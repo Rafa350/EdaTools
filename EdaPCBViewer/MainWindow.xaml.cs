@@ -1,15 +1,15 @@
 ﻿namespace Eda.PCBViewer {
 
-    using System;
-    using System.IO;
-    using System.Windows;
-    using System.Windows.Input;
-    using System.Windows.Media;
     using Eda.PCBViewer.DrawEditor;
     using Eda.PCBViewer.DrawEditor.Tools;
     using Eda.PCBViewer.DrawEditor.Visuals;
     using MikroPic.EdaTools.v1.Model;
     using MikroPic.EdaTools.v1.Model.IO;
+    using System;
+    using System.IO;
+    using System.Windows;
+    using System.Windows.Input;
+    using System.Windows.Media;
 
     public partial class MainWindow: Window {
 
