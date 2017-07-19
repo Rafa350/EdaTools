@@ -1,0 +1,83 @@
+﻿<Window 
+    x:Class="Eda.PCBViewer.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Eda.PCBViewer"
+    xmlns:local2="clr-namespace:Eda.PCBViewer.DrawEditor"
+    Title="MainWindow" 
+    Height="350" 
+    Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="5"
+            BorderBrush="Black"
+            BorderThickness="1">
+            <StackPanel
+                Orientation="Vertical">
+                <Button
+                    Margin="5,5,5,5"
+                    Content="Apply" Click="Button_Click" IsDefault="True" />
+                <Button
+                    Margin="5,5,5,5"
+                    Content="Seleccion"
+                    Click="Button_Click_4" />
+                <Button
+                    Margin="5,5,5,5"
+                    Content="Pad"
+                    Click="Button_Click_1" />
+                <Button
+                    Margin="5,5,5,5"
+                    Content="Line"
+                    Click="Button_Click_2" />
+                <Button
+                    Margin="5,5,5,5"
+                    Content="Rectangle"
+                    Click="Button_Click_3" />
+            </StackPanel>
+        </Border>
+        <Label
+            Grid.Row="1"
+            Grid.Column="1"            
+            Name="ctrlPosition" />
+        <Border
+            x:Name="_this"
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="5"
+            Padding="5"
+            BorderThickness="1"
+            Background="Black">
+            <Border.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1" ScaleY="-1"/>
+                    <TranslateTransform Y="{Binding ElementName=_this, Path=ActualHeight}"/>
+                </TransformGroup>
+            </Border.RenderTransform>
+            <local2:ZoomControl
+                x:Name="zoomControl"
+                ClipToBounds="True" 
+                MouseMove="zoomControl_MouseMove" 
+                MouseUp="zoomControl_MouseUp" 
+                MouseWheel="zoomControl_MouseWheel" 
+                MouseDown="zoomControl_MouseDown">
+                <local2:DesignSurface
+                    x:Name="content"
+                    ClipToBounds="True"
+                    SnapsToDevicePixels="True"
+                    Background="Transparent">
+                </local2:DesignSurface>
+            </local2:ZoomControl>
+        </Border>    
+    </Grid>
+</Window>
+    

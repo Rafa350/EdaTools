@@ -1,0 +1,24 @@
+﻿namespace MikroPic.EdaTools.v1.Model {
+
+    using MikroPic.EdaTools.v1.Model.Elements;
+
+    public interface IVisitor {
+
+        void Visit(Board board);
+        void Visit(Layer layer);
+        void Visit(Part part);
+        void Visit(Parameter parameter);
+        void Visit(Signal signal);
+        void Visit(Component component);
+        void Visit(LineElement line);
+        void Visit(ArcElement arc);
+        void Visit(RectangleElement rectangle);
+        void Visit(CircleElement circle);
+        void Visit(ViaElement via);
+        void Visit(SmdPadElement pad);
+        void Visit(ThPadElement pad);
+        void Visit(PolygonElement polygon);
+        void Visit(TextElement text);
+        void Visit(HoleElement hole);
+    }
+}

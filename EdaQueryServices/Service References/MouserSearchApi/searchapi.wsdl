@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://api.mouser.com/service" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://api.mouser.com/service" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This Webservice provides an easy way to retrieve our product information.</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://api.mouser.com/service">
+      <s:element name="SearchByKeyword">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="keyword" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="records" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="startingRecord" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="searchOptions" type="s:ID" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByKeywordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchByKeywordResult" type="tns:ResultParts" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ResultParts">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="NumberOfResult" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Parts" type="tns:ArrayOfMouserPart" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfMouserPart">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MouserPart" nillable="true" type="tns:MouserPart" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="MouserPart">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Availability" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DataSheetUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ImagePath" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Category" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LeadTime" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LifecycleStatus" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Manufacturer" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ManufacturerPartNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Min" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Mult" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MouserPartNumber" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductAttributes" type="tns:ArrayOfProductAttribute" />
+          <s:element minOccurs="0" maxOccurs="1" name="PriceBreaks" type="tns:ArrayOfPricebreaks" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProductDetailUrl" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Reeling" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="ROHSStatus" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SuggestedReplacement" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MultiSimBlue" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="UnitWeightKg" type="tns:UnitWeightKg" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfProductAttribute">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ProductAttribute" nillable="true" type="tns:ProductAttribute" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ProductAttribute">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="AttributeName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AttributeValue" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPricebreaks">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Pricebreaks" nillable="true" type="tns:Pricebreaks" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Pricebreaks">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Quantity" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Price" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Currency" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Pricebreaks2">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Pricebreaks" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="UnitWeightKg">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="UnitWeight" nillable="true" type="s:decimal" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="MouserHeader" type="tns:MouserHeader" />
+      <s:complexType name="MouserHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="AccountInfo" type="tns:AccountInfo" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:complexType name="AccountInfo">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="PartnerID" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SearchByPartNumber">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mouserPartNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SearchByPartNumberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SearchByPartNumberResult" type="tns:ResultParts" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Calculator">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="calculatorParameters" type="tns:MCalculator" />
+            <s:element minOccurs="1" maxOccurs="1" name="records" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="startingRecord" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MCalculator">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CalculatorMethodName" type="tns:MCalculatorMethod" />
+          <s:element minOccurs="0" maxOccurs="1" name="Resistance" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Tolerance" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TemperatureCoefficient" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Capacitance" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Inductance" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="MCalculatorMethod">
+        <s:restriction base="s:string">
+          <s:enumeration value="None" />
+          <s:enumeration value="ResistanceCode" />
+          <s:enumeration value="ResistanceColorCode1" />
+          <s:enumeration value="ResistanceColorCode2" />
+          <s:enumeration value="CapacitorCode" />
+          <s:enumeration value="Inductance" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="CalculatorResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CalculatorResult" type="tns:ResultParts" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ServiceStatus">
+        <s:complexType />
+      </s:element>
+      <s:element name="ServiceStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ServiceStatusResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SearchByKeywordSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchByKeyword" />
+  </wsdl:message>
+  <wsdl:message name="SearchByKeywordSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchByKeywordResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchByKeywordMouserHeader">
+    <wsdl:part name="MouserHeader" element="tns:MouserHeader" />
+  </wsdl:message>
+  <wsdl:message name="SearchByPartNumberSoapIn">
+    <wsdl:part name="parameters" element="tns:SearchByPartNumber" />
+  </wsdl:message>
+  <wsdl:message name="SearchByPartNumberSoapOut">
+    <wsdl:part name="parameters" element="tns:SearchByPartNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="SearchByPartNumberMouserHeader">
+    <wsdl:part name="MouserHeader" element="tns:MouserHeader" />
+  </wsdl:message>
+  <wsdl:message name="CalculatorSoapIn">
+    <wsdl:part name="parameters" element="tns:Calculator" />
+  </wsdl:message>
+  <wsdl:message name="CalculatorSoapOut">
+    <wsdl:part name="parameters" element="tns:CalculatorResponse" />
+  </wsdl:message>
+  <wsdl:message name="CalculatorMouserHeader">
+    <wsdl:part name="MouserHeader" element="tns:MouserHeader" />
+  </wsdl:message>
+  <wsdl:message name="ServiceStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:ServiceStatus" />
+  </wsdl:message>
+  <wsdl:message name="ServiceStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:ServiceStatusResponse" />
+  </wsdl:message>
+  <wsdl:portType name="SearchAPISoap">
+    <wsdl:operation name="SearchByKeyword">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Search parts by keyword and return a maximum of 50 parts. @keyword used for keyword part search. @records is used to specify how many records the method should return. @startingRecord indicates where in the total recordset the return set should begin. From the startingRecord, the number of records specified will be returned up to the end of the recordset. This is useful for paging through the complete recordset of parts matching keyword. @searchOptions refers to options supported by the search engine. Only one value at a time is supported.  None is the default.  The following values are valid: None | Rohs | InStock | RohsAndInStock - can use string representations or integer IDs: 1[None] | 2[Rohs] | 4[InStock] | 8[RohsAndInStock]</wsdl:documentation>
+      <wsdl:input message="tns:SearchByKeywordSoapIn" />
+      <wsdl:output message="tns:SearchByKeywordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SearchByPartNumber">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Search by Part Number - Return max of 50 </wsdl:documentation>
+      <wsdl:input message="tns:SearchByPartNumberSoapIn" />
+      <wsdl:output message="tns:SearchByPartNumberSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Calculator">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Search by calculator parameters - Return max of 50</wsdl:documentation>
+      <wsdl:input message="tns:CalculatorSoapIn" />
+      <wsdl:output message="tns:CalculatorSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ServiceStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Check Web Service Availability</wsdl:documentation>
+      <wsdl:input message="tns:ServiceStatusSoapIn" />
+      <wsdl:output message="tns:ServiceStatusSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SearchAPISoap" type="tns:SearchAPISoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SearchByKeyword">
+      <soap:operation soapAction="http://api.mouser.com/service/SearchByKeyword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SearchByKeywordMouserHeader" part="MouserHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByPartNumber">
+      <soap:operation soapAction="http://api.mouser.com/service/SearchByPartNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SearchByPartNumberMouserHeader" part="MouserHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Calculator">
+      <soap:operation soapAction="http://api.mouser.com/service/Calculator" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:CalculatorMouserHeader" part="MouserHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ServiceStatus">
+      <soap:operation soapAction="http://api.mouser.com/service/ServiceStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SearchAPISoap12" type="tns:SearchAPISoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SearchByKeyword">
+      <soap12:operation soapAction="http://api.mouser.com/service/SearchByKeyword" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SearchByKeywordMouserHeader" part="MouserHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchByPartNumber">
+      <soap12:operation soapAction="http://api.mouser.com/service/SearchByPartNumber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SearchByPartNumberMouserHeader" part="MouserHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Calculator">
+      <soap12:operation soapAction="http://api.mouser.com/service/Calculator" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:CalculatorMouserHeader" part="MouserHeader" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ServiceStatus">
+      <soap12:operation soapAction="http://api.mouser.com/service/ServiceStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SearchAPI">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This Webservice provides an easy way to retrieve our product information.</wsdl:documentation>
+    <wsdl:port name="SearchAPISoap" binding="tns:SearchAPISoap">
+      <soap:address location="http://www.mouser.com/service/searchapi.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SearchAPISoap12" binding="tns:SearchAPISoap12">
+      <soap12:address location="http://www.mouser.com/service/searchapi.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

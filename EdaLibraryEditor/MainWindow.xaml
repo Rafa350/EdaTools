@@ -1,0 +1,14 @@
+﻿<Window x:Class="EdaLibraryEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:visuals="clr-namespace:Mkpic.EdaTools.v1.LibraryEditor.Visuals"
+        Title="MainWindow" Height="517" Width="623">
+    <Canvas>
+        <visuals:ThPadShape
+            Canvas.Left="150"
+            Canvas.Top="96"
+            Height="268" Width="372">
+            
+        </visuals:ThPadShape>
+    </Canvas>
+</Window>

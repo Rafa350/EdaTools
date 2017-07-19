@@ -1,0 +1,61 @@
+﻿namespace Eda.PCBViewer.DrawEditor.Visuals {
+
+    using System.Windows.Media;
+    using MikroPic.EdaTools.v1.Model;
+    using MikroPic.EdaTools.v1.Model.Elements;
+
+    public sealed class HoleVisual: ElementVisual {
+
+        public HoleVisual(HoleElement hole, Part part)
+            : base(hole, part) {
+
+            RenderVisual();
+        }
+
+        public override void RenderVisual() {
+
+            bool isMirror = Part == null ? false : Part.IsMirror;
+            Layer layer = isMirror ? Hole.MirrorLayer : Hole.Layer;
+
+            using (DrawingContext dc = RenderOpen()) {
+
+                // Push de la transformacio global
+                //
+                if (Part != null) {
+                    TransformGroup transform = new TransformGroup();
+                    transform.Children.Add(new TranslateTransform(Part.Position.X, Part.Position.Y));
+                    transform.Children.Add(new RotateTransform(Part.Rotate, Part.Position.X, Part.Position.Y));
+                    dc.PushTransform(transform);
+                }
+
+                Pen pen = PenCache.Instance.GetPen(layer.Color, 0.05);
+
+                // Push de la transformacio d'escala pel canvi de cara
+                //
+                if (isMirror)
+                    dc.PushTransform(new ScaleTransform(-1, 1));
+
+                // Dibuixa el forat
+                //
+                dc.DrawEllipse(null, pen, Hole.Position, Hole.Drill / 2, Hole.Drill / 2);
+
+                // Pop de la transformacio d'escala pel canvi de cara
+                //
+                if (isMirror)
+                    dc.Pop();
+
+                // Pop de la transformacio global
+                //
+                if (Part != null)
+                    dc.Pop();
+            }
+        }
+
+        public HoleElement Hole {
+            get {
+                return (HoleElement) Element;
+            }
+        }
+    }
+}
+

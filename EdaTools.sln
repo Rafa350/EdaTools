@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaPCBModel", "EdaPCBModel\EdaPCBModel.csproj", "{706BC74F-0182-4B56-8D9D-C6B311044076}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaPCBTool", "EdaPCBTool\EdaPCBTool.csproj", "{D54B130E-6746-482D-B6A7-C261F5DC0684}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaQueryServices", "EdaQueryServices\EdaQueryServices.csproj", "{5CB68CCD-BEBC-4A48-930F-91F87B16DE00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaPCBViewer", "EdaPCBViewer\EdaPCBViewer.csproj", "{8CEAFC37-67B6-4765-A9C0-6F64EE01C7A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaPartFinder", "EdaPartFinder\EdaPartFinder.csproj", "{AD8FC968-D24F-4529-B55D-E979A917BE2D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaImport", "EdaImport\EdaImport.csproj", "{992BECEF-69F9-4071-9ACA-AB3DB04B8B97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaLibraryEditor", "EdaLibraryEditor\EdaLibraryEditor.csproj", "{CCC8A87B-987C-49D2-908E-A8BAFE27F3CE}"
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{706BC74F-0182-4B56-8D9D-C6B311044076}.Debug|x86.ActiveCfg = Debug|x86
+		{706BC74F-0182-4B56-8D9D-C6B311044076}.Debug|x86.Build.0 = Debug|x86
+		{706BC74F-0182-4B56-8D9D-C6B311044076}.Release|x86.ActiveCfg = Release|x86
+		{706BC74F-0182-4B56-8D9D-C6B311044076}.Release|x86.Build.0 = Release|x86
+		{D54B130E-6746-482D-B6A7-C261F5DC0684}.Debug|x86.ActiveCfg = Debug|x86
+		{D54B130E-6746-482D-B6A7-C261F5DC0684}.Release|x86.ActiveCfg = Release|x86
+		{D54B130E-6746-482D-B6A7-C261F5DC0684}.Release|x86.Build.0 = Release|x86
+		{5CB68CCD-BEBC-4A48-930F-91F87B16DE00}.Debug|x86.ActiveCfg = Debug|x86
+		{5CB68CCD-BEBC-4A48-930F-91F87B16DE00}.Debug|x86.Build.0 = Debug|x86
+		{5CB68CCD-BEBC-4A48-930F-91F87B16DE00}.Release|x86.ActiveCfg = Release|x86
+		{5CB68CCD-BEBC-4A48-930F-91F87B16DE00}.Release|x86.Build.0 = Release|x86
+		{8CEAFC37-67B6-4765-A9C0-6F64EE01C7A9}.Debug|x86.ActiveCfg = Debug|x86
+		{8CEAFC37-67B6-4765-A9C0-6F64EE01C7A9}.Debug|x86.Build.0 = Debug|x86
+		{8CEAFC37-67B6-4765-A9C0-6F64EE01C7A9}.Release|x86.ActiveCfg = Release|x86
+		{8CEAFC37-67B6-4765-A9C0-6F64EE01C7A9}.Release|x86.Build.0 = Release|x86
+		{AD8FC968-D24F-4529-B55D-E979A917BE2D}.Debug|x86.ActiveCfg = Debug|x86
+		{AD8FC968-D24F-4529-B55D-E979A917BE2D}.Debug|x86.Build.0 = Debug|x86
+		{AD8FC968-D24F-4529-B55D-E979A917BE2D}.Release|x86.ActiveCfg = Release|x86
+		{AD8FC968-D24F-4529-B55D-E979A917BE2D}.Release|x86.Build.0 = Release|x86
+		{992BECEF-69F9-4071-9ACA-AB3DB04B8B97}.Debug|x86.ActiveCfg = Debug|x86
+		{992BECEF-69F9-4071-9ACA-AB3DB04B8B97}.Release|x86.ActiveCfg = Release|x86
+		{992BECEF-69F9-4071-9ACA-AB3DB04B8B97}.Release|x86.Build.0 = Release|x86
+		{CCC8A87B-987C-49D2-908E-A8BAFE27F3CE}.Debug|x86.ActiveCfg = Debug|x86
+		{CCC8A87B-987C-49D2-908E-A8BAFE27F3CE}.Debug|x86.Build.0 = Debug|x86
+		{CCC8A87B-987C-49D2-908E-A8BAFE27F3CE}.Release|x86.ActiveCfg = Release|x86
+		{CCC8A87B-987C-49D2-908E-A8BAFE27F3CE}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
