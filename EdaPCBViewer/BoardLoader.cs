@@ -1,5 +1,7 @@
 ﻿namespace Eda.PCBViewer {
 
+    using MikroPic.EdaTools.v1.Model;
+    using MikroPic.EdaTools.v1.Model.Elements;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
@@ -7,8 +9,6 @@
     using System.Windows;
     using System.Windows.Media;
     using System.Xml;
-    using MikroPic.EdaTools.v1.Model;
-    using MikroPic.EdaTools.v1.Model.Elements;
 
     public sealed class BoardLoader {
 
@@ -396,9 +396,9 @@
                 }
                 else {
                     if (info.Angle == 0)
-                        polygon.AddLine(info.X, info.Y);
+                        polygon.AddLine(new Point(info.X, info.Y));
                     else
-                        polygon.AddArc(info.X, info.Y, info.Angle);
+                        polygon.AddArc(new Point(info.X, info.Y), info.Angle);
                 }
             }
         }
@@ -620,8 +620,7 @@
 
                 // Corrigeix perque siguin relatives al component
                 //
-                parameter.X -= x;
-                parameter.Y -= y;
+                parameter.Position = new Point(parameter.Position.X - x, parameter.Position.Y - y);
 
                 part.AddParameter(parameter);
             }
@@ -638,7 +637,7 @@
             double rotate = RotateToDouble(GetAttribute(node, "rotate"));
             bool isVisible = GetAttribute(node, "display") != "off";
 
-            return new Parameter(name, x, y, rotate, isVisible, value);
+            return new Parameter(name, new Point(x, y), rotate, isVisible, value);
         }
 
         private ViaNodeInfo ParseViaNode(XmlNode node) {

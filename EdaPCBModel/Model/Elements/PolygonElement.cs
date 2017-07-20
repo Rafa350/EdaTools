@@ -7,8 +7,7 @@
 
         public class Segment {
 
-            public double X { get; set; }
-            public double Y { get; set; }
+            public Point Delta { get; set; }            
             public double Angle { get; set; }
         }
 
@@ -22,28 +21,26 @@
             visitor.Visit(this);
         }
 
-        public PolygonElement AddLine(double x, double y) {
+        public PolygonElement AddLine(Point delta) {
 
             if (nodes == null)
                 nodes = new List<Segment>();
 
             nodes.Add(new Segment {
-                X = x,
-                Y = y,
+                Delta = delta,
                 Angle = 0
             });
 
             return this;
         }
 
-        public PolygonElement AddArc(double x, double y, double angle) {
+        public PolygonElement AddArc(Point delta, double angle) {
 
             if (nodes == null)
                 nodes = new List<Segment>();
 
             nodes.Add(new Segment {
-                X = x,
-                Y = y,
+                Delta = delta,
                 Angle = angle
             });
 

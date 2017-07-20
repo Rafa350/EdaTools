@@ -1,12 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.Model {
 
     using System;
+    using System.Windows;
 
     public sealed class Parameter: IVisitable {
 
         private string name;
-        private double x;
-        private double y;
+        private Point position;
         private double rotate;
         private string value;
         private bool isVisible;
@@ -23,14 +23,13 @@
             this.value = value;
         }
 
-        public Parameter(string name, double x, double y, double rotate, bool isVisible, string value) {
+        public Parameter(string name, Point position, double rotate, bool isVisible, string value) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
             this.name = name;
-            this.x = x;
-            this.y = y;
+            this.position = position;
             this.rotate = rotate;
             this.isVisible = isVisible;
             this.value = value;
@@ -50,21 +49,12 @@
             }
         }
 
-        public double X {
+        public Point Position {
             get {
-                return x;
+                return position;
             }
             set {
-                x = value;
-            }
-        }
-
-        public double Y {
-            get {
-                return y;
-            }
-            set {
-                y = value;
+                position = value;
             }
         }
 

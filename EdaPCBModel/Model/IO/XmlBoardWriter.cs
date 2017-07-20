@@ -93,7 +93,7 @@
 
                 writer.WriteStartElement("spad");
                 writer.WriteAttributeString("layer", pad.Layer.Name);
-                writer.WriteAttributeString("name", pad.Name);
+                writer.WriteAttributeString("id", pad.Name);
                 writer.WriteAttribute("position", pad.Position);
                 if (pad.Rotate != 0)
                     writer.WriteAttribute("rotate", pad.Rotate);
@@ -106,7 +106,7 @@
             public override void Visit(ThPadElement pad) {
 
                 writer.WriteStartElement("tpad");
-                writer.WriteAttributeString("name", pad.Name);
+                writer.WriteAttributeString("id", pad.Name);
                 writer.WriteAttribute("position", pad.Position);
                 if (pad.Rotate != 0)
                     writer.WriteAttribute("rotate", pad.Rotate);
@@ -120,10 +120,7 @@
 
                 writer.WriteStartElement("parameter");
                 writer.WriteAttributeString("name", parameter.Name);
-                if (parameter.X != 0)
-                    writer.WriteAttributeString("x", parameter.X.ToString(ci));
-                if (parameter.Y != 0)
-                    writer.WriteAttributeString("y", parameter.Y.ToString(ci));
+                writer.WriteAttribute("position", parameter.Position);
                 if (parameter.Rotate != 0)
                     writer.WriteAttribute("rotate", parameter.Rotate);
                 writer.WriteAttributeString("value", parameter.Value);
@@ -135,10 +132,11 @@
                 writer.WriteStartElement("polygon");
                 writer.WriteAttributeString("layer", polygon.Layer.Name);
                 writer.WriteAttribute("position", polygon.Position);
+                if (polygon.Thickness > 0)
+                    writer.WriteAttribute("thickness", polygon.Thickness);
                 foreach (PolygonElement.Segment node in polygon.Nodes) {
                     writer.WriteStartElement(node.Angle == 0 ? "line" : "arc");
-                    writer.WriteAttributeString("x", node.X.ToString(ci));
-                    writer.WriteAttributeString("y", node.Y.ToString(ci));
+                    writer.WriteAttribute("delta", node.Delta);
                     writer.WriteEndElement();
                 }
                 writer.WriteEndElement();
@@ -195,7 +193,7 @@
             public override void Visit(Component component) {
 
                 writer.WriteStartElement("component");
-                writer.WriteAttributeString("name", component.Name);
+                writer.WriteAttributeString("id", component.Name);
 
                 if (component.Elements != null) {
                     writer.WriteStartElement("elements");
@@ -210,7 +208,7 @@
             public override void Visit(Layer layer) {
 
                 writer.WriteStartElement("layer");
-                writer.WriteAttributeString("name", layer.Name);
+                writer.WriteAttributeString("id", layer.Name);
                 writer.WriteAttributeString("visible", layer.IsVisible.ToString());
                 writer.WriteAttributeString("color", layer.Color.ToString());
                 writer.WriteEndElement();

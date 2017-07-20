@@ -43,8 +43,8 @@
                 }
                 else {
                     value = parameter.Value;
-                    x = parameter.X;
-                    y = parameter.Y;
+                    x = parameter.Position.X;
+                    y = parameter.Position.Y;
                     rotate = parameter.Rotate;
                 }
 
