@@ -1,6 +1,5 @@
 ﻿namespace MikroPic.EdaTools.v1.Model.Elements {
 
-    using System;
     using System.Windows;
 
     public sealed class SmdPadElement: PadElement {

@@ -70,12 +70,12 @@
             public override void Visit(TextElement text) {
 
                 writer.WriteStartElement("text");
+                if (!String.IsNullOrEmpty(text.Name))
+                    writer.WriteAttributeString("name", text.Name);
                 writer.WriteAttributeString("layer", text.Layer.Name);
                 writer.WriteAttribute("position", text.Position);
                 if (text.Rotate != 0)
                     writer.WriteAttribute("rotate", text.Rotate);
-                if (!String.IsNullOrEmpty(text.Name))
-                    writer.WriteAttributeString("name", text.Name);
                 if (!String.IsNullOrEmpty(text.Value))
                     writer.WriteAttributeString("value", text.Value);
                 writer.WriteEndElement();
@@ -92,21 +92,21 @@
             public override void Visit(SmdPadElement pad) {
 
                 writer.WriteStartElement("spad");
+                writer.WriteAttributeString("name", pad.Name);
                 writer.WriteAttributeString("layer", pad.Layer.Name);
-                writer.WriteAttributeString("id", pad.Name);
                 writer.WriteAttribute("position", pad.Position);
                 if (pad.Rotate != 0)
                     writer.WriteAttribute("rotate", pad.Rotate);
                 writer.WriteAttribute("size", pad.Size);
                 if (pad.Roundnes > 0)
-                    writer.WriteAttribute("roundnes", pad.Roundnes);
+                    writer.WriteAttribute("roundness", pad.Roundnes);
                 writer.WriteEndElement();
             }
 
             public override void Visit(ThPadElement pad) {
 
                 writer.WriteStartElement("tpad");
-                writer.WriteAttributeString("id", pad.Name);
+                writer.WriteAttributeString("name", pad.Name);
                 writer.WriteAttribute("position", pad.Position);
                 if (pad.Rotate != 0)
                     writer.WriteAttribute("rotate", pad.Rotate);
@@ -118,9 +118,10 @@
 
             public override void Visit(Parameter parameter) {
 
-                writer.WriteStartElement("parameter");
+                writer.WriteStartElement("attribute");
                 writer.WriteAttributeString("name", parameter.Name);
-                writer.WriteAttribute("position", parameter.Position);
+                if ((parameter.Position.X != 0) || (parameter.Position.Y != 0))
+                    writer.WriteAttribute("position", parameter.Position);
                 if (parameter.Rotate != 0)
                     writer.WriteAttribute("rotate", parameter.Rotate);
                 writer.WriteAttributeString("value", parameter.Value);
@@ -154,7 +155,7 @@
                     writer.WriteAttributeString("mirror", part.IsMirror.ToString());
 
                 if (part.Parameters != null) {
-                    writer.WriteStartElement("parameters");
+                    writer.WriteStartElement("attributes");
                     foreach (Parameter parameter in part.Parameters)
                         parameter.AcceptVisitor(this);
                     writer.WriteEndElement();
@@ -193,7 +194,7 @@
             public override void Visit(Component component) {
 
                 writer.WriteStartElement("component");
-                writer.WriteAttributeString("id", component.Name);
+                writer.WriteAttributeString("name", component.Name);
 
                 if (component.Elements != null) {
                     writer.WriteStartElement("elements");
@@ -208,7 +209,7 @@
             public override void Visit(Layer layer) {
 
                 writer.WriteStartElement("layer");
-                writer.WriteAttributeString("id", layer.Name);
+                writer.WriteAttributeString("name", layer.Name);
                 writer.WriteAttributeString("visible", layer.IsVisible.ToString());
                 writer.WriteAttributeString("color", layer.Color.ToString());
                 writer.WriteEndElement();
