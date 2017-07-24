@@ -49,15 +49,16 @@
             /// <param name="signal">La senyal a visitar.</param>
             public override void Visit(Signal signal) {
 
-                foreach (ElementBase element in signal.Elements) {
-                    if (ReferenceEquals(element.Layer, layer)) {
-                        RenderItem renderItem = new RenderItem {
-                            Part = null,
-                            Element = element
-                        };
-                        renderList.Add(renderItem);
+                if (signal.Elements != null)
+                    foreach (ElementBase element in signal.Elements) {
+                        if (ReferenceEquals(element.Layer, layer)) {
+                            RenderItem renderItem = new RenderItem {
+                                Part = null,
+                                Element = element
+                            };
+                            renderList.Add(renderItem);
+                        }
                     }
-                }
             }
         }
 
