@@ -43,7 +43,7 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            if (parameters.ContainsKey(name))
+            if ((parameters != null) && (parameters.ContainsKey(name)))
                 return parameters[name];
             else
                 return null;

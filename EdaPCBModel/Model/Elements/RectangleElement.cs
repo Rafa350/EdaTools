@@ -6,6 +6,7 @@
 
         private Point position;
         private Size size;
+        private double rotate;
         private double thickness;
 
         public override void AcceptVisitor(IVisitor visitor) {
@@ -28,6 +29,15 @@
             }
             set {
                 size = value;
+            }
+        }
+
+        public double Rotate {
+            get {
+                return rotate;
+            }
+            set {
+                rotate = value;
             }
         }
 

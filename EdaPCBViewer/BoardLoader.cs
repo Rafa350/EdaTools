@@ -76,11 +76,11 @@
 
         private sealed class RectangleNodeInfo {
 
-            public double X1 { get; set; }
-            public double Y1 { get; set; }
-            public double X2 { get; set; }
-            public double Y2 { get; set; }
-            public double Radius { get; set; }
+            public double X { get; set; }
+            public double Y { get; set; }
+            public double Width { get; set; }
+            public double Height { get; set; }
+            public double Rotate { get; set; }
             public double Thickness { get; set; }
             public Layer Layer { get; set; }
         }
@@ -313,7 +313,7 @@
 
                             case "rectangle": {
                                     RectangleNodeInfo info = ParseRectangleNode(node);
-                                    component.Add(boardBuilder.CreateRectangle(new Point(info.X1, info.Y1), new Size(info.X2 - info.X1, info.Y2 - info.Y1), info.Thickness, info.Layer));
+                                    component.Add(boardBuilder.CreateRectangle(new Point(info.X, info.Y), new Size(info.Width, info.Height), info.Rotate, info.Thickness, info.Layer));
                                 }
                                 break;
 
@@ -445,6 +445,7 @@
             double y = StrToDouble(GetAttribute(node, "y"));
             double width = StrToDouble(GetAttribute(node, "dx"));
             double height = StrToDouble(GetAttribute(node, "dy"));
+            double rotate = RotateToDouble(GetAttribute(node, "rot"));
             double roundness = StrToDouble(GetAttribute(node, "roundness"));
             int layerNum = Int32.Parse(GetAttribute(node, "layer"));
 
@@ -454,6 +455,7 @@
                 Y = y,
                 Width = width,
                 Height = height,
+                Rotate = rotate,
                 Radius = roundness / 100,
                 Layer = layerDict[layerNum]
             };
@@ -516,14 +518,16 @@
             double y1 = StrToDouble(GetAttribute(node, "y1"));
             double x2 = StrToDouble(GetAttribute(node, "x2"));
             double y2 = StrToDouble(GetAttribute(node, "y2"));
+            double rotate = RotateToDouble(GetAttribute(node, "rot"));
             double thickness = StrToDouble(GetAttribute(node, "width"));
             int layerNum = Int32.Parse(GetAttribute(node, "layer"));
 
             return new RectangleNodeInfo {
-                X1 = x1,
-                Y1 = y1,
-                X2 = x2,
-                Y2 = y2,
+                X = (x1 + x2) / 2,
+                Y = (y1 + y2) / 2,
+                Width = x2 - x1,
+                Height = y2 - y1,
+                Rotate = rotate,
                 Thickness = thickness,
                 Layer = layerDict[layerNum]
             };
@@ -646,17 +650,29 @@
             double y = StrToDouble(GetAttribute(node, "y"));
             double drill = StrToDouble(GetAttribute(node, "drill"));
             double diameter = StrToDouble(GetAttribute(node, "diameter"));
+            string shape = GetAttribute(node, "shape");
             string extent = GetAttribute(node, "extent");
             string[] layers = extent.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
             int upperLayerNum = Int32.Parse(layers[0]);
             int lowerLayerNum = Int32.Parse(layers[1]);
+
+            ViaElement.ViaShape viaShape = ViaElement.ViaShape.Circular;
+            switch (shape) {
+                case "square":
+                    viaShape = ViaElement.ViaShape.Square;
+                    break;
+
+                case "octagon":
+                    viaShape = ViaElement.ViaShape.Octogonal;
+                    break;
+            }
 
             return new ViaNodeInfo {
                 X = x,
                 Y = y,
                 Drill = drill,
                 Size = diameter,
-                Shape = ViaElement.ViaShape.Circular,
+                Shape = viaShape,
                 Upper = layerDict[upperLayerNum],
                 Lower = layerDict[lowerLayerNum],
             };

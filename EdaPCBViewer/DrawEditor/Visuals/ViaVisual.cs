@@ -38,10 +38,6 @@
                         dc.DrawOctogonalRing(brush, null, Via.Position, Via.Size, Via.Drill);
                         break;
                 }
-
-                // Dibuixa el forat interior de la via
-                //
-                //dc.DrawEllipse(Brushes.Black, null, Via.Position, Via.Drill / 2, Via.Drill / 2);
             }
         }
 

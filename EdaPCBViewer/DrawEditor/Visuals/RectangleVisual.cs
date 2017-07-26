@@ -43,7 +43,10 @@
                     pen = PenCache.Instance.GetPen(layer.Color, Rectangle.Thickness);
                 else
                     brush = BrushCache.Instance.GetBrush(layer.Color);
-                dc.DrawRectangle(brush, null, new Rect(Rectangle.Position, Rectangle.Size));
+                Point position = new Point(
+                    Rectangle.Position.X - (Rectangle.Size.Width / 2),
+                    Rectangle.Position.Y - (Rectangle.Size.Height / 2));
+                dc.DrawRectangle(brush, null, new Rect(position, Rectangle.Size));
 
                 // Pop de la transformacio d'escala pel canvi de cara
                 //

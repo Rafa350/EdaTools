@@ -21,6 +21,8 @@
 
         private bool showDrag = true;
         private readonly double scaleFactor = 1.1;
+        private const string inTestFileName = @"c:\temp\board.brd";
+        private const string outTestFileName = @"c:\temp\board.xml";
 
         private Point prevContentMousePos;
 
@@ -37,10 +39,10 @@
         private void Button_Click(object sender, RoutedEventArgs e) {
 
             BoardLoader loader = new BoardLoader();
-            Board board = loader.Load(@"c:\temp\board.brd");
+            Board board = loader.Load(inTestFileName);
 
             XmlBoardWriter writer = new XmlBoardWriter(
-                new FileStream(@"c:\temp\board.xml", FileMode.Create, FileAccess.Write, FileShare.None));
+                new FileStream(outTestFileName, FileMode.Create, FileAccess.Write, FileShare.None));
             writer.Write(board);
 
             content.ClearVisual();

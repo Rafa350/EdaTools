@@ -51,6 +51,8 @@
                 writer.WriteAttributeString("layer", rectangle.Layer.Name);
                 writer.WriteAttribute("position", rectangle.Position);
                 writer.WriteAttribute("size", rectangle.Size);
+                if (rectangle.Rotate > 0)
+                    writer.WriteAttribute("rotate", rectangle.Rotate);
                 if (rectangle.Thickness > 0)
                     writer.WriteAttribute("thickness", rectangle.Thickness);
                 writer.WriteEndElement();
@@ -169,10 +171,8 @@
                 writer.WriteStartElement("via");
                 writer.WriteAttribute("position", via.Position);
                 writer.WriteAttribute("drill", via.Drill);
-                if (via.AutoSize)
-                    writer.WriteAttributeString("auto", "true");
-                else
-                    writer.WriteAttribute("size", via.Size);
+                writer.WriteAttribute("size", via.Size);
+                writer.WriteAttributeString("shape", via.Shape.ToString());
                 writer.WriteEndElement();
             }
 

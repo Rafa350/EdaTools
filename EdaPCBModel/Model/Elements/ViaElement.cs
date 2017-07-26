@@ -10,12 +10,11 @@
             Circular
         }
 
-        private static double autosizeFactor = 1.3;
+        private static double autosizeFactor = 1.625;
 
         private Point position;
         private double drill;
         private double size;
-        private bool autoSize = false;
         private Layer upper;
         private Layer lower;
         private ViaShape shape = ViaShape.Circular;
@@ -54,24 +53,10 @@
         /// </summary>
         public double Size {
             get {
-                return autoSize ? size * autosizeFactor : size;
+                return size <= drill ? drill * autosizeFactor : size;
             }
             set {
                 size = value;
-                autoSize = false;
-            }
-        }
-
-
-        /// <summary>
-        /// Obte o asigna el indicador de tamany automatic de la corona.
-        /// </summary>
-        public bool AutoSize {
-            get {
-                return autoSize;
-            }
-            set {
-                autoSize = value;
             }
         }
 
@@ -94,7 +79,7 @@
         }
 
         /// <summary>
-        /// Obte o asigna la forma de la corona exterior. Les interiors sembre son circulars.
+        /// Obte o asigna la forma exterior. Les interiors sempre son circulars.
         /// </summary>
         public ViaShape Shape {
             get {

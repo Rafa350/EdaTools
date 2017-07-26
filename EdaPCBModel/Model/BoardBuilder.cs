@@ -149,6 +149,7 @@
             via.Position = position;
             via.Size = size;
             via.Drill = drill;
+            via.Shape = shape;
             via.Layer = board.GetLayer(LayerId.Vias);
             via.Upper = upper;
             via.Lower = lower;
@@ -228,7 +229,7 @@
             return line;
         }
        
-        public RectangleElement CreateRectangle(Point position, Size size, double thickness, Layer layer) {
+        public RectangleElement CreateRectangle(Point position, Size size, double rotate, double thickness, Layer layer) {
 
             if (layer == null)
                 throw new ArgumentNullException("layer");
@@ -236,6 +237,7 @@
             RectangleElement rectangle = new RectangleElement();
             rectangle.Position = position;
             rectangle.Size = size;
+            rectangle.Rotate = rotate;
             rectangle.Thickness = thickness;
             rectangle.Layer = layer;
 
