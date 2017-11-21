@@ -138,8 +138,10 @@
                 if (polygon.Thickness > 0)
                     writer.WriteAttribute("thickness", polygon.Thickness);
                 foreach (PolygonElement.Segment node in polygon.Nodes) {
-                    writer.WriteStartElement(node.Angle == 0 ? "line" : "arc");
-                    writer.WriteAttribute("delta", node.Delta);
+                    writer.WriteStartElement("segment");
+                    writer.WriteAttribute("position", node.Delta);
+                    if (node.Angle != 0)
+                        writer.WriteAttribute("angle", node.Angle);
                     writer.WriteEndElement();
                 }
                 writer.WriteEndElement();
