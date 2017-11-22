@@ -55,7 +55,7 @@
                         value,
                         CultureInfo.CurrentUICulture,
                         FlowDirection.LeftToRight,
-                        new Typeface("Arial"),
+                        new Typeface("Consolas"),
                         Text.Height,
                         brush);
                     formattedText.TextAlignment = TextAlignment.Left;

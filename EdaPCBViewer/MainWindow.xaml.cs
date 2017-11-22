@@ -39,7 +39,7 @@
         private void Button_Click(object sender, RoutedEventArgs e) {
 
             BoardLoader loader = new BoardLoader();
-            Board board = loader.Load(inTestFileName);
+            Board board = loader.LoadBoard(inTestFileName);
 
             XmlBoardWriter writer = new XmlBoardWriter(
                 new FileStream(outTestFileName, FileMode.Create, FileAccess.Write, FileShare.None));

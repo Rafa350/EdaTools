@@ -1,0 +1,20 @@
+Modul Import/Export
+-clase Importar
+          ImportEagle
+          ImportKiCad
+-clase Export
+           ExportEagle
+           ExportKiCad           
+
+Importar/Exporta
+-Importar/exporter placa
+-Importar/exportar llibreria de footprints 
+
+Guardar format nadiu.
+-Guardar placa.
+-Guardar footprint.
+
+Gestio de llibreries.
+-Una llibreria es una carpeta.
+-Un footprint es un arxiu en la carpeta de llibreria, en format nadiu xml.
+

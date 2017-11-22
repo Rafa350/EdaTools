@@ -114,15 +114,15 @@
         private Dictionary<int, Layer> layerDict = new Dictionary<int, Layer>();
         private Dictionary<string, Component> componentDict = new Dictionary<string, Component>();
 
-        public Board Load(string fileName) {
+        public Board LoadBoard(string fileName) {
 
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None))
-                return Load(stream);
+                return LoadBoard(stream);
         }
 
-        public Board Load(Stream stream) {
+        public Board LoadBoard(Stream stream) {
 
-            XmlDocument doc = LoadXmlDocument(stream);
+            XmlDocument doc = ReadXmlDocument(stream);
 
             Board board = boardBuilder.CreateBoard();
 
@@ -134,7 +134,7 @@
             return board;
         }
 
-        private XmlDocument LoadXmlDocument(Stream stream) {
+        private XmlDocument ReadXmlDocument(Stream stream) {
 
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.DtdProcessing = DtdProcessing.Ignore;
@@ -403,62 +403,65 @@
             }
         }
 
+        /// <summary>
+        /// Procesa un node de tipus PAD.
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>Informacio recolectada del node.</returns>
+        /// 
         private PadNodeInfo ParsePadNode(XmlNode node) {
 
-            string name = GetAttribute(node, "name");
-            double x = StrToDouble(GetAttribute(node, "x"));
-            double y = StrToDouble(GetAttribute(node, "y"));
-            double rotate = RotateToDouble(GetAttribute(node, "rot"));
-            double drill = StrToDouble(GetAttribute(node, "drill"));
-            string shape = GetAttribute(node, "shape");
+            PadNodeInfo info = new PadNodeInfo();
 
-            ThPadElement.ThPadShape padShape = ThPadElement.ThPadShape.Circular;
-            switch (shape) {
+            info.Name = GetAttribute(node, "name");
+
+            info.X = StrToDouble(GetAttribute(node, "x"));
+            info.Y = StrToDouble(GetAttribute(node, "y"));
+            info.Rotate = RotateToDouble(GetAttribute(node, "rot"));
+
+            info.Drill = StrToDouble(GetAttribute(node, "drill"));
+            info.Size = info.Drill * 1.6;
+
+            info.Shape = ThPadElement.ThPadShape.Circular;
+            switch (GetAttribute(node, "shape")) {
                 case "square":
-                    padShape = ThPadElement.ThPadShape.Square;
+                    info.Shape = ThPadElement.ThPadShape.Square;
                     break;
 
                 case "octagon":
-                    padShape = ThPadElement.ThPadShape.Octogonal;
+                    info.Shape = ThPadElement.ThPadShape.Octogonal;
                     break;
 
                 case "long":
-                    padShape = ThPadElement.ThPadShape.Oval;
+                    info.Shape = ThPadElement.ThPadShape.Oval;
                     break;
             }
 
-            return new PadNodeInfo {
-                Name = name,
-                X = x,
-                Y = y,
-                Rotate = rotate,
-                Shape = padShape,
-                Drill = drill,
-                Size = drill * 1.6
-            };
+            return info;
         }
 
+        /// <summary>
+        /// procesa un node de tipus SMD.
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>Informacio recolectada del node.</returns>
+        /// 
         private SmdNodeInfo ParseSmdNode(XmlNode node) {
 
-            string name = GetAttribute(node, "name");
-            double x = StrToDouble(GetAttribute(node, "x"));
-            double y = StrToDouble(GetAttribute(node, "y"));
-            double width = StrToDouble(GetAttribute(node, "dx"));
-            double height = StrToDouble(GetAttribute(node, "dy"));
-            double rotate = RotateToDouble(GetAttribute(node, "rot"));
-            double roundness = StrToDouble(GetAttribute(node, "roundness"));
-            int layerNum = Int32.Parse(GetAttribute(node, "layer"));
+            SmdNodeInfo info = new SmdNodeInfo();
 
-            return new SmdNodeInfo {
-                Name = name,
-                X = x,
-                Y = y,
-                Width = width,
-                Height = height,
-                Rotate = rotate,
-                Radius = roundness / 100,
-                Layer = layerDict[layerNum]
-            };
+            info.Name = GetAttribute(node, "name");
+
+            info.X = StrToDouble(GetAttribute(node, "x"));
+            info.Y = StrToDouble(GetAttribute(node, "y"));
+            info.Width = StrToDouble(GetAttribute(node, "dx"));
+            info.Height = StrToDouble(GetAttribute(node, "dy"));
+            info.Rotate = RotateToDouble(GetAttribute(node, "rot"));
+            info.Radius = StrToDouble(GetAttribute(node, "roundness")) / 100;
+
+            info.Layer = layerDict[Int32.Parse(GetAttribute(node, "layer"))];
+
+            return info;
         }
 
         private TextNodeInfo ParseTextNode(XmlNode node) {
