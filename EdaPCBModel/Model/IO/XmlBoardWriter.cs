@@ -220,6 +220,8 @@
             public override void Visit(Board board) {
 
                 writer.WriteStartElement("board");
+                writer.WriteAttributeString("version", "100");
+                writer.WriteAttributeString("units", "mm");
 
                 if (board.Layers != null) {
                     writer.WriteStartElement("layers");

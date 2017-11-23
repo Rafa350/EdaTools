@@ -48,6 +48,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Import\Eagle\EagleImporter.cs" />
+    <Compile Include="Import\Importer.cs" />
+    <Compile Include="Import\ImporterFactory.cs" />
     <Compile Include="Model\BoardBuilder.cs" />
     <Compile Include="Model\Elements\ArcElement.cs" />
     <Compile Include="Model\Elements\ElementBase.cs" />
@@ -56,8 +59,9 @@
     <Compile Include="Model\Elements\TextElement.cs" />
     <Compile Include="Model\Elements\ViaElement.cs" />
     <Compile Include="Model\ILayerElement.cs" />
-    <Compile Include="Model\IO\XmlPartWriter.cs" />
+    <Compile Include="Model\IO\XmlLibraryWriter.cs" />
     <Compile Include="Model\IO\XmlWriterHelper.cs" />
+    <Compile Include="Model\Library.cs" />
     <Compile Include="Model\Parameter.cs" />
     <Compile Include="Model\Board.cs" />
     <Compile Include="Model\Elements\CircleElement.cs" />
@@ -76,7 +80,9 @@
     <Compile Include="Model\Elements\ThPadElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Import\KiCad\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

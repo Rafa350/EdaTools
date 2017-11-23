@@ -1,16 +1,16 @@
-﻿namespace Eda.PCBViewer {
+﻿namespace MikroPic.EdaTools.v1.Import.Eagle {
 
-    using MikroPic.EdaTools.v1.Model;
-    using MikroPic.EdaTools.v1.Model.Elements;
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
-    using System.IO;
     using System.Windows;
     using System.Windows.Media;
+    using System.IO;
     using System.Xml;
+    using System.Collections.Generic;
+    using MikroPic.EdaTools.v1.Model;
+    using MikroPic.EdaTools.v1.Model.Elements;
 
-    public sealed class BoardLoader {
+    public sealed class EagleImporter: Importer {
 
         private sealed class HoleNodeInfo {
 
@@ -53,13 +53,13 @@
             public string Name { get; set; }
         }
 
-        private sealed class WireNodeInfo {       
-            
+        private sealed class WireNodeInfo {
+
             public double X1 { get; set; }
             public double Y1 { get; set; }
             public double X2 { get; set; }
             public double Y2 { get; set; }
-            public double Angle {get;set;}
+            public double Angle { get; set; }
             public double Thickness { get; set; }
             public LineElement.LineCapStyle LineCap { get; set; }
             public Layer Layer { get; set; }
@@ -114,13 +114,7 @@
         private Dictionary<int, Layer> layerDict = new Dictionary<int, Layer>();
         private Dictionary<string, Component> componentDict = new Dictionary<string, Component>();
 
-        public Board LoadBoard(string fileName) {
-
-            using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None))
-                return LoadBoard(stream);
-        }
-
-        public Board LoadBoard(Stream stream) {
+        public override Board LoadBoard(Stream stream) {
 
             XmlDocument doc = ReadXmlDocument(stream);
 
@@ -132,6 +126,13 @@
             CreateSignals(doc, board);
 
             return board;
+        }
+
+        public override Library LoadLibrary(Stream stream) {
+
+            XmlDocument doc = ReadXmlDocument(stream);
+
+            throw new NotImplementedException();
         }
 
         private XmlDocument ReadXmlDocument(Stream stream) {
@@ -304,7 +305,7 @@
 
                             case "wire": {
                                     WireNodeInfo info = ParseWireNode(node);
-                                    if (info.Angle == 0) 
+                                    if (info.Angle == 0)
                                         component.Add(boardBuilder.CreateLine(new Point(info.X1, info.Y1), new Point(info.X2, info.Y2), info.Thickness, info.LineCap, info.Layer));
                                     else
                                         component.Add(boardBuilder.CreateArc(new Point(info.X1, info.Y1), new Point(info.X2, info.Y2), info.Thickness, info.LineCap, info.Angle, info.Layer));
@@ -441,7 +442,7 @@
         }
 
         /// <summary>
-        /// procesa un node de tipus SMD.
+        /// Procesa un node de tipus SMD.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
         /// <returns>Informacio recolectada del node.</returns>
@@ -515,42 +516,50 @@
             };
         }
 
+        /// <summary>
+        /// Procesa un node de tipus RECTANGLE
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>La infoamacio recopilada.</returns>
+        /// 
         private RectangleNodeInfo ParseRectangleNode(XmlNode node) {
+
+            RectangleNodeInfo info = new RectangleNodeInfo();
 
             double x1 = StrToDouble(GetAttribute(node, "x1"));
             double y1 = StrToDouble(GetAttribute(node, "y1"));
             double x2 = StrToDouble(GetAttribute(node, "x2"));
             double y2 = StrToDouble(GetAttribute(node, "y2"));
-            double rotate = RotateToDouble(GetAttribute(node, "rot"));
-            double thickness = StrToDouble(GetAttribute(node, "width"));
-            int layerNum = Int32.Parse(GetAttribute(node, "layer"));
+            info.X = (x1 + x2) / 2;
+            info.Y = (y1 + y2) / 2;
+            info.Width = x2 - x1;
+            info.Height = y2 - y1;
 
-            return new RectangleNodeInfo {
-                X = (x1 + x2) / 2,
-                Y = (y1 + y2) / 2,
-                Width = x2 - x1,
-                Height = y2 - y1,
-                Rotate = rotate,
-                Thickness = thickness,
-                Layer = layerDict[layerNum]
-            };
+            info.Rotate = RotateToDouble(GetAttribute(node, "rot"));
+            info.Thickness = StrToDouble(GetAttribute(node, "width"));
+
+            info.Layer = layerDict[Int32.Parse(GetAttribute(node, "layer"))];
+
+            return info;
         }
 
+        /// <summary>
+        /// Procesa un node de tipus CIRCLE
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>La informacio recopilada.</returns>
+        /// 
         private CircleNodeInfo ParseCircleNode(XmlNode node) {
 
-            double x = StrToDouble(GetAttribute(node, "x"));
-            double y = StrToDouble(GetAttribute(node, "y"));
-            double thickness = StrToDouble(GetAttribute(node, "width"));
-            double radius = StrToDouble(GetAttribute(node, "radius"));
-            int layerNum = Int32.Parse(GetAttribute(node, "layer"));
+            CircleNodeInfo info = new CircleNodeInfo();
 
-            return new CircleNodeInfo {
-                X = x,
-                Y = y,
-                Thickness = thickness,
-                Radius = radius,
-                Layer = layerDict[layerNum]
-            };
+            info.X = StrToDouble(GetAttribute(node, "x"));
+            info.Y = StrToDouble(GetAttribute(node, "y"));
+            info.Thickness = StrToDouble(GetAttribute(node, "width"));
+            info.Radius = StrToDouble(GetAttribute(node, "radius"));
+            info.Layer = layerDict[Int32.Parse(GetAttribute(node, "layer"))];
+
+            return info;
         }
 
         private PolygonNodeInfo ParsePolygonNode(XmlNode node) {

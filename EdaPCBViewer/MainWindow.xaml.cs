@@ -5,6 +5,8 @@
     using Eda.PCBViewer.DrawEditor.Visuals;
     using MikroPic.EdaTools.v1.Model;
     using MikroPic.EdaTools.v1.Model.IO;
+    using MikroPic.EdaTools.v1.Import;
+    using MikroPic.EdaTools.v1.Import.Eagle;
     using System;
     using System.IO;
     using System.Windows;
@@ -38,8 +40,8 @@
 
         private void Button_Click(object sender, RoutedEventArgs e) {
 
-            BoardLoader loader = new BoardLoader();
-            Board board = loader.LoadBoard(inTestFileName);
+            Importer importer = new EagleImporter();
+            Board board = importer.LoadBoard(inTestFileName);
 
             XmlBoardWriter writer = new XmlBoardWriter(
                 new FileStream(outTestFileName, FileMode.Create, FileAccess.Write, FileShare.None));
