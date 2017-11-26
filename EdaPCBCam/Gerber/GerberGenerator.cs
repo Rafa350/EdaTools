@@ -12,7 +12,6 @@
     public sealed class GerberGenerator {
 
         private readonly GerberGeneratorOptions options;
-        private GerberBuilder gb;
 
         public GerberGenerator(GerberGeneratorOptions options) {
 
@@ -38,7 +37,10 @@
                     // Definicio d'unitats i format de coordinades
                     //
                     gb.SetUnits(Units.Milimeters);
-                    gb.SetPrecision(7, 4);
+                    gb.SetCoordinateFormat(7, 4);
+                    gb.SetOffset(0, 0);
+                    gb.SetPolarity(true);
+                    gb.SetObjectPolarity(true);
 
                     // Definicio de macros per l'apertura X
                     // $1: Amplada
@@ -48,7 +50,7 @@
                     //
                     gb.DefineMacro(
                         "21,1,$1,$2-$3-$3,0,0,$4*" +
-                        "21,1,$2-$3-$3,$2,0,0,$4*" +
+                        "21,1,$1-$3-$3,$2,0,0,$4*" +
                         "$5=$1/2*" +
                         "$6=$2/2*" +
                         "$7=2X$3*" +
@@ -59,27 +61,13 @@
 
                     // Definicio de les apertures
                     //
-                    foreach (ApertureBase aperture in apertures.Values)
-                        gb.Escape(aperture.GetDeclarationCommand());
+                    gb.DefineApertures(board);
 
                     gb.Escape("%");
 
                     // Definicio de la imatge
                     //
-                     if (board.Signals != null)
-                        foreach (Signal signal in board.Signals) {
-                            if (signal.Elements != null)
-                                foreach (ElementBase element in signal.Elements) {
-                                    ViaElement via = element as ViaElement;
-                                    if (via != null) {
-                                        string key = ApertureKeyGenerator.GenerateKey(via);
-                                        ApertureBase aperture = apertures[key];
-
-                                        gb.SelectAperture(aperture.Id);
-                                        gb.Operation(via.Position.X, via.Position.Y, OperationCode.Flash);
-                                    }
-                                }
-                        }
+                    gb.FlasApertures(board);
 
                     // Final
                     //

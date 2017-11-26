@@ -5,12 +5,24 @@
     public abstract class DefaultVisitor: IVisitor {
 
         public virtual void Visit(Board board) {
+
+            if (board.Parts != null)
+                foreach (Part part in board.Parts)
+                    part.AcceptVisitor(this);
+
+            if (board.Signals != null)
+                foreach (Signal signal in board.Signals)
+                    signal.AcceptVisitor(this);
         }
 
         public virtual void Visit(Layer layer) {
         }
 
         public virtual void Visit(Signal signal) {
+
+            if (signal.Elements != null)
+                foreach (ElementBase element in signal.Elements)
+                    element.AcceptVisitor(this);
         }
 
         public virtual void Visit(LineElement line) {
@@ -44,9 +56,16 @@
         }
 
         public virtual void Visit(Part part) {
+
+            if (part.Component != null)
+                part.Component.AcceptVisitor(this);
         }
 
         public virtual void Visit(Component component) {
+
+            if (component.Elements != null)
+                foreach (ElementBase element in component.Elements)
+                    element.AcceptVisitor(this);
         }
 
         public virtual void Visit(Parameter parameter) {

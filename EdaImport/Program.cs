@@ -19,7 +19,7 @@
             boardWriter.Write(board);
 
             CAMGenerator camGenerator = new CAMGenerator();
-            camGenerator.Generate(board, @"c:\temp\board3.cam");
+            camGenerator.Generate(board, @"c:\temp\board3.cmp");
         }
     }
 }
