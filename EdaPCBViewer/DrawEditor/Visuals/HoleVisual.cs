@@ -28,8 +28,6 @@
                     dc.PushTransform(transform);
                 }
 
-                Pen pen = PenCache.Instance.GetPen(layer.Color, 0.05);
-
                 // Push de la transformacio d'escala pel canvi de cara
                 //
                 if (isMirror)
@@ -37,6 +35,7 @@
 
                 // Dibuixa el forat
                 //
+                Pen pen = PenCache.Instance.GetPen(layer.Color, 0.05);
                 dc.DrawEllipse(null, pen, Hole.Position, Hole.Drill / 2, Hole.Drill / 2);
 
                 // Pop de la transformacio d'escala pel canvi de cara

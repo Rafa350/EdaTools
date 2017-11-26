@@ -43,6 +43,8 @@
                 return thickness;
             }
             set {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("Thickness");
                 thickness = value;
             }
         }

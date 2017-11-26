@@ -51,7 +51,7 @@
                 writer.WriteAttributeString("layer", rectangle.Layer.Name);
                 writer.WriteAttribute("position", rectangle.Position);
                 writer.WriteAttribute("size", rectangle.Size);
-                if (rectangle.Rotate > 0)
+                if (rectangle.Rotate != 0)
                     writer.WriteAttribute("rotate", rectangle.Rotate);
                 if (rectangle.Thickness > 0)
                     writer.WriteAttribute("thickness", rectangle.Thickness);

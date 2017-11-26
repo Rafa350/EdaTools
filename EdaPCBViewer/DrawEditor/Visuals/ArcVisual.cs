@@ -43,10 +43,8 @@
                 if (isMirror)
                     dc.PushTransform(new ScaleTransform(-1, 1));
 
-                // Dibuixa el arc
+                // Genera la geometria del arc
                 //
-                Pen pen = PenCache.Instance.GetPen(layer.Color, Arc.Thickness,
-                    Arc.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
                 StreamGeometry geometry = new StreamGeometry();
                 using (StreamGeometryContext ctx = geometry.Open()) {
                     ctx.BeginFigure(Arc.StartPosition, false, false);
@@ -57,6 +55,11 @@
                         true, true);
                 }
                 geometry.Freeze();
+
+                // Dibuixa la geometria
+                //
+                Pen pen = PenCache.Instance.GetPen(layer.Color, Arc.Thickness,
+                    Arc.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
                 dc.DrawGeometry(null, pen, geometry);
 
                 // Pop de la transformacio d'escala pel canvi de cara

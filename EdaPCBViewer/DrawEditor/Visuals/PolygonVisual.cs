@@ -30,35 +30,43 @@
 
                 Layer layer = isMirror ? Polygon.MirrorLayer : Polygon.Layer;
 
-                Pen pen = PenCache.Instance.GetPen(layer.Color, Polygon.Thickness, PenLineCap.Round);
+                Pen pen = Polygon.Thickness == 0 ?
+                    null :
+                    PenCache.Instance.GetPen(layer.Color, Polygon.Thickness, PenLineCap.Round);
+
+                Brush brush = Polygon.Thickness == 0 ?
+                    new SolidColorBrush(layer.Color) :
+                    null;
 
                 StreamGeometry geometry = new StreamGeometry();
                 using (StreamGeometryContext ctx = geometry.Open()) {
 
                     double x1 = Polygon.Position.X;
                     double y1 = Polygon.Position.Y;
+                    double angle = 0;
 
                     ctx.BeginFigure(new Point(x1, y1), Polygon.Thickness == 0, true);
                     foreach (PolygonElement.Segment node in Polygon.Nodes) {
-                        if (node.Angle == 0)
+                        if (angle == 0)
                             ctx.LineTo(node.Delta, true, true);
                         else {
                             double co = Math.Sqrt(Math.Pow(node.Delta.X - x1, 2) + Math.Pow(node.Delta.Y - y1, 2)) / 2;
-                            double radius = Math.Abs(co / Math.Sin((node.Angle / 2) * Math.PI / 180));
+                            double radius = Math.Abs(co / Math.Sin((angle / 2) * Math.PI / 180));
                             ctx.ArcTo(node.Delta, new Size(radius, radius),
-                                Math.Abs(node.Angle),
+                                Math.Abs(angle),
                                 true,
-                                node.Angle > 0 ? SweepDirection.Clockwise : SweepDirection.Counterclockwise,
+                                angle > 0 ? SweepDirection.Clockwise : SweepDirection.Counterclockwise,
                                 true, true);
                         }
                         x1 = node.Delta.X;
                         y1 = node.Delta.Y;
+                        angle = node.Angle;
                     }
                 }
 
                 if (isMirror)
                     dc.PushTransform(new ScaleTransform(-1, 1));
-                dc.DrawGeometry(null, pen, geometry);
+                dc.DrawGeometry(brush, pen, geometry);
                 if (isMirror)
                     dc.Pop();
 

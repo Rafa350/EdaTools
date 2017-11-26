@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Model.Elements {
 
+    using System;
     using System.Windows;
 
     public sealed class RectangleElement: ElementBase {
@@ -46,6 +47,8 @@
                 return thickness;
             }
             set {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("Thickness");
                 thickness = value;
             }
         }

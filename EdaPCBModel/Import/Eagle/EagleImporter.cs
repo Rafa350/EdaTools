@@ -418,7 +418,7 @@
 
             info.X = StrToDouble(GetAttribute(node, "x"));
             info.Y = StrToDouble(GetAttribute(node, "y"));
-            info.Rotate = RotateToDouble(GetAttribute(node, "rot"));
+            info.Rotate = StrToDouble(GetAttribute(node, "rot"));
 
             info.Drill = StrToDouble(GetAttribute(node, "drill"));
             info.Size = info.Drill * 1.6;
@@ -457,70 +457,72 @@
             info.Y = StrToDouble(GetAttribute(node, "y"));
             info.Width = StrToDouble(GetAttribute(node, "dx"));
             info.Height = StrToDouble(GetAttribute(node, "dy"));
-            info.Rotate = RotateToDouble(GetAttribute(node, "rot"));
+            info.Rotate = StrToDouble(GetAttribute(node, "rot"));
             info.Radius = StrToDouble(GetAttribute(node, "roundness")) / 100;
 
-            info.Layer = layerDict[Int32.Parse(GetAttribute(node, "layer"))];
+            info.Layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
 
             return info;
         }
 
+        /// <summary>
+        /// Procesa un doce de tipus TEXT.
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>La informacio recopilada.</returns>
+        /// 
         private TextNodeInfo ParseTextNode(XmlNode node) {
 
-            string name = null;
-            string value = null;
+            TextNodeInfo info = new TextNodeInfo();
 
             string s = node.InnerText;
-            if (s.StartsWith(">"))
-                name = s.Substring(1);
-            else
-                value = s;
-            double x = StrToDouble(GetAttribute(node, "x"));
-            double y = StrToDouble(GetAttribute(node, "y"));
-            double rotate = RotateToDouble(GetAttribute(node, "rot"));
-            double height = StrToDouble(GetAttribute(node, "size"));
-            int layerNum = Int32.Parse(GetAttribute(node, "layer"));
+            if (s.StartsWith(">")) {
+                info.Name = s.Substring(1);
+                info.Value = null;
+            }
+            else {
+                info.Name = null;
+                info.Value = s;
+            }
 
-            return new TextNodeInfo {
-                X = x,
-                Y = y,
-                Rotate = rotate,
-                Height = height,
-                Name = name,
-                Value = value,
-                Layer = layerDict[layerNum]
-            };
+            info.X = StrToDouble(GetAttribute(node, "x"));
+            info.Y = StrToDouble(GetAttribute(node, "y"));
+            info.Rotate = StrToDouble(GetAttribute(node, "rot"));
+            info.Height = StrToDouble(GetAttribute(node, "size"));
+            info.Layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
+
+            return info;
         }
 
+        /// <summary>
+        /// Procesa un node WIRE.
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>La informacio recopilada.</returns>
+        /// 
         private WireNodeInfo ParseWireNode(XmlNode node) {
 
-            double x1 = StrToDouble(GetAttribute(node, "x1"));
-            double y1 = StrToDouble(GetAttribute(node, "y1"));
-            double x2 = StrToDouble(GetAttribute(node, "x2"));
-            double y2 = StrToDouble(GetAttribute(node, "y2"));
-            double curve = StrToDouble(GetAttribute(node, "curve"));
-            string cap = GetAttribute(node, "cap");
+            WireNodeInfo info = new WireNodeInfo();
 
-            double thickness = StrToDouble(GetAttribute(node, "width"));
-            int layerNum = Int32.Parse(GetAttribute(node, "layer"));
+            info.X1 = StrToDouble(GetAttribute(node, "x1"));
+            info.Y1 = StrToDouble(GetAttribute(node, "y1"));
+            info.X2 = StrToDouble(GetAttribute(node, "x2"));
+            info.Y2 = StrToDouble(GetAttribute(node, "y2"));
 
-            return new WireNodeInfo {
-                X1 = x1,
-                Y1 = y1,
-                X2 = x2,
-                Y2 = y2,
-                LineCap = cap == null ? LineElement.LineCapStyle.Round : LineElement.LineCapStyle.Flat,
-                Thickness = thickness,
-                Angle = curve,
-                Layer = layerDict[layerNum]
-            };
+            info.Angle = StrToDouble(GetAttribute(node, "curve"));
+            info.LineCap = GetAttribute(node, "cap") == null ? LineElement.LineCapStyle.Round : LineElement.LineCapStyle.Flat;
+            info.Thickness = StrToDouble(GetAttribute(node, "width"));
+
+            info.Layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
+
+            return info;
         }
 
         /// <summary>
         /// Procesa un node de tipus RECTANGLE
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>La infoamacio recopilada.</returns>
+        /// <returns>La informacio recopilada.</returns>
         /// 
         private RectangleNodeInfo ParseRectangleNode(XmlNode node) {
 
@@ -535,10 +537,10 @@
             info.Width = x2 - x1;
             info.Height = y2 - y1;
 
-            info.Rotate = RotateToDouble(GetAttribute(node, "rot"));
+            info.Rotate = StrToDouble(GetAttribute(node, "rot"));
             info.Thickness = StrToDouble(GetAttribute(node, "width"));
 
-            info.Layer = layerDict[Int32.Parse(GetAttribute(node, "layer"))];
+            info.Layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
 
             return info;
         }
@@ -557,46 +559,61 @@
             info.Y = StrToDouble(GetAttribute(node, "y"));
             info.Thickness = StrToDouble(GetAttribute(node, "width"));
             info.Radius = StrToDouble(GetAttribute(node, "radius"));
-            info.Layer = layerDict[Int32.Parse(GetAttribute(node, "layer"))];
+
+            info.Layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
 
             return info;
         }
 
+        /// <summary>
+        /// Procesa un node POLYGON.
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>La informacio recopilada.</returns>
+        /// 
         private PolygonNodeInfo ParsePolygonNode(XmlNode node) {
 
-            double thickness = StrToDouble(GetAttribute(node, "width"));
-            int layerNum = Int32.Parse(GetAttribute(node, "layer"));
+            PolygonNodeInfo info = new PolygonNodeInfo();
 
-            return new PolygonNodeInfo {
-                Thickness = thickness,
-                Layer = layerDict[layerNum]
-            };
+            info.Thickness = 0; //  StrToDouble(GetAttribute(node, "width"));
+            info.Layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
+
+            return info;
         }
 
+        /// <summary>
+        /// Procesa un node de tipus VERTEX.
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>La informacio recopilada.</returns>
+        /// 
         private VertexNodeInfo ParseVertexNode(XmlNode node) {
 
-            double x = StrToDouble(GetAttribute(node, "x"));
-            double y = StrToDouble(GetAttribute(node, "y"));
-            double curve = StrToDouble(GetAttribute(node, "curve"));
+            VertexNodeInfo info = new VertexNodeInfo();
 
-            return new VertexNodeInfo {
-                X = x,
-                Y = y,
-                Angle = curve
-            };
+            info.X = StrToDouble(GetAttribute(node, "x"));
+            info.Y = StrToDouble(GetAttribute(node, "y"));
+            info.Angle = StrToDouble(GetAttribute(node, "curve"));
+
+            return info;
         }
 
+        /// <summary>
+        /// procesa un node de tipus HOLE.
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>La informacio recopilada.</returns>
+        /// 
         private HoleNodeInfo ParseHoleNode(XmlNode node) {
 
-            double x = StrToDouble(GetAttribute(node, "x"));
-            double y = StrToDouble(GetAttribute(node, "y"));
-            double drill = StrToDouble(GetAttribute(node, "drill"));
+            HoleNodeInfo info = new HoleNodeInfo();
 
-            return new HoleNodeInfo {
-                X = x,
-                Y = y,
-                Drill = drill
-            };
+            info.X = StrToDouble(GetAttribute(node, "x"));
+            info.Y = StrToDouble(GetAttribute(node, "y"));
+
+            info.Drill = StrToDouble(GetAttribute(node, "drill"));
+
+            return info;
         }
 
         private Part ParseElementNode(XmlNode node) {
@@ -614,7 +631,7 @@
             double rotate = 0;
             string rot = GetAttribute(node, "rot");
             if (rot != null) {
-                rotate = RotateToDouble(rot);
+                rotate = StrToDouble(rot);
                 mirror = rot.StartsWith("M");
             }
 
@@ -650,7 +667,7 @@
             string value = GetAttribute(node, "value");
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
-            double rotate = RotateToDouble(GetAttribute(node, "rotate"));
+            double rotate = StrToDouble(GetAttribute(node, "rotate"));
             bool isVisible = GetAttribute(node, "display") != "off";
 
             return new Parameter(name, new Point(x, y), rotate, isVisible, value);
@@ -700,17 +717,24 @@
 
             if (String.IsNullOrEmpty(value))
                 return 0;
-            else
-                return Double.Parse(value, CultureInfo.InvariantCulture);
+            else {
+                int i = 0;
+                while (i < value.Length) {
+                    if (Char.IsLetter(value[i]))
+                        i++;
+                    else
+                        return Double.Parse(value.Substring(i), CultureInfo.InvariantCulture);
+                }
+                return 0;
+            }
         }
 
-        private static double RotateToDouble(string value) {
+        private static int StrToInteger(string value) {
 
             if (String.IsNullOrEmpty(value))
                 return 0;
-            else {
-                return Double.Parse(value.Remove(0, value.StartsWith("M") ? 2 : 1), CultureInfo.InvariantCulture);
-            }
+            else 
+                return Int32.Parse(value);
         }
     }
 }

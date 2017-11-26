@@ -46,7 +46,7 @@
                 Point position = new Point(
                     Rectangle.Position.X - (Rectangle.Size.Width / 2),
                     Rectangle.Position.Y - (Rectangle.Size.Height / 2));
-                dc.DrawRectangle(brush, null, new Rect(position, Rectangle.Size));
+                dc.DrawRectangle(brush, pen, new Rect(position, Rectangle.Size));
 
                 // Pop de la transformacio d'escala pel canvi de cara
                 //

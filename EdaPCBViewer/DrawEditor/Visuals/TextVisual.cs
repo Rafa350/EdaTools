@@ -55,7 +55,7 @@
                         value,
                         CultureInfo.CurrentUICulture,
                         FlowDirection.LeftToRight,
-                        new Typeface("Consolas"),
+                        new Typeface("Courier New"),
                         Text.Height,
                         brush);
                     formattedText.TextAlignment = TextAlignment.Left;

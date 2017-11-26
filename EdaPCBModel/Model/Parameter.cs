@@ -6,10 +6,11 @@
     public sealed class Parameter: IVisitable {
 
         private string name;
+        private string value;
         private Point position;
         private double rotate;
-        private string value;
         private bool isVisible;
+        // private bool usePosition
 
         public Parameter() {
         }

@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Model.Elements {
 
+    using System;
     using System.Windows;
 
     public sealed class SmdPadElement: PadElement {
@@ -32,12 +33,9 @@
                 return roundnes;
             }
             set {
-                if (value < 0)
-                    roundnes = 0;
-                else if (value > 1)
-                    roundnes = 1;
-                else
-                    roundnes = value;
+                if (value < 0 || roundnes > 1)
+                    throw new ArgumentOutOfRangeException("Roundness");
+                roundnes = value;
             }
         }
     }

@@ -137,6 +137,17 @@
             return signal;
         }
 
+        /// <summary>
+        /// Crea una via.
+        /// </summary>
+        /// <param name="position">Posicio.</param>
+        /// <param name="size">Tamany de la corona.</param>
+        /// <param name="drill">Diametre del forat.</param>
+        /// <param name="shape">Formade la corona.</param>
+        /// <param name="upper">Capa superior.</param>
+        /// <param name="lower">Capa inferior.</param>
+        /// <returns>El objecte Via creat.</returns>
+        /// 
         public ViaElement CreateVia(Point position, double size, double drill, ViaElement.ViaShape shape, Layer upper, Layer lower) {
 
             if (upper == null)

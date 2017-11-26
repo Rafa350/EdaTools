@@ -28,6 +28,8 @@
                 return thickness;
             }
             set {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("Thickness");
                 thickness = value;
             }
         }
@@ -37,6 +39,8 @@
                 return radius;
             }
             set {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException("Radius");
                 radius = value;
             }
         }
@@ -46,6 +50,8 @@
                 return radius * 2;
             }
             set {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException("Diameter");
                 radius = value / 2;
             }
         }

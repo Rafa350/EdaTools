@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Model.Elements {
 
+    using System;
     using System.Windows;
 
     public sealed class ViaElement: ElementBase {
@@ -44,6 +45,8 @@
                 return drill;
             }
             set {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException("Drill");
                 drill = value;
             }
         }

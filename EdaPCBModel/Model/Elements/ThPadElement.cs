@@ -1,5 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Model.Elements {
 
+    using System;
+
     public sealed class ThPadElement: PadElement {
 
         public enum ThPadShape {
@@ -38,6 +40,8 @@
                 return drill;
             }
             set {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException("Drill");
                 drill = value;
             }
         }

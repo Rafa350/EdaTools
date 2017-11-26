@@ -40,6 +40,9 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>MikroPic.EdaTools.v1.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
@@ -52,6 +55,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EdaPCBCam\EdaPCBCam.csproj">
+      <Project>{9786f647-bca2-45f5-814c-e41eba6a4480}</Project>
+      <Name>EdaPCBCam</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EdaPCBModel\EdaPCBModel.csproj">
       <Project>{706BC74F-0182-4B56-8D9D-C6B311044076}</Project>
       <Name>EdaPCBModel</Name>
