@@ -4,8 +4,8 @@
     using System.Globalization;
     using System.Windows;
     using System.Windows.Media;
-    using MikroPic.EdaTools.v1.Model;
-    using MikroPic.EdaTools.v1.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
     public sealed class SmdPadVisual: ElementVisual {
 

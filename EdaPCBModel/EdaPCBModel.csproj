@@ -8,7 +8,7 @@
     <ProjectGuid>{706BC74F-0182-4B56-8D9D-C6B311044076}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MikroPic.EdaTools.v1</RootNamespace>
+    <RootNamespace>MikroPic.EdaTools.v1.Pcb</RootNamespace>
     <AssemblyName>EdaPCBModel</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

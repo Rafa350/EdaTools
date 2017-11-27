@@ -1,7 +1,8 @@
-﻿namespace MikroPic.EdaTools.v1.Model {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using System;
     using System.Collections.Generic;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
     /// <summary>
     /// Clase que representa una placa.
@@ -12,6 +13,7 @@
         private List<Component> components;
         private List<Part> parts;
         private List<Signal> signals;
+        private List<ElementBase> elements;
 
         /// <summary>
         /// Constructor per defecte.
@@ -85,6 +87,20 @@
         }
 
         /// <summary>
+        /// Afeigeix un element.
+        /// </summary>
+        /// <param name="element">L'element a afeigir.</param>
+        public void AddElement(ElementBase element) {
+
+            if (element == null)
+                throw new ArgumentNullException("element");
+
+            if (elements == null)
+                elements = new List<ElementBase>();
+            elements.Add(element);
+        }
+
+        /// <summary>
         /// Obte una capa a partir del seu identificador.
         /// </summary>
         /// <param name="id">El identificador de la capa.</param>
@@ -127,6 +143,15 @@
         public IEnumerable<Signal> Signals {
             get {
                 return signals;
+            }
+        }
+
+        /// <summary>
+        /// Obte un enunerador pels elements.
+        /// </summary>
+        public IEnumerable<ElementBase> Elements {
+            get {
+                return elements;
             }
         }
     }

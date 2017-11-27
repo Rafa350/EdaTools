@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Import.Eagle {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Import.Eagle {
 
     using System;
     using System.Globalization;
@@ -7,8 +7,8 @@
     using System.IO;
     using System.Xml;
     using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Model;
-    using MikroPic.EdaTools.v1.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
     public sealed class EagleImporter: Importer {
 
@@ -272,6 +272,18 @@
 
         private void CreateMeasures(XmlDocument doc, Board board) {
 
+            foreach (XmlNode node in doc.SelectNodes("eagle/drawing/board/plain/*")) {
+
+                switch (node.Name) {
+                    case "wire":
+                        WireNodeInfo info = ParseWireNode(node);
+                        if (info.Angle == 0)
+                            board.AddElement(boardBuilder.CreateLine(new Point(info.X1, info.Y1), new Point(info.X2, info.Y2), info.Thickness, info.LineCap, info.Layer));
+                        else
+                            board.AddElement(boardBuilder.CreateArc(new Point(info.X1, info.Y1), new Point(info.X2, info.Y2), info.Thickness, info.LineCap, info.Angle, info.Layer));
+                        break;
+                }
+            }
         }
 
         private void CreateComponents(XmlDocument doc, Board board) {

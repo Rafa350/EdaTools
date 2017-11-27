@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using System.Windows.Media;
     using Eda.PCBViewer.DrawEditor.Visuals;
-    using MikroPic.EdaTools.v1.Model;
-    using MikroPic.EdaTools.v1.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
     public sealed class VisualGenerator {
 

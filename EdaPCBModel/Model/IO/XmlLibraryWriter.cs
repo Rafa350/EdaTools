@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Model.IO {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
     public class XmlLibraryWriter {
         

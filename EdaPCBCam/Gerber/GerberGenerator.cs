@@ -1,13 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
 
-    using System.Globalization;
-    using System;
-    using System.IO;
+    using MikroPic.EdaTools.v1.Pcb.Model;
     using System.Collections.Generic;
+    using System.IO;
     using System.Text;
-    using MikroPic.EdaTools.v1.Model;
-    using MikroPic.EdaTools.v1.Model.Elements;
-    using MikroPic.EdaTools.v1.Cam.Gerber.Infrastructure;
 
     public sealed class GerberGenerator {
 
@@ -22,6 +18,10 @@
         }
 
         public void Generate(Board board, string fileName) {
+
+            List<Layer> layers = new List<Layer>();
+            layers.Add(board.GetLayer(LayerId.Top));
+            layers.Add(board.GetLayer(LayerId.Measures));
 
             // Escriu el fitxer de sortida
             //
@@ -58,14 +58,13 @@
 
                     // Definicio de les apertures
                     //
-                    //gb.DefineCircleAperture(-1, 0);
-                    gb.DefineApertures(board);
+                    gb.DefineApertures(board, layers);
 
                     gb.Escape("%");
 
                     // Definicio de la imatge
                     //
-                    gb.FlasApertures(board);
+                    gb.FlasApertures(board, layers);
 
                     // Final
                     //

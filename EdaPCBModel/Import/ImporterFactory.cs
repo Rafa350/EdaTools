@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Import {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Import {
 
     public sealed class ImporterFactory {
 

@@ -1,10 +1,14 @@
-﻿namespace MikroPic.EdaTools.v1.Model {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
-    using MikroPic.EdaTools.v1.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
     public abstract class DefaultVisitor: IVisitor {
 
         public virtual void Visit(Board board) {
+
+            if (board.Elements != null)
+                foreach (ElementBase element in board.Elements)
+                    element.AcceptVisitor(this);
 
             if (board.Parts != null)
                 foreach (Part part in board.Parts)

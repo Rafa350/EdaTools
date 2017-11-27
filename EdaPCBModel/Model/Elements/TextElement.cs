@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Model.Elements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using System.Windows;
 

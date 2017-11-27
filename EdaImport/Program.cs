@@ -1,9 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1 {
 
-    using MikroPic.EdaTools.v1.Import;
-    using MikroPic.EdaTools.v1.Import.Eagle;
-    using MikroPic.EdaTools.v1.Model;
-    using MikroPic.EdaTools.v1.Model.IO;
+    using MikroPic.EdaTools.v1.Pcb.Import;
+    using MikroPic.EdaTools.v1.Pcb.Import.Eagle;
+    using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Pcb.Model.IO;
     using MikroPic.EdaTools.v1.Cam;
     using System.IO;
 

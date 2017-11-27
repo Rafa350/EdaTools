@@ -1,8 +1,8 @@
-﻿namespace MikroPic.EdaTools.v1.Model {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using System;
     using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
     public sealed class Component: IVisitable {
 

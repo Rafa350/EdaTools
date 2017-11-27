@@ -1,8 +1,18 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Infrastructure {
 
-    using MikroPic.EdaTools.v1.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
     internal static class ApertureKeyGenerator {
+
+        public static string GenerateKey(LineElement line) {
+
+            return string.Format("line${0}", line.Thickness);
+        }
+
+        public static string GenerateKey(ArcElement arc) {
+
+            return string.Format("arc${0}", arc.Thickness);
+        }
 
         public static string GenerateKey(ViaElement via) {
 

@@ -57,6 +57,7 @@
     <None Include="signature.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Configuration\" />
     <Folder Include="Excellon\" />
   </ItemGroup>
   <ItemGroup>

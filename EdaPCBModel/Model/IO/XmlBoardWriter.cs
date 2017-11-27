@@ -1,10 +1,10 @@
-﻿namespace MikroPic.EdaTools.v1.Model.IO {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
     using System;
     using System.Globalization;
     using System.IO;
     using System.Xml;
-    using MikroPic.EdaTools.v1.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     
     public sealed class XmlBoardWriter {
 
