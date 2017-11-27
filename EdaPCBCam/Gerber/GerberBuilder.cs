@@ -6,6 +6,7 @@
     using System.IO;
 
     public enum Units {
+        Unknown,
         Milimeters,
         Inches
     }
@@ -16,6 +17,24 @@
         Flash = 3
     }
 
+    public enum InterpolationMode {
+        Unknown,
+        Linear,
+        Circular
+    }
+
+    public enum CircularInterpolationQuadrant {
+        Unknown,
+        Single,
+        Multiple
+    }
+
+    public enum CircularInterpolationDirection {
+        Unknown,
+        CW,
+        CCW
+    }
+
     public sealed class GerberBuilder {
 
         private readonly TextWriter writer;
@@ -24,6 +43,8 @@
         private int macroIndex = 0;
         private int apertureIndex = 10;
         private int currentAperture = -1;
+        private bool currentAperturePolarity = true;
+        private double currentApertureAngle = 0;
         private double currentX = 0;
         private double currentY = 0;
         private double currentCX = 0;
@@ -39,6 +60,10 @@
             this.writer = writer;
         }
 
+        /// <summary>
+        /// Marca el final del fitxer.
+        /// </summary>
+        /// 
         public void EndFile() {
 
             writer.WriteLine("M02*");
@@ -93,35 +118,52 @@
         /// <summary>
         /// Defineix un macro.
         /// </summary>
+        /// <param name="macro">Identificador del macro. -1 si es generara automaticament.</param>
         /// <param name="command">La comanda que defineix el macro.</param>
         /// <returns>El identificador del macro.</returns>
         /// 
-        public int DefineMacro(string command) {
+        public int DefineMacro(int macro, string command) {
+
+            if (macro < -1)
+                throw new ArgumentOutOfRangeException("macro");
+
+            if (String.IsNullOrEmpty(command))
+                throw new ArgumentNullException("command");
+
+            if (macro == -1)
+                macro = macroIndex++;
 
             sb.Clear();
-            sb.AppendFormat("%AMX{0}*", macroIndex);
+            sb.AppendFormat("%AMM{0}*", macro);
             sb.Append(command);
             if (!command.EndsWith("%"))
                 sb.Append('%');
 
             writer.WriteLine(sb.ToString());
 
-            return macroIndex++;
+            return macro;
         }
 
         /// <summary>
         /// Defineix una apertura rectangular.
         /// </summary>
+        /// <param name="aperture">Identificador de l'apertura. -1 si es genera automaticament.</param>
         /// <param name="width">Amplada.</param>
         /// <param name="height">Alçada.</param>
         /// <param name="drill">Diametre del forar. Zero si no n'hi ha.</param>
         /// <returns>El identificador de l'apertura.</returns>
         /// 
-        public int DefineRectangleAperture(double width, double height, double drill = 0) {
+        public int DefineRectangleAperture(int aperture, double width, double height, double drill = 0) {
+
+            if ((aperture < 10) && (aperture != -1))
+                throw new ArgumentNullException("aperture");
+
+            if (aperture == -1)
+                aperture = apertureIndex++;
 
             sb.Clear();
             sb.Append("%ADD");
-            sb.AppendFormat("{0}", apertureIndex);
+            sb.AppendFormat("{0}", aperture);
             sb.Append("R,");
             sb.AppendFormat(CultureInfo.InvariantCulture, "{0}X{1}", width, height);
             if (drill > 0)
@@ -130,7 +172,7 @@
 
             writer.WriteLine(sb.ToString());
 
-            return apertureIndex++;
+            return aperture;
         }
 
         /// <summary>
@@ -140,11 +182,17 @@
         /// <param name="drill">Diametre del forar. Zero si no n'hi ha.</param>
         /// <returns>El identificador de l'apertura.</returns>
         /// 
-        public int DefineCircleAperture(double diameter, double drill = 0) {
+        public int DefineCircleAperture(int aperture, double diameter, double drill = 0) {
+
+            if ((aperture < 10) && (aperture != -1))
+                throw new ArgumentNullException("aperture");
+
+            if (aperture == -1)
+                aperture = apertureIndex++;
 
             sb.Clear();
             sb.Append("%ADD");
-            sb.AppendFormat("{0}", apertureIndex);
+            sb.AppendFormat("{0}", aperture);
             sb.Append("C,");
             sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", diameter);
             if (drill > 0)
@@ -153,7 +201,7 @@
 
             writer.WriteLine(sb.ToString());
 
-            return apertureIndex++;
+            return aperture;
         }
 
         /// <summary>
@@ -164,11 +212,17 @@
         /// <param name="drill">Diametre del forar. Zero si no n'hi ha.</param>
         /// <returns>El identificador de l'apertura.</returns>
         /// 
-        public int DefineObroundAperture(double width, double height, double drill = 0) {
+        public int DefineObroundAperture(int aperture, double width, double height, double drill = 0) {
+
+            if ((aperture < 10) && (aperture != -1))
+                throw new ArgumentNullException("aperture");
+
+            if (aperture == -1)
+                aperture = apertureIndex++;
 
             sb.Clear();
             sb.Append("%ADD");
-            sb.AppendFormat("{0}", apertureIndex);
+            sb.AppendFormat("{0}", aperture);
             sb.Append("O,");
             sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", width);
             sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", height);
@@ -178,7 +232,7 @@
 
             writer.WriteLine(sb.ToString());
 
-            return apertureIndex++;
+            return aperture;
         }
 
         /// <summary>
@@ -190,11 +244,17 @@
         /// <param name="drill">Diametre del forat. Zero si no n'hi ha.</param>
         /// <returns>El identificador de l'apertura.</returns>
         /// 
-        public int DefinePoligonAperture(int vertex, double diameter, double angle, double drill = 0) {
+        public int DefinePoligonAperture(int aperture, int vertex, double diameter, double angle, double drill = 0) {
+
+            if ((aperture < 10) && (aperture != -1))
+                throw new ArgumentNullException("aperture");
+
+            if (aperture == -1)
+                aperture = apertureIndex++;
 
             sb.Clear();
             sb.Append("%ADD");
-            sb.AppendFormat("{0}", apertureIndex);
+            sb.AppendFormat("{0}", aperture);
             sb.Append("P,");
             sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", diameter);
             sb.AppendFormat("X{0}", vertex);
@@ -205,7 +265,7 @@
 
             writer.WriteLine(sb.ToString());
 
-            return apertureIndex++;
+            return aperture;
         }
 
         /// <summary>
@@ -215,12 +275,18 @@
         /// <param name="args">Llista d'arguments del macro.</param>
         /// <returns>El identificador de l'apertura.</returns>
         /// 
-        public int DefineMacroAperture(int macro, params object[] args) {
+        public int DefineMacroAperture(int aperture, int macro, params object[] args) {
+
+            if ((aperture < 10) && (aperture != -1))
+                throw new ArgumentNullException("aperture");
+
+            if (aperture == -1)
+                aperture = apertureIndex++;
 
             sb.Clear();
             sb.Append("%ADD");
-            sb.AppendFormat("{0}", apertureIndex);
-            sb.AppendFormat("X{0},", macro);
+            sb.AppendFormat("{0}", aperture);
+            sb.AppendFormat("M{0},", macro);
 
             bool first = true;
             foreach (object arg in args) {
@@ -234,10 +300,18 @@
 
             writer.WriteLine(sb.ToString());
 
-            return apertureIndex++;
+            return aperture;
         }
 
+        /// <summary>
+        /// Selecciona l'apertura.
+        /// </summary>
+        /// <param name="aperture">L'apertura a seleccionar.</param>
+        /// 
         public void SelectAperture(int aperture) {
+
+            if (aperture < 10)
+                throw new ArgumentOutOfRangeException("aperture");
 
             if (currentAperture != aperture) {
                 currentAperture = aperture;
@@ -255,28 +329,61 @@
             writer.WriteLine(String.Format("%IP{0}*%", positive ? "POS" : "NEG"));
         }
 
-        public void SetObjectPolarity(bool dark) {
+        public void SetAperturePolarity(bool polarity) {
 
-            writer.WriteLine(String.Format("%LP{0}*%", dark ? "D" : "C"));
+            if (currentAperturePolarity != polarity) {
+                currentAperturePolarity = polarity;
+                writer.WriteLine(String.Format("%LP{0}*%", polarity ? "D" : "C"));
+            }
         }
 
+        public void SetApertureRotation(double angle) {
+
+            if (currentApertureAngle != angle) {
+                currentApertureAngle = angle;
+                writer.WriteLine(String.Format("%LR{0}*%", angle));
+            }
+        }
+
+        /// <summary>
+        /// Selecciona interpolacio linial.
+        /// </summary>
         public void SetLinealInterpolationMode() {
 
             writer.WriteLine("G01*");
         }
 
-        public void SetCircularInterpolationMode(bool mq, bool ccw) {
+        /// <summary>
+        /// Selecciona interpolacio circular.
+        /// </summary>
+        /// <param name="quadrant">Quadrant simple o multiple.</param>
+        /// <param name="direccio">Direccio dreta o esquerra.</param>
+        /// 
+        public void SetCircularInterpolationMode(CircularInterpolationQuadrant quadrant, CircularInterpolationDirection direction) {
 
-            if (ccw)
+            if (quadrant == CircularInterpolationQuadrant.Unknown)
+                throw new ArgumentOutOfRangeException("quadrant");
+
+            if (direction == CircularInterpolationDirection.Unknown)
+                throw new ArgumentOutOfRangeException("direction");
+
+            if (direction == CircularInterpolationDirection.CW)
                 writer.WriteLine("G02*");
             else
                 writer.WriteLine("G03*");
-            if (mq)
-                writer.WriteLine("G75*");
+
+            if (quadrant == CircularInterpolationQuadrant.Single)
+                writer.WriteLine("G74*");
             else
                 writer.WriteLine("G75*");
         }
 
+        /// <summary>
+        /// Selecciona el format de coordinades.
+        /// </summary>
+        /// <param name="precision">Numero de digit significatius.</param>
+        /// <param name="decimals">Numero de digits decimals.</param>
+        /// 
         public void SetCoordinateFormat(int precision, int decimals) {
 
             if ((precision < 4) || (precision > 9))
@@ -296,6 +403,9 @@
         /// <param name="units">Les unitats.</param>
         /// 
         public void SetUnits(Units units) {
+
+            if (units == Units.Unknown)
+                throw new ArgumentOutOfRangeException("units");
 
             writer.WriteLine(String.Format("%MO{0}*%", units == Units.Inches ? "IN" : "MM"));
         }

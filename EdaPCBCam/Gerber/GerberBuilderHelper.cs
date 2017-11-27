@@ -26,15 +26,15 @@
                 if (!apertures.ContainsKey(key)) {
                     switch (via.Shape) {
                         case ViaElement.ViaShape.Circular:
-                            apertures.Add(key, gb.DefineCircleAperture(via.Size, via.Drill));
+                            apertures.Add(key, gb.DefineCircleAperture(-1, via.Size, via.Drill));
                             break;
 
                         case ViaElement.ViaShape.Square:
-                            apertures.Add(key, gb.DefineRectangleAperture(via.Size, via.Size, via.Drill));
+                            apertures.Add(key, gb.DefineRectangleAperture(-1, via.Size, via.Size, via.Drill));
                             break;
 
                         case ViaElement.ViaShape.Octogonal:
-                            apertures.Add(key, gb.DefinePoligonAperture(8, via.Size, 22.5, via.Drill));
+                            apertures.Add(key, gb.DefinePoligonAperture(8, -1, via.Size, 22.5, via.Drill));
                             break;
                     }
                 }
@@ -46,19 +46,19 @@
                 if (!apertures.ContainsKey(key)) {
                     switch (pad.Shape) {
                         case ThPadElement.ThPadShape.Circular:
-                            apertures.Add(key, gb.DefineCircleAperture(pad.Size, pad.Drill));
+                            apertures.Add(key, gb.DefineCircleAperture(-1, pad.Size, pad.Drill));
                             break;
 
                         case ThPadElement.ThPadShape.Square:
-                            apertures.Add(key, gb.DefineRectangleAperture(pad.Size, pad.Size, pad.Drill));
+                            apertures.Add(key, gb.DefineRectangleAperture(-1, pad.Size, pad.Size, pad.Drill));
                             break;
 
                         case ThPadElement.ThPadShape.Octogonal:
-                            apertures.Add(key, gb.DefinePoligonAperture(8, pad.Size, 22.5, pad.Drill));
+                            apertures.Add(key, gb.DefinePoligonAperture(-1, 8, pad.Size, 22.5, pad.Drill));
                             break;
 
                         case ThPadElement.ThPadShape.Oval:
-                            apertures.Add(key, gb.DefineObroundAperture(pad.Size, pad.Size * 2, pad.Drill));
+                            apertures.Add(key, gb.DefineObroundAperture(-1, pad.Size * 2, pad.Size, pad.Drill));
                             break;
                     }
                 }
@@ -70,10 +70,10 @@
                 if (!apertures.ContainsKey(key)) {
                     if (pad.Roundnes > 0) {
                         double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
-                        apertures.Add(key, gb.DefineMacroAperture(0, pad.Size.Width, pad.Size.Height, radius, 0));
+                        apertures.Add(key, gb.DefineMacroAperture(-1, 0, pad.Size.Width, pad.Size.Height, radius, 0));
                     }
                     else
-                        apertures.Add(key, gb.DefineRectangleAperture(pad.Size.Width, pad.Size.Height, 0));
+                        apertures.Add(key, gb.DefineRectangleAperture(-1, pad.Size.Width, pad.Size.Height, 0));
                 }
             }
         }
@@ -107,6 +107,11 @@
                 gb.Operation(via.Position.X, via.Position.Y, OperationCode.Flash);
             }
 
+            /// <summary>
+            /// Visita un element de tipus ThPadElement
+            /// </summary>
+            /// <param name="pad">El element a visitar.</param>
+            /// 
             public override void Visit(ThPadElement pad) {
 
                 string key = ApertureKeyGenerator.GenerateKey(pad);
@@ -114,13 +119,22 @@
                     apertures.Add(key, apertureIndex++);
 
                 Point p = pad.Position;
-                if (currentPart != null)
-                    p = Transform(p, currentPart.Position, currentPart.Rotate);
+                if (currentPart != null) {
+                    p = RotateTransform(p, currentPart.Position, currentPart.Rotate);
+                    gb.SetApertureRotation(pad.Rotate + currentPart.Rotate);
+                }
+                else
+                    gb.SetApertureRotation(pad.Rotate);
 
                 gb.SelectAperture(apertures[key]);
                 gb.Operation(p.X, p.Y, OperationCode.Flash);
             }
 
+            /// <summary>
+            /// Visita un element de tipus SmdPad.
+            /// </summary>
+            /// <param name="pad">El element a visitar.</param>
+            /// 
             public override void Visit(SmdPadElement pad) {
 
                 string key = ApertureKeyGenerator.GenerateKey(pad);
@@ -128,18 +142,29 @@
                     apertures.Add(key, apertureIndex++);
 
                 Point p = pad.Position;
-                if (currentPart != null)
-                    p = Transform(p, currentPart.Position, currentPart.Rotate);
+                if (currentPart != null) {
+                    p = RotateTransform(p, currentPart.Position, currentPart.Rotate);
+                    gb.SetApertureRotation(pad.Rotate + currentPart.Rotate);
+                }
+                else
+                    gb.SetApertureRotation(pad.Rotate);
 
                 gb.SelectAperture(apertures[key]);
                 gb.Operation(p.X, p.Y, OperationCode.Flash);
             }
 
-            private Point Transform(Point p, Point origin, double rotate) {
+            /// <summary>
+            /// Aplica una rotacio a un punt.
+            /// </summary>
+            /// <param name="p">El punt a transformar.</param>
+            /// <param name="center">Punt del centre de rotacio.</param>
+            /// <param name="rotate">Angle de rotacio.</param>
+            /// <returns></returns>
+            private Point RotateTransform(Point p, Point center, double rotate) {
 
                 Matrix m = new Matrix();
-                m.Translate(origin.X, origin.Y);
-                m.RotateAt(rotate, origin.X, origin.Y);
+                m.Translate(center.X, center.Y);
+                m.RotateAt(rotate, center.X, center.Y);
 
                 return m.Transform(p);
             }

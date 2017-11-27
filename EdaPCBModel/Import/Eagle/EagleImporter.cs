@@ -121,6 +121,7 @@
             Board board = boardBuilder.CreateBoard();
 
             CreateLayers(doc, board);
+            CreateMeasures(doc, board);
             CreateComponents(doc, board);
             CreateElements(doc, board);
             CreateSignals(doc, board);
@@ -171,6 +172,10 @@
 
                     case 19:
                         id = LayerId.Unrouted;
+                        break;
+
+                    case 20:
+                        id = LayerId.Measures;
                         break;
 
                     case 21:
@@ -263,6 +268,10 @@
                     layerDict.Add(layerNum, layer);
                 }
             }
+        }
+
+        private void CreateMeasures(XmlDocument doc, Board board) {
+
         }
 
         private void CreateComponents(XmlDocument doc, Board board) {

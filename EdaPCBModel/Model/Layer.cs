@@ -43,6 +43,8 @@
         BottomRestrict,
         BottomKeepout,
 
+        Measures, 
+
         ViaRestrict,
 
         Vias,

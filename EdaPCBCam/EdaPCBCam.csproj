@@ -50,13 +50,7 @@
     <Compile Include="Gerber\GerberBuilderHelper.cs" />
     <Compile Include="Gerber\GerberGenerator.cs" />
     <Compile Include="Gerber\GerberGeneratorOptions.cs" />
-    <Compile Include="Gerber\Infrastructure\ApertureBase.cs" />
     <Compile Include="Gerber\Infrastructure\ApertureKeyGenerator.cs" />
-    <Compile Include="Gerber\Infrastructure\ApertureTableGenerator.cs" />
-    <Compile Include="Gerber\Infrastructure\CircleAperture.cs" />
-    <Compile Include="Gerber\Infrastructure\OctagonAperture.cs" />
-    <Compile Include="Gerber\Infrastructure\SquareAperture.cs" />
-    <Compile Include="Gerber\Infrastructure\RoundRectAperture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

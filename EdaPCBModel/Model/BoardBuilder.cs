@@ -27,6 +27,7 @@
             Color padColor = Colors.DarkGoldenrod;
             Color viaColor = Colors.Green;
             Color holeColor = Colors.LightCoral;
+            Color measuresColor = Colors.Yellow;
 
             // Defineix les capes conductores
             //
@@ -56,6 +57,10 @@
             board.AddLayer(new Layer(LayerId.Vias, "Vias", viaColor, true));
             board.AddLayer(new Layer(LayerId.Pads, "Pads", padColor, true));
             board.AddLayer(new Layer(LayerId.Holes, "Holes", holeColor, true));
+
+            // Defineix la capa de mesures
+            //
+            board.AddLayer(new Layer(LayerId.Measures, "Measures", measuresColor, true));
 
             // Defineix les capes de documentacio
             //

@@ -12,7 +12,7 @@
         static void Main(string[] args) {
 
             Importer importer = new EagleImporter();
-            Board board = importer.LoadBoard(@"c:\temp\board.brd");
+            Board board = importer.LoadBoard(@"c:\temp\board3.brd");
 
             XmlBoardWriter boardWriter = new XmlBoardWriter(
                 new FileStream(@"c:\temp\board3.xml", FileMode.Create, FileAccess.Write, FileShare.None));
