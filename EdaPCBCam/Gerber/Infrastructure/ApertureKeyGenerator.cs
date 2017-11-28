@@ -26,7 +26,7 @@
 
         public static string GenerateKey(SmdPadElement pad) {
 
-            return string.Format("smd{0}${1}", pad.Size, pad.Roundnes);
+            return string.Format("smd{0}${1}${2}", pad.Size, pad.Roundnes, pad.Rotate);
         }
     }
 }

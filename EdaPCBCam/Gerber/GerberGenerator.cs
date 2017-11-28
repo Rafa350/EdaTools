@@ -2,10 +2,28 @@
 
     using MikroPic.EdaTools.v1.Pcb.Model;
     using System.Collections.Generic;
+    using System;
     using System.IO;
     using System.Text;
 
     public sealed class GerberGenerator {
+
+        // Definicio de macros per l'apertura pad-smd
+        // $1: Amplada
+        // $2: Alçada
+        // $3: Radi de corvatura
+        // $4: Angle de rotacio
+        //
+        private string padApertureMacro =
+            "21,1,$1,$2-$3-$3,0,0,$4*" +
+            "21,1,$1-$3-$3,$2,0,0,$4*" +
+            "$5=$1/2*" +
+            "$6=$2/2*" +
+            "$7=2x$3*" +
+            "1,1,$7,$5-$3,$6-$3,$4*" +
+            "1,1,$7,-$5+$3,$6-$3,$4*" +
+            "1,1,$7,-$5+$3,-$6+$3,$4*" +
+            "1,1,$7,$5-$3,-$6+$3,$4*";
 
         private readonly GerberGeneratorOptions options;
 
@@ -17,11 +35,16 @@
                 this.options = options;
         }
 
-        public void Generate(Board board, string fileName) {
+        public void Generate(Board board, IList<Layer> layers, string fileName) {
 
-            List<Layer> layers = new List<Layer>();
-            layers.Add(board.GetLayer(LayerId.Top));
-            layers.Add(board.GetLayer(LayerId.Measures));
+            if (board == null)
+                throw new ArgumentNullException("board");
+
+            if (layers == null)
+                throw new ArgumentNullException("layers");
+
+            if (String.IsNullOrEmpty(fileName))
+                throw new ArgumentNullException("fileName");
 
             // Escriu el fitxer de sortida
             //
@@ -39,22 +62,9 @@
                     gb.SetAperturePolarity(true);
                     gb.SetApertureRotation(0);
 
-                    // Definicio de macros per l'apertura psd-smd
-                    // $1: Amplada
-                    // $2: Alçada
-                    // $3: Radi de corvatura
-                    // $4: Angle de rotacio
+                    // Definicio de macros per les apertures
                     //
-                    gb.DefineMacro(-1,
-                        "21,1,$1,$2-$3-$3,0,0,$4*" +
-                        "21,1,$1-$3-$3,$2,0,0,$4*" +
-                        "$5=$1/2*" +
-                        "$6=$2/2*" +
-                        "$7=2X$3*" +
-                        "1,1,$7,$5-$3,$6-$3,$4*" +
-                        "1,1,$7,-$5+$3,$6-$3,$4*" +
-                        "1,1,$7,-$5+$3,-$6+$3,$4*" +
-                        "1,1,$7,$5-$3,-$6+$3,$4*");
+                    gb.DefineMacro(-1, padApertureMacro);
 
                     // Definicio de les apertures
                     //

@@ -9,17 +9,26 @@
     using MikroPic.EdaTools.v1.Cam.Gerber.Infrastructure;
 
     public static class GerberBuilderHelper {
-        
+
+       
         private sealed class DefineElementApertures: DefaultVisitor {
 
             private readonly GerberBuilder gb;
             private readonly IList<Layer> layers;
             private readonly Dictionary<string, int> apertures = new Dictionary<string, int>();
+            private Part currentPart = null;
 
             public DefineElementApertures(GerberBuilder gb, IList<Layer> layers) {
 
                 this.gb = gb;
                 this.layers = layers;
+            }
+
+            public override void Visit(Part part) {
+
+                currentPart = part;
+                base.Visit(part);
+                currentPart = null;
             }
 
             public override void Visit(LineElement line) {
@@ -58,6 +67,7 @@
                 if (layers.Contains(pad.Layer)) {
                     string key = ApertureKeyGenerator.GenerateKey(pad);
                     if (!apertures.ContainsKey(key)) {
+                        double partRotate = currentPart != null ? currentPart.Rotate : 0;
                         switch (pad.Shape) {
                             case ThPadElement.ThPadShape.Circular:
                                 apertures.Add(key, gb.DefineCircleAperture(-1, pad.Size, pad.Drill));
@@ -84,9 +94,10 @@
                 if (layers.Contains(pad.Layer)) {
                     string key = ApertureKeyGenerator.GenerateKey(pad);
                     if (!apertures.ContainsKey(key)) {
+                        double partRotate = currentPart != null ? currentPart.Rotate : 0;
                         if (pad.Roundnes > 0) {
                             double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
-                            apertures.Add(key, gb.DefineMacroAperture(-1, 0, pad.Size.Width, pad.Size.Height, radius, 0));
+                            apertures.Add(key, gb.DefineMacroAperture(-1, 0, pad.Size.Width, pad.Size.Height, radius, partRotate + pad.Rotate));
                         }
                         else
                             apertures.Add(key, gb.DefineRectangleAperture(-1, pad.Size.Width, pad.Size.Height, 0));
@@ -157,12 +168,8 @@
                         apertures.Add(key, apertureIndex++);
 
                     Point p = pad.Position;
-                    if (currentPart != null) {
+                    if (currentPart != null) 
                         p = RotateTransform(p, currentPart.Position, currentPart.Rotate);
-                        gb.SetApertureRotation(pad.Rotate + currentPart.Rotate);
-                    }
-                    else
-                        gb.SetApertureRotation(pad.Rotate);
 
                     gb.SelectAperture(apertures[key]);
                     gb.Operation(p.X, p.Y, OperationCode.Flash);
@@ -183,12 +190,8 @@
                         apertures.Add(key, apertureIndex++);
 
                     Point p = pad.Position;
-                    if (currentPart != null) {
+                    if (currentPart != null) 
                         p = RotateTransform(p, currentPart.Position, currentPart.Rotate);
-                        gb.SetApertureRotation(pad.Rotate + currentPart.Rotate);
-                    }
-                    else
-                        gb.SetApertureRotation(pad.Rotate);
 
                     gb.SelectAperture(apertures[key]);
                     gb.Operation(p.X, p.Y, OperationCode.Flash);
