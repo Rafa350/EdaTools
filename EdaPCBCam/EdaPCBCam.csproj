@@ -49,7 +49,6 @@
     <Compile Include="Gerber\GerberBuilder.cs" />
     <Compile Include="Gerber\GerberBuilderHelper.cs" />
     <Compile Include="Gerber\GerberGenerator.cs" />
-    <Compile Include="Gerber\GerberGeneratorOptions.cs" />
     <Compile Include="Gerber\Infrastructure\ApertureKeyGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -21,12 +21,12 @@
 
         public static string GenerateKey(ThPadElement pad) {
 
-            return string.Format("th{0}${1}${2}", pad.Shape, pad.Size, pad.Drill);
+            return string.Format("th{0}${1}${2}${3}", pad.Shape, pad.Size, pad.Drill, pad.Rotate);
         }
 
         public static string GenerateKey(SmdPadElement pad) {
 
-            return string.Format("smd{0}${1}${2}", pad.Size, pad.Roundnes, pad.Rotate);
+            return string.Format("smd{0}${1}${2}${3}", pad.Size, pad.Roundnes, pad.Rotate, pad.Rotate);
         }
     }
 }

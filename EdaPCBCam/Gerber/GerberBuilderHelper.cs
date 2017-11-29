@@ -55,7 +55,7 @@
                                 break;
 
                             case ViaElement.ViaShape.Octogonal:
-                                apertures.Add(key, gb.DefinePoligonAperture(8, -1, via.Size, 22.5, via.Drill));
+                                apertures.Add(key, gb.DefinePoligonAperture(8, -1, via.Size, 0, via.Drill));
                                 break;
                         }
                     }
@@ -67,18 +67,18 @@
                 if (layers.Contains(pad.Layer)) {
                     string key = ApertureKeyGenerator.GenerateKey(pad);
                     if (!apertures.ContainsKey(key)) {
-                        double partRotate = currentPart != null ? currentPart.Rotate : 0;
+                        double rotate = pad.Rotate + (currentPart != null ? currentPart.Rotate : 0);
                         switch (pad.Shape) {
                             case ThPadElement.ThPadShape.Circular:
                                 apertures.Add(key, gb.DefineCircleAperture(-1, pad.Size, pad.Drill));
                                 break;
 
                             case ThPadElement.ThPadShape.Square:
-                                apertures.Add(key, gb.DefineRectangleAperture(-1, pad.Size, pad.Size, pad.Drill));
+                                apertures.Add(key, gb.DefineMacroAperture(-1, 1, pad.Size, pad.Size, pad.Drill, pad.Rotate));
                                 break;
 
                             case ThPadElement.ThPadShape.Octogonal:
-                                apertures.Add(key, gb.DefinePoligonAperture(-1, 8, pad.Size, 22.5, pad.Drill));
+                                apertures.Add(key, gb.DefinePoligonAperture(-1, 8, pad.Size, rotate, pad.Drill));
                                 break;
 
                             case ThPadElement.ThPadShape.Oval:
@@ -94,10 +94,10 @@
                 if (layers.Contains(pad.Layer)) {
                     string key = ApertureKeyGenerator.GenerateKey(pad);
                     if (!apertures.ContainsKey(key)) {
-                        double partRotate = currentPart != null ? currentPart.Rotate : 0;
+                        double rotate = pad.Rotate + (currentPart != null ? currentPart.Rotate : 0);
                         if (pad.Roundnes > 0) {
                             double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
-                            apertures.Add(key, gb.DefineMacroAperture(-1, 0, pad.Size.Width, pad.Size.Height, radius, partRotate + pad.Rotate));
+                            apertures.Add(key, gb.DefineMacroAperture(-1, 0, pad.Size.Width, pad.Size.Height, radius, rotate));
                         }
                         else
                             apertures.Add(key, gb.DefineRectangleAperture(-1, pad.Size.Width, pad.Size.Height, 0));

@@ -249,6 +249,9 @@
             if ((aperture < 10) && (aperture != -1))
                 throw new ArgumentNullException("aperture");
 
+            if ((vertex < 3) || (vertex > 12))
+                throw new ArgumentOutOfRangeException("vertex");
+
             if (aperture == -1)
                 aperture = apertureIndex++;
 
@@ -258,7 +261,8 @@
             sb.Append("P,");
             sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", diameter);
             sb.AppendFormat("X{0}", vertex);
-            sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", angle);
+            if ((angle > 0) || (drill > 0))
+                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", angle);
             if (drill > 0)
                 sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", drill);
             sb.Append("*%");
@@ -394,7 +398,7 @@
 
             this.precision = precision;
             this.decimals = decimals;
-            writer.WriteLine("%FSLAX{0}{1}Y{0}{1}%*", precision - decimals, decimals);
+            writer.WriteLine("%FSLAX{0}{1}Y{0}{1}*%", precision - decimals, decimals);
         }
 
         /// <summary>
