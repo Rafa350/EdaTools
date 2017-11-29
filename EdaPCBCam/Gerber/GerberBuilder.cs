@@ -69,19 +69,32 @@
             writer.WriteLine("M02*");
         }
 
+        /// <summary>
+        /// Afegeix una linia de text directe, sense procesar.
+        /// </summary>
+        /// <param name="line">El text a afeigir.</param>
+        /// 
         public void Escape(string line) {
 
             writer.WriteLine(line);
         }
 
         /// <summary>
-        /// Afegeix un comentari al fitxer.
+        /// Afegeix un comentari.
         /// </summary>
         /// <param name="line">La linia de comentari.</param>
         /// 
         public void Comment(string line) {
 
             writer.WriteLine("G04 {0} *", line);
+        }
+
+        /// <summary>
+        /// Afegeix un atribut.
+        /// </summary>
+        /// <param name="attr"></param>
+        /// 
+        public void Attribute(string attr) {
         }
 
         public void Operation(double x, double y, OperationCode operation) {
@@ -273,7 +286,7 @@
         }
 
         /// <summary>
-        /// Declara una aperture de macro.
+        /// Declara una apertura de macro.
         /// </summary>
         /// <param name="macro">Identificador del macro previament definit.</param>
         /// <param name="args">Llista d'arguments del macro.</param>
