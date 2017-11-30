@@ -2,8 +2,8 @@
 
     using System;
     using System.Globalization;
-    using System.Text;
     using System.IO;
+    using System.Text;
 
     public enum Units {
         Unknown,
@@ -35,20 +35,39 @@
         CCW
     }
 
+    public enum AperturePolarity {
+        Clear,
+        Dark
+    }
+
     public sealed class GerberBuilder {
 
         private readonly TextWriter writer;
         private readonly StringBuilder sb = new StringBuilder();
 
+        private sealed class State {
+            public int Aperture { get; set; }
+            public AperturePolarity AperturePolarity { get; set; }
+            public double ApertureAngle { get; set; }
+            public double X { get; set; }
+            public double Y { get; set; }
+            public double CX { get; set; }
+            public double CY { get; set; }
+
+            public State() {
+                Aperture = -1;
+                AperturePolarity = AperturePolarity.Dark;
+                ApertureAngle = 0;
+                X = 0;
+                Y = 0;
+                CX = 0;
+                CY = 0;
+            }
+        }
+
         private int macroIndex = 0;
         private int apertureIndex = 10;
-        private int currentAperture = -1;
-        private bool currentAperturePolarity = true;
-        private double currentApertureAngle = 0;
-        private double currentX = 0;
-        private double currentY = 0;
-        private double currentCX = 0;
-        private double currentCY = 0;
+        private State state = new State();
         private int precision = 7;
         private int decimals = 4;
 
@@ -103,23 +122,23 @@
             double cy = 0;
 
             sb.Clear();
-            if (currentX != x) {
-                currentX = x;
+            if (state.X != x) {
+                state.X = x;
                 sb.Append('X');
                 sb.Append(FormatNumber(x, precision, decimals));
             }
-            if (currentY != y) {
-                currentY = y;
+            if (state.Y != y) {
+                state.Y = y;
                 sb.Append('Y');
                 sb.Append(FormatNumber(y, precision, decimals));
             }
-            if (currentCX != cx) {
-                currentCX = cx;
+            if (state.CX != cx) {
+                state.CX = cx;
                 sb.Append('I');
                 sb.Append(FormatNumber(cx, precision, decimals));
             }
-            if (currentCY != cy) {
-                currentCY = cy;
+            if (state.CY != cy) {
+                state.CY = cy;
                 sb.Append('J');
                 sb.Append(FormatNumber(cy, precision, decimals));
             }
@@ -155,6 +174,24 @@
             writer.WriteLine(sb.ToString());
 
             return macro;
+        }
+
+        /// <summary>
+        /// Defineix els macros de la taula de macros.
+        /// </summary>
+        /// <param name="macroTbl">Taula de macros.</param>
+        /// 
+        public void DefineMacros(GerberMacroTable macroTbl) {
+
+            foreach (GerberMacro macro in macroTbl.Macros) {
+                sb.Clear();
+                sb.AppendFormat("%AMM{0}*", macro.Id);
+                sb.Append(macro.Command);
+                if (!macro.Command.EndsWith("%"))
+                    sb.Append('%');
+
+                writer.WriteLine(sb.ToString());
+            }
         }
 
         /// <summary>
@@ -330,8 +367,8 @@
             if (aperture < 10)
                 throw new ArgumentOutOfRangeException("aperture");
 
-            if (currentAperture != aperture) {
-                currentAperture = aperture;
+            if (state.Aperture != aperture) {
+                state.Aperture = aperture;
                 writer.WriteLine(String.Format("D{0:00}*", aperture));
             }
         }
@@ -346,18 +383,18 @@
             writer.WriteLine(String.Format("%IP{0}*%", positive ? "POS" : "NEG"));
         }
 
-        public void SetAperturePolarity(bool polarity) {
+        public void SetAperturePolarity(AperturePolarity polarity) {
 
-            if (currentAperturePolarity != polarity) {
-                currentAperturePolarity = polarity;
-                writer.WriteLine(String.Format("%LP{0}*%", polarity ? "D" : "C"));
+            if (state.AperturePolarity != polarity) {
+                state.AperturePolarity = polarity;
+                writer.WriteLine(String.Format("%LP{0}*%", polarity == AperturePolarity.Dark ? "D" : "C"));
             }
         }
 
         public void SetApertureRotation(double angle) {
 
-            if (currentApertureAngle != angle) {
-                currentApertureAngle = angle;
+            if (state.ApertureAngle != angle) {
+                state.ApertureAngle = angle;
                 writer.WriteLine(String.Format("%LR{0}*%", angle));
             }
         }

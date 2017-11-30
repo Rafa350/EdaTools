@@ -46,8 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CAMGenerator.cs" />
+    <Compile Include="Gerber\GerberAperture.cs" />
+    <Compile Include="Gerber\GerberApertureTable.cs" />
     <Compile Include="Gerber\GerberBuilder.cs" />
     <Compile Include="Gerber\GerberGenerator.cs" />
+    <Compile Include="Gerber\GerberMacro.cs" />
+    <Compile Include="Gerber\GerberMacroTable.cs" />
     <Compile Include="Gerber\Infrastructure\ApertureKeyGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -18,8 +18,7 @@
         // $3: Radi de corvatura
         // $4: Angle de rotacio
         //
-        private const int smdApertureMacroId = 0;
-        private const string smdApertureMacro =
+        private static readonly GerberMacro smdApertureMacro = new GerberMacro(
             "21,1,$1,$2-$3-$3,0,0,$4*\n" +
             "21,1,$1-$3-$3,$2,0,0,$4*\n" +
             "$5=$1/2*\n" +
@@ -28,7 +27,7 @@
             "1,1,$7,$5-$3,$6-$3,$4*\n" +
             "1,1,$7,-$5+$3,$6-$3,$4*\n" +
             "1,1,$7,-$5+$3,-$6+$3,$4*\n" +
-            "1,1,$7,$5-$3,-$6+$3,$4*";
+            "1,1,$7,$5-$3,-$6+$3,$4*");
 
         // Definicio del macro per l'apertura rectangle
         // $1: Amplada
@@ -36,15 +35,24 @@
         // $3: Diametre del forat
         // $4: Angle de rotacio
         //
-        private const int squareApertureMacroId = 1;
-        private const string squareApertureMacro =
+        private static readonly GerberMacro squareApertureMacro = new GerberMacro(
             "21,1,$1,$2,0,0,$4*\n" +
-            "1,0,$3,0,0,0*";
+            "1,0,$3,0,0,0*");
 
-        private const int oblongApertureMacroId = 2;
+        // Definicio del macro per l'apertura ovalada
+        // $1: Amplada
+        // $2: Alçada
+        // $3: Diametre del forat
+        // $4: Angle de rotacio
+        //
         private const string oblongApertureMacro = "";
 
-        private const int octagonApertureMacroId = 3;
+        // Definicio del macro per l'apertura octogonal
+        // $1: Amplada
+        // $2: Alçada
+        // $3: Diametre del forat
+        // $4: Angle de rotacio
+        //
         private const string octagonApertureMacro = "";
 
 
@@ -76,6 +84,12 @@
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
 
+                    // Crea la taula de macros
+                    //
+                    GerberMacroTable macroTbl = new GerberMacroTable();
+                    macroTbl.Add(smdApertureMacro);
+                    macroTbl.Add(squareApertureMacro);
+
                     GerberBuilder gb = new GerberBuilder(writer);
 
                     // Definicio de capcelera, unitats, format, etc.
@@ -87,15 +101,14 @@
                     gb.SetCoordinateFormat(8, 5);
                     gb.SetOffset(0, 0);
                     gb.SetPolarity(true);
-                    gb.SetAperturePolarity(true);
+                    gb.SetAperturePolarity(AperturePolarity.Dark);
                     gb.SetApertureRotation(0);
                     gb.Comment("END HEADER");
 
                     // Definicio de macros per les apertures
                     //
                     gb.Comment("BEGIN MACROS");
-                    gb.DefineMacro(smdApertureMacroId, smdApertureMacro);
-                    gb.DefineMacro(squareApertureMacroId, squareApertureMacro);
+                    gb.DefineMacros(macroTbl);
                     gb.Comment("END MACROS");
 
                     // Definicio de les apertures
@@ -182,7 +195,7 @@
                                 break;
 
                             case ThPadElement.ThPadShape.Square:
-                                apertures.Add(key, gb.DefineMacroAperture(-1, squareApertureMacroId, pad.Size, pad.Size, 0, pad.Rotate));
+                                apertures.Add(key, gb.DefineMacroAperture(-1, squareApertureMacro.Id, pad.Size, pad.Size, 0, pad.Rotate));
                                 break;
 
                             case ThPadElement.ThPadShape.Octogonal:
@@ -205,10 +218,10 @@
                         double rotate = pad.Rotate + (currentPart != null ? currentPart.Rotate : 0);
                         if (pad.Roundnes > 0) {
                             double radius = (pad.Roundnes - 0.01) * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
-                            apertures.Add(key, gb.DefineMacroAperture(-1, smdApertureMacroId, pad.Size.Width, pad.Size.Height, radius, rotate));
+                            apertures.Add(key, gb.DefineMacroAperture(-1, smdApertureMacro.Id, pad.Size.Width, pad.Size.Height, radius, rotate));
                         }
                         else
-                            apertures.Add(key, gb.DefineMacroAperture(-1, squareApertureMacroId, pad.Size.Width, pad.Size.Height, 0, rotate));
+                            apertures.Add(key, gb.DefineMacroAperture(-1, squareApertureMacro.Id, pad.Size.Width, pad.Size.Height, 0, rotate));
                     }
                 }
             }
