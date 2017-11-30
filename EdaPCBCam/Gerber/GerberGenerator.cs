@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
 
     using MikroPic.EdaTools.v1.Cam.Gerber.Infrastructure;
+    using MikroPic.EdaTools.v1.Cam.Gerber.Apertures;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
@@ -18,7 +19,7 @@
         // $3: Radi de corvatura
         // $4: Angle de rotacio
         //
-        private static readonly GerberMacro smdApertureMacro = new GerberMacro(
+        private static readonly Macro smdApertureMacro = new Macro(
             "21,1,$1,$2-$3-$3,0,0,$4*\n" +
             "21,1,$1-$3-$3,$2,0,0,$4*\n" +
             "$5=$1/2*\n" +
@@ -35,7 +36,7 @@
         // $3: Diametre del forat
         // $4: Angle de rotacio
         //
-        private static readonly GerberMacro squareApertureMacro = new GerberMacro(
+        private static readonly Macro squareApertureMacro = new Macro(
             "21,1,$1,$2,0,0,$4*\n" +
             "1,0,$3,0,0,0*");
 
@@ -77,18 +78,21 @@
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException("fileName");
 
-            IVisitor visitor;
-
             // Escriu el fitxer de sortida
             //
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
 
-                    // Crea la taula de macros
+                    // Crea llista de macros
                     //
-                    GerberMacroTable macroTbl = new GerberMacroTable();
-                    macroTbl.Add(smdApertureMacro);
-                    macroTbl.Add(squareApertureMacro);
+                    List<Macro> macros = new List<Macro>();
+                    macros.Add(smdApertureMacro);
+                    macros.Add(squareApertureMacro);
+
+                    // Crea la taula d'apertures
+                    //
+                    Dictionary<string, Aperture> apertures = new Dictionary<string, Aperture>();
+                    board.AcceptVisitor(new DefineAperturesVisitor(layers, apertures));
 
                     GerberBuilder gb = new GerberBuilder(writer);
 
@@ -108,21 +112,19 @@
                     // Definicio de macros per les apertures
                     //
                     gb.Comment("BEGIN MACROS");
-                    gb.DefineMacros(macroTbl);
+                    gb.DefineMacros(macros);
                     gb.Comment("END MACROS");
 
                     // Definicio de les apertures
                     //
                     gb.Comment("BEGIN APERTURES");
-                    visitor = new DefineAperturesVisitor(gb, layers);
-                    board.AcceptVisitor(visitor);
+                    gb.DefineApertures(apertures.Values);
                     gb.Comment("END APERTURES");
 
                     // Definicio de la imatge
                     //
                     gb.Comment("BEGIN IMAGE");
-                    visitor = new FlashAperturesVisitor(gb, layers);
-                    board.AcceptVisitor(visitor);
+                    board.AcceptVisitor(new FlashAperturesVisitor(gb, layers, apertures));
                     gb.Comment("END IMAGE");
 
                     // Final
@@ -134,15 +136,14 @@
 
         private sealed class DefineAperturesVisitor : DefaultVisitor {
 
-            private readonly GerberBuilder gb;
             private readonly IList<Layer> layers;
-            private readonly Dictionary<string, int> apertures = new Dictionary<string, int>();
+            private readonly IDictionary<string, Aperture> apertures = new Dictionary<string, Aperture>();
             private Part currentPart = null;
 
-            public DefineAperturesVisitor(GerberBuilder gb, IList<Layer> layers) {
+            public DefineAperturesVisitor(IList<Layer> layers, IDictionary<string, Aperture> apertures) {
 
-                this.gb = gb;
                 this.layers = layers;
+                this.apertures = apertures;
             }
 
             public override void Visit(Part part) {
@@ -157,7 +158,7 @@
                 if (layers.Contains(line.Layer)) {
                     string key = ApertureKeyGenerator.GenerateKey(line);
                     if (!apertures.ContainsKey(key))
-                        apertures.Add(key, gb.DefineCircleAperture(-1, line.Thickness));
+                        apertures.Add(key, new CircleAperture(line.Thickness));
                 }
             }
 
@@ -168,15 +169,15 @@
                     if (!apertures.ContainsKey(key)) {
                         switch (via.Shape) {
                             case ViaElement.ViaShape.Circular:
-                                apertures.Add(key, gb.DefineCircleAperture(-1, via.Size));
+                                apertures.Add(key, new CircleAperture(via.Size));
                                 break;
 
                             case ViaElement.ViaShape.Square:
-                                apertures.Add(key, gb.DefineRectangleAperture(-1, via.Size, via.Size));
+                                apertures.Add(key, new RectangleAperture(via.Size, via.Size));
                                 break;
 
                             case ViaElement.ViaShape.Octogonal:
-                                apertures.Add(key, gb.DefinePoligonAperture(8, -1, via.Size, 0));
+                                apertures.Add(key, new PoligonAperture(8, via.Size, 0));
                                 break;
                         }
                     }
@@ -191,19 +192,19 @@
                         double rotate = pad.Rotate + (currentPart != null ? currentPart.Rotate : 0);
                         switch (pad.Shape) {
                             case ThPadElement.ThPadShape.Circular:
-                                apertures.Add(key, gb.DefineCircleAperture(-1, pad.Size));
+                                apertures.Add(key, new CircleAperture(pad.Size));
                                 break;
 
                             case ThPadElement.ThPadShape.Square:
-                                apertures.Add(key, gb.DefineMacroAperture(-1, squareApertureMacro.Id, pad.Size, pad.Size, 0, pad.Rotate));
+                                apertures.Add(key, new MacroAperture(squareApertureMacro, pad.Size, pad.Size, 0, pad.Rotate));
                                 break;
 
                             case ThPadElement.ThPadShape.Octogonal:
-                                apertures.Add(key, gb.DefinePoligonAperture(-1, 8, pad.Size, rotate));
+//                                apertures.Add(key, gb.DefinePoligonAperture(-1, 8, pad.Size, rotate));
                                 break;
 
                             case ThPadElement.ThPadShape.Oval:
-                                apertures.Add(key, gb.DefineObroundAperture(-1, pad.Size * 2, pad.Size));
+                                apertures.Add(key, new ObroundAperture(pad.Size * 2, pad.Size));
                                 break;
                         }
                     }
@@ -218,10 +219,10 @@
                         double rotate = pad.Rotate + (currentPart != null ? currentPart.Rotate : 0);
                         if (pad.Roundnes > 0) {
                             double radius = (pad.Roundnes - 0.01) * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
-                            apertures.Add(key, gb.DefineMacroAperture(-1, smdApertureMacro.Id, pad.Size.Width, pad.Size.Height, radius, rotate));
+                            apertures.Add(key, new MacroAperture(smdApertureMacro, pad.Size.Width, pad.Size.Height, radius, rotate));
                         }
                         else
-                            apertures.Add(key, gb.DefineMacroAperture(-1, squareApertureMacro.Id, pad.Size.Width, pad.Size.Height, 0, rotate));
+                            apertures.Add(key, new MacroAperture(squareApertureMacro, pad.Size.Width, pad.Size.Height, 0, rotate));
                     }
                 }
             }
@@ -231,14 +232,15 @@
 
             private readonly GerberBuilder gb;
             private readonly IList<Layer> layers;
-            private readonly Dictionary<string, int> apertures = new Dictionary<string, int>();
+            private readonly IDictionary<string, Aperture> apertures = new Dictionary<string, Aperture>();
             private int apertureIndex = 10;
             private Part currentPart;
 
-            public FlashAperturesVisitor(GerberBuilder gb, IList<Layer> layers) {
+            public FlashAperturesVisitor(GerberBuilder gb, IList<Layer> layers, IDictionary<string, Aperture> apertures) {
 
                 this.gb = gb;
                 this.layers = layers;
+                this.apertures = apertures;
             }
 
             public override void Visit(Part part) {
@@ -253,8 +255,6 @@
                 if (layers.Contains(line.Layer)) {
 
                     string key = ApertureKeyGenerator.GenerateKey(line);
-                    if (!apertures.ContainsKey(key))
-                        apertures.Add(key, apertureIndex++);
 
                     gb.SelectAperture(apertures[key]);
                     gb.Operation(line.StartPosition.X, line.StartPosition.Y, OperationCode.Move);
@@ -267,8 +267,6 @@
                 if (layers.Contains(via.Layer)) {
 
                     string key = ApertureKeyGenerator.GenerateKey(via);
-                    if (!apertures.ContainsKey(key))
-                        apertures.Add(key, apertureIndex++);
 
                     gb.SelectAperture(apertures[key]);
                     gb.Operation(via.Position.X, via.Position.Y, OperationCode.Flash);
@@ -285,8 +283,6 @@
                 if (layers.Contains(pad.Layer)) {
 
                     string key = ApertureKeyGenerator.GenerateKey(pad);
-                    if (!apertures.ContainsKey(key))
-                        apertures.Add(key, apertureIndex++);
 
                     Point p = pad.Position;
                     if (currentPart != null)
@@ -307,8 +303,6 @@
                 if (layers.Contains(pad.Layer)) {
 
                     string key = ApertureKeyGenerator.GenerateKey(pad);
-                    if (!apertures.ContainsKey(key))
-                        apertures.Add(key, apertureIndex++);
 
                     Point p = pad.Position;
                     if (currentPart != null)

@@ -4,19 +4,29 @@
 
     public abstract class DefaultVisitor: IVisitor {
 
+        private Board visitingBoard;
+        private Part visitingPart;
+
         public virtual void Visit(Board board) {
 
-            if (board.Elements != null)
-                foreach (ElementBase element in board.Elements)
-                    element.AcceptVisitor(this);
+            visitingBoard = board;
+            try {
 
-            if (board.Parts != null)
-                foreach (Part part in board.Parts)
-                    part.AcceptVisitor(this);
+                if (board.Elements != null)
+                    foreach (ElementBase element in board.Elements)
+                        element.AcceptVisitor(this);
 
-            if (board.Signals != null)
-                foreach (Signal signal in board.Signals)
-                    signal.AcceptVisitor(this);
+                if (board.Parts != null)
+                    foreach (Part part in board.Parts)
+                        part.AcceptVisitor(this);
+
+                if (board.Signals != null)
+                    foreach (Signal signal in board.Signals)
+                        signal.AcceptVisitor(this);
+            }
+            finally {
+                visitingBoard = null;
+            }
         }
 
         public virtual void Visit(Layer layer) {
@@ -61,8 +71,16 @@
 
         public virtual void Visit(Part part) {
 
-            if (part.Component != null)
-                part.Component.AcceptVisitor(this);
+            visitingPart = part;
+            try {
+
+                if (part.Component != null)
+                    part.Component.AcceptVisitor(this);
+            }
+
+            finally {
+                visitingPart = null;
+            }
         }
 
         public virtual void Visit(Component component) {
@@ -74,5 +92,8 @@
 
         public virtual void Visit(Parameter parameter) {
         }
+
+        protected Board VisitingBoard {  get { return visitingBoard; } }
+        protected Part VisitingPart { get { return visitingPart; } }
     }
 }

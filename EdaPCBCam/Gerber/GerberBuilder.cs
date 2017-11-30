@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
 
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using System.Text;
@@ -147,214 +148,48 @@
             writer.WriteLine(sb.ToString());
         }
 
-        /// <summary>
-        /// Defineix un macro.
-        /// </summary>
-        /// <param name="macro">Identificador del macro. -1 si es generara automaticament.</param>
-        /// <param name="command">La comanda que defineix el macro.</param>
-        /// <returns>El identificador del macro.</returns>
-        /// 
-        public int DefineMacro(int macro, string command) {
+        public void DefineAperture(Aperture aperture) {
 
-            if (macro < -1)
-                throw new ArgumentOutOfRangeException("macro");
-
-            if (String.IsNullOrEmpty(command))
-                throw new ArgumentNullException("command");
-
-            if (macro == -1)
-                macro = macroIndex++;
-
-            sb.Clear();
-            sb.AppendFormat("%AMM{0}*", macro);
-            sb.Append(command);
-            if (!command.EndsWith("%"))
-                sb.Append('%');
-
-            writer.WriteLine(sb.ToString());
-
-            return macro;
-        }
-
-        /// <summary>
-        /// Defineix els macros de la taula de macros.
-        /// </summary>
-        /// <param name="macroTbl">Taula de macros.</param>
-        /// 
-        public void DefineMacros(GerberMacroTable macroTbl) {
-
-            foreach (GerberMacro macro in macroTbl.Macros) {
-                sb.Clear();
-                sb.AppendFormat("%AMM{0}*", macro.Id);
-                sb.Append(macro.Command);
-                if (!macro.Command.EndsWith("%"))
-                    sb.Append('%');
-
-                writer.WriteLine(sb.ToString());
-            }
-        }
-
-        /// <summary>
-        /// Defineix una apertura rectangular.
-        /// </summary>
-        /// <param name="aperture">Identificador de l'apertura. -1 si es genera automaticament.</param>
-        /// <param name="width">Amplada.</param>
-        /// <param name="height">Alçada.</param>
-        /// <param name="drill">Diametre del forar. Zero si no n'hi ha.</param>
-        /// <returns>El identificador de l'apertura.</returns>
-        /// 
-        public int DefineRectangleAperture(int aperture, double width, double height, double drill = 0) {
-
-            if ((aperture < 10) && (aperture != -1))
+            if (aperture == null)
                 throw new ArgumentNullException("aperture");
 
-            if (aperture == -1)
-                aperture = apertureIndex++;
+            writer.WriteLine(aperture.Command);
+        }
 
-            sb.Clear();
-            sb.Append("%ADD");
-            sb.AppendFormat("{0}", aperture);
-            sb.Append("R,");
-            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}X{1}", width, height);
-            if (drill > 0)
-                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", drill);
-            sb.Append("*%");
+        public void DefineApertures(IEnumerable<Aperture> apertures) {
 
-            writer.WriteLine(sb.ToString());
+            if (apertures == null)
+                throw new ArgumentNullException("apertures");
 
-            return aperture;
+            foreach (Aperture aperture in apertures)
+                DefineAperture(aperture);
         }
 
         /// <summary>
-        /// Defineix una apertura circular.
+        /// Definicio d'un macro.
         /// </summary>
-        /// <param name="diameter">Diametre.</param>
-        /// <param name="drill">Diametre del forar. Zero si no n'hi ha.</param>
-        /// <returns>El identificador de l'apertura.</returns>
+        /// <param name="macro">El macro a definir.</param>
         /// 
-        public int DefineCircleAperture(int aperture, double diameter, double drill = 0) {
+        public void DefineMacro(Macro macro) {
 
-            if ((aperture < 10) && (aperture != -1))
-                throw new ArgumentNullException("aperture");
+            if (macro == null)
+                throw new ArgumentNullException("macro");
 
-            if (aperture == -1)
-                aperture = apertureIndex++;
-
-            sb.Clear();
-            sb.Append("%ADD");
-            sb.AppendFormat("{0}", aperture);
-            sb.Append("C,");
-            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", diameter);
-            if (drill > 0)
-                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", drill);
-            sb.Append("*%");
-
-            writer.WriteLine(sb.ToString());
-
-            return aperture;
+            writer.WriteLine(macro.Command);
         }
 
         /// <summary>
-        /// Defineix una apertura ovalada.
+        /// Definicio d'una col·leccio de macros de macros.
         /// </summary>
-        /// <param name="width">Amplada.</param>
-        /// <param name="height">Alçada.</param>
-        /// <param name="drill">Diametre del forar. Zero si no n'hi ha.</param>
-        /// <returns>El identificador de l'apertura.</returns>
+        /// <param name="macros">Taula de macros.</param>
         /// 
-        public int DefineObroundAperture(int aperture, double width, double height, double drill = 0) {
+        public void DefineMacros(IEnumerable<Macro> macros) {
 
-            if ((aperture < 10) && (aperture != -1))
-                throw new ArgumentNullException("aperture");
+            if (macros == null)
+                throw new ArgumentNullException("macros");
 
-            if (aperture == -1)
-                aperture = apertureIndex++;
-
-            sb.Clear();
-            sb.Append("%ADD");
-            sb.AppendFormat("{0}", aperture);
-            sb.Append("O,");
-            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", width);
-            sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", height);
-            if (drill > 0)
-                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", drill);
-            sb.Append("*%");
-
-            writer.WriteLine(sb.ToString());
-
-            return aperture;
-        }
-
-        /// <summary>
-        /// Defineix una apertura poligonal.
-        /// </summary>
-        /// <param name="vertex">Nombre de vertex.</param>
-        /// <param name="diameter">Diametre exterior del poligon.</param>
-        /// <param name="angle">Angle de rotacio.</param>
-        /// <param name="drill">Diametre del forat. Zero si no n'hi ha.</param>
-        /// <returns>El identificador de l'apertura.</returns>
-        /// 
-        public int DefinePoligonAperture(int aperture, int vertex, double diameter, double angle, double drill = 0) {
-
-            if ((aperture < 10) && (aperture != -1))
-                throw new ArgumentNullException("aperture");
-
-            if ((vertex < 3) || (vertex > 12))
-                throw new ArgumentOutOfRangeException("vertex");
-
-            if (aperture == -1)
-                aperture = apertureIndex++;
-
-            sb.Clear();
-            sb.Append("%ADD");
-            sb.AppendFormat("{0}", aperture);
-            sb.Append("P,");
-            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", diameter);
-            sb.AppendFormat("X{0}", vertex);
-            if ((angle > 0) || (drill > 0))
-                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", angle);
-            if (drill > 0)
-                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", drill);
-            sb.Append("*%");
-
-            writer.WriteLine(sb.ToString());
-
-            return aperture;
-        }
-
-        /// <summary>
-        /// Declara una apertura de macro.
-        /// </summary>
-        /// <param name="macro">Identificador del macro previament definit.</param>
-        /// <param name="args">Llista d'arguments del macro.</param>
-        /// <returns>El identificador de l'apertura.</returns>
-        /// 
-        public int DefineMacroAperture(int aperture, int macro, params object[] args) {
-
-            if ((aperture < 10) && (aperture != -1))
-                throw new ArgumentNullException("aperture");
-
-            if (aperture == -1)
-                aperture = apertureIndex++;
-
-            sb.Clear();
-            sb.Append("%ADD");
-            sb.AppendFormat("{0}", aperture);
-            sb.AppendFormat("M{0},", macro);
-
-            bool first = true;
-            foreach (object arg in args) {
-                if (first)
-                    first = false;
-                else
-                    sb.Append('X');
-                sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", arg);
-            }
-            sb.Append("*%");
-
-            writer.WriteLine(sb.ToString());
-
-            return aperture;
+            foreach (Macro macro in macros)
+                DefineMacro(macro);
         }
 
         /// <summary>
@@ -362,14 +197,14 @@
         /// </summary>
         /// <param name="aperture">L'apertura a seleccionar.</param>
         /// 
-        public void SelectAperture(int aperture) {
+        public void SelectAperture(Aperture aperture) {
 
-            if (aperture < 10)
-                throw new ArgumentOutOfRangeException("aperture");
+            if (aperture == null)
+                throw new ArgumentNullException("aperture");
 
-            if (state.Aperture != aperture) {
-                state.Aperture = aperture;
-                writer.WriteLine(String.Format("D{0:00}*", aperture));
+            if (state.Aperture != aperture.Id) {
+                state.Aperture = aperture.Id;
+                writer.WriteLine(String.Format("D{0:00}*", aperture.Id));
             }
         }
 
