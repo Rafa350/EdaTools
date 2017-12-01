@@ -3,7 +3,7 @@
     using System;
     using System.Text;
 
-    public sealed class Macro {
+    public class Macro {
 
         private static int __id = 0;
         private readonly int id;
@@ -24,6 +24,22 @@
         }
 
         /// <summary>
+        /// Retorna la comanda Gerber per la definicio del macro.
+        /// </summary>
+        /// <returns>La comanda.</returns>
+        /// 
+        protected virtual string GetCommand() {
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("%AMM{0}*", id);
+            sb.Append(text);
+            if (!text.EndsWith("%"))
+                sb.Append('%');
+
+            return sb.ToString();
+        }
+
+        /// <summary>
         /// Obte el ID del macro.
         /// </summary>
         /// 
@@ -36,18 +52,6 @@
         /// <summary>
         /// Obte la comanda Gerber per la definicio del macro.
         /// </summary>
-        /// 
-        public string Command {
-            get {
-
-                StringBuilder sb = new StringBuilder();
-                sb.AppendFormat("%AMM{0}*", id);
-                sb.Append(text);
-                if (!text.EndsWith("%"))
-                    sb.Append('%');
-
-                return sb.ToString();
-            }
-        }
+        public string Command { get { return GetCommand(); } }
     }
 }

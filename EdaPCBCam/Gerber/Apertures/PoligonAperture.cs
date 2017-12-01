@@ -44,6 +44,11 @@
 
             return sb.ToString();
         }
+
+        public int Vertex { get { return vertex; } }
+        public double Diameter { get { return diameter; } }
+        public double Drill { get { return drill; } }
+        public double Angle { get { return angle; } }
     }
 }
 

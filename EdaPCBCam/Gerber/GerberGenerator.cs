@@ -13,6 +13,12 @@
 
     public sealed class GerberGenerator {
 
+        public enum FileFunction {
+            Top,
+            Bottom,
+            Profile,
+        }
+
         // Definicio del macro per l'apertura rectangle arrodonit
         // $1: Amplada
         // $2: Alçada
@@ -67,7 +73,7 @@
         /// <param name="layers">Llista de capes a procesar.</param>
         /// <param name="fileName">Nom del fitxer de sortida.</param>
         /// 
-        public void Generate(Board board, IList<Layer> layers, string fileName) {
+        public void Generate(Board board, IList<Layer> layers, FileFunction function, string fileName) {
 
             if (board == null)
                 throw new ArgumentNullException("board");
@@ -101,6 +107,19 @@
                     gb.Comment("EdaTools v1.0.");
                     gb.Comment("EdaTools CAM processor. Gerber generator.");
                     gb.Comment("BEGIN HEADER");
+                    switch (function) {
+                        case FileFunction.Top:
+                            gb.Attribute(".FileFunction,Copper,L1,Top,Signal");
+                            break;
+
+                        case FileFunction.Bottom:
+                            break;
+
+                        case FileFunction.Profile:
+                            gb.Attribute(".FileFunction,Profile,NP");
+                            break;
+                    }
+                    gb.Attribute(".FilePolarity,Positive");
                     gb.SetUnits(Units.Milimeters);
                     gb.SetCoordinateFormat(8, 5);
                     gb.SetOffset(0, 0);
@@ -177,7 +196,7 @@
                                 break;
 
                             case ViaElement.ViaShape.Octogonal:
-                                apertures.Add(key, new PoligonAperture(8, via.Size, 0));
+                                apertures.Add(key, new PoligonAperture(8, via.Size, 22.5));
                                 break;
                         }
                     }
@@ -200,7 +219,7 @@
                                 break;
 
                             case ThPadElement.ThPadShape.Octogonal:
-//                                apertures.Add(key, gb.DefinePoligonAperture(-1, 8, pad.Size, rotate));
+                                apertures.Add(key, new PoligonAperture(8, pad.Size, 22.5 + rotate));
                                 break;
 
                             case ThPadElement.ThPadShape.Oval:
@@ -233,7 +252,6 @@
             private readonly GerberBuilder gb;
             private readonly IList<Layer> layers;
             private readonly IDictionary<string, Aperture> apertures = new Dictionary<string, Aperture>();
-            private int apertureIndex = 10;
             private Part currentPart;
 
             public FlashAperturesVisitor(GerberBuilder gb, IList<Layer> layers, IDictionary<string, Aperture> apertures) {

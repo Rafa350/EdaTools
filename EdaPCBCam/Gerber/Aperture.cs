@@ -27,7 +27,7 @@
         }
 
         /// <summary>
-        /// Obte la comanda Gerber per definit l'apertura.
+        /// Obte la comanda Gerber per definir l'apertura.
         /// </summary>
         /// 
         public string Command {

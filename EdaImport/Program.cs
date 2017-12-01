@@ -11,15 +11,17 @@
 
         static void Main(string[] args) {
 
+            string path = @"..\..\..\Data";
+
             Importer importer = new EagleImporter();
-            Board board = importer.LoadBoard(@"c:\temp\board3.brd");
+            Board board = importer.LoadBoard(Path.Combine(path, "board3.brd"));
 
             XmlBoardWriter boardWriter = new XmlBoardWriter(
-                new FileStream(@"c:\temp\board3.xml", FileMode.Create, FileAccess.Write, FileShare.None));
+                new FileStream(Path.Combine(path, "board3.xml"), FileMode.Create, FileAccess.Write, FileShare.None));
             boardWriter.Write(board);
 
             CAMGenerator camGenerator = new CAMGenerator();
-            camGenerator.Generate(board, @"c:\temp\board3.cmp");
+            camGenerator.Generate(board, Path.Combine(path, "board3.gbr"));
         }
     }
 }

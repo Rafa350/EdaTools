@@ -277,6 +277,8 @@
                 switch (node.Name) {
                     case "wire":
                         WireNodeInfo info = ParseWireNode(node);
+                        if (info.Thickness == 0)
+                            info.Thickness = 0.01;
                         if (info.Angle == 0)
                             board.AddElement(boardBuilder.CreateLine(new Point(info.X1, info.Y1), new Point(info.X2, info.Y2), info.Thickness, info.LineCap, info.Layer));
                         else

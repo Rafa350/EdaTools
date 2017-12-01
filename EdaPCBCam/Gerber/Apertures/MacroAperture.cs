@@ -6,7 +6,7 @@
 
     public sealed class MacroAperture: Aperture {
 
-        private object[] args;
+        private readonly object[] args;
         private readonly Macro macro;
 
         public MacroAperture(Macro macro, params object[] args) {
@@ -39,5 +39,8 @@
 
             return sb.ToString();
         }
+
+        public Macro Macro { get { return macro; } }
+        public object[] Args { get { return args; } }
     }
 }

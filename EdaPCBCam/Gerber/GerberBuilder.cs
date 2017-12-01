@@ -2,7 +2,6 @@
 
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.IO;
     using System.Text;
 
@@ -66,8 +65,6 @@
             }
         }
 
-        private int macroIndex = 0;
-        private int apertureIndex = 10;
         private State state = new State();
         private int precision = 7;
         private int decimals = 4;
@@ -115,6 +112,8 @@
         /// <param name="attr"></param>
         /// 
         public void Attribute(string attr) {
+
+            writer.WriteLine(String.Format("%TF{0}*%", attr));
         }
 
         public void Operation(double x, double y, OperationCode operation) {
