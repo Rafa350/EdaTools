@@ -17,6 +17,11 @@
             Top,
             Bottom,
             Profile,
+            TopLegend,
+            BottomLegend,
+            PlatedDrill,
+            NonPlatedDrill,
+            NonPlatedRoute
         }
 
         // Definicio del macro per l'apertura rectangle arrodonit
@@ -113,6 +118,7 @@
                             break;
 
                         case FileFunction.Bottom:
+                            gb.Attribute(".FileFunction,Copper,L2,Bottom,Signal");
                             break;
 
                         case FileFunction.Profile:
@@ -157,19 +163,11 @@
 
             private readonly IList<Layer> layers;
             private readonly IDictionary<string, Aperture> apertures = new Dictionary<string, Aperture>();
-            private Part currentPart = null;
 
             public DefineAperturesVisitor(IList<Layer> layers, IDictionary<string, Aperture> apertures) {
 
                 this.layers = layers;
                 this.apertures = apertures;
-            }
-
-            public override void Visit(Part part) {
-
-                currentPart = part;
-                base.Visit(part);
-                currentPart = null;
             }
 
             public override void Visit(LineElement line) {
@@ -208,7 +206,7 @@
                 if (layers.Contains(pad.Layer)) {
                     string key = ApertureKeyGenerator.GenerateKey(pad);
                     if (!apertures.ContainsKey(key)) {
-                        double rotate = pad.Rotate + (currentPart != null ? currentPart.Rotate : 0);
+                        double rotate = pad.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
                         switch (pad.Shape) {
                             case ThPadElement.ThPadShape.Circular:
                                 apertures.Add(key, new CircleAperture(pad.Size));
@@ -235,7 +233,7 @@
                 if (layers.Contains(pad.Layer)) {
                     string key = ApertureKeyGenerator.GenerateKey(pad);
                     if (!apertures.ContainsKey(key)) {
-                        double rotate = pad.Rotate + (currentPart != null ? currentPart.Rotate : 0);
+                        double rotate = pad.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
                         if (pad.Roundnes > 0) {
                             double radius = (pad.Roundnes - 0.01) * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
                             apertures.Add(key, new MacroAperture(smdApertureMacro, pad.Size.Width, pad.Size.Height, radius, rotate));
@@ -252,20 +250,12 @@
             private readonly GerberBuilder gb;
             private readonly IList<Layer> layers;
             private readonly IDictionary<string, Aperture> apertures = new Dictionary<string, Aperture>();
-            private Part currentPart;
 
             public FlashAperturesVisitor(GerberBuilder gb, IList<Layer> layers, IDictionary<string, Aperture> apertures) {
 
                 this.gb = gb;
                 this.layers = layers;
                 this.apertures = apertures;
-            }
-
-            public override void Visit(Part part) {
-
-                currentPart = part;
-                base.Visit(part);
-                currentPart = null;
             }
 
             public override void Visit(LineElement line) {
@@ -303,8 +293,8 @@
                     string key = ApertureKeyGenerator.GenerateKey(pad);
 
                     Point p = pad.Position;
-                    if (currentPart != null)
-                        p = RotateTransform(p, currentPart.Position, currentPart.Rotate);
+                    if (VisitingPart != null)
+                        p = RotateTransform(p, VisitingPart.Position, VisitingPart.Rotate);
 
                     gb.SelectAperture(apertures[key]);
                     gb.Operation(p.X, p.Y, OperationCode.Flash);
@@ -323,8 +313,8 @@
                     string key = ApertureKeyGenerator.GenerateKey(pad);
 
                     Point p = pad.Position;
-                    if (currentPart != null)
-                        p = RotateTransform(p, currentPart.Position, currentPart.Rotate);
+                    if (VisitingPart != null)
+                        p = RotateTransform(p, VisitingPart.Position, VisitingPart.Rotate);
 
                     gb.SelectAperture(apertures[key]);
                     gb.Operation(p.X, p.Y, OperationCode.Flash);

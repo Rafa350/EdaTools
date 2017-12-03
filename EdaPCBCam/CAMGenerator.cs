@@ -17,11 +17,18 @@
             layers.Add(board.GetLayer(LayerId.Pads));
             layers.Add(board.GetLayer(LayerId.Vias));
             layers.Add(board.GetLayer(LayerId.Measures));
-            generator.Generate(board, layers, GerberGenerator.FileFunction.Top, @"c:\temp\board3.cmp");
+            generator.Generate(board, layers, GerberGenerator.FileFunction.Top, @"..\..\..\Data\board_Copper$L1.gbr");
+
+            layers.Clear();
+            layers.Add(board.GetLayer(LayerId.Bottom));
+            layers.Add(board.GetLayer(LayerId.Pads));
+            layers.Add(board.GetLayer(LayerId.Vias));
+            layers.Add(board.GetLayer(LayerId.Measures));
+            generator.Generate(board, layers, GerberGenerator.FileFunction.Bottom, @"..\..\..\Data\board_Copper$L2.gbr");
 
             layers.Clear();
             layers.Add(board.GetLayer(LayerId.Measures));
-            generator.Generate(board, layers, GerberGenerator.FileFunction.Profile, @"c:\temp\board3.miling");
+            generator.Generate(board, layers, GerberGenerator.FileFunction.Profile, @"..\..\..\Data\board_Profile$NP.gbr");
         }
     }
 }
