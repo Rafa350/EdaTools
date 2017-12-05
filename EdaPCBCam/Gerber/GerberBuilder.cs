@@ -207,6 +207,24 @@
             }
         }
 
+        /// <summary>
+        /// Inicia una regio.
+        /// </summary>
+        /// 
+        public void BeginRegion() {
+
+            writer.WriteLine("G36*");
+        }
+
+        /// <summary>
+        /// Finalitza una regio.
+        /// </summary>
+        /// 
+        public void EndRegion() {
+
+            writer.WriteLine("G37*");
+        }
+
         public void SetOffset(double x, double y) {
 
             writer.WriteLine(String.Format("%OFA{0}B{0}*%", x, y));
