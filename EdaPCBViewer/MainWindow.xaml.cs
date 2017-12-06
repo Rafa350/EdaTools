@@ -23,8 +23,9 @@
 
         private bool showDrag = true;
         private readonly double scaleFactor = 1.1;
-        private const string inTestFileName = @"c:\temp\board.brd";
-        private const string outTestFileName = @"c:\temp\board.xml";
+        private const string path = @"..\..\..\Data";
+        private const string inTestFileName = @"board3.brd";
+        private const string outTestFileName = @"board3.xml";
 
         private Point prevContentMousePos;
 
@@ -41,10 +42,10 @@
         private void Button_Click(object sender, RoutedEventArgs e) {
 
             Importer importer = new EagleImporter();
-            Board board = importer.LoadBoard(inTestFileName);
+            Board board = importer.LoadBoard(Path.Combine(path, inTestFileName));
 
             XmlBoardWriter writer = new XmlBoardWriter(
-                new FileStream(outTestFileName, FileMode.Create, FileAccess.Write, FileShare.None));
+                new FileStream(Path.Combine(path, outTestFileName), FileMode.Create, FileAccess.Write, FileShare.None));
             writer.Write(board);
 
             content.ClearVisual();

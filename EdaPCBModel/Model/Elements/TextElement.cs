@@ -2,7 +2,7 @@
 
     using System.Windows;
 
-    public sealed class TextElement: ElementBase {
+    public sealed class TextElement: SingleLayerElement {
 
         public enum TextAlign {
             TopLeft,

@@ -3,7 +3,7 @@
     using System;
     using System.Windows;
 
-    public sealed class CircleElement: ElementBase {
+    public sealed class CircleElement: SingleLayerElement {
 
         private Point position;
         private double thickness;

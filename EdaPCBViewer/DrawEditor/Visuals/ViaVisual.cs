@@ -24,7 +24,7 @@
 
                 // Dibuixa el anell de la via
                 //
-                Brush brush = BrushCache.Instance.GetBrush(Via.Layer.Color);
+                Brush brush = BrushCache.Instance.GetBrush(Colors.Green);
                 switch (Via.Shape) {
                     case ViaElement.ViaShape.Circular:
                         dc.DrawCircularRing(brush, null, Via.Position, Via.Size, Via.Drill);

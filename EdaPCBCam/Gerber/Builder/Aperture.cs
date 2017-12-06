@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
+﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Builder {
 
     public abstract class Aperture {
 

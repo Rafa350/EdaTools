@@ -1,8 +1,10 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
     using System;
+    using System.Text;
     using System.Windows;
     using System.Xml;
+    using MikroPic.EdaTools.v1.Pcb.Model;
 
     public static class XmlWriterHelper {
 
@@ -33,6 +35,30 @@
         public static void WriteAttribute(this XmlWriter writer, string name, bool value) {
 
             writer.WriteAttributeString(name, XmlConvert.ToString(value));
+        }
+
+        public static void WriteAttribute(this XmlWriter writer, string name, Layer layer) {
+
+            if (layer != null)
+                writer.WriteAttributeString(name, layer.Name);
+        }
+
+        public static void WriteAttribute(this XmlWriter writer, string name, LayerSet layers) {
+
+            if (layers != null && layers.Count > 0) {
+
+                StringBuilder sb = new StringBuilder();
+
+                bool first = true;
+                foreach (Layer layer in layers) {
+                    if (first)
+                        first = false;
+                    else
+                        sb.Append(", ");
+                    sb.Append(layer.Name);
+                }
+                writer.WriteAttributeString(name, sb.ToString());
+            }
         }
     }
 }

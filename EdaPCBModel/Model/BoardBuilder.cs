@@ -60,7 +60,7 @@
 
             // Defineix la capa de mesures
             //
-            board.AddLayer(new Layer(LayerId.Measures, "Measures", measuresColor, true));
+            board.AddLayer(new Layer(LayerId.Profile, "Measures", measuresColor, true));
 
             // Defineix les capes de documentacio
             //
@@ -153,22 +153,18 @@
         /// <param name="lower">Capa inferior.</param>
         /// <returns>El objecte Via creat.</returns>
         /// 
-        public ViaElement CreateVia(Point position, double size, double drill, ViaElement.ViaShape shape, Layer upper, Layer lower) {
+        public ViaElement CreateVia(Point position, double size, double drill, ViaElement.ViaShape shape, LayerSet layers) {
 
-            if (upper == null)
-                throw new ArgumentNullException("upper");
-
-            if (lower == null)
-                throw new ArgumentNullException("lower");
+            if (layers == null)
+                throw new ArgumentNullException("layerSet");
 
             ViaElement via = new ViaElement();
             via.Position = position;
             via.Size = size;
             via.Drill = drill;
             via.Shape = shape;
-            via.Layer = board.GetLayer(LayerId.Vias);
-            via.Upper = upper;
-            via.Lower = lower;
+            via.Layers.Add(board.GetLayer(LayerId.Vias));
+            via.Layers.Add(layers);
 
             return via;
         }
@@ -182,7 +178,6 @@
             pad.Size = size;
             pad.Drill = drill;
             pad.Name = name;
-            pad.Layer = board.GetLayer(LayerId.Pads);
 
             return pad;
         }

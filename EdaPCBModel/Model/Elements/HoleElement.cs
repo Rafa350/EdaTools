@@ -3,7 +3,7 @@
     using System;
     using System.Windows;
 
-    public sealed class HoleElement: ElementBase {
+    public sealed class HoleElement: SingleLayerElement {
 
         private Point position;
         private double drill;

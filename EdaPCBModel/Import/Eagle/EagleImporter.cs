@@ -19,17 +19,6 @@
             public double Drill { get; set; }
         }
 
-        private sealed class ViaNodeInfo {
-
-            public double X { get; set; }
-            public double Y { get; set; }
-            public double Size { get; set; }
-            public double Drill { get; set; }
-            public ViaElement.ViaShape Shape { get; set; }
-            public Layer Upper { get; set; }
-            public Layer Lower { get; set; }
-        }
-
         private sealed class SmdNodeInfo {
 
             public double X { get; set; }
@@ -175,7 +164,7 @@
                         break;
 
                     case 20:
-                        id = LayerId.Measures;
+                        id = LayerId.Profile;
                         break;
 
                     case 21:
@@ -386,10 +375,8 @@
                 foreach (XmlNode node in signalNode.ChildNodes) {
 
                     switch (node.Name) {
-                        case "via": {
-                                ViaNodeInfo info = ParseViaNode(node);
-                                signal.Add(boardBuilder.CreateVia(new Point(info.X, info.Y), info.Size, info.Drill, info.Shape, info.Upper, info.Lower));
-                            }
+                        case "via": 
+                            signal.Add(ParseViaNode(node));
                             break;
 
                         case "wire": {
@@ -696,38 +683,39 @@
             return new Parameter(name, new Point(x, y), rotate, isVisible, value);
         }
 
-        private ViaNodeInfo ParseViaNode(XmlNode node) {
+        private ViaElement ParseViaNode(XmlNode node) {
 
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
             double drill = StrToDouble(GetAttribute(node, "drill"));
-            double diameter = StrToDouble(GetAttribute(node, "diameter"));
-            string shape = GetAttribute(node, "shape");
-            string extent = GetAttribute(node, "extent");
-            string[] layers = extent.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
-            int upperLayerNum = Int32.Parse(layers[0]);
-            int lowerLayerNum = Int32.Parse(layers[1]);
+            double size = StrToDouble(GetAttribute(node, "diameter"));
 
-            ViaElement.ViaShape viaShape = ViaElement.ViaShape.Circular;
-            switch (shape) {
+            LayerSet layers = new LayerSet();
+            string extent = GetAttribute(node, "extent");
+            string[] layerNames = extent.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string layerName in layerNames)
+                layers.Add(layerDict[Int32.Parse(layerName)]);
+
+            ViaElement.ViaShape shape = ViaElement.ViaShape.Circular;
+            string shapeName = GetAttribute(node, "shape");
+            switch (shapeName) {
                 case "square":
-                    viaShape = ViaElement.ViaShape.Square;
+                    shape = ViaElement.ViaShape.Square;
                     break;
 
                 case "octagon":
-                    viaShape = ViaElement.ViaShape.Octogonal;
+                    shape = ViaElement.ViaShape.Octogonal;
                     break;
             }
 
-            return new ViaNodeInfo {
-                X = x,
-                Y = y,
-                Drill = drill,
-                Size = diameter,
-                Shape = viaShape,
-                Upper = layerDict[upperLayerNum],
-                Lower = layerDict[lowerLayerNum],
-            };
+            ViaElement via = new ViaElement();
+            via.Position = new Point(x, y);
+            via.Size = size;
+            via.Drill = drill;
+            via.Shape = shape;
+            via.Layers.Add(layers);
+
+            return via;
         }
 
         private static string GetAttribute(XmlNode node, string name) {

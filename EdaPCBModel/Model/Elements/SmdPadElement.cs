@@ -3,14 +3,65 @@
     using System;
     using System.Windows;
 
-    public sealed class SmdPadElement: PadElement {
+    public sealed class SmdPadElement: SingleLayerElement {
 
+        private string name;
+        private Point position;
+        private double rotate;
         private Size size;
         private double roundnes;
+
+        public override bool InLayer(Layer layer) {
+
+            if (Layer == layer)
+                return true;
+            else if ((Layer.Id == LayerId.Top) && (layer.Id == LayerId.TopStop))
+                return true;
+            else if ((Layer.Id == LayerId.Bottom) && (layer.Id == LayerId.BottomStop))
+                return true;
+            else
+                return false;
+        }
 
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
+        }
+
+        /// <summary>
+        /// Nom del pad.
+        /// </summary>
+        public string Name {
+            get {
+                return name;
+            }
+            set {
+                name = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna la posicio del pad.
+        /// </summary>
+        public Point Position {
+            get {
+                return position;
+            }
+            set {
+                position = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna la orientacio del pad.
+        /// </summary>
+        public double Rotate {
+            get {
+                return rotate;
+            }
+            set {
+                rotate = value;
+            }
         }
 
         /// <summary>

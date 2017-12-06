@@ -51,7 +51,7 @@
 
                 if (signal.Elements != null)
                     foreach (ElementBase element in signal.Elements) {
-                        if (ReferenceEquals(element.Layer, layer)) {
+                        if (element.InLayer(layer)) {
                             RenderItem renderItem = new RenderItem {
                                 Part = null,
                                 Element = element
@@ -83,8 +83,8 @@
 
                 if (part.Component != null && part.Component.Elements != null)
                     foreach (ElementBase element in part.Component.Elements) {
-                        Layer elementLayer = part.IsMirror ? element.Layer.Mirror : element.Layer;
-                        if (ReferenceEquals(elementLayer, layer)) {
+                        //Layer elementLayer = part.IsMirror ? element.Layer.Mirror : element.Layer;
+                        if (element.InLayer(layer)) {
                             RenderItem renderItem = new RenderItem {
                                 Part = part,
                                 Element = element

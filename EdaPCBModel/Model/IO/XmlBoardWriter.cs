@@ -23,7 +23,7 @@
             public override void Visit(LineElement line) {
 
                 writer.WriteStartElement("line");
-                writer.WriteAttributeString("layer", line.Layer.Name);
+                writer.WriteAttribute("layer", line.Layer);
                 writer.WriteAttribute("startPosition", line.StartPosition);
                 writer.WriteAttribute("endPosition", line.EndPosition);
                 if (line.Thickness > 0)
@@ -35,7 +35,7 @@
             public override void Visit(ArcElement arc) {
 
                 writer.WriteStartElement("arc");
-                writer.WriteAttributeString("layer", arc.Layer.Name);
+                writer.WriteAttribute("layer", arc.Layer);
                 writer.WriteAttribute("startPosition", arc.StartPosition);
                 writer.WriteAttribute("endPosition", arc.EndPosition);
                 writer.WriteAttribute("angle", arc.Angle);
@@ -48,7 +48,7 @@
             public override void Visit(RectangleElement rectangle) {
 
                 writer.WriteStartElement("rectangle");
-                writer.WriteAttributeString("layer", rectangle.Layer.Name);
+                writer.WriteAttribute("layer", rectangle.Layer);
                 writer.WriteAttribute("position", rectangle.Position);
                 writer.WriteAttribute("size", rectangle.Size);
                 if (rectangle.Rotate != 0)
@@ -61,7 +61,7 @@
             public override void Visit(CircleElement circle) {
 
                 writer.WriteStartElement("circle");
-                writer.WriteAttributeString("layer", circle.Layer.Name);
+                writer.WriteAttribute("layer", circle.Layer);
                 writer.WriteAttribute("position", circle.Position);
                 writer.WriteAttribute("radius", circle.Radius);
                 if (circle.Thickness > 0)
@@ -74,7 +74,7 @@
                 writer.WriteStartElement("text");
                 if (!String.IsNullOrEmpty(text.Name))
                     writer.WriteAttributeString("name", text.Name);
-                writer.WriteAttributeString("layer", text.Layer.Name);
+                writer.WriteAttribute("layer", text.Layer);
                 writer.WriteAttribute("position", text.Position);
                 if (text.Rotate != 0)
                     writer.WriteAttribute("rotate", text.Rotate);
@@ -95,7 +95,7 @@
 
                 writer.WriteStartElement("spad");
                 writer.WriteAttributeString("name", pad.Name);
-                writer.WriteAttributeString("layer", pad.Layer.Name);
+                writer.WriteAttribute("layer", pad.Layer);
                 writer.WriteAttribute("position", pad.Position);
                 if (pad.Rotate != 0)
                     writer.WriteAttribute("rotate", pad.Rotate);
@@ -133,7 +133,7 @@
             public override void Visit(PolygonElement polygon) {
 
                 writer.WriteStartElement("polygon");
-                writer.WriteAttributeString("layer", polygon.Layer.Name);
+                writer.WriteAttribute("layer", polygon.Layer);
                 writer.WriteAttribute("position", polygon.Position);
                 if (polygon.Thickness > 0)
                     writer.WriteAttribute("thickness", polygon.Thickness);
@@ -172,6 +172,7 @@
 
                 writer.WriteStartElement("via");
                 writer.WriteAttribute("position", via.Position);
+                writer.WriteAttribute("layers", via.Layers);
                 writer.WriteAttribute("drill", via.Drill);
                 writer.WriteAttribute("size", via.Size);
                 writer.WriteAttributeString("shape", via.Shape.ToString());

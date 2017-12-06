@@ -3,7 +3,7 @@
     using System.Windows;
     using System.Collections.Generic;
 
-    public sealed class PolygonElement: ElementBase {
+    public sealed class PolygonElement: SingleLayerElement {
 
         public class Segment {
 

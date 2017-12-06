@@ -34,7 +34,7 @@
 
                 // Dibuixa el anell del pad
                 //
-                Brush padBrush = BrushCache.Instance.GetBrush(IsSelected ? Colors.Goldenrod : Pad.Layer.Color);
+                Brush padBrush = BrushCache.Instance.GetBrush(IsSelected ? Colors.Goldenrod : Colors.Yellow);
                 switch (Pad.Shape) {
                     case ThPadElement.ThPadShape.Circular:
                         dc.DrawCircularRing(padBrush, null, Pad.Position, Pad.Size, Pad.Drill);

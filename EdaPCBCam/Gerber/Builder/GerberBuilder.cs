@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
+﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Builder {
 
     using System;
     using System.Collections.Generic;
@@ -49,6 +49,7 @@
             public int Aperture { get; set; }
             public AperturePolarity AperturePolarity { get; set; }
             public double ApertureAngle { get; set; }
+            public InterpolationMode InterpolationMode { get; set; }
             public double X { get; set; }
             public double Y { get; set; }
             public double CX { get; set; }
@@ -58,6 +59,7 @@
                 Aperture = -1;
                 AperturePolarity = AperturePolarity.Dark;
                 ApertureAngle = 0;
+                InterpolationMode = InterpolationMode.Unknown;
                 X = 0;
                 Y = 0;
                 CX = 0;
@@ -118,8 +120,10 @@
 
         public void Operation(double x, double y, OperationCode operation) {
 
-            double cx = 0;
-            double cy = 0;
+            Operation(x, y, 0, 0, operation);
+        }
+
+        public void Operation(double x, double y, double cx, double cy, OperationCode operation) {
 
             sb.Clear();
             if (state.X != x) {
@@ -147,6 +151,11 @@
             writer.WriteLine(sb.ToString());
         }
 
+        /// <summary>
+        /// Defineix una apertura.
+        /// </summary>
+        /// <param name="aperture">L'apertura a definir.</param>
+        /// 
         public void DefineAperture(Aperture aperture) {
 
             if (aperture == null)
@@ -155,6 +164,11 @@
             writer.WriteLine(aperture.Command);
         }
 
+        /// <summary>
+        /// Defineix una col·leccio d'apertures.
+        /// </summary>
+        /// <param name="apertures">Les apertures a definir.</param>
+        /// 
         public void DefineApertures(IEnumerable<Aperture> apertures) {
 
             if (apertures == null)
@@ -178,7 +192,7 @@
         }
 
         /// <summary>
-        /// Definicio d'una col·leccio de macros de macros.
+        /// Definicio d'una col·leccio de macros.
         /// </summary>
         /// <param name="macros">Taula de macros.</param>
         /// 
@@ -256,7 +270,10 @@
         /// </summary>
         public void SetLinealInterpolationMode() {
 
-            writer.WriteLine("G01*");
+            if (state.InterpolationMode != InterpolationMode.Linear) {
+                state.InterpolationMode = InterpolationMode.Linear;
+                writer.WriteLine("G01*");
+            }
         }
 
         /// <summary>
@@ -273,15 +290,19 @@
             if (direction == CircularInterpolationDirection.Unknown)
                 throw new ArgumentOutOfRangeException("direction");
 
-            if (direction == CircularInterpolationDirection.CW)
-                writer.WriteLine("G02*");
-            else
-                writer.WriteLine("G03*");
+            if (state.InterpolationMode != InterpolationMode.Circular) {
+                state.InterpolationMode = InterpolationMode.Circular;
 
-            if (quadrant == CircularInterpolationQuadrant.Single)
-                writer.WriteLine("G74*");
-            else
-                writer.WriteLine("G75*");
+                if (direction == CircularInterpolationDirection.CW)
+                    writer.WriteLine("G02*");
+                else
+                    writer.WriteLine("G03*");
+
+                if (quadrant == CircularInterpolationQuadrant.Single)
+                    writer.WriteLine("G74*");
+                else
+                    writer.WriteLine("G75*");
+            }
         }
 
         /// <summary>

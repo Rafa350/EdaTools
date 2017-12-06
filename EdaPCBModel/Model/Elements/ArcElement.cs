@@ -16,8 +16,10 @@
                 return angle;
             }
             set {
-                if (value >= 360.0)
+                if (Math.Abs(value) >= 360.0)
                     value = value % 360.0;
+                //if (value < 0)
+                //    value = 360 - value;
                 angle = value;
             }
         }

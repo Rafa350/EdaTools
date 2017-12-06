@@ -1,16 +1,16 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Apertures {
+﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Builder.Apertures {
 
     using System;
     using System.Globalization;
     using System.Text;
 
-    public sealed class RectangleAperture : Aperture {
+    public sealed class ObroundAperture: Aperture {
 
         private readonly double width;
         private readonly double height;
         private readonly double drill;
 
-        public RectangleAperture(double width, double height, double drill = 0) {
+        public ObroundAperture(double width, double height, double drill = 0) {
 
             if (width <= 0)
                 throw new ArgumentOutOfRangeException("width");
@@ -31,8 +31,9 @@
             StringBuilder sb = new StringBuilder();
             sb.Append("%ADD");
             sb.AppendFormat("{0}", Id);
-            sb.Append("R,");
-            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}X{1}", width, height);
+            sb.Append("O,");
+            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", width);
+            sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", height);
             if (drill > 0)
                 sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", drill);
             sb.Append("*%");
@@ -42,6 +43,6 @@
 
         public double Width { get { return width; } }
         public double Height { get { return height; } }
-        public double Drill { get { return drill; } }
+        public double Angle { get { return Angle; } }
     }
 }

@@ -46,16 +46,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CAMGenerator.cs" />
-    <Compile Include="Gerber\Aperture.cs" />
-    <Compile Include="Gerber\Apertures\ObroundAperture.cs" />
-    <Compile Include="Gerber\GerberBuilder.cs" />
-    <Compile Include="Gerber\Apertures\CircleAperture.cs" />
+    <Compile Include="Gerber\Builder\Aperture.cs" />
+    <Compile Include="Gerber\Builder\Apertures\ObroundAperture.cs" />
+    <Compile Include="Gerber\Builder\GerberBuilder.cs" />
+    <Compile Include="Gerber\Builder\Apertures\CircleAperture.cs" />
+    <Compile Include="Gerber\ElementExtensions.cs" />
+    <Compile Include="Gerber\GerberDrillGenerator.cs" />
+    <Compile Include="Gerber\GerberImageGenerator.cs" />
     <Compile Include="Gerber\GerberGenerator.cs" />
     <Compile Include="Gerber\Macro.cs" />
-    <Compile Include="Gerber\Apertures\MacroAperture.cs" />
-    <Compile Include="Gerber\Apertures\PoligonAperture.cs" />
-    <Compile Include="Gerber\Apertures\RectangleAperture.cs" />
-    <Compile Include="Gerber\Infrastructure\ApertureKeyGenerator.cs" />
+    <Compile Include="Gerber\Builder\Apertures\MacroAperture.cs" />
+    <Compile Include="Gerber\Builder\Apertures\PoligonAperture.cs" />
+    <Compile Include="Gerber\Builder\Apertures\RectangleAperture.cs" />
+    <Compile Include="Gerber\ApertureKeyGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -64,7 +67,7 @@
   <ItemGroup>
     <Folder Include="Configuration\" />
     <Folder Include="Excellon\" />
-    <Folder Include="Gerber\Macros\" />
+    <Folder Include="Gerber\Builder\Macros\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EdaPCBModel\EdaPCBModel.csproj">

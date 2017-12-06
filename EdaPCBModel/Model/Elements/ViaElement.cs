@@ -3,7 +3,7 @@
     using System;
     using System.Windows;
 
-    public sealed class ViaElement: ElementBase {
+    public sealed class ViaElement: MultiLayerElement {
 
         public enum ViaShape {
             Square,
@@ -11,14 +11,22 @@
             Circular
         }
 
-        private static double autosizeFactor = 1.625;
+        private const double OAR = 0.125;
 
         private Point position;
         private double drill;
         private double size;
-        private Layer upper;
-        private Layer lower;
         private ViaShape shape = ViaShape.Circular;
+
+        public override bool InLayer(Layer layer) {
+
+            if (base.InLayer(layer))
+                return true;
+            else if (layer.Id == LayerId.Vias)
+                return true;
+            else
+                return false;
+        }
 
         public override void AcceptVisitor(IVisitor visitor) {
 
@@ -56,28 +64,10 @@
         /// </summary>
         public double Size {
             get {
-                return size <= drill ? drill * autosizeFactor : size;
+                return Math.Max(drill + 0.1 + (OAR * 2.0), size);
             }
             set {
                 size = value;
-            }
-        }
-
-        public Layer Lower {
-            get {
-                return lower;
-            }
-            set {
-                lower = value;
-            }
-        }
-
-        public Layer Upper {
-            get {
-                return upper;
-            }
-            set {
-                upper = value;
             }
         }
 

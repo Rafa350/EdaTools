@@ -1,9 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
-    using System;
-    using System.Collections.Generic;
     using System.Windows.Media;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
     public enum LayerId {
         TopKeepout,
@@ -43,7 +40,7 @@
         BottomRestrict,
         BottomKeepout,
 
-        Measures, 
+        Profile, 
 
         ViaRestrict,
 
@@ -79,12 +76,11 @@
         private Layer mirror;
         private bool isVisible = true;
         private bool isMirror = false;
-        private List<ElementBase> elements;
-        private static Dictionary<ElementBase, Layer> revElements;
 
         /// <summary>
         /// Constructor per defecte.
         /// </summary>
+        /// 
         public Layer() {
         }
 
@@ -96,6 +92,7 @@
         /// <param name="color">Color dels elements.</param>
         /// <param name="isVisible">Indica si la capa es visible.</param>
         /// <param name="isMirror">Indica si la capa es dibuixa en mirall.</param>
+        /// 
         public Layer(LayerId id, string name, Color color, bool isVisible = true, bool isMirror = false) {
 
             this.id = id;
@@ -113,6 +110,7 @@
         /// <param name="color">Color dels elements.</param>
         /// <param name="isVisible">Indica si la capa es visible.</param>
         /// <param name="mirror">Referencia a la seva capa mirall.</param>
+        /// 
         public Layer(LayerId id, string name, Color color, bool isVisible, Layer mirror) {
 
             this.id = id;
@@ -121,50 +119,6 @@
             this.isVisible = isVisible;
             this.isMirror = false;
             this.mirror = mirror;
-        }
-
-        public void AddElement(ElementBase element) {
-
-            if (element == null)
-                throw new ArgumentNullException("element");
-
-            if ((elements != null) && elements.Contains(element))
-                throw new InvalidOperationException(
-                    String.Format("El elemento ya pertenece a la capa '{0}'.", name));
-
-            if (elements == null)
-                elements = new List<ElementBase>();
-            elements.Add(element);
-
-            if (revElements == null)
-                revElements = new Dictionary<ElementBase, Layer>();
-            revElements.Add(element, this);
-        }
-
-        public void RemoveElement(ElementBase element) {
-
-            if (element == null)
-                throw new ArgumentNullException("element");
-
-            if ((elements == null) || !elements.Contains(element))
-                throw new InvalidOperationException(
-                    String.Format("El elemento no pertenece a la capa '{0}'.", name));
-
-            elements.Remove(element);
-            if (elements.Count == 0)
-                elements = null;
-
-            revElements.Remove(element);
-            if (revElements.Count == 0)
-                revElements = null;
-        }
-
-        internal static Layer LayerOf(ElementBase element) {
-            
-            if ((revElements != null) && revElements.ContainsKey(element))
-                return revElements[element];
-            else
-                return null;
         }
 
         public void AcceptVisitor(IVisitor visitor) {
@@ -178,6 +132,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna el nom de la capa.
+        /// </summary>
+        /// 
         public string Name {
             get {
                 return name;
@@ -187,6 +145,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna el color de la capa.
+        /// </summary>
+        /// 
         public Color Color {
             get {
                 return color;
@@ -223,12 +185,6 @@
             set {
                 mirror = value;
                 isMirror = false;
-            }
-        }
-
-        public IEnumerable<ElementBase> Elements {
-            get {
-                return elements;
             }
         }
     }

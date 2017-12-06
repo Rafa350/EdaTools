@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Apertures {
+﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Builder.Apertures {
 
     using System;
     using System.Globalization;

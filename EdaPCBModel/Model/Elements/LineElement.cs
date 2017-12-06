@@ -3,7 +3,7 @@
     using System;
     using System.Windows;
 
-    public class LineElement: ElementBase {
+    public class LineElement: SingleLayerElement {
 
         public enum LineCapStyle {
             Round,

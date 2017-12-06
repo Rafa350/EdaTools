@@ -3,7 +3,7 @@
     using System;
     using System.Windows;
 
-    public sealed class RectangleElement: ElementBase {
+    public sealed class RectangleElement: SingleLayerElement {
 
         private Point position;
         private Size size;

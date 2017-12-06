@@ -1519,206 +1519,206 @@
     <signals>
         <signal name="GND">
             <elements>
-                <via position="2, 45.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4, 45.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4, 44.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="2, 44.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="2, 36.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="2, 35.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4, 35.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4, 36.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="2, 34.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4, 34.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4, 33.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="2, 33.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="2, 25.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4, 25.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4, 24.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="2, 24.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="2, 20.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4, 20.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4, 19.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="2, 19.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="2, 10.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="2, 9.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4, 9.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4, 10.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="17.25, 26.625" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="33.75, 7.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="44, 38.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="44, 33.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="41.5, 12.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="46, 12.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="51.5, 14" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="52.5, 10.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="55, 8" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="56, 10.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="56.5, 14" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="20.25, 36" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="14, 27.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="17.25, 46.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="28.25, 47.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="20.25, 43" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="19.5, 31.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="14, 34.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="14, 38.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="14, 42.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="3.5, 48.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="9.5, 43" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="10.25, 40.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4.5, 42.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="6.5, 44" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4.5, 31" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="6, 33" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4.5, 29" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4.5, 40" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="6, 35" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="10.5, 27.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="10.5, 32" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="10.5, 36.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="14, 7.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="18.75, 7.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="19, 10.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="12.5, 12" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="10, 12" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="19, 24.625" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="26.25, 35" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="21.75, 44.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="27.25, 37.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="22.5, 47" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="14.125, 30.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="7.5, 46.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="40, 54.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="45.5, 17" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="21.25, 34.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="11.25, 12" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="10.25, 7.625" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="29.25, 11.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="65.75, 25.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="62.75, 24.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="57.75, 24.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="54.25, 23.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="49.75, 24.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="45, 24.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="45.5, 21.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="48.5, 21.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="41.125, 22" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="42.5, 18.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="46.5, 18.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="51.5, 18.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="56, 17.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="59.5, 18.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="63.5, 18.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="67, 17.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="68.5, 18.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="64.5, 21.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="60, 21.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="57, 21.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="63.5, 28.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="63.5, 33.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="63.5, 38.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="63.5, 43" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="69.375, 55.375" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="64.375, 55.375" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="64.375, 47.875" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="69.375, 42.625" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="67.5, 40.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="69.375, 34.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="69.375, 27.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="45.5, 10" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="42, 10" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="42, 14" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="35, 13.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="33.5, 21.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="32.5, 19" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="29.75, 18.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="30, 16.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="21.75, 13.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="21.25, 16" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="19.25, 18" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="17, 17" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="19.25, 13.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="11.5, 17" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="12, 18" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="8, 11" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="6.5, 9" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="10, 6.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="12.5, 5.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="23.25, 7.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="33, 37" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="34, 34.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="29.25, 37" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="24.25, 43" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="19.75, 39" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="37.5, 44.125" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="41, 50.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="21.5, 27.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="26.25, 28.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="24.25, 25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="28.75, 25.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="28.75, 28.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="30.75, 25.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="34.25, 24.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="35.75, 23.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="37.875, 22.125" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="37.5, 19" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="37, 12.375" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="36.5, 7.375" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="15, 17" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="13.375, 24.375" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="7.5, 21" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="40.5, 25.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="40, 30.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="40.25, 35.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="40, 40.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="37.5, 39.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="37.75, 35.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="38, 31.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="38.75, 52" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="44, 52.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="44, 47.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="44, 43" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="41.75, 45.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="44, 28.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="40.5, 24.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="27.375, 18.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="39.5, 17" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="68.875, 43.875" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="66.875, 45.375" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="69.5, 49.625" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="36.5, 18.125" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="37.625, 16" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="45.25, 23.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="60.5, 23.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="29.75, 22.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="30, 14" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="27.5, 14" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="24.625, 13.625" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="26.25, 25.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="21.75, 21.875" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4.5, 16.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="4, 13" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="1.5, 15" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="2, 30.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="2, 41.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="1, 49.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="8.5, 49.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="5.75, 52" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="11.25, 52" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="16.75, 52" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="22.25, 52" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="27.75, 52" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="33.25, 52" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="16.75, 48.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="14.75, 49.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="13.75, 47.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="12.25, 48.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="9, 46" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="26, 16.5" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="37.875, 25.625" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="35.75, 24.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="37.875, 23.25" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="37.875, 24.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="2, 45.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4, 45.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4, 44.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="2, 44.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="2, 36.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="2, 35.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4, 35.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4, 36.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="2, 34.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4, 34.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4, 33.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="2, 33.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="2, 25.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4, 25.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4, 24.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="2, 24.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="2, 20.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4, 20.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4, 19.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="2, 19.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="2, 10.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="2, 9.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4, 9.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4, 10.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="17.25, 26.625" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="33.75, 7.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="44, 38.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="44, 33.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="41.5, 12.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="46, 12.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="51.5, 14" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="52.5, 10.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="55, 8" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="56, 10.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="56.5, 14" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="20.25, 36" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="14, 27.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="17.25, 46.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="28.25, 47.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="20.25, 43" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="19.5, 31.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="14, 34.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="14, 38.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="14, 42.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="3.5, 48.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="9.5, 43" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="10.25, 40.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4.5, 42.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="6.5, 44" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4.5, 31" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="6, 33" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4.5, 29" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4.5, 40" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="6, 35" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="10.5, 27.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="10.5, 32" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="10.5, 36.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="14, 7.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="18.75, 7.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="19, 10.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="12.5, 12" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="10, 12" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="19, 24.625" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="26.25, 35" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="21.75, 44.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="27.25, 37.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="22.5, 47" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="14.125, 30.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="7.5, 46.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="40, 54.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="45.5, 17" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="21.25, 34.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="11.25, 12" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="10.25, 7.625" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="29.25, 11.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="65.75, 25.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="62.75, 24.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="57.75, 24.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="54.25, 23.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="49.75, 24.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="45, 24.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="45.5, 21.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="48.5, 21.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="41.125, 22" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="42.5, 18.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="46.5, 18.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="51.5, 18.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="56, 17.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="59.5, 18.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="63.5, 18.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="67, 17.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="68.5, 18.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="64.5, 21.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="60, 21.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="57, 21.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="63.5, 28.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="63.5, 33.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="63.5, 38.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="63.5, 43" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="69.375, 55.375" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="64.375, 55.375" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="64.375, 47.875" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="69.375, 42.625" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="67.5, 40.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="69.375, 34.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="69.375, 27.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="45.5, 10" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="42, 10" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="42, 14" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="35, 13.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="33.5, 21.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="32.5, 19" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="29.75, 18.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="30, 16.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="21.75, 13.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="21.25, 16" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="19.25, 18" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="17, 17" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="19.25, 13.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="11.5, 17" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="12, 18" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="8, 11" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="6.5, 9" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="10, 6.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="12.5, 5.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="23.25, 7.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="33, 37" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="34, 34.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="29.25, 37" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="24.25, 43" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="19.75, 39" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="37.5, 44.125" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="41, 50.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="21.5, 27.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="26.25, 28.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="24.25, 25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="28.75, 25.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="28.75, 28.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="30.75, 25.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="34.25, 24.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="35.75, 23.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="37.875, 22.125" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="37.5, 19" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="37, 12.375" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="36.5, 7.375" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="15, 17" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="13.375, 24.375" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="7.5, 21" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="40.5, 25.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="40, 30.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="40.25, 35.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="40, 40.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="37.5, 39.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="37.75, 35.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="38, 31.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="38.75, 52" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="44, 52.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="44, 47.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="44, 43" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="41.75, 45.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="44, 28.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="40.5, 24.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="27.375, 18.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="39.5, 17" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="68.875, 43.875" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="66.875, 45.375" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="69.5, 49.625" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="36.5, 18.125" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="37.625, 16" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="45.25, 23.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="60.5, 23.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="29.75, 22.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="30, 14" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="27.5, 14" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="24.625, 13.625" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="26.25, 25.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="21.75, 21.875" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4.5, 16.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="4, 13" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="1.5, 15" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="2, 30.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="2, 41.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="1, 49.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="8.5, 49.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="5.75, 52" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="11.25, 52" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="16.75, 52" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="22.25, 52" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="27.75, 52" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="33.25, 52" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="16.75, 48.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="14.75, 49.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="13.75, 47.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="12.25, 48.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="9, 46" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="26, 16.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="37.875, 25.625" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="35.75, 24.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="37.875, 23.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="37.875, 24.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
             </elements>
         </signal>
         <signal name="VCC">
@@ -1731,26 +1731,26 @@
                 <line layer="Top" startPosition="9.305, 22.145" endPosition="9.2, 22.25" thickness="0.6" lineCap="Round" />
                 <line layer="Top" startPosition="37.25, 8.5" endPosition="37.25, 10.575" thickness="0.8" lineCap="Round" />
                 <line layer="Top" startPosition="37.25, 10.575" endPosition="37.075, 10.75" thickness="0.6" lineCap="Round" />
-                <via position="33.75, 10.5" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="33.75, 10.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="33.75, 10.5" endPosition="36.75, 10.5" thickness="0.8" lineCap="Round" />
                 <line layer="Bottom" startPosition="36.75, 10.5" endPosition="37.25, 10" thickness="0.8" lineCap="Round" />
                 <line layer="Bottom" startPosition="37.25, 10" endPosition="37.25, 8.5" thickness="0.8" lineCap="Round" />
                 <line layer="Top" startPosition="6.5, 27.375" endPosition="6.875, 27.375" thickness="0.6" lineCap="Round" />
-                <via position="7.625, 27.375" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="7.625, 27.375" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="7.625, 27.375" endPosition="7.625, 38.875" thickness="0.8" lineCap="Round" />
-                <via position="7.625, 38.875" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="7.625, 38.875" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="7.625, 38.875" endPosition="6.5, 38.875" thickness="0.6" lineCap="Round" />
                 <line layer="Bottom" startPosition="7.625, 38.875" endPosition="7.625, 43.625" thickness="0.8" lineCap="Round" />
                 <line layer="Bottom" startPosition="7.625, 43.625" endPosition="7.75, 43.75" thickness="0.6" lineCap="Round" />
                 <line layer="Bottom" startPosition="7.75, 43.75" endPosition="8.25, 44.25" thickness="0.8" lineCap="Round" />
-                <via position="8.25, 44.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="8.25, 44.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="8.25, 44.25" endPosition="11.5, 44.25" thickness="0.8" lineCap="Round" />
                 <line layer="Top" startPosition="11.5, 44.25" endPosition="13.55, 44.25" thickness="0.8" lineCap="Round" />
                 <line layer="Top" startPosition="13.55, 44.25" endPosition="13.75, 44.05" thickness="0.6" lineCap="Round" />
                 <line layer="Top" startPosition="13.75, 44.05" endPosition="14.05, 44.05" thickness="0.6" lineCap="Round" />
                 <line layer="Top" startPosition="14.05, 44.05" endPosition="14.25, 44.25" thickness="0.6" lineCap="Round" />
                 <line layer="Top" startPosition="14.5, 25.45" endPosition="12.25, 25.45" thickness="0.6" lineCap="Round" />
-                <via position="7.625, 25.5" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="7.625, 25.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="7.625, 25.5" endPosition="9.25, 25.5" thickness="0.8" lineCap="Round" />
                 <line layer="Top" startPosition="9.25, 25.5" endPosition="12.2, 25.5" thickness="0.6" lineCap="Round" />
                 <line layer="Top" startPosition="12.2, 25.5" endPosition="12.25, 25.45" thickness="0.6" lineCap="Round" />
@@ -1760,7 +1760,7 @@
                 <line layer="Bottom" startPosition="39.125, 45.75" endPosition="39.125, 26.5" thickness="0.8" lineCap="Round" />
                 <line layer="Bottom" startPosition="39.125, 26.5" endPosition="38.75, 26.125" thickness="0.8" lineCap="Round" />
                 <line layer="Top" startPosition="15.25, 44.25" endPosition="14.25, 44.25" thickness="0.8" lineCap="Round" />
-                <via position="38.75, 26.125" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="38.75, 26.125" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="7.625, 27.375" endPosition="6.5, 27.375" thickness="0.8" lineCap="Round" />
                 <line layer="Top" startPosition="33.75, 10.5" endPosition="32.45, 10.5" thickness="0.6" lineCap="Round" />
                 <line layer="Top" startPosition="32.45, 10.5" endPosition="32.5, 10.7" thickness="0.6" lineCap="Round" />
@@ -1781,8 +1781,8 @@
                 <line layer="Top" startPosition="38.5, 18.575" endPosition="38.675, 18.75" thickness="0.8" lineCap="Round" />
                 <line layer="Top" startPosition="38.75, 20.75" endPosition="38.75, 26.125" thickness="0.8" lineCap="Round" />
                 <line layer="Top" startPosition="38.75, 18.75" endPosition="38.75, 20.75" thickness="0.8" lineCap="Round" />
-                <via position="39.125, 45.75" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="7.625, 43.625" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="39.125, 45.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="7.625, 43.625" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="7.625, 43.625" endPosition="8.25, 44.25" thickness="0.8" lineCap="Round" />
                 <line layer="Bottom" startPosition="7.625, 27.375" endPosition="7.625, 25.5" thickness="0.8" lineCap="Round" />
                 <line layer="Bottom" startPosition="6.25, 24.125" endPosition="6.25, 10.5" thickness="0.8" lineCap="Round" />
@@ -1870,13 +1870,13 @@
                 <line layer="Top" startPosition="32.7, 24.3" endPosition="32.7, 24.95" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="32.7, 24.95" endPosition="32.75, 25" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="32.75, 25" endPosition="32.75, 25.375" thickness="0.2" lineCap="Round" />
-                <via position="32.75, 25.375" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="32.75, 25.375" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="32.75, 25.375" endPosition="32.75, 25.5" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="32.75, 25.5" endPosition="35.5, 28.25" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="35.5, 28.25" endPosition="35.5, 46.25" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="35.5, 46.25" endPosition="37.5, 48.25" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="37.5, 48.25" endPosition="39.5, 48.25" thickness="0.2" lineCap="Round" />
-                <via position="39.5, 48.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="39.5, 48.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="41.7, 51.75" endPosition="41.75, 51.8" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="41.75, 51.8" endPosition="40.55, 51.8" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="40.55, 51.8" endPosition="40.25, 51.5" thickness="0.2" lineCap="Round" />
@@ -1889,8 +1889,8 @@
             <elements>
                 <line layer="Top" startPosition="41.7, 47" endPosition="41.75, 46.925" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="33.5, 24.3" endPosition="33.5, 25.375" thickness="0.2" lineCap="Round" />
-                <via position="33.5, 25.375" drill="0.25" size="0.40625" shape="Circular" />
-                <via position="39.5, 47" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="33.5, 25.375" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
+                <via position="39.5, 47" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="39.5, 47" endPosition="41.675, 47" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="41.675, 47" endPosition="41.75, 46.925" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="33.5, 25.375" endPosition="33.5, 25.75" thickness="0.2" lineCap="Round" />
@@ -1908,12 +1908,12 @@
                 <line layer="Top" startPosition="35.3, 20.9" endPosition="36.15, 20.9" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="36.15, 20.9" endPosition="36.875, 21.625" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="36.875, 21.625" endPosition="36.875, 25.25" thickness="0.2" lineCap="Round" />
-                <via position="36.875, 25.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="36.875, 25.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="36.875, 25.25" endPosition="36.875, 26.125" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="36.875, 26.125" endPosition="37.5, 26.75" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="37.5, 26.75" endPosition="37.5, 32.25" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="37.5, 32.25" endPosition="37.75, 32.5" thickness="0.2" lineCap="Round" />
-                <via position="37.75, 32.5" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="37.75, 32.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="37.75, 32.5" endPosition="41.7, 32.5" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="41.7, 32.5" endPosition="41.75, 32.55" thickness="0.2" lineCap="Round" />
                 <line layer="Unrouted" startPosition="41.7, 32.5" endPosition="41.75, 32.45" lineCap="Round" />
@@ -1923,12 +1923,12 @@
             <elements>
                 <line layer="Top" startPosition="35.3, 21.7" endPosition="36.2, 21.7" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="36.2, 21.7" endPosition="36.5, 22" thickness="0.2" lineCap="Round" />
-                <via position="36.375, 24.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="36.375, 24.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="36.375, 24.75" endPosition="36.375, 26.125" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="36.375, 26.125" endPosition="37.125, 26.875" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="37.125, 26.875" endPosition="37.125, 36.875" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="37.125, 36.875" endPosition="37.5, 37.25" thickness="0.2" lineCap="Round" />
-                <via position="37.5, 37.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="37.5, 37.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="37.5, 37.25" endPosition="41.7, 37.25" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="41.7, 37.25" endPosition="41.75, 37.3" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="36.375, 24.75" endPosition="36.5, 24.625" thickness="0.2" lineCap="Round" />
@@ -1941,12 +1941,12 @@
                 <line layer="Top" startPosition="6.5, 12.375" endPosition="7.125, 12.375" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="7.125, 12.375" endPosition="7.25, 12.25" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="7.25, 12.25" endPosition="7.75, 12.25" thickness="0.2" lineCap="Round" />
-                <via position="7.75, 12.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="7.75, 12.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="7.75, 12.25" endPosition="7.75, 14" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="7.75, 14" endPosition="7.25, 14.5" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="7.25, 14.5" endPosition="7.25, 18.25" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="7.25, 18.25" endPosition="7.5, 18.5" thickness="0.2" lineCap="Round" />
-                <via position="7.5, 18.5" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="7.5, 18.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="7.5, 18.5" endPosition="11.25, 18.5" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="11.845, 19.8234" endPosition="11.845, 19.095" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="11.845, 19.095" endPosition="11.25, 18.5" thickness="0.2" lineCap="Round" />
@@ -1968,10 +1968,10 @@
                 <line layer="Top" startPosition="6.5, 14.875" endPosition="7.125, 14.875" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="7.125, 14.875" endPosition="7.25, 15" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="7.25, 15" endPosition="7.75, 15" thickness="0.2" lineCap="Round" />
-                <via position="7.75, 15" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="7.75, 15" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="7.75, 15" endPosition="7.75, 16.5" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="7.75, 16.5" endPosition="8.75, 17.5" thickness="0.2" lineCap="Round" />
-                <via position="8.75, 17.5" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="8.75, 17.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="8.75, 17.5" endPosition="12.75, 17.5" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="13.115, 19.8234" endPosition="13.115, 17.865" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="13.115, 17.865" endPosition="12.75, 17.5" thickness="0.2" lineCap="Round" />
@@ -2046,11 +2046,11 @@
                 <line layer="Top" startPosition="14.385, 19.8234" endPosition="14.385, 19.385" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="14.385, 19.385" endPosition="14.375, 19.125" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="14.375, 19.125" endPosition="14.375, 18.25" thickness="0.2" lineCap="Round" />
-                <via position="14.375, 18.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="14.375, 18.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="14.375, 18.25" endPosition="14.375, 14.125" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="14.375, 14.125" endPosition="16.125, 12.375" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="16.125, 12.375" endPosition="24.875, 12.375" thickness="0.2" lineCap="Round" />
-                <via position="24.875, 12.375" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="24.875, 12.375" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="24.875, 12.375" endPosition="25.5, 12.375" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="25.5, 12.375" endPosition="25.5, 12.7" thickness="0.2" lineCap="Round" />
             </elements>
@@ -2059,9 +2059,9 @@
             <elements>
                 <line layer="Top" startPosition="28.7, 12.7" endPosition="28.7, 12.3" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="28.7, 12.3" endPosition="28.75, 12.125" thickness="0.2" lineCap="Round" />
-                <via position="28.75, 10.5" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="28.75, 10.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="28.75, 10.5" endPosition="21, 10.5" thickness="0.2" lineCap="Round" />
-                <via position="21, 10.5" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="21, 10.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="21, 10.5" endPosition="21, 15.25" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="21, 15.25" endPosition="18.195, 18.055" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="18.195, 19.8234" endPosition="18.195, 18.055" thickness="0.2" lineCap="Round" />
@@ -2073,11 +2073,11 @@
                 <line layer="Top" startPosition="15.655, 19.8234" endPosition="15.655, 19.155" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="15.655, 19.155" endPosition="15.625, 19" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="15.625, 19" endPosition="15.625, 18.25" thickness="0.2" lineCap="Round" />
-                <via position="15.625, 18.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="15.625, 18.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="15.625, 18.25" endPosition="15.625, 15.375" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="15.625, 15.375" endPosition="16.5, 14.5" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="16.5, 14.5" endPosition="22.5, 14.5" thickness="0.2" lineCap="Round" />
-                <via position="22.5, 14.5" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="22.5, 14.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="23.75, 14.45" endPosition="23.7, 14.5" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="22.5, 14.5" endPosition="23.7, 14.5" thickness="0.2" lineCap="Round" />
             </elements>
@@ -2086,9 +2086,9 @@
             <elements>
                 <line layer="Top" startPosition="27.875, 12.5" endPosition="27.875, 11.5" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="27.875, 12.5" endPosition="27.9, 12.7" thickness="0.2" lineCap="Round" />
-                <via position="27.875, 11.5" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="27.875, 11.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="27.875, 11.5" endPosition="20, 11.5" thickness="0.2" lineCap="Round" />
-                <via position="20, 11.5" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="20, 11.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="20, 11.5" endPosition="20, 15" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="20, 15" endPosition="16.925, 18.075" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="16.925, 19.8234" endPosition="16.925, 18.075" thickness="0.2" lineCap="Round" />
@@ -2143,11 +2143,11 @@
             <elements>
                 <line layer="Top" startPosition="35.3, 22.5" endPosition="35.125, 22.5" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="35.125, 22.5" endPosition="35.125, 25.375" thickness="0.2" lineCap="Round" />
-                <via position="35.125, 25.375" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="35.125, 25.375" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="35.125, 25.375" endPosition="36.75, 27" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="36.75, 27" endPosition="36.75, 41.25" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="36.75, 41.25" endPosition="37.5, 42" thickness="0.2" lineCap="Round" />
-                <via position="37.5, 42" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="37.5, 42" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="37.5, 42" endPosition="41.7, 42" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="41.7, 42" endPosition="41.75, 42.05" thickness="0.2" lineCap="Round" />
                 <line layer="Unrouted" startPosition="41.7, 42" endPosition="41.75, 41.95" lineCap="Round" />
@@ -2159,9 +2159,9 @@
                 <line layer="Top" startPosition="36.1, 20.1" endPosition="37.25, 21.25" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="37.25, 21.25" endPosition="37.25, 24.625" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="37.25, 24.625" endPosition="37.375, 24.75" thickness="0.2" lineCap="Round" />
-                <via position="37.375, 24.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="37.375, 24.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="37.375, 24.75" endPosition="41.75, 24.75" thickness="0.2" lineCap="Round" />
-                <via position="41.75, 24.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="41.75, 24.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="41.75, 24.75" endPosition="41.75, 27.8" thickness="0.2" lineCap="Round" />
                 <line layer="Unrouted" startPosition="41.75, 27.8" endPosition="41.75, 27.7" lineCap="Round" />
             </elements>
@@ -2173,7 +2173,7 @@
                 <line layer="Top" startPosition="4, 58.25" endPosition="6, 58.25" thickness="0.4" lineCap="Round" />
                 <line layer="Top" startPosition="6, 58.25" endPosition="9.5, 61.75" thickness="0.4" lineCap="Round" />
                 <line layer="Top" startPosition="9.5, 61.75" endPosition="9.5, 64" thickness="0.4" lineCap="Round" />
-                <via position="9.5, 64" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="9.5, 64" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="9.5, 64" endPosition="12.605, 64" thickness="0.4" lineCap="Round" />
                 <line layer="Bottom" startPosition="12.605, 64" endPosition="12.73, 63.875" thickness="0.4" lineCap="Round" />
             </elements>
@@ -2183,16 +2183,16 @@
                 <line layer="Bottom" startPosition="12.73, 61.875" endPosition="9.625, 61.875" thickness="0.4" lineCap="Round" />
                 <line layer="Bottom" startPosition="9.625, 61.875" endPosition="6, 58.25" thickness="0.4" lineCap="Round" />
                 <line layer="Bottom" startPosition="6, 58.25" endPosition="1.125, 58.25" thickness="0.4" lineCap="Round" />
-                <via position="1.125, 58.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="1.125, 58.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="1.125, 58.25" endPosition="1.125, 56.9475" thickness="0.4" lineCap="Round" />
                 <line layer="Top" startPosition="1.125, 56.9475" endPosition="1.095, 56.9175" thickness="0.4" lineCap="Round" />
             </elements>
         </signal>
         <signal name="I2">
             <elements>
-                <via position="9.125, 60" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="9.125, 60" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="9.125, 60" endPosition="13.75, 60" thickness="0.4" lineCap="Round" />
-                <via position="13.75, 60" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="13.75, 60" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="13.75, 60" endPosition="13.75, 62.895" thickness="0.4" lineCap="Round" />
                 <line layer="Top" startPosition="13.75, 62.895" endPosition="14.73, 63.875" thickness="0.4" lineCap="Round" />
                 <line layer="Top" startPosition="9.125, 60" endPosition="9.125, 56.9275" thickness="0.4" lineCap="Round" />
@@ -2203,9 +2203,9 @@
             <elements>
                 <line layer="Top" startPosition="6.595, 56.9175" endPosition="6.595, 57.845" thickness="0.4" lineCap="Round" />
                 <line layer="Top" startPosition="6.595, 57.845" endPosition="8, 59.25" thickness="0.4" lineCap="Round" />
-                <via position="8, 59.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="8, 59.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="8, 59.25" endPosition="14.75, 59.25" thickness="0.4" lineCap="Round" />
-                <via position="14.75, 59.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="14.75, 59.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="14.75, 59.25" endPosition="14.75, 61.855" thickness="0.4" lineCap="Round" />
                 <line layer="Top" startPosition="14.75, 61.855" endPosition="14.73, 61.875" thickness="0.4" lineCap="Round" />
             </elements>
@@ -2222,9 +2222,9 @@
         </signal>
         <signal name="I5">
             <elements>
-                <via position="12.125, 60.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="12.125, 60.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="12.125, 60.75" endPosition="17.75, 60.75" thickness="0.4" lineCap="Round" />
-                <via position="17.75, 60.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="17.75, 60.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="17.75, 60.75" endPosition="17.75, 62.895" thickness="0.4" lineCap="Round" />
                 <line layer="Top" startPosition="17.75, 62.895" endPosition="18.73, 63.875" thickness="0.4" lineCap="Round" />
                 <line layer="Top" startPosition="12.125, 60.75" endPosition="12.125, 56.9475" thickness="0.4" lineCap="Round" />
@@ -2240,9 +2240,9 @@
         </signal>
         <signal name="I7">
             <elements>
-                <via position="17.625, 59.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="17.625, 59.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="17.625, 59.75" endPosition="19.75, 59.75" thickness="0.4" lineCap="Round" />
-                <via position="19.75, 59.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="19.75, 59.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="19.75, 59.75" endPosition="19.75, 62.895" thickness="0.4" lineCap="Round" />
                 <line layer="Top" startPosition="19.75, 62.895" endPosition="20.73, 63.875" thickness="0.4" lineCap="Round" />
                 <line layer="Top" startPosition="17.625, 59.75" endPosition="17.625, 56.9475" thickness="0.4" lineCap="Round" />
@@ -2255,11 +2255,11 @@
                 <line layer="Bottom" startPosition="15, 26.25" endPosition="24.25, 17" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="24.25, 17" endPosition="33.25, 17" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="33.25, 17" endPosition="34.125, 16.125" thickness="0.2" lineCap="Round" />
-                <via position="34.125, 16.125" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="34.125, 16.125" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="34.125, 16.125" endPosition="35.275, 16.125" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="35.275, 16.125" endPosition="35.3, 16.1" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="15, 48.25" endPosition="13.375, 49.875" thickness="0.2" lineCap="Round" />
-                <via position="13.375, 49.875" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="13.375, 49.875" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="13.375, 49.875" endPosition="13.375, 51.0725" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="13.375, 51.0725" endPosition="13.365, 51.0825" thickness="0.2" lineCap="Round" />
             </elements>
@@ -2271,10 +2271,10 @@
                 <line layer="Bottom" startPosition="15.375, 26.375" endPosition="24.375, 17.375" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="24.375, 17.375" endPosition="33.625, 17.375" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="33.625, 17.375" endPosition="34.125, 16.875" thickness="0.2" lineCap="Round" />
-                <via position="34.125, 16.875" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="34.125, 16.875" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="34.125, 16.875" endPosition="35.275, 16.875" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="35.275, 16.875" endPosition="35.3, 16.9" thickness="0.2" lineCap="Round" />
-                <via position="15.875, 49.875" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="15.875, 49.875" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="15.875, 49.875" endPosition="15.875, 51.0525" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="15.875, 51.0525" endPosition="15.905, 51.0825" thickness="0.2" lineCap="Round" />
             </elements>
@@ -2286,13 +2286,13 @@
                 <line layer="Bottom" startPosition="12.625, 26.875" endPosition="23.875, 15.625" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="23.875, 15.625" endPosition="31.875, 15.625" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="31.875, 15.625" endPosition="32.125, 15.375" thickness="0.2" lineCap="Round" />
-                <via position="32.125, 15.375" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="32.125, 15.375" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="32.125, 15.375" endPosition="32.2, 15.3" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="32.75, 12.75" endPosition="32.75, 14.75" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="32.75, 14.75" endPosition="32.125, 15.375" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="12.625, 46.375" endPosition="9.125, 49.875" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="9.125, 49.875" endPosition="7.75, 49.875" thickness="0.2" lineCap="Round" />
-                <via position="7.75, 49.875" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="7.75, 49.875" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="7.75, 49.875" endPosition="7.75, 50.9675" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="7.75, 50.9675" endPosition="7.865, 51.0825" thickness="0.2" lineCap="Round" />
             </elements>
@@ -2302,12 +2302,12 @@
                 <line layer="Bottom" startPosition="13, 46.5" endPosition="13, 27" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="13, 27" endPosition="24, 16" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="24, 16" endPosition="32.625, 16" thickness="0.2" lineCap="Round" />
-                <via position="32.625, 16" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="32.625, 16" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="33.5, 12.7" endPosition="33.5, 15.125" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="33.5, 15.125" endPosition="32.625, 16" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="13, 46.5" endPosition="10.375, 49.125" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="10.375, 49.125" endPosition="10.375, 49.875" thickness="0.2" lineCap="Round" />
-                <via position="10.375, 49.875" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="10.375, 49.875" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="10.375, 49.875" endPosition="10.375, 51.0525" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="10.375, 51.0525" endPosition="10.405, 51.0825" thickness="0.2" lineCap="Round" />
             </elements>
@@ -2318,12 +2318,12 @@
                 <line layer="Bottom" startPosition="11.875, 26.625" endPosition="23.625, 14.875" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="23.625, 14.875" endPosition="30.375, 14.875" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="30.375, 14.875" endPosition="31.125, 14.125" thickness="0.2" lineCap="Round" />
-                <via position="31.125, 14.125" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="31.125, 14.125" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="31.125, 12.8" endPosition="31.1, 12.7" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="31.125, 12.8" endPosition="31.125, 14.125" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="11.875, 46" endPosition="10.125, 47.75" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="10.125, 47.75" endPosition="2.375, 47.75" thickness="0.2" lineCap="Round" />
-                <via position="2.375, 47.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="2.375, 47.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="2.375, 47.75" endPosition="2.375, 51.0725" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="2.375, 51.0725" endPosition="2.365, 51.0825" thickness="0.2" lineCap="Round" />
             </elements>
@@ -2334,14 +2334,14 @@
                 <line layer="Bottom" startPosition="12.25, 26.75" endPosition="23.75, 15.25" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="23.75, 15.25" endPosition="31.125, 15.25" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="31.125, 15.25" endPosition="31.625, 14.75" thickness="0.2" lineCap="Round" />
-                <via position="31.625, 14.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="31.625, 14.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="31.9, 12.7" endPosition="31.9, 14.475" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="31.9, 14.475" endPosition="31.625, 14.75" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="12.25, 46.125" endPosition="10.125, 48.25" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="4.905, 51.0825" endPosition="4.905, 50.405" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="4.905, 50.405" endPosition="4.875, 50.375" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="4.875, 50.375" endPosition="4.875, 48.25" thickness="0.2" lineCap="Round" />
-                <via position="4.875, 48.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="4.875, 48.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="4.875, 48.25" endPosition="10.125, 48.25" thickness="0.2" lineCap="Round" />
             </elements>
         </signal>
@@ -2420,7 +2420,7 @@
         </signal>
         <signal name="O6">
             <elements>
-                <via position="55.25, 27.5" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="55.25, 27.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="48.75, 61.77" endPosition="48.75, 55.75" thickness="0.4" lineCap="Round" />
                 <line layer="Bottom" startPosition="48.75, 55.75" endPosition="49.75, 54.75" thickness="0.4" lineCap="Round" />
                 <line layer="Bottom" startPosition="49.75, 54.75" endPosition="49.75, 33" thickness="0.4" lineCap="Round" />
@@ -2432,13 +2432,13 @@
         </signal>
         <signal name="O7">
             <elements>
-                <via position="49.875, 60.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="49.875, 60.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="49.875, 60.75" endPosition="49.875, 55.5" thickness="0.4" lineCap="Round" />
                 <line layer="Bottom" startPosition="49.875, 55.5" endPosition="50.375, 55" thickness="0.4" lineCap="Round" />
                 <line layer="Bottom" startPosition="50.375, 55" endPosition="50.375, 37.125" thickness="0.4" lineCap="Round" />
                 <line layer="Top" startPosition="57.38, 32.25" endPosition="57.4, 32.23" thickness="0.4" lineCap="Round" />
                 <line layer="Top" startPosition="57.38, 32.25" endPosition="55.25, 32.25" thickness="0.4" lineCap="Round" />
-                <via position="55.25, 32.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="55.25, 32.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="55.25, 32.25" endPosition="50.375, 37.125" thickness="0.4" lineCap="Round" />
                 <line layer="Top" startPosition="49.875, 60.75" endPosition="49.875, 62.895" thickness="0.4" lineCap="Round" />
                 <line layer="Top" startPosition="49.875, 62.895" endPosition="50.855, 63.875" thickness="0.4" lineCap="Round" />
@@ -2460,10 +2460,10 @@
         </signal>
         <signal name="OUT6">
             <elements>
-                <via position="25.5, 20.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="25.5, 20.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="25.5, 20.75" endPosition="65.25, 20.75" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="65.25, 20.75" endPosition="65.375, 20.875" thickness="0.2" lineCap="Round" />
-                <via position="65.375, 20.875" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="65.375, 20.875" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="65.375, 20.875" endPosition="65.375, 23" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="65.375, 23" endPosition="67, 24.625" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="67, 24.625" endPosition="67, 29.5" thickness="0.2" lineCap="Round" />
@@ -2482,10 +2482,10 @@
                 <line layer="Top" startPosition="23.7, 15.3" endPosition="26.55, 15.3" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="26.55, 15.3" endPosition="28.125, 16.875" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="28.125, 16.875" endPosition="28.125, 19.25" thickness="0.2" lineCap="Round" />
-                <via position="28.125, 19.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="28.125, 19.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="28.125, 19.25" endPosition="28.5, 19.625" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="28.5, 19.625" endPosition="66.375, 19.625" thickness="0.2" lineCap="Round" />
-                <via position="66.375, 19.625" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="66.375, 19.625" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="66.375, 19.625" endPosition="66.375, 23.5" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="66.375, 23.5" endPosition="67.375, 24.5" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="67.375, 24.5" endPosition="67.375, 33.875" thickness="0.2" lineCap="Round" />
@@ -2500,7 +2500,7 @@
                 <line layer="Bottom" startPosition="15.75, 46.75" endPosition="15.75, 26.5" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="15.75, 26.5" endPosition="24.5, 17.75" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="24.5, 17.75" endPosition="34.125, 17.75" thickness="0.2" lineCap="Round" />
-                <via position="34.125, 17.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="34.125, 17.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="34.125, 17.75" endPosition="35.25, 17.75" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="35.25, 17.75" endPosition="35.3, 17.7" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="35.35, 17.75" endPosition="35.3, 17.7" thickness="0.2" lineCap="Round" />
@@ -2512,7 +2512,7 @@
                 <line layer="Bottom" startPosition="40.25, 11.875" endPosition="34.375, 17.75" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="34.375, 17.75" endPosition="34.125, 17.75" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="15.75, 46.75" endPosition="18.875, 49.875" thickness="0.2" lineCap="Round" />
-                <via position="18.875, 49.875" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="18.875, 49.875" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="18.875, 49.875" endPosition="18.875, 51.0725" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="18.875, 51.0725" endPosition="18.865, 51.0825" thickness="0.2" lineCap="Round" />
             </elements>
@@ -2520,7 +2520,7 @@
         <signal name="IN6/PGD">
             <elements>
                 <line layer="Top" startPosition="35.3, 18.5" endPosition="34.125, 18.5" thickness="0.2" lineCap="Round" />
-                <via position="34.125, 18.5" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="34.125, 18.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="16.125, 44.625" endPosition="16.125, 26.625" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="16.125, 26.625" endPosition="24.625, 18.125" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="24.625, 18.125" endPosition="33.75, 18.125" thickness="0.2" lineCap="Round" />
@@ -2529,7 +2529,7 @@
                 <line layer="Bottom" startPosition="40.625, 12" endPosition="40.625, 9.125" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="40.625, 9.125" endPosition="41.25, 8.5" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="16.125, 44.625" endPosition="21.375, 49.875" thickness="0.2" lineCap="Round" />
-                <via position="21.375, 49.875" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="21.375, 49.875" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="21.375, 49.875" endPosition="21.375, 51.0525" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="21.375, 51.0525" endPosition="21.405, 51.0825" thickness="0.2" lineCap="Round" />
             </elements>
@@ -2556,14 +2556,14 @@
         <signal name="SCL2">
             <elements>
                 <line layer="Top" startPosition="6.5, 40.125" endPosition="9.25, 40.125" thickness="0.2" lineCap="Round" />
-                <via position="9.25, 40.125" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="9.25, 40.125" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="9.25, 40.125" endPosition="9.25, 28.625" thickness="0.2" lineCap="Round" />
-                <via position="9.25, 28.625" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="9.25, 28.625" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="9.25, 28.625" endPosition="6.5, 28.625" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="9.25, 28.625" endPosition="9.25, 23.375" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="9.25, 23.375" endPosition="10.375, 22.25" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="10.375, 22.25" endPosition="14.5, 22.25" thickness="0.2" lineCap="Round" />
-                <via position="14.5, 22.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="14.5, 22.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="14.5, 22.25" endPosition="19.125, 22.25" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="19.125, 22.25" endPosition="22.125, 19.25" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="22.125, 19.25" endPosition="23.65, 19.25" thickness="0.2" lineCap="Round" />
@@ -2575,9 +2575,9 @@
         <signal name="SDA2">
             <elements>
                 <line layer="Top" startPosition="6.5, 41.375" endPosition="8.75, 41.375" thickness="0.2" lineCap="Round" />
-                <via position="8.75, 41.375" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="8.75, 41.375" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="8.75, 41.375" endPosition="8.75, 29.875" thickness="0.2" lineCap="Round" />
-                <via position="8.75, 29.875" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="8.75, 29.875" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="8.75, 29.875" endPosition="6.5, 29.875" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="12.25, 21.75" endPosition="19, 21.75" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="19, 21.75" endPosition="22.25, 18.5" thickness="0.2" lineCap="Round" />
@@ -2585,7 +2585,7 @@
                 <line layer="Bottom" startPosition="8.75, 29.875" endPosition="8.75, 23.25" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="8.75, 23.25" endPosition="10.25, 21.75" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="10.25, 21.75" endPosition="12.25, 21.75" thickness="0.2" lineCap="Round" />
-                <via position="12.25, 21.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="12.25, 21.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="12.25, 23.55" endPosition="12.25, 21.75" thickness="0.2" lineCap="Round" />
                 <line layer="Unrouted" startPosition="12.25, 23.55" endPosition="12.25, 23.45" lineCap="Round" />
             </elements>
@@ -2609,7 +2609,7 @@
             <elements>
                 <line layer="Top" startPosition="57.38, 37" endPosition="57.4, 36.98" thickness="0.4" lineCap="Round" />
                 <line layer="Top" startPosition="57.38, 37" endPosition="55.25, 37" thickness="0.4" lineCap="Round" />
-                <via position="55.25, 37" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="55.25, 37" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="55.25, 37" endPosition="51, 41.25" thickness="0.4" lineCap="Round" />
                 <line layer="Bottom" startPosition="51, 41.25" endPosition="51, 61.73" thickness="0.4" lineCap="Round" />
                 <line layer="Bottom" startPosition="51, 61.73" endPosition="50.855, 61.875" thickness="0.4" lineCap="Round" />
@@ -2620,7 +2620,7 @@
                 <line layer="Top" startPosition="31.9, 24.3" endPosition="31.9, 23.9" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="31.9, 23.9" endPosition="32, 23.625" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="32, 23.625" endPosition="32, 21.875" thickness="0.2" lineCap="Round" />
-                <via position="32, 21.875" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="32, 21.875" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="32, 21.875" endPosition="31, 21.875" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="31, 21.875" endPosition="30.75, 21.625" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="30.75, 21.625" endPosition="24.75, 21.625" thickness="0.2" lineCap="Round" />
@@ -2631,7 +2631,7 @@
                 <line layer="Top" startPosition="26.905, 47.73" endPosition="26.875, 47.7" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="18.125, 43.625" endPosition="23.5, 49" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="23.5, 49" endPosition="26.905, 49" thickness="0.2" lineCap="Round" />
-                <via position="26.905, 49" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="26.905, 49" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="18.125, 28.75" endPosition="24, 22.875" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="24, 22.875" endPosition="24, 22.375" thickness="0.2" lineCap="Round" />
                 <line layer="Unrouted" startPosition="26.905, 47.73" endPosition="26.875, 47.8" lineCap="Round" />
@@ -2639,7 +2639,7 @@
         </signal>
         <signal name="IN9">
             <elements>
-                <via position="31.125, 21.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="31.125, 21.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="31.125, 21.25" endPosition="24.625, 21.25" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="17.75, 28.625" endPosition="17.75, 43.75" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="24.365, 51.0825" endPosition="24.365, 49.5" thickness="0.2" lineCap="Round" />
@@ -2647,7 +2647,7 @@
                 <line layer="Top" startPosition="24.365, 47.71" endPosition="24.375, 47.7" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="17.75, 43.75" endPosition="23.5, 49.5" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="23.5, 49.5" endPosition="24.365, 49.5" thickness="0.2" lineCap="Round" />
-                <via position="24.365, 49.5" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="24.365, 49.5" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="24.625, 21.25" endPosition="23.625, 22.25" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="23.625, 22.25" endPosition="23.625, 22.75" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="23.625, 22.75" endPosition="17.75, 28.625" thickness="0.2" lineCap="Round" />
@@ -2665,13 +2665,13 @@
         </signal>
         <signal name="OUT8">
             <elements>
-                <via position="25, 20.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="25, 20.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="25, 20.25" endPosition="26.25, 20.25" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="26.25, 20.25" endPosition="26.375, 20.375" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="26.375, 20.375" endPosition="65.875, 20.375" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="65.875, 20.375" endPosition="66.25, 20.75" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="66.25, 20.75" endPosition="67.25, 20.75" thickness="0.2" lineCap="Round" />
-                <via position="67.25, 20.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="67.25, 20.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="67.25, 20.75" endPosition="67.25, 23.875" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="67.25, 23.875" endPosition="67.75, 24.375" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="67.75, 24.375" endPosition="67.75, 38.25" thickness="0.2" lineCap="Round" />
@@ -2691,11 +2691,11 @@
                 <line layer="Top" startPosition="66.675, 43.95" endPosition="68.125, 42.5" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="68.125, 42.5" endPosition="68.125, 24" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="68.125, 24" endPosition="67.875, 23.75" thickness="0.2" lineCap="Round" />
-                <via position="67.875, 23.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="67.875, 23.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="67.875, 23.75" endPosition="30, 23.75" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="30, 23.75" endPosition="29.25, 23" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="29.25, 23" endPosition="26.25, 23" thickness="0.2" lineCap="Round" />
-                <via position="26.25, 23" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="26.25, 23" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="26.25, 23" endPosition="26.25, 24.225" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="26.25, 24.225" endPosition="26.3, 24.3" thickness="0.2" lineCap="Round" />
                 <line layer="Unrouted" startPosition="65.625, 43.95" endPosition="65.625, 44.05" lineCap="Round" />
@@ -2791,9 +2791,9 @@
                 <line layer="Top" startPosition="32.405, 47.73" endPosition="32.375, 47.7" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="18.875, 36.625" endPosition="31.25, 49" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="31.25, 49" endPosition="32.405, 49" thickness="0.2" lineCap="Round" />
-                <via position="32.405, 49" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="32.405, 49" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="23.7, 16.9" endPosition="24.65, 16.9" thickness="0.2" lineCap="Round" />
-                <via position="25.25, 22.625" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="25.25, 22.625" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="26, 21.875" endPosition="26, 18.25" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="26, 18.25" endPosition="24.65, 16.9" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="18.875, 29" endPosition="25.25, 22.625" thickness="0.2" lineCap="Round" />
@@ -2808,7 +2808,7 @@
                 <line layer="Top" startPosition="26.25, 13.25" endPosition="26.25, 13.75" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="26.25, 13.75" endPosition="29, 16.5" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="29, 16.5" endPosition="29, 22.125" thickness="0.2" lineCap="Round" />
-                <via position="29, 22.125" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="29, 22.125" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="18.5, 28.875" endPosition="18.5, 38.75" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="29, 22.125" endPosition="24.75, 22.125" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="29.865, 51.0825" endPosition="29.865, 49" thickness="0.2" lineCap="Round" />
@@ -2816,7 +2816,7 @@
                 <line layer="Top" startPosition="29.865, 47.71" endPosition="29.875, 47.7" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="18.5, 38.75" endPosition="28.75, 49" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="28.75, 49" endPosition="29.865, 49" thickness="0.2" lineCap="Round" />
-                <via position="29.865, 49" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="29.865, 49" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="18.5, 28.875" endPosition="24.375, 23" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="24.375, 23" endPosition="24.375, 22.5" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="24.375, 22.5" endPosition="24.75, 22.125" thickness="0.2" lineCap="Round" />
@@ -2868,7 +2868,7 @@
                 <line layer="Top" startPosition="48.77, 36.98" endPosition="48.75, 37" thickness="0.8" lineCap="Round" />
                 <line layer="Bottom" startPosition="46.855, 61.875" endPosition="46.855, 56.145" thickness="0.8" lineCap="Round" />
                 <line layer="Bottom" startPosition="46.855, 56.145" endPosition="48.75, 54.25" thickness="0.8" lineCap="Round" />
-                <via position="48.75, 54.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="48.75, 54.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
             </elements>
         </signal>
         <signal name="OC1">
@@ -2893,7 +2893,7 @@
                 <line layer="Bottom" startPosition="56, 59.25" endPosition="57, 58.25" thickness="0.8" lineCap="Round" />
                 <line layer="Bottom" startPosition="57, 58.25" endPosition="57, 45.75" thickness="0.8" lineCap="Round" />
                 <line layer="Bottom" startPosition="57, 45.75" endPosition="58.75, 44" thickness="0.8" lineCap="Round" />
-                <via position="58.75, 44" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="58.75, 44" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
             </elements>
         </signal>
         <signal name="N$10" />
@@ -2921,9 +2921,9 @@
         <signal name="N$47" />
         <signal name="OUT11">
             <elements>
-                <via position="68.875, 22.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="68.875, 22.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="68.875, 22.75" endPosition="30.25, 22.75" thickness="0.2" lineCap="Round" />
-                <via position="30.25, 22.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="30.25, 22.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="30.25, 22.75" endPosition="30.25, 24.25" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="30.25, 24.25" endPosition="30.3, 24.3" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="69.5, 43.5" endPosition="68.875, 42.875" thickness="0.2" lineCap="Round" />
@@ -2935,11 +2935,11 @@
         </signal>
         <signal name="OUT10">
             <elements>
-                <via position="25.5, 19.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="25.5, 19.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="26.5, 20" endPosition="66, 20" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="66, 20" endPosition="66.25, 20.25" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="66.25, 20.25" endPosition="68.25, 20.25" thickness="0.2" lineCap="Round" />
-                <via position="68.25, 20.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="68.25, 20.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="68.25, 20.25" endPosition="68.25, 22.875" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="68.25, 22.875" endPosition="68.5, 23.125" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="68.125, 43.125" endPosition="68.5, 42.75" thickness="0.2" lineCap="Round" />
@@ -3003,9 +3003,9 @@
                 <line layer="Bottom" startPosition="33.875, 50.25" endPosition="34.875, 49.25" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="34.875, 49.25" endPosition="37.885, 49.25" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="37.885, 49.25" endPosition="37.905, 49.23" thickness="0.2" lineCap="Round" />
-                <via position="37.905, 49.23" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="37.905, 49.23" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="17.375, 28.5" endPosition="23, 22.875" thickness="0.2" lineCap="Round" />
-                <via position="26.5, 19.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="26.5, 19.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Top" startPosition="37.905, 49.23" endPosition="37.905, 47.73" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="37.905, 47.73" endPosition="37.875, 47.7" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="23.7, 16.1" endPosition="24.6, 16.1" thickness="0.2" lineCap="Round" />
@@ -3025,13 +3025,13 @@
                 <line layer="Top" startPosition="23.7, 20.1" endPosition="22.9, 20.1" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="22.9, 20.1" endPosition="22.5, 20.5" thickness="0.2" lineCap="Round" />
                 <line layer="Top" startPosition="22.5, 20.5" endPosition="22.5, 22.25" thickness="0.2" lineCap="Round" />
-                <via position="22.5, 22.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="22.5, 22.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="22.5, 22.25" endPosition="22.5, 22.875" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="22.5, 22.875" endPosition="17, 28.375" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="17, 28.375" endPosition="17, 44" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="17, 44" endPosition="23.625, 50.625" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="23.625, 50.625" endPosition="34.115, 50.625" thickness="0.2" lineCap="Round" />
-                <via position="35.365, 49.75" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="35.365, 49.75" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="35.365, 49.75" endPosition="34.99, 49.75" thickness="0.2" lineCap="Round" />
                 <line layer="Bottom" startPosition="34.99, 49.75" endPosition="34.115, 50.625" thickness="0.2" lineCap="Round" />
                 <line layer="Unrouted" startPosition="35.365, 47.71" endPosition="35.375, 47.8" lineCap="Round" />
@@ -3055,7 +3055,7 @@
             <elements>
                 <line layer="Top" startPosition="56.23, 49.23" endPosition="58.23, 49.23" thickness="0.4" lineCap="Round" />
                 <line layer="Top" startPosition="58.23, 49.23" endPosition="58.25, 49.25" thickness="0.4" lineCap="Round" />
-                <via position="58.25, 49.25" drill="0.25" size="0.40625" shape="Circular" />
+                <via position="58.25, 49.25" layers="Top, Bottom" drill="0.25" size="0.6" shape="Circular" />
                 <line layer="Bottom" startPosition="58.25, 49.25" endPosition="58.25, 60" thickness="0.4" lineCap="Round" />
                 <line layer="Bottom" startPosition="58.25, 60" endPosition="57.75, 60.5" thickness="0.4" lineCap="Round" />
                 <line layer="Bottom" startPosition="57.75, 60.5" endPosition="55.5, 60.5" thickness="0.4" lineCap="Round" />
