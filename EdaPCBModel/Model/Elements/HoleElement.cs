@@ -5,19 +5,18 @@
 
     public sealed class HoleElement: ElementBase {
 
-        private Point position;
         private double drill;
 
         public HoleElement() {
 
         }
 
-        public HoleElement(Point position, double drill) {
+        public HoleElement(Point position, double drill):
+            base(position) {
 
             if (position == null)
                 throw new ArgumentNullException("position");
 
-            this.position = position;
             this.drill = drill;
         }
 
@@ -29,15 +28,6 @@
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
-        }
-
-        public Point Position {
-            get {
-                return position;
-            }
-            set {
-                position = value;
-            }
         }
 
         public double Drill {

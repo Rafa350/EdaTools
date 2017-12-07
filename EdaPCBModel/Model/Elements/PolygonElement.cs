@@ -12,9 +12,18 @@
         }
 
         private List<Segment> nodes;
-        private Point position;
         private double rotate;
         private double thickness;
+
+        public PolygonElement():
+            base() {
+
+        }
+
+        public PolygonElement(Point position, Layer layer):
+            base(position, layer) {
+
+        }
 
         public override void AcceptVisitor(IVisitor visitor) {
 
@@ -47,15 +56,6 @@
             return this;
         }
 
-        public Point Position {
-            get {
-                return position;
-            }
-            set {
-                position = value;
-            }
-        }
-        
         public double Rotate {
             get {
                 return rotate;

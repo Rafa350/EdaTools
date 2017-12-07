@@ -16,11 +16,38 @@
 
         private ThPadShape shape = ThPadShape.Circular;
         private string name;
-        private Point position;
         private double rotate;
         private double size;
         private bool autoSize = false;
         private double drill;
+
+        /// <summary>
+        /// Constructor per defecte del objecte.
+        /// </summary>
+        /// 
+        public ThPadElement():
+            base() {
+
+        }
+
+        /// <summary>
+        /// Constructor del objecte.
+        /// </summary>
+        /// <param name="name">Nom.</param>
+        /// <param name="position">Posicio.</param>
+        /// <param name="rotate">Orientacio.</param>
+        /// <param name="size">Tamany/diametre del pad.</param>
+        /// <param name="shape">Diametre del forat.</param>
+        /// <param name="drill">Forma de la corona.</param>
+        /// 
+        public ThPadElement(string name, Point position, double rotate, double size, ThPadShape shape, double drill):
+            base(position) {
+
+            this.name = name;
+            this.size = size;
+            this.drill = drill;
+            this.shape = shape;
+        }
 
         public override bool InLayer(Layer layer) {
 
@@ -47,18 +74,6 @@
             }
             set {
                 name = value;
-            }
-        }
-
-        /// <summary>
-        /// Obte o asigna la posicio del pad.
-        /// </summary>
-        public Point Position {
-            get {
-                return position;
-            }
-            set {
-                position = value;
             }
         }
 

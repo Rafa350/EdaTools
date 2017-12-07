@@ -6,12 +6,26 @@
     public sealed class SmdPadElement: SingleLayerElement {
 
         private string name;
-        private Point position;
         private double rotate;
         private Size size;
         private double roundnes;
         private bool cream = true;
         private bool stop = true;
+
+        public SmdPadElement():
+            base() {
+
+        }
+
+        public SmdPadElement(string name, Point position, Layer layer, Size size, double rotate, double roundnes, bool stop, bool cream):
+            base(position, layer) {
+
+            this.name = name;
+            this.size = size;
+            this.roundnes = roundnes;
+            this.stop = stop;
+            this.cream = cream;
+        }
 
         public override bool InLayer(Layer layer) {
 
@@ -43,18 +57,6 @@
             }
             set {
                 name = value;
-            }
-        }
-
-        /// <summary>
-        /// Obte o asigna la posicio del pad.
-        /// </summary>
-        public Point Position {
-            get {
-                return position;
-            }
-            set {
-                position = value;
             }
         }
 

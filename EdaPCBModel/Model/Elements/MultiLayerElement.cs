@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using System;
+    using System.Windows;
     using System.Collections.Generic;
 
     public abstract class MultiLayerElement: ElementBase {
@@ -18,9 +19,11 @@
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
+        /// <param name="position">Posicio.</param>
         /// <param name="layers">La llista de capes a la que pertany.</param>
         /// 
-        public MultiLayerElement(IEnumerable<Layer> layers) {
+        public MultiLayerElement(Point position, IEnumerable<Layer> layers):
+            base(position) {
 
             if (layers == null)
                 throw new ArgumentNullException("layers");

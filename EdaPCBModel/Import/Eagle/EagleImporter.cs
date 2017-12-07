@@ -12,29 +12,6 @@
 
     public sealed class EagleImporter: Importer {
 
-        private sealed class SmdNodeInfo {
-
-            public double X { get; set; }
-            public double Y { get; set; }
-            public double Width { get; set; }
-            public double Height { get; set; }
-            public double Radius { get; set; }
-            public double Rotate { get; set; }
-            public string Name { get; set; }
-            public Layer Layer { get; set; }
-        }
-
-        private sealed class PadNodeInfo {
-
-            public double X { get; set; }
-            public double Y { get; set; }
-            public double Rotate { get; set; }
-            public double Size { get; set; }
-            public double Drill { get; set; }
-            public ThPadElement.ThPadShape Shape { get; set; }
-            public string Name { get; set; }
-        }
-
         private sealed class WireNodeInfo {
 
             public double X1 { get; set; }
@@ -44,26 +21,6 @@
             public double Angle { get; set; }
             public double Thickness { get; set; }
             public LineElement.LineCapStyle LineCap { get; set; }
-            public Layer Layer { get; set; }
-        }
-
-        private sealed class CircleNodeInfo {
-
-            public double X { get; set; }
-            public double Y { get; set; }
-            public double Radius { get; set; }
-            public double Thickness { get; set; }
-            public Layer Layer { get; set; }
-        }
-
-        private sealed class RectangleNodeInfo {
-
-            public double X { get; set; }
-            public double Y { get; set; }
-            public double Width { get; set; }
-            public double Height { get; set; }
-            public double Rotate { get; set; }
-            public double Thickness { get; set; }
             public Layer Layer { get; set; }
         }
 
@@ -289,17 +246,13 @@
 
                         switch (node.Name) {
 
-                            case "smd": {
-                                    SmdNodeInfo info = ParseSmdNode(node);
-                                    component.Add(boardBuilder.CreateSmdPad(new Point(info.X, info.Y), new Size(info.Width, info.Height), info.Radius, info.Rotate, info.Name, info.Layer));
-                                }
+                            case "smd":
+                                component.Add(ParseSmdNode(node));
                                 break;
 
-                            case "pad": {
-                                    PadNodeInfo info = ParsePadNode(node);
-                                    component.Add(boardBuilder.CreateThPad(new Point(info.X, info.Y), info.Rotate, info.Shape, info.Size, info.Drill, info.Name));
-                                    break;
-                                }
+                            case "pad": 
+                                component.Add(ParsePadNode(node));
+                                break;
 
                             case "text": {
                                     TextNodeInfo info = ParseTextNode(node);
@@ -317,16 +270,12 @@
                                 }
                                 break;
 
-                            case "rectangle": {
-                                    RectangleNodeInfo info = ParseRectangleNode(node);
-                                    component.Add(boardBuilder.CreateRectangle(new Point(info.X, info.Y), new Size(info.Width, info.Height), info.Rotate, info.Thickness, info.Layer));
-                                }
+                            case "rectangle": 
+                                component.Add(ParseRectangleNode(node));
                                 break;
-
-                            case "circle": {
-                                    CircleNodeInfo info = ParseCircleNode(node);
-                                    component.Add(boardBuilder.CreateCircle(new Point(info.X, info.Y), info.Radius, info.Thickness, info.Layer));
-                                }
+                                
+                            case "circle": 
+                                component.Add(ParseCircleNode(node));
                                 break;
 
                             case "polygon": {
@@ -406,64 +355,62 @@
         }
 
         /// <summary>
-        /// Procesa un node de tipus PAD.
+        /// Procesa un node de tipus PAD i crea l'element corresponent.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>Informacio recolectada del node.</returns>
+        /// <returns>L'element creat.</returns>
         /// 
-        private PadNodeInfo ParsePadNode(XmlNode node) {
+        private ElementBase ParsePadNode(XmlNode node) {
 
-            PadNodeInfo info = new PadNodeInfo();
+            string name = GetAttribute(node, "name");
 
-            info.Name = GetAttribute(node, "name");
+            double x = StrToDouble(GetAttribute(node, "x"));
+            double y = StrToDouble(GetAttribute(node, "y"));
+            double rotate = StrToDouble(GetAttribute(node, "rot"));
 
-            info.X = StrToDouble(GetAttribute(node, "x"));
-            info.Y = StrToDouble(GetAttribute(node, "y"));
-            info.Rotate = StrToDouble(GetAttribute(node, "rot"));
+            double drill = StrToDouble(GetAttribute(node, "drill"));
+            double size = drill * 1.6;
 
-            info.Drill = StrToDouble(GetAttribute(node, "drill"));
-            info.Size = info.Drill * 1.6;
-
-            info.Shape = ThPadElement.ThPadShape.Circular;
+            ThPadElement.ThPadShape shape = ThPadElement.ThPadShape.Circular;
             switch (GetAttribute(node, "shape")) {
                 case "square":
-                    info.Shape = ThPadElement.ThPadShape.Square;
+                    shape = ThPadElement.ThPadShape.Square;
                     break;
 
                 case "octagon":
-                    info.Shape = ThPadElement.ThPadShape.Octogonal;
+                    shape = ThPadElement.ThPadShape.Octogonal;
                     break;
 
                 case "long":
-                    info.Shape = ThPadElement.ThPadShape.Oval;
+                    shape = ThPadElement.ThPadShape.Oval;
                     break;
             }
 
-            return info;
+            return new ThPadElement(name, new Point(x, y), rotate, size, shape, drill);
         }
 
         /// <summary>
-        /// Procesa un node de tipus SMD.
+        /// Procesa un node de tipus SMD i crea l'element corresponent.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>Informacio recolectada del node.</returns>
+        /// <returns>L'element creat.</returns>
         /// 
-        private SmdNodeInfo ParseSmdNode(XmlNode node) {
+        private ElementBase ParseSmdNode(XmlNode node) {
 
-            SmdNodeInfo info = new SmdNodeInfo();
+            string name = GetAttribute(node, "name");
 
-            info.Name = GetAttribute(node, "name");
+            double x = StrToDouble(GetAttribute(node, "x"));
+            double y = StrToDouble(GetAttribute(node, "y"));
+            double width = StrToDouble(GetAttribute(node, "dx"));
+            double height = StrToDouble(GetAttribute(node, "dy"));
+            double rotate = StrToDouble(GetAttribute(node, "rot"));
+            double roundnes = StrToDouble(GetAttribute(node, "roundness")) / 100;
+            bool stop = StrToBoolean(GetAttribute(node, "stop"), true);
+            bool cream = StrToBoolean(GetAttribute(node, "cream"), true);
 
-            info.X = StrToDouble(GetAttribute(node, "x"));
-            info.Y = StrToDouble(GetAttribute(node, "y"));
-            info.Width = StrToDouble(GetAttribute(node, "dx"));
-            info.Height = StrToDouble(GetAttribute(node, "dy"));
-            info.Rotate = StrToDouble(GetAttribute(node, "rot"));
-            info.Radius = StrToDouble(GetAttribute(node, "roundness")) / 100;
+            Layer layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
 
-            info.Layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
-
-            return info;
+            return new SmdPadElement(name, new Point(x, y), layer, new Size(width, height), rotate, roundnes, stop, cream);
         }
 
         /// <summary>
@@ -520,50 +467,46 @@
         }
 
         /// <summary>
-        /// Procesa un node de tipus RECTANGLE
+        /// Procesa un node de tipus RECTANGLE i crea el element corresponent.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>La informacio recopilada.</returns>
+        /// <returns>L'element creat.</returns>
         /// 
-        private RectangleNodeInfo ParseRectangleNode(XmlNode node) {
-
-            RectangleNodeInfo info = new RectangleNodeInfo();
+        private ElementBase ParseRectangleNode(XmlNode node) {
 
             double x1 = StrToDouble(GetAttribute(node, "x1"));
             double y1 = StrToDouble(GetAttribute(node, "y1"));
             double x2 = StrToDouble(GetAttribute(node, "x2"));
             double y2 = StrToDouble(GetAttribute(node, "y2"));
-            info.X = (x1 + x2) / 2;
-            info.Y = (y1 + y2) / 2;
-            info.Width = x2 - x1;
-            info.Height = y2 - y1;
+            double x = (x1 + x2) / 2;
+            double y = (y1 + y2) / 2;
+            double width = x2 - x1;
+            double height = y2 - y1;
 
-            info.Rotate = StrToDouble(GetAttribute(node, "rot"));
-            info.Thickness = StrToDouble(GetAttribute(node, "width"));
+            double rotate = StrToDouble(GetAttribute(node, "rot"));
+            double thickness = StrToDouble(GetAttribute(node, "width"));
 
-            info.Layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
+            Layer layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
 
-            return info;
+            return new RectangleElement(new Point(x, y), layer, new Size(width, height), rotate, thickness);
         }
 
         /// <summary>
-        /// Procesa un node de tipus CIRCLE
+        /// Procesa un node de tipus CIRCLE i crea el element corresponent.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>La informacio recopilada.</returns>
+        /// <returns>L'element creat.</returns>
         /// 
-        private CircleNodeInfo ParseCircleNode(XmlNode node) {
+        private ElementBase ParseCircleNode(XmlNode node) {
 
-            CircleNodeInfo info = new CircleNodeInfo();
+            double x = StrToDouble(GetAttribute(node, "x"));
+            double y = StrToDouble(GetAttribute(node, "y"));
+            double thickness = StrToDouble(GetAttribute(node, "width"));
+            double radius = StrToDouble(GetAttribute(node, "radius"));
 
-            info.X = StrToDouble(GetAttribute(node, "x"));
-            info.Y = StrToDouble(GetAttribute(node, "y"));
-            info.Thickness = StrToDouble(GetAttribute(node, "width"));
-            info.Radius = StrToDouble(GetAttribute(node, "radius"));
+            Layer layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
 
-            info.Layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
-
-            return info;
+            return new CircleElement(new Point(x, y), layer, radius, thickness);
         }
 
         /// <summary>
@@ -600,12 +543,12 @@
         }
 
         /// <summary>
-        /// Procesa un node de tipus HOLE.
+        /// Procesa un node de tipus HOLE i crea l'element correspoonent.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>Un element HOLE.</returns>
+        /// <returns>L'element creat.</returns>
         /// 
-        private HoleElement ParseHoleNode(XmlNode node) {
+        private ElementBase ParseHoleNode(XmlNode node) {
 
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
@@ -672,14 +615,20 @@
             return new Parameter(name, new Point(x, y), rotate, isVisible, value);
         }
 
-        private ViaElement ParseViaNode(XmlNode node) {
+        /// <summary>
+        /// Procesa un n ode de tipus VIA i crea l'element corresponent.
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>L'element creat.</returns>
+        /// 
+        private ElementBase ParseViaNode(XmlNode node) {
 
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
             double drill = StrToDouble(GetAttribute(node, "drill"));
             double size = StrToDouble(GetAttribute(node, "diameter"));
 
-            LayerSet layers = new LayerSet();
+            List<Layer> layers = new List<Layer>();
             string extent = GetAttribute(node, "extent");
             string[] layerNames = extent.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string layerName in layerNames)
@@ -697,7 +646,7 @@
                     break;
             }
 
-            return new ViaElement(new Point(x, y), size, drill, shape, layers);
+            return new ViaElement(new Point(x, y), layers, size, drill, shape);
         }
 
         private static string GetAttribute(XmlNode node, string name) {
@@ -706,7 +655,7 @@
             return attribute == null ? null : attribute.Value;
         }
 
-        private static double StrToDouble(string value) {
+        private static double StrToDouble(string value, double derfValue = 0) {
 
             if (String.IsNullOrEmpty(value))
                 return 0;
@@ -722,12 +671,22 @@
             }
         }
 
-        private static int StrToInteger(string value) {
+        private static int StrToInteger(string value, int defValue = 0) {
 
             if (String.IsNullOrEmpty(value))
-                return 0;
+                return defValue;
             else 
                 return Int32.Parse(value);
+        }
+
+        private static bool StrToBoolean(string value, bool defValue = false) {
+
+            if (String.IsNullOrEmpty(value))
+                return defValue;
+            else
+                return 
+                    String.Compare(value, "yes", true) == 0 || 
+                    String.Compare(value, "true", true) == 0;
         }
     }
 }

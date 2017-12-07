@@ -14,7 +14,6 @@
 
         private const double OAR = 0.125;
 
-        private Point position;
         private double drill;
         private double size;
         private ViaShape shape = ViaShape.Circular;
@@ -35,35 +34,14 @@
         /// <param name="size">Tamany/diametre de la corona.</param>
         /// <param name="drill">Diametre del forat.</param>
         /// <param name="shape">Forma de la corona.</param>
-        /// 
-        public ViaElement(Point position, double size, double drill, ViaShape shape):
-            base() {
-
-            if (position == null)
-                throw new ArgumentNullException("position");
-
-            this.position = position;
-            this.size = size;
-            this.drill = drill;
-            this.shape = shape;
-        }
-
-        /// <summary>
-        /// Constructor del objecte.
-        /// </summary>
-        /// <param name="position">Posicio.</param>
-        /// <param name="size">Tamany/diametre de la corona.</param>
-        /// <param name="drill">Diametre del forat.</param>
-        /// <param name="shape">Forma de la corona.</param>
         /// <param name="layers">Capes a les que pertany.</param>
         /// 
-        public ViaElement(Point position, double size, double drill, ViaShape shape, IEnumerable<Layer> layers) :
-            base(layers) {
+        public ViaElement(Point position, IEnumerable<Layer> layers, double size, double drill, ViaShape shape) :
+            base(position, layers) {
 
             if (position == null)
                 throw new ArgumentNullException("position");
 
-            this.position = position;
             this.size = size;
             this.drill = drill;
             this.shape = shape;
@@ -95,19 +73,6 @@
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
-        }
-
-        /// <summary>
-        /// Obte o asigna la posicio de la via.
-        /// </summary>
-        /// 
-        public Point Position {
-            get {
-                return position;
-            }
-            set {
-                position = value;
-            }
         }
 
         /// <summary>

@@ -5,22 +5,24 @@
 
     public sealed class CircleElement: SingleLayerElement {
 
-        private Point position;
         private double thickness;
         private double radius;
+
+        public CircleElement():
+            base() {
+
+        }
+
+        public CircleElement(Point position, Layer layer, double radius, double thickness = 0) :
+            base(position, layer) {
+
+            this.radius = radius;
+            this.thickness = thickness;
+        }
 
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
-        }
-
-        public Point Position {
-            get {
-                return position;
-            }
-            set {
-                position = value;
-            }
         }
 
         public double Thickness {

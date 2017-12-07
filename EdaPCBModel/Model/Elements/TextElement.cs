@@ -16,25 +16,25 @@
             BottomRight,
         }
 
-        private Point position;
         private double rotate = 0;
         private double height;
         private TextAlign align = TextAlign.MiddleCenter;
         private string value;
         private string name;
 
+        public TextElement():
+            base() {
+
+        }
+
+        public TextElement(Point position, Layer layer):
+            base(position, layer) {
+
+        }
+
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
-        }
-
-        public Point Position {
-            get {
-                return position;
-            }
-            set {
-                position = value;
-            }
         }
 
         public double Rotate {

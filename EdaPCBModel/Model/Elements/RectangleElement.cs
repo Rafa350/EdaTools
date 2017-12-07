@@ -5,23 +5,26 @@
 
     public sealed class RectangleElement: SingleLayerElement {
 
-        private Point position;
         private Size size;
         private double rotate;
         private double thickness;
 
+        public RectangleElement(): 
+            base() {
+
+        }
+
+        public RectangleElement(Point position, Layer layer, Size size, double rotate = 0, double thickness = 0) :
+            base(position, layer) {
+
+            this.size = size;
+            this.rotate = rotate;
+            this.thickness = thickness;
+        }
+
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
-        }
-
-        public Point Position {
-            get {
-                return position;
-            }
-            set {
-                position = value;
-            }
         }
 
         public Size Size {
