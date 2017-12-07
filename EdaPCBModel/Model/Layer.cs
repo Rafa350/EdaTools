@@ -47,6 +47,7 @@
         Vias,
         Pads,
         Holes,
+        Drills,
 
         Unrouted,
 

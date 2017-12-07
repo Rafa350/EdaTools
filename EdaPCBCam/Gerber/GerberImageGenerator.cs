@@ -115,12 +115,12 @@
                             break;
 
                         case ImageType.TopSolderMask:
-                            gb.Attribute(".FileFunction,Soldermask,Bot");
+                            gb.Attribute(".FileFunction,Soldermask,Top");
                             gb.Attribute(".FilePolarity,Negative");
                             break;
 
                         case ImageType.BottomSolderMask:
-                            gb.Attribute(".FileFunction,Soldermask,Top");
+                            gb.Attribute(".FileFunction,Soldermask,Bot");
                             gb.Attribute(".FilePolarity,Negative");
                             break;
 
@@ -360,12 +360,13 @@
             }
 
             /// <summary>
-            /// Aplica una rotacio a un punt.
+            /// Aplica una transformacio a un punt.
             /// </summary>
             /// <param name="p">El punt a transformar.</param>
             /// <param name="center">Punt del centre de rotacio.</param>
             /// <param name="rotate">Angle de rotacio.</param>
-            /// <returns></returns>
+            /// <returns>El punt transformat.</returns>
+            /// 
             private Point Transform(Point p, Point center, double rotate) {
 
                 Matrix m = new Matrix();

@@ -12,13 +12,6 @@
 
     public sealed class EagleImporter: Importer {
 
-        private sealed class HoleNodeInfo {
-
-            public double X { get; set; }
-            public double Y { get; set; }
-            public double Drill { get; set; }
-        }
-
         private sealed class SmdNodeInfo {
 
             public double X { get; set; }
@@ -344,10 +337,8 @@
                                 }
                                 break;
 
-                            case "hole": {
-                                    HoleNodeInfo info = ParseHoleNode(node);
-                                    component.Add(boardBuilder.CreateHole(new Point(info.X, info.Y), info.Drill));
-                                }
+                            case "hole":
+                                component.Add(ParseHoleNode(node));
                                 break;
                         }
                     }
@@ -609,21 +600,19 @@
         }
 
         /// <summary>
-        /// procesa un node de tipus HOLE.
+        /// Procesa un node de tipus HOLE.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>La informacio recopilada.</returns>
+        /// <returns>Un element HOLE.</returns>
         /// 
-        private HoleNodeInfo ParseHoleNode(XmlNode node) {
+        private HoleElement ParseHoleNode(XmlNode node) {
 
-            HoleNodeInfo info = new HoleNodeInfo();
+            double x = StrToDouble(GetAttribute(node, "x"));
+            double y = StrToDouble(GetAttribute(node, "y"));
 
-            info.X = StrToDouble(GetAttribute(node, "x"));
-            info.Y = StrToDouble(GetAttribute(node, "y"));
+            double drill = StrToDouble(GetAttribute(node, "drill"));
 
-            info.Drill = StrToDouble(GetAttribute(node, "drill"));
-
-            return info;
+            return new HoleElement(new Point(x, y), drill);
         }
 
         private Part ParseElementNode(XmlNode node) {
@@ -708,14 +697,7 @@
                     break;
             }
 
-            ViaElement via = new ViaElement();
-            via.Position = new Point(x, y);
-            via.Size = size;
-            via.Drill = drill;
-            via.Shape = shape;
-            via.Layers.Add(layers);
-
-            return via;
+            return new ViaElement(new Point(x, y), size, drill, shape, layers);
         }
 
         private static string GetAttribute(XmlNode node, string name) {

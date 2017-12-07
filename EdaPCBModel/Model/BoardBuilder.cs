@@ -57,6 +57,7 @@
             board.AddLayer(new Layer(LayerId.Vias, "Vias", viaColor, true));
             board.AddLayer(new Layer(LayerId.Pads, "Pads", padColor, true));
             board.AddLayer(new Layer(LayerId.Holes, "Holes", holeColor, true));
+            board.AddLayer(new Layer(LayerId.Drills, "Drills", holeColor, true));
 
             // Defineix la capa de mesures
             //
@@ -289,7 +290,6 @@
             HoleElement hole = new HoleElement();
             hole.Position = position;
             hole.Drill = drill;
-            hole.Layer = board.GetLayer(LayerId.Holes);
 
             return hole;
         }

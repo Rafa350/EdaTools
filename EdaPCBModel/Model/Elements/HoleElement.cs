@@ -3,10 +3,28 @@
     using System;
     using System.Windows;
 
-    public sealed class HoleElement: SingleLayerElement {
+    public sealed class HoleElement: ElementBase {
 
         private Point position;
         private double drill;
+
+        public HoleElement() {
+
+        }
+
+        public HoleElement(Point position, double drill) {
+
+            if (position == null)
+                throw new ArgumentNullException("position");
+
+            this.position = position;
+            this.drill = drill;
+        }
+
+        public override bool InLayer(Layer layer) {
+
+            return layer.Id == LayerId.Holes;
+        }
 
         public override void AcceptVisitor(IVisitor visitor) {
 

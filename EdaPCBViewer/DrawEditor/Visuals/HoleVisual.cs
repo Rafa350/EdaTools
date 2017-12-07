@@ -15,7 +15,7 @@
         public override void RenderVisual() {
 
             bool isMirror = Part == null ? false : Part.IsMirror;
-            Layer layer = isMirror ? Hole.MirrorLayer : Hole.Layer;
+            //Layer layer = isMirror ? Hole.MirrorLayer : Hole.Layer;
 
             using (DrawingContext dc = RenderOpen()) {
 
@@ -35,7 +35,8 @@
 
                 // Dibuixa el forat
                 //
-                Pen pen = PenCache.Instance.GetPen(layer.Color, 0.05);
+                //Pen pen = PenCache.Instance.GetPen(layer.Color, 0.05);
+                Pen pen = PenCache.Instance.GetPen(Colors.Coral, 0.05);
                 dc.DrawEllipse(null, pen, Hole.Position, Hole.Drill / 2, Hole.Drill / 2);
 
                 // Pop de la transformacio d'escala pel canvi de cara

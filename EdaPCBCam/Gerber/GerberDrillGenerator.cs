@@ -18,7 +18,7 @@
             NonPlatedDrill
         }
 
-        public void Generate(Board board, DrillType drillType, string fileName) {
+        public void Generate(Board board, IList<Layer> layers, DrillType drillType, string fileName) {
 
             if (board == null)
                 throw new ArgumentNullException("board");
@@ -34,7 +34,7 @@
                     // Crea el diccionari d'apertures
                     //
                     IDictionary<string, Aperture> apertures = new Dictionary<string, Aperture>();
-                    board.AcceptVisitor(new DefineAperturesVisitor(apertures));
+                    board.AcceptVisitor(new DefineAperturesVisitor(layers, apertures));
 
                     GerberBuilder gb = new GerberBuilder(writer);
 
@@ -66,7 +66,7 @@
                     // Definicio de la imatge
                     //
                     gb.Comment("BEGIN IMAGE");
-                    board.AcceptVisitor(new ImageGeneratorVisitor(gb, apertures));
+                    board.AcceptVisitor(new ImageGeneratorVisitor(gb, layers, apertures));
                     gb.Comment("END IMAGE");
 
                     // Final
@@ -78,25 +78,40 @@
 
         private sealed class DefineAperturesVisitor : DefaultVisitor {
 
+            private readonly IList<Layer> layers;
             private readonly IDictionary<string, Aperture> apertures;
 
-            public DefineAperturesVisitor(IDictionary<string, Aperture> apertures) {
+            public DefineAperturesVisitor(IList<Layer> layers, IDictionary<string, Aperture> apertures) {
 
+                this.layers = layers;
                 this.apertures = apertures;
+            }
+
+            public override void Visit(HoleElement hole) {
+
+                if (hole.InAnyLayer(layers)) {
+                    string key = ApertureKeyGenerator.GenerateKey(hole);
+                    if (!apertures.ContainsKey(key))
+                        apertures.Add(key, new CircleAperture(hole.Drill));
+                }
             }
 
             public override void Visit(ViaElement via) {
 
-                string key = ApertureKeyGenerator.GenerateKey(via, true);
-                if (!apertures.ContainsKey(key))
-                    apertures.Add(key, new CircleAperture(via.Drill));
+                if (via.InAnyLayer(layers)) {
+                    string key = ApertureKeyGenerator.GenerateKey(via, true);
+                    if (!apertures.ContainsKey(key))
+                        apertures.Add(key, new CircleAperture(via.Drill));
+                }
             }
 
             public override void Visit(ThPadElement pad) {
 
-                string key = ApertureKeyGenerator.GenerateKey(pad, true);
-                if (!apertures.ContainsKey(key))
-                    apertures.Add(key, new CircleAperture(pad.Drill));
+                if (pad.InAnyLayer(layers)) {
+                    string key = ApertureKeyGenerator.GenerateKey(pad, true);
+                    if (!apertures.ContainsKey(key))
+                        apertures.Add(key, new CircleAperture(pad.Drill));
+                }
             }
         }
 
@@ -104,12 +119,32 @@
         private sealed class ImageGeneratorVisitor : DefaultVisitor {
 
             private readonly GerberBuilder gb;
+            private readonly IList<Layer> layers;
             private readonly IDictionary<string, Aperture> apertures;
 
-            public ImageGeneratorVisitor(GerberBuilder gb, IDictionary<string, Aperture> apertures) {
+            public ImageGeneratorVisitor(GerberBuilder gb, IList<Layer> layers, IDictionary<string, Aperture> apertures) {
 
                 this.gb = gb;
+                this.layers = layers;
                 this.apertures = apertures;
+            }
+
+            public override void Visit(HoleElement hole) {
+
+                if (hole.InAnyLayer(layers)) {
+                    string key = ApertureKeyGenerator.GenerateKey(hole);
+
+                    Point p = hole.Position;
+                    if (VisitingPart != null) {
+                        Matrix m = new Matrix();
+                        m.Translate(VisitingPart.Position.X, VisitingPart.Position.Y);
+                        m.RotateAt(VisitingPart.Rotate, VisitingPart.Position.X, VisitingPart.Position.Y);
+                        p = m.Transform(p);
+                    }
+
+                    gb.SelectAperture(apertures[key]);
+                    gb.Operation(p.X, p.Y, OperationCode.Flash);
+                }
             }
 
             /// <summary>
@@ -119,10 +154,11 @@
             /// 
             public override void Visit(ViaElement via) {
 
-                string key = ApertureKeyGenerator.GenerateKey(via, true);
-
-                gb.SelectAperture(apertures[key]);
-                gb.Operation(via.Position.X, via.Position.Y, OperationCode.Flash);
+                if (via.InAnyLayer(layers)) {
+                    string key = ApertureKeyGenerator.GenerateKey(via, true);
+                    gb.SelectAperture(apertures[key]);
+                    gb.Operation(via.Position.X, via.Position.Y, OperationCode.Flash);
+                }
             }
 
             /// <summary>
@@ -132,18 +168,20 @@
             /// 
             public override void Visit(ThPadElement pad) {
 
-                string key = ApertureKeyGenerator.GenerateKey(pad, true);
+                if (pad.InAnyLayer(layers)) {
+                    string key = ApertureKeyGenerator.GenerateKey(pad, true);
 
-                Point p = pad.Position;
-                if (VisitingPart != null) {
-                    Matrix m = new Matrix();
-                    m.Translate(VisitingPart.Position.X, VisitingPart.Position.Y);
-                    m.RotateAt(VisitingPart.Rotate, VisitingPart.Position.X, VisitingPart.Position.Y);
-                    p = m.Transform(p);
+                    Point p = pad.Position;
+                    if (VisitingPart != null) {
+                        Matrix m = new Matrix();
+                        m.Translate(VisitingPart.Position.X, VisitingPart.Position.Y);
+                        m.RotateAt(VisitingPart.Rotate, VisitingPart.Position.X, VisitingPart.Position.Y);
+                        p = m.Transform(p);
+                    }
+
+                    gb.SelectAperture(apertures[key]);
+                    gb.Operation(p.X, p.Y, OperationCode.Flash);
                 }
-
-                gb.SelectAperture(apertures[key]);
-                gb.Operation(p.X, p.Y, OperationCode.Flash);
             }
         }
     }

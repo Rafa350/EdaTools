@@ -66,7 +66,6 @@
     <Compile Include="Model\Elements\SingleLayerElement.cs" />
     <Compile Include="Model\Elements\TextElement.cs" />
     <Compile Include="Model\Elements\ViaElement.cs" />
-    <Compile Include="Model\ILayerElement.cs" />
     <Compile Include="Model\IO\XmlLibraryWriter.cs" />
     <Compile Include="Model\IO\XmlWriterHelper.cs" />
     <Compile Include="Model\LayerSet.cs" />

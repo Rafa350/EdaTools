@@ -102,6 +102,10 @@
                 writer.WriteAttribute("size", pad.Size);
                 if (pad.Roundnes > 0)
                     writer.WriteAttribute("roundness", pad.Roundnes);
+                if (!pad.Cream)
+                    writer.WriteAttribute("cream", false);
+                if (!pad.Stop)
+                    writer.WriteAttribute("stop", false);
                 writer.WriteEndElement();
             }
 
@@ -214,7 +218,7 @@
                 writer.WriteStartElement("layer");
                 writer.WriteAttributeString("name", layer.Name);
                 writer.WriteAttributeString("visible", layer.IsVisible.ToString());
-                writer.WriteAttributeString("color", layer.Color.ToString());
+                writer.WriteAttribute("color", layer.Color);
                 writer.WriteEndElement();
             }
 

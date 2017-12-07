@@ -40,10 +40,15 @@
             layers.Add(board.GetLayer(LayerId.Profile));
             imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.Profile, @"..\..\..\Data\board_Profile$NP.gbr");
 
-            /*GerberDrillGenerator drillGenerator = new GerberDrillGenerator();
-            drillGenerator.Generate(board, GerberDrillGenerator.DrillType.PlatedDrill, @"..\..\..\Data\board_Plated$1$2$PTH$Drill.gbr");
-            drillGenerator.Generate(board, GerberDrillGenerator.DrillType.NonPlatedDrill, @"..\..\..\Data\board_NonPlated$1$2$NPTH$Drill.gbr");
-            */
+            GerberDrillGenerator drillGenerator = new GerberDrillGenerator();
+
+            layers.Clear();
+            layers.Add(board.GetLayer(LayerId.Drills));
+            drillGenerator.Generate(board, layers, GerberDrillGenerator.DrillType.PlatedDrill, @"..\..\..\Data\board_Plated$1$2$PTH$Drill.gbr");
+
+            layers.Clear();
+            layers.Add(board.GetLayer(LayerId.Holes));
+            drillGenerator.Generate(board, layers, GerberDrillGenerator.DrillType.NonPlatedDrill, @"..\..\..\Data\board_NonPlated$1$2$NPTH$Drill.gbr");            
         }
     }
 }

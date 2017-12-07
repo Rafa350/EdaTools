@@ -26,7 +26,8 @@
 
             if ((layer.Id == LayerId.Pads) ||
                 (layer.Id == LayerId.TopStop) ||
-                (layer.Id == LayerId.BottomStop))
+                (layer.Id == LayerId.BottomStop) ||
+                (layer.Id == LayerId.Drills))
                 return true;
             else
                 return false;

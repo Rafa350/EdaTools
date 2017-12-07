@@ -3,6 +3,7 @@
     using System;
     using System.Text;
     using System.Windows;
+    using System.Windows.Media;
     using System.Xml;
     using MikroPic.EdaTools.v1.Pcb.Model;
 
@@ -20,6 +21,13 @@
             writer.WriteAttributeString(
                 name, 
                 String.Format("{0}, {1}", XmlConvert.ToString(size.Width), XmlConvert.ToString(size.Height)));
+        }
+
+        public static void WriteAttribute(this XmlWriter writer, string name, Color color) {
+
+            writer.WriteAttributeString(
+                name,
+                String.Format("{0}, {1}, {2}, {3}", color.A, color.R, color.G, color.B));
         }
 
         public static void WriteAttribute(this XmlWriter writer, string name, double value) {
