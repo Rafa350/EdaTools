@@ -12,30 +12,6 @@
 
     public sealed class EagleImporter: Importer {
 
-        private sealed class WireNodeInfo {
-
-            public double X1 { get; set; }
-            public double Y1 { get; set; }
-            public double X2 { get; set; }
-            public double Y2 { get; set; }
-            public double Angle { get; set; }
-            public double Thickness { get; set; }
-            public LineElement.LineCapStyle LineCap { get; set; }
-            public Layer Layer { get; set; }
-        }
-
-        private sealed class TextNodeInfo {
-
-            public double X { get; set; }
-            public double Y { get; set; }
-            public double Rotate { get; set; }
-            public double Height { get; set; }
-            public TextElement.TextAlign Align { get; set; }
-            public string Name { get; set; }
-            public string Value { get; set; }
-            public Layer Layer { get; set; }
-        }
-
         private sealed class PolygonNodeInfo {
 
             public double Thickness { get; set; }
@@ -215,13 +191,7 @@
 
                 switch (node.Name) {
                     case "wire":
-                        WireNodeInfo info = ParseWireNode(node);
-                        if (info.Thickness == 0)
-                            info.Thickness = 0.01;
-                        if (info.Angle == 0)
-                            board.AddElement(boardBuilder.CreateLine(new Point(info.X1, info.Y1), new Point(info.X2, info.Y2), info.Thickness, info.LineCap, info.Layer));
-                        else
-                            board.AddElement(boardBuilder.CreateArc(new Point(info.X1, info.Y1), new Point(info.X2, info.Y2), info.Thickness, info.LineCap, info.Angle, info.Layer));
+                        board.AddElement(ParseWireNode(node));
                         break;
                 }
             }
@@ -254,20 +224,13 @@
                                 component.Add(ParsePadNode(node));
                                 break;
 
-                            case "text": {
-                                    TextNodeInfo info = ParseTextNode(node);
-                                    component.Add(boardBuilder.CreateText(new Point(info.X, info.Y), info.Rotate, info.Height, info.Layer, info.Name, info.Value));
-                                }
+                            case "text":
+                                component.Add(ParseTextNode(node));
                                 break;
 
 
-                            case "wire": {
-                                    WireNodeInfo info = ParseWireNode(node);
-                                    if (info.Angle == 0)
-                                        component.Add(boardBuilder.CreateLine(new Point(info.X1, info.Y1), new Point(info.X2, info.Y2), info.Thickness, info.LineCap, info.Layer));
-                                    else
-                                        component.Add(boardBuilder.CreateArc(new Point(info.X1, info.Y1), new Point(info.X2, info.Y2), info.Thickness, info.LineCap, info.Angle, info.Layer));
-                                }
+                            case "wire":
+                                component.Add(ParseWireNode(node));
                                 break;
 
                             case "rectangle": 
@@ -319,13 +282,8 @@
                             signal.Add(ParseViaNode(node));
                             break;
 
-                        case "wire": {
-                                WireNodeInfo info = ParseWireNode(node);
-                                if (info.Angle == 0)
-                                    signal.Add(boardBuilder.CreateLine(new Point(info.X1, info.Y1), new Point(info.X2, info.Y2), info.Thickness, info.LineCap, info.Layer));
-                                else
-                                    signal.Add(boardBuilder.CreateArc(new Point(info.X1, info.Y1), new Point(info.X2, info.Y2), info.Thickness, info.LineCap, info.Angle, info.Layer));
-                            }
+                        case "wire":
+                            signal.Add(ParseWireNode(node));
                             break;
                     }
                 }
@@ -419,51 +377,54 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>La informacio recopilada.</returns>
         /// 
-        private TextNodeInfo ParseTextNode(XmlNode node) {
+        private ElementBase ParseTextNode(XmlNode node) {
 
-            TextNodeInfo info = new TextNodeInfo();
+            string name = null;
+            string value = null;
 
             string s = node.InnerText;
-            if (s.StartsWith(">")) {
-                info.Name = s.Substring(1);
-                info.Value = null;
-            }
-            else {
-                info.Name = null;
-                info.Value = s;
-            }
+            if (s.StartsWith(">")) 
+                name = s.Substring(1);
+            else 
+                value = s;
 
-            info.X = StrToDouble(GetAttribute(node, "x"));
-            info.Y = StrToDouble(GetAttribute(node, "y"));
-            info.Rotate = StrToDouble(GetAttribute(node, "rot"));
-            info.Height = StrToDouble(GetAttribute(node, "size"));
-            info.Layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
+            double x = StrToDouble(GetAttribute(node, "x"));
+            double y = StrToDouble(GetAttribute(node, "y"));
+            double rotate = StrToDouble(GetAttribute(node, "rot"));
+            double height = StrToDouble(GetAttribute(node, "size"));
 
-            return info;
+            Layer layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
+
+            TextElement element = new TextElement(new Point(x, y), layer, rotate, height, TextElement.TextAlign.TopLeft);
+            element.Name = name;
+            element.Value = value;
+            return element;
         }
 
         /// <summary>
-        /// Procesa un node WIRE.
+        /// Procesa un node WIRE i crea l'element corresponent.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>La informacio recopilada.</returns>
+        /// <returns>L'element creat.</returns>
         /// 
-        private WireNodeInfo ParseWireNode(XmlNode node) {
+        private ElementBase ParseWireNode(XmlNode node) {
 
-            WireNodeInfo info = new WireNodeInfo();
+            double x1 = StrToDouble(GetAttribute(node, "x1"));
+            double y1 = StrToDouble(GetAttribute(node, "y1"));
+            double x2 = StrToDouble(GetAttribute(node, "x2"));
+            double y2 = StrToDouble(GetAttribute(node, "y2"));
 
-            info.X1 = StrToDouble(GetAttribute(node, "x1"));
-            info.Y1 = StrToDouble(GetAttribute(node, "y1"));
-            info.X2 = StrToDouble(GetAttribute(node, "x2"));
-            info.Y2 = StrToDouble(GetAttribute(node, "y2"));
+            double angle = StrToDouble(GetAttribute(node, "curve"));
+            LineElement.LineCapStyle lineCap = GetAttribute(node, "cap") == null ? LineElement.LineCapStyle.Round : LineElement.LineCapStyle.Flat;
 
-            info.Angle = StrToDouble(GetAttribute(node, "curve"));
-            info.LineCap = GetAttribute(node, "cap") == null ? LineElement.LineCapStyle.Round : LineElement.LineCapStyle.Flat;
-            info.Thickness = StrToDouble(GetAttribute(node, "width"));
+            double thickness = StrToDouble(GetAttribute(node, "width"));
 
-            info.Layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
+            Layer layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
 
-            return info;
+            if (angle == 0) 
+                return new LineElement(new Point(x1, y1), layer, new Point(x2, y2), thickness, lineCap);
+            else 
+                return new ArcElement(new Point(x1, y1), layer, new Point(x2, y2), thickness, angle, lineCap);
         }
 
         /// <summary>

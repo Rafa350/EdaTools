@@ -22,6 +22,7 @@
 
             this.name = name;
             this.size = size;
+            this.rotate = rotate;
             this.roundnes = roundnes;
             this.stop = stop;
             this.cream = cream;

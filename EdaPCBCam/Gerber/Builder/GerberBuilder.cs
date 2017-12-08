@@ -125,30 +125,38 @@
 
         public void Operation(double x, double y, double cx, double cy, OperationCode operation) {
 
+            bool changed = false;
+
             sb.Clear();
             if (state.X != x) {
                 state.X = x;
+                changed = true;
                 sb.Append('X');
                 sb.Append(FormatNumber(x, precision, decimals));
             }
             if (state.Y != y) {
                 state.Y = y;
+                changed = true;
                 sb.Append('Y');
                 sb.Append(FormatNumber(y, precision, decimals));
             }
             if (state.CX != cx) {
                 state.CX = cx;
+                changed = true;
                 sb.Append('I');
                 sb.Append(FormatNumber(cx, precision, decimals));
             }
             if (state.CY != cy) {
                 state.CY = cy;
+                changed = true;
                 sb.Append('J');
                 sb.Append(FormatNumber(cy, precision, decimals));
             }
-            sb.AppendFormat("D{0:00}*", Convert.ToInt32(operation));
 
-            writer.WriteLine(sb.ToString());
+            if (changed) {
+                sb.AppendFormat("D{0:00}*", Convert.ToInt32(operation));
+                writer.WriteLine(sb.ToString());
+            }
         }
 
         /// <summary>

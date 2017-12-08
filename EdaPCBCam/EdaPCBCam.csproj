@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CAMGenerator.cs" />
+    <Compile Include="Gerber\ApertureDictionary.cs" />
     <Compile Include="Gerber\Builder\Aperture.cs" />
     <Compile Include="Gerber\Builder\Apertures\ObroundAperture.cs" />
     <Compile Include="Gerber\Builder\GerberBuilder.cs" />
@@ -58,7 +59,6 @@
     <Compile Include="Gerber\Builder\Apertures\MacroAperture.cs" />
     <Compile Include="Gerber\Builder\Apertures\PoligonAperture.cs" />
     <Compile Include="Gerber\Builder\Apertures\RectangleAperture.cs" />
-    <Compile Include="Gerber\ApertureKeyGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@
 
         public enum TextAlign {
             TopLeft,
-            TipCenter,
+            TopCenter,
             TopRight,
             MiddleLeft,
             MiddleCenter,
@@ -27,9 +27,12 @@
 
         }
 
-        public TextElement(Point position, Layer layer):
+        public TextElement(Point position, Layer layer, double rotate, double height, TextAlign align = TextAlign.MiddleCenter):
             base(position, layer) {
 
+            this.rotate = rotate;
+            this.height = height;
+            this.align = align;
         }
 
         public override void AcceptVisitor(IVisitor visitor) {

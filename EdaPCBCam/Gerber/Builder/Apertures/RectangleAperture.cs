@@ -10,7 +10,8 @@
         private readonly double height;
         private readonly double drill;
 
-        public RectangleAperture(double width, double height, double drill = 0) {
+        public RectangleAperture(int id, double width, double height, double drill = 0) :
+            base(id) {
 
             if (width <= 0)
                 throw new ArgumentOutOfRangeException("width");

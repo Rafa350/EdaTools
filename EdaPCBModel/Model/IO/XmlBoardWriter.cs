@@ -249,6 +249,13 @@
                     writer.WriteEndElement();
                 }
 
+                if (board.Elements != null) {
+                    writer.WriteStartElement("elements");
+                    foreach (ElementBase element in board.Elements)
+                        element.AcceptVisitor(this);
+                    writer.WriteEndElement();
+                }
+
                 if (board.Signals != null) {
                     writer.WriteStartElement("signals");
                     foreach (Signal signal in board.Signals)

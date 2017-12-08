@@ -1,6 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
 
     using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Media;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
@@ -19,6 +21,45 @@
                 if (element.InLayer(layer))
                     return true;
             return false;
+        }
+
+        public static Point GetEndPosition(this LineElement element, Part part) {
+
+            Point p = element.EndPosition;
+            if (part != null) {
+                Matrix m = new Matrix();
+                m.Translate(part.Position.X, part.Position.Y);
+                m.RotateAt(part.Rotate, part.Position.X, part.Position.Y);
+                return m.Transform(p);
+            }
+            else
+                return p;
+        }
+
+        public static Point GetCenter(this ArcElement element, Part part) {
+
+            Point p = element.Center;
+            if (part != null) {
+                Matrix m = new Matrix();
+                m.Translate(part.Position.X, part.Position.Y);
+                m.RotateAt(part.Rotate, part.Position.X, part.Position.Y);
+                return m.Transform(p);
+            }
+            else
+                return p;
+        }
+
+        public static Point GetPosition(this ElementBase element, Part part) {
+
+            Point p = element.Position;
+            if (part != null) {
+                Matrix m = new Matrix();
+                m.Translate(part.Position.X, part.Position.Y);
+                m.RotateAt(part.Rotate, part.Position.X, part.Position.Y);
+                return m.Transform(p);
+            }
+            else
+                return p;
         }
     }
 }

@@ -9,7 +9,8 @@
         private readonly object[] args;
         private readonly Macro macro;
 
-        public MacroAperture(Macro macro, params object[] args) {
+        public MacroAperture(int id, Macro macro, params object[] args) :
+            base(id) {
 
             if (macro == null)
                 throw new ArgumentNullException("macro");

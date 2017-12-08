@@ -9,7 +9,8 @@
         public readonly double diameter;
         public readonly double drill;
 
-        public CircleAperture(double diameter, double drill = 0) {
+        public CircleAperture(int id, double diameter, double drill = 0) :
+            base(id) {
 
             if (diameter <= 0)
                 throw new ArgumentOutOfRangeException("diameter");

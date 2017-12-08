@@ -61,7 +61,7 @@
 
             // Defineix la capa de mesures
             //
-            board.AddLayer(new Layer(LayerId.Profile, "Measures", measuresColor, true));
+            board.AddLayer(new Layer(LayerId.Profile, "Profile", measuresColor, true));
 
             // Defineix les capes de documentacio
             //

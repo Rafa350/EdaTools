@@ -40,6 +40,16 @@
             layers.Add(board.GetLayer(LayerId.Profile));
             imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.Profile, @"..\..\..\Data\board_Profile$NP.gbr");
 
+            layers.Clear();
+            layers.Add(board.GetLayer(LayerId.TopPlace));
+            layers.Add(board.GetLayer(LayerId.Profile));
+            imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.TopLegend, @"..\..\..\Data\board_Legend$Top.gbr");
+
+            layers.Clear();
+            layers.Add(board.GetLayer(LayerId.BottomPlace));
+            layers.Add(board.GetLayer(LayerId.Profile));
+            imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.BottomLegend, @"..\..\..\Data\board_Legend$Bottom.gbr");
+
             GerberDrillGenerator drillGenerator = new GerberDrillGenerator();
 
             layers.Clear();

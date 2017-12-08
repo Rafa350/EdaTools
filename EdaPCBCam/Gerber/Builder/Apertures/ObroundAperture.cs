@@ -10,7 +10,8 @@
         private readonly double height;
         private readonly double drill;
 
-        public ObroundAperture(double width, double height, double drill = 0) {
+        public ObroundAperture(int id, double width, double height, double drill = 0) : 
+            base(id) {
 
             if (width <= 0)
                 throw new ArgumentOutOfRangeException("width");

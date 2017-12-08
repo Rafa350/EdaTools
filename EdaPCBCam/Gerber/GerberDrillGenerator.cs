@@ -1,15 +1,13 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
 
+    using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-    using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
-    using MikroPic.EdaTools.v1.Cam.Gerber.Builder.Apertures;
     using System;
+    using System.Collections.Generic;
+    using System.IO;
     using System.Text;
     using System.Windows;
-    using System.IO;
-    using System.Windows.Media;
-    using System.Collections.Generic;
 
     public sealed class GerberDrillGenerator: GerberGenerator {
 
@@ -33,7 +31,7 @@
 
                     // Crea el diccionari d'apertures
                     //
-                    IDictionary<string, Aperture> apertures = new Dictionary<string, Aperture>();
+                    ApertureDictionary apertures = new ApertureDictionary();
                     board.AcceptVisitor(new DefineAperturesVisitor(layers, apertures));
 
                     GerberBuilder gb = new GerberBuilder(writer);
@@ -60,7 +58,7 @@
                     // Definicio de les apertures
                     //
                     gb.Comment("BEGIN APERTURES");
-                    gb.DefineApertures(apertures.Values);
+                    gb.DefineApertures(apertures.Apertures);
                     gb.Comment("END APERTURES");
 
                     // Definicio de la imatge
@@ -79,9 +77,9 @@
         private sealed class DefineAperturesVisitor : DefaultVisitor {
 
             private readonly IList<Layer> layers;
-            private readonly IDictionary<string, Aperture> apertures;
+            private readonly ApertureDictionary apertures;
 
-            public DefineAperturesVisitor(IList<Layer> layers, IDictionary<string, Aperture> apertures) {
+            public DefineAperturesVisitor(IList<Layer> layers, ApertureDictionary apertures) {
 
                 this.layers = layers;
                 this.apertures = apertures;
@@ -89,29 +87,20 @@
 
             public override void Visit(HoleElement hole) {
 
-                if (hole.InAnyLayer(layers)) {
-                    string key = ApertureKeyGenerator.GenerateKey(hole);
-                    if (!apertures.ContainsKey(key))
-                        apertures.Add(key, new CircleAperture(hole.Drill));
-                }
+                if (hole.InAnyLayer(layers)) 
+                    apertures.AddCircle(hole.Drill);
             }
 
             public override void Visit(ViaElement via) {
 
-                if (via.InAnyLayer(layers)) {
-                    string key = ApertureKeyGenerator.GenerateKey(via, true);
-                    if (!apertures.ContainsKey(key))
-                        apertures.Add(key, new CircleAperture(via.Drill));
-                }
+                if (via.InAnyLayer(layers))
+                    apertures.AddCircle(via.Drill);
             }
 
             public override void Visit(ThPadElement pad) {
 
-                if (pad.InAnyLayer(layers)) {
-                    string key = ApertureKeyGenerator.GenerateKey(pad, true);
-                    if (!apertures.ContainsKey(key))
-                        apertures.Add(key, new CircleAperture(pad.Drill));
-                }
+                if (pad.InAnyLayer(layers))
+                    apertures.AddCircle(pad.Drill);
             }
         }
 
@@ -120,9 +109,9 @@
 
             private readonly GerberBuilder gb;
             private readonly IList<Layer> layers;
-            private readonly IDictionary<string, Aperture> apertures;
+            private readonly ApertureDictionary apertures;
 
-            public ImageGeneratorVisitor(GerberBuilder gb, IList<Layer> layers, IDictionary<string, Aperture> apertures) {
+            public ImageGeneratorVisitor(GerberBuilder gb, IList<Layer> layers, ApertureDictionary apertures) {
 
                 this.gb = gb;
                 this.layers = layers;
@@ -132,17 +121,9 @@
             public override void Visit(HoleElement hole) {
 
                 if (hole.InAnyLayer(layers)) {
-                    string key = ApertureKeyGenerator.GenerateKey(hole);
-
-                    Point p = hole.Position;
-                    if (VisitingPart != null) {
-                        Matrix m = new Matrix();
-                        m.Translate(VisitingPart.Position.X, VisitingPart.Position.Y);
-                        m.RotateAt(VisitingPart.Rotate, VisitingPart.Position.X, VisitingPart.Position.Y);
-                        p = m.Transform(p);
-                    }
-
-                    gb.SelectAperture(apertures[key]);
+                    Aperture ap = apertures.GetCircleAperture(hole.Drill);
+                    gb.SelectAperture(ap);
+                    Point p = hole.GetPosition(VisitingPart);
                     gb.Operation(p.X, p.Y, OperationCode.Flash);
                 }
             }
@@ -155,8 +136,8 @@
             public override void Visit(ViaElement via) {
 
                 if (via.InAnyLayer(layers)) {
-                    string key = ApertureKeyGenerator.GenerateKey(via, true);
-                    gb.SelectAperture(apertures[key]);
+                    Aperture ap = apertures.GetCircleAperture(via.Drill);
+                    gb.SelectAperture(ap);
                     gb.Operation(via.Position.X, via.Position.Y, OperationCode.Flash);
                 }
             }
@@ -169,17 +150,9 @@
             public override void Visit(ThPadElement pad) {
 
                 if (pad.InAnyLayer(layers)) {
-                    string key = ApertureKeyGenerator.GenerateKey(pad, true);
-
-                    Point p = pad.Position;
-                    if (VisitingPart != null) {
-                        Matrix m = new Matrix();
-                        m.Translate(VisitingPart.Position.X, VisitingPart.Position.Y);
-                        m.RotateAt(VisitingPart.Rotate, VisitingPart.Position.X, VisitingPart.Position.Y);
-                        p = m.Transform(p);
-                    }
-
-                    gb.SelectAperture(apertures[key]);
+                    Aperture ap = apertures.GetCircleAperture(pad.Drill);
+                    gb.SelectAperture(ap);
+                    Point p = pad.GetPosition(VisitingPart);
                     gb.Operation(p.X, p.Y, OperationCode.Flash);
                 }
             }

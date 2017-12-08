@@ -1,0 +1,242 @@
+﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
+
+    using System;
+    using System.Collections.Generic;
+    using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
+    using MikroPic.EdaTools.v1.Cam.Gerber.Builder.Apertures;
+
+    internal sealed class ApertureDictionary {
+
+        private static readonly Macro roundRectangleMacro = new Macro(
+            "21,1,$1,$2-$3-$3,0,0,$4*\n" +
+            "21,1,$1-$3-$3,$2,0,0,$4*\n" +
+            "$5=$1/2*\n" +
+            "$6=$2/2*\n" +
+            "$7=2x$3*\n" +
+            "1,1,$7,$5-$3,$6-$3,$4*\n" +
+            "1,1,$7,-$5+$3,$6-$3,$4*\n" +
+            "1,1,$7,-$5+$3,-$6+$3,$4*\n" +
+            "1,1,$7,$5-$3,-$6+$3,$4*");
+
+        // Definicio del macro per l'apertura rectangle
+        // $1: Amplada
+        // $2: Alçada
+        // $3: Angle de rotacio
+        //
+        private static readonly Macro rectangleMacro = new Macro(
+            "21,1,$1,$2,0,0,$3*");
+
+        // Definicio del macro per l'apertura ovalada
+        // $1: Amplada
+        // $2: Alçada
+        // $3: Diametre del forat
+        // $4: Angle de rotacio
+        //
+        private const string oblongApertureMacro = "";
+
+        // Definicio del macro per l'apertura octogonal
+        // $1: Amplada
+        // $2: Alçada
+        // $3: Diametre del forat
+        // $4: Angle de rotacio
+        //
+        private const string octagonApertureMacro = "";
+
+        private readonly IList<Macro> macros = new List<Macro>();
+        private readonly IDictionary<string, Aperture> items = new Dictionary<string, Aperture>();
+        private int id = 10;
+
+        /// <summary>
+        /// Contructor del objecte.
+        /// </summary>
+        /// 
+        public ApertureDictionary() {
+
+            macros.Add(rectangleMacro);
+            macros.Add(roundRectangleMacro);
+        }
+
+        /// <summary>
+        /// Obte la clau unique per una apertura de tipus cercle.
+        /// </summary>
+        /// <param name="diameter">Diametre.</param>
+        /// <returns>La clau unica.</returns>
+        /// 
+        private static string GetCircleKey(double diameter) {
+
+            return String.Format("circle_{0}", diameter);
+        }
+
+        /// <summary>
+        /// Obte la clau unica per una apertura de tipus rectangle.
+        /// </summary>
+        /// <param name="width">Amplada.</param>
+        /// <param name="height">Alçada.</param>
+        /// <param name="rotate">Orientacio.</param>
+        /// <returns>La clau unica.</returns>
+        /// 
+        private static string GetRectangleKey(double width, double height, double rotate) {
+
+            return String.Format("rectangle_{0}_{1}_{2}", width, height, rotate);
+        }
+
+        /// <summary>
+        /// Obte la clau unica per una apertura de tipus rectangle arrodonit.
+        /// </summary>
+        /// <param name="width">Amplada.</param>
+        /// <param name="height">Alçada.</param>
+        /// <param name="radius">Radi de corvatura.</param>
+        /// <param name="rotate">Orientacio.</param>
+        /// <returns>La clau unica.</returns>
+        /// 
+        private static string GetRoundRectangleKey(double width, double height, double radius, double rotate) {
+
+            return String.Format("round_{0}_{1}_{2}_{3}", width, height, radius, rotate);
+        }
+
+        /// <summary>
+        /// Obte la clau unica per una apertura de tipus octagon.
+        /// </summary>
+        /// <param name="size">Diametre extern..</param>
+        /// <param name="rotate">Orientacio.</param>
+        /// <returns>La clau unica.</returns>
+        /// 
+        private static string GetOctagonKey(double size, double rotate) {
+
+            return String.Format("octagon_{0}_{1}", size, rotate);
+        }
+
+        /// <summary>
+        /// Obte la clau unica per una apertura de tipus oval.
+        /// </summary>
+        /// <param name="width">Amplada.</param>
+        /// <param name="height">Alçada.</param>
+        /// <param name="rotate">Orientacio.</param>
+        /// <returns>la clau unica.</returns>
+        /// 
+        private static string GetOvalKey(double width, double height, double rotate) {
+
+            return String.Format("oval_{0}_{1}_{2}", width, height, rotate);
+        }
+
+        /// <summary>
+        /// Afegeix una apertuda de tipus cercle.
+        /// </summary>
+        /// <param name="diameter">Diametre.</param>
+        /// 
+        public void AddCircle(double diameter) {
+
+            string key = GetCircleKey(diameter);
+            if (!items.ContainsKey(key)) {
+                Aperture ap = new CircleAperture(id++, diameter);
+                items.Add(key, ap);
+            }
+        }
+
+        /// <summary>
+        /// Afegeix una apertura de tipus rectangle.
+        /// </summary>
+        /// <param name="width">Amplada.</param>
+        /// <param name="height">Alçada.</param>
+        /// <param name="rotate">Orientacio.</param>
+        /// 
+        public void AddRectangle(double width, double height, double rotate) {
+
+            string key = GetRectangleKey(width, height, rotate);
+            if (!items.ContainsKey(key)) {
+                Aperture ap = new MacroAperture(id++, rectangleMacro, width, height, rotate);
+                items.Add(key, ap);
+            }
+        }
+
+        /// <summary>
+        /// Afegeix una apertura de tipus rectangle arrodonit.
+        /// </summary>
+        /// <param name="width">Amplada.</param>
+        /// <param name="height">Alçada.</param>
+        /// <param name="radius">Radi de corvatura.</param>
+        /// <param name="rotate">orientacio.</param>
+        /// 
+        public void AddRoundRectangle(double width, double height, double radius, double rotate) {
+
+            string key = GetRoundRectangleKey(width, height, radius, rotate);
+            if (!items.ContainsKey(key)) {
+                Aperture ap = new MacroAperture(id++, roundRectangleMacro, width, height, radius, rotate);
+                items.Add(key, ap);
+            }
+        }
+
+        /// <summary>
+        /// Afegeix una apertura de tipus octagon.
+        /// </summary>
+        /// <param name="size">Diametre exterior.</param>
+        /// <param name="rotate">Orientacio.</param>
+        /// 
+        public void AddOctagon(double size, double rotate) {
+
+            string key = GetOctagonKey(size, rotate);
+            if (!items.ContainsKey(key)) {
+                Aperture ap = new PoligonAperture(id++, 8, size, 22.5 + rotate);
+                items.Add(key, ap);
+            }
+        }
+
+        /// <summary>
+        /// Afegeix una apertura de tipus oval.
+        /// </summary>
+        /// <param name="width">Amplada.</param>
+        /// <param name="height">Alçada.</param>
+        /// <param name="rotate">Orientacio.</param>
+        /// 
+        public void AddOval(double width, double height, double rotate) {
+
+            string key = GetOvalKey(width, height, rotate);
+            if (!items.ContainsKey(key)) {
+                Aperture ap = new ObroundAperture(id++, width, height);
+                items.Add(key, ap);
+            }
+        }
+
+        public Aperture GetCircleAperture(double diameter) {
+
+            string key = GetCircleKey(diameter);
+            return items[key];
+        }
+
+        public Aperture GetRectangleAperture(double width, double height, double rotate) {
+
+            string key = GetRectangleKey(width, height, rotate);
+            return items[key];
+        }
+
+        public Aperture GetRoundRectangleAperture(double width, double height, double radius, double rotate) {
+
+            string key = GetRoundRectangleKey(width, height, radius, rotate);
+            return items[key];
+        }
+
+        public Aperture GetOctagonAperture(double size, double rotate) {
+
+            string key = GetOctagonKey(size, rotate);
+            return items[key];
+        }
+
+        public Aperture GetOvalAperture(double width, double height, double rotate) {
+
+            string key = GetOvalKey(width, height, rotate);
+            return items[key];
+        }
+
+        public IEnumerable<Macro> Macros {
+            get {
+                return macros;
+            }
+        }
+
+        public IEnumerable<Aperture> Apertures {
+            get {
+                return items.Values;
+            }
+        }
+    }
+}

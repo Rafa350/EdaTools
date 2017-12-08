@@ -2,16 +2,15 @@
 
     public abstract class Aperture {
 
-        private static int __id = 10;
         private readonly int id;
 
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
         /// 
-        public Aperture() {
+        public Aperture(int id) {
 
-            this.id = __id++;
+            this.id = id;
         }
 
         protected abstract string GetCommand();
