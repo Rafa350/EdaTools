@@ -519,6 +519,11 @@
             return new HoleElement(new Point(x, y), drill);
         }
 
+        /// <summary>
+        /// Procesa un node de tipus ELEMENT i crea un objecte Part
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>L'objecte Part creat.</returns>
         private Part ParseElementNode(XmlNode node) {
 
             string name = GetAttribute(node, "name");

@@ -46,7 +46,7 @@
         }
 
         /// <summary>
-        /// Obte el conjunt da capes del element.
+        /// Obte el conjunt de capes del element.
         /// </summary>
         /// 
         public LayerSet Layers {

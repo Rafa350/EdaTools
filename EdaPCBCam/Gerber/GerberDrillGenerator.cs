@@ -124,7 +124,7 @@
                     Aperture ap = apertures.GetCircleAperture(hole.Drill);
                     gb.SelectAperture(ap);
                     Point p = hole.GetPosition(VisitingPart);
-                    gb.Operation(p.X, p.Y, OperationCode.Flash);
+                    gb.FlashAt(p.X, p.Y);
                 }
             }
 
@@ -138,7 +138,7 @@
                 if (via.InAnyLayer(layers)) {
                     Aperture ap = apertures.GetCircleAperture(via.Drill);
                     gb.SelectAperture(ap);
-                    gb.Operation(via.Position.X, via.Position.Y, OperationCode.Flash);
+                    gb.FlashAt(via.Position.X, via.Position.Y);
                 }
             }
 
@@ -153,7 +153,7 @@
                     Aperture ap = apertures.GetCircleAperture(pad.Drill);
                     gb.SelectAperture(ap);
                     Point p = pad.GetPosition(VisitingPart);
-                    gb.Operation(p.X, p.Y, OperationCode.Flash);
+                    gb.FlashAt(p.X, p.Y);
                 }
             }
         }

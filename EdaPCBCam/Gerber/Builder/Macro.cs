@@ -1,11 +1,10 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
+﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Builder {
 
     using System;
     using System.Text;
 
     public class Macro {
 
-        private static int __id = 0;
         private readonly int id;
         private readonly string text;
 
@@ -14,12 +13,12 @@
         /// </summary>
         /// <param name="text">La sequencia de comandes del macro.</param>
         /// 
-        public Macro(string text) {
+        public Macro(int id, string text) {
 
             if (String.IsNullOrEmpty(text))
                 throw new ArgumentNullException("text");
 
-            this.id = __id++;
+            this.id = id;
             this.text = text;
         }
 

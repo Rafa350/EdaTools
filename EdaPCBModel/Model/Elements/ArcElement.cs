@@ -32,28 +32,28 @@
 
                 // Calcula el punt central
                 //
-                double mx = (x1 + x2) / 2;
-                double my = (y1 + y2) / 2;
+                double mx = (x1 + x2) / 2.0;
+                double my = (y1 + y2) / 2.0;
 
-                // Calcula la distancia
+                // Calcula la distancia entre els dos punts.
                 //
-                double l = Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
+                double d = Math.Sqrt(Math.Pow(x2 - x1, 2.0) + Math.Pow(y2 - y1, 2.0));
 
                 // Calcula el radi
                 //
-                double r = Math.Abs((l / 2) / Math.Sin((angle / 2) * Math.PI / 180));
+                double r = Math.Abs((d / 2.0) / Math.Sin((angle / 2.0) * Math.PI / 180.0));
 
                 // Calcula el centre
                 //
                 if (angle > 0)
                     return new Point(
-                        mx + Math.Sqrt(Math.Pow(r, 2) - Math.Pow((l / 2), 2)) * (y1 - y2) / l,
-                        my + Math.Sqrt(Math.Pow(r, 2) - Math.Pow((l / 2), 2)) * (x2 - x1) / l);
+                        mx + Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (y1 - y2) / d,
+                        my + Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (x2 - x1) / d);
 
                 else
                     return new Point(
-                        mx - Math.Sqrt(Math.Pow(r, 2) - Math.Pow((l / 2), 2)) * (y1 - y2) / l,
-                        my - Math.Sqrt(Math.Pow(r, 2) - Math.Pow((l / 2), 2)) * (x2 - x1) / l);
+                        mx - Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (y1 - y2) / d,
+                        my - Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (x2 - x1) / d);
             }
         }
 
@@ -72,8 +72,13 @@
 
         public double Radius {
             get {
-                double co = Math.Sqrt(Math.Pow(EndPosition.X - StartPosition.X, 2) + Math.Pow(EndPosition.Y - StartPosition.Y, 2)) / 2;
-                return Math.Abs(co / Math.Sin((angle / 2) * Math.PI / 180));
+                // La semi-distancia entre els dos punts es un catet
+                //
+                double sd = Math.Sqrt(Math.Pow(EndPosition.X - StartPosition.X, 2.0) + Math.Pow(EndPosition.Y - StartPosition.Y, 2.0)) / 2.0;
+
+                // La hipotenusa es el radi. Aplicant trigonometria...
+                //
+                return Math.Abs(sd / Math.Sin((angle / 2.0) * Math.PI / 180.0));
             }
         }
     }

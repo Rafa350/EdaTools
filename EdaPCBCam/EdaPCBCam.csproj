@@ -51,11 +51,12 @@
     <Compile Include="Gerber\Builder\Apertures\ObroundAperture.cs" />
     <Compile Include="Gerber\Builder\GerberBuilder.cs" />
     <Compile Include="Gerber\Builder\Apertures\CircleAperture.cs" />
+    <Compile Include="Gerber\Builder\State.cs" />
     <Compile Include="Gerber\ElementExtensions.cs" />
     <Compile Include="Gerber\GerberDrillGenerator.cs" />
     <Compile Include="Gerber\GerberImageGenerator.cs" />
     <Compile Include="Gerber\GerberGenerator.cs" />
-    <Compile Include="Gerber\Macro.cs" />
+    <Compile Include="Gerber\Builder\Macro.cs" />
     <Compile Include="Gerber\Builder\Apertures\MacroAperture.cs" />
     <Compile Include="Gerber\Builder\Apertures\PoligonAperture.cs" />
     <Compile Include="Gerber\Builder\Apertures\RectangleAperture.cs" />

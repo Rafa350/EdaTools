@@ -10,6 +10,9 @@
 
         public void Add(IEnumerable<Layer> layerSet) {
 
+            if (layerSet == null)
+                throw new ArgumentNullException("layerSet");
+
             foreach (Layer layer in layerSet)
                 Add(layer);
         }
@@ -46,15 +49,15 @@
             return items.GetEnumerator();
         }
 
-        public int Count {
+        public bool IsEmpty {
             get {
-                return items.Count;
+                return items.Count != 0;
             }
         }
 
-        public IEnumerable<Layer> Layers {
+        public int Count {
             get {
-                return items;
+                return items.Count;
             }
         }
     }

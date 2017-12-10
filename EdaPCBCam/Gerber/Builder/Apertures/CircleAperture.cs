@@ -12,7 +12,7 @@
         public CircleAperture(int id, double diameter, double drill = 0) :
             base(id) {
 
-            if (diameter <= 0)
+            if (diameter < 0) // C es l'unica que permet tamany zero
                 throw new ArgumentOutOfRangeException("diameter");
 
             if (drill >= diameter)

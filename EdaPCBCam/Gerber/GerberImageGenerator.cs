@@ -227,10 +227,9 @@
                     Aperture ap = apertures.GetCircleAperture(Math.Max(line.Thickness, 0.01));
                     gb.SelectAperture(ap);
                     Point p1 = line.GetPosition(VisitingPart);
-                    gb.Operation(p1.X, p1.Y, OperationCode.Move);
+                    gb.MoveTo(p1.X, p1.Y);
                     Point p2 = line.GetEndPosition(VisitingPart);
-                    gb.SetLinealInterpolationMode();
-                    gb.Operation(p2.X, p2.Y, OperationCode.Interpolate);
+                    gb.LineTo(p2.X, p2.Y);
                 }
             }
 
@@ -240,13 +239,13 @@
                     Aperture ap = apertures.GetCircleAperture(Math.Max(arc.Thickness, 0.01));
                     gb.SelectAperture(ap);
                     Point p1 = arc.GetPosition(VisitingPart);
-                    gb.Operation(p1.X, p1.Y, OperationCode.Move);
+                    gb.MoveTo(p1.X, p1.Y);
                     Point p2 = arc.GetEndPosition(VisitingPart);
                     Point c = arc.GetCenter(VisitingPart);
-                    if (arc.Angle <= 90) {
-                        gb.SetCircularInterpolationMode(CircularInterpolationQuadrant.Single, CircularInterpolationDirection.CW);
-                        gb.Operation(p2.X, p2.Y, Math.Abs(c.X - p1.X), Math.Abs(c.Y - p1.Y), OperationCode.Interpolate);
-                    }
+                    gb.ArcTo(
+                        p2.X, p2.Y,
+                        c.X - p1.X, c.Y - p1.Y,
+                        arc.Angle < 0 ? ArcDirection.CW : ArcDirection.CCW);
                 }
             }
 
@@ -258,7 +257,7 @@
                         Aperture ap = apertures.GetRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotate);
                         gb.SelectAperture(ap);
                         Point p = rectangle.GetPosition(VisitingPart);
-                        gb.Operation(p.X, p.Y, OperationCode.Flash);
+                        gb.FlashAt(p.X, p.Y);
                     }
                 }
             }
@@ -270,7 +269,7 @@
                         Aperture ap = apertures.GetCircleAperture(circle.Diameter);
                         gb.SelectAperture(ap);
                         Point p = circle.GetPosition(VisitingPart);
-                        gb.Operation(p.X, p.Y, OperationCode.Flash);
+                        gb.FlashAt(p.X, p.Y);
                     }
                 }
             }
@@ -294,7 +293,7 @@
                             break;
                     }
                     gb.SelectAperture(ap);
-                    gb.Operation(via.Position.X, via.Position.Y, OperationCode.Flash);
+                    gb.FlashAt(via.Position.X, via.Position.Y);
                 }
             }
 
@@ -327,7 +326,7 @@
                     }
                     gb.SelectAperture(ap);
                     Point p = pad.GetPosition(VisitingPart);
-                    gb.Operation(p.X, p.Y, OperationCode.Flash);
+                    gb.FlashAt(p.X, p.Y);
                 }
             }
 
@@ -344,7 +343,7 @@
                     Aperture ap = apertures.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotate);
                     gb.SelectAperture(ap);
                     Point p = pad.GetPosition(VisitingPart);
-                    gb.Operation(p.X, p.Y, OperationCode.Flash);
+                    gb.FlashAt(p.X, p.Y);
                 }
             }
         }

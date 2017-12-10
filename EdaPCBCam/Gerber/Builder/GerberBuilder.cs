@@ -11,28 +11,23 @@
         Inches
     }
 
-    public enum OperationCode {
-        Interpolate = 1,
-        Move = 2,
-        Flash = 3
-    }
-
     public enum InterpolationMode {
         Unknown,
         Linear,
-        Circular
+        CircularSingleCW,
+        CircularSingleCCW,
+        CircularMultipleCW,
+        CircularMultipleCCW,
     }
 
-    public enum CircularInterpolationQuadrant {
-        Unknown,
-        Single,
-        Multiple
-    }
-
-    public enum CircularInterpolationDirection {
-        Unknown,
+    public enum ArcDirection {
         CW,
         CCW
+    }
+
+    public enum ArcQuadrant {
+        Single,
+        Multiple
     }
 
     public enum AperturePolarity {
@@ -43,31 +38,8 @@
     public sealed class GerberBuilder {
 
         private readonly TextWriter writer;
-        private readonly StringBuilder sb = new StringBuilder();
-
-        private sealed class State {
-            public int Aperture { get; set; }
-            public AperturePolarity AperturePolarity { get; set; }
-            public double ApertureAngle { get; set; }
-            public InterpolationMode InterpolationMode { get; set; }
-            public double X { get; set; }
-            public double Y { get; set; }
-            public double CX { get; set; }
-            public double CY { get; set; }
-
-            public State() {
-                Aperture = -1;
-                AperturePolarity = AperturePolarity.Dark;
-                ApertureAngle = 0;
-                InterpolationMode = InterpolationMode.Unknown;
-                X = 0;
-                Y = 0;
-                CX = 0;
-                CY = 0;
-            }
-        }
-
-        private State state = new State();
+        private readonly StringBuilder sb = new StringBuilder();       
+        private readonly State state = new State();
         private int precision = 7;
         private int decimals = 4;
 
@@ -118,43 +90,129 @@
             writer.WriteLine(String.Format("%TF{0}*%", attr));
         }
 
-        public void Operation(double x, double y, OperationCode operation) {
-
-            Operation(x, y, 0, 0, operation);
-        }
-
-        public void Operation(double x, double y, double cx, double cy, OperationCode operation) {
-
-            bool changed = false;
+        /// <summary>
+        /// Flash d'una apertura en la posicio indicada. La posicio,
+        /// passa a ser la posicio actual.
+        /// </summary>
+        /// <param name="x">Coordinada X de la posicio.</param>
+        /// <param name="y">Coordinada Y de la posicio</param>
+        /// 
+        public void FlashAt(double x, double y) {
 
             sb.Clear();
-            if (state.X != x) {
-                state.X = x;
-                changed = true;
+            if (state.SetX(x)) { 
                 sb.Append('X');
-                sb.Append(FormatNumber(x, precision, decimals));
+                sb.Append(FormatNumber(x));
             }
-            if (state.Y != y) {
-                state.Y = y;
-                changed = true;
+            if (state.SetY(y)) {
                 sb.Append('Y');
-                sb.Append(FormatNumber(y, precision, decimals));
-            }
-            if (state.CX != cx) {
-                state.CX = cx;
-                changed = true;
-                sb.Append('I');
-                sb.Append(FormatNumber(cx, precision, decimals));
-            }
-            if (state.CY != cy) {
-                state.CY = cy;
-                changed = true;
-                sb.Append('J');
-                sb.Append(FormatNumber(cy, precision, decimals));
+                sb.Append(FormatNumber(y));
             }
 
-            if (changed) {
-                sb.AppendFormat("D{0:00}*", Convert.ToInt32(operation));
+            sb.Append("D03*");
+            writer.WriteLine(sb.ToString());
+        }
+
+        /// <summary>
+        /// Mou la posicio actual a les coordinades especificades.
+        /// </summary>
+        /// <param name="x">Coordinada X.</param>
+        /// <param name="y">Coordinada Y.</param>
+        /// 
+        public void MoveTo(double x, double y) {
+
+            // Si no hi ha moviment real, no cal fa res
+            //
+            if ((state.X != x) || (state.Y != y)) {
+
+                sb.Clear();
+                if (state.SetX(x)) {
+                    sb.Append('X');
+                    sb.Append(FormatNumber(x));
+                }
+                if (state.SetY(y)) {
+                    sb.Append('Y');
+                    sb.Append(FormatNumber(y));
+                }
+
+                sb.Append("D02*");
+                writer.WriteLine(sb.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Interpola una linia desde la posicio actual fins la especificada.
+        /// </summary>
+        /// <param name="x">Coordinada X.</param>
+        /// <param name="y">Coordinada Y.</param>
+        /// 
+        public void LineTo(double x, double y) {
+
+            if (state.Aperture == null)
+                throw new InvalidOperationException("Apertura no seleccionada.");
+
+            // Si no hi ha movinent real, no cal fer res
+            //
+            if ((state.X != x) || (state.Y != y)) {
+
+                SetInterpolationMode(InterpolationMode.Linear);
+
+                sb.Clear();
+                if (state.SetX(x)) {
+                    sb.Append('X');
+                    sb.Append(FormatNumber(x));
+                }
+                if (state.SetY(y)) {
+                    sb.Append('Y');
+                    sb.Append(FormatNumber(y));
+                }
+
+                sb.Append("D01*");
+                writer.WriteLine(sb.ToString());
+            }
+        }
+
+        public void ArcTo(double x, double y, double cx, double cy, ArcDirection direction, ArcQuadrant quadrant = ArcQuadrant.Multiple) {
+
+            if (state.Aperture == null)
+                throw new InvalidOperationException("Apertura no seleccionada.");
+
+            // Si no hi ha moviment real, no cal fer res
+            //
+            if ((state.X != x) || (state.Y != y)) {
+
+                if (direction == ArcDirection.CW) {
+                    if (quadrant == ArcQuadrant.Single)
+                        SetInterpolationMode(InterpolationMode.CircularSingleCW);
+                    else
+                        SetInterpolationMode(InterpolationMode.CircularMultipleCW);
+                }
+                else {
+                    if (quadrant == ArcQuadrant.Single)
+                        SetInterpolationMode(InterpolationMode.CircularSingleCCW);
+                    else
+                        SetInterpolationMode(InterpolationMode.CircularMultipleCCW);
+                }
+
+                sb.Clear();
+                if (state.SetX(x)) {
+                    sb.Append('X');
+                    sb.Append(FormatNumber(x));
+                }
+                if (state.SetY(y)) {
+                    sb.Append('Y');
+                    sb.Append(FormatNumber(y));
+                }
+                if (state.SetCX(cx)) {
+                    sb.Append('I');
+                    sb.Append(FormatNumber(cx));
+                }
+                if (state.SetCY(cy)) {
+                    sb.Append('J');
+                    sb.Append(FormatNumber(cy));
+                }
+
+                sb.AppendFormat("D01*");
                 writer.WriteLine(sb.ToString());
             }
         }
@@ -223,10 +281,8 @@
             if (aperture == null)
                 throw new ArgumentNullException("aperture");
 
-            if (state.Aperture != aperture.Id) {
-                state.Aperture = aperture.Id;
+            if (state.SetAperture(aperture))
                 writer.WriteLine(String.Format("D{0:00}*", aperture.Id));
-            }
         }
 
         /// <summary>
@@ -259,57 +315,50 @@
 
         public void SetAperturePolarity(AperturePolarity polarity) {
 
-            if (state.AperturePolarity != polarity) {
-                state.AperturePolarity = polarity;
+            if (state.SetAperturePolarity(polarity)) 
                 writer.WriteLine(String.Format("%LP{0}*%", polarity == AperturePolarity.Dark ? "D" : "C"));
-            }
         }
 
         public void SetApertureRotation(double angle) {
 
-            if (state.ApertureAngle != angle) {
-                state.ApertureAngle = angle;
+            if (state.SetApertureAngle(angle))
                 writer.WriteLine(String.Format("%LR{0}*%", angle));
-            }
         }
 
         /// <summary>
-        /// Selecciona interpolacio linial.
+        /// Selecciona el modus d'interpolacio.
         /// </summary>
-        public void SetLinealInterpolationMode() {
+        public void SetInterpolationMode(InterpolationMode interpolationMode) {
 
-            if (state.InterpolationMode != InterpolationMode.Linear) {
-                state.InterpolationMode = InterpolationMode.Linear;
-                writer.WriteLine("G01*");
-            }
-        }
+            if (state.SetInterpolationMode(interpolationMode)) {
 
-        /// <summary>
-        /// Selecciona interpolacio circular.
-        /// </summary>
-        /// <param name="quadrant">Quadrant simple o multiple.</param>
-        /// <param name="direccio">Direccio dreta o esquerra.</param>
-        /// 
-        public void SetCircularInterpolationMode(CircularInterpolationQuadrant quadrant, CircularInterpolationDirection direction) {
+                switch(interpolationMode) {
+                    case InterpolationMode.Linear:
+                        writer.WriteLine("G01*");
+                        break;
 
-            if (quadrant == CircularInterpolationQuadrant.Unknown)
-                throw new ArgumentOutOfRangeException("quadrant");
+                    case InterpolationMode.CircularSingleCW:
+                    case InterpolationMode.CircularMultipleCW:
+                        writer.WriteLine("G02*");
+                        break;
 
-            if (direction == CircularInterpolationDirection.Unknown)
-                throw new ArgumentOutOfRangeException("direction");
+                    case InterpolationMode.CircularSingleCCW:
+                    case InterpolationMode.CircularMultipleCCW:
+                        writer.WriteLine("G03*");
+                        break;
+                }
 
-            if (state.InterpolationMode != InterpolationMode.Circular) {
-                state.InterpolationMode = InterpolationMode.Circular;
+                switch (interpolationMode) {
+                    case InterpolationMode.CircularSingleCW:
+                    case InterpolationMode.CircularSingleCCW:
+                        writer.WriteLine("G74*");
+                        break;
 
-                if (direction == CircularInterpolationDirection.CW)
-                    writer.WriteLine("G02*");
-                else
-                    writer.WriteLine("G03*");
-
-                if (quadrant == CircularInterpolationQuadrant.Single)
-                    writer.WriteLine("G74*");
-                else
-                    writer.WriteLine("G75*");
+                    case InterpolationMode.CircularMultipleCW:
+                    case InterpolationMode.CircularMultipleCCW:
+                        writer.WriteLine("G75*");
+                        break;
+                }
             }
         }
 
@@ -349,14 +398,16 @@
         /// Formateja un numero.
         /// </summary>
         /// <param name="number">El numero a formatejar.</param>
-        /// <param name="precision">Nombre de digits.</param>
-        /// <param name="decimals">Nombre de posicions decimals.</param>
         /// <returns>El numero formatejat.</returns>
         /// 
-        private static string FormatNumber(double number, int precision, int decimals) {
+        private string FormatNumber(double number) {
 
-            number = Math.Round(number * Math.Pow(10, decimals));
-            return number.ToString().PadLeft(precision, '0');
+            for (int i = 0; i < decimals; i++)
+                number *= 10;
+            number = Math.Round(number);
+
+            string fmt = String.Format("{{0:{0}}}", new String('0', precision));
+            return String.Format(fmt, number);
         }
     }
 }
