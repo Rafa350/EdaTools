@@ -46,20 +46,20 @@
                     double angle = 0;
 
                     ctx.BeginFigure(new Point(x1, y1), Polygon.Thickness == 0, true);
-                    foreach (PolygonElement.Segment node in Polygon.Nodes) {
+                    foreach (PolygonElement.Segment node in Polygon.Segments) {
                         if (angle == 0)
-                            ctx.LineTo(node.Delta, true, true);
+                            ctx.LineTo(node.Position, true, true);
                         else {
-                            double co = Math.Sqrt(Math.Pow(node.Delta.X - x1, 2) + Math.Pow(node.Delta.Y - y1, 2)) / 2;
+                            double co = Math.Sqrt(Math.Pow(node.Position.X - x1, 2) + Math.Pow(node.Position.Y - y1, 2)) / 2;
                             double radius = Math.Abs(co / Math.Sin((angle / 2) * Math.PI / 180));
-                            ctx.ArcTo(node.Delta, new Size(radius, radius),
+                            ctx.ArcTo(node.Position, new Size(radius, radius),
                                 Math.Abs(angle),
                                 true,
                                 angle > 0 ? SweepDirection.Clockwise : SweepDirection.Counterclockwise,
                                 true, true);
                         }
-                        x1 = node.Delta.X;
-                        y1 = node.Delta.Y;
+                        x1 = node.Position.X;
+                        y1 = node.Position.Y;
                         angle = node.Angle;
                     }
                 }

@@ -285,6 +285,14 @@
                         case "wire":
                             signal.Add(ParseWireNode(node));
                             break;
+
+                        case "polygon": {
+                                PolygonNodeInfo info = ParsePolygonNode(node);
+                                PolygonElement polygon = boardBuilder.CreatePolygon(new Point(0, 0), 0, info.Thickness, info.Layer);
+                                CreateVertexList(node, polygon);
+                                signal.Add(polygon);
+                            }
+                            break;
                     }
                 }
 

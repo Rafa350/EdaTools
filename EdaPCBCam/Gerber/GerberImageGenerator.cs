@@ -17,6 +17,8 @@
             Bottom,
             TopSolderMask,
             BottomSolderMask,
+            TopCream,
+            BottomCream,
             Profile,
             TopLegend,
             BottomLegend
@@ -74,6 +76,12 @@
                         case ImageType.BottomSolderMask:
                             gb.Attribute(".FileFunction,Soldermask,Bot");
                             gb.Attribute(".FilePolarity,Negative");
+                            break;
+
+                        case ImageType.TopCream:
+                            break;
+
+                        case ImageType.BottomCream:
                             break;
 
                         case ImageType.Profile:
@@ -271,6 +279,22 @@
                         Point p = circle.GetPosition(VisitingPart);
                         gb.FlashAt(p.X, p.Y);
                     }
+                }
+            }
+
+            public override void Visit(PolygonElement polygon) {
+
+                if (polygon.InAnyLayer(layers)) {
+                    gb.BeginRegion();
+                    double x = polygon.Position.X;
+                    double y = polygon.Position.Y;
+                    gb.MoveTo(x, y);
+                    foreach (PolygonElement.Segment segment in polygon.Segments) {
+                        x = segment.Position.X;
+                        y = segment.Position.Y;
+                        gb.LineTo(x, y);
+                    }
+                    gb.EndRegion();
                 }
             }
 

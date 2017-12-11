@@ -1,11 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
     using System.Globalization;
     using System.IO;
     using System.Xml;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-    
+
     public sealed class XmlBoardWriter {
 
         private Stream stream;
@@ -141,11 +141,11 @@
                 writer.WriteAttribute("position", polygon.Position);
                 if (polygon.Thickness > 0)
                     writer.WriteAttribute("thickness", polygon.Thickness);
-                foreach (PolygonElement.Segment node in polygon.Nodes) {
+                foreach (PolygonElement.Segment segment in polygon.Segments) {
                     writer.WriteStartElement("segment");
-                    writer.WriteAttribute("position", node.Delta);
-                    if (node.Angle != 0)
-                        writer.WriteAttribute("angle", node.Angle);
+                    writer.WriteAttribute("position", segment.Position);
+                    if (segment.Angle != 0)
+                        writer.WriteAttribute("angle", segment.Angle);
                     writer.WriteEndElement();
                 }
                 writer.WriteEndElement();

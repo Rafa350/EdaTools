@@ -7,11 +7,11 @@
 
         public class Segment {
 
-            public Point Delta { get; set; }            
+            public Point Position { get; set; }            
             public double Angle { get; set; }
         }
 
-        private List<Segment> nodes;
+        private List<Segment> segments;
         private double rotate;
         private double thickness;
 
@@ -32,11 +32,11 @@
 
         public PolygonElement AddLine(Point delta) {
 
-            if (nodes == null)
-                nodes = new List<Segment>();
+            if (segments == null)
+                segments = new List<Segment>();
 
-            nodes.Add(new Segment {
-                Delta = delta,
+            segments.Add(new Segment {
+                Position = delta,
                 Angle = 0
             });
 
@@ -45,11 +45,11 @@
 
         public PolygonElement AddArc(Point delta, double angle) {
 
-            if (nodes == null)
-                nodes = new List<Segment>();
+            if (segments == null)
+                segments = new List<Segment>();
 
-            nodes.Add(new Segment {
-                Delta = delta,
+            segments.Add(new Segment {
+                Position = delta,
                 Angle = angle
             });
 
@@ -84,9 +84,9 @@
             }
         }
 
-        public IEnumerable<Segment> Nodes {
+        public IEnumerable<Segment> Segments {
             get {
-                return nodes;
+                return segments;
             }
         }
     }
