@@ -27,15 +27,15 @@
                 Brush brush = BrushCache.Instance.GetBrush(Colors.Green);
                 switch (Via.Shape) {
                     case ViaElement.ViaShape.Circular:
-                        dc.DrawCircularRing(brush, null, Via.Position, Via.Size, Via.Drill);
+                        dc.DrawCircularRing(brush, null, Via.Position, Via.OuterSize, Via.Drill);
                         break;
 
                     case ViaElement.ViaShape.Square:
-                        dc.DrawSquareRing(brush, null, Via.Position, Via.Size, Via.Drill);
+                        dc.DrawSquareRing(brush, null, Via.Position, Via.OuterSize, Via.Drill);
                         break;
 
                     case ViaElement.ViaShape.Octogonal:
-                        dc.DrawOctogonalRing(brush, null, Via.Position, Via.Size, Via.Drill);
+                        dc.DrawOctogonalRing(brush, null, Via.Position, Via.OuterSize, Via.Drill);
                         break;
                 }
             }

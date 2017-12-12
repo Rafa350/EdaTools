@@ -178,7 +178,8 @@
                 writer.WriteAttribute("position", via.Position);
                 writer.WriteAttribute("layers", via.Layers);
                 writer.WriteAttribute("drill", via.Drill);
-                writer.WriteAttribute("size", via.Size);
+                writer.WriteAttribute("outerSize", via.OuterSize);
+                writer.WriteAttribute("innerSize", via.InnerSize);
                 writer.WriteAttributeString("shape", via.Shape.ToString());
                 writer.WriteEndElement();
             }

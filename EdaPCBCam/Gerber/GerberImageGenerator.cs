@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
 
     using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
-    using MikroPic.EdaTools.v1.Cam.Gerber.Builder.Apertures;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
@@ -59,12 +58,12 @@
                     gb.Comment("BEGIN HEADER");
                     switch (imageType) {
                         case ImageType.Top:
-                            gb.Attribute(".FileFunction,Copper,L1,Top,Signal");
+                            gb.Attribute(String.Format(".FileFunction,Copper,L{0},{1},Signal", 1, "Top"));
                             gb.Attribute(".FilePolarity,Positive");
                             break;
 
                         case ImageType.Bottom:
-                            gb.Attribute(".FileFunction,Copper,L2,Bottom,Signal");
+                            gb.Attribute(String.Format(".FileFunction,Copper,L{0},{1},Signal", 2, "Bot"));
                             gb.Attribute(".FilePolarity,Positive");
                             break;
 
@@ -79,9 +78,13 @@
                             break;
 
                         case ImageType.TopCream:
+                            gb.Attribute(".FileFunction,Paste,Top");
+                            gb.Attribute(".FilePolarity,Negative");
                             break;
 
                         case ImageType.BottomCream:
+                            gb.Attribute(".FileFunction,Paste,Bot");
+                            gb.Attribute(".FilePolarity,Negative");
                             break;
 
                         case ImageType.Profile:
@@ -168,15 +171,15 @@
                 if (via.InAnyLayer(layers)) {
                     switch (via.Shape) {
                         case ViaElement.ViaShape.Circular:
-                            apertures.AddCircle(via.Size);
+                            apertures.AddCircle(via.OuterSize);
                             break;
 
                         case ViaElement.ViaShape.Square:
-                            apertures.AddRectangle(via.Size, via.Size, 0);
+                            apertures.AddRectangle(via.OuterSize, via.OuterSize, 0);
                             break;
 
                         case ViaElement.ViaShape.Octogonal:
-                            apertures.AddOctagon(via.Size, 0);
+                            apertures.AddOctagon(via.OuterSize, 0);
                             break;
                     }
                 }
@@ -305,15 +308,15 @@
                     switch (via.Shape) {
                         default:
                         case ViaElement.ViaShape.Circular:
-                            ap = apertures.GetCircleAperture(via.Size);
+                            ap = apertures.GetCircleAperture(via.OuterSize);
                             break;
 
                         case ViaElement.ViaShape.Square:
-                            ap = apertures.GetRectangleAperture(via.Size, via.Size, 0);
+                            ap = apertures.GetRectangleAperture(via.OuterSize, via.OuterSize, 0);
                             break;
 
                         case ViaElement.ViaShape.Octogonal:
-                            ap = apertures.GetOctagonAperture(via.Size, 0);
+                            ap = apertures.GetOctagonAperture(via.OuterSize, 0);
                             break;
                     }
                     gb.SelectAperture(ap);

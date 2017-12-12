@@ -21,7 +21,7 @@
             boardWriter.Write(board);
 
             CAMGenerator camGenerator = new CAMGenerator();
-            camGenerator.Generate(board, Path.Combine(path, "board3.gbr"));
+            camGenerator.Generate(board, @"..\..\..\Data", "board");
         }
     }
 }

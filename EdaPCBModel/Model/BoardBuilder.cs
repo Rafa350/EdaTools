@@ -161,7 +161,7 @@
 
             ViaElement via = new ViaElement();
             via.Position = position;
-            via.Size = size;
+            via.OuterSize = size;
             via.Drill = drill;
             via.Shape = shape;
             via.Layers.Add(board.GetLayer(LayerId.Vias));

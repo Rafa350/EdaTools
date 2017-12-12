@@ -15,7 +15,8 @@
         private const double OAR = 0.125;
 
         private double drill;
-        private double size;
+        private double outerSize;
+        private double innerSize;
         private ViaShape shape = ViaShape.Circular;
 
         /// <summary>
@@ -42,7 +43,8 @@
             if (position == null)
                 throw new ArgumentNullException("position");
 
-            this.size = size;
+            this.outerSize = size;
+            this.innerSize = size;
             this.drill = drill;
             this.shape = shape;
         }
@@ -91,15 +93,28 @@
         }
 
         /// <summary>
-        /// Obte o asigna el tamany de la corona.
+        /// Obte o asigna el tamany de la corona de les capes externes.
         /// </summary>
         /// 
-        public double Size {
+        public double OuterSize {
             get {
-                return Math.Max(drill + 0.1 + (OAR * 2.0), size);
+                return Math.Max(drill + 0.1 + (OAR * 2.0), outerSize);
             }
             set {
-                size = value;
+                outerSize = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna el tamany de la corona de les capes internes.
+        /// </summary>
+        /// 
+        public double InnerSize {
+            get {
+                return Math.Max(drill + 0.1 + (OAR * 2.0), innerSize);
+            }
+            set {
+                innerSize = value;
             }
         }
 

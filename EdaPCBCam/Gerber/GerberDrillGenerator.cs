@@ -42,8 +42,8 @@
                     gb.Comment("EdaTools CAM processor. Gerber generator.");
                     gb.Comment("BEGIN HEADER");
 
-                    if (drillType == DrillType.PlatedDrill) 
-                        gb.Attribute(".FileFunction,Plated,1,2,PTH,Drill");
+                    if (drillType == DrillType.PlatedDrill)
+                        gb.Attribute(String.Format(".FileFunction,Plated,{0},{1},PTH,Drill", 1, 2));
                     else
                         gb.Attribute(".FileFunction,Profile,NP");
                     gb.Attribute(".FilePolarity,Positive");
