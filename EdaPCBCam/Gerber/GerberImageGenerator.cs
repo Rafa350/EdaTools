@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
 
     using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
+    using MikroPic.EdaTools.v1.Cam.Gerber.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
@@ -372,6 +373,18 @@
                     Point p = pad.GetPosition(VisitingPart);
                     gb.FlashAt(p.X, p.Y);
                 }
+            }
+        }
+
+        private sealed class PolygonBuilderVisitor: DefaultVisitor {
+
+            public PolygonBuilderVisitor() {
+
+            }
+
+            public override void Visit(ThPadElement pad) {
+
+                Polygon polygon = Polygon.FromCircle(pad.Position.X, pad.Position.Y, pad.Size);
             }
         }
     }

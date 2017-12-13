@@ -4,10 +4,11 @@
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Media;
+    using ClipperLib;
 
     public sealed class Polygon {
 
-        private List<Point> points = new List<Point>();
+        private List<IntPoint> points = new List<IntPoint>();
 
         /// <summary>
         /// Crea un poligon a partir d'un cercle.
@@ -54,14 +55,60 @@
             return p;
         }
 
-        public void AddPoint(double x, double y) {
+        public Polygon() {
 
-            points.Add(new Point(x, y));
         }
 
+        public Polygon(IEnumerable<Point> points) {
+
+            foreach (var point in points)
+                AddPoint(point);
+        }
+
+        /// <summary>
+        /// Constructor intern.
+        /// </summary>
+        /// <param name="points">Enumeracio amb els punt a afeigir.</param>
+        /// 
+        private Polygon(IEnumerable<IntPoint> points) {
+
+            this.points.AddRange(points);
+        }
+
+        /// <summary>
+        /// Afegeix un punt al poligon.
+        /// </summary>
+        /// <param name="x">Coordinada X del punt.</param>
+        /// <param name="y">Coordinada Y del punt.</param>
+        /// 
+        public void AddPoint(double x, double y) {
+
+            points.Add(new IntPoint(x * 10000, y * 10000));
+        }
+
+        /// <summary>
+        /// Afegeix un punt al poligon.
+        /// </summary>
+        /// <param name="point">El punt a afeigir.</param>
+        /// 
         public void AddPoint(Point point) {
 
-            points.Add(point);
+            points.Add(new IntPoint(point.X * 10000, point.Y * 10000));
+        }
+
+        public IEnumerable<Polygon> Clip(Polygon clipPolygon) {
+
+            Clipper cp = new Clipper();
+            cp.AddPath(points, PolyType.ptSubject, true);
+            cp.AddPath(clipPolygon.points, PolyType.ptClip, true);
+
+            List<List<IntPoint>> solution = new List<List<IntPoint>>();
+            cp.Execute(ClipType.ctDifference, solution);
+
+            List<Polygon> polygons = new List<Polygon>();
+            foreach (var poly in solution)
+                polygons.Add(new Polygon(poly));
+            return polygons;
         }
 
         public int NumPoints {
@@ -72,7 +119,10 @@
 
         public IEnumerable<Point> Points {
             get {
-                return points;
+                List<Point> p = new List<Point>(points.Count);
+                foreach (var point in points)
+                    p.Add(new Point(point.X / 10000, point.Y / 10000));
+                return p;
             }
         }
     }
