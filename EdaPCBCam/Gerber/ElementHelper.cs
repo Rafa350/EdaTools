@@ -6,7 +6,7 @@
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
-    internal static class ElementExtensions {
+    internal static class ElementHelper {
 
         /// <summary>
         /// Comprova si el element pertany a alguna capa.
