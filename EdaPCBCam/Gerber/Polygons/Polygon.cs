@@ -23,15 +23,15 @@
             Polygon p = new Polygon();
 
             double radius = diameter / 2;
-            double delta = 6 * Math.PI / 180;
+            double delta = 15 * Math.PI / 180;
             for (double a = 0; a < 2 * Math.PI; a += delta)
-                p.AddPoint(x + radius * Math.Sin(a), y + radius * Math.Cos(a));
+                p.AddPoint(x + radius * Math.Cos(a), y + radius * Math.Sin(a));
 
             return p;
         }
 
         /// <summary>
-        /// Creas un poligon a partir d'un rectangle.
+        /// Crea un poligon a partir d'un rectangle.
         /// </summary>
         /// <param name="x">Coordinada X del centre.</param>
         /// <param name="y">Coordinada Y del centre.</param>
@@ -47,18 +47,46 @@
 
             Polygon p = new Polygon();
 
-            p.AddPoint(m.Transform(new Point(x, y)));
-            p.AddPoint(m.Transform(new Point(x + width, y)));
-            p.AddPoint(m.Transform(new Point(x + width, y + height)));
-            p.AddPoint(m.Transform(new Point(x, y + height)));
+            double w = width / 2;
+            double h = height / 2;
+            p.AddPoint(m.Transform(new Point(x - w, y - h)));
+            p.AddPoint(m.Transform(new Point(x + w, y - h)));
+            p.AddPoint(m.Transform(new Point(x + w, y + h)));
+            p.AddPoint(m.Transform(new Point(x - w, y + h)));
 
             return p;
         }
 
+        public static Polygon FromPolygon(int facets, double x, double y, double diameter, double rotate) {
+
+            Matrix m = new Matrix();
+            m.RotateAt(rotate, x, y); 
+
+            Polygon p = new Polygon();
+
+            double radius = diameter / 2;
+            double a = rotate * Math.PI / 180;
+            for (int f = 0; f < facets; f++) {
+                p.AddPoint(m.Transform(new Point(x + radius * Math.Cos(a), y + radius * Math.Sin(a))));
+                a += 360 / (double)facets * Math.PI / 180;
+            }
+
+            return p;
+        }
+
+        /// <summary>
+        /// Constructor. Crea un poligon buit.
+        /// </summary>
+        /// 
         public Polygon() {
 
         }
 
+        /// <summary>
+        /// Constructor. Crea un poligon a partir d'una coleccio de punts.
+        /// </summary>
+        /// <param name="points">Coleccio de punts.</param>
+        /// 
         public Polygon(IEnumerable<Point> points) {
 
             foreach (var point in points)
@@ -66,9 +94,9 @@
         }
 
         /// <summary>
-        /// Constructor intern.
+        /// Constructor intern. Crea el poligon a partir d'una coleccio de punts.
         /// </summary>
-        /// <param name="points">Enumeracio amb els punt a afeigir.</param>
+        /// <param name="points">Coleccio de punts.</param>
         /// 
         private Polygon(IEnumerable<IntPoint> points) {
 
@@ -121,7 +149,7 @@
             get {
                 List<Point> p = new List<Point>(points.Count);
                 foreach (var point in points)
-                    p.Add(new Point(point.X / 10000, point.Y / 10000));
+                    p.Add(new Point((double)point.X / 10000.0, (double)point.Y / 10000.0));
                 return p;
             }
         }

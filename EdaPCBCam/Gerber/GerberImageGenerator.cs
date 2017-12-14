@@ -115,8 +115,10 @@
 
                     // Definicio de la imatge
                     //
+                    BuildPolygons(board, gb);
+
                     gb.Comment("BEGIN IMAGE");
-                    board.AcceptVisitor(new ImageGeneratorVisitor(gb, layers, apertures));
+                    //board.AcceptVisitor(new ImageGeneratorVisitor(gb, layers, apertures));
                     gb.Comment("END IMAGE");
 
                     // Final
@@ -124,6 +126,12 @@
                     gb.EndFile();
                 }
             }
+        }
+
+        private void BuildPolygons(Board board, GerberBuilder gb) {
+
+            PolygonBuilderVisitor visitor = new PolygonBuilderVisitor(gb);
+            board.AcceptVisitor(visitor);
         }
 
         private sealed class DefineAperturesVisitor : DefaultVisitor {
@@ -378,13 +386,84 @@
 
         private sealed class PolygonBuilderVisitor: DefaultVisitor {
 
-            public PolygonBuilderVisitor() {
+            private readonly GerberBuilder gb;
+            private readonly List<Polygon> polygons = new List<Polygon>();
 
+            public PolygonBuilderVisitor(GerberBuilder gb) {
+
+                this.gb = gb;
+            }
+
+            public override void Visit(ViaElement via) {
+
+                Point p = via.GetPosition(VisitingPart);
+
+                Polygon polygon = null;
+                switch (via.Shape) {
+                    case ViaElement.ViaShape.Circular:
+                        polygon = Polygon.FromCircle(p.X, p.Y, via.OuterSize);
+                        break;
+
+                    case ViaElement.ViaShape.Square:
+                        polygon = Polygon.FromRectangle(p.X, p.Y, via.OuterSize, via.OuterSize, 0);
+                        break;
+
+                    case ViaElement.ViaShape.Octogonal:
+                        polygon = Polygon.FromPolygon(8, p.X, p.Y, via.OuterSize, 22.5);
+                        break;
+                }
+
+                if (polygon != null) {
+                    gb.BeginRegion();
+                    bool first = true;
+                    foreach (Point point in polygon.Points) {
+                        if (first) {
+                            first = false;
+                            gb.MoveTo(point.X, point.Y);
+                        }
+                        else
+                            gb.LineTo(point.X, point.Y);
+                    }
+                    gb.EndRegion();
+                }
             }
 
             public override void Visit(ThPadElement pad) {
 
-                Polygon polygon = Polygon.FromCircle(pad.Position.X, pad.Position.Y, pad.Size);
+                Point p = pad.GetPosition(VisitingPart);
+                double rotate = pad.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
+
+                Polygon polygon = null;
+                switch (pad.Shape) {
+                    case ThPadElement.ThPadShape.Circular:
+                        polygon = Polygon.FromCircle(p.X, p.Y, pad.Size);
+                        break;
+
+                    case ThPadElement.ThPadShape.Square:
+                        polygon = Polygon.FromRectangle(p.X, p.Y, pad.Size, pad.Size, rotate);
+                        break;
+
+                    case ThPadElement.ThPadShape.Octogonal:
+                        polygon = Polygon.FromPolygon(8, p.X, p.Y, pad.Size, 22.5);
+                        break;
+
+                    case ThPadElement.ThPadShape.Oval:
+                        break;
+                }
+
+                if (polygon != null) {
+                    gb.BeginRegion();
+                    bool first = true;
+                    foreach (Point point in polygon.Points) {
+                        if (first) {
+                            first = false;
+                            gb.MoveTo(point.X, point.Y);
+                        }
+                        else
+                            gb.LineTo(point.X, point.Y);
+                    }
+                    gb.EndRegion();
+                }
             }
         }
     }

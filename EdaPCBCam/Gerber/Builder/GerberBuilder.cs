@@ -40,6 +40,7 @@
         private readonly TextWriter writer;
         private readonly StringBuilder sb = new StringBuilder();       
         private readonly State state = new State();
+        private bool inRegion = false;
         private int precision = 7;
         private int decimals = 4;
 
@@ -148,7 +149,7 @@
         /// 
         public void LineTo(double x, double y) {
 
-            if (state.Aperture == null)
+            if (state.Aperture == null && !inRegion)
                 throw new InvalidOperationException("Apertura no seleccionada.");
 
             // Si no hi ha movinent real, no cal fer res
@@ -291,6 +292,7 @@
         /// 
         public void BeginRegion() {
 
+            inRegion = true;
             writer.WriteLine("G36*");
         }
 
@@ -301,6 +303,7 @@
         public void EndRegion() {
 
             writer.WriteLine("G37*");
+            inRegion = false;
         }
 
         public void SetOffset(double x, double y) {
