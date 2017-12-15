@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
 
     using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
-    using MikroPic.EdaTools.v1.Cam.Gerber.Polygons;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
@@ -394,26 +394,11 @@
                 this.gb = gb;
             }
 
-            public override void Visit(ViaElement via) {
+            public override void Visit(Board board) {
 
-                Point p = via.GetPosition(VisitingPart);
+                base.Visit(board);
 
-                Polygon polygon = null;
-                switch (via.Shape) {
-                    case ViaElement.ViaShape.Circular:
-                        polygon = Polygon.FromCircle(p.X, p.Y, via.OuterSize);
-                        break;
-
-                    case ViaElement.ViaShape.Square:
-                        polygon = Polygon.FromRectangle(p.X, p.Y, via.OuterSize, via.OuterSize, 0);
-                        break;
-
-                    case ViaElement.ViaShape.Octogonal:
-                        polygon = Polygon.FromPolygon(8, p.X, p.Y, via.OuterSize, 22.5);
-                        break;
-                }
-
-                if (polygon != null) {
+                foreach (Polygon polygon in polygons) {
                     gb.BeginRegion();
                     bool first = true;
                     foreach (Point point in polygon.Points) {
@@ -428,42 +413,13 @@
                 }
             }
 
+            public override void Visit(ViaElement via) {
+            }
+
             public override void Visit(ThPadElement pad) {
 
-                Point p = pad.GetPosition(VisitingPart);
-                double rotate = pad.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
-
-                Polygon polygon = null;
-                switch (pad.Shape) {
-                    case ThPadElement.ThPadShape.Circular:
-                        polygon = Polygon.FromCircle(p.X, p.Y, pad.Size);
-                        break;
-
-                    case ThPadElement.ThPadShape.Square:
-                        polygon = Polygon.FromRectangle(p.X, p.Y, pad.Size, pad.Size, rotate);
-                        break;
-
-                    case ThPadElement.ThPadShape.Octogonal:
-                        polygon = Polygon.FromPolygon(8, p.X, p.Y, pad.Size, 22.5);
-                        break;
-
-                    case ThPadElement.ThPadShape.Oval:
-                        break;
-                }
-
-                if (polygon != null) {
-                    gb.BeginRegion();
-                    bool first = true;
-                    foreach (Point point in polygon.Points) {
-                        if (first) {
-                            first = false;
-                            gb.MoveTo(point.X, point.Y);
-                        }
-                        else
-                            gb.LineTo(point.X, point.Y);
-                    }
-                    gb.EndRegion();
-                }
+                Polygon polygon = Polygon.FromElement(pad, VisitingPart);
+                polygons.Add(polygon);
             }
         }
     }

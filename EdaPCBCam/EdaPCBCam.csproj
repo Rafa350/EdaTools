@@ -59,8 +59,6 @@
     <Compile Include="Gerber\Builder\Apertures\MacroAperture.cs" />
     <Compile Include="Gerber\Builder\Apertures\PoligonAperture.cs" />
     <Compile Include="Gerber\Builder\Apertures\RectangleAperture.cs" />
-    <Compile Include="Gerber\Polygons\Clipper.cs" />
-    <Compile Include="Gerber\Polygons\Polygon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
