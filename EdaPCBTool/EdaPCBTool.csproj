@@ -55,12 +55,6 @@
     <Compile Include="XmlHelper\XmlWriterHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EdaPCBModel\EdaPCBModel.csproj">
-      <Project>{706BC74F-0182-4B56-8D9D-C6B311044076}</Project>
-      <Name>EdaPCBModel</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

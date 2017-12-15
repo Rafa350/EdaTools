@@ -143,7 +143,7 @@
                 visualList.Add(new CircleVisual(circle, currentPart));
             }
 
-            public override void Visit(PolygonElement polygon) {
+            public override void Visit(RegionElement polygon) {
 
                 visualList.Add(new PolygonVisual(polygon, currentPart));
             }

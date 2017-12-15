@@ -57,7 +57,7 @@
         public virtual void Visit(ThPadElement pad) {
         }
 
-        public virtual void Visit(PolygonElement polygon) {
+        public virtual void Visit(RegionElement region) {
         }
 
         public virtual void Visit(TextElement text) {

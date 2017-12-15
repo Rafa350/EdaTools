@@ -8,7 +8,7 @@
 
     public sealed class PolygonVisual: ElementVisual {
 
-        public PolygonVisual(PolygonElement polygon, Part part)
+        public PolygonVisual(RegionElement polygon, Part part)
             : base(polygon, part) {
 
             RenderVisual();
@@ -46,7 +46,7 @@
                     double angle = 0;
 
                     ctx.BeginFigure(new Point(x1, y1), Polygon.Thickness == 0, true);
-                    foreach (PolygonElement.Segment node in Polygon.Segments) {
+                    foreach (RegionElement.Segment node in Polygon.Segments) {
                         if (angle == 0)
                             ctx.LineTo(node.Position, true, true);
                         else {
@@ -77,9 +77,9 @@
             }
         }
 
-        public PolygonElement Polygon {
+        public RegionElement Polygon {
             get {
-                return (PolygonElement) Element;
+                return (RegionElement) Element;
             }
         }
     }

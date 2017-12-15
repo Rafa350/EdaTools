@@ -124,12 +124,11 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EdaPCBModel\EdaPCBModel.csproj">
-      <Project>{706BC74F-0182-4B56-8D9D-C6B311044076}</Project>
-      <Name>EdaPCBModel</Name>
+    <ProjectReference Include="..\EdaPCBLibrary\EdaPCBLibrary.csproj">
+      <Project>{706bc74f-0182-4b56-8d9d-c6b311044076}</Project>
+      <Name>EdaPCBLibrary</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

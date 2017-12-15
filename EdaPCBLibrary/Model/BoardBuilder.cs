@@ -256,12 +256,12 @@
             return rectangle;
         }
 
-        public PolygonElement CreatePolygon(Point position, double rotate, double thickness, Layer layer) {
+        public RegionElement CreatePolygon(Point position, double rotate, double thickness, Layer layer) {
 
             if (layer == null)
                 throw new ArgumentNullException("layer");
 
-            PolygonElement polygon = new PolygonElement();
+            RegionElement polygon = new RegionElement();
             polygon.Position = position;
             polygon.Thickness = thickness;
             polygon.Layer = layer;

@@ -134,14 +134,16 @@
                 writer.WriteEndElement();
             }
 
-            public override void Visit(PolygonElement polygon) {
+            public override void Visit(RegionElement isolation) {
 
-                writer.WriteStartElement("polygon");
-                writer.WriteAttribute("layer", polygon.Layer);
-                writer.WriteAttribute("position", polygon.Position);
-                if (polygon.Thickness > 0)
-                    writer.WriteAttribute("thickness", polygon.Thickness);
-                foreach (PolygonElement.Segment segment in polygon.Segments) {
+                writer.WriteStartElement("region");
+                writer.WriteAttribute("layer", isolation.Layer);
+                writer.WriteAttribute("position", isolation.Position);
+                if (isolation.Thickness > 0)
+                    writer.WriteAttribute("thickness", isolation.Thickness);
+                if (isolation.Isolation > 0)
+                    writer.WriteAttribute("isolation", isolation.Isolation);
+                foreach (RegionElement.Segment segment in isolation.Segments) {
                     writer.WriteStartElement("segment");
                     writer.WriteAttribute("position", segment.Position);
                     if (segment.Angle != 0)

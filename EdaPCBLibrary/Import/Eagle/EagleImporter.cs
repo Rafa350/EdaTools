@@ -243,7 +243,7 @@
 
                             case "polygon": {
                                     PolygonNodeInfo info = ParsePolygonNode(node);
-                                    PolygonElement polygon = boardBuilder.CreatePolygon(new Point(0, 0), 0, info.Thickness, info.Layer);
+                                    RegionElement polygon = boardBuilder.CreatePolygon(new Point(0, 0), 0, info.Thickness, info.Layer);
                                     CreateVertexList(node, polygon);
                                     component.Add(polygon);
                                 }
@@ -288,7 +288,7 @@
 
                         case "polygon": {
                                 PolygonNodeInfo info = ParsePolygonNode(node);
-                                PolygonElement polygon = boardBuilder.CreatePolygon(new Point(0, 0), 0, info.Thickness, info.Layer);
+                                RegionElement polygon = boardBuilder.CreatePolygon(new Point(0, 0), 0, info.Thickness, info.Layer);
                                 CreateVertexList(node, polygon);
                                 signal.Add(polygon);
                             }
@@ -300,7 +300,7 @@
             }
         }
 
-        private void CreateVertexList(XmlNode polygonNode, PolygonElement polygon) {
+        private void CreateVertexList(XmlNode polygonNode, RegionElement polygon) {
 
             bool first = true;
             foreach (XmlNode vertexNode in polygonNode.SelectNodes("vertex")) {

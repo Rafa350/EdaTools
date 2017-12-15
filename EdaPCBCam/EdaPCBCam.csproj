@@ -40,7 +40,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -73,9 +72,9 @@
     <Folder Include="Gerber\Builder\Macros\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EdaPCBModel\EdaPCBModel.csproj">
+    <ProjectReference Include="..\EdaPCBLibrary\EdaPCBLibrary.csproj">
       <Project>{706bc74f-0182-4b56-8d9d-c6b311044076}</Project>
-      <Name>EdaPCBModel</Name>
+      <Name>EdaPCBLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

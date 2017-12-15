@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MikroPic.EdaTools.v1.Pcb</RootNamespace>
-    <AssemblyName>EdaPCBModel</AssemblyName>
+    <AssemblyName>EdaPCBLibrary</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Svn</SccProjectName>
@@ -62,7 +62,7 @@
     <Compile Include="Model\Elements\ElementBase.cs" />
     <Compile Include="Model\Elements\HoleElement.cs" />
     <Compile Include="Model\Elements\MultiLayerElement.cs" />
-    <Compile Include="Model\Elements\PolygonElement.cs" />
+    <Compile Include="Model\Elements\RegionElement.cs" />
     <Compile Include="Model\Elements\SingleLayerElement.cs" />
     <Compile Include="Model\Elements\TextElement.cs" />
     <Compile Include="Model\Elements\ViaElement.cs" />

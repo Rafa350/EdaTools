@@ -3,7 +3,7 @@
     using System.Windows;
     using System.Collections.Generic;
 
-    public sealed class PolygonElement: SingleLayerElement {
+    public sealed class RegionElement: SingleLayerElement {
 
         public class Segment {
 
@@ -14,13 +14,14 @@
         private List<Segment> segments;
         private double rotate;
         private double thickness;
+        private double isolation;
 
-        public PolygonElement():
+        public RegionElement():
             base() {
 
         }
 
-        public PolygonElement(Point position, Layer layer):
+        public RegionElement(Point position, Layer layer):
             base(position, layer) {
 
         }
@@ -30,7 +31,7 @@
             visitor.Visit(this);
         }
 
-        public PolygonElement AddLine(Point delta) {
+        public RegionElement AddLine(Point delta) {
 
             if (segments == null)
                 segments = new List<Segment>();
@@ -43,7 +44,7 @@
             return this;
         }
 
-        public PolygonElement AddArc(Point delta, double angle) {
+        public RegionElement AddArc(Point delta, double angle) {
 
             if (segments == null)
                 segments = new List<Segment>();
@@ -71,6 +72,15 @@
             }
             set {
                 thickness = value;
+            }
+        }
+
+        public double Isolation {
+            get {
+                return isolation;
+            }
+            set {
+                isolation = value;
             }
         }
 

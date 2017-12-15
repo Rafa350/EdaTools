@@ -294,14 +294,14 @@
                 }
             }
 
-            public override void Visit(PolygonElement polygon) {
+            public override void Visit(RegionElement polygon) {
 
                 if (polygon.InAnyLayer(layers)) {
                     gb.BeginRegion();
                     double x = polygon.Position.X;
                     double y = polygon.Position.Y;
                     gb.MoveTo(x, y);
-                    foreach (PolygonElement.Segment segment in polygon.Segments) {
+                    foreach (RegionElement.Segment segment in polygon.Segments) {
                         x = segment.Position.X;
                         y = segment.Position.Y;
                         gb.LineTo(x, y);
