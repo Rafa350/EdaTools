@@ -55,9 +55,9 @@
         /// <param name="layer">La capa per verificar.</param>
         /// <returns>True si pertany, false en cas contrari.</returns>
         /// 
-        public override bool InLayer(Layer layer) {
+        public override bool IsOnLayer(Layer layer) {
 
-            if (base.InLayer(layer))
+            if (base.IsOnLayer(layer))
                 return true;
             else if (layer.Id == LayerId.Vias)
                 return true;

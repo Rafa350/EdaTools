@@ -43,6 +43,7 @@
         private bool inRegion = false;
         private int precision = 7;
         private int decimals = 4;
+        private string fmt;
 
         public GerberBuilder(TextWriter writer) {
 
@@ -292,6 +293,9 @@
         /// 
         public void BeginRegion() {
 
+            if (inRegion)
+                throw new InvalidOperationException("Ya hay una region abierta.");
+
             inRegion = true;
             writer.WriteLine("G36*");
         }
@@ -301,6 +305,9 @@
         /// </summary>
         /// 
         public void EndRegion() {
+
+            if (!inRegion)
+                throw new InvalidOperationException("No hay ninguna region abierta.");
 
             writer.WriteLine("G37*");
             inRegion = false;
@@ -381,6 +388,9 @@
 
             this.precision = precision;
             this.decimals = decimals;
+
+            fmt = String.Format("{{0:{0}}}", new String('0', precision));
+
             writer.WriteLine("%FSLAX{0}{1}Y{0}{1}*%", precision - decimals, decimals);
         }
 
@@ -409,7 +419,6 @@
                 number *= 10;
             number = Math.Round(number);
 
-            string fmt = String.Format("{{0:{0}}}", new String('0', precision));
             return String.Format(fmt, number);
         }
     }

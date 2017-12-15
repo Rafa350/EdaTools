@@ -88,6 +88,7 @@
     <Compile Include="Model\Elements\SmdPadElement.cs" />
     <Compile Include="Model\Elements\ThPadElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\ElementFinder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Import\KiCad\" />

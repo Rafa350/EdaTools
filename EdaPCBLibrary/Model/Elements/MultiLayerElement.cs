@@ -37,7 +37,7 @@
         /// <param name="layer">La capa a comprovar.</param>
         /// <returns>True si pertany, false en cas contrari.</returns>
         /// 
-        public override bool InLayer(Layer layer) {
+        public override bool IsOnLayer(Layer layer) {
 
             foreach (var l in layers)
                 if (l == layer)

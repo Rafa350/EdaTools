@@ -20,7 +20,7 @@
             this.drill = drill;
         }
 
-        public override bool InLayer(Layer layer) {
+        public override bool IsOnLayer(Layer layer) {
 
             return layer.Id == LayerId.Holes;
         }

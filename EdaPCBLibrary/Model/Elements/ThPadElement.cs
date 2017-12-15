@@ -49,7 +49,7 @@
             this.shape = shape;
         }
 
-        public override bool InLayer(Layer layer) {
+        public override bool IsOnLayer(Layer layer) {
 
             if ((layer.Id == LayerId.Pads) ||
                 (layer.Id == LayerId.TopStop) ||

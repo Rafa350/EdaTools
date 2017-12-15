@@ -115,10 +115,10 @@
 
                     // Definicio de la imatge
                     //
-                    BuildPolygons(board, gb);
+                    //BuildPolygons(board, gb);
 
                     gb.Comment("BEGIN IMAGE");
-                    //board.AcceptVisitor(new ImageGeneratorVisitor(gb, layers, apertures));
+                    board.AcceptVisitor(new ImageGeneratorVisitor(gb, layers, apertures));
                     gb.Comment("END IMAGE");
 
                     // Final
@@ -294,18 +294,19 @@
                 }
             }
 
-            public override void Visit(RegionElement polygon) {
+            public override void Visit(RegionElement region) {
 
-                if (polygon.InAnyLayer(layers)) {
+                if (region.InAnyLayer(layers)) {
                     gb.BeginRegion();
-                    double x = polygon.Position.X;
-                    double y = polygon.Position.Y;
+                    double x = region.Position.X;
+                    double y = region.Position.Y;
                     gb.MoveTo(x, y);
-                    foreach (RegionElement.Segment segment in polygon.Segments) {
+                    foreach (RegionElement.Segment segment in region.Segments) {
                         x = segment.Position.X;
                         y = segment.Position.Y;
                         gb.LineTo(x, y);
                     }
+                    gb.LineTo(region.Position.X, region.Position.Y);
                     gb.EndRegion();
                 }
             }

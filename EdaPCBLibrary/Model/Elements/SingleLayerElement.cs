@@ -36,7 +36,7 @@
         /// <param name="layer">La capa a comprovar.</param>
         /// <returns>True si pertany a la capa, false en cas contrari.</returns>
         /// 
-        public override bool InLayer(Layer layer) {
+        public override bool IsOnLayer(Layer layer) {
 
             return this.layer == layer;
         }

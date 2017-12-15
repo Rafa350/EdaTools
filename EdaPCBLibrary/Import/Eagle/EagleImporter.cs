@@ -10,7 +10,7 @@
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
-    public sealed class EagleImporter: Importer {
+    public sealed class EagleImporter : Importer {
 
         private sealed class PolygonNodeInfo {
 
@@ -220,7 +220,7 @@
                                 component.Add(ParseSmdNode(node));
                                 break;
 
-                            case "pad": 
+                            case "pad":
                                 component.Add(ParsePadNode(node));
                                 break;
 
@@ -233,11 +233,11 @@
                                 component.Add(ParseWireNode(node));
                                 break;
 
-                            case "rectangle": 
+                            case "rectangle":
                                 component.Add(ParseRectangleNode(node));
                                 break;
-                                
-                            case "circle": 
+
+                            case "circle":
                                 component.Add(ParseCircleNode(node));
                                 break;
 
@@ -278,7 +278,7 @@
                 foreach (XmlNode node in signalNode.ChildNodes) {
 
                     switch (node.Name) {
-                        case "via": 
+                        case "via":
                             signal.Add(ParseViaNode(node));
                             break;
 
@@ -319,6 +319,110 @@
                 }
             }
         }
+
+        private Layer ParseLayerNode(XmlNode node) {
+
+            string name = node.Attributes["name"].Value;
+            int layerNum = Int32.Parse(node.Attributes["number"].Value);
+
+            LayerId id = LayerId.UserDefined1;
+            switch (layerNum) {
+                case 1:
+                    id = LayerId.Top;
+                    break;
+
+                case 16:
+                    id = LayerId.Bottom;
+                    break;
+
+                case 19:
+                    id = LayerId.Unrouted;
+                    break;
+
+                case 20:
+                    id = LayerId.Profile;
+                    break;
+
+                case 21:
+                    id = LayerId.TopPlace;
+                    break;
+
+                case 22:
+                    id = LayerId.BottomPlace;
+                    break;
+
+                case 25:
+                    id = LayerId.TopNames;
+                    break;
+
+                case 26:
+                    id = LayerId.BottomNames;
+                    break;
+
+                case 27:
+                    id = LayerId.TopValues;
+                    break;
+
+                case 28:
+                    id = LayerId.BottomValues;
+                    break;
+
+                case 29:
+                    id = LayerId.TopStop;
+                    break;
+
+                case 30:
+                    id = LayerId.BottomStop;
+                    break;
+
+                case 31:
+                    id = LayerId.TopCream;
+                    break;
+
+                case 32:
+                    id = LayerId.BottomCream;
+                    break;
+
+                case 35:
+                    id = LayerId.TopGlue;
+                    break;
+
+                case 36:
+                    id = LayerId.BottomGlue;
+                    break;
+
+                case 39:
+                    id = LayerId.TopKeepout;
+                    break;
+
+                case 40:
+                    id = LayerId.BottomKeepout;
+                    break;
+
+                case 41:
+                    id = LayerId.TopRestrict;
+                    break;
+
+                case 42:
+                    id = LayerId.BottomRestrict;
+                    break;
+
+                case 43:
+                    id = LayerId.ViaRestrict;
+                    break;
+
+                case 51:
+                    id = LayerId.TopDocument;
+                    break;
+
+                case 52:
+                    id = LayerId.BottomDocument;
+                    break;
+            }
+
+            return new Layer(id, name, Colors.WhiteSmoke);
+        }
+
 
         /// <summary>
         /// Procesa un node de tipus PAD i crea l'element corresponent.
@@ -391,9 +495,9 @@
             string value = null;
 
             string s = node.InnerText;
-            if (s.StartsWith(">")) 
+            if (s.StartsWith(">"))
                 name = s.Substring(1);
-            else 
+            else
                 value = s;
 
             double x = StrToDouble(GetAttribute(node, "x"));
@@ -429,9 +533,9 @@
 
             Layer layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
 
-            if (angle == 0) 
+            if (angle == 0)
                 return new LineElement(new Point(x1, y1), layer, new Point(x2, y2), thickness, lineCap);
-            else 
+            else
                 return new ArcElement(new Point(x1, y1), layer, new Point(x2, y2), thickness, angle, lineCap);
         }
 
@@ -649,7 +753,7 @@
 
             if (String.IsNullOrEmpty(value))
                 return defValue;
-            else 
+            else
                 return Int32.Parse(value);
         }
 
@@ -658,8 +762,8 @@
             if (String.IsNullOrEmpty(value))
                 return defValue;
             else
-                return 
-                    String.Compare(value, "yes", true) == 0 || 
+                return
+                    String.Compare(value, "yes", true) == 0 ||
                     String.Compare(value, "true", true) == 0;
         }
     }

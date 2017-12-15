@@ -17,7 +17,7 @@
 
         public abstract void AcceptVisitor(IVisitor visitor);
 
-        public abstract bool InLayer(Layer layer);
+        public abstract bool IsOnLayer(Layer layer);
 
         public Point Position {
             get {

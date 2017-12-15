@@ -18,7 +18,7 @@
         public static bool InAnyLayer(this ElementBase element, IEnumerable<Layer> layers) {
 
             foreach (Layer layer in layers)
-                if (element.InLayer(layer))
+                if (element.IsOnLayer(layer))
                     return true;
             return false;
         }

@@ -28,7 +28,7 @@
             this.cream = cream;
         }
 
-        public override bool InLayer(Layer layer) {
+        public override bool IsOnLayer(Layer layer) {
 
             if (Layer == layer)
                 return true;
