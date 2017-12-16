@@ -47,8 +47,7 @@
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
 
-                    ApertureDictionary apertures = new ApertureDictionary();
-                    board.AcceptVisitor(new DefineAperturesVisitor(layers, apertures));
+                    ApertureDictionary apertures = BuildApertures(board, layers);
 
                     GerberBuilder gb = new GerberBuilder(writer);
 
@@ -98,7 +97,6 @@
                     gb.SetOffset(0, 0);
                     gb.SetPolarity(true);
                     gb.SetAperturePolarity(AperturePolarity.Dark);
-                    gb.SetApertureRotation(0);
                     gb.Comment("END HEADER");
 
                     // Definicio de macros per les apertures
@@ -115,10 +113,22 @@
 
                     // Definicio de la imatge
                     //
-                    //BuildPolygons(board, gb);
+                    foreach (Polygon polygon in BuildPolygons(board, layers)) {
+                        gb.BeginRegion();
+                        bool first = true;
+                        foreach (Point point in polygon.Points) {
+                            if (first) {
+                                first = false;
+                                gb.MoveTo(point.X, point.Y);
+                            }
+                            else
+                                gb.LineTo(point.X, point.Y);
+                        }
+                        gb.EndRegion();
+                    }
 
                     gb.Comment("BEGIN IMAGE");
-                    board.AcceptVisitor(new ImageGeneratorVisitor(gb, layers, apertures));
+                    //board.AcceptVisitor(new ImageGeneratorVisitor(gb, layers, apertures));
                     gb.Comment("END IMAGE");
 
                     // Final
@@ -128,10 +138,28 @@
             }
         }
 
-        private void BuildPolygons(Board board, GerberBuilder gb) {
+        /// <summary>
+        /// Construeix el diccionari d'apertures.
+        /// </summary>
+        /// <param name="board">La placa.</param>
+        /// <param name="layers">La llista de capes.</param>
+        /// <returns>El deiccionari generat.</returns>
+        /// 
+        private static ApertureDictionary BuildApertures(Board board, IList<Layer> layers) {
 
-            PolygonBuilderVisitor visitor = new PolygonBuilderVisitor(gb);
+            ApertureDictionary apertures = new ApertureDictionary();
+            board.AcceptVisitor(new DefineAperturesVisitor(layers, apertures));
+
+            return apertures;
+        }
+
+        private IList<Polygon> BuildPolygons(Board board, IList<Layer> layers) {
+
+            List<Polygon> polygons = new List<Polygon>();
+            PolygonBuilderVisitor visitor = new PolygonBuilderVisitor(layers, polygons);
             board.AcceptVisitor(visitor);
+
+            return polygons;
         }
 
         private sealed class DefineAperturesVisitor : DefaultVisitor {
@@ -147,19 +175,19 @@
 
             public override void Visit(LineElement line) {
 
-                if (line.InAnyLayer(layers)) 
+                if (line.IsOnAnyLayer(layers)) 
                     apertures.AddCircle(Math.Max(line.Thickness, 0.01));
             }
 
             public override void Visit(ArcElement arc) {
 
-                if (arc.InAnyLayer(layers))
+                if (arc.IsOnAnyLayer(layers))
                     apertures.AddCircle(Math.Max(arc.Thickness, 0.01));
             }
 
             public override void Visit(RectangleElement rectangle) {
 
-                if (rectangle.InAnyLayer(layers)) {
+                if (rectangle.IsOnAnyLayer(layers)) {
                     if (rectangle.Thickness == 0) {
                         double rotate = rectangle.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
                         apertures.AddRectangle(rectangle.Size.Width, rectangle.Size.Height, rotate);
@@ -169,7 +197,7 @@
 
             public override void Visit(CircleElement circle) {
 
-                if (circle.InAnyLayer(layers)) {
+                if (circle.IsOnAnyLayer(layers)) {
                     if (circle.Thickness == 0)
                         apertures.AddCircle(circle.Diameter);
                 }
@@ -177,7 +205,7 @@
 
             public override void Visit(ViaElement via) {
 
-                if (via.InAnyLayer(layers)) {
+                if (via.IsOnAnyLayer(layers)) {
                     switch (via.Shape) {
                         case ViaElement.ViaShape.Circular:
                             apertures.AddCircle(via.OuterSize);
@@ -196,7 +224,7 @@
 
             public override void Visit(ThPadElement pad) {
 
-                if (pad.InAnyLayer(layers)) {
+                if (pad.IsOnAnyLayer(layers)) {
                     double rotate = pad.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
                     switch (pad.Shape) {
                         case ThPadElement.ThPadShape.Circular:
@@ -220,7 +248,7 @@
 
             public override void Visit(SmdPadElement pad) {
 
-                if (pad.InAnyLayer(layers)) {
+                if (pad.IsOnAnyLayer(layers)) {
                     double rotate = pad.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
                     double radius = (pad.Roundnes - 0.01) * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
                     apertures.AddRoundRectangle(pad.Size.Width, pad.Size.Height, radius, rotate);
@@ -243,7 +271,7 @@
 
             public override void Visit(LineElement line) {
 
-                if (line.InAnyLayer(layers)) {
+                if (line.IsOnAnyLayer(layers)) {
                     Aperture ap = apertures.GetCircleAperture(Math.Max(line.Thickness, 0.01));
                     gb.SelectAperture(ap);
                     Point p1 = line.GetPosition(VisitingPart);
@@ -255,7 +283,7 @@
 
             public override void Visit(ArcElement arc) {
 
-                if (arc.InAnyLayer(layers)) {
+                if (arc.IsOnAnyLayer(layers)) {
                     Aperture ap = apertures.GetCircleAperture(Math.Max(arc.Thickness, 0.01));
                     gb.SelectAperture(ap);
                     Point p1 = arc.GetPosition(VisitingPart);
@@ -271,7 +299,7 @@
 
             public override void Visit(RectangleElement rectangle) {
 
-                if (rectangle.InAnyLayer(layers)) {
+                if (rectangle.IsOnAnyLayer(layers)) {
                     if (rectangle.Thickness == 0) {
                         double rotate = rectangle.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
                         Aperture ap = apertures.GetRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotate);
@@ -284,7 +312,7 @@
 
             public override void Visit(CircleElement circle) {
 
-                if (circle.InAnyLayer(layers)) {
+                if (circle.IsOnAnyLayer(layers)) {
                     if (circle.Thickness == 0) {
                         Aperture ap = apertures.GetCircleAperture(circle.Diameter);
                         gb.SelectAperture(ap);
@@ -296,7 +324,7 @@
 
             public override void Visit(RegionElement region) {
 
-                if (region.InAnyLayer(layers)) {
+                if (region.IsOnAnyLayer(layers)) {
                     gb.BeginRegion();
                     double x = region.Position.X;
                     double y = region.Position.Y;
@@ -313,7 +341,7 @@
 
             public override void Visit(ViaElement via) {
 
-                if (via.InAnyLayer(layers)) {
+                if (via.IsOnAnyLayer(layers)) {
                     Aperture ap = null;
                     switch (via.Shape) {
                         default:
@@ -341,7 +369,7 @@
             /// 
             public override void Visit(ThPadElement pad) {
 
-                if (pad.InAnyLayer(layers)) {
+                if (pad.IsOnAnyLayer(layers)) {
                     double rotate = pad.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
                     Aperture ap = null;
                     switch (pad.Shape) {
@@ -374,7 +402,7 @@
             /// 
             public override void Visit(SmdPadElement pad) {
 
-                if (pad.InAnyLayer(layers)) {
+                if (pad.IsOnAnyLayer(layers)) {
                     double rotate = pad.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
                     double radius = (pad.Roundnes - 0.01) * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
                     Aperture ap = apertures.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotate);
@@ -387,40 +415,35 @@
 
         private sealed class PolygonBuilderVisitor: DefaultVisitor {
 
-            private readonly GerberBuilder gb;
-            private readonly List<Polygon> polygons = new List<Polygon>();
+            private readonly IList<Layer> layers;
+            private readonly IList<Polygon> polygons;
 
-            public PolygonBuilderVisitor(GerberBuilder gb) {
+            public PolygonBuilderVisitor(IList<Layer> layers, IList<Polygon> polygons) {
 
-                this.gb = gb;
-            }
-
-            public override void Visit(Board board) {
-
-                base.Visit(board);
-
-                foreach (Polygon polygon in polygons) {
-                    gb.BeginRegion();
-                    bool first = true;
-                    foreach (Point point in polygon.Points) {
-                        if (first) {
-                            first = false;
-                            gb.MoveTo(point.X, point.Y);
-                        }
-                        else
-                            gb.LineTo(point.X, point.Y);
-                    }
-                    gb.EndRegion();
-                }
+                this.layers = layers;
+                this.polygons = polygons;
             }
 
             public override void Visit(ViaElement via) {
+
+                if (via.IsOnAnyLayer(layers)) {
+                    Polygon polygon = Polygon.FromElement(via, VisitingPart);
+                    polygons.Add(polygon);
+                }
             }
 
             public override void Visit(ThPadElement pad) {
 
-                Polygon polygon = Polygon.FromElement(pad, VisitingPart);
-                polygons.Add(polygon);
+                if (pad.IsOnAnyLayer(layers)) {
+                    Polygon polygon = Polygon.FromElement(pad, VisitingPart);
+                    polygons.Add(polygon);
+                }
+            }
+
+            public IList<Polygon> Polygons {
+                get {
+                    return polygons;
+                }
             }
         }
     }

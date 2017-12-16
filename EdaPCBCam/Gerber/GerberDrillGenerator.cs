@@ -87,19 +87,19 @@
 
             public override void Visit(HoleElement hole) {
 
-                if (hole.InAnyLayer(layers)) 
+                if (hole.IsOnAnyLayer(layers)) 
                     apertures.AddCircle(hole.Drill);
             }
 
             public override void Visit(ViaElement via) {
 
-                if (via.InAnyLayer(layers))
+                if (via.IsOnAnyLayer(layers))
                     apertures.AddCircle(via.Drill);
             }
 
             public override void Visit(ThPadElement pad) {
 
-                if (pad.InAnyLayer(layers))
+                if (pad.IsOnAnyLayer(layers))
                     apertures.AddCircle(pad.Drill);
             }
         }
@@ -120,7 +120,7 @@
 
             public override void Visit(HoleElement hole) {
 
-                if (hole.InAnyLayer(layers)) {
+                if (hole.IsOnAnyLayer(layers)) {
                     Aperture ap = apertures.GetCircleAperture(hole.Drill);
                     gb.SelectAperture(ap);
                     Point p = hole.GetPosition(VisitingPart);
@@ -135,7 +135,7 @@
             /// 
             public override void Visit(ViaElement via) {
 
-                if (via.InAnyLayer(layers)) {
+                if (via.IsOnAnyLayer(layers)) {
                     Aperture ap = apertures.GetCircleAperture(via.Drill);
                     gb.SelectAperture(ap);
                     gb.FlashAt(via.Position.X, via.Position.Y);
@@ -149,7 +149,7 @@
             /// 
             public override void Visit(ThPadElement pad) {
 
-                if (pad.InAnyLayer(layers)) {
+                if (pad.IsOnAnyLayer(layers)) {
                     Aperture ap = apertures.GetCircleAperture(pad.Drill);
                     gb.SelectAperture(ap);
                     Point p = pad.GetPosition(VisitingPart);

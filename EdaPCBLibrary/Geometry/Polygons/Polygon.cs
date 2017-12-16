@@ -53,6 +53,37 @@
             return FromRectangle(new Size(rectangle.Size.Width + (inflate * 2), rectangle.Size.Height + (inflate * 2)), m);
         }
 
+        public static Polygon FromElement(ViaElement via, Part part, double inflate = 0) {
+
+            Matrix m = new Matrix();
+            m.Translate(via.Position.X, via.Position.Y);
+            if (via.Shape == ViaElement.ViaShape.Octogonal)
+                m.RotateAt(22.5, via.Position.X, via.Position.Y);
+            if (part != null) {
+                m.Translate(part.Position.X, part.Position.Y);
+                m.RotateAt(part.Rotate, part.Position.X, part.Position.Y);
+            }
+
+            Polygon p = new Polygon();
+
+            double size = via.OuterSize;
+            switch (via.Shape) {
+                case ViaElement.ViaShape.Circular:
+                    p = FromCircle(size + (inflate * 2), m);
+                    break;
+
+                case ViaElement.ViaShape.Square:
+                    p = FromRectangle(new Size(size + (inflate * 2), size + (inflate * 2)), m);
+                    break;
+
+                case ViaElement.ViaShape.Octogonal:
+                    p = FromPolygon(8, size + (inflate * 2), m);
+                    break;
+            }
+
+            return p;
+        }
+
         /// <summary>
         /// Crea un poligon a partir d'un element.
         /// </summary>
@@ -77,7 +108,7 @@
 
             switch (pad.Shape) {
                 case ThPadElement.ThPadShape.Circular:
-                    p = FromCircle(pad.Size + (inflate + 2), m);
+                    p = FromCircle(pad.Size + (inflate * 2), m);
                     break;
 
                 case ThPadElement.ThPadShape.Square:
