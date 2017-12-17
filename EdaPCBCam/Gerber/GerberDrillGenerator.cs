@@ -47,12 +47,13 @@
                     else
                         gb.Attribute(".FileFunction,Profile,NP");
                     gb.Attribute(".FilePolarity,Positive");
+                    gb.Attribute(".Part,Single");
                     gb.SetUnits(Units.Milimeters);
                     gb.SetCoordinateFormat(8, 5);
                     gb.SetOffset(0, 0);
                     gb.SetPolarity(true);
-                    gb.SetAperturePolarity(AperturePolarity.Dark);
-                    gb.SetApertureRotation(0);
+                    gb.LoadPolarity(Polarity.Dark);
+                    gb.LoadRotation(0);
                     gb.Comment("END HEADER");
 
                     // Definicio de les apertures

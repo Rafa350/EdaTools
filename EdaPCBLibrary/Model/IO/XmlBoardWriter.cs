@@ -174,6 +174,14 @@
                 writer.WriteEndElement();
             }
 
+            public override void Visit(Terminal terminal) {
+
+                writer.WriteStartElement("terminal");
+                writer.WriteAttributeString("part", terminal.Part.Name);
+                writer.WriteAttributeString("pad", terminal.PadName);
+                writer.WriteEndElement();
+            }
+
             public override void Visit(ViaElement via) {
 
                 writer.WriteStartElement("via");
@@ -195,6 +203,8 @@
                     writer.WriteStartElement("elements");
                     foreach (ElementBase element in signal.Elements) 
                         element.AcceptVisitor(this);
+                    foreach (Terminal pad in signal.Terminals)
+                        pad.AcceptVisitor(this);
                     writer.WriteEndElement();
                 }
 
@@ -220,6 +230,8 @@
 
                 writer.WriteStartElement("layer");
                 writer.WriteAttributeString("name", layer.Name);
+                writer.WriteAttributeString("id", layer.Id.ToString());
+                writer.WriteAttributeString("class", layer.Class.ToString());
                 writer.WriteAttributeString("visible", layer.IsVisible.ToString());
                 writer.WriteAttribute("color", layer.Color);
                 writer.WriteEndElement();

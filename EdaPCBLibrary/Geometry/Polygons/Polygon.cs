@@ -53,6 +53,14 @@
             return FromRectangle(new Size(rectangle.Size.Width + (inflate * 2), rectangle.Size.Height + (inflate * 2)), m);
         }
 
+        /// <summary>
+        /// Crea un poligon a partir d'un element.
+        /// </summary>
+        /// <param name="via">El element.</param>
+        /// <param name="part">El conmponent al que pertany.</param>
+        /// <param name="inflate">El increment de tamany del poligon.</param>
+        /// <returns>El poligon generat.</returns>
+        /// 
         public static Polygon FromElement(ViaElement via, Part part, double inflate = 0) {
 
             Matrix m = new Matrix();
@@ -124,6 +132,24 @@
         }
 
         /// <summary>
+        /// Crea un poligon a partir d'un element.
+        /// </summary>
+        /// <param name="region">El element</param>
+        /// <param name="inflate">El increment de tamany del poligon.</param>
+        /// <returns>El poligon generat.</returns>
+        /// 
+        public static Polygon FromElement(RegionElement region, double inflate = 0) {
+
+            Polygon p = new Polygon();
+
+            p.AddPoint(region.Position);
+            foreach (RegionElement.Segment segment in region.Segments) 
+                p.AddPoint(segment.Position);
+
+            return p;
+        }
+
+        /// <summary>
         /// Crea un poligon de 24 cares per simular un cercle, centrat en l'origen.
         /// </summary>
         /// <param name="diameter">Diametre.</param>
@@ -157,7 +183,7 @@
         }
 
         /// <summary>
-        /// Crea un poligon regular.
+        /// Crea un poligon regular centrat el l'origen.
         /// </summary>
         /// <param name="sides">Numero de arestes.</param>
         /// <param name="diameter">Diametre extern.</param>
@@ -229,19 +255,32 @@
             points.Add(new IntPoint(point.X * 10000, point.Y * 10000));
         }
 
-        public IEnumerable<Polygon> Clip(Polygon clipPolygon) {
+        public Polygon Offset(double delta) {
+
+            ClipperOffset co = new ClipperOffset();
+            co.AddPath(points, JoinType.jtRound, EndType.etClosedPolygon);
+
+            List<List<IntPoint>> solution = new List<List<IntPoint>>();
+            co.Execute(ref solution, delta * 10000);
+
+            return new Polygon(solution[0]);
+        }
+
+        public IList<Polygon> Clip(IEnumerable<Polygon> polygons) {
 
             Clipper cp = new Clipper();
+
             cp.AddPath(points, PolyType.ptSubject, true);
-            cp.AddPath(clipPolygon.points, PolyType.ptClip, true);
+            foreach (Polygon polygon in polygons)
+                cp.AddPath(polygon.points, PolyType.ptClip, true);
 
             List<List<IntPoint>> solution = new List<List<IntPoint>>();
             cp.Execute(ClipType.ctDifference, solution);
 
-            List<Polygon> polygons = new List<Polygon>();
+            List<Polygon> result = new List<Polygon>();
             foreach (var poly in solution)
-                polygons.Add(new Polygon(poly));
-            return polygons;
+                result.Add(new Polygon(poly));
+            return result;
         }
 
         public int NumPoints {

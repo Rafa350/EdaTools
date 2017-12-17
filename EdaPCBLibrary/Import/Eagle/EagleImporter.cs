@@ -28,6 +28,7 @@
         private BoardBuilder boardBuilder = new BoardBuilder();
         private Dictionary<int, Layer> layerDict = new Dictionary<int, Layer>();
         private Dictionary<string, Component> componentDict = new Dictionary<string, Component>();
+        private Dictionary<string, Part> partDict = new Dictionary<string, Part>();
 
         public override Board LoadBoard(Stream stream) {
 
@@ -262,8 +263,11 @@
 
         private void CreateElements(XmlDocument doc, Board board) {
 
-            foreach (XmlNode node in doc.SelectNodes("eagle/drawing/board/elements/element"))
-                board.AddPart(ParseElementNode(node));
+            foreach (XmlNode node in doc.SelectNodes("eagle/drawing/board/elements/element")) {
+                Part part = ParseElementNode(node);
+                board.AddPart(part);
+                partDict.Add(part.Name, part);
+            }
         }
 
         private void CreateSignals(XmlDocument doc, Board board) {
@@ -292,6 +296,10 @@
                                 CreateVertexList(node, polygon);
                                 signal.Add(polygon);
                             }
+                            break;
+
+                        case "contactref":
+                            signal.Add(ParseContactRefNode(node));
                             break;
                     }
                 }
@@ -481,6 +489,22 @@
             Layer layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
 
             return new SmdPadElement(name, new Point(x, y), layer, new Size(width, height), rotate, roundnes, stop, cream);
+        }
+
+        /// <summary>
+        /// Procesa un node de tipus CONTACTREF.
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>L'objecte creat.</returns>
+        /// 
+        private Terminal ParseContactRefNode(XmlNode node) {
+
+            string partName = GetAttribute(node, "element");
+            string padName = GetAttribute(node, "pad");
+
+            Part part = partDict[partName];
+
+            return new Terminal(part, padName);
         }
 
         /// <summary>

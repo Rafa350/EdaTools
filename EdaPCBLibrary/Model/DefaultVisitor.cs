@@ -6,6 +6,7 @@
 
         private Board visitingBoard;
         private Part visitingPart;
+        private Signal visitingSignal;
 
         public virtual void Visit(Board board) {
 
@@ -34,9 +35,22 @@
 
         public virtual void Visit(Signal signal) {
 
-            if (signal.Elements != null)
-                foreach (ElementBase element in signal.Elements)
-                    element.AcceptVisitor(this);
+            visitingSignal = signal;
+            try {
+                if (signal.Elements != null)
+                    foreach (ElementBase element in signal.Elements)
+                        element.AcceptVisitor(this);
+
+                if (signal.Terminals != null)
+                    foreach (Terminal pad in signal.Terminals)
+                        pad.AcceptVisitor(this);
+            }
+            finally { 
+                visitingSignal = null;
+            }
+        }
+
+        public virtual void Visit(Terminal terminal) {
         }
 
         public virtual void Visit(LineElement line) {
@@ -95,5 +109,6 @@
 
         protected Board VisitingBoard {  get { return visitingBoard; } }
         protected Part VisitingPart { get { return visitingPart; } }
+        protected Signal VisitingSignal { get { return visitingSignal; } }
     }
 }

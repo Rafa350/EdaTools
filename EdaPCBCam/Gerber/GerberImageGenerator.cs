@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
 
     using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
+    using MikroPic.EdaTools.v1.Cam.Gerber.Infrastructure;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
@@ -10,7 +11,7 @@
     using System.Text;
     using System.Windows;
 
-    public class GerberImageGenerator: GerberGenerator { 
+    public sealed class GerberImageGenerator: GerberGenerator { 
 
         public enum ImageType {
             Top,
@@ -34,7 +35,7 @@
         /// <param name="layers">Llista de capes a procesar.</param>
         /// <param name="fileName">Nom del fitxer de sortida.</param>
         /// 
-        public virtual void Generate(Board board, IList<Layer> layers, ImageType imageType, string fileName) {
+        public void Generate(Board board, IList<Layer> layers, ImageType imageType, string fileName) {
 
             if (board == null)
                 throw new ArgumentNullException("board");
@@ -47,7 +48,15 @@
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
 
-                    ApertureDictionary apertures = BuildApertures(board, layers);
+                    // Crea el diccionari d'apertures
+                    //
+                    ApertureDictionary apertureDict = ApertureDictionaryBuilder.Build(board, layers);
+
+                    // Crea el diccionari de senyals. No mes per les imatges de capes senyal
+                    //
+                    IDictionary<Signal, List<Polygon>> polygonDict = null;
+                    if ((imageType == ImageType.Top) || (imageType == ImageType.Bottom))
+                        polygonDict = PolygonDictionaryBuilder.Build(board, layers);
 
                     GerberBuilder gb = new GerberBuilder(writer);
 
@@ -92,43 +101,30 @@
                             gb.Attribute(".FilePolarity,Positive");
                             break;
                     }
+                    gb.Attribute(".Part,Single");
                     gb.SetUnits(Units.Milimeters);
                     gb.SetCoordinateFormat(8, 5);
                     gb.SetOffset(0, 0);
                     gb.SetPolarity(true);
-                    gb.SetAperturePolarity(AperturePolarity.Dark);
+                    gb.LoadPolarity(Polarity.Dark);
                     gb.Comment("END HEADER");
 
                     // Definicio de macros per les apertures
                     //
                     gb.Comment("BEGIN MACROS");
-                    gb.DefineMacros(apertures.Macros);
+                    gb.DefineMacros(apertureDict.Macros);
                     gb.Comment("END MACROS");
 
                     // Definicio de les apertures
                     //
                     gb.Comment("BEGIN APERTURES");
-                    gb.DefineApertures(apertures.Apertures);
+                    gb.DefineApertures(apertureDict.Apertures);
                     gb.Comment("END APERTURES");
 
                     // Definicio de la imatge
                     //
-                    foreach (Polygon polygon in BuildPolygons(board, layers)) {
-                        gb.BeginRegion();
-                        bool first = true;
-                        foreach (Point point in polygon.Points) {
-                            if (first) {
-                                first = false;
-                                gb.MoveTo(point.X, point.Y);
-                            }
-                            else
-                                gb.LineTo(point.X, point.Y);
-                        }
-                        gb.EndRegion();
-                    }
-
                     gb.Comment("BEGIN IMAGE");
-                    //board.AcceptVisitor(new ImageGeneratorVisitor(gb, layers, apertures));
+                    board.AcceptVisitor(new ImageGeneratorVisitor(gb, layers, apertureDict, polygonDict));
                     gb.Comment("END IMAGE");
 
                     // Final
@@ -139,155 +135,43 @@
         }
 
         /// <summary>
-        /// Construeix el diccionari d'apertures.
+        /// Clase utilitzada per la generacio de la imatge.
         /// </summary>
-        /// <param name="board">La placa.</param>
-        /// <param name="layers">La llista de capes.</param>
-        /// <returns>El deiccionari generat.</returns>
         /// 
-        private static ApertureDictionary BuildApertures(Board board, IList<Layer> layers) {
-
-            ApertureDictionary apertures = new ApertureDictionary();
-            board.AcceptVisitor(new DefineAperturesVisitor(layers, apertures));
-
-            return apertures;
-        }
-
-        private IList<Polygon> BuildPolygons(Board board, IList<Layer> layers) {
-
-            List<Polygon> polygons = new List<Polygon>();
-            PolygonBuilderVisitor visitor = new PolygonBuilderVisitor(layers, polygons);
-            board.AcceptVisitor(visitor);
-
-            return polygons;
-        }
-
-        private sealed class DefineAperturesVisitor : DefaultVisitor {
-
-            private readonly IList<Layer> layers;
-            private readonly ApertureDictionary apertures;
-
-            public DefineAperturesVisitor(IList<Layer> layers, ApertureDictionary apertures) {
-
-                this.layers = layers;
-                this.apertures = apertures;
-            }
-
-            public override void Visit(LineElement line) {
-
-                if (line.IsOnAnyLayer(layers)) 
-                    apertures.AddCircle(Math.Max(line.Thickness, 0.01));
-            }
-
-            public override void Visit(ArcElement arc) {
-
-                if (arc.IsOnAnyLayer(layers))
-                    apertures.AddCircle(Math.Max(arc.Thickness, 0.01));
-            }
-
-            public override void Visit(RectangleElement rectangle) {
-
-                if (rectangle.IsOnAnyLayer(layers)) {
-                    if (rectangle.Thickness == 0) {
-                        double rotate = rectangle.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
-                        apertures.AddRectangle(rectangle.Size.Width, rectangle.Size.Height, rotate);
-                    }
-                }
-            }
-
-            public override void Visit(CircleElement circle) {
-
-                if (circle.IsOnAnyLayer(layers)) {
-                    if (circle.Thickness == 0)
-                        apertures.AddCircle(circle.Diameter);
-                }
-            }
-
-            public override void Visit(ViaElement via) {
-
-                if (via.IsOnAnyLayer(layers)) {
-                    switch (via.Shape) {
-                        case ViaElement.ViaShape.Circular:
-                            apertures.AddCircle(via.OuterSize);
-                            break;
-
-                        case ViaElement.ViaShape.Square:
-                            apertures.AddRectangle(via.OuterSize, via.OuterSize, 0);
-                            break;
-
-                        case ViaElement.ViaShape.Octogonal:
-                            apertures.AddOctagon(via.OuterSize, 0);
-                            break;
-                    }
-                }
-            }
-
-            public override void Visit(ThPadElement pad) {
-
-                if (pad.IsOnAnyLayer(layers)) {
-                    double rotate = pad.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
-                    switch (pad.Shape) {
-                        case ThPadElement.ThPadShape.Circular:
-                            apertures.AddCircle(pad.Size);
-                            break;
-
-                        case ThPadElement.ThPadShape.Square:
-                            apertures.AddRectangle(pad.Size, pad.Size, rotate);
-                            break;
-
-                        case ThPadElement.ThPadShape.Octogonal:
-                            apertures.AddOctagon(pad.Size, rotate);
-                                break;
-
-                        case ThPadElement.ThPadShape.Oval:
-                            apertures.AddOval(pad.Size * 2, pad.Size, rotate);
-                            break;
-                    }
-                }
-            }
-
-            public override void Visit(SmdPadElement pad) {
-
-                if (pad.IsOnAnyLayer(layers)) {
-                    double rotate = pad.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
-                    double radius = (pad.Roundnes - 0.01) * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
-                    apertures.AddRoundRectangle(pad.Size.Width, pad.Size.Height, radius, rotate);
-                }
-            }
-        }
-
         private sealed class ImageGeneratorVisitor : DefaultVisitor {
 
             private readonly GerberBuilder gb;
             private readonly IList<Layer> layers;
-            private readonly ApertureDictionary apertures;
+            private readonly ApertureDictionary apertureDict;
+            private readonly IDictionary<Signal, List<Polygon>> polygonDict;
 
-            public ImageGeneratorVisitor(GerberBuilder gb, IList<Layer> layers, ApertureDictionary apertures) {
+            public ImageGeneratorVisitor(GerberBuilder gb, IList<Layer> layers, ApertureDictionary apertureDict, IDictionary<Signal, List<Polygon>> polygonDict) {
 
                 this.gb = gb;
                 this.layers = layers;
-                this.apertures = apertures;
+                this.apertureDict = apertureDict;
+                this.polygonDict = polygonDict;
             }
 
             public override void Visit(LineElement line) {
 
                 if (line.IsOnAnyLayer(layers)) {
-                    Aperture ap = apertures.GetCircleAperture(Math.Max(line.Thickness, 0.01));
+                    Aperture ap = apertureDict.GetCircleAperture(Math.Max(line.Thickness, 0.01));
                     gb.SelectAperture(ap);
                     Point p1 = line.GetPosition(VisitingPart);
-                    gb.MoveTo(p1.X, p1.Y);
+                    gb.MoveTo(p1);
                     Point p2 = line.GetEndPosition(VisitingPart);
-                    gb.LineTo(p2.X, p2.Y);
+                    gb.LineTo(p2);
                 }
             }
 
             public override void Visit(ArcElement arc) {
 
                 if (arc.IsOnAnyLayer(layers)) {
-                    Aperture ap = apertures.GetCircleAperture(Math.Max(arc.Thickness, 0.01));
+                    Aperture ap = apertureDict.GetCircleAperture(Math.Max(arc.Thickness, 0.01));
                     gb.SelectAperture(ap);
                     Point p1 = arc.GetPosition(VisitingPart);
-                    gb.MoveTo(p1.X, p1.Y);
+                    gb.MoveTo(p1);
                     Point p2 = arc.GetEndPosition(VisitingPart);
                     Point c = arc.GetCenter(VisitingPart);
                     gb.ArcTo(
@@ -302,10 +186,10 @@
                 if (rectangle.IsOnAnyLayer(layers)) {
                     if (rectangle.Thickness == 0) {
                         double rotate = rectangle.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
-                        Aperture ap = apertures.GetRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotate);
+                        Aperture ap = apertureDict.GetRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotate);
                         gb.SelectAperture(ap);
                         Point p = rectangle.GetPosition(VisitingPart);
-                        gb.FlashAt(p.X, p.Y);
+                        gb.FlashAt(p);
                     }
                 }
             }
@@ -314,10 +198,10 @@
 
                 if (circle.IsOnAnyLayer(layers)) {
                     if (circle.Thickness == 0) {
-                        Aperture ap = apertures.GetCircleAperture(circle.Diameter);
+                        Aperture ap = apertureDict.GetCircleAperture(circle.Diameter);
                         gb.SelectAperture(ap);
                         Point p = circle.GetPosition(VisitingPart);
-                        gb.FlashAt(p.X, p.Y);
+                        gb.FlashAt(p);
                     }
                 }
             }
@@ -325,17 +209,39 @@
             public override void Visit(RegionElement region) {
 
                 if (region.IsOnAnyLayer(layers)) {
-                    gb.BeginRegion();
-                    double x = region.Position.X;
-                    double y = region.Position.Y;
-                    gb.MoveTo(x, y);
-                    foreach (RegionElement.Segment segment in region.Segments) {
-                        x = segment.Position.X;
-                        y = segment.Position.Y;
-                        gb.LineTo(x, y);
+
+                    if (VisitingSignal != null) {
+
+                        Polygon sourcePolygon = Polygon.FromElement(region);
+
+                        List<Polygon> resultPolygons = new List<Polygon>();
+
+                        if (polygonDict.ContainsKey(VisitingSignal)) {
+                            List<Polygon> clipPolygons = polygonDict[VisitingSignal];
+                            List<Polygon> inflatedPolygons = new List<Polygon>();
+                            foreach (Polygon clipPolygon in clipPolygons)
+                                if (clipPolygon.NumPoints > 0)
+                                    inflatedPolygons.Add(clipPolygon.Offset(0.25));
+                            
+                            resultPolygons.AddRange(sourcePolygon.Clip(inflatedPolygons));
+                        }
+                        else
+                            resultPolygons.Add(sourcePolygon);
+
+                        bool first = true;
+                        foreach (Polygon polygon in resultPolygons) {
+                            if (first) {
+                                first = false;
+                                gb.LoadPolarity(Polarity.Dark);
+                            }
+                            else
+                                gb.LoadPolarity(Polarity.Clear);
+                            gb.BeginRegion();
+                            gb.Region(polygon.Points);
+                            gb.EndRegion();
+                        }
+                        gb.LoadPolarity(Polarity.Dark);
                     }
-                    gb.LineTo(region.Position.X, region.Position.Y);
-                    gb.EndRegion();
                 }
             }
 
@@ -346,19 +252,19 @@
                     switch (via.Shape) {
                         default:
                         case ViaElement.ViaShape.Circular:
-                            ap = apertures.GetCircleAperture(via.OuterSize);
+                            ap = apertureDict.GetCircleAperture(via.OuterSize);
                             break;
 
                         case ViaElement.ViaShape.Square:
-                            ap = apertures.GetRectangleAperture(via.OuterSize, via.OuterSize, 0);
+                            ap = apertureDict.GetRectangleAperture(via.OuterSize, via.OuterSize, 0);
                             break;
 
                         case ViaElement.ViaShape.Octogonal:
-                            ap = apertures.GetOctagonAperture(via.OuterSize, 0);
+                            ap = apertureDict.GetOctagonAperture(via.OuterSize, 0);
                             break;
                     }
                     gb.SelectAperture(ap);
-                    gb.FlashAt(via.Position.X, via.Position.Y);
+                    gb.FlashAt(via.Position);
                 }
             }
 
@@ -374,24 +280,24 @@
                     Aperture ap = null;
                     switch (pad.Shape) {
                         case ThPadElement.ThPadShape.Circular:
-                            ap = apertures.GetCircleAperture(pad.Size);
+                            ap = apertureDict.GetCircleAperture(pad.Size);
                             break;
 
                         case ThPadElement.ThPadShape.Square:
-                            ap = apertures.GetRectangleAperture(pad.Size, pad.Size, rotate);
+                            ap = apertureDict.GetRectangleAperture(pad.Size, pad.Size, rotate);
                             break;
 
                         case ThPadElement.ThPadShape.Octogonal:
-                            ap = apertures.GetOctagonAperture(pad.Size, rotate);
+                            ap = apertureDict.GetOctagonAperture(pad.Size, rotate);
                             break;
 
                         case ThPadElement.ThPadShape.Oval:
-                            ap = apertures.GetOvalAperture(pad.Size * 2, pad.Size, rotate);
+                            ap = apertureDict.GetOvalAperture(pad.Size * 2, pad.Size, rotate);
                             break;
                     }
                     gb.SelectAperture(ap);
                     Point p = pad.GetPosition(VisitingPart);
-                    gb.FlashAt(p.X, p.Y);
+                    gb.FlashAt(p);
                 }
             }
 
@@ -401,48 +307,14 @@
             /// <param name="pad">El element a visitar.</param>
             /// 
             public override void Visit(SmdPadElement pad) {
-
+                
                 if (pad.IsOnAnyLayer(layers)) {
                     double rotate = pad.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
                     double radius = (pad.Roundnes - 0.01) * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
-                    Aperture ap = apertures.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotate);
+                    Aperture ap = apertureDict.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotate);
                     gb.SelectAperture(ap);
                     Point p = pad.GetPosition(VisitingPart);
-                    gb.FlashAt(p.X, p.Y);
-                }
-            }
-        }
-
-        private sealed class PolygonBuilderVisitor: DefaultVisitor {
-
-            private readonly IList<Layer> layers;
-            private readonly IList<Polygon> polygons;
-
-            public PolygonBuilderVisitor(IList<Layer> layers, IList<Polygon> polygons) {
-
-                this.layers = layers;
-                this.polygons = polygons;
-            }
-
-            public override void Visit(ViaElement via) {
-
-                if (via.IsOnAnyLayer(layers)) {
-                    Polygon polygon = Polygon.FromElement(via, VisitingPart);
-                    polygons.Add(polygon);
-                }
-            }
-
-            public override void Visit(ThPadElement pad) {
-
-                if (pad.IsOnAnyLayer(layers)) {
-                    Polygon polygon = Polygon.FromElement(pad, VisitingPart);
-                    polygons.Add(polygon);
-                }
-            }
-
-            public IList<Polygon> Polygons {
-                get {
-                    return polygons;
+                    gb.FlashAt(p);
                 }
             }
         }

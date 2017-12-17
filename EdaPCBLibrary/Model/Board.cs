@@ -117,6 +117,15 @@
             return layers == null ? null : layers[id];
         }
 
+        public Signal GetSignal(string name) {
+
+            if (signals != null)
+                foreach (Signal signal in signals)
+                    if (signal.Name == name)
+                        return signal;
+            return null;
+        }
+
         /// <summary>
         /// Obte un enuymerador per les capes.
         /// </summary>

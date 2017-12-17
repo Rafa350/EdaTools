@@ -5,7 +5,7 @@
    internal sealed class State {
 
         private Aperture aperture = null;
-        private AperturePolarity aperturePolarity = AperturePolarity.Dark;
+        private Polarity aperturePolarity = Polarity.Dark;
         private double apertureAngle = 0;
         private double apertureScale = 0;
         private bool apertureMirror = false;
@@ -143,7 +143,7 @@
         /// <param name="aperturePolarity">El valor de la polaritat.</param>
         /// <returns>True si ha canviat l'estat.</returns>
         /// 
-        public bool SetAperturePolarity(AperturePolarity aperturePolarity) {
+        public bool SetAperturePolarity(Polarity aperturePolarity) {
 
             if (this.aperturePolarity != aperturePolarity) {
                 this.aperturePolarity = aperturePolarity;
@@ -247,7 +247,7 @@
         /// Opte la polaritat de l'apertura.
         /// </summary>
         /// 
-        public AperturePolarity AperturePolarity {
+        public Polarity AperturePolarity {
             get {
                 return aperturePolarity;
             }

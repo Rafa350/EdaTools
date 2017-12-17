@@ -3,6 +3,7 @@
     using System.Windows.Media;
 
     public enum LayerId {
+        Unknown,
         TopKeepout,
         TopRestrict,
         TopNames,
@@ -69,9 +70,19 @@
         UserDefined16
     }
 
+    public enum LayerClass {
+        Unknown,
+        TopCopper,
+        InnerCopper,
+        BottomCopper,
+        Design,
+        Mechanical,
+    }
+
     public sealed class Layer: IVisitable {
 
-        private LayerId id;
+        private readonly LayerId id = LayerId.Unknown;
+        private readonly LayerClass cls = LayerClass.Unknown;
         private string name;
         private Color color;
         private Layer mirror;
@@ -130,6 +141,12 @@
         public LayerId Id {
             get {
                 return id;
+            }
+        }
+
+        public LayerClass Class {
+            get {
+                return cls;
             }
         }
 

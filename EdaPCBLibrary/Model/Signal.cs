@@ -7,6 +7,7 @@
     public sealed class Signal: IVisitable {
 
         private List<ElementBase> elements;
+        private List<Terminal> terminals;
         private string name;
 
         public void AcceptVisitor(IVisitor visitor) {
@@ -28,6 +29,20 @@
             elements.Add(element);
         }
 
+        public void Add(Terminal pad) {
+
+            if (pad == null)
+                throw new ArgumentNullException("pad");
+
+            if ((terminals != null) && terminals.Contains(pad))
+                throw new InvalidOperationException(
+                    String.Format("El pad ya pertenece a la señal '{0}'.", name));
+
+            if (terminals == null)
+                terminals = new List<Terminal>();
+            terminals.Add(pad);
+        }
+
         public string Name {
             get {
                 return name;
@@ -40,6 +55,12 @@
         public IEnumerable<ElementBase> Elements {
             get {
                 return elements;
+            }
+        }
+
+        public IEnumerable<Terminal> Terminals {
+            get {
+                return terminals;
             }
         }
     }

@@ -2,6 +2,7 @@
 
     using System;
     using System.Collections.Generic;
+    using System.Windows;
     using System.IO;
     using System.Text;
 
@@ -30,7 +31,7 @@
         Multiple
     }
 
-    public enum AperturePolarity {
+    public enum Polarity {
         Clear,
         Dark
     }
@@ -92,6 +93,11 @@
             writer.WriteLine(String.Format("%TF{0}*%", attr));
         }
 
+        public void FlashAt(Point point) {
+
+            FlashAt(point.X, point.Y);
+        }
+
         /// <summary>
         /// Flash d'una apertura en la posicio indicada. La posicio,
         /// passa a ser la posicio actual.
@@ -113,6 +119,11 @@
 
             sb.Append("D03*");
             writer.WriteLine(sb.ToString());
+        }
+
+        public void MoveTo(Point point) {
+
+            MoveTo(point.X, point.Y);
         }
 
         /// <summary>
@@ -140,6 +151,11 @@
                 sb.Append("D02*");
                 writer.WriteLine(sb.ToString());
             }
+        }
+
+        public void LineTo(Point point) {
+
+            LineTo(point.X, point.Y);
         }
 
         /// <summary>
@@ -313,6 +329,19 @@
             inRegion = false;
         }
 
+        public void Region(IEnumerable<Point> points) {
+
+            bool first = true;
+            foreach (Point point in points) {
+                if (first) {
+                    first = false;
+                    MoveTo(point);
+                }
+                else
+                    LineTo(point);
+            }
+        }
+
         public void SetOffset(double x, double y) {
 
             writer.WriteLine(String.Format("%OFA{0}B{0}*%", x, y));
@@ -323,16 +352,24 @@
             writer.WriteLine(String.Format("%IP{0}*%", positive ? "POS" : "NEG"));
         }
 
-        public void SetAperturePolarity(AperturePolarity polarity) {
+        public void LoadPolarity(Polarity polarity) {
 
             if (state.SetAperturePolarity(polarity)) 
-                writer.WriteLine(String.Format("%LP{0}*%", polarity == AperturePolarity.Dark ? "D" : "C"));
+                writer.WriteLine(String.Format("%LP{0}*%", polarity == Polarity.Dark ? "D" : "C"));
         }
 
-        public void SetApertureRotation(double angle) {
+        public void LoadRotation(double angle) {
 
             if (state.SetApertureAngle(angle))
                 writer.WriteLine(String.Format("%LR{0}*%", angle));
+        }
+
+        public void LoadMirroring() {
+
+        }
+
+        public void LoadScaling() {
+
         }
 
         /// <summary>
