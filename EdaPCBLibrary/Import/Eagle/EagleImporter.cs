@@ -9,6 +9,7 @@
     using System.Collections.Generic;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
 
     public sealed class EagleImporter : Importer {
 
@@ -34,11 +35,13 @@
 
             XmlDocument doc = ReadXmlDocument(stream);
 
-            Board board = boardBuilder.CreateBoard();
+            Board board = new Board(); // boardBuilder.CreateBoard();
 
             CreateLayers(doc, board);
             CreateMeasures(doc, board);
+
             CreateComponents(doc, board);
+
             CreateElements(doc, board);
             CreateSignals(doc, board);
 
@@ -70,118 +73,18 @@
 
         private void CreateLayers(XmlDocument doc, Board board) {
 
-            foreach (XmlNode layerNode in doc.SelectNodes("eagle/drawing/layers/layer")) {
+            foreach (XmlNode node in doc.SelectNodes("eagle/drawing/layers/layer")) {
 
-                string name = layerNode.Attributes["name"].Value;
-                int layerNum = Int32.Parse(layerNode.Attributes["number"].Value);
+                int layerNum = StrToInteger(GetAttribute(node, "number"));
 
-                bool ok = true;
-                LayerId id = LayerId.UserDefined1;
-                switch (layerNum) {
-                    case 1:
-                        id = LayerId.Top;
-                        break;
+                if (GetLayerId(layerNum) != LayerId.Unknown) {
+                    if (!layerDict.ContainsKey(layerNum)) {
 
-                    case 16:
-                        id = LayerId.Bottom;
-                        break;
+                        Layer layer = ParseLayerNode(node);
+                        board.Layers.Add(layer);
 
-                    case 19:
-                        id = LayerId.Unrouted;
-                        break;
-
-                    case 20:
-                        id = LayerId.Profile;
-                        break;
-
-                    case 21:
-                        id = LayerId.TopPlace;
-                        break;
-
-                    case 22:
-                        id = LayerId.BottomPlace;
-                        break;
-
-                    case 25:
-                        id = LayerId.TopNames;
-                        break;
-
-                    case 26:
-                        id = LayerId.BottomNames;
-                        break;
-
-                    case 27:
-                        id = LayerId.TopValues;
-                        break;
-
-                    case 28:
-                        id = LayerId.BottomValues;
-                        break;
-
-                    case 29:
-                        id = LayerId.TopStop;
-                        break;
-
-                    case 30:
-                        id = LayerId.BottomStop;
-                        break;
-
-                    case 31:
-                        id = LayerId.TopCream;
-                        break;
-
-                    case 32:
-                        id = LayerId.BottomCream;
-                        break;
-
-                    case 35:
-                        id = LayerId.TopGlue;
-                        break;
-
-                    case 36:
-                        id = LayerId.BottomGlue;
-                        break;
-
-                    case 39:
-                        id = LayerId.TopKeepout;
-                        break;
-
-                    case 40:
-                        id = LayerId.BottomKeepout;
-                        break;
-
-                    case 41:
-                        id = LayerId.TopRestrict;
-                        break;
-
-                    case 42:
-                        id = LayerId.BottomRestrict;
-                        break;
-
-                    case 43:
-                        id = LayerId.ViaRestrict;
-                        break;
-
-                    case 51:
-                        id = LayerId.TopDocument;
-                        break;
-
-                    case 52:
-                        id = LayerId.BottomDocument;
-                        break;
-
-                    default:
-                        ok = false;
-                        break;
-                }
-
-                if (ok) {
-                    Layer layer = board.GetLayer(id);
-                    if (layer == null) {
-                        layer = new Layer(id, name, Colors.White, true);
-                        board.AddLayer(layer);
+                        layerDict.Add(layerNum, layer);
                     }
-                    layerDict.Add(layerNum, layer);
                 }
             }
         }
@@ -202,61 +105,58 @@
 
             foreach (XmlNode libraryNode in doc.SelectNodes("eagle/drawing/board/libraries/library")) {
 
-                string libraryName = libraryNode.Attributes["name"].Value;
+                string libraryName = GetAttribute(libraryNode, "name");
 
-                foreach (XmlNode componentNode in libraryNode.SelectNodes("packages/package")) {
+                foreach (XmlNode packageNode in libraryNode.SelectNodes("packages/package")) {
 
-                    string componentId = String.Format(
-                        "{0}@{1}",
-                        componentNode.Attributes["name"].Value,
-                        libraryName);
+                    string packageName = GetAttribute(packageNode, "name");
 
-                    Component component = boardBuilder.CreateComponent(board, componentId);
+                    ElementCollection elements = new ElementCollection();
 
-                    foreach (XmlNode node in componentNode.ChildNodes) {
-
+                    foreach (XmlNode node in packageNode.ChildNodes) {
                         switch (node.Name) {
-
                             case "smd":
-                                component.Add(ParseSmdNode(node));
+                                elements.Add(ParseSmdNode(node));
                                 break;
 
                             case "pad":
-                                component.Add(ParsePadNode(node));
+                                elements.Add(ParsePadNode(node));
                                 break;
 
                             case "text":
-                                component.Add(ParseTextNode(node));
+                                elements.Add(ParseTextNode(node));
                                 break;
 
-
                             case "wire":
-                                component.Add(ParseWireNode(node));
+                                elements.Add(ParseWireNode(node));
                                 break;
 
                             case "rectangle":
-                                component.Add(ParseRectangleNode(node));
+                                elements.Add(ParseRectangleNode(node));
                                 break;
 
                             case "circle":
-                                component.Add(ParseCircleNode(node));
+                                elements.Add(ParseCircleNode(node));
                                 break;
 
                             case "polygon": {
                                     PolygonNodeInfo info = ParsePolygonNode(node);
                                     RegionElement polygon = boardBuilder.CreatePolygon(new Point(0, 0), 0, info.Thickness, info.Layer);
                                     CreateVertexList(node, polygon);
-                                    component.Add(polygon);
+                                    elements.Add(polygon);
                                 }
                                 break;
 
                             case "hole":
-                                component.Add(ParseHoleNode(node));
+                                elements.Add(ParseHoleNode(node));
                                 break;
                         }
                     }
 
-                    componentDict.Add(componentId, component);
+                    string name = String.Format("{0}@{1}", packageName, libraryName);
+                    Component component = new Component(name, elements);
+                    board.Components.Add(component);
+                    componentDict.Add(name, component);
                 }
             }
         }
@@ -328,117 +228,30 @@
             }
         }
 
+        /// <summary>
+        /// Procesa un node LAYER.
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>L'objecte 'Layer' creat.</returns>
+        /// 
         private Layer ParseLayerNode(XmlNode node) {
 
-            string name = node.Attributes["name"].Value;
-            int layerNum = Int32.Parse(node.Attributes["number"].Value);
+            string name = GetAttribute(node, "name");
+            int layerNum = StrToInteger(GetAttribute(node, "number"));
 
-            LayerId id = LayerId.UserDefined1;
-            switch (layerNum) {
-                case 1:
-                    id = LayerId.Top;
-                    break;
+            LayerId layerId = GetLayerId(layerNum);
 
-                case 16:
-                    id = LayerId.Bottom;
-                    break;
-
-                case 19:
-                    id = LayerId.Unrouted;
-                    break;
-
-                case 20:
-                    id = LayerId.Profile;
-                    break;
-
-                case 21:
-                    id = LayerId.TopPlace;
-                    break;
-
-                case 22:
-                    id = LayerId.BottomPlace;
-                    break;
-
-                case 25:
-                    id = LayerId.TopNames;
-                    break;
-
-                case 26:
-                    id = LayerId.BottomNames;
-                    break;
-
-                case 27:
-                    id = LayerId.TopValues;
-                    break;
-
-                case 28:
-                    id = LayerId.BottomValues;
-                    break;
-
-                case 29:
-                    id = LayerId.TopStop;
-                    break;
-
-                case 30:
-                    id = LayerId.BottomStop;
-                    break;
-
-                case 31:
-                    id = LayerId.TopCream;
-                    break;
-
-                case 32:
-                    id = LayerId.BottomCream;
-                    break;
-
-                case 35:
-                    id = LayerId.TopGlue;
-                    break;
-
-                case 36:
-                    id = LayerId.BottomGlue;
-                    break;
-
-                case 39:
-                    id = LayerId.TopKeepout;
-                    break;
-
-                case 40:
-                    id = LayerId.BottomKeepout;
-                    break;
-
-                case 41:
-                    id = LayerId.TopRestrict;
-                    break;
-
-                case 42:
-                    id = LayerId.BottomRestrict;
-                    break;
-
-                case 43:
-                    id = LayerId.ViaRestrict;
-                    break;
-
-                case 51:
-                    id = LayerId.TopDocument;
-                    break;
-
-                case 52:
-                    id = LayerId.BottomDocument;
-                    break;
-            }
-
-            return new Layer(id, name, Colors.WhiteSmoke);
+            return new Layer(layerId, name, Colors.WhiteSmoke);
         }
 
 
         /// <summary>
-        /// Procesa un node de tipus PAD i crea l'element corresponent.
+        /// Procesa un node PAD.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>L'element creat.</returns>
+        /// <returns>L'objecte 'ThPadElement' creat.</returns>
         /// 
-        private ElementBase ParsePadNode(XmlNode node) {
+        private Element ParsePadNode(XmlNode node) {
 
             string name = GetAttribute(node, "name");
 
@@ -468,12 +281,12 @@
         }
 
         /// <summary>
-        /// Procesa un node de tipus SMD i crea l'element corresponent.
+        /// Procesa un node SMD.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>L'element creat.</returns>
+        /// <returns>L'objecte 'SmdPadElement' creat.</returns>
         /// 
-        private ElementBase ParseSmdNode(XmlNode node) {
+        private Element ParseSmdNode(XmlNode node) {
 
             string name = GetAttribute(node, "name");
 
@@ -486,34 +299,52 @@
             bool stop = StrToBoolean(GetAttribute(node, "stop"), true);
             bool cream = StrToBoolean(GetAttribute(node, "cream"), true);
 
-            Layer layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
+            Layer layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
 
             return new SmdPadElement(name, new Point(x, y), layer, new Size(width, height), rotate, roundnes, stop, cream);
         }
 
         /// <summary>
-        /// Procesa un node de tipus CONTACTREF.
+        /// Procesa un node VIA.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>L'objecte creat.</returns>
+        /// <returns>L'objecte 'ViaElement' creat.</returns>
         /// 
-        private Terminal ParseContactRefNode(XmlNode node) {
+        private Element ParseViaNode(XmlNode node) {
 
-            string partName = GetAttribute(node, "element");
-            string padName = GetAttribute(node, "pad");
+            double x = StrToDouble(GetAttribute(node, "x"));
+            double y = StrToDouble(GetAttribute(node, "y"));
+            double drill = StrToDouble(GetAttribute(node, "drill"));
+            double size = StrToDouble(GetAttribute(node, "diameter"));
 
-            Part part = partDict[partName];
+            List<Layer> layers = new List<Layer>();
+            string extent = GetAttribute(node, "extent");
+            string[] layerNames = extent.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string layerName in layerNames)
+                layers.Add(GetLayer(Int32.Parse(layerName)));
 
-            return new Terminal(part, padName);
+            ViaElement.ViaShape shape = ViaElement.ViaShape.Circular;
+            string shapeName = GetAttribute(node, "shape");
+            switch (shapeName) {
+                case "square":
+                    shape = ViaElement.ViaShape.Square;
+                    break;
+
+                case "octagon":
+                    shape = ViaElement.ViaShape.Octogonal;
+                    break;
+            }
+
+            return new ViaElement(new Point(x, y), layers, size, drill, shape);
         }
 
         /// <summary>
-        /// Procesa un doce de tipus TEXT.
+        /// Procesa un node TEXT.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>La informacio recopilada.</returns>
+        /// <returns>L'objecte 'TextElement' creat.</returns>
         /// 
-        private ElementBase ParseTextNode(XmlNode node) {
+        private Element ParseTextNode(XmlNode node) {
 
             string name = null;
             string value = null;
@@ -529,7 +360,7 @@
             double rotate = StrToDouble(GetAttribute(node, "rot"));
             double height = StrToDouble(GetAttribute(node, "size"));
 
-            Layer layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
+            Layer layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
 
             TextElement element = new TextElement(new Point(x, y), layer, rotate, height, TextElement.TextAlign.TopLeft);
             element.Name = name;
@@ -538,12 +369,12 @@
         }
 
         /// <summary>
-        /// Procesa un node WIRE i crea l'element corresponent.
+        /// Procesa un node WIRE.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>L'element creat.</returns>
+        /// <returns>L'objecte 'LineElement' o ArcElement' creat.</returns>
         /// 
-        private ElementBase ParseWireNode(XmlNode node) {
+        private Element ParseWireNode(XmlNode node) {
 
             double x1 = StrToDouble(GetAttribute(node, "x1"));
             double y1 = StrToDouble(GetAttribute(node, "y1"));
@@ -555,7 +386,7 @@
 
             double thickness = StrToDouble(GetAttribute(node, "width"));
 
-            Layer layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
+            Layer layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
 
             if (angle == 0)
                 return new LineElement(new Point(x1, y1), layer, new Point(x2, y2), thickness, lineCap);
@@ -564,12 +395,12 @@
         }
 
         /// <summary>
-        /// Procesa un node de tipus RECTANGLE i crea el element corresponent.
+        /// Procesa un node RECTANGLE.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>L'element creat.</returns>
+        /// <returns>L'objecte 'RectangleElement' creat.</returns>
         /// 
-        private ElementBase ParseRectangleNode(XmlNode node) {
+        private Element ParseRectangleNode(XmlNode node) {
 
             double x1 = StrToDouble(GetAttribute(node, "x1"));
             double y1 = StrToDouble(GetAttribute(node, "y1"));
@@ -583,25 +414,25 @@
             double rotate = StrToDouble(GetAttribute(node, "rot"));
             double thickness = StrToDouble(GetAttribute(node, "width"));
 
-            Layer layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
+            Layer layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
 
             return new RectangleElement(new Point(x, y), layer, new Size(width, height), rotate, thickness);
         }
 
         /// <summary>
-        /// Procesa un node de tipus CIRCLE i crea el element corresponent.
+        /// Procesa un node CIRCLE.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>L'element creat.</returns>
+        /// <returns>L'objecte 'CircleElement' creat.</returns>
         /// 
-        private ElementBase ParseCircleNode(XmlNode node) {
+        private Element ParseCircleNode(XmlNode node) {
 
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
             double thickness = StrToDouble(GetAttribute(node, "width"));
             double radius = StrToDouble(GetAttribute(node, "radius"));
 
-            Layer layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
+            Layer layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
 
             return new CircleElement(new Point(x, y), layer, radius, thickness);
         }
@@ -617,7 +448,7 @@
             PolygonNodeInfo info = new PolygonNodeInfo();
 
             info.Thickness = 0; //  StrToDouble(GetAttribute(node, "width"));
-            info.Layer = layerDict[StrToInteger(GetAttribute(node, "layer"))];
+            info.Layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
 
             return info;
         }
@@ -640,12 +471,12 @@
         }
 
         /// <summary>
-        /// Procesa un node de tipus HOLE i crea l'element correspoonent.
+        /// Procesa un node HOLE.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>L'element creat.</returns>
+        /// <returns>L'objecte 'HoleElement' creat.</returns>
         /// 
-        private ElementBase ParseHoleNode(XmlNode node) {
+        private Element ParseHoleNode(XmlNode node) {
 
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
@@ -656,15 +487,32 @@
         }
 
         /// <summary>
-        /// Procesa un node de tipus ELEMENT i crea un objecte Part
+        /// Procesa un node CONTACTREF.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>L'objecte Part creat.</returns>
+        /// <returns>L'objecte 'Terminal' creat.</returns>
+        /// 
+        private Terminal ParseContactRefNode(XmlNode node) {
+
+            string partName = GetAttribute(node, "element");
+            string padName = GetAttribute(node, "pad");
+
+            Part part = partDict[partName];
+
+            return new Terminal(part, padName);
+        }
+        
+        /// <summary>
+        /// Procesa un node ELEMENT
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>L'objecte 'Part' creat.</returns>
+        /// 
         private Part ParseElementNode(XmlNode node) {
 
             string name = GetAttribute(node, "name");
             string value = GetAttribute(node, "value");
-            string packageName = String.Format(
+            string componentKey = String.Format(
                 "{0}@{1}",
                 GetAttribute(node, "package"),
                 GetAttribute(node, "library"));
@@ -684,7 +532,7 @@
             part.Position = new Point(x, y);
             part.Rotate = rotate;
             part.IsMirror = mirror;
-            part.Component = componentDict[packageName];
+            part.Component = GetComponent(componentKey);
 
             foreach (XmlNode attrNode in node.SelectNodes("attribute")) {
 
@@ -718,37 +566,120 @@
         }
 
         /// <summary>
-        /// Procesa un n ode de tipus VIA i crea l'element corresponent.
+        /// Obte un objecte capa a partir del seu numero.
         /// </summary>
-        /// <param name="node">El node a procesar.</param>
-        /// <returns>L'element creat.</returns>
+        /// <param name="layerNum">Numero de capa.</param>
+        /// <returns>La capa.</returns>
         /// 
-        private ElementBase ParseViaNode(XmlNode node) {
+        private Layer GetLayer(int layerNum) {
 
-            double x = StrToDouble(GetAttribute(node, "x"));
-            double y = StrToDouble(GetAttribute(node, "y"));
-            double drill = StrToDouble(GetAttribute(node, "drill"));
-            double size = StrToDouble(GetAttribute(node, "diameter"));
+            return layerDict[layerNum];
+        }
 
-            List<Layer> layers = new List<Layer>();
-            string extent = GetAttribute(node, "extent");
-            string[] layerNames = extent.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string layerName in layerNames)
-                layers.Add(layerDict[Int32.Parse(layerName)]);
+        /// <summary>
+        /// Obte el identificador de la capa a partir del seu numero.
+        /// </summary>
+        /// <param name="layerNum">Numero de la capa.</param>
+        /// <returns>La capa.</returns>
+        /// 
+        private static LayerId GetLayerId(int layerNum) {
 
-            ViaElement.ViaShape shape = ViaElement.ViaShape.Circular;
-            string shapeName = GetAttribute(node, "shape");
-            switch (shapeName) {
-                case "square":
-                    shape = ViaElement.ViaShape.Square;
-                    break;
+            switch (layerNum) {
+                case 1:
+                    return LayerId.Top;
 
-                case "octagon":
-                    shape = ViaElement.ViaShape.Octogonal;
-                    break;
-            }
+                case 16:
+                    return LayerId.Bottom;
 
-            return new ViaElement(new Point(x, y), layers, size, drill, shape);
+                case 17:
+                    return LayerId.Pads;
+
+                case 18:
+                    return LayerId.Vias;
+
+                case 19:
+                    return LayerId.Unrouted;
+
+                case 20:
+                    return LayerId.Profile;
+
+                case 21:
+                    return LayerId.TopPlace;
+
+                case 22:
+                    return LayerId.BottomPlace;
+
+                case 25:
+                    return LayerId.TopNames;
+
+                case 26:
+                    return LayerId.BottomNames;
+
+                case 27:
+                    return LayerId.TopValues;
+
+                case 28:
+                    return LayerId.BottomValues;
+
+                case 29:
+                    return LayerId.TopStop;
+
+                case 30:
+                    return LayerId.BottomStop;
+
+                case 31:
+                    return LayerId.TopCream;
+
+                case 32:
+                    return LayerId.BottomCream;
+
+                case 35:
+                    return LayerId.TopGlue;
+
+                case 36:
+                    return LayerId.BottomGlue;
+
+                case 39:
+                    return LayerId.TopKeepout;
+
+                case 40:
+                    return LayerId.BottomKeepout;
+
+                case 41:
+                    return LayerId.TopRestrict;
+
+                case 42:
+                    return LayerId.BottomRestrict;
+
+                case 43:
+                    return LayerId.ViaRestrict;
+
+                case 44:
+                    return LayerId.Drills;
+
+                case 45:
+                    return LayerId.Holes;
+
+                case 51:
+                    return LayerId.TopDocument;
+
+                case 52:
+                    return LayerId.BottomDocument;
+
+                default:
+                    return LayerId.Unknown;
+            }           
+        }
+
+        /// <summary>
+        /// Obte objecte Component a partir del seu nom.
+        /// </summary>
+        /// <param name="name">El nom del component.</param>
+        /// <returns>El component.</returns>
+        /// 
+        private Component GetComponent(string name) {
+
+            return componentDict[name];
         }
 
         private static string GetAttribute(XmlNode node, string name) {

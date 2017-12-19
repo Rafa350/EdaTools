@@ -1,8 +1,8 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Visitors {
 
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
-    public abstract class DefaultVisitor: IVisitor {
+    public abstract class BoardVisitor: IVisitor {
 
         private Board visitingBoard;
         private Part visitingPart;
@@ -14,7 +14,7 @@
             try {
 
                 if (board.Elements != null)
-                    foreach (ElementBase element in board.Elements)
+                    foreach (Element element in board.Elements)
                         element.AcceptVisitor(this);
 
                 if (board.Parts != null)
@@ -38,7 +38,7 @@
             visitingSignal = signal;
             try {
                 if (signal.Elements != null)
-                    foreach (ElementBase element in signal.Elements)
+                    foreach (Element element in signal.Elements)
                         element.AcceptVisitor(this);
 
                 if (signal.Terminals != null)
@@ -99,9 +99,8 @@
 
         public virtual void Visit(Component component) {
 
-            if (component.Elements != null)
-                foreach (ElementBase element in component.Elements)
-                    element.AcceptVisitor(this);
+            foreach (Element element in component.Elements)
+                element.AcceptVisitor(this);
         }
 
         public virtual void Visit(Parameter parameter) {

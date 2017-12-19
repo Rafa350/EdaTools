@@ -17,10 +17,9 @@
         /// </summary>
         /// <param name="circle">El element.</param>
         /// <param name="part">El component al que pertany.</param>
-        /// <param name="inflate">El increment de tamany del poligon.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public static Polygon FromElement(CircleElement circle, Part part, double inflate = 0) {
+        public static Polygon FromElement(CircleElement circle, Part part) {
 
             Matrix m = new Matrix();
             m.Translate(circle.Position.X, circle.Position.Y);
@@ -29,7 +28,7 @@
                 m.RotateAt(part.Rotate, part.Position.X, part.Position.Y);
             }
 
-            return FromCircle(circle.Diameter + (inflate * 2), m);
+            return FromCircle(circle.Diameter, m);
         }
 
         /// <summary>
@@ -37,10 +36,9 @@
         /// </summary>
         /// <param name="rectangle">El element.</param>
         /// <param name="part">El component al que pertany.</param>
-        /// <param name="inflate">El increment de tamany del poligon.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public static Polygon FromElement(RectangleElement rectangle, Part part, double inflate = 0) {
+        public static Polygon FromElement(RectangleElement rectangle, Part part) {
 
             Matrix m = new Matrix();
             m.Translate(rectangle.Position.X, rectangle.Position.Y);
@@ -50,7 +48,7 @@
                 m.RotateAt(part.Rotate, part.Position.X, part.Position.Y);
             }
 
-            return FromRectangle(new Size(rectangle.Size.Width + (inflate * 2), rectangle.Size.Height + (inflate * 2)), m);
+            return FromRectangle(new Size(rectangle.Size.Width, rectangle.Size.Height), m);
         }
 
         /// <summary>
@@ -58,10 +56,9 @@
         /// </summary>
         /// <param name="via">El element.</param>
         /// <param name="part">El conmponent al que pertany.</param>
-        /// <param name="inflate">El increment de tamany del poligon.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public static Polygon FromElement(ViaElement via, Part part, double inflate = 0) {
+        public static Polygon FromElement(ViaElement via, Part part) {
 
             Matrix m = new Matrix();
             m.Translate(via.Position.X, via.Position.Y);
@@ -72,24 +69,18 @@
                 m.RotateAt(part.Rotate, part.Position.X, part.Position.Y);
             }
 
-            Polygon p = new Polygon();
-
             double size = via.OuterSize;
             switch (via.Shape) {
+                default:
                 case ViaElement.ViaShape.Circular:
-                    p = FromCircle(size + (inflate * 2), m);
-                    break;
+                    return FromCircle(size, m);
 
                 case ViaElement.ViaShape.Square:
-                    p = FromRectangle(new Size(size + (inflate * 2), size + (inflate * 2)), m);
-                    break;
+                    return FromRectangle(new Size(size, size), m);
 
                 case ViaElement.ViaShape.Octogonal:
-                    p = FromPolygon(8, size + (inflate * 2), m);
-                    break;
+                    return FromPolygon(8, size, m);
             }
-
-            return p;
         }
 
         /// <summary>
@@ -97,10 +88,9 @@
         /// </summary>
         /// <param name="pad">El element.</param>
         /// <param name="part">El component al que pertany.</param>
-        /// <param name="inflate">El increment de tamany del poligon.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public static Polygon FromElement(ThPadElement pad, Part part, double inflate = 0) {
+        public static Polygon FromElement(ThPadElement pad, Part part) {
 
             Matrix m = new Matrix();
             m.Translate(pad.Position.X, pad.Position.Y);
@@ -112,41 +102,41 @@
                 m.RotateAt(part.Rotate, part.Position.X, part.Position.Y);
             }
 
-            Polygon p = new Polygon();
-
             switch (pad.Shape) {
+                default:
                 case ThPadElement.ThPadShape.Circular:
-                    p = FromCircle(pad.Size + (inflate * 2), m);
-                    break;
+                    return FromCircle(pad.Size, m);
 
                 case ThPadElement.ThPadShape.Square:
-                    p = FromRectangle(new Size(pad.Size + (inflate * 2), pad.Size + (inflate * 2)), m);
-                    break;
+                    return FromRectangle(new Size(pad.Size, pad.Size), m);
 
                 case ThPadElement.ThPadShape.Octogonal:
-                    p = FromPolygon(8, pad.Size + (inflate * 2), m);
-                    break;
+                    return FromPolygon(8, pad.Size, m);
             }
+        }
 
-            return p;
+        public static Polygon FromElement(SmdPadElement pad, Part part) {
+
+            Polygon polygon = new Polygon();
+
+            return polygon;
         }
 
         /// <summary>
         /// Crea un poligon a partir d'un element.
         /// </summary>
         /// <param name="region">El element</param>
-        /// <param name="inflate">El increment de tamany del poligon.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public static Polygon FromElement(RegionElement region, double inflate = 0) {
+        public static Polygon FromElement(RegionElement region) {
 
-            Polygon p = new Polygon();
+            Polygon polygon = new Polygon();
 
-            p.AddPoint(region.Position);
+            polygon.AddPoint(region.Position);
             foreach (RegionElement.Segment segment in region.Segments) 
-                p.AddPoint(segment.Position);
+                polygon.AddPoint(segment.Position);
 
-            return p;
+            return polygon;
         }
 
         /// <summary>
@@ -170,16 +160,16 @@
         /// 
         private static Polygon FromRectangle(Size size, Matrix m) {
 
-            Polygon p = new Polygon();
+            Polygon polygon = new Polygon();
 
             double w = size.Width / 2;
             double h = size.Height / 2;
-            p.AddPoint(m.Transform(new Point(-w, -h)));
-            p.AddPoint(m.Transform(new Point(w, -h)));
-            p.AddPoint(m.Transform(new Point(w, h)));
-            p.AddPoint(m.Transform(new Point(-w, h)));
+            polygon.AddPoint(m.Transform(new Point(-w, -h)));
+            polygon.AddPoint(m.Transform(new Point(w, -h)));
+            polygon.AddPoint(m.Transform(new Point(w, h)));
+            polygon.AddPoint(m.Transform(new Point(-w, h)));
 
-            return p;
+            return polygon;
         }
 
         /// <summary>
@@ -192,17 +182,17 @@
         /// 
         private static Polygon FromPolygon(int sides, double diameter, Matrix m) {
 
-            Polygon p = new Polygon();
+            Polygon polygon = new Polygon();
 
             double radius = diameter / 2;
             double angle = 0;
             double delta = 360.0 / sides * Math.PI / 180.0;
             while (sides-- > 0) {
-                p.AddPoint(m.Transform(new Point(radius * Math.Cos(angle), radius * Math.Sin(angle))));
+                polygon.AddPoint(m.Transform(new Point(radius * Math.Cos(angle), radius * Math.Sin(angle))));
                 angle += delta;
             }
 
-            return p;
+            return polygon;
         }
 
         /// <summary>

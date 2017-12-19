@@ -1,12 +1,13 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
+    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
     using System;
-    using System.Windows;
     using System.Collections.Generic;
+    using System.Windows;
 
-    public abstract class MultiLayerElement: ElementBase {
+    public abstract class MultiLayerElement: Element {
 
-        private readonly LayerSet layers = new LayerSet();
+        private readonly LayerCollection layers = new LayerCollection();
 
         /// <summary>
         /// Constructor per defecte de l'objecte.
@@ -46,10 +47,42 @@
         }
 
         /// <summary>
-        /// Obte el conjunt de capes del element.
+        /// Afegeix l'element a la capa.
+        /// </summary>
+        /// <param name="layer">La capa.</param>
+        /// 
+        public void AddToLayer(Layer layer) {
+
+            if (layer == null)
+                throw new ArgumentNullException("layer");
+
+            if (layers.Contains(layer))
+                throw new InvalidOperationException("El elemento ya pertenece a la capa.");
+
+            layers.Add(layer);
+        }
+
+        /// <summary>
+        /// Treu l'element de la capa.
+        /// </summary>
+        /// <param name="layer">La capa.</param>
+        /// 
+        public void RemoveFromLayer(Layer layer) {
+
+            if (layer == null)
+                throw new ArgumentNullException("layer");
+
+            if (!layers.Contains(layer))
+                throw new InvalidOperationException("El elemento no pertenece a la capa.");
+
+            layers.Remove(layer);
+        }
+
+        /// <summary>
+        /// Obte el conjunt de capes a la que pertany l'element.
         /// </summary>
         /// 
-        public LayerSet Layers {
+        public IEnumerable<Layer> Layers {
             get {
                 return layers;
             }

@@ -20,58 +20,58 @@
             GerberImageGenerator imageGenerator = new GerberImageGenerator();
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.Top));
-            layers.Add(board.GetLayer(LayerId.Pads));
-            layers.Add(board.GetLayer(LayerId.Vias));
-            layers.Add(board.GetLayer(LayerId.Profile));
+            layers.Add(board.Layers.ById(LayerId.Top));
+            layers.Add(board.Layers.ById(LayerId.Pads));
+            layers.Add(board.Layers.ById(LayerId.Vias));
+            layers.Add(board.Layers.ById(LayerId.Profile));
             fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.Top);
             imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.Top, fileName);
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.Bottom));
-            layers.Add(board.GetLayer(LayerId.Pads));
-            layers.Add(board.GetLayer(LayerId.Vias));
-            layers.Add(board.GetLayer(LayerId.Profile));
+            layers.Add(board.Layers.ById(LayerId.Bottom));
+            layers.Add(board.Layers.ById(LayerId.Pads));
+            layers.Add(board.Layers.ById(LayerId.Vias));
+            layers.Add(board.Layers.ById(LayerId.Profile));
             fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.Bottom);
             imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.Bottom, fileName);
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.TopStop));
-            layers.Add(board.GetLayer(LayerId.Profile));
+            layers.Add(board.Layers.ById(LayerId.TopStop));
+            layers.Add(board.Layers.ById(LayerId.Profile));
             fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.TopSolderMask);
             imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.TopSolderMask, fileName);
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.BottomStop));
-            layers.Add(board.GetLayer(LayerId.Profile));
+            layers.Add(board.Layers.ById(LayerId.BottomStop));
+            layers.Add(board.Layers.ById(LayerId.Profile));
             fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.BottomSolderMask);
             imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.BottomSolderMask, fileName);
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.Profile));
+            layers.Add(board.Layers.ById(LayerId.Profile));
             fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.Profile);
             imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.Profile, fileName);
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.TopPlace));
-            layers.Add(board.GetLayer(LayerId.Profile));
+            layers.Add(board.Layers.ById(LayerId.TopPlace));
+            layers.Add(board.Layers.ById(LayerId.Profile));
             fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.TopLegend);
             imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.TopLegend, fileName);
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.BottomPlace));
-            layers.Add(board.GetLayer(LayerId.Profile));
+            layers.Add(board.Layers.ById(LayerId.BottomPlace));
+            layers.Add(board.Layers.ById(LayerId.Profile));
             fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.BottomLegend);
             imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.BottomLegend, fileName);
 
             GerberDrillGenerator drillGenerator = new GerberDrillGenerator();
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.Drills));
+            layers.Add(board.Layers.ById(LayerId.Drills));
             drillGenerator.Generate(board, layers, GerberDrillGenerator.DrillType.PlatedDrill, @"..\..\..\Data\board_Plated$1$2$PTH$Drill.gbr");
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.Holes));
+            layers.Add(board.Layers.ById(LayerId.Holes));
             drillGenerator.Generate(board, layers, GerberDrillGenerator.DrillType.NonPlatedDrill, @"..\..\..\Data\board_NonPlated$1$2$NPTH$Drill.gbr");            
         }
 

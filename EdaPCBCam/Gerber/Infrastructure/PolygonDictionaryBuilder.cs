@@ -2,6 +2,7 @@
 
     using System.Collections.Generic;
     using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
@@ -11,7 +12,7 @@
         /// Clase utilitzada per inicialitzar el diccionari de poligons
         /// </summary>
         /// 
-        private sealed class PolygonBuilderVisitor : DefaultVisitor {
+        private sealed class PolygonBuilderVisitor : BoardVisitor {
 
             private readonly IList<Layer> layers;
             private readonly IDictionary<Signal, List<Polygon>> polygonDict;
@@ -49,7 +50,7 @@
 
                 Component component = terminal.Part.Component;
                 currentPart = terminal.Part;
-                foreach (ElementBase element in component.Elements)
+                foreach (Element element in component.Elements)
                     element.AcceptVisitor(this);
             }
 
@@ -72,6 +73,19 @@
             /// <param name="pad">El pad a visitar.</param>
             /// 
             public override void Visit(ThPadElement pad) {
+
+                if (pad.IsOnAnyLayer(layers)) {
+                    Polygon polygon = Polygon.FromElement(pad, currentPart);
+                    Add(VisitingSignal, polygon);
+                }
+            }
+
+            /// <summary>
+            /// Visita un pad smd
+            /// </summary>
+            /// <param name="pad">El pad a visitar.</param>
+            /// 
+            public override void Visit(SmdPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers)) {
                     Polygon polygon = Polygon.FromElement(pad, currentPart);

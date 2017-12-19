@@ -3,6 +3,7 @@
     using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -75,7 +76,7 @@
             }
         }
 
-        private sealed class DefineAperturesVisitor : DefaultVisitor {
+        private sealed class DefineAperturesVisitor : BoardVisitor {
 
             private readonly IList<Layer> layers;
             private readonly ApertureDictionary apertures;
@@ -106,7 +107,7 @@
         }
 
 
-        private sealed class ImageGeneratorVisitor : DefaultVisitor {
+        private sealed class ImageGeneratorVisitor : BoardVisitor {
 
             private readonly GerberBuilder gb;
             private readonly IList<Layer> layers;

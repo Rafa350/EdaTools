@@ -4,12 +4,13 @@
     using System.Collections.Generic;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
 
     public sealed class ElementFinder {
 
         private interface IChecker {
 
-            bool Check(ElementBase element);
+            bool Check(Element element);
         }
 
         private sealed class LayerChecker: IChecker {
@@ -21,15 +22,15 @@
                 this.layer = layer;
             }
 
-            public bool Check(ElementBase element) {
+            public bool Check(Element element) {
 
                 return element.IsOnLayer(layer);
             }
         }
 
-        private sealed class CheckerVisitor: DefaultVisitor {
+        private sealed class CheckerVisitor: BoardVisitor {
 
-            private readonly List<ElementBase> elements = new List<ElementBase>();
+            private readonly List<Element> elements = new List<Element>();
             private readonly IChecker checker;
             private readonly Board board;
 
@@ -57,7 +58,7 @@
                     elements.Add(via);
             }
 
-            public IEnumerable<ElementBase> Elements {
+            public IEnumerable<Element> Elements {
                 get {
                     return elements;
                 }
@@ -71,7 +72,7 @@
             this.board = board;
         }
 
-        public IEnumerable<ElementBase> ElementsOfLayer(Layer layer) {
+        public IEnumerable<Element> ElementsOfLayer(Layer layer) {
 
             LayerChecker checker = new LayerChecker(layer);
             CheckerVisitor visitor = new CheckerVisitor(board, checker);

@@ -3,17 +3,18 @@
     using System;
     using System.Collections.Generic;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
 
     /// <summary>
     /// Clase que representa una placa.
     /// </summary>
     public sealed class Board: IVisitable {
 
-        private Dictionary<LayerId, Layer> layers;
-        private List<Component> components;
+        private readonly LayerCollection layers = new LayerCollection();
+        private readonly ElementCollection elements = new ElementCollection();
+        private readonly ComponentCollection components = new ComponentCollection();
         private List<Part> parts;
         private List<Signal> signals;
-        private List<ElementBase> elements;
 
         /// <summary>
         /// Constructor per defecte.
@@ -29,36 +30,6 @@
         public void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
-        }
-
-        /// <summary>
-        /// Afegeix una capa.
-        /// </summary>
-        /// <param name="layer">La capa a afeigir.</param>
-        /// 
-        public void AddLayer(Layer layer) {
-
-            if (layer == null)
-                throw new ArgumentNullException("layer");
-
-            if (layers == null)
-                layers = new Dictionary<LayerId, Layer>();
-            layers.Add(layer.Id, layer);
-        }
-
-        /// <summary>
-        /// Afegeix un component.
-        /// </summary>
-        /// <param name="component">El component a afeigir.</param>
-        /// 
-        public void AddComponent(Component component) {
-
-            if (component == null)
-                throw new ArgumentNullException("component");
-
-            if (components == null)
-                components = new List<Component>();
-            components.Add(component);
         }
 
         /// <summary>
@@ -96,25 +67,12 @@
         /// </summary>
         /// <param name="element">L'element a afeigir.</param>
         /// 
-        public void AddElement(ElementBase element) {
+        public void AddElement(Element element) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
 
-            if (elements == null)
-                elements = new List<ElementBase>();
             elements.Add(element);
-        }
-
-        /// <summary>
-        /// Obte una capa a partir del seu identificador.
-        /// </summary>
-        /// <param name="id">El identificador de la capa.</param>
-        /// <returns>La capa. Null si no la troba.</returns>
-        /// 
-        public Layer GetLayer(LayerId id) {
-
-            return layers == null ? null : layers[id];
         }
 
         public Signal GetSignal(string name) {
@@ -127,20 +85,20 @@
         }
 
         /// <summary>
-        /// Obte un enuymerador per les capes.
+        /// Obte la llista de capes.
         /// </summary>
         /// 
-        public IEnumerable<Layer> Layers {
+        public LayerCollection Layers {
             get {
-                return layers.Values;
+                return layers;
             }
         }
 
         /// <summary>
-        /// Obte un enumerador pel components.
+        /// Obte la llista de components.
         /// </summary>
         /// 
-        public IEnumerable<Component> Components {
+        public ComponentCollection Components {
             get {
                 return components;
             }
@@ -170,7 +128,7 @@
         /// Obte un enunerador pels elements.
         /// </summary>
         /// 
-        public IEnumerable<ElementBase> Elements {
+        public IEnumerable<Element> Elements {
             get {
                 return elements;
             }

@@ -5,6 +5,7 @@
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -121,10 +122,16 @@
                     gb.DefineApertures(apertureDict.Apertures);
                     gb.Comment("END APERTURES");
 
+                    // Definicio de les regions
+                    //
+                    gb.Comment("BEGIN POLYGONS");
+                    board.AcceptVisitor(new RegionGeneratorVisitor(gb, layers, polygonDict));
+                    gb.Comment("END POLYGONS");
+
                     // Definicio de la imatge
                     //
                     gb.Comment("BEGIN IMAGE");
-                    board.AcceptVisitor(new ImageGeneratorVisitor(gb, layers, apertureDict, polygonDict));
+                    board.AcceptVisitor(new ImageGeneratorVisitor(gb, layers, apertureDict));
                     gb.Comment("END IMAGE");
 
                     // Final
@@ -138,19 +145,17 @@
         /// Clase utilitzada per la generacio de la imatge.
         /// </summary>
         /// 
-        private sealed class ImageGeneratorVisitor : DefaultVisitor {
+        private sealed class ImageGeneratorVisitor : BoardVisitor {
 
             private readonly GerberBuilder gb;
             private readonly IList<Layer> layers;
             private readonly ApertureDictionary apertureDict;
-            private readonly IDictionary<Signal, List<Polygon>> polygonDict;
 
-            public ImageGeneratorVisitor(GerberBuilder gb, IList<Layer> layers, ApertureDictionary apertureDict, IDictionary<Signal, List<Polygon>> polygonDict) {
+            public ImageGeneratorVisitor(GerberBuilder gb, IList<Layer> layers, ApertureDictionary apertureDict) {
 
                 this.gb = gb;
                 this.layers = layers;
                 this.apertureDict = apertureDict;
-                this.polygonDict = polygonDict;
             }
 
             public override void Visit(LineElement line) {
@@ -202,45 +207,6 @@
                         gb.SelectAperture(ap);
                         Point p = circle.GetPosition(VisitingPart);
                         gb.FlashAt(p);
-                    }
-                }
-            }
-
-            public override void Visit(RegionElement region) {
-
-                if (region.IsOnAnyLayer(layers)) {
-
-                    if (VisitingSignal != null) {
-
-                        Polygon sourcePolygon = Polygon.FromElement(region);
-
-                        List<Polygon> resultPolygons = new List<Polygon>();
-
-                        if (polygonDict.ContainsKey(VisitingSignal)) {
-                            List<Polygon> clipPolygons = polygonDict[VisitingSignal];
-                            List<Polygon> inflatedPolygons = new List<Polygon>();
-                            foreach (Polygon clipPolygon in clipPolygons)
-                                if (clipPolygon.NumPoints > 0)
-                                    inflatedPolygons.Add(clipPolygon.Offset(0.25));
-                            
-                            resultPolygons.AddRange(sourcePolygon.Clip(inflatedPolygons));
-                        }
-                        else
-                            resultPolygons.Add(sourcePolygon);
-
-                        bool first = true;
-                        foreach (Polygon polygon in resultPolygons) {
-                            if (first) {
-                                first = false;
-                                gb.LoadPolarity(Polarity.Dark);
-                            }
-                            else
-                                gb.LoadPolarity(Polarity.Clear);
-                            gb.BeginRegion();
-                            gb.Region(polygon.Points);
-                            gb.EndRegion();
-                        }
-                        gb.LoadPolarity(Polarity.Dark);
                     }
                 }
             }
@@ -315,6 +281,59 @@
                     gb.SelectAperture(ap);
                     Point p = pad.GetPosition(VisitingPart);
                     gb.FlashAt(p);
+                }
+            }
+        }
+
+        private sealed class RegionGeneratorVisitor: BoardVisitor {
+
+            private readonly GerberBuilder gb;
+            private readonly IList<Layer> layers;
+            private readonly IDictionary<Signal, List<Polygon>> polygonDict;
+
+            public RegionGeneratorVisitor(GerberBuilder gb, IList<Layer> layers, IDictionary<Signal, List<Polygon>> polygonDict) {
+
+                this.gb = gb;
+                this.layers = layers;
+                this.polygonDict = polygonDict;
+            }
+
+            public override void Visit(RegionElement region) {
+
+                if (region.IsOnAnyLayer(layers)) {
+
+                    if (VisitingSignal != null) {
+
+                        Polygon sourcePolygon = Polygon.FromElement(region);
+
+                        List<Polygon> resultPolygons = new List<Polygon>();
+
+                        if (polygonDict.ContainsKey(VisitingSignal)) {
+                            List<Polygon> clipPolygons = polygonDict[VisitingSignal];
+                            List<Polygon> inflatedPolygons = new List<Polygon>();
+                            foreach (Polygon clipPolygon in clipPolygons)
+                                if (clipPolygon.NumPoints > 0)
+                                    inflatedPolygons.Add(clipPolygon.Offset(0.25));
+
+                            resultPolygons.AddRange(sourcePolygon.Clip(inflatedPolygons));
+                        }
+                        else
+                            resultPolygons.Add(sourcePolygon);
+
+                        bool first = true;
+                        foreach (Polygon polygon in resultPolygons) {
+                            if (first) {
+                                first = false;
+                                gb.LoadPolarity(Polarity.Dark);
+                            }
+                            else
+                                gb.LoadPolarity(Polarity.Clear);
+                            gb.BeginRegion();
+                            gb.Region(polygon.Points);
+                            gb.EndRegion();
+                        }
+                        gb.LoadPolarity(Polarity.Dark);
+                    }
                 }
             }
         }

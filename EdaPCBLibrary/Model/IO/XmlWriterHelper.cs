@@ -6,6 +6,7 @@
     using System.Windows.Media;
     using System.Xml;
     using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
 
     public static class XmlWriterHelper {
 
@@ -51,9 +52,9 @@
                 writer.WriteAttributeString(name, layer.Name);
         }
 
-        public static void WriteAttribute(this XmlWriter writer, string name, LayerSet layers) {
+        public static void WriteAttribute(this XmlWriter writer, string name, LayerCollection layers) {
 
-            if (layers != null && layers.Count > 0) {
+            if (layers != null && !layers.IsEmpty) {
 
                 StringBuilder sb = new StringBuilder();
 

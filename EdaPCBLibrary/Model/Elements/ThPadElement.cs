@@ -3,7 +3,7 @@
     using System;
     using System.Windows;
 
-    public sealed class ThPadElement: ElementBase {
+    public sealed class ThPadElement: Element {
 
         public enum ThPadShape {
             Square,
@@ -49,6 +49,12 @@
             this.shape = shape;
         }
 
+        /// <summary>
+        /// Comprova si pertany a la capa especificada.
+        /// </summary>
+        /// <param name="layer">La capa a comprovar.</param>
+        /// <returns>True si pertany, false en cas contraru.</returns>
+        /// 
         public override bool IsOnLayer(Layer layer) {
 
             if ((layer.Id == LayerId.Pads) ||
@@ -66,7 +72,7 @@
         }
 
         /// <summary>
-        /// Nom del pad.
+        /// Obte o asigna el nom.
         /// </summary>
         public string Name {
             get {

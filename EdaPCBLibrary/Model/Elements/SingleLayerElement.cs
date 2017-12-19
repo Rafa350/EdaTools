@@ -3,7 +3,7 @@
     using System;
     using System.Windows;
 
-    public abstract class SingleLayerElement: ElementBase {
+    public abstract class SingleLayerElement: Element {
 
         private Layer layer;
 
@@ -42,15 +42,44 @@
         }
 
         /// <summary>
-        /// Obte o asigna la capa a la que pertany l'element.
+        /// Afegeix l'element a la capa.
+        /// </summary>
+        /// <param name="layer">La capa.</param>
+        /// 
+        public void AddToLayer(Layer layer) {
+
+            if (layer == null)
+                throw new ArgumentNullException("layer");
+
+            if (this.layer != null)
+                throw new InvalidOperationException("Este elemento solo puede pertenecer a una capa.");
+
+            this.layer = layer;
+        }
+
+        /// <summary>
+        /// Treu l'element de la capa.
+        /// </summary>
+        /// <param name="layer">La capa.</param>
+        /// 
+        public void RemoveFromLayer(Layer layer) {
+
+            if (layer == null)
+                throw new ArgumentNullException("layer");
+
+            if (this.layer != layer)
+                throw new InvalidOperationException("El elemento no pertenece a la capa.");
+
+            this.layer = null;
+        }
+
+        /// <summary>
+        /// Obte la capa a la que pertany l'element.
         /// </summary>
         /// 
         public Layer Layer {
             get {
                 return layer;
-            }
-            set {
-                layer = value;
             }
         }
 

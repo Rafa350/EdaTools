@@ -2,6 +2,7 @@
 
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Media;
@@ -15,7 +16,7 @@
         /// <param name="layers">Conjunt de capes a comprovar.</param>
         /// <returns>True si pertany a alguna capa.</returns>
         /// 
-        public static bool IsOnAnyLayer(this ElementBase element, IEnumerable<Layer> layers) {
+        public static bool IsOnAnyLayer(this Element element, IEnumerable<Layer> layers) {
 
             foreach (Layer layer in layers)
                 if (element.IsOnLayer(layer))
@@ -23,7 +24,7 @@
             return false;
         }
 
-        public static Point GetPosition(this ElementBase element, Part part) {
+        public static Point GetPosition(this Element element, Part part) {
 
             Point p = element.Position;
             if (part != null) {

@@ -50,7 +50,7 @@
         }
 
         /// <summary>
-        /// Nom del pad.
+        /// Obte o asigna el nom.
         /// </summary>
         public string Name {
             get {
@@ -62,7 +62,7 @@
         }
 
         /// <summary>
-        /// Obte o asigna la orientacio del pad.
+        /// Obte o asigna l'orientacio del pad.
         /// </summary>
         public double Rotate {
             get {

@@ -72,9 +72,9 @@
 
     public enum LayerClass {
         Unknown,
-        TopCopper,
-        InnerCopper,
-        BottomCopper,
+        TopSignal,
+        InnerSignal,
+        BottomSignal,
         Design,
         Mechanical,
     }

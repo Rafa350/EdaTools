@@ -7,7 +7,7 @@
 
     public abstract class ElementVisual: DrawingVisual {
 
-        private readonly ElementBase element;
+        private readonly Element element;
         private readonly Part part;
         private bool isSelected = false;
 
@@ -16,7 +16,7 @@
         /// </summary>
         /// <param name="element">El element.</param>
         /// <param name="part">El component del element. Si s'escau.</param>
-        public ElementVisual(ElementBase element, Part part) {
+        public ElementVisual(Element element, Part part) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
@@ -34,7 +34,7 @@
         /// <summary>
         /// Obte el element.
         /// </summary>
-        public ElementBase Element {
+        public Element Element {
             get {
                 return element;
             }

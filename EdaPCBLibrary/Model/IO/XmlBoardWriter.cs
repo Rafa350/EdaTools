@@ -1,6 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
+    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
     using System;
     using System.Globalization;
     using System.IO;
@@ -10,7 +12,7 @@
 
         private Stream stream;
 
-        private class Visitor: DefaultVisitor {
+        private class Visitor: BoardVisitor {
 
             private XmlWriter writer;
             private readonly CultureInfo ci = CultureInfo.InvariantCulture;
@@ -186,7 +188,7 @@
 
                 writer.WriteStartElement("via");
                 writer.WriteAttribute("position", via.Position);
-                writer.WriteAttribute("layers", via.Layers);
+                //writer.WriteAttribute("layers", via.Layers);
                 writer.WriteAttribute("drill", via.Drill);
                 writer.WriteAttribute("outerSize", via.OuterSize);
                 writer.WriteAttribute("innerSize", via.InnerSize);
@@ -201,7 +203,7 @@
 
                 if (signal.Elements != null) {
                     writer.WriteStartElement("elements");
-                    foreach (ElementBase element in signal.Elements) 
+                    foreach (Element element in signal.Elements) 
                         element.AcceptVisitor(this);
                     foreach (Terminal pad in signal.Terminals)
                         pad.AcceptVisitor(this);
@@ -216,9 +218,9 @@
                 writer.WriteStartElement("component");
                 writer.WriteAttributeString("name", component.Name);
 
-                if (component.Elements != null) {
+                if (!component.Elements.IsEmpty) {
                     writer.WriteStartElement("elements");
-                    foreach (ElementBase element in component.Elements)
+                    foreach (Element element in component.Elements)
                         element.AcceptVisitor(this);
                     writer.WriteEndElement();
                 }
@@ -266,7 +268,7 @@
 
                 if (board.Elements != null) {
                     writer.WriteStartElement("elements");
-                    foreach (ElementBase element in board.Elements)
+                    foreach (Element element in board.Elements)
                         element.AcceptVisitor(this);
                     writer.WriteEndElement();
                 }

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using MikroPic.EdaTools.v1.Cam.Gerber;
 
     internal static class ApertureDictionaryBuilder {
@@ -12,7 +13,7 @@
         /// Clase utilitzada per la inicialitzacio del diccionari d'apertures.
         /// </summary>
         /// 
-        private sealed class DefineAperturesVisitor : DefaultVisitor {
+        private sealed class DefineAperturesVisitor : BoardVisitor {
 
             private readonly IList<Layer> layers;
             private readonly ApertureDictionary apertureDict;

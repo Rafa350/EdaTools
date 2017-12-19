@@ -6,18 +6,19 @@
     using Eda.PCBViewer.DrawEditor.Visuals;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
 
     public sealed class VisualGenerator {
 
         private class RenderItem {
             public Part Part { get; set; }
-            public ElementBase Element { get; set; }
+            public Element Element { get; set; }
         }
 
         /// <summary>
         /// Visitador per les senyals d'una placa.
         /// </summary>
-        private sealed class PopulateRenderListSignalsVisitor: DefaultVisitor {
+        private sealed class PopulateRenderListSignalsVisitor: BoardVisitor {
 
             private readonly Layer layer;
             private readonly IList<RenderItem> renderList;
@@ -50,7 +51,7 @@
             public override void Visit(Signal signal) {
 
                 if (signal.Elements != null)
-                    foreach (ElementBase element in signal.Elements) {
+                    foreach (Element element in signal.Elements) {
                         if (element.IsOnLayer(layer)) {
                             RenderItem renderItem = new RenderItem {
                                 Part = null,
@@ -62,7 +63,7 @@
             }
         }
 
-        private sealed class PopulateRenderListPartsVisitor: DefaultVisitor {
+        private sealed class PopulateRenderListPartsVisitor: BoardVisitor {
 
             private readonly Layer layer;
             private readonly IList<RenderItem> renderList;
@@ -82,7 +83,7 @@
             public override void Visit(Part part) {
 
                 if (part.Component != null && part.Component.Elements != null)
-                    foreach (ElementBase element in part.Component.Elements) {
+                    foreach (Element element in part.Component.Elements) {
                         //Layer elementLayer = part.IsMirror ? element.Layer.Mirror : element.Layer;
                         if (element.IsOnLayer(layer)) {
                             RenderItem renderItem = new RenderItem {
@@ -95,7 +96,7 @@
             }
         }
 
-        private sealed class CreateVisualsVisitor: DefaultVisitor {
+        private sealed class CreateVisualsVisitor: BoardVisitor {
 
             private readonly IList<RenderItem> renderList;
             private readonly IList<Visual> visualList;
