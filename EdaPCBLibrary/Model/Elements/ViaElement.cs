@@ -44,6 +44,7 @@
             if (position == null)
                 throw new ArgumentNullException("position");
 
+            this.position = position;
             this.outerSize = size;
             this.innerSize = size;
             this.drill = drill;

@@ -8,17 +8,17 @@
 
         public struct Segment {
 
-            private Point vertex;
+            private Point position;
             private double angle;
 
-            public Segment(Point vertex, double angle) {
+            public Segment(Point position, double angle) {
 
-                this.vertex = vertex;
+                this.position = position;
                 this.angle = angle;
             }
 
-            public Point Vertex {
-                get { return vertex; }
+            public Point Position {
+                get { return position; }
             }
 
             public double Angle {
@@ -83,22 +83,22 @@
         /// <summary>
         /// Afegeix una linia a la regio.
         /// </summary>
-        /// <param name="vertex">Vertex final de la linia</param>
+        /// <param name="position">Vertex final de la linia</param>
         /// 
-        public void AddLine(Point vertex) {
+        public void AddLine(Point position) {
 
-            Add(new Segment(vertex, 0));
+            Add(new Segment(position, 0));
         }
 
         /// <summary>
         /// Afegeix un arc a la regio.
         /// </summary>
-        /// <param name="vertex">Vertec final del arc.</param>
+        /// <param name="position">Vertec final del arc.</param>
         /// <param name="angle">Angle del arc.</param>
         /// 
-        public void AddArc(Point vertex, double angle) {
+        public void AddArc(Point position, double angle) {
 
-            Add(new Segment(vertex, angle));
+            Add(new Segment(position, angle));
         }
 
         /// <summary>

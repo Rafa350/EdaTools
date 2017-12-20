@@ -23,7 +23,7 @@
                 if (Part != null) {
                     TransformGroup transform = new TransformGroup();
                     transform.Children.Add(new TranslateTransform(Part.Position.X, Part.Position.Y));
-                    transform.Children.Add(new RotateTransform(Part.Rotate, Part.Position.X, Part.Position.Y));
+                    transform.Children.Add(new RotateTransform(Part.Rotation, Part.Position.X, Part.Position.Y));
                     dc.PushTransform(transform);
                 }
                 bool isMirror = Part == null ? false : Part.IsMirror;
@@ -49,23 +49,23 @@
                     foreach (RegionElement.Segment segment in Polygon.Segments) {
                         if (first) {
                             first = false;
-                            ctx.BeginFigure(segment.Vertex, Polygon.Thickness == 0, true);
+                            ctx.BeginFigure(segment.Position, Polygon.Thickness == 0, true);
                         }
                         else {
                             if (angle == 0)
-                                ctx.LineTo(segment.Vertex, true, true);
+                                ctx.LineTo(segment.Position, true, true);
                             else {
-                                double co = Math.Sqrt(Math.Pow(segment.Vertex.X - x1, 2) + Math.Pow(segment.Vertex.Y - y1, 2)) / 2;
+                                double co = Math.Sqrt(Math.Pow(segment.Position.X - x1, 2) + Math.Pow(segment.Position.Y - y1, 2)) / 2;
                                 double radius = Math.Abs(co / Math.Sin((angle / 2) * Math.PI / 180));
-                                ctx.ArcTo(segment.Vertex, new Size(radius, radius),
+                                ctx.ArcTo(segment.Position, new Size(radius, radius),
                                     Math.Abs(angle),
                                     true,
                                     angle > 0 ? SweepDirection.Clockwise : SweepDirection.Counterclockwise,
                                     true, true);
                             }
                         }
-                        x1 = segment.Vertex.X;
-                        y1 = segment.Vertex.Y;
+                        x1 = segment.Position.X;
+                        y1 = segment.Position.Y;
                         angle = segment.Angle;
                     }
                 }

@@ -2,6 +2,6 @@
 
     public interface IRotation {
 
-        double Angle { get; set; }
+        double Rotation { get; set; }
     }
 }

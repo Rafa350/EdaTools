@@ -2,7 +2,6 @@
 
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
-    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
     using System;
     using System.Globalization;
     using System.IO;
@@ -53,8 +52,8 @@
                 writer.WriteAttribute("layer", rectangle.Layer);
                 writer.WriteAttribute("position", rectangle.Position);
                 writer.WriteAttribute("size", rectangle.Size);
-                if (rectangle.Angle != 0)
-                    writer.WriteAttribute("rotate", rectangle.Angle);
+                if (rectangle.Rotation != 0)
+                    writer.WriteAttribute("rotation", rectangle.Rotation);
                 if (rectangle.Thickness > 0)
                     writer.WriteAttribute("thickness", rectangle.Thickness);
                 writer.WriteEndElement();
@@ -78,8 +77,8 @@
                     writer.WriteAttributeString("name", text.Name);
                 writer.WriteAttribute("layer", text.Layer);
                 writer.WriteAttribute("position", text.Position);
-                if (text.Angle != 0)
-                    writer.WriteAttribute("rotate", text.Angle);
+                if (text.Rotation != 0)
+                    writer.WriteAttribute("rotation", text.Rotation);
                 if (!String.IsNullOrEmpty(text.Value))
                     writer.WriteAttributeString("value", text.Value);
                 writer.WriteEndElement();
@@ -99,8 +98,8 @@
                 writer.WriteAttributeString("name", pad.Name);
                 writer.WriteAttribute("layer", pad.Layer);
                 writer.WriteAttribute("position", pad.Position);
-                if (pad.Angle != 0)
-                    writer.WriteAttribute("rotate", pad.Angle);
+                if (pad.Rotation != 0)
+                    writer.WriteAttribute("rotation", pad.Rotation);
                 writer.WriteAttribute("size", pad.Size);
                 if (pad.Roundnes > 0)
                     writer.WriteAttribute("roundness", pad.Roundnes);
@@ -116,8 +115,8 @@
                 writer.WriteStartElement("tpad");
                 writer.WriteAttributeString("name", pad.Name);
                 writer.WriteAttribute("position", pad.Position);
-                if (pad.Angle != 0)
-                    writer.WriteAttribute("rotate", pad.Angle);
+                if (pad.Rotation != 0)
+                    writer.WriteAttribute("rotation", pad.Rotation);
                 writer.WriteAttribute("size", pad.Size);
                 writer.WriteAttribute("drill",  pad.Drill);
                 writer.WriteAttributeString("shape", pad.Shape.ToString());
@@ -146,7 +145,7 @@
                     writer.WriteAttribute("isolation", isolation.Isolation);
                 foreach (RegionElement.Segment segment in isolation.Segments) {
                     writer.WriteStartElement("segment");
-                    writer.WriteAttribute("position", segment.Vertex);
+                    writer.WriteAttribute("position", segment.Position);
                     if (segment.Angle != 0)
                         writer.WriteAttribute("angle", segment.Angle);
                     writer.WriteEndElement();
@@ -160,8 +159,8 @@
                 writer.WriteAttributeString("name", part.Name);
                 writer.WriteAttributeString("component", part.Component.Name);
                 writer.WriteAttribute("position", part.Position);
-                if (part.Rotate != 0)
-                    writer.WriteAttribute("rotate", part.Rotate);
+                if (part.Rotation != 0)
+                    writer.WriteAttribute("rotation", part.Rotation);
                 if (part.IsMirror)
                     writer.WriteAttributeString("mirror", part.IsMirror.ToString());
 
@@ -217,7 +216,7 @@
                 writer.WriteStartElement("component");
                 writer.WriteAttributeString("name", component.Name);
 
-                if (!component.Elements.IsEmpty) {
+                if (component.HasElements) {
                     writer.WriteStartElement("elements");
                     foreach (Element element in component.Elements)
                         element.AcceptVisitor(this);
@@ -251,14 +250,14 @@
                     writer.WriteEndElement();
                 }
 
-                if (board.Components != null) {
+                if (board.HasComponents) {
                     writer.WriteStartElement("components");
                     foreach (Component component in board.Components)
                         component.AcceptVisitor(this);
                     writer.WriteEndElement();
                 }
 
-                if (board.Parts != null) {
+                if (board.HasParts) {
                     writer.WriteStartElement("parts");
                     foreach (Part part in board.Parts)
                         part.AcceptVisitor(this);

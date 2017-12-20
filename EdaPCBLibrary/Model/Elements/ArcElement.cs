@@ -7,20 +7,23 @@
 
         private double angle;
 
-        public override void AcceptVisitor(IVisitor visitor) {
-
-            visitor.Visit(this);
-        }
-
+        /// <summary>
+        /// Constructor per defecte de l'objecte.
+        /// </summary>
+        /// 
         public ArcElement():
             base() {
-
         }
 
         public ArcElement(Point startPosition, Point endPosition, Layer layer, double thickness, double angle, LineCapStyle lineCap) :
             base(startPosition, endPosition, layer, thickness, lineCap) {
 
             this.angle = angle;
+        }
+
+        public override void AcceptVisitor(IVisitor visitor) {
+
+            visitor.Visit(this);
         }
 
         public Point Center {

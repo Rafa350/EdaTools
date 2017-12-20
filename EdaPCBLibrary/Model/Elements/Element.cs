@@ -18,5 +18,15 @@
         /// <returns>True si pertany a la capa. False en cas contraru.</returns>
         /// 
         public abstract bool IsOnLayer(Layer layer);
+
+        /// <summary>
+        /// Obte el component al que pertany. Null si no pertany a cap.
+        /// </summary>
+        /// 
+        public Component Component {
+            get {
+                return Component.ComponentOf(this);
+            }
+        }
     }
 }

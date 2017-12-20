@@ -17,6 +17,7 @@
             if (position == null)
                 throw new ArgumentNullException("position");
 
+            this.position = position;
             this.drill = drill;
         }
 

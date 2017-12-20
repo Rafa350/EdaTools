@@ -125,7 +125,7 @@
                 if (hole.IsOnAnyLayer(layers)) {
                     Aperture ap = apertures.GetCircleAperture(hole.Drill);
                     gb.SelectAperture(ap);
-                    Point p = hole.GetPosition(VisitingPart);
+                    Point p = VisitingPart.Transform(hole.Position);
                     gb.FlashAt(p.X, p.Y);
                 }
             }
@@ -154,7 +154,7 @@
                 if (pad.IsOnAnyLayer(layers)) {
                     Aperture ap = apertures.GetCircleAperture(pad.Drill);
                     gb.SelectAperture(ap);
-                    Point p = pad.GetPosition(VisitingPart);
+                    Point p = VisitingPart.Transform(pad.Position);
                     gb.FlashAt(p.X, p.Y);
                 }
             }

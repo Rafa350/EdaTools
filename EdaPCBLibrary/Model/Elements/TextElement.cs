@@ -17,7 +17,7 @@
         }
 
         private Point position;
-        private double angle;
+        private double rotation;
         private double height;
         private TextAlign align = TextAlign.MiddleCenter;
         private string value;
@@ -25,14 +25,13 @@
 
         public TextElement():
             base() {
-
         }
 
-        public TextElement(Point position, Layer layer, double angle, double height, TextAlign align = TextAlign.MiddleCenter):
+        public TextElement(Point position, Layer layer, double rotation, double height, TextAlign align = TextAlign.MiddleCenter):
             base(layer) {
 
             this.position = position;
-            this.angle = angle;
+            this.rotation = rotation;
             this.height = height;
             this.align = align;
         }
@@ -55,12 +54,12 @@
             }
         }
 
-        public double Angle {
+        public double Rotation {
             get {
-                return angle;
+                return rotation;
             }
             set {
-                angle = value;
+                rotation = value;
             }
         }
 

@@ -60,9 +60,6 @@
     <Compile Include="Import\Importer.cs" />
     <Compile Include="Import\ImporterFactory.cs" />
     <Compile Include="Model\BoardBuilder.cs" />
-    <Compile Include="Model\Collections\CollectionBase.cs" />
-    <Compile Include="Model\Collections\ComponentCollection.cs" />
-    <Compile Include="Model\Collections\ElementCollection.cs" />
     <Compile Include="Model\IMultiLayer.cs" />
     <Compile Include="Model\IPosition.cs" />
     <Compile Include="Model\IRotation.cs" />

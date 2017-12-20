@@ -8,7 +8,7 @@
         private string name;
         private Point position;
         private Size size;
-        private double angle;
+        private double rotation;
         private double roundnes;
         private bool cream = true;
         private bool stop = true;
@@ -29,18 +29,18 @@
         /// <param name="position"></param>
         /// <param name="layer"></param>
         /// <param name="size"></param>
-        /// <param name="angle"></param>
+        /// <param name="rotation"></param>
         /// <param name="roundnes"></param>
         /// <param name="stop"></param>
         /// <param name="cream"></param>
         /// 
-        public SmdPadElement(string name, Point position, Layer layer, Size size, double angle, double roundnes, bool stop, bool cream):
+        public SmdPadElement(string name, Point position, Layer layer, Size size, double rotation, double roundnes, bool stop, bool cream):
             base(layer) {
 
             this.name = name;
             this.position = position;
             this.size = size;
-            this.angle = angle;
+            this.rotation = rotation;
             this.roundnes = roundnes;
             this.stop = stop;
             this.cream = cream;
@@ -96,12 +96,12 @@
         /// Obte o asigna l'orientacio del pad.
         /// </summary>
         /// 
-        public double Angle {
+        public double Rotation {
             get {
-                return angle;
+                return rotation;
             }
             set {
-                angle = value;
+                rotation = value;
             }
         }
 

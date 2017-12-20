@@ -4,11 +4,11 @@
     using System.Windows;
     using System.Collections.Generic;
 
-    public sealed class Part {
+    public sealed class Part: IPosition, IRotation {
 
         private string name;
         private Point position;
-        private double rotate;
+        private double angle;
         private bool isMirror;
         private Component component;
         private Dictionary<string, Parameter> parameters;
@@ -25,6 +25,7 @@
 
             if (parameters == null)
                 parameters = new Dictionary<string, Parameter>();
+
             parameters.Add(parameter.Name, parameter);
         }
 
@@ -67,12 +68,12 @@
             }
         }
 
-        public double Rotate {
+        public double Rotation {
             get {
-                return rotate;
+                return angle;
             }
             set {
-                rotate = value;
+                angle = value;
             }
         }
 

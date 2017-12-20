@@ -1,31 +1,16 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Import.Eagle {
 
-    using System;
-    using System.Globalization;
-    using System.Windows;
-    using System.Windows.Media;
-    using System.IO;
-    using System.Xml;
-    using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
+    using System.Windows;
+    using System.Windows.Media;
+    using System.Xml;
 
     public sealed class EagleImporter : Importer {
-
-        private sealed class PolygonNodeInfo {
-
-            public double Thickness { get; set; }
-            public Layer Layer { get; set; }
-        }
-
-        private sealed class VertexNodeInfo {
-
-            public double X { get; set; }
-            public double Y { get; set; }
-            public double Angle { get; set; }
-        }
 
         private BoardBuilder boardBuilder = new BoardBuilder();
         private Dictionary<int, Layer> layerDict = new Dictionary<int, Layer>();
@@ -45,7 +30,6 @@
 
             CreateElements(doc, board);
 
-
             CreateSignals(doc, board);
 
             return board;
@@ -58,6 +42,12 @@
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Carrega el document XML en format EAGLE
+        /// </summary>
+        /// <param name="stream">Stream d'entrada.</param>
+        /// <returns>El document XML carregqat.</returns>
+        /// 
         private XmlDocument ReadXmlDocument(Stream stream) {
 
             XmlReaderSettings settings = new XmlReaderSettings();
@@ -114,47 +104,51 @@
 
                     string packageName = GetAttribute(packageNode, "name");
 
-                    ElementCollection elements = new ElementCollection();
+                    List<Element> elements = new List<Element>();
 
                     foreach (XmlNode node in packageNode.ChildNodes) {
+                        Element element = null;
                         switch (node.Name) {
                             case "smd":
-                                elements.Add(ParseSmdNode(node));
+                                element = ParseSmdNode(node);
                                 break;
 
                             case "pad":
-                                elements.Add(ParsePadNode(node));
+                                element = ParsePadNode(node);
                                 break;
 
                             case "text":
-                                elements.Add(ParseTextNode(node));
+                                element = ParseTextNode(node);
                                 break;
 
                             case "wire":
-                                elements.Add(ParseWireNode(node));
+                                element = ParseWireNode(node);
                                 break;
 
                             case "rectangle":
-                                elements.Add(ParseRectangleNode(node));
+                                element = ParseRectangleNode(node);
                                 break;
 
                             case "circle":
-                                elements.Add(ParseCircleNode(node));
+                                element = ParseCircleNode(node);
                                 break;
 
                             case "polygon":
-                                elements.Add(ParsePolygonNode(node));
+                                element = ParsePolygonNode(node);
                                 break;
 
                             case "hole":
-                                elements.Add(ParseHoleNode(node));
+                                element = ParseHoleNode(node);
                                 break;
                         }
+
+                        if (element != null)
+                            elements.Add(element);
                     }
 
                     string name = String.Format("{0}@{1}", packageName, libraryName);
                     Component component = new Component(name, elements);
-                    board.Components.Add(component);
+                    board.AddComponent(component);
                     componentDict.Add(name, component);
                 }
             }
@@ -203,26 +197,6 @@
             }
         }
 
-        /*private void CreateVertexList(XmlNode polygonNode, RegionElement polygon) {
-
-            bool first = true;
-            foreach (XmlNode vertexNode in polygonNode.SelectNodes("vertex")) {
-
-                VertexNodeInfo info = ParseVertexNode(vertexNode);
-
-                if (first) {
-                    polygon.Position = new Point(info.X, info.Y);
-                    first = false;
-                }
-                else {
-                    if (info.Angle == 0)
-                        polygon.AddLine(new Point(info.X, info.Y));
-                    else
-                        polygon.AddArc(new Point(info.X, info.Y), info.Angle);
-                }
-            }
-        }*/
-
         /// <summary>
         /// Procesa un node LAYER.
         /// </summary>
@@ -252,8 +226,9 @@
 
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
-            double rotate = StrToDouble(GetAttribute(node, "rot"));
+            Point position = new Point(x, y);
 
+            double rotate = StrToDouble(GetAttribute(node, "rot"));
             double drill = StrToDouble(GetAttribute(node, "drill"));
             double size = drill * 1.6;
 
@@ -272,7 +247,7 @@
                     break;
             }
 
-            return new ThPadElement(name, new Point(x, y), rotate, size, shape, drill);
+            return new ThPadElement(name, position, rotate, size, shape, drill);
         }
 
         /// <summary>
@@ -287,8 +262,12 @@
 
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
+            Point position = new Point(x, y);
+
             double width = StrToDouble(GetAttribute(node, "dx"));
             double height = StrToDouble(GetAttribute(node, "dy"));
+            Size size = new Size(width, height);
+
             double rotate = StrToDouble(GetAttribute(node, "rot"));
             double roundnes = StrToDouble(GetAttribute(node, "roundness")) / 100;
             bool stop = StrToBoolean(GetAttribute(node, "stop"), true);
@@ -296,7 +275,7 @@
 
             Layer layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
 
-            return new SmdPadElement(name, new Point(x, y), layer, new Size(width, height), rotate, roundnes, stop, cream);
+            return new SmdPadElement(name, position, layer, size, rotate, roundnes, stop, cream);
         }
 
         /// <summary>
@@ -309,6 +288,8 @@
 
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
+            Point position = new Point(x, y);
+
             double drill = StrToDouble(GetAttribute(node, "drill"));
             double size = StrToDouble(GetAttribute(node, "diameter"));
 
@@ -330,7 +311,7 @@
                     break;
             }
 
-            return new ViaElement(new Point(x, y), layers, size, drill, shape);
+            return new ViaElement(position, layers, size, drill, shape);
         }
 
         /// <summary>
@@ -352,12 +333,14 @@
 
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
+            Point position = new Point(x, y);
+
             double rotate = StrToDouble(GetAttribute(node, "rot"));
             double height = StrToDouble(GetAttribute(node, "size"));
 
             Layer layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
 
-            TextElement element = new TextElement(new Point(x, y), layer, rotate, height, TextElement.TextAlign.TopLeft);
+            TextElement element = new TextElement(position, layer, rotate, height, TextElement.TextAlign.TopLeft);
             element.Name = name;
             element.Value = value;
             return element;
@@ -373,8 +356,11 @@
 
             double x1 = StrToDouble(GetAttribute(node, "x1"));
             double y1 = StrToDouble(GetAttribute(node, "y1"));
+            Point p1 = new Point(x1, y1);
+
             double x2 = StrToDouble(GetAttribute(node, "x2"));
             double y2 = StrToDouble(GetAttribute(node, "y2"));
+            Point p2 = new Point(x2, y2);
 
             double angle = StrToDouble(GetAttribute(node, "curve"));
             LineElement.LineCapStyle lineCap = GetAttribute(node, "cap") == null ? LineElement.LineCapStyle.Round : LineElement.LineCapStyle.Flat;
@@ -384,9 +370,9 @@
             Layer layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
 
             if (angle == 0)
-                return new LineElement(new Point(x1, y1), new Point(x2, y2), layer, thickness, lineCap);
+                return new LineElement(p1, p2, layer, thickness, lineCap);
             else
-                return new ArcElement(new Point(x1, y1), new Point(x2, y2), layer, thickness, angle, lineCap);
+                return new ArcElement(p1, p2, layer, thickness, angle, lineCap);
         }
 
         /// <summary>
@@ -401,17 +387,15 @@
             double y1 = StrToDouble(GetAttribute(node, "y1"));
             double x2 = StrToDouble(GetAttribute(node, "x2"));
             double y2 = StrToDouble(GetAttribute(node, "y2"));
-            double x = (x1 + x2) / 2;
-            double y = (y1 + y2) / 2;
-            double width = x2 - x1;
-            double height = y2 - y1;
+            Point position = new Point((x1 + x2) / 2, (y1 + y2) / 2);
+            Size size = new Size(x2 - x1, y2 - y1);
 
             double rotate = StrToDouble(GetAttribute(node, "rot"));
             double thickness = StrToDouble(GetAttribute(node, "width"));
 
             Layer layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
 
-            return new RectangleElement(new Point(x, y), layer, new Size(width, height), rotate, thickness);
+            return new RectangleElement(position, layer, size, rotate, thickness);
         }
 
         /// <summary>
@@ -424,12 +408,14 @@
 
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
+            Point position = new Point(x, y);
+
             double thickness = StrToDouble(GetAttribute(node, "width"));
             double radius = StrToDouble(GetAttribute(node, "radius"));
 
             Layer layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
 
-            return new CircleElement(new Point(x, y), layer, radius, thickness);
+            return new CircleElement(position, layer, radius, thickness);
         }
 
         /// <summary>
@@ -450,9 +436,11 @@
 
                 double x = StrToDouble(GetAttribute(vertexNode, "x"));
                 double y = StrToDouble(GetAttribute(vertexNode, "y"));
+                Point vertex = new Point(x, y);
+
                 double angle = StrToDouble(GetAttribute(vertexNode, "curve"));
 
-                segments.Add(new RegionElement.Segment(new Point(x, y), angle));
+                segments.Add(new RegionElement.Segment(vertex, angle));
             }
 
             return new RegionElement(layer,segments);
@@ -468,10 +456,11 @@
 
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
+            Point position = new Point(x, y);
 
             double drill = StrToDouble(GetAttribute(node, "drill"));
 
-            return new HoleElement(new Point(x, y), drill);
+            return new HoleElement(position, drill);
         }
 
         /// <summary>
@@ -504,8 +493,10 @@
                 "{0}@{1}",
                 GetAttribute(node, "package"),
                 GetAttribute(node, "library"));
+
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
+            Point position = new Point(x, y);
 
             bool mirror = false;
             double rotate = 0;
@@ -517,8 +508,8 @@
 
             Part part = new Part();
             part.Name = name;
-            part.Position = new Point(x, y);
-            part.Rotate = rotate;
+            part.Position = position;
+            part.Rotation = rotate;
             part.IsMirror = mirror;
             part.Component = GetComponent(componentKey);
 

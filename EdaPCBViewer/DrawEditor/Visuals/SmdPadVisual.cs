@@ -27,7 +27,7 @@
                 if (Part != null) {
                     TransformGroup transform = new TransformGroup();
                     transform.Children.Add(new TranslateTransform(Part.Position.X, Part.Position.Y));
-                    transform.Children.Add(new RotateTransform(Part.Rotate, Part.Position.X, Part.Position.Y));
+                    transform.Children.Add(new RotateTransform(Part.Rotation, Part.Position.X, Part.Position.Y));
                     dc.PushTransform(transform);
                 }
 
@@ -38,8 +38,8 @@
 
                 // Push de la transformacio de rotacio
                 //
-                if (Pad.Angle != 0)
-                    dc.PushTransform(new RotateTransform(Pad.Angle, Pad.Position.X, Pad.Position.Y));
+                if (Pad.Rotation != 0)
+                    dc.PushTransform(new RotateTransform(Pad.Rotation, Pad.Position.X, Pad.Position.Y));
 
                 // Dibuixa el pad
                 //
@@ -75,7 +75,7 @@
 
                 // Pop de la transformacio de rotacio
                 //
-                if (Pad.Angle != 0)
+                if (Pad.Rotation != 0)
                     dc.Pop();
 
                 // Pop de la transformacio d'escala pel canvi de cara

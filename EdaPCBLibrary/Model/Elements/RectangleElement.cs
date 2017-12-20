@@ -7,7 +7,7 @@
 
         private Point position;
         private Size size;
-        private double angle;
+        private double rotation;
         private double thickness;
 
         /// <summary>
@@ -24,14 +24,15 @@
         /// <param name="position">Posicio del centre geometric.</param>
         /// <param name="layer">Capa.</param>
         /// <param name="size">Amplada i alçada del rectangle.</param>
-        /// <param name="angle">Angle de rotacio.</param>
+        /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="thickness">Amplada de linia. Si es zero, es un rectangle ple.</param>
         /// 
-        public RectangleElement(Point position, Layer layer, Size size, double angle = 0, double thickness = 0) :
+        public RectangleElement(Point position, Layer layer, Size size, double rotation = 0, double thickness = 0) :
             base(layer) {
 
+            this.position = position;
             this.size = size;
-            this.angle = angle;
+            this.rotation = rotation;
             this.thickness = thickness;
         }
 
@@ -75,12 +76,12 @@
         /// Obte o asigna l'angle de rotacio.
         /// </summary>
         /// 
-        public double Angle {
+        public double Rotation {
             get {
-                return angle;
+                return rotation;
             }
             set {
-                angle = value;
+                rotation = value;
             }
         }
 

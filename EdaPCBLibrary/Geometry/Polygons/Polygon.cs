@@ -25,7 +25,7 @@
             m.Translate(circle.Position.X, circle.Position.Y);
             if (part != null) {
                 m.Translate(part.Position.X, part.Position.Y);
-                m.RotateAt(part.Rotate, part.Position.X, part.Position.Y);
+                m.RotateAt(part.Rotation, part.Position.X, part.Position.Y);
             }
 
             return FromCircle(circle.Diameter, m);
@@ -42,10 +42,10 @@
 
             Matrix m = new Matrix();
             m.Translate(rectangle.Position.X, rectangle.Position.Y);
-            m.RotateAt(rectangle.Angle, rectangle.Position.X, rectangle.Position.Y);
+            m.RotateAt(rectangle.Rotation, rectangle.Position.X, rectangle.Position.Y);
             if (part != null) {
                 m.Translate(part.Position.X, part.Position.Y);
-                m.RotateAt(part.Rotate, part.Position.X, part.Position.Y);
+                m.RotateAt(part.Rotation, part.Position.X, part.Position.Y);
             }
 
             return FromRectangle(new Size(rectangle.Size.Width, rectangle.Size.Height), m);
@@ -66,7 +66,7 @@
                 m.RotateAt(22.5, via.Position.X, via.Position.Y);
             if (part != null) {
                 m.Translate(part.Position.X, part.Position.Y);
-                m.RotateAt(part.Rotate, part.Position.X, part.Position.Y);
+                m.RotateAt(part.Rotation, part.Position.X, part.Position.Y);
             }
 
             double size = via.OuterSize;
@@ -94,12 +94,12 @@
 
             Matrix m = new Matrix();
             m.Translate(pad.Position.X, pad.Position.Y);
-            m.RotateAt(pad.Angle, pad.Position.X, pad.Position.Y);
+            m.RotateAt(pad.Rotation, pad.Position.X, pad.Position.Y);
             if (pad.Shape == ThPadElement.ThPadShape.Octogonal)
                 m.RotateAt(22.5, pad.Position.X, pad.Position.Y);
             if (part != null) {
                 m.Translate(part.Position.X, part.Position.Y);
-                m.RotateAt(part.Rotate, part.Position.X, part.Position.Y);
+                m.RotateAt(part.Rotation, part.Position.X, part.Position.Y);
             }
 
             switch (pad.Shape) {
@@ -133,7 +133,7 @@
             Polygon polygon = new Polygon();
 
             foreach (RegionElement.Segment segment in region.Segments) 
-                polygon.AddPoint(segment.Vertex);
+                polygon.AddPoint(segment.Position);
 
             return polygon;
         }

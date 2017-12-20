@@ -12,8 +12,8 @@
     public sealed class Board: IVisitable {
 
         private readonly LayerStackup layerStackup = new LayerStackup();
-        private readonly ElementCollection elements = new ElementCollection();
-        private readonly ComponentCollection components = new ComponentCollection();
+        private readonly List<Element> elements = new List<Element>();
+        private readonly List<Component> components = new List<Component>();
         private List<Part> parts;
         private List<Signal> signals;
 
@@ -76,6 +76,19 @@
             elements.Add(element);
         }
 
+        /// <summary>
+        /// Afeigeix un element.
+        /// </summary>
+        /// <param name="element">El component a afeigir.</param>
+        /// 
+        public void AddComponent(Component component) {
+
+            if (component == null)
+                throw new ArgumentNullException("component");
+
+            components.Add(component);
+        }
+
         public Signal GetSignal(string name) {
 
             if (signals != null)
@@ -102,13 +115,26 @@
             }
         }
 
+        public bool HasComponents {
+            get {
+                return components.Count > 0;
+            }
+        }
+
         /// <summary>
         /// Obte la llista de components.
         /// </summary>
         /// 
-        public ComponentCollection Components {
+        public IEnumerable<Component> Components {
             get {
                 return components;
+            }
+        }
+
+
+        public bool HasParts {
+            get {
+                return parts.Count > 0;
             }
         }
 
