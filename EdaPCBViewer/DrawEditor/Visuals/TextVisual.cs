@@ -39,7 +39,7 @@
                     value = Text.Value;
                     x = Text.Position.X;
                     y = Text.Position.Y;
-                    rotate = Text.Rotate;
+                    rotate = Text.Angle;
                 }
                 else {
                     value = parameter.Value;

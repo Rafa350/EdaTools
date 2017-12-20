@@ -3,19 +3,25 @@
     using System;
     using System.Windows;
 
-    public sealed class CircleElement: SingleLayerElement {
+    public sealed class CircleElement: SingleLayerElement, IPosition {
 
-        private double thickness;
+        private Point position;
         private double radius;
+        private double thickness;
 
+        /// <summary>
+        ///  Constructor por defecte de l'objecte.
+        /// </summary>
+        /// 
         public CircleElement():
             base() {
 
         }
 
         public CircleElement(Point position, Layer layer, double radius, double thickness = 0) :
-            base(position, layer) {
+            base(layer) {
 
+            this.position = position;
             this.radius = radius;
             this.thickness = thickness;
         }
@@ -25,17 +31,23 @@
             visitor.Visit(this);
         }
 
-        public double Thickness {
+        /// <summary>
+        ///  Obte o asigna la posicio del centre del cercle.
+        /// </summary>
+        /// 
+        public Point Position {
             get {
-                return thickness;
+                return position;
             }
             set {
-                if (value < 0)
-                    throw new ArgumentOutOfRangeException("Thickness");
-                thickness = value;
+                position = value;
             }
         }
 
+        /// <summary>
+        /// Obte o asigna el radi del cercle.
+        /// </summary>
+        /// 
         public double Radius {
             get {
                 return radius;
@@ -47,6 +59,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna el diametre del cercle.
+        /// </summary>
+        /// 
         public double Diameter {
             get {
                 return radius * 2;
@@ -55,6 +71,17 @@
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Diameter");
                 radius = value / 2;
+            }
+        }
+
+        public double Thickness {
+            get {
+                return thickness;
+            }
+            set {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("Thickness");
+                thickness = value;
             }
         }
 

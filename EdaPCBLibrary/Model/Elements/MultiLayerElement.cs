@@ -1,20 +1,17 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
-    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
     using System;
     using System.Collections.Generic;
-    using System.Windows;
 
-    public abstract class MultiLayerElement: Element {
+    public abstract class MultiLayerElement: Element, IMultiLayer {
 
-        private readonly LayerCollection layers = new LayerCollection();
+        private readonly List<Layer> layers = new List<Layer>();
 
         /// <summary>
         /// Constructor per defecte de l'objecte.
         /// </summary>
         /// 
         public MultiLayerElement() {
-
         }
 
         /// <summary>
@@ -23,13 +20,12 @@
         /// <param name="position">Posicio.</param>
         /// <param name="layers">La llista de capes a la que pertany.</param>
         /// 
-        public MultiLayerElement(Point position, IEnumerable<Layer> layers):
-            base(position) {
+        public MultiLayerElement(IEnumerable<Layer> layers) {
 
             if (layers == null)
                 throw new ArgumentNullException("layers");
 
-            this.layers.Add(layers);
+            this.layers.AddRange(layers);
         }
 
         /// <summary>

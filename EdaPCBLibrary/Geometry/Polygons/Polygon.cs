@@ -42,7 +42,7 @@
 
             Matrix m = new Matrix();
             m.Translate(rectangle.Position.X, rectangle.Position.Y);
-            m.RotateAt(rectangle.Rotate, rectangle.Position.X, rectangle.Position.Y);
+            m.RotateAt(rectangle.Angle, rectangle.Position.X, rectangle.Position.Y);
             if (part != null) {
                 m.Translate(part.Position.X, part.Position.Y);
                 m.RotateAt(part.Rotate, part.Position.X, part.Position.Y);
@@ -94,7 +94,7 @@
 
             Matrix m = new Matrix();
             m.Translate(pad.Position.X, pad.Position.Y);
-            m.RotateAt(pad.Rotate, pad.Position.X, pad.Position.Y);
+            m.RotateAt(pad.Angle, pad.Position.X, pad.Position.Y);
             if (pad.Shape == ThPadElement.ThPadShape.Octogonal)
                 m.RotateAt(22.5, pad.Position.X, pad.Position.Y);
             if (part != null) {
@@ -132,9 +132,8 @@
 
             Polygon polygon = new Polygon();
 
-            polygon.AddPoint(region.Position);
             foreach (RegionElement.Segment segment in region.Segments) 
-                polygon.AddPoint(segment.Position);
+                polygon.AddPoint(segment.Vertex);
 
             return polygon;
         }

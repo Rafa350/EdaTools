@@ -46,7 +46,7 @@
 
                 if (rectangle.IsOnAnyLayer(layers)) {
                     if (rectangle.Thickness == 0) {
-                        double rotate = rectangle.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
+                        double rotate = rectangle.Angle + (VisitingPart != null ? VisitingPart.Rotate : 0);
                         apertureDict.AddRectangle(rectangle.Size.Width, rectangle.Size.Height, rotate);
                     }
                 }
@@ -82,7 +82,7 @@
             public override void Visit(ThPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers)) {
-                    double rotate = pad.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
+                    double rotate = pad.Angle + (VisitingPart != null ? VisitingPart.Rotate : 0);
                     switch (pad.Shape) {
                         case ThPadElement.ThPadShape.Circular:
                             apertureDict.AddCircle(pad.Size);
@@ -106,7 +106,7 @@
             public override void Visit(SmdPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers)) {
-                    double rotate = pad.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
+                    double rotate = pad.Angle + (VisitingPart != null ? VisitingPart.Rotate : 0);
                     double radius = (pad.Roundnes - 0.01) * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
                     apertureDict.AddRoundRectangle(pad.Size.Width, pad.Size.Height, radius, rotate);
                 }

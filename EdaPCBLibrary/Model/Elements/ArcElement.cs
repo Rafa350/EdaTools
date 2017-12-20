@@ -17,16 +17,16 @@
 
         }
 
-        public ArcElement(Point position, Layer layer, Point endPosition, double thickness, double angle, LineCapStyle lineCap) :
-            base(position, layer, endPosition, thickness, lineCap) {
+        public ArcElement(Point startPosition, Point endPosition, Layer layer, double thickness, double angle, LineCapStyle lineCap) :
+            base(startPosition, endPosition, layer, thickness, lineCap) {
 
             this.angle = angle;
         }
 
         public Point Center {
             get {
-                double x1 = Position.X;
-                double y1 = Position.Y;
+                double x1 = StartPosition.X;
+                double y1 = EndPosition.Y;
                 double x2 = EndPosition.X;
                 double y2 = EndPosition.Y;
 

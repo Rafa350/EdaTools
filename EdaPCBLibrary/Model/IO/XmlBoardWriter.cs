@@ -53,8 +53,8 @@
                 writer.WriteAttribute("layer", rectangle.Layer);
                 writer.WriteAttribute("position", rectangle.Position);
                 writer.WriteAttribute("size", rectangle.Size);
-                if (rectangle.Rotate != 0)
-                    writer.WriteAttribute("rotate", rectangle.Rotate);
+                if (rectangle.Angle != 0)
+                    writer.WriteAttribute("rotate", rectangle.Angle);
                 if (rectangle.Thickness > 0)
                     writer.WriteAttribute("thickness", rectangle.Thickness);
                 writer.WriteEndElement();
@@ -78,8 +78,8 @@
                     writer.WriteAttributeString("name", text.Name);
                 writer.WriteAttribute("layer", text.Layer);
                 writer.WriteAttribute("position", text.Position);
-                if (text.Rotate != 0)
-                    writer.WriteAttribute("rotate", text.Rotate);
+                if (text.Angle != 0)
+                    writer.WriteAttribute("rotate", text.Angle);
                 if (!String.IsNullOrEmpty(text.Value))
                     writer.WriteAttributeString("value", text.Value);
                 writer.WriteEndElement();
@@ -99,8 +99,8 @@
                 writer.WriteAttributeString("name", pad.Name);
                 writer.WriteAttribute("layer", pad.Layer);
                 writer.WriteAttribute("position", pad.Position);
-                if (pad.Rotate != 0)
-                    writer.WriteAttribute("rotate", pad.Rotate);
+                if (pad.Angle != 0)
+                    writer.WriteAttribute("rotate", pad.Angle);
                 writer.WriteAttribute("size", pad.Size);
                 if (pad.Roundnes > 0)
                     writer.WriteAttribute("roundness", pad.Roundnes);
@@ -116,8 +116,8 @@
                 writer.WriteStartElement("tpad");
                 writer.WriteAttributeString("name", pad.Name);
                 writer.WriteAttribute("position", pad.Position);
-                if (pad.Rotate != 0)
-                    writer.WriteAttribute("rotate", pad.Rotate);
+                if (pad.Angle != 0)
+                    writer.WriteAttribute("rotate", pad.Angle);
                 writer.WriteAttribute("size", pad.Size);
                 writer.WriteAttribute("drill",  pad.Drill);
                 writer.WriteAttributeString("shape", pad.Shape.ToString());
@@ -140,14 +140,13 @@
 
                 writer.WriteStartElement("region");
                 writer.WriteAttribute("layer", isolation.Layer);
-                writer.WriteAttribute("position", isolation.Position);
                 if (isolation.Thickness > 0)
                     writer.WriteAttribute("thickness", isolation.Thickness);
                 if (isolation.Isolation > 0)
                     writer.WriteAttribute("isolation", isolation.Isolation);
                 foreach (RegionElement.Segment segment in isolation.Segments) {
                     writer.WriteStartElement("segment");
-                    writer.WriteAttribute("position", segment.Position);
+                    writer.WriteAttribute("position", segment.Vertex);
                     if (segment.Angle != 0)
                         writer.WriteAttribute("angle", segment.Angle);
                     writer.WriteEndElement();

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Windows;
 
-    public sealed class ViaElement: MultiLayerElement {
+    public sealed class ViaElement: MultiLayerElement, IPosition {
 
         public enum ViaShape {
             Square,
@@ -14,6 +14,7 @@
 
         private const double OAR = 0.125;
 
+        private Point position;
         private double drill;
         private double outerSize;
         private double innerSize;
@@ -38,7 +39,7 @@
         /// <param name="layers">Capes a les que pertany.</param>
         /// 
         public ViaElement(Point position, IEnumerable<Layer> layers, double size, double drill, ViaShape shape) :
-            base(position, layers) {
+            base(layers) {
 
             if (position == null)
                 throw new ArgumentNullException("position");
@@ -75,6 +76,19 @@
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
+        }
+
+        /// <summary>
+        ///  Obte o asigna la posicio del centre del cercle.
+        /// </summary>
+        /// 
+        public Point Position {
+            get {
+                return position;
+            }
+            set {
+                position = value;
+            }
         }
 
         /// <summary>

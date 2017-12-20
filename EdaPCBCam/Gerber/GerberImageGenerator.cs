@@ -190,7 +190,7 @@
 
                 if (rectangle.IsOnAnyLayer(layers)) {
                     if (rectangle.Thickness == 0) {
-                        double rotate = rectangle.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
+                        double rotate = rectangle.Angle + (VisitingPart != null ? VisitingPart.Rotate : 0);
                         Aperture ap = apertureDict.GetRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotate);
                         gb.SelectAperture(ap);
                         Point p = rectangle.GetPosition(VisitingPart);
@@ -242,7 +242,7 @@
             public override void Visit(ThPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers)) {
-                    double rotate = pad.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
+                    double rotate = pad.Angle + (VisitingPart != null ? VisitingPart.Rotate : 0);
                     Aperture ap = null;
                     switch (pad.Shape) {
                         case ThPadElement.ThPadShape.Circular:
@@ -275,7 +275,7 @@
             public override void Visit(SmdPadElement pad) {
                 
                 if (pad.IsOnAnyLayer(layers)) {
-                    double rotate = pad.Rotate + (VisitingPart != null ? VisitingPart.Rotate : 0);
+                    double rotate = pad.Angle + (VisitingPart != null ? VisitingPart.Rotate : 0);
                     double radius = (pad.Roundnes - 0.01) * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
                     Aperture ap = apertureDict.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotate);
                     gb.SelectAperture(ap);

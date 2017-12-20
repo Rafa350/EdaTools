@@ -24,7 +24,7 @@
             return false;
         }
 
-        public static Point GetPosition(this Element element, Part part) {
+        public static Point GetPosition(this IPosition element, Part part) {
 
             Point p = element.Position;
             if (part != null) {

@@ -3,7 +3,7 @@
     using System;
     using System.Windows;
 
-    public sealed class ThPadElement: Element {
+    public sealed class ThPadElement: Element, IPosition, IRotation {
 
         public enum ThPadShape {
             Square,
@@ -16,7 +16,8 @@
 
         private ThPadShape shape = ThPadShape.Circular;
         private string name;
-        private double rotate;
+        private Point position;
+        private double angle;
         private double size;
         private bool autoSize = false;
         private double drill;
@@ -35,13 +36,13 @@
         /// </summary>
         /// <param name="name">Nom.</param>
         /// <param name="position">Posicio.</param>
-        /// <param name="rotate">Orientacio.</param>
+        /// <param name="angle">Orientacio.</param>
         /// <param name="size">Tamany/diametre del pad.</param>
         /// <param name="shape">Diametre del forat.</param>
         /// <param name="drill">Forma de la corona.</param>
         /// 
-        public ThPadElement(string name, Point position, double rotate, double size, ThPadShape shape, double drill):
-            base(position) {
+        public ThPadElement(string name, Point position, double angle, double size, ThPadShape shape, double drill):
+            base() {
 
             this.name = name;
             this.size = size;
@@ -84,14 +85,27 @@
         }
 
         /// <summary>
-        /// Obte o asigna la orientacio del pad.
+        ///  Obte o asigna la posicio del centre del cercle.
         /// </summary>
-        public double Rotate {
+        /// 
+        public Point Position {
             get {
-                return rotate;
+                return position;
             }
             set {
-                rotate = value;
+                position = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna la orientacio del pad.
+        /// </summary>
+        public double Angle {
+            get {
+                return angle;
+            }
+            set {
+                angle = value;
             }
         }
 

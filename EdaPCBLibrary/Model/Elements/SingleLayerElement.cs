@@ -1,9 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using System;
-    using System.Windows;
 
-    public abstract class SingleLayerElement: Element {
+    public abstract class SingleLayerElement: Element, ISingleLayer {
 
         private Layer layer;
 
@@ -21,8 +20,7 @@
         /// <param name="position">Posicio.</param>
         /// <param name="layer">La capa a la que pertany.</param>
         /// 
-        public SingleLayerElement(Point position, Layer layer):
-            base(position) {
+        public SingleLayerElement(Layer layer) { 
 
             if (layer == null)
                 throw new ArgumentNullException("layer");

@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Collections;
@@ -10,7 +11,7 @@
     /// </summary>
     public sealed class Board: IVisitable {
 
-        private readonly LayerCollection layers = new LayerCollection();
+        private readonly LayerStackup layerStackup = new LayerStackup();
         private readonly ElementCollection elements = new ElementCollection();
         private readonly ComponentCollection components = new ComponentCollection();
         private List<Part> parts;
@@ -84,13 +85,20 @@
             return null;
         }
 
-        /// <summary>
-        /// Obte la llista de capes.
-        /// </summary>
-        /// 
-        public LayerCollection Layers {
+        public Layer GetLayer(LayerId id) {
+
+            return layerStackup.GetLayer(id);
+        }
+
+        public LayerStackup LayerStackup {
             get {
-                return layers;
+                return layerStackup;
+            }
+        }
+
+        public IEnumerable<Layer> Layers {
+            get {
+                return layerStackup.Layers;
             }
         }
 

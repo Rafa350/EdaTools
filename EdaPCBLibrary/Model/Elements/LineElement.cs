@@ -10,6 +10,7 @@
             Flat
         }
 
+        private Point startPosition;
         private Point endPosition;
         private double thickness;
         private LineCapStyle lineCap = LineCapStyle.Round;
@@ -26,15 +27,16 @@
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="position">La posicio.</param>
-        /// <param name="layer">La capa.</param>
+        /// <param name="startPosition">La posicio inicial.</param>
         /// <param name="endPosition">La posicio final.</param>
+        /// <param name="layer">La capa.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="lineCap">Forma dels extrems de linia.</param>
         /// 
-        public LineElement(Point position, Layer layer, Point endPosition, double thickness, LineCapStyle lineCap) :
-            base(position, layer) {
+        public LineElement(Point startPosition, Point endPosition, Layer layer, double thickness, LineCapStyle lineCap) :
+            base(layer) {
 
+            this.startPosition = startPosition;
             this.endPosition = endPosition;
             this.thickness = thickness;
             this.lineCap = lineCap;
@@ -47,10 +49,10 @@
 
         public Point StartPosition {
             get {
-                return Position;
+                return startPosition;
             }
             set {
-                Position = value;
+                startPosition = value;
             }
         }
 

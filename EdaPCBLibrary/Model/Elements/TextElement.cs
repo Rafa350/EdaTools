@@ -2,7 +2,7 @@
 
     using System.Windows;
 
-    public sealed class TextElement: SingleLayerElement {
+    public sealed class TextElement: SingleLayerElement, IPosition, IRotation {
 
         public enum TextAlign {
             TopLeft,
@@ -16,7 +16,8 @@
             BottomRight,
         }
 
-        private double rotate = 0;
+        private Point position;
+        private double angle;
         private double height;
         private TextAlign align = TextAlign.MiddleCenter;
         private string value;
@@ -27,10 +28,11 @@
 
         }
 
-        public TextElement(Point position, Layer layer, double rotate, double height, TextAlign align = TextAlign.MiddleCenter):
-            base(position, layer) {
+        public TextElement(Point position, Layer layer, double angle, double height, TextAlign align = TextAlign.MiddleCenter):
+            base(layer) {
 
-            this.rotate = rotate;
+            this.position = position;
+            this.angle = angle;
             this.height = height;
             this.align = align;
         }
@@ -40,12 +42,25 @@
             visitor.Visit(this);
         }
 
-        public double Rotate {
+        /// <summary>
+        ///  Obte o asigna la posicio del centre del cercle.
+        /// </summary>
+        /// 
+        public Point Position {
             get {
-                return rotate;
+                return position;
             }
             set {
-                rotate = value;
+                position = value;
+            }
+        }
+
+        public double Angle {
+            get {
+                return angle;
+            }
+            set {
+                angle = value;
             }
         }
 

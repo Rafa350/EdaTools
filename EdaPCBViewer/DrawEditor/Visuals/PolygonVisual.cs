@@ -41,26 +41,32 @@
                 StreamGeometry geometry = new StreamGeometry();
                 using (StreamGeometryContext ctx = geometry.Open()) {
 
-                    double x1 = Polygon.Position.X;
-                    double y1 = Polygon.Position.Y;
+                    double x1 = 0;
+                    double y1 = 0;
                     double angle = 0;
 
-                    ctx.BeginFigure(new Point(x1, y1), Polygon.Thickness == 0, true);
-                    foreach (RegionElement.Segment node in Polygon.Segments) {
-                        if (angle == 0)
-                            ctx.LineTo(node.Position, true, true);
-                        else {
-                            double co = Math.Sqrt(Math.Pow(node.Position.X - x1, 2) + Math.Pow(node.Position.Y - y1, 2)) / 2;
-                            double radius = Math.Abs(co / Math.Sin((angle / 2) * Math.PI / 180));
-                            ctx.ArcTo(node.Position, new Size(radius, radius),
-                                Math.Abs(angle),
-                                true,
-                                angle > 0 ? SweepDirection.Clockwise : SweepDirection.Counterclockwise,
-                                true, true);
+                    bool first = true;
+                    foreach (RegionElement.Segment segment in Polygon.Segments) {
+                        if (first) {
+                            first = false;
+                            ctx.BeginFigure(segment.Vertex, Polygon.Thickness == 0, true);
                         }
-                        x1 = node.Position.X;
-                        y1 = node.Position.Y;
-                        angle = node.Angle;
+                        else {
+                            if (angle == 0)
+                                ctx.LineTo(segment.Vertex, true, true);
+                            else {
+                                double co = Math.Sqrt(Math.Pow(segment.Vertex.X - x1, 2) + Math.Pow(segment.Vertex.Y - y1, 2)) / 2;
+                                double radius = Math.Abs(co / Math.Sin((angle / 2) * Math.PI / 180));
+                                ctx.ArcTo(segment.Vertex, new Size(radius, radius),
+                                    Math.Abs(angle),
+                                    true,
+                                    angle > 0 ? SweepDirection.Clockwise : SweepDirection.Counterclockwise,
+                                    true, true);
+                            }
+                        }
+                        x1 = segment.Vertex.X;
+                        y1 = segment.Vertex.Y;
+                        angle = segment.Angle;
                     }
                 }
 

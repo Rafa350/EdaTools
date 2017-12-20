@@ -7,6 +7,7 @@
     using System.IO;
     using System.Xml;
     using System.Collections.Generic;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Collections;
@@ -43,6 +44,8 @@
             CreateComponents(doc, board);
 
             CreateElements(doc, board);
+
+
             CreateSignals(doc, board);
 
             return board;
@@ -81,7 +84,7 @@
                     if (!layerDict.ContainsKey(layerNum)) {
 
                         Layer layer = ParseLayerNode(node);
-                        board.Layers.Add(layer);
+                        board.LayerStackup.AddLayer(layer);
 
                         layerDict.Add(layerNum, layer);
                     }
@@ -139,12 +142,8 @@
                                 elements.Add(ParseCircleNode(node));
                                 break;
 
-                            case "polygon": {
-                                    PolygonNodeInfo info = ParsePolygonNode(node);
-                                    RegionElement polygon = boardBuilder.CreatePolygon(new Point(0, 0), 0, info.Thickness, info.Layer);
-                                    CreateVertexList(node, polygon);
-                                    elements.Add(polygon);
-                                }
+                            case "polygon":
+                                elements.Add(ParsePolygonNode(node));
                                 break;
 
                             case "hole":
@@ -190,12 +189,8 @@
                             signal.Add(ParseWireNode(node));
                             break;
 
-                        case "polygon": {
-                                PolygonNodeInfo info = ParsePolygonNode(node);
-                                RegionElement polygon = boardBuilder.CreatePolygon(new Point(0, 0), 0, info.Thickness, info.Layer);
-                                CreateVertexList(node, polygon);
-                                signal.Add(polygon);
-                            }
+                        case "polygon": 
+                            signal.Add(ParsePolygonNode(node));
                             break;
 
                         case "contactref":
@@ -208,7 +203,7 @@
             }
         }
 
-        private void CreateVertexList(XmlNode polygonNode, RegionElement polygon) {
+        /*private void CreateVertexList(XmlNode polygonNode, RegionElement polygon) {
 
             bool first = true;
             foreach (XmlNode vertexNode in polygonNode.SelectNodes("vertex")) {
@@ -226,7 +221,7 @@
                         polygon.AddArc(new Point(info.X, info.Y), info.Angle);
                 }
             }
-        }
+        }*/
 
         /// <summary>
         /// Procesa un node LAYER.
@@ -389,9 +384,9 @@
             Layer layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
 
             if (angle == 0)
-                return new LineElement(new Point(x1, y1), layer, new Point(x2, y2), thickness, lineCap);
+                return new LineElement(new Point(x1, y1), new Point(x2, y2), layer, thickness, lineCap);
             else
-                return new ArcElement(new Point(x1, y1), layer, new Point(x2, y2), thickness, angle, lineCap);
+                return new ArcElement(new Point(x1, y1), new Point(x2, y2), layer, thickness, angle, lineCap);
         }
 
         /// <summary>
@@ -441,33 +436,26 @@
         /// Procesa un node POLYGON.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>La informacio recopilada.</returns>
+        /// <returns>L'objecte 'RegionElement' creat.</returns>
         /// 
-        private PolygonNodeInfo ParsePolygonNode(XmlNode node) {
+        private RegionElement ParsePolygonNode(XmlNode node) {
 
-            PolygonNodeInfo info = new PolygonNodeInfo();
+            Layer layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
 
-            info.Thickness = 0; //  StrToDouble(GetAttribute(node, "width"));
-            info.Layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
+            RegionElement region = new RegionElement();
+            region.AddToLayer(layer);
 
-            return info;
-        }
+            List<RegionElement.Segment> segments = new List<RegionElement.Segment>();
+            foreach (XmlNode vertexNode in node.SelectNodes("vertex")) {
 
-        /// <summary>
-        /// Procesa un node de tipus VERTEX.
-        /// </summary>
-        /// <param name="node">El node a procesar.</param>
-        /// <returns>La informacio recopilada.</returns>
-        /// 
-        private VertexNodeInfo ParseVertexNode(XmlNode node) {
+                double x = StrToDouble(GetAttribute(vertexNode, "x"));
+                double y = StrToDouble(GetAttribute(vertexNode, "y"));
+                double angle = StrToDouble(GetAttribute(vertexNode, "curve"));
 
-            VertexNodeInfo info = new VertexNodeInfo();
+                segments.Add(new RegionElement.Segment(new Point(x, y), angle));
+            }
 
-            info.X = StrToDouble(GetAttribute(node, "x"));
-            info.Y = StrToDouble(GetAttribute(node, "y"));
-            info.Angle = StrToDouble(GetAttribute(node, "curve"));
-
-            return info;
+            return new RegionElement(layer,segments);
         }
 
         /// <summary>

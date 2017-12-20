@@ -38,8 +38,8 @@
 
                 // Push de la transformacio de rotacio
                 //
-                if (Pad.Rotate != 0)
-                    dc.PushTransform(new RotateTransform(Pad.Rotate, Pad.Position.X, Pad.Position.Y));
+                if (Pad.Angle != 0)
+                    dc.PushTransform(new RotateTransform(Pad.Angle, Pad.Position.X, Pad.Position.Y));
 
                 // Dibuixa el pad
                 //
@@ -75,7 +75,7 @@
 
                 // Pop de la transformacio de rotacio
                 //
-                if (Pad.Rotate != 0)
+                if (Pad.Angle != 0)
                     dc.Pop();
 
                 // Pop de la transformacio d'escala pel canvi de cara

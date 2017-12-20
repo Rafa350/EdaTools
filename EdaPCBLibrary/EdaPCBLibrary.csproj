@@ -63,6 +63,12 @@
     <Compile Include="Model\Collections\CollectionBase.cs" />
     <Compile Include="Model\Collections\ComponentCollection.cs" />
     <Compile Include="Model\Collections\ElementCollection.cs" />
+    <Compile Include="Model\IMultiLayer.cs" />
+    <Compile Include="Model\IPosition.cs" />
+    <Compile Include="Model\IRotation.cs" />
+    <Compile Include="Model\ISingleLayer.cs" />
+    <Compile Include="Model\ISize.cs" />
+    <Compile Include="Model\LayerPair.cs" />
     <Compile Include="Model\Visitors\DefaultVisitor.cs" />
     <Compile Include="Model\Elements\ArcElement.cs" />
     <Compile Include="Model\Elements\Element.cs" />
@@ -74,7 +80,7 @@
     <Compile Include="Model\Elements\ViaElement.cs" />
     <Compile Include="Model\IO\XmlLibraryWriter.cs" />
     <Compile Include="Model\IO\XmlWriterHelper.cs" />
-    <Compile Include="Model\Collections\LayerCollection.cs" />
+    <Compile Include="Model\LayerStackup.cs" />
     <Compile Include="Model\Library.cs" />
     <Compile Include="Model\Terminal.cs" />
     <Compile Include="Model\Parameter.cs" />

@@ -3,26 +3,44 @@
     using System;
     using System.Windows;
 
-    public sealed class SmdPadElement: SingleLayerElement {
+    public sealed class SmdPadElement: SingleLayerElement, IPosition, IRotation {
 
         private string name;
-        private double rotate;
+        private Point position;
         private Size size;
+        private double angle;
         private double roundnes;
         private bool cream = true;
         private bool stop = true;
 
+        /// <summary>
+        /// Constructor per defecte de l'objecte.
+        /// </summary>
+        /// 
         public SmdPadElement():
             base() {
 
         }
 
-        public SmdPadElement(string name, Point position, Layer layer, Size size, double rotate, double roundnes, bool stop, bool cream):
-            base(position, layer) {
+        /// <summary>
+        /// Constructor de l'objecte.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="position"></param>
+        /// <param name="layer"></param>
+        /// <param name="size"></param>
+        /// <param name="angle"></param>
+        /// <param name="roundnes"></param>
+        /// <param name="stop"></param>
+        /// <param name="cream"></param>
+        /// 
+        public SmdPadElement(string name, Point position, Layer layer, Size size, double angle, double roundnes, bool stop, bool cream):
+            base(layer) {
 
             this.name = name;
+            this.position = position;
             this.size = size;
-            this.rotate = rotate;
+            this.angle = angle;
             this.roundnes = roundnes;
             this.stop = stop;
             this.cream = cream;
@@ -62,20 +80,35 @@
         }
 
         /// <summary>
-        /// Obte o asigna l'orientacio del pad.
+        ///  Obte o asigna la posicio del centre geometric del rectangle.
         /// </summary>
-        public double Rotate {
+        /// 
+        public Point Position {
             get {
-                return rotate;
+                return position;
             }
             set {
-                rotate = value;
+                position = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna l'orientacio del pad.
+        /// </summary>
+        /// 
+        public double Angle {
+            get {
+                return angle;
+            }
+            set {
+                angle = value;
             }
         }
 
         /// <summary>
         /// Obte o asigna el tamany del pad.
         /// </summary>
+        /// 
         public Size Size {
             get {
                 return size;
@@ -88,6 +121,7 @@
         /// <summary>
         /// Obte o asigna el factor d'arrodoniment de les cantonades del pad.
         /// </summary>
+        /// 
         public double Roundnes {
             get {
                 return roundnes;

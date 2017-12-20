@@ -4,17 +4,11 @@
 
     public abstract class Element: IVisitable {
 
-        private Point position;
-
-        public Element () {
-
-        }
-
-        public Element(Point position) {
-
-            this.position = position;
-        }
-
+        /// <summary>
+        /// Accepta un visitador.
+        /// </summary>
+        /// <param name="visitor">El visitador.</param>
+        /// 
         public abstract void AcceptVisitor(IVisitor visitor);
 
         /// <summary>
@@ -24,17 +18,5 @@
         /// <returns>True si pertany a la capa. False en cas contraru.</returns>
         /// 
         public abstract bool IsOnLayer(Layer layer);
-
-        /// <summary>
-        /// Obte les coordinades de la posicio del element.
-        /// </summary>
-        public Point Position {
-            get {
-                return position;
-            }
-            set {
-                position = value;
-            }
-        }
     }
 }

@@ -105,19 +105,6 @@
             */
             return board;
         }
-
-        public RegionElement CreatePolygon(Point position, double rotate, double thickness, Layer layer) {
-
-            if (layer == null)
-                throw new ArgumentNullException("layer");
-
-            RegionElement polygon = new RegionElement();
-            polygon.Position = position;
-            polygon.Thickness = thickness;
-            polygon.AddToLayer(layer);
-
-            return polygon;
-        }
     
         public Board Board {
             get {
