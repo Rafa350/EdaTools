@@ -19,7 +19,7 @@
         /// <param name="part">El component al que pertany.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public static Polygon FromElement(CircleElement circle, Part part) {
+        public static Polygon FromElement(CircleElement circle, Part part, double inflate) {
 
             Matrix m = new Matrix();
             m.Translate(circle.Position.X, circle.Position.Y);
@@ -28,7 +28,7 @@
                 m.RotateAt(part.Rotation, part.Position.X, part.Position.Y);
             }
 
-            return FromCircle(circle.Diameter, m);
+            return FromCircle(circle.Diameter + (inflate * 2), m);
         }
 
         /// <summary>
@@ -36,9 +36,10 @@
         /// </summary>
         /// <param name="rectangle">El element.</param>
         /// <param name="part">El component al que pertany.</param>
+        /// <param name="inflate">Invrement de tamany.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public static Polygon FromElement(RectangleElement rectangle, Part part) {
+        public static Polygon FromElement(RectangleElement rectangle, Part part, double inflate) {
 
             Matrix m = new Matrix();
             m.Translate(rectangle.Position.X, rectangle.Position.Y);
@@ -48,7 +49,7 @@
                 m.RotateAt(part.Rotation, part.Position.X, part.Position.Y);
             }
 
-            return FromRectangle(new Size(rectangle.Size.Width, rectangle.Size.Height), m);
+            return FromRectangle(new Size(rectangle.Size.Width + (inflate * 2), rectangle.Size.Height + (inflate * 2)), m);
         }
 
         /// <summary>
@@ -56,9 +57,10 @@
         /// </summary>
         /// <param name="via">El element.</param>
         /// <param name="part">El conmponent al que pertany.</param>
+        /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public static Polygon FromElement(ViaElement via, Part part) {
+        public static Polygon FromElement(ViaElement via, Part part, double inflate) {
 
             Matrix m = new Matrix();
             m.Translate(via.Position.X, via.Position.Y);
@@ -73,13 +75,13 @@
             switch (via.Shape) {
                 default:
                 case ViaElement.ViaShape.Circular:
-                    return FromCircle(size, m);
+                    return FromCircle(size + (inflate * 2), m);
 
                 case ViaElement.ViaShape.Square:
-                    return FromRectangle(new Size(size, size), m);
+                    return FromRectangle(new Size(size + (inflate * 2), size + (inflate * 2)), m);
 
                 case ViaElement.ViaShape.Octogonal:
-                    return FromPolygon(8, size, m);
+                    return FromPolygon(8, size + (inflate * 2), m);
             }
         }
 
@@ -88,9 +90,10 @@
         /// </summary>
         /// <param name="pad">El element.</param>
         /// <param name="part">El component al que pertany.</param>
+        /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public static Polygon FromElement(ThPadElement pad, Part part) {
+        public static Polygon FromElement(ThPadElement pad, Part part, double inflate) {
 
             Matrix m = new Matrix();
             m.Translate(pad.Position.X, pad.Position.Y);
@@ -105,21 +108,27 @@
             switch (pad.Shape) {
                 default:
                 case ThPadElement.ThPadShape.Circular:
-                    return FromCircle(pad.Size, m);
+                    return FromCircle(pad.Size + (inflate * 2), m);
 
                 case ThPadElement.ThPadShape.Square:
-                    return FromRectangle(new Size(pad.Size, pad.Size), m);
+                    return FromRectangle(new Size(pad.Size + (inflate * 2), pad.Size + (inflate * 2)), m);
 
                 case ThPadElement.ThPadShape.Octogonal:
-                    return FromPolygon(8, pad.Size, m);
+                    return FromPolygon(8, pad.Size + (inflate * 2), m);
             }
         }
 
-        public static Polygon FromElement(SmdPadElement pad, Part part) {
+        public static Polygon FromElement(SmdPadElement pad, Part part, double inflate) {
 
-            Polygon polygon = new Polygon();
+            Matrix m = new Matrix();
+            m.Translate(pad.Position.X, pad.Position.Y);
+            m.RotateAt(pad.Rotation, pad.Position.X, pad.Position.Y);
+            if (part != null) {
+                m.Translate(part.Position.X, part.Position.Y);
+                m.RotateAt(part.Rotation, part.Position.X, part.Position.Y);
+            }
 
-            return polygon;
+            return FromRectangle(new Size(pad.Size.Width + (inflate * 2), pad.Size.Height + (inflate * 2)), m);
         }
 
         /// <summary>
@@ -143,7 +152,7 @@
         /// </summary>
         /// <param name="diameter">Diametre.</param>
         /// <param name="m">Matriu de transformacio.</param>
-        /// <returns>El piligon.</returns>
+        /// <returns>El poligon.</returns>
         /// 
         private static Polygon FromCircle(double diameter, Matrix m) {
 
@@ -255,7 +264,7 @@
             return new Polygon(solution[0]);
         }
 
-        public IList<Polygon> Clip(IEnumerable<Polygon> polygons) {
+        public IList<Polygon> Clip(IEnumerable<Polygon> polygons, ClipType clipType) {
 
             Clipper cp = new Clipper();
 
@@ -264,7 +273,23 @@
                 cp.AddPath(polygon.points, PolyType.ptClip, true);
 
             List<List<IntPoint>> solution = new List<List<IntPoint>>();
-            cp.Execute(ClipType.ctDifference, solution);
+            cp.Execute(clipType, solution);
+
+            List<Polygon> result = new List<Polygon>();
+            foreach (var poly in solution)
+                result.Add(new Polygon(poly));
+            return result;
+        }
+
+        public IList<Polygon> Clip(Polygon polygon, ClipType clipType) {
+
+            Clipper cp = new Clipper();
+
+            cp.AddPath(points, PolyType.ptSubject, true);
+            cp.AddPath(polygon.points, PolyType.ptClip, true);
+
+            List<List<IntPoint>> solution = new List<List<IntPoint>>();
+            cp.Execute(clipType, solution);
 
             List<Polygon> result = new List<Polygon>();
             foreach (var poly in solution)

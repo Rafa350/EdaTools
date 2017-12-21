@@ -8,14 +8,27 @@
         private Point position;
         private double drill;
 
+        /// <summary>
+        /// Constructor per defecte de l'objecte.
+        /// </summary>
+        /// 
         public HoleElement() {
 
         }
 
+        /// <summary>
+        /// Constructir de l'objecte.
+        /// </summary>
+        /// <param name="position">Pocicio del centre.</param>
+        /// <param name="drill">Diametre del forat.</param>
+        /// 
         public HoleElement(Point position, double drill) { 
 
             if (position == null)
                 throw new ArgumentNullException("position");
+
+            if (drill <= 0)
+                throw new ArgumentOutOfRangeException("drill");
 
             this.position = position;
             this.drill = drill;
@@ -44,6 +57,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna el diametre del forat.
+        /// </summary>
+        /// 
         public double Drill {
             get {
                 return drill;

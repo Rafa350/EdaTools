@@ -60,6 +60,7 @@
     <Compile Include="Gerber\Builder\Apertures\PoligonAperture.cs" />
     <Compile Include="Gerber\Builder\Apertures\RectangleAperture.cs" />
     <Compile Include="Gerber\Infrastructure\ApertureDictionaryBuilder.cs" />
+    <Compile Include="Gerber\Infrastructure\PolygonListBuilder.cs" />
     <Compile Include="Gerber\Infrastructure\PolygonDictionaryBuilder.cs" />
     <Compile Include="Gerber\PartHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

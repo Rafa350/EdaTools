@@ -28,7 +28,7 @@
 
         private readonly List<Segment> segments = new List<Segment>();
         private double thickness = 0;
-        private double isolation = 0.15;
+        private double isolation = 0;
 
         /// <summary>
         /// Constructor per defecte del objecte.
@@ -43,10 +43,20 @@
         /// Constructor del objecte.
         /// </summary>
         /// <param name="layer">Capa a la que pertany.</param>
+        /// <param name="thickness">Amplada de linia.</param>
+        /// <param name="isolation">Distancia d'aillament.</param>
         /// 
-        public RegionElement(Layer layer):
+        public RegionElement(Layer layer, double thickness = 0, double isolation = 0):
             base(layer) {
 
+            if (thickness < 0)
+                throw new ArgumentOutOfRangeException("thickness");
+
+            if (isolation < 0)
+                throw new ArgumentOutOfRangeException("isolation");
+
+            this.thickness = thickness;
+            this.isolation = isolation;
         }
 
         /// <summary>
@@ -110,6 +120,8 @@
                 return thickness;
             }
             set {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("Tickness");
                 thickness = value;
             }
         }
@@ -123,6 +135,8 @@
                 return isolation;
             }
             set {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("Isolation");
                 isolation = value;
             }
         }
@@ -142,7 +156,7 @@
         }
 
         /// <summary>
-        /// obte la llista se segments.
+        /// Obte la llista se segments.
         /// </summary>
         /// 
         public IEnumerable<Segment> Segments {

@@ -55,7 +55,7 @@
 
                     // Crea el diccionari de senyals. No mes per les imatges de capes senyal
                     //
-                    IDictionary<Signal, List<Polygon>> polygonDict = null;
+                    IDictionary<Polygon, Signal> polygonDict = null;
                     if ((imageType == ImageType.Top) || (imageType == ImageType.Bottom))
                         polygonDict = PolygonDictionaryBuilder.Build(board, layers);
 
@@ -293,9 +293,9 @@
 
             private readonly GerberBuilder gb;
             private readonly IList<Layer> layers;
-            private readonly IDictionary<Signal, List<Polygon>> polygonDict;
+            private readonly IDictionary<Polygon, Signal> polygonDict;
 
-            public RegionGeneratorVisitor(GerberBuilder gb, IList<Layer> layers, IDictionary<Signal, List<Polygon>> polygonDict) {
+            public RegionGeneratorVisitor(GerberBuilder gb, IList<Layer> layers, IDictionary<Polygon, Signal> polygonDict) {
 
                 this.gb = gb;
                 this.layers = layers;
@@ -308,21 +308,13 @@
 
                     if (VisitingSignal != null) {
 
-                        Polygon sourcePolygon = Polygon.FromElement(region);
+                        Polygon regionPolygon = Polygon.FromElement(region);
+
+                        List<Polygon> clipPolygons = new List<Polygon>(PolygonListBuilder.Build(VisitingBoard, layers[0], regionPolygon, 0.15));
 
                         List<Polygon> resultPolygons = new List<Polygon>();
-
-                        if (polygonDict.ContainsKey(VisitingSignal)) {
-                            List<Polygon> clipPolygons = polygonDict[VisitingSignal];
-                            List<Polygon> inflatedPolygons = new List<Polygon>();
-                            foreach (Polygon clipPolygon in clipPolygons)
-                                if (clipPolygon.NumPoints > 0)
-                                    inflatedPolygons.Add(clipPolygon.Offset(0.25));
-
-                            resultPolygons.AddRange(sourcePolygon.Clip(inflatedPolygons));
-                        }
-                        else
-                            resultPolygons.Add(sourcePolygon);
+                        resultPolygons.Add(regionPolygon);
+                        resultPolygons.AddRange(clipPolygons);
 
                         bool first = true;
                         foreach (Polygon polygon in resultPolygons) {

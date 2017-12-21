@@ -15,7 +15,7 @@
         private sealed class PolygonBuilderVisitor : BoardVisitor {
 
             private readonly IList<Layer> layers;
-            private readonly IDictionary<Signal, List<Polygon>> polygonDict;
+            private readonly IDictionary<Polygon, Signal> polygonDict;
             private Part currentPart = null;
 
             /// <summary>
@@ -24,7 +24,7 @@
             /// <param name="layers">Llista de capes.</param>
             /// <param name="polygonDict">El diccionari a inicialitzar.</param>
             /// 
-            public PolygonBuilderVisitor(IList<Layer> layers, IDictionary<Signal, List<Polygon>> polygonDict) {
+            public PolygonBuilderVisitor(IList<Layer> layers, IDictionary<Polygon, Signal> polygonDict) {
 
                 this.layers = layers;
                 this.polygonDict = polygonDict;
@@ -62,7 +62,7 @@
             public override void Visit(ViaElement via) {
 
                 if (via.IsOnAnyLayer(layers)) {
-                    Polygon polygon = Polygon.FromElement(via, VisitingPart);
+                    Polygon polygon = Polygon.FromElement(via, VisitingPart, 0);
                     Add(VisitingSignal, polygon);
                 }
             }
@@ -75,7 +75,7 @@
             public override void Visit(ThPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers)) {
-                    Polygon polygon = Polygon.FromElement(pad, currentPart);
+                    Polygon polygon = Polygon.FromElement(pad, currentPart, 0);
                     Add(VisitingSignal, polygon);
                 }
             }
@@ -88,7 +88,7 @@
             public override void Visit(SmdPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers)) {
-                    Polygon polygon = Polygon.FromElement(pad, currentPart);
+                    Polygon polygon = Polygon.FromElement(pad, currentPart, 0);
                     Add(VisitingSignal, polygon);
                 }
             }
@@ -101,20 +101,14 @@
             /// 
             private void Add(Signal signal, Polygon polygon) {
 
-                List<Polygon> polygons = null;
-
-                if (!polygonDict.TryGetValue(signal, out polygons)) {
-                    polygons = new List<Polygon>();
-                    polygonDict.Add(signal, polygons);
-                }
-
-                polygons.Add(polygon);
+                if (polygon.NumPoints > 2)
+                    polygonDict.Add(polygon, signal);
             }
         }
 
-        public static IDictionary<Signal, List<Polygon>> Build(Board board, IList<Layer> layers) {
+        public static IDictionary<Polygon, Signal> Build(Board board, IList<Layer> layers) {
 
-            Dictionary<Signal, List<Polygon>> polygonDict = new Dictionary<Signal, List<Polygon>>();
+            Dictionary<Polygon, Signal> polygonDict = new Dictionary<Polygon, Signal>();
             PolygonBuilderVisitor visitor = new PolygonBuilderVisitor(layers, polygonDict);
             board.AcceptVisitor(visitor);
 

@@ -18,6 +18,14 @@
 
         }
 
+        /// <summary>
+        /// Constructor de l'objecte.
+        /// </summary>
+        /// <param name="position">Posicio del centre.</param>
+        /// <param name="layer">Capa.</param>
+        /// <param name="radius">Radi.</param>
+        /// <param name="thickness">Amplada de linia.</param>
+        /// 
         public CircleElement(Point position, Layer layer, double radius, double thickness = 0) :
             base(layer) {
 
@@ -74,6 +82,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna l'amplada de linia.
+        /// </summary>
+        /// 
         public double Thickness {
             get {
                 return thickness;

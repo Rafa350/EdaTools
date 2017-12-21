@@ -15,6 +15,16 @@
             base() {
         }
 
+        /// <summary>
+        /// Constructor de l'objecte.
+        /// </summary>
+        /// <param name="startPosition">Punt inicial.</param>
+        /// <param name="endPosition">Punt final.</param>
+        /// <param name="layer">Capa.</param>
+        /// <param name="thickness">Amplada de linia.</param>
+        /// <param name="angle">Angle del arc.</param>
+        /// <param name="lineCap">Extrems de linia.</param>
+        /// 
         public ArcElement(Point startPosition, Point endPosition, Layer layer, double thickness, double angle, LineCapStyle lineCap) :
             base(startPosition, endPosition, layer, thickness, lineCap) {
 
@@ -26,6 +36,10 @@
             visitor.Visit(this);
         }
 
+        /// <summary>
+        /// Obte el centre de l'arc.
+        /// </summary>
+        /// 
         public Point Center {
             get {
                 double x1 = StartPosition.X;
@@ -60,6 +74,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna l'angle del arc.
+        /// </summary>
+        /// 
         public double Angle {
             get {
                 return angle;
@@ -73,6 +91,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte el radi de l'arc.
+        /// </summary
+        /// >
         public double Radius {
             get {
                 // La semi-distancia entre els dos punts es un catet
