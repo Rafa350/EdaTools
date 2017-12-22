@@ -6,8 +6,8 @@
 
     public sealed class Component: IVisitable {
 
-        private static readonly Dictionary<Element, Component> elementOwner = new Dictionary<Element, Component>();
-        private readonly List<Element> elements = new List<Element>();
+        private static readonly Dictionary<IComponentElement, Component> elementOwners = new Dictionary<IComponentElement, Component>();
+        private readonly List<IComponentElement> elements = new List<IComponentElement>();
         private string name;
 
         /// <summary>
@@ -51,7 +51,7 @@
         /// </summary>
         /// <param name="element">El element a afeigir.</param>
         /// 
-        public void AddElement(Element element) {
+        public void AddElement(IComponentElement element) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
@@ -59,11 +59,11 @@
             if (elements.Contains(element))
                 throw new InvalidOperationException("El elemento ya pertenece al componente.");
 
-            if (elementOwner.ContainsKey(element))
+            if (elementOwners.ContainsKey(element))
                 throw new InvalidOperationException("El elemento ya pertenece a otro componente.");
 
             elements.Add(element);
-            elementOwner.Add(element, this);
+            elementOwners.Add(element, this);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@
         /// </summary>
         /// <param name="element">El element a eliminar.</param>
         /// 
-        public void RemoveElement(Element element) {
+        public void RemoveElement(IComponentElement element) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
@@ -80,7 +80,7 @@
                 throw new InvalidOperationException("El elemento no pertenece al componente.");
 
             elements.Remove(element);
-            elementOwner.Remove(element);
+            elementOwners.Remove(element);
         }
 
         /// <summary>
@@ -89,14 +89,26 @@
         /// <param name="element">El element.</param>
         /// <returns>El component al que pertany.</returns>
         /// 
-        public static Component ComponentOf(Element element) {
+        public static Component ComponentOf(IComponentElement element) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
 
             Component component = null;
-            elementOwner.TryGetValue(element, out component);
-            return component;
+            if (elementOwners.TryGetValue(element, out component))
+                return component;
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// Obte la placa a la que pertany el component
+        /// </summary>
+        /// 
+        public Board Board {
+            get {
+                return Board.BoardOf(this);
+            }
         }
 
         /// <summary>

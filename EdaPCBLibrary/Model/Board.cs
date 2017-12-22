@@ -13,6 +13,7 @@
 
         private readonly LayerStackup layerStackup = new LayerStackup();
         private readonly List<Element> elements = new List<Element>();
+        private static readonly Dictionary<Component, Board> componentOwners = new Dictionary<Component, Board>();
         private readonly List<Component> components = new List<Component>();
         private List<Part> parts;
         private List<Signal> signals;
@@ -77,7 +78,7 @@
         }
 
         /// <summary>
-        /// Afeigeix un element.
+        /// Afeigeix un component.
         /// </summary>
         /// <param name="element">El component a afeigir.</param>
         /// 
@@ -86,7 +87,14 @@
             if (component == null)
                 throw new ArgumentNullException("component");
 
+            if (components.Contains(component))
+                throw new InvalidOperationException("El componente ya pertenece a la placa.");
+
+            if (componentOwners.ContainsKey(component))
+                throw new InvalidOperationException("El componente ya pertenece a otra placa.");
+
             components.Add(component);
+            componentOwners.Add(component, this);
         }
 
         public Signal GetSignal(string name) {
@@ -129,6 +137,18 @@
             get {
                 return components;
             }
+        }
+
+        public static Board BoardOf(Component component) {
+
+            if (component == null)
+                throw new ArgumentNullException("component");
+
+            Board board;
+            if (componentOwners.TryGetValue(component, out board))
+                return board;
+            else
+                return null;
         }
 
 

@@ -60,12 +60,15 @@
     <Compile Include="Import\Importer.cs" />
     <Compile Include="Import\ImporterFactory.cs" />
     <Compile Include="Model\BoardBuilder.cs" />
+    <Compile Include="Model\IBoardElement.cs" />
+    <Compile Include="Model\IComponentElement.cs" />
     <Compile Include="Model\IMultiLayer.cs" />
     <Compile Include="Model\IPosition.cs" />
     <Compile Include="Model\IRotation.cs" />
     <Compile Include="Model\ISingleLayer.cs" />
     <Compile Include="Model\ISize.cs" />
     <Compile Include="Model\LayerPair.cs" />
+    <Compile Include="Model\Collections\BidirectionalMap.cs" />
     <Compile Include="Model\Visitors\DefaultVisitor.cs" />
     <Compile Include="Model\Elements\ArcElement.cs" />
     <Compile Include="Model\Elements\Element.cs" />

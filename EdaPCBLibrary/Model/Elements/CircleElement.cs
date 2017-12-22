@@ -15,7 +15,6 @@
         /// 
         public CircleElement():
             base() {
-
         }
 
         /// <summary>
@@ -34,6 +33,11 @@
             this.thickness = thickness;
         }
 
+        /// <summary>
+        /// Accepta un visitador del objecte.
+        /// </summary>
+        /// <param name="visitor">El visitador.</param>
+        /// 
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
@@ -97,6 +101,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna el indicador de cercle ple.
+        /// </summary>
+        /// 
         public bool Filled {
             get {
                 return thickness == 0;

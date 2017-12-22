@@ -19,7 +19,6 @@
         /// 
         public SmdPadElement():
             base() {
-
         }
 
         /// <summary>

@@ -13,7 +13,6 @@
         /// </summary>
         /// 
         public HoleElement() {
-
         }
 
         /// <summary>
@@ -34,11 +33,22 @@
             this.drill = drill;
         }
 
+        /// <summary>
+        /// Comprova si esta en una capa.
+        /// </summary>
+        /// <param name="layer">La capa a comprovar.</param>
+        /// <returns>True si es en la capa, false en cas contrari.</returns>
+        /// 
         public override bool IsOnLayer(Layer layer) {
 
             return layer.Id == LayerId.Holes;
         }
 
+        /// <summary>
+        /// Accepta un visitador del objecte.
+        /// </summary>
+        /// <param name="visitor">El visitador.</param>
+        /// 
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);

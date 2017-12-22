@@ -2,7 +2,7 @@
 
     using System.Windows;
 
-    public abstract class Element: IVisitable {
+    public abstract class Element: IVisitable, IComponentElement {
 
         /// <summary>
         /// Accepta un visitador.
@@ -26,6 +26,16 @@
         public Component Component {
             get {
                 return Component.ComponentOf(this);
+            }
+        }
+
+        /// <summary>
+        /// Obte la placa a la que pertany. Null si no pertany a cap.
+        /// </summary>
+        /// 
+        public Board Board {
+            get {
+                return (Component == null) ? null : Component.Board;
             }
         }
     }
