@@ -62,7 +62,7 @@
             public override void Visit(ViaElement via) {
 
                 if (via.IsOnAnyLayer(layers)) {
-                    Polygon polygon = Polygon.FromElement(via, VisitingPart, 0);
+                    Polygon polygon = PolygonBuilder.Build(via, VisitingPart, 0);
                     Add(VisitingSignal, polygon);
                 }
             }
@@ -75,7 +75,7 @@
             public override void Visit(ThPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers)) {
-                    Polygon polygon = Polygon.FromElement(pad, currentPart, 0);
+                    Polygon polygon = PolygonBuilder.Build(pad, currentPart, 0);
                     Add(VisitingSignal, polygon);
                 }
             }
@@ -88,7 +88,7 @@
             public override void Visit(SmdPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers)) {
-                    Polygon polygon = Polygon.FromElement(pad, currentPart, 0);
+                    Polygon polygon = PolygonBuilder.Build(pad, currentPart, 0);
                     Add(VisitingSignal, polygon);
                 }
             }

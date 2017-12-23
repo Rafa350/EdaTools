@@ -106,9 +106,12 @@
             public override void Visit(SmdPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers)) {
-                    double rotate = pad.Rotation + (VisitingPart != null ? VisitingPart.Rotation : 0);
-                    double radius = (pad.Roundnes - 0.01) * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
-                    apertureDict.AddRoundRectangle(pad.Size.Width, pad.Size.Height, radius, rotate);
+                    double rotation = pad.Rotation + (VisitingPart != null ? VisitingPart.Rotation : 0);
+                    double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
+                    if (radius == 0)
+                        apertureDict.AddRectangle(pad.Size.Width, pad.Size.Height, rotation);
+                    else
+                        apertureDict.AddRoundRectangle(pad.Size.Width, pad.Size.Height, radius, rotation);
                 }
             }
         }

@@ -1,10 +1,10 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Infrastructure {
 
-    using System.Collections.Generic;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
-    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using System.Collections.Generic;
 
     internal static class PolygonListBuilder { 
 
@@ -12,38 +12,38 @@
 
             private readonly Layer layer;
             private readonly List<Polygon> resultPolygons;
-            private readonly double inflate;
+            private readonly double clearance;
             private readonly Polygon clipPolygon;
 
-            public Visitor(Layer layer, Polygon clipPolygon, double inflate, List<Polygon> resultPolygons) {
+            public Visitor(Layer layer, Polygon clipPolygon, double clearance, List<Polygon> resultPolygons) {
 
                 this.layer = layer;
                 this.clipPolygon = clipPolygon;
-                this.inflate = inflate;
+                this.clearance = clearance;
                 this.resultPolygons = resultPolygons;
             }
 
             public override void Visit(ViaElement via) {
 
                 if (via.IsOnLayer(layer)) {
-                    Polygon polygon = Polygon.FromElement(via, VisitingPart, inflate);
-                    resultPolygons.AddRange(polygon.Clip(clipPolygon, ClipperLib.ClipType.ctIntersection));
+                    Polygon polygon = PolygonBuilder.Build(via, VisitingPart, clearance);
+                    resultPolygons.AddRange(PolygonProcessor.Clip(polygon, clipPolygon, PolygonProcessor.ClipOperation.Intersection));
                 }
             }
 
             public override void Visit(ThPadElement pad) {
 
                 if (pad.IsOnLayer(layer)) {
-                    Polygon polygon = Polygon.FromElement(pad, VisitingPart, inflate);
-                    resultPolygons.AddRange(polygon.Clip(clipPolygon, ClipperLib.ClipType.ctIntersection));
+                    Polygon polygon = PolygonBuilder.Build(pad, VisitingPart, clearance);
+                    resultPolygons.AddRange(PolygonProcessor.Clip(polygon, clipPolygon, PolygonProcessor.ClipOperation.Intersection));
                 }
             }
 
             public override void Visit(SmdPadElement pad) {
 
                 if (pad.IsOnLayer(layer)) {
-                    Polygon polygon = Polygon.FromElement(pad, VisitingPart, inflate);
-                    resultPolygons.AddRange(polygon.Clip(clipPolygon, ClipperLib.ClipType.ctIntersection));
+                    Polygon polygon = PolygonBuilder.Build(pad, VisitingPart, clearance);
+                    resultPolygons.AddRange(PolygonProcessor.Clip(polygon, clipPolygon, PolygonProcessor.ClipOperation.Intersection));
                 }
             }
         }

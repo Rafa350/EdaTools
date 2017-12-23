@@ -138,7 +138,7 @@
         /// Obte la llista d'elements.
         /// </summary>
         /// 
-        public IEnumerable<Element> Elements {
+        public IEnumerable<IComponentElement> Elements {
             get {
                 return elements;
             }

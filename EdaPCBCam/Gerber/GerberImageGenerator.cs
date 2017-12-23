@@ -279,9 +279,11 @@
             public override void Visit(SmdPadElement pad) {
                 
                 if (pad.IsOnAnyLayer(layers)) {
-                    double rotate = pad.Rotation + (VisitingPart != null ? VisitingPart.Rotation : 0);
-                    double radius = (pad.Roundnes - 0.01) * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
-                    Aperture ap = apertureDict.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotate);
+                    double rotation = pad.Rotation + (VisitingPart != null ? VisitingPart.Rotation : 0);
+                    double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
+                    Aperture ap = radius == 0 ?
+                        apertureDict.GetRectangleAperture(pad.Size.Width, pad.Size.Height, rotation) :
+                        apertureDict.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
                     gb.SelectAperture(ap);
                     Point p = VisitingPart.Transform(pad.Position);
                     gb.FlashAt(p);
@@ -308,7 +310,7 @@
 
                     if (VisitingSignal != null) {
 
-                        Polygon regionPolygon = Polygon.FromElement(region);
+                        Polygon regionPolygon = PolygonBuilder.Build(region);
 
                         List<Polygon> clipPolygons = new List<Polygon>(PolygonListBuilder.Build(VisitingBoard, layers[0], regionPolygon, 0.15));
 
