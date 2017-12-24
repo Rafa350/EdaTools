@@ -26,27 +26,36 @@
         /// 
         public static IEnumerable<Polygon> Clip(Polygon sourcePolygon, Polygon clipPolygon, ClipOperation op) {
 
-            ClipType ct = ClipType.ctDifference;
-            switch  (op) {
-                case ClipOperation.Intersection:
-                    ct = ClipType.ctIntersection;
-                    break;
-
-                case ClipOperation.Union:
-                    ct = ClipType.ctUnion;
-                    break;
-
-                case ClipOperation.Xor:
-                    ct = ClipType.ctXor;
-                    break;
-            }
-
             cp.Clear();
             cp.AddPath(PolygonToPointList(sourcePolygon), PolyType.ptSubject, true);
             cp.AddPath(PolygonToPointList(clipPolygon), PolyType.ptClip, true);
 
             List<List<IntPoint>> solution = new List<List<IntPoint>>();
-            cp.Execute(ct, solution);
+            cp.Execute(GetClipType(op), solution, PolyFillType.pftNonZero);
+
+            List<Polygon> polygons = new List<Polygon>();
+            foreach (List<IntPoint> intPoints in solution)
+                polygons.Add(PointListToPolygon(intPoints));
+            return polygons;
+        }
+
+        /// <summary>
+        /// Retalla un poligon.
+        /// </summary>
+        /// <param name="sourcePolygon">Poligon a retallar.</param>
+        /// <param name="clipPolygons">Poligon de retall.</param>
+        /// <param name="op">Operacio de retall.</param>
+        /// <returns>La sequencia de poligons resultants de l'operacio.</returns>
+        /// 
+        public static IEnumerable<Polygon> Clip(Polygon sourcePolygon, IEnumerable<Polygon> clipPolygons, ClipOperation op) {
+
+            cp.Clear();
+            cp.AddPath(PolygonToPointList(sourcePolygon), PolyType.ptSubject, true);
+            foreach (Polygon clipPolygon in clipPolygons)
+                cp.AddPath(PolygonToPointList(clipPolygon), PolyType.ptClip, true);
+
+            List<List<IntPoint>> solution = new List<List<IntPoint>>();
+            cp.Execute(GetClipType(op), solution, PolyFillType.pftNonZero);
 
             List<Polygon> polygons = new List<Polygon>();
             foreach (List<IntPoint> intPoints in solution)
@@ -89,12 +98,35 @@
             return intPoints;
         }
 
-        private static Polygon PointListToPolygon(List<IntPoint> points) {
+        private static Polygon PointListToPolygon(IEnumerable<IntPoint> points) {
 
             Polygon polygon = new Polygon();
             foreach (IntPoint intPoint in points)
                 polygon.Add(new Point((double)intPoint.X / 10000.0, (double)intPoint.Y / 10000.0));
             return polygon;
+        }
+
+        /// <summary>
+        /// Obte el codi de retall que correspon a cada operacio.
+        /// </summary>
+        /// <param name="op">Operacio de retall.</param>
+        /// <returns>El tipus de retall a aplicar.</returns>
+        /// 
+        private static ClipType GetClipType(ClipOperation op) {
+
+            switch (op) {
+                case ClipOperation.Intersection:
+                    return ClipType.ctIntersection;
+
+                case ClipOperation.Union:
+                    return ClipType.ctUnion;
+
+                case ClipOperation.Xor:
+                    return ClipType.ctXor;
+
+                default:
+                    return ClipType.ctDifference;
+            }
         }
     }
 }

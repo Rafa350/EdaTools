@@ -57,13 +57,15 @@
         /// <param name="inflate">Aument de tamany dels poligons.</param>
         /// <returns>La llista de poligons.</returns>
         /// 
-        public static List<Polygon> Build(Board board, Layer layer, Polygon clipPolygon, double inflate = 0) {
+        public static IEnumerable<Polygon> Build(Board board, Layer layer, Polygon clipPolygon, double inflate = 0) {
 
             List<Polygon> polygons = new List<Polygon>();
             Visitor visitor = new Visitor(layer, clipPolygon, inflate, polygons);
             board.AcceptVisitor(visitor);
 
-            return polygons;
+            return PolygonProcessor.Clip(clipPolygon, polygons, PolygonProcessor.ClipOperation.Intersection);
+
+            //return polygons;
         }
     }
 }

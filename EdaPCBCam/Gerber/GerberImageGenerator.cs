@@ -311,26 +311,22 @@
                     if (VisitingSignal != null) {
 
                         Polygon regionPolygon = PolygonBuilder.Build(region);
+                        IEnumerable<Polygon> holePolygons = PolygonListBuilder.Build(VisitingBoard, layers[0], regionPolygon, 0.15);
 
-                        List<Polygon> clipPolygons = PolygonListBuilder.Build(VisitingBoard, layers[0], regionPolygon, 0.15);
+                        // Dibuixa la regio
+                        //
+                        //gb.BeginRegion();
+                        //gb.Region(regionPolygon.Points);
+                        //gb.EndRegion();
 
-                        List<Polygon> resultPolygons = new List<Polygon>();
-                        resultPolygons.Add(regionPolygon);
-                        resultPolygons.AddRange(clipPolygons);
-
-                        bool first = true;
-                        foreach (Polygon polygon in resultPolygons) {
-                            if (first) {
-                                first = false;
-                                gb.LoadPolarity(Polarity.Dark);
-                            }
-                            else
-                                gb.LoadPolarity(Polarity.Clear);
-                            gb.BeginRegion();
+                        // Dibuixa els forats de la regio
+                        //
+                        //gb.LoadPolarity(Polarity.Clear);
+                        gb.BeginRegion();
+                        foreach (Polygon polygon in holePolygons)
                             gb.Region(polygon.Points);
-                            gb.EndRegion();
-                        }
-                        gb.LoadPolarity(Polarity.Dark);
+                        gb.EndRegion();
+                        //gb.LoadPolarity(Polarity.Dark);
                     }
                 }
             }
