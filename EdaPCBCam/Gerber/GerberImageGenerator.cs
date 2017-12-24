@@ -312,7 +312,7 @@
 
                         Polygon regionPolygon = PolygonBuilder.Build(region);
 
-                        List<Polygon> clipPolygons = new List<Polygon>(PolygonListBuilder.Build(VisitingBoard, layers[0], regionPolygon, 0.15));
+                        List<Polygon> clipPolygons = PolygonListBuilder.Build(VisitingBoard, layers[0], regionPolygon, 0.15);
 
                         List<Polygon> resultPolygons = new List<Polygon>();
                         resultPolygons.Add(regionPolygon);

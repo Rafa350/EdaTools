@@ -89,6 +89,20 @@
             }
         }
 
+        public double StartAngle {
+            get {
+                Point center = Center;
+                return Math.Atan((StartPosition.Y - center.Y) / (StartPosition.X - center.X));
+            }
+        }
+
+        public double EndAngle {
+            get {
+                Point center = Center;
+                return Math.Atan((EndPosition.Y - center.Y) / (EndPosition.X - center.X));
+            }
+        }
+
         /// <summary>
         /// Obte el radi de l'arc.
         /// </summary

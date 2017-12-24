@@ -60,6 +60,8 @@
         public override bool IsOnLayer(Layer layer) {
 
             if ((layer.Id == LayerId.Pads) ||
+                (layer.Id == LayerId.Top) ||
+                (layer.Id == LayerId.Bottom) ||
                 (layer.Id == LayerId.TopStop) ||
                 (layer.Id == LayerId.BottomStop) ||
                 (layer.Id == LayerId.Drills))
