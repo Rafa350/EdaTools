@@ -12,21 +12,21 @@
 
             private readonly Layer layer;
             private readonly List<Polygon> resultPolygons;
-            private readonly double clearance;
+            private readonly double inflate;
             private readonly Polygon clipPolygon;
 
-            public Visitor(Layer layer, Polygon clipPolygon, double clearance, List<Polygon> resultPolygons) {
+            public Visitor(Layer layer, Polygon clipPolygon, double inflate, List<Polygon> resultPolygons) {
 
                 this.layer = layer;
                 this.clipPolygon = clipPolygon;
-                this.clearance = clearance;
+                this.inflate = inflate;
                 this.resultPolygons = resultPolygons;
             }
 
             public override void Visit(ViaElement via) {
 
                 if (via.IsOnLayer(layer)) {
-                    Polygon polygon = PolygonBuilder.Build(via, VisitingPart, clearance);
+                    Polygon polygon = PolygonBuilder.Build(via, VisitingPart, inflate);
                     resultPolygons.AddRange(PolygonProcessor.Clip(polygon, clipPolygon, PolygonProcessor.ClipOperation.Intersection));
                 }
             }
@@ -34,7 +34,7 @@
             public override void Visit(ThPadElement pad) {
 
                 if (pad.IsOnLayer(layer)) {
-                    Polygon polygon = PolygonBuilder.Build(pad, VisitingPart, clearance);
+                    Polygon polygon = PolygonBuilder.Build(pad, VisitingPart, inflate);
                     resultPolygons.AddRange(PolygonProcessor.Clip(polygon, clipPolygon, PolygonProcessor.ClipOperation.Intersection));
                 }
             }
@@ -42,14 +42,14 @@
             public override void Visit(SmdPadElement pad) {
 
                 if (pad.IsOnLayer(layer)) {
-                    Polygon polygon = PolygonBuilder.Build(pad, VisitingPart, clearance);
+                    Polygon polygon = PolygonBuilder.Build(pad, VisitingPart, inflate);
                     resultPolygons.AddRange(PolygonProcessor.Clip(polygon, clipPolygon, PolygonProcessor.ClipOperation.Intersection));
                 }
             }
         }
 
         /// <summary>
-        /// Construeix la llista de poligons d'una capa retallats.
+        /// Construeix la llista de poligons d'una capa.
         /// </summary>
         /// <param name="board">La placa.</param>
         /// <param name="layer">La capa.</param>
@@ -63,9 +63,7 @@
             Visitor visitor = new Visitor(layer, clipPolygon, inflate, polygons);
             board.AcceptVisitor(visitor);
 
-            return PolygonProcessor.Clip(clipPolygon, polygons, PolygonProcessor.ClipOperation.Intersection);
-
-            //return polygons;
+            return PolygonProcessor.Union(polygons);
         }
     }
 }

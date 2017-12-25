@@ -329,6 +329,11 @@
             inRegion = false;
         }
 
+        /// <summary>
+        /// Dinuiza una regio.
+        /// </summary>
+        /// <param name="points">La llista de punts que conformen la regio.</param>
+        /// 
         public void Region(IEnumerable<Point> points) {
 
             bool first = true;

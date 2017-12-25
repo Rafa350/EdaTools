@@ -13,6 +13,8 @@
             Xor
         }
 
+        private const double scaleFactor = 1000000.0;
+
         private static readonly Clipper cp = new Clipper();
         private static readonly ClipperOffset cpOffset = new ClipperOffset();
 
@@ -33,10 +35,10 @@
             List<List<IntPoint>> solution = new List<List<IntPoint>>();
             cp.Execute(GetClipType(op), solution, PolyFillType.pftNonZero);
 
-            List<Polygon> polygons = new List<Polygon>();
+            List<Polygon> result = new List<Polygon>();
             foreach (List<IntPoint> intPoints in solution)
-                polygons.Add(PointListToPolygon(intPoints));
-            return polygons;
+                result.Add(PointListToPolygon(intPoints));
+            return result;
         }
 
         /// <summary>
@@ -57,10 +59,31 @@
             List<List<IntPoint>> solution = new List<List<IntPoint>>();
             cp.Execute(GetClipType(op), solution, PolyFillType.pftNonZero);
 
-            List<Polygon> polygons = new List<Polygon>();
+            List<Polygon> result = new List<Polygon>();
             foreach (List<IntPoint> intPoints in solution)
-                polygons.Add(PointListToPolygon(intPoints));
-            return polygons;
+                result.Add(PointListToPolygon(intPoints));
+            return result;
+        }
+
+        /// <summary>
+        /// Fusiona els poligons d'una llista que estiguin en contacte.
+        /// </summary>
+        /// <param name="polygons">El poligons a fisionar.</param>
+        /// <returns>La coleccio de poligons resultants de la fusio.</returns>
+        /// 
+        public static IEnumerable<Polygon> Union(IEnumerable<Polygon> polygons) {
+
+            cp.Clear();
+            foreach (Polygon polygon in polygons)
+                cp.AddPath(PolygonToPointList(polygon), PolyType.ptSubject, true);
+
+            List<List<IntPoint>> solution = new List<List<IntPoint>>();
+            cp.Execute(ClipType.ctUnion, solution, PolyFillType.pftNonZero);
+
+            List<Polygon> result = new List<Polygon>();
+            foreach (List<IntPoint> intPoints in solution)
+                result.Add(PointListToPolygon(intPoints));
+            return result;
         }
 
         public static Polygon Offset(Polygon sourcePoligon, double offset) {
@@ -69,7 +92,7 @@
             cpOffset.AddPath(PolygonToPointList(sourcePoligon), JoinType.jtRound, EndType.etClosedPolygon);
 
             List<List<IntPoint>> solutions = new List<List<IntPoint>>();
-            cpOffset.Execute(ref solutions, offset * 10000);
+            cpOffset.Execute(ref solutions, offset * scaleFactor);
 
             return PointListToPolygon(solutions[0]);
         }
@@ -81,7 +104,7 @@
                 cpOffset.AddPath(PolygonToPointList(sourcePolygon), JoinType.jtRound, EndType.etClosedPolygon);
 
             List<List<IntPoint>> solutions = new List<List<IntPoint>>();
-            cpOffset.Execute(ref solutions, offset * 10000);
+            cpOffset.Execute(ref solutions, offset * scaleFactor);
 
             List<Polygon> results = new List<Polygon>(solutions.Count);
             foreach (List<IntPoint> solution in solutions)
@@ -94,7 +117,7 @@
 
             List<IntPoint> intPoints = new List<IntPoint>();
             foreach (Point point in polygon.Points)
-                intPoints.Add(new IntPoint(point.X * 10000.0, point.Y * 10000.0));
+                intPoints.Add(new IntPoint(point.X * scaleFactor, point.Y * scaleFactor));
             return intPoints;
         }
 
@@ -102,7 +125,7 @@
 
             Polygon polygon = new Polygon();
             foreach (IntPoint intPoint in points)
-                polygon.Add(new Point((double)intPoint.X / 10000.0, (double)intPoint.Y / 10000.0));
+                polygon.Add(new Point((double)intPoint.X / scaleFactor, (double)intPoint.Y / scaleFactor));
             return polygon;
         }
 

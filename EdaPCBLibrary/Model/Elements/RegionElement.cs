@@ -27,7 +27,7 @@
         }
 
         private readonly List<Segment> segments = new List<Segment>();
-        private double thickness = 0;
+        private double thickness = 0.1;
         private double isolation = 0;
 
         /// <summary>

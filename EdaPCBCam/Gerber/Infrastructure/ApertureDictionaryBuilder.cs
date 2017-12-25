@@ -114,6 +114,12 @@
                         apertureDict.AddRoundRectangle(pad.Size.Width, pad.Size.Height, radius, rotation);
                 }
             }
+
+            public override void Visit(RegionElement region) {
+
+                if (region.IsOnAnyLayer(layers))
+                    apertureDict.AddCircle(region.Thickness);
+            }
         }
 
         public static ApertureDictionary Build(Board board, IList<Layer> layers) {

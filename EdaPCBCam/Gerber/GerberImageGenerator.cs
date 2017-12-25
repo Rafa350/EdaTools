@@ -125,7 +125,7 @@
                     // Definicio de les regions
                     //
                     gb.Comment("BEGIN POLYGONS");
-                    board.AcceptVisitor(new RegionGeneratorVisitor(gb, layers, polygonDict));
+                    board.AcceptVisitor(new RegionGeneratorVisitor(gb, layers, apertureDict, polygonDict));
                     gb.Comment("END POLYGONS");
 
                     // Definicio de la imatge
@@ -295,12 +295,14 @@
 
             private readonly GerberBuilder gb;
             private readonly IList<Layer> layers;
+            private readonly ApertureDictionary apertureDict;
             private readonly IDictionary<Polygon, Signal> polygonDict;
 
-            public RegionGeneratorVisitor(GerberBuilder gb, IList<Layer> layers, IDictionary<Polygon, Signal> polygonDict) {
+            public RegionGeneratorVisitor(GerberBuilder gb, IList<Layer> layers, ApertureDictionary apertureDict, IDictionary<Polygon, Signal> polygonDict) {
 
                 this.gb = gb;
                 this.layers = layers;
+                this.apertureDict = apertureDict;
                 this.polygonDict = polygonDict;
             }
 
@@ -310,23 +312,44 @@
 
                     if (VisitingSignal != null) {
 
+                        double clearance = 0.15;
+
                         Polygon regionPolygon = PolygonBuilder.Build(region);
-                        IEnumerable<Polygon> holePolygons = PolygonListBuilder.Build(VisitingBoard, layers[0], regionPolygon, 0.15);
+                        IEnumerable<Polygon> holePolygons = PolygonListBuilder.Build(VisitingBoard, layers[0], regionPolygon, clearance + region.Thickness);
 
                         // Dibuixa la regio
                         //
-                        //gb.BeginRegion();
-                        //gb.Region(regionPolygon.Points);
-                        //gb.EndRegion();
+                        gb.BeginRegion();
+                        gb.Region(regionPolygon.Points);
+                        gb.EndRegion();
 
                         // Dibuixa els forats de la regio
                         //
-                        //gb.LoadPolarity(Polarity.Clear);
+                        gb.LoadPolarity(Polarity.Clear);
                         gb.BeginRegion();
                         foreach (Polygon polygon in holePolygons)
                             gb.Region(polygon.Points);
                         gb.EndRegion();
-                        //gb.LoadPolarity(Polarity.Dark);
+                        gb.LoadPolarity(Polarity.Dark);
+
+                        // Dibuixa els perfiles dels forats de la regio
+                        //
+                        Aperture ap = apertureDict.GetCircleAperture(region.Thickness);
+                        gb.SelectAperture(ap);
+                        foreach (Polygon polygon in holePolygons) {
+                            bool first = true;
+                            Point firstPoint = default(Point);
+                            foreach (Point point in polygon.Points) {
+                                if (first) {
+                                    first = false;
+                                    firstPoint = point;
+                                    gb.MoveTo(point);
+                                }
+                                else
+                                    gb.LineTo(point);
+                            }
+                            gb.LineTo(firstPoint);
+                        }
                     }
                 }
             }
