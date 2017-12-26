@@ -12,7 +12,7 @@
     using System.Text;
     using System.Windows;
 
-    public sealed class GerberImageGenerator: GerberGenerator { 
+    public sealed class GerberImageGenerator : GerberGenerator {
 
         public enum ImageType {
             Top,
@@ -52,12 +52,6 @@
                     // Crea el diccionari d'apertures
                     //
                     ApertureDictionary apertureDict = ApertureDictionaryBuilder.Build(board, layers);
-
-                    // Crea el diccionari de senyals. No mes per les imatges de capes senyal
-                    //
-                    IDictionary<Polygon, Signal> polygonDict = null;
-                    if ((imageType == ImageType.Top) || (imageType == ImageType.Bottom))
-                        polygonDict = PolygonDictionaryBuilder.Build(board, layers);
 
                     GerberBuilder gb = new GerberBuilder(writer);
 
@@ -105,8 +99,6 @@
                     gb.Attribute(".Part,Single");
                     gb.SetUnits(Units.Milimeters);
                     gb.SetCoordinateFormat(8, 5);
-                    gb.SetOffset(0, 0);
-                    gb.SetPolarity(true);
                     gb.LoadPolarity(Polarity.Dark);
                     gb.Comment("END HEADER");
 
@@ -125,7 +117,7 @@
                     // Definicio de les regions
                     //
                     gb.Comment("BEGIN POLYGONS");
-                    board.AcceptVisitor(new RegionGeneratorVisitor(gb, layers, apertureDict, polygonDict));
+                    board.AcceptVisitor(new RegionGeneratorVisitor(gb, layers, apertureDict));
                     gb.Comment("END POLYGONS");
 
                     // Definicio de la imatge
@@ -277,7 +269,7 @@
             /// <param name="pad">El element a visitar.</param>
             /// 
             public override void Visit(SmdPadElement pad) {
-                
+
                 if (pad.IsOnAnyLayer(layers)) {
                     double rotation = pad.Rotation + (VisitingPart != null ? VisitingPart.Rotation : 0);
                     double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
@@ -291,19 +283,17 @@
             }
         }
 
-        private sealed class RegionGeneratorVisitor: BoardVisitor {
+        private sealed class RegionGeneratorVisitor : BoardVisitor {
 
             private readonly GerberBuilder gb;
             private readonly IList<Layer> layers;
             private readonly ApertureDictionary apertureDict;
-            private readonly IDictionary<Polygon, Signal> polygonDict;
 
-            public RegionGeneratorVisitor(GerberBuilder gb, IList<Layer> layers, ApertureDictionary apertureDict, IDictionary<Polygon, Signal> polygonDict) {
+            public RegionGeneratorVisitor(GerberBuilder gb, IList<Layer> layers, ApertureDictionary apertureDict) {
 
                 this.gb = gb;
                 this.layers = layers;
                 this.apertureDict = apertureDict;
-                this.polygonDict = polygonDict;
             }
 
             public override void Visit(RegionElement region) {
@@ -315,43 +305,33 @@
                         double clearance = 0.15;
 
                         Polygon regionPolygon = PolygonBuilder.Build(region);
-                        IEnumerable<Polygon> holePolygons = PolygonListBuilder.Build(VisitingBoard, layers[0], regionPolygon, clearance + region.Thickness);
+                        IEnumerable<Polygon> holePolygons = PolygonListBuilder.Build(VisitingBoard, layers[0], regionPolygon, clearance + (region.Thickness / 2));
 
-                        // Dibuixa la regio
-                        //
-                        gb.BeginRegion();
-                        gb.Region(regionPolygon.Points);
-                        gb.EndRegion();
+                        PolygonTree polygonTree = PolygonProcessor.ClipExtended(regionPolygon, holePolygons, PolygonProcessor.ClipOperation.Diference);
+                        ProcessPolygonTree(polygonTree, 0, region.Thickness);
 
-                        // Dibuixa els forats de la regio
-                        //
-                        gb.LoadPolarity(Polarity.Clear);
-                        gb.BeginRegion();
-                        foreach (Polygon polygon in holePolygons)
-                            gb.Region(polygon.Points);
-                        gb.EndRegion();
-                        gb.LoadPolarity(Polarity.Dark);
-
-                        // Dibuixa els perfiles dels forats de la regio
-                        //
-                        Aperture ap = apertureDict.GetCircleAperture(region.Thickness);
-                        gb.SelectAperture(ap);
-                        foreach (Polygon polygon in holePolygons) {
-                            bool first = true;
-                            Point firstPoint = default(Point);
-                            foreach (Point point in polygon.Points) {
-                                if (first) {
-                                    first = false;
-                                    firstPoint = point;
-                                    gb.MoveTo(point);
-                                }
-                                else
-                                    gb.LineTo(point);
-                            }
-                            gb.LineTo(firstPoint);
-                        }
                     }
                 }
+            }
+
+            private void ProcessPolygonTree(PolygonTree polygonTree, int level, double thickness) {
+
+                if (polygonTree.Polygon != null) {
+
+                    gb.LoadPolarity((level % 2) == 0 ? Polarity.Clear : Polarity.Dark);
+                    gb.BeginRegion();
+                    gb.Region(polygonTree.Polygon.Points, true);
+                    gb.EndRegion();
+
+                    Aperture ap = apertureDict.GetCircleAperture(thickness);
+                    gb.SelectAperture(ap);
+                    gb.LoadPolarity(Polarity.Dark);
+                    gb.Polygon(polygonTree.Polygon.Points);
+                }
+
+                if (polygonTree.HasChilds)
+                    foreach (PolygonTree polygonTreeChild in polygonTree.Childs)
+                        ProcessPolygonTree(polygonTreeChild, level + 1, thickness);
             }
         }
     }

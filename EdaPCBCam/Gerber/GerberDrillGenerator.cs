@@ -51,8 +51,6 @@
                     gb.Attribute(".Part,Single");
                     gb.SetUnits(Units.Milimeters);
                     gb.SetCoordinateFormat(8, 5);
-                    gb.SetOffset(0, 0);
-                    gb.SetPolarity(true);
                     gb.LoadPolarity(Polarity.Dark);
                     gb.LoadRotation(0);
                     gb.Comment("END HEADER");

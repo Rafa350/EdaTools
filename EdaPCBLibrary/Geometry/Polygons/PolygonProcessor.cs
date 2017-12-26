@@ -66,6 +66,27 @@
         }
 
         /// <summary>
+        /// Retalla un poligon.
+        /// </summary>
+        /// <param name="sourcePolygon">Poligon a retallar.</param>
+        /// <param name="clipPolygons">Poligon de retall.</param>
+        /// <param name="op">Operacio de retall.</param>
+        /// <returns>Arbre de poligons.</returns>
+        /// 
+        public static PolygonTree ClipExtended(Polygon sourcePolygon, IEnumerable<Polygon> clipPolygons, ClipOperation op) {
+
+            cp.Clear();
+            cp.AddPath(PolygonToPointList(sourcePolygon), PolyType.ptSubject, true);
+            foreach (Polygon clipPolygon in clipPolygons)
+                cp.AddPath(PolygonToPointList(clipPolygon), PolyType.ptClip, true);
+
+            PolyTree solution = new PolyTree();
+            cp.Execute(GetClipType(op), solution, PolyFillType.pftNonZero);
+
+            return PolyTreeToPolygonTree(solution);
+        }
+
+        /// <summary>
         /// Fusiona els poligons d'una llista que estiguin en contacte.
         /// </summary>
         /// <param name="polygons">El poligons a fisionar.</param>
@@ -127,6 +148,23 @@
             foreach (IntPoint intPoint in points)
                 polygon.Add(new Point((double)intPoint.X / scaleFactor, (double)intPoint.Y / scaleFactor));
             return polygon;
+        }
+
+        private static PolygonTree PolyTreeToPolygonTree(PolyNode polyNode) {
+
+            Polygon polygon = null;
+            List<PolygonTree> childs = null;
+
+            if (polyNode.Contour.Count > 0)
+                polygon = PointListToPolygon(polyNode.Contour);
+
+            if (polyNode.ChildCount > 0) {
+                childs = new List<PolygonTree>(polyNode.ChildCount);
+                foreach (PolyNode polyNodeChild in polyNode.Childs)
+                    childs.Add(PolyTreeToPolygonTree(polyNodeChild));
+            }
+
+            return new PolygonTree(polygon, childs);
         }
 
         /// <summary>

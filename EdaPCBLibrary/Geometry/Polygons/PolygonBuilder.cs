@@ -11,6 +11,38 @@
         /// <summary>
         /// Crea un poligon a partir d'un element.
         /// </summary>
+        /// <param name="line">L'element</param>
+        /// <param name="part">El component al que pertany.</param>
+        /// <param name="clearance">Espai de separacio.</param>
+        /// <returns>El poligon creat.</returns>
+        /// 
+        public static Polygon Build(LineElement line, Part part, double clearance) {
+
+            double length =
+                Math.Sqrt(
+                    Math.Pow(line.EndPosition.X - line.StartPosition.X, 2) +
+                    Math.Pow(line.EndPosition.Y - line.StartPosition.Y, 2));
+            Point[] points = PointsFromLine(length, line.Thickness + (clearance * 2));
+
+            // Realitza la transformacio dels punts, a la posicio i 
+            // orientacio finals.
+            //
+            Matrix m = new Matrix();
+            m.Translate(line.StartPosition.X, line.StartPosition.Y);
+            double angle = Math.Atan2(line.EndPosition.Y - line.StartPosition.Y , line.EndPosition.X - line.StartPosition.X) * 180.0 / Math.PI;
+            m.RotateAt(angle, line.StartPosition.X, line.StartPosition.Y);
+            if (part != null) {
+                m.Translate(part.Position.X, part.Position.Y);
+                m.RotateAt(part.Rotation, part.Position.X, part.Position.Y);
+            }
+            m.Transform(points);
+
+            return new Polygon(points);
+        }
+
+        /// <summary>
+        /// Crea un poligon a partir d'un element.
+        /// </summary>
         /// <param name="circle">El element.</param>
         /// <param name="part">El component al que pertany.</param>
         /// <param name="clearance">Espai de separacio.</param>
@@ -214,7 +246,33 @@
         }
 
         /// <summary>
-        /// Crea una sequencia de punts per un poligon en forma de rectangle, centrat
+        /// Genera una sequencia de puns per un poligon d'una traç amb origen 0,0,
+        /// i extrems de linia arrodonits. 
+        /// </summary>
+        /// <param name="length">Longitut de la linia.</param>
+        /// <param name="thickness">Amplada de linia.</param>
+        /// <returns>La sequencia de punts.</returns>
+        /// 
+        private static Point[] PointsFromLine(double length, double thickness) {
+
+            double radius = thickness / 2;
+
+            Point[] q0Points = PointsFromQuadrant(new Point(length, 0), radius, 0);
+            Point[] q1Points = PointsFromQuadrant(new Point(0, 0), radius, 1);
+            Point[] q2Points = PointsFromQuadrant(new Point(0, 0), radius, 2);
+            Point[] q3Points = PointsFromQuadrant(new Point(length, 0), radius, 3);
+
+            Point[] points = new Point[4 * 9];
+            q0Points.CopyTo(points, 0);
+            q1Points.CopyTo(points, 9);
+            q2Points.CopyTo(points, 18);
+            q3Points.CopyTo(points, 27);
+
+            return points;
+        }
+
+        /// <summary>
+        /// Genera una sequencia de punts per un poligon en forma de rectangle, centrat
         /// en l'origen de coordinades.
         /// </summary>
         /// <param name="size">Tamany del rectangle.</param>
@@ -264,7 +322,42 @@
         }
 
         /// <summary>
-        /// Crea una sequencia de punts per un quadrant.
+        /// Crea una sequencia de punts per un poligon en forma de cercle, format
+        /// per 64 segments de recta i centrat en l'origen de coordinades.
+        /// </summary>
+        /// <param name="radius">Radi del cercle.</param>
+        /// <returns>La sequencia de punts.</returns>
+        /// 
+        private static Point[] PointsFromCircle(double radius) {
+
+            return PointsFromRegularPolygon(32, radius);
+        }
+
+        /// <summary>
+        /// Crea una sequencia de punts per un poligon regular centrat en 
+        /// l'origen, on la base es una aresta. El poligon es tancat.
+        /// </summary>
+        /// <param name="sides">Numero de arestes.</param>
+        /// <param name="radius">El radi del cercle exterior.</param>
+        /// <returns>La sequencia de punts.</returns>
+        /// 
+        private static Point[] PointsFromRegularPolygon(int sides, double radius) {
+
+            Point[] points = new Point[sides];
+
+            double delta = (360.0 * Math.PI / 180.0) / sides;
+            double angle = delta / 2;
+
+            for (int i = 0; i < sides; i++) {
+                points[i] = new Point(radius * Math.Cos(angle), radius * Math.Sin(angle));
+                angle += delta;
+            }
+
+            return points;
+        }
+
+        /// <summary>
+        /// Crea una sequencia de punts per un quadrant. 
         /// </summary>
         /// <param name="center">Centre del quandrant.</param>
         /// <param name="radius">Radi de curvatura.</param>
@@ -277,43 +370,8 @@
 
             double delta = (360.0 * Math.PI / 180.0) / 32;
             double angle = quadrant * 90 * Math.PI / 180;
-            for (int i = 0; i <= 8; i++) {
+            for (int i = 0; i < 9; i++) {
                 points[i] = new Point(center.X + (radius * Math.Cos(angle)), center.Y + (radius * Math.Sin(angle)));
-                angle += delta;
-            }
-
-            return points;
-        }
-
-        /// <summary>
-        /// Crea una sequencia de punts per un poligon en forma de cercle, format
-        /// per 64 segments de recta i centrat en l'origen de coordinades.
-        /// </summary>
-        /// <param name="radius">Radi del cercle.</param>
-        /// <returns>La llista de punts.</returns>
-        /// 
-        private static Point[] PointsFromCircle(double radius) {
-
-            return PointsFromRegularPolygon(32, radius);
-        }
-
-        /// <summary>
-        /// Crea una sequencia de punts per un poligon regular centrat en 
-        /// l'origen, on la base es una aresta.
-        /// </summary>
-        /// <param name="sides">Numero de arestes.</param>
-        /// <param name="radius">El radi del cercle exterior.</param>
-        /// <param name="m">Matriu de transformacio.</param>
-        /// <returns>La llista de punts.</returns>
-        /// 
-        private static Point[] PointsFromRegularPolygon(int sides, double radius) {
-
-            Point[] points = new Point[sides];
-
-            double delta = (360.0 * Math.PI / 180.0) / sides;
-            double angle = delta / 2;
-            for (int i = 0; i < sides; i++) {
-                points[i] = new Point(radius * Math.Cos(angle), radius * Math.Sin(angle));
                 angle += delta;
             }
 

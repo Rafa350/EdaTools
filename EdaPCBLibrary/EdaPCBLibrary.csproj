@@ -54,6 +54,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Geometry\Polygons\PolygonTree.cs" />
     <Compile Include="Geometry\Polygons\Infrastructure\Clipper.cs" />
     <Compile Include="Geometry\Polygons\Polygon.cs" />
     <Compile Include="Geometry\Polygons\PolygonBuilder.cs" />

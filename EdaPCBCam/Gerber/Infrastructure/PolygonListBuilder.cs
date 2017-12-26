@@ -23,6 +23,14 @@
                 this.resultPolygons = resultPolygons;
             }
 
+            public override void Visit(LineElement line) {
+
+                if (line.IsOnLayer(layer)) {
+                    Polygon polygon = PolygonBuilder.Build(line, VisitingPart, inflate);
+                    resultPolygons.AddRange(PolygonProcessor.Clip(polygon, clipPolygon, PolygonProcessor.ClipOperation.Intersection));
+                }
+            }
+
             public override void Visit(ViaElement via) {
 
                 if (via.IsOnLayer(layer)) {

@@ -39,7 +39,7 @@
     public sealed class GerberBuilder {
 
         private readonly TextWriter writer;
-        private readonly StringBuilder sb = new StringBuilder();       
+        private readonly StringBuilder sb = new StringBuilder();
         private readonly State state = new State();
         private bool inRegion = false;
         private int precision = 7;
@@ -108,7 +108,7 @@
         public void FlashAt(double x, double y) {
 
             sb.Clear();
-            if (state.SetX(x)) { 
+            if (state.SetX(x)) {
                 sb.Append('X');
                 sb.Append(FormatNumber(x));
             }
@@ -190,6 +190,11 @@
             }
         }
 
+        public void ArcTo(Point point, Point center, ArcDirection direction, ArcQuadrant quadrant = ArcQuadrant.Multiple) {
+
+            ArcTo(point.X, point.Y, center.X, center.Y, direction, quadrant);
+        }
+
         public void ArcTo(double x, double y, double cx, double cy, ArcDirection direction, ArcQuadrant quadrant = ArcQuadrant.Multiple) {
 
             if (state.Aperture == null)
@@ -233,6 +238,38 @@
                 sb.AppendFormat("D01*");
                 writer.WriteLine(sb.ToString());
             }
+        }
+
+        /// <summary>
+        /// Interpola una polilinia.
+        /// </summary>
+        /// <param name="points">Sequencia de punts.</param>
+        /// 
+        public void Polyline(IEnumerable<Point> points) {
+
+            foreach (Point point in points)
+                LineTo(point);
+        }
+
+        /// <summary>
+        /// Interpola un poligon. 
+        /// </summary>
+        /// <param name="points">Sequencia de punts.</param>
+        /// 
+        public void Polygon(IEnumerable<Point> points) {
+
+            bool first = true;
+            Point firstPoint = default(Point);
+            foreach (Point point in points) {
+                if (first) {
+                    first = false;
+                    firstPoint = point;
+                    MoveTo(point);
+                }
+                else
+                    LineTo(point);
+            }
+            LineTo(firstPoint);
         }
 
         /// <summary>
@@ -330,31 +367,25 @@
         }
 
         /// <summary>
-        /// Dinuiza una regio.
+        /// Dibuixa una regio.
         /// </summary>
         /// <param name="points">La llista de punts que conformen la regio.</param>
         /// 
-        public void Region(IEnumerable<Point> points) {
+        public void Region(IEnumerable<Point> points, bool close = false) {
 
             bool first = true;
+            Point firstPoint = default(Point);
             foreach (Point point in points) {
                 if (first) {
                     first = false;
+                    firstPoint = point;
                     MoveTo(point);
                 }
                 else
                     LineTo(point);
             }
-        }
-
-        public void SetOffset(double x, double y) {
-
-            writer.WriteLine(String.Format("%OFA{0}B{0}*%", x, y));
-        }
-
-        public void SetPolarity(bool positive) {
-
-            writer.WriteLine(String.Format("%IP{0}*%", positive ? "POS" : "NEG"));
+            if (close)
+                LineTo(firstPoint);
         }
 
         public void LoadPolarity(Polarity polarity) {
