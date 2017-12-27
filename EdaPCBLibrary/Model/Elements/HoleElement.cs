@@ -41,7 +41,10 @@
         /// 
         public override bool IsOnLayer(Layer layer) {
 
-            return layer.Id == LayerId.Holes;
+            return
+                (layer.Id == LayerId.Holes) ||
+                (layer.Id == LayerId.Top) ||
+                (layer.Id == LayerId.Bottom);
         }
 
         /// <summary>

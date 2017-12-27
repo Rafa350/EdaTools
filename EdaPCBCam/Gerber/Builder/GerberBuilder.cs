@@ -6,12 +6,16 @@
     using System.IO;
     using System.Text;
 
+    // Unitats de mesura del fitxer gerber
+    //
     public enum Units {
         Unknown,
         Milimeters,
         Inches
     }
 
+    // Modus d'interpolacio
+    //
     public enum InterpolationMode {
         Unknown,
         Linear,
@@ -21,16 +25,22 @@
         CircularMultipleCCW,
     }
 
+    // Direccio de dibuix dels arcs
+    //
     public enum ArcDirection {
         CW,
         CCW
     }
 
+    // Modus de dibuix dels arcs
+    //
     public enum ArcQuadrant {
         Single,
         Multiple
     }
 
+    // Polaritat dels objectes i regions
+    //
     public enum Polarity {
         Clear,
         Dark
@@ -44,8 +54,14 @@
         private bool inRegion = false;
         private int precision = 7;
         private int decimals = 4;
-        private string fmt;
+        private string fmtTemplate = null;
+        private double fmtScale = 0;
 
+        /// <summary>
+        /// Constructor del objecte.
+        /// </summary>
+        /// <param name="writer">Escriptor de text per la sortida.</param>
+        /// 
         public GerberBuilder(TextWriter writer) {
 
             if (writer == null)
@@ -411,6 +427,8 @@
         /// <summary>
         /// Selecciona el modus d'interpolacio.
         /// </summary>
+        /// <param name="interpolationMode">El modus d'interpolacio.</param>
+        /// 
         public void SetInterpolationMode(InterpolationMode interpolationMode) {
 
             if (state.SetInterpolationMode(interpolationMode)) {
@@ -461,8 +479,7 @@
 
             this.precision = precision;
             this.decimals = decimals;
-
-            fmt = String.Format("{{0:{0}}}", new String('0', precision));
+            this.fmtTemplate = null;
 
             writer.WriteLine("%FSLAX{0}{1}Y{0}{1}*%", precision - decimals, decimals);
         }
@@ -488,11 +505,12 @@
         /// 
         private string FormatNumber(double number) {
 
-            for (int i = 0; i < decimals; i++)
-                number *= 10;
-            number = Math.Round(number);
+            if (fmtTemplate == null) {
+                fmtTemplate = String.Format("{{0:{0}}}", new String('0', precision));
+                fmtScale = Math.Pow(10, decimals);
+            }
 
-            return String.Format(fmt, number);
+            return String.Format(fmtTemplate, Math.Round(number * fmtScale));
         }
     }
 }

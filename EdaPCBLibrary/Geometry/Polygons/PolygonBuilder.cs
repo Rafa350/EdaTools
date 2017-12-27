@@ -43,6 +43,36 @@
         /// <summary>
         /// Crea un poligon a partir d'un element.
         /// </summary>
+        /// <param name="hole">El element.</param>
+        /// <param name="part">El component al que pertany.</param>
+        /// <param name="clearance">Espai de separacio.</param>
+        /// <returns>El poligon creat.</returns>
+        /// 
+        public static Polygon Build(HoleElement hole, Part part, Double clearance) {
+
+            // Crea els punts per un cercle centrat l'origen.
+            //
+            Point[] points = PointsFromCircle((hole.Drill / 2) + clearance);
+
+            // Realitza la transformacio dels punts, a la posicio i 
+            // orientacio finals.
+            //
+            Matrix m = new Matrix();
+            m.Translate(hole.Position.X, hole.Position.Y);
+            if (part != null) {
+                m.Translate(part.Position.X, part.Position.Y);
+                m.RotateAt(part.Rotation, part.Position.X, part.Position.Y);
+            }
+            m.Transform(points);
+
+            // Crea el poligon amb la llista de punts.
+            //
+            return new Polygon(points);
+        }
+
+        /// <summary>
+        /// Crea un poligon a partir d'un element.
+        /// </summary>
         /// <param name="circle">El element.</param>
         /// <param name="part">El component al que pertany.</param>
         /// <param name="clearance">Espai de separacio.</param>
@@ -50,7 +80,7 @@
         /// 
         public static Polygon Build(CircleElement circle, Part part, double clearance) {
 
-            // Crea els punts per un cercle centrat el l'origen.
+            // Crea els punts per un cercle centrat l'origen.
             //
             Point[] points = PointsFromCircle(circle.Radius + clearance);
 

@@ -31,6 +31,14 @@
                 }
             }
 
+            public override void Visit(HoleElement hole) {
+
+                if (hole.IsOnLayer(layer)) {
+                    Polygon polygon = PolygonBuilder.Build(hole, VisitingPart, inflate);
+                    resultPolygons.AddRange(PolygonProcessor.Clip(polygon, clipPolygon, PolygonProcessor.ClipOperation.Intersection));
+                }
+            }
+
             public override void Visit(ViaElement via) {
 
                 if (via.IsOnLayer(layer)) {

@@ -4,8 +4,16 @@
     using System.Collections.Generic;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons.Infrastructure;
 
+    /// <summary>
+    /// Clase per procesar poligons.
+    /// </summary>
+    /// 
     public static class PolygonProcessor {
 
+        /// <summary>
+        /// Codi d'operacio.
+        /// </summary>
+        /// 
         public enum ClipOperation {
             Intersection,
             Union,
@@ -73,7 +81,7 @@
         /// <param name="op">Operacio de retall.</param>
         /// <returns>Arbre de poligons.</returns>
         /// 
-        public static PolygonTree ClipExtended(Polygon sourcePolygon, IEnumerable<Polygon> clipPolygons, ClipOperation op) {
+        public static PolygonNode ClipExtended(Polygon sourcePolygon, IEnumerable<Polygon> clipPolygons, ClipOperation op) {
 
             cp.Clear();
             cp.AddPath(PolygonToPointList(sourcePolygon), PolyType.ptSubject, true);
@@ -134,14 +142,26 @@
             return results;
         }
 
+        /// <summary>
+        /// Conversio a llista de punts.
+        /// </summary>
+        /// <param name="polygon">El poligon.</param>
+        /// <returns>La llista de punts.</returns>
+        /// 
         private static List<IntPoint> PolygonToPointList(Polygon polygon) {
 
             List<IntPoint> intPoints = new List<IntPoint>();
-            foreach (Point point in polygon.Points)
+            foreach (Point point in polygon)
                 intPoints.Add(new IntPoint(point.X * scaleFactor, point.Y * scaleFactor));
             return intPoints;
         }
 
+        /// <summary>
+        /// Conversio a poligon
+        /// </summary>
+        /// <param name="points">La llista de punts.</param>
+        /// <returns>El poligon.</returns>
+        /// 
         private static Polygon PointListToPolygon(IEnumerable<IntPoint> points) {
 
             Polygon polygon = new Polygon();
@@ -150,21 +170,27 @@
             return polygon;
         }
 
-        private static PolygonTree PolyTreeToPolygonTree(PolyNode polyNode) {
+        /// <summary>
+        /// Conversio a PolygonNode
+        /// </summary>
+        /// <param name="polyNode">En PolyNode d'entrada.</param>
+        /// <returns>El PolygonTree de sortida.</returns>
+        /// 
+        private static PolygonNode PolyTreeToPolygonTree(PolyNode polyNode) {
 
             Polygon polygon = null;
-            List<PolygonTree> childs = null;
+            List<PolygonNode> childs = null;
 
             if (polyNode.Contour.Count > 0)
                 polygon = PointListToPolygon(polyNode.Contour);
 
             if (polyNode.ChildCount > 0) {
-                childs = new List<PolygonTree>(polyNode.ChildCount);
+                childs = new List<PolygonNode>(polyNode.ChildCount);
                 foreach (PolyNode polyNodeChild in polyNode.Childs)
                     childs.Add(PolyTreeToPolygonTree(polyNodeChild));
             }
 
-            return new PolygonTree(polygon, childs);
+            return new PolygonNode(polygon, childs);
         }
 
         /// <summary>

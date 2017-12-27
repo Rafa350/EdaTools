@@ -9,7 +9,7 @@
         private readonly string text;
 
         /// <summary>
-        /// Construictor del objecte.
+        /// Constructor del objecte.
         /// </summary>
         /// <param name="text">La sequencia de comandes del macro.</param>
         /// 
@@ -51,6 +51,9 @@
         /// <summary>
         /// Obte la comanda Gerber per la definicio del macro.
         /// </summary>
-        public string Command { get { return GetCommand(); } }
+        /// 
+        public string Command {
+            get { return GetCommand(); }
+        }
     }
 }

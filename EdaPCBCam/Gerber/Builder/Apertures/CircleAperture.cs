@@ -4,11 +4,18 @@
     using System.Text;
     using System.Globalization;
 
-    public sealed class CircleAperture: Aperture {
+    public sealed class CircleAperture : Aperture {
 
         public readonly double diameter;
         public readonly double drill;
 
+        /// <summary>
+        /// Constructor del objecte.
+        /// </summary>
+        /// <param name="id">Identificador.</param>
+        /// <param name="diameter">Diametre extern.</param>
+        /// <param name="drill">Diametre del forat.</param>
+        /// 
         public CircleAperture(int id, double diameter, double drill = 0) :
             base(id) {
 
@@ -22,6 +29,11 @@
             this.drill = drill;
         }
 
+        /// <summary>
+        /// Obte la comanda per definit l'apertura.
+        /// </summary>
+        /// <returns>La comanda.</returns>
+        /// 
         protected override string GetCommand() {
 
             StringBuilder sb = new StringBuilder();
@@ -36,7 +48,20 @@
             return sb.ToString();
         }
 
-        public double Diameter { get { return diameter; } }
-        public double Drill { get { return drill; } }
+        /// <summary>
+        /// Obte el diametre extern.
+        /// </summary>
+        /// 
+        public double Diameter {
+            get { return diameter; }
+        }
+
+        /// <summary>
+        /// Obte el diametre del forat.
+        /// </summary>
+        /// 
+        public double Drill {
+            get { return drill; }
+        }
     }
 }

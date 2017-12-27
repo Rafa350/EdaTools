@@ -307,30 +307,42 @@
                         Polygon regionPolygon = PolygonBuilder.Build(region);
                         IEnumerable<Polygon> holePolygons = PolygonListBuilder.Build(VisitingBoard, layers[0], regionPolygon, clearance + (region.Thickness / 2));
 
-                        PolygonTree polygonTree = PolygonProcessor.ClipExtended(regionPolygon, holePolygons, PolygonProcessor.ClipOperation.Diference);
-                        ProcessPolygonTree(polygonTree, 0, region.Thickness);
-
+                        PolygonNode polygonTree = PolygonProcessor.ClipExtended(regionPolygon, holePolygons, PolygonProcessor.ClipOperation.Diference);
+                        ProcessPolygonTree(polygonTree, region.Thickness);
                     }
                 }
             }
 
-            private void ProcessPolygonTree(PolygonTree polygonTree, int level, double thickness) {
+            private void ProcessPolygonTree(PolygonNode polygonTree, double thickness) {
 
+                ProcessPolygonTree(polygonTree, 0, thickness);
+            }
+
+            private void ProcessPolygonTree(PolygonNode polygonTree, int level, double thickness) {
+
+                // Procesa el poligon
+                //
                 if (polygonTree.Polygon != null) {
 
+                    // Dibuixa el contingut de la regio
+                    //
                     gb.LoadPolarity((level % 2) == 0 ? Polarity.Clear : Polarity.Dark);
                     gb.BeginRegion();
-                    gb.Region(polygonTree.Polygon.Points, true);
+                    gb.Region(polygonTree.Polygon, true);
                     gb.EndRegion();
 
+                    // Dibuixa el perfil de la regio
+                    //
                     Aperture ap = apertureDict.GetCircleAperture(thickness);
                     gb.SelectAperture(ap);
                     gb.LoadPolarity(Polarity.Dark);
-                    gb.Polygon(polygonTree.Polygon.Points);
+                    gb.Polygon(polygonTree.Polygon);
                 }
 
-                if (polygonTree.HasChilds)
-                    foreach (PolygonTree polygonTreeChild in polygonTree.Childs)
+                // Processa els fills. Amb level < 2 evitem els poligons orfres
+                //
+                if (polygonTree.HasChilds && (level < 2))
+                    foreach (PolygonNode polygonTreeChild in polygonTree.Childs)
                         ProcessPolygonTree(polygonTreeChild, level + 1, thickness);
             }
         }

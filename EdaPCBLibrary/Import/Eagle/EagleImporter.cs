@@ -21,7 +21,7 @@
 
             XmlDocument doc = ReadXmlDocument(stream);
 
-            Board board = new Board(); // boardBuilder.CreateBoard();
+            Board board = new Board();
 
             CreateLayers(doc, board);
             CreateMeasures(doc, board);

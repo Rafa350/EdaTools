@@ -1,33 +1,23 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry.Polygons {
 
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Windows;
 
-    public sealed class Polygon {
+    public sealed class Polygon: IEnumerable<Point> {
 
-        private readonly List<Point> points;
+        private readonly List<Point> points = new List<Point>();
+        private double minX = Double.MaxValue;
+        private double minY = Double.MaxValue;
+        private double maxX = Double.MinValue;
+        private double maxY = Double.MinValue;
 
         /// <summary>
         /// Constructor. Crea un poligon buit.
         /// </summary>
         /// 
         public Polygon() {
-
-            points = new List<Point>();
-        }
-
-        /// <summary>
-        /// Constructor. Crea un poligon a partir d'una coleccio de punts.
-        /// </summary>
-        /// <param name="points">Coleccio de punts.</param>
-        /// 
-        public Polygon(List<Point> points) {
-
-            if (points == null)
-                throw new ArgumentNullException("points");
-
-            this.points = points;
         }
 
         /// <summary>
@@ -40,12 +30,7 @@
             if (points == null)
                 throw new ArgumentNullException("points");
 
-            this.points = new List<Point>(points);
-        }
-
-        public void Clear() {
-
-            points.Clear();
+            InternalAdd(points);
         }
 
         /// <summary>
@@ -58,7 +43,7 @@
             if (point == null)
                 throw new ArgumentNullException("point");
 
-            points.Add(point);
+            InternalAdd(point);
         }
 
         /// <summary>
@@ -71,19 +56,68 @@
             if (points == null)
                 throw new ArgumentNullException("points");
 
-            this.points.AddRange(points);
+            InternalAdd(points);
         }
 
-        public int NumPoints {
+        /// <summary>
+        /// Afegeix un punt al poligon.
+        /// </summary>
+        /// <param name="point">El punt a afeigir.</param>
+        /// 
+        private void InternalAdd(Point point) {
+
+            if (point.X < minX)
+                minX = point.X;
+            if (point.Y < minY)
+                minY = point.Y;
+
+            if (point.X > maxX)
+                maxX = point.X;
+            if (point.Y > maxY)
+                maxY = point.Y;
+
+            points.Add(point);
+        }
+
+        /// <summary>
+        /// Afegeix una serie de punts al poligon.
+        /// </summary>
+        /// <param name="points">Els punts a afeigir.</param>
+        /// 
+        private void InternalAdd(IEnumerable<Point> points) {
+
+            foreach (Point point in points)
+                InternalAdd(point);
+        }
+
+        /// <summary>
+        /// Obte el bounding-box del poligon.
+        /// </summary>
+        /// 
+        public Rect BoundingBox {
+            get {
+                return new Rect(minX, minY, maxX - minX, maxY - minY);
+            }
+        }
+
+        /// <summary>
+        /// Obte el numero de puns en el poligon
+        /// </summary>
+        /// 
+        public int Count {
             get {
                 return points.Count;
             }
         }
 
-        public IEnumerable<Point> Points {
-            get {
-                return points;
-            }
+        IEnumerator IEnumerable.GetEnumerator() {
+
+            return points.GetEnumerator();
+        }
+
+        public IEnumerator<Point> GetEnumerator() {
+
+            return points.GetEnumerator();
         }
     }
 }

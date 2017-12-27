@@ -50,6 +50,10 @@
                 return null;
         }
 
+        /// <summary>
+        /// Obte o asigna el nom.
+        /// </summary>
+        /// 
         public string Name {
             get {
                 return name;
@@ -59,6 +63,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna la posicio.
+        /// </summary>
+        /// 
         public Point Position {
             get {
                 return position;
@@ -68,6 +76,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna l'angle de rotacio.
+        /// </summary>
+        /// 
         public double Rotation {
             get {
                 return angle;
@@ -86,6 +98,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna el component.
+        /// </summary>
+        /// 
         public Component Component {
             get {
                 return component;
@@ -95,6 +111,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte la llista de parametres.
+        /// </summary>
+        /// 
         public IEnumerable<Parameter> Parameters {
             get {
                 return parameters == null ? null : parameters.Values;
