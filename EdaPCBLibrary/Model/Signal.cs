@@ -29,18 +29,18 @@
             elements.Add(element);
         }
 
-        public void Add(Terminal pad) {
+        public void Add(Terminal terminal) {
 
-            if (pad == null)
-                throw new ArgumentNullException("pad");
+            if (terminal == null)
+                throw new ArgumentNullException("terminal");
 
-            if ((terminals != null) && terminals.Contains(pad))
+            if ((terminals != null) && terminals.Contains(terminal))
                 throw new InvalidOperationException(
                     String.Format("El pad ya pertenece a la señal '{0}'.", name));
 
             if (terminals == null)
                 terminals = new List<Terminal>();
-            terminals.Add(pad);
+            terminals.Add(terminal);
         }
 
         public string Name {

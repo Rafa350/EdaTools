@@ -85,9 +85,7 @@
         private readonly LayerClass cls = LayerClass.Unknown;
         private string name;
         private Color color;
-        private Layer mirror;
         private bool isVisible = true;
-        private bool isMirror = false;
 
         /// <summary>
         /// Constructor per defecte.
@@ -105,32 +103,12 @@
         /// <param name="isVisible">Indica si la capa es visible.</param>
         /// <param name="isMirror">Indica si la capa es dibuixa en mirall.</param>
         /// 
-        public Layer(LayerId id, string name, Color color, bool isVisible = true, bool isMirror = false) {
+        public Layer(LayerId id, string name, Color color, bool isVisible = true) {
 
             this.id = id;
             this.name = name;
             this.color = color;
             this.isVisible = isVisible;
-            this.isMirror = isMirror;
-        }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="id">Identificador de la capa.</param>
-        /// <param name="name">Nom de la capa.</param>
-        /// <param name="color">Color dels elements.</param>
-        /// <param name="isVisible">Indica si la capa es visible.</param>
-        /// <param name="mirror">Referencia a la seva capa mirall.</param>
-        /// 
-        public Layer(LayerId id, string name, Color color, bool isVisible, Layer mirror) {
-
-            this.id = id;
-            this.name = name;
-            this.color = color;
-            this.isVisible = isVisible;
-            this.isMirror = false;
-            this.mirror = mirror;
         }
 
         public void AcceptVisitor(IVisitor visitor) {
@@ -182,27 +160,6 @@
             }
             set {
                 isVisible = value;
-            }
-        }
-
-        public bool IsMirror {
-            get {
-                return isMirror;
-            }
-            set {
-                isMirror = value;
-                if (isMirror)
-                    mirror = null;
-            }
-        }
-
-        public Layer Mirror {
-            get {
-                return mirror;
-            }
-            set {
-                mirror = value;
-                isMirror = false;
             }
         }
     }

@@ -52,9 +52,9 @@
                 writer.WriteAttributeString(name, layer.Name);
         }
 
-        public static void WriteAttribute(this XmlWriter writer, string name, IList<Layer> layers) {
+        public static void WriteAttribute(this XmlWriter writer, string name, IEnumerable<Layer> layers) {
 
-            if (layers != null && (layers.Count != 0)) {
+            if (layers != null) {
 
                 StringBuilder sb = new StringBuilder();
 

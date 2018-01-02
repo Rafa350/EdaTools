@@ -140,6 +140,13 @@
                             case "hole":
                                 element = ParseHoleNode(node);
                                 break;
+
+                            case "description":
+                                break;
+
+                            default:
+                                throw new InvalidOperationException(
+                                    String.Format("No se reconoce el tag '{0}'.", node.Name));
                         }
 
                         if (element != null)
@@ -190,6 +197,10 @@
                         case "contactref":
                             signal.Add(ParseContactRefNode(node));
                             break;
+
+                        default:
+                            throw new InvalidOperationException(
+                                String.Format("No se reconoce el tag '{0}'.", node.Name));
                     }
                 }
 
@@ -209,8 +220,9 @@
             int layerNum = StrToInteger(GetAttribute(node, "number"));
 
             LayerId layerId = GetLayerId(layerNum);
+            Color color = GetLayerColor(layerNum);
 
-            return new Layer(layerId, name, Colors.WhiteSmoke);
+            return new Layer(layerId, name, color);
         }
 
 
@@ -510,7 +522,7 @@
             part.Name = name;
             part.Position = position;
             part.Rotation = rotate;
-            part.IsMirror = mirror;
+            part.IsFlipped = mirror;
             part.Component = GetComponent(componentKey);
 
             foreach (XmlNode attrNode in node.SelectNodes("attribute")) {
@@ -648,6 +660,27 @@
                 default:
                     return LayerId.Unknown;
             }           
+        }
+
+        private Color GetLayerColor(int layerNum) {
+
+            switch (layerNum) {
+                case 1:
+                    return Colors.Red;
+
+                case 16:
+                    return Colors.Blue;
+
+                case 17:
+                    return Colors.Gold;
+
+                case 18:
+                    return Colors.Green;
+
+                default:
+                    return Colors.White;
+            }
+
         }
 
         /// <summary>

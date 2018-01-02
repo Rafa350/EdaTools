@@ -79,5 +79,10 @@
             board.AcceptVisitor(visitor);
             return visitor.Elements;
         }
+
+        public IEnumerable<Element> ElementsOfPart(Part part) {
+
+            return part.Component.Elements;
+        }
     }
 }

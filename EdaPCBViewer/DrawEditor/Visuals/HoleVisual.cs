@@ -14,7 +14,7 @@
 
         public override void RenderVisual() {
 
-            bool isMirror = Part == null ? false : Part.IsMirror;
+            bool isMirror = Part == null ? false : Part.IsFlipped;
             //Layer layer = isMirror ? Hole.MirrorLayer : Hole.Layer;
 
             using (DrawingContext dc = RenderOpen()) {

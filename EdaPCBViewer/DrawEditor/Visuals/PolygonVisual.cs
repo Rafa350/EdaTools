@@ -26,9 +26,9 @@
                     transform.Children.Add(new RotateTransform(Part.Rotation, Part.Position.X, Part.Position.Y));
                     dc.PushTransform(transform);
                 }
-                bool isMirror = Part == null ? false : Part.IsMirror;
+                bool isMirror = Part == null ? false : Part.IsFlipped;
 
-                Layer layer = isMirror ? Polygon.MirrorLayer : Polygon.Layer;
+                Layer layer = Polygon.Layer;
 
                 Pen pen = Polygon.Thickness == 0 ?
                     null :

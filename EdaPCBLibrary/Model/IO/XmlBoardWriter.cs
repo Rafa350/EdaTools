@@ -161,8 +161,8 @@
                 writer.WriteAttribute("position", part.Position);
                 if (part.Rotation != 0)
                     writer.WriteAttribute("rotation", part.Rotation);
-                if (part.IsMirror)
-                    writer.WriteAttributeString("mirror", part.IsMirror.ToString());
+                if (part.IsFlipped)
+                    writer.WriteAttributeString("flipped", part.IsFlipped.ToString());
 
                 if (part.Parameters != null) {
                     writer.WriteStartElement("attributes");
@@ -186,11 +186,12 @@
 
                 writer.WriteStartElement("via");
                 writer.WriteAttribute("position", via.Position);
-                //writer.WriteAttribute("layers", via.Layers);
+                writer.WriteAttribute("layers", via.Layers);
                 writer.WriteAttribute("drill", via.Drill);
                 writer.WriteAttribute("outerSize", via.OuterSize);
                 writer.WriteAttribute("innerSize", via.InnerSize);
                 writer.WriteAttributeString("shape", via.Shape.ToString());
+                writer.WriteAttributeString("type", via.Type.ToString());
                 writer.WriteEndElement();
             }
 

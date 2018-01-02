@@ -12,6 +12,12 @@
             Circular
         }
 
+        public enum ViaType {
+            Through,
+            Blind,
+            Buried
+        }
+
         private const double OAR = 0.125;
 
         private Point position;
@@ -19,6 +25,7 @@
         private double outerSize;
         private double innerSize;
         private ViaShape shape = ViaShape.Circular;
+        private ViaType type = ViaType.Through;
 
         /// <summary>
         /// Constructor per defecte de l'objecte.
@@ -143,6 +150,19 @@
             }
             set {
                 shape = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna el tipus de via.
+        /// </summary>
+        /// 
+        public ViaType Type {
+            get {
+                return type;
+            }
+            set {
+                type = value;
             }
         }
     }

@@ -1,13 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
     using System.Collections.Generic;
 
     public sealed class Component: IVisitable {
 
-        private static readonly Dictionary<IComponentElement, Component> elementOwners = new Dictionary<IComponentElement, Component>();
-        private readonly List<IComponentElement> elements = new List<IComponentElement>();
+        private static readonly Dictionary<Element, Component> elementOwners = new Dictionary<Element, Component>();
+        private readonly List<Element> elements = new List<Element>();
         private string name;
 
         /// <summary>
@@ -50,7 +49,7 @@
         /// </summary>
         /// <param name="element">El element a afeigir.</param>
         /// 
-        public void AddElement(IComponentElement element) {
+        public void AddElement(Element element) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
@@ -70,7 +69,7 @@
         /// </summary>
         /// <param name="element">El element a eliminar.</param>
         /// 
-        public void RemoveElement(IComponentElement element) {
+        public void RemoveElement(Element element) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
@@ -88,7 +87,7 @@
         /// <param name="element">El element.</param>
         /// <returns>El component al que pertany.</returns>
         /// 
-        public static Component ComponentOf(IComponentElement element) {
+        public static Component ComponentOf(Element element) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
@@ -137,7 +136,7 @@
         /// Obte la llista d'elements.
         /// </summary>
         /// 
-        public IEnumerable<IComponentElement> Elements {
+        public IEnumerable<Element> Elements {
             get {
                 return elements;
             }

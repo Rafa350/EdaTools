@@ -14,8 +14,8 @@
 
         public override void RenderVisual() {
 
-            bool isMirror = Part == null ? false : Part.IsMirror;
-            Layer layer = isMirror ? Circle.MirrorLayer : Circle.Layer;
+            bool isMirror = Part == null ? false : Part.IsFlipped;
+            Layer layer = Circle.Layer;
 
             using (DrawingContext dc = RenderOpen()) {
 

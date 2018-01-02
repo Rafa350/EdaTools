@@ -8,8 +8,8 @@
 
         private string name;
         private Point position;
-        private double angle;
-        private bool isMirror;
+        private double rotation;
+        private bool isFlipped;
         private Component component;
         private Dictionary<string, Parameter> parameters;
 
@@ -82,19 +82,19 @@
         /// 
         public double Rotation {
             get {
-                return angle;
+                return rotation;
             }
             set {
-                angle = value;
+                rotation = value;
             }
         }
 
-        public bool IsMirror {
+        public bool IsFlipped {
             get {
-                return isMirror;
+                return isFlipped;
             }
             set {
-                isMirror = value;
+                isFlipped = value;
             }
         }
 

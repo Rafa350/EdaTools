@@ -79,18 +79,5 @@
                 return layer;
             }
         }
-
-        /// <summary>
-        /// Obte la capa mirall, si en te.
-        /// </summary>
-        /// 
-        public Layer MirrorLayer {
-            get {
-                if ((layer != null) && (layer.Mirror != null))
-                    return layer.Mirror;
-                else
-                    return null;
-            }
-        }
     }
 }

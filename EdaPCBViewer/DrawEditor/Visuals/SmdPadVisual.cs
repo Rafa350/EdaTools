@@ -17,8 +17,8 @@
 
         public override void RenderVisual() {
 
-            bool isMirror = Part == null ? false : Part.IsMirror;
-            Layer layer = isMirror ? Pad.MirrorLayer : Pad.Layer;
+            bool isMirror = Part == null ? false : Part.IsFlipped;
+            Layer layer = Pad.Layer;
 
             using (DrawingContext dc = RenderOpen()) {
 

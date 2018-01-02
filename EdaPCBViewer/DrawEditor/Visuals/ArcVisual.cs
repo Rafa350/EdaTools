@@ -24,8 +24,8 @@
         /// </summary>
         public override void RenderVisual() {
 
-            bool isMirror = Part == null ? false : Part.IsMirror;
-            Layer layer = isMirror ? Arc.MirrorLayer : Arc.Layer;
+            bool isMirror = Part == null ? false : Part.IsFlipped;
+            Layer layer = Arc.Layer;
 
             using (DrawingContext dc = RenderOpen()) {
 
