@@ -8,6 +8,7 @@
     public sealed class Polygon: IEnumerable<Point> {
 
         private readonly List<Point> points = new List<Point>();
+        private List<Polygon> holes;
         private double minX = Double.MaxValue;
         private double minY = Double.MaxValue;
         private double maxX = Double.MinValue;
@@ -30,7 +31,7 @@
             if (points == null)
                 throw new ArgumentNullException("points");
 
-            InternalAdd(points);
+            InternalAddPoint(points);
         }
 
         /// <summary>
@@ -43,7 +44,7 @@
             if (point == null)
                 throw new ArgumentNullException("point");
 
-            InternalAdd(point);
+            InternalAddPoint(point);
         }
 
         /// <summary>
@@ -56,7 +57,15 @@
             if (points == null)
                 throw new ArgumentNullException("points");
 
-            InternalAdd(points);
+            InternalAddPoint(points);
+        }
+
+        public void AddHole(Polygon polygon) {
+
+            if (polygon == null)
+                throw new ArgumentNullException("hole");
+
+            InternalAddHole(polygon);
         }
 
         /// <summary>
@@ -64,7 +73,7 @@
         /// </summary>
         /// <param name="point">El punt a afeigir.</param>
         /// 
-        private void InternalAdd(Point point) {
+        private void InternalAddPoint(Point point) {
 
             if (point.X < minX)
                 minX = point.X;
@@ -84,10 +93,34 @@
         /// </summary>
         /// <param name="points">Els punts a afeigir.</param>
         /// 
-        private void InternalAdd(IEnumerable<Point> points) {
+        private void InternalAddPoint(IEnumerable<Point> points) {
 
             foreach (Point point in points)
-                InternalAdd(point);
+                InternalAddPoint(point);
+        }
+
+        /// <summary>
+        /// Afegeig un forat al poligon.
+        /// </summary>
+        /// <param name="hole">El forat a afeigir.</param>
+        /// 
+        private void InternalAddHole(Polygon hole) {
+
+            if (holes == null)
+                holes = new List<Polygon>();
+
+            holes.Add(hole);
+        }
+
+        /// <summary>
+        /// Afegeix una serie de forats al poligon.
+        /// </summary>
+        /// <param name="holes">Els forats a afeigir.</param>
+        /// 
+        private void InternalAddHole(IEnumerable<Polygon> holes) {
+
+            foreach (Polygon hole in holes)
+                InternalAddHole(hole);
         }
 
         /// <summary>
@@ -107,6 +140,18 @@
         public int Count {
             get {
                 return points.Count;
+            }
+        }
+
+        public bool HasHoles {
+            get {
+                return holes != null;
+            }
+        }
+
+        public IEnumerable<Polygon> Holes {
+            get {
+                return holes;
             }
         }
 

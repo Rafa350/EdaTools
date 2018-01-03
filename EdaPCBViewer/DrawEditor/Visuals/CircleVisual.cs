@@ -41,7 +41,9 @@
                     pen = PenCache.Instance.GetPen(layer.Color, Circle.Thickness);
                 else
                     brush = BrushCache.Instance.GetBrush(layer.Color);
-                dc.DrawEllipse(brush, pen, Circle.Position, Circle.Radius, Circle.Radius);
+
+                //dc.DrawEllipse(brush, pen, Circle.Position, Circle.Radius, Circle.Radius);
+                dc.DrawPolygon(brush, pen, Circle.Polygon);
 
                 // Pop de la transformacio d'escala pel canvi de cara
                 //

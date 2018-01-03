@@ -2,12 +2,14 @@
 
     using System;
     using System.Windows;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
     public sealed class CircleElement: SingleLayerElement, IPosition {
 
         private Point position;
         private double radius;
         private double thickness;
+        private Polygon polygon;
 
         /// <summary>
         ///  Constructor por defecte de l'objecte.
@@ -52,7 +54,10 @@
                 return position;
             }
             set {
-                position = value;
+                if (position != value) {
+                    position = value;
+                    polygon = null;
+                }
             }
         }
 
@@ -67,7 +72,11 @@
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Radius");
-                radius = value;
+
+                if (radius != value) {
+                    radius = value;
+                    polygon = null;
+                }
             }
         }
 
@@ -82,7 +91,12 @@
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Diameter");
-                radius = value / 2;
+
+                double v = value / 2;
+                if (radius != v) {
+                    radius = v;
+                    polygon = null;
+                }
             }
         }
 
@@ -112,6 +126,18 @@
             set {
                 if (value)
                     thickness = 0;
+            }
+        }
+
+        /// <summary>
+        /// Obte el poligon del element.
+        /// </summary>
+        /// 
+        public override Polygon Polygon {
+            get {
+                if (polygon == null)
+                    polygon = PolygonBuilder.Build(this, null, 0);
+                return polygon;
             }
         }
     }

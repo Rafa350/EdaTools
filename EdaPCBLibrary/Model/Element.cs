@@ -1,6 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
-    public abstract class Element: IVisitable {
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+
+    public abstract class Element : IVisitable {
 
         /// <summary>
         /// Accepta un visitador.
@@ -16,5 +18,12 @@
         /// <returns>True si pertany a la capa. False en cas contraru.</returns>
         /// 
         public abstract bool IsOnLayer(Layer layer);
+
+        /// <summary>
+        /// Obte el poligon del element.
+        /// </summary>
+        /// 
+        //public abstract Polygon Polygon { get; }
+        public virtual Polygon Polygon { get { return null; } }
     }
 }

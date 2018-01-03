@@ -3,7 +3,8 @@
     using System;
     using System.Windows;
     using System.Windows.Media;
-
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    
     public static class DrawingContextHelper {
 
         /// <summary>
@@ -148,6 +149,35 @@
             geometry.Freeze();
 
             dc.DrawGeometry(brush, pen, geometry);
+        }
+
+        public static void DrawPolygon(this DrawingContext dc, Brush brush, Pen pen, Polygon polygon) {
+
+            StreamGeometry geometry = new StreamGeometry();
+            using (StreamGeometryContext ctx = geometry.Open()) {
+
+                bool isStroked = pen != null;
+                StreamPolygon(ctx, polygon, isStroked);
+                if (polygon.HasHoles)
+                    foreach (Polygon hole in polygon.Holes)
+                        StreamPolygon(ctx, hole, isStroked);
+            }
+            geometry.Freeze();
+
+            dc.DrawGeometry(brush, pen, geometry);
+        }
+
+        private static void StreamPolygon(StreamGeometryContext ctx, Polygon polygon, bool isStroked) {
+
+            bool first = true;
+            foreach (Point point in polygon) {
+                if (first) {
+                    first = false;
+                    ctx.BeginFigure(point, true, true);
+                }
+                else
+                    ctx.LineTo(point, isStroked, true);
+            }
         }
 
         private static Point Rotate(double angle, Point point, Point center) {
