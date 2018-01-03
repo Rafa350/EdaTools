@@ -1,10 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using System;
+    using System.Linq;
     using System.Windows;
     using System.Collections.Generic;
 
-    public sealed class Part: IPosition, IRotation {
+    public sealed class Part: IPosition, IRotation, IName {
 
         private string name;
         private Point position;
@@ -109,6 +110,20 @@
             set {
                 component = value;
             }
+        }
+
+        /// <summary>
+        /// Obte la llista de pads.
+        /// </summary>
+        /// 
+        public IEnumerable<Pad> Pads {
+            get {
+                List<Pad> pads = new List<Pad>();
+                foreach (IConected element in component.Elements.OfType<IConected>())
+                    pads.Add(new Pad(element));
+                return pads;
+            }
+
         }
 
         /// <summary>

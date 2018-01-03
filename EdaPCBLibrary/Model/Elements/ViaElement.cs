@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Windows;
 
-    public sealed class ViaElement: MultiLayerElement, IPosition {
+    public sealed class ViaElement: MultiLayerElement, IPosition, IConected {
 
         public enum ViaShape {
             Square,
@@ -65,6 +65,9 @@
         /// <returns>True si pertany, false en cas contrari.</returns>
         /// 
         public override bool IsOnLayer(Layer layer) {
+
+            if (layer == null)
+                throw new ArgumentNullException("layer");
 
             if (base.IsOnLayer(layer))
                 return true;

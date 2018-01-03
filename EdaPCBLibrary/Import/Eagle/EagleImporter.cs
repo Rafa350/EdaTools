@@ -12,7 +12,6 @@
 
     public sealed class EagleImporter : Importer {
 
-        private BoardBuilder boardBuilder = new BoardBuilder();
         private Dictionary<int, Layer> layerDict = new Dictionary<int, Layer>();
         private Dictionary<string, Component> componentDict = new Dictionary<string, Component>();
         private Dictionary<string, Part> partDict = new Dictionary<string, Part>();
@@ -25,11 +24,8 @@
 
             CreateLayers(doc, board);
             CreateMeasures(doc, board);
-
             CreateComponents(doc, board);
-
-            CreateElements(doc, board);
-
+            CreateParts(doc, board);
             CreateSignals(doc, board);
 
             return board;
@@ -58,9 +54,9 @@
             settings.IgnoreWhitespace = true;
 
             XmlReader reader = XmlReader.Create(stream, settings);
-
             XmlDocument doc = new XmlDocument();
             doc.Load(reader);
+
             return doc;
         }
 
@@ -161,7 +157,7 @@
             }
         }
 
-        private void CreateElements(XmlDocument doc, Board board) {
+        private void CreateParts(XmlDocument doc, Board board) {
 
             foreach (XmlNode node in doc.SelectNodes("eagle/drawing/board/elements/element")) {
                 Part part = ParseElementNode(node);
@@ -436,7 +432,7 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'RegionElement' creat.</returns>
         /// 
-        private RegionElement ParsePolygonNode(XmlNode node) {
+        private Element ParsePolygonNode(XmlNode node) {
 
             Layer layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
 

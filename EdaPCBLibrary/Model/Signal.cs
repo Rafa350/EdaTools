@@ -2,9 +2,8 @@
     
     using System;
     using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
-    public sealed class Signal: IVisitable {
+    public sealed class Signal: IName, IVisitable {
 
         private List<Element> elements;
         private List<Terminal> terminals;

@@ -3,7 +3,7 @@
     using System;
     using System.Windows;
 
-    public sealed class ThPadElement: Element, IPosition, IRotation {
+    public sealed class ThPadElement: Element, IPosition, IRotation, IName, IConected {
 
         public enum ThPadShape {
             Square,
@@ -59,6 +59,9 @@
         /// 
         public override bool IsOnLayer(Layer layer) {
 
+            if (layer == null)
+                throw new ArgumentNullException("layer");
+
             if ((layer.Id == LayerId.Pads) ||
                 (layer.Id == LayerId.Top) ||
                 (layer.Id == LayerId.Bottom) ||
@@ -78,6 +81,7 @@
         /// <summary>
         /// Obte o asigna el nom.
         /// </summary>
+        /// 
         public string Name {
             get {
                 return name;
@@ -103,6 +107,7 @@
         /// <summary>
         /// Obte o asigna la orientacio del pad.
         /// </summary>
+        /// 
         public double Rotation {
             get {
                 return rotation;

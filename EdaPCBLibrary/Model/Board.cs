@@ -1,9 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using System;
-    using System.Linq;
     using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using MikroPic.EdaTools.v1.Pcb.Model.Collections;
 
     /// <summary>
