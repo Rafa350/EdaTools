@@ -2,6 +2,8 @@
 
     using System;
     using System.Windows;
+    using System.Windows.Media;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
     public sealed class HoleElement: Element, IPosition {
 
@@ -58,6 +60,18 @@
         }
 
         /// <summary>
+        /// Crea el poligon del element.
+        /// </summary>
+        /// <returns>El poligon.</returns>
+        /// 
+        protected override Polygon GetPolygon() {
+
+            Polygon polygon = PolygonBuilder.BuildCircle(position, drill / 2);
+
+            return polygon;
+        }
+
+        /// <summary>
         ///  Obte o asigna la posicio del centre del cercle.
         /// </summary>
         /// 
@@ -66,7 +80,10 @@
                 return position;
             }
             set {
-                position = value;
+                if (position != value) {
+                    position = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -81,7 +98,11 @@
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Drill");
-                drill = value;
+
+                if (drill != value) {
+                    drill = value;
+                    Invalidate();
+                }
             }
         }
     }

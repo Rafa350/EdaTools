@@ -2,6 +2,8 @@
 
     using System;
     using System.Windows;
+    using System.Windows.Media;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
     public sealed class ArcElement: LineElement {
 
@@ -34,6 +36,18 @@
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
+        }
+
+        /// <summary>
+        /// Crea el poligon del element.
+        /// </summary>
+        /// <param name="transform">Transformacio a aplicar.</param>
+        /// <param name="inflate">Increment de tamany.</param>
+        /// <returns>El poligon.</returns>
+        /// 
+        public override Polygon GetPolygon(Matrix transform, double inflate) {
+
+            return PolygonBuilder.Build(this, null, inflate);
         }
 
         /// <summary>
@@ -85,7 +99,11 @@
             set {
                 if (Math.Abs(value) >= 360.0)
                     value = value % 360.0;
-                angle = value;
+
+                if (angle != value) {
+                    angle = value;
+                    Invalidate();
+                }
             }
         }
 

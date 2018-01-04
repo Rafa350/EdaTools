@@ -1,8 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using System.Windows.Media;
 
     public abstract class Element : IVisitable {
+
+        private Polygon polygon;
 
         /// <summary>
         /// Accepta un visitador.
@@ -20,10 +23,31 @@
         public abstract bool IsOnLayer(Layer layer);
 
         /// <summary>
+        /// Crea el poligon del element.
+        /// </summary>
+        /// <returns>El poligon</returns>
+        /// 
+        protected abstract Polygon GetPolygon();
+
+        /// <summary>
+        /// Invalida el caches interns de l'element.
+        /// </summary>
+        /// 
+        protected virtual void Invalidate() {
+
+            polygon = null;
+        }
+
+        /// <summary>
         /// Obte el poligon del element.
         /// </summary>
         /// 
-        //public abstract Polygon Polygon { get; }
-        public virtual Polygon Polygon { get { return null; } }
+        public Polygon Polygon {
+            get {
+                if (polygon == null)
+                    polygon = GetPolygon();
+                return polygon;
+            }
+        }
     }
 }

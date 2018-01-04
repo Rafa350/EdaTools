@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Windows;
+    using System.Windows.Media;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
     public sealed class ViaElement: MultiLayerElement, IPosition, IConected {
 
@@ -51,6 +53,12 @@
             if (position == null)
                 throw new ArgumentNullException("position");
 
+            if (size < 0)
+                throw new ArgumentOutOfRangeException("size");
+
+            if (drill <= 0)
+                throw new ArgumentOutOfRangeException("drill");
+
             this.position = position;
             this.outerSize = size;
             this.innerSize = size;
@@ -90,6 +98,33 @@
         }
 
         /// <summary>
+        /// Crea el poligon del element.
+        /// </summary>
+        /// <returns>El poligon.</returns>
+        /// 
+        protected override Polygon GetPolygon() {
+
+            Polygon polygon;
+            switch (shape) {
+                case ViaShape.Square:
+                    polygon = PolygonBuilder.BuildRectangle(position, new Size(OuterSize / 2, OuterSize / 2), 0, 0);
+                    break;
+
+                case ViaShape.Octogonal:
+                    polygon = PolygonBuilder.BuildRegularPolygon(8, position, OuterSize / 2, 0);
+                    break;
+
+                default:
+                    polygon = PolygonBuilder.BuildCircle(position, OuterSize / 2);
+                    break;
+            }
+
+            polygon.AddHole(PolygonBuilder.BuildCircle(position, drill / 2));
+
+            return polygon;
+        }
+
+        /// <summary>
         ///  Obte o asigna la posicio del centre del cercle.
         /// </summary>
         /// 
@@ -98,7 +133,10 @@
                 return position;
             }
             set {
-                position = value;
+                if (position != value) {
+                    position = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -113,7 +151,11 @@
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Drill");
-                drill = value;
+
+                if (drill != value) {
+                    drill = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -126,7 +168,10 @@
                 return Math.Max(drill + 0.1 + (OAR * 2.0), outerSize);
             }
             set {
-                outerSize = value;
+                if (outerSize != value) {
+                    outerSize = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -139,7 +184,10 @@
                 return Math.Max(drill + 0.1 + (OAR * 2.0), innerSize);
             }
             set {
-                innerSize = value;
+                if (innerSize != value) {
+                    innerSize = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -152,7 +200,10 @@
                 return shape;
             }
             set {
-                shape = value;
+                if (shape != value) {
+                    shape = value;
+                    Invalidate();
+                }
             }
         }
 

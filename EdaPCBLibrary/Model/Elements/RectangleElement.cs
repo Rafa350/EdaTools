@@ -2,6 +2,8 @@
 
     using System;
     using System.Windows;
+    using System.Windows.Media;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
     public sealed class RectangleElement: SingleLayerElement, IPosition, ISize, IRotation {
 
@@ -46,6 +48,11 @@
             visitor.Visit(this);
         }
 
+        protected override Polygon GetPolygon() {
+
+            return PolygonBuilder.Build(this, null, 0);
+        }
+
         /// <summary>
         ///  Obte o asigna la posicio del centre geometric del rectangle.
         /// </summary>
@@ -55,7 +62,10 @@
                 return position;
             }
             set {
-                position = value;
+                if (position != value) {
+                    position = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -68,7 +78,10 @@
                 return size;
             }
             set {
-                size = value;
+                if (size != value) {
+                    size = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -81,7 +94,10 @@
                 return rotation;
             }
             set {
-                rotation = value;
+                if (rotation != value) {
+                    rotation = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -96,7 +112,11 @@
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Thickness");
-                thickness = value;
+
+                if (thickness != value) {
+                    thickness = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -110,7 +130,7 @@
             }
             set {
                 if (value)
-                    thickness = 0;
+                    Thickness = 0; // Canvia la propietat
             }
         }
     }

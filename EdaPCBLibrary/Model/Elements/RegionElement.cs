@@ -3,6 +3,8 @@
     using System;
     using System.Windows;
     using System.Collections.Generic;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using System.Windows.Media;
 
     public sealed class RegionElement: SingleLayerElement {
 
@@ -78,6 +80,16 @@
         }
 
         /// <summary>
+        /// Creas el poligon del element.
+        /// </summary>
+        /// <returns>El poligon.</returns>
+        /// 
+        protected override Polygon GetPolygon() {
+
+            return PolygonBuilder.Build(this);
+        }
+
+        /// <summary>
         /// Afegeix un segment a la regio.
         /// </summary>
         /// <param name="segment">El segment a afeigir.</param>
@@ -122,7 +134,11 @@
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Tickness");
-                thickness = value;
+
+                if (thickness != value) {
+                    thickness = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -137,7 +153,11 @@
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Isolation");
-                isolation = value;
+
+                if (isolation != value) {
+                    isolation = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -151,7 +171,7 @@
             }
             set {
                 if (value)
-                    thickness = 0;
+                    Thickness = 0; // Canvia la propietat
             }
         }
 

@@ -52,7 +52,7 @@
 
             // Crea els punts per un cercle centrat l'origen.
             //
-            Point[] points = PointsFromCircle((hole.Drill / 2) + clearance);
+            Point[] points = PointsFromCircle(hole.Position, (hole.Drill / 2) + clearance);
 
             // Realitza la transformacio dels punts, a la posicio i 
             // orientacio finals.
@@ -71,6 +71,53 @@
         }
 
         /// <summary>
+        /// Crea un poligon en forma de cercle.
+        /// </summary>
+        /// <param name="position">Posicio del centre.</param>
+        /// <param name="radius">Radi.</param>
+        /// <returns>El poligon.</returns>
+        /// 
+        public static Polygon BuildCircle(Point position, double radius) {
+
+            Point[] points = PointsFromCircle(position, radius);
+            return new Polygon(points);
+        }
+
+        /// <summary>
+        /// Crea un poligon en forma de rectangle.
+        /// </summary>
+        /// <param name="position">Posicio del centroid.</param>
+        /// <param name="size">Tamany.</param>
+        /// <param name="radius">Radi de curvatura.</param>
+        /// <param name="angle">Angle de rotacio.</param>
+        /// <returns>El poligon.</returns>
+        /// 
+        public static Polygon BuildRectangle(Point position, Size size, double radius, double angle) {
+
+            Point[] points;
+            if (radius == 0)
+                points = PointsFromRectangle(position, size, angle);
+            else
+                points = PointsFromRoundRectangle(position, size, radius, angle);
+            return new Polygon(points);
+        }
+
+        /// <summary>
+        /// Crea un poligon regular.
+        /// </summary>
+        /// <param name="sides">Nombre de cares.</param>
+        /// <param name="position">Posicio del centroid.</param>
+        /// <param name="radius">Radi del cercle maxim.</param>
+        /// <param name="angle">Angle de rotacio.</param>
+        /// <returns>El poligon.</returns>
+        /// 
+        public static Polygon BuildRegularPolygon(int sides, Point position, double radius, double angle) {
+
+            Point[] points = PointsFromRegularPolygon(sides, position, radius, angle);
+            return new Polygon(points);
+        }
+
+        /// <summary>
         /// Crea un poligon a partir d'un element.
         /// </summary>
         /// <param name="circle">El element.</param>
@@ -82,7 +129,7 @@
 
             // Crea els punts per un cercle centrat l'origen.
             //
-            Point[] points = PointsFromCircle(circle.Radius + clearance);
+            Point[] points = PointsFromCircle(circle.Position, circle.Radius + clearance);
 
             // Realitza la transformacio dels punts, a la posicio i 
             // orientacio finals.
@@ -112,7 +159,7 @@
 
             // Crea els punts d'un rectangle centrat el l'origen.
             //
-            Point[] points = PointsFromRectangle(rectangle.Size);
+            Point[] points = PointsFromRectangle(new Point(0, 0), rectangle.Size, 0);
 
             // Realitza la transformacio dels punts, a la posicio i 
             // orientacio finals.
@@ -148,15 +195,15 @@
             switch (via.Shape) {
                 default:
                 case ViaElement.ViaShape.Circular:
-                    points = PointsFromCircle(radius + clearance);
+                    points = PointsFromCircle(via.Position, radius + clearance);
                     break;
 
                 case ViaElement.ViaShape.Square:
-                    points = PointsFromRectangle(new Size(size + (clearance * 2), size + (clearance * 2)));
+                    points = PointsFromRectangle(new Point(0, 0), new Size(size + (clearance * 2), size + (clearance * 2)), 0);
                     break;
 
                 case ViaElement.ViaShape.Octogonal:
-                    points = PointsFromRegularPolygon(8, radius + clearance);
+                    points = PointsFromRegularPolygon(8, via.Position, radius + clearance, 0);
                     break;
             }
 
@@ -189,22 +236,22 @@
             switch (pad.Shape) {
                 default:
                 case ThPadElement.ThPadShape.Circular:
-                    points = PointsFromCircle(radius + clearance);
+                    points = PointsFromCircle(pad.Position, radius + clearance);
                     break;
 
                 case ThPadElement.ThPadShape.Square: {
                         Rect rect = new Rect(0, 0, pad.Size, pad.Size);
                         if (clearance == 0)
-                            points = PointsFromRectangle(rect.Size);
+                            points = PointsFromRectangle(new Point(0, 0), rect.Size, 0);
                         else {
                             rect.Inflate(clearance, clearance);
-                            points = PointsFromRoundRectangle(rect.Size, clearance);
+                            points = PointsFromRoundRectangle(new Point(0, 0), rect.Size, clearance, 0);
                         }
                     }
                     break;
 
                 case ThPadElement.ThPadShape.Octogonal:
-                    points = PointsFromRegularPolygon(8, radius + clearance);
+                    points = PointsFromRegularPolygon(8, pad.Position, radius + clearance, 0);
                     break;
             }
 
@@ -241,10 +288,10 @@
             Rect rect = new Rect(0, 0, pad.Size.Width, pad.Size.Height);
 
             if ((radius == 0) && (clearance == 0))
-                points = PointsFromRectangle(rect.Size);
+                points = PointsFromRectangle(new Point(0, 0), rect.Size, 0);
             else {
                 rect.Inflate(clearance, clearance);
-                points = PointsFromRoundRectangle(rect.Size, clearance + radius);
+                points = PointsFromRoundRectangle(new Point(0, 0), rect.Size, clearance + radius, 0);
             }
 
             Matrix m = new Matrix();
@@ -305,48 +352,68 @@
         /// Genera una sequencia de punts per un poligon en forma de rectangle, centrat
         /// en l'origen de coordinades.
         /// </summary>
+        /// <param name="position">Posicio del centroid.</param>
         /// <param name="size">Tamany del rectangle.</param>
+        /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        private static Point[] PointsFromRectangle(Size size) {
+        private static Point[] PointsFromRectangle(Point position, Size size, double rotation) {
 
             Point[] points = new Point[4];
 
+            double x = position.X;
+            double y = position.Y;
             double w = size.Width / 2;
             double h = size.Height / 2;
 
-            points[0] = new Point(-w, h);
-            points[1] = new Point(w, h);
-            points[2] = new Point(w, -h);
-            points[3] = new Point(-w, -h);
+            points[0] = new Point(x - w, y + h);
+            points[1] = new Point(x + w, y + h);
+            points[2] = new Point(x + w, y - h);
+            points[3] = new Point(x - w, y - h);
+
+            if (rotation != 0) {
+                Matrix m = new Matrix();
+                m.RotateAt(rotation, x, y);
+                m.Transform(points);
+            }
 
             return points;
         }
-        
+
         /// <summary>
         /// Crea una sequencia de punts per un rectangle arrodonit.
         /// </summary>
+        /// <param name="position">Posicio del centroid.</param>
         /// <param name="size">Tamany del rectangle.</param>
         /// <param name="radius">Radi de curvatura.</param>
+        /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>La kkista de punts.</returns>
         /// 
-        private static Point[] PointsFromRoundRectangle(Size size, double radius) {
+        private static Point[] PointsFromRoundRectangle(Point position, Size size, double radius, double rotation) {
 
+            double x = position.X;
+            double y = position.Y;
             double dx = size.Width / 2;
             double dy = size.Height / 2;
             double dxc = dx - radius;
             double dyc = dy - radius;
 
-            Point[] q0Points = PointsFromQuadrant(new Point(dxc, dyc), radius, 0);
-            Point[] q1Points = PointsFromQuadrant(new Point(-dxc, dyc), radius, 1);
-            Point[] q2Points = PointsFromQuadrant(new Point(-dxc, -dyc), radius, 2);
-            Point[] q3Points = PointsFromQuadrant(new Point(dxc, -dyc), radius, 3);
+            Point[] q0Points = PointsFromQuadrant(new Point(x + dxc, y + dyc), radius, 0);
+            Point[] q1Points = PointsFromQuadrant(new Point(x - dxc, y + dyc), radius, 1);
+            Point[] q2Points = PointsFromQuadrant(new Point(x - dxc, y - dyc), radius, 2);
+            Point[] q3Points = PointsFromQuadrant(new Point(x + dxc, y - dyc), radius, 3);
 
             Point[] points = new Point[4 * 9];
             q0Points.CopyTo(points, 0);
             q1Points.CopyTo(points, 9);
             q2Points.CopyTo(points, 18);
             q3Points.CopyTo(points, 27);
+
+            if (rotation != 0) {
+                Matrix m = new Matrix();
+                m.RotateAt(rotation, x, y);
+                m.Transform(points);
+            }
 
             return points;
         }
@@ -358,29 +425,39 @@
         /// <param name="radius">Radi del cercle.</param>
         /// <returns>La sequencia de punts.</returns>
         /// 
-        private static Point[] PointsFromCircle(double radius) {
+        private static Point[] PointsFromCircle(Point position, double radius) {
 
-            return PointsFromRegularPolygon(32, radius);
+            return PointsFromRegularPolygon(32, position, radius, 0);
         }
 
         /// <summary>
-        /// Crea una sequencia de punts per un poligon regular centrat en 
-        /// l'origen, on la base es una aresta. El poligon es tancat.
+        /// Crea una sequencia de punts per un poligon regular, on la base es una aresta.
         /// </summary>
         /// <param name="sides">Numero de arestes.</param>
+        /// <param name="position">Posicio del centre.</param>
         /// <param name="radius">El radi del cercle exterior.</param>
+        /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>La sequencia de punts.</returns>
         /// 
-        private static Point[] PointsFromRegularPolygon(int sides, double radius) {
+        private static Point[] PointsFromRegularPolygon(int sides, Point position, double radius, double rotation) {
 
             Point[] points = new Point[sides];
 
+            double x = position.X;
+            double y = position.Y;
             double delta = (360.0 * Math.PI / 180.0) / sides;
             double angle = delta / 2;
 
             for (int i = 0; i < sides; i++) {
-                points[i] = new Point(radius * Math.Cos(angle), radius * Math.Sin(angle));
+                points[i] = new Point(x + (radius * Math.Cos(angle)), y + (radius * Math.Sin(angle))
+                );
                 angle += delta;
+            }
+
+            if (angle != 0) {
+                Matrix m = new Matrix();
+                m.RotateAt(angle, x, y);
+                m.Transform(points);
             }
 
             return points;

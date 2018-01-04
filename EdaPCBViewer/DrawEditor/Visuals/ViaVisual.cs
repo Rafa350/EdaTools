@@ -22,22 +22,9 @@
 
             using (DrawingContext dc = RenderOpen()) {
 
-                // Dibuixa el anell de la via
-                //
                 Brush brush = BrushCache.Instance.GetBrush(Colors.Green);
-                switch (Via.Shape) {
-                    case ViaElement.ViaShape.Circular:
-                        dc.DrawCircularRing(brush, null, Via.Position, Via.OuterSize, Via.Drill);
-                        break;
 
-                    case ViaElement.ViaShape.Square:
-                        dc.DrawSquareRing(brush, null, Via.Position, Via.OuterSize, Via.Drill);
-                        break;
-
-                    case ViaElement.ViaShape.Octogonal:
-                        dc.DrawOctogonalRing(brush, null, Via.Position, Via.OuterSize, Via.Drill);
-                        break;
-                }
+                dc.DrawPolygon(brush, null, Via.Polygon);
             }
         }
 

@@ -2,6 +2,8 @@
 
     using System;
     using System.Windows;
+    using System.Windows.Media;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
     public sealed class SmdPadElement: SingleLayerElement, IPosition, IRotation, IName, IConected {
 
@@ -66,6 +68,11 @@
             visitor.Visit(this);
         }
 
+        protected override Polygon GetPolygon() {
+
+            return PolygonBuilder.Build(this, null, 0);
+        }
+
         /// <summary>
         /// Obte o asigna el nom.
         /// </summary>
@@ -87,7 +94,10 @@
                 return position;
             }
             set {
-                position = value;
+                if (position != value) {
+                    position = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -100,7 +110,10 @@
                 return rotation;
             }
             set {
-                rotation = value;
+                if (rotation != value) {
+                    rotation = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -113,7 +126,10 @@
                 return size;
             }
             set {
-                size = value;
+                if (size != value) {
+                    size = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -128,7 +144,11 @@
             set {
                 if (value < 0 || roundnes > 1)
                     throw new ArgumentOutOfRangeException("Roundness");
-                roundnes = value;
+
+                if (roundnes != value) {
+                    roundnes = value;
+                    Invalidate();
+                }
             }
         }
 

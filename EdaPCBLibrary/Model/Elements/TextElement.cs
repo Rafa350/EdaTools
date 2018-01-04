@@ -1,6 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using System.Windows;
+    using System.Windows.Media;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
     public sealed class TextElement: SingleLayerElement, IPosition, IRotation {
 
@@ -39,6 +41,16 @@
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
+        }
+
+        /// <summary>
+        /// Crea el poligon del element.
+        /// </summary>
+        /// <returns>El poligon.</returns>
+        /// 
+        protected override Polygon GetPolygon() {
+
+            throw new System.NotImplementedException();
         }
 
         /// <summary>

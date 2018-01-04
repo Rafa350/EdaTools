@@ -35,7 +35,7 @@
                 // Dibuixa el anell del pad
                 //
                 Brush padBrush = BrushCache.Instance.GetBrush(IsSelected ? Colors.Goldenrod : Colors.Gold);
-                switch (Pad.Shape) {
+                /*switch (Pad.Shape) {
                     case ThPadElement.ThPadShape.Circular:
                         dc.DrawCircularRing(padBrush, null, Pad.Position, Pad.Size, Pad.Drill);
                         break;
@@ -56,6 +56,8 @@
                 // Dibuixa el forat interior del pad
                 //
                 //dc.DrawEllipse(Brushes.Black, null, new Point(pad.X, pad.Y), pad.Drill / 2, pad.Drill / 2);
+                */
+                dc.DrawPolygon(padBrush, null, Pad.Polygon);
 
                 // Push de la transformacio d'escala del text
                 //

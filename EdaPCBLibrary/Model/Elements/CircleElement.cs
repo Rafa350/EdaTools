@@ -2,6 +2,7 @@
 
     using System;
     using System.Windows;
+    using System.Windows.Media;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
     public sealed class CircleElement: SingleLayerElement, IPosition {
@@ -9,7 +10,6 @@
         private Point position;
         private double radius;
         private double thickness;
-        private Polygon polygon;
 
         /// <summary>
         ///  Constructor por defecte de l'objecte.
@@ -46,6 +46,18 @@
         }
 
         /// <summary>
+        /// Crea el poligon del element.
+        /// </summary>
+        /// <returns>El poligon.</returns>
+        /// 
+        public override Polygon GetPolygon() {
+
+            Polygon polygon = PolygonBuilder.BuildCircle(position, radius);
+
+            return polygon;
+        }
+
+        /// <summary>
         ///  Obte o asigna la posicio del centre del cercle.
         /// </summary>
         /// 
@@ -56,7 +68,7 @@
             set {
                 if (position != value) {
                     position = value;
-                    polygon = null;
+                    Invalidate();
                 }
             }
         }
@@ -75,7 +87,7 @@
 
                 if (radius != value) {
                     radius = value;
-                    polygon = null;
+                    Invalidate();
                 }
             }
         }
@@ -95,7 +107,7 @@
                 double v = value / 2;
                 if (radius != v) {
                     radius = v;
-                    polygon = null;
+                    Invalidate();
                 }
             }
         }
@@ -111,7 +123,11 @@
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Thickness");
-                thickness = value;
+
+                if (thickness != value) {
+                    thickness = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -125,19 +141,7 @@
             }
             set {
                 if (value)
-                    thickness = 0;
-            }
-        }
-
-        /// <summary>
-        /// Obte el poligon del element.
-        /// </summary>
-        /// 
-        public override Polygon Polygon {
-            get {
-                if (polygon == null)
-                    polygon = PolygonBuilder.Build(this, null, 0);
-                return polygon;
+                    Thickness = 0; // Canvia la propietat
             }
         }
     }

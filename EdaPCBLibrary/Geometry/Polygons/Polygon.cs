@@ -4,6 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Windows;
+    using System.Windows.Media;
 
     public sealed class Polygon: IEnumerable<Point> {
 
@@ -60,12 +61,32 @@
             InternalAddPoint(points);
         }
 
+        /// <summary>
+        /// Afegeig un forat al poligon.
+        /// </summary>
+        /// <param name="polygon">El forat a afeigir.</param>
+        /// 
         public void AddHole(Polygon polygon) {
 
             if (polygon == null)
                 throw new ArgumentNullException("hole");
 
             InternalAddHole(polygon);
+        }
+
+        /// <summary>
+        /// Clona el poligon. (Copia en profunditat.)
+        /// </summary>
+        /// <returns>El nou poligon.</returns>
+        /// 
+        public Polygon Clone() {
+
+            Polygon polygon = new Polygon(points);
+            if (holes != null)
+                foreach (Polygon hole in holes)
+                    polygon.AddHole(hole.Clone());
+
+            return polygon;
         }
 
         /// <summary>
@@ -123,6 +144,22 @@
                 InternalAddHole(hole);
         }
 
+
+        /// <summary>
+        /// Aplica una transformacio al poligon.
+        /// </summary>
+        /// <param name="m">La matriu de transformacio.</param>
+        /// 
+        public void Transform(Matrix m) {
+
+            for (int i = 0; i < points.Count; i++)
+                points[i] = m.Transform(points[i]);
+
+            if (holes != null)
+                foreach (Polygon hole in holes)
+                    hole.Transform(m);
+        }
+
         /// <summary>
         /// Obte el bounding-box del poligon.
         /// </summary>
@@ -143,23 +180,41 @@
             }
         }
 
+        /// <summary>
+        /// Indica si el poligon te forats.
+        /// </summary>
+        /// 
         public bool HasHoles {
             get {
                 return holes != null;
             }
         }
 
+        /// <summary>
+        /// Enumera la llista de forats.
+        /// </summary>
+        /// 
         public IEnumerable<Polygon> Holes {
             get {
                 return holes;
             }
         }
 
+        /// <summary>
+        /// Retorna el enumerador del poligon. 
+        /// </summary>
+        /// <returns>El enumerador.</returns>
+        /// 
         IEnumerator IEnumerable.GetEnumerator() {
 
             return points.GetEnumerator();
         }
 
+        /// <summary>
+        /// Retorna el enumerador del poligon. 
+        /// </summary>
+        /// <returns>El enumerador.</returns>
+        /// 
         public IEnumerator<Point> GetEnumerator() {
 
             return points.GetEnumerator();

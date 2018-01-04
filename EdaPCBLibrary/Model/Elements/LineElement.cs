@@ -2,6 +2,8 @@
 
     using System;
     using System.Windows;
+    using System.Windows.Media;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
     public class LineElement: SingleLayerElement {
 
@@ -47,12 +49,20 @@
             visitor.Visit(this);
         }
 
+        protected override Polygon GetPolygon() {
+
+            return PolygonBuilder.Build(this, null, 0);
+        }
+
         public Point StartPosition {
             get {
                 return startPosition;
             }
             set {
-                startPosition = value;
+                if (startPosition != value) {
+                    startPosition = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -61,7 +71,10 @@
                 return endPosition;
             }
             set {
-                endPosition = value;
+                if (endPosition != value) {
+                    endPosition = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -72,7 +85,11 @@
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Thickness");
-                thickness = value;
+
+                if (thickness != value) {
+                    thickness = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -81,7 +98,10 @@
                 return lineCap;
             }
             set {
-                lineCap = value;
+                if (lineCap != value) {
+                    lineCap = value;
+                    Invalidate();
+                }
             }
         }
     }
