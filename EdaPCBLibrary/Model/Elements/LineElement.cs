@@ -1,9 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
     using System.Windows;
-    using System.Windows.Media;
-    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
     public class LineElement: SingleLayerElement {
 
@@ -44,16 +43,30 @@
             this.lineCap = lineCap;
         }
 
+        /// <summary>
+        /// Accepta un visitador.
+        /// </summary>
+        /// <param name="visitor">El visitador.</param>
+        /// 
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
         }
 
+        /// <summary>
+        /// Crea el poligon del element.
+        /// </summary>
+        /// <returns>El poligon.</returns>
+        /// 
         protected override Polygon GetPolygon() {
 
-            return PolygonBuilder.Build(this, null, 0);
+            return PolygonBuilder.BuildLine(startPosition, endPosition, thickness);
         }
 
+        /// <summary>
+        /// Obte o asigna la posicio inicial.
+        /// </summary>
+        /// 
         public Point StartPosition {
             get {
                 return startPosition;
@@ -66,6 +79,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna la posicio final.
+        /// </summary>
+        /// 
         public Point EndPosition {
             get {
                 return endPosition;
@@ -78,6 +95,22 @@
             }
         }
 
+        /// <summary>
+        /// Obte la longitut de la linia.
+        /// </summary>
+        /// 
+        public double Length {
+            get {
+                double dx = endPosition.X - startPosition.X;
+                double dy = endPosition.Y - startPosition.Y;
+                return Math.Sqrt((dx * dx) + (dy * dy));
+            }
+        }
+
+        /// <summary>
+        ///  Obte o asigna l'amplada de linia.
+        /// </summary>
+        /// 
         public double Thickness {
             get {
                 return thickness;
@@ -93,6 +126,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna el tipus d'extrem de linia.
+        /// </summary>
+        /// 
         public LineCapStyle LineCap {
             get {
                 return lineCap;

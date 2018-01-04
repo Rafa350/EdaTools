@@ -27,38 +27,11 @@
                     dc.PushTransform(transform);
                 }
 
-                // Push de la transformacio de rotacio
-                //
-                if (Pad.Rotation != 0)
-                    dc.PushTransform(new RotateTransform(Pad.Rotation, Pad.Position.X, Pad.Position.Y));
-
-                // Dibuixa el anell del pad
+                // Dibuixa el pad
                 //
                 Brush padBrush = BrushCache.Instance.GetBrush(IsSelected ? Colors.Goldenrod : Colors.Gold);
-                /*switch (Pad.Shape) {
-                    case ThPadElement.ThPadShape.Circular:
-                        dc.DrawCircularRing(padBrush, null, Pad.Position, Pad.Size, Pad.Drill);
-                        break;
-
-                    case ThPadElement.ThPadShape.Square:
-                        dc.DrawSquareRing(padBrush, null, Pad.Position, Pad.Size, Pad.Drill);
-                        break;
-
-                    case ThPadElement.ThPadShape.Octogonal:
-                        dc.DrawOctogonalRing(padBrush, null, Pad.Position, Pad.Size, Pad.Drill);
-                        break;
-
-                    case ThPadElement.ThPadShape.Oval:
-                        dc.DrawOvalRing(padBrush, null, Pad.Position, Pad.Size, Pad.Drill);
-                        break;
-                }
-
-                // Dibuixa el forat interior del pad
-                //
-                //dc.DrawEllipse(Brushes.Black, null, new Point(pad.X, pad.Y), pad.Drill / 2, pad.Drill / 2);
-                */
                 dc.DrawPolygon(padBrush, null, Pad.Polygon);
-
+                /*
                 // Push de la transformacio d'escala del text
                 //
                 dc.PushTransform(new ScaleTransform(1, -1, Pad.Position.X, Pad.Position.Y));
@@ -75,12 +48,7 @@
                 // Pop de la transformacio d'escala del text
                 //
                 dc.Pop();
-
-                // Pop de la transformacio de rotacio
-                //
-                if (Pad.Rotation != 0)
-                    dc.Pop();
-
+                */
                 // Pop de la transformacio global
                 //
                 if (Part != null)

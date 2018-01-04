@@ -35,9 +35,8 @@
 
                 // Dibuixa la linia
                 //
-                Pen pen = PenCache.Instance.GetPen(layer.Color, Line.Thickness,
-                    Line.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
-                dc.DrawLine(pen, Line.StartPosition, Line.EndPosition);
+                Brush brush = BrushCache.Instance.GetBrush(layer.Color);
+                dc.DrawPolygon(brush, null, Line.Polygon);
 
                 // Pop de la transformacio d'escala pel canvi de cara
                 //

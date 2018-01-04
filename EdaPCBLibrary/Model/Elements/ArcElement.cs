@@ -41,13 +41,11 @@
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
-        /// <param name="transform">Transformacio a aplicar.</param>
-        /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(Matrix transform, double inflate) {
+        protected override Polygon GetPolygon() {
 
-            return PolygonBuilder.Build(this, null, inflate);
+            return PolygonBuilder.Build(this, null, 0);
         }
 
         /// <summary>

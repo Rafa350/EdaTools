@@ -90,7 +90,7 @@
             Polygon polygon;
             switch (shape) {
                 case ThPadShape.Square:
-                    polygon = PolygonBuilder.BuildCircle(position, size / 2);
+                    polygon = PolygonBuilder.BuildRectangle(position, new Size(size, size), 0, rotation);
                     break;
 
                 case ThPadShape.Octogonal:
@@ -98,7 +98,7 @@
                     break;
 
                 case ThPadShape.Oval:
-                    polygon = PolygonBuilder.BuildRectangle(position, new Size(size + size, size), Size / 2, rotation);
+                    polygon = PolygonBuilder.BuildRectangle(position, new Size(size, size + size), size / 2, rotation);
                     break;
 
                 default:

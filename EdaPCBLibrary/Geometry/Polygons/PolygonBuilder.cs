@@ -71,6 +71,33 @@
         }
 
         /// <summary>
+        /// Crea un poligon en forma de linia.
+        /// </summary>
+        /// <param name="start">Posicio inicial.</param>
+        /// <param name="end">Posicio final.</param>
+        /// <param name="thickness">Amplada de linia.</param>
+        /// <returns>El poligon.</returns>
+        /// 
+        public static Polygon BuildLine(Point start, Point end, double thickness) {
+
+            double dx = end.X - start.X;
+            double dy = end.Y - start.Y;
+            double length = Math.Sqrt((dx * dx) + (dy * dy));
+            Point[] points = PointsFromLine(length, thickness);
+
+            // Realitza la transformacio dels punts, a la posicio i 
+            // orientacio finals.
+            //
+            Matrix m = new Matrix();
+            m.Translate(start.X, start.Y);
+            double angle = Math.Atan2(dy, dx) * 180.0 / Math.PI;
+            m.RotateAt(angle, start.X, start.Y);
+            m.Transform(points);
+
+            return new Polygon(points);
+        }
+
+        /// <summary>
         /// Crea un poligon en forma de cercle.
         /// </summary>
         /// <param name="position">Posicio del centre.</param>
@@ -81,24 +108,24 @@
 
             Point[] points = PointsFromCircle(position, radius);
             return new Polygon(points);
-        }
-
+        }        
+        
         /// <summary>
         /// Crea un poligon en forma de rectangle.
         /// </summary>
         /// <param name="position">Posicio del centroid.</param>
         /// <param name="size">Tamany.</param>
         /// <param name="radius">Radi de curvatura.</param>
-        /// <param name="angle">Angle de rotacio.</param>
+        /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public static Polygon BuildRectangle(Point position, Size size, double radius, double angle) {
+        public static Polygon BuildRectangle(Point position, Size size, double radius, double rotation) {
 
             Point[] points;
             if (radius == 0)
-                points = PointsFromRectangle(position, size, angle);
+                points = PointsFromRectangle(position, size, rotation);
             else
-                points = PointsFromRoundRectangle(position, size, radius, angle);
+                points = PointsFromRoundRectangle(position, size, radius, rotation);
             return new Polygon(points);
         }
 
@@ -108,12 +135,12 @@
         /// <param name="sides">Nombre de cares.</param>
         /// <param name="position">Posicio del centroid.</param>
         /// <param name="radius">Radi del cercle maxim.</param>
-        /// <param name="angle">Angle de rotacio.</param>
+        /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public static Polygon BuildRegularPolygon(int sides, Point position, double radius, double angle) {
+        public static Polygon BuildRegularPolygon(int sides, Point position, double radius, double rotation) {
 
-            Point[] points = PointsFromRegularPolygon(sides, position, radius, angle);
+            Point[] points = PointsFromRegularPolygon(sides, position, radius, rotation);
             return new Polygon(points);
         }
 
@@ -359,23 +386,25 @@
         /// 
         private static Point[] PointsFromRectangle(Point position, Size size, double rotation) {
 
+            // Crea el rectangle unitari
+            //
             Point[] points = new Point[4];
+            points[0].X = -0.5;
+            points[0].Y =  0.5;
+            points[1].X =  0.5;
+            points[1].Y =  0.5;
+            points[2].X =  0.5;
+            points[2].Y = -0.5;
+            points[3].X = -0.5;
+            points[3].Y = -0.5;
 
-            double x = position.X;
-            double y = position.Y;
-            double w = size.Width / 2;
-            double h = size.Height / 2;
-
-            points[0] = new Point(x - w, y + h);
-            points[1] = new Point(x + w, y + h);
-            points[2] = new Point(x + w, y - h);
-            points[3] = new Point(x - w, y - h);
-
-            if (rotation != 0) {
-                Matrix m = new Matrix();
-                m.RotateAt(rotation, x, y);
-                m.Transform(points);
-            }
+            // El transforma al rectangle a la posicio, tamany i orientacio final.
+            //
+            Matrix m = new Matrix();
+            m.Scale(size.Width, size.Height);
+            m.Rotate(rotation);
+            m.Translate(position.X, position.Y);
+            m.Transform(points);
 
             return points;
         }
@@ -391,17 +420,13 @@
         /// 
         private static Point[] PointsFromRoundRectangle(Point position, Size size, double radius, double rotation) {
 
-            double x = position.X;
-            double y = position.Y;
-            double dx = size.Width / 2;
-            double dy = size.Height / 2;
-            double dxc = dx - radius;
-            double dyc = dy - radius;
+            double cx = (size.Width / 2) - radius;
+            double cy = (size.Height / 2) - radius;
 
-            Point[] q0Points = PointsFromQuadrant(new Point(x + dxc, y + dyc), radius, 0);
-            Point[] q1Points = PointsFromQuadrant(new Point(x - dxc, y + dyc), radius, 1);
-            Point[] q2Points = PointsFromQuadrant(new Point(x - dxc, y - dyc), radius, 2);
-            Point[] q3Points = PointsFromQuadrant(new Point(x + dxc, y - dyc), radius, 3);
+            Point[] q0Points = PointsFromQuadrant(new Point(cx, cy), radius, 0);
+            Point[] q1Points = PointsFromQuadrant(new Point(-cx, cy), radius, 1);
+            Point[] q2Points = PointsFromQuadrant(new Point(-cx, -cy), radius, 2);
+            Point[] q3Points = PointsFromQuadrant(new Point(cx, -cy), radius, 3);
 
             Point[] points = new Point[4 * 9];
             q0Points.CopyTo(points, 0);
@@ -409,11 +434,12 @@
             q2Points.CopyTo(points, 18);
             q3Points.CopyTo(points, 27);
 
-            if (rotation != 0) {
-                Matrix m = new Matrix();
-                m.RotateAt(rotation, x, y);
-                m.Transform(points);
-            }
+            // Transforma a la posicio i orientacio final
+            //
+            Matrix m = new Matrix();
+            m.Rotate(rotation);
+            m.Translate(position.X, position.Y);
+            m.Transform(points);
 
             return points;
         }
@@ -446,18 +472,11 @@
             double x = position.X;
             double y = position.Y;
             double delta = (360.0 * Math.PI / 180.0) / sides;
-            double angle = delta / 2;
+            double angle = (rotation * Math.PI / 180.0) + (delta / 2);
 
             for (int i = 0; i < sides; i++) {
-                points[i] = new Point(x + (radius * Math.Cos(angle)), y + (radius * Math.Sin(angle))
-                );
+                points[i] = new Point(x + (radius * Math.Cos(angle)), y + (radius * Math.Sin(angle)));
                 angle += delta;
-            }
-
-            if (angle != 0) {
-                Matrix m = new Matrix();
-                m.RotateAt(angle, x, y);
-                m.Transform(points);
             }
 
             return points;

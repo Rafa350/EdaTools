@@ -50,7 +50,7 @@
         /// </summary>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon() {
+        protected override Polygon GetPolygon() {
 
             Polygon polygon = PolygonBuilder.BuildCircle(position, radius);
 

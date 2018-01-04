@@ -46,7 +46,7 @@
             get {
                 if (polygon == null)
                     polygon = GetPolygon();
-                return polygon;
+                return polygon.Clone();
             }
         }
     }

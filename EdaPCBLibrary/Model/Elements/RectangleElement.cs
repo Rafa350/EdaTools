@@ -48,9 +48,14 @@
             visitor.Visit(this);
         }
 
+        /// <summary>
+        /// Crea el poligon del element.
+        /// </summary>
+        /// <returns>El poligon.</returns>
+        /// 
         protected override Polygon GetPolygon() {
 
-            return PolygonBuilder.Build(this, null, 0);
+            return PolygonBuilder.BuildRectangle(position, size, 0, rotation);
         }
 
         /// <summary>

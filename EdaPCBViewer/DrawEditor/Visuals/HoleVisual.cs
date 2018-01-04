@@ -37,7 +37,7 @@
                 //
                 //Pen pen = PenCache.Instance.GetPen(layer.Color, 0.05);
                 Pen pen = PenCache.Instance.GetPen(Colors.Coral, 0.05);
-                dc.DrawEllipse(null, pen, Hole.Position, Hole.Drill / 2, Hole.Drill / 2);
+                dc.DrawPolygon(null, pen, Hole.Polygon);
 
                 // Pop de la transformacio d'escala pel canvi de cara
                 //
