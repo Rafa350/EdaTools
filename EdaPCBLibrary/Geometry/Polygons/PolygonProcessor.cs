@@ -21,6 +21,12 @@
             Xor
         }
 
+        public enum OffsetJoin {
+            Round,
+            Square,
+            Mitter
+        }
+
         private const double scaleFactor = 1000000.0;
 
         private static readonly Clipper cp = new Clipper();
@@ -115,10 +121,10 @@
             return result;
         }
 
-        public static Polygon Offset(Polygon sourcePoligon, double offset) {
+        public static Polygon Offset(Polygon sourcePoligon, double offset, OffsetJoin oj = OffsetJoin.Mitter) {
 
             cpOffset.Clear();
-            cpOffset.AddPath(PolygonToPointList(sourcePoligon), JoinType.jtRound, EndType.etClosedPolygon);
+            cpOffset.AddPath(PolygonToPointList(sourcePoligon), GetJoinType(oj), EndType.etClosedPolygon);
 
             List<List<IntPoint>> solutions = new List<List<IntPoint>>();
             cpOffset.Execute(ref solutions, offset * scaleFactor);
@@ -126,11 +132,11 @@
             return PointListToPolygon(solutions[0]);
         }
 
-        public static IEnumerable<Polygon> Offset(IEnumerable<Polygon> sourcePoligons, double offset) {
+        public static IEnumerable<Polygon> Offset(IEnumerable<Polygon> sourcePoligons, double offset, OffsetJoin oj = OffsetJoin.Mitter) {
 
             cpOffset.Clear();
             foreach (Polygon sourcePolygon in sourcePoligons)
-                cpOffset.AddPath(PolygonToPointList(sourcePolygon), JoinType.jtRound, EndType.etClosedPolygon);
+                cpOffset.AddPath(PolygonToPointList(sourcePolygon), GetJoinType(oj), EndType.etClosedPolygon);
 
             List<List<IntPoint>> solutions = new List<List<IntPoint>>();
             cpOffset.Execute(ref solutions, offset * scaleFactor);
@@ -212,7 +218,23 @@
                     return ClipType.ctXor;
 
                 default:
+                case ClipOperation.Diference:
                     return ClipType.ctDifference;
+            }
+        }
+
+        private static JoinType GetJoinType(OffsetJoin oj) {
+
+            switch (oj) {
+                case OffsetJoin.Round:
+                    return JoinType.jtRound;
+
+                case OffsetJoin.Square:
+                    return JoinType.jtSquare;
+
+                default:
+                case OffsetJoin.Mitter:
+                    return JoinType.jtMiter;
             }
         }
     }

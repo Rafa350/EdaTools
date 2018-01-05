@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Windows;
     using System.Collections.Generic;
+    using System.Windows.Media;
 
     public sealed class Part: IPosition, IRotation, IName {
 
@@ -96,6 +97,19 @@
             }
             set {
                 isFlipped = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte la matriu de transformacio per aplicar als elements.
+        /// </summary>
+        /// 
+        public Matrix Transformation {
+            get {
+                Matrix m = new Matrix();
+                m.Translate(position.X, position.Y);
+                m.RotateAt(rotation, position.X, position.Y);
+                return m;
             }
         }
 

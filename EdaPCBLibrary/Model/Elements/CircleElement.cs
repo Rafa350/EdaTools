@@ -52,9 +52,7 @@
         /// 
         protected override Polygon GetPolygon() {
 
-            Polygon polygon = PolygonBuilder.BuildCircle(position, radius);
-
-            return polygon;
+            return PolygonBuilder.BuildCircle(position, radius);
         }
 
         /// <summary>

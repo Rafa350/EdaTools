@@ -75,6 +75,11 @@
                 return false;
         }
 
+        /// <summary>
+        /// Accepta un visitador.
+        /// </summary>
+        /// <param name="visitor">El visitador.</param>
+        /// 
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
@@ -98,7 +103,7 @@
                     break;
 
                 case ThPadShape.Oval:
-                    polygon = PolygonBuilder.BuildRectangle(position, new Size(size, size + size), size / 2, rotation);
+                    polygon = PolygonBuilder.BuildRectangle(position, new Size(size + size, size), size / 2, rotation);
                     break;
 
                 default:

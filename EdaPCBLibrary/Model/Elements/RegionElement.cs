@@ -74,6 +74,11 @@
                 Add(segment);
         }
 
+        /// <summary>
+        /// Accepta un visitador.
+        /// </summary>
+        /// <param name="visitor">El visitador.</param>
+        /// 
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);

@@ -66,9 +66,7 @@
         /// 
         protected override Polygon GetPolygon() {
 
-            Polygon polygon = PolygonBuilder.BuildCircle(position, drill / 2);
-
-            return polygon;
+            return PolygonBuilder.BuildCircle(position, drill / 2);
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System.Collections.Generic;
+    using System.Windows.Media;
 
     internal static class PolygonListBuilder { 
 
@@ -34,7 +35,11 @@
             public override void Visit(HoleElement hole) {
 
                 if (hole.IsOnLayer(layer)) {
-                    Polygon polygon = PolygonBuilder.Build(hole, VisitingPart, inflate);
+
+                    Polygon polygon = PolygonProcessor.Offset(hole.Polygon, inflate, PolygonProcessor.OffsetJoin.Mitter);
+                    if (VisitingPart != null)
+                        polygon.Transform(VisitingPart.Transformation);
+
                     resultPolygons.AddRange(PolygonProcessor.Clip(polygon, clipPolygon, PolygonProcessor.ClipOperation.Intersection));
                 }
             }
@@ -42,7 +47,9 @@
             public override void Visit(ViaElement via) {
 
                 if (via.IsOnLayer(layer)) {
-                    Polygon polygon = PolygonBuilder.Build(via, VisitingPart, inflate);
+
+                    Polygon polygon = PolygonProcessor.Offset(via.Polygon, inflate, PolygonProcessor.OffsetJoin.Mitter);
+
                     resultPolygons.AddRange(PolygonProcessor.Clip(polygon, clipPolygon, PolygonProcessor.ClipOperation.Intersection));
                 }
             }
@@ -50,7 +57,14 @@
             public override void Visit(ThPadElement pad) {
 
                 if (pad.IsOnLayer(layer)) {
-                    Polygon polygon = PolygonBuilder.Build(pad, VisitingPart, inflate);
+
+                    PolygonProcessor.OffsetJoin oj = pad.Shape == ThPadElement.ThPadShape.Square ?
+                        PolygonProcessor.OffsetJoin.Round : PolygonProcessor.OffsetJoin.Mitter;
+
+                    Polygon polygon = PolygonProcessor.Offset(pad.Polygon, inflate, oj);
+                    if (VisitingPart != null)
+                        polygon.Transform(VisitingPart.Transformation);
+
                     resultPolygons.AddRange(PolygonProcessor.Clip(polygon, clipPolygon, PolygonProcessor.ClipOperation.Intersection));
                 }
             }
@@ -58,7 +72,14 @@
             public override void Visit(SmdPadElement pad) {
 
                 if (pad.IsOnLayer(layer)) {
-                    Polygon polygon = PolygonBuilder.Build(pad, VisitingPart, inflate);
+
+                    PolygonProcessor.OffsetJoin oj = pad.Roundnes == 0 ?
+                        PolygonProcessor.OffsetJoin.Round : PolygonProcessor.OffsetJoin.Mitter;
+
+                    Polygon polygon = PolygonProcessor.Offset(pad.Polygon, inflate, oj);
+                    if (VisitingPart != null)
+                        polygon.Transform(VisitingPart.Transformation);
+
                     resultPolygons.AddRange(PolygonProcessor.Clip(polygon, clipPolygon, PolygonProcessor.ClipOperation.Intersection));
                 }
             }

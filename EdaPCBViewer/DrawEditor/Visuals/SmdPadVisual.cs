@@ -36,21 +36,10 @@
                 if (isMirror)
                     dc.PushTransform(new ScaleTransform(-1, 1));
 
-                // Push de la transformacio de rotacio
-                //
-                if (Pad.Rotation != 0)
-                    dc.PushTransform(new RotateTransform(Pad.Rotation, Pad.Position.X, Pad.Position.Y));
-
                 // Dibuixa el pad
                 //
-                double radius = Pad.Roundnes * (Math.Min(Pad.Size.Width, Pad.Size.Height) / 2);
-                Rect rect = new Rect(
-                    Pad.Position.X - (Pad.Size.Width / 2),
-                    Pad.Position.Y - (Pad.Size.Height / 2),
-                    Pad.Size.Width,
-                    Pad.Size.Height);
                 Brush padBrush = BrushCache.Instance.GetBrush(IsSelected ? Colors.GreenYellow : layer.Color);
-                dc.DrawRoundedRectangle(padBrush, null, rect, radius, radius);
+                dc.DrawPolygon(padBrush, null, Pad.Polygon);
 
                 // Push de la transformacio d'escala del text
                 //
@@ -73,11 +62,6 @@
                 //
                 dc.Pop();
 
-                // Pop de la transformacio de rotacio
-                //
-                if (Pad.Rotation != 0)
-                    dc.Pop();
-
                 // Pop de la transformacio d'escala pel canvi de cara
                 //
                 if (isMirror)
@@ -85,7 +69,6 @@
 
                 // Pop de la transformacio global
                 //
-                //if (transform != null)
                 if (Part != null)
                     dc.Pop();
             }

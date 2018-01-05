@@ -63,19 +63,31 @@
                 return false;
         }
 
+        /// <summary>
+        /// Accepta un visitador.
+        /// </summary>
+        /// <param name="visitor">El visitador.</param>
+        /// 
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
         }
 
+        /// <summary>
+        /// Crea el poligon del element.
+        /// </summary>
+        /// <returns>El poligon.</returns>
+        /// 
         protected override Polygon GetPolygon() {
 
-            return PolygonBuilder.Build(this, null, 0);
+            return PolygonBuilder.BuildRectangle(position, size, Radius, rotation);
+            //return PolygonBuilder.Build(this, null, 0);
         }
 
         /// <summary>
         /// Obte o asigna el nom.
         /// </summary>
+        /// 
         public string Name {
             get {
                 return name;
@@ -149,6 +161,16 @@
                     roundnes = value;
                     Invalidate();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Obte el radi de curvatura de les cantonades.
+        /// </summary>
+        /// 
+        public double Radius {
+            get {
+                return Math.Min(size.Width, size.Height) * Roundnes / 2;
             }
         }
 
