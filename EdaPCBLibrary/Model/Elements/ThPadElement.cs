@@ -88,30 +88,48 @@
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
+        /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        protected override Polygon GetPolygon() {
+        public override Polygon GetPolygon(double inflate = 0) {
 
             Polygon polygon;
             switch (shape) {
                 case ThPadShape.Square:
-                    polygon = PolygonBuilder.BuildRectangle(position, new Size(size, size), 0, rotation);
+                    polygon = PolygonBuilder.BuildRectangle(
+                        position, 
+                        new Size(size + (inflate * 2), size + (inflate * 2)), 
+                        inflate, 
+                        rotation);
                     break;
 
                 case ThPadShape.Octogonal:
-                    polygon = PolygonBuilder.BuildRegularPolygon(8, position, size / 2, rotation);
+                    polygon = PolygonBuilder.BuildRegularPolygon(
+                        8, 
+                        position, 
+                        (size / 2) + inflate, 
+                        rotation);
                     break;
 
                 case ThPadShape.Oval:
-                    polygon = PolygonBuilder.BuildRectangle(position, new Size(size + size, size), size / 2, rotation);
+                    polygon = PolygonBuilder.BuildRectangle(
+                        position, 
+                        new Size((size * 2) + (inflate * 2), size + (inflate * 2)), 
+                        (size / 2) + inflate, 
+                        rotation);
                     break;
 
                 default:
-                    polygon = PolygonBuilder.BuildCircle(position, size / 2);
+                    polygon = PolygonBuilder.BuildCircle(
+                        position, 
+                        (size / 2) + inflate);
                     break;
             }
 
-            polygon.AddHole(PolygonBuilder.BuildCircle(position, drill / 2));
+            // Si esta inflat, no genera el forat
+            //
+            if (inflate == 0)
+                polygon.AddHole(PolygonBuilder.BuildCircle(position, drill / 2));
 
             return polygon;
         }

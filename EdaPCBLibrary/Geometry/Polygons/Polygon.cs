@@ -8,12 +8,8 @@
 
     public sealed class Polygon: IEnumerable<Point> {
 
-        private readonly List<Point> points = new List<Point>();
+        private List<Point> points;
         private List<Polygon> holes;
-        private double minX = Double.MaxValue;
-        private double minY = Double.MaxValue;
-        private double maxX = Double.MinValue;
-        private double maxY = Double.MinValue;
 
         /// <summary>
         /// Constructor. Crea un poligon buit.
@@ -32,7 +28,7 @@
             if (points == null)
                 throw new ArgumentNullException("points");
 
-            InternalAddPoint(points);
+            InternalAddPoints(points);
         }
 
         /// <summary>
@@ -58,7 +54,7 @@
             if (points == null)
                 throw new ArgumentNullException("points");
 
-            InternalAddPoint(points);
+            InternalAddPoints(points);
         }
 
         /// <summary>
@@ -96,15 +92,8 @@
         /// 
         private void InternalAddPoint(Point point) {
 
-            if (point.X < minX)
-                minX = point.X;
-            if (point.Y < minY)
-                minY = point.Y;
-
-            if (point.X > maxX)
-                maxX = point.X;
-            if (point.Y > maxY)
-                maxY = point.Y;
+            if (points == null)
+                points = new List<Point>();
 
             points.Add(point);
         }
@@ -114,10 +103,12 @@
         /// </summary>
         /// <param name="points">Els punts a afeigir.</param>
         /// 
-        private void InternalAddPoint(IEnumerable<Point> points) {
+        private void InternalAddPoints(IEnumerable<Point> points) {
 
-            foreach (Point point in points)
-                InternalAddPoint(point);
+            if (this.points == null)
+                this.points = new List<Point>(points);
+            else
+                this.points.AddRange(points);
         }
 
         /// <summary>
@@ -166,6 +157,24 @@
         /// 
         public Rect BoundingBox {
             get {
+                double minX = Double.MaxValue;
+                double minY = Double.MaxValue;
+                double maxX = Double.MinValue;
+                double maxY = Double.MinValue;
+
+                foreach (Point point in points) {
+
+                    if (point.X < minX)
+                        minX = point.X;
+                    if (point.Y < minY)
+                        minY = point.Y;
+
+                    if (point.X > maxX)
+                        maxX = point.X;
+                    if (point.Y > maxY)
+                        maxY = point.Y;
+                }
+
                 return new Rect(minX, minY, maxX - minX, maxY - minY);
             }
         }

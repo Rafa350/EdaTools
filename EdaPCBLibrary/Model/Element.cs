@@ -25,9 +25,10 @@
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
+        /// <param name="inflate">Increment de tamany</param>
         /// <returns>El poligon</returns>
         /// 
-        protected abstract Polygon GetPolygon();
+        public abstract Polygon GetPolygon(double inflate = 0);
 
         /// <summary>
         /// Invalida el caches interns de l'element.

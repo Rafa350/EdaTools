@@ -5,7 +5,6 @@
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System.Collections.Generic;
-    using System.Windows.Media;
 
     internal static class PolygonListBuilder { 
 
@@ -36,7 +35,7 @@
 
                 if (hole.IsOnLayer(layer)) {
 
-                    Polygon polygon = PolygonProcessor.Offset(hole.Polygon, inflate, PolygonProcessor.OffsetJoin.Mitter);
+                    Polygon polygon = hole.GetPolygon(inflate);
                     if (VisitingPart != null)
                         polygon.Transform(VisitingPart.Transformation);
 
@@ -48,7 +47,7 @@
 
                 if (via.IsOnLayer(layer)) {
 
-                    Polygon polygon = PolygonProcessor.Offset(via.Polygon, inflate, PolygonProcessor.OffsetJoin.Mitter);
+                    Polygon polygon = via.GetPolygon(inflate);
 
                     resultPolygons.AddRange(PolygonProcessor.Clip(polygon, clipPolygon, PolygonProcessor.ClipOperation.Intersection));
                 }
@@ -58,10 +57,7 @@
 
                 if (pad.IsOnLayer(layer)) {
 
-                    PolygonProcessor.OffsetJoin oj = pad.Shape == ThPadElement.ThPadShape.Square ?
-                        PolygonProcessor.OffsetJoin.Round : PolygonProcessor.OffsetJoin.Mitter;
-
-                    Polygon polygon = PolygonProcessor.Offset(pad.Polygon, inflate, oj);
+                    Polygon polygon = pad.GetPolygon(inflate);
                     if (VisitingPart != null)
                         polygon.Transform(VisitingPart.Transformation);
 
@@ -73,10 +69,7 @@
 
                 if (pad.IsOnLayer(layer)) {
 
-                    PolygonProcessor.OffsetJoin oj = pad.Roundnes == 0 ?
-                        PolygonProcessor.OffsetJoin.Round : PolygonProcessor.OffsetJoin.Mitter;
-
-                    Polygon polygon = PolygonProcessor.Offset(pad.Polygon, inflate, oj);
+                    Polygon polygon = pad.GetPolygon(inflate);
                     if (VisitingPart != null)
                         polygon.Transform(VisitingPart.Transformation);
 

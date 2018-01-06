@@ -76,12 +76,13 @@
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
+        /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        protected override Polygon GetPolygon() {
+        public override Polygon GetPolygon(double inflate = 0) {
 
-            return PolygonBuilder.BuildRectangle(position, size, Radius, rotation);
-            //return PolygonBuilder.Build(this, null, 0);
+            return PolygonBuilder.BuildRectangle(position,
+                new Size(size.Width + (inflate * 2), size.Height + (inflate * 2)), Radius + inflate, rotation);
         }
 
         /// <summary>

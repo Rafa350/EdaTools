@@ -48,7 +48,7 @@
         /// </summary>
         /// <returns>El poligon.</returns>
         /// 
-        protected override Polygon GetPolygon() {
+        public override Polygon GetPolygon(double inflate = 0) {
 
             throw new System.NotImplementedException();
         }

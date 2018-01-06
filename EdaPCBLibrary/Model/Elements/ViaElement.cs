@@ -102,24 +102,27 @@
         /// </summary>
         /// <returns>El poligon.</returns>
         /// 
-        protected override Polygon GetPolygon() {
+        public override Polygon GetPolygon(double inflate = 0) {
 
             Polygon polygon;
             switch (shape) {
                 case ViaShape.Square:
-                    polygon = PolygonBuilder.BuildRectangle(position, new Size(OuterSize / 2, OuterSize / 2), 0, 0);
+                    polygon = PolygonBuilder.BuildRectangle(position, new Size((OuterSize / 2) + inflate, (OuterSize / 2) + inflate), 0, 0);
                     break;
 
                 case ViaShape.Octogonal:
-                    polygon = PolygonBuilder.BuildRegularPolygon(8, position, OuterSize / 2, 0);
+                    polygon = PolygonBuilder.BuildRegularPolygon(8, position, (OuterSize / 2) + inflate, 0);
                     break;
 
                 default:
-                    polygon = PolygonBuilder.BuildCircle(position, OuterSize / 2);
+                    polygon = PolygonBuilder.BuildCircle(position, (OuterSize / 2) + inflate);
                     break;
             }
 
-            polygon.AddHole(PolygonBuilder.BuildCircle(position, drill / 2));
+            // Si esta inflat, no genera el forat.
+            //
+            if (inflate == 0)
+                polygon.AddHole(PolygonBuilder.BuildCircle(position, drill / 2));
 
             return polygon;
         }

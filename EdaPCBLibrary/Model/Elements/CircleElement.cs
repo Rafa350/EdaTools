@@ -48,11 +48,12 @@
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
+        /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        protected override Polygon GetPolygon() {
+        public override Polygon GetPolygon(double inflate = 0) {
 
-            return PolygonBuilder.BuildCircle(position, radius);
+            return PolygonBuilder.BuildCircle(position, radius + inflate);
         }
 
         /// <summary>
