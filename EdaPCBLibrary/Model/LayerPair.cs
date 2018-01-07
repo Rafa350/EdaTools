@@ -5,21 +5,21 @@
     public sealed class LayerPair {
 
         private readonly Layer layer;
-        private readonly Layer complementLayer;
+        private readonly Layer pairLayer;
 
-        public LayerPair(Layer layer, Layer complementLayer) {
+        public LayerPair(Layer layer, Layer pairLayer) {
 
             if (layer == null)
                 throw new ArgumentNullException("layer");
 
-            if (complementLayer == null)
-                throw new ArgumentNullException("complementLayer");
+            if (pairLayer == null)
+                throw new ArgumentNullException("pairLayer");
 
             this.layer = layer;
-            this.complementLayer = complementLayer;
+            this.pairLayer = pairLayer;
         }
 
         public Layer Layer { get { return layer; } }
-        public Layer ComplementLayer { get { return complementLayer; } }
+        public Layer PairLayer { get { return pairLayer; } }
     }
 }

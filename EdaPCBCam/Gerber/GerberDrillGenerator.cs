@@ -88,19 +88,19 @@
             public override void Visit(HoleElement hole) {
 
                 if (hole.IsOnAnyLayer(layers)) 
-                    apertures.AddCircle(hole.Drill);
+                    apertures.DefineCircleAperture(hole.Drill);
             }
 
             public override void Visit(ViaElement via) {
 
                 if (via.IsOnAnyLayer(layers))
-                    apertures.AddCircle(via.Drill);
+                    apertures.DefineCircleAperture(via.Drill);
             }
 
             public override void Visit(ThPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers))
-                    apertures.AddCircle(pad.Drill);
+                    apertures.DefineCircleAperture(pad.Drill);
             }
         }
 

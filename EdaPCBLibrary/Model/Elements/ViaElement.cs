@@ -1,10 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
     using System.Collections.Generic;
     using System.Windows;
-    using System.Windows.Media;
-    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
     public sealed class ViaElement: MultiLayerElement, IPosition, IConected {
 
@@ -77,14 +76,11 @@
             if (layer == null)
                 throw new ArgumentNullException("layer");
 
-            if (base.IsOnLayer(layer))
-                return true;
-            else if (layer.Id == LayerId.Vias)
-                return true;
-            else if (layer.Id == LayerId.Drills)
-                return true;
-            else
-                return false;
+            // TODO: Com gestionar though, blind i buried?
+
+            return base.IsOnLayer(layer) ||
+                (layer.Id == LayerId.Vias) ||
+                (layer.Id == LayerId.Drills);
         }
 
         /// <summary>

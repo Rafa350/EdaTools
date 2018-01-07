@@ -1,9 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
     using System.Windows;
-    using System.Windows.Media;
-    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
     public sealed class HoleElement: Element, IPosition {
 

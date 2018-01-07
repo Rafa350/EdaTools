@@ -1,10 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
-    using System;
-    using System.Windows;
-    using System.Collections.Generic;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
-    using System.Windows.Media;
+    using System;
+    using System.Collections.Generic;
+    using System.Windows;
 
     public sealed class RegionElement: SingleLayerElement {
 

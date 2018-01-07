@@ -26,7 +26,11 @@
             public override void Visit(LineElement line) {
 
                 if (line.IsOnLayer(layer)) {
-                    Polygon polygon = PolygonBuilder.Build(line, VisitingPart, inflate);
+
+                    Polygon polygon = line.GetPolygon(inflate);
+                    if (VisitingPart != null)
+                        polygon.Transform(VisitingPart.Transformation);
+
                     resultPolygons.AddRange(PolygonProcessor.Clip(polygon, clipPolygon, PolygonProcessor.ClipOperation.Intersection));
                 }
             }
@@ -48,6 +52,8 @@
                 if (via.IsOnLayer(layer)) {
 
                     Polygon polygon = via.GetPolygon(inflate);
+                    if (VisitingPart != null)
+                        polygon.Transform(VisitingPart.Transformation);
 
                     resultPolygons.AddRange(PolygonProcessor.Clip(polygon, clipPolygon, PolygonProcessor.ClipOperation.Intersection));
                 }

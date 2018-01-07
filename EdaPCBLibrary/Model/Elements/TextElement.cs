@@ -1,8 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
-    using System.Windows;
-    using System.Windows.Media;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using System.Windows;
 
     public sealed class TextElement: SingleLayerElement, IPosition, IRotation {
 

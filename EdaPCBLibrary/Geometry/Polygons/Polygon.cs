@@ -131,8 +131,10 @@
         /// 
         private void InternalAddHole(IEnumerable<Polygon> holes) {
 
-            foreach (Polygon hole in holes)
-                InternalAddHole(hole);
+            if (this.holes == null)
+                this.holes = new List<Polygon>(holes);
+            else
+                this.holes.AddRange(holes);
         }
 
 

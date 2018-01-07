@@ -21,16 +21,12 @@
 
             layers.Clear();
             layers.Add(board.LayerStackup.GetLayer(LayerId.Top));
-            layers.Add(board.LayerStackup.GetLayer(LayerId.Pads));
-            layers.Add(board.LayerStackup.GetLayer(LayerId.Vias));
             layers.Add(board.LayerStackup.GetLayer(LayerId.Profile));
             fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.Top);
             imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.Top, fileName);
 
             layers.Clear();
             layers.Add(board.LayerStackup.GetLayer(LayerId.Bottom));
-            layers.Add(board.LayerStackup.GetLayer(LayerId.Pads));
-            layers.Add(board.LayerStackup.GetLayer(LayerId.Vias));
             layers.Add(board.LayerStackup.GetLayer(LayerId.Profile));
             fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.Bottom);
             imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.Bottom, fileName);

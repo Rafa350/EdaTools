@@ -157,7 +157,8 @@
 
                 writer.WriteStartElement("part");
                 writer.WriteAttributeString("name", part.Name);
-                writer.WriteAttributeString("component", part.Component.Name);
+                if (part.Component != null)
+                    writer.WriteAttributeString("component", part.Component.Name);
                 writer.WriteAttribute("position", part.Position);
                 if (part.Rotation != 0)
                     writer.WriteAttribute("rotation", part.Rotation);

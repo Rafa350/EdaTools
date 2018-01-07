@@ -33,13 +33,13 @@
             public override void Visit(LineElement line) {
 
                 if (line.IsOnAnyLayer(layers))
-                    apertureDict.AddCircle(Math.Max(line.Thickness, 0.01));
+                    apertureDict.DefineCircleAperture(Math.Max(line.Thickness, 0.01));
             }
 
             public override void Visit(ArcElement arc) {
 
                 if (arc.IsOnAnyLayer(layers))
-                    apertureDict.AddCircle(Math.Max(arc.Thickness, 0.01));
+                    apertureDict.DefineCircleAperture(Math.Max(arc.Thickness, 0.01));
             }
 
             public override void Visit(RectangleElement rectangle) {
@@ -47,7 +47,7 @@
                 if (rectangle.IsOnAnyLayer(layers)) {
                     if (rectangle.Thickness == 0) {
                         double rotate = rectangle.Rotation + (VisitingPart != null ? VisitingPart.Rotation : 0);
-                        apertureDict.AddRectangle(rectangle.Size.Width, rectangle.Size.Height, rotate);
+                        apertureDict.DefineRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotate);
                     }
                 }
             }
@@ -56,7 +56,7 @@
 
                 if (circle.IsOnAnyLayer(layers)) {
                     if (circle.Thickness == 0)
-                        apertureDict.AddCircle(circle.Diameter);
+                        apertureDict.DefineCircleAperture(circle.Diameter);
                 }
             }
 
@@ -65,15 +65,15 @@
                 if (via.IsOnAnyLayer(layers)) {
                     switch (via.Shape) {
                         case ViaElement.ViaShape.Circular:
-                            apertureDict.AddCircle(via.OuterSize);
+                            apertureDict.DefineCircleAperture(via.OuterSize);
                             break;
 
                         case ViaElement.ViaShape.Square:
-                            apertureDict.AddRectangle(via.OuterSize, via.OuterSize, 0);
+                            apertureDict.DefineRectangleAperture(via.OuterSize, via.OuterSize, 0);
                             break;
 
                         case ViaElement.ViaShape.Octogonal:
-                            apertureDict.AddOctagon(via.OuterSize, 0);
+                            apertureDict.DefineOctagonAperture(via.OuterSize, 0);
                             break;
                     }
                 }
@@ -85,19 +85,19 @@
                     double rotate = pad.Rotation + (VisitingPart != null ? VisitingPart.Rotation : 0);
                     switch (pad.Shape) {
                         case ThPadElement.ThPadShape.Circular:
-                            apertureDict.AddCircle(pad.Size);
+                            apertureDict.DefineCircleAperture(pad.Size);
                             break;
 
                         case ThPadElement.ThPadShape.Square:
-                            apertureDict.AddRectangle(pad.Size, pad.Size, rotate);
+                            apertureDict.DefineRectangleAperture(pad.Size, pad.Size, rotate);
                             break;
 
                         case ThPadElement.ThPadShape.Octogonal:
-                            apertureDict.AddOctagon(pad.Size, rotate);
+                            apertureDict.DefineOctagonAperture(pad.Size, rotate);
                             break;
 
                         case ThPadElement.ThPadShape.Oval:
-                            apertureDict.AddOval(pad.Size * 2, pad.Size, rotate);
+                            apertureDict.DefineOvalAperture(pad.Size * 2, pad.Size, rotate);
                             break;
                     }
                 }
@@ -109,16 +109,16 @@
                     double rotation = pad.Rotation + (VisitingPart != null ? VisitingPart.Rotation : 0);
                     double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
                     if (radius == 0)
-                        apertureDict.AddRectangle(pad.Size.Width, pad.Size.Height, rotation);
+                        apertureDict.DefineRectangleAperture(pad.Size.Width, pad.Size.Height, rotation);
                     else
-                        apertureDict.AddRoundRectangle(pad.Size.Width, pad.Size.Height, radius, rotation);
+                        apertureDict.DefineRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
                 }
             }
 
             public override void Visit(RegionElement region) {
 
                 if (region.IsOnAnyLayer(layers))
-                    apertureDict.AddCircle(region.Thickness);
+                    apertureDict.DefineCircleAperture(region.Thickness);
             }
         }
 

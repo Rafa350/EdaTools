@@ -130,7 +130,7 @@
         /// </summary>
         /// <param name="diameter">Diametre.</param>
         /// 
-        public void AddCircle(double diameter) {
+        public void DefineCircleAperture(double diameter) {
 
             string key = GetCircleKey(diameter);
             if (!items.ContainsKey(key)) {
@@ -146,7 +146,7 @@
         /// <param name="height">Alçada.</param>
         /// <param name="rotate">Orientacio.</param>
         /// 
-        public void AddRectangle(double width, double height, double rotate) {
+        public void DefineRectangleAperture(double width, double height, double rotate) {
 
             string key = GetRectangleKey(width, height, rotate);
             if (!items.ContainsKey(key)) {
@@ -163,7 +163,7 @@
         /// <param name="radius">Radi de corvatura.</param>
         /// <param name="rotate">orientacio.</param>
         /// 
-        public void AddRoundRectangle(double width, double height, double radius, double rotate) {
+        public void DefineRoundRectangleAperture(double width, double height, double radius, double rotate) {
 
             string key = GetRoundRectangleKey(width, height, radius, rotate);
             if (!items.ContainsKey(key)) {
@@ -178,7 +178,7 @@
         /// <param name="size">Diametre exterior.</param>
         /// <param name="rotate">Orientacio.</param>
         /// 
-        public void AddOctagon(double size, double rotate) {
+        public void DefineOctagonAperture(double size, double rotate) {
 
             string key = GetOctagonKey(size, rotate);
             if (!items.ContainsKey(key)) {
@@ -194,7 +194,7 @@
         /// <param name="height">Alçada.</param>
         /// <param name="rotate">Orientacio.</param>
         /// 
-        public void AddOval(double width, double height, double rotate) {
+        public void DefineOvalAperture(double width, double height, double rotate) {
 
             string key = GetOvalKey(width, height, rotate);
             if (!items.ContainsKey(key)) {
