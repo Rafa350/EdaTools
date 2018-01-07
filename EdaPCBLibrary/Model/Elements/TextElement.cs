@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using System;
     using System.Windows;
 
     public sealed class TextElement: SingleLayerElement, IPosition, IRotation {
@@ -50,6 +51,16 @@
         public override Polygon GetPolygon(double inflate = 0) {
 
             throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// Calcula el bounding box del element.
+        /// </summary>
+        /// <returns>El bounding box.</returns>
+        /// 
+        protected override Rect GetBoundingBox() {
+
+            throw new NotImplementedException();
         }
 
         /// <summary>

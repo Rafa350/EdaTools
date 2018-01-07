@@ -65,6 +65,16 @@
         }
 
         /// <summary>
+        /// Calcula el bounding box del element.
+        /// </summary>
+        /// <returns>El bounding box.</returns>
+        /// 
+        protected override Rect GetBoundingBox() {
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Obte o asigna la posicio inicial.
         /// </summary>
         /// 

@@ -658,20 +658,58 @@
             }           
         }
 
+        /// <summary>
+        /// Obte el color de la capa a partir del seu numero.
+        /// </summary>
+        /// <param name="layerNum">El numero de la capa.</param>
+        /// <returns>El color.</returns>
+        /// 
         private Color GetLayerColor(int layerNum) {
 
             switch (layerNum) {
-                case 1:
+                case 1: // Top signal
                     return Colors.Red;
 
-                case 16:
+                case 16: // Bottom signal
                     return Colors.Blue;
 
-                case 17:
-                    return Colors.Gold;
+                case 17: // Through hole pads
+                    return Colors.DarkGoldenrod;
 
-                case 18:
+                case 18: // Vias
                     return Colors.Green;
+
+                case 21: // Top placement
+                case 22: // Bottom placement
+                    return Colors.LightGray;
+
+                case 25:
+                case 26:
+                    return Colors.LightGray;
+
+                case 31:
+                case 32:
+                    return Colors.LightSeaGreen;
+
+                case 35: // Top glue
+                case 36: // Bottom glue
+                    return Colors.LightSkyBlue;
+
+                case 39: // Top keepout
+                case 40: // Bottom keepout
+                    return Color.FromArgb(64, Colors.Cyan.R, Colors.Cyan.G, Colors.Cyan.B);
+
+                case 41: // Top restrict
+                case 42: // Bottom restrict
+                case 43: // Via restrict
+                    return Color.FromArgb(64, Colors.DarkViolet.R, Colors.DarkViolet.G, Colors.DarkViolet.B);
+
+                case 45: // Holes
+                    return Colors.LightCoral;
+
+                case 51: // Top document
+                case 52: // Bottom document
+                    return Colors.LightGray;
 
                 default:
                     return Colors.White;

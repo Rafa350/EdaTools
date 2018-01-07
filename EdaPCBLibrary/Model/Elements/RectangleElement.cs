@@ -64,6 +64,20 @@
         }
 
         /// <summary>
+        /// Calcula el bounding box del element.
+        /// </summary>
+        /// <returns>El bounding box.</returns>
+        /// 
+        protected override Rect GetBoundingBox() {
+
+            double r = rotation * Math.PI / 180.0;
+            double w = size.Width * Math.Cos(r) + size.Height * Math.Sin(r);
+            double h = size.Width * Math.Sin(r) + size.Height * Math.Cos(r);
+
+            return new Rect(position.X - w / 2, position.Y - h / 2, w, h);
+        }
+
+        /// <summary>
         ///  Obte o asigna la posicio del centre geometric del rectangle.
         /// </summary>
         /// 

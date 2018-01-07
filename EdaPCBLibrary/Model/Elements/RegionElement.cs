@@ -95,6 +95,16 @@
         }
 
         /// <summary>
+        /// Calcula el bounding box del element.
+        /// </summary>
+        /// <returns>El bounding box.</returns>
+        /// 
+        protected override Rect GetBoundingBox() {
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Afegeix un segment a la regio.
         /// </summary>
         /// <param name="segment">El segment a afeigir.</param>

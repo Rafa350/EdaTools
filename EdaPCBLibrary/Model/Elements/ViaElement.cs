@@ -124,6 +124,18 @@
         }
 
         /// <summary>
+        /// Calcula el bounding box del element.
+        /// </summary>
+        /// <returns>El bounding box.</returns>
+        /// 
+        protected override Rect GetBoundingBox() {
+
+            double size = OuterSize;
+            double hSize = size / 2;
+            return new Rect(position.X - hSize, position.Y - hSize, size, size);
+        }
+
+        /// <summary>
         ///  Obte o asigna la posicio del centre del cercle.
         /// </summary>
         /// 
