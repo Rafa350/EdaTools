@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
     using System.Windows;
@@ -17,8 +18,8 @@
 
         private ThPadShape shape = ThPadShape.Circular;
         private string name;
-        private Point position;
-        private double rotation;
+        private System.Windows.Point position;
+        private Angle rotation;
         private double size;
         private bool autoSize = false;
         private double drill;
@@ -41,7 +42,7 @@
         /// <param name="shape">Diametre del forat.</param>
         /// <param name="drill">Forma de la corona.</param>
         /// 
-        public ThPadElement(string name, Point position, double rotation, double size, ThPadShape shape, double drill):
+        public ThPadElement(string name, System.Windows.Point position, Angle rotation, double size, ThPadShape shape, double drill):
             base() {
 
             this.name = name;
@@ -95,9 +96,9 @@
                 case ThPadShape.Square:
                     polygon = PolygonBuilder.BuildRectangle(
                         position, 
-                        new Size(size + (inflate * 2), size + (inflate * 2)), 
-                        inflate, 
-                        rotation);
+                        new System.Windows.Size(size + (inflate * 2), size + (inflate * 2)), 
+                        inflate,
+                        rotation.Degrees);
                     break;
 
                 case ThPadShape.Octogonal:
@@ -105,15 +106,15 @@
                         8, 
                         position, 
                         (size / 2) + inflate, 
-                        rotation);
+                        rotation.Degrees);
                     break;
 
                 case ThPadShape.Oval:
                     polygon = PolygonBuilder.BuildRectangle(
                         position, 
-                        new Size((size * 2) + (inflate * 2), size + (inflate * 2)), 
-                        (size / 2) + inflate, 
-                        rotation);
+                        new System.Windows.Size((size * 2) + (inflate * 2), size + (inflate * 2)), 
+                        (size / 2) + inflate,
+                        rotation.Degrees);
                     break;
 
                 default:
@@ -158,7 +159,7 @@
         ///  Obte o asigna la posicio.
         /// </summary>
         /// 
-        public Point Position {
+        public System.Windows.Point Position {
             get {
                 return position;
             }
@@ -174,7 +175,7 @@
         /// Obte o asigna l'orientacio del pad.
         /// </summary>
         /// 
-        public double Rotation {
+        public Angle Rotation {
             get {
                 return rotation;
             }

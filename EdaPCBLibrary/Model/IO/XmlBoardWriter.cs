@@ -52,7 +52,7 @@
                 writer.WriteAttribute("layer", rectangle.Layer);
                 writer.WriteAttribute("position", rectangle.Position);
                 writer.WriteAttribute("size", rectangle.Size);
-                if (rectangle.Rotation != 0)
+                if (!rectangle.Rotation.IsZero)
                     writer.WriteAttribute("rotation", rectangle.Rotation);
                 if (rectangle.Thickness > 0)
                     writer.WriteAttribute("thickness", rectangle.Thickness);
@@ -77,7 +77,7 @@
                     writer.WriteAttributeString("name", text.Name);
                 writer.WriteAttribute("layer", text.Layer);
                 writer.WriteAttribute("position", text.Position);
-                if (text.Rotation != 0)
+                if (!text.Rotation.IsZero)
                     writer.WriteAttribute("rotation", text.Rotation);
                 if (!String.IsNullOrEmpty(text.Value))
                     writer.WriteAttributeString("value", text.Value);
@@ -98,7 +98,7 @@
                 writer.WriteAttributeString("name", pad.Name);
                 writer.WriteAttribute("layer", pad.Layer);
                 writer.WriteAttribute("position", pad.Position);
-                if (pad.Rotation != 0)
+                if (!pad.Rotation.IsZero)
                     writer.WriteAttribute("rotation", pad.Rotation);
                 writer.WriteAttribute("size", pad.Size);
                 if (pad.Roundnes > 0)
@@ -115,7 +115,7 @@
                 writer.WriteStartElement("tpad");
                 writer.WriteAttributeString("name", pad.Name);
                 writer.WriteAttribute("position", pad.Position);
-                if (pad.Rotation != 0)
+                if (!pad.Rotation.IsZero)
                     writer.WriteAttribute("rotation", pad.Rotation);
                 writer.WriteAttribute("size", pad.Size);
                 writer.WriteAttribute("drill",  pad.Drill);
@@ -160,7 +160,7 @@
                 if (part.Component != null)
                     writer.WriteAttributeString("component", part.Component.Name);
                 writer.WriteAttribute("position", part.Position);
-                if (part.Rotation != 0)
+                if (!part.Rotation.IsZero)
                     writer.WriteAttribute("rotation", part.Rotation);
                 if (part.IsFlipped)
                     writer.WriteAttributeString("flipped", part.IsFlipped.ToString());

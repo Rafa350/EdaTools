@@ -2,6 +2,7 @@
 
     using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
     using MikroPic.EdaTools.v1.Cam.Gerber.Infrastructure;
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
@@ -155,11 +156,11 @@
                 if (line.IsOnAnyLayer(layers)) {
                     Aperture ap = apertureDict.GetCircleAperture(Math.Max(line.Thickness, 0.01));
                     gb.SelectAperture(ap);
-                    Point p1 = line.StartPosition;
+                    System.Windows.Point p1 = line.StartPosition;
                     if (VisitingPart != null)
                         p1 = VisitingPart.Transform(p1);
                     gb.MoveTo(p1);
-                    Point p2 = line.EndPosition;
+                    System.Windows.Point p2 = line.EndPosition;
                     if (VisitingPart != null)
                         p2 = VisitingPart.Transform(p2);
                     gb.LineTo(p2);
@@ -171,10 +172,10 @@
                 if (arc.IsOnAnyLayer(layers)) {
                     Aperture ap = apertureDict.GetCircleAperture(Math.Max(arc.Thickness, 0.01));
                     gb.SelectAperture(ap);
-                    Point p1 = VisitingPart.Transform(arc.StartPosition);
+                    System.Windows.Point p1 = VisitingPart.Transform(arc.StartPosition);
                     gb.MoveTo(p1);
-                    Point p2 = VisitingPart.Transform(arc.EndPosition);
-                    Point c = VisitingPart.Transform(arc.Center);
+                    System.Windows.Point p2 = VisitingPart.Transform(arc.EndPosition);
+                    System.Windows.Point c = VisitingPart.Transform(arc.Center);
                     gb.ArcTo(
                         p2.X, p2.Y,
                         c.X - p1.X, c.Y - p1.Y,
@@ -186,10 +187,10 @@
 
                 if (rectangle.IsOnAnyLayer(layers)) {
                     if (rectangle.Thickness == 0) {
-                        double rotate = rectangle.Rotation + (VisitingPart != null ? VisitingPart.Rotation : 0);
-                        Aperture ap = apertureDict.GetRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotate);
+                        Angle rotate = rectangle.Rotation + (VisitingPart != null ? VisitingPart.Rotation : Angle.FromDegrees(0));
+                        Aperture ap = apertureDict.GetRectangleAperture((double)rectangle.Size.Width, (double)rectangle.Size.Height, rotate.Degrees);
                         gb.SelectAperture(ap);
-                        Point p = VisitingPart.Transform(rectangle.Position);
+                        System.Windows.Point p = VisitingPart.Transform((System.Windows.Point)rectangle.Position);
                         gb.FlashAt(p);
                     }
                 }
@@ -201,7 +202,7 @@
                     if (circle.Thickness == 0) {
                         Aperture ap = apertureDict.GetCircleAperture(circle.Diameter);
                         gb.SelectAperture(ap);
-                        Point p = VisitingPart.Transform(circle.Position);
+                        System.Windows.Point p = VisitingPart.Transform(circle.Position);
                         gb.FlashAt(p);
                     }
                 }
@@ -238,7 +239,7 @@
             public override void Visit(ThPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers)) {
-                    double rotate = pad.Rotation + (VisitingPart != null ? VisitingPart.Rotation : 0);
+                    Angle rotate = pad.Rotation + (VisitingPart != null ? VisitingPart.Rotation : Angle.FromDegrees(0));
                     Aperture ap = null;
                     switch (pad.Shape) {
                         case ThPadElement.ThPadShape.Circular:
@@ -246,19 +247,19 @@
                             break;
 
                         case ThPadElement.ThPadShape.Square:
-                            ap = apertureDict.GetRectangleAperture(pad.Size, pad.Size, rotate);
+                            ap = apertureDict.GetRectangleAperture(pad.Size, pad.Size, rotate.Degrees);
                             break;
 
                         case ThPadElement.ThPadShape.Octogonal:
-                            ap = apertureDict.GetOctagonAperture(pad.Size, rotate);
+                            ap = apertureDict.GetOctagonAperture(pad.Size, rotate.Degrees);
                             break;
 
                         case ThPadElement.ThPadShape.Oval:
-                            ap = apertureDict.GetOvalAperture(pad.Size * 2, pad.Size, rotate);
+                            ap = apertureDict.GetOvalAperture(pad.Size * 2, pad.Size, rotate.Degrees);
                             break;
                     }
                     gb.SelectAperture(ap);
-                    Point p = VisitingPart.Transform(pad.Position);
+                    System.Windows.Point p = VisitingPart.Transform((System.Windows.Point)pad.Position);
                     gb.FlashAt(p);
                 }
             }
@@ -271,13 +272,13 @@
             public override void Visit(SmdPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers)) {
-                    double rotation = pad.Rotation + (VisitingPart != null ? VisitingPart.Rotation : 0);
-                    double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
+                    Angle rotation = pad.Rotation + (VisitingPart != null ? VisitingPart.Rotation : Angle.FromDegrees(0));
+                    double radius = pad.Roundnes * Math.Min((double)pad.Size.Width, (double)pad.Size.Height) / 2;
                     Aperture ap = radius == 0 ?
-                        apertureDict.GetRectangleAperture(pad.Size.Width, pad.Size.Height, rotation) :
-                        apertureDict.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
+                        apertureDict.GetRectangleAperture((double)pad.Size.Width, (double)pad.Size.Height, rotation.Degrees) :
+                        apertureDict.GetRoundRectangleAperture((double)pad.Size.Width, (double)pad.Size.Height, radius, rotation.Degrees);
                     gb.SelectAperture(ap);
-                    Point p = VisitingPart.Transform(pad.Position);
+                    System.Windows.Point p = VisitingPart.Transform((System.Windows.Point)pad.Position);
                     gb.FlashAt(p);
                 }
             }

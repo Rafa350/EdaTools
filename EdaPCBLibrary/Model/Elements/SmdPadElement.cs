@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
     using System.Windows;
@@ -7,9 +8,9 @@
     public sealed class SmdPadElement: SingleLayerElement, IPosition, IRotation, IName, IConected {
 
         private string name;
-        private Point position;
-        private Size size;
-        private double rotation;
+        private System.Windows.Point position;
+        private System.Windows.Size size;
+        private Angle rotation;
         private double roundnes;
         private bool cream = true;
         private bool stop = true;
@@ -34,7 +35,7 @@
         /// <param name="stop"></param>
         /// <param name="cream"></param>
         /// 
-        public SmdPadElement(string name, Point position, Layer layer, Size size, double rotation, double roundnes, bool stop, bool cream):
+        public SmdPadElement(string name, System.Windows.Point position, Layer layer, System.Windows.Size size, Angle rotation, double roundnes, bool stop, bool cream):
             base(layer) {
 
             this.name = name;
@@ -81,7 +82,7 @@
         public override Polygon GetPolygon(double inflate = 0) {
 
             return PolygonBuilder.BuildRectangle(position,
-                new Size(size.Width + (inflate * 2), size.Height + (inflate * 2)), Radius + inflate, rotation);
+                new System.Windows.Size(size.Width + (inflate * 2), size.Height + (inflate * 2)), Radius + inflate, rotation.Degrees);
         }
 
         /// <summary>
@@ -111,7 +112,7 @@
         ///  Obte o asigna la posicio del centre geometric del rectangle.
         /// </summary>
         /// 
-        public Point Position {
+        public System.Windows.Point Position {
             get {
                 return position;
             }
@@ -127,7 +128,7 @@
         /// Obte o asigna l'orientacio del pad.
         /// </summary>
         /// 
-        public double Rotation {
+        public Angle Rotation {
             get {
                 return rotation;
             }
@@ -143,7 +144,7 @@
         /// Obte o asigna el tamany del pad.
         /// </summary>
         /// 
-        public Size Size {
+        public System.Windows.Size Size {
             get {
                 return size;
             }

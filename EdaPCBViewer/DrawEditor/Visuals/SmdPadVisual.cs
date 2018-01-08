@@ -27,7 +27,7 @@
                 if (Part != null) {
                     TransformGroup transform = new TransformGroup();
                     transform.Children.Add(new TranslateTransform(Part.Position.X, Part.Position.Y));
-                    transform.Children.Add(new RotateTransform(Part.Rotation, Part.Position.X, Part.Position.Y));
+                    transform.Children.Add(new RotateTransform(Part.Rotation.Degrees, Part.Position.X, Part.Position.Y));
                     dc.PushTransform(transform);
                 }
 
@@ -56,7 +56,7 @@
                     0.5,
                     textBrush);
                 formattedText.TextAlignment = TextAlignment.Center;
-                dc.DrawText(formattedText, new Point(Pad.Position.X, Pad.Position.Y - formattedText.Height / 2));
+                dc.DrawText(formattedText, new Point((double)Pad.Position.X, (double)(Pad.Position.Y - formattedText.Height / 2)));
 
                 // Pop de la transformacio d'escala del text
                 //

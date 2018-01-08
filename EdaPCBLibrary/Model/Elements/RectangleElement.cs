@@ -1,14 +1,15 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
     using System.Windows;
 
     public sealed class RectangleElement: SingleLayerElement, IPosition, ISize, IRotation {
 
-        private Point position;
-        private Size size;
-        private double rotation;
+        private System.Windows.Point position;
+        private System.Windows.Size size;
+        private Angle rotation;
         private double thickness;
 
         /// <summary>
@@ -28,7 +29,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="thickness">Amplada de linia. Si es zero, es un rectangle ple.</param>
         /// 
-        public RectangleElement(Point position, Layer layer, Size size, double rotation = 0, double thickness = 0) :
+        public RectangleElement(System.Windows.Point position, Layer layer, System.Windows.Size size, Angle rotation, double thickness = 0) :
             base(layer) {
 
             this.position = position;
@@ -56,11 +57,11 @@
         public override Polygon GetPolygon(double inflate = 0) {
 
             if (inflate == 0)
-                return PolygonBuilder.BuildRectangle(position, size, 0, rotation);
+                return PolygonBuilder.BuildRectangle(position, size, 0, rotation.Degrees);
             else
                 return PolygonBuilder.BuildRectangle(position, 
-                    new Size(size.Width + inflate * 2, size.Height+ inflate * 2), 
-                    inflate, rotation);
+                    new System.Windows.Size(size.Width + inflate * 2, size.Height+ inflate * 2), 
+                    inflate, rotation.Degrees);
         }
 
         /// <summary>
@@ -70,7 +71,7 @@
         /// 
         protected override Rect GetBoundingBox() {
 
-            double r = rotation * Math.PI / 180.0;
+            double r = rotation.Radiants;
             double w = size.Width * Math.Cos(r) + size.Height * Math.Sin(r);
             double h = size.Width * Math.Sin(r) + size.Height * Math.Cos(r);
 
@@ -81,7 +82,7 @@
         ///  Obte o asigna la posicio del centre geometric del rectangle.
         /// </summary>
         /// 
-        public Point Position {
+        public System.Windows.Point Position {
             get {
                 return position;
             }
@@ -97,7 +98,7 @@
         /// Obte o asigna el tamany del rectangle.
         /// </summary>
         /// 
-        public Size Size {
+        public System.Windows.Size Size {
             get {
                 return size;
             }
@@ -113,7 +114,7 @@
         /// Obte o asigna l'angle de rotacio.
         /// </summary>
         /// 
-        public double Rotation {
+        public Angle Rotation {
             get {
                 return rotation;
             }

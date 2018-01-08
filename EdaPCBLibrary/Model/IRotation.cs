@@ -1,7 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
+
     public interface IRotation {
 
-        double Rotation { get; set; }
+        Angle Rotation { get; set; }
     }
 }
