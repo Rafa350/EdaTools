@@ -47,7 +47,7 @@
 
                 if (rectangle.IsOnAnyLayer(layers)) {
                     if (rectangle.Thickness == 0) {
-                        Angle rotation = rectangle.Rotation;
+                        double rotation = rectangle.Rotation;
                         if (VisitingPart != null)
                             rotation += VisitingPart.Rotation;
                         apertureDict.DefineRectangleAperture((double)rectangle.Size.Width, (double)rectangle.Size.Height, rotation);
@@ -72,11 +72,11 @@
                             break;
 
                         case ViaElement.ViaShape.Square:
-                            apertureDict.DefineRectangleAperture(via.OuterSize, via.OuterSize, Angle.Zero);
+                            apertureDict.DefineRectangleAperture(via.OuterSize, via.OuterSize, 0);
                             break;
 
                         case ViaElement.ViaShape.Octogonal:
-                            apertureDict.DefineOctagonAperture(via.OuterSize, Angle.Zero);
+                            apertureDict.DefineOctagonAperture(via.OuterSize, 0);
                             break;
                     }
                 }
@@ -85,7 +85,7 @@
             public override void Visit(ThPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers)) {
-                    Angle rotation = pad.Rotation;
+                    double rotation = pad.Rotation;
                     if (VisitingPart != null)
                         rotation += VisitingPart.Rotation;
                     switch (pad.Shape) {
@@ -111,7 +111,7 @@
             public override void Visit(SmdPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers)) {
-                    Angle rotation = pad.Rotation;
+                    double rotation = pad.Rotation;
                     if (VisitingPart != null)
                         rotation += VisitingPart.Rotation;
                     double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;

@@ -1,6 +1,5 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
     using System.Collections.Generic;
@@ -11,9 +10,9 @@
         public struct Segment {
 
             private Point position;
-            private Angle angle;
+            private double angle;
 
-            public Segment(Point position, Angle angle) {
+            public Segment(Point position, double angle) {
 
                 this.position = position;
                 this.angle = angle;
@@ -23,7 +22,7 @@
                 get { return position; }
             }
 
-            public Angle Angle {
+            public double Angle {
                 get { return angle; }
             }
         }
@@ -112,7 +111,7 @@
         /// 
         public void Add(Segment segment) {
 
-            if ((segments.Count == 0) && (!segment.Angle.IsZero))
+            if ((segments.Count == 0) && (segment.Angle != 0))
                 throw new InvalidOperationException("En primer segmento no puede ser un arco.");
 
             segments.Add(segment);
@@ -125,7 +124,7 @@
         /// 
         public void AddLine(Point position) {
 
-            Add(new Segment(position, Angle.FromDegrees(0)));
+            Add(new Segment(position, 0));
         }
 
         /// <summary>
@@ -134,7 +133,7 @@
         /// <param name="position">Vertec final del arc.</param>
         /// <param name="angle">Angle del arc.</param>
         /// 
-        public void AddArc(Point position, Angle angle) {
+        public void AddArc(Point position, double angle) {
 
             Add(new Segment(position, angle));
         }

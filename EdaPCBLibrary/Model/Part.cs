@@ -1,6 +1,5 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using System;
     using System.Linq;
     using System.Windows;
@@ -11,7 +10,7 @@
 
         private string name;
         private Point position;
-        private Angle rotation;
+        private double rotation;
         private bool isFlipped;
         private Component component;
         private Dictionary<string, Parameter> parameters;
@@ -83,7 +82,7 @@
         /// Obte o asigna l'angle de rotacio.
         /// </summary>
         /// 
-        public Angle Rotation {
+        public double Rotation {
             get {
                 return rotation;
             }
@@ -109,7 +108,7 @@
             get {
                 Matrix m = new Matrix();
                 m.Translate(position.X, position.Y);
-                m.RotateAt(rotation.Degrees, position.X, position.Y);
+                m.RotateAt(rotation, position.X, position.Y);
                 return m;
             }
         }

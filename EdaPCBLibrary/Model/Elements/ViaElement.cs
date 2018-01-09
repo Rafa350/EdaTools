@@ -104,11 +104,11 @@
             Polygon polygon;
             switch (shape) {
                 case ViaShape.Square:
-                    polygon = PolygonBuilder.BuildRectangle(position, new Size((OuterSize / 2) + inflate, (OuterSize / 2) + inflate), 0, Angle.Zero);
+                    polygon = PolygonBuilder.BuildRectangle(position, new Size((OuterSize / 2) + inflate, (OuterSize / 2) + inflate), 0, 0);
                     break;
 
                 case ViaShape.Octogonal:
-                    polygon = PolygonBuilder.BuildRegularPolygon(8, position, (OuterSize / 2) + inflate, Angle.Zero);
+                    polygon = PolygonBuilder.BuildRegularPolygon(8, position, (OuterSize / 2) + inflate, 0);
                     break;
 
                 default:

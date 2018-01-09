@@ -10,7 +10,7 @@
 
             Matrix m = new Matrix();
             m.Translate(part.Position.X, part.Position.Y);
-            m.RotateAt(part.Rotation.Degrees, part.Position.X, part.Position.Y);
+            m.RotateAt(part.Rotation, part.Position.X, part.Position.Y);
 
             return m.Transform(point);
         }

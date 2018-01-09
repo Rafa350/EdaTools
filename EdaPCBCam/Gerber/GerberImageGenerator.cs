@@ -179,7 +179,7 @@
                     gb.ArcTo(
                         p2.X, p2.Y,
                         c.X - p1.X, c.Y - p1.Y,
-                        arc.Angle.IsNegative ? ArcDirection.CW : ArcDirection.CCW);
+                        arc.Angle < 0 ? ArcDirection.CW : ArcDirection.CCW);
                 }
             }
 
@@ -187,7 +187,7 @@
 
                 if (rectangle.IsOnAnyLayer(layers)) {
                     if (rectangle.Thickness == 0) {
-                        Angle rotate = rectangle.Rotation;
+                        double rotate = rectangle.Rotation;
                         if (VisitingPart != null)
                             rotate += VisitingPart.Rotation;
                         Aperture ap = apertureDict.GetRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotate);
@@ -221,11 +221,11 @@
                             break;
 
                         case ViaElement.ViaShape.Square:
-                            ap = apertureDict.GetRectangleAperture(via.OuterSize, via.OuterSize, Angle.Zero);
+                            ap = apertureDict.GetRectangleAperture(via.OuterSize, via.OuterSize, 0);
                             break;
 
                         case ViaElement.ViaShape.Octogonal:
-                            ap = apertureDict.GetOctagonAperture(via.OuterSize, Angle.Zero);
+                            ap = apertureDict.GetOctagonAperture(via.OuterSize, 0);
                             break;
                     }
                     gb.SelectAperture(ap);
@@ -241,7 +241,7 @@
             public override void Visit(ThPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers)) {
-                    Angle rotate = pad.Rotation;
+                    double rotate = pad.Rotation;
                     if (VisitingPart != null)
                         rotate += VisitingPart.Rotation;
                     Aperture ap = null;
@@ -276,7 +276,7 @@
             public override void Visit(SmdPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers)) {
-                    Angle rotation = pad.Rotation;
+                    double rotation = pad.Rotation;
                     if (VisitingPart != null)
                         rotation += VisitingPart.Rotation;
                     double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;

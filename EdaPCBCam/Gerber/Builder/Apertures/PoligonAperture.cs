@@ -1,6 +1,5 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Builder.Apertures {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using System;
     using System.Text;
     using System.Globalization;
@@ -10,9 +9,9 @@
         private readonly int vertex;
         private readonly double diameter;
         private readonly double drill;
-        private readonly Angle angle;
+        private readonly double angle;
 
-        public PoligonAperture(int id, int vertex, double diameter, Angle angle, double drill = 0) :
+        public PoligonAperture(int id, int vertex, double diameter, double angle, double drill = 0) :
             base(id) {
 
             if ((vertex < 3) || (vertex > 12))
@@ -38,8 +37,8 @@
             sb.Append("P,");
             sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", diameter);
             sb.AppendFormat("X{0}", vertex);
-            if (!angle.IsZero || (drill > 0))
-                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", angle.Degrees);
+            if ((angle > 0) || (drill > 0))
+                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", angle);
             if (drill > 0)
                 sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", drill);
             sb.Append("*%");
@@ -50,7 +49,7 @@
         public int Vertex { get { return vertex; } }
         public double Diameter { get { return diameter; } }
         public double Drill { get { return drill; } }
-        public Angle Angle { get { return angle; } }
+        public double Angle { get { return angle; } }
     }
 }
 

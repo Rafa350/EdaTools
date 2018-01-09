@@ -1,6 +1,5 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
     using System.Windows;
@@ -20,7 +19,7 @@
         }
 
         private Point position;
-        private Angle rotation;
+        private double rotation;
         private double height;
         private TextAlign align = TextAlign.MiddleCenter;
         private string value;
@@ -30,7 +29,7 @@
             base() {
         }
 
-        public TextElement(Point position, Layer layer, Angle rotation, double height, TextAlign align = TextAlign.MiddleCenter):
+        public TextElement(Point position, Layer layer, double rotation, double height, TextAlign align = TextAlign.MiddleCenter):
             base(layer) {
 
             this.position = position;
@@ -68,7 +67,7 @@
         ///  Obte o asigna la posicio del centre del cercle.
         /// </summary>
         /// 
-        public System.Windows.Point Position {
+        public Point Position {
             get {
                 return position;
             }
@@ -77,7 +76,7 @@
             }
         }
 
-        public Angle Rotation {
+        public double Rotation {
             get {
                 return rotation;
             }

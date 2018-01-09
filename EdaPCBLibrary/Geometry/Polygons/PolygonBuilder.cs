@@ -56,12 +56,12 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public static Polygon BuildRectangle(Point position, Size size, double radius, Angle rotation) {
+        public static Polygon BuildRectangle(Point position, Size size, double radius, double rotation) {
 
             if (radius == 0)
-                return new Polygon(PointsFromRectangle(position, size, rotation.Degrees));
+                return new Polygon(PointsFromRectangle(position, size, rotation));
             else
-                return new Polygon(PointsFromRoundRectangle(position, size, radius, rotation.Degrees));
+                return new Polygon(PointsFromRoundRectangle(position, size, radius, rotation));
         }
 
         /// <summary>
@@ -73,9 +73,9 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public static Polygon BuildRegularPolygon(int sides, Point position, double radius, Angle rotation) {
+        public static Polygon BuildRegularPolygon(int sides, Point position, double radius, double rotation) {
 
-            return new Polygon(PointsFromRegularPolygon(sides, position, radius, rotation.Degrees));
+            return new Polygon(PointsFromRegularPolygon(sides, position, radius, rotation));
         }
         
         /// <summary>

@@ -23,7 +23,7 @@
                 if (Part != null) {
                     TransformGroup transform = new TransformGroup();
                     transform.Children.Add(new TranslateTransform(Part.Position.X, Part.Position.Y));
-                    transform.Children.Add(new RotateTransform(Part.Rotation.Degrees, Part.Position.X, Part.Position.Y));
+                    transform.Children.Add(new RotateTransform(Part.Rotation, Part.Position.X, Part.Position.Y));
                     dc.PushTransform(transform);
                 }
                 bool isMirror = Part == null ? false : Part.IsFlipped;
@@ -66,7 +66,7 @@
                         }
                         x1 = segment.Position.X;
                         y1 = segment.Position.Y;
-                        angle = segment.Angle.Degrees;
+                        angle = segment.Angle;
                     }
                 }
 

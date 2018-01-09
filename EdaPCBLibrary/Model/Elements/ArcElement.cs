@@ -7,7 +7,7 @@
 
     public sealed class ArcElement: LineElement {
 
-        private Angle angle;
+        private double angle;
 
         /// <summary>
         /// Constructor per defecte de l'objecte.
@@ -27,7 +27,7 @@
         /// <param name="angle">Angle del arc.</param>
         /// <param name="lineCap">Extrems de linia.</param>
         /// 
-        public ArcElement(Point startPosition, Point endPosition, Layer layer, double thickness, Angle angle, LineCapStyle lineCap) :
+        public ArcElement(Point startPosition, Point endPosition, Layer layer, double thickness, double angle, LineCapStyle lineCap) :
             base(startPosition, endPosition, layer, thickness, lineCap) {
 
             this.angle = angle;
@@ -55,6 +55,7 @@
         /// 
         public Point Center {
             get {
+                double rAngle = angle * Math.PI / 180.0;
                 double x1 = StartPosition.X;
                 double y1 = EndPosition.Y;
                 double x2 = EndPosition.X;
@@ -71,11 +72,11 @@
 
                 // Calcula el radi
                 //
-                double r = Math.Abs((d / 2.0) / Math.Sin(angle.Radiants / 2.0));
+                double r = Math.Abs((d / 2.0) / Math.Sin(rAngle / 2.0));
 
                 // Calcula el centre
                 //
-                if (angle.IsPositive)
+                if (angle > 0)
                     return new Point(
                         mx + Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (y1 - y2) / d,
                         my + Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (x2 - x1) / d);
@@ -91,7 +92,7 @@
         /// Obte o asigna l'angle del arc.
         /// </summary>
         /// 
-        public Angle Angle {
+        public double Angle {
             get {
                 return angle;
             }
@@ -107,10 +108,11 @@
         /// Obte l'angle inicial del arc.
         /// </summary>
         /// 
-        public Angle StartAngle {
+        public double StartAngle {
             get {
                 Point center = Center;
-                return Angle.FromRadiants(Math.Atan((StartPosition.Y - center.Y) / (StartPosition.X - center.X)));
+                double rAngle = Math.Atan((StartPosition.Y - center.Y) / (StartPosition.X - center.X));
+                return rAngle * 180.0 / Math.PI;
             }
         }
 
@@ -118,17 +120,18 @@
         /// Obte l'angle final de l'arc.
         /// </summary>
         /// 
-        public Angle EndAngle {
+        public double EndAngle {
             get {
                 Point center = Center;
-                return Angle.FromRadiants(Math.Atan((EndPosition.Y - center.Y) / (EndPosition.X - center.X)));
+                double rAngle = Math.Atan((EndPosition.Y - center.Y) / (EndPosition.X - center.X));
+                return rAngle * 180.0 / Math.PI;
             }
         }
 
         /// <summary>
         /// Obte el radi de l'arc.
-        /// </summary
-        /// >
+        /// </summary>
+        /// 
         public double Radius {
             get {
                 // La semi-distancia entre els dos punts es un catet
@@ -137,7 +140,8 @@
 
                 // La hipotenusa es el radi. Aplicant trigonometria...
                 //
-                return Math.Abs(sd / Math.Sin(angle.Radiants / 2.0));
+                double rAngle = angle * Math.PI / 180.0;
+                return Math.Abs(sd / Math.Sin(rAngle / 2.0));
             }
         }
     }

@@ -53,7 +53,7 @@
                     gb.SetUnits(Units.Milimeters);
                     gb.SetCoordinateFormat(8, 5);
                     gb.LoadPolarity(Polarity.Dark);
-                    gb.LoadRotation(Angle.Zero);
+                    gb.LoadRotation(0);
                     gb.Comment("END HEADER");
 
                     // Definicio de les apertures

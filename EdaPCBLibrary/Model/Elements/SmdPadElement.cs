@@ -1,6 +1,5 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
     using System.Windows;
@@ -10,7 +9,7 @@
         private string name;
         private Point position;
         private Size size;
-        private Angle rotation;
+        private double rotation;
         private double roundnes;
         private bool cream = true;
         private bool stop = true;
@@ -35,7 +34,7 @@
         /// <param name="stop"></param>
         /// <param name="cream"></param>
         /// 
-        public SmdPadElement(string name, Point position, Layer layer, Size size, Angle rotation, double roundnes, bool stop, bool cream):
+        public SmdPadElement(string name, Point position, Layer layer, Size size, double rotation, double roundnes, bool stop, bool cream):
             base(layer) {
 
             this.name = name;
@@ -128,7 +127,7 @@
         /// Obte o asigna l'orientacio del pad.
         /// </summary>
         /// 
-        public Angle Rotation {
+        public double Rotation {
             get {
                 return rotation;
             }

@@ -1,6 +1,5 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
     using System.Windows;
@@ -19,7 +18,7 @@
         private ThPadShape shape = ThPadShape.Circular;
         private string name;
         private Point position;
-        private Angle rotation;
+        private double rotation;
         private double size;
         private bool autoSize = false;
         private double drill;
@@ -42,7 +41,7 @@
         /// <param name="shape">Diametre del forat.</param>
         /// <param name="drill">Forma de la corona.</param>
         /// 
-        public ThPadElement(string name, Point position, Angle rotation, double size, ThPadShape shape, double drill):
+        public ThPadElement(string name, Point position, double rotation, double size, ThPadShape shape, double drill):
             base() {
 
             this.name = name;
@@ -175,7 +174,7 @@
         /// Obte o asigna l'orientacio del pad.
         /// </summary>
         /// 
-        public Angle Rotation {
+        public double Rotation {
             get {
                 return rotation;
             }

@@ -34,7 +34,7 @@
                 if (Part != null) {
                     TransformGroup transform = new TransformGroup();
                     transform.Children.Add(new TranslateTransform(Part.Position.X, Part.Position.Y));
-                    transform.Children.Add(new RotateTransform(Part.Rotation.Degrees, Part.Position.X, Part.Position.Y));
+                    transform.Children.Add(new RotateTransform(Part.Rotation, Part.Position.X, Part.Position.Y));
                     dc.PushTransform(transform);
                 }
 
@@ -49,9 +49,9 @@
                 using (StreamGeometryContext ctx = geometry.Open()) {
                     ctx.BeginFigure(Arc.StartPosition, false, false);
                     ctx.ArcTo(Arc.EndPosition, new Size(Arc.Radius, Arc.Radius),
-                        Math.Abs(Arc.Angle.Degrees),
+                        Math.Abs(Arc.Angle),
                         false,
-                        Arc.Angle.Degrees > 0 ? SweepDirection.Clockwise : SweepDirection.Counterclockwise,
+                        Arc.Angle > 0 ? SweepDirection.Clockwise : SweepDirection.Counterclockwise,
                         true, true);
                 }
                 geometry.Freeze();

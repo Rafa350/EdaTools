@@ -32,11 +32,6 @@
                 String.Format("{0}, {1}, {2}, {3}", color.A, color.R, color.G, color.B));
         }
 
-        public static void WriteAttribute(this XmlWriter writer, string name, Angle angle) {
-
-            writer.WriteAttributeString(name, XmlConvert.ToString(angle.Degrees));
-        }
-
         public static void WriteAttribute(this XmlWriter writer, string name, double value) {
 
             writer.WriteAttributeString(name, XmlConvert.ToString(value));
