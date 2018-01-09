@@ -57,11 +57,11 @@
         public override Polygon GetPolygon(double inflate = 0) {
 
             if (inflate == 0)
-                return PolygonBuilder.BuildRectangle(position, size, 0, rotation.Degrees);
+                return PolygonBuilder.BuildRectangle(position, size, 0, rotation);
             else
                 return PolygonBuilder.BuildRectangle(position, 
                     new System.Windows.Size(size.Width + inflate * 2, size.Height+ inflate * 2), 
-                    inflate, rotation.Degrees);
+                    inflate, rotation);
         }
 
         /// <summary>

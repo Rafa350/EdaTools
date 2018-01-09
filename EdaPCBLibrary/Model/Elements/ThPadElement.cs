@@ -96,9 +96,9 @@
                 case ThPadShape.Square:
                     polygon = PolygonBuilder.BuildRectangle(
                         position, 
-                        new System.Windows.Size(size + (inflate * 2), size + (inflate * 2)), 
+                        new Size(size + (inflate * 2), size + (inflate * 2)), 
                         inflate,
-                        rotation.Degrees);
+                        rotation);
                     break;
 
                 case ThPadShape.Octogonal:
@@ -106,7 +106,7 @@
                         8, 
                         position, 
                         (size / 2) + inflate, 
-                        rotation.Degrees);
+                        rotation);
                     break;
 
                 case ThPadShape.Oval:
@@ -114,7 +114,7 @@
                         position, 
                         new Size((size * 2) + (inflate * 2), size + (inflate * 2)), 
                         (size / 2) + inflate,
-                        rotation.Degrees);
+                        rotation);
                     break;
 
                 default:

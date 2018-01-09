@@ -82,7 +82,7 @@
         public override Polygon GetPolygon(double inflate = 0) {
 
             return PolygonBuilder.BuildRectangle(position,
-                new Size(size.Width + (inflate * 2), size.Height + (inflate * 2)), Radius + inflate, rotation.Degrees);
+                new Size(size.Width + (inflate * 2), size.Height + (inflate * 2)), Radius + inflate, rotation);
         }
 
         /// <summary>
