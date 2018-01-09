@@ -10,7 +10,7 @@
     public sealed class Part: IPosition, IRotation, IName {
 
         private string name;
-        private System.Windows.Point position;
+        private Point position;
         private Angle rotation;
         private bool isFlipped;
         private Component component;
@@ -70,7 +70,7 @@
         /// Obte o asigna la posicio.
         /// </summary>
         /// 
-        public System.Windows.Point Position {
+        public Point Position {
             get {
                 return position;
             }

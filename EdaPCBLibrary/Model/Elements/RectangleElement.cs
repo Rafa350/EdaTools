@@ -7,8 +7,8 @@
 
     public sealed class RectangleElement: SingleLayerElement, IPosition, ISize, IRotation {
 
-        private System.Windows.Point position;
-        private System.Windows.Size size;
+        private Point position;
+        private Size size;
         private Angle rotation;
         private double thickness;
 
@@ -29,7 +29,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="thickness">Amplada de linia. Si es zero, es un rectangle ple.</param>
         /// 
-        public RectangleElement(System.Windows.Point position, Layer layer, System.Windows.Size size, Angle rotation, double thickness = 0) :
+        public RectangleElement(Point position, Layer layer, Size size, Angle rotation, double thickness = 0) :
             base(layer) {
 
             this.position = position;
@@ -82,7 +82,7 @@
         ///  Obte o asigna la posicio del centre geometric del rectangle.
         /// </summary>
         /// 
-        public System.Windows.Point Position {
+        public Point Position {
             get {
                 return position;
             }
@@ -98,7 +98,7 @@
         /// Obte o asigna el tamany del rectangle.
         /// </summary>
         /// 
-        public System.Windows.Size Size {
+        public Size Size {
             get {
                 return size;
             }

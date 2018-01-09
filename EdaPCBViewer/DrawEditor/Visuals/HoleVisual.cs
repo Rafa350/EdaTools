@@ -24,7 +24,7 @@
                 if (Part != null) {
                     TransformGroup transform = new TransformGroup();
                     transform.Children.Add(new TranslateTransform(Part.Position.X, Part.Position.Y));
-                    transform.Children.Add(new RotateTransform(Part.Rotation.Degrees, Part.Position.X, Part.Position.Y));
+                    transform.Children.Add(new RotateTransform(Part.Rotation, Part.Position.X, Part.Position.Y));
                     dc.PushTransform(transform);
                 }
 

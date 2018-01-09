@@ -85,6 +85,12 @@
             return polygon;
         }
 
+        public void Transform(Matrix m) {
+
+            for (int i = 0; i < points.Count; i++)
+                points[i] = m.Transform(points[i]);
+        }
+
         /// <summary>
         /// Afegeix un punt al poligon.
         /// </summary>
@@ -137,21 +143,6 @@
                 this.holes.AddRange(holes);
         }
 
-
-        /// <summary>
-        /// Aplica una transformacio al poligon.
-        /// </summary>
-        /// <param name="m">La matriu de transformacio.</param>
-        /// 
-        public void Transform(Matrix m) {
-
-            for (int i = 0; i < points.Count; i++)
-                points[i] = m.Transform(points[i]);
-
-            if (holes != null)
-                foreach (Polygon hole in holes)
-                    hole.Transform(m);
-        }
 
         /// <summary>
         /// Obte el bounding-box del poligon.

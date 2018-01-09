@@ -8,8 +8,8 @@
     public sealed class SmdPadElement: SingleLayerElement, IPosition, IRotation, IName, IConected {
 
         private string name;
-        private System.Windows.Point position;
-        private System.Windows.Size size;
+        private Point position;
+        private Size size;
         private Angle rotation;
         private double roundnes;
         private bool cream = true;
@@ -35,7 +35,7 @@
         /// <param name="stop"></param>
         /// <param name="cream"></param>
         /// 
-        public SmdPadElement(string name, System.Windows.Point position, Layer layer, System.Windows.Size size, Angle rotation, double roundnes, bool stop, bool cream):
+        public SmdPadElement(string name, Point position, Layer layer, Size size, Angle rotation, double roundnes, bool stop, bool cream):
             base(layer) {
 
             this.name = name;
@@ -82,7 +82,7 @@
         public override Polygon GetPolygon(double inflate = 0) {
 
             return PolygonBuilder.BuildRectangle(position,
-                new System.Windows.Size(size.Width + (inflate * 2), size.Height + (inflate * 2)), Radius + inflate, rotation.Degrees);
+                new Size(size.Width + (inflate * 2), size.Height + (inflate * 2)), Radius + inflate, rotation.Degrees);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@
         ///  Obte o asigna la posicio del centre geometric del rectangle.
         /// </summary>
         /// 
-        public System.Windows.Point Position {
+        public Point Position {
             get {
                 return position;
             }
@@ -144,7 +144,7 @@
         /// Obte o asigna el tamany del pad.
         /// </summary>
         /// 
-        public System.Windows.Size Size {
+        public Size Size {
             get {
                 return size;
             }

@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
 
     using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
@@ -52,7 +53,7 @@
                     gb.SetUnits(Units.Milimeters);
                     gb.SetCoordinateFormat(8, 5);
                     gb.LoadPolarity(Polarity.Dark);
-                    gb.LoadRotation(0);
+                    gb.LoadRotation(Angle.Zero);
                     gb.Comment("END HEADER");
 
                     // Definicio de les apertures

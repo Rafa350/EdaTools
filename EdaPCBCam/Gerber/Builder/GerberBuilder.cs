@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Builder {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using System;
     using System.Collections.Generic;
     using System.Windows;
@@ -410,10 +411,10 @@
                 writer.WriteLine(String.Format("%LP{0}*%", polarity == Polarity.Dark ? "D" : "C"));
         }
 
-        public void LoadRotation(double angle) {
+        public void LoadRotation(Angle angle) {
 
             if (state.SetApertureAngle(angle))
-                writer.WriteLine(String.Format("%LR{0}*%", angle));
+                writer.WriteLine(String.Format("%LR{0}*%", angle.Degrees));
         }
 
         public void LoadMirroring() {

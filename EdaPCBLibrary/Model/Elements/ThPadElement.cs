@@ -18,7 +18,7 @@
 
         private ThPadShape shape = ThPadShape.Circular;
         private string name;
-        private System.Windows.Point position;
+        private Point position;
         private Angle rotation;
         private double size;
         private bool autoSize = false;
@@ -42,7 +42,7 @@
         /// <param name="shape">Diametre del forat.</param>
         /// <param name="drill">Forma de la corona.</param>
         /// 
-        public ThPadElement(string name, System.Windows.Point position, Angle rotation, double size, ThPadShape shape, double drill):
+        public ThPadElement(string name, Point position, Angle rotation, double size, ThPadShape shape, double drill):
             base() {
 
             this.name = name;
@@ -112,7 +112,7 @@
                 case ThPadShape.Oval:
                     polygon = PolygonBuilder.BuildRectangle(
                         position, 
-                        new System.Windows.Size((size * 2) + (inflate * 2), size + (inflate * 2)), 
+                        new Size((size * 2) + (inflate * 2), size + (inflate * 2)), 
                         (size / 2) + inflate,
                         rotation.Degrees);
                     break;
@@ -159,7 +159,7 @@
         ///  Obte o asigna la posicio.
         /// </summary>
         /// 
-        public System.Windows.Point Position {
+        public Point Position {
             get {
                 return position;
             }

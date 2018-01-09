@@ -19,7 +19,7 @@
             BottomRight,
         }
 
-        private System.Windows.Point position;
+        private Point position;
         private Angle rotation;
         private double height;
         private TextAlign align = TextAlign.MiddleCenter;
@@ -30,7 +30,7 @@
             base() {
         }
 
-        public TextElement(System.Windows.Point position, Layer layer, Angle rotation, double height, TextAlign align = TextAlign.MiddleCenter):
+        public TextElement(Point position, Layer layer, Angle rotation, double height, TextAlign align = TextAlign.MiddleCenter):
             base(layer) {
 
             this.position = position;

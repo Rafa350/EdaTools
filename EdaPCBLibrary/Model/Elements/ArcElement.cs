@@ -1,12 +1,13 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
     using System.Windows;
 
     public sealed class ArcElement: LineElement {
 
-        private double angle;
+        private Angle angle;
 
         /// <summary>
         /// Constructor per defecte de l'objecte.
@@ -26,7 +27,7 @@
         /// <param name="angle">Angle del arc.</param>
         /// <param name="lineCap">Extrems de linia.</param>
         /// 
-        public ArcElement(Point startPosition, Point endPosition, Layer layer, double thickness, double angle, LineCapStyle lineCap) :
+        public ArcElement(Point startPosition, Point endPosition, Layer layer, double thickness, Angle angle, LineCapStyle lineCap) :
             base(startPosition, endPosition, layer, thickness, lineCap) {
 
             this.angle = angle;
@@ -70,11 +71,11 @@
 
                 // Calcula el radi
                 //
-                double r = Math.Abs((d / 2.0) / Math.Sin((angle / 2.0) * Math.PI / 180.0));
+                double r = Math.Abs((d / 2.0) / Math.Sin(angle.Radiants / 2.0));
 
                 // Calcula el centre
                 //
-                if (angle > 0)
+                if (angle.IsPositive)
                     return new Point(
                         mx + Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (y1 - y2) / d,
                         my + Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (x2 - x1) / d);
@@ -90,14 +91,11 @@
         /// Obte o asigna l'angle del arc.
         /// </summary>
         /// 
-        public double Angle {
+        public Angle Angle {
             get {
                 return angle;
             }
             set {
-                if (Math.Abs(value) >= 360.0)
-                    value = value % 360.0;
-
                 if (angle != value) {
                     angle = value;
                     Invalidate();
@@ -105,17 +103,25 @@
             }
         }
 
-        public double StartAngle {
+        /// <summary>
+        /// Obte l'angle inicial del arc.
+        /// </summary>
+        /// 
+        public Angle StartAngle {
             get {
                 Point center = Center;
-                return Math.Atan((StartPosition.Y - center.Y) / (StartPosition.X - center.X));
+                return Angle.FromRadiants(Math.Atan((StartPosition.Y - center.Y) / (StartPosition.X - center.X)));
             }
         }
 
-        public double EndAngle {
+        /// <summary>
+        /// Obte l'angle final de l'arc.
+        /// </summary>
+        /// 
+        public Angle EndAngle {
             get {
                 Point center = Center;
-                return Math.Atan((EndPosition.Y - center.Y) / (EndPosition.X - center.X));
+                return Angle.FromRadiants(Math.Atan((EndPosition.Y - center.Y) / (EndPosition.X - center.X)));
             }
         }
 
@@ -131,7 +137,7 @@
 
                 // La hipotenusa es el radi. Aplicant trigonometria...
                 //
-                return Math.Abs(sd / Math.Sin((angle / 2.0) * Math.PI / 180.0));
+                return Math.Abs(sd / Math.Sin(angle.Radiants / 2.0));
             }
         }
     }

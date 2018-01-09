@@ -1,7 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
+    using System.Windows;
+
     public interface IPosition {
 
-        System.Windows.Point Position { get; set; }
+        Point Position { get; set; }
     }
 }

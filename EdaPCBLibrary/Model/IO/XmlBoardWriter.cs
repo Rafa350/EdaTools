@@ -146,7 +146,7 @@
                 foreach (RegionElement.Segment segment in isolation.Segments) {
                     writer.WriteStartElement("segment");
                     writer.WriteAttribute("position", segment.Position);
-                    if (segment.Angle != 0)
+                    if (!segment.Angle.IsZero)
                         writer.WriteAttribute("angle", segment.Angle);
                     writer.WriteEndElement();
                 }

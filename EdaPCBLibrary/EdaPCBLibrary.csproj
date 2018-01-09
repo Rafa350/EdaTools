@@ -55,9 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Geometry\Angle.cs" />
-    <Compile Include="Geometry\Measure.cs" />
-    <Compile Include="Geometry\Point.cs" />
-    <Compile Include="Geometry\Size.cs" />
     <Compile Include="Geometry\Polygons\PolygonNode.cs" />
     <Compile Include="Geometry\Polygons\Infrastructure\Clipper.cs" />
     <Compile Include="Geometry\Polygons\Polygon.cs" />

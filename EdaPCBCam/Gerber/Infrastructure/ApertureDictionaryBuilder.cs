@@ -47,8 +47,10 @@
 
                 if (rectangle.IsOnAnyLayer(layers)) {
                     if (rectangle.Thickness == 0) {
-                        Angle rotate = rectangle.Rotation + (VisitingPart != null ? VisitingPart.Rotation : Angle.FromDegrees(0));
-                        apertureDict.DefineRectangleAperture((double)rectangle.Size.Width, (double)rectangle.Size.Height, rotate.Degrees);
+                        Angle rotation = rectangle.Rotation;
+                        if (VisitingPart != null)
+                            rotation += VisitingPart.Rotation;
+                        apertureDict.DefineRectangleAperture((double)rectangle.Size.Width, (double)rectangle.Size.Height, rotation);
                     }
                 }
             }
@@ -70,11 +72,11 @@
                             break;
 
                         case ViaElement.ViaShape.Square:
-                            apertureDict.DefineRectangleAperture(via.OuterSize, via.OuterSize, 0);
+                            apertureDict.DefineRectangleAperture(via.OuterSize, via.OuterSize, Angle.Zero);
                             break;
 
                         case ViaElement.ViaShape.Octogonal:
-                            apertureDict.DefineOctagonAperture(via.OuterSize, 0);
+                            apertureDict.DefineOctagonAperture(via.OuterSize, Angle.Zero);
                             break;
                     }
                 }
@@ -83,22 +85,24 @@
             public override void Visit(ThPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers)) {
-                    Angle rotate = pad.Rotation + (VisitingPart != null ? VisitingPart.Rotation : Angle.FromDegrees(0));
+                    Angle rotation = pad.Rotation;
+                    if (VisitingPart != null)
+                        rotation += VisitingPart.Rotation;
                     switch (pad.Shape) {
                         case ThPadElement.ThPadShape.Circular:
                             apertureDict.DefineCircleAperture(pad.Size);
                             break;
 
                         case ThPadElement.ThPadShape.Square:
-                            apertureDict.DefineRectangleAperture(pad.Size, pad.Size, rotate.Degrees);
+                            apertureDict.DefineRectangleAperture(pad.Size, pad.Size, rotation);
                             break;
 
                         case ThPadElement.ThPadShape.Octogonal:
-                            apertureDict.DefineOctagonAperture(pad.Size, rotate.Degrees);
+                            apertureDict.DefineOctagonAperture(pad.Size, rotation);
                             break;
 
                         case ThPadElement.ThPadShape.Oval:
-                            apertureDict.DefineOvalAperture(pad.Size * 2, pad.Size, rotate.Degrees);
+                            apertureDict.DefineOvalAperture(pad.Size * 2, pad.Size, rotation);
                             break;
                     }
                 }
@@ -107,12 +111,14 @@
             public override void Visit(SmdPadElement pad) {
 
                 if (pad.IsOnAnyLayer(layers)) {
-                    Angle rotation = pad.Rotation + (VisitingPart != null ? VisitingPart.Rotation : Angle.FromDegrees(0));
-                    double radius = pad.Roundnes * Math.Min((double)pad.Size.Width, (double)pad.Size.Height) / 2;
+                    Angle rotation = pad.Rotation;
+                    if (VisitingPart != null)
+                        rotation += VisitingPart.Rotation;
+                    double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
                     if (radius == 0)
-                        apertureDict.DefineRectangleAperture((double)pad.Size.Width, (double)pad.Size.Height, rotation.Degrees);
+                        apertureDict.DefineRectangleAperture(pad.Size.Width, pad.Size.Height, rotation);
                     else
-                        apertureDict.DefineRoundRectangleAperture((double)pad.Size.Width, (double)pad.Size.Height, radius, rotation.Degrees);
+                        apertureDict.DefineRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
                 }
             }
 

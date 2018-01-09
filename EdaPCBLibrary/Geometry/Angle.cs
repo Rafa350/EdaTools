@@ -1,25 +1,28 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry {
 
     using System;
+    using System.Globalization;
 
     /// <summary>
-    /// Estructura que representa un angle en centesimes de grau.
+    /// Estructura que representa un angle.
     /// </summary>
     public struct Angle {
 
-        public enum Units {
+        public enum FormatingUnits {
             Auto,
             Native,
             Degrees,
             Radiants
         }
 
+        public static readonly Angle Zero = new Angle(0);
+
         private readonly int value;
 
         /// <summary>
         /// Constructor del objecte
         /// </summary>
-        /// <param name="value">El valor en centesimes de grau.</param>
+        /// <param name="value">El valor unitats internes.</param>
         /// 
         private Angle(int value) {
 
@@ -54,7 +57,7 @@
         /// <param name="s">La text a analitzar.</param>
         /// <returns>L'objecte creat.</returns>
         /// 
-        public static Angle Parse(string s, Units units = Units.Auto) {
+        public static Angle Parse(string s, FormatingUnits units = FormatingUnits.Auto) {
 
             double v = Double.Parse(s);
             return new Angle((int)(v * 100.0));
@@ -77,26 +80,27 @@
         /// 
         public override string ToString() {
 
-            return ToString(Units.Native);
+            return ToString(CultureInfo.CurrentCulture, FormatingUnits.Native);
         }
 
         /// <summary>
         /// Retorna la representacio textual del valor del objecte.
         /// </summary>
+        /// <param name="provider">Proveidor de format.</param>
         /// <param name="units">Unitats.</param>
         /// <returns>La representacio.</returns>
         /// 
-        public string ToString(Units units) {
+        public string ToString(IFormatProvider provider, FormatingUnits units) {
 
             switch (units) {
-                case Units.Native:
-                    return value.ToString();
+                case FormatingUnits.Native:
+                    return String.Format(provider, "{0}", value);
 
-                case Units.Degrees:
-                    return String.Format("{0}deg", Degrees);
+                case FormatingUnits.Degrees:
+                    return String.Format(provider, "{0}deg", Degrees);
 
-                case Units.Radiants:
-                    return String.Format("{0}rad", Radiants);
+                case FormatingUnits.Radiants:
+                    return String.Format(provider, "{0}rad", Radiants);
 
                 default:
                     throw new InvalidOperationException("Tipo de unidades no valida.");
@@ -193,6 +197,18 @@
         public bool IsZero {
             get {
                 return value == 0;
+            }
+        }
+
+        public bool IsPositive {
+            get {
+                return value >= 0;
+            }
+        }
+
+        public bool IsNegative {
+            get {
+                return value < 0;
             }
         }
 

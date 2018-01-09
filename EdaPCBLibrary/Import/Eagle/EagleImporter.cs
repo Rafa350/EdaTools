@@ -235,9 +235,11 @@
 
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
-            System.Windows.Point position = new System.Windows.Point(x, y);
+            Point position = new Point(x, y);
 
-            Angle rotate = Angle.FromDegrees(StrToDouble(GetAttribute(node, "rot")));
+            double r = StrToDouble(GetAttribute(node, "rot"));
+            Angle rotate = Angle.FromDegrees(r);
+
             double drill = StrToDouble(GetAttribute(node, "drill"));
             double size = drill * 1.6;
 
@@ -271,13 +273,15 @@
 
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
-            System.Windows.Point position = new System.Windows.Point(x, y);
+            Point position = new Point(x, y);
 
             double width = StrToDouble(GetAttribute(node, "dx"));
             double height = StrToDouble(GetAttribute(node, "dy"));
-            System.Windows.Size size = new System.Windows.Size(width, height);
+            Size size = new Size(width, height);
 
-            Angle rotate = Angle.FromDegrees(StrToDouble(GetAttribute(node, "rot")));
+            double r = StrToDouble(GetAttribute(node, "rot"));
+            Angle rotate = Angle.FromDegrees(r);
+
             double roundnes = StrToDouble(GetAttribute(node, "roundness")) / 100;
             bool stop = StrToBoolean(GetAttribute(node, "stop"), true);
             bool cream = StrToBoolean(GetAttribute(node, "cream"), true);
@@ -342,9 +346,11 @@
 
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
-            System.Windows.Point position = new System.Windows.Point(x, y);
+            Point position = new Point(x, y);
 
-            Angle rotate = Angle.FromDegrees(StrToDouble(GetAttribute(node, "rot")));
+            double r = StrToDouble(GetAttribute(node, "rot"));
+            Angle rotate = Angle.FromDegrees(r);
+
             double height = StrToDouble(GetAttribute(node, "size"));
 
             Layer layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
@@ -365,20 +371,22 @@
 
             double x1 = StrToDouble(GetAttribute(node, "x1"));
             double y1 = StrToDouble(GetAttribute(node, "y1"));
-            System.Windows.Point p1 = new System.Windows.Point(x1, y1);
+            Point p1 = new System.Windows.Point(x1, y1);
 
             double x2 = StrToDouble(GetAttribute(node, "x2"));
             double y2 = StrToDouble(GetAttribute(node, "y2"));
-            System.Windows.Point p2 = new System.Windows.Point(x2, y2);
+            Point p2 = new System.Windows.Point(x2, y2);
 
-            double angle = StrToDouble(GetAttribute(node, "curve"));
+            double a = StrToDouble(GetAttribute(node, "curve"));
+            Angle angle = Angle.FromDegrees(a);
+
             LineElement.LineCapStyle lineCap = GetAttribute(node, "cap") == null ? LineElement.LineCapStyle.Round : LineElement.LineCapStyle.Flat;
 
             double thickness = StrToDouble(GetAttribute(node, "width"));
 
             Layer layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
 
-            if (angle == 0)
+            if (angle.IsZero)
                 return new LineElement(p1, p2, layer, thickness, lineCap);
             else
                 return new ArcElement(p1, p2, layer, thickness, angle, lineCap);
@@ -396,10 +404,12 @@
             double y1 = StrToDouble(GetAttribute(node, "y1"));
             double x2 = StrToDouble(GetAttribute(node, "x2"));
             double y2 = StrToDouble(GetAttribute(node, "y2"));
-            System.Windows.Point position = new System.Windows.Point((x1 + x2) / 2, (y1 + y2) / 2);
-            System.Windows.Size size = new System.Windows.Size(x2 - x1, y2 - y1);
+            Point position = new Point((x1 + x2) / 2, (y1 + y2) / 2);
+            Size size = new Size(x2 - x1, y2 - y1);
 
-            Angle rotate = Angle.FromDegrees(StrToDouble(GetAttribute(node, "rot")));
+            double r = StrToDouble(GetAttribute(node, "rot"));
+            Angle rotate = Angle.FromDegrees(r);
+
             double thickness = StrToDouble(GetAttribute(node, "width"));
 
             Layer layer = GetLayer(StrToInteger(GetAttribute(node, "layer")));
@@ -445,9 +455,10 @@
 
                 double x = StrToDouble(GetAttribute(vertexNode, "x"));
                 double y = StrToDouble(GetAttribute(vertexNode, "y"));
-                System.Windows.Point vertex = new System.Windows.Point(x, y);
+                Point vertex = new Point(x, y);
 
-                double angle = StrToDouble(GetAttribute(vertexNode, "curve"));
+                double a = StrToDouble(GetAttribute(vertexNode, "curve"));
+                Angle angle = Angle.FromDegrees(a);
 
                 segments.Add(new RegionElement.Segment(vertex, angle));
             }
@@ -465,7 +476,7 @@
 
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
-            System.Windows.Point position = new System.Windows.Point(x, y);
+            Point position = new Point(x, y);
 
             double drill = StrToDouble(GetAttribute(node, "drill"));
 
@@ -505,20 +516,20 @@
 
             double x = StrToDouble(GetAttribute(node, "x"));
             double y = StrToDouble(GetAttribute(node, "y"));
-            System.Windows.Point position = new System.Windows.Point(x, y);
+            Point position = new Point(x, y);
 
             bool mirror = false;
-            double rotate = 0;
+            double r = 0;
             string rot = GetAttribute(node, "rot");
             if (rot != null) {
-                rotate = StrToDouble(rot);
+                r = StrToDouble(rot);
                 mirror = rot.StartsWith("M");
             }
 
             Part part = new Part();
             part.Name = name;
             part.Position = position;
-            part.Rotation = Angle.FromDegrees(rotate);
+            part.Rotation = Angle.FromDegrees(r);
             part.IsFlipped = mirror;
             part.Component = GetComponent(componentKey);
 

@@ -1,12 +1,13 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Builder {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using System;
 
    internal sealed class State {
 
         private Aperture aperture = null;
         private Polarity aperturePolarity = Polarity.Dark;
-        private double apertureAngle = 0;
+        private Angle apertureAngle = Angle.FromDegrees(0);
         private double apertureScale = 0;
         private bool apertureMirror = false;
         private InterpolationMode interpolationMode = InterpolationMode.Unknown;
@@ -127,7 +128,7 @@
         /// <param name="apertureAngle">El valor de l'angle en graus.</param>
         /// <returns>True si ha canviat l'estat.</returns>
         /// 
-        public bool SetApertureAngle(double apertureAngle) {
+        public bool SetApertureAngle(Angle apertureAngle) {
 
             if (this.apertureAngle != apertureAngle) {
                 this.apertureAngle = apertureAngle;
@@ -237,7 +238,7 @@
         /// Obte l'angle de l'apertura.
         /// </summary>
         /// 
-        public double ApertureAngle {
+        public Angle ApertureAngle {
             get {
                 return apertureAngle;
             }
