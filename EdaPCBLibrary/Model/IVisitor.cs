@@ -9,7 +9,6 @@
         void Visit(Part part);
         void Visit(Parameter parameter);
         void Visit(Signal signal);
-        void Visit(Terminal terminal);
         void Visit(Component component);
         void Visit(LineElement line);
         void Visit(ArcElement arc);

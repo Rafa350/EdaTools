@@ -11,7 +11,7 @@
 
         private Stream stream;
 
-        private class Visitor: BoardVisitor {
+        private class Visitor: DefaultVisitor {
 
             private XmlWriter writer;
             private readonly CultureInfo ci = CultureInfo.InvariantCulture;
@@ -29,7 +29,8 @@
                 writer.WriteAttribute("endPosition", line.EndPosition);
                 if (line.Thickness > 0)
                     writer.WriteAttribute("thickness", line.Thickness);
-                writer.WriteAttributeString("lineCap", line.LineCap.ToString());
+                if (line.LineCap != LineElement.LineCapStyle.Round)
+                    writer.WriteAttributeString("lineCap", line.LineCap.ToString());
                 writer.WriteEndElement();
             }
 
@@ -119,7 +120,8 @@
                     writer.WriteAttribute("rotation", pad.Rotation);
                 writer.WriteAttribute("size", pad.Size);
                 writer.WriteAttribute("drill",  pad.Drill);
-                writer.WriteAttributeString("shape", pad.Shape.ToString());
+                if (pad.Shape != ThPadElement.ThPadShape.Circular)
+                    writer.WriteAttributeString("shape", pad.Shape.ToString());
                 writer.WriteEndElement();
             }
 
@@ -175,14 +177,11 @@
                 writer.WriteEndElement();
             }
 
-            public override void Visit(Terminal terminal) {
-
-                writer.WriteStartElement("terminal");
-                writer.WriteAttributeString("part", terminal.Part.Name);
-                writer.WriteAttributeString("pad", terminal.PadName);
-                writer.WriteEndElement();
-            }
-
+            /// <summary>
+            /// Visita una via.
+            /// </summary>
+            /// <param name="via">La via a visitar.</param>
+            /// 
             public override void Visit(ViaElement via) {
 
                 writer.WriteStartElement("via");
@@ -190,32 +189,46 @@
                 writer.WriteAttribute("layers", via.Layers);
                 writer.WriteAttribute("drill", via.Drill);
                 writer.WriteAttribute("outerSize", via.OuterSize);
-                writer.WriteAttribute("innerSize", via.InnerSize);
-                writer.WriteAttributeString("shape", via.Shape.ToString());
-                writer.WriteAttributeString("type", via.Type.ToString());
+                if (via.InnerSize != via.OuterSize)
+                    writer.WriteAttribute("innerSize", via.InnerSize);
+                if (via.Shape != ViaElement.ViaShape.Circular)
+                    writer.WriteAttributeString("shape", via.Shape.ToString());
+                if (via.Type != ViaElement.ViaType.Through)
+                    writer.WriteAttributeString("type", via.Type.ToString());
                 writer.WriteEndElement();
             }
 
+            /// <summary>
+            /// Visita una capa.
+            /// </summary>
+            /// <param name="layer">La capa a visitar.</param>
+            /// 
+            public override void Visit(Layer layer) {
+
+                writer.WriteStartElement("layer");
+                writer.WriteAttributeString("name", layer.Name);
+                writer.WriteAttributeString("id", layer.Id.ToString());
+                writer.WriteAttributeString("class", layer.Class.ToString());
+                writer.WriteAttributeString("visible", layer.IsVisible.ToString());
+                writer.WriteAttribute("color", layer.Color);
+                writer.WriteEndElement();
+            }
+
+            /// <summary>
+            /// Visita una senyal.
+            /// </summary>
+            /// <param name="signal">La senyal a visitar.</param>
+            /// 
             public override void Visit(Signal signal) {
                 
                 writer.WriteStartElement("signal");
                 writer.WriteAttributeString("name", signal.Name);
-
-                if (signal.Elements != null) {
-                    writer.WriteStartElement("elements");
-                    foreach (Element element in signal.Elements) 
-                        element.AcceptVisitor(this);
-                    foreach (Terminal pad in signal.Terminals)
-                        pad.AcceptVisitor(this);
-                    writer.WriteEndElement();
-                }
-
                 writer.WriteEndElement();
             }
 
             public override void Visit(Component component) {
 
-                writer.WriteStartElement("component");
+                writer.WriteStartElement("block");
                 writer.WriteAttributeString("name", component.Name);
 
                 if (component.HasElements) {
@@ -228,21 +241,10 @@
                 writer.WriteEndElement();
             }
 
-            public override void Visit(Layer layer) {
-
-                writer.WriteStartElement("layer");
-                writer.WriteAttributeString("name", layer.Name);
-                writer.WriteAttributeString("id", layer.Id.ToString());
-                writer.WriteAttributeString("class", layer.Class.ToString());
-                writer.WriteAttributeString("visible", layer.IsVisible.ToString());
-                writer.WriteAttribute("color", layer.Color);
-                writer.WriteEndElement();
-            }
-
             public override void Visit(Board board) {
 
                 writer.WriteStartElement("board");
-                writer.WriteAttributeString("version", "100");
+                writer.WriteAttributeString("version", "200");
                 writer.WriteAttributeString("units", "mm");
 
                 if (board.Layers != null) {
@@ -252,8 +254,15 @@
                     writer.WriteEndElement();
                 }
 
+                if (board.Signals != null) {
+                    writer.WriteStartElement("signals");
+                    foreach (Signal signal in board.Signals)
+                        signal.AcceptVisitor(this);
+                    writer.WriteEndElement();
+                }
+
                 if (board.HasComponents) {
-                    writer.WriteStartElement("components");
+                    writer.WriteStartElement("blocks");
                     foreach (Component component in board.Components)
                         component.AcceptVisitor(this);
                     writer.WriteEndElement();
@@ -270,13 +279,6 @@
                     writer.WriteStartElement("elements");
                     foreach (Element element in board.Elements)
                         element.AcceptVisitor(this);
-                    writer.WriteEndElement();
-                }
-
-                if (board.Signals != null) {
-                    writer.WriteStartElement("signals");
-                    foreach (Signal signal in board.Signals)
-                        signal.AcceptVisitor(this);
                     writer.WriteEndElement();
                 }
 

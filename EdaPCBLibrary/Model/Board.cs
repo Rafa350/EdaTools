@@ -2,7 +2,6 @@
 
     using System;
     using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using MikroPic.EdaTools.v1.Pcb.Model.Collections;
 
     /// <summary>
@@ -12,6 +11,8 @@
 
         private readonly LayerStackup layerStackup = new LayerStackup();
         private readonly List<Element> elements = new List<Element>();
+        private readonly Dictionary<Signal, List<Element>> mapSignalToElements = new Dictionary<Signal, List<Element>>();
+        private readonly Dictionary<Element, Signal> mapElementToSignal = new Dictionary<Element, Signal>();
         private static readonly Dictionary<Component, Board> componentOwners = new Dictionary<Component, Board>();
         private readonly List<Component> components = new List<Component>();
         private List<Part> parts;
@@ -94,6 +95,41 @@
 
             components.Add(component);
             componentOwners.Add(component, this);
+        }
+
+        /// <summary>
+        /// Afegeix una conexio entre un element i un senyal.
+        /// </summary>
+        /// <param name="signal">La senyal.</param>
+        /// <param name="element">El element a conectar.</param>
+        /// 
+        public void AddConnection(Signal signal, Element element) {
+
+            if (signal == null)
+                throw new ArgumentNullException("signal");
+
+            if (element == null)
+                throw new ArgumentNullException("element");
+
+            if (mapElementToSignal.ContainsKey(element))
+                throw new InvalidOperationException("El elemento ya esta conectado.");
+
+            List<Element> elementList;
+            if (mapSignalToElements.TryGetValue(signal, out elementList)) {
+                elementList = new List<Element>();
+                mapSignalToElements.Add(signal, elementList);
+            }
+            elementList.Add(element);
+            mapElementToSignal.Add(element, signal);
+        }
+
+        public void RemoveConnection(Element element) {
+
+            if (element == null)
+                throw new ArgumentNullException("element");
+
+            if (!mapElementToSignal.ContainsKey(element))
+                throw new InvalidOperationException("El elemento no esta conectado a ninguna señal.");
         }
 
         public Signal GetSignal(string name) {

@@ -13,9 +13,6 @@
         public virtual void Visit(Signal signal) {
         }
 
-        public virtual void Visit(Terminal terminal) {
-        }
-
         public virtual void Visit(LineElement line) {
         }
 

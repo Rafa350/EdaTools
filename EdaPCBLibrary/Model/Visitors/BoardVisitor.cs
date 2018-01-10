@@ -1,14 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Visitors {
 
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-
-    public abstract class BoardVisitor: IVisitor {
+    public abstract class BoardVisitor: DefaultVisitor {
 
         private Board visitingBoard;
         private Part visitingPart;
-        private Signal visitingSignal;
 
-        public virtual void Visit(Board board) {
+        public override void Visit(Board board) {
 
             visitingBoard = board;
             try {
@@ -20,70 +17,13 @@
                 if (board.Parts != null)
                     foreach (Part part in board.Parts)
                         part.AcceptVisitor(this);
-
-                if (board.Signals != null)
-                    foreach (Signal signal in board.Signals)
-                        signal.AcceptVisitor(this);
             }
             finally {
                 visitingBoard = null;
             }
         }
 
-        public virtual void Visit(Layer layer) {
-        }
-
-        public virtual void Visit(Signal signal) {
-
-            visitingSignal = signal;
-            try {
-                if (signal.Elements != null)
-                    foreach (Element element in signal.Elements)
-                        element.AcceptVisitor(this);
-
-                if (signal.Terminals != null)
-                    foreach (Terminal pad in signal.Terminals)
-                        pad.AcceptVisitor(this);
-            }
-            finally { 
-                visitingSignal = null;
-            }
-        }
-
-        public virtual void Visit(Terminal terminal) {
-        }
-
-        public virtual void Visit(LineElement line) {
-        }
-
-        public virtual void Visit(ArcElement arc) {
-        }
-
-        public virtual void Visit(RectangleElement rectangle) {
-        }
-
-        public virtual void Visit(CircleElement circle) {
-        }
-
-        public virtual void Visit(SmdPadElement pad) {
-        }
-
-        public virtual void Visit(ThPadElement pad) {
-        }
-
-        public virtual void Visit(RegionElement region) {
-        }
-
-        public virtual void Visit(TextElement text) {
-        }
-
-        public virtual void Visit(HoleElement hole) {
-        }
-
-        public virtual void Visit(ViaElement via) {
-        }
-
-        public virtual void Visit(Part part) {
+        public override void Visit(Part part) {
 
             visitingPart = part;
             try {
@@ -97,17 +37,14 @@
             }
         }
 
-        public virtual void Visit(Component component) {
+        public override void Visit(Component component) {
 
-            foreach (Element element in component.Elements)
-                element.AcceptVisitor(this);
-        }
-
-        public virtual void Visit(Parameter parameter) {
+            if (component.HasElements)
+                foreach (Element element in component.Elements)
+                    element.AcceptVisitor(this);
         }
 
         protected Board VisitingBoard {  get { return visitingBoard; } }
         protected Part VisitingPart { get { return visitingPart; } }
-        protected Signal VisitingSignal { get { return visitingSignal; } }
     }
 }

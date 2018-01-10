@@ -263,7 +263,7 @@
                             break;
                     }
                     gb.SelectAperture(ap);
-                    System.Windows.Point p = VisitingPart.Transform(pad.Position);
+                    Point p = VisitingPart.Transform(pad.Position);
                     gb.FlashAt(p);
                 }
             }
@@ -284,7 +284,7 @@
                         apertureDict.GetRectangleAperture(pad.Size.Width, pad.Size.Height, rotation) :
                         apertureDict.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
                     gb.SelectAperture(ap);
-                    System.Windows.Point p = VisitingPart.Transform(pad.Position);
+                    Point p = VisitingPart.Transform(pad.Position);
                     gb.FlashAt(p);
                 }
             }
@@ -307,16 +307,13 @@
 
                 if (region.IsOnAnyLayer(layers)) {
 
-                    if (VisitingSignal != null) {
+                    double clearance = 0.15;
 
-                        double clearance = 0.15;
+                    Polygon regionPolygon = PolygonBuilder.Build(region);
+                    IEnumerable<Polygon> holePolygons = PolygonListBuilder.Build(VisitingBoard, layers[0], regionPolygon, clearance + (region.Thickness / 2));
 
-                        Polygon regionPolygon = PolygonBuilder.Build(region);
-                        IEnumerable<Polygon> holePolygons = PolygonListBuilder.Build(VisitingBoard, layers[0], regionPolygon, clearance + (region.Thickness / 2));
-
-                        PolygonNode polygonTree = PolygonProcessor.ClipExtended(regionPolygon, holePolygons, PolygonProcessor.ClipOperation.Diference);
-                        ProcessPolygonTree(polygonTree, region.Thickness);
-                    }
+                    PolygonNode polygonTree = PolygonProcessor.ClipExtended(regionPolygon, holePolygons, PolygonProcessor.ClipOperation.Diference);
+                    ProcessPolygonTree(polygonTree, region.Thickness);
                 }
             }
 

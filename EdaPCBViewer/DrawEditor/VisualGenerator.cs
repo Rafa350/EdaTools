@@ -43,24 +43,6 @@
                 foreach (Signal signal in board.Signals)
                     signal.AcceptVisitor(this);
             }
-
-            /// <summary>
-            /// Visita un objecte 'Signal'.
-            /// </summary>
-            /// <param name="signal">La senyal a visitar.</param>
-            public override void Visit(Signal signal) {
-
-                if (signal.Elements != null)
-                    foreach (Element element in signal.Elements) {
-                        if (element.IsOnLayer(layer)) {
-                            RenderItem renderItem = new RenderItem {
-                                Part = null,
-                                Element = element
-                            };
-                            renderList.Add(renderItem);
-                        }
-                    }
-            }
         }
 
         private sealed class PopulateRenderListPartsVisitor: BoardVisitor {
