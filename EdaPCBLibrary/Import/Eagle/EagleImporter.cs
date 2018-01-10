@@ -17,45 +17,22 @@
         private readonly Dictionary<string, Part> partDict = new Dictionary<string, Part>();
         private readonly Dictionary<string, Signal> signalDict = new Dictionary<string, Signal>();
 
+        /// <summary>
+        /// Importa una placa en format EAGLE.
+        /// </summary>
+        /// <param name="stream">Stream d'entrada.</param>
+        /// <returns>La placa.</returns>
+        /// 
         public override Board LoadBoard(Stream stream) {
 
             XmlDocument doc = ReadXmlDocument(stream);
 
             Board board = new Board();
 
-            // Procesa la definicio de capes
-            //
-            foreach (Layer layer in ParseLayersNode(doc.SelectSingleNode("eagle/drawing/layers"))) {
-                board.LayerStackup.AddLayer(layer);
-                layerDict.Add(layer.Id, layer);
-            }
-
-            // Procesa la definicio de senyals
-            //
-            foreach (Signal signal in ParseSignalsNodeForSignals(doc.SelectSingleNode("eagle/drawing/board/signals"))) {
-                board.AddSignal(signal);
-                signalDict.Add(signal.Name, signal);
-            }
-
-            // Procesa la definicio de components
-            //
-            foreach (Component component in ParseLibrariesNode(doc.SelectSingleNode("eagle/drawing/board/libraries"))) {
-                board.AddComponent(component);
-                componentDict.Add(component.Name, component);
-            }
-
-            // Procesa la definicio d'elements de la placa. En eagle, es troba repartida per diversos llocs
-            //
-            foreach (Part part in ParseElementsNode(doc.SelectSingleNode("eagle/drawing/board/elements"))) {
-                board.AddPart(part);
-                partDict.Add(part.Name, part);
-            }
-
-            foreach (Element element in ParsePlainNode(doc.SelectSingleNode("eagle/drawing/board/plain")))
-                board.AddElement(element);
-
-            foreach (Element element in ParseSignalsNodeForElements(doc.SelectSingleNode("eagle/drawing/board/signals")))
-                board.AddElement(element);
+            ProcessLayers(board, doc);
+            ProcessSignals(board, doc);
+            ProcessBlocks(board, doc);
+            ProcessElements(board, doc);
 
             return board;
         }
@@ -71,7 +48,7 @@
         /// Carrega el document XML en format EAGLE
         /// </summary>
         /// <param name="stream">Stream d'entrada.</param>
-        /// <returns>El document XML carregqat.</returns>
+        /// <returns>El document XML carregat.</returns>
         /// 
         private XmlDocument ReadXmlDocument(Stream stream) {
 
@@ -90,96 +67,60 @@
         }
 
         /// <summary>
-        /// Procesa el node LAYERS.
+        /// Procesa les capes.
         /// </summary>
-        /// <param name="node">El node a procesar.</param>
-        /// <returns>La llista de capes.</returns>
+        /// <param name="board">La placa.</param>
+        /// <param name="doc">El document xml a procesar.</param>
         /// 
-        private IEnumerable<Layer> ParseLayersNode(XmlNode node) {
+        private void ProcessLayers(Board board, XmlDocument doc) {
 
-            List<Layer> layers = new List<Layer>();
-            foreach (XmlNode childNode in node.SelectNodes("layer")) {
+            foreach (XmlNode layerNode in doc.SelectNodes("eagle/drawing/layers/layer")) {
 
-                int layerNum = GetAttributeInteger(childNode, "number");
+                int layerNum = GetAttributeInteger(layerNode, "number");
                 LayerId layerId = GetLayerId(layerNum);
 
                 if ((layerId != LayerId.Unknown) && (!layerDict.ContainsKey(layerId))) {
-                    Layer layer = ParseLayerNode(childNode);
-                    layers.Add(layer);
+                    Layer layer = ParseLayerNode(layerNode);
+                    board.LayerStackup.AddLayer(layer);
+                    layerDict.Add(layer.Id, layer);
                 }
             }
-            return layers;
         }
 
         /// <summary>
-        /// Procesa el node SIGNALS.
+        /// Procesa les senyals
         /// </summary>
-        /// <param name="node">El node a procesar</param>
-        /// <returns>La llista de senyals.</returns>
+        /// <param name="board">La placa.</param>
+        /// <param name="doc">El document a procesar.</param>
         /// 
-        private IEnumerable<Signal> ParseSignalsNodeForSignals(XmlNode node) {
+        private void ProcessSignals(Board board, XmlDocument doc) {
 
-            List<Signal> signals = new List<Signal>();
-            foreach (XmlNode childNode in node.SelectNodes("signal")) {
+            // Procesa el tag <signal>
+            //
+            foreach (XmlNode signalNode in doc.SelectNodes("eagle/drawing/board/signals/signal")) {
 
-                Signal signal = ParseSignalNode(childNode);
-                signals.Add(signal);
+                Signal signal = ParseSignalNode(signalNode);
+                board.AddSignal(signal);
+                signalDict.Add(signal.Name, signal);
             }
-
-            return signals;
         }
 
         /// <summary>
-        /// Procesa el node SIGNALS.
+        /// Procesa els blocs
         /// </summary>
-        /// <param name="node">El node a procesar</param>
-        /// <returns>La llista de senyals.</returns>
+        /// <param name="board">La placa.</param>
+        /// <param name="doc">El document a procesar.</param>
         /// 
-        private IEnumerable<Element> ParseSignalsNodeForElements(XmlNode node) {
+        private void ProcessBlocks(Board board, XmlDocument doc) {
 
-            List<Element> elements = new List<Element>();
-            foreach (XmlNode childNode in node.SelectNodes("signal/*")) {
-                Element element = null;
-                switch (childNode.Name) {
-                    case "wire":
-                        element = ParseWireNode(childNode);
-                        break;
-
-                    case "via":
-                        element = ParseViaNode(childNode);
-                        break;
-
-                    case "polygon":
-                        element = ParsePolygonNode(childNode);
-                        break;
-
-                    case "contactref":
-                        break;
-
-                    default:
-                        throw new InvalidOperationException(
-                            String.Format("No se reconoce el tag '{0}'.", childNode.Name));
-                }
-                if (element != null)
-                    elements.Add(element);
-            }
-
-            return elements;
-        }
-
-        /// <summary>
-        /// Procesa el node LIBRARIES
-        /// </summary>
-        /// <param name="node">El node a procesar.</param>
-        /// <returns>La llista de components.</returns>
-        /// 
-        private IEnumerable<Component> ParseLibrariesNode(XmlNode node) {
-
-            List<Component> components = new List<Component>();
-            foreach (XmlNode libraryNode in node.SelectNodes("library")) {
+            // Procesa el tag <library>
+            //
+            foreach (XmlNode libraryNode in doc.SelectNodes("eagle/drawing/board/libraries/library")) {
 
                 string libraryName = GetAttributeString(libraryNode, "name");
 
+                // Procesa el tag <package>
+                //
                 foreach (XmlNode packageNode in libraryNode.SelectNodes("packages/package")) {
 
                     string packageName = GetAttributeString(packageNode, "name");
@@ -233,31 +174,39 @@
 
                     string name = String.Format("{0}@{1}", packageName, libraryName);
                     Component component = new Component(name, elements);
-                    components.Add(component);
+                    board.AddComponent(component);
+                    componentDict.Add(component.Name, component);
                 }
             }
-
-            return components;
         }
 
         /// <summary>
-        /// Procesa el node PLAIN
+        /// Procesa els elements.
         /// </summary>
-        /// <param name="node">El node a procesar.</param>
-        /// <returns>La llista d'elements.</returns>
+        /// <param name="board">La placa.</param>
+        /// <param name="doc">El document a procesar.</param>
         /// 
-        private IEnumerable<Element> ParsePlainNode(XmlNode node) {
+        private void ProcessElements(Board board, XmlDocument doc) {
 
-            List<Element> elements = new List<Element>();
-            foreach (XmlNode childNode in node.ChildNodes) {
+            // Procesa el tag <elements>
+            //
+            foreach (Part part in ParseElementsNode(doc.SelectSingleNode("eagle/drawing/board/elements"))) {
+                board.AddPart(part);
+                partDict.Add(part.Name, part);
+            }
+
+            // Procesa el tag <plain>
+            //
+            foreach (XmlNode node in doc.SelectSingleNode("eagle/drawing/board/plain")) {
+
                 Element element = null;
-                switch (childNode.Name) {
+                switch (node.Name) {
                     case "wire":
-                        element = ParseWireNode(childNode);
+                        element = ParseWireNode(node);
                         break;
 
                     case "text":
-                        element = ParseTextNode(childNode);
+                        element = ParseTextNode(node);
                         break;
 
                     case "dimension":
@@ -265,12 +214,53 @@
 
                     default:
                         throw new InvalidOperationException(
-                            String.Format("No se reconoce el tag '{0}'.", childNode.Name));
+                            String.Format("No se reconoce el tag '{0}'.", node.Name));
                 }
                 if (element != null)
-                    elements.Add(element);
+                    board.AddElement(element);
             }
-            return elements;
+
+            // Procesa el tag <signals>
+            //
+            foreach (XmlNode node in doc.SelectSingleNode("eagle/drawing/board/signals")) {
+
+                string signalName = GetAttributeString(node, "name");
+                Signal signal = signalDict[signalName];
+
+                foreach (XmlNode childNode in node.ChildNodes) {
+                    Element element = null;
+                    switch (childNode.Name) {
+                        case "wire":
+                            element = ParseWireNode(childNode);
+                            break;
+
+                        case "via":
+                            element = ParseViaNode(childNode);
+                            break;
+
+                        case "polygon":
+                            element = ParsePolygonNode(childNode);
+                            break;
+
+                        case "contactref": {
+                                string componentName = GetAttributeString(childNode, "element");
+                                string padName = GetAttributeString(childNode, "pad");
+                                break;
+                            }
+
+                        default:
+                            throw new InvalidOperationException(
+                                String.Format("No se reconoce el tag '{0}'.", childNode.Name));
+                    }
+                    if (element != null) {
+                        board.AddElement(element);
+
+                        IConectable conectable = element as IConectable;
+                        if (conectable != null)
+                            board.AddConnection(signal, conectable);
+                    }
+                }
+            }
         }
 
         /// <summary>

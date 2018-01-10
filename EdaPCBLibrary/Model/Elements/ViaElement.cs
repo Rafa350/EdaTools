@@ -6,7 +6,7 @@
     using System.Collections.Generic;
     using System.Windows;
 
-    public sealed class ViaElement: MultiLayerElement, IPosition, IConected {
+    public sealed class ViaElement: MultiLayerElement, IPosition, IConectable {
 
         public enum ViaShape {
             Square,

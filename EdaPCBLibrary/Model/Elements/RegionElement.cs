@@ -5,7 +5,7 @@
     using System.Collections.Generic;
     using System.Windows;
 
-    public sealed class RegionElement: SingleLayerElement {
+    public sealed class RegionElement: SingleLayerElement, IConectable {
 
         public struct Segment {
 

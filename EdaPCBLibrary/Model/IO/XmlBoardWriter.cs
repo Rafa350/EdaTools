@@ -13,8 +13,9 @@
 
         private class Visitor: DefaultVisitor {
 
-            private XmlWriter writer;
+            private readonly XmlWriter writer;
             private readonly CultureInfo ci = CultureInfo.InvariantCulture;
+            private Board board;
 
             public Visitor(XmlWriter writer) {
 
@@ -31,6 +32,9 @@
                     writer.WriteAttribute("thickness", line.Thickness);
                 if (line.LineCap != LineElement.LineCapStyle.Round)
                     writer.WriteAttributeString("lineCap", line.LineCap.ToString());
+                Signal signal = board.GetSignal(line);
+                if (signal != null)
+                    writer.WriteAttributeString("signal", signal.Name);
                 writer.WriteEndElement();
             }
 
@@ -44,6 +48,9 @@
                 if (arc.Thickness > 0)
                     writer.WriteAttribute("thickness", arc.Thickness);
                 writer.WriteAttributeString("lineCap", arc.LineCap.ToString());
+                Signal signal = board.GetSignal(arc);
+                if (signal != null)
+                    writer.WriteAttributeString("signal", signal.Name);
                 writer.WriteEndElement();
             }
 
@@ -108,6 +115,9 @@
                     writer.WriteAttribute("cream", false);
                 if (!pad.Stop)
                     writer.WriteAttribute("stop", false);
+                Signal signal = board.GetSignal(pad);
+                if (signal != null)
+                    writer.WriteAttributeString("signal", signal.Name);
                 writer.WriteEndElement();
             }
 
@@ -122,6 +132,9 @@
                 writer.WriteAttribute("drill",  pad.Drill);
                 if (pad.Shape != ThPadElement.ThPadShape.Circular)
                     writer.WriteAttributeString("shape", pad.Shape.ToString());
+                Signal signal = board.GetSignal(pad);
+                if (signal != null)
+                    writer.WriteAttributeString("signal", signal.Name);
                 writer.WriteEndElement();
             }
 
@@ -137,15 +150,18 @@
                 writer.WriteEndElement();
             }
 
-            public override void Visit(RegionElement isolation) {
+            public override void Visit(RegionElement region) {
 
                 writer.WriteStartElement("region");
-                writer.WriteAttribute("layer", isolation.Layer);
-                if (isolation.Thickness > 0)
-                    writer.WriteAttribute("thickness", isolation.Thickness);
-                if (isolation.Isolation > 0)
-                    writer.WriteAttribute("isolation", isolation.Isolation);
-                foreach (RegionElement.Segment segment in isolation.Segments) {
+                writer.WriteAttribute("layer", region.Layer);
+                if (region.Thickness > 0)
+                    writer.WriteAttribute("thickness", region.Thickness);
+                if (region.Isolation > 0)
+                    writer.WriteAttribute("isolation", region.Isolation);
+                Signal signal = board.GetSignal(region);
+                if (signal != null)
+                    writer.WriteAttributeString("signal", signal.Name);
+                foreach (RegionElement.Segment segment in region.Segments) {
                     writer.WriteStartElement("segment");
                     writer.WriteAttribute("position", segment.Position);
                     if (segment.Angle != 0)
@@ -195,6 +211,11 @@
                     writer.WriteAttributeString("shape", via.Shape.ToString());
                 if (via.Type != ViaElement.ViaType.Through)
                     writer.WriteAttributeString("type", via.Type.ToString());
+
+                Signal signal = board.GetSignal(via);
+                if (signal != null)
+                    writer.WriteAttributeString("signal", signal.Name);
+
                 writer.WriteEndElement();
             }
 
@@ -242,6 +263,8 @@
             }
 
             public override void Visit(Board board) {
+
+                this.board = board;
 
                 writer.WriteStartElement("board");
                 writer.WriteAttributeString("version", "200");

@@ -133,7 +133,7 @@
         public IEnumerable<Pad> Pads {
             get {
                 List<Pad> pads = new List<Pad>();
-                foreach (IConected element in component.Elements.OfType<IConected>())
+                foreach (IConectable element in component.Elements.OfType<IConectable>())
                     pads.Add(new Pad(element));
                 return pads;
             }

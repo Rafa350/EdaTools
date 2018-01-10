@@ -5,7 +5,7 @@
     using System;
     using System.Windows;
 
-    public sealed class ArcElement: LineElement {
+    public sealed class ArcElement: LineElement, IConectable {
 
         private double angle;
 

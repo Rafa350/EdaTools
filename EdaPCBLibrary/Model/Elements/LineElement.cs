@@ -4,7 +4,7 @@
     using System;
     using System.Windows;
 
-    public class LineElement: SingleLayerElement {
+    public class LineElement: SingleLayerElement, IConectable {
 
         public enum LineCapStyle {
             Round,

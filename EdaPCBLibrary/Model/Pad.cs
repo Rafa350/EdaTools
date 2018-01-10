@@ -2,11 +2,11 @@
 
     using System;
 
-    public sealed class Pad {
+    public sealed class Pad: IVisitable {
 
-        private readonly IConected element;
+        private readonly IConectable element;
 
-        public Pad(IConected element) {
+        public Pad(IConectable element) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
@@ -14,7 +14,12 @@
             this.element = element;
         }
 
-        public IConected Element {
+        public void AcceptVisitor(IVisitor visitor) {
+
+            visitor.Visit(this);
+        }
+
+        public IConectable Element {
             get {
                 return element;
             }

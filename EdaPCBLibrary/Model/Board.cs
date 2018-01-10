@@ -11,8 +11,8 @@
 
         private readonly LayerStackup layerStackup = new LayerStackup();
         private readonly List<Element> elements = new List<Element>();
-        private readonly Dictionary<Signal, List<Element>> mapSignalToElements = new Dictionary<Signal, List<Element>>();
-        private readonly Dictionary<Element, Signal> mapElementToSignal = new Dictionary<Element, Signal>();
+        private readonly Dictionary<Signal, List<IConectable>> mapSignalToItems = new Dictionary<Signal, List<IConectable>>();
+        private readonly Dictionary<IConectable, Signal> mapItemToSignal = new Dictionary<IConectable, Signal>();
         private static readonly Dictionary<Component, Board> componentOwners = new Dictionary<Component, Board>();
         private readonly List<Component> components = new List<Component>();
         private List<Part> parts;
@@ -98,47 +98,58 @@
         }
 
         /// <summary>
-        /// Afegeix una conexio entre un element i un senyal.
+        /// Afegeix una conexio entre un objece i un senyal.
         /// </summary>
         /// <param name="signal">La senyal.</param>
-        /// <param name="element">El element a conectar.</param>
+        /// <param name="item">El objecte a conectar.</param>
         /// 
-        public void AddConnection(Signal signal, Element element) {
+        public void AddConnection(Signal signal, IConectable item) {
 
             if (signal == null)
                 throw new ArgumentNullException("signal");
 
-            if (element == null)
-                throw new ArgumentNullException("element");
+            if (item == null)
+                throw new ArgumentNullException("item");
 
-            if (mapElementToSignal.ContainsKey(element))
-                throw new InvalidOperationException("El elemento ya esta conectado.");
+            if (mapItemToSignal.ContainsKey(item))
+                throw new InvalidOperationException("El objeto ya esta conectado.");
 
-            List<Element> elementList;
-            if (mapSignalToElements.TryGetValue(signal, out elementList)) {
-                elementList = new List<Element>();
-                mapSignalToElements.Add(signal, elementList);
+            List<IConectable> elementList;
+            if (!mapSignalToItems.TryGetValue(signal, out elementList)) {
+                elementList = new List<IConectable>();
+                mapSignalToItems.Add(signal, elementList);
             }
-            elementList.Add(element);
-            mapElementToSignal.Add(element, signal);
+            elementList.Add(item);
+            mapItemToSignal.Add(item, signal);
         }
 
-        public void RemoveConnection(Element element) {
 
-            if (element == null)
-                throw new ArgumentNullException("element");
+        /// <summary>
+        /// Elimina la conexio a un objecte.
+        /// </summary>
+        /// <param name="item">El element a desconectar.</param>
+        /// 
+        public void RemoveConnection(IConectable item) {
 
-            if (!mapElementToSignal.ContainsKey(element))
-                throw new InvalidOperationException("El elemento no esta conectado a ninguna señal.");
+            if (item == null)
+                throw new ArgumentNullException("item");
+
+            if (!mapItemToSignal.ContainsKey(item))
+                throw new InvalidOperationException("El objeto no esta conectado a ninguna señal.");
         }
 
-        public Signal GetSignal(string name) {
+        /// <summary>
+        /// Obte la senyal conectada a un objecte.
+        /// </summary>
+        /// <param name="item">El objecte.</param>
+        /// <returns>La senyal. Null si no esta conectat.</returns>
+        /// 
+        public Signal GetSignal(IConectable item) {
 
-            if (signals != null)
-                foreach (Signal signal in signals)
-                    if (signal.Name == name)
-                        return signal;
-            return null;
+            if (mapItemToSignal.ContainsKey(item))
+                return mapItemToSignal[item];
+            else
+                return null;
         }
 
         public Layer GetLayer(LayerId id) {

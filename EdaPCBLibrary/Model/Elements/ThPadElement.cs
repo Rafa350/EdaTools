@@ -4,7 +4,7 @@
     using System;
     using System.Windows;
 
-    public sealed class ThPadElement: Element, IPosition, IRotation, IName, IConected {
+    public sealed class ThPadElement: Element, IPosition, IRotation, IName, IConectable {
 
         public enum ThPadShape {
             Square,

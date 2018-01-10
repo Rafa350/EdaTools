@@ -4,7 +4,7 @@
     using System;
     using System.Windows;
 
-    public sealed class SmdPadElement: SingleLayerElement, IPosition, IRotation, IName, IConected {
+    public sealed class SmdPadElement: SingleLayerElement, IPosition, IRotation, IName, IConectable {
 
         private string name;
         private Point position;
