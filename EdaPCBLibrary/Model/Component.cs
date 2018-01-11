@@ -123,16 +123,6 @@
         }
 
         /// <summary>
-        /// Indica si conte elements.
-        /// </summary>
-        /// 
-        public bool HasElements {
-            get {
-                return elements.Count > 0;
-            }
-        }
-
-        /// <summary>
         /// Obte la llista d'elements.
         /// </summary>
         /// 

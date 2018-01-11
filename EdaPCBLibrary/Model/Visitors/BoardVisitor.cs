@@ -39,9 +39,8 @@
 
         public override void Visit(Component component) {
 
-            if (component.HasElements)
-                foreach (Element element in component.Elements)
-                    element.AcceptVisitor(this);
+            foreach (Element element in component.Elements)
+                element.AcceptVisitor(this);
         }
 
         protected Board VisitingBoard {  get { return visitingBoard; } }

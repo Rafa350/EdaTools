@@ -7,6 +7,7 @@
 
         private Polygon polygon;
         private Rect boundingBox = Rect.Empty;
+        private bool locked = false;
 
         /// <summary>
         /// Accepta un visitador.
@@ -14,6 +15,11 @@
         /// <param name="visitor">El visitador.</param>
         /// 
         public abstract void AcceptVisitor(IVisitor visitor);
+
+        public void Lock() {
+
+            locked = true;
+        }
 
         /// <summary>
         /// Comprova si l'element pertany a la capa.
@@ -69,6 +75,16 @@
                 if (polygon == null)
                     polygon = GetPolygon();
                 return polygon.Clone();
+            }
+        }
+
+        /// <summary>
+        /// Indica si esta bloquejat.
+        /// </summary>
+        /// 
+        public bool IsLocked {
+            get {
+                return locked;
             }
         }
     }

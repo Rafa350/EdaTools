@@ -81,7 +81,7 @@
 
                 if ((layerId != LayerId.Unknown) && (!layerDict.ContainsKey(layerId))) {
                     Layer layer = ParseLayerNode(layerNode);
-                    board.LayerStackup.AddLayer(layer);
+                    board.AddLayer(layer);
                     layerDict.Add(layer.Id, layer);
                 }
             }

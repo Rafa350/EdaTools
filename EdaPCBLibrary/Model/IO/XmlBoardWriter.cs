@@ -252,12 +252,10 @@
                 writer.WriteStartElement("block");
                 writer.WriteAttributeString("name", component.Name);
 
-                if (component.HasElements) {
-                    writer.WriteStartElement("elements");
-                    foreach (Element element in component.Elements)
-                        element.AcceptVisitor(this);
-                    writer.WriteEndElement();
-                }
+                writer.WriteStartElement("elements");
+                foreach (Element element in component.Elements)
+                    element.AcceptVisitor(this);
+                writer.WriteEndElement();
 
                 writer.WriteEndElement();
             }
@@ -270,33 +268,25 @@
                 writer.WriteAttributeString("version", "200");
                 writer.WriteAttributeString("units", "mm");
 
-                if (board.Layers != null) {
-                    writer.WriteStartElement("layers");
-                    foreach (Layer layer in board.Layers)
-                        layer.AcceptVisitor(this);
-                    writer.WriteEndElement();
-                }
+                writer.WriteStartElement("layers");
+                foreach (Layer layer in board.Layers)
+                    layer.AcceptVisitor(this);
+                writer.WriteEndElement();
 
-                if (board.Signals != null) {
-                    writer.WriteStartElement("signals");
-                    foreach (Signal signal in board.Signals)
-                        signal.AcceptVisitor(this);
-                    writer.WriteEndElement();
-                }
+                writer.WriteStartElement("signals");
+                foreach (Signal signal in board.Signals)
+                    signal.AcceptVisitor(this);
+                writer.WriteEndElement();
 
-                if (board.HasComponents) {
-                    writer.WriteStartElement("blocks");
-                    foreach (Component component in board.Components)
-                        component.AcceptVisitor(this);
-                    writer.WriteEndElement();
-                }
+                writer.WriteStartElement("blocks");
+                foreach (Component component in board.Components)
+                    component.AcceptVisitor(this);
+                writer.WriteEndElement();
 
-                if (board.HasParts) {
-                    writer.WriteStartElement("parts");
-                    foreach (Part part in board.Parts)
-                        part.AcceptVisitor(this);
-                    writer.WriteEndElement();
-                }
+                writer.WriteStartElement("parts");
+                foreach (Part part in board.Parts)
+                    part.AcceptVisitor(this);
+                writer.WriteEndElement();
 
                 if (board.Elements != null) {
                     writer.WriteStartElement("elements");
