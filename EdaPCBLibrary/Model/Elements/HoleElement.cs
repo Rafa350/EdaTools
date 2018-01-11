@@ -35,17 +35,17 @@
         }
 
         /// <summary>
-        /// Comprova si esta en una capa.
+        /// Comprova si pertany a la capa especificada.
         /// </summary>
         /// <param name="layer">La capa a comprovar.</param>
         /// <returns>True si es en la capa, false en cas contrari.</returns>
         /// 
-        public override bool IsOnLayer(Layer layer) {
+        public override bool IsOnLayer(LayerId layerId) {
 
             return
-                (layer.Id == LayerId.Holes) ||
-                (layer.Id == LayerId.Top) ||
-                (layer.Id == LayerId.Bottom);
+                (layerId == LayerId.Holes) ||
+                (layerId == LayerId.Top) ||
+                (layerId == LayerId.Bottom);
         }
 
         /// <summary>

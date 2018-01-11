@@ -4,7 +4,6 @@
     using System.Windows;
     using System.Windows.Media;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
 
     public sealed class BoardBuilder {
 

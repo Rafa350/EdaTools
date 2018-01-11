@@ -64,12 +64,12 @@
                 throw new ArgumentNullException("layer");
 
             return 
-                (layer.Id == LayerId.Pads) ||
-                (layer.Id == LayerId.Top) ||
-                (layer.Id == LayerId.Bottom) ||
-                (layer.Id == LayerId.TopStop) ||
-                (layer.Id == LayerId.BottomStop) ||
-                (layer.Id == LayerId.Drills);
+                (layer.Id == LayerIdentifier.Pads) ||
+                (layer.Id == LayerIdentifier.Top) ||
+                (layer.Id == LayerIdentifier.Bottom) ||
+                (layer.Id == LayerIdentifier.TopStop) ||
+                (layer.Id == LayerIdentifier.BottomStop) ||
+                (layer.Id == LayerIdentifier.Drills);
         }
 
         /// <summary>

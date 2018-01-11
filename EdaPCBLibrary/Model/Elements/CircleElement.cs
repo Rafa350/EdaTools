@@ -4,9 +4,10 @@
     using System;
     using System.Windows;
 
-    public sealed class CircleElement: SingleLayerElement, IPosition {
+    public sealed class CircleElement: Element, IPosition {
 
         private Point position;
+        private LayerId layerId;
         private double radius;
         private double thickness;
 
@@ -22,14 +23,15 @@
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="position">Posicio del centre.</param>
-        /// <param name="layer">Capa.</param>
+        /// <param name="layerId">Capa.</param>
         /// <param name="radius">Radi.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// 
-        public CircleElement(Point position, Layer layer, double radius, double thickness = 0) :
-            base(layer) {
+        public CircleElement(Point position, LayerId layerId, double radius, double thickness = 0) :
+            base() {
 
             this.position = position;
+            this.layerId = layerId;
             this.radius = radius;
             this.thickness = thickness;
         }
@@ -42,6 +44,18 @@
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
+        }
+
+
+        /// <summary>
+        /// Comprova si pertany a la capa especificada.
+        /// </summary>
+        /// <param name="layerId">El identificador de la capa.</param>
+        /// <returns>True si pertany, false en cas contrari.</returns>
+        /// 
+        public override bool IsOnLayer(LayerId layerId) {
+
+            return this.layerId == layerId;
         }
 
         /// <summary>
@@ -78,6 +92,19 @@
                     position = value;
                     Invalidate();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna el identificador de la capa.
+        /// </summary>
+        /// 
+        public LayerId LayerId {
+            get {
+                return layerId;
+            }
+            set {
+                layerId = value;
             }
         }
 

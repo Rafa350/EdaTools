@@ -1,6 +1,5 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
     using System.Windows;
@@ -22,17 +21,22 @@
         /// </summary>
         /// <param name="startPosition">Punt inicial.</param>
         /// <param name="endPosition">Punt final.</param>
-        /// <param name="layer">Capa.</param>
+        /// <param name="layerId">Capa.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="angle">Angle del arc.</param>
         /// <param name="lineCap">Extrems de linia.</param>
         /// 
-        public ArcElement(Point startPosition, Point endPosition, Layer layer, double thickness, double angle, LineCapStyle lineCap) :
-            base(startPosition, endPosition, layer, thickness, lineCap) {
+        public ArcElement(Point startPosition, Point endPosition, LayerId layerId, double thickness, double angle, LineCapStyle lineCap) :
+            base(startPosition, endPosition, layerId, thickness, lineCap) {
 
             this.angle = angle;
         }
 
+        /// <summary>
+        /// Accepta un visitador.
+        /// </summary>
+        /// <param name="visitor">El visitador.</param>
+        /// 
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
@@ -47,6 +51,22 @@
         public override Polygon GetPolygon(double inflate = 0) {
 
             return PolygonBuilder.BuildLine(StartPosition, EndPosition, Thickness + (inflate * 2));
+        }
+
+        /// <summary>
+        /// Obte o asigna l'angle del arc.
+        /// </summary>
+        /// 
+        public double Angle {
+            get {
+                return angle;
+            }
+            set {
+                if (angle != value) {
+                    angle = value;
+                    Invalidate();
+                }
+            }
         }
 
         /// <summary>
@@ -88,21 +108,7 @@
             }
         }
 
-        /// <summary>
-        /// Obte o asigna l'angle del arc.
-        /// </summary>
-        /// 
-        public double Angle {
-            get {
-                return angle;
-            }
-            set {
-                if (angle != value) {
-                    angle = value;
-                    Invalidate();
-                }
-            }
-        }
+
 
         /// <summary>
         /// Obte l'angle inicial del arc.

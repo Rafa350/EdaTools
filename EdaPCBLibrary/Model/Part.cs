@@ -12,9 +12,46 @@
         private Point position;
         private double rotation;
         private bool isFlipped;
-        private Component component;
+        private readonly Component component;
         private Dictionary<string, Parameter> parameters;
 
+        /// <summary>
+        /// Constructor de l'objecte.
+        /// </summary>
+        /// <param name="component">El component associat.</param>
+        /// 
+        public Part(Component component) {
+
+            this.component = component;
+
+            UpdateItemList();
+        }
+
+        /// <summary>
+        /// Constructor de l'objecte.
+        /// </summary>
+        /// <param name="name">El nom.</param>
+        /// <param name="position">Posicio.</param>
+        /// <param name="rotation">Angle de rotacio</param>
+        /// <param name="isFlipped">Indica si va girat.</param>
+        /// <param name="component">El component associat.</param>
+        /// 
+        public Part(string name, Point position, double rotation, bool isFlipped, Component component) {
+
+            this.name = name;
+            this.position = position;
+            this.rotation = rotation;
+            this.isFlipped = isFlipped;
+            this.component = component;
+
+            UpdateItemList();
+        }
+
+        /// <summary>
+        /// Accepta un visitador.
+        /// </summary>
+        /// <param name="visitor">El visitador.</param>
+        /// 
         public void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
@@ -50,6 +87,10 @@
                 return parameters[name];
             else
                 return null;
+        }
+
+        private void UpdateItemList() {
+
         }
 
         /// <summary>
@@ -120,9 +161,6 @@
         public Component Component {
             get {
                 return component;
-            }
-            set {
-                component = value;
             }
         }
 

@@ -4,9 +4,10 @@
     using System;
     using System.Windows;
 
-    public sealed class RectangleElement: SingleLayerElement, IPosition, ISize, IRotation {
+    public sealed class RectangleElement: Element, IPosition, ISize, IRotation {
 
         private Point position;
+        private LayerId layerId = LayerId.Unknown;
         private Size size;
         private double rotation;
         private double thickness;
@@ -23,15 +24,16 @@
         /// Constructor del objecte.
         /// </summary>
         /// <param name="position">Posicio del centre geometric.</param>
-        /// <param name="layer">Capa.</param>
+        /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="size">Amplada i alçada del rectangle.</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="thickness">Amplada de linia. Si es zero, es un rectangle ple.</param>
         /// 
-        public RectangleElement(Point position, Layer layer, Size size, double rotation, double thickness = 0) :
-            base(layer) {
+        public RectangleElement(Point position, LayerId layerId, Size size, double rotation, double thickness = 0) :
+            base() {
 
             this.position = position;
+            this.layerId = layerId;
             this.size = size;
             this.rotation = rotation;
             this.thickness = thickness;
@@ -45,6 +47,11 @@
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
+        }
+
+        public override bool IsOnLayer(LayerId layerId) {
+
+            return this.layerId == layerId;
         }
 
         /// <summary>
@@ -90,6 +97,19 @@
                     position = value;
                     Invalidate();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna el identificador de la caps.
+        /// </summary>
+        /// 
+        public LayerId LayerId {
+            get {
+                return layerId;
+            }
+            set {
+                layerId = value;
             }
         }
 

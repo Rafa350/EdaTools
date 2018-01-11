@@ -1,0 +1,124 @@
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
+
+    public enum LayerIdentifier {
+        Unknown,
+        TopKeepout,
+        TopRestrict,
+        TopNames,
+        TopValues,
+        TopPlace,
+        TopDocument,
+        TopStop,
+        TopCream,
+        TopGlue,
+        TopPins,
+        Top,
+        Inner2,
+        Inner3,
+        Inner4,
+        Inner5,
+        Inner6,
+        Inner7,
+        Inner8,
+        Inner9,
+        Inner10,
+        Inner11,
+        Inner12,
+        Inner13,
+        Inner14,
+        Inner15,
+        Bottom,
+        BottomPins,
+        BottomGlue,
+        BottomCream,
+        BottomStop,
+        BottomDocument,
+        BottomPlace,
+        BottomValues,
+        BottomNames,
+        BottomRestrict,
+        BottomKeepout,
+        Profile,
+        ViaRestrict,
+        Vias,
+        Pads,
+        Holes,
+        Drills,
+        Unrouted,
+        UserDefined
+    }
+
+    public struct LayerId {
+
+        private LayerIdentifier id;
+        private string name;
+
+        public static readonly LayerId Unknown = new LayerId(LayerIdentifier.Unknown);
+        public static readonly LayerId Top = new LayerId(LayerIdentifier.Top);
+        public static readonly LayerId Bottom = new LayerId(LayerIdentifier.Bottom);
+        public static readonly LayerId Holes = new LayerId(LayerIdentifier.Holes);
+
+        /// <summary>
+        /// Constructor privat.
+        /// </summary>
+        /// <param name="id">Identificador.</param>
+        /// 
+        private LayerId(LayerIdentifier id) {
+
+            this.id = id;
+            name = null;
+        }
+
+        /// <summary>
+        /// Contructor del objecte.
+        /// </summary>
+        /// <param name="name">Nom identificatiu.</param>
+        /// 
+        public LayerId(string name) {
+
+            id = LayerIdentifier.UserDefined;
+            this.name = name;
+        }
+
+        public override int GetHashCode() {
+
+            return id.GetHashCode() ^ (name != null ? name.GetHashCode() : 0xF5689);
+        }
+
+        public override string ToString() {
+
+            return name == null ? id.ToString() : name;
+        }
+
+        public override bool Equals(object obj) {
+
+            if ((obj != null) && (obj is LayerId))
+                return id == ((LayerId)obj).id &&
+                       name == ((LayerId)obj).name;
+            else
+                return false;
+        }
+
+        public static bool operator == (LayerId a, LayerId b) {
+
+            return (a.Id == b.Id) && (a.name == b.name);
+        }
+
+        public static bool operator !=(LayerId a, LayerId b) {
+
+            return (a.Id != b.Id) || (a.name != b.name);
+        }
+
+        public LayerIdentifier Id {
+            get {
+                return id;
+            }
+        }
+
+        public string Name {
+            get {
+                return name;
+            }
+        }
+    }
+}

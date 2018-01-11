@@ -4,7 +4,7 @@
     using System;
     using System.Windows;
 
-    public sealed class TextElement: SingleLayerElement, IPosition, IRotation {
+    public sealed class TextElement: Element, IPosition, IRotation {
 
         public enum TextAlign {
             TopLeft,
@@ -19,6 +19,7 @@
         }
 
         private Point position;
+        private LayerId layerId = LayerId.Unknown;
         private double rotation;
         private double height;
         private TextAlign align = TextAlign.MiddleCenter;
@@ -29,10 +30,11 @@
             base() {
         }
 
-        public TextElement(Point position, Layer layer, double rotation, double height, TextAlign align = TextAlign.MiddleCenter):
-            base(layer) {
+        public TextElement(Point position, LayerId layerId, double rotation, double height, TextAlign align = TextAlign.MiddleCenter):
+            base() {
 
             this.position = position;
+            this.layerId = layerId;
             this.rotation = rotation;
             this.height = height;
             this.align = align;
@@ -41,6 +43,11 @@
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
+        }
+
+        public override bool IsOnLayer(LayerId layerId) {
+
+            return this.layerId == layerId;
         }
 
         /// <summary>

@@ -115,7 +115,7 @@
         /// <param name="id">El id de la capa.</param>
         /// <returns>La capa.</returns>
         /// 
-        public Layer GetLayer(LayerId id) {
+        public Layer GetLayer(LayerIdentifier id) {
 
             return layers.Find(a => a.Id == id);
         }

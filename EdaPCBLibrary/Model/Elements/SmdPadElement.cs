@@ -4,10 +4,11 @@
     using System;
     using System.Windows;
 
-    public sealed class SmdPadElement: SingleLayerElement, IPosition, IRotation, IName, IConectable {
+    public sealed class SmdPadElement: Element, IPosition, IRotation, IName, IConectable {
 
         private string name;
         private Point position;
+        private LayerId layerId;
         private Size size;
         private double rotation;
         private double roundnes;
@@ -25,20 +26,21 @@
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="position"></param>
-        /// <param name="layer"></param>
-        /// <param name="size"></param>
-        /// <param name="rotation"></param>
-        /// <param name="roundnes"></param>
-        /// <param name="stop"></param>
-        /// <param name="cream"></param>
+        /// <param name="name">Nom del pad.</param>
+        /// <param name="position">Posicio.</param>
+        /// <param name="layerId">Identificador de la capa.</param>
+        /// <param name="size">Tamany</param>
+        /// <param name="rotation">Angle de rotacio.</param>
+        /// <param name="roundnes">Percentatge d'arrodoniment de les cantonades.</param>
+        /// <param name="stop">Genera mascara.</param>
+        /// <param name="cream">Genera encolat.</param>
         /// 
-        public SmdPadElement(string name, Point position, Layer layer, Size size, double rotation, double roundnes, bool stop, bool cream):
-            base(layer) {
+        public SmdPadElement(string name, Point position, LayerId layerId, Size size, double rotation, double roundnes, bool stop, bool cream):
+            base() {
 
             this.name = name;
             this.position = position;
+            this.layerId = layerId;
             this.size = size;
             this.rotation = rotation;
             this.roundnes = roundnes;
@@ -46,17 +48,17 @@
             this.cream = cream;
         }
 
-        public override bool IsOnLayer(Layer layer) {
+        public override bool IsOnLayer(LayerId layerId) {
 
-            if (Layer == layer)
+            if (this.layerId == layerId)
                 return true;
-            else if ((Layer.Id == LayerId.Top) && (layer.Id == LayerId.TopStop) && stop)
+            else if ((this.layerId == LayerId.Top) && (layerId == LayerIdentifier.TopStop) && stop)
                 return true;
-            else if ((Layer.Id == LayerId.Bottom) && (layer.Id == LayerId.BottomStop) && stop)
+            else if ((this.layerId == LayerId.Bottom) && (layerId == LayerIdentifier.BottomStop) && stop)
                 return true;
-            else if ((Layer.Id == LayerId.Top) && (layer.Id == LayerId.TopCream) && cream)
+            else if ((this.layerId == LayerId.Top) && (layerId == LayerIdentifier.TopCream) && cream)
                 return true;
-            else if ((Layer.Id == LayerId.Bottom) && (layer.Id == LayerId.BottomCream) && cream)
+            else if ((this.layerId == LayerId.Bottom) && (layerId == LayerIdentifier.BottomCream) && cream)
                 return true;
             else
                 return false;

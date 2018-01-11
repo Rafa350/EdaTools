@@ -182,33 +182,33 @@
 
             // Procesa la placa, capa a capa
             //
-            ProcessLayer(board, LayerId.BottomNames, visualList);
-            ProcessLayer(board, LayerId.BottomValues, visualList);
-            ProcessLayer(board, LayerId.BottomDocument, visualList);
-            ProcessLayer(board, LayerId.BottomCream, visualList);
-            ProcessLayer(board, LayerId.BottomGlue, visualList);
-            ProcessLayer(board, LayerId.BottomKeepout, visualList);
-            ProcessLayer(board, LayerId.BottomRestrict, visualList);
-            ProcessLayer(board, LayerId.BottomPlace, visualList);
-            ProcessLayer(board, LayerId.Bottom, visualList);
-            ProcessLayer(board, LayerId.ViaRestrict, visualList);
-            ProcessLayer(board, LayerId.Top, visualList);
-            ProcessLayer(board, LayerId.Holes, visualList);
-            ProcessLayer(board, LayerId.TopPlace, visualList);
-            ProcessLayer(board, LayerId.TopRestrict, visualList);
-            ProcessLayer(board, LayerId.TopKeepout, visualList);
-            ProcessLayer(board, LayerId.TopGlue, visualList);
-            ProcessLayer(board, LayerId.TopCream, visualList);
-            ProcessLayer(board, LayerId.TopDocument, visualList);
-            ProcessLayer(board, LayerId.TopValues, visualList);
-            ProcessLayer(board, LayerId.TopNames, visualList);
-            ProcessLayer(board, LayerId.Vias, visualList);
-            ProcessLayer(board, LayerId.Pads, visualList);
+            ProcessLayer(board, LayerIdentifier.BottomNames, visualList);
+            ProcessLayer(board, LayerIdentifier.BottomValues, visualList);
+            ProcessLayer(board, LayerIdentifier.BottomDocument, visualList);
+            ProcessLayer(board, LayerIdentifier.BottomCream, visualList);
+            ProcessLayer(board, LayerIdentifier.BottomGlue, visualList);
+            ProcessLayer(board, LayerIdentifier.BottomKeepout, visualList);
+            ProcessLayer(board, LayerIdentifier.BottomRestrict, visualList);
+            ProcessLayer(board, LayerIdentifier.BottomPlace, visualList);
+            ProcessLayer(board, LayerIdentifier.Bottom, visualList);
+            ProcessLayer(board, LayerIdentifier.ViaRestrict, visualList);
+            ProcessLayer(board, LayerIdentifier.Top, visualList);
+            ProcessLayer(board, LayerIdentifier.Holes, visualList);
+            ProcessLayer(board, LayerIdentifier.TopPlace, visualList);
+            ProcessLayer(board, LayerIdentifier.TopRestrict, visualList);
+            ProcessLayer(board, LayerIdentifier.TopKeepout, visualList);
+            ProcessLayer(board, LayerIdentifier.TopGlue, visualList);
+            ProcessLayer(board, LayerIdentifier.TopCream, visualList);
+            ProcessLayer(board, LayerIdentifier.TopDocument, visualList);
+            ProcessLayer(board, LayerIdentifier.TopValues, visualList);
+            ProcessLayer(board, LayerIdentifier.TopNames, visualList);
+            ProcessLayer(board, LayerIdentifier.Vias, visualList);
+            ProcessLayer(board, LayerIdentifier.Pads, visualList);
 
             return visualList;
         }
 
-        private void ProcessLayer(Board board, LayerId layerId, IList<Visual> visualList) {
+        private void ProcessLayer(Board board, LayerIdentifier layerId, IList<Visual> visualList) {
 
             Layer layer = board.GetLayer(layerId);
             if ((layer != null) && layer.IsVisible) {

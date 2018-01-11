@@ -12,7 +12,7 @@
 
     public sealed class EagleImporter : Importer {
 
-        private readonly Dictionary<LayerId, Layer> layerDict = new Dictionary<LayerId, Layer>();
+        private readonly Dictionary<LayerIdentifier, Layer> layerDict = new Dictionary<LayerIdentifier, Layer>();
         private readonly Dictionary<string, Component> componentDict = new Dictionary<string, Component>();
         private readonly Dictionary<string, Part> partDict = new Dictionary<string, Part>();
         private readonly Dictionary<string, Signal> signalDict = new Dictionary<string, Signal>();
@@ -77,9 +77,9 @@
             foreach (XmlNode layerNode in doc.SelectNodes("eagle/drawing/layers/layer")) {
 
                 int layerNum = GetAttributeInteger(layerNode, "number");
-                LayerId layerId = GetLayerId(layerNum);
+                LayerIdentifier layerId = GetLayerId(layerNum);
 
-                if ((layerId != LayerId.Unknown) && (!layerDict.ContainsKey(layerId))) {
+                if ((layerId != LayerIdentifier.Unknown) && (!layerDict.ContainsKey(layerId))) {
                     Layer layer = ParseLayerNode(layerNode);
                     board.AddLayer(layer);
                     layerDict.Add(layer.Id, layer);
@@ -303,7 +303,7 @@
             string name = GetAttributeString(node, "name");
             int layerNum = GetAttributeInteger(node, "number");
 
-            LayerId layerId = GetLayerId(layerNum);
+            LayerIdentifier layerId = GetLayerId(layerNum);
             Color color = GetLayerColor(layerNum);
 
             return new Layer(layerId, name, color);
@@ -486,12 +486,12 @@
             Point position = new Point((x1 + x2) / 2, (y1 + y2) / 2);
             Size size = new Size(x2 - x1, y2 - y1);
 
-            double rotate = GetAttributeDouble(node, "rot");
+            double rotation = GetAttributeDouble(node, "rot");
             double thickness = GetAttributeDouble(node, "width");
 
             Layer layer = GetLayer(GetAttributeInteger(node, "layer"));
 
-            return new RectangleElement(position, layer, size, rotate, thickness);
+            return new RectangleElement(position, layer, size, rotation, thickness);
         }
 
         /// <summary>
@@ -578,23 +578,18 @@
             double y = GetAttributeDouble(node, "y");
             Point position = new Point(x, y);
 
-            bool mirror = false;
-            double rotate = 0;
+            bool isFlipped = false;
+            double rotation = 0;
             string rot = GetAttributeString(node, "rot");
             if (rot != null) {
-                mirror = rot.IndexOf("M") != -1;
+                isFlipped = rot.IndexOf("M") != -1;
 
                 rot = rot.Replace("M", null);
                 rot = rot.Replace("R", null);
-                rotate = Double.Parse(rot);
+                rotation = Double.Parse(rot);
             }
 
-            Part part = new Part();
-            part.Name = name;
-            part.Position = position;
-            part.Rotation = rotate;
-            part.IsFlipped = mirror;
-            part.Component = GetComponent(componentKey);
+            Part part = new Part(name, position, rotation, isFlipped, GetComponent(componentKey));
 
             foreach (XmlNode attrNode in node.SelectNodes("attribute")) {
 
@@ -644,92 +639,92 @@
         /// <param name="layerNum">Numero de la capa.</param>
         /// <returns>La capa.</returns>
         /// 
-        private static LayerId GetLayerId(int layerNum) {
+        private static LayerIdentifier GetLayerId(int layerNum) {
 
             switch (layerNum) {
                 case 1:
-                    return LayerId.Top;
+                    return LayerIdentifier.Top;
 
                 case 16:
-                    return LayerId.Bottom;
+                    return LayerIdentifier.Bottom;
 
                 case 17:
-                    return LayerId.Pads;
+                    return LayerIdentifier.Pads;
 
                 case 18:
-                    return LayerId.Vias;
+                    return LayerIdentifier.Vias;
 
                 case 19:
-                    return LayerId.Unrouted;
+                    return LayerIdentifier.Unrouted;
 
                 case 20:
-                    return LayerId.Profile;
+                    return LayerIdentifier.Profile;
 
                 case 21:
-                    return LayerId.TopPlace;
+                    return LayerIdentifier.TopPlace;
 
                 case 22:
-                    return LayerId.BottomPlace;
+                    return LayerIdentifier.BottomPlace;
 
                 case 25:
-                    return LayerId.TopNames;
+                    return LayerIdentifier.TopNames;
 
                 case 26:
-                    return LayerId.BottomNames;
+                    return LayerIdentifier.BottomNames;
 
                 case 27:
-                    return LayerId.TopValues;
+                    return LayerIdentifier.TopValues;
 
                 case 28:
-                    return LayerId.BottomValues;
+                    return LayerIdentifier.BottomValues;
 
                 case 29:
-                    return LayerId.TopStop;
+                    return LayerIdentifier.TopStop;
 
                 case 30:
-                    return LayerId.BottomStop;
+                    return LayerIdentifier.BottomStop;
 
                 case 31:
-                    return LayerId.TopCream;
+                    return LayerIdentifier.TopCream;
 
                 case 32:
-                    return LayerId.BottomCream;
+                    return LayerIdentifier.BottomCream;
 
                 case 35:
-                    return LayerId.TopGlue;
+                    return LayerIdentifier.TopGlue;
 
                 case 36:
-                    return LayerId.BottomGlue;
+                    return LayerIdentifier.BottomGlue;
 
                 case 39:
-                    return LayerId.TopKeepout;
+                    return LayerIdentifier.TopKeepout;
 
                 case 40:
-                    return LayerId.BottomKeepout;
+                    return LayerIdentifier.BottomKeepout;
 
                 case 41:
-                    return LayerId.TopRestrict;
+                    return LayerIdentifier.TopRestrict;
 
                 case 42:
-                    return LayerId.BottomRestrict;
+                    return LayerIdentifier.BottomRestrict;
 
                 case 43:
-                    return LayerId.ViaRestrict;
+                    return LayerIdentifier.ViaRestrict;
 
                 case 44:
-                    return LayerId.Drills;
+                    return LayerIdentifier.Drills;
 
                 case 45:
-                    return LayerId.Holes;
+                    return LayerIdentifier.Holes;
 
                 case 51:
-                    return LayerId.TopDocument;
+                    return LayerIdentifier.TopDocument;
 
                 case 52:
-                    return LayerId.BottomDocument;
+                    return LayerIdentifier.BottomDocument;
 
                 default:
-                    return LayerId.Unknown;
+                    return LayerIdentifier.Unknown;
             }
         }
 

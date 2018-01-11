@@ -1,12 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
     using System.Collections.Generic;
     using System.Windows;
 
-    public sealed class ViaElement: MultiLayerElement, IPosition, IConectable {
+    public sealed class ViaElement: Element, IPosition, IConectable {
 
         public enum ViaShape {
             Square,
@@ -48,7 +47,7 @@
         /// <param name="layers">Capes a les que pertany.</param>
         /// 
         public ViaElement(Point position, IEnumerable<Layer> layers, double size, double drill, ViaShape shape) :
-            base(layers) {
+            base() {
 
             if (position == null)
                 throw new ArgumentNullException("position");
@@ -79,9 +78,9 @@
 
             // TODO: Com gestionar though, blind i buried?
 
-            return base.IsOnLayer(layer) ||
-                (layer.Id == LayerId.Vias) ||
-                (layer.Id == LayerId.Drills);
+            return 
+                (layer.Id == LayerIdentifier.Vias) ||
+                (layer.Id == LayerIdentifier.Drills);
         }
 
         /// <summary>

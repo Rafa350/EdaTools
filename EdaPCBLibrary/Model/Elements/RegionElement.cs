@@ -5,7 +5,7 @@
     using System.Collections.Generic;
     using System.Windows;
 
-    public sealed class RegionElement: SingleLayerElement, IConectable {
+    public sealed class RegionElement: Element, IConectable {
 
         public struct Segment {
 
@@ -28,6 +28,7 @@
         }
 
         private readonly List<Segment> segments = new List<Segment>();
+        private LayerId layerId = LayerId.Unknown;
         private double thickness = 0.1;
         private double isolation = 0;
 
@@ -37,18 +38,17 @@
         /// 
         public RegionElement():
             base() {
-
         }
 
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
-        /// <param name="layer">Capa a la que pertany.</param>
+        /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="isolation">Distancia d'aillament.</param>
         /// 
-        public RegionElement(Layer layer, double thickness = 0, double isolation = 0):
-            base(layer) {
+        public RegionElement(LayerId layerId, double thickness = 0, double isolation = 0):
+            base() {
 
             if (thickness < 0)
                 throw new ArgumentOutOfRangeException("thickness");
@@ -56,6 +56,7 @@
             if (isolation < 0)
                 throw new ArgumentOutOfRangeException("isolation");
 
+            this.layerId = layerId;
             this.thickness = thickness;
             this.isolation = isolation;
         }
@@ -63,11 +64,13 @@
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
-        /// <param name="layer">Capa a la que pertany.</param>
+        /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="segments">Llista de segments.</param>
         /// 
-        public RegionElement(Layer layer, IEnumerable<Segment> segments) :
-            base(layer) {
+        public RegionElement(LayerId layerId, IEnumerable<Segment> segments) :
+            base() {
+
+            this.layerId = layerId;
 
             foreach (Segment segment in segments)
                 Add(segment);
@@ -81,6 +84,11 @@
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
+        }
+
+        public override bool IsOnLayer(Layer layer) {
+
+            return layerId.Id == layer.Id;
         }
 
         /// <summary>
@@ -136,6 +144,15 @@
         public void AddArc(Point position, double angle) {
 
             Add(new Segment(position, angle));
+        }
+
+        public LayerId LayerId {
+            get {
+                return layerId;
+            }
+            set {
+                layerId = value;
+            }
         }
 
         /// <summary>

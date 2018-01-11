@@ -4,7 +4,7 @@
     using System;
     using System.Windows;
 
-    public class LineElement: SingleLayerElement, IConectable {
+    public class LineElement: Element, IConectable {
 
         public enum LineCapStyle {
             Round,
@@ -13,6 +13,7 @@
 
         private Point startPosition;
         private Point endPosition;
+        private LayerId layerId = LayerId.Unknown;
         private double thickness;
         private LineCapStyle lineCap = LineCapStyle.Round;
 
@@ -22,7 +23,6 @@
         /// 
         public LineElement():
             base() {
-
         }
 
         /// <summary>
@@ -30,15 +30,16 @@
         /// </summary>
         /// <param name="startPosition">La posicio inicial.</param>
         /// <param name="endPosition">La posicio final.</param>
-        /// <param name="layer">La capa.</param>
+        /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="lineCap">Forma dels extrems de linia.</param>
         /// 
-        public LineElement(Point startPosition, Point endPosition, Layer layer, double thickness, LineCapStyle lineCap) :
-            base(layer) {
+        public LineElement(Point startPosition, Point endPosition, LayerId layerId, double thickness, LineCapStyle lineCap) :
+            base() {
 
             this.startPosition = startPosition;
             this.endPosition = endPosition;
+            this.layerId = layerId;
             this.thickness = thickness;
             this.lineCap = lineCap;
         }
@@ -51,6 +52,17 @@
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
+        }
+
+        /// <summary>
+        /// Comprova si pertany a la capa especificada.
+        /// </summary>
+        /// <param name="layer">La capa.</param>
+        /// <returns>True si pertany, false en cas contrari.</returns>
+        /// 
+        public override bool IsOnLayer(LayerId layerId) {
+
+            return this.layerId == layerId;
         }
 
         /// <summary>
@@ -103,6 +115,19 @@
                     endPosition = value;
                     Invalidate();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna el identificador de la capa.
+        /// </summary>
+        /// 
+        public LayerId LayerId {
+            get {
+                return layerId;
+            }
+            set {
+                layerId = value;
             }
         }
 
