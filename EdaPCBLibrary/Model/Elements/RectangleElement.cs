@@ -4,6 +4,9 @@
     using System;
     using System.Windows;
 
+    /// <summary>
+    /// Clase que representa un rectangle.
+    /// </summary>
     public sealed class RectangleElement: Element, IPosition, ISize, IRotation {
 
         private Point position;
@@ -13,7 +16,7 @@
         private double thickness;
 
         /// <summary>
-        ///  Constructor por defecte de l'objecte.
+        ///  Constructor de l'objecte amb els parametres per defecte.
         /// </summary>
         /// 
         public RectangleElement(): 
@@ -29,7 +32,13 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="thickness">Amplada de linia. Si es zero, es un rectangle ple.</param>
         /// 
-        public RectangleElement(Point position, LayerId layerId, Size size, double rotation, double thickness = 0) :
+        public RectangleElement(
+            Point position, 
+            LayerId layerId, 
+            Size size, 
+            double rotation, 
+            double thickness = 0) :
+            
             base() {
 
             this.position = position;
@@ -44,12 +53,20 @@
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public override void AcceptVisitor(IVisitor visitor) {
+        public override void AcceptVisitor(
+            IVisitor visitor) {
 
             visitor.Visit(this);
         }
 
-        public override bool IsOnLayer(LayerId layerId) {
+        /// <summary>
+        /// Comprova si l'objecte pertany a la capa especificada.
+        /// </summary>
+        /// <param name="layerId">El identificador de la capa.</param>
+        /// <returns>True si pertany, false en cas contrari.</returns>
+        /// 
+        public override bool IsOnLayer(
+            LayerId layerId) {
 
             return this.layerId == layerId;
         }
@@ -60,13 +77,14 @@
         /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(double inflate = 0) {
+        public override Polygon GetPolygon(
+            double inflate = 0) {
 
             if (inflate == 0)
                 return PolygonBuilder.BuildRectangle(position, size, 0, rotation);
             else
                 return PolygonBuilder.BuildRectangle(position, 
-                    new System.Windows.Size(size.Width + inflate * 2, size.Height+ inflate * 2), 
+                    new Size(size.Width + inflate * 2, size.Height+ inflate * 2), 
                     inflate, rotation);
         }
 
@@ -77,9 +95,9 @@
         /// 
         protected override Rect GetBoundingBox() {
 
-            double r = rotation * Math.PI / 180.0;
-            double w = size.Width * Math.Cos(r) + size.Height * Math.Sin(r);
-            double h = size.Width * Math.Sin(r) + size.Height * Math.Cos(r);
+            double a = rotation * Math.PI / 180.0;
+            double w = size.Width * Math.Cos(a) + size.Height * Math.Sin(a);
+            double h = size.Width * Math.Sin(a) + size.Height * Math.Cos(a);
 
             return new Rect(position.X - w / 2, position.Y - h / 2, w, h);
         }

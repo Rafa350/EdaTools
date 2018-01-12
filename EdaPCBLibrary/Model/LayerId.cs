@@ -55,8 +55,31 @@
 
         public static readonly LayerId Unknown = new LayerId(LayerIdentifier.Unknown);
         public static readonly LayerId Top = new LayerId(LayerIdentifier.Top);
+        public static readonly LayerId TopPlace = new LayerId(LayerIdentifier.TopPlace);
+        public static readonly LayerId TopStop = new LayerId(LayerIdentifier.TopStop);
+        public static readonly LayerId TopNames = new LayerId(LayerIdentifier.TopNames);
+        public static readonly LayerId TopValues = new LayerId(LayerIdentifier.TopValues);
+        public static readonly LayerId TopDocument = new LayerId(LayerIdentifier.TopDocument);
+        public static readonly LayerId TopCream = new LayerId(LayerIdentifier.TopCream);
+        public static readonly LayerId TopGlue = new LayerId(LayerIdentifier.TopGlue);
+        public static readonly LayerId TopRestrict = new LayerId(LayerIdentifier.TopRestrict);
+        public static readonly LayerId TopKeepout = new LayerId(LayerIdentifier.TopKeepout);
         public static readonly LayerId Bottom = new LayerId(LayerIdentifier.Bottom);
+        public static readonly LayerId BottomPlace = new LayerId(LayerIdentifier.BottomPlace);
+        public static readonly LayerId BottomStop = new LayerId(LayerIdentifier.BottomStop);
+        public static readonly LayerId BottomNames = new LayerId(LayerIdentifier.BottomNames);
+        public static readonly LayerId BottomValues = new LayerId(LayerIdentifier.BottomValues);
+        public static readonly LayerId BottomDocument = new LayerId(LayerIdentifier.BottomDocument);
+        public static readonly LayerId BottomCream = new LayerId(LayerIdentifier.BottomCream);
+        public static readonly LayerId BottomGlue = new LayerId(LayerIdentifier.BottomGlue);
+        public static readonly LayerId BottomRestrict = new LayerId(LayerIdentifier.BottomRestrict);
+        public static readonly LayerId BottomKeepout = new LayerId(LayerIdentifier.BottomKeepout);
+        public static readonly LayerId Vias = new LayerId(LayerIdentifier.Vias);
+        public static readonly LayerId ViaRestrict = new LayerId(LayerIdentifier.ViaRestrict);
+        public static readonly LayerId Pads = new LayerId(LayerIdentifier.Pads);
         public static readonly LayerId Holes = new LayerId(LayerIdentifier.Holes);
+        public static readonly LayerId Drills = new LayerId(LayerIdentifier.Drills);
+        public static readonly LayerId Profile = new LayerId(LayerIdentifier.Profile);
 
         /// <summary>
         /// Constructor privat.

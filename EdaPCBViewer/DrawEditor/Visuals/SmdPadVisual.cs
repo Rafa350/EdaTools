@@ -18,7 +18,6 @@
         public override void RenderVisual() {
 
             bool isMirror = Part == null ? false : Part.IsFlipped;
-            Layer layer = Pad.Layer;
 
             using (DrawingContext dc = RenderOpen()) {
 
@@ -38,7 +37,7 @@
 
                 // Dibuixa el pad
                 //
-                Brush padBrush = BrushCache.Instance.GetBrush(IsSelected ? Colors.GreenYellow : layer.Color);
+                Brush padBrush = BrushCache.Instance.GetBrush(IsSelected ? Colors.GreenYellow : Colors.LightPink);
                 dc.DrawPolygon(padBrush, null, Pad.Polygon);
 
                 // Push de la transformacio d'escala del text

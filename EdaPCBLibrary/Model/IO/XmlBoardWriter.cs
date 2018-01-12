@@ -25,7 +25,7 @@
             public override void Visit(LineElement line) {
 
                 writer.WriteStartElement("line");
-                writer.WriteAttribute("layer", line.Layer);
+                //writer.WriteAttribute("layer", line.Layer);
                 writer.WriteAttribute("startPosition", line.StartPosition);
                 writer.WriteAttribute("endPosition", line.EndPosition);
                 if (line.Thickness > 0)
@@ -41,7 +41,7 @@
             public override void Visit(ArcElement arc) {
 
                 writer.WriteStartElement("arc");
-                writer.WriteAttribute("layer", arc.Layer);
+                //writer.WriteAttribute("layer", arc.Layer);
                 writer.WriteAttribute("startPosition", arc.StartPosition);
                 writer.WriteAttribute("endPosition", arc.EndPosition);
                 writer.WriteAttribute("angle", arc.Angle);
@@ -57,7 +57,7 @@
             public override void Visit(RectangleElement rectangle) {
 
                 writer.WriteStartElement("rectangle");
-                writer.WriteAttribute("layer", rectangle.Layer);
+                //writer.WriteAttribute("layer", rectangle.Layer);
                 writer.WriteAttribute("position", rectangle.Position);
                 writer.WriteAttribute("size", rectangle.Size);
                 if (rectangle.Rotation != 0)
@@ -70,7 +70,7 @@
             public override void Visit(CircleElement circle) {
 
                 writer.WriteStartElement("circle");
-                writer.WriteAttribute("layer", circle.Layer);
+                //writer.WriteAttribute("layer", circle.Layer);
                 writer.WriteAttribute("position", circle.Position);
                 writer.WriteAttribute("radius", circle.Radius);
                 if (circle.Thickness > 0)
@@ -83,7 +83,7 @@
                 writer.WriteStartElement("text");
                 if (!String.IsNullOrEmpty(text.Name))
                     writer.WriteAttributeString("name", text.Name);
-                writer.WriteAttribute("layer", text.Layer);
+                //writer.WriteAttribute("layer", text.LayerId);
                 writer.WriteAttribute("position", text.Position);
                 if (text.Rotation != 0)
                     writer.WriteAttribute("rotation", text.Rotation);
@@ -104,7 +104,7 @@
 
                 writer.WriteStartElement("spad");
                 writer.WriteAttributeString("name", pad.Name);
-                writer.WriteAttribute("layer", pad.Layer);
+                //writer.WriteAttribute("layer", pad.Layer);
                 writer.WriteAttribute("position", pad.Position);
                 if (pad.Rotation != 0)
                     writer.WriteAttribute("rotation", pad.Rotation);
@@ -153,7 +153,7 @@
             public override void Visit(RegionElement region) {
 
                 writer.WriteStartElement("region");
-                writer.WriteAttribute("layer", region.Layer);
+                //writer.WriteAttribute("layer", region.Layer);
                 if (region.Thickness > 0)
                     writer.WriteAttribute("thickness", region.Thickness);
                 if (region.Isolation > 0)
@@ -202,7 +202,7 @@
 
                 writer.WriteStartElement("via");
                 writer.WriteAttribute("position", via.Position);
-                writer.WriteAttribute("layers", via.Layers);
+                //writer.WriteAttribute("layers", via.Layers);
                 writer.WriteAttribute("drill", via.Drill);
                 writer.WriteAttribute("outerSize", via.OuterSize);
                 if (via.InnerSize != via.OuterSize)
@@ -228,7 +228,7 @@
 
                 writer.WriteStartElement("layer");
                 writer.WriteAttributeString("name", layer.Name);
-                writer.WriteAttributeString("id", layer.Id.ToString());
+                writer.WriteAttributeString("id", layer.LayerId.ToString());
                 writer.WriteAttributeString("class", layer.Class.ToString());
                 writer.WriteAttributeString("visible", layer.IsVisible.ToString());
                 writer.WriteAttribute("color", layer.Color);

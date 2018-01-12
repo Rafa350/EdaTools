@@ -5,6 +5,9 @@
     using System.Collections.Generic;
     using System.Windows;
 
+    /// <summary>
+    /// Clase que representa una regio poligonal.
+    /// </summary>
     public sealed class RegionElement: Element, IConectable {
 
         public struct Segment {
@@ -33,7 +36,7 @@
         private double isolation = 0;
 
         /// <summary>
-        /// Constructor per defecte del objecte.
+        /// Constructor de l'objecte amb els parametres per defecte.
         /// </summary>
         /// 
         public RegionElement():
@@ -47,7 +50,11 @@
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="isolation">Distancia d'aillament.</param>
         /// 
-        public RegionElement(LayerId layerId, double thickness = 0, double isolation = 0):
+        public RegionElement(
+            LayerId layerId, 
+            double thickness = 0, 
+            double isolation = 0):
+            
             base() {
 
             if (thickness < 0)
@@ -65,12 +72,21 @@
         /// Constructor del objecte.
         /// </summary>
         /// <param name="layerId">Identificador de la capa.</param>
+        /// <param name="isolation">D'istancia d'aillament.</param>
+        /// <param name="thickness">Amplada de linia del perfil.</param>
         /// <param name="segments">Llista de segments.</param>
         /// 
-        public RegionElement(LayerId layerId, IEnumerable<Segment> segments) :
+        public RegionElement(
+            LayerId layerId, 
+            double thickness,
+            double isolation,
+            IEnumerable<Segment> segments) :
+
             base() {
 
             this.layerId = layerId;
+            this.thickness = thickness;
+            this.isolation = isolation;
 
             foreach (Segment segment in segments)
                 Add(segment);
@@ -81,14 +97,22 @@
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public override void AcceptVisitor(IVisitor visitor) {
+        public override void AcceptVisitor(
+            IVisitor visitor) {
 
             visitor.Visit(this);
         }
 
-        public override bool IsOnLayer(Layer layer) {
+        /// <summary>
+        /// Comprova si l'objecte pertany a la capa especificada.
+        /// </summary>
+        /// <param name="layerId">Identificador de la capa.</param>
+        /// <returns>True si pertany, false en cas contrari.</returns>
+        /// 
+        public override bool IsOnLayer(
+            LayerId layerId) {
 
-            return layerId.Id == layer.Id;
+            return this.layerId == layerId;
         }
 
         /// <summary>
@@ -97,7 +121,8 @@
         /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(double inflate = 0) {
+        public override Polygon GetPolygon(
+            double inflate = 0) {
 
             return PolygonBuilder.Build(this);
         }
@@ -146,6 +171,10 @@
             Add(new Segment(position, angle));
         }
 
+        /// <summary>
+        /// Obte o asigna el identificador de la capa.
+        /// </summary>
+        /// 
         public LayerId LayerId {
             get {
                 return layerId;
@@ -156,7 +185,7 @@
         }
 
         /// <summary>
-        /// Obte o asigna l'amplada de linia.
+        /// Obte o asigna l'amplada de linia del perfil.
         /// </summary>
         /// 
         public double Thickness {

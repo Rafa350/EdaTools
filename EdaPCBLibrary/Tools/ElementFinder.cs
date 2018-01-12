@@ -24,7 +24,7 @@
 
             public bool Check(Element element) {
 
-                return element.IsOnLayer(layer);
+                return element.IsOnLayer(layer.LayerId);
             }
         }
 

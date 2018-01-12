@@ -18,7 +18,6 @@
         public override void RenderVisual() {
 
             bool isMirror = Part == null ? false : Part.IsFlipped;
-            Layer layer = Text.Layer;
 
             using (DrawingContext dc = RenderOpen()) {
 
@@ -50,7 +49,7 @@
 
                 if (!String.IsNullOrEmpty(value)) {
 
-                    Brush brush = BrushCache.Instance.GetBrush(Text.Layer.Color);
+                    Brush brush = BrushCache.Instance.GetBrush(Colors.LightGray);
                     FormattedText formattedText = new FormattedText(
                         value,
                         CultureInfo.CurrentUICulture,

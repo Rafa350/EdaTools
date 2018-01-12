@@ -112,12 +112,12 @@
         /// <summary>
         /// Obte una capa pel seu Id
         /// </summary>
-        /// <param name="id">El id de la capa.</param>
+        /// <param name="id">El identificador de la capa.</param>
         /// <returns>La capa.</returns>
         /// 
-        public Layer GetLayer(LayerIdentifier id) {
+        public Layer GetLayer(LayerId layerId) {
 
-            return layers.Find(a => a.Id == id);
+            return layers.Find(layer => layer.LayerId == layerId);
         }
 
         /// <summary>

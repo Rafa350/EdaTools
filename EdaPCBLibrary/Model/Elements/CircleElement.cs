@@ -4,6 +4,9 @@
     using System;
     using System.Windows;
 
+    /// <summary>
+    /// Clase que representa un cercle.
+    /// </summary>
     public sealed class CircleElement: Element, IPosition {
 
         private Point position;
@@ -12,7 +15,7 @@
         private double thickness;
 
         /// <summary>
-        ///  Constructor por defecte de l'objecte.
+        ///  Constructor de l'objecte amb els parametres per defecte.
         /// </summary>
         /// 
         public CircleElement():
@@ -23,11 +26,16 @@
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="position">Posicio del centre.</param>
-        /// <param name="layerId">Capa.</param>
+        /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="radius">Radi.</param>
-        /// <param name="thickness">Amplada de linia.</param>
+        /// <param name="thickness">Amplada de linia. Zero indica que es un disc.</param>
         /// 
-        public CircleElement(Point position, LayerId layerId, double radius, double thickness = 0) :
+        public CircleElement(
+            Point position, 
+            LayerId layerId, 
+            double radius, 
+            double thickness = 0) :
+            
             base() {
 
             this.position = position;
@@ -53,7 +61,8 @@
         /// <param name="layerId">El identificador de la capa.</param>
         /// <returns>True si pertany, false en cas contrari.</returns>
         /// 
-        public override bool IsOnLayer(LayerId layerId) {
+        public override bool IsOnLayer(
+            LayerId layerId) {
 
             return this.layerId == layerId;
         }
@@ -64,7 +73,8 @@
         /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(double inflate = 0) {
+        public override Polygon GetPolygon(
+            double inflate = 0) {
 
             return PolygonBuilder.BuildCircle(position, radius + inflate);
         }
@@ -76,7 +86,7 @@
         /// 
         protected override Rect GetBoundingBox() {
 
-            return new Rect(position.X - radius, position.Y - radius, Diameter, Diameter);
+            return new Rect(position.X - radius, position.Y - radius, radius + radius, radius + radius);
         }
 
         /// <summary>
@@ -176,7 +186,7 @@
             }
             set {
                 if (value)
-                    Thickness = 0; // Canvia la propietat
+                    Thickness = 0; // Canvia la propietat, no el camp
             }
         }
     }

@@ -5,6 +5,9 @@
     using System.Collections.Generic;
     using System.Windows;
 
+    /// <summary>
+    /// Clase que representa una via
+    /// </summary>
     public sealed class ViaElement: Element, IPosition, IConectable {
 
         public enum ViaShape {
@@ -29,7 +32,7 @@
         private ViaType type = ViaType.Through;
 
         /// <summary>
-        /// Constructor per defecte de l'objecte.
+        /// Constructor de l'objecte amb els parametres per defecte.
         /// </summary>
         /// 
         public ViaElement():
@@ -46,11 +49,14 @@
         /// <param name="shape">Forma de la corona.</param>
         /// <param name="layers">Capes a les que pertany.</param>
         /// 
-        public ViaElement(Point position, IEnumerable<Layer> layers, double size, double drill, ViaShape shape) :
+        public ViaElement(
+            Point position, 
+            IEnumerable<Layer> layers, 
+            double size, 
+            double drill, 
+            ViaShape shape) :
+            
             base() {
-
-            if (position == null)
-                throw new ArgumentNullException("position");
 
             if (size < 0)
                 throw new ArgumentOutOfRangeException("size");
@@ -68,19 +74,19 @@
         /// <summary>
         /// Comprova si partany a la capa.
         /// </summary>
-        /// <param name="layer">La capa per verificar.</param>
+        /// <param name="layerId">Identificador de la capa.</param>
         /// <returns>True si pertany, false en cas contrari.</returns>
         /// 
-        public override bool IsOnLayer(Layer layer) {
+        public override bool IsOnLayer(
+            LayerId layerId) {
 
-            if (layer == null)
-                throw new ArgumentNullException("layer");
-
-            // TODO: Com gestionar though, blind i buried?
+            // TODO: Com blind i buried?
 
             return 
-                (layer.Id == LayerIdentifier.Vias) ||
-                (layer.Id == LayerIdentifier.Drills);
+                ((layerId == LayerId.Top) && (type == ViaType.Through)) ||
+                ((layerId == LayerId.Bottom) && (type == ViaType.Through)) ||
+                (layerId == LayerId.Vias) ||
+                (layerId == LayerId.Drills);
         }
 
         /// <summary>
@@ -88,7 +94,8 @@
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public override void AcceptVisitor(IVisitor visitor) {
+        public override void AcceptVisitor(
+            IVisitor visitor) {
 
             visitor.Visit(this);
         }
@@ -98,7 +105,8 @@
         /// </summary>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(double inflate = 0) {
+        public override Polygon GetPolygon(
+            double inflate = 0) {
 
             Polygon polygon;
             switch (shape) {

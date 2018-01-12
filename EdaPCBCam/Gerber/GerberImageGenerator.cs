@@ -310,7 +310,7 @@
                     double clearance = 0.15;
 
                     Polygon regionPolygon = PolygonBuilder.Build(region);
-                    IEnumerable<Polygon> holePolygons = PolygonListBuilder.Build(VisitingBoard, layers[0], regionPolygon, clearance + (region.Thickness / 2));
+                    IEnumerable<Polygon> holePolygons = PolygonListBuilder.Build(VisitingBoard, layers[0].LayerId, regionPolygon, clearance + (region.Thickness / 2));
 
                     PolygonNode polygonTree = PolygonProcessor.ClipExtended(regionPolygon, holePolygons, PolygonProcessor.ClipOperation.Diference);
                     ProcessPolygonTree(polygonTree, region.Thickness);

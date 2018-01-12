@@ -25,7 +25,6 @@
         public override void RenderVisual() {
 
             bool isMirror = Part == null ? false : Part.IsFlipped;
-            Layer layer = Arc.Layer;
 
             using (DrawingContext dc = RenderOpen()) {
 
@@ -58,7 +57,7 @@
 
                 // Dibuixa la geometria
                 //
-                Pen pen = PenCache.Instance.GetPen(layer.Color, Arc.Thickness,
+                Pen pen = PenCache.Instance.GetPen(Colors.Wheat, Arc.Thickness,
                     Arc.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
                 dc.DrawGeometry(null, pen, geometry);
 

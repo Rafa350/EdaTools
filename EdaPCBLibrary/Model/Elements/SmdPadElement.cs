@@ -4,6 +4,9 @@
     using System;
     using System.Windows;
 
+    /// <summary>
+    /// Clase que representa un pad superficial
+    /// </summary>
     public sealed class SmdPadElement: Element, IPosition, IRotation, IName, IConectable {
 
         private string name;
@@ -16,7 +19,7 @@
         private bool stop = true;
 
         /// <summary>
-        /// Constructor per defecte de l'objecte.
+        /// Constructor de l'objecte amb els parametres per defecte.
         /// </summary>
         /// 
         public SmdPadElement():
@@ -35,7 +38,16 @@
         /// <param name="stop">Genera mascara.</param>
         /// <param name="cream">Genera encolat.</param>
         /// 
-        public SmdPadElement(string name, Point position, LayerId layerId, Size size, double rotation, double roundnes, bool stop, bool cream):
+        public SmdPadElement(
+            string name, 
+            Point position, 
+            LayerId layerId, 
+            Size size, 
+            double rotation, 
+            double roundnes, 
+            bool stop = true, 
+            bool cream = true):
+            
             base() {
 
             this.name = name;
@@ -48,17 +60,24 @@
             this.cream = cream;
         }
 
-        public override bool IsOnLayer(LayerId layerId) {
+        /// <summary>
+        /// Comprova si l'objecte pertany a la capa especificada.
+        /// </summary>
+        /// <param name="layerId">Identificador de la capa.</param>
+        /// <returns>True si pertany, false en cas contrari.</returns>
+        /// 
+        public override bool IsOnLayer(
+            LayerId layerId) {
 
             if (this.layerId == layerId)
                 return true;
-            else if ((this.layerId == LayerId.Top) && (layerId == LayerIdentifier.TopStop) && stop)
+            else if ((this.layerId == LayerId.Top) && (layerId == LayerId.TopStop) && stop)
                 return true;
-            else if ((this.layerId == LayerId.Bottom) && (layerId == LayerIdentifier.BottomStop) && stop)
+            else if ((this.layerId == LayerId.Bottom) && (layerId == LayerId.BottomStop) && stop)
                 return true;
-            else if ((this.layerId == LayerId.Top) && (layerId == LayerIdentifier.TopCream) && cream)
+            else if ((this.layerId == LayerId.Top) && (layerId == LayerId.TopCream) && cream)
                 return true;
-            else if ((this.layerId == LayerId.Bottom) && (layerId == LayerIdentifier.BottomCream) && cream)
+            else if ((this.layerId == LayerId.Bottom) && (layerId == LayerId.BottomCream) && cream)
                 return true;
             else
                 return false;
@@ -80,7 +99,8 @@
         /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(double inflate = 0) {
+        public override Polygon GetPolygon(
+            double inflate = 0) {
 
             return PolygonBuilder.BuildRectangle(position,
                 new Size(size.Width + (inflate * 2), size.Height + (inflate * 2)), Radius + inflate, rotation);
@@ -110,7 +130,7 @@
         }
 
         /// <summary>
-        ///  Obte o asigna la posicio del centre geometric del rectangle.
+        ///  Obte o asigna la posicio del centre geometric del pad.
         /// </summary>
         /// 
         public Point Position {

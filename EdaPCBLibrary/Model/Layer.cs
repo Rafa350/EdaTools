@@ -13,7 +13,7 @@
 
     public sealed class Layer: IVisitable {
 
-        private readonly LayerIdentifier id = LayerIdentifier.Unknown;
+        private readonly LayerId layerId = LayerId.Unknown;
         private readonly LayerClass cls = LayerClass.Unknown;
         private string name;
         private Color color;
@@ -29,15 +29,15 @@
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="id">Identificador de la capa.</param>
+        /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="name">Nom de la capa.</param>
         /// <param name="color">Color dels elements.</param>
         /// <param name="isVisible">Indica si la capa es visible.</param>
         /// <param name="isMirror">Indica si la capa es dibuixa en mirall.</param>
         /// 
-        public Layer(LayerIdentifier id, string name, Color color, bool isVisible = true) {
+        public Layer(LayerId layerId, string name, Color color, bool isVisible = true) {
 
-            this.id = id;
+            this.layerId = layerId;
             this.name = name;
             this.color = color;
             this.isVisible = isVisible;
@@ -48,9 +48,9 @@
             visitor.Visit(this);
         }
 
-        public LayerIdentifier Id {
+        public LayerId LayerId {
             get {
-                return id;
+                return layerId;
             }
         }
 

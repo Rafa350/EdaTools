@@ -4,6 +4,9 @@
     using System;
     using System.Windows;
 
+    /// <summary>
+    /// Clase que representa una linia.
+    /// </summary>
     public class LineElement: Element, IConectable {
 
         public enum LineCapStyle {
@@ -18,7 +21,7 @@
         private LineCapStyle lineCap = LineCapStyle.Round;
 
         /// <summary>
-        /// Constructor per defecte de l'objecte.
+        /// Constructor de l'objecte amb els parametres per defecte.
         /// </summary>
         /// 
         public LineElement():
@@ -34,7 +37,13 @@
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="lineCap">Forma dels extrems de linia.</param>
         /// 
-        public LineElement(Point startPosition, Point endPosition, LayerId layerId, double thickness, LineCapStyle lineCap) :
+        public LineElement(
+            Point startPosition, 
+            Point endPosition, 
+            LayerId layerId, 
+            double thickness, 
+            LineCapStyle lineCap) :
+
             base() {
 
             this.startPosition = startPosition;
@@ -49,18 +58,20 @@
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public override void AcceptVisitor(IVisitor visitor) {
+        public override void AcceptVisitor(
+            IVisitor visitor) {
 
             visitor.Visit(this);
         }
 
         /// <summary>
-        /// Comprova si pertany a la capa especificada.
+        /// Comprova si l'objecte pertany a la capa especificada.
         /// </summary>
-        /// <param name="layer">La capa.</param>
+        /// <param name="layer">Identificador de la capa.</param>
         /// <returns>True si pertany, false en cas contrari.</returns>
         /// 
-        public override bool IsOnLayer(LayerId layerId) {
+        public override bool IsOnLayer(
+            LayerId layerId) {
 
             return this.layerId == layerId;
         }
@@ -71,7 +82,8 @@
         /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(double inflate = 0) {
+        public override Polygon GetPolygon(
+            double inflate = 0) {
 
             return PolygonBuilder.BuildLine(startPosition, endPosition, thickness + (inflate * 2));
         }

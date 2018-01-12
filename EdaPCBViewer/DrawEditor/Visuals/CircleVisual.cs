@@ -15,7 +15,6 @@
         public override void RenderVisual() {
 
             bool isMirror = Part == null ? false : Part.IsFlipped;
-            Layer layer = Circle.Layer;
 
             using (DrawingContext dc = RenderOpen()) {
 
@@ -38,9 +37,9 @@
                 Pen pen = null;
                 Brush brush = null;
                 if (Circle.Thickness > 0)
-                    pen = PenCache.Instance.GetPen(layer.Color, Circle.Thickness);
+                    pen = PenCache.Instance.GetPen(Colors.Wheat, Circle.Thickness);
                 else
-                    brush = BrushCache.Instance.GetBrush(layer.Color);
+                    brush = BrushCache.Instance.GetBrush(Colors.Wheat);
                 dc.DrawPolygon(brush, pen, Circle.Polygon);
 
                 // Pop de la transformacio d'escala pel canvi de cara

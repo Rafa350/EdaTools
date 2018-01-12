@@ -4,12 +4,15 @@
     using System;
     using System.Windows;
 
+    /// <summary>
+    /// Clase que representa un arc.
+    /// </summary>
     public sealed class ArcElement: LineElement, IConectable {
 
         private double angle;
 
         /// <summary>
-        /// Constructor per defecte de l'objecte.
+        /// Constructor de l'objecte, amb els parametres per defecte.
         /// </summary>
         /// 
         public ArcElement():
@@ -21,12 +24,19 @@
         /// </summary>
         /// <param name="startPosition">Punt inicial.</param>
         /// <param name="endPosition">Punt final.</param>
-        /// <param name="layerId">Capa.</param>
+        /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="angle">Angle del arc.</param>
         /// <param name="lineCap">Extrems de linia.</param>
         /// 
-        public ArcElement(Point startPosition, Point endPosition, LayerId layerId, double thickness, double angle, LineCapStyle lineCap) :
+        public ArcElement(
+            Point startPosition, 
+            Point endPosition, 
+            LayerId layerId, 
+            double thickness, 
+            double angle, 
+            LineCapStyle lineCap) :
+            
             base(startPosition, endPosition, layerId, thickness, lineCap) {
 
             this.angle = angle;
@@ -37,18 +47,20 @@
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public override void AcceptVisitor(IVisitor visitor) {
+        public override void AcceptVisitor(
+            IVisitor visitor) {
 
             visitor.Visit(this);
         }
 
         /// <summary>
-        /// Crea el poligon del element.
+        /// Crea el poligon del objecte.
         /// </summary>
         /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(double inflate = 0) {
+        public override Polygon GetPolygon(
+            double inflate = 0) {
 
             return PolygonBuilder.BuildLine(StartPosition, EndPosition, Thickness + (inflate * 2));
         }
@@ -88,6 +100,7 @@
 
                 // Calcula la distancia entre els dos punts.
                 //
+                //double d = Length;
                 double d = Math.Sqrt(Math.Pow(x2 - x1, 2.0) + Math.Pow(y2 - y1, 2.0));
 
                 // Calcula el radi
@@ -108,17 +121,15 @@
             }
         }
 
-
-
         /// <summary>
         /// Obte l'angle inicial del arc.
         /// </summary>
         /// 
         public double StartAngle {
             get {
-                Point center = Center;
-                double rAngle = Math.Atan((StartPosition.Y - center.Y) / (StartPosition.X - center.X));
-                return rAngle * 180.0 / Math.PI;
+                Point c = Center;
+                double a = Math.Atan((StartPosition.Y - c.Y) / (StartPosition.X - c.X));
+                return a * 180.0 / Math.PI;
             }
         }
 
@@ -128,9 +139,9 @@
         /// 
         public double EndAngle {
             get {
-                Point center = Center;
-                double rAngle = Math.Atan((EndPosition.Y - center.Y) / (EndPosition.X - center.X));
-                return rAngle * 180.0 / Math.PI;
+                Point c = Center;
+                double a = Math.Atan((EndPosition.Y - c.Y) / (EndPosition.X - c.X));
+                return a * 180.0 / Math.PI;
             }
         }
 
@@ -140,14 +151,9 @@
         /// 
         public double Radius {
             get {
-                // La semi-distancia entre els dos punts es un catet
-                //
-                double sd = Math.Sqrt(Math.Pow(EndPosition.X - StartPosition.X, 2.0) + Math.Pow(EndPosition.Y - StartPosition.Y, 2.0)) / 2.0;
-
-                // La hipotenusa es el radi. Aplicant trigonometria...
-                //
-                double rAngle = angle * Math.PI / 180.0;
-                return Math.Abs(sd / Math.Sin(rAngle / 2.0));
+                double a = angle * Math.PI / 180.0;
+                double l = Length / 2.0;
+                return Math.Abs(l / Math.Sin(a / 2.0));
             }
         }
     }

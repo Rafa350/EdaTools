@@ -15,7 +15,6 @@
         public override void RenderVisual() {
 
             bool isMirror = Part == null ? false : Part.IsFlipped;
-            Layer layer = Line.Layer;
 
             using (DrawingContext dc = RenderOpen()) {
 
@@ -35,7 +34,7 @@
 
                 // Dibuixa la linia
                 //
-                Brush brush = BrushCache.Instance.GetBrush(layer.Color);
+                Brush brush = BrushCache.Instance.GetBrush(Colors.Coral);
                 dc.DrawPolygon(brush, null, Line.Polygon);
 
                 // Pop de la transformacio d'escala pel canvi de cara

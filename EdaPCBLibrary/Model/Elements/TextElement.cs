@@ -4,6 +4,9 @@
     using System;
     using System.Windows;
 
+    /// <summary>
+    /// Clase que representa un text.
+    /// </summary>
     public sealed class TextElement: Element, IPosition, IRotation {
 
         public enum TextAlign {
@@ -26,11 +29,30 @@
         private string value;
         private string name;
 
+        /// <summary>
+        /// Constructor de l'objecte amb els parametres per defecte.
+        /// </summary>
+        /// 
         public TextElement():
             base() {
         }
 
-        public TextElement(Point position, LayerId layerId, double rotation, double height, TextAlign align = TextAlign.MiddleCenter):
+        /// <summary>
+        /// Constructor de l'objecte.
+        /// </summary>
+        /// <param name="position">Posicio.</param>
+        /// <param name="layerId">Identificador de la capa.</param>
+        /// <param name="rotation">Angle de rotacio.</param>
+        /// <param name="height">Alçada de lletra.</param>
+        /// <param name="align">Alineacio respecte la posicio.</param>
+        /// 
+        public TextElement(
+            Point position, 
+            LayerId layerId, 
+            double rotation, 
+            double height, 
+            TextAlign align = TextAlign.MiddleCenter):
+            
             base() {
 
             this.position = position;
@@ -40,12 +62,25 @@
             this.align = align;
         }
 
-        public override void AcceptVisitor(IVisitor visitor) {
+        /// <summary>
+        /// Accepta  un visitador.
+        /// </summary>
+        /// <param name="visitor">El visitador.</param>
+        /// 
+        public override void AcceptVisitor(
+            IVisitor visitor) {
 
             visitor.Visit(this);
         }
 
-        public override bool IsOnLayer(LayerId layerId) {
+        /// <summary>
+        /// Comprova si l'objecte pertany a la capa especificada.
+        /// </summary>
+        /// <param name="layerId">Identificador de la capa.</param>
+        /// <returns>True si pertany, false en cas contrari.</returns>
+        /// 
+        public override bool IsOnLayer(
+            LayerId layerId) {
 
             return this.layerId == layerId;
         }
@@ -55,7 +90,8 @@
         /// </summary>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(double inflate = 0) {
+        public override Polygon GetPolygon(
+            double inflate = 0) {
 
             throw new System.NotImplementedException();
         }
@@ -83,6 +119,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna l'angle de rotacio.
+        /// </summary>
+        /// 
         public double Rotation {
             get {
                 return rotation;
@@ -92,6 +132,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna l'alçada de lletra.
+        /// </summary>
+        /// 
         public double Height {
             get {
                 return height;
@@ -101,6 +145,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna l'aliniacio del text.
+        /// </summary>
+        /// 
         public TextAlign Align {
             get {
                 return align;
@@ -110,6 +158,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna el nom.
+        /// </summary>
+        /// 
         public string Name {
             get {
                 return name;
@@ -119,6 +171,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna el valor del text.
+        /// </summary>
+        /// 
         public string Value {
             get {
                 return value;

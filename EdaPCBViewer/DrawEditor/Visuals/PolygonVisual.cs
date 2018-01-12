@@ -28,14 +28,12 @@
                 }
                 bool isMirror = Part == null ? false : Part.IsFlipped;
 
-                Layer layer = Polygon.Layer;
-
                 Pen pen = Polygon.Thickness == 0 ?
                     null :
-                    PenCache.Instance.GetPen(layer.Color, Polygon.Thickness, PenLineCap.Round);
+                    PenCache.Instance.GetPen(Colors.AliceBlue, Polygon.Thickness, PenLineCap.Round);
 
                 Brush brush = Polygon.Thickness == 0 ?
-                    new SolidColorBrush(layer.Color) :
+                    new SolidColorBrush(Colors.Beige) :
                     null;
 
                 StreamGeometry geometry = new StreamGeometry();

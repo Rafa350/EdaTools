@@ -4,13 +4,16 @@
     using System;
     using System.Windows;
 
+    /// <summary>
+    /// Clase que representa un forat no conductor.
+    /// </summary>
     public sealed class HoleElement: Element, IPosition {
 
         private Point position;
         private double drill;
 
         /// <summary>
-        /// Constructor per defecte de l'objecte.
+        /// Constructor de l'objecte amb els parametres per defecte.
         /// </summary>
         /// 
         public HoleElement() {
@@ -22,10 +25,9 @@
         /// <param name="position">Pocicio del centre.</param>
         /// <param name="drill">Diametre del forat.</param>
         /// 
-        public HoleElement(Point position, double drill) { 
-
-            if (position == null)
-                throw new ArgumentNullException("position");
+        public HoleElement(
+            Point position, 
+            double drill) { 
 
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException("drill");
@@ -37,10 +39,11 @@
         /// <summary>
         /// Comprova si pertany a la capa especificada.
         /// </summary>
-        /// <param name="layer">La capa a comprovar.</param>
+        /// <param name="layerId">Identificador de la capa.</param>
         /// <returns>True si es en la capa, false en cas contrari.</returns>
         /// 
-        public override bool IsOnLayer(LayerId layerId) {
+        public override bool IsOnLayer(
+            LayerId layerId) {
 
             return
                 (layerId == LayerId.Holes) ||
@@ -53,7 +56,8 @@
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public override void AcceptVisitor(IVisitor visitor) {
+        public override void AcceptVisitor(
+            IVisitor visitor) {
 
             visitor.Visit(this);
         }
@@ -64,7 +68,8 @@
         /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(double inflate = 0) {
+        public override Polygon GetPolygon(
+            double inflate = 0) {
 
             return PolygonBuilder.BuildCircle(position, (drill / 2) + inflate);
         }
@@ -76,7 +81,7 @@
         /// 
         protected override Rect GetBoundingBox() {
 
-            throw new NotImplementedException();
+            return new Rect(position.X - drill / 2, position.Y - drill / 2, drill, drill);
         }
 
         /// <summary>

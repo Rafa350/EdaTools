@@ -16,7 +16,6 @@
         public override void RenderVisual() {
 
             bool isMirror = Part == null ? false : Part.IsFlipped;
-            Layer layer = Rectangle.Layer;
 
             using (DrawingContext dc = RenderOpen()) {
 
@@ -39,9 +38,9 @@
                 Pen pen = null;
                 Brush brush = null;
                 if (Rectangle.Thickness > 0)
-                    pen = PenCache.Instance.GetPen(layer.Color, Rectangle.Thickness);
+                    pen = PenCache.Instance.GetPen(Colors.LightCyan, Rectangle.Thickness);
                 else
-                    brush = BrushCache.Instance.GetBrush(layer.Color);
+                    brush = BrushCache.Instance.GetBrush(Colors.LightCyan);
                 dc.DrawPolygon(brush, pen, Rectangle.Polygon);
 
                 // Pop de la transformacio d'escala pel canvi de cara
