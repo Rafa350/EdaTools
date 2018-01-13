@@ -12,7 +12,7 @@
         private Point position;
         private double rotation;
         private bool isFlipped;
-        private readonly Component component;
+        private readonly Block component;
         private Dictionary<string, Parameter> parameters;
 
         /// <summary>
@@ -20,7 +20,7 @@
         /// </summary>
         /// <param name="component">El component associat.</param>
         /// 
-        public Part(Component component) {
+        public Part(Block component) {
 
             this.component = component;
 
@@ -36,7 +36,7 @@
         /// <param name="isFlipped">Indica si va girat.</param>
         /// <param name="component">El component associat.</param>
         /// 
-        public Part(string name, Point position, double rotation, bool isFlipped, Component component) {
+        public Part(string name, Point position, double rotation, bool isFlipped, Block component) {
 
             this.name = name;
             this.position = position;
@@ -158,7 +158,7 @@
         /// Obte o asigna el component.
         /// </summary>
         /// 
-        public Component Component {
+        public Block Component {
             get {
                 return component;
             }

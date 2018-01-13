@@ -8,25 +8,28 @@
     /// </summary>
     public sealed class Board: IVisitable {
 
-        // Gestio de capes
+        // llista de capes
         private readonly List<Layer> layers = new List<Layer>();
-        private readonly Dictionary<Layer, List<Element>> mapLayerToElements = new Dictionary<Layer, List<Element>>();
-        private readonly Dictionary<Element, List<Layer>> mapElementToLayers = new Dictionary<Element, List<Layer>>();
+        private readonly Dictionary<Layer, Layer> layerPairs = new Dictionary<Layer, Layer>();
+        private readonly Dictionary<Layer, List<Element>> elementsOfLayer = new Dictionary<Layer, List<Element>>();
+        private readonly Dictionary<Element, List<Layer>> layersOfElement = new Dictionary<Element, List<Layer>>();
 
-        // Gestio de senyals
+        // Llista de senyals
         private readonly List<Signal> signals = new List<Signal>();
-        private readonly Dictionary<Signal, List<IConectable>> mapSignalToItems = new Dictionary<Signal, List<IConectable>>();
-        private readonly Dictionary<IConectable, Signal> mapItemToSignal = new Dictionary<IConectable, Signal>();
+        private readonly Dictionary<Signal, List<IConectable>> itemsOfSignal = new Dictionary<Signal, List<IConectable>>();
+        private readonly Dictionary<IConectable, Signal> signalOfItem = new Dictionary<IConectable, Signal>();
 
-        // Gestio dels blocs
-        private static readonly Dictionary<Component, Board> componentOwners = new Dictionary<Component, Board>();
-        private readonly List<Component> components = new List<Component>();
+        // Llista del blocs
+        private readonly List<Block> blocks = new List<Block>();
 
+        // Llista d'elements
         private readonly List<Element> elements = new List<Element>();
+
+        // Llista de parts
         readonly private List<Part> parts = new List<Part>();
 
         /// <summary>
-        /// Constructor per defecte.
+        /// Constructor del objecte amb els parametres per defecte.
         /// </summary>
         /// 
         public Board() {
@@ -69,25 +72,20 @@
         }
 
         /// <summary>
-        /// Afeigeix un component.
+        /// Afeigeix un bloc.
         /// </summary>
-        /// <param name="element">El component a afeigir.</param>
+        /// <param name="block">El component a afeigir.</param>
         /// 
-        public void AddComponent(Component component) {
+        public void AddBlock(Block block) {
 
-            if (component == null)
-                throw new ArgumentNullException("component");
+            if (block == null)
+                throw new ArgumentNullException("block");
 
-            if (components.Contains(component))
+            if (blocks.Contains(block))
                 throw new InvalidOperationException(
-                    String.Format("El componente '{0}', ya esta asignado a esta placa.", component.Name));
+                    String.Format("El bloque '{0}', ya esta asignado a esta placa.", block.Name));
 
-            if (componentOwners.ContainsKey(component))
-                throw new InvalidOperationException(
-                    String.Format("El componente '{0}', ya esta asignado a otra placa.", component.Name));
-
-            components.Add(component);
-            componentOwners.Add(component, this);
+            blocks.Add(block);
         }
 
         #region Metodes per la gestio de capes
@@ -112,12 +110,18 @@
         /// <summary>
         /// Obte una capa pel seu Id
         /// </summary>
-        /// <param name="id">El identificador de la capa.</param>
+        /// <param name="layerId">El identificador de la capa.</param>
+        /// <param name="throwOnError">True si genera una excepcio en cas d'error.</param>
         /// <returns>La capa.</returns>
         /// 
-        public Layer GetLayer(LayerId layerId) {
+        public Layer GetLayer(LayerId layerId, bool throwOnError = true) {
 
-            return layers.Find(layer => layer.LayerId == layerId);
+            Layer layer = layers.Find(l => l.Id == layerId);
+            if ((layer == null) && throwOnError)
+                throw new InvalidOperationException(
+                    String.Format("No se encontro la capa con el ID '{0}'.", layerId.ToString()));
+
+            return layer;
         }
 
         /// <summary>
@@ -138,27 +142,41 @@
                 throw new InvalidOperationException(
                     String.Format("La capa '{0}', no esta asignada a esta placa.", layer.Name));
 
+            // Afegeix l'element a la llista d'elements de la capa
+            //
             List<Element> elementList;
-            if (!mapLayerToElements.TryGetValue(layer, out elementList)) {
+            if (!elementsOfLayer.TryGetValue(layer, out elementList)) {
                 elementList = new List<Element>();
-                mapLayerToElements.Add(layer, elementList);
+                elementsOfLayer.Add(layer, elementList);
             }
-
             if (elementList.Contains(element))
                 throw new InvalidOperationException(
                     String.Format("La capa '{0}', ya contiene este elemento.", layer.Name));
-
             elementList.Add(element);
-        }
 
-        public void Unplace(Layer layer, Element element) {
-
+            // Afegeix la capa a la llista de capes del element
+            //
+            List<Layer> layerList;
+            if (!layersOfElement.TryGetValue(element, out layerList)) {
+                layerList = new List<Layer>();
+                layersOfElement.Add(element, layerList);
+            }
+            if (layerList.Contains(layer))
+                throw new InvalidOperationException(
+                    String.Format("El elemento ya esta contenido en la capa '{0}'.", layer.Name));
+            layerList.Add(layer);
         }
 
         public void Unplace(Element element) {
 
         }
 
+        /// <summary>
+        /// Obte la coleccio d'elements d'una capa.
+        /// </summary>
+        /// <param name="layer">La capa.</param>
+        /// <returns>La coleccio d'elements o null si no n'hi ha</returns>
+        /// 
         public IEnumerable<Element> GetElements(Layer layer) {
 
             if (layer == null)
@@ -168,12 +186,64 @@
                 throw new InvalidOperationException(
                     String.Format("La capa '{0}', no esta asignada a esta placa.", layer.Name));
 
-            if (mapLayerToElements.ContainsKey(layer))
-                return mapLayerToElements[layer];
+            if (elementsOfLayer.ContainsKey(layer))
+                return elementsOfLayer[layer];
             else
-                return new List<Element>();
+                return null;
         }
 
+        /// <summary>
+        /// Obte la coleccio de capes d'un element.
+        /// </summary>
+        /// <param name="element">El element.</param>
+        /// <returns>La coleccio de capes o null si n'hi ha.</returns>
+        /// 
+        public IEnumerable<Layer> GetLayers(Element element) {
+
+            if (element == null)
+                throw new ArgumentNullException("element");
+
+            if (layersOfElement.ContainsKey(element))
+                return layersOfElement[element];
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// Comproba si un element pertany a una capa.
+        /// </summary>
+        /// <param name="element">El element.</param>
+        /// <param name="layer">La capa.</param>
+        /// <returns>True si pertany, false en cas contrari.</returns>
+        /// 
+        public bool IsOnLayer(Element element, Layer layer) {
+
+            if (element == null)
+                throw new ArgumentNullException("element");
+
+            if (layer == null)
+                throw new ArgumentNullException("layer");
+
+            if (elementsOfLayer.ContainsKey(layer))
+                return elementsOfLayer[layer].Contains(element);
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Comprova si un element pertany a qualsevol capa de les especificades.
+        /// </summary>
+        /// <param name="element">El element.</param>
+        /// <param name="layers">La coleccio de capes a verificar.</param>
+        /// <returns>True si pertany a qualsevol de les capes, false si no pertany a cap.</returns>
+        /// 
+        public bool IsOnAnyLayer(Element element, IEnumerable<Layer> layers) {
+
+            foreach (Layer layer in layers)
+                if (IsOnLayer(element, layer))
+                    return true;
+            return false;
+        }
         #endregion
 
         #region Metodes de gestio de les senyals
@@ -209,7 +279,7 @@
                 throw new InvalidOperationException(
                     String.Format("La señal '{0}', no esta asignada a esta placa.", signal.Name));
 
-            if (mapSignalToItems.ContainsKey(signal))
+            if (itemsOfSignal.ContainsKey(signal))
                 throw new InvalidOperationException(
                     String.Format("La señal '{0}', esta en uso y no puede ser retirada de la placa.", signal.Name));
 
@@ -217,12 +287,12 @@
         }
 
         /// <summary>
-        /// Afegeix una conexio entre un objece i un senyal.
+        /// Conecta un objece amb un senyal.
         /// </summary>
         /// <param name="signal">La senyal.</param>
         /// <param name="item">El objecte a conectar.</param>
         /// 
-        public void AddConnection(Signal signal, IConectable item) {
+        public void Connect(Signal signal, IConectable item) {
 
             if (signal == null)
                 throw new ArgumentNullException("signal");
@@ -234,29 +304,29 @@
                 throw new InvalidOperationException(
                     String.Format("La senyal '{0}', no esta asignada a esta placa.", signal.Name));
 
-            if (mapItemToSignal.ContainsKey(item))
+            if (signalOfItem.ContainsKey(item))
                 throw new InvalidOperationException("El objeto ya esta conectado.");
 
             List<IConectable> elementList;
-            if (!mapSignalToItems.TryGetValue(signal, out elementList)) {
+            if (!itemsOfSignal.TryGetValue(signal, out elementList)) {
                 elementList = new List<IConectable>();
-                mapSignalToItems.Add(signal, elementList);
+                itemsOfSignal.Add(signal, elementList);
             }
             elementList.Add(item);
-            mapItemToSignal.Add(item, signal);
+            signalOfItem.Add(item, signal);
         }
 
         /// <summary>
-        /// Elimina la conexio a un objecte.
+        /// Desconecta un objecte de la senyal.
         /// </summary>
         /// <param name="item">El element a desconectar.</param>
         /// 
-        public void RemoveConnection(IConectable item) {
+        public void Disconnect(IConectable item) {
 
             if (item == null)
                 throw new ArgumentNullException("item");
 
-            if (!mapItemToSignal.ContainsKey(item))
+            if (!signalOfItem.ContainsKey(item))
                 throw new InvalidOperationException("El objeto no esta conectado a ninguna señal.");
         }
 
@@ -264,23 +334,50 @@
         /// Obte la senyal conectada a un objecte.
         /// </summary>
         /// <param name="item">El objecte.</param>
+        /// <param name="throwOnError">True si cal generar una excepcio en cas d'error.</param>
         /// <returns>La senyal. Null si no esta conectat.</returns>
         /// 
-        public Signal GetSignal(IConectable item) {
+        public Signal GetSignal(IConectable item, bool throwOnError = true) {
+
+            if (item == null)
+                throw new ArgumentNullException("item");
 
             Signal signal;
 
-            if (mapItemToSignal.TryGetValue(item, out signal))
+            if (signalOfItem.TryGetValue(item, out signal))
                 return signal;
-            else
+            else {
+                if (throwOnError)
+                    throw new InvalidOperationException("El item no esta conectado.");
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Obte una senyal pel seu nom.
+        /// </summary>
+        /// <param name="name">Nom de la senyal.</param>
+        /// <param name="throwOnError">True si cal generar una exepcio en cas d'error.</param>
+        /// <returns>La senyal. Null si no existeix.</returns>
+        /// 
+        public Signal GetSignal(string name, bool throwOnError = true) {
+
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            Signal signal = signals.Find(s => s.Name == name);
+            if ((signal == null) && throwOnError)
+                throw new InvalidOperationException(
+                    String.Format("No se encontro la señal '{0}'.", name));
+
+            return signal;
         }
 
         /// <summary>
         /// Obte els items conectats a una senyal.
         /// </summary>
         /// <param name="signal">La senyal.</param>
-        /// <returns>Els items conectats.</returns>
+        /// <returns>Els items conectats. Null si no hi ha cap.</returns>
         /// 
         public IEnumerable<IConectable> GetConnectedItems(Signal signal) {
 
@@ -292,7 +389,7 @@
                     String.Format("La señal '{0}', no esta asignada a esta placa.", signal.Name));
 
             List<IConectable> items;
-            if (mapSignalToItems.TryGetValue(signal, out items))
+            if (itemsOfSignal.TryGetValue(signal, out items))
                 return items;
             else
                 return null;
@@ -304,22 +401,10 @@
         /// Obte la llista de components.
         /// </summary>
         /// 
-        public IEnumerable<Component> Components {
+        public IEnumerable<Block> Blocks {
             get {
-                return components;
+                return blocks;
             }
-        }
-
-        public static Board BoardOf(Component component) {
-
-            if (component == null)
-                throw new ArgumentNullException("component");
-
-            Board board;
-            if (componentOwners.TryGetValue(component, out board))
-                return board;
-            else
-                return null;
         }
 
         /// <summary>
@@ -333,7 +418,7 @@
         }
 
         /// <summary>
-        /// Obte un enumerados per les capes
+        /// Obte un enumerador per les capes
         /// </summary>
         /// 
         public IEnumerable<Layer> Layers {

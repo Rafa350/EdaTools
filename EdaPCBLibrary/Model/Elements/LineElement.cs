@@ -37,13 +37,7 @@
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="lineCap">Forma dels extrems de linia.</param>
         /// 
-        public LineElement(
-            Point startPosition, 
-            Point endPosition, 
-            LayerId layerId, 
-            double thickness, 
-            LineCapStyle lineCap) :
-
+        public LineElement(Point startPosition, Point endPosition, LayerId layerId, double thickness, LineCapStyle lineCap) :
             base() {
 
             this.startPosition = startPosition;
@@ -58,22 +52,9 @@
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public override void AcceptVisitor(
-            IVisitor visitor) {
+        public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
-        }
-
-        /// <summary>
-        /// Comprova si l'objecte pertany a la capa especificada.
-        /// </summary>
-        /// <param name="layer">Identificador de la capa.</param>
-        /// <returns>True si pertany, false en cas contrari.</returns>
-        /// 
-        public override bool IsOnLayer(
-            LayerId layerId) {
-
-            return this.layerId == layerId;
         }
 
         /// <summary>
@@ -82,8 +63,7 @@
         /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(
-            double inflate = 0) {
+        public override Polygon GetPolygon(double inflate = 0) {
 
             return PolygonBuilder.BuildLine(startPosition, endPosition, thickness + (inflate * 2));
         }

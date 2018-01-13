@@ -25,14 +25,14 @@
             public override void Visit(LineElement line) {
 
                 writer.WriteStartElement("line");
-                //writer.WriteAttribute("layer", line.Layer);
+                //writer.WriteAttribute("layer", board.GetLayer( line.Layer);
                 writer.WriteAttribute("startPosition", line.StartPosition);
                 writer.WriteAttribute("endPosition", line.EndPosition);
                 if (line.Thickness > 0)
                     writer.WriteAttribute("thickness", line.Thickness);
                 if (line.LineCap != LineElement.LineCapStyle.Round)
                     writer.WriteAttributeString("lineCap", line.LineCap.ToString());
-                Signal signal = board.GetSignal(line);
+                Signal signal = board.GetSignal(line, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
                 writer.WriteEndElement();
@@ -48,7 +48,7 @@
                 if (arc.Thickness > 0)
                     writer.WriteAttribute("thickness", arc.Thickness);
                 writer.WriteAttributeString("lineCap", arc.LineCap.ToString());
-                Signal signal = board.GetSignal(arc);
+                Signal signal = board.GetSignal(arc, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
                 writer.WriteEndElement();
@@ -111,11 +111,11 @@
                 writer.WriteAttribute("size", pad.Size);
                 if (pad.Roundnes > 0)
                     writer.WriteAttribute("roundness", pad.Roundnes);
-                if (!pad.Cream)
+                if (!board.IsOnLayer(pad, board.GetLayer(LayerId.TopCream)))
                     writer.WriteAttribute("cream", false);
-                if (!pad.Stop)
+                if (!board.IsOnLayer(pad, board.GetLayer(LayerId.TopGlue)))
                     writer.WriteAttribute("stop", false);
-                Signal signal = board.GetSignal(pad);
+                Signal signal = board.GetSignal(pad, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
                 writer.WriteEndElement();
@@ -132,7 +132,7 @@
                 writer.WriteAttribute("drill",  pad.Drill);
                 if (pad.Shape != ThPadElement.ThPadShape.Circular)
                     writer.WriteAttributeString("shape", pad.Shape.ToString());
-                Signal signal = board.GetSignal(pad);
+                Signal signal = board.GetSignal(pad, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
                 writer.WriteEndElement();
@@ -158,7 +158,7 @@
                     writer.WriteAttribute("thickness", region.Thickness);
                 if (region.Isolation > 0)
                     writer.WriteAttribute("isolation", region.Isolation);
-                Signal signal = board.GetSignal(region);
+                Signal signal = board.GetSignal(region, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
                 foreach (RegionElement.Segment segment in region.Segments) {
@@ -212,7 +212,7 @@
                 if (via.Type != ViaElement.ViaType.Through)
                     writer.WriteAttributeString("type", via.Type.ToString());
 
-                Signal signal = board.GetSignal(via);
+                Signal signal = board.GetSignal(via, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
 
@@ -228,7 +228,7 @@
 
                 writer.WriteStartElement("layer");
                 writer.WriteAttributeString("name", layer.Name);
-                writer.WriteAttributeString("id", layer.LayerId.ToString());
+                writer.WriteAttributeString("id", layer.Id.ToString());
                 writer.WriteAttributeString("class", layer.Class.ToString());
                 writer.WriteAttributeString("visible", layer.IsVisible.ToString());
                 writer.WriteAttribute("color", layer.Color);
@@ -247,7 +247,7 @@
                 writer.WriteEndElement();
             }
 
-            public override void Visit(Component component) {
+            public override void Visit(Block component) {
 
                 writer.WriteStartElement("block");
                 writer.WriteAttributeString("name", component.Name);
@@ -279,7 +279,7 @@
                 writer.WriteEndElement();
 
                 writer.WriteStartElement("blocks");
-                foreach (Component component in board.Components)
+                foreach (Block component in board.Blocks)
                     component.AcceptVisitor(this);
                 writer.WriteEndElement();
 

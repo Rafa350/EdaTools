@@ -32,13 +32,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="thickness">Amplada de linia. Si es zero, es un rectangle ple.</param>
         /// 
-        public RectangleElement(
-            Point position, 
-            LayerId layerId, 
-            Size size, 
-            double rotation, 
-            double thickness = 0) :
-            
+        public RectangleElement(Point position, LayerId layerId, Size size, double rotation, double thickness = 0) :
             base() {
 
             this.position = position;
@@ -53,22 +47,9 @@
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public override void AcceptVisitor(
-            IVisitor visitor) {
+        public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
-        }
-
-        /// <summary>
-        /// Comprova si l'objecte pertany a la capa especificada.
-        /// </summary>
-        /// <param name="layerId">El identificador de la capa.</param>
-        /// <returns>True si pertany, false en cas contrari.</returns>
-        /// 
-        public override bool IsOnLayer(
-            LayerId layerId) {
-
-            return this.layerId == layerId;
         }
 
         /// <summary>
@@ -77,8 +58,7 @@
         /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(
-            double inflate = 0) {
+        public override Polygon GetPolygon(double inflate = 0) {
 
             if (inflate == 0)
                 return PolygonBuilder.BuildRectangle(position, size, 0, rotation);

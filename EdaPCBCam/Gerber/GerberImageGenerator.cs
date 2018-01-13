@@ -2,7 +2,6 @@
 
     using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
     using MikroPic.EdaTools.v1.Cam.Gerber.Infrastructure;
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
@@ -12,6 +11,7 @@
     using System.IO;
     using System.Text;
     using System.Windows;
+    using System.Windows.Media;
 
     public sealed class GerberImageGenerator : GerberGenerator {
 
@@ -118,13 +118,13 @@
                     // Definicio de les regions
                     //
                     gb.Comment("BEGIN POLYGONS");
-                    board.AcceptVisitor(new RegionGeneratorVisitor(gb, layers, apertureDict));
+                    board.AcceptVisitor(new RegionGeneratorVisitor(gb, board, layers, apertureDict));
                     gb.Comment("END POLYGONS");
 
                     // Definicio de la imatge
                     //
                     gb.Comment("BEGIN IMAGE");
-                    board.AcceptVisitor(new ImageGeneratorVisitor(gb, layers, apertureDict));
+                    board.AcceptVisitor(new ImageGeneratorVisitor(gb, board, layers, apertureDict));
                     gb.Comment("END IMAGE");
 
                     // Final
@@ -141,41 +141,51 @@
         private sealed class ImageGeneratorVisitor : BoardVisitor {
 
             private readonly GerberBuilder gb;
-            private readonly IList<Layer> layers;
+            private readonly Board board;
+            private readonly IEnumerable<Layer> layers;
             private readonly ApertureDictionary apertureDict;
+            private Matrix partMatrix = Matrix.Identity;
+            private double partRotation = 0;
 
-            public ImageGeneratorVisitor(GerberBuilder gb, IList<Layer> layers, ApertureDictionary apertureDict) {
+            public ImageGeneratorVisitor(GerberBuilder gb, Board board, IEnumerable<Layer> layers, ApertureDictionary apertureDict) {
 
                 this.gb = gb;
+                this.board = board;
                 this.layers = layers;
                 this.apertureDict = apertureDict;
             }
 
+            /// <summary>
+            /// Visita un element Line
+            /// </summary>
+            /// <param name="line">El element a visitar.</param>
+            /// 
             public override void Visit(LineElement line) {
 
-                if (line.IsOnAnyLayer(layers)) {
+                if (board.IsOnAnyLayer(line, layers)) {
                     Aperture ap = apertureDict.GetCircleAperture(Math.Max(line.Thickness, 0.01));
                     gb.SelectAperture(ap);
-                    Point p1 = line.StartPosition;
-                    if (VisitingPart != null)
-                        p1 = VisitingPart.Transform(p1);
+                    Point p1 = partMatrix.Transform(line.StartPosition);
                     gb.MoveTo(p1);
-                    Point p2 = line.EndPosition;
-                    if (VisitingPart != null)
-                        p2 = VisitingPart.Transform(p2);
+                    Point p2 = partMatrix.Transform(line.EndPosition);
                     gb.LineTo(p2);
                 }
             }
 
+            /// <summary>
+            /// Visita un element de tipus Arc.
+            /// </summary>
+            /// <param name="arc">El element a visitar.</param>
+            /// 
             public override void Visit(ArcElement arc) {
 
-                if (arc.IsOnAnyLayer(layers)) {
+                if (board.IsOnAnyLayer(arc, layers)) {
                     Aperture ap = apertureDict.GetCircleAperture(Math.Max(arc.Thickness, 0.01));
                     gb.SelectAperture(ap);
-                    Point p1 = VisitingPart.Transform(arc.StartPosition);
+                    Point p1 = partMatrix.Transform(arc.StartPosition);
                     gb.MoveTo(p1);
-                    Point p2 = VisitingPart.Transform(arc.EndPosition);
-                    Point c = VisitingPart.Transform(arc.Center);
+                    Point p2 = partMatrix.Transform(arc.EndPosition);
+                    Point c = partMatrix.Transform(arc.Center);
                     gb.ArcTo(
                         p2.X, p2.Y,
                         c.X - p1.X, c.Y - p1.Y,
@@ -183,16 +193,21 @@
                 }
             }
 
+            /// <summary>
+            /// Visita un element de tipus Rectangle.
+            /// </summary>
+            /// <param name="rectangle">El element a visitar.</param>
+            /// 
             public override void Visit(RectangleElement rectangle) {
 
-                if (rectangle.IsOnAnyLayer(layers)) {
+                if (board.IsOnAnyLayer(rectangle, layers)) {
                     if (rectangle.Thickness == 0) {
                         double rotate = rectangle.Rotation;
                         if (VisitingPart != null)
                             rotate += VisitingPart.Rotation;
                         Aperture ap = apertureDict.GetRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotate);
                         gb.SelectAperture(ap);
-                        System.Windows.Point p = VisitingPart.Transform(rectangle.Position);
+                        Point p = partMatrix.Transform(rectangle.Position);
                         gb.FlashAt(p);
                     }
                 }
@@ -200,11 +215,11 @@
 
             public override void Visit(CircleElement circle) {
 
-                if (circle.IsOnAnyLayer(layers)) {
+                if (board.IsOnAnyLayer(circle, layers)) {
                     if (circle.Thickness == 0) {
                         Aperture ap = apertureDict.GetCircleAperture(circle.Diameter);
                         gb.SelectAperture(ap);
-                        Point p = VisitingPart.Transform(circle.Position);
+                        Point p = partMatrix.Transform(circle.Position);
                         gb.FlashAt(p);
                     }
                 }
@@ -212,7 +227,7 @@
 
             public override void Visit(ViaElement via) {
 
-                if (via.IsOnAnyLayer(layers)) {
+                if (board.IsOnAnyLayer(via, layers)) {
                     Aperture ap = null;
                     switch (via.Shape) {
                         default:
@@ -234,13 +249,13 @@
             }
 
             /// <summary>
-            /// Visita un element de tipus ThPadElement
+            /// Visita un element de tipus ThPad
             /// </summary>
             /// <param name="pad">El element a visitar.</param>
             /// 
             public override void Visit(ThPadElement pad) {
 
-                if (pad.IsOnAnyLayer(layers)) {
+                if (board.IsOnAnyLayer(pad, layers)) {
                     double rotate = pad.Rotation;
                     if (VisitingPart != null)
                         rotate += VisitingPart.Rotation;
@@ -263,58 +278,115 @@
                             break;
                     }
                     gb.SelectAperture(ap);
-                    Point p = VisitingPart.Transform(pad.Position);
+                    Point p = partMatrix.Transform(pad.Position);
                     gb.FlashAt(p);
                 }
             }
 
             /// <summary>
-            /// Visita un element de tipus SmdPad.
+            /// Visita un element de tipus SmdPad
             /// </summary>
             /// <param name="pad">El element a visitar.</param>
             /// 
             public override void Visit(SmdPadElement pad) {
 
-                if (pad.IsOnAnyLayer(layers)) {
-                    double rotation = pad.Rotation;
-                    if (VisitingPart != null)
-                        rotation += VisitingPart.Rotation;
+                if (board.IsOnAnyLayer(pad, layers)) {
+                    double rotation = pad.Rotation + partRotation;
                     double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
                     Aperture ap = radius == 0 ?
                         apertureDict.GetRectangleAperture(pad.Size.Width, pad.Size.Height, rotation) :
                         apertureDict.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
                     gb.SelectAperture(ap);
-                    Point p = VisitingPart.Transform(pad.Position);
+                    Point p = partMatrix.Transform(pad.Position);
                     gb.FlashAt(p);
                 }
+            }
+
+            /// <summary>
+            /// Visita un objecte Part
+            /// </summary>
+            /// <param name="part">El objecte a visitar</param>
+            /// 
+            public override void Visit(Part part) {
+
+                partMatrix = part.Transformation;
+                partRotation = part.Rotation;
+
+                base.Visit(part);
+
+                partMatrix = Matrix.Identity;
+                partRotation = 0;
             }
         }
 
         private sealed class RegionGeneratorVisitor : BoardVisitor {
 
             private readonly GerberBuilder gb;
-            private readonly IList<Layer> layers;
+            private readonly Board board;
+            private readonly IEnumerable<Layer> layers;
             private readonly ApertureDictionary apertureDict;
 
-            public RegionGeneratorVisitor(GerberBuilder gb, IList<Layer> layers, ApertureDictionary apertureDict) {
+            public RegionGeneratorVisitor(GerberBuilder gb, Board board, IEnumerable<Layer> layers, ApertureDictionary apertureDict) {
 
                 this.gb = gb;
+                this.board = board;
                 this.layers = layers;
                 this.apertureDict = apertureDict;
             }
 
             public override void Visit(RegionElement region) {
 
-                if (region.IsOnAnyLayer(layers)) {
+                if (board.IsOnAnyLayer(region, layers)) {
 
-                    double clearance = 0.15;
-
-                    Polygon regionPolygon = PolygonBuilder.Build(region);
-                    IEnumerable<Polygon> holePolygons = PolygonListBuilder.Build(VisitingBoard, layers[0].LayerId, regionPolygon, clearance + (region.Thickness / 2));
-
-                    PolygonNode polygonTree = PolygonProcessor.ClipExtended(regionPolygon, holePolygons, PolygonProcessor.ClipOperation.Diference);
+                    PolygonNode polygonTree = CreatePolygonTree(board, region);
                     ProcessPolygonTree(polygonTree, region.Thickness);
                 }
+            }
+
+            /// <summary>
+            /// Crea el poligon de la regio, amb els forats corresponents
+            /// </summary>
+            /// <param name="board">La placa</param>
+            /// <param name="region">La regio.</param>
+            /// <returns>La coleccio de poligons.</returns>
+            /// 
+            private PolygonNode CreatePolygonTree(Board board, RegionElement region) {
+
+                Polygon regionPolygon = PolygonBuilder.Build(region);
+                IEnumerable<Layer> regionLayers = board.GetLayers(region);
+                Signal regionSignal = board.GetSignal(region, false);
+
+                double inflate = 0.15 + region.Thickness / 2;
+                List<Polygon> holePolygons = new List<Polygon>();
+
+                // Procesa els elements de la placa
+                //
+                foreach (Element element in board.Elements) {
+                    if ((element != region) && (board.IsOnAnyLayer(element, regionLayers))) {
+                        IConectable item = element as IConectable;
+                        if ((item == null) || (board.GetSignal(item, false) != regionSignal)) {
+                            Polygon elementPolygon = element.GetPolygon(inflate);
+                            holePolygons.AddRange(PolygonProcessor.Clip(elementPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));
+                        }
+                    }
+                }
+
+                // Procesa els elements dels blocs
+                //
+                foreach (Part part in board.Parts) {
+                    foreach (Element element in part.Component.Elements) {
+                        if ((element != region) && (board.IsOnAnyLayer(element, regionLayers))) {
+                            IConectable item = element as IConectable;
+                            if ((item == null) || (board.GetSignal(item, false) != regionSignal)) {
+                                Polygon elementPolygon = element.GetPolygon(inflate);
+                                elementPolygon.Transform(part.Transformation);
+                                holePolygons.AddRange(PolygonProcessor.Clip(elementPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));
+                            }
+                        }
+                    }
+                }
+
+                return PolygonProcessor.ClipExtended(regionPolygon, holePolygons, PolygonProcessor.ClipOperation.Diference);
             }
 
             private void ProcessPolygonTree(PolygonNode polygonTree, double thickness) {

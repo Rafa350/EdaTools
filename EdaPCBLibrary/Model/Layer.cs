@@ -13,7 +13,7 @@
 
     public sealed class Layer: IVisitable {
 
-        private readonly LayerId layerId = LayerId.Unknown;
+        private readonly LayerId id = LayerId.Unknown;
         private readonly LayerClass cls = LayerClass.Unknown;
         private string name;
         private Color color;
@@ -37,7 +37,7 @@
         /// 
         public Layer(LayerId layerId, string name, Color color, bool isVisible = true) {
 
-            this.layerId = layerId;
+            this.id = layerId;
             this.name = name;
             this.color = color;
             this.isVisible = isVisible;
@@ -48,9 +48,9 @@
             visitor.Visit(this);
         }
 
-        public LayerId LayerId {
+        public LayerId Id {
             get {
-                return layerId;
+                return id;
             }
         }
 

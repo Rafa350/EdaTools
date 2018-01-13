@@ -158,8 +158,8 @@
 
                 bool isStroked = pen != null;
                 StreamPolygon(ctx, polygon, isStroked);
-                if (polygon.HasHoles)
-                    foreach (Polygon hole in polygon.Holes)
+                if (polygon.HasChilds)
+                    foreach (Polygon hole in polygon.Childs)
                         StreamPolygon(ctx, hole, isStroked);
             }
             geometry.Freeze();

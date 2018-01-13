@@ -1,54 +1,54 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
-    public enum LayerIdentifier {
-        Unknown,
-        TopKeepout,
-        TopRestrict,
-        TopNames,
-        TopValues,
-        TopPlace,
-        TopDocument,
-        TopStop,
-        TopCream,
-        TopGlue,
-        TopPins,
-        Top,
-        Inner2,
-        Inner3,
-        Inner4,
-        Inner5,
-        Inner6,
-        Inner7,
-        Inner8,
-        Inner9,
-        Inner10,
-        Inner11,
-        Inner12,
-        Inner13,
-        Inner14,
-        Inner15,
-        Bottom,
-        BottomPins,
-        BottomGlue,
-        BottomCream,
-        BottomStop,
-        BottomDocument,
-        BottomPlace,
-        BottomValues,
-        BottomNames,
-        BottomRestrict,
-        BottomKeepout,
-        Profile,
-        ViaRestrict,
-        Vias,
-        Pads,
-        Holes,
-        Drills,
-        Unrouted,
-        UserDefined
-    }
-
     public struct LayerId {
+
+        private enum LayerIdentifier {
+            Unknown,
+            TopKeepout,
+            TopRestrict,
+            TopNames,
+            TopValues,
+            TopPlace,
+            TopDocument,
+            TopStop,
+            TopCream,
+            TopGlue,
+            TopPins,
+            Top,
+            Inner2,
+            Inner3,
+            Inner4,
+            Inner5,
+            Inner6,
+            Inner7,
+            Inner8,
+            Inner9,
+            Inner10,
+            Inner11,
+            Inner12,
+            Inner13,
+            Inner14,
+            Inner15,
+            Bottom,
+            BottomPins,
+            BottomGlue,
+            BottomCream,
+            BottomStop,
+            BottomDocument,
+            BottomPlace,
+            BottomValues,
+            BottomNames,
+            BottomRestrict,
+            BottomKeepout,
+            Profile,
+            ViaRestrict,
+            Vias,
+            Pads,
+            Holes,
+            Drills,
+            Unrouted,
+            UserDefined
+        }
 
         private LayerIdentifier id;
         private string name;
@@ -80,6 +80,7 @@
         public static readonly LayerId Holes = new LayerId(LayerIdentifier.Holes);
         public static readonly LayerId Drills = new LayerId(LayerIdentifier.Drills);
         public static readonly LayerId Profile = new LayerId(LayerIdentifier.Profile);
+        public static readonly LayerId Unrouted = new LayerId(LayerIdentifier.Unrouted);
 
         /// <summary>
         /// Constructor privat.
@@ -124,18 +125,12 @@
 
         public static bool operator == (LayerId a, LayerId b) {
 
-            return (a.Id == b.Id) && (a.name == b.name);
+            return (a.id == b.id) && (a.name == b.name);
         }
 
         public static bool operator !=(LayerId a, LayerId b) {
 
-            return (a.Id != b.Id) || (a.name != b.name);
-        }
-
-        public LayerIdentifier Id {
-            get {
-                return id;
-            }
+            return (a.id != b.id) || (a.name != b.name);
         }
 
         public string Name {

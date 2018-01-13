@@ -44,14 +44,7 @@
         /// <param name="shape">Diametre del forat.</param>
         /// <param name="drill">Forma de la corona.</param>
         /// 
-        public ThPadElement(
-            string name, 
-            Point position, 
-            double rotation, 
-            double size, 
-            ThPadShape shape, 
-            double drill):
-            
+        public ThPadElement(string name, Point position, double rotation, double size, ThPadShape shape, double drill):
             base() {
 
             this.name = name;
@@ -63,30 +56,11 @@
         }
 
         /// <summary>
-        /// Comprova si pertany a la capa especificada.
-        /// </summary>
-        /// <param name="layerId">Identificador de la capa.</param>
-        /// <returns>True si pertany, false en cas contrari.</returns>
-        /// 
-        public override bool IsOnLayer(
-            LayerId layerId) {
-
-            return 
-                (layerId == LayerId.Pads) ||
-                (layerId == LayerId.Top) ||
-                (layerId == LayerId.Bottom) ||
-                (layerId == LayerId.TopStop) ||
-                (layerId == LayerId.BottomStop) ||
-                (layerId == LayerId.Drills);
-        }
-
-        /// <summary>
         /// Accepta un visitador.
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public override void AcceptVisitor(
-            IVisitor visitor) {
+        public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
         }
@@ -97,8 +71,7 @@
         /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(
-            double inflate = 0) {
+        public override Polygon GetPolygon(double inflate = 0) {
 
             Polygon polygon;
             switch (shape) {
@@ -136,7 +109,7 @@
             // Si esta inflat, no genera el forat
             //
             if (inflate == 0)
-                polygon.AddHole(PolygonBuilder.BuildCircle(position, drill / 2));
+                polygon.AddChild(PolygonBuilder.BuildCircle(position, drill / 2));
 
             return polygon;
         }
@@ -230,7 +203,6 @@
                 }
             }
         }
-
 
         /// <summary>
         /// Obte o asigna el tamany del pad.

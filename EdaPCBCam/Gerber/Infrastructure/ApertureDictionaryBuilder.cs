@@ -2,7 +2,6 @@
 
     using System;
     using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
@@ -16,7 +15,8 @@
         /// 
         private sealed class DefineAperturesVisitor : BoardVisitor {
 
-            private readonly IList<Layer> layers;
+            private readonly Board board;
+            private readonly IEnumerable<Layer> layers;
             private readonly ApertureDictionary apertureDict;
 
             /// <summary>
@@ -25,27 +25,28 @@
             /// <param name="layers">La llista de capes.</param>
             /// <param name="apertureDict">El diccionari per inicialitzar.</param>
             /// 
-            public DefineAperturesVisitor(IList<Layer> layers, ApertureDictionary apertureDict) {
+            public DefineAperturesVisitor(Board board, IEnumerable<Layer> layers, ApertureDictionary apertureDict) {
 
+                this.board = board;
                 this.layers = layers;
                 this.apertureDict = apertureDict;
             }
 
             public override void Visit(LineElement line) {
 
-                if (line.IsOnAnyLayer(layers))
+                if (board.IsOnAnyLayer(line, layers))
                     apertureDict.DefineCircleAperture(Math.Max(line.Thickness, 0.01));
             }
 
             public override void Visit(ArcElement arc) {
 
-                if (arc.IsOnAnyLayer(layers))
+                if (board.IsOnAnyLayer(arc, layers))
                     apertureDict.DefineCircleAperture(Math.Max(arc.Thickness, 0.01));
             }
 
             public override void Visit(RectangleElement rectangle) {
 
-                if (rectangle.IsOnAnyLayer(layers)) {
+                if (board.IsOnAnyLayer(rectangle, layers)) {
                     if (rectangle.Thickness == 0) {
                         double rotation = rectangle.Rotation;
                         if (VisitingPart != null)
@@ -57,7 +58,7 @@
 
             public override void Visit(CircleElement circle) {
 
-                if (circle.IsOnAnyLayer(layers)) {
+                if (board.IsOnAnyLayer(circle, layers)) {
                     if (circle.Thickness == 0)
                         apertureDict.DefineCircleAperture(circle.Diameter);
                 }
@@ -65,7 +66,7 @@
 
             public override void Visit(ViaElement via) {
 
-                if (via.IsOnAnyLayer(layers)) {
+                if (board.IsOnAnyLayer(via, layers)) {
                     switch (via.Shape) {
                         case ViaElement.ViaShape.Circular:
                             apertureDict.DefineCircleAperture(via.OuterSize);
@@ -84,7 +85,7 @@
 
             public override void Visit(ThPadElement pad) {
 
-                if (pad.IsOnAnyLayer(layers)) {
+                if (board.IsOnAnyLayer(pad, layers)) {
                     double rotation = pad.Rotation;
                     if (VisitingPart != null)
                         rotation += VisitingPart.Rotation;
@@ -110,7 +111,7 @@
 
             public override void Visit(SmdPadElement pad) {
 
-                if (pad.IsOnAnyLayer(layers)) {
+                if (board.IsOnAnyLayer(pad, layers)) {
                     double rotation = pad.Rotation;
                     if (VisitingPart != null)
                         rotation += VisitingPart.Rotation;
@@ -124,15 +125,15 @@
 
             public override void Visit(RegionElement region) {
 
-                if (region.IsOnAnyLayer(layers))
+                if (board.IsOnAnyLayer(region, layers))
                     apertureDict.DefineCircleAperture(region.Thickness);
             }
         }
 
-        public static ApertureDictionary Build(Board board, IList<Layer> layers) {
+        public static ApertureDictionary Build(Board board, IEnumerable<Layer> layers) {
 
             ApertureDictionary apertureDict = new ApertureDictionary();
-            board.AcceptVisitor(new DefineAperturesVisitor(layers, apertureDict));
+            board.AcceptVisitor(new DefineAperturesVisitor(board, layers, apertureDict));
 
             return apertureDict;
         }

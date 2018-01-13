@@ -6,10 +6,13 @@
     using System.Windows;
     using System.Windows.Media;
 
+    /// <summary>
+    /// Clase que representa un poligon amb fills.
+    /// </summary>
     public sealed class Polygon: IEnumerable<Point> {
 
         private List<Point> points;
-        private List<Polygon> holes;
+        private List<Polygon> childs;
 
         /// <summary>
         /// Constructor. Crea un poligon buit.
@@ -45,7 +48,7 @@
         }
 
         /// <summary>
-        /// Afegeix ua serie de punts al poligon.
+        /// Afegeix una serie de punts al poligon.
         /// </summary>
         /// <param name="points">Els punta a afeigir.</param>
         /// 
@@ -58,16 +61,16 @@
         }
 
         /// <summary>
-        /// Afegeig un forat al poligon.
+        /// Afegeig un poligon fill.
         /// </summary>
-        /// <param name="polygon">El forat a afeigir.</param>
+        /// <param name="child">El fill a afeigir.</param>
         /// 
-        public void AddHole(Polygon polygon) {
+        public void AddChild(Polygon child) {
 
-            if (polygon == null)
+            if (child == null)
                 throw new ArgumentNullException("hole");
 
-            InternalAddHole(polygon);
+            InternalAddChild(child);
         }
 
         /// <summary>
@@ -78,13 +81,18 @@
         public Polygon Clone() {
 
             Polygon polygon = new Polygon(points);
-            if (holes != null)
-                foreach (Polygon hole in holes)
-                    polygon.AddHole(hole.Clone());
+            if (childs != null)
+                foreach (Polygon child in childs)
+                    polygon.AddChild(child.Clone());
 
             return polygon;
         }
 
+        /// <summary>
+        /// Aplica una matriu de transformacio al poligon.
+        /// </summary>
+        /// <param name="m">La matriu.</param>
+        /// 
         public void Transform(Matrix m) {
 
             for (int i = 0; i < points.Count; i++)
@@ -118,29 +126,29 @@
         }
 
         /// <summary>
-        /// Afegeig un forat al poligon.
+        /// Afegeig un poligon fill.
         /// </summary>
-        /// <param name="hole">El forat a afeigir.</param>
+        /// <param name="child">El fill a afeigir.</param>
         /// 
-        private void InternalAddHole(Polygon hole) {
+        private void InternalAddChild(Polygon child) {
 
-            if (holes == null)
-                holes = new List<Polygon>();
+            if (childs == null)
+                childs = new List<Polygon>();
 
-            holes.Add(hole);
+            childs.Add(child);
         }
 
         /// <summary>
-        /// Afegeix una serie de forats al poligon.
+        /// Afegeix una serie de poligons fills.
         /// </summary>
-        /// <param name="holes">Els forats a afeigir.</param>
+        /// <param name="childs">Els fills a afeigir.</param>
         /// 
-        private void InternalAddHole(IEnumerable<Polygon> holes) {
+        private void InternalAddChild(IEnumerable<Polygon> childs) {
 
-            if (this.holes == null)
-                this.holes = new List<Polygon>(holes);
+            if (this.childs == null)
+                this.childs = new List<Polygon>(childs);
             else
-                this.holes.AddRange(holes);
+                this.childs.AddRange(childs);
         }
 
 
@@ -178,27 +186,27 @@
         /// 
         public int Count {
             get {
-                return points.Count;
+                return points == null ? 0 :  points.Count;
             }
         }
 
         /// <summary>
-        /// Indica si el poligon te forats.
+        /// Indica si el poligon te fills.
         /// </summary>
         /// 
-        public bool HasHoles {
+        public bool HasChilds {
             get {
-                return holes != null;
+                return childs != null;
             }
         }
 
         /// <summary>
-        /// Enumera la llista de forats.
+        /// Enumera la llista de fills.
         /// </summary>
         /// 
-        public IEnumerable<Polygon> Holes {
+        public IEnumerable<Polygon> Childs {
             get {
-                return holes;
+                return childs;
             }
         }
 

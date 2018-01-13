@@ -30,12 +30,7 @@
         /// <param name="radius">Radi.</param>
         /// <param name="thickness">Amplada de linia. Zero indica que es un disc.</param>
         /// 
-        public CircleElement(
-            Point position, 
-            LayerId layerId, 
-            double radius, 
-            double thickness = 0) :
-            
+        public CircleElement(Point position, LayerId layerId, double radius, double thickness = 0) :           
             base() {
 
             this.position = position;
@@ -54,27 +49,13 @@
             visitor.Visit(this);
         }
 
-
-        /// <summary>
-        /// Comprova si pertany a la capa especificada.
-        /// </summary>
-        /// <param name="layerId">El identificador de la capa.</param>
-        /// <returns>True si pertany, false en cas contrari.</returns>
-        /// 
-        public override bool IsOnLayer(
-            LayerId layerId) {
-
-            return this.layerId == layerId;
-        }
-
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
         /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(
-            double inflate = 0) {
+        public override Polygon GetPolygon(double inflate = 0) {
 
             return PolygonBuilder.BuildCircle(position, radius + inflate);
         }

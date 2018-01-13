@@ -84,7 +84,7 @@
     <Compile Include="Model\Parameter.cs" />
     <Compile Include="Model\Board.cs" />
     <Compile Include="Model\Elements\CircleElement.cs" />
-    <Compile Include="Model\Component.cs" />
+    <Compile Include="Model\Block.cs" />
     <Compile Include="Model\Visitors\BoardVisitor.cs" />
     <Compile Include="Model\IO\XmlBoardWriter.cs" />
     <Compile Include="Model\IVisitable.cs" />
@@ -97,7 +97,6 @@
     <Compile Include="Model\Elements\SmdPadElement.cs" />
     <Compile Include="Model\Elements\ThPadElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tools\ElementFinder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Import\KiCad\" />

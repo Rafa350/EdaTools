@@ -12,9 +12,12 @@
 
     public sealed class EagleImporter : Importer {
 
-        private readonly Dictionary<string, Component> componentDict = new Dictionary<string, Component>();
-        private readonly Dictionary<string, Part> partDict = new Dictionary<string, Part>();
+        private readonly Dictionary<string, Block> componentDict = new Dictionary<string, Block>();
         private readonly Dictionary<string, Signal> signalDict = new Dictionary<string, Signal>();
+        private readonly Dictionary<Element, string> mapElementSignal = new Dictionary<Element, string>();
+
+        private Board board;
+        private XmlDocument doc;
 
         /// <summary>
         /// Importa una placa en format EAGLE.
@@ -24,14 +27,13 @@
         /// 
         public override Board LoadBoard(Stream stream) {
 
-            XmlDocument doc = ReadXmlDocument(stream);
+            doc = ReadXmlDocument(stream);
+            board = new Board();
 
-            Board board = new Board();
-
-            ProcessLayers(board, doc);
-            ProcessSignals(board, doc);
-            ProcessBlocks(board, doc);
-            ProcessElements(board, doc);
+            ProcessLayers();
+            ProcessSignals();
+            ProcessBlocks();
+            ProcessElements();
 
             return board;
         }
@@ -68,17 +70,21 @@
         /// <summary>
         /// Procesa les capes.
         /// </summary>
-        /// <param name="board">La placa.</param>
-        /// <param name="doc">El document xml a procesar.</param>
         /// 
-        private void ProcessLayers(Board board, XmlDocument doc) {
+        private void ProcessLayers() {
 
+            // Recorre el node <layers> per crear les capes necesaries.
+            //
             foreach (XmlNode layerNode in doc.SelectNodes("eagle/drawing/layers/layer")) {
 
+                // Obte el identificador de la capa
+                //
                 int layerNum = GetAttributeInteger(layerNode, "number");
                 LayerId layerId = GetLayerId(layerNum);
 
-                if ((layerId != LayerId.Unknown) && (board.GetLayer(layerId) == null)) {
+                // Si la capa no existeix, la crea i l'afegeix a la placa.
+                //
+                if ((layerId != LayerId.Unknown) && (board.GetLayer(layerId, false) == null)) {
                     Layer layer = ParseLayerNode(layerNode);
                     board.AddLayer(layer);
                 }
@@ -88,12 +94,10 @@
         /// <summary>
         /// Procesa les senyals
         /// </summary>
-        /// <param name="board">La placa.</param>
-        /// <param name="doc">El document a procesar.</param>
         /// 
-        private void ProcessSignals(Board board, XmlDocument doc) {
+        private void ProcessSignals() {
 
-            // Procesa el tag <signal>
+            // Recorre el node <signal> per crear les senyals necesaries
             //
             foreach (XmlNode signalNode in doc.SelectNodes("eagle/drawing/board/signals/signal")) {
 
@@ -106,10 +110,8 @@
         /// <summary>
         /// Procesa els blocs
         /// </summary>
-        /// <param name="board">La placa.</param>
-        /// <param name="doc">El document a procesar.</param>
         /// 
-        private void ProcessBlocks(Board board, XmlDocument doc) {
+        private void ProcessBlocks() {
 
             // Procesa el tag <library>
             //
@@ -171,8 +173,8 @@
                     }
 
                     string name = String.Format("{0}@{1}", packageName, libraryName);
-                    Component component = new Component(name, elements);
-                    board.AddComponent(component);
+                    Block component = new Block(name, elements);
+                    board.AddBlock(component);
                     componentDict.Add(component.Name, component);
                 }
             }
@@ -181,17 +183,13 @@
         /// <summary>
         /// Procesa els elements.
         /// </summary>
-        /// <param name="board">La placa.</param>
-        /// <param name="doc">El document a procesar.</param>
         /// 
-        private void ProcessElements(Board board, XmlDocument doc) {
+        private void ProcessElements() {
 
             // Procesa el tag <elements>
             //
-            foreach (Part part in ParseElementsNode(doc.SelectSingleNode("eagle/drawing/board/elements"))) {
+            foreach (Part part in ParseElementsNode(doc.SelectSingleNode("eagle/drawing/board/elements"))) 
                 board.AddPart(part);
-                partDict.Add(part.Name, part);
-            }
 
             // Procesa el tag <plain>
             //
@@ -255,7 +253,7 @@
 
                         IConectable conectable = element as IConectable;
                         if (conectable != null)
-                            board.AddConnection(signal, conectable);
+                            board.Connect(signal, conectable);
                     }
                 }
             }
@@ -342,7 +340,16 @@
                     break;
             }
 
-            return new ThPadElement(name, position, rotate, size, shape, drill);
+            Element element = new ThPadElement(name, position, rotate, size, shape, drill);
+
+            board.Place(board.GetLayer(LayerId.Pads), element);
+            board.Place(board.GetLayer(LayerId.Drills), element);
+            board.Place(board.GetLayer(LayerId.Top), element);
+            board.Place(board.GetLayer(LayerId.TopStop), element);
+            board.Place(board.GetLayer(LayerId.Bottom), element);
+            board.Place(board.GetLayer(LayerId.BottomStop), element);
+
+            return element;
         }
 
         /// <summary>
@@ -368,9 +375,17 @@
             bool stop = GetAttributeBoolean(node, "stop", true);
             bool cream = GetAttributeBoolean(node, "cream", true);
 
-            LayerId layerId = GetLayerId(GetAttributeInteger(node, "layer"));
+            int layerNum = GetAttributeInteger(node, "layer");
+            LayerId layerId = GetLayerId(layerNum);
 
-            return new SmdPadElement(name, position, layerId, size, rotate, roundnes, stop, cream);
+            Element element = new SmdPadElement(name, position, layerId, size, rotate, roundnes);
+            board.Place(board.GetLayer(layerId), element);
+            if (cream)
+                board.Place(board.GetLayer(LayerId.TopCream), element);
+            if (stop)
+                board.Place(board.GetLayer(LayerId.TopStop), element);
+
+            return element;
         }
 
         /// <summary>
@@ -388,11 +403,11 @@
             double drill = GetAttributeDouble(node, "drill");
             double size = GetAttributeDouble(node, "diameter");
 
-            List<Layer> layers = new List<Layer>();
             string extent = GetAttributeString(node, "extent");
             string[] layerNames = extent.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
-            //foreach (string layerName in layerNames)
-              //  layers.Add(GetLayer(Int32.Parse(layerName)));
+            int[] layerNums = new int[layerNames.Length];
+            for (int i = 0; i < layerNums.Length; i++)
+                layerNums[i] = Int32.Parse(layerNames[i]);
 
             ViaElement.ViaShape shape = ViaElement.ViaShape.Circular;
             string shapeName = GetAttributeString(node, "shape");
@@ -406,7 +421,17 @@
                     break;
             }
 
-            return new ViaElement(position, layers, size, drill, shape);
+            List<Layer> layers = new List<Layer>();
+            Element element = new ViaElement(position, layers, size, drill, shape);
+
+            foreach(int layerNum in layerNums) {
+                LayerId layerId = GetLayerId(layerNum);
+                board.Place(board.GetLayer(layerId), element);
+            }
+            board.Place(board.GetLayer(LayerId.Vias), element);
+            board.Place(board.GetLayer(LayerId.Drills), element);
+
+            return element;
         }
 
         /// <summary>
@@ -433,11 +458,15 @@
             double rotate = GetAttributeDouble(node, "rot");
             double height = GetAttributeDouble(node, "size");
 
-            LayerId layerId = GetLayerId(GetAttributeInteger(node, "layer"));
+            int layerNum = GetAttributeInteger(node, "layer");
+            LayerId layerId = GetLayerId(layerNum);
 
             TextElement element = new TextElement(position, layerId, rotate, height, TextElement.TextAlign.TopLeft);
             element.Name = name;
             element.Value = value;
+
+            board.Place(board.GetLayer(layerId), element);
+
             return element;
         }
 
@@ -461,12 +490,18 @@
             LineElement.LineCapStyle lineCap = GetAttributeString(node, "cap") == null ? LineElement.LineCapStyle.Round : LineElement.LineCapStyle.Flat;
             double thickness = GetAttributeDouble(node, "width");
 
-            LayerId layerId = GetLayerId(GetAttributeInteger(node, "layer"));
+            int layerNum = GetAttributeInteger(node, "layer");
+            LayerId layerId = GetLayerId(layerNum);
 
+            Element element;
             if (angle == 0)
-                return new LineElement(p1, p2, layerId, thickness, lineCap);
+                element = new LineElement(p1, p2, layerId, thickness, lineCap);
             else
-                return new ArcElement(p1, p2, layerId, thickness, angle, lineCap);
+                element = new ArcElement(p1, p2, layerId, thickness, angle, lineCap);
+
+            board.Place(board.GetLayer(layerId), element);
+
+            return element;
         }
 
         /// <summary>
@@ -487,9 +522,14 @@
             double rotation = GetAttributeDouble(node, "rot");
             double thickness = GetAttributeDouble(node, "width");
 
-            LayerId layerId = GetLayerId(GetAttributeInteger(node, "layer"));
+            int layerNum = GetAttributeInteger(node, "layer");
+            LayerId layerId = GetLayerId(layerNum);
 
-            return new RectangleElement(position, layerId, size, rotation, thickness);
+            Element element = new RectangleElement(position, layerId, size, rotation, thickness);
+
+            board.Place(board.GetLayer(layerId), element);
+
+            return element;
         }
 
         /// <summary>
@@ -507,9 +547,14 @@
             double thickness = GetAttributeDouble(node, "width");
             double radius = GetAttributeDouble(node, "radius");
 
-            LayerId layerId = GetLayerId(GetAttributeInteger(node, "layer"));
+            int layerNum = GetAttributeInteger(node, "layer");
+            LayerId layerId = GetLayerId(layerNum);
 
-            return new CircleElement(position, layerId, radius, thickness);
+            Element element = new CircleElement(position, layerId, radius, thickness);
+
+            board.Place(board.GetLayer(layerId), element);
+
+            return element;
         }
 
         /// <summary>
@@ -520,7 +565,10 @@
         /// 
         private Element ParsePolygonNode(XmlNode node) {
 
-            LayerId layerId = GetLayerId(GetAttributeInteger(node, "layer"));
+            double thickness = GetAttributeDouble(node, "width");
+
+            int layerNum = GetAttributeInteger(node, "layer");
+            LayerId layerId = GetLayerId(layerNum);
 
             List<RegionElement.Segment> segments = new List<RegionElement.Segment>();
             foreach (XmlNode vertexNode in node.SelectNodes("vertex")) {
@@ -534,7 +582,11 @@
                 segments.Add(new RegionElement.Segment(vertex, angle));
             }
 
-            return new RegionElement(layerId, 0, 0, segments);
+            Element element = new RegionElement(layerId, thickness, 0, segments);
+
+            board.Place(board.GetLayer(layerId), element);
+
+            return element;
         }
 
         /// <summary>
@@ -551,7 +603,13 @@
 
             double drill = GetAttributeDouble(node, "drill");
 
-            return new HoleElement(position, drill);
+            Element element = new HoleElement(position, drill);
+
+            board.Place(board.GetLayer(LayerId.Holes), element);
+            board.Place(board.GetLayer(LayerId.Top), element);
+            board.Place(board.GetLayer(LayerId.Bottom), element);
+
+            return element;
         }
 
         /// <summary>
@@ -638,8 +696,8 @@
                 case 18:
                     return LayerId.Vias;
 
-                //case 19:
-                //    return LayerId.Unrouted;
+                case 19:
+                    return LayerId.Unrouted;
 
                 case 20:
                     return LayerId.Profile;
@@ -733,6 +791,9 @@
                 case 18: // Vias
                     return Colors.Green;
 
+                case 19: // Unrouted
+                    return Colors.Yellow;
+
                 case 21: // Top placement
                 case 22: // Bottom placement
                     return Colors.LightGray;
@@ -777,7 +838,7 @@
         /// <param name="name">El nom del component.</param>
         /// <returns>El component.</returns>
         /// 
-        private Component GetComponent(string name) {
+        private Block GetComponent(string name) {
 
             return componentDict[name];
         }

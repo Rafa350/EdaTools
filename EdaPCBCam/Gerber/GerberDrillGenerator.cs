@@ -18,7 +18,7 @@
             NonPlatedDrill
         }
 
-        public void Generate(Board board, IList<Layer> layers, DrillType drillType, string fileName) {
+        public void Generate(Board board, IEnumerable<Layer> layers, DrillType drillType, string fileName) {
 
             if (board == null)
                 throw new ArgumentNullException("board");
@@ -34,7 +34,8 @@
                     // Crea el diccionari d'apertures
                     //
                     ApertureDictionary apertures = new ApertureDictionary();
-                    board.AcceptVisitor(new DefineAperturesVisitor(layers, apertures));
+                    IVisitor defineAperturesVisitor = new DefineAperturesVisitor(board, layers, apertures);
+                    defineAperturesVisitor.Visit(board);
 
                     GerberBuilder gb = new GerberBuilder(writer);
 
@@ -65,7 +66,8 @@
                     // Definicio de la imatge
                     //
                     gb.Comment("BEGIN IMAGE");
-                    board.AcceptVisitor(new ImageGeneratorVisitor(gb, layers, apertures));
+                    IVisitor imageGeneratorVisitor = new ImageGeneratorVisitor(gb, board, layers, apertures);
+                    imageGeneratorVisitor.Visit(board);
                     gb.Comment("END IMAGE");
 
                     // Final
@@ -75,53 +77,62 @@
             }
         }
 
+        /// <summary>
+        /// Clase utilitzada per generar les apertures.
+        /// </summary>
         private sealed class DefineAperturesVisitor : BoardVisitor {
 
-            private readonly IList<Layer> layers;
+            private readonly Board board;
+            private readonly IEnumerable<Layer> layers;
             private readonly ApertureDictionary apertures;
 
-            public DefineAperturesVisitor(IList<Layer> layers, ApertureDictionary apertures) {
+            public DefineAperturesVisitor(Board board, IEnumerable<Layer> layers, ApertureDictionary apertures) {
 
+                this.board = board;
                 this.layers = layers;
                 this.apertures = apertures;
             }
 
             public override void Visit(HoleElement hole) {
 
-                if (hole.IsOnAnyLayer(layers)) 
+                if (board.IsOnAnyLayer(hole, layers)) 
                     apertures.DefineCircleAperture(hole.Drill);
             }
 
             public override void Visit(ViaElement via) {
 
-                if (via.IsOnAnyLayer(layers))
+                if (board.IsOnAnyLayer(via, layers))
                     apertures.DefineCircleAperture(via.Drill);
             }
 
             public override void Visit(ThPadElement pad) {
 
-                if (pad.IsOnAnyLayer(layers))
+                if (board.IsOnAnyLayer(pad, layers))
                     apertures.DefineCircleAperture(pad.Drill);
             }
         }
 
-
+        /// <summary>
+        /// Clase utilitzada per generar la imatge
+        /// </summary>
         private sealed class ImageGeneratorVisitor : BoardVisitor {
 
             private readonly GerberBuilder gb;
-            private readonly IList<Layer> layers;
+            private readonly Board board;
+            private readonly IEnumerable<Layer> layers;
             private readonly ApertureDictionary apertures;
 
-            public ImageGeneratorVisitor(GerberBuilder gb, IList<Layer> layers, ApertureDictionary apertures) {
+            public ImageGeneratorVisitor(GerberBuilder gb, Board board, IEnumerable<Layer> layers, ApertureDictionary apertures) {
 
                 this.gb = gb;
+                this.board = board;
                 this.layers = layers;
                 this.apertures = apertures;
             }
 
             public override void Visit(HoleElement hole) {
 
-                if (hole.IsOnAnyLayer(layers)) {
+                if (board.IsOnAnyLayer(hole, layers)) {
                     Aperture ap = apertures.GetCircleAperture(hole.Drill);
                     gb.SelectAperture(ap);
                     Point p = VisitingPart.Transform(hole.Position);
@@ -136,7 +147,7 @@
             /// 
             public override void Visit(ViaElement via) {
 
-                if (via.IsOnAnyLayer(layers)) {
+                if (board.IsOnAnyLayer(via, layers)) {
                     Aperture ap = apertures.GetCircleAperture(via.Drill);
                     gb.SelectAperture(ap);
                     gb.FlashAt(via.Position.X, via.Position.Y);
@@ -150,7 +161,7 @@
             /// 
             public override void Visit(ThPadElement pad) {
 
-                if (pad.IsOnAnyLayer(layers)) {
+                if (board.IsOnAnyLayer(pad, layers)) {
                     Aperture ap = apertures.GetCircleAperture(pad.Drill);
                     gb.SelectAperture(ap);
                     Point p = VisitingPart.Transform(pad.Position);

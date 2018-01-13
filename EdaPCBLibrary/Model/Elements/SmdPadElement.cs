@@ -15,8 +15,6 @@
         private Size size;
         private double rotation;
         private double roundnes;
-        private bool cream = true;
-        private bool stop = true;
 
         /// <summary>
         /// Constructor de l'objecte amb els parametres per defecte.
@@ -35,19 +33,8 @@
         /// <param name="size">Tamany</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="roundnes">Percentatge d'arrodoniment de les cantonades.</param>
-        /// <param name="stop">Genera mascara.</param>
-        /// <param name="cream">Genera encolat.</param>
         /// 
-        public SmdPadElement(
-            string name, 
-            Point position, 
-            LayerId layerId, 
-            Size size, 
-            double rotation, 
-            double roundnes, 
-            bool stop = true, 
-            bool cream = true):
-            
+        public SmdPadElement(string name, Point position, LayerId layerId, Size size, double rotation, double roundnes) :
             base() {
 
             this.name = name;
@@ -56,31 +43,6 @@
             this.size = size;
             this.rotation = rotation;
             this.roundnes = roundnes;
-            this.stop = stop;
-            this.cream = cream;
-        }
-
-        /// <summary>
-        /// Comprova si l'objecte pertany a la capa especificada.
-        /// </summary>
-        /// <param name="layerId">Identificador de la capa.</param>
-        /// <returns>True si pertany, false en cas contrari.</returns>
-        /// 
-        public override bool IsOnLayer(
-            LayerId layerId) {
-
-            if (this.layerId == layerId)
-                return true;
-            else if ((this.layerId == LayerId.Top) && (layerId == LayerId.TopStop) && stop)
-                return true;
-            else if ((this.layerId == LayerId.Bottom) && (layerId == LayerId.BottomStop) && stop)
-                return true;
-            else if ((this.layerId == LayerId.Top) && (layerId == LayerId.TopCream) && cream)
-                return true;
-            else if ((this.layerId == LayerId.Bottom) && (layerId == LayerId.BottomCream) && cream)
-                return true;
-            else
-                return false;
         }
 
         /// <summary>
@@ -99,8 +61,7 @@
         /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(
-            double inflate = 0) {
+        public override Polygon GetPolygon(double inflate = 0) {
 
             return PolygonBuilder.BuildRectangle(position,
                 new Size(size.Width + (inflate * 2), size.Height + (inflate * 2)), Radius + inflate, rotation);
@@ -203,32 +164,6 @@
         public double Radius {
             get {
                 return Math.Min(size.Width, size.Height) * Roundnes / 2;
-            }
-        }
-
-        /// <summary>
-        /// Obte o asigna l'indicador de mascara de soldadura.
-        /// </summary>
-        /// 
-        public bool Stop {
-            get {
-                return stop;
-            }
-            set {
-                stop = value;
-            }
-        }
-
-        /// <summary>
-        /// Obte o asigna l'indicador de pasta de soldar.
-        /// </summary>
-        /// 
-        public bool Cream {
-            get {
-                return cream;
-            }
-            set {
-                cream = value;
             }
         }
     }

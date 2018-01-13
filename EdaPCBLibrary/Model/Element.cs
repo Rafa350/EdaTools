@@ -3,9 +3,12 @@
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System.Windows;
 
+    /// <summary>
+    /// Clase base per tots els elements de la placa.
+    /// </summary>
     public abstract class Element : IVisitable {
 
-        private Polygon polygon;
+        private Polygon polygon = null;
         private Rect boundingBox = Rect.Empty;
         private bool locked = false;
 
@@ -16,18 +19,14 @@
         /// 
         public abstract void AcceptVisitor(IVisitor visitor);
 
+        /// <summary>
+        /// Bloqueja l'element i impedeix que es pugui editar.
+        /// </summary>
+        /// 
         public void Lock() {
 
             locked = true;
         }
-
-        /// <summary>
-        /// Comprova si l'element pertany a la capa.
-        /// </summary>
-        /// <param name="layerId">Identificador de la capa.</param>
-        /// <returns>True si pertany a la capa. False en cas contraru.</returns>
-        /// 
-        public abstract bool IsOnLayer(LayerId layerId);
 
         /// <summary>
         /// Crea el poligon del element.
@@ -48,7 +47,7 @@
         /// Invalida el caches interns de l'element.
         /// </summary>
         /// 
-        protected virtual void Invalidate() {
+        protected void Invalidate() {
 
             polygon = null;
             boundingBox = Rect.Empty;

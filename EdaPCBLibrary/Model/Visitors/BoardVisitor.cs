@@ -37,7 +37,7 @@
             }
         }
 
-        public override void Visit(Component component) {
+        public override void Visit(Block component) {
 
             foreach (Element element in component.Elements)
                 element.AcceptVisitor(this);

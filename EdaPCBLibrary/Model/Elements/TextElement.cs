@@ -46,13 +46,7 @@
         /// <param name="height">Alçada de lletra.</param>
         /// <param name="align">Alineacio respecte la posicio.</param>
         /// 
-        public TextElement(
-            Point position, 
-            LayerId layerId, 
-            double rotation, 
-            double height, 
-            TextAlign align = TextAlign.MiddleCenter):
-            
+        public TextElement(Point position, LayerId layerId, double rotation, double height, TextAlign align = TextAlign.MiddleCenter):
             base() {
 
             this.position = position;
@@ -67,22 +61,9 @@
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public override void AcceptVisitor(
-            IVisitor visitor) {
+        public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
-        }
-
-        /// <summary>
-        /// Comprova si l'objecte pertany a la capa especificada.
-        /// </summary>
-        /// <param name="layerId">Identificador de la capa.</param>
-        /// <returns>True si pertany, false en cas contrari.</returns>
-        /// 
-        public override bool IsOnLayer(
-            LayerId layerId) {
-
-            return this.layerId == layerId;
         }
 
         /// <summary>
@@ -90,10 +71,9 @@
         /// </summary>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(
-            double inflate = 0) {
+        public override Polygon GetPolygon(double inflate = 0) {
 
-            throw new System.NotImplementedException();
+            return new Polygon();
         }
 
         /// <summary>
@@ -115,7 +95,10 @@
                 return position;
             }
             set {
-                position = value;
+                if (position != value) {
+                    position = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -128,7 +111,10 @@
                 return rotation;
             }
             set {
-                rotation = value;
+                if (rotation != value) {
+                    rotation = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -141,7 +127,10 @@
                 return height;
             }
             set {
-                height = value;
+                if (height != value) {
+                    height = value;
+                    Invalidate();
+                }
             }
         }
 
@@ -154,7 +143,10 @@
                 return align;
             }
             set {
-                align = value;
+                if (align != value) {
+                    align = value;
+                    Invalidate();
+                }
             }
         }
 

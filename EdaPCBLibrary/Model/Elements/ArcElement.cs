@@ -29,14 +29,7 @@
         /// <param name="angle">Angle del arc.</param>
         /// <param name="lineCap">Extrems de linia.</param>
         /// 
-        public ArcElement(
-            Point startPosition, 
-            Point endPosition, 
-            LayerId layerId, 
-            double thickness, 
-            double angle, 
-            LineCapStyle lineCap) :
-            
+        public ArcElement(Point startPosition, Point endPosition, LayerId layerId, double thickness, double angle, LineCapStyle lineCap) :
             base(startPosition, endPosition, layerId, thickness, lineCap) {
 
             this.angle = angle;
@@ -47,8 +40,7 @@
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public override void AcceptVisitor(
-            IVisitor visitor) {
+        public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
         }
@@ -59,8 +51,7 @@
         /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(
-            double inflate = 0) {
+        public override Polygon GetPolygon(double inflate = 0) {
 
             return PolygonBuilder.BuildLine(StartPosition, EndPosition, Thickness + (inflate * 2));
         }
@@ -152,8 +143,7 @@
         public double Radius {
             get {
                 double a = angle * Math.PI / 180.0;
-                double l = Length / 2.0;
-                return Math.Abs(l / Math.Sin(a / 2.0));
+                return Math.Abs(Length / 2.0 / Math.Sin(a / 2.0));
             }
         }
     }

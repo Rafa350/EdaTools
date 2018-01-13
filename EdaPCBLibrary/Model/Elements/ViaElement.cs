@@ -22,12 +22,17 @@
             Buried
         }
 
-        private const double OAR = 0.125;
+        private const double drcOuterMin = 0.125;
+        private const double drcOuterMax = 2.5;
+        private const double drcOuterPercent = 0.25;
+        private const double drcInnerMin = 0.125;
+        private const double drcInnerMax = 2.5;
+        private const double drcInnerPercent = 0.25;
 
         private Point position;
         private double drill;
-        private double outerSize;
-        private double innerSize;
+        private double outerSize = 0;
+        private double innerSize = 0;
         private ViaShape shape = ViaShape.Circular;
         private ViaType type = ViaType.Through;
 
@@ -49,13 +54,7 @@
         /// <param name="shape">Forma de la corona.</param>
         /// <param name="layers">Capes a les que pertany.</param>
         /// 
-        public ViaElement(
-            Point position, 
-            IEnumerable<Layer> layers, 
-            double size, 
-            double drill, 
-            ViaShape shape) :
-            
+        public ViaElement(Point position, IEnumerable<Layer> layers, double size, double drill, ViaShape shape) :
             base() {
 
             if (size < 0)
@@ -72,30 +71,11 @@
         }
 
         /// <summary>
-        /// Comprova si partany a la capa.
-        /// </summary>
-        /// <param name="layerId">Identificador de la capa.</param>
-        /// <returns>True si pertany, false en cas contrari.</returns>
-        /// 
-        public override bool IsOnLayer(
-            LayerId layerId) {
-
-            // TODO: Com blind i buried?
-
-            return 
-                ((layerId == LayerId.Top) && (type == ViaType.Through)) ||
-                ((layerId == LayerId.Bottom) && (type == ViaType.Through)) ||
-                (layerId == LayerId.Vias) ||
-                (layerId == LayerId.Drills);
-        }
-
-        /// <summary>
         /// Accepta un visitador.
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public override void AcceptVisitor(
-            IVisitor visitor) {
+        public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
         }
@@ -105,8 +85,7 @@
         /// </summary>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(
-            double inflate = 0) {
+        public override Polygon GetPolygon(double inflate = 0) {
 
             Polygon polygon;
             switch (shape) {
@@ -126,7 +105,7 @@
             // Si esta inflat, no genera el forat.
             //
             if (inflate == 0)
-                polygon.AddHole(PolygonBuilder.BuildCircle(position, drill / 2));
+                polygon.AddChild(PolygonBuilder.BuildCircle(position, drill / 2));
 
             return polygon;
         }
@@ -184,7 +163,8 @@
         /// 
         public double OuterSize {
             get {
-                return Math.Max(drill + 0.1 + (OAR * 2.0), outerSize);
+                double size = outerSize == 0 ? 2 * (drill * drcOuterPercent) + drill : outerSize;
+                return Math.Max(drcOuterMin, Math.Min(drcOuterMax, size));
             }
             set {
                 if (outerSize != value) {
@@ -200,7 +180,8 @@
         /// 
         public double InnerSize {
             get {
-                return Math.Max(drill + 0.1 + (OAR * 2.0), innerSize);
+                double size = innerSize == 0 ? 2 * (drill * drcInnerPercent) + drill : innerSize;
+                return Math.Max(drcInnerMin, Math.Min(drcInnerMax, size));
             }
             set {
                 if (innerSize != value) {

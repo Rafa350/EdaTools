@@ -49,7 +49,7 @@
         public virtual void Visit(Pad pad) {
         }
 
-        public virtual void Visit(Component component) {
+        public virtual void Visit(Block component) {
         }
 
         public virtual void Visit(Parameter parameter) {

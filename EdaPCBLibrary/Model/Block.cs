@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
 
-    public sealed class Component: IVisitable {
+    public sealed class Block: IVisitable {
 
-        private static readonly Dictionary<Element, Component> elementOwners = new Dictionary<Element, Component>();
+        private static readonly Dictionary<Element, Block> elementOwners = new Dictionary<Element, Block>();
         private readonly List<Element> elements = new List<Element>();
         private string name;
 
@@ -13,7 +13,7 @@
         /// Constructor per defecte de l'objecte.
         /// </summary>
         /// 
-        public Component() {
+        public Block() {
         }
 
         /// <summary>
@@ -22,7 +22,7 @@
         /// <param name="name">Identificador del component.</param>
         /// <param name="elements">Llista d'elements que formen el component.</param>
         /// 
-        public Component(string name, IEnumerable<Element> elements = null) {
+        public Block(string name, IEnumerable<Element> elements = null) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -87,26 +87,16 @@
         /// <param name="element">El element.</param>
         /// <returns>El component al que pertany.</returns>
         /// 
-        public static Component ComponentOf(Element element) {
+        public static Block ComponentOf(Element element) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
 
-            Component component = null;
+            Block component = null;
             if (elementOwners.TryGetValue(element, out component))
                 return component;
             else
                 return null;
-        }
-
-        /// <summary>
-        /// Obte la placa a la que pertany el component
-        /// </summary>
-        /// 
-        public Board Board {
-            get {
-                return Board.BoardOf(this);
-            }
         }
 
         /// <summary>

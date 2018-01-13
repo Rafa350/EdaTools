@@ -157,8 +157,9 @@
         private static List<IntPoint> PolygonToPointList(Polygon polygon) {
 
             List<IntPoint> intPoints = new List<IntPoint>();
-            foreach (Point point in polygon)
-                intPoints.Add(new IntPoint(point.X * scaleFactor, point.Y * scaleFactor));
+            if (polygon.Count > 0)
+                foreach (Point point in polygon)
+                    intPoints.Add(new IntPoint(point.X * scaleFactor, point.Y * scaleFactor));
             return intPoints;
         }
 
@@ -179,7 +180,7 @@
         /// <summary>
         /// Conversio a PolygonNode
         /// </summary>
-        /// <param name="polyNode">En PolyNode d'entrada.</param>
+        /// <param name="polyNode">El PolyNode d'entrada.</param>
         /// <returns>El PolygonTree de sortida.</returns>
         /// 
         private static PolygonNode PolyTreeToPolygonTree(PolyNode polyNode) {
