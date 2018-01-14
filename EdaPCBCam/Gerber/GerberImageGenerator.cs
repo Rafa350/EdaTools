@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
 
     using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
-    using MikroPic.EdaTools.v1.Cam.Gerber.Infrastructure;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
@@ -50,86 +49,236 @@
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
 
-                    // Crea el diccionari d'apertures
-                    //
-                    ApertureDictionary apertureDict = ApertureDictionaryBuilder.Build(board, layers);
-
                     GerberBuilder gb = new GerberBuilder(writer);
 
-                    // Definicio de capcelera, unitats, format, etc.
-                    //
-                    gb.Comment("EdaTools v1.0.");
-                    gb.Comment("EdaTools CAM processor. Gerber generator.");
-                    gb.Comment("BEGIN HEADER");
-                    switch (imageType) {
-                        case ImageType.Top:
-                            gb.Attribute(String.Format(".FileFunction,Copper,L{0},{1},Signal", 1, "Top"));
-                            gb.Attribute(".FilePolarity,Positive");
+                    ApertureDictionary apertures = CreateApertures(board, layers);
+
+                    GenerateFileHeader(gb, imageType);
+                    GenerateMacros(gb, apertures);
+                    GenerateApertures(gb, apertures);
+                    GenerateRergions(gb, board, layers, apertures);
+                    GenerateImage(gb, board, layers, apertures);
+                    GenerateFileTail(gb);
+                }
+            }
+        }
+
+        private ApertureDictionary CreateApertures(Board board, IEnumerable<Layer> layers) {
+
+            ApertureCreatorVisitor visitor = new ApertureCreatorVisitor(board, layers);
+            visitor.Visit(board);
+            return visitor.Apertures;
+        }
+
+        private void GenerateFileHeader(GerberBuilder gb, ImageType imageType) {
+
+            gb.Comment("EdaTools v1.0.");
+            gb.Comment("EdaTools CAM processor. Gerber generator.");
+            gb.Comment("BEGIN HEADER");
+            switch (imageType) {
+                case ImageType.Top:
+                    gb.Attribute(String.Format(".FileFunction,Copper,L{0},{1},Signal", 1, "Top"));
+                    gb.Attribute(".FilePolarity,Positive");
+                    break;
+
+                case ImageType.Bottom:
+                    gb.Attribute(String.Format(".FileFunction,Copper,L{0},{1},Signal", 2, "Bot"));
+                    gb.Attribute(".FilePolarity,Positive");
+                    break;
+
+                case ImageType.TopSolderMask:
+                    gb.Attribute(".FileFunction,Soldermask,Top");
+                    gb.Attribute(".FilePolarity,Negative");
+                    break;
+
+                case ImageType.BottomSolderMask:
+                    gb.Attribute(".FileFunction,Soldermask,Bot");
+                    gb.Attribute(".FilePolarity,Negative");
+                    break;
+
+                case ImageType.TopCream:
+                    gb.Attribute(".FileFunction,Paste,Top");
+                    gb.Attribute(".FilePolarity,Negative");
+                    break;
+
+                case ImageType.BottomCream:
+                    gb.Attribute(".FileFunction,Paste,Bot");
+                    gb.Attribute(".FilePolarity,Negative");
+                    break;
+
+                case ImageType.Profile:
+                    gb.Attribute(".FileFunction,Profile,NP");
+                    gb.Attribute(".FilePolarity,Positive");
+                    break;
+            }
+            gb.Attribute(".Part,Single");
+            gb.SetUnits(Units.Milimeters);
+            gb.SetCoordinateFormat(8, 5);
+            gb.LoadPolarity(Polarity.Dark);
+            gb.Comment("END HEADER");
+        }
+
+        private void GenerateFileTail(GerberBuilder gb) {
+
+            gb.EndFile();
+            gb.Comment("END FILE");
+        }
+
+        private void GenerateApertures(GerberBuilder gb, ApertureDictionary apertures) {
+
+            gb.Comment("BEGIN APERTURES");
+            gb.DefineApertures(apertures.Apertures);
+            gb.Comment("END APERTURES");
+        }
+
+        private void GenerateMacros(GerberBuilder gb, ApertureDictionary apertures) {
+
+            gb.Comment("BEGIN MACROS");
+            gb.DefineMacros(apertures.Macros);
+            gb.Comment("END MACROS");
+        }
+
+        private void GenerateRergions(GerberBuilder gb, Board board, IEnumerable<Layer> layers, ApertureDictionary apertures) {
+
+            gb.Comment("BEGIN POLYGONS");
+            IVisitor visitor = new RegionGeneratorVisitor(gb, board, layers, apertures);
+            visitor.Visit(board);
+            gb.Comment("END POLYGONS");
+        }
+
+        private void GenerateImage(GerberBuilder gb, Board board, IEnumerable<Layer> layers, ApertureDictionary apertures) {
+
+            gb.Comment("BEGIN IMAGE");
+            IVisitor visitor = new ImageGeneratorVisitor(gb, board, layers, apertures);
+            visitor.Visit(board);
+            gb.Comment("END IMAGE");
+        }
+
+        /// <summary>
+        /// Clase utilitzada per la creacio d'apertures.
+        /// </summary>
+        /// 
+        private sealed class ApertureCreatorVisitor : BoardVisitor {
+
+            private readonly Board board;
+            private readonly IEnumerable<Layer> layers;
+            private readonly ApertureDictionary apertures;
+            private double localRotation = 0;
+
+            /// <summary>
+            /// Constructor de la clase.
+            /// </summary>
+            /// <param name="board">La placa a procesar.</param>
+            /// <param name="layers">El conjunt de capes a consultar.</param>
+            /// 
+            public ApertureCreatorVisitor(Board board, IEnumerable<Layer> layers) {
+
+                this.board = board;
+                this.layers = layers;
+                apertures = new ApertureDictionary();
+            }
+
+            public override void Visit(LineElement line) {
+
+                if (board.IsOnAnyLayer(line, layers))
+                    apertures.DefineCircleAperture(Math.Max(line.Thickness, 0.01));
+            }
+
+            public override void Visit(ArcElement arc) {
+
+                if (board.IsOnAnyLayer(arc, layers))
+                    apertures.DefineCircleAperture(Math.Max(arc.Thickness, 0.01));
+            }
+
+            public override void Visit(RectangleElement rectangle) {
+
+                if (board.IsOnAnyLayer(rectangle, layers)) {
+                    if (rectangle.Thickness == 0) {
+                        double rotation = localRotation + rectangle.Rotation;
+                        apertures.DefineRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotation);
+                    }
+                }
+            }
+
+            public override void Visit(CircleElement circle) {
+
+                if (board.IsOnAnyLayer(circle, layers)) {
+                    if (circle.Thickness == 0)
+                        apertures.DefineCircleAperture(circle.Diameter);
+                }
+            }
+
+            public override void Visit(ViaElement via) {
+
+                if (board.IsOnAnyLayer(via, layers)) {
+                    switch (via.Shape) {
+                        case ViaElement.ViaShape.Circular:
+                            apertures.DefineCircleAperture(via.OuterSize);
                             break;
 
-                        case ImageType.Bottom:
-                            gb.Attribute(String.Format(".FileFunction,Copper,L{0},{1},Signal", 2, "Bot"));
-                            gb.Attribute(".FilePolarity,Positive");
+                        case ViaElement.ViaShape.Square:
+                            apertures.DefineRectangleAperture(via.OuterSize, via.OuterSize, 0);
                             break;
 
-                        case ImageType.TopSolderMask:
-                            gb.Attribute(".FileFunction,Soldermask,Top");
-                            gb.Attribute(".FilePolarity,Negative");
-                            break;
-
-                        case ImageType.BottomSolderMask:
-                            gb.Attribute(".FileFunction,Soldermask,Bot");
-                            gb.Attribute(".FilePolarity,Negative");
-                            break;
-
-                        case ImageType.TopCream:
-                            gb.Attribute(".FileFunction,Paste,Top");
-                            gb.Attribute(".FilePolarity,Negative");
-                            break;
-
-                        case ImageType.BottomCream:
-                            gb.Attribute(".FileFunction,Paste,Bot");
-                            gb.Attribute(".FilePolarity,Negative");
-                            break;
-
-                        case ImageType.Profile:
-                            gb.Attribute(".FileFunction,Profile,NP");
-                            gb.Attribute(".FilePolarity,Positive");
+                        case ViaElement.ViaShape.Octogonal:
+                            apertures.DefineOctagonAperture(via.OuterSize, 0);
                             break;
                     }
-                    gb.Attribute(".Part,Single");
-                    gb.SetUnits(Units.Milimeters);
-                    gb.SetCoordinateFormat(8, 5);
-                    gb.LoadPolarity(Polarity.Dark);
-                    gb.Comment("END HEADER");
+                }
+            }
 
-                    // Definicio de macros per les apertures
-                    //
-                    gb.Comment("BEGIN MACROS");
-                    gb.DefineMacros(apertureDict.Macros);
-                    gb.Comment("END MACROS");
+            public override void Visit(ThPadElement pad) {
 
-                    // Definicio de les apertures
-                    //
-                    gb.Comment("BEGIN APERTURES");
-                    gb.DefineApertures(apertureDict.Apertures);
-                    gb.Comment("END APERTURES");
+                if (board.IsOnAnyLayer(pad, layers)) {
+                    double rotation = localRotation + pad.Rotation;
+                    switch (pad.Shape) {
+                        case ThPadElement.ThPadShape.Circular:
+                            apertures.DefineCircleAperture(pad.Size);
+                            break;
 
-                    // Definicio de les regions
-                    //
-                    gb.Comment("BEGIN POLYGONS");
-                    board.AcceptVisitor(new RegionGeneratorVisitor(gb, board, layers, apertureDict));
-                    gb.Comment("END POLYGONS");
+                        case ThPadElement.ThPadShape.Square:
+                            apertures.DefineRectangleAperture(pad.Size, pad.Size, rotation);
+                            break;
 
-                    // Definicio de la imatge
-                    //
-                    gb.Comment("BEGIN IMAGE");
-                    board.AcceptVisitor(new ImageGeneratorVisitor(gb, board, layers, apertureDict));
-                    gb.Comment("END IMAGE");
+                        case ThPadElement.ThPadShape.Octogonal:
+                            apertures.DefineOctagonAperture(pad.Size, rotation);
+                            break;
 
-                    // Final
-                    //
-                    gb.EndFile();
+                        case ThPadElement.ThPadShape.Oval:
+                            apertures.DefineOvalAperture(pad.Size * 2, pad.Size, rotation);
+                            break;
+                    }
+                }
+            }
+
+            public override void Visit(SmdPadElement pad) {
+
+                if (board.IsOnAnyLayer(pad, layers)) {
+                    double rotation = localRotation + pad.Rotation;
+                    double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
+                    if (radius == 0)
+                        apertures.DefineRectangleAperture(pad.Size.Width, pad.Size.Height, rotation);
+                    else
+                        apertures.DefineRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
+                }
+            }
+
+            public override void Visit(RegionElement region) {
+
+                if (board.IsOnAnyLayer(region, layers))
+                    apertures.DefineCircleAperture(region.Thickness);
+            }
+
+            public override void Visit(Part part) {
+
+                localRotation = part.Rotation;
+                base.Visit(part);
+                localRotation = 0;
+            }
+
+            public ApertureDictionary Apertures {
+                get {
+                    return apertures;
                 }
             }
         }

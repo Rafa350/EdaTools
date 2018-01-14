@@ -10,6 +10,7 @@
     using System.IO;
     using System.Text;
     using System.Windows;
+    using System.Windows.Media;
 
     public sealed class GerberDrillGenerator: GerberGenerator {
 
@@ -31,84 +32,135 @@
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
 
-                    // Crea el diccionari d'apertures
-                    //
-                    ApertureDictionary apertures = new ApertureDictionary();
-                    IVisitor defineAperturesVisitor = new DefineAperturesVisitor(board, layers, apertures);
-                    defineAperturesVisitor.Visit(board);
-
                     GerberBuilder gb = new GerberBuilder(writer);
 
-                    // Definicio de capcelera, unitats, format, etc.
-                    //
-                    gb.Comment("EdaTools v1.0.");
-                    gb.Comment("EdaTools CAM processor. Gerber generator.");
-                    gb.Comment("BEGIN HEADER");
+                    ApertureDictionary apertures = CreateApertures(board, layers);
 
-                    if (drillType == DrillType.PlatedDrill)
-                        gb.Attribute(String.Format(".FileFunction,Plated,{0},{1},PTH,Drill", 1, 2));
-                    else
-                        gb.Attribute(".FileFunction,Profile,NP");
-                    gb.Attribute(".FilePolarity,Positive");
-                    gb.Attribute(".Part,Single");
-                    gb.SetUnits(Units.Milimeters);
-                    gb.SetCoordinateFormat(8, 5);
-                    gb.LoadPolarity(Polarity.Dark);
-                    gb.LoadRotation(0);
-                    gb.Comment("END HEADER");
-
-                    // Definicio de les apertures
-                    //
-                    gb.Comment("BEGIN APERTURES");
-                    gb.DefineApertures(apertures.Apertures);
-                    gb.Comment("END APERTURES");
-
-                    // Definicio de la imatge
-                    //
-                    gb.Comment("BEGIN IMAGE");
-                    IVisitor imageGeneratorVisitor = new ImageGeneratorVisitor(gb, board, layers, apertures);
-                    imageGeneratorVisitor.Visit(board);
-                    gb.Comment("END IMAGE");
-
-                    // Final
-                    //
-                    gb.EndFile();
+                    GenerateFileHeader(gb, drillType);
+                    GenerateApertures(gb, apertures);
+                    GenerateImage(gb, board, layers, apertures);
+                    GenerateFileTail(gb);
                 }
             }
         }
 
         /// <summary>
-        /// Clase utilitzada per generar les apertures.
+        /// Crea el diccionari d'aperturess.
         /// </summary>
-        private sealed class DefineAperturesVisitor : BoardVisitor {
+        /// <param name="board">La placa a procesar.</param>
+        /// <param name="layers">Les capes a tenir en compte.</param>
+        /// <returns>El diccionari d'aperturees.</returns>
+        /// 
+        private ApertureDictionary CreateApertures(Board board, IEnumerable<Layer> layers) {
+
+            AperturesCreatorVisitor visitor = new AperturesCreatorVisitor(board, layers);
+            visitor.Visit(board);
+            return visitor.AperturesDict;
+        }
+
+        /// <summary>
+        /// Genera la capcelera del fitxer.
+        /// </summary>
+        /// <param name="gb">El generador de gerbers</param>
+        /// <param name="drillType">El tipus de forat.</param>
+        /// 
+        private void GenerateFileHeader(GerberBuilder gb, DrillType drillType) {
+
+            gb.Comment("EdaTools v1.0.");
+            gb.Comment("EdaTools CAM processor. Gerber generator.");
+            gb.Comment("BEGIN HEADER");
+
+            if (drillType == DrillType.PlatedDrill)
+                gb.Attribute(String.Format(".FileFunction,Plated,{0},{1},PTH,Drill", 1, 2));
+            else
+                gb.Attribute(".FileFunction,Profile,NP");
+            gb.Attribute(".FilePolarity,Positive");
+            gb.Attribute(".Part,Single");
+            gb.SetUnits(Units.Milimeters);
+            gb.SetCoordinateFormat(8, 5);
+            gb.LoadPolarity(Polarity.Dark);
+            gb.LoadRotation(0);
+            gb.Comment("END HEADER");
+        }
+
+        /// <summary>
+        /// Genera el peu del fitxer.
+        /// </summary>
+        /// <param name="gb">El generador de gerbers.</param>
+        /// 
+        private void GenerateFileTail(GerberBuilder gb) {
+
+            gb.EndFile();
+            gb.Comment("END FILE");
+        }
+
+        /// <summary>
+        /// Genera les apertures.
+        /// </summary>
+        /// <param name="gb">El generador de gerbers.</param>
+        /// <param name="apertures">El diccionari d'apertures.</param>
+        /// 
+        private void GenerateApertures(GerberBuilder gb, ApertureDictionary apertures) {
+
+            gb.Comment("BEGIN APERTURES");
+            gb.DefineApertures(apertures.Apertures);
+            gb.Comment("END APERTURES");
+        }
+
+        /// <summary>
+        /// Genera la imatge.
+        /// </summary>
+        /// <param name="gb">El generador de gerbers.</param>
+        /// <param name="board">La placa a procesar.</param>
+        /// <param name="layers">Les capes a tenir en compte.</param>
+        /// <param name="apertures">El diccionari d'apoertures.</param>
+        /// 
+        private void GenerateImage(GerberBuilder gb, Board board, IEnumerable<Layer> layers, ApertureDictionary apertures) {
+
+            gb.Comment("BEGIN IMAGE");
+            IVisitor visitor = new ImageGeneratorVisitor(gb, board, layers, apertures);
+            visitor.Visit(board);
+            gb.Comment("END IMAGE");
+        }
+
+        /// <summary>
+        /// Clase utilitzada per crear les apertures.
+        /// </summary>
+        private sealed class AperturesCreatorVisitor : BoardVisitor {
 
             private readonly Board board;
             private readonly IEnumerable<Layer> layers;
-            private readonly ApertureDictionary apertures;
+            private readonly ApertureDictionary apertureDict;
 
-            public DefineAperturesVisitor(Board board, IEnumerable<Layer> layers, ApertureDictionary apertures) {
+            public AperturesCreatorVisitor(Board board, IEnumerable<Layer> layers) {
 
                 this.board = board;
                 this.layers = layers;
-                this.apertures = apertures;
+                apertureDict = new ApertureDictionary();
             }
 
             public override void Visit(HoleElement hole) {
 
                 if (board.IsOnAnyLayer(hole, layers)) 
-                    apertures.DefineCircleAperture(hole.Drill);
+                    apertureDict.DefineCircleAperture(hole.Drill);
             }
 
             public override void Visit(ViaElement via) {
 
                 if (board.IsOnAnyLayer(via, layers))
-                    apertures.DefineCircleAperture(via.Drill);
+                    apertureDict.DefineCircleAperture(via.Drill);
             }
 
             public override void Visit(ThPadElement pad) {
 
                 if (board.IsOnAnyLayer(pad, layers))
-                    apertures.DefineCircleAperture(pad.Drill);
+                    apertureDict.DefineCircleAperture(pad.Drill);
+            }
+
+            public ApertureDictionary AperturesDict {
+                get {
+                    return apertureDict;
+                }
             }
         }
 
@@ -121,7 +173,16 @@
             private readonly Board board;
             private readonly IEnumerable<Layer> layers;
             private readonly ApertureDictionary apertures;
+            private Matrix localTransformation = Matrix.Identity;
 
+            /// <summary>
+            /// Constructor de la clase.
+            /// </summary>
+            /// <param name="gb">El generador de gerbers.</param>
+            /// <param name="board">La placa a procesar.</param>
+            /// <param name="layers">Les capes tenir en compte.</param>
+            /// <param name="apertures">El diccionari d'apertures.</param>
+            /// 
             public ImageGeneratorVisitor(GerberBuilder gb, Board board, IEnumerable<Layer> layers, ApertureDictionary apertures) {
 
                 this.gb = gb;
@@ -130,13 +191,17 @@
                 this.apertures = apertures;
             }
 
+            /// <summary>
+            /// Visita un element de tipus Hole
+            /// </summary>
+            /// <param name="hole">El element a visitar.</param>
+            /// 
             public override void Visit(HoleElement hole) {
 
                 if (board.IsOnAnyLayer(hole, layers)) {
                     Aperture ap = apertures.GetCircleAperture(hole.Drill);
                     gb.SelectAperture(ap);
-                    Point p = VisitingPart.Transform(hole.Position);
-                    gb.FlashAt(p.X, p.Y);
+                    gb.FlashAt(localTransformation.Transform(hole.Position));
                 }
             }
 
@@ -150,7 +215,7 @@
                 if (board.IsOnAnyLayer(via, layers)) {
                     Aperture ap = apertures.GetCircleAperture(via.Drill);
                     gb.SelectAperture(ap);
-                    gb.FlashAt(via.Position.X, via.Position.Y);
+                    gb.FlashAt(localTransformation.Transform(via.Position));
                 }
             }
 
@@ -164,9 +229,20 @@
                 if (board.IsOnAnyLayer(pad, layers)) {
                     Aperture ap = apertures.GetCircleAperture(pad.Drill);
                     gb.SelectAperture(ap);
-                    Point p = VisitingPart.Transform(pad.Position);
-                    gb.FlashAt(p.X, p.Y);
+                    gb.FlashAt(localTransformation.Transform(pad.Position));
                 }
+            }
+
+            /// <summary>
+            /// Visita un objecte Part
+            /// </summary>
+            /// <param name="part">El objecte a visitar.</param>
+            /// 
+            public override void Visit(Part part) {
+
+                localTransformation = part.Transformation;
+                base.Visit(part);
+                localTransformation = Matrix.Identity;
             }
         }
     }

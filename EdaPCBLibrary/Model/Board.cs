@@ -8,24 +8,24 @@
     /// </summary>
     public sealed class Board: IVisitable {
 
-        // llista de capes
-        private readonly List<Layer> layers = new List<Layer>();
+        // Capes
+        private readonly HashSet<Layer> layers = new HashSet<Layer>();
         private readonly Dictionary<Layer, Layer> layerPairs = new Dictionary<Layer, Layer>();
-        private readonly Dictionary<Layer, List<Element>> elementsOfLayer = new Dictionary<Layer, List<Element>>();
-        private readonly Dictionary<Element, List<Layer>> layersOfElement = new Dictionary<Element, List<Layer>>();
+        private readonly Dictionary<Layer, HashSet<Element>> elementsOfLayer = new Dictionary<Layer, HashSet<Element>>();
+        private readonly Dictionary<Element, HashSet<Layer>> layersOfElement = new Dictionary<Element, HashSet<Layer>>();
 
-        // Llista de senyals
-        private readonly List<Signal> signals = new List<Signal>();
-        private readonly Dictionary<Signal, List<IConectable>> itemsOfSignal = new Dictionary<Signal, List<IConectable>>();
+        // Senyals
+        private readonly HashSet<Signal> signals = new HashSet<Signal>();
+        private readonly Dictionary<Signal, HashSet<IConectable>> itemsOfSignal = new Dictionary<Signal, HashSet<IConectable>>();
         private readonly Dictionary<IConectable, Signal> signalOfItem = new Dictionary<IConectable, Signal>();
 
-        // Llista del blocs
+        // Blocs
         private readonly List<Block> blocks = new List<Block>();
 
-        // Llista d'elements
+        // Elements
         private readonly List<Element> elements = new List<Element>();
 
-        // Llista de parts
+        // Parts
         readonly private List<Part> parts = new List<Part>();
 
         /// <summary>
@@ -100,11 +100,9 @@
             if (layer == null)
                 throw new ArgumentNullException("layer");
 
-            if (layers.Contains(layer))
+            if (!layers.Add(layer))
                 throw new InvalidOperationException(
                     String.Format("La capa '{0}', ya esta asignada a esta placa.", layer.Name));
-
-            layers.Add(layer);
         }
 
         /// <summary>
@@ -116,12 +114,15 @@
         /// 
         public Layer GetLayer(LayerId layerId, bool throwOnError = true) {
 
-            Layer layer = layers.Find(l => l.Id == layerId);
-            if ((layer == null) && throwOnError)
+            foreach (Layer layer in layers)
+                if (layer.Id == layerId)
+                    return layer;
+
+            if (throwOnError)
                 throw new InvalidOperationException(
                     String.Format("No se encontro la capa con el ID '{0}'.", layerId.ToString()));
 
-            return layer;
+            return null;
         }
 
         /// <summary>
@@ -142,29 +143,28 @@
                 throw new InvalidOperationException(
                     String.Format("La capa '{0}', no esta asignada a esta placa.", layer.Name));
 
-            // Afegeix l'element a la llista d'elements de la capa
+            // Afegeix l'element al conjunt d'elements de la capa
             //
-            List<Element> elementList;
-            if (!elementsOfLayer.TryGetValue(layer, out elementList)) {
-                elementList = new List<Element>();
-                elementsOfLayer.Add(layer, elementList);
+            HashSet<Element> elementSet;
+            if (!elementsOfLayer.TryGetValue(layer, out elementSet)) {
+                elementSet = new HashSet<Element>();
+                elementsOfLayer.Add(layer, elementSet);
             }
-            if (elementList.Contains(element))
-                throw new InvalidOperationException(
-                    String.Format("La capa '{0}', ya contiene este elemento.", layer.Name));
-            elementList.Add(element);
+            if (!elementSet.Add(element))
+                if (elementSet.Contains(element))
+                    throw new InvalidOperationException(
+                        String.Format("La capa '{0}', ya contiene este elemento.", layer.Name));
 
-            // Afegeix la capa a la llista de capes del element
+            // Afegeix la capa al conjunt de capes del element
             //
-            List<Layer> layerList;
-            if (!layersOfElement.TryGetValue(element, out layerList)) {
-                layerList = new List<Layer>();
-                layersOfElement.Add(element, layerList);
+            HashSet<Layer> layerSet;
+            if (!layersOfElement.TryGetValue(element, out layerSet)) {
+                layerSet = new HashSet<Layer>();
+                layersOfElement.Add(element, layerSet);
             }
-            if (layerList.Contains(layer))
+            if (!layerSet.Add(layer))
                 throw new InvalidOperationException(
                     String.Format("El elemento ya esta contenido en la capa '{0}'.", layer.Name));
-            layerList.Add(layer);
         }
 
         public void Unplace(Element element) {
@@ -186,8 +186,9 @@
                 throw new InvalidOperationException(
                     String.Format("La capa '{0}', no esta asignada a esta placa.", layer.Name));
 
-            if (elementsOfLayer.ContainsKey(layer))
-                return elementsOfLayer[layer];
+            HashSet<Element> elementSet;
+            if (elementsOfLayer.TryGetValue(layer, out elementSet))
+                return elementSet;
             else
                 return null;
         }
@@ -203,8 +204,9 @@
             if (element == null)
                 throw new ArgumentNullException("element");
 
-            if (layersOfElement.ContainsKey(element))
-                return layersOfElement[element];
+            HashSet<Layer> layerSet;
+            if (layersOfElement.TryGetValue(element, out layerSet))
+                return layerSet;
             else
                 return null;
         }
@@ -224,10 +226,11 @@
             if (layer == null)
                 throw new ArgumentNullException("layer");
 
-            if (elementsOfLayer.ContainsKey(layer))
-                return elementsOfLayer[layer].Contains(element);
-            else
-                return false;
+            HashSet<Layer> layerCollection;
+            if (layersOfElement.TryGetValue(element, out layerCollection))
+                return layerCollection.Contains(layer);
+
+            return false;
         }
 
         /// <summary>
@@ -239,9 +242,10 @@
         /// 
         public bool IsOnAnyLayer(Element element, IEnumerable<Layer> layers) {
 
-            foreach (Layer layer in layers)
-                if (IsOnLayer(element, layer))
-                    return true;
+            HashSet<Layer> layerCollection;
+            if (layersOfElement.TryGetValue(element, out layerCollection)) 
+                return layerCollection.Overlaps(layers);
+
             return false;
         }
         #endregion
@@ -307,12 +311,12 @@
             if (signalOfItem.ContainsKey(item))
                 throw new InvalidOperationException("El objeto ya esta conectado.");
 
-            List<IConectable> elementList;
-            if (!itemsOfSignal.TryGetValue(signal, out elementList)) {
-                elementList = new List<IConectable>();
-                itemsOfSignal.Add(signal, elementList);
+            HashSet<IConectable> elementSet;
+            if (!itemsOfSignal.TryGetValue(signal, out elementSet)) {
+                elementSet = new HashSet<IConectable>();
+                itemsOfSignal.Add(signal, elementSet);
             }
-            elementList.Add(item);
+            elementSet.Add(item);
             signalOfItem.Add(item, signal);
         }
 
@@ -365,12 +369,15 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            Signal signal = signals.Find(s => s.Name == name);
-            if ((signal == null) && throwOnError)
+            foreach (Signal signal in signals)
+                if (signal.Name == name)
+                    return signal;
+
+            if (throwOnError)
                 throw new InvalidOperationException(
                     String.Format("No se encontro la señal '{0}'.", name));
 
-            return signal;
+            return null;
         }
 
         /// <summary>
@@ -388,9 +395,9 @@
                 throw new InvalidOperationException(
                     String.Format("La señal '{0}', no esta asignada a esta placa.", signal.Name));
 
-            List<IConectable> items;
-            if (itemsOfSignal.TryGetValue(signal, out items))
-                return items;
+            HashSet<IConectable> itemSet;
+            if (itemsOfSignal.TryGetValue(signal, out itemSet))
+                return itemSet;
             else
                 return null;
         }
