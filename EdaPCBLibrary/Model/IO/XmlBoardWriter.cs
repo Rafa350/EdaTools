@@ -25,7 +25,7 @@
             public override void Visit(LineElement line) {
 
                 writer.WriteStartElement("line");
-                //writer.WriteAttribute("layer", board.GetLayer( line.Layer);
+                writer.WriteAttribute("layers", board.GetLayers(line));
                 writer.WriteAttribute("startPosition", line.StartPosition);
                 writer.WriteAttribute("endPosition", line.EndPosition);
                 if (line.Thickness > 0)
@@ -41,7 +41,7 @@
             public override void Visit(ArcElement arc) {
 
                 writer.WriteStartElement("arc");
-                //writer.WriteAttribute("layer", arc.Layer);
+                writer.WriteAttribute("layers", board.GetLayers(arc));
                 writer.WriteAttribute("startPosition", arc.StartPosition);
                 writer.WriteAttribute("endPosition", arc.EndPosition);
                 writer.WriteAttribute("angle", arc.Angle);
@@ -57,7 +57,7 @@
             public override void Visit(RectangleElement rectangle) {
 
                 writer.WriteStartElement("rectangle");
-                //writer.WriteAttribute("layer", rectangle.Layer);
+                writer.WriteAttribute("layers", board.GetLayers(rectangle));
                 writer.WriteAttribute("position", rectangle.Position);
                 writer.WriteAttribute("size", rectangle.Size);
                 if (rectangle.Rotation != 0)
@@ -70,7 +70,7 @@
             public override void Visit(CircleElement circle) {
 
                 writer.WriteStartElement("circle");
-                //writer.WriteAttribute("layer", circle.Layer);
+                writer.WriteAttribute("layers", board.GetLayers(circle));
                 writer.WriteAttribute("position", circle.Position);
                 writer.WriteAttribute("radius", circle.Radius);
                 if (circle.Thickness > 0)
@@ -83,7 +83,7 @@
                 writer.WriteStartElement("text");
                 if (!String.IsNullOrEmpty(text.Name))
                     writer.WriteAttributeString("name", text.Name);
-                //writer.WriteAttribute("layer", text.LayerId);
+                writer.WriteAttribute("layers", board.GetLayers(text));
                 writer.WriteAttribute("position", text.Position);
                 if (text.Rotation != 0)
                     writer.WriteAttribute("rotation", text.Rotation);
@@ -95,6 +95,7 @@
             public override void Visit(HoleElement hole) {
 
                 writer.WriteStartElement("hole");
+                writer.WriteAttribute("layers", board.GetLayers(hole));
                 writer.WriteAttribute("position", hole.Position);
                 writer.WriteAttribute("drill", hole.Drill);
                 writer.WriteEndElement();
@@ -104,17 +105,13 @@
 
                 writer.WriteStartElement("spad");
                 writer.WriteAttributeString("name", pad.Name);
-                //writer.WriteAttribute("layer", pad.Layer);
+                writer.WriteAttribute("layers", board.GetLayers(pad));
                 writer.WriteAttribute("position", pad.Position);
                 if (pad.Rotation != 0)
                     writer.WriteAttribute("rotation", pad.Rotation);
                 writer.WriteAttribute("size", pad.Size);
                 if (pad.Roundnes > 0)
                     writer.WriteAttribute("roundness", pad.Roundnes);
-                if (!board.IsOnLayer(pad, board.GetLayer(LayerId.TopCream)))
-                    writer.WriteAttribute("cream", false);
-                if (!board.IsOnLayer(pad, board.GetLayer(LayerId.TopGlue)))
-                    writer.WriteAttribute("stop", false);
                 Signal signal = board.GetSignal(pad, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
@@ -125,6 +122,7 @@
 
                 writer.WriteStartElement("tpad");
                 writer.WriteAttributeString("name", pad.Name);
+                writer.WriteAttribute("layers", board.GetLayers(pad));
                 writer.WriteAttribute("position", pad.Position);
                 if (pad.Rotation != 0)
                     writer.WriteAttribute("rotation", pad.Rotation);
@@ -153,7 +151,7 @@
             public override void Visit(RegionElement region) {
 
                 writer.WriteStartElement("region");
-                //writer.WriteAttribute("layer", region.Layer);
+                writer.WriteAttribute("layers", board.GetLayers(region));
                 if (region.Thickness > 0)
                     writer.WriteAttribute("thickness", region.Thickness);
                 if (region.Isolation > 0)
@@ -202,7 +200,7 @@
 
                 writer.WriteStartElement("via");
                 writer.WriteAttribute("position", via.Position);
-                //writer.WriteAttribute("layers", via.Layers);
+                writer.WriteAttribute("layers", board.GetLayers(via));
                 writer.WriteAttribute("drill", via.Drill);
                 writer.WriteAttribute("outerSize", via.OuterSize);
                 if (via.InnerSize != via.OuterSize)
@@ -247,13 +245,13 @@
                 writer.WriteEndElement();
             }
 
-            public override void Visit(Block component) {
+            public override void Visit(Block block) {
 
                 writer.WriteStartElement("block");
-                writer.WriteAttributeString("name", component.Name);
+                writer.WriteAttributeString("name", block.Name);
 
                 writer.WriteStartElement("elements");
-                foreach (Element element in component.Elements)
+                foreach (Element element in block.Elements)
                     element.AcceptVisitor(this);
                 writer.WriteEndElement();
 
@@ -279,8 +277,8 @@
                 writer.WriteEndElement();
 
                 writer.WriteStartElement("blocks");
-                foreach (Block component in board.Blocks)
-                    component.AcceptVisitor(this);
+                foreach (Block block in board.Blocks)
+                    block.AcceptVisitor(this);
                 writer.WriteEndElement();
 
                 writer.WriteStartElement("parts");
@@ -316,7 +314,7 @@
                 writer.WriteStartDocument();
 
                 IVisitor visitor = new Visitor(writer);
-                board.AcceptVisitor(visitor);
+                visitor.Visit(board);
 
                 writer.WriteEndDocument();
             }

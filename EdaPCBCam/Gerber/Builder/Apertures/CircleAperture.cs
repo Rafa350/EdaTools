@@ -53,7 +53,9 @@
         /// </summary>
         /// 
         public double Diameter {
-            get { return diameter; }
+            get {
+                return diameter;
+            }
         }
 
         /// <summary>
@@ -61,7 +63,9 @@
         /// </summary>
         /// 
         public double Drill {
-            get { return drill; }
+            get {
+                return drill;
+            }
         }
     }
 }

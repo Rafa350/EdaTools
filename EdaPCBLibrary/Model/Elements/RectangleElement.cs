@@ -10,7 +10,6 @@
     public sealed class RectangleElement: Element, IPosition, ISize, IRotation {
 
         private Point position;
-        private LayerId layerId = LayerId.Unknown;
         private Size size;
         private double rotation;
         private double thickness;
@@ -27,16 +26,14 @@
         /// Constructor del objecte.
         /// </summary>
         /// <param name="position">Posicio del centre geometric.</param>
-        /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="size">Amplada i alçada del rectangle.</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="thickness">Amplada de linia. Si es zero, es un rectangle ple.</param>
         /// 
-        public RectangleElement(Point position, LayerId layerId, Size size, double rotation, double thickness = 0) :
+        public RectangleElement(Point position, Size size, double rotation, double thickness = 0) :
             base() {
 
             this.position = position;
-            this.layerId = layerId;
             this.size = size;
             this.rotation = rotation;
             this.thickness = thickness;
@@ -95,19 +92,6 @@
                     position = value;
                     Invalidate();
                 }
-            }
-        }
-
-        /// <summary>
-        /// Obte o asigna el identificador de la caps.
-        /// </summary>
-        /// 
-        public LayerId LayerId {
-            get {
-                return layerId;
-            }
-            set {
-                layerId = value;
             }
         }
 

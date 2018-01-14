@@ -11,7 +11,6 @@
 
         private string name;
         private Point position;
-        private LayerId layerId;
         private Size size;
         private double rotation;
         private double roundnes;
@@ -29,17 +28,15 @@
         /// </summary>
         /// <param name="name">Nom del pad.</param>
         /// <param name="position">Posicio.</param>
-        /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="size">Tamany</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="roundnes">Percentatge d'arrodoniment de les cantonades.</param>
         /// 
-        public SmdPadElement(string name, Point position, LayerId layerId, Size size, double rotation, double roundnes) :
+        public SmdPadElement(string name, Point position, Size size, double rotation, double roundnes) :
             base() {
 
             this.name = name;
             this.position = position;
-            this.layerId = layerId;
             this.size = size;
             this.rotation = rotation;
             this.roundnes = roundnes;

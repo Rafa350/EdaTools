@@ -81,17 +81,12 @@
     <Compile Include="DrawEditor\Tools\SelectionTool.cs" />
     <Compile Include="DrawEditor\VisualGenerator.cs" />
     <Compile Include="DrawEditor\Visuals\ArcVisual.cs" />
-    <Compile Include="DrawEditor\Visuals\CircleVisual.cs" />
     <Compile Include="DrawEditor\Visuals\ElementVisual.cs" />
     <Compile Include="DrawEditor\Visuals\GridVisual.cs" />
-    <Compile Include="DrawEditor\Visuals\HoleVisual.cs" />
-    <Compile Include="DrawEditor\Visuals\LineVisual.cs" />
     <Compile Include="DrawEditor\Visuals\PolygonVisual.cs" />
-    <Compile Include="DrawEditor\Visuals\RectangleVisual.cs" />
     <Compile Include="DrawEditor\Visuals\SmdPadVisual.cs" />
     <Compile Include="DrawEditor\Visuals\TextVisual.cs" />
     <Compile Include="DrawEditor\Visuals\ThPadVisual.cs" />
-    <Compile Include="DrawEditor\Visuals\ViaVisual.cs" />
     <Compile Include="DrawEditor\ZoomControl.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

@@ -378,7 +378,7 @@
             int layerNum = GetAttributeInteger(node, "layer");
             LayerId layerId = GetLayerId(layerNum);
 
-            Element element = new SmdPadElement(name, position, layerId, size, rotate, roundnes);
+            Element element = new SmdPadElement(name, position, size, rotate, roundnes);
             board.Place(board.GetLayer(layerId), element);
             if (cream)
                 board.Place(board.GetLayer(LayerId.TopCream), element);
@@ -422,7 +422,7 @@
             }
 
             List<Layer> layers = new List<Layer>();
-            Element element = new ViaElement(position, layers, size, drill, shape);
+            Element element = new ViaElement(position, size, drill, shape);
 
             foreach(int layerNum in layerNums) {
                 LayerId layerId = GetLayerId(layerNum);
@@ -461,7 +461,7 @@
             int layerNum = GetAttributeInteger(node, "layer");
             LayerId layerId = GetLayerId(layerNum);
 
-            TextElement element = new TextElement(position, layerId, rotate, height, TextElement.TextAlign.TopLeft);
+            TextElement element = new TextElement(position, rotate, height, TextElement.TextAlign.TopLeft);
             element.Name = name;
             element.Value = value;
 
@@ -495,9 +495,9 @@
 
             Element element;
             if (angle == 0)
-                element = new LineElement(p1, p2, layerId, thickness, lineCap);
+                element = new LineElement(p1, p2, thickness, lineCap);
             else
-                element = new ArcElement(p1, p2, layerId, thickness, angle, lineCap);
+                element = new ArcElement(p1, p2, thickness, angle, lineCap);
 
             board.Place(board.GetLayer(layerId), element);
 
@@ -516,7 +516,7 @@
             double y1 = GetAttributeDouble(node, "y1");
             double x2 = GetAttributeDouble(node, "x2");
             double y2 = GetAttributeDouble(node, "y2");
-            Point position = new Point((x1 + x2) / 2, (y1 + y2) / 2);
+            Point position = new Point((x1 + x2) / 2.0, (y1 + y2) / 2.0);
             Size size = new Size(x2 - x1, y2 - y1);
 
             double rotation = GetAttributeDouble(node, "rot");
@@ -525,7 +525,7 @@
             int layerNum = GetAttributeInteger(node, "layer");
             LayerId layerId = GetLayerId(layerNum);
 
-            Element element = new RectangleElement(position, layerId, size, rotation, thickness);
+            Element element = new RectangleElement(position, size, rotation, thickness);
 
             board.Place(board.GetLayer(layerId), element);
 
@@ -550,7 +550,7 @@
             int layerNum = GetAttributeInteger(node, "layer");
             LayerId layerId = GetLayerId(layerNum);
 
-            Element element = new CircleElement(position, layerId, radius, thickness);
+            Element element = new CircleElement(position, radius, thickness);
 
             board.Place(board.GetLayer(layerId), element);
 
@@ -582,7 +582,7 @@
                 segments.Add(new RegionElement.Segment(vertex, angle));
             }
 
-            Element element = new RegionElement(layerId, thickness, 0, segments);
+            Element element = new RegionElement(thickness, 0, segments);
 
             board.Place(board.GetLayer(layerId), element);
 

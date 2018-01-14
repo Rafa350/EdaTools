@@ -16,7 +16,6 @@
 
         private Point startPosition;
         private Point endPosition;
-        private LayerId layerId = LayerId.Unknown;
         private double thickness;
         private LineCapStyle lineCap = LineCapStyle.Round;
 
@@ -33,16 +32,14 @@
         /// </summary>
         /// <param name="startPosition">La posicio inicial.</param>
         /// <param name="endPosition">La posicio final.</param>
-        /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="lineCap">Forma dels extrems de linia.</param>
         /// 
-        public LineElement(Point startPosition, Point endPosition, LayerId layerId, double thickness, LineCapStyle lineCap) :
+        public LineElement(Point startPosition, Point endPosition, double thickness, LineCapStyle lineCap) :
             base() {
 
             this.startPosition = startPosition;
             this.endPosition = endPosition;
-            this.layerId = layerId;
             this.thickness = thickness;
             this.lineCap = lineCap;
         }
@@ -107,19 +104,6 @@
                     endPosition = value;
                     Invalidate();
                 }
-            }
-        }
-
-        /// <summary>
-        /// Obte o asigna el identificador de la capa.
-        /// </summary>
-        /// 
-        public LayerId LayerId {
-            get {
-                return layerId;
-            }
-            set {
-                layerId = value;
             }
         }
 

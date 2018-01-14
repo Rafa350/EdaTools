@@ -1,11 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam {
 
+    using MikroPic.EdaTools.v1.Cam.Gerber;
+    using MikroPic.EdaTools.v1.Pcb.Model;
     using System;
     using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Cam.Gerber;
 
     public sealed class CAMGenerator {
 

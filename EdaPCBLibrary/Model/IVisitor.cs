@@ -10,7 +10,7 @@
         void Visit(Pad pad);
         void Visit(Parameter parameter);
         void Visit(Signal signal);
-        void Visit(Block component);
+        void Visit(Block block);
         void Visit(LineElement line);
         void Visit(ArcElement arc);
         void Visit(RectangleElement rectangle);

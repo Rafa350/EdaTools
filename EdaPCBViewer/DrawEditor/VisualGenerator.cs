@@ -1,12 +1,12 @@
 ﻿namespace Eda.PCBViewer.DrawEditor {
 
+    using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
     using System.Collections.Generic;
     using System.Windows.Media;
-    using Eda.PCBViewer.DrawEditor.Visuals;
-    using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-    using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
 
     public sealed class VisualGenerator {
 
@@ -15,145 +15,223 @@
             public Element Element { get; set; }
         }
 
-        /// <summary>
-        /// Visitador per les senyals d'una placa.
-        /// </summary>
-        private sealed class PopulateRenderListSignalsVisitor: BoardVisitor {
+        private sealed class RenderVisitor: BoardVisitor {
 
-            private readonly LayerId layerId;
-            private readonly IList<RenderItem> renderList;
+            private readonly Board board;
+            private readonly Layer layer;
+            private readonly IList<Visual> visuals;
+            private MatrixTransform localTransform = null;
 
-            /// <summary>
-            /// Constructor e la clase.
-            /// </summary>
-            /// <param name="layerId">La capa a visitar.</param>
-            /// <param name="renderList">La llista on deixar el resultat.</param>
-            public PopulateRenderListSignalsVisitor(LayerId layerId, IList<RenderItem> renderList) {
+            public RenderVisitor(Board board, Layer layer, IList<Visual> visuals) {
 
-                this.layerId = layerId;
-                this.renderList = renderList;
-            }
-
-            /// <summary>
-            /// Visita un objecte 'Board'.
-            /// </summary>
-            /// <param name="board">La placa a visitar.</param>
-            public override void Visit(Board board) {
-
-                foreach (Signal signal in board.Signals)
-                    signal.AcceptVisitor(this);
-            }
-        }
-
-        private sealed class PopulateRenderListPartsVisitor: BoardVisitor {
-
-            private readonly LayerId layerId;
-            private readonly IList<RenderItem> renderList;
-
-            public PopulateRenderListPartsVisitor(LayerId layerId, IList<RenderItem> renderList) {
-
-                this.layerId = layerId;
-                this.renderList = renderList;
-            }
-
-            public override void Visit(Board board) {
-
-                foreach (Part part in board.Parts)
-                    part.AcceptVisitor(this);
+                this.board = board;
+                this.layer = layer;
+                this.visuals = visuals;
             }
 
             public override void Visit(Part part) {
 
-                if (part.Component != null && part.Component.Elements != null)
-                    foreach (Element element in part.Component.Elements) {
-                        //Layer elementLayer = part.IsMirror ? element.Layer.Mirror : element.Layer;
-                        if (element.IsOnLayer(layerId)) {
-                            RenderItem renderItem = new RenderItem {
-                                Part = part,
-                                Element = element
-                            };
-                            renderList.Add(renderItem);
-                        }
+                localTransform = new MatrixTransform(part.Transformation);
+                base.Visit(part);
+                localTransform = null;
+            }
+
+            public override void Visit(LineElement line) {
+
+                if (board.IsOnLayer(line, layer)) {
+
+                    DrawingVisual visual = new DrawingVisual();
+                    using (DrawingContext dc = visual.RenderOpen()) {
+
+                        if (localTransform != null)
+                            dc.PushTransform(localTransform);
+
+                        Brush brush = BrushCache.Instance.GetBrush(layer.Color);
+                        dc.DrawPolygon(brush, null, line.Polygon);
+
+                        if (localTransform != null)
+                            dc.Pop();
                     }
-            }
-        }
 
-        private sealed class CreateVisualsVisitor: BoardVisitor {
-
-            private readonly IList<RenderItem> renderList;
-            private readonly IList<Visual> visualList;
-            private Part currentPart;
-
-            public CreateVisualsVisitor(IList<RenderItem> renderList, IList<Visual> visualList) {
-
-                this.renderList = renderList;
-                this.visualList = visualList;
-            }
-
-            public override void Visit(Board board) {
-
-                foreach (RenderItem renderItem in renderList) {
-                    currentPart = renderItem.Part;
-                    renderItem.Element.AcceptVisitor(this);
+                    visuals.Add(visual);
                 }
             }
 
-            /// <summary>
-            /// Visita una linia de component.
-            /// </summary>
-            /// <param name="line">La linia a visitar.</param>
-            public override void Visit(LineElement line) {
-
-                visualList.Add(new LineVisual(line, currentPart));
-            }
-
-            /// <summary>
-            /// Visita un arc de component.
-            /// </summary>
-            /// <param name="arc">L'arc a visitar.</param>
             public override void Visit(ArcElement arc) {
 
-                visualList.Add(new ArcVisual(arc, currentPart));
+                if (board.IsOnLayer(arc, layer)) {
+
+                    DrawingVisual visual = new DrawingVisual();
+                    using (DrawingContext dc = visual.RenderOpen()) {
+
+                        if (localTransform != null)
+                            dc.PushTransform(localTransform);
+
+                        Brush brush = BrushCache.Instance.GetBrush(layer.Color);
+                        dc.DrawPolygon(brush, null, arc.Polygon);
+
+                        if (localTransform != null)
+                            dc.Pop();
+                    }
+
+                    visuals.Add(visual);
+                }
             }
 
             public override void Visit(RectangleElement rectangle) {
 
-                visualList.Add(new RectangleVisual(rectangle, currentPart));
+                if (board.IsOnLayer(rectangle, layer)) {
+
+                    DrawingVisual visual = new DrawingVisual();
+                    using (DrawingContext dc = visual.RenderOpen()) {
+
+                        if (localTransform != null)
+                            dc.PushTransform(localTransform);
+
+                        Brush brush = BrushCache.Instance.GetBrush(layer.Color);
+                        dc.DrawPolygon(brush, null, rectangle.Polygon);
+
+                        if (localTransform != null)
+                            dc.Pop();
+                    }
+
+                    visuals.Add(visual);
+                }
             }
 
             public override void Visit(CircleElement circle) {
 
-                visualList.Add(new CircleVisual(circle, currentPart));
+                if (board.IsOnLayer(circle, layer)) {
+
+                    DrawingVisual visual = new DrawingVisual();
+                    using (DrawingContext dc = visual.RenderOpen()) {
+
+                        if (localTransform != null)
+                            dc.PushTransform(localTransform);
+
+                        Brush brush = BrushCache.Instance.GetBrush(layer.Color);
+                        dc.DrawPolygon(brush, null, circle.Polygon);
+
+                        if (localTransform != null)
+                            dc.Pop();
+                    }
+
+                    visuals.Add(visual);
+                }
             }
 
-            public override void Visit(RegionElement polygon) {
+            public override void Visit(RegionElement region) {
 
-                visualList.Add(new PolygonVisual(polygon, currentPart));
-            }
+                if (layer.Id == LayerId.TopPlace && board.IsOnLayer(region, layer)) {
 
-            public override void Visit(TextElement text) {
+                    DrawingVisual visual = new DrawingVisual();
+                    using (DrawingContext dc = visual.RenderOpen()) {
 
-                visualList.Add(new TextVisual(text, currentPart));
-            }
+                        if (localTransform != null)
+                            dc.PushTransform(localTransform);
 
-            public override void Visit(SmdPadElement pad) {
+                        Brush brush = BrushCache.Instance.GetBrush(layer.Color);
+                        dc.DrawPolygon(brush, null, region.Polygon);
 
-                visualList.Add(new SmdPadVisual(pad, currentPart));
-            }
+                        if (localTransform != null)
+                            dc.Pop();
+                    }
 
-            public override void Visit(ThPadElement pad) {
-
-                visualList.Add(new ThPadVisual(pad, currentPart));
+                    visuals.Add(visual);
+                }
             }
 
             public override void Visit(ViaElement via) {
 
-                visualList.Add(new ViaVisual(via));
+                if ((layer.Id == LayerId.Vias) && board.IsOnLayer(via, layer)) {
+
+                    DrawingVisual visual = new DrawingVisual();
+                    using (DrawingContext dc = visual.RenderOpen()) {
+
+                        if (localTransform != null)
+                            dc.PushTransform(localTransform);
+
+                        Polygon polygon = via.Polygon;
+                        List<Polygon> polygonHoles = new List<Polygon>(polygon.Childs);
+
+                        Brush polygonBrush = BrushCache.Instance.GetBrush(layer.Color);
+                        dc.DrawPolygon(polygonBrush, null, polygon);
+
+                        if (polygonHoles.Count == 1) {
+                            Brush holeBrush = BrushCache.Instance.GetBrush(Colors.Black);
+                            dc.DrawPolygon(holeBrush, null, polygonHoles[0]);
+                        }
+
+                        if (localTransform != null)
+                            dc.Pop();
+                    }
+
+                    visuals.Add(visual);
+                }
+            }
+
+            public override void Visit(SmdPadElement pad) {
+
+                if (board.IsOnLayer(pad, layer)) {
+
+                    DrawingVisual visual = new DrawingVisual();
+                    using (DrawingContext dc = visual.RenderOpen()) {
+
+                        if (localTransform != null)
+                            dc.PushTransform(localTransform);
+
+                        Brush brush = BrushCache.Instance.GetBrush(layer.Color);
+                        dc.DrawPolygon(brush, null, pad.Polygon);
+
+                        if (localTransform != null)
+                            dc.Pop();
+                    }
+
+                    visuals.Add(visual);
+                }
+            }
+
+            public override void Visit(ThPadElement pad) {
+
+               if ((layer.Id == LayerId.Pads) && board.IsOnLayer(pad, layer)) {
+
+                    DrawingVisual visual = new DrawingVisual();
+                    using (DrawingContext dc = visual.RenderOpen()) {
+
+                        if (localTransform != null)
+                            dc.PushTransform(localTransform);
+
+                        Brush brush = BrushCache.Instance.GetBrush(layer.Color);
+                        dc.DrawPolygon(brush, null, pad.Polygon);
+
+                        if (localTransform != null)
+                            dc.Pop();
+                    }
+
+                    visuals.Add(visual);
+                }
             }
 
             public override void Visit(HoleElement hole) {
 
-                visualList.Add(new HoleVisual(hole, currentPart));
+                if ((layer.Id == LayerId.Holes) && board.IsOnLayer(hole, layer)) {
+
+                    DrawingVisual visual = new DrawingVisual();
+                    using (DrawingContext dc = visual.RenderOpen()) {
+
+                        if (localTransform != null)
+                            dc.PushTransform(localTransform);
+
+                        Pen pen = PenCache.Instance.GetPen(layer.Color, 0.05);
+                        Brush brush = BrushCache.Instance.GetBrush(Colors.Black);
+                        dc.DrawPolygon(brush, pen, hole.Polygon);
+
+                        if (localTransform != null)
+                            dc.Pop();
+                    }
+
+                    visuals.Add(visual);
+                }
             }
         }
 
@@ -176,61 +254,46 @@
         /// Genera totes les visuals per representasr la placa.
         /// </summary>
         /// <returns>Un enumerador de les visuals creades.</returns>
+        /// 
         public IEnumerable<Visual> CreateVisuals() {
 
-            List<Visual> visualList = new List<Visual>();
+            List<Visual> visuals = new List<Visual>();
 
             // Procesa la placa, capa a capa
             //
-            ProcessLayer(board, LayerId.BottomNames, visualList);
-            ProcessLayer(board, LayerId.BottomValues, visualList);
-            ProcessLayer(board, LayerId.BottomDocument, visualList);
-            ProcessLayer(board, LayerId.BottomCream, visualList);
-            ProcessLayer(board, LayerId.BottomGlue, visualList);
-            ProcessLayer(board, LayerId.BottomKeepout, visualList);
-            ProcessLayer(board, LayerId.BottomRestrict, visualList);
-            ProcessLayer(board, LayerId.BottomPlace, visualList);
-            ProcessLayer(board, LayerId.Bottom, visualList);
-            ProcessLayer(board, LayerId.ViaRestrict, visualList);
-            ProcessLayer(board, LayerId.Top, visualList);
-            ProcessLayer(board, LayerId.Holes, visualList);
-            ProcessLayer(board, LayerId.TopPlace, visualList);
-            ProcessLayer(board, LayerId.TopRestrict, visualList);
-            ProcessLayer(board, LayerId.TopKeepout, visualList);
-            ProcessLayer(board, LayerId.TopGlue, visualList);
-            ProcessLayer(board, LayerId.TopCream, visualList);
-            ProcessLayer(board, LayerId.TopDocument, visualList);
-            ProcessLayer(board, LayerId.TopValues, visualList);
-            ProcessLayer(board, LayerId.TopNames, visualList);
-            ProcessLayer(board, LayerId.Vias, visualList);
-            ProcessLayer(board, LayerId.Pads, visualList);
+            //ProcessLayer(board, LayerId.BottomNames, visualList);
+            //ProcessLayer(board, LayerId.BottomValues, visualList);
+            ProcessLayer(board, LayerId.BottomDocument, visuals);
+            //ProcessLayer(board, LayerId.BottomCream, visuals);
+            ProcessLayer(board, LayerId.BottomGlue, visuals);
+            ProcessLayer(board, LayerId.BottomKeepout, visuals);
+            ProcessLayer(board, LayerId.BottomRestrict, visuals);
+            ProcessLayer(board, LayerId.BottomPlace, visuals);
+            ProcessLayer(board, LayerId.Bottom, visuals);
+            ProcessLayer(board, LayerId.ViaRestrict, visuals);
+            ProcessLayer(board, LayerId.Top, visuals);
+            ProcessLayer(board, LayerId.TopPlace, visuals);
+            ProcessLayer(board, LayerId.TopRestrict, visuals);
+            ProcessLayer(board, LayerId.TopKeepout, visuals);
+            ProcessLayer(board, LayerId.TopGlue, visuals);
+            //ProcessLayer(board, LayerId.TopCream, visuals);
+            ProcessLayer(board, LayerId.TopDocument, visuals);
+            //ProcessLayer(board, LayerId.TopValues, visualList);
+            //ProcessLayer(board, LayerId.TopNames, visualList);
+            ProcessLayer(board, LayerId.Vias, visuals);
+            ProcessLayer(board, LayerId.Pads, visuals);
+            ProcessLayer(board, LayerId.Holes, visuals);
+            ProcessLayer(board, LayerId.Profile, visuals);
 
-            return visualList;
+            return visuals;
         }
 
-        private void ProcessLayer(Board board, LayerId layerId, IList<Visual> visualList) {
+        private void ProcessLayer(Board board, LayerId layerId, IList<Visual> visuals) {
 
             Layer layer = board.GetLayer(layerId);
-            if ((layer != null) && layer.IsVisible) {
-
-                // Lista d'elements a renderitzar
-                //
-                List<RenderItem> renderList = new List<RenderItem>();
-
-                // Obte els elements de la llista 'Signals'
-                //
-                PopulateRenderListSignalsVisitor populateRenderListSignalVisitor = new PopulateRenderListSignalsVisitor(layerId, renderList);
-                board.AcceptVisitor(populateRenderListSignalVisitor);
-
-                // Obte els elements de la llista 'Parts'
-                //
-                PopulateRenderListPartsVisitor populateRenderListPartsVisitor = new PopulateRenderListPartsVisitor(layerId, renderList);
-                board.AcceptVisitor(populateRenderListPartsVisitor);
-
-                // Crea les visuals
-                //
-                CreateVisualsVisitor createVisualsVisitor = new CreateVisualsVisitor(renderList, visualList);
-                board.AcceptVisitor(createVisualsVisitor);
+            if (layer.IsVisible) {
+                RenderVisitor visitor = new RenderVisitor(board, layer, visuals);
+                visitor.Visit(board);
             }
         }
     }

@@ -31,7 +31,6 @@
         }
 
         private readonly List<Segment> segments = new List<Segment>();
-        private LayerId layerId = LayerId.Unknown;
         private double thickness = 0.1;
         private double isolation = 0;
 
@@ -46,11 +45,10 @@
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
-        /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="isolation">Distancia d'aillament.</param>
         /// 
-        public RegionElement(LayerId layerId, double thickness = 0, double isolation = 0):
+        public RegionElement(double thickness = 0, double isolation = 0):
             base() {
 
             if (thickness < 0)
@@ -59,7 +57,6 @@
             if (isolation < 0)
                 throw new ArgumentOutOfRangeException("isolation");
 
-            this.layerId = layerId;
             this.thickness = thickness;
             this.isolation = isolation;
         }
@@ -67,15 +64,13 @@
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
-        /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="isolation">D'istancia d'aillament.</param>
         /// <param name="thickness">Amplada de linia del perfil.</param>
         /// <param name="segments">Llista de segments.</param>
         /// 
-        public RegionElement(LayerId layerId, double thickness, double isolation, IEnumerable<Segment> segments) :
+        public RegionElement(double thickness, double isolation, IEnumerable<Segment> segments) :
             base() {
 
-            this.layerId = layerId;
             this.thickness = thickness;
             this.isolation = isolation;
 
@@ -146,19 +141,6 @@
         public void AddArc(Point position, double angle) {
 
             Add(new Segment(position, angle));
-        }
-
-        /// <summary>
-        /// Obte o asigna el identificador de la capa.
-        /// </summary>
-        /// 
-        public LayerId LayerId {
-            get {
-                return layerId;
-            }
-            set {
-                layerId = value;
-            }
         }
 
         /// <summary>

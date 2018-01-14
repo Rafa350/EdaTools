@@ -22,7 +22,6 @@
         }
 
         private Point position;
-        private LayerId layerId = LayerId.Unknown;
         private double rotation;
         private double height;
         private TextAlign align = TextAlign.MiddleCenter;
@@ -41,16 +40,14 @@
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="position">Posicio.</param>
-        /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="height">Alçada de lletra.</param>
         /// <param name="align">Alineacio respecte la posicio.</param>
         /// 
-        public TextElement(Point position, LayerId layerId, double rotation, double height, TextAlign align = TextAlign.MiddleCenter):
+        public TextElement(Point position, double rotation, double height, TextAlign align = TextAlign.MiddleCenter):
             base() {
 
             this.position = position;
-            this.layerId = layerId;
             this.rotation = rotation;
             this.height = height;
             this.align = align;

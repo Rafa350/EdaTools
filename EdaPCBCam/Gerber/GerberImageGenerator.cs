@@ -36,7 +36,7 @@
         /// <param name="layers">Llista de capes a procesar.</param>
         /// <param name="fileName">Nom del fitxer de sortida.</param>
         /// 
-        public void Generate(Board board, IList<Layer> layers, ImageType imageType, string fileName) {
+        public void Generate(Board board, IEnumerable<Layer> layers, ImageType imageType, string fileName) {
 
             if (board == null)
                 throw new ArgumentNullException("board");

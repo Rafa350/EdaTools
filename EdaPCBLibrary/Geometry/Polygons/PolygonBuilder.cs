@@ -2,6 +2,7 @@
 
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
+    using System.Text;
     using System.Windows;
     using System.Windows.Media;
 
@@ -179,7 +180,7 @@
             q2Points.CopyTo(points, 18);
             q3Points.CopyTo(points, 27);
 
-            // Transforma a la posicio i orientacio final
+            // Transforma a la posicio i tamany final
             //
             Matrix m = new Matrix();
             m.Rotate(rotation);
@@ -198,7 +199,82 @@
         /// 
         private static Point[] PointsFromCircle(Point position, double radius) {
 
-            return PointsFromRegularPolygon(32, position, radius, 0);
+            //Crea el cercle unitari
+            //
+            Point[] points = new Point[32];
+            points[0].X = 0.995184726672197;
+            points[0].Y = 0.0980171403295606;
+            points[1].X = 0.956940335732209;
+            points[1].Y = 0.290284677254462;
+            points[2].X = 0.881921264348355;
+            points[2].Y = 0.471396736825998;
+            points[3].X = 0.773010453362737;
+            points[3].Y = 0.634393284163645;
+            points[4].X = 0.634393284163645;
+            points[4].Y = 0.773010453362737;
+            points[5].X = 0.471396736825998;
+            points[5].Y = 0.881921264348355;
+            points[6].X = 0.290284677254463;
+            points[6].Y = 0.956940335732209;
+            points[7].X = 0.0980171403295608;
+            points[7].Y = 0.995184726672197;
+            points[8].X = -0.0980171403295604;
+            points[8].Y = 0.995184726672197;
+            points[9].X = -0.290284677254462;
+            points[9].Y = 0.956940335732209;
+            points[10].X = -0.471396736825998;
+            points[10].Y = 0.881921264348355;
+            points[11].X = -0.634393284163646;
+            points[11].Y = 0.773010453362737;
+            points[12].X = -0.773010453362737;
+            points[12].Y = 0.634393284163645;
+            points[13].X = -0.881921264348355;
+            points[13].Y = 0.471396736825997;
+            points[14].X = -0.956940335732209;
+            points[14].Y = 0.290284677254462;
+            points[15].X = -0.995184726672197;
+            points[15].Y = 0.0980171403295595;
+            points[16].X = -0.995184726672197;
+            points[16].Y = -0.0980171403295619;
+            points[17].X = -0.956940335732208;
+            points[17].Y = -0.290284677254464;
+            points[18].X = -0.881921264348354;
+            points[18].Y = -0.471396736825999;
+            points[19].X = -0.773010453362736;
+            points[19].Y = -0.634393284163647;
+            points[20].X = -0.634393284163644;
+            points[20].Y = -0.773010453362738;
+            points[21].X = -0.471396736825996;
+            points[21].Y = -0.881921264348356;
+            points[22].X = -0.29028467725446;
+            points[22].Y = -0.95694033573221;
+            points[23].X = -0.0980171403295578;
+            points[23].Y = -0.995184726672197;
+            points[24].X = 0.0980171403295636;
+            points[24].Y = -0.995184726672197;
+            points[25].X = 0.290284677254466;
+            points[25].Y = -0.956940335732208;
+            points[26].X = 0.471396736826001;
+            points[26].Y = -0.881921264348353;
+            points[27].X = 0.634393284163648;
+            points[27].Y = -0.773010453362735;
+            points[28].X = 0.773010453362739;
+            points[28].Y = -0.634393284163642;
+            points[29].X = 0.881921264348357;
+            points[29].Y = -0.471396736825994;
+            points[30].X = 0.95694033573221;
+            points[30].Y = -0.290284677254458;
+            points[31].X = 0.995184726672197;
+            points[31].Y = -0.0980171403295561;
+
+            // El transforma al rectangle a la posicio, tamany i orientacio final.
+            //
+            Matrix m = new Matrix();
+            m.Scale(radius, radius);
+            m.Translate(position.X, position.Y);
+            m.Transform(points);
+
+            return points;
         }
 
         /// <summary>
@@ -219,6 +295,7 @@
             double delta = (360.0 * Math.PI / 180.0) / sides;
             double angle = (rotation * Math.PI / 180.0) + (delta / 2);
 
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < sides; i++) {
                 points[i] = new Point(x + (radius * Math.Cos(angle)), y + (radius * Math.Sin(angle)));
                 angle += delta;
@@ -237,6 +314,8 @@
         /// 
         private static Point[] PointsFromQuadrant(Point center, double radius, int quadrant) {
 
+            // Crea el cercle unitari
+            //
             Point[] points = new Point[9];
 
             double delta = (360.0 * Math.PI / 180.0) / 32;

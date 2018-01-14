@@ -10,7 +10,6 @@
     public sealed class CircleElement: Element, IPosition {
 
         private Point position;
-        private LayerId layerId;
         private double radius;
         private double thickness;
 
@@ -26,15 +25,13 @@
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="position">Posicio del centre.</param>
-        /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="radius">Radi.</param>
         /// <param name="thickness">Amplada de linia. Zero indica que es un disc.</param>
         /// 
-        public CircleElement(Point position, LayerId layerId, double radius, double thickness = 0) :           
+        public CircleElement(Point position, double radius, double thickness = 0) :           
             base() {
 
             this.position = position;
-            this.layerId = layerId;
             this.radius = radius;
             this.thickness = thickness;
         }
@@ -83,19 +80,6 @@
                     position = value;
                     Invalidate();
                 }
-            }
-        }
-
-        /// <summary>
-        /// Obte o asigna el identificador de la capa.
-        /// </summary>
-        /// 
-        public LayerId LayerId {
-            get {
-                return layerId;
-            }
-            set {
-                layerId = value;
             }
         }
 

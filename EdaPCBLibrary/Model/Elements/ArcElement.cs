@@ -24,13 +24,12 @@
         /// </summary>
         /// <param name="startPosition">Punt inicial.</param>
         /// <param name="endPosition">Punt final.</param>
-        /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="angle">Angle del arc.</param>
         /// <param name="lineCap">Extrems de linia.</param>
         /// 
-        public ArcElement(Point startPosition, Point endPosition, LayerId layerId, double thickness, double angle, LineCapStyle lineCap) :
-            base(startPosition, endPosition, layerId, thickness, lineCap) {
+        public ArcElement(Point startPosition, Point endPosition, double thickness, double angle, LineCapStyle lineCap) :
+            base(startPosition, endPosition, thickness, lineCap) {
 
             this.angle = angle;
         }

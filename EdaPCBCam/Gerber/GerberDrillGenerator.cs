@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
 
     using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
@@ -9,7 +8,6 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
-    using System.Windows;
     using System.Windows.Media;
 
     public sealed class GerberDrillGenerator: GerberGenerator {
