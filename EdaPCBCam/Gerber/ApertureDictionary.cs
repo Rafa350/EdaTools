@@ -43,7 +43,7 @@
         //private static readonly Macro oblongApertureMacro = null;
 
         private readonly IList<Macro> macros = new List<Macro>();
-        private readonly IDictionary<string, Aperture> items = new Dictionary<string, Aperture>();
+        private readonly IDictionary<int, Aperture> items = new Dictionary<int, Aperture>();
         private int apertureId = 10;
 
         /// <summary>
@@ -63,10 +63,11 @@
         /// <param name="diameter">Diametre.</param>
         /// <returns>La clau unica.</returns>
         /// 
-        private static string GetCircleKey(double diameter) {
+        private static int GetCircleKey(double diameter) {
 
-            return String.Format(CultureInfo.InvariantCulture, 
+            string s = String.Format(CultureInfo.InvariantCulture, 
                 "circle;{0}", diameter);
+            return s.GetHashCode();
         }
 
         /// <summary>
@@ -77,10 +78,11 @@
         /// <param name="rotate">Orientacio.</param>
         /// <returns>La clau unica.</returns>
         /// 
-        private static string GetRectangleKey(double width, double height, double rotate) {
+        private static int GetRectangleKey(double width, double height, double rotate) {
 
-            return String.Format(CultureInfo.InvariantCulture, 
+            string s = String.Format(CultureInfo.InvariantCulture, 
                 "rectangle;{0};{1};{2}", width, height, rotate);
+            return s.GetHashCode();
         }
 
         /// <summary>
@@ -92,10 +94,11 @@
         /// <param name="rotate">Orientacio.</param>
         /// <returns>La clau unica.</returns>
         /// 
-        private static string GetRoundRectangleKey(double width, double height, double radius, double rotate) {
+        private static int GetRoundRectangleKey(double width, double height, double radius, double rotate) {
 
-            return String.Format(CultureInfo.InvariantCulture, 
-                "round_{0};{1};{2};{3}", width, height, radius, rotate);
+            string s = String.Format(CultureInfo.InvariantCulture, 
+                "round;{0};{1};{2};{3}", width, height, radius, rotate);
+            return s.GetHashCode();
         }
 
         /// <summary>
@@ -105,10 +108,11 @@
         /// <param name="rotate">Orientacio.</param>
         /// <returns>La clau unica.</returns>
         /// 
-        private static string GetOctagonKey(double size, double rotate) {
+        private static int GetOctagonKey(double size, double rotate) {
 
-            return String.Format(CultureInfo.InvariantCulture, 
+            string s = String.Format(CultureInfo.InvariantCulture, 
                 "octagon;{0};{1}", size, rotate);
+            return s.GetHashCode();
         }
 
         /// <summary>
@@ -119,10 +123,11 @@
         /// <param name="rotate">Orientacio.</param>
         /// <returns>la clau unica.</returns>
         /// 
-        private static string GetOvalKey(double width, double height, double rotate) {
+        private static int GetOvalKey(double width, double height, double rotate) {
 
-            return String.Format(CultureInfo.InvariantCulture, 
+            string s = String.Format(CultureInfo.InvariantCulture, 
                 "oval;{0};{1};{2}", width, height, rotate);
+            return s.GetHashCode();
         }
 
         /// <summary>
@@ -132,7 +137,7 @@
         /// 
         public void DefineCircleAperture(double diameter) {
 
-            string key = GetCircleKey(diameter);
+            int key = GetCircleKey(diameter);
             if (!items.ContainsKey(key)) {
                 Aperture ap = new CircleAperture(apertureId++, diameter);
                 items.Add(key, ap);
@@ -148,7 +153,7 @@
         /// 
         public void DefineRectangleAperture(double width, double height, double rotate) {
 
-            string key = GetRectangleKey(width, height, rotate);
+            int key = GetRectangleKey(width, height, rotate);
             if (!items.ContainsKey(key)) {
                 Aperture ap = new MacroAperture(apertureId++, rectangleMacro, width, height, rotate);
                 items.Add(key, ap);
@@ -165,7 +170,7 @@
         /// 
         public void DefineRoundRectangleAperture(double width, double height, double radius, double rotate) {
 
-            string key = GetRoundRectangleKey(width, height, radius, rotate);
+            int key = GetRoundRectangleKey(width, height, radius, rotate);
             if (!items.ContainsKey(key)) {
                 Aperture ap = new MacroAperture(apertureId++, roundRectangleMacro, width, height, radius, rotate);
                 items.Add(key, ap);
@@ -180,7 +185,7 @@
         /// 
         public void DefineOctagonAperture(double size, double rotate) {
 
-            string key = GetOctagonKey(size, rotate);
+            int key = GetOctagonKey(size, rotate);
             if (!items.ContainsKey(key)) {
                 Aperture ap = new PoligonAperture(apertureId++, 8, size, rotate + 22.5);
                 items.Add(key, ap);
@@ -196,7 +201,7 @@
         /// 
         public void DefineOvalAperture(double width, double height, double rotate) {
 
-            string key = GetOvalKey(width, height, rotate);
+            int key = GetOvalKey(width, height, rotate);
             if (!items.ContainsKey(key)) {
                 Aperture ap = new ObroundAperture(apertureId++, width, height);
                 items.Add(key, ap);
@@ -211,7 +216,7 @@
         /// 
         public Aperture GetCircleAperture(double diameter) {
 
-            string key = GetCircleKey(diameter);
+            int key = GetCircleKey(diameter);
             return items[key];
         }
 
@@ -225,7 +230,7 @@
         /// 
         public Aperture GetRectangleAperture(double width, double height, double rotate) {
 
-            string key = GetRectangleKey(width, height, rotate);
+            int key = GetRectangleKey(width, height, rotate);
             return items[key];
         }
 
@@ -240,7 +245,7 @@
         /// 
         public Aperture GetRoundRectangleAperture(double width, double height, double radius, double rotate) {
 
-            string key = GetRoundRectangleKey(width, height, radius, rotate);
+            int key = GetRoundRectangleKey(width, height, radius, rotate);
             return items[key];
         }
 
@@ -253,7 +258,7 @@
         /// 
         public Aperture GetOctagonAperture(double size, double rotate) {
 
-            string key = GetOctagonKey(size, rotate);
+            int key = GetOctagonKey(size, rotate);
             return items[key];
         }
 
@@ -267,7 +272,7 @@
         /// 
         public Aperture GetOvalAperture(double width, double height, double rotate) {
 
-            string key = GetOvalKey(width, height, rotate);
+            int key = GetOvalKey(width, height, rotate);
             return items[key];
         }
 

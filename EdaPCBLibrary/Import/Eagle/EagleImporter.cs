@@ -299,10 +299,22 @@
             string name = GetAttributeString(node, "name");
             int layerNum = GetAttributeInteger(node, "number");
 
+            LayerSide side = LayerSide.Unknown;
+            if (layerNum == 1) 
+                side = LayerSide.Top;
+            else if (layerNum > 1 && layerNum < 16) 
+                side = LayerSide.Inner;
+            else if (layerNum == 16)
+                side = LayerSide.Bottom;
+
+            LayerFunction function = LayerFunction.Unknown;
+            if (layerNum >= 1 && layerNum <= 16)
+                function = LayerFunction.Signal;
+
             LayerId layerId = GetLayerId(layerNum);
             Color color = GetLayerColor(layerNum);
 
-            return new Layer(layerId, name, color);
+            return new Layer(layerId, name, side, function, color);
         }
 
 

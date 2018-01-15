@@ -175,9 +175,9 @@
                 double deltaX = (curMousePos.X - zoomControl.ScaleCenterX) / curScale;
                 double deltaY = (curMousePos.Y - zoomControl.ScaleCenterY) / curScale;
  
-                zoomControl.Scale = newScale;
                 zoomControl.ScaleCenterX += deltaX;
                 zoomControl.ScaleCenterY += deltaY;
+                zoomControl.Scale = newScale;
 
                 e.Handled = true;
             }

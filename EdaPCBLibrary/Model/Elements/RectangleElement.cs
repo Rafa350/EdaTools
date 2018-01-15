@@ -76,7 +76,7 @@
             double w = size.Width * Math.Cos(a) + size.Height * Math.Sin(a);
             double h = size.Width * Math.Sin(a) + size.Height * Math.Cos(a);
 
-            return new Rect(position.X - w / 2, position.Y - h / 2, w, h);
+            return new Rect(position.X - w / 2.0, position.Y - h / 2.0, w, h);
         }
 
         /// <summary>

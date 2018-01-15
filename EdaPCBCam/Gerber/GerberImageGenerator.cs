@@ -508,10 +508,13 @@
                 double inflate = 0.15 + region.Thickness / 2;
                 List<Polygon> holePolygons = new List<Polygon>();
 
+                Layer restrict = board.GetLayer(LayerId.TopRestrict);
+
                 // Procesa els elements de la placa
                 //
                 foreach (Element element in board.Elements) {
-                    if ((element != region) && (board.IsOnAnyLayer(element, regionLayers))) {
+                    if ((element != region) && 
+                        (board.IsOnAnyLayer(element, regionLayers) || board.IsOnLayer(element, restrict))) {
                         IConectable item = element as IConectable;
                         if ((item == null) || (board.GetSignal(item, false) != regionSignal)) {
                             Polygon elementPolygon = element.GetPolygon(inflate);
@@ -524,7 +527,8 @@
                 //
                 foreach (Part part in board.Parts) {
                     foreach (Element element in part.Component.Elements) {
-                        if ((element != region) && (board.IsOnAnyLayer(element, regionLayers))) {
+                        if ((element != region) && 
+                            (board.IsOnAnyLayer(element, regionLayers) || board.IsOnLayer(element, restrict))) {
                             IConectable item = element as IConectable;
                             if ((item == null) || (board.GetSignal(item, false) != regionSignal)) {
                                 Polygon elementPolygon = element.GetPolygon(inflate);

@@ -227,9 +227,11 @@
                 writer.WriteStartElement("layer");
                 writer.WriteAttributeString("name", layer.Name);
                 writer.WriteAttributeString("id", layer.Id.ToString());
-                writer.WriteAttributeString("class", layer.Class.ToString());
-                writer.WriteAttributeString("visible", layer.IsVisible.ToString());
+                writer.WriteAttributeString("side", layer.Side.ToString());
+                writer.WriteAttributeString("function", layer.Function.ToString());
                 writer.WriteAttribute("color", layer.Color);
+                if (!layer.IsVisible)
+                    writer.WriteAttributeString("visible", "false");
                 writer.WriteEndElement();
             }
 

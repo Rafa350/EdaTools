@@ -20,7 +20,7 @@
         private readonly Dictionary<IConectable, Signal> signalOfItem = new Dictionary<IConectable, Signal>();
 
         // Blocs
-        private readonly List<Block> blocks = new List<Block>();
+        private readonly HashSet<Block> blocks = new HashSet<Block>();
 
         // Elements
         private readonly List<Element> elements = new List<Element>();
@@ -81,11 +81,9 @@
             if (block == null)
                 throw new ArgumentNullException("block");
 
-            if (blocks.Contains(block))
+            if (!blocks.Add(block))
                 throw new InvalidOperationException(
                     String.Format("El bloque '{0}', ya esta asignado a esta placa.", block.Name));
-
-            blocks.Add(block);
         }
 
         #region Metodes per la gestio de capes
@@ -262,11 +260,9 @@
             if (signal == null)
                 throw new ArgumentNullException("signal");
 
-            if (signals.Contains(signal))
+            if (!signals.Add(signal))
                 throw new InvalidOperationException(
                     String.Format("La señal '{0}', ya esta asignada a esta placa.", signal.Name));
-
-            signals.Add(signal);
         }
 
         /// <summary>

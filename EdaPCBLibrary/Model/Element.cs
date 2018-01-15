@@ -9,7 +9,6 @@
     public abstract class Element : IVisitable {
 
         private Polygon polygon = null;
-        private Rect boundingBox = Rect.Empty;
         private bool locked = false;
 
         /// <summary>
@@ -50,7 +49,6 @@
         protected void Invalidate() {
 
             polygon = null;
-            boundingBox = Rect.Empty;
         }
 
         /// <summary>
@@ -59,14 +57,12 @@
         /// 
         public Rect BoundingBox {
             get {
-                if (boundingBox.IsEmpty)
-                    boundingBox = GetBoundingBox();
-                return boundingBox;
+                return GetBoundingBox();
             }
         }
 
         /// <summary>
-        /// Obte el poligon del element.
+        /// Obte una copia del poligon del element.
         /// </summary>
         /// 
         public Polygon Polygon {

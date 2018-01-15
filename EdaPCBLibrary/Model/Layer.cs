@@ -2,19 +2,25 @@
 
     using System.Windows.Media;
     
-    public enum LayerClass {
+    public enum LayerFunction {
         Unknown,
-        TopSignal,
-        InnerSignal,
-        BottomSignal,
+        Signal,
         Design,
         Mechanical,
+    }
+
+    public enum LayerSide {
+        Unknown,
+        Top,
+        Inner,
+        Bottom
     }
 
     public sealed class Layer: IVisitable {
 
         private readonly LayerId id = LayerId.Unknown;
-        private readonly LayerClass cls = LayerClass.Unknown;
+        private readonly LayerSide side = LayerSide.Unknown;
+        private readonly LayerFunction function = LayerFunction.Unknown;
         private string name;
         private Color color;
         private bool isVisible = true;
@@ -29,16 +35,19 @@
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="layerId">Identificador de la capa.</param>
+        /// <param name="id">Identificador de la capa.</param>
         /// <param name="name">Nom de la capa.</param>
+        /// <param name="side">Cara on es troba la capa.</param>
+        /// <param name="function">Functio de la capa.</param>
         /// <param name="color">Color dels elements.</param>
         /// <param name="isVisible">Indica si la capa es visible.</param>
-        /// <param name="isMirror">Indica si la capa es dibuixa en mirall.</param>
         /// 
-        public Layer(LayerId layerId, string name, Color color, bool isVisible = true) {
+        public Layer(LayerId id, string name, LayerSide side, LayerFunction function, Color color, bool isVisible = true) {
 
-            this.id = layerId;
+            this.id = id;
             this.name = name;
+            this.side = side;
+            this.function = function;
             this.color = color;
             this.isVisible = isVisible;
         }
@@ -48,15 +57,33 @@
             visitor.Visit(this);
         }
 
+        /// <summary>
+        /// Obte el identificador de la capa.
+        /// </summary>
+        /// 
         public LayerId Id {
             get {
                 return id;
             }
         }
 
-        public LayerClass Class {
+        /// <summary>
+        /// Obte la funcio de la capa
+        /// </summary>
+        /// 
+        public LayerFunction Function {
             get {
-                return cls;
+                return function;
+            }
+        }
+
+        /// <summary>
+        /// Obte el cara on es troba la capa de la capa.
+        /// </summary>
+        /// 
+        public LayerSide Side {
+            get {
+                return side;
             }
         }
 
