@@ -69,6 +69,7 @@
 
             gb.Comment("EdaTools v1.0.");
             gb.Comment("EdaTools CAM processor. Gerber generator.");
+            gb.Comment(String.Format("Start timestamp: {0}", DateTime.Now));
             gb.Comment("BEGIN HEADER");
             switch (imageType) {
                 case ImageType.Top:
@@ -126,6 +127,7 @@
         private void GenerateFileTail(GerberBuilder gb) {
 
             gb.EndFile();
+            gb.Comment(String.Format("End timestamp: {0}", DateTime.Now));
             gb.Comment("END FILE");
         }
 
@@ -525,7 +527,7 @@
             /// 
             private PolygonNode CreatePolygonTree(Board board, RegionElement region) {
 
-                Polygon regionPolygon = PolygonBuilder.Build(region);
+                Polygon regionPolygon = region.Polygon;
                 regionPolygon.Transform(localTransformation);
 
                 IEnumerable<Layer> regionLayers = board.GetLayers(region);
@@ -583,7 +585,7 @@
                     //
                     gb.LoadPolarity((level % 2) == 0 ? Polarity.Clear : Polarity.Dark);
                     gb.BeginRegion();
-                    gb.Region(polygonTree.Polygon, true);
+                    gb.Region(polygonTree.Polygon.Points, true);
                     gb.EndRegion();
 
                     // Dibuixa el perfil de la regio
@@ -591,7 +593,7 @@
                     Aperture ap = apertureDict.GetCircleAperture(thickness);
                     gb.SelectAperture(ap);
                     gb.LoadPolarity(Polarity.Dark);
-                    gb.Polygon(polygonTree.Polygon);
+                    gb.Polygon(polygonTree.Polygon.Points);
                 }
 
                 // Processa els fills. Amb level < 2 evitem els poligons orfres

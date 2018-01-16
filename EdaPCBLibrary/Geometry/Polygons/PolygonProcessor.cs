@@ -157,8 +157,8 @@
         private static List<IntPoint> PolygonToPointList(Polygon polygon) {
 
             List<IntPoint> intPoints = new List<IntPoint>();
-            if (polygon.Count > 0)
-                foreach (Point point in polygon)
+            if (polygon.PointCount > 0)
+                foreach (Point point in polygon.Points)
                     intPoints.Add(new IntPoint(point.X * scaleFactor, point.Y * scaleFactor));
             return intPoints;
         }
@@ -173,7 +173,7 @@
 
             Polygon polygon = new Polygon();
             foreach (IntPoint intPoint in points)
-                polygon.Add(new Point((double)intPoint.X / scaleFactor, (double)intPoint.Y / scaleFactor));
+                polygon.AddPoint(new Point((double)intPoint.X / scaleFactor, (double)intPoint.Y / scaleFactor));
             return polygon;
         }
 

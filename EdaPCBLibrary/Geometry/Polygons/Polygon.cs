@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry.Polygons {
 
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Media;
@@ -9,7 +8,7 @@
     /// <summary>
     /// Clase que representa un poligon amb fills.
     /// </summary>
-    public sealed class Polygon: IEnumerable<Point> {
+    public sealed class Polygon {
 
         private List<Point> points;
         private List<Polygon> childs;
@@ -39,7 +38,7 @@
         /// </summary>
         /// <param name="point">El punt a afeigir.</param>
         /// 
-        public void Add(Point point) {
+        public void AddPoint(Point point) {
 
             if (point == null)
                 throw new ArgumentNullException("point");
@@ -52,7 +51,7 @@
         /// </summary>
         /// <param name="points">Els punta a afeigir.</param>
         /// 
-        public void Add(IEnumerable<Point> points) {
+        public void AddPoints(IEnumerable<Point> points) {
 
             if (points == null)
                 throw new ArgumentNullException("points");
@@ -95,8 +94,13 @@
         /// 
         public void Transform(Matrix m) {
 
-            for (int i = 0; i < points.Count; i++)
-                points[i] = m.Transform(points[i]);
+            if (points != null)
+                for (int i = 0; i < points.Count; i++)
+                    points[i] = m.Transform(points[i]);
+
+            if (childs != null)
+                foreach (Polygon child in childs)
+                    child.Transform(m);
         }
 
         /// <summary>
@@ -143,14 +147,13 @@
         /// </summary>
         /// <param name="childs">Els fills a afeigir.</param>
         /// 
-        private void InternalAddChild(IEnumerable<Polygon> childs) {
+        private void InternalAddChilds(IEnumerable<Polygon> childs) {
 
             if (this.childs == null)
                 this.childs = new List<Polygon>(childs);
             else
                 this.childs.AddRange(childs);
         }
-
 
         /// <summary>
         /// Obte el bounding-box del poligon.
@@ -180,13 +183,31 @@
             }
         }
 
+        public bool IsValid {
+            get {
+                return PointCount == 0 || PointCount >= 3;
+            }
+        }
+
+        public bool HasPoints {
+            get {
+                return points != null;
+            }
+        }
+
         /// <summary>
         /// Obte el numero de puns en el poligon
         /// </summary>
         /// 
-        public int Count {
+        public int PointCount {
             get {
                 return points == null ? 0 :  points.Count;
+            }
+        }
+
+        public IEnumerable<Point> Points {
+            get {
+                return points;
             }
         }
 
@@ -200,6 +221,12 @@
             }
         }
 
+        public int ChildCount {
+            get {
+                return (childs == null) ? 0 : childs.Count;
+            }
+        }
+
         /// <summary>
         /// Enumera la llista de fills.
         /// </summary>
@@ -208,26 +235,6 @@
             get {
                 return childs;
             }
-        }
-
-        /// <summary>
-        /// Retorna el enumerador del poligon. 
-        /// </summary>
-        /// <returns>El enumerador.</returns>
-        /// 
-        IEnumerator IEnumerable.GetEnumerator() {
-
-            return points.GetEnumerator();
-        }
-
-        /// <summary>
-        /// Retorna el enumerador del poligon. 
-        /// </summary>
-        /// <returns>El enumerador.</returns>
-        /// 
-        public IEnumerator<Point> GetEnumerator() {
-
-            return points.GetEnumerator();
         }
     }
 }

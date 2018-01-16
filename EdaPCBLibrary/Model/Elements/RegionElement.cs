@@ -96,7 +96,10 @@
         /// 
         public override Polygon GetPolygon(double inflate = 0) {
 
-            return PolygonBuilder.Build(this);
+            Polygon polygon = new Polygon();
+            foreach (Segment segment in segments)
+                polygon.AddPoint(segment.Position);
+            return polygon;
         }
 
         /// <summary>

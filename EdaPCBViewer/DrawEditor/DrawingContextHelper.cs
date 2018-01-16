@@ -170,7 +170,7 @@
         private static void StreamPolygon(StreamGeometryContext ctx, Polygon polygon, bool isStroked) {
 
             bool first = true;
-            foreach (Point point in polygon) {
+            foreach (Point point in polygon.Points) {
                 if (first) {
                     first = false;
                     ctx.BeginFigure(point, true, true);

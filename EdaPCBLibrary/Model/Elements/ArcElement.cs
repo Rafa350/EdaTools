@@ -52,7 +52,7 @@
         /// 
         public override Polygon GetPolygon(double inflate = 0) {
 
-            return PolygonBuilder.BuildArc(Center, Radius, StartAngle, EndAngle, Thickness + (inflate * 2));
+            return PolygonBuilder.BuildArcSegment(Center, Radius, StartAngle, EndAngle, Thickness + (inflate * 2));
         }
 
         /// <summary>

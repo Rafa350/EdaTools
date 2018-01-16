@@ -62,7 +62,7 @@
         /// 
         public override Polygon GetPolygon(double inflate = 0) {
 
-            return PolygonBuilder.BuildLine(startPosition, endPosition, thickness + (inflate * 2));
+            return PolygonBuilder.BuildLineSegment(startPosition, endPosition, thickness + (inflate * 2));
         }
 
         /// <summary>
