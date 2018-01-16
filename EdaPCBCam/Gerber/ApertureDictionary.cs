@@ -65,8 +65,7 @@
         /// 
         private static int GetCircleKey(double diameter) {
 
-            string s = String.Format(CultureInfo.InvariantCulture, 
-                "circle;{0}", diameter);
+            string s = String.Format(CultureInfo.InvariantCulture, "circle;{0}", diameter);
             return s.GetHashCode();
         }
 
@@ -80,8 +79,7 @@
         /// 
         private static int GetRectangleKey(double width, double height, double rotate) {
 
-            string s = String.Format(CultureInfo.InvariantCulture, 
-                "rectangle;{0};{1};{2}", width, height, rotate);
+            string s = String.Format(CultureInfo.InvariantCulture, "rectangle;{0};{1};{2}", width, height, rotate);
             return s.GetHashCode();
         }
 
@@ -96,8 +94,7 @@
         /// 
         private static int GetRoundRectangleKey(double width, double height, double radius, double rotate) {
 
-            string s = String.Format(CultureInfo.InvariantCulture, 
-                "round;{0};{1};{2};{3}", width, height, radius, rotate);
+            string s = String.Format(CultureInfo.InvariantCulture, "round;{0};{1};{2};{3}", width, height, radius, rotate);
             return s.GetHashCode();
         }
 
@@ -110,8 +107,7 @@
         /// 
         private static int GetOctagonKey(double size, double rotate) {
 
-            string s = String.Format(CultureInfo.InvariantCulture, 
-                "octagon;{0};{1}", size, rotate);
+            string s = String.Format(CultureInfo.InvariantCulture, "octagon;{0};{1}", size, rotate);
             return s.GetHashCode();
         }
 
@@ -125,8 +121,7 @@
         /// 
         private static int GetOvalKey(double width, double height, double rotate) {
 
-            string s = String.Format(CultureInfo.InvariantCulture, 
-                "oval;{0};{1};{2}", width, height, rotate);
+            string s = String.Format(CultureInfo.InvariantCulture, "oval;{0};{1};{2}", width, height, rotate);
             return s.GetHashCode();
         }
 

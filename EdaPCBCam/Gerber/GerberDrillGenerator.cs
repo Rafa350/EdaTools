@@ -7,7 +7,6 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Text;
     using System.Windows.Media;
 
     public sealed class GerberDrillGenerator: GerberGenerator {
@@ -17,42 +16,35 @@
             NonPlatedDrill
         }
 
-        public void Generate(Board board, IEnumerable<Layer> layers, DrillType drillType, string fileName) {
+        public GerberDrillGenerator(Board board) :
+            base(board) {
+        }
 
-            if (board == null)
-                throw new ArgumentNullException("board");
+        public void Generate(TextWriter writer, IEnumerable<Layer> layers, DrillType drillType) {
 
-            if (String.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException("fileName");
+            if (writer == null)
+                throw new ArgumentNullException("writer");
 
-            // Escriu el fitxer de sortida
-            //
-            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
-                using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
+            GerberBuilder gb = new GerberBuilder(writer);
 
-                    GerberBuilder gb = new GerberBuilder(writer);
+            ApertureDictionary apertures = CreateApertures(layers);
 
-                    ApertureDictionary apertures = CreateApertures(board, layers);
-
-                    GenerateFileHeader(gb, drillType);
-                    GenerateApertures(gb, apertures);
-                    GenerateImage(gb, board, layers, apertures);
-                    GenerateFileTail(gb);
-                }
-            }
+            GenerateFileHeader(gb, drillType);
+            GenerateApertures(gb, apertures);
+            GenerateImage(gb, layers, apertures);
+            GenerateFileTail(gb);
         }
 
         /// <summary>
         /// Crea el diccionari d'aperturess.
         /// </summary>
-        /// <param name="board">La placa a procesar.</param>
         /// <param name="layers">Les capes a tenir en compte.</param>
         /// <returns>El diccionari d'aperturees.</returns>
         /// 
-        private ApertureDictionary CreateApertures(Board board, IEnumerable<Layer> layers) {
+        private ApertureDictionary CreateApertures(IEnumerable<Layer> layers) {
 
-            AperturesCreatorVisitor visitor = new AperturesCreatorVisitor(board, layers);
-            visitor.Visit(board);
+            AperturesCreatorVisitor visitor = new AperturesCreatorVisitor(Board, layers);
+            visitor.Visit(Board);
             return visitor.AperturesDict;
         }
 
@@ -109,15 +101,14 @@
         /// Genera la imatge.
         /// </summary>
         /// <param name="gb">El generador de gerbers.</param>
-        /// <param name="board">La placa a procesar.</param>
         /// <param name="layers">Les capes a tenir en compte.</param>
         /// <param name="apertures">El diccionari d'apoertures.</param>
         /// 
-        private void GenerateImage(GerberBuilder gb, Board board, IEnumerable<Layer> layers, ApertureDictionary apertures) {
+        private void GenerateImage(GerberBuilder gb, IEnumerable<Layer> layers, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
-            IVisitor visitor = new ImageGeneratorVisitor(gb, board, layers, apertures);
-            visitor.Visit(board);
+            IVisitor visitor = new ImageGeneratorVisitor(gb, Board, layers, apertures);
+            visitor.Visit(Board);
             gb.Comment("END IMAGE");
         }
 

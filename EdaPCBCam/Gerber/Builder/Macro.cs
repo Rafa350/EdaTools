@@ -53,7 +53,9 @@
         /// </summary>
         /// 
         public string Command {
-            get { return GetCommand(); }
+            get {
+                return GetCommand();
+            }
         }
     }
 }

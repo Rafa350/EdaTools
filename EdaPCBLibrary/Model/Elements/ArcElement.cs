@@ -52,7 +52,7 @@
         /// 
         public override Polygon GetPolygon(double inflate = 0) {
 
-            return PolygonBuilder.BuildLine(StartPosition, EndPosition, Thickness + (inflate * 2));
+            return PolygonBuilder.BuildArc(Center, Radius, StartAngle, EndAngle, Thickness + (inflate * 2));
         }
 
         /// <summary>
@@ -90,7 +90,6 @@
 
                 // Calcula la distancia entre els dos punts.
                 //
-                //double d = Length;
                 double d = Math.Sqrt(Math.Pow(x2 - x1, 2.0) + Math.Pow(y2 - y1, 2.0));
 
                 // Calcula el radi

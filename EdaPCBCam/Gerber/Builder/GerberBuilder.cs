@@ -109,9 +109,15 @@
             writer.WriteLine(String.Format("%TF{0}*%", attr));
         }
 
-        public void FlashAt(Point point) {
+        /// <summary>
+        /// Flash d'una apertura en la posicio indicada. La posicio,
+        /// passa a ser la posicio actual.
+        /// </summary>
+        /// <param name="position">La posicio.</param>
+        /// 
+        public void FlashAt(Point position) {
 
-            FlashAt(point.X, point.Y);
+            FlashAt(position.X, position.Y);
         }
 
         /// <summary>
@@ -137,9 +143,14 @@
             writer.WriteLine(sb.ToString());
         }
 
-        public void MoveTo(Point point) {
+        /// <summary>
+        /// Mou la posicio actual a les coordinades especificades.
+        /// </summary>
+        /// <param name="position">La posicio.</param>
+        /// 
+        public void MoveTo(Point position) {
 
-            MoveTo(point.X, point.Y);
+            MoveTo(position.X, position.Y);
         }
 
         /// <summary>
@@ -169,9 +180,14 @@
             }
         }
 
-        public void LineTo(Point point) {
+        /// <summary>
+        /// Interpola una linia desde la posicio actual fins la especificada.
+        /// </summary>
+        /// <param name="position">La posicio.</param>
+        /// 
+        public void LineTo(Point position) {
 
-            LineTo(point.X, point.Y);
+            LineTo(position.X, position.Y);
         }
 
         /// <summary>
@@ -404,12 +420,22 @@
                 LineTo(firstPoint);
         }
 
+        /// <summary>
+        /// Selecciona la polaritat de les apertures.
+        /// </summary>
+        /// <param name="polarity">Datk o Clear.</param>
+        /// 
         public void LoadPolarity(Polarity polarity) {
 
             if (state.SetAperturePolarity(polarity)) 
                 writer.WriteLine(String.Format("%LP{0}*%", polarity == Polarity.Dark ? "D" : "C"));
         }
 
+        /// <summary>
+        /// Selecciona l'angle de rotacio de les apertures.
+        /// </summary>
+        /// <param name="angle">Angle de rotacio.</param>
+        /// 
         public void LoadRotation(double angle) {
 
             if (state.SetApertureAngle(angle))
@@ -418,10 +444,12 @@
 
         public void LoadMirroring() {
 
+            throw new NotImplementedException();
         }
 
         public void LoadScaling() {
 
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -498,7 +526,7 @@
         }
 
         /// <summary>
-        /// Formateja un numero.
+        /// Formateja un numero al format de coordinades.
         /// </summary>
         /// <param name="number">El numero a formatejar.</param>
         /// <returns>El numero formatejat.</returns>

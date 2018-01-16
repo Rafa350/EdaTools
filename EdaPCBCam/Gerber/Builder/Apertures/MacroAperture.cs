@@ -4,11 +4,18 @@
     using System.Globalization;
     using System.Text;
 
-    public sealed class MacroAperture: Aperture {
+    public sealed class MacroAperture : Aperture {
 
         private readonly object[] args;
         private readonly Macro macro;
 
+        /// <summary>
+        /// Constructor de l'objecte.
+        /// </summary>
+        /// <param name="id">Identificador de l'apertura.</param>
+        /// <param name="macro">Macro asignat a l'aperture.</param>
+        /// <param name="args">Erguments del macro.</param>
+        /// 
         public MacroAperture(int id, Macro macro, params object[] args) :
             base(id) {
 
@@ -41,7 +48,16 @@
             return sb.ToString();
         }
 
-        public Macro Macro { get { return macro; } }
-        public object[] Args { get { return args; } }
+        public Macro Macro {
+            get {
+                return macro;
+            }
+        }
+
+        public object[] Args {
+            get {
+                return args;
+            }
+        }
     }
 }

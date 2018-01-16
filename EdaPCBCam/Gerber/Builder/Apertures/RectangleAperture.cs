@@ -41,8 +41,22 @@
             return sb.ToString();
         }
 
-        public double Width { get { return width; } }
-        public double Height { get { return height; } }
-        public double Drill { get { return drill; } }
+        public double Width {
+            get {
+                return width;
+            }
+        }
+
+        public double Height {
+            get {
+                return height;
+            }
+        }
+
+        public double Drill {
+            get {
+                return drill;
+            }
+        }
     }
 }

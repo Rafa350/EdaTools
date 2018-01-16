@@ -35,6 +35,11 @@
             return new Polygon(points);
         }
 
+        public static Polygon BuildArc(Point center, double radius, double startAngle, double endAngle, double thickness) {
+
+            return new Polygon(PointsFromArc(center, radius, startAngle, endAngle, thickness));
+        }
+
         /// <summary>
         /// Crea un poligon en forma de cercle.
         /// </summary>
@@ -117,6 +122,22 @@
             q1Points.CopyTo(points, 9);
             q2Points.CopyTo(points, 18);
             q3Points.CopyTo(points, 27);
+
+            return points;
+        }
+
+        private static Point[] PointsFromArc(Point center, double radius, double startAngle, double endAngle, double thickness) {
+
+            int intervals = 10;
+            double deltaAngle = (endAngle - startAngle) / (intervals - 1);
+
+            double x = center.X * radius * Math.Cos(startAngle * Math.PI / 180.0);
+            double y = center.Y * radius * Math.Sin(startAngle * Math.PI / 180.0);
+
+            Point[] points = new Point[intervals];
+            for (int i = 0; i < intervals; i++) {
+                points[i] = new Point(x, y);
+            }
 
             return points;
         }

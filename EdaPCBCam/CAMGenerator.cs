@@ -3,6 +3,8 @@
     using MikroPic.EdaTools.v1.Cam.Gerber;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using System;
+    using System.Text;
+    using System.IO;
     using System.Collections.Generic;
 
     public sealed class CAMGenerator {
@@ -16,58 +18,116 @@
 
             List<Layer> layers = new List<Layer>();
 
-            GerberImageGenerator imageGenerator = new GerberImageGenerator();
+            GerberImageGenerator imageGenerator = new GerberImageGenerator(board);
 
             layers.Clear();
             layers.Add(board.GetLayer(LayerId.Top));
             layers.Add(board.GetLayer(LayerId.Profile));
             fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.Top);
-            imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.Top, fileName);
+            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
+                using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
+                    imageGenerator.Generate(writer, layers, GerberImageGenerator.ImageType.Top);
+                }
+            }
 
             layers.Clear();
             layers.Add(board.GetLayer(LayerId.Bottom));
             layers.Add(board.GetLayer(LayerId.Profile));
             fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.Bottom);
-            imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.Bottom, fileName);
+            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
+                using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
+                    imageGenerator.Generate(writer, layers, GerberImageGenerator.ImageType.Bottom);
+                }
+            }
 
             layers.Clear();
             layers.Add(board.GetLayer(LayerId.TopStop));
             layers.Add(board.GetLayer(LayerId.Profile));
             fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.TopSolderMask);
-            imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.TopSolderMask, fileName);
+            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
+                using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
+                    imageGenerator.Generate(writer, layers, GerberImageGenerator.ImageType.TopSolderMask);
+                }
+            }
 
             layers.Clear();
             layers.Add(board.GetLayer(LayerId.BottomStop));
             layers.Add(board.GetLayer(LayerId.Profile));
             fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.BottomSolderMask);
-            imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.BottomSolderMask, fileName);
-
-            layers.Clear();
-            layers.Add(board.GetLayer(LayerId.Profile));
-            fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.Profile);
-            imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.Profile, fileName);
+            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
+                using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
+                    imageGenerator.Generate(writer, layers, GerberImageGenerator.ImageType.BottomSolderMask);
+                }
+            }
 
             layers.Clear();
             layers.Add(board.GetLayer(LayerId.TopPlace));
             layers.Add(board.GetLayer(LayerId.Profile));
             fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.TopLegend);
-            imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.TopLegend, fileName);
+            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
+                using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
+                    imageGenerator.Generate(writer, layers, GerberImageGenerator.ImageType.TopLegend);
+                }
+            }
 
             layers.Clear();
             layers.Add(board.GetLayer(LayerId.BottomPlace));
             layers.Add(board.GetLayer(LayerId.Profile));
             fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.BottomLegend);
-            imageGenerator.Generate(board, layers, GerberImageGenerator.ImageType.BottomLegend, fileName);
+            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
+                using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
+                    imageGenerator.Generate(writer, layers, GerberImageGenerator.ImageType.BottomLegend);
+                }
+            }
 
-            GerberDrillGenerator drillGenerator = new GerberDrillGenerator();
+            layers.Clear();
+            layers.Add(board.GetLayer(LayerId.Profile));
+            fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.Profile);
+            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
+                using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
+                    imageGenerator.Generate(writer, layers, GerberImageGenerator.ImageType.Profile);
+                }
+            }
+
+            layers.Clear();
+            layers.Add(board.GetLayer(LayerId.TopPlace));
+            layers.Add(board.GetLayer(LayerId.Profile));
+            fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.TopLegend);
+            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
+                using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
+                    imageGenerator.Generate(writer, layers, GerberImageGenerator.ImageType.TopLegend);
+                }
+            }
+
+            layers.Clear();
+            layers.Add(board.GetLayer(LayerId.BottomPlace));
+            layers.Add(board.GetLayer(LayerId.Profile));
+            fileName = MakeFileName(board, folder, name, GerberImageGenerator.ImageType.BottomLegend);
+            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
+                using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
+                    imageGenerator.Generate(writer, layers, GerberImageGenerator.ImageType.BottomLegend);
+                }
+            }
+
+            GerberDrillGenerator drillGenerator = new GerberDrillGenerator(board);
 
             layers.Clear();
             layers.Add(board.GetLayer(LayerId.Drills));
-            drillGenerator.Generate(board, layers, GerberDrillGenerator.DrillType.PlatedDrill, @"..\..\..\Data\board_Plated$1$2$PTH$Drill.gbr");
+            fileName = @"..\..\..\Data\board_Plated$1$2$PTH$Drill.gbr";
+            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
+                using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
+                    drillGenerator.Generate(writer, layers, GerberDrillGenerator.DrillType.PlatedDrill);
+                }
+            }
 
             layers.Clear();
             layers.Add(board.GetLayer(LayerId.Holes));
-            drillGenerator.Generate(board, layers, GerberDrillGenerator.DrillType.NonPlatedDrill, @"..\..\..\Data\board_NonPlated$1$2$NPTH$Drill.gbr");            
+            fileName = @"..\..\..\Data\board_NonPlated$1$2$NPTH$Drill.gbr";
+            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
+                using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
+                    drillGenerator.Generate(writer, layers, GerberDrillGenerator.DrillType.NonPlatedDrill);
+                }
+            }
         }
 
         private string MakeFileName(Board board, string folder, string name, GerberImageGenerator.ImageType imageType) {

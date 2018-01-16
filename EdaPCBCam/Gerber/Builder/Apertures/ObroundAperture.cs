@@ -4,13 +4,13 @@
     using System.Globalization;
     using System.Text;
 
-    public sealed class ObroundAperture: Aperture {
+    public sealed class ObroundAperture : Aperture {
 
         private readonly double width;
         private readonly double height;
         private readonly double drill;
 
-        public ObroundAperture(int id, double width, double height, double drill = 0) : 
+        public ObroundAperture(int id, double width, double height, double drill = 0) :
             base(id) {
 
             if (width <= 0)
@@ -42,8 +42,22 @@
             return sb.ToString();
         }
 
-        public double Width { get { return width; } }
-        public double Height { get { return height; } }
-        public double Angle { get { return Angle; } }
+        public double Width {
+            get {
+                return width;
+            }
+        }
+
+        public double Height {
+            get {
+                return height;
+            }
+        }
+
+        public double Angle {
+            get {
+                return Angle;
+            }
+        }
     }
 }

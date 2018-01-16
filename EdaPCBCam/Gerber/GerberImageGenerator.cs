@@ -8,7 +8,6 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Text;
     using System.Windows;
     using System.Windows.Media;
 
@@ -26,47 +25,43 @@
             BottomLegend
         }
 
-        public GerberImageGenerator() {
+        /// <summary>
+        /// Constructor del objecte.
+        /// </summary>
+        /// <param name="board">La placa a procesar.</param>
+        /// 
+        public GerberImageGenerator(Board board):
+            base(board) {
         }
 
         /// <summary>
-        /// Genera un fitxer gerber.
+        /// Genera un document gerber.
         /// </summary>
-        /// <param name="board">La placa.</param>
+        /// <param name="writer">Writer de sortida.</param>
         /// <param name="layers">Llista de capes a procesar.</param>
         /// <param name="fileName">Nom del fitxer de sortida.</param>
         /// 
-        public void Generate(Board board, IEnumerable<Layer> layers, ImageType imageType, string fileName) {
+        public void Generate(TextWriter writer, IEnumerable<Layer> layers, ImageType imageType) {
 
-            if (board == null)
-                throw new ArgumentNullException("board");
+            if (writer == null)
+                throw new ArgumentNullException("writer");
 
-            if (String.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException("fileName");
+            GerberBuilder gb = new GerberBuilder(writer);
 
-            // Escriu el fitxer de sortida
-            //
-            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
-                using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
+            ApertureDictionary apertures = CreateApertures(layers);
 
-                    GerberBuilder gb = new GerberBuilder(writer);
-
-                    ApertureDictionary apertures = CreateApertures(board, layers);
-
-                    GenerateFileHeader(gb, imageType);
-                    GenerateMacros(gb, apertures);
-                    GenerateApertures(gb, apertures);
-                    GenerateRergions(gb, board, layers, apertures);
-                    GenerateImage(gb, board, layers, apertures);
-                    GenerateFileTail(gb);
-                }
-            }
+            GenerateFileHeader(gb, imageType);
+            GenerateMacros(gb, apertures);
+            GenerateApertures(gb, apertures);
+            GenerateRergions(gb, layers, apertures);
+            GenerateImage(gb, layers, apertures);
+            GenerateFileTail(gb);
         }
 
-        private ApertureDictionary CreateApertures(Board board, IEnumerable<Layer> layers) {
+        private ApertureDictionary CreateApertures(IEnumerable<Layer> layers) {
 
-            ApertureCreatorVisitor visitor = new ApertureCreatorVisitor(board, layers);
-            visitor.Visit(board);
+            ApertureCreatorVisitor visitor = new ApertureCreatorVisitor(Board, layers);
+            visitor.Visit(Board);
             return visitor.Apertures;
         }
 
@@ -106,6 +101,16 @@
                     gb.Attribute(".FilePolarity,Negative");
                     break;
 
+                case ImageType.TopLegend:
+                    gb.Attribute(".FileFunction,Legend,Top");
+                    gb.Attribute(".FilePolarity,Positive");
+                    break;
+
+                case ImageType.BottomLegend:
+                    gb.Attribute(".FileFunction,Legend,Bot");
+                    gb.Attribute(".FilePolarity,Positive");
+                    break;
+
                 case ImageType.Profile:
                     gb.Attribute(".FileFunction,Profile,NP");
                     gb.Attribute(".FilePolarity,Positive");
@@ -138,19 +143,19 @@
             gb.Comment("END MACROS");
         }
 
-        private void GenerateRergions(GerberBuilder gb, Board board, IEnumerable<Layer> layers, ApertureDictionary apertures) {
+        private void GenerateRergions(GerberBuilder gb, IEnumerable<Layer> layers, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN POLYGONS");
-            IVisitor visitor = new RegionGeneratorVisitor(gb, board, layers, apertures);
-            visitor.Visit(board);
+            IVisitor visitor = new RegionGeneratorVisitor(gb, Board, layers, apertures);
+            visitor.Visit(Board);
             gb.Comment("END POLYGONS");
         }
 
-        private void GenerateImage(GerberBuilder gb, Board board, IEnumerable<Layer> layers, ApertureDictionary apertures) {
+        private void GenerateImage(GerberBuilder gb, IEnumerable<Layer> layers, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
-            IVisitor visitor = new ImageGeneratorVisitor(gb, board, layers, apertures);
-            visitor.Visit(board);
+            IVisitor visitor = new ImageGeneratorVisitor(gb, Board, layers, apertures);
+            visitor.Visit(Board);
             gb.Comment("END IMAGE");
         }
 
@@ -293,8 +298,8 @@
             private readonly Board board;
             private readonly IEnumerable<Layer> layers;
             private readonly ApertureDictionary apertureDict;
-            private Matrix partMatrix = Matrix.Identity;
-            private double partRotation = 0;
+            private Matrix localTransformation = Matrix.Identity;
+            private double localRotation = 0;
 
             public ImageGeneratorVisitor(GerberBuilder gb, Board board, IEnumerable<Layer> layers, ApertureDictionary apertureDict) {
 
@@ -312,11 +317,13 @@
             public override void Visit(LineElement line) {
 
                 if (board.IsOnAnyLayer(line, layers)) {
+
                     Aperture ap = apertureDict.GetCircleAperture(Math.Max(line.Thickness, 0.01));
                     gb.SelectAperture(ap);
-                    Point p1 = partMatrix.Transform(line.StartPosition);
+
+                    Point p1 = localTransformation.Transform(line.StartPosition);
                     gb.MoveTo(p1);
-                    Point p2 = partMatrix.Transform(line.EndPosition);
+                    Point p2 = localTransformation.Transform(line.EndPosition);
                     gb.LineTo(p2);
                 }
             }
@@ -329,12 +336,14 @@
             public override void Visit(ArcElement arc) {
 
                 if (board.IsOnAnyLayer(arc, layers)) {
+
                     Aperture ap = apertureDict.GetCircleAperture(Math.Max(arc.Thickness, 0.01));
                     gb.SelectAperture(ap);
-                    Point p1 = partMatrix.Transform(arc.StartPosition);
+
+                    Point p1 = localTransformation.Transform(arc.StartPosition);
                     gb.MoveTo(p1);
-                    Point p2 = partMatrix.Transform(arc.EndPosition);
-                    Point c = partMatrix.Transform(arc.Center);
+                    Point p2 = localTransformation.Transform(arc.EndPosition);
+                    Point c = localTransformation.Transform(arc.Center);
                     gb.ArcTo(
                         p2.X, p2.Y,
                         c.X - p1.X, c.Y - p1.Y,
@@ -350,13 +359,13 @@
             public override void Visit(RectangleElement rectangle) {
 
                 if (board.IsOnAnyLayer(rectangle, layers)) {
+
                     if (rectangle.Thickness == 0) {
-                        double rotate = rectangle.Rotation;
-                        if (VisitingPart != null)
-                            rotate += VisitingPart.Rotation;
+                        double rotate = + localRotation + rectangle.Rotation;
                         Aperture ap = apertureDict.GetRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotate);
                         gb.SelectAperture(ap);
-                        Point p = partMatrix.Transform(rectangle.Position);
+
+                        Point p = localTransformation.Transform(rectangle.Position);
                         gb.FlashAt(p);
                     }
                 }
@@ -365,10 +374,13 @@
             public override void Visit(CircleElement circle) {
 
                 if (board.IsOnAnyLayer(circle, layers)) {
+
                     if (circle.Thickness == 0) {
+
                         Aperture ap = apertureDict.GetCircleAperture(circle.Diameter);
                         gb.SelectAperture(ap);
-                        Point p = partMatrix.Transform(circle.Position);
+
+                        Point p = localTransformation.Transform(circle.Position);
                         gb.FlashAt(p);
                     }
                 }
@@ -393,6 +405,7 @@
                             break;
                     }
                     gb.SelectAperture(ap);
+
                     gb.FlashAt(via.Position);
                 }
             }
@@ -405,9 +418,7 @@
             public override void Visit(ThPadElement pad) {
 
                 if (board.IsOnAnyLayer(pad, layers)) {
-                    double rotate = pad.Rotation;
-                    if (VisitingPart != null)
-                        rotate += VisitingPart.Rotation;
+                    double rotate = localRotation + pad.Rotation;
                     Aperture ap = null;
                     switch (pad.Shape) {
                         case ThPadElement.ThPadShape.Circular:
@@ -427,7 +438,8 @@
                             break;
                     }
                     gb.SelectAperture(ap);
-                    Point p = partMatrix.Transform(pad.Position);
+
+                    Point p = localTransformation.Transform(pad.Position);
                     gb.FlashAt(p);
                 }
             }
@@ -440,13 +452,15 @@
             public override void Visit(SmdPadElement pad) {
 
                 if (board.IsOnAnyLayer(pad, layers)) {
-                    double rotation = pad.Rotation + partRotation;
+
+                    double rotation = localRotation + pad.Rotation;
                     double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
                     Aperture ap = radius == 0 ?
                         apertureDict.GetRectangleAperture(pad.Size.Width, pad.Size.Height, rotation) :
                         apertureDict.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
                     gb.SelectAperture(ap);
-                    Point p = partMatrix.Transform(pad.Position);
+
+                    Point p = localTransformation.Transform(pad.Position);
                     gb.FlashAt(p);
                 }
             }
@@ -458,13 +472,13 @@
             /// 
             public override void Visit(Part part) {
 
-                partMatrix = part.Transformation;
-                partRotation = part.Rotation;
+                localTransformation = part.Transformation;
+                localRotation = part.Rotation;
 
                 base.Visit(part);
 
-                partMatrix = Matrix.Identity;
-                partRotation = 0;
+                localTransformation = Matrix.Identity;
+                localRotation = 0;
             }
         }
 
@@ -474,6 +488,7 @@
             private readonly Board board;
             private readonly IEnumerable<Layer> layers;
             private readonly ApertureDictionary apertureDict;
+            private Matrix localTransformation = Matrix.Identity;
 
             public RegionGeneratorVisitor(GerberBuilder gb, Board board, IEnumerable<Layer> layers, ApertureDictionary apertureDict) {
 
@@ -492,6 +507,15 @@
                 }
             }
 
+            public override void Visit(Part part) {
+
+                localTransformation = part.Transformation;
+
+                base.Visit(part);
+
+                localTransformation = Matrix.Identity;
+            }
+
             /// <summary>
             /// Crea el poligon de la regio, amb els forats corresponents
             /// </summary>
@@ -502,6 +526,8 @@
             private PolygonNode CreatePolygonTree(Board board, RegionElement region) {
 
                 Polygon regionPolygon = PolygonBuilder.Build(region);
+                regionPolygon.Transform(localTransformation);
+
                 IEnumerable<Layer> regionLayers = board.GetLayers(region);
                 Signal regionSignal = board.GetSignal(region, false);
 
