@@ -16,14 +16,17 @@
             Oval
         }
 
-        private static double autosizefactor = 1.3;
+        private const double drcTopSizeMin = 0.125;
+        private const double drcTopSizeMax = 2.5;
+        private const double drcTopSizePercent = 0.25;
 
         private ThPadShape shape = ThPadShape.Circular;
         private string name;
         private Point position;
         private double rotation;
-        private double size;
-        private bool autoSize = false;
+        private double topSize;
+        private double innerSize;
+        private double bottomSize;
         private double drill;
 
         /// <summary>
@@ -47,10 +50,18 @@
         public ThPadElement(string name, Point position, double rotation, double size, ThPadShape shape, double drill):
             base() {
 
+            if (size < 0)
+                throw new ArgumentOutOfRangeException("size");
+
+            if (drill <= 0)
+                throw new ArgumentOutOfRangeException("drill");
+
             this.name = name;
             this.position = position;
             this.rotation = rotation;
-            this.size = size;
+            this.topSize = size;
+            this.innerSize = size;
+            this.bottomSize = size;
             this.drill = drill;
             this.shape = shape;
         }
@@ -78,7 +89,7 @@
                 case ThPadShape.Square:
                     polygon = PolygonBuilder.BuildRectangle(
                         position, 
-                        new Size(size + (inflate * 2), size + (inflate * 2)), 
+                        new Size(topSize + (inflate * 2), topSize + (inflate * 2)), 
                         inflate,
                         rotation);
                     break;
@@ -87,22 +98,22 @@
                     polygon = PolygonBuilder.BuildRegularPolygon(
                         8, 
                         position, 
-                        (size / 2) + inflate, 
+                        (topSize / 2) + inflate, 
                         rotation);
                     break;
 
                 case ThPadShape.Oval:
                     polygon = PolygonBuilder.BuildRectangle(
                         position, 
-                        new Size((size * 2) + (inflate * 2), size + (inflate * 2)), 
-                        (size / 2) + inflate,
+                        new Size((topSize * 2) + (inflate * 2), topSize + (inflate * 2)), 
+                        (topSize / 2) + inflate,
                         rotation);
                     break;
 
                 default:
                     polygon = PolygonBuilder.BuildCircle(
                         position, 
-                        (size / 2) + inflate);
+                        (topSize / 2) + inflate);
                     break;
             }
 
@@ -210,28 +221,12 @@
         /// 
         public double Size {
             get {
-                return autoSize ? size * autosizefactor : size;
+                double dimension = topSize == 0 ? 2 * (drill * drcTopSizePercent) + drill : topSize;
+                return Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, dimension));
             }
             set {
-                if (size != value) {
-                    size = value;
-                    autoSize = false;
-                    Invalidate();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Asigna o obte el indicador de tamany automatic.
-        /// </summary>
-        /// 
-        public bool AutoSize {
-            get {
-                return autoSize;
-            }
-            set {
-                if (autoSize != value) {
-                    autoSize = value;
+                if (topSize != value) {
+                    topSize = value;
                     Invalidate();
                 }
             }

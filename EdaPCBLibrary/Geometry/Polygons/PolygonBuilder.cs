@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry.Polygons {
 
     using System;
-    using System.Text;
     using System.Windows;
     using System.Windows.Media;
 
@@ -45,6 +44,8 @@
         /// 
         public static Polygon BuildLineSegment(Point start, Point end, double thickness) {
 
+            // Crea el segment en la direccio X+ i Y=0
+            //
             double dx = end.X - start.X;
             double dy = end.Y - start.Y;
             double length = Math.Sqrt((dx * dx) + (dy * dy));
@@ -100,67 +101,81 @@
         /// <param name="radius">Radi de curvatura.</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>El poligon.</returns>
+        /// <remarks> 
+        /// Optimitza les orientacions ortogonals. Nomes fa servir matrius en les rotacions 
+        /// en àngles arbitraris
+        /// </remarks>
         /// 
         public static Polygon BuildRectangle(Point position, Size size, double radius, double rotation) {
 
             Polygon polygon = new Polygon();
 
+            double x = position.X;
+            double y = position.Y;
+            double dx = (size.Width / 2) - radius;
+            double dy = (size.Height / 2) - radius;
+
+            // En aquestes rotacions, nomes cal intercanviar amplada per alçada
+            //
+            if ((rotation == 90) || (rotation == 270)) {
+                double temp = dx;
+                dx = dy;
+                dy = temp;
+            }
+
             if (radius == 0) {
 
-                // Crea un poligon unitari
-                //
-                polygon.AddPoint(new Point(-0.5, 0.5));
-                polygon.AddPoint(new Point(0.5, 0.5));
-                polygon.AddPoint(new Point(0.5, -0.5));
-                polygon.AddPoint(new Point(-0.5, 0.5));
+                polygon.AddPoint(new Point(x - dx, y + dy));
+                polygon.AddPoint(new Point(x + dx, y + dy));
+                polygon.AddPoint(new Point(x + dx, y - dy));
+                polygon.AddPoint(new Point(x - dx, y - dy));
 
-                // El transforma a la posicio, tamany i orientacio final.
+                // Si es una rotacio arbitraria, fa servir calcul amb matrius
                 //
-                Matrix m = new Matrix();
-                m.Scale(size.Width, size.Height);
-                m.Rotate(rotation);
-                m.Translate(position.X, position.Y);
-                polygon.Transform(m);
-
+                if ((rotation % 90) != 0) {
+                    Matrix m = new Matrix();
+                    m.RotateAt(rotation, x, y);
+                    polygon.Transform(m);
+                }
             }
 
             else {
 
-                double dx = (size.Width / 2) - radius;
-                double dy = (size.Height / 2) - radius;
-
                 for (int i = 0; i <= 8; i++) {
                     polygon.AddPoint(
                         new Point(
-                            circlePoints[i].X * radius + dx, 
-                            circlePoints[i].Y * radius + dy));
+                            x + circlePoints[i].X * radius + dx,
+                            y + circlePoints[i].Y * radius + dy));
                 }
 
                 for (int i = 8; i <= 16; i++) {
                     polygon.AddPoint(
                         new Point(
-                            circlePoints[i].X * radius - dx, 
-                            circlePoints[i].Y * radius + dy));
+                            x + circlePoints[i].X * radius - dx,
+                            y + circlePoints[i].Y * radius + dy));
                 }
 
                 for (int i = 16; i <= 24; i++) {
                     polygon.AddPoint(
                         new Point(
-                            circlePoints[i].X * radius - dx, 
-                            circlePoints[i].Y * radius - dy));
+                            x + circlePoints[i].X * radius - dx,
+                            y + circlePoints[i].Y * radius - dy));
                 }
 
                 for (int i = 24; i <= 32; i++) {
                     polygon.AddPoint(
                         new Point(
-                            circlePoints[i].X * radius + dx,
-                            circlePoints[i].Y * radius - dy));
+                            x + circlePoints[i].X * radius + dx,
+                            y + circlePoints[i].Y * radius - dy));
                 }
 
-                Matrix m = new Matrix();
-                m.Rotate(rotation);
-                m.Translate(position.X, position.Y);
-                polygon.Transform(m);
+                // Si es una rotacio arbitraria, fa servir calcul amb matrius
+                //
+                if ((rotation % 90) != 0) {
+                    Matrix m = new Matrix();
+                    m.RotateAt(rotation, x, y);
+                    polygon.Transform(m);
+                }
             }
 
             return polygon;

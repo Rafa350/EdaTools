@@ -162,8 +162,8 @@
         /// 
         public double OuterSize {
             get {
-                double size = outerSize == 0 ? 2 * (drill * drcOuterPercent) + drill : outerSize;
-                return Math.Max(drcOuterMin, Math.Min(drcOuterMax, size));
+                double dimension = outerSize == 0 ? 2 * (drill * drcOuterPercent) + drill : outerSize;
+                return Math.Max(drcOuterMin, Math.Min(drcOuterMax, dimension));
             }
             set {
                 if (outerSize != value) {
@@ -179,8 +179,8 @@
         /// 
         public double InnerSize {
             get {
-                double size = innerSize == 0 ? 2 * (drill * drcInnerPercent) + drill : innerSize;
-                return Math.Max(drcInnerMin, Math.Min(drcInnerMax, size));
+                double dimension = innerSize == 0 ? 2 * (drill * drcInnerPercent) + drill : innerSize;
+                return Math.Max(drcInnerMin, Math.Min(drcInnerMax, dimension));
             }
             set {
                 if (innerSize != value) {
