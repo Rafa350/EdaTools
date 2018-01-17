@@ -19,6 +19,16 @@
             visitor.Visit(this);
         }
 
+        public string Name {
+            get {
+                return "noname";
+            }
+        }
+
+        /// <summary>
+        /// Obte l'element associat
+        /// </summary>
+        /// 
         public IConectable Element {
             get {
                 return element;

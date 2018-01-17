@@ -1,13 +1,13 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Visitors {
 
-    public abstract class BoardVisitor: DefaultVisitor {
+    public abstract class BoardVisitor : DefaultVisitor {
 
-        private Board visitingBoard;
-        private Part visitingPart;
+        private Board currentBoard;
+        private Part currentPart;
 
         public override void Visit(Board board) {
 
-            visitingBoard = board;
+            currentBoard = board;
             try {
 
                 if (board.Elements != null)
@@ -19,31 +19,43 @@
                         part.AcceptVisitor(this);
             }
             finally {
-                visitingBoard = null;
+                currentBoard = null;
             }
         }
 
         public override void Visit(Part part) {
 
-            visitingPart = part;
+            currentPart = part;
             try {
 
-                if (part.Component != null)
-                    part.Component.AcceptVisitor(this);
-            }
+                if (part.Block != null)
+                    part.Block.AcceptVisitor(this);
 
+                if (part.Pads != null)
+                    foreach (Pad pad in part.Pads)
+                        pad.AcceptVisitor(this);
+            }
             finally {
-                visitingPart = null;
+                currentPart = null;
             }
         }
 
-        public override void Visit(Block component) {
+        public override void Visit(Block block) {
 
-            foreach (Element element in component.Elements)
+            foreach (Element element in block.Elements)
                 element.AcceptVisitor(this);
         }
 
-        protected Board VisitingBoard {  get { return visitingBoard; } }
-        protected Part VisitingPart { get { return visitingPart; } }
+        protected Board CurrentBoard {
+            get {
+                return currentBoard;
+            }
+        }
+
+        protected Part CurrentPart {
+            get {
+                return currentPart;
+            }
+        }
     }
 }

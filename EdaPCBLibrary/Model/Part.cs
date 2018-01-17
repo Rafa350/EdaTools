@@ -1,9 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using System;
-    using System.Linq;
-    using System.Windows;
     using System.Collections.Generic;
+    using System.Windows;
     using System.Windows.Media;
 
     public sealed class Part: IPosition, IRotation, IName {
@@ -12,17 +11,21 @@
         private Point position;
         private double rotation;
         private bool isFlipped;
-        private readonly Block component;
+        private readonly Block block;
+        private readonly List<Pad> pads = new List<Pad>();
         private Dictionary<string, Parameter> parameters;
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="component">El component associat.</param>
+        /// <param name="block">El bloc associat.</param>
         /// 
-        public Part(Block component) {
+        public Part(Block block) {
 
-            this.component = component;
+            if (block == null)
+                throw new ArgumentNullException("block");
+
+            this.block = block;
 
             UpdateItemList();
         }
@@ -34,15 +37,21 @@
         /// <param name="position">Posicio.</param>
         /// <param name="rotation">Angle de rotacio</param>
         /// <param name="isFlipped">Indica si va girat.</param>
-        /// <param name="component">El component associat.</param>
+        /// <param name="block">El component associat.</param>
         /// 
-        public Part(string name, Point position, double rotation, bool isFlipped, Block component) {
+        public Part(string name, Point position, double rotation, bool isFlipped, Block block) {
+
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            if (block == null)
+                throw new ArgumentNullException("block");
 
             this.name = name;
             this.position = position;
             this.rotation = rotation;
             this.isFlipped = isFlipped;
-            this.component = component;
+            this.block = block;
 
             UpdateItemList();
         }
@@ -55,6 +64,14 @@
         public void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
+        }
+
+        public IConectable GetPad(string name) {
+
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            return null;
         }
 
         public void AddParameter(Parameter parameter) {
@@ -91,6 +108,13 @@
 
         private void UpdateItemList() {
 
+            foreach (Element element in block.Elements) {
+                IConectable item = element as IConectable;
+                if (item != null) {
+                    Pad pad = new Pad(item);
+                    pads.Add(pad);
+                }
+            }
         }
 
         /// <summary>
@@ -155,12 +179,12 @@
         }
 
         /// <summary>
-        /// Obte o asigna el component.
+        /// Obte el block associat.
         /// </summary>
         /// 
-        public Block Component {
+        public Block Block {
             get {
-                return component;
+                return block;
             }
         }
 
@@ -170,12 +194,8 @@
         /// 
         public IEnumerable<Pad> Pads {
             get {
-                List<Pad> pads = new List<Pad>();
-                foreach (IConectable element in component.Elements.OfType<IConectable>())
-                    pads.Add(new Pad(element));
                 return pads;
             }
-
         }
 
         /// <summary>

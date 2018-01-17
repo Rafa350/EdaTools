@@ -62,7 +62,6 @@
     <Compile Include="Import\Eagle\EagleImporter.cs" />
     <Compile Include="Import\Importer.cs" />
     <Compile Include="Import\ImporterFactory.cs" />
-    <Compile Include="Model\BoardBuilder.cs" />
     <Compile Include="Model\IConectable.cs" />
     <Compile Include="Model\IName.cs" />
     <Compile Include="Model\IPosition.cs" />

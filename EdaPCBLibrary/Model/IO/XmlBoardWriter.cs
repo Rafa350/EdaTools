@@ -173,8 +173,8 @@
 
                 writer.WriteStartElement("part");
                 writer.WriteAttributeString("name", part.Name);
-                if (part.Component != null)
-                    writer.WriteAttributeString("component", part.Component.Name);
+                if (part.Block != null)
+                    writer.WriteAttributeString("component", part.Block.Name);
                 writer.WriteAttribute("position", part.Position);
                 if (part.Rotation != 0)
                     writer.WriteAttribute("rotation", part.Rotation);

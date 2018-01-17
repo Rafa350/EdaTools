@@ -554,7 +554,7 @@
                 // Procesa els elements dels blocs
                 //
                 foreach (Part part in board.Parts) {
-                    foreach (Element element in part.Component.Elements) {
+                    foreach (Element element in part.Block.Elements) {
                         if ((element != region) && 
                             (board.IsOnAnyLayer(element, regionLayers) || board.IsOnLayer(element, restrict))) {
                             IConectable item = element as IConectable;

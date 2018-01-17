@@ -87,10 +87,11 @@
         public static Polygon BuildCircle(Point position, double radius) {
 
             Polygon polygon = new Polygon();
+
             for (int i = 0; i < circleSegments; i++)
                 polygon.AddPoint(new Point(position.X + circlePoints[i].X * radius, position.Y + circlePoints[i].Y * radius));
-            return polygon;
 
+            return polygon;
         }
 
         /// <summary>
