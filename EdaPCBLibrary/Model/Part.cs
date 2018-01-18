@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Media;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
     public sealed class Part: IPosition, IRotation, IName {
 
@@ -66,10 +67,18 @@
             visitor.Visit(this);
         }
 
-        public IConectable GetPad(string name) {
+        public Pad GetPad(string name, bool throwOnError = false) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
+
+            foreach (Pad pad in pads)
+                if (pad.Name == name)
+                    return pad;
+
+            if (throwOnError)
+                throw new InvalidOperationException(
+                    String.Format("El pad '{0}', no se encontro en el componente '{1}'.", name, this.name));
 
             return null;
         }
@@ -109,10 +118,13 @@
         private void UpdateItemList() {
 
             foreach (Element element in block.Elements) {
-                IConectable item = element as IConectable;
-                if (item != null) {
-                    Pad pad = new Pad(item);
-                    pads.Add(pad);
+                if (element is SmdPadElement) {
+                    SmdPadElement item = (SmdPadElement)element;
+                    pads.Add(new Pad(item.Name, item));
+                }
+                else if (element is ThPadElement) {
+                    ThPadElement item = (ThPadElement)element;
+                    pads.Add(new Pad(item.Name, item));
                 }
             }
         }

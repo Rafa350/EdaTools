@@ -56,6 +56,25 @@
         }
 
         /// <summary>
+        /// Calcula el numero de serie del objecte
+        /// </summary>
+        /// <returns>El numero de serie.</returns>
+        /// 
+        protected override int GetSerial() {
+
+            string s = String.Format("{0}${1}${2}${3}${4}${5}${6}${7}", 
+                GetType().FullName, 
+                StartPosition.X, 
+                StartPosition.Y, 
+                EndPosition.X, 
+                EndPosition.Y, 
+                angle, 
+                Thickness,
+                LineCap);
+            return s.GetHashCode();
+        }
+
+        /// <summary>
         /// Obte o asigna l'angle del arc.
         /// </summary>
         /// 
@@ -64,10 +83,7 @@
                 return angle;
             }
             set {
-                if (angle != value) {
-                    angle = value;
-                    Invalidate();
-                }
+                angle = value;
             }
         }
 

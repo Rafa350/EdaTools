@@ -25,8 +25,8 @@
         // Elements
         private readonly List<Element> elements = new List<Element>();
 
-        // Parts
-        readonly private List<Part> parts = new List<Part>();
+        // Components
+        readonly private HashSet<Part> parts = new HashSet<Part>();
 
         /// <summary>
         /// Constructor del objecte amb els parametres per defecte.
@@ -45,18 +45,53 @@
             visitor.Visit(this);
         }
 
+        #region Metodes per la gestio de parts
+
         /// <summary>
-        /// Afegeix una peça.
+        /// Afegeix una component.
         /// </summary>
-        /// <param name="part">La peça a afeigir.</param>
+        /// <param name="part">El component a afeigir.</param>
         /// 
         public void AddPart(Part part) {
 
             if (part == null)
                 throw new ArgumentNullException("part");
 
-            parts.Add(part);
+            if (!parts.Add(part))
+                throw new InvalidOperationException(
+                    String.Format("El componente '{0}' ya esta asignado a esta la placa.", part.Name));
         }
+
+        /// <summary>
+        /// Elimina una peça de la placa.
+        /// </summary>
+        /// <param name="part">La peça a eliminar.</param>
+        /// 
+        public void RemovePart(Part part) {
+
+            if (part == null)
+                throw new ArgumentNullException("part");
+        }
+
+
+        public Part GetPart(string name, bool throwOnError = false) {
+
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            foreach (Part part in parts)
+                if (part.Name == name)
+                    return part;
+
+            if (throwOnError)
+                throw new InvalidOperationException(
+                    String.Format("El componente '{0}', no se encontro en esta placa.", name));
+
+            return null;
+        }
+
+        #endregion
+
 
         /// <summary>
         /// Afeigeix un element.
@@ -71,10 +106,12 @@
             elements.Add(element);
         }
 
+        #region Metodes per la gestio de blocs
+
         /// <summary>
         /// Afeigeix un bloc.
         /// </summary>
-        /// <param name="block">El component a afeigir.</param>
+        /// <param name="block">El bloc a afeigir.</param>
         /// 
         public void AddBlock(Block block) {
 
@@ -85,6 +122,8 @@
                 throw new InvalidOperationException(
                     String.Format("El bloque '{0}', ya esta asignado a esta placa.", block.Name));
         }
+
+        #endregion
 
         #region Metodes per la gestio de capes
 
@@ -401,7 +440,7 @@
         #endregion
 
         /// <summary>
-        /// Obte la llista de components.
+        /// Obte un enumerador pels blocs.
         /// </summary>
         /// 
         public IEnumerable<Block> Blocks {
@@ -411,7 +450,7 @@
         }
 
         /// <summary>
-        /// Obte un enumerador per les peces.
+        /// Obte un enumerador pels components.
         /// </summary>
         /// 
         public IEnumerable<Part> Parts {

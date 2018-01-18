@@ -45,6 +45,22 @@
         }
 
         /// <summary>
+        /// Calcula el numero de serie del element.
+        /// </summary>
+        /// <returns>El numero de serie.</returns>
+        /// 
+        protected override int GetSerial() {
+
+            string s = String.Format("{0}${1}${2}${3}",
+                GetType().FullName,
+                position.X,
+                position.Y,
+                drill);
+            return s.GetHashCode();
+        }
+
+
+        /// <summary>
         /// Crea el poligon del element.
         /// </summary>
         /// <param name="inflate">Increment de tamany.</param>
@@ -74,10 +90,7 @@
                 return position;
             }
             set {
-                if (position != value) {
-                    position = value;
-                    Invalidate();
-                }
+                position = value;
             }
         }
 
@@ -93,10 +106,7 @@
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Drill");
 
-                if (drill != value) {
-                    drill = value;
-                    Invalidate();
-                }
+                drill = value;
             }
         }
     }

@@ -80,6 +80,24 @@
         }
 
         /// <summary>
+        /// Calcula el numero de serie del element.
+        /// </summary>
+        /// <returns>El numero de serie.</returns>
+        /// 
+        protected override int GetSerial() {
+
+            string s = String.Format("{0}${1}${2}${3}${4}${5}${6}",
+                GetType().FullName,
+                position.X,
+                position.Y,
+                outerSize,
+                innerSize,
+                drill,
+                shape);
+            return s.GetHashCode();
+        }
+
+        /// <summary>
         /// Crea el poligon del element.
         /// </summary>
         /// <returns>El poligon.</returns>
@@ -130,10 +148,7 @@
                 return position;
             }
             set {
-                if (position != value) {
-                    position = value;
-                    Invalidate();
-                }
+                position = value;
             }
         }
 
@@ -149,10 +164,7 @@
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Drill");
 
-                if (drill != value) {
-                    drill = value;
-                    Invalidate();
-                }
+                drill = value;
             }
         }
 
@@ -166,10 +178,7 @@
                 return Math.Max(drcOuterMin, Math.Min(drcOuterMax, dimension));
             }
             set {
-                if (outerSize != value) {
-                    outerSize = value;
-                    Invalidate();
-                }
+                outerSize = value;
             }
         }
 
@@ -183,10 +192,7 @@
                 return Math.Max(drcInnerMin, Math.Min(drcInnerMax, dimension));
             }
             set {
-                if (innerSize != value) {
-                    innerSize = value;
-                    Invalidate();
-                }
+                innerSize = value;
             }
         }
 
@@ -199,10 +205,7 @@
                 return shape;
             }
             set {
-                if (shape != value) {
-                    shape = value;
-                    Invalidate();
-                }
+                shape = value;
             }
         }
 

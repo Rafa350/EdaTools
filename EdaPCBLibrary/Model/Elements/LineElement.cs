@@ -55,6 +55,24 @@
         }
 
         /// <summary>
+        /// Calcula el numero de serie del objecte
+        /// </summary>
+        /// <returns>El numero de serie.</returns>
+        /// 
+        protected override int GetSerial() {
+
+            string s = String.Format("{0}${1}${2}${3}${4}${5}${6}",
+                GetType().FullName,
+                startPosition.X,
+                startPosition.Y,
+                endPosition.X,
+                endPosition.Y,
+                thickness,
+                lineCap);
+            return s.GetHashCode();
+        }
+
+        /// <summary>
         /// Crea el poligon del element.
         /// </summary>
         /// <param name="inflate">Increment de tamany.</param>
@@ -84,10 +102,7 @@
                 return startPosition;
             }
             set {
-                if (startPosition != value) {
-                    startPosition = value;
-                    Invalidate();
-                }
+                startPosition = value;
             }
         }
 
@@ -100,10 +115,7 @@
                 return endPosition;
             }
             set {
-                if (endPosition != value) {
-                    endPosition = value;
-                    Invalidate();
-                }
+                endPosition = value;
             }
         }
 
@@ -141,10 +153,7 @@
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Thickness");
 
-                if (thickness != value) {
-                    thickness = value;
-                    Invalidate();
-                }
+                thickness = value;
             }
         }
 
@@ -157,10 +166,7 @@
                 return lineCap;
             }
             set {
-                if (lineCap != value) {
-                    lineCap = value;
-                    Invalidate();
-                }
+                lineCap = value;
             }
         }
     }

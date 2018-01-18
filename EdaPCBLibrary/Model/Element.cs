@@ -8,24 +8,12 @@
     /// </summary>
     public abstract class Element : IVisitable {
 
-        private Polygon polygon = null;
-        private bool locked = false;
-
         /// <summary>
         /// Accepta un visitador.
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
         public abstract void AcceptVisitor(IVisitor visitor);
-
-        /// <summary>
-        /// Bloqueja l'element i impedeix que es pugui editar.
-        /// </summary>
-        /// 
-        public void Lock() {
-
-            locked = true;
-        }
 
         /// <summary>
         /// Crea el poligon del element.
@@ -43,13 +31,11 @@
         protected abstract Rect GetBoundingBox();
 
         /// <summary>
-        /// Invalida el caches interns de l'element.
+        /// Calcula el numero de serie del element
         /// </summary>
+        /// <returns>El numero de serie.</returns>
         /// 
-        protected void Invalidate() {
-
-            polygon = null;
-        }
+        protected abstract int GetSerial();
 
         /// <summary>
         /// Obte el bounding box del element.
@@ -62,24 +48,12 @@
         }
 
         /// <summary>
-        /// Obte una copia del poligon del element.
+        /// Obte el numero de serie.
         /// </summary>
         /// 
-        public Polygon Polygon {
+        public int Serial {
             get {
-                if (polygon == null)
-                    polygon = GetPolygon();
-                return polygon.Clone();
-            }
-        }
-
-        /// <summary>
-        /// Indica si esta bloquejat.
-        /// </summary>
-        /// 
-        public bool IsLocked {
-            get {
-                return locked;
+                return GetSerial();
             }
         }
     }

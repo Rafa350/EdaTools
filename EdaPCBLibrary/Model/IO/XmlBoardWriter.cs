@@ -181,6 +181,13 @@
                 if (part.IsFlipped)
                     writer.WriteAttributeString("flipped", part.IsFlipped.ToString());
 
+                if (part.Pads != null) {
+                    writer.WriteStartElement("pads");
+                    foreach (Pad pad in part.Pads)
+                        pad.AcceptVisitor(this);
+                    writer.WriteEndElement();
+                }
+
                 if (part.Parameters != null) {
                     writer.WriteStartElement("attributes");
                     foreach (Parameter parameter in part.Parameters)
@@ -188,6 +195,16 @@
                     writer.WriteEndElement();
                 }
 
+                writer.WriteEndElement();
+            }
+
+            public override void Visit(Pad pad) {
+
+                writer.WriteStartElement("pad");
+                writer.WriteAttributeString("name", pad.Name);
+                Signal signal = board.GetSignal(pad, false);
+                if (signal != null)
+                    writer.WriteAttributeString("signal", signal.Name);
                 writer.WriteEndElement();
             }
 

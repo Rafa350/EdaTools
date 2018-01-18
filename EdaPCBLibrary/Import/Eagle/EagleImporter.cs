@@ -223,6 +223,16 @@
                 string signalName = GetAttributeString(node, "name");
                 Signal signal = signalDict[signalName];
 
+                foreach (XmlNode childNode in node.SelectNodes("contactref")) {
+                    string partName = GetAttributeString(childNode, "element");
+                    string padName = GetAttributeString(childNode, "pad");
+
+                    Part part = board.GetPart(partName, true);
+                    Pad pad = part.GetPad(padName, true);
+
+                    board.Connect(signal, pad);
+                }
+
                 foreach (XmlNode childNode in node.ChildNodes) {
                     Element element = null;
                     switch (childNode.Name) {
@@ -238,11 +248,8 @@
                             element = ParsePolygonNode(childNode);
                             break;
 
-                        case "contactref": {
-                                string componentName = GetAttributeString(childNode, "element");
-                                string padName = GetAttributeString(childNode, "pad");
-                                break;
-                            }
+                        case "contactref":
+                            break;
 
                         default:
                             throw new InvalidOperationException(

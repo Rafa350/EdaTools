@@ -53,6 +53,23 @@
         }
 
         /// <summary>
+        /// Calcula el numero de serie del element.
+        /// </summary>
+        /// <returns>El numero de serie.</returns>
+        /// 
+        protected override int GetSerial() {
+
+            string s = String.Format("{0}${1}${2}${3}${4}${5}${6}",
+                GetType().FullName,
+                name,
+                position.X,
+                position.Y,
+                size,
+                rotation,
+                roundnes);
+            return s.GetHashCode();
+        }
+        /// <summary>
         /// Crea el poligon del element.
         /// </summary>
         /// <param name="inflate">Increment de tamany.</param>
@@ -96,10 +113,7 @@
                 return position;
             }
             set {
-                if (position != value) {
-                    position = value;
-                    Invalidate();
-                }
+                position = value;
             }
         }
 
@@ -112,10 +126,7 @@
                 return rotation;
             }
             set {
-                if (rotation != value) {
-                    rotation = value;
-                    Invalidate();
-                }
+                rotation = value;
             }
         }
 
@@ -128,10 +139,7 @@
                 return size;
             }
             set {
-                if (size != value) {
-                    size = value;
-                    Invalidate();
-                }
+                size = value;
             }
         }
 
@@ -147,10 +155,7 @@
                 if (value < 0 || roundnes > 1)
                     throw new ArgumentOutOfRangeException("Roundness");
 
-                if (roundnes != value) {
-                    roundnes = value;
-                    Invalidate();
-                }
+                roundnes = value;
             }
         }
 

@@ -89,6 +89,20 @@
         }
 
         /// <summary>
+        /// Calcula el numero de serie del element.
+        /// </summary>
+        /// <returns>El numero de serie.</returns>
+        /// 
+        protected override int GetSerial() {
+
+            string s = String.Format("{0}${1}${2}",
+                GetType().FullName,
+                thickness,
+                isolation);
+            return s.GetHashCode();
+        }
+
+        /// <summary>
         /// Creas el poligon del element.
         /// </summary>
         /// <param name="inflate">Increment de tamany.</param>
@@ -158,10 +172,7 @@
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Tickness");
 
-                if (thickness != value) {
-                    thickness = value;
-                    Invalidate();
-                }
+                thickness = value;
             }
         }
 
@@ -177,10 +188,7 @@
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Isolation");
 
-                if (isolation != value) {
-                    isolation = value;
-                    Invalidate();
-                }
+                isolation = value;
             }
         }
 

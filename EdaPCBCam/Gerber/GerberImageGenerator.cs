@@ -527,7 +527,7 @@
             /// 
             private PolygonNode CreatePolygonTree(Board board, RegionElement region) {
 
-                Polygon regionPolygon = region.Polygon;
+                Polygon regionPolygon = region.GetPolygon();
                 regionPolygon.Transform(localTransformation);
 
                 IEnumerable<Layer> regionLayers = board.GetLayers(region);

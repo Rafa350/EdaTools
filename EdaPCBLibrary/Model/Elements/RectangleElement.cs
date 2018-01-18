@@ -50,6 +50,24 @@
         }
 
         /// <summary>
+        /// Calcula el numero de serie del element.
+        /// </summary>
+        /// <returns>El numero de serie.</returns>
+        /// 
+        protected override int GetSerial() {
+
+            string s = String.Format("{0}${1}${2}${3}${4}${5}${6}",
+                GetType().FullName,
+                position.X,
+                position.Y,
+                size.Width,
+                size.Height,
+                rotation,
+                thickness);
+            return s.GetHashCode();
+        }
+
+        /// <summary>
         /// Crea el poligon del element.
         /// </summary>
         /// <param name="inflate">Increment de tamany.</param>
@@ -60,8 +78,8 @@
             if (inflate == 0)
                 return PolygonBuilder.BuildRectangle(position, size, 0, rotation);
             else
-                return PolygonBuilder.BuildRectangle(position, 
-                    new Size(size.Width + inflate * 2, size.Height+ inflate * 2), 
+                return PolygonBuilder.BuildRectangle(position,
+                    new Size(size.Width + inflate * 2, size.Height + inflate * 2),
                     inflate, rotation);
         }
 
@@ -88,10 +106,7 @@
                 return position;
             }
             set {
-                if (position != value) {
-                    position = value;
-                    Invalidate();
-                }
+                position = value;
             }
         }
 
@@ -104,10 +119,7 @@
                 return size;
             }
             set {
-                if (size != value) {
-                    size = value;
-                    Invalidate();
-                }
+                size = value;
             }
         }
 
@@ -120,10 +132,7 @@
                 return rotation;
             }
             set {
-                if (rotation != value) {
-                    rotation = value;
-                    Invalidate();
-                }
+                rotation = value;
             }
         }
 
@@ -139,10 +148,7 @@
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Thickness");
 
-                if (thickness != value) {
-                    thickness = value;
-                    Invalidate();
-                }
+                thickness = value;
             }
         }
 

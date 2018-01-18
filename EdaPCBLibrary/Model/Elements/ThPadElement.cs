@@ -77,6 +77,27 @@
         }
 
         /// <summary>
+        /// Calcula el numero de serie del element.
+        /// </summary>
+        /// <returns>El numero de serie.</returns>
+        /// 
+        protected override int GetSerial() {
+
+            string s = String.Format("{0}${1}${2}${3}${4}${5}${6}${7}${8}${9}",
+                GetType().FullName,
+                name,
+                position.X,
+                position.Y,
+                rotation,
+                topSize,
+                innerSize,
+                bottomSize,
+                drill,
+                shape);
+            return s.GetHashCode();
+        }
+
+        /// <summary>
         /// Crea el poligon del element.
         /// </summary>
         /// <param name="inflate">Increment de tamany.</param>
@@ -157,10 +178,7 @@
                 return position;
             }
             set {
-                if (position != value) {
-                    position = value;
-                    Invalidate();
-                }
+                position = value;
             }
         }
 
@@ -173,10 +191,7 @@
                 return rotation;
             }
             set {
-                if (rotation != value) {
-                    rotation = value;
-                    Invalidate();
-                }
+                rotation = value;
             }
         }
 
@@ -189,10 +204,7 @@
                 return shape;
             }
             set {
-                if (shape != value) {
-                    shape = value;
-                    Invalidate();
-                }
+                shape = value;
             }
         }
 
@@ -208,10 +220,7 @@
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Drill");
 
-                if (drill != value) {
-                    drill = value;
-                    Invalidate();
-                }
+                drill = value;
             }
         }
 
@@ -225,10 +234,7 @@
                 return Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, dimension));
             }
             set {
-                if (topSize != value) {
-                    topSize = value;
-                    Invalidate();
-                }
+                topSize = value;
             }
         }
     }
