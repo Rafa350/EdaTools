@@ -62,6 +62,7 @@
     <Compile Include="Import\Eagle\EagleImporter.cs" />
     <Compile Include="Import\Importer.cs" />
     <Compile Include="Import\ImporterFactory.cs" />
+    <Compile Include="Model\Elements\PadElement.cs" />
     <Compile Include="Model\IConectable.cs" />
     <Compile Include="Model\IName.cs" />
     <Compile Include="Model\IPosition.cs" />
@@ -69,7 +70,6 @@
     <Compile Include="Model\ISize.cs" />
     <Compile Include="Model\LayerId.cs" />
     <Compile Include="Model\LayerPair.cs" />
-    <Compile Include="Model\Pad.cs" />
     <Compile Include="Model\Visitors\DefaultVisitor.cs" />
     <Compile Include="Model\Elements\ArcElement.cs" />
     <Compile Include="Model\Element.cs" />

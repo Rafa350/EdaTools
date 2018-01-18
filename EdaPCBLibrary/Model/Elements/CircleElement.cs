@@ -78,7 +78,7 @@
         /// </summary>
         /// <returns>El bounding box.</returns>
         /// 
-        protected override Rect GetBoundingBox() {
+        public override Rect GetBoundingBox() {
 
             return new Rect(position.X - radius, position.Y - radius, radius + radius, radius + radius);
         }

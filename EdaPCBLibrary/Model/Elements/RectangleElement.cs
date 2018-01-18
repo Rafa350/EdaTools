@@ -88,7 +88,7 @@
         /// </summary>
         /// <returns>El bounding box.</returns>
         /// 
-        protected override Rect GetBoundingBox() {
+        public override Rect GetBoundingBox() {
 
             double a = rotation * Math.PI / 180.0;
             double w = size.Width * Math.Cos(a) + size.Height * Math.Sin(a);

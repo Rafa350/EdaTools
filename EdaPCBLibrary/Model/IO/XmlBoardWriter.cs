@@ -16,6 +16,7 @@
             private readonly XmlWriter writer;
             private readonly CultureInfo ci = CultureInfo.InvariantCulture;
             private Board board;
+            private Part currentPart = null;
 
             public Visitor(XmlWriter writer) {
 
@@ -32,7 +33,7 @@
                     writer.WriteAttribute("thickness", line.Thickness);
                 if (line.LineCap != LineElement.LineCapStyle.Round)
                     writer.WriteAttributeString("lineCap", line.LineCap.ToString());
-                Signal signal = board.GetSignal(line, false);
+                Signal signal = board.GetSignal(line, currentPart, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
                 writer.WriteEndElement();
@@ -48,7 +49,7 @@
                 if (arc.Thickness > 0)
                     writer.WriteAttribute("thickness", arc.Thickness);
                 writer.WriteAttributeString("lineCap", arc.LineCap.ToString());
-                Signal signal = board.GetSignal(arc, false);
+                Signal signal = board.GetSignal(arc, currentPart, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
                 writer.WriteEndElement();
@@ -112,7 +113,7 @@
                 writer.WriteAttribute("size", pad.Size);
                 if (pad.Roundnes > 0)
                     writer.WriteAttribute("roundness", pad.Roundnes);
-                Signal signal = board.GetSignal(pad, false);
+                Signal signal = board.GetSignal(pad, currentPart, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
                 writer.WriteEndElement();
@@ -130,7 +131,7 @@
                 writer.WriteAttribute("drill",  pad.Drill);
                 if (pad.Shape != ThPadElement.ThPadShape.Circular)
                     writer.WriteAttributeString("shape", pad.Shape.ToString());
-                Signal signal = board.GetSignal(pad, false);
+                Signal signal = board.GetSignal(pad, currentPart, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
                 writer.WriteEndElement();
@@ -156,7 +157,7 @@
                     writer.WriteAttribute("thickness", region.Thickness);
                 if (region.Isolation > 0)
                     writer.WriteAttribute("isolation", region.Isolation);
-                Signal signal = board.GetSignal(region, false);
+                Signal signal = board.GetSignal(region, currentPart, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
                 foreach (RegionElement.Segment segment in region.Segments) {
@@ -171,41 +172,41 @@
 
             public override void Visit(Part part) {
 
-                writer.WriteStartElement("part");
-                writer.WriteAttributeString("name", part.Name);
-                if (part.Block != null)
-                    writer.WriteAttributeString("component", part.Block.Name);
-                writer.WriteAttribute("position", part.Position);
-                if (part.Rotation != 0)
-                    writer.WriteAttribute("rotation", part.Rotation);
-                if (part.IsFlipped)
-                    writer.WriteAttributeString("flipped", part.IsFlipped.ToString());
+                currentPart = part;
+                try {
+                    writer.WriteStartElement("part");
+                    writer.WriteAttributeString("name", part.Name);
+                    writer.WriteAttributeString("block", part.Block.Name);
+                    writer.WriteAttribute("position", part.Position);
+                    if (part.Rotation != 0)
+                        writer.WriteAttribute("rotation", part.Rotation);
+                    if (part.IsFlipped)
+                        writer.WriteAttributeString("flipped", part.IsFlipped.ToString());
 
-                if (part.Pads != null) {
                     writer.WriteStartElement("pads");
-                    foreach (Pad pad in part.Pads)
-                        pad.AcceptVisitor(this);
+                    foreach (PadElement pad in part.Pads) {
+                        Signal signal = board.GetSignal(pad, part, false);
+                        if (signal != null) {
+                            writer.WriteStartElement("pad");
+                            writer.WriteAttributeString("name", pad.Name);
+                            writer.WriteAttributeString("signal", signal.Name);
+                            writer.WriteEndElement();
+                        }
+                    }
+                    writer.WriteEndElement();
+
+                    if (part.Parameters != null) {
+                        writer.WriteStartElement("attributes");
+                        foreach (Parameter parameter in part.Parameters)
+                            parameter.AcceptVisitor(this);
+                        writer.WriteEndElement();
+                    }
+
                     writer.WriteEndElement();
                 }
-
-                if (part.Parameters != null) {
-                    writer.WriteStartElement("attributes");
-                    foreach (Parameter parameter in part.Parameters)
-                        parameter.AcceptVisitor(this);
-                    writer.WriteEndElement();
+                finally {
+                    currentPart = null;
                 }
-
-                writer.WriteEndElement();
-            }
-
-            public override void Visit(Pad pad) {
-
-                writer.WriteStartElement("pad");
-                writer.WriteAttributeString("name", pad.Name);
-                Signal signal = board.GetSignal(pad, false);
-                if (signal != null)
-                    writer.WriteAttributeString("signal", signal.Name);
-                writer.WriteEndElement();
             }
 
             /// <summary>
@@ -227,7 +228,7 @@
                 if (via.Type != ViaElement.ViaType.Through)
                     writer.WriteAttributeString("type", via.Type.ToString());
 
-                Signal signal = board.GetSignal(via, false);
+                Signal signal = board.GetSignal(via, null, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
 

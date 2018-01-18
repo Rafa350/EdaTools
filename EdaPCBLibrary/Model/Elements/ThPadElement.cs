@@ -7,7 +7,7 @@
     /// <summary>
     /// Clase que representa un pad throug hole
     /// </summary>
-    public sealed class ThPadElement: Element, IPosition, IRotation, IName, IConectable {
+    public sealed class ThPadElement: PadElement, IRotation {
 
         public enum ThPadShape {
             Square,
@@ -21,8 +21,6 @@
         private const double drcTopSizePercent = 0.25;
 
         private ThPadShape shape = ThPadShape.Circular;
-        private string name;
-        private Point position;
         private double rotation;
         private double topSize;
         private double innerSize;
@@ -48,7 +46,7 @@
         /// <param name="drill">Forma de la corona.</param>
         /// 
         public ThPadElement(string name, Point position, double rotation, double size, ThPadShape shape, double drill):
-            base() {
+            base(name, position) {
 
             if (size < 0)
                 throw new ArgumentOutOfRangeException("size");
@@ -56,8 +54,6 @@
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException("drill");
 
-            this.name = name;
-            this.position = position;
             this.rotation = rotation;
             this.topSize = size;
             this.innerSize = size;
@@ -85,9 +81,9 @@
 
             string s = String.Format("{0}${1}${2}${3}${4}${5}${6}${7}${8}${9}",
                 GetType().FullName,
-                name,
-                position.X,
-                position.Y,
+                Name,
+                Position.X,
+                Position.Y,
                 rotation,
                 topSize,
                 innerSize,
@@ -109,7 +105,7 @@
             switch (shape) {
                 case ThPadShape.Square:
                     polygon = PolygonBuilder.BuildRectangle(
-                        position, 
+                        Position, 
                         new Size(topSize + (inflate * 2), topSize + (inflate * 2)), 
                         inflate,
                         rotation);
@@ -118,14 +114,14 @@
                 case ThPadShape.Octogonal:
                     polygon = PolygonBuilder.BuildRegularPolygon(
                         8, 
-                        position, 
+                        Position, 
                         (topSize / 2) + inflate, 
                         rotation);
                     break;
 
                 case ThPadShape.Oval:
                     polygon = PolygonBuilder.BuildRectangle(
-                        position, 
+                        Position, 
                         new Size((topSize * 2) + (inflate * 2), topSize + (inflate * 2)), 
                         (topSize / 2) + inflate,
                         rotation);
@@ -133,7 +129,7 @@
 
                 default:
                     polygon = PolygonBuilder.BuildCircle(
-                        position, 
+                        Position, 
                         (topSize / 2) + inflate);
                     break;
             }
@@ -141,7 +137,7 @@
             // Si esta inflat, no genera el forat
             //
             if (inflate == 0)
-                polygon.AddChild(PolygonBuilder.BuildCircle(position, drill / 2));
+                polygon.AddChild(PolygonBuilder.BuildCircle(Position, drill / 2));
 
             return polygon;
         }
@@ -151,35 +147,9 @@
         /// </summary>
         /// <returns>El bounding box.</returns>
         /// 
-        protected override Rect GetBoundingBox() {
+        public override Rect GetBoundingBox() {
 
             throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Obte o asigna el nom.
-        /// </summary>
-        /// 
-        public string Name {
-            get {
-                return name;
-            }
-            set {
-                name = value;
-            }
-        }
-
-        /// <summary>
-        ///  Obte o asigna la posicio.
-        /// </summary>
-        /// 
-        public Point Position {
-            get {
-                return position;
-            }
-            set {
-                position = value;
-            }
         }
 
         /// <summary>

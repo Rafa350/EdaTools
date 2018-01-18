@@ -2,6 +2,7 @@
 
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Media;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
@@ -13,7 +14,6 @@
         private double rotation;
         private bool isFlipped;
         private readonly Block block;
-        private readonly List<Pad> pads = new List<Pad>();
         private Dictionary<string, Parameter> parameters;
 
         /// <summary>
@@ -27,20 +27,18 @@
                 throw new ArgumentNullException("block");
 
             this.block = block;
-
-            UpdateItemList();
         }
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
+        /// <param name="block">El component associat.</param>
         /// <param name="name">El nom.</param>
         /// <param name="position">Posicio.</param>
         /// <param name="rotation">Angle de rotacio</param>
         /// <param name="isFlipped">Indica si va girat.</param>
-        /// <param name="block">El component associat.</param>
         /// 
-        public Part(string name, Point position, double rotation, bool isFlipped, Block block) {
+        public Part(Block block, string name, Point position, double rotation, bool isFlipped) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -53,8 +51,6 @@
             this.rotation = rotation;
             this.isFlipped = isFlipped;
             this.block = block;
-
-            UpdateItemList();
         }
 
         /// <summary>
@@ -65,22 +61,6 @@
         public void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
-        }
-
-        public Pad GetPad(string name, bool throwOnError = false) {
-
-            if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
-
-            foreach (Pad pad in pads)
-                if (pad.Name == name)
-                    return pad;
-
-            if (throwOnError)
-                throw new InvalidOperationException(
-                    String.Format("El pad '{0}', no se encontro en el componente '{1}'.", name, this.name));
-
-            return null;
         }
 
         public void AddParameter(Parameter parameter) {
@@ -115,20 +95,6 @@
                 return null;
         }
 
-        private void UpdateItemList() {
-
-            foreach (Element element in block.Elements) {
-                if (element is SmdPadElement) {
-                    SmdPadElement item = (SmdPadElement)element;
-                    pads.Add(new Pad(item.Name, item));
-                }
-                else if (element is ThPadElement) {
-                    ThPadElement item = (ThPadElement)element;
-                    pads.Add(new Pad(item.Name, item));
-                }
-            }
-        }
-
         /// <summary>
         /// Obte o asigna el nom.
         /// </summary>
@@ -139,6 +105,16 @@
             }
             set {
                 name = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte el block.
+        /// </summary>
+        /// 
+        public Block Block {
+            get {
+                return block;
             }
         }
 
@@ -191,22 +167,22 @@
         }
 
         /// <summary>
-        /// Obte el block associat.
+        /// Obte la coleccio d'elements.
         /// </summary>
         /// 
-        public Block Block {
+        public IEnumerable<Element> Elements {
             get {
-                return block;
+                return block.Elements;
             }
         }
 
         /// <summary>
-        /// Obte la llista de pads.
+        /// Obte la llista d'elements que son Pad's
         /// </summary>
         /// 
-        public IEnumerable<Pad> Pads {
+        public IEnumerable<PadElement> Pads {
             get {
-                return pads;
+                return block.Elements.OfType<PadElement>();
             }
         }
 

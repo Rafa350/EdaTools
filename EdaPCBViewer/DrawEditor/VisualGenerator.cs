@@ -61,7 +61,7 @@
                             dc.PushTransform(localTransform);
 
                         Brush brush = CreateBrush(layer.Color);
-                        dc.DrawPolygon(brush, null, line.Polygon);
+                        dc.DrawPolygon(brush, null, line.GetPolygon());
 
                         if (localTransform != null)
                             dc.Pop();
@@ -87,7 +87,7 @@
                             dc.PushTransform(localTransform);
 
                         Brush brush = CreateBrush(layer.Color);
-                        dc.DrawPolygon(brush, null, arc.Polygon);
+                        dc.DrawPolygon(brush, null, arc.GetPolygon());
 
                         if (localTransform != null)
                             dc.Pop();
@@ -113,7 +113,7 @@
                             dc.PushTransform(localTransform);
 
                         Brush brush = CreateBrush(layer.Color);
-                        dc.DrawPolygon(brush, null, rectangle.Polygon);
+                        dc.DrawPolygon(brush, null, rectangle.GetPolygon());
 
                         if (localTransform != null)
                             dc.Pop();
@@ -139,7 +139,7 @@
                             dc.PushTransform(localTransform);
 
                         Brush brush = CreateBrush(layer.Color);
-                        dc.DrawPolygon(brush, null, circle.Polygon);
+                        dc.DrawPolygon(brush, null, circle.GetPolygon());
 
                         if (localTransform != null)
                             dc.Pop();
@@ -169,7 +169,7 @@
                         else 
                             brush = new SolidColorBrush(layer.Color);
 
-                        dc.DrawPolygon(brush, pen, region.Polygon);
+                        dc.DrawPolygon(brush, pen, region.GetPolygon());
 
                         if (localTransform != null)
                             dc.Pop();
@@ -194,7 +194,7 @@
                         if (localTransform != null)
                             dc.PushTransform(localTransform);
 
-                        Polygon polygon = via.Polygon;
+                        Polygon polygon = via.GetPolygon();
                         List<Polygon> polygonHoles = new List<Polygon>(polygon.Childs);
 
                         Brush polygonBrush = CreateBrush(layer.Color);
@@ -229,7 +229,7 @@
                             dc.PushTransform(localTransform);
 
                         Brush brush = CreateBrush(layer.Color);
-                        dc.DrawPolygon(brush, null, pad.Polygon);
+                        dc.DrawPolygon(brush, null, pad.GetPolygon());
 
                         if (localTransform != null)
                             dc.Pop();
@@ -255,7 +255,7 @@
                             dc.PushTransform(localTransform);
 
                         Brush polygonBrush = CreateBrush(layer.Color);
-                        dc.DrawPolygon(polygonBrush, null, pad.Polygon);
+                        dc.DrawPolygon(polygonBrush, null, pad.GetPolygon());
 
                         dc.PushTransform(new ScaleTransform(1, -1, pad.Position.X, pad.Position.Y));
                         Brush textBrush = CreateBrush(Colors.Yellow);
@@ -291,7 +291,7 @@
 
                         Pen pen = CreatePen(layer.Color, 0.05);
                         Brush brush = CreateBrush(Colors.Black);
-                        dc.DrawPolygon(brush, pen, hole.Polygon);
+                        dc.DrawPolygon(brush, pen, hole.GetPolygon());
 
                         if (localTransform != null)
                             dc.Pop();

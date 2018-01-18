@@ -132,7 +132,7 @@
         /// </summary>
         /// <returns>El bounding box.</returns>
         /// 
-        protected override Rect GetBoundingBox() {
+        public override Rect GetBoundingBox() {
 
             double size = OuterSize;
             double hSize = size / 2;

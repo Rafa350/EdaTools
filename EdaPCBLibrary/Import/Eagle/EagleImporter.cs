@@ -228,9 +228,10 @@
                     string padName = GetAttributeString(childNode, "pad");
 
                     Part part = board.GetPart(partName, true);
-                    Pad pad = part.GetPad(padName, true);
-
-                    board.Connect(signal, pad);
+                    foreach (PadElement pad in part.Pads) {
+                        if (pad.Name == padName)
+                            board.Connect(signal, pad, part);
+                    }
                 }
 
                 foreach (XmlNode childNode in node.ChildNodes) {
@@ -661,7 +662,7 @@
                 rotation = Double.Parse(rot);
             }
 
-            Part part = new Part(name, position, rotation, isFlipped, GetComponent(componentKey));
+            Part part = new Part(GetComponent(componentKey), name, position, rotation, isFlipped);
 
             foreach (XmlNode attrNode in node.SelectNodes("attribute")) {
 

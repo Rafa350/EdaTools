@@ -46,9 +46,6 @@
         public virtual void Visit(Part part) {
         }
 
-        public virtual void Visit(Pad pad) {
-        }
-
         public virtual void Visit(Block block) {
         }
 

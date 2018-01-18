@@ -531,7 +531,7 @@
                 regionPolygon.Transform(localTransformation);
 
                 IEnumerable<Layer> regionLayers = board.GetLayers(region);
-                Signal regionSignal = board.GetSignal(region, false);
+                Signal regionSignal = board.GetSignal(region, null, false);
 
                 double inflate = 0.15 + region.Thickness / 2;
                 List<Polygon> holePolygons = new List<Polygon>();
@@ -544,21 +544,21 @@
                     if ((element != region) && 
                         (board.IsOnAnyLayer(element, regionLayers) || board.IsOnLayer(element, restrict))) {
                         IConectable item = element as IConectable;
-                        if ((item == null) || (board.GetSignal(item, false) != regionSignal)) {
+                        if ((item == null) || (board.GetSignal(item, null, false) != regionSignal)) {
                             Polygon elementPolygon = element.GetPolygon(inflate);
                             holePolygons.AddRange(PolygonProcessor.Clip(elementPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));
                         }
                     }
                 }
 
-                // Procesa els elements dels blocs
+                // Procesa els elements dels components
                 //
                 foreach (Part part in board.Parts) {
                     foreach (Element element in part.Block.Elements) {
                         if ((element != region) && 
                             (board.IsOnAnyLayer(element, regionLayers) || board.IsOnLayer(element, restrict))) {
                             IConectable item = element as IConectable;
-                            if ((item == null) || (board.GetSignal(item, false) != regionSignal)) {
+                            if ((item == null) || (board.GetSignal(item, null, false) != regionSignal)) {
                                 Polygon elementPolygon = element.GetPolygon(inflate);
                                 elementPolygon.Transform(part.Transformation);
                                 holePolygons.AddRange(PolygonProcessor.Clip(elementPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));

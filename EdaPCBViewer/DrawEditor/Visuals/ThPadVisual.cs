@@ -30,7 +30,7 @@
                 // Dibuixa el pad
                 //
                 Brush padBrush = BrushCache.Instance.GetBrush(IsSelected ? Colors.Goldenrod : Colors.Gold);
-                dc.DrawPolygon(padBrush, null, Pad.Polygon);
+                dc.DrawPolygon(padBrush, null, Pad.GetPolygon());
                 /*
                 // Push de la transformacio d'escala del text
                 //

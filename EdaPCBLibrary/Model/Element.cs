@@ -28,7 +28,7 @@
         /// </summary>
         /// <returns>El bounding box.</returns>
         /// 
-        protected abstract Rect GetBoundingBox();
+        public abstract Rect GetBoundingBox();
 
         /// <summary>
         /// Calcula el numero de serie del element
@@ -36,16 +36,6 @@
         /// <returns>El numero de serie.</returns>
         /// 
         protected abstract int GetSerial();
-
-        /// <summary>
-        /// Obte el bounding box del element.
-        /// </summary>
-        /// 
-        public Rect BoundingBox {
-            get {
-                return GetBoundingBox();
-            }
-        }
 
         /// <summary>
         /// Obte el numero de serie.

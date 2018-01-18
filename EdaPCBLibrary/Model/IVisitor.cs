@@ -7,7 +7,6 @@
         void Visit(Board board);
         void Visit(Layer layer);
         void Visit(Part part);
-        void Visit(Pad pad);
         void Visit(Parameter parameter);
         void Visit(Signal signal);
         void Visit(Block block);

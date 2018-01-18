@@ -76,7 +76,7 @@
         /// </summary>
         /// <returns>El bounding box.</returns>
         /// 
-        protected override Rect GetBoundingBox() {
+        public override Rect GetBoundingBox() {
 
             return new Rect(position.X - drill / 2, position.Y - drill / 2, drill, drill);
         }

@@ -27,23 +27,13 @@
 
             currentPart = part;
             try {
-
-                if (part.Block != null)
-                    part.Block.AcceptVisitor(this);
-
-                if (part.Pads != null)
-                    foreach (Pad pad in part.Pads)
-                        pad.AcceptVisitor(this);
+                if (part.Block.Elements != null)
+                    foreach (Element element in part.Block.Elements)
+                        element.AcceptVisitor(this);
             }
             finally {
                 currentPart = null;
             }
-        }
-
-        public override void Visit(Block block) {
-
-            foreach (Element element in block.Elements)
-                element.AcceptVisitor(this);
         }
 
         protected Board CurrentBoard {

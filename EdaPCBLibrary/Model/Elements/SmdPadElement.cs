@@ -7,10 +7,8 @@
     /// <summary>
     /// Clase que representa un pad superficial
     /// </summary>
-    public sealed class SmdPadElement: Element, IPosition, IRotation, IName, IConectable {
+    public sealed class SmdPadElement: PadElement, IRotation, IConectable {
 
-        private string name;
-        private Point position;
         private Size size;
         private double rotation;
         private double roundnes;
@@ -33,10 +31,8 @@
         /// <param name="roundnes">Percentatge d'arrodoniment de les cantonades.</param>
         /// 
         public SmdPadElement(string name, Point position, Size size, double rotation, double roundnes) :
-            base() {
+            base(name, position) {
 
-            this.name = name;
-            this.position = position;
             this.size = size;
             this.rotation = rotation;
             this.roundnes = roundnes;
@@ -61,9 +57,9 @@
 
             string s = String.Format("{0}${1}${2}${3}${4}${5}${6}",
                 GetType().FullName,
-                name,
-                position.X,
-                position.Y,
+                Name,
+                Position.X,
+                Position.Y,
                 size,
                 rotation,
                 roundnes);
@@ -77,7 +73,7 @@
         /// 
         public override Polygon GetPolygon(double inflate = 0) {
 
-            return PolygonBuilder.BuildRectangle(position,
+            return PolygonBuilder.BuildRectangle(Position,
                 new Size(size.Width + (inflate * 2), size.Height + (inflate * 2)), Radius + inflate, rotation);
         }
 
@@ -86,35 +82,9 @@
         /// </summary>
         /// <returns>El bounding box.</returns>
         /// 
-        protected override Rect GetBoundingBox() {
+        public override Rect GetBoundingBox() {
 
             throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Obte o asigna el nom.
-        /// </summary>
-        /// 
-        public string Name {
-            get {
-                return name;
-            }
-            set {
-                name = value;
-            }
-        }
-
-        /// <summary>
-        ///  Obte o asigna la posicio del centre geometric del pad.
-        /// </summary>
-        /// 
-        public Point Position {
-            get {
-                return position;
-            }
-            set {
-                position = value;
-            }
         }
 
         /// <summary>

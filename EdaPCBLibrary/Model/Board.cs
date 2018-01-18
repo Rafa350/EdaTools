@@ -16,8 +16,8 @@
 
         // Senyals
         private readonly HashSet<Signal> signals = new HashSet<Signal>();
-        private readonly Dictionary<Signal, HashSet<IConectable>> itemsOfSignal = new Dictionary<Signal, HashSet<IConectable>>();
-        private readonly Dictionary<IConectable, Signal> signalOfItem = new Dictionary<IConectable, Signal>();
+        private readonly Dictionary<Signal, HashSet<Tuple<IConectable, Part>>> itemsOfSignal = new Dictionary<Signal, HashSet<Tuple<IConectable, Part>>>();
+        private readonly Dictionary<Tuple<IConectable, Part>, Signal> signalOfItem = new Dictionary<Tuple<IConectable, Part>, Signal>();
 
         // Blocs
         private readonly HashSet<Block> blocks = new HashSet<Block>();
@@ -326,29 +326,32 @@
         }
 
         /// <summary>
-        /// Conecta un objece amb un senyal.
+        /// Conecta un element conectable amb una senyal.
         /// </summary>
         /// <param name="signal">La senyal.</param>
-        /// <param name="item">El objecte a conectar.</param>
+        /// <param name="element">L'element a conectar.</param>
+        /// <param name="part">El component del element.</param>
         /// 
-        public void Connect(Signal signal, IConectable item) {
+        public void Connect(Signal signal, IConectable element, Part part = null) {
 
             if (signal == null)
                 throw new ArgumentNullException("signal");
 
-            if (item == null)
-                throw new ArgumentNullException("item");
+            if (element == null)
+                throw new ArgumentNullException("element");
 
             if (!signals.Contains(signal))
                 throw new InvalidOperationException(
                     String.Format("La senyal '{0}', no esta asignada a esta placa.", signal.Name));
 
+            Tuple<IConectable, Part> item = new Tuple<IConectable, Part>(element, part);
+
             if (signalOfItem.ContainsKey(item))
                 throw new InvalidOperationException("El objeto ya esta conectado.");
 
-            HashSet<IConectable> elementSet;
+            HashSet<Tuple<IConectable, Part>> elementSet;
             if (!itemsOfSignal.TryGetValue(signal, out elementSet)) {
-                elementSet = new HashSet<IConectable>();
+                elementSet = new HashSet<Tuple<IConectable, Part>>();
                 itemsOfSignal.Add(signal, elementSet);
             }
             elementSet.Add(item);
@@ -356,14 +359,17 @@
         }
 
         /// <summary>
-        /// Desconecta un objecte de la senyal.
+        /// Desconecta un element de la senyal.
         /// </summary>
-        /// <param name="item">El element a desconectar.</param>
+        /// <param name="element">El element a desconectar.</param>
+        /// <param name="part">El component del element.</param>
         /// 
-        public void Disconnect(IConectable item) {
+        public void Disconnect(IConectable element, Part part = null) {
 
-            if (item == null)
-                throw new ArgumentNullException("item");
+            if (element == null)
+                throw new ArgumentNullException("element");
+
+            Tuple<IConectable, Part> item = new Tuple<IConectable, Part>(element, part);
 
             if (!signalOfItem.ContainsKey(item))
                 throw new InvalidOperationException("El objeto no esta conectado a ninguna señal.");
@@ -372,17 +378,19 @@
         /// <summary>
         /// Obte la senyal conectada a un objecte.
         /// </summary>
-        /// <param name="item">El objecte.</param>
+        /// <param name="element">El objecte.</param>
         /// <param name="throwOnError">True si cal generar una excepcio en cas d'error.</param>
         /// <returns>La senyal. Null si no esta conectat.</returns>
         /// 
-        public Signal GetSignal(IConectable item, bool throwOnError = true) {
+        public Signal GetSignal(IConectable element, Part part = null, bool throwOnError = true) {
 
-            if (item == null)
-                throw new ArgumentNullException("item");
+            if (element == null)
+                throw new ArgumentNullException("element");
+
+            Tuple<IConectable, Part> item = new Tuple<IConectable, Part>(element, part);
 
             Signal signal;
-
+            
             if (signalOfItem.TryGetValue(item, out signal))
                 return signal;
             else {
@@ -421,7 +429,7 @@
         /// <param name="signal">La senyal.</param>
         /// <returns>Els items conectats. Null si no hi ha cap.</returns>
         /// 
-        public IEnumerable<IConectable> GetConnectedItems(Signal signal) {
+        public IEnumerable<Tuple<IConectable, Part>> GetConnectedItems(Signal signal) {
 
             if (signal == null)
                 throw new ArgumentNullException("signal");
@@ -430,7 +438,7 @@
                 throw new InvalidOperationException(
                     String.Format("La señal '{0}', no esta asignada a esta placa.", signal.Name));
 
-            HashSet<IConectable> itemSet;
+            HashSet<Tuple<IConectable, Part>> itemSet;
             if (itemsOfSignal.TryGetValue(signal, out itemSet))
                 return itemSet;
             else
