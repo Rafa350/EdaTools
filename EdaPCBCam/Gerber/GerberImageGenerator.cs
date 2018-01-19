@@ -283,6 +283,10 @@
                 localRotation = 0;
             }
 
+            /// <summary>
+            /// Obte el diccionari d'apertures generat.
+            /// </summary>
+            /// 
             public ApertureDictionary Apertures {
                 get {
                     return apertures;
@@ -303,6 +307,14 @@
             private Matrix localTransformation = Matrix.Identity;
             private double localRotation = 0;
 
+            /// <summary>
+            /// Construcxtor del objecte.
+            /// </summary>
+            /// <param name="gb">El objecte GerberBuilder.</param>
+            /// <param name="board">La placa a procesar.</param>
+            /// <param name="layers">Capes a tenir en compte.</param>
+            /// <param name="apertureDict">Diccionari d'apertures.</param>
+            /// 
             public ImageGeneratorVisitor(GerberBuilder gb, Board board, IEnumerable<Layer> layers, ApertureDictionary apertureDict) {
 
                 this.gb = gb;
@@ -363,7 +375,7 @@
                 if (board.IsOnAnyLayer(rectangle, layers)) {
 
                     if (rectangle.Thickness == 0) {
-                        double rotate = + localRotation + rectangle.Rotation;
+                        double rotate = localRotation + rectangle.Rotation;
                         Aperture ap = apertureDict.GetRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotate);
                         gb.SelectAperture(ap);
 
@@ -554,11 +566,11 @@
                 // Procesa els elements dels components
                 //
                 foreach (Part part in board.Parts) {
-                    foreach (Element element in part.Block.Elements) {
+                    foreach (Element element in part.Elements) {
                         if ((element != region) && 
                             (board.IsOnAnyLayer(element, regionLayers) || board.IsOnLayer(element, restrict))) {
                             IConectable item = element as IConectable;
-                            if ((item == null) || (board.GetSignal(item, null, false) != regionSignal)) {
+                            if ((item == null) || (board.GetSignal(item, part, false) != regionSignal)) {
                                 Polygon elementPolygon = element.GetPolygon(inflate);
                                 elementPolygon.Transform(part.Transformation);
                                 holePolygons.AddRange(PolygonProcessor.Clip(elementPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));

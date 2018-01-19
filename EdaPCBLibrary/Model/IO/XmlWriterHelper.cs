@@ -8,8 +8,19 @@
     using System.Windows.Media;
     using System.Xml;
 
+    /// <summary>
+    /// Clase amb metodes d'extensio per la clase XmlWriter
+    /// </summary>
+    /// 
     public static class XmlWriterHelper {
 
+        /// <summary>
+        /// Escriu un atribut de tipus Point
+        /// </summary>
+        /// <param name="writer">El objecte escriptor xml.</param>
+        /// <param name="name">Nom del atribut.</param>
+        /// <param name="point">El valor del atribut.</param>
+        /// 
         public static void WriteAttribute(this XmlWriter writer, string name, Point point) {
 
             writer.WriteAttributeString(
@@ -20,6 +31,13 @@
                     XmlConvert.ToString(point.Y)));
         }
 
+        /// <summary>
+        /// Escriu un atribut de tipus Size.
+        /// </summary>
+        /// <param name="writer">El objecte escriptor xml.</param>
+        /// <param name="name">El nom del atribut.</param>
+        /// <param name="size">El valor del atribut.</param>
+        /// 
         public static void WriteAttribute(this XmlWriter writer, string name, Size size) {
 
             writer.WriteAttributeString(
