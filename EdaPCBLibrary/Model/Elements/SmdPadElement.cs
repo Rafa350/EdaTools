@@ -49,23 +49,6 @@
         }
 
         /// <summary>
-        /// Calcula el numero de serie del element.
-        /// </summary>
-        /// <returns>El numero de serie.</returns>
-        /// 
-        protected override int GetSerial() {
-
-            string s = String.Format("{0}${1}${2}${3}${4}${5}${6}",
-                GetType().FullName,
-                Name,
-                Position.X,
-                Position.Y,
-                size,
-                rotation,
-                roundnes);
-            return s.GetHashCode();
-        }
-        /// <summary>
         /// Crea el poligon del element.
         /// </summary>
         /// <param name="inflate">Increment de tamany.</param>

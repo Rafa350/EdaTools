@@ -26,7 +26,6 @@
         private double height;
         private TextAlign align = TextAlign.MiddleCenter;
         private string value;
-        private string name;
 
         /// <summary>
         /// Constructor de l'objecte amb els parametres per defecte.
@@ -63,22 +62,6 @@
             visitor.Visit(this);
         }
 
-        /// <summary>
-        /// Calcula el numero de serie del element.
-        /// </summary>
-        /// <returns>El numero de serie.</returns>
-        /// 
-        protected override int GetSerial() {
-
-            string s = String.Format("{0}${1}${2}${3}${4}${5}",
-                GetType().FullName,
-                position.X,
-                position.Y,
-                rotation,
-                height,
-                align);
-            return s.GetHashCode();
-        }
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
@@ -148,19 +131,6 @@
             }
             set {
                 align = value;
-            }
-        }
-
-        /// <summary>
-        /// Obte o asigna el nom.
-        /// </summary>
-        /// 
-        public string Name {
-            get {
-                return name;
-            }
-            set {
-                name = value;
             }
         }
 

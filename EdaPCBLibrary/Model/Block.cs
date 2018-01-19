@@ -5,8 +5,7 @@
 
     public sealed class Block: IVisitable {
 
-        private static readonly Dictionary<Element, Block> elementOwners = new Dictionary<Element, Block>();
-        private readonly List<Element> elements = new List<Element>();
+        private readonly HashSet<Element> elements = new HashSet<Element>();
         private string name;
 
         /// <summary>
@@ -54,14 +53,8 @@
             if (element == null)
                 throw new ArgumentNullException("element");
 
-            if (elements.Contains(element))
-                throw new InvalidOperationException("El elemento ya pertenece al componente.");
-
-            if (elementOwners.ContainsKey(element))
-                throw new InvalidOperationException("El elemento ya pertenece a otro componente.");
-
-            elements.Add(element);
-            elementOwners.Add(element, this);
+            if (!elements.Add(element))
+                throw new InvalidOperationException("El elemento ya pertenece al bloque.");
         }
 
         /// <summary>
@@ -75,28 +68,9 @@
                 throw new ArgumentNullException("element");
 
             if (!elements.Contains(element))
-                throw new InvalidOperationException("El elemento no pertenece al componente.");
+                throw new InvalidOperationException("El elemento no pertenece al bloque.");
 
             elements.Remove(element);
-            elementOwners.Remove(element);
-        }
-
-        /// <summary>
-        /// Obte el component al que pertany el element.
-        /// </summary>
-        /// <param name="element">El element.</param>
-        /// <returns>El component al que pertany.</returns>
-        /// 
-        public static Block ComponentOf(Element element) {
-
-            if (element == null)
-                throw new ArgumentNullException("element");
-
-            Block component = null;
-            if (elementOwners.TryGetValue(element, out component))
-                return component;
-            else
-                return null;
         }
 
         /// <summary>

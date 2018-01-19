@@ -462,14 +462,9 @@
         /// 
         private Element ParseTextNode(XmlNode node) {
 
-            string name = null;
-            string value = null;
-
-            string s = node.InnerText;
-            if (s.StartsWith(">"))
-                name = s.Substring(1);
-            else
-                value = s;
+            string value = node.InnerText;
+            if (value.StartsWith(">"))
+                value = String.Format("$({0})", value.Substring(1));
 
             double x = GetAttributeDouble(node, "x");
             double y = GetAttributeDouble(node, "y");
@@ -482,7 +477,6 @@
             LayerId layerId = GetLayerId(layerNum);
 
             TextElement element = new TextElement(position, rotate, height, TextElement.TextAlign.TopLeft);
-            element.Name = name;
             element.Value = value;
 
             board.Place(board.GetLayer(layerId), element);
@@ -668,6 +662,8 @@
 
                 Parameter parameter = ParseAttributeNode(attrNode);
 
+                // Inicialitza els valor per defecte dels parametres NAME i VALUE
+                //
                 if (parameter.Name == "NAME")
                     parameter.Value = name;
                 else if (parameter.Name == "VALUE")
@@ -675,7 +671,7 @@
 
                 // Corrigeix perque siguin relatives al component
                 //
-                parameter.Position = new System.Windows.Point(parameter.Position.X - x, parameter.Position.Y - y);
+                parameter.Position = new Point(parameter.Position.X - x, parameter.Position.Y - y);
 
                 part.AddParameter(parameter);
             }

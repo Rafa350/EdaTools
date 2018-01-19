@@ -33,7 +33,7 @@
                 string value;
                 double x, y, rotate;
 
-                Parameter parameter = Part.GetParameter(Text.Name);
+                Parameter parameter = Part.GetParameter(Text.Value);
                 if (parameter == null) {
                     value = Text.Value;
                     x = Text.Position.X;

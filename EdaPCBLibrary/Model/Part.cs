@@ -14,7 +14,7 @@
         private double rotation;
         private bool isFlipped;
         private readonly Block block;
-        private Dictionary<string, Parameter> parameters;
+        private Dictionary<string, Parameter> parameters = new Dictionary<string, Parameter>();
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -68,9 +68,6 @@
             if (parameter == null)
                 throw new ArgumentNullException("parameter");
 
-            if (parameters == null)
-                parameters = new Dictionary<string, Parameter>();
-
             parameters.Add(parameter.Name, parameter);
         }
 
@@ -80,8 +77,6 @@
                 throw new ArgumentNullException("parameter");
 
             parameters.Remove(parameter.Name);
-            if (parameters.Count == 0)
-                parameters = null;
         }
 
         public Parameter GetParameter(string name) {
@@ -89,10 +84,11 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            if ((parameters != null) && (parameters.ContainsKey(name)))
-                return parameters[name];
-            else
-                return null;
+            Parameter value;
+            if (parameters.TryGetValue(name, out value))
+                return value;
+
+            return null;
         }
 
         /// <summary>
@@ -192,7 +188,7 @@
         /// 
         public IEnumerable<Parameter> Parameters {
             get {
-                return parameters == null ? null : parameters.Values;
+                return parameters.Values;
             }
         }
     }

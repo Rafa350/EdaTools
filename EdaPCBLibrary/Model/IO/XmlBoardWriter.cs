@@ -82,8 +82,6 @@
             public override void Visit(TextElement text) {
 
                 writer.WriteStartElement("text");
-                if (!String.IsNullOrEmpty(text.Name))
-                    writer.WriteAttributeString("name", text.Name);
                 writer.WriteAttribute("layers", board.GetLayers(text));
                 writer.WriteAttribute("position", text.Position);
                 if (text.Rotation != 0)
@@ -170,11 +168,21 @@
                 writer.WriteEndElement();
             }
 
+            /// <summary>
+            /// Visita un objecte Part
+            /// </summary>
+            /// <param name="part">L'objecte a visitar.</param>
+            /// 
             public override void Visit(Part part) {
+
+                bool first;
 
                 currentPart = part;
                 try {
                     writer.WriteStartElement("part");
+
+                    // Escriu els parametres
+                    //
                     writer.WriteAttributeString("name", part.Name);
                     writer.WriteAttributeString("block", part.Block.Name);
                     writer.WriteAttribute("position", part.Position);
@@ -183,24 +191,37 @@
                     if (part.IsFlipped)
                         writer.WriteAttributeString("flipped", part.IsFlipped.ToString());
 
-                    writer.WriteStartElement("pads");
+                    // Escriu la llista de pads.
+                    //
+                    first = true;
                     foreach (PadElement pad in part.Pads) {
                         Signal signal = board.GetSignal(pad, part, false);
                         if (signal != null) {
+                            if (first) {
+                                first = false;
+                                writer.WriteStartElement("pads");
+                            }
                             writer.WriteStartElement("pad");
                             writer.WriteAttributeString("name", pad.Name);
                             writer.WriteAttributeString("signal", signal.Name);
                             writer.WriteEndElement();
                         }
                     }
-                    writer.WriteEndElement();
-
-                    if (part.Parameters != null) {
-                        writer.WriteStartElement("attributes");
-                        foreach (Parameter parameter in part.Parameters)
-                            parameter.AcceptVisitor(this);
+                    if (!first)
                         writer.WriteEndElement();
+
+                    // Escriu la llista d'atributs.
+                    //
+                    first = true;
+                    foreach (Parameter parameter in part.Parameters) {
+                        if (first) {
+                            first = false;
+                            writer.WriteStartElement("attributes");
+                        }
+                        parameter.AcceptVisitor(this);
                     }
+                    if (!first)
+                        writer.WriteEndElement();
 
                     writer.WriteEndElement();
                 }
@@ -317,12 +338,28 @@
             }
         }
 
+        /// <summary>
+        /// Constructor del objecte.
+        /// </summary>
+        /// <param name="stream">Stream de sortida.</param>
+        /// 
         public XmlBoardWriter(Stream stream) {
+
+            if (stream == null)
+                throw new ArgumentNullException("stream");
 
             this.stream = stream;
         }
 
+        /// <summary>
+        /// Escriu la placa en el stream de sortida.
+        /// </summary>
+        /// <param name="board">La placa.</param>
+        /// 
         public void Write(Board board) {
+
+            if (board == null)
+                throw new ArgumentNullException("board");
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
