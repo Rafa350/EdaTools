@@ -68,13 +68,27 @@
         /// </summary>
         /// <param name="center"></param>
         /// <param name="radius"></param>
-        /// <param name="startAngle"></param>
-        /// <param name="endAngle"></param>
+        /// <param name="deltaAngle"></param>
+        /// <param name="deltaAngle"></param>
         /// <param name="thickness"></param>
         /// <returns></returns>
-        public static Polygon BuildArcSegment(Point center, double radius, double startAngle, double endAngle, double thickness) {
+        public static Polygon BuildArcSegment(Point center, double radius, double startAngle, double angle, double thickness) {
 
-            return new Polygon(PointsFromArc(center, radius, startAngle, endAngle, thickness));
+            double endAngle = startAngle + angle;
+            double sides = Math.Floor((Math.Abs(angle)) * 32.0 / 360.0);
+
+            Polygon polygon = new Polygon();
+
+            double rAngle = startAngle * Math.PI / 180.0;
+            double rDelta = angle / sides * Math.PI / 180.0;
+            for (int i = 0; i <= (int) sides; i++) {
+                polygon.AddPoint(
+                    new Point(
+                        center.X + (radius * Math.Cos(rAngle)),
+                        center.Y + (radius * Math.Sin(rAngle))));
+                rAngle += rDelta;
+            }
+            return polygon;
         }
 
         /// <summary>
@@ -178,6 +192,43 @@
                     polygon.Transform(m);
                 }
             }
+
+            return polygon;
+        }
+
+        /// <summary>
+        /// Crea una polygoin en forma de creu.
+        /// </summary>
+        /// <param name="position">Posicio del centre.</param>
+        /// <param name="size">Tamany.</param>
+        /// <param name="thickness">Amplada dels braços</param>
+        /// <param name="rotation">Angle de rotacio.</param>
+        /// <returns>El poligon.</returns>
+        /// 
+        public static Polygon BuildCross(Point position, Size size, double thickness, double rotation) {
+
+            double dx = size.Width / 2;
+            double dy = size.Height / 2;
+            double dt = thickness / 2;
+
+            double x0 = position.X;
+            double y0 = position.Y;
+
+            double x1 = x0 - dx;
+            double y1 = y0 - dy;
+
+            double x2 = x0 + dx;
+            double y2 = y0 + dy;
+
+            Point[] points = new Point[12];
+            points[0].X = x1;
+            points[0].Y = y0 - dt;
+            points[1].X = x0 - dt;
+            points[1].Y = y0 - dt;
+            points[2].X = x0 - dt;
+            points[2].Y = y1;
+
+            Polygon polygon = new Polygon(points);
 
             return polygon;
         }

@@ -75,49 +75,56 @@
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
-        /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(double inflate = 0) {
+        public override Polygon GetPolygon() {
 
-            Polygon polygon;
+            Polygon polygon = GetPourPolygon(0);
+            polygon.AddChild(PolygonBuilder.BuildCircle(Position, drill / 2));
+
+            return polygon;
+        }
+
+        /// <summary>
+        /// Crea el poligon espaiat del element.
+        /// </summary>
+        /// <param name="spacing">Espaiat</param>
+        /// <returns>El poligon.</returns>
+        /// 
+        public override Polygon GetPourPolygon(double spacing) {
+
+        Polygon polygon;
             switch (shape) {
                 case ThPadShape.Square:
                     polygon = PolygonBuilder.BuildRectangle(
-                        Position, 
-                        new Size(topSize + (inflate * 2), topSize + (inflate * 2)), 
-                        inflate,
+                        Position,
+                        new Size(topSize + (spacing * 2), topSize + (spacing * 2)),
+                        spacing,
                         rotation);
                     break;
 
                 case ThPadShape.Octogonal:
                     polygon = PolygonBuilder.BuildRegularPolygon(
-                        8, 
-                        Position, 
-                        (topSize / 2) + inflate, 
+                        8,
+                        Position,
+                        (topSize / 2) + spacing,
                         rotation);
                     break;
 
                 case ThPadShape.Oval:
                     polygon = PolygonBuilder.BuildRectangle(
-                        Position, 
-                        new Size((topSize * 2) + (inflate * 2), topSize + (inflate * 2)), 
-                        (topSize / 2) + inflate,
+                        Position,
+                        new Size((topSize * 2) + (spacing * 2), topSize + (spacing * 2)),
+                        (topSize / 2) + spacing,
                         rotation);
                     break;
 
                 default:
                     polygon = PolygonBuilder.BuildCircle(
-                        Position, 
-                        (topSize / 2) + inflate);
+                        Position,
+                        (topSize / 2) + spacing);
                     break;
             }
-
-            // Si esta inflat, no genera el forat
-            //
-            if (inflate == 0)
-                polygon.AddChild(PolygonBuilder.BuildCircle(Position, drill / 2));
-
             return polygon;
         }
 

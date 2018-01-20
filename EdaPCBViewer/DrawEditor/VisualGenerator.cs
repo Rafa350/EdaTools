@@ -255,7 +255,14 @@
                             dc.PushTransform(localTransform);
 
                         Brush polygonBrush = CreateBrush(layer.Color);
-                        dc.DrawPolygon(polygonBrush, null, pad.GetPolygon());
+                        Polygon polygon = pad.GetPolygon();
+                        dc.DrawPolygon(polygonBrush, null, polygon);
+
+                        List<Polygon> polygonHoles = new List<Polygon>(polygon.Childs);
+                        if (polygonHoles.Count == 1) {
+                            Brush holeBrush = CreateBrush(Colors.Black);
+                            dc.DrawPolygon(holeBrush, null, polygonHoles[0]);
+                        }
 
                         dc.PushTransform(new ScaleTransform(1, -1, pad.Position.X, pad.Position.Y));
                         Brush textBrush = CreateBrush(Colors.Yellow);

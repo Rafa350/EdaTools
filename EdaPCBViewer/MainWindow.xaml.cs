@@ -2,11 +2,10 @@
 
     using Eda.PCBViewer.DrawEditor;
     using Eda.PCBViewer.DrawEditor.Tools;
-    using Eda.PCBViewer.DrawEditor.Visuals;
-    using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.IO;
     using MikroPic.EdaTools.v1.Pcb.Import;
     using MikroPic.EdaTools.v1.Pcb.Import.Eagle;
+    using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Pcb.Model.IO;
     using System;
     using System.IO;
     using System.Windows;
@@ -152,13 +151,13 @@
 
                 HitTestResult result = VisualTreeHelper.HitTest(content, e.GetPosition(content));
                 if (result.VisualHit != null) {
-                    ElementVisual visual = result.VisualHit as ElementVisual;
+                    DrawingVisual visual = result.VisualHit as DrawingVisual;
                     if (visual != null) {
-                        visual.IsSelected = !visual.IsSelected;
+                        /*visual.IsSelected = !visual.IsSelected;
                         foreach (ElementVisual child in content.Visuals) {
                             if (child.Part == visual.Part)
                                 child.IsSelected = visual.IsSelected;
-                        }
+                        }*/
                     }
                 }
             }

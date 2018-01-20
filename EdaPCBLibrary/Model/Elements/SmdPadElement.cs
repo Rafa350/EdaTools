@@ -51,13 +51,23 @@
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
-        /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(double inflate = 0) {
+        public override Polygon GetPolygon() {
+
+            return PolygonBuilder.BuildRectangle(Position, Size, Radius, rotation);
+        }
+
+        /// <summary>
+        /// Crea el poligon espaiat del element.
+        /// </summary>
+        /// <param name="spacing">Espaiat</param>
+        /// <returns>El poligon.</returns>
+        /// 
+        public override Polygon GetPourPolygon(double spacing) {
 
             return PolygonBuilder.BuildRectangle(Position,
-                new Size(size.Width + (inflate * 2), size.Height + (inflate * 2)), Radius + inflate, rotation);
+                new Size(size.Width + (spacing * 2), size.Height + (spacing * 2)), Radius + spacing, rotation);
         }
 
         /// <summary>

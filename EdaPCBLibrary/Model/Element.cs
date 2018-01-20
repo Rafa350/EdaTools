@@ -18,10 +18,17 @@
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
-        /// <param name="inflate">Increment de tamany</param>
         /// <returns>El poligon</returns>
         /// 
-        public abstract Polygon GetPolygon(double inflate = 0);
+        public abstract Polygon GetPolygon();
+
+        /// <summary>
+        /// Crea el poligon espaiat del element.
+        /// </summary>
+        /// <param name="spacing">Espaiat</param>
+        /// <returns>El poligon.</returns>
+        /// 
+        public abstract Polygon GetPourPolygon(double spacing);
 
         /// <summary>
         /// Calula el bounding box del element.

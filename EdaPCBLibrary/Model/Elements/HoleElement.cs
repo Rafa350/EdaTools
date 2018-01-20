@@ -47,12 +47,22 @@
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
-        /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(double inflate = 0) {
+        public override Polygon GetPolygon() {
 
-            return PolygonBuilder.BuildCircle(position, (drill / 2) + inflate);
+            return PolygonBuilder.BuildCircle(position, drill / 2);
+        }
+
+        /// <summary>
+        /// Crea el poligon espaiat del element.
+        /// </summary>
+        /// <param name="spacing">Espaiat</param>
+        /// <returns>El poligon.</returns>
+        /// 
+        public override Polygon GetPourPolygon(double spacing) {
+
+            return PolygonBuilder.BuildCircle(position, (drill / 2) + spacing);
         }
 
         /// <summary>

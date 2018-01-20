@@ -201,6 +201,10 @@
                         element = ParseWireNode(node);
                         break;
 
+                    case "rectangle":
+                        element = ParseRectangleNode(node);
+                        break;
+
                     case "text":
                         element = ParseTextNode(node);
                         break;
@@ -812,7 +816,7 @@
 
                 case 21: // Top placement
                 case 22: // Bottom placement
-                    return Colors.LightGray;
+                    return Color.FromArgb(128, Colors.LightGray.R, Colors.LightGray.G, Colors.LightGray.B); 
 
                 case 25:
                 case 26:

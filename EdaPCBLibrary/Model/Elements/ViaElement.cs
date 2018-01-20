@@ -22,12 +22,12 @@
             Buried
         }
 
-        private const double drcOuterMin = 0.125;
-        private const double drcOuterMax = 2.5;
-        private const double drcOuterPercent = 0.25;
-        private const double drcInnerMin = 0.125;
-        private const double drcInnerMax = 2.5;
-        private const double drcInnerPercent = 0.25;
+        private const double drcOuterSizeMin = 0.125;
+        private const double drcOuterSizeMax = 2.5;
+        private const double drcOuterSizePercent = 0.25;
+        private const double drcInnerSizeMin = 0.125;
+        private const double drcInnerSizeMax = 2.5;
+        private const double drcInnerSizePercent = 0.25;
 
         private Point position;
         private double drill;
@@ -84,27 +84,35 @@
         /// </summary>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(double inflate = 0) {
+        public override Polygon GetPolygon() {
+
+            Polygon polygon = GetPourPolygon(0);
+            polygon.AddChild(PolygonBuilder.BuildCircle(position, drill / 2));
+            return polygon;
+        }
+
+        /// <summary>
+        /// Crea el poligon espaiat del element.
+        /// </summary>
+        /// <param name="spacing">Espaiat</param>
+        /// <returns>El poligon.</returns>
+        /// 
+        public override Polygon GetPourPolygon(double spacing) {
 
             Polygon polygon;
             switch (shape) {
                 case ViaShape.Square:
-                    polygon = PolygonBuilder.BuildRectangle(position, new Size((OuterSize / 2) + inflate, (OuterSize / 2) + inflate), 0, 0);
+                    polygon = PolygonBuilder.BuildRectangle(position, new Size(OuterSize + spacing * 2, OuterSize + spacing * 2), 0, 0);
                     break;
 
                 case ViaShape.Octogonal:
-                    polygon = PolygonBuilder.BuildRegularPolygon(8, position, (OuterSize / 2) + inflate, 0);
+                    polygon = PolygonBuilder.BuildRegularPolygon(8, position, (OuterSize / 2) + spacing, 0);
                     break;
 
                 default:
-                    polygon = PolygonBuilder.BuildCircle(position, (OuterSize / 2) + inflate);
+                    polygon = PolygonBuilder.BuildCircle(position, (OuterSize / 2) + spacing);
                     break;
             }
-
-            // Si esta inflat, no genera el forat.
-            //
-            if (inflate == 0)
-                polygon.AddChild(PolygonBuilder.BuildCircle(position, drill / 2));
 
             return polygon;
         }
@@ -156,8 +164,8 @@
         /// 
         public double OuterSize {
             get {
-                double dimension = outerSize == 0 ? 2 * (drill * drcOuterPercent) + drill : outerSize;
-                return Math.Max(drcOuterMin, Math.Min(drcOuterMax, dimension));
+                double dimension = outerSize == 0 ? 2 * (drill * drcOuterSizePercent) + drill : outerSize;
+                return Math.Max(drcOuterSizeMin, Math.Min(drcOuterSizeMax, dimension));
             }
             set {
                 outerSize = value;
@@ -170,8 +178,8 @@
         /// 
         public double InnerSize {
             get {
-                double dimension = innerSize == 0 ? 2 * (drill * drcInnerPercent) + drill : innerSize;
-                return Math.Max(drcInnerMin, Math.Min(drcInnerMax, dimension));
+                double dimension = innerSize == 0 ? 2 * (drill * drcInnerSizePercent) + drill : innerSize;
+                return Math.Max(drcInnerSizeMin, Math.Min(drcInnerSizeMax, dimension));
             }
             set {
                 innerSize = value;

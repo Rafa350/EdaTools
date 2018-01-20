@@ -68,7 +68,8 @@
                 writer.WriteAttribute("angle", arc.Angle);
                 if (arc.Thickness > 0)
                     writer.WriteAttribute("thickness", arc.Thickness);
-                writer.WriteAttributeString("lineCap", arc.LineCap.ToString());
+                if (arc.LineCap != LineElement.LineCapStyle.Round)
+                    writer.WriteAttributeString("lineCap", arc.LineCap.ToString());
 
                 Signal signal = board.GetSignal(arc, currentPart, false);
                 if (signal != null)

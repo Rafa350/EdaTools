@@ -91,15 +91,25 @@
         /// <summary>
         /// Creas el poligon del element.
         /// </summary>
-        /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(double inflate = 0) {
+        public override Polygon GetPolygon() {
 
             Polygon polygon = new Polygon();
             foreach (Segment segment in segments)
                 polygon.AddPoint(segment.Position);
             return polygon;
+        }
+
+        /// <summary>
+        /// Crea el poligon espaiat del element.
+        /// </summary>
+        /// <param name="spacing">Espaiat</param>
+        /// <returns>El poligon.</returns>
+        ///
+        public override Polygon GetPourPolygon(double spacing) {
+
+            throw new NotImplementedException();
         }
 
         /// <summary>

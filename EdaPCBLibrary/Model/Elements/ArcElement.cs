@@ -47,12 +47,22 @@
         /// <summary>
         /// Crea el poligon del objecte.
         /// </summary>
-        /// <param name="inflate">Increment de tamany.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon(double inflate = 0) {
+        public override Polygon GetPolygon() {
 
-            return PolygonBuilder.BuildArcSegment(Center, Radius, StartAngle, EndAngle, Thickness + (inflate * 2));
+            return PolygonBuilder.BuildArcSegment(Center, Radius, StartAngle, angle, Thickness);
+        }
+
+        /// <summary>
+        /// Crea el poligon espaiat del element.
+        /// </summary>
+        /// <param name="spacing">Espaiat</param>
+        /// <returns>El poligon.</returns>
+        /// 
+        public override Polygon GetPourPolygon(double spacing) {
+
+            return PolygonBuilder.BuildArcSegment(Center, Radius, StartAngle, angle, Thickness + (spacing * 2));
         }
 
         /// <summary>
@@ -76,7 +86,7 @@
             get {
                 double rAngle = angle * Math.PI / 180.0;
                 double x1 = StartPosition.X;
-                double y1 = EndPosition.Y;
+                double y1 = StartPosition.Y;
                 double x2 = EndPosition.X;
                 double y2 = EndPosition.Y;
 
@@ -114,19 +124,7 @@
         public double StartAngle {
             get {
                 Point c = Center;
-                double a = Math.Atan((StartPosition.Y - c.Y) / (StartPosition.X - c.X));
-                return a * 180.0 / Math.PI;
-            }
-        }
-
-        /// <summary>
-        /// Obte l'angle final de l'arc.
-        /// </summary>
-        /// 
-        public double EndAngle {
-            get {
-                Point c = Center;
-                double a = Math.Atan((EndPosition.Y - c.Y) / (EndPosition.X - c.X));
+                double a = Math.Atan2(StartPosition.Y - c.Y, StartPosition.X - c.X);
                 return a * 180.0 / Math.PI;
             }
         }

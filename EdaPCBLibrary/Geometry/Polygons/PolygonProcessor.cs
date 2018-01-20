@@ -43,15 +43,15 @@
         public static IEnumerable<Polygon> Clip(Polygon sourcePolygon, Polygon clipPolygon, ClipOperation op) {
 
             cp.Clear();
-            cp.AddPath(PolygonToPointList(sourcePolygon), PolyType.ptSubject, true);
-            cp.AddPath(PolygonToPointList(clipPolygon), PolyType.ptClip, true);
+            cp.AddPath(ToPointList(sourcePolygon), PolyType.ptSubject, true);
+            cp.AddPath(ToPointList(clipPolygon), PolyType.ptClip, true);
 
             List<List<IntPoint>> solution = new List<List<IntPoint>>();
             cp.Execute(GetClipType(op), solution, PolyFillType.pftNonZero);
 
             List<Polygon> result = new List<Polygon>();
             foreach (List<IntPoint> intPoints in solution)
-                result.Add(PointListToPolygon(intPoints));
+                result.Add(ToPolygon(intPoints));
             return result;
         }
 
@@ -66,16 +66,16 @@
         public static IEnumerable<Polygon> Clip(Polygon sourcePolygon, IEnumerable<Polygon> clipPolygons, ClipOperation op) {
 
             cp.Clear();
-            cp.AddPath(PolygonToPointList(sourcePolygon), PolyType.ptSubject, true);
+            cp.AddPath(ToPointList(sourcePolygon), PolyType.ptSubject, true);
             foreach (Polygon clipPolygon in clipPolygons)
-                cp.AddPath(PolygonToPointList(clipPolygon), PolyType.ptClip, true);
+                cp.AddPath(ToPointList(clipPolygon), PolyType.ptClip, true);
 
             List<List<IntPoint>> solution = new List<List<IntPoint>>();
             cp.Execute(GetClipType(op), solution, PolyFillType.pftNonZero);
 
             List<Polygon> result = new List<Polygon>();
             foreach (List<IntPoint> intPoints in solution)
-                result.Add(PointListToPolygon(intPoints));
+                result.Add(ToPolygon(intPoints));
             return result;
         }
 
@@ -87,63 +87,63 @@
         /// <param name="op">Operacio de retall.</param>
         /// <returns>Arbre de poligons.</returns>
         /// 
-        public static PolygonNode ClipExtended(Polygon sourcePolygon, IEnumerable<Polygon> clipPolygons, ClipOperation op) {
+        public static Polygon ClipExtended(Polygon sourcePolygon, IEnumerable<Polygon> clipPolygons, ClipOperation op) {
 
             cp.Clear();
-            cp.AddPath(PolygonToPointList(sourcePolygon), PolyType.ptSubject, true);
+            cp.AddPath(ToPointList(sourcePolygon), PolyType.ptSubject, true);
             foreach (Polygon clipPolygon in clipPolygons)
-                cp.AddPath(PolygonToPointList(clipPolygon), PolyType.ptClip, true);
+                cp.AddPath(ToPointList(clipPolygon), PolyType.ptClip, true);
 
             PolyTree solution = new PolyTree();
             cp.Execute(GetClipType(op), solution, PolyFillType.pftNonZero);
 
-            return PolyTreeToPolygonTree(solution);
+            return ToPolygon(solution);
         }
 
         /// <summary>
         /// Fusiona els poligons d'una llista que estiguin en contacte.
         /// </summary>
-        /// <param name="polygons">El poligons a fisionar.</param>
+        /// <param name="polygons">El poligons a fusionar.</param>
         /// <returns>La coleccio de poligons resultants de la fusio.</returns>
         /// 
         public static IEnumerable<Polygon> Union(IEnumerable<Polygon> polygons) {
 
             cp.Clear();
             foreach (Polygon polygon in polygons)
-                cp.AddPath(PolygonToPointList(polygon), PolyType.ptSubject, true);
+                cp.AddPath(ToPointList(polygon), PolyType.ptSubject, true);
 
             List<List<IntPoint>> solution = new List<List<IntPoint>>();
             cp.Execute(ClipType.ctUnion, solution, PolyFillType.pftNonZero);
 
             List<Polygon> result = new List<Polygon>();
             foreach (List<IntPoint> intPoints in solution)
-                result.Add(PointListToPolygon(intPoints));
+                result.Add(ToPolygon(intPoints));
             return result;
         }
 
         public static Polygon Offset(Polygon sourcePoligon, double offset, OffsetJoin oj = OffsetJoin.Mitter) {
 
             cpOffset.Clear();
-            cpOffset.AddPath(PolygonToPointList(sourcePoligon), GetJoinType(oj), EndType.etClosedPolygon);
+            cpOffset.AddPath(ToPointList(sourcePoligon), GetJoinType(oj), EndType.etClosedPolygon);
 
             List<List<IntPoint>> solutions = new List<List<IntPoint>>();
             cpOffset.Execute(ref solutions, offset * scaleFactor);
 
-            return PointListToPolygon(solutions[0]);
+            return ToPolygon(solutions[0]);
         }
 
         public static IEnumerable<Polygon> Offset(IEnumerable<Polygon> sourcePoligons, double offset, OffsetJoin oj = OffsetJoin.Mitter) {
 
             cpOffset.Clear();
             foreach (Polygon sourcePolygon in sourcePoligons)
-                cpOffset.AddPath(PolygonToPointList(sourcePolygon), GetJoinType(oj), EndType.etClosedPolygon);
+                cpOffset.AddPath(ToPointList(sourcePolygon), GetJoinType(oj), EndType.etClosedPolygon);
 
             List<List<IntPoint>> solutions = new List<List<IntPoint>>();
             cpOffset.Execute(ref solutions, offset * scaleFactor);
 
             List<Polygon> results = new List<Polygon>(solutions.Count);
             foreach (List<IntPoint> solution in solutions)
-                results.Add(PointListToPolygon(solution));
+                results.Add(ToPolygon(solution));
 
             return results;
         }
@@ -154,7 +154,7 @@
         /// <param name="polygon">El poligon.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        private static List<IntPoint> PolygonToPointList(Polygon polygon) {
+        private static List<IntPoint> ToPointList(Polygon polygon) {
 
             List<IntPoint> intPoints = new List<IntPoint>();
             if (polygon.PointCount > 0)
@@ -169,7 +169,7 @@
         /// <param name="points">La llista de punts.</param>
         /// <returns>El poligon.</returns>
         /// 
-        private static Polygon PointListToPolygon(IEnumerable<IntPoint> points) {
+        private static Polygon ToPolygon(IEnumerable<IntPoint> points) {
 
             Polygon polygon = new Polygon();
             foreach (IntPoint intPoint in points)
@@ -178,26 +178,25 @@
         }
 
         /// <summary>
-        /// Conversio a PolygonNode
+        /// Conversio a poligon
         /// </summary>
         /// <param name="polyNode">El PolyNode d'entrada.</param>
-        /// <returns>El PolygonTree de sortida.</returns>
+        /// <returns>El poligon.</returns>
         /// 
-        private static PolygonNode PolyTreeToPolygonTree(PolyNode polyNode) {
+        private static Polygon ToPolygon(PolyNode polyNode) {
 
-            Polygon polygon = null;
-            List<PolygonNode> childs = null;
+            Polygon polygon = new Polygon();
 
             if (polyNode.Contour.Count > 0)
-                polygon = PointListToPolygon(polyNode.Contour);
+                foreach (IntPoint intPoint in polyNode.Contour)
+                    polygon.AddPoint(new Point((double)intPoint.X / scaleFactor, (double)intPoint.Y / scaleFactor));
 
             if (polyNode.ChildCount > 0) {
-                childs = new List<PolygonNode>(polyNode.ChildCount);
                 foreach (PolyNode polyNodeChild in polyNode.Childs)
-                    childs.Add(PolyTreeToPolygonTree(polyNodeChild));
+                    polygon.AddChild(ToPolygon(polyNodeChild));
             }
 
-            return new PolygonNode(polygon, childs);
+            return polygon;
         }
 
         /// <summary>

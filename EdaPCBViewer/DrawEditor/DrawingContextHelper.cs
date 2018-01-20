@@ -169,14 +169,16 @@
 
         private static void StreamPolygon(StreamGeometryContext ctx, Polygon polygon, bool isStroked) {
 
-            bool first = true;
-            foreach (Point point in polygon.Points) {
-                if (first) {
-                    first = false;
-                    ctx.BeginFigure(point, true, true);
+            if (polygon.HasPoints) {
+                bool first = true;
+                foreach (Point point in polygon.Points) {
+                    if (first) {
+                        first = false;
+                        ctx.BeginFigure(point, true, true);
+                    }
+                    else
+                        ctx.LineTo(point, isStroked, true);
                 }
-                else
-                    ctx.LineTo(point, isStroked, true);
             }
         }
 

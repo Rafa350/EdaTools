@@ -336,8 +336,9 @@
                     gb.SelectAperture(ap);
 
                     Point p1 = localTransformation.Transform(line.StartPosition);
-                    gb.MoveTo(p1);
                     Point p2 = localTransformation.Transform(line.EndPosition);
+
+                    gb.MoveTo(p1);
                     gb.LineTo(p2);
                 }
             }
@@ -355,12 +356,15 @@
                     gb.SelectAperture(ap);
 
                     Point p1 = localTransformation.Transform(arc.StartPosition);
-                    gb.MoveTo(p1);
                     Point p2 = localTransformation.Transform(arc.EndPosition);
                     Point c = localTransformation.Transform(arc.Center);
+
+                    gb.MoveTo(p1);
                     gb.ArcTo(
-                        p2.X, p2.Y,
-                        c.X - p1.X, c.Y - p1.Y,
+                        p2.X,
+                        p2.Y,
+                        c.X - p1.X,
+                        c.Y - p1.Y,
                         arc.Angle < 0 ? ArcDirection.CW : ArcDirection.CCW);
                 }
             }
@@ -516,8 +520,8 @@
 
                 if (board.IsOnAnyLayer(region, layers)) {
 
-                    PolygonNode polygonTree = CreatePolygonTree(board, region);
-                    ProcessPolygonTree(polygonTree, region.Thickness);
+                    Polygon polygon = CreatePolygon(board, region);
+                    ProcessPolygon(polygon, region.Thickness);
                 }
             }
 
@@ -537,7 +541,7 @@
             /// <param name="region">La regio.</param>
             /// <returns>La coleccio de poligons.</returns>
             /// 
-            private PolygonNode CreatePolygonTree(Board board, RegionElement region) {
+            private Polygon CreatePolygon(Board board, RegionElement region) {
 
                 Polygon regionPolygon = region.GetPolygon();
                 regionPolygon.Transform(localTransformation);
@@ -545,7 +549,7 @@
                 IEnumerable<Layer> regionLayers = board.GetLayers(region);
                 Signal regionSignal = board.GetSignal(region, null, false);
 
-                double inflate = 0.15 + region.Thickness / 2;
+                double spacing = 0.15 + region.Thickness / 2;
                 List<Polygon> holePolygons = new List<Polygon>();
 
                 Layer restrict = board.GetLayer(LayerId.TopRestrict);
@@ -557,7 +561,7 @@
                         (board.IsOnAnyLayer(element, regionLayers) || board.IsOnLayer(element, restrict))) {
                         IConectable item = element as IConectable;
                         if ((item == null) || (board.GetSignal(item, null, false) != regionSignal)) {
-                            Polygon elementPolygon = element.GetPolygon(inflate);
+                            Polygon elementPolygon = element.GetPourPolygon(spacing);
                             holePolygons.AddRange(PolygonProcessor.Clip(elementPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));
                         }
                     }
@@ -571,7 +575,7 @@
                             (board.IsOnAnyLayer(element, regionLayers) || board.IsOnLayer(element, restrict))) {
                             IConectable item = element as IConectable;
                             if ((item == null) || (board.GetSignal(item, part, false) != regionSignal)) {
-                                Polygon elementPolygon = element.GetPolygon(inflate);
+                                Polygon elementPolygon = element.GetPourPolygon(spacing);
                                 elementPolygon.Transform(part.Transformation);
                                 holePolygons.AddRange(PolygonProcessor.Clip(elementPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));
                             }
@@ -582,22 +586,22 @@
                 return PolygonProcessor.ClipExtended(regionPolygon, holePolygons, PolygonProcessor.ClipOperation.Diference);
             }
 
-            private void ProcessPolygonTree(PolygonNode polygonTree, double thickness) {
+            private void ProcessPolygon(Polygon polygon, double thickness) {
 
-                ProcessPolygonTree(polygonTree, 0, thickness);
+                ProcessPolygon(polygon, 0, thickness);
             }
 
-            private void ProcessPolygonTree(PolygonNode polygonTree, int level, double thickness) {
+            private void ProcessPolygon(Polygon polygon, int level, double thickness) {
 
                 // Procesa el poligon
                 //
-                if (polygonTree.Polygon != null) {
+                if (polygon.HasPoints) {
 
                     // Dibuixa el contingut de la regio
                     //
                     gb.LoadPolarity((level % 2) == 0 ? Polarity.Clear : Polarity.Dark);
                     gb.BeginRegion();
-                    gb.Region(polygonTree.Polygon.Points, true);
+                    gb.Region(polygon.Points, true);
                     gb.EndRegion();
 
                     // Dibuixa el perfil de la regio
@@ -605,14 +609,14 @@
                     Aperture ap = apertureDict.GetCircleAperture(thickness);
                     gb.SelectAperture(ap);
                     gb.LoadPolarity(Polarity.Dark);
-                    gb.Polygon(polygonTree.Polygon.Points);
+                    gb.Polygon(polygon.Points);
                 }
 
                 // Processa els fills. Amb level < 2 evitem els poligons orfres
                 //
-                if (polygonTree.HasChilds && (level < 2))
-                    foreach (PolygonNode polygonTreeChild in polygonTree.Childs)
-                        ProcessPolygonTree(polygonTreeChild, level + 1, thickness);
+                if (polygon.HasChilds && (level < 2))
+                    foreach (Polygon child in polygon.Childs)
+                        ProcessPolygon(child, level + 1, thickness);
             }
         }
     }

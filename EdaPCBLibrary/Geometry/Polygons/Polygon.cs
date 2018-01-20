@@ -79,7 +79,13 @@
         /// 
         public Polygon Clone() {
 
-            Polygon polygon = new Polygon(points);
+            Polygon polygon;
+
+            if (points == null)
+                polygon = new Polygon();
+            else
+                polygon = new Polygon(points);
+
             if (childs != null)
                 foreach (Polygon child in childs)
                     polygon.AddChild(child.Clone());
@@ -161,34 +167,52 @@
         /// 
         public Rect BoundingBox {
             get {
-                double minX = Double.MaxValue;
-                double minY = Double.MaxValue;
-                double maxX = Double.MinValue;
-                double maxY = Double.MinValue;
+                if (points == null)
+                    return Rect.Empty;
 
-                foreach (Point point in points) {
+                else {
+                    double minX = Double.MaxValue;
+                    double minY = Double.MaxValue;
+                    double maxX = Double.MinValue;
+                    double maxY = Double.MinValue;
 
-                    if (point.X < minX)
-                        minX = point.X;
-                    if (point.Y < minY)
-                        minY = point.Y;
+                    foreach (Point point in points) {
 
-                    if (point.X > maxX)
-                        maxX = point.X;
-                    if (point.Y > maxY)
-                        maxY = point.Y;
+                        if (point.X < minX)
+                            minX = point.X;
+                        if (point.Y < minY)
+                            minY = point.Y;
+
+                        if (point.X > maxX)
+                            maxX = point.X;
+                        if (point.Y > maxY)
+                            maxY = point.Y;
+                    }
+
+                    return new Rect(minX, minY, maxX - minX, maxY - minY);
                 }
-
-                return new Rect(minX, minY, maxX - minX, maxY - minY);
             }
         }
 
+        /// <summary>
+        /// Indica si es valid.
+        /// </summary>
+        /// 
         public bool IsValid {
             get {
+                if (childs != null)
+                    foreach (Polygon child in childs)
+                        if (!child.IsValid)
+                            return false;
+
                 return PointCount == 0 || PointCount >= 3;
             }
         }
 
+        /// <summary>
+        /// Indica si conte punts.
+        /// </summary>
+        /// 
         public bool HasPoints {
             get {
                 return points != null;
@@ -196,7 +220,7 @@
         }
 
         /// <summary>
-        /// Obte el numero de puns en el poligon
+        /// Obte el numero de punts.
         /// </summary>
         /// 
         public int PointCount {
@@ -205,6 +229,10 @@
             }
         }
 
+        /// <summary>
+        /// Enumera la llista de punts.
+        /// </summary>
+        /// 
         public IEnumerable<Point> Points {
             get {
                 return points;
@@ -212,7 +240,7 @@
         }
 
         /// <summary>
-        /// Indica si el poligon te fills.
+        /// Indica si te fills.
         /// </summary>
         /// 
         public bool HasChilds {
@@ -221,6 +249,9 @@
             }
         }
 
+        /// <summary>
+        /// Obte el numero fills
+        /// </summary>
         public int ChildCount {
             get {
                 return (childs == null) ? 0 : childs.Count;
