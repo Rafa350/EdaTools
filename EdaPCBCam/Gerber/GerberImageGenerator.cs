@@ -310,7 +310,7 @@
             /// <summary>
             /// Construcxtor del objecte.
             /// </summary>
-            /// <param name="gb">El objecte GerberBuilder.</param>
+            /// <param name="gb">L'bjecte GerberBuilder.</param>
             /// <param name="board">La placa a procesar.</param>
             /// <param name="layers">Capes a tenir en compte.</param>
             /// <param name="apertureDict">Diccionari d'apertures.</param>
@@ -326,7 +326,7 @@
             /// <summary>
             /// Visita un element Line
             /// </summary>
-            /// <param name="line">El element a visitar.</param>
+            /// <param name="line">L'element a visitar.</param>
             /// 
             public override void Visit(LineElement line) {
 
@@ -346,7 +346,7 @@
             /// <summary>
             /// Visita un element de tipus Arc.
             /// </summary>
-            /// <param name="arc">El element a visitar.</param>
+            /// <param name="arc">L' element a visitar.</param>
             /// 
             public override void Visit(ArcElement arc) {
 
@@ -372,7 +372,7 @@
             /// <summary>
             /// Visita un element de tipus Rectangle.
             /// </summary>
-            /// <param name="rectangle">El element a visitar.</param>
+            /// <param name="rectangle">L'element a visitar.</param>
             /// 
             public override void Visit(RectangleElement rectangle) {
 
@@ -389,6 +389,11 @@
                 }
             }
 
+            /// <summary>
+            /// Visita un element de tipus cercle
+            /// </summary>
+            /// <param name="circle">L'element a visitar.</param>
+            /// 
             public override void Visit(CircleElement circle) {
 
                 if (board.IsOnAnyLayer(circle, layers)) {
@@ -404,6 +409,11 @@
                 }
             }
 
+            /// <summary>
+            /// Visita un element de tipus via.
+            /// </summary>
+            /// <param name="via">L'element a visitar.</param>
+            /// 
             public override void Visit(ViaElement via) {
 
                 if (board.IsOnAnyLayer(via, layers)) {
@@ -431,7 +441,7 @@
             /// <summary>
             /// Visita un element de tipus ThPad
             /// </summary>
-            /// <param name="pad">El element a visitar.</param>
+            /// <param name="pad">L'element a visitar.</param>
             /// 
             public override void Visit(ThPadElement pad) {
 
@@ -465,7 +475,7 @@
             /// <summary>
             /// Visita un element de tipus SmdPad
             /// </summary>
-            /// <param name="pad">El element a visitar.</param>
+            /// <param name="pad">L'element a visitar.</param>
             /// 
             public override void Visit(SmdPadElement pad) {
 
@@ -486,7 +496,7 @@
             /// <summary>
             /// Visita un objecte Part
             /// </summary>
-            /// <param name="part">El objecte a visitar</param>
+            /// <param name="part">L'objecte a visitar</param>
             /// 
             public override void Visit(Part part) {
 

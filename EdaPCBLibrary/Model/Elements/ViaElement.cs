@@ -106,7 +106,7 @@
                     break;
 
                 case ViaShape.Octogonal:
-                    polygon = PolygonBuilder.BuildRegularPolygon(8, position, (OuterSize / 2) + spacing, 0);
+                    polygon = PolygonBuilder.BuildRegularPolygon(8, position, (OuterSize / 2) + spacing, 22.5);
                     break;
 
                 default:

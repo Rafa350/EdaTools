@@ -225,17 +225,27 @@
         /// 
         public int PointCount {
             get {
-                return points == null ? 0 :  points.Count;
+                return points == null ? 0 : points.Count;
             }
         }
 
         /// <summary>
-        /// Enumera la llista de punts.
+        /// Obte un enumerador de punts.
         /// </summary>
         /// 
         public IEnumerable<Point> Points {
             get {
                 return points;
+            }
+        }
+
+        /// <summary>
+        /// Obte un array de punts.
+        /// </summary>
+        /// 
+        public Point[] PointArray {
+            get {
+                return points == null ? null :  points.ToArray();
             }
         }
 
@@ -250,8 +260,9 @@
         }
 
         /// <summary>
-        /// Obte el numero fills
+        /// Obte el numero poligons fills
         /// </summary>
+        /// 
         public int ChildCount {
             get {
                 return (childs == null) ? 0 : childs.Count;
@@ -259,12 +270,22 @@
         }
 
         /// <summary>
-        /// Enumera la llista de fills.
+        /// Obte un enumerador de poligons fills.
         /// </summary>
         /// 
         public IEnumerable<Polygon> Childs {
             get {
                 return childs;
+            }
+        }
+
+        /// <summary>
+        /// Obte un array de poligons fills
+        /// </summary>
+        /// 
+        public Polygon[] ChildArray {
+            get {
+                return childs == null ? null : childs.ToArray();
             }
         }
     }

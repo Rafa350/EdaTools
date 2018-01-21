@@ -96,8 +96,13 @@
         public override Polygon GetPolygon() {
 
             Polygon polygon = new Polygon();
-            foreach (Segment segment in segments)
-                polygon.AddPoint(segment.Position);
+            foreach (Segment segment in segments) {
+                if (segment.Angle == 0)
+                    polygon.AddPoint(segment.Position);
+                else {
+                    polygon.AddPoint(segment.Position); // Provisional
+                }
+            }
             return polygon;
         }
 

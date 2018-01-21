@@ -108,7 +108,7 @@
                         8,
                         Position,
                         (topSize / 2) + spacing,
-                        rotation);
+                        rotation + 22.5);
                     break;
 
                 case ThPadShape.Oval:
