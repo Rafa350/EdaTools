@@ -9,38 +9,6 @@
     /// </summary>
     public static class PolygonBuilder {
 
-        private const int circleSegments = 32;
-
-        private const double minSegmentAngle = 5.0;
-        private const double minSegmentSize = 0.05;
-        private const double numSegments = 32;
-
-        private static readonly Point[] circlePoints;
-
-        /// <summary>
-        /// Constructor estatic de l'objecte.
-        /// </summary>
-        /// 
-        static PolygonBuilder() {
-
-            // Inicialitza la taula de punts pel calcul de cercles. Els
-            // punts corresponen a un cercle unitari centrat en l'origen.
-            // D'aquesta manera ens estalviem de calcular els sinus i
-            // cosinus cada cop que calgui dibuixar un cercle.
-            //
-            circlePoints = new Point[circleSegments + 1];
-            double angle = 0;
-            double delta = (360.0 * Math.PI / 180.0) / circleSegments;
-            for (int i = 0; i < circleSegments; i++) {
-                circlePoints[i] = new Point(Math.Cos(angle), Math.Sin(angle));
-                angle += delta;
-            }
-
-            // Tanca el cercle per facilitar els calculs
-            //
-            circlePoints[circleSegments] = circlePoints[0];
-        }
-
         /// <summary>
         /// Crea un poligon en forma de segment de linia amb finals arrodonits
         /// </summary>
@@ -51,23 +19,15 @@
         /// 
         public static Polygon BuildLineSegment(Point start, Point end, double thickness) {
 
-            // Crea el segment en la direccio X+ i Y=0
-            //
             double dx = end.X - start.X;
             double dy = end.Y - start.Y;
-            double length = Math.Sqrt((dx * dx) + (dy * dy));
-            Point[] points = PointsFromLine(length, thickness);
-
-            // Realitza la transformacio dels punts, a la posicio i 
-            // orientacio finals.
-            //
-            Matrix m = new Matrix();
-            m.Translate(start.X, start.Y);
             double angle = Math.Atan2(dy, dx) * 180.0 / Math.PI;
-            m.RotateAt(angle, start.X, start.Y);
-            m.Transform(points);
 
-            return new Polygon(points);
+            Polygon polygon = new Polygon();
+            polygon.AddPoints(ArcPoints(end, thickness / 2, 270 + angle, 180));
+            polygon.AddPoints(ArcPoints(start, thickness / 2, 90 + angle, 180));
+
+            return polygon;
         }
 
         /// <summary>
@@ -143,7 +103,7 @@
                 polygon.AddPoint(new Point(x - dx, y - dy));
             }
 
-            // Rectangle amb cantos arrodonides
+            // Rectangle amb cantonades arrodonides
             //
             else {
                 polygon.AddPoints(ArcPoints(new Point(x + dx, y + dy), radius, 0, 90));
@@ -285,14 +245,15 @@
         /// <param name="radius">Radi.</param>
         /// <param name="startAngle">Angle inicial</param>
         /// <param name="angle">Angle del arc.</param>
-        /// <returns>L'array de punts. Com es obert, el numero de punns es
+        /// <param name="discardLast">Si es true, descarta l'ultim punt.</param>
+        /// <returns>L'array de punts. Com es obert, el numero de punts es
         /// el numero de segments mes u.
         /// </returns>
         /// 
-        private static Point[] ArcPoints(Point center, double radius, double startAngle, double angle) {
+        private static Point[] ArcPoints(Point center, double radius, double startAngle, double angle, bool discardLast = false) {
 
             int numSegments = (int) Math.Floor((Math.Abs(angle)) * 32.0 / 360.0);
-            int numPoints = numSegments + 1;
+            int numPoints = numSegments + (discardLast ? 0 : 1);
 
             // Calcula el punt inicial
             //
@@ -315,56 +276,6 @@
                 double temp = x;
                 x = cos * x - sin * y;
                 y = sin * temp + cos * y;
-            }
-
-            return points;
-        }
-
-        /// <summary>
-        /// Genera una sequencia de puns per un poligon d'una traç amb origen 0,0,
-        /// i extrems de linia arrodonits. 
-        /// </summary>
-        /// <param name="length">Longitut de la linia.</param>
-        /// <param name="thickness">Amplada de linia.</param>
-        /// <returns>La sequencia de punts.</returns>
-        /// 
-        private static Point[] PointsFromLine(double length, double thickness) {
-
-            double radius = thickness / 2;
-
-            Point[] q0Points = PointsFromQuadrant(new Point(length, 0), radius, 0);
-            Point[] q1Points = PointsFromQuadrant(new Point(0, 0), radius, 1);
-            Point[] q2Points = PointsFromQuadrant(new Point(0, 0), radius, 2);
-            Point[] q3Points = PointsFromQuadrant(new Point(length, 0), radius, 3);
-
-            Point[] points = new Point[4 * 9];
-            q0Points.CopyTo(points, 0);
-            q1Points.CopyTo(points, 9);
-            q2Points.CopyTo(points, 18);
-            q3Points.CopyTo(points, 27);
-
-            return points;
-        }
-
-        /// <summary>
-        /// Crea una sequencia de punts per un quadrant. 
-        /// </summary>
-        /// <param name="center">Centre del quandrant.</param>
-        /// <param name="radius">Radi de curvatura.</param>
-        /// <param name="quadrant">Numero de quadrant (0..3)</param>
-        /// <returns>La llista de punts.</returns>
-        /// 
-        private static Point[] PointsFromQuadrant(Point center, double radius, int quadrant) {
-
-            // Crea el cercle unitari
-            //
-            Point[] points = new Point[9];
-
-            double delta = (360.0 * Math.PI / 180.0) / 32;
-            double angle = quadrant * 90 * Math.PI / 180;
-            for (int i = 0; i < 9; i++) {
-                points[i] = new Point(center.X + (radius * Math.Cos(angle)), center.Y + (radius * Math.Sin(angle)));
-                angle += delta;
             }
 
             return points;
