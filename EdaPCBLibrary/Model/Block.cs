@@ -3,6 +3,9 @@
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Clase que representa un bloc predefinit.
+    /// </summary>
     public sealed class Block: IVisitable {
 
         private readonly HashSet<Element> elements = new HashSet<Element>();

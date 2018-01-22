@@ -4,6 +4,9 @@
     using System.Windows;
     using System.Windows.Media;
 
+    /// <summary>
+    /// Clase que permet la construccio de diferent poligons.
+    /// </summary>
     public static class PolygonBuilder {
 
         private const int circleSegments = 32;
@@ -131,59 +134,30 @@
                 dy = temp;
             }
 
+            // Rectangle sense cantonades arrodonides
+            //
             if (radius == 0) {
-
                 polygon.AddPoint(new Point(x - dx, y + dy));
                 polygon.AddPoint(new Point(x + dx, y + dy));
                 polygon.AddPoint(new Point(x + dx, y - dy));
                 polygon.AddPoint(new Point(x - dx, y - dy));
-
-                // Si es una rotacio arbitraria, fa servir calcul amb matrius
-                //
-                if ((rotation % 90) != 0) {
-                    Matrix m = new Matrix();
-                    m.RotateAt(rotation, x, y);
-                    polygon.Transform(m);
-                }
             }
 
+            // Rectangle amb cantos arrodonides
+            //
             else {
+                polygon.AddPoints(ArcPoints(new Point(x + dx, y + dy), radius, 0, 90));
+                polygon.AddPoints(ArcPoints(new Point(x - dx, y + dy), radius, 90, 90));
+                polygon.AddPoints(ArcPoints(new Point(x - dx, y - dy), radius, 180, 90));
+                polygon.AddPoints(ArcPoints(new Point(x + dx, y - dy), radius, 270, 90));
+            }
 
-                for (int i = 0; i <= 8; i++) {
-                    polygon.AddPoint(
-                        new Point(
-                            x + circlePoints[i].X * radius + dx,
-                            y + circlePoints[i].Y * radius + dy));
-                }
-
-                for (int i = 8; i <= 16; i++) {
-                    polygon.AddPoint(
-                        new Point(
-                            x + circlePoints[i].X * radius - dx,
-                            y + circlePoints[i].Y * radius + dy));
-                }
-
-                for (int i = 16; i <= 24; i++) {
-                    polygon.AddPoint(
-                        new Point(
-                            x + circlePoints[i].X * radius - dx,
-                            y + circlePoints[i].Y * radius - dy));
-                }
-
-                for (int i = 24; i <= 32; i++) {
-                    polygon.AddPoint(
-                        new Point(
-                            x + circlePoints[i].X * radius + dx,
-                            y + circlePoints[i].Y * radius - dy));
-                }
-
-                // Si es una rotacio arbitraria, fa servir calcul amb matrius
-                //
-                if ((rotation % 90) != 0) {
-                    Matrix m = new Matrix();
-                    m.RotateAt(rotation, x, y);
-                    polygon.Transform(m);
-                }
+            // Si es una rotacio arbitraria, fa servir calcul amb matrius
+            //
+            if ((rotation % 90) != 0) {
+                Matrix m = new Matrix();
+                m.RotateAt(rotation, x, y);
+                polygon.Transform(m);
             }
 
             return polygon;
@@ -305,7 +279,7 @@
         }
 
         /// <summary>
-        /// Crea un array de puntsa per un arc.
+        /// Crea un array de punts per un arc.
         /// </summary>
         /// <param name="center">Coordinades del centre.</param>
         /// <param name="radius">Radi.</param>

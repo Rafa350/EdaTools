@@ -10,6 +10,9 @@
     using System.Windows.Media;
     using System.Xml;
 
+    /// <summary>
+    /// Clase per importar una placa desde Eagle
+    /// </summary>
     public sealed class EagleImporter : Importer {
 
         private readonly Dictionary<string, Block> componentDict = new Dictionary<string, Block>();
