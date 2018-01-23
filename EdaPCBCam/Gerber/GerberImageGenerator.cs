@@ -639,6 +639,7 @@
                         foreach (Element element in part.Elements) {
                             if ((element != region) &&
                                 (board.IsOnAnyLayer(element, regionLayers) || board.IsOnLayer(element, restrict))) {
+
                                 PadElement padElement = element as PadElement;
 
                                 // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
@@ -666,19 +667,13 @@
 
                 // Si no es capa de senyal no cal fer res mes
                 //
-                else {
-                    // Crea un poligon buit per contindre el de la regio
-                    //
-                    Polygon polygon = new Polygon();
-                    polygon.AddChild(regionPolygon);
-
-                    return polygon;
-                }
+                else 
+                    return regionPolygon;
             }
 
             private void ProcessPolygon(Polygon polygon, double thickness) {
 
-                ProcessPolygon(polygon, 0, thickness);
+                ProcessPolygon(polygon, polygon.HasPoints ? 1 : 0, thickness);
             }
 
             private void ProcessPolygon(Polygon polygon, int level, double thickness) {
