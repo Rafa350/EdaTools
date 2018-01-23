@@ -98,6 +98,11 @@
                 writer.WriteEndElement();
             }
 
+            /// <summary>
+            /// Visita un element de tipus cervle
+            /// </summary>
+            /// <param name="circle">L'element a visitar.</param>
+            /// 
             public override void Visit(CircleElement circle) {
 
                 writer.WriteStartElement("circle");
@@ -125,6 +130,11 @@
                 writer.WriteEndElement();
             }
 
+            /// <summary>
+            /// Visita un element de tipus forat.
+            /// </summary>
+            /// <param name="hole">L'element a visitar.</param>
+            /// 
             public override void Visit(HoleElement hole) {
 
                 writer.WriteStartElement("hole");

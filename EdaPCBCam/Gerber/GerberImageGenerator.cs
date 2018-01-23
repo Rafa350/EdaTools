@@ -11,6 +11,9 @@
     using System.Windows;
     using System.Windows.Media;
 
+    /// <summary>
+    /// Clase per generar el fitxers gerber d'imatge
+    /// </summary>
     public sealed class GerberImageGenerator : GerberGenerator {
 
         public enum ImageType {
@@ -58,6 +61,12 @@
             GenerateFileTail(gb);
         }
 
+        /// <summary>
+        /// Genera el diccionari d'apertures.
+        /// </summary>
+        /// <param name="layers">La coleccio de capes a comprobar.</param>
+        /// <returns>El diccionari.</returns>
+        /// 
         private ApertureDictionary CreateApertures(IEnumerable<Layer> layers) {
 
             ApertureCreatorVisitor visitor = new ApertureCreatorVisitor(Board, layers);
@@ -65,6 +74,12 @@
             return visitor.Apertures;
         }
 
+        /// <summary>
+        /// Genera la capcelera del fitxer.
+        /// </summary>
+        /// <param name="gb">El generador de codi gerber.</param>
+        /// <param name="imageType">Tipus d'imatge a generar.</param>
+        /// 
         private void GenerateFileHeader(GerberBuilder gb, ImageType imageType) {
 
             gb.Comment("EdaTools v1.0.");
@@ -124,6 +139,11 @@
             gb.Comment("END HEADER");
         }
 
+        /// <summary>
+        /// Genera el final de fitxer.
+        /// </summary>
+        /// <param name="gb">El generador de codi gerber.</param>
+        /// 
         private void GenerateFileTail(GerberBuilder gb) {
 
             gb.EndFile();
@@ -131,6 +151,12 @@
             gb.Comment("END FILE");
         }
 
+        /// <summary>
+        /// Genera la seccio d'apertures del fitxer.
+        /// </summary>
+        /// <param name="gb">El generador de codi gerber.</param>
+        /// <param name="apertures">El diccionari d'apertures.</param>
+        /// 
         private void GenerateApertures(GerberBuilder gb, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN APERTURES");
@@ -510,6 +536,9 @@
             }
         }
 
+        /// <summary>
+        /// Clase per generar regions poligonals.
+        /// </summary>
         private sealed class RegionGeneratorVisitor : BoardVisitor {
 
             private readonly GerberBuilder gb;
@@ -518,6 +547,14 @@
             private readonly ApertureDictionary apertureDict;
             private Matrix localTransformation = Matrix.Identity;
 
+            /// <summary>
+            /// Constructor del objecte.
+            /// </summary>
+            /// <param name="gb">Generador de codi gerber.</param>
+            /// <param name="board">La placa.</param>
+            /// <param name="layers">El conjunt de capes a procesar.</param>
+            /// <param name="apertureDict">Diccionari d'apertures.</param>
+            /// 
             public RegionGeneratorVisitor(GerberBuilder gb, Board board, IEnumerable<Layer> layers, ApertureDictionary apertureDict) {
 
                 this.gb = gb;
@@ -526,6 +563,11 @@
                 this.apertureDict = apertureDict;
             }
 
+            /// <summary>
+            /// Visita un element de tipus regio
+            /// </summary>
+            /// <param name="region">L'element a visitar.</param>
+            /// 
             public override void Visit(RegionElement region) {
 
                 if (board.IsOnAnyLayer(region, layers)) {
@@ -535,6 +577,11 @@
                 }
             }
 
+            /// <summary>
+            /// Visita un element de tipus Part.
+            /// </summary>
+            /// <param name="part">L'objecte a visitar.</param>
+            /// 
             public override void Visit(Part part) {
 
                 localTransformation = part.Transformation;
@@ -550,50 +597,83 @@
             /// <param name="board">La placa</param>
             /// <param name="region">La regio.</param>
             /// <returns>La coleccio de poligons.</returns>
+            /// <remarks>
+            /// El primer poligon no te punts, no mes s'utilitza per contindre els altres poligons fills.
+            /// A nivell de dibuix el nivell 0 es transparent
+            /// </remarks>
             /// 
             private Polygon CreatePolygon(Board board, RegionElement region) {
 
                 Polygon regionPolygon = region.GetPolygon();
                 regionPolygon.Transform(localTransformation);
 
-                IEnumerable<Layer> regionLayers = board.GetLayers(region);
-                Signal regionSignal = board.GetSignal(region, null, false);
-
-                double spacing = 0.15 + region.Thickness / 2;
-                List<Polygon> holePolygons = new List<Polygon>();
-
-                Layer restrict = board.GetLayer(LayerId.TopRestrict);
-
-                // Procesa els elements de la placa
+                // Si estem en capes de senyal, cal generar els porus i termals
                 //
-                foreach (Element element in board.Elements) {
-                    if ((element != region) && 
-                        (board.IsOnAnyLayer(element, regionLayers) || board.IsOnLayer(element, restrict))) {
-                        IConectable item = element as IConectable;
-                        if ((item == null) || (board.GetSignal(item, null, false) != regionSignal)) {
-                            Polygon elementPolygon = element.GetPourPolygon(spacing);
-                            holePolygons.AddRange(PolygonProcessor.Clip(elementPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));
-                        }
-                    }
-                }
+                if (board.IsOnLayer(region, board.GetLayer(LayerId.Top)) ||
+                    board.IsOnLayer(region, board.GetLayer(LayerId.Bottom))) {
 
-                // Procesa els elements dels components
-                //
-                foreach (Part part in board.Parts) {
-                    foreach (Element element in part.Elements) {
-                        if ((element != region) && 
+                    IEnumerable<Layer> regionLayers = board.GetLayers(region);
+                    Signal regionSignal = board.GetSignal(region, null, false);
+
+                    double spacing = 0.15 + region.Thickness / 2;
+                    List<Polygon> holePolygons = new List<Polygon>();
+
+                    Layer restrict = board.GetLayer(LayerId.TopRestrict);
+
+                    // Procesa els elements de la placa
+                    //
+                    foreach (Element element in board.Elements) {
+                        if ((element != region) &&
                             (board.IsOnAnyLayer(element, regionLayers) || board.IsOnLayer(element, restrict))) {
                             IConectable item = element as IConectable;
-                            if ((item == null) || (board.GetSignal(item, part, false) != regionSignal)) {
+                            if ((item == null) || (board.GetSignal(item, null, false) != regionSignal)) {
                                 Polygon elementPolygon = element.GetPourPolygon(spacing);
-                                elementPolygon.Transform(part.Transformation);
                                 holePolygons.AddRange(PolygonProcessor.Clip(elementPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));
                             }
                         }
                     }
+
+                    // Procesa els elements dels components
+                    //
+                    foreach (Part part in board.Parts) {
+                        foreach (Element element in part.Elements) {
+                            if ((element != region) &&
+                                (board.IsOnAnyLayer(element, regionLayers) || board.IsOnLayer(element, restrict))) {
+                                PadElement padElement = element as PadElement;
+
+                                // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
+                                //
+                                if ((padElement == null) || (board.GetSignal(padElement, part, false) != regionSignal)) {
+                                    Polygon elementPolygon = element.GetPourPolygon(spacing);
+                                    elementPolygon.Transform(part.Transformation);
+                                    holePolygons.AddRange(PolygonProcessor.Clip(elementPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));
+                                }
+
+                                // En cas contrari genera un thermal
+                                //
+                                else {
+                                    //Polygon elementPolygon = element.GetPourPolygon(spacing);
+                                    //elementPolygon.Transform(part.Transformation);
+                                    //Polygon thermalPolygon = PolygonBuilder.BuildCross()
+                                    //holePolygons.AddRange(PolygonProcessor.Clip(elementPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));
+                                }
+                            }
+                        }
+                    }
+
+                    return PolygonProcessor.ClipExtended(regionPolygon, holePolygons, PolygonProcessor.ClipOperation.Diference);
                 }
 
-                return PolygonProcessor.ClipExtended(regionPolygon, holePolygons, PolygonProcessor.ClipOperation.Diference);
+                // Si no es capa de senyal no cal fer res mes
+                //
+                else {
+                    // Crea un poligon buit per contindre el de la regio
+                    //
+                    Polygon polygon = new Polygon();
+                    polygon.AddChild(regionPolygon);
+
+                    return polygon;
+                }
             }
 
             private void ProcessPolygon(Polygon polygon, double thickness) {

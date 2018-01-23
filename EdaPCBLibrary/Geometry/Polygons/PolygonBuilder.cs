@@ -15,9 +15,10 @@
         /// <param name="start">Posicio inicial.</param>
         /// <param name="end">Posicio final.</param>
         /// <param name="thickness">Amplada de linia.</param>
+        /// <param name="capRounded">True si els extrems son arrodinits.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public static Polygon BuildLineSegment(Point start, Point end, double thickness) {
+        public static Polygon BuildLineSegment(Point start, Point end, double thickness, bool capRounded = true) {
 
             double dx = end.X - start.X;
             double dy = end.Y - start.Y;
@@ -33,14 +34,15 @@
         /// <summary>
         /// Crea un poligon en forma de segment d'arc amb finals de linia rectes.
         /// </summary>
-        /// <param name="center"></param>
-        /// <param name="radius"></param>
-        /// <param name="deltaAngle"></param>
-        /// <param name="deltaAngle"></param>
-        /// <param name="thickness"></param>
+        /// <param name="center">Centre de l'arc.</param>
+        /// <param name="radius">Radi de curvatura.</param>
+        /// <param name="startAngle">Angle inicial.</param>
+        /// <param name="angle">Angle de recoregut.</param>
+        /// <param name="thickness">Amplada de linia.</param>
+        /// <param name="capRounded">True si els extrems son arrodonits.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public static Polygon BuildArcSegment(Point center, double radius, double startAngle, double angle, double thickness) {
+        public static Polygon BuildArcSegment(Point center, double radius, double startAngle, double angle, double thickness, bool capRounded = true) {
 
             double innerRadius = radius - (thickness / 2.0);
             double outerRadius = radius + (thickness / 2.0);
@@ -72,10 +74,6 @@
         /// <param name="radius">Radi de curvatura.</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>El poligon.</returns>
-        /// <remarks> 
-        /// Optimitza les orientacions ortogonals. Nomes fa servir matrius en les rotacions 
-        /// en àngles arbitraris
-        /// </remarks>
         /// 
         public static Polygon BuildRectangle(Point position, Size size, double radius, double rotation) {
 
@@ -136,48 +134,65 @@
 
             double dx = size.Width / 2;
             double dy = size.Height / 2;
+
+            // En aquestes rotacions, nomes cal intercanviar amplada per alçada
+            //
+            if ((rotation == 90) || (rotation == 270)) {
+                double temp = dx;
+                dx = dy;
+                dy = temp;
+            }
+
             double dt = thickness / 2;
 
-            double x0 = position.X;
-            double y0 = position.Y;
+            double x = position.X;
+            double y = position.Y;
 
-            double x1 = x0 - dx;
-            double y1 = y0 - dy;
+            double x1 = x - dx;
+            double y1 = y - dy;
 
-            double x2 = x0 + dx;
-            double y2 = y0 + dy;
+            double x2 = x + dx;
+            double y2 = y + dy;
 
             Point[] points = new Point[12];
 
-            points[0].X = x1;
-            points[0].Y = y0 - dt;
-            points[1].X = x0 - dt;
-            points[1].Y = y0 - dt;
-            points[2].X = x0 - dt;
+            points[0].X = x2;
+            points[0].Y = y - dt;
+            points[1].X = x + dt;
+            points[1].Y = y - dt;
+            points[2].X = x + dt;
             points[2].Y = y1;
 
-            points[3].X = x1;
-            points[3].Y = y0 - dt;
-            points[4].X = x0 - dt;
-            points[4].Y = y0 - dt;
-            points[5].X = x0 - dt;
-            points[5].Y = y1;
+            points[3].X = x - dt;
+            points[3].Y = y1;
+            points[4].X = x - dt;
+            points[4].Y = y - dt;
+            points[5].X = x1;
+            points[5].Y = y - dt;
 
             points[6].X = x1;
-            points[6].Y = y0 - dt;
-            points[7].X = x0 - dt;
-            points[7].Y = y0 - dt;
-            points[8].X = x0 - dt;
-            points[8].Y = y1;
+            points[6].Y = y - dt;
+            points[7].X = x - dt;
+            points[7].Y = y - dt;
+            points[8].X = x - dt;
+            points[8].Y = y2;
 
-            points[9].X = x1;
-            points[9].Y = y0 - dt;
-            points[10].X = x0 - dt;
-            points[10].Y = y0 - dt;
-            points[11].X = x0 - dt;
-            points[11].Y = y1;
+            points[9].X = x + dt;
+            points[9].Y = y2;
+            points[10].X = x + dt;
+            points[10].Y = y - dt;
+            points[11].X = x2;
+            points[11].Y = y - dt;
 
             Polygon polygon = new Polygon(points);
+
+            // Si es una rotacio arbitraria, fa servir calcul amb matrius
+            //
+            if ((rotation % 90) != 0) {
+                Matrix m = new Matrix();
+                m.RotateAt(rotation, x, y);
+                polygon.Transform(m);
+            }
 
             return polygon;
         }

@@ -2,7 +2,6 @@
 
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
-    using System.Collections.Generic;
     using System.Windows;
 
     /// <summary>

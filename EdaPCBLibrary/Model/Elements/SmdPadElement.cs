@@ -7,7 +7,7 @@
     /// <summary>
     /// Clase que representa un pad superficial
     /// </summary>
-    public sealed class SmdPadElement: PadElement, IRotation, IConectable {
+    public sealed class SmdPadElement: PadElement, IRotation {
 
         private Size size;
         private double rotation;
@@ -77,7 +77,12 @@
         /// 
         public override Rect GetBoundingBox() {
 
-            throw new NotImplementedException();
+            double a = rotation * Math.PI / 180.0;
+            double w = size.Width * Math.Cos(a) + size.Height * Math.Sin(a);
+            double h = size.Width * Math.Sin(a) + size.Height * Math.Cos(a);
+
+            return new Rect(Position.X - w / 2.0, Position.Y - h / 2.0, w, h);
+
         }
 
         /// <summary>
