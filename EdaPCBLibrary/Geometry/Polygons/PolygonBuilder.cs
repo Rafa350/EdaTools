@@ -148,41 +148,41 @@
             double x = position.X;
             double y = position.Y;
 
-            double x1 = x - dx;
-            double y1 = y - dy;
+            double xMin = x - dx;
+            double yMin = y - dy;
 
-            double x2 = x + dx;
-            double y2 = y + dy;
+            double xMax = x + dx;
+            double yMax = y + dy;
 
             Point[] points = new Point[12];
 
-            points[0].X = x2;
+            points[0].X = xMax;
             points[0].Y = y - dt;
             points[1].X = x + dt;
             points[1].Y = y - dt;
             points[2].X = x + dt;
-            points[2].Y = y1;
+            points[2].Y = yMin;
 
             points[3].X = x - dt;
-            points[3].Y = y1;
+            points[3].Y = yMin;
             points[4].X = x - dt;
             points[4].Y = y - dt;
-            points[5].X = x1;
+            points[5].X = xMin;
             points[5].Y = y - dt;
 
-            points[6].X = x1;
-            points[6].Y = y - dt;
+            points[6].X = xMin;
+            points[6].Y = y + dt;
             points[7].X = x - dt;
-            points[7].Y = y - dt;
+            points[7].Y = y + dt;
             points[8].X = x - dt;
-            points[8].Y = y2;
+            points[8].Y = yMax;
 
             points[9].X = x + dt;
-            points[9].Y = y2;
+            points[9].Y = yMax;
             points[10].X = x + dt;
-            points[10].Y = y - dt;
-            points[11].X = x2;
-            points[11].Y = y - dt;
+            points[10].Y = y + dt;
+            points[11].X = xMax;
+            points[11].Y = y + dt;
 
             Polygon polygon = new Polygon(points);
 

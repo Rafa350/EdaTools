@@ -164,6 +164,11 @@
             gb.Comment("END APERTURES");
         }
 
+        /// <summary>
+        /// Genera la seccio de macros del fitxer.
+        /// </summary>
+        /// <param name="gb">El generador de codi gerber.</param>
+        /// <param name="apertures">El diccionari d'apertures.</param>
         private void GenerateMacros(GerberBuilder gb, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN MACROS");
@@ -171,6 +176,13 @@
             gb.Comment("END MACROS");
         }
 
+        /// <summary>
+        /// Genera la seccio de poligons del fitxer.
+        /// </summary>
+        /// <param name="gb">El generador de codi gerber.</param>
+        /// <param name="layers">Les capes a procesar.</param>
+        /// <param name="apertures">El diccionari d'apertures.</param>
+        /// 
         private void GenerateRergions(GerberBuilder gb, IEnumerable<Layer> layers, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN POLYGONS");
@@ -179,6 +191,13 @@
             gb.Comment("END POLYGONS");
         }
 
+        /// <summary>
+        /// Genera la seccio d'imatges del fitxer.
+        /// </summary>
+        /// <param name="gb">El generador de codi gerber.</param>
+        /// <param name="layers">Les capes a procesar.</param>
+        /// <param name="apertures">El diccionari d'apertures.</param>
+        /// 
         private void GenerateImage(GerberBuilder gb, IEnumerable<Layer> layers, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
@@ -620,7 +639,7 @@
 
                     Layer restrict = board.GetLayer(LayerId.TopRestrict);
 
-                    // Procesa els elements de la placa
+                    // Procesa els elements de la placa en la mateixa capa que la regio o el la capa restrict
                     //
                     foreach (Element element in board.Elements) {
                         if ((element != region) &&
@@ -647,16 +666,21 @@
                                 if ((padElement == null) || (board.GetSignal(padElement, part, false) != regionSignal)) {
                                     Polygon elementPolygon = element.GetPourPolygon(spacing);
                                     elementPolygon.Transform(part.Transformation);
-                                    holePolygons.AddRange(PolygonProcessor.Clip(elementPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));
+                                    holePolygons.Add(elementPolygon);
+
+                                    // No esta clar si cal o no
+                                    //holePolygons.AddRange(PolygonProcessor.Clip(elementPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));
                                 }
 
-                                // En cas contrari genera un thermal
+                                // En es un pad i esta conectat per tant, genera un thermal
                                 //
-                                else {
-                                    //Polygon elementPolygon = element.GetPourPolygon(spacing);
-                                    //elementPolygon.Transform(part.Transformation);
-                                    //Polygon thermalPolygon = PolygonBuilder.BuildCross()
-                                    //holePolygons.AddRange(PolygonProcessor.Clip(elementPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));
+                                else if (padElement != null) { 
+                                    Polygon thermalPolygon = padElement.GetThermalPolygon(spacing, 0.2);
+                                    thermalPolygon.Transform(part.Transformation);
+                                    foreach (Polygon polygon in thermalPolygon.Childs)
+                                        holePolygons.Add(polygon);
+                                    // No esta clar si cal o no
+                                    //holePolygons.AddRange(PolygonProcessor.Clip(thermalPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));
                                 }
                             }
                         }

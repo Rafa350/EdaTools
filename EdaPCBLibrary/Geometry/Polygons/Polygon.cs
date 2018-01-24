@@ -72,6 +72,14 @@
             InternalAddChild(child);
         }
 
+        public void AddChilds(IEnumerable<Polygon> childs) {
+
+            if (childs == null)
+                throw new ArgumentNullException("childs");
+
+            InternalAddChilds(childs);
+        }
+
         /// <summary>
         /// Clona el poligon. (Copia en profunditat.)
         /// </summary>

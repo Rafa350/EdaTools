@@ -2,6 +2,7 @@
 
     using System;
     using System.Windows;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
     /// <summary>
     /// Clase que representa un pad.
@@ -32,6 +33,15 @@
             this.name = name;
             this.position = position;
         }
+
+        /// <summary>
+        /// Crea el poligon del thermal.
+        /// </summary>
+        /// <param name="spacing">Espaiat.</param>
+        /// <param name="width">Amplada dels conductors.</param>
+        /// <returns>El poligon.</returns>
+        /// 
+        public abstract Polygon GetThermalPolygon(double spacing, double width);
 
         /// <summary>
         /// Obte o asigna el nom.

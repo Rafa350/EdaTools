@@ -129,6 +129,26 @@
         }
 
         /// <summary>
+        /// Crea el poligon del thermal.
+        /// </summary>
+        /// <param name="spacing">Espaiat.</param>
+        /// <param name="width">Amplada dels conductors.</param>
+        /// <returns>El poligon.</returns>
+        /// 
+        public override Polygon GetThermalPolygon(double spacing, double width) {
+
+            double w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize) + (spacing * 2);
+            double h = topSize + (spacing * 2);
+
+            Polygon pour = GetPourPolygon(spacing);
+            Polygon thermal = PolygonBuilder.BuildCross(Position, new Size(w, h), width, rotation);
+
+            Polygon polygon = new Polygon();
+            polygon.AddChilds(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
+            return polygon;
+        }
+
+        /// <summary>
         /// Calcula el bounding box del element.
         /// </summary>
         /// <returns>El bounding box.</returns>
