@@ -590,8 +590,7 @@
             public override void Visit(RegionElement region) {
 
                 if (board.IsOnAnyLayer(region, layers)) {
-
-                    Polygon polygon = CreatePolygon(board, region);
+                    Polygon polygon = board.GetRegionPolygon(region, 0.20, localTransformation);
                     ProcessPolygon(polygon, region.Thickness);
                 }
             }
@@ -608,91 +607,6 @@
                 base.Visit(part);
 
                 localTransformation = Matrix.Identity;
-            }
-
-            /// <summary>
-            /// Crea el poligon de la regio, amb els forats corresponents
-            /// </summary>
-            /// <param name="board">La placa</param>
-            /// <param name="region">La regio.</param>
-            /// <returns>La coleccio de poligons.</returns>
-            /// <remarks>
-            /// El primer poligon no te punts, no mes s'utilitza per contindre els altres poligons fills.
-            /// A nivell de dibuix el nivell 0 es transparent
-            /// </remarks>
-            /// 
-            private Polygon CreatePolygon(Board board, RegionElement region) {
-
-                Polygon regionPolygon = region.GetPolygon();
-                regionPolygon.Transform(localTransformation);
-
-                // Si estem en capes de senyal, cal generar els porus i termals
-                //
-                if (board.IsOnLayer(region, board.GetLayer(LayerId.Top)) ||
-                    board.IsOnLayer(region, board.GetLayer(LayerId.Bottom))) {
-
-                    IEnumerable<Layer> regionLayers = board.GetLayers(region);
-                    Signal regionSignal = board.GetSignal(region, null, false);
-
-                    double spacing = 0.15 + region.Thickness / 2;
-                    List<Polygon> holePolygons = new List<Polygon>();
-
-                    Layer restrict = board.GetLayer(LayerId.TopRestrict);
-
-                    // Procesa els elements de la placa en la mateixa capa que la regio o el la capa restrict
-                    //
-                    foreach (Element element in board.Elements) {
-                        if ((element != region) &&
-                            (board.IsOnAnyLayer(element, regionLayers) || board.IsOnLayer(element, restrict))) {
-                            IConectable item = element as IConectable;
-                            if ((item == null) || (board.GetSignal(item, null, false) != regionSignal)) {
-                                Polygon elementPolygon = element.GetPourPolygon(spacing);
-                                holePolygons.AddRange(PolygonProcessor.Clip(elementPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));
-                            }
-                        }
-                    }
-
-                    // Procesa els elements dels components
-                    //
-                    foreach (Part part in board.Parts) {
-                        foreach (Element element in part.Elements) {
-                            if ((element != region) &&
-                                (board.IsOnAnyLayer(element, regionLayers) || board.IsOnLayer(element, restrict))) {
-
-                                PadElement padElement = element as PadElement;
-
-                                // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
-                                //
-                                if ((padElement == null) || (board.GetSignal(padElement, part, false) != regionSignal)) {
-                                    Polygon elementPolygon = element.GetPourPolygon(spacing);
-                                    elementPolygon.Transform(part.Transformation);
-                                    holePolygons.Add(elementPolygon);
-
-                                    // No esta clar si cal o no
-                                    //holePolygons.AddRange(PolygonProcessor.Clip(elementPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));
-                                }
-
-                                // En es un pad i esta conectat per tant, genera un thermal
-                                //
-                                else if (padElement != null) { 
-                                    Polygon thermalPolygon = padElement.GetThermalPolygon(spacing, 0.2);
-                                    thermalPolygon.Transform(part.Transformation);
-                                    foreach (Polygon polygon in thermalPolygon.Childs)
-                                        holePolygons.Add(polygon);
-                                    // No esta clar si cal o no
-                                    //holePolygons.AddRange(PolygonProcessor.Clip(thermalPolygon, regionPolygon, PolygonProcessor.ClipOperation.Intersection));
-                                }
-                            }
-                        }
-                    }
-
-                    return PolygonProcessor.ClipExtended(regionPolygon, holePolygons, PolygonProcessor.ClipOperation.Diference);
-                }
-
-                // Si no es capa de senyal no cal fer res mes
-                //
-                else 
-                    return regionPolygon;
             }
 
             private void ProcessPolygon(Polygon polygon, double thickness) {
