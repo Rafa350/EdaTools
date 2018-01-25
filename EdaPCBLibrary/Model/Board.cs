@@ -6,6 +6,13 @@
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
+    public enum BoardSide {
+        Unknown,
+        Top,
+        Inner,
+        Bottom
+    }
+
     /// <summary>
     /// Clase que representa una placa.
     /// </summary>

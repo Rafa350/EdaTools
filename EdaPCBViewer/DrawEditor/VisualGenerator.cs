@@ -10,8 +10,14 @@
     using System.Windows;
     using System.Windows.Media;
 
+    /// <summary>
+    /// Clase que genera les visuals de la placa.
+    /// </summary>
     public sealed class VisualGenerator {
 
+        /// <summary>
+        /// Clase per visitar la placa i generar les visuals.
+        /// </summary>
         private sealed class RenderVisitor: BoardVisitor {
 
             private readonly Board board;
@@ -149,6 +155,11 @@
                 }
             }
 
+            /// <summary>
+            /// Visita un objecte RegionElement.
+            /// </summary>
+            /// <param name="region">L'objecte a visitar.</param>
+            /// 
             public override void Visit(RegionElement region) {
 
                 if (board.IsOnLayer(region, layer)) {
@@ -182,9 +193,9 @@
             }
 
             /// <summary>
-            /// Visita un element Via
+            /// Visita un objecte ViaElement
             /// </summary>
-            /// <param name="via">l'element a visitar.</param>
+            /// <param name="via">L'objecte a visitar.</param>
             /// 
             public override void Visit(ViaElement via) {
 
@@ -216,9 +227,9 @@
             }
 
             /// <summary>
-            /// Visita un element de tipus SmdPad.
+            /// Visita un objecte SmdPadElement.
             /// </summary>
-            /// <param name="pad">L'element a visitar.</param>
+            /// <param name="pad">L'objecte a visitar.</param>
             /// 
             public override void Visit(SmdPadElement pad) {
 
@@ -242,9 +253,9 @@
             }
 
             /// <summary>
-            /// Visita un element de tipus ThPad.
+            /// Visita un objecte ThPadElement.
             /// </summary>
-            /// <param name="pad">L'element a visitar.</param>
+            /// <param name="pad">L'objecte a visitar.</param>
             /// 
             public override void Visit(ThPadElement pad) {
 
@@ -284,9 +295,9 @@
             }
 
             /// <summary>
-            /// Visita un element Hole
+            /// Visita un objecte HoleElement
             /// </summary>
-            /// <param name="hole">L'element a visitar.</param>
+            /// <param name="hole">L'objecte a visitar.</param>
             /// 
             public override void Visit(HoleElement hole) {
 
@@ -348,6 +359,14 @@
                 return brush;
             }
 
+            /// <summary>
+            /// Dibuixa un poligon.
+            /// </summary>
+            /// <param name="dc">El contexte de dibuix.</param>
+            /// <param name="brush">El brush.</param>
+            /// <param name="pen">El pen.</param>
+            /// <param name="polygon">El poligon a dibuixar.</param>
+            /// 
             private static void DrawPolygon(DrawingContext dc, Brush brush, Pen pen, Polygon polygon) {
 
                 StreamGeometry geometry = new StreamGeometry();
@@ -362,6 +381,7 @@
             /// </summary>
             /// <param name="ctx">Contexte de la geometria.</param>
             /// <param name="polygon">El poligon a dibuixar.</param>
+            /// <param name="level">Nivell del poligon.</param>
             /// 
             private static void StreamPolygon(StreamGeometryContext ctx, Polygon polygon, int level) {
 
@@ -386,7 +406,7 @@
         private readonly Board board;
 
         /// <summary>
-        /// Contructor. 
+        /// Contructor de la clase. 
         /// </summary>
         /// <param name="board">La placa a procesar.</param>
         /// 

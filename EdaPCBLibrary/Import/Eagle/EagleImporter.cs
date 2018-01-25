@@ -314,13 +314,13 @@
             string name = GetAttributeString(node, "name");
             int layerNum = GetAttributeInteger(node, "number");
 
-            LayerSide side = LayerSide.Unknown;
+            BoardSide side = BoardSide.Unknown;
             if (layerNum == 1) 
-                side = LayerSide.Top;
+                side = BoardSide.Top;
             else if (layerNum > 1 && layerNum < 16) 
-                side = LayerSide.Inner;
+                side = BoardSide.Inner;
             else if (layerNum == 16)
-                side = LayerSide.Bottom;
+                side = BoardSide.Bottom;
 
             LayerFunction function = LayerFunction.Unknown;
             if (layerNum >= 1 && layerNum <= 16)

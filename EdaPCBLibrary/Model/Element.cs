@@ -25,7 +25,7 @@
         /// <summary>
         /// Crea el poligon espaiat del element.
         /// </summary>
-        /// <param name="spacing">Espaiat</param>
+        /// <param name="spacing">Espaiat.</param>
         /// <returns>El poligon.</returns>
         /// 
         public abstract Polygon GetPourPolygon(double spacing);

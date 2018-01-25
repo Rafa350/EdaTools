@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using System;
     using System.Collections.Generic;
     using System.Windows;
@@ -95,13 +96,19 @@
         /// 
         public override Polygon GetPolygon() {
 
+            Point startPosition = new Point();
+
             Polygon polygon = new Polygon();
             foreach (Segment segment in segments) {
                 if (segment.Angle == 0)
                     polygon.AddPoint(segment.Position);
                 else {
-                    polygon.AddPoint(segment.Position); // Provisional
+                    Point center = ArcUtils.Center(startPosition, segment.Position, segment.Angle);
+                    double radius = ArcUtils.Radius(startPosition, segment.Position, segment.Angle);
+                    double startAngle = ArcUtils.StartAngle(startPosition, center);
+                    polygon.AddPoints(PolygonBuilder.ArcPoints(center, radius, startAngle, segment.Angle));
                 }
+                startPosition = segment.Position;
             }
             return polygon;
         }

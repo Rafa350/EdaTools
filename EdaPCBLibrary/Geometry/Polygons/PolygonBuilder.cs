@@ -223,7 +223,7 @@
         /// coincideix amb en numero de segments.
         /// </returns>
         /// 
-        private static Point[] PolygonPoints(int sides, Point position, double radius, double rotation) {
+        public static Point[] PolygonPoints(int sides, Point position, double radius, double rotation) {
 
             // Calcula el punt inicial
             //
@@ -265,7 +265,7 @@
         /// el numero de segments mes u.
         /// </returns>
         /// 
-        private static Point[] ArcPoints(Point center, double radius, double startAngle, double angle, bool discardLast = false) {
+        public static Point[] ArcPoints(Point center, double radius, double startAngle, double angle, bool discardLast = false) {
 
             int numSegments = (int) Math.Floor((Math.Abs(angle)) * 32.0 / 360.0);
             int numPoints = numSegments + (discardLast ? 0 : 1);

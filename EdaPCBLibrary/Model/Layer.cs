@@ -9,17 +9,10 @@
         Mechanical,
     }
 
-    public enum LayerSide {
-        Unknown,
-        Top,
-        Inner,
-        Bottom
-    }
-
     public sealed class Layer: IVisitable {
 
         private readonly LayerId id = LayerId.Unknown;
-        private readonly LayerSide side = LayerSide.Unknown;
+        private readonly BoardSide side = BoardSide.Unknown;
         private readonly LayerFunction function = LayerFunction.Unknown;
         private string name;
         private Color color;
@@ -42,7 +35,7 @@
         /// <param name="color">Color dels elements.</param>
         /// <param name="isVisible">Indica si la capa es visible.</param>
         /// 
-        public Layer(LayerId id, string name, LayerSide side, LayerFunction function, Color color, bool isVisible = true) {
+        public Layer(LayerId id, string name, BoardSide side, LayerFunction function, Color color, bool isVisible = true) {
 
             this.id = id;
             this.name = name;
@@ -81,7 +74,7 @@
         /// Obte el cara on es troba la capa de la capa.
         /// </summary>
         /// 
-        public LayerSide Side {
+        public BoardSide Side {
             get {
                 return side;
             }
