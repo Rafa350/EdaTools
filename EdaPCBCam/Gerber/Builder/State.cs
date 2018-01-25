@@ -2,7 +2,10 @@
 
     using System;
 
-   internal sealed class State {
+    /// <summary>
+    /// Clase que gestiona l'estat intern del generador gerber.
+    /// </summary>
+    internal sealed class State {
 
         private Aperture aperture = null;
         private Polarity aperturePolarity = Polarity.Dark;

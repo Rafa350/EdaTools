@@ -80,10 +80,13 @@
         public override Polygon GetThermalPolygon(double spacing, double width) {
 
             Polygon pour = GetPourPolygon(spacing);
-            Polygon thermal = PolygonBuilder.BuildCross(Position, new Size(size.Width + (spacing * 2), size.Height + (spacing * 2)), width, rotation);
+            Polygon thermal = PolygonBuilder.BuildCross(Position, 
+                new Size(size.Width + (spacing * 2.25), size.Height + (spacing * 2.25)), width, rotation);
 
             Polygon polygon = new Polygon();
             polygon.AddChilds(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
+            if (polygon.ChildCount != 4)
+                throw new InvalidProgramException("Thermal generada incorrectamente.");
             return polygon;
         }
 

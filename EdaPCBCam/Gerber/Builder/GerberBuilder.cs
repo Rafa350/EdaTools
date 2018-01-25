@@ -46,6 +46,9 @@
         Dark
     }
 
+    /// <summary>
+    /// Generador de codi Gerber.
+    /// </summary>
     public sealed class GerberBuilder {
 
         private readonly TextWriter writer;

@@ -137,14 +137,16 @@
         /// 
         public override Polygon GetThermalPolygon(double spacing, double width) {
 
-            double w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize) + (spacing * 2);
-            double h = topSize + (spacing * 2);
+            double w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize) + (spacing * 2.25);
+            double h = topSize + (spacing * 2.25);
 
             Polygon pour = GetPourPolygon(spacing);
             Polygon thermal = PolygonBuilder.BuildCross(Position, new Size(w, h), width, rotation);
 
             Polygon polygon = new Polygon();
             polygon.AddChilds(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
+            if (polygon.ChildCount != 4)
+                throw new InvalidProgramException("Thermal generada incorrectamente.");
             return polygon;
         }
 
@@ -155,7 +157,10 @@
         /// 
         public override Rect GetBoundingBox() {
 
-            throw new NotImplementedException();
+            double w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize);
+            double h = topSize;
+
+            return new Rect(Position.X - w / 2, Position.Y - h / 2, w, h);
         }
 
         /// <summary>

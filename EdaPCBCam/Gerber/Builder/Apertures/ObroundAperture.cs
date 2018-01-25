@@ -4,6 +4,9 @@
     using System.Globalization;
     using System.Text;
 
+    /// <summary>
+    /// Clase que representa una aperture eliptica.
+    /// </summary>
     public sealed class ObroundAperture : Aperture {
 
         private readonly double width;

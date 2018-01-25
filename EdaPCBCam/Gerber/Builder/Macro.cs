@@ -3,6 +3,9 @@
     using System;
     using System.Text;
 
+    /// <summary>
+    /// Clase que representa un macro gerber.
+    /// </summary>
     public class Macro {
 
         private readonly int id;

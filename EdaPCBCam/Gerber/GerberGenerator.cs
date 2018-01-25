@@ -3,6 +3,9 @@
     using System;
     using MikroPic.EdaTools.v1.Pcb.Model;
 
+    /// <summary>
+    /// Base pels generadors gerber.
+    /// </summary>
     public abstract class GerberGenerator {
 
         private readonly Board board;

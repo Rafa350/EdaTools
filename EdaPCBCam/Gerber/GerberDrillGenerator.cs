@@ -9,6 +9,9 @@
     using System.IO;
     using System.Windows.Media;
 
+    /// <summary>
+    /// Clase per generar fitxers gerber de taladrat.
+    /// </summary>
     public sealed class GerberDrillGenerator: GerberGenerator {
 
         public enum DrillType {

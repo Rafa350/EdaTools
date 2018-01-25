@@ -4,6 +4,9 @@
     using System.Text;
     using System.Globalization;
 
+    /// <summary>
+    /// Clase que representa una apertura poligonal.
+    /// </summary>
     public sealed class PoligonAperture : Aperture {
 
         private readonly int vertex;

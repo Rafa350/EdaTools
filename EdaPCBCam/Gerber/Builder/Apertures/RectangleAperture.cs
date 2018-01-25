@@ -4,6 +4,9 @@
     using System.Globalization;
     using System.Text;
 
+    /// <summary>
+    /// Clase que representa una aperture rectangular.
+    /// </summary>
     public sealed class RectangleAperture : Aperture {
 
         private readonly double width;

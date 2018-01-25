@@ -1,5 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Builder {
 
+    /// <summary>
+    /// Clase que representa una aperture gerber
+    /// </summary>
     public abstract class Aperture {
 
         private readonly int id;
@@ -13,6 +16,10 @@
             this.id = id;
         }
 
+        /// <summary>
+        /// Genera la comanda gerber per crear l'apertura.
+        /// </summary>
+        /// <returns></returns>
         protected abstract string GetCommand();
 
         /// <summary>

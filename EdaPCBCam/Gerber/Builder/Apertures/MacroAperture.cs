@@ -4,6 +4,9 @@
     using System.Globalization;
     using System.Text;
 
+    /// <summary>
+    /// Clae que representa una apertura de macro.
+    /// </summary>
     public sealed class MacroAperture : Aperture {
 
         private readonly object[] args;

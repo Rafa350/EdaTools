@@ -95,6 +95,7 @@
 
         #endregion
 
+        #region Metodes per la gestion d'elements
 
         /// <summary>
         /// Afeigeix un element.
@@ -108,6 +109,8 @@
 
             elements.Add(element);
         }
+
+        #endregion
 
         #region Metodes per la gestio de blocs
 
@@ -456,90 +459,100 @@
         /// Calcula el poligon d'una regio.
         /// </summary>
         /// <param name="region">L'element de tipus regio.</param>
+        /// <param name="layer">La capa a procesar.</param>
+        /// <param name="spacing">Espaiat.</param>
+        /// <param name="transformation">Transformacio a aplicar al poligon.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public Polygon GetRegionPolygon(RegionElement region, double spacing, Matrix transformation) {
+        public Polygon GetRegionPolygon(RegionElement region, Layer layer, double spacing, Matrix transformation) {
 
             if (region == null)
                 throw new ArgumentNullException("region");
 
-            Polygon regionPolygon = region.GetPolygon();
-            regionPolygon.Transform(transformation);
+            if (IsOnLayer(region, layer)) {
 
-            // Si estem en capes de senyal, cal generar els porus i termals
-            //
-            if (IsOnLayer(region, GetLayer(LayerId.Top)) ||
-                IsOnLayer(region, GetLayer(LayerId.Bottom))) {
+                Polygon regionPolygon = region.GetPolygon();
+                regionPolygon.Transform(transformation);
 
-                IEnumerable<Layer> regionLayers = GetLayers(region);
-                Signal regionSignal = GetSignal(region, null, false);
-
-                spacing += region.Thickness / 2;
-                List<Polygon> holePolygons = new List<Polygon>();
-
-                Layer restrictLayer = GetLayer(LayerId.TopRestrict);
-
-                // Procesa els elements de la placa en la mateixa capa que la regio o el la capa restrict
+                // Si estem en capes de senyal, cal generar els porus i termals
                 //
-                foreach (Element element in elements) {
-                    if (element != region) {
+                if ((layer.Id == LayerId.Top) || (layer.Id == LayerId.Bottom)) {
 
-                        // El element es en la mateixa capa que la regio
-                        //
-                        if (IsOnAnyLayer(element, regionLayers)) {
-                            IConectable item = element as IConectable;
-                            if ((item == null) || (GetSignal(item, null, false) != regionSignal)) {
-                                Polygon elementPolygon = element.GetPourPolygon(spacing);
+                    Signal regionSignal = GetSignal(region, null, false);
+
+                    spacing += region.Thickness / 2;
+                    List<Polygon> holePolygons = new List<Polygon>();
+
+                    Layer restrictLayer = GetLayer(LayerId.TopRestrict);
+
+                    // Procesa els elements de la placa que es troben en la mateixa capa que 
+                    // la regio, o en la capa restrict.
+                    //
+                    foreach (Element element in elements) {
+                        if (element != region) {
+
+                            // El element es en la mateixa capa que la regio
+                            //
+                            if (IsOnLayer(element, layer)) {
+                                IConectable item = element as IConectable;
+
+                                // Si no esta en la mateixa senyal que la regio, genera un forat.
+                                //
+                                if ((item == null) || (GetSignal(item, null, false) != regionSignal)) {
+                                    Polygon elementPolygon = element.GetPourPolygon(spacing);
+                                    holePolygons.Add(elementPolygon);
+                                }
+                            }
+
+                            // El element esta el la capa restrict
+                            //
+                            else if (IsOnLayer(element, restrictLayer)) {
+                                Polygon elementPolygon = element.GetPolygon();
                                 holePolygons.Add(elementPolygon);
                             }
                         }
+                    }
 
-                        // El element esta el la capa restrict
-                        //
-                        else if (IsOnLayer(element, restrictLayer)) {
-                            Polygon elementPolygon = element.GetPolygon();
-                            holePolygons.Add(elementPolygon);
+                    // Procesa els elements dels components
+                    //
+                    foreach (Part part in parts) {
+                        foreach (Element element in part.Elements) {
+
+                            if ((element != region) &&
+                                (IsOnLayer(element, layer) || IsOnLayer(element, restrictLayer))) {
+
+                                PadElement padElement = element as PadElement;
+
+                                // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
+                                //
+                                if ((padElement == null) || (GetSignal(padElement, part, false) != regionSignal)) {
+                                    Polygon elementPolygon = element.GetPourPolygon(spacing);
+                                    elementPolygon.Transform(part.Transformation);
+                                    holePolygons.Add(elementPolygon);
+                                }
+
+                                // En es un pad i esta conectat per tant, genera un thermal
+                                //
+                                else if (padElement != null) {
+                                    Polygon thermalPolygon = padElement.GetThermalPolygon(spacing, 0.2);
+                                    thermalPolygon.Transform(part.Transformation);
+                                    foreach (Polygon polygon in thermalPolygon.Childs)
+                                        holePolygons.Add(polygon);
+                                }
+                            }
                         }
                     }
+
+                    return PolygonProcessor.ClipExtended(regionPolygon, holePolygons, PolygonProcessor.ClipOperation.Diference);
                 }
 
-                // Procesa els elements dels components
+                // Si no es capa de senyal no cal fer res mes
                 //
-                foreach (Part part in parts) {
-                    foreach (Element element in part.Elements) {
-
-                        if ((element != region) &&
-                            (IsOnAnyLayer(element, regionLayers) || IsOnLayer(element, restrictLayer))) {
-
-                            PadElement padElement = element as PadElement;
-
-                            // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
-                            //
-                            if ((padElement == null) || (GetSignal(padElement, part, false) != regionSignal)) {
-                                Polygon elementPolygon = element.GetPourPolygon(spacing);
-                                elementPolygon.Transform(part.Transformation);
-                                holePolygons.Add(elementPolygon);
-                            }
-
-                            // En es un pad i esta conectat per tant, genera un thermal
-                            //
-                            else if (padElement != null) {
-                                Polygon thermalPolygon = padElement.GetThermalPolygon(spacing, 0.2);
-                                thermalPolygon.Transform(part.Transformation);
-                                foreach (Polygon polygon in thermalPolygon.Childs)
-                                    holePolygons.Add(polygon);
-                            }
-                        }
-                    }
-                }
-
-                return PolygonProcessor.ClipExtended(regionPolygon, holePolygons, PolygonProcessor.ClipOperation.Diference);
+                else
+                    return regionPolygon;
             }
-
-            // Si no es capa de senyal no cal fer res mes
-            //
             else
-                return regionPolygon;
+                return null;
         }
 
         #endregion

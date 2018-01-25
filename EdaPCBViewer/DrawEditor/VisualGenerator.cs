@@ -23,7 +23,7 @@
             /// Constructor del objecte.
             /// </summary>
             /// <param name="board">La placa a procesar.</param>
-            /// <param name="layer">La capa on apicar el proces.</param>
+            /// <param name="layer">La capa on aplicar el proces.</param>
             /// <param name="visuals">Llista de visuals.</param>
             /// 
             public RenderVisitor(Board board, Layer layer, IList<Visual> visuals) {
@@ -46,7 +46,7 @@
             }
 
             /// <summary>
-            /// Visita un element Linia
+            /// Visita un objecte LiniaElement
             /// </summary>
             /// <param name="line">L'element a visitar.</param>
             /// 
@@ -61,7 +61,7 @@
                             dc.PushTransform(localTransform);
 
                         Brush brush = CreateBrush(layer.Color);
-                        dc.DrawPolygon(brush, null, line.GetPolygon());
+                        DrawPolygon(dc, brush, null, line.GetPolygon());
 
                         if (localTransform != null)
                             dc.Pop();
@@ -72,7 +72,7 @@
             }
 
             /// <summary>
-            /// Visita un element Arc
+            /// Visita un objecte ArcElement
             /// </summary>
             /// <param name="arc">L'element a visitar.</param>
             /// 
@@ -87,7 +87,7 @@
                             dc.PushTransform(localTransform);
 
                         Brush brush = CreateBrush(layer.Color);
-                        dc.DrawPolygon(brush, null, arc.GetPolygon());
+                        DrawPolygon(dc, brush, null, arc.GetPolygon());
 
                         if (localTransform != null)
                             dc.Pop();
@@ -98,7 +98,7 @@
             }
 
             /// <summary>
-            /// Visita un element Rectangle
+            /// Visita un objecte RectangleElement
             /// </summary>
             /// <param name="rectangle">L'element a visitar.</param>
             /// 
@@ -113,7 +113,7 @@
                             dc.PushTransform(localTransform);
 
                         Brush brush = CreateBrush(layer.Color);
-                        dc.DrawPolygon(brush, null, rectangle.GetPolygon());
+                        DrawPolygon(dc, brush, null, rectangle.GetPolygon());
 
                         if (localTransform != null)
                             dc.Pop();
@@ -124,7 +124,7 @@
             }
 
             /// <summary>
-            /// Visita un element Circle.
+            /// Visita un objecte CircleElement.
             /// </summary>
             /// <param name="circle">L'element a visitar.</param>
             /// 
@@ -139,7 +139,7 @@
                             dc.PushTransform(localTransform);
 
                         Brush brush = CreateBrush(layer.Color);
-                        dc.DrawPolygon(brush, null, circle.GetPolygon());
+                        DrawPolygon(dc, brush, null, circle.GetPolygon());
 
                         if (localTransform != null)
                             dc.Pop();
@@ -159,17 +159,19 @@
                         if (localTransform != null)
                             dc.PushTransform(localTransform);
 
+                        Polygon polygon = board.GetRegionPolygon(region, layer, 0.15, Matrix.Identity);
+
+
                         Pen pen = null;
                         Brush brush = null;
 
                         if ((layer.Id == LayerId.Top) || (layer.Id == LayerId.Bottom)) {
-                            brush = CreateBrush(layer.Color, 0.2);
-                            pen = CreatePen(layer.Color, 0.1);
+                            brush = CreateBrush(layer.Color);
+                            pen = CreatePen(layer.Color, 0.2);
                         }
-                        else 
+                        else
                             brush = new SolidColorBrush(layer.Color);
-
-                        dc.DrawPolygon(brush, pen, region.GetPolygon());
+                        DrawPolygon(dc, brush, pen, polygon);
 
                         if (localTransform != null)
                             dc.Pop();
@@ -198,11 +200,11 @@
                         List<Polygon> polygonHoles = new List<Polygon>(polygon.Childs);
 
                         Brush polygonBrush = CreateBrush(layer.Color);
-                        dc.DrawPolygon(polygonBrush, null, polygon);
+                        DrawPolygon(dc, polygonBrush, null, polygon);
 
                         if (polygonHoles.Count == 1) {
                             Brush holeBrush = CreateBrush(Colors.Black);
-                            dc.DrawPolygon(holeBrush, null, polygonHoles[0]);
+                            DrawPolygon(dc, holeBrush, null, polygonHoles[0]);
                         }
 
                         if (localTransform != null)
@@ -229,7 +231,7 @@
                             dc.PushTransform(localTransform);
 
                         Brush brush = CreateBrush(layer.Color);
-                        dc.DrawPolygon(brush, null, pad.GetPolygon());
+                        DrawPolygon(dc, brush, null, pad.GetPolygon());
 
                         if (localTransform != null)
                             dc.Pop();
@@ -256,12 +258,12 @@
 
                         Brush polygonBrush = CreateBrush(layer.Color);
                         Polygon polygon = pad.GetPolygon();
-                        dc.DrawPolygon(polygonBrush, null, polygon);
+                        DrawPolygon(dc, polygonBrush, null, polygon);
 
                         List<Polygon> polygonHoles = new List<Polygon>(polygon.Childs);
                         if (polygonHoles.Count == 1) {
                             Brush holeBrush = CreateBrush(Colors.Black);
-                            dc.DrawPolygon(holeBrush, null, polygonHoles[0]);
+                            DrawPolygon(dc, holeBrush, null, polygonHoles[0]);
                         }
 
                         dc.PushTransform(new ScaleTransform(1, -1, pad.Position.X, pad.Position.Y));
@@ -298,7 +300,7 @@
 
                         Pen pen = CreatePen(layer.Color, 0.05);
                         Brush brush = CreateBrush(Colors.Black);
-                        dc.DrawPolygon(brush, pen, hole.GetPolygon());
+                        DrawPolygon(dc, brush, pen, hole.GetPolygon());
 
                         if (localTransform != null)
                             dc.Pop();
@@ -345,6 +347,40 @@
 
                 return brush;
             }
+
+            private static void DrawPolygon(DrawingContext dc, Brush brush, Pen pen, Polygon polygon) {
+
+                StreamGeometry geometry = new StreamGeometry();
+                using (StreamGeometryContext ctx = geometry.Open())
+                    StreamPolygon(ctx, polygon, polygon.HasPoints ? 1 : 0);
+                geometry.Freeze();
+                dc.DrawGeometry(brush, pen, geometry);
+            }
+
+            /// <summary>
+            /// Dibuixa un poligon en una geometria
+            /// </summary>
+            /// <param name="ctx">Contexte de la geometria.</param>
+            /// <param name="polygon">El poligon a dibuixar.</param>
+            /// 
+            private static void StreamPolygon(StreamGeometryContext ctx, Polygon polygon, int level) {
+
+                if (polygon.HasPoints) {
+                    bool first = true;
+                    foreach (Point point in polygon.Points) {
+                        if (first) {
+                            first = false;
+                            ctx.BeginFigure(point, true, true);
+                        }
+                        else
+                            ctx.LineTo(point, true, true);
+                    }
+                }
+                if (polygon.HasChilds && (level < 2))
+                    foreach (Polygon child in polygon.Childs)
+                        StreamPolygon(ctx, child, level + 1);
+            }
+
         }
 
         private readonly Board board;

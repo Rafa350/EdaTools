@@ -6,6 +6,9 @@
     using System.Collections.Generic;
     using System.Globalization;
 
+    /// <summary>
+    /// Clase que representa el diccionari d'apertures.
+    /// </summary>
     internal sealed class ApertureDictionary {
 
         // Definicio del macro per l'apertura rectangle arrodonit.

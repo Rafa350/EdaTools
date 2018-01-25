@@ -64,7 +64,6 @@
     </Compile>
     <Compile Include="DrawEditor\DesignTool.cs" />
     <Compile Include="DrawEditor\BrushCache.cs" />
-    <Compile Include="DrawEditor\DrawingContextHelper.cs" />
     <Compile Include="DrawEditor\PenCache.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

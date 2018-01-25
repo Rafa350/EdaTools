@@ -207,7 +207,7 @@
         }
 
         /// <summary>
-        /// Clase utilitzada per la creacio d'apertures.
+        /// Clase utilitzada per crear el diccionari d'apertures.
         /// </summary>
         /// 
         private sealed class ApertureCreatorVisitor : BoardVisitor {
@@ -340,7 +340,7 @@
         }
 
         /// <summary>
-        /// Clase utilitzada per la generacio de la imatge.
+        /// Clase generar la imatge a base d'apertures.
         /// </summary>
         /// 
         private sealed class ImageGeneratorVisitor : BoardVisitor {
@@ -353,7 +353,7 @@
             private double localRotation = 0;
 
             /// <summary>
-            /// Construcxtor del objecte.
+            /// Constructor del objecte.
             /// </summary>
             /// <param name="gb">L'bjecte GerberBuilder.</param>
             /// <param name="board">La placa a procesar.</param>
@@ -369,7 +369,7 @@
             }
 
             /// <summary>
-            /// Visita un element Line
+            /// Visita objecte LineElement
             /// </summary>
             /// <param name="line">L'element a visitar.</param>
             /// 
@@ -389,7 +389,7 @@
             }
 
             /// <summary>
-            /// Visita un element de tipus Arc.
+            /// Visita objecte ArcElement.
             /// </summary>
             /// <param name="arc">L' element a visitar.</param>
             /// 
@@ -415,7 +415,7 @@
             }
 
             /// <summary>
-            /// Visita un element de tipus Rectangle.
+            /// Visita un objecte RectangleElement.
             /// </summary>
             /// <param name="rectangle">L'element a visitar.</param>
             /// 
@@ -435,7 +435,7 @@
             }
 
             /// <summary>
-            /// Visita un element de tipus cercle
+            /// Visita un objecte CircleElement
             /// </summary>
             /// <param name="circle">L'element a visitar.</param>
             /// 
@@ -518,9 +518,9 @@
             }
 
             /// <summary>
-            /// Visita un element de tipus SmdPad
+            /// Visita un objecte SmdPadElement
             /// </summary>
-            /// <param name="pad">L'element a visitar.</param>
+            /// <param name="pad">L'objecte a visitar.</param>
             /// 
             public override void Visit(SmdPadElement pad) {
 
@@ -556,7 +556,7 @@
         }
 
         /// <summary>
-        /// Clase per generar regions poligonals.
+        /// Clase per generar la imatge amb regions poligonals.
         /// </summary>
         private sealed class RegionGeneratorVisitor : BoardVisitor {
 
@@ -564,7 +564,8 @@
             private readonly Board board;
             private readonly IEnumerable<Layer> layers;
             private readonly ApertureDictionary apertureDict;
-            private Matrix localTransformation = Matrix.Identity;
+            private Matrix currentTransformation = Matrix.Identity;
+            private Layer currentLayer;
 
             /// <summary>
             /// Constructor del objecte.
@@ -583,38 +584,65 @@
             }
 
             /// <summary>
-            /// Visita un element de tipus regio
+            /// Visita un objecte Board
             /// </summary>
-            /// <param name="region">L'element a visitar.</param>
+            /// <param name="board">L'objecte a visitar.</param>
             /// 
-            public override void Visit(RegionElement region) {
+            public override void Visit(Board board) {
 
-                if (board.IsOnAnyLayer(region, layers)) {
-                    Polygon polygon = board.GetRegionPolygon(region, 0.20, localTransformation);
-                    ProcessPolygon(polygon, region.Thickness);
+                // Procesa capa a capa
+                //
+                foreach (Layer layer in layers) {
+                    currentLayer = layer;
+                    base.Visit(board);
+                    currentLayer = null;
                 }
             }
 
             /// <summary>
-            /// Visita un element de tipus Part.
+            /// Visita un objecte RegionElement
+            /// </summary>
+            /// <param name="region">L'objecte a visitar.</param>
+            /// 
+            public override void Visit(RegionElement region) {
+
+                if (board.IsOnLayer(region, currentLayer)) {
+                    Polygon polygon = board.GetRegionPolygon(region, currentLayer, 0.20, currentTransformation);
+                    DrawPolygon(polygon, region.Thickness);
+                }
+            }
+
+            /// <summary>
+            /// Visita un objecte Part.
             /// </summary>
             /// <param name="part">L'objecte a visitar.</param>
             /// 
             public override void Visit(Part part) {
 
-                localTransformation = part.Transformation;
-
+                currentTransformation = part.Transformation;
                 base.Visit(part);
-
-                localTransformation = Matrix.Identity;
+                currentTransformation = Matrix.Identity;
             }
 
-            private void ProcessPolygon(Polygon polygon, double thickness) {
+            /// <summary>
+            /// Dibuixa un poligon
+            /// </summary>
+            /// <param name="polygon">El poligon a dibuixar.</param>
+            /// <param name="thickness">Amplada del perfil.</param>
+            /// 
+            private void DrawPolygon(Polygon polygon, double thickness) {
 
-                ProcessPolygon(polygon, polygon.HasPoints ? 1 : 0, thickness);
+                DrawPolygon(polygon, polygon.HasPoints ? 1 : 0, thickness);
             }
 
-            private void ProcessPolygon(Polygon polygon, int level, double thickness) {
+            /// <summary>
+            /// Dibuixa un poligon
+            /// </summary>
+            /// <param name="polygon">El poligon a dibuixar.</param>
+            /// <param name="level">Nivell d'anidad del poligon.</param>
+            /// <param name="thickness">Amplada del perfil.</param>
+            /// 
+            private void DrawPolygon(Polygon polygon, int level, double thickness) {
 
                 // Procesa el poligon
                 //
@@ -639,7 +667,7 @@
                 //
                 if (polygon.HasChilds && (level < 2))
                     foreach (Polygon child in polygon.Childs)
-                        ProcessPolygon(child, level + 1, thickness);
+                        DrawPolygon(child, level + 1, thickness);
             }
         }
     }

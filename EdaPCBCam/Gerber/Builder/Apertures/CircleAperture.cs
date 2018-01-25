@@ -4,6 +4,9 @@
     using System.Text;
     using System.Globalization;
 
+    /// <summary>
+    /// Clase que representa una apertura circular.
+    /// </summary>
     public sealed class CircleAperture : Aperture {
 
         public readonly double diameter;
