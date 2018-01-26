@@ -118,7 +118,9 @@
                         if (localTransform != null)
                             dc.PushTransform(localTransform);
 
-                        Brush brush = CreateBrush(layer.Color);
+                        Brush brush = rectangle.Filled ? CreateBrush(layer.Color) : null;
+                        Pen pen = rectangle.Filled ? null : CreatePen(layer.Color, rectangle.Thickness);
+
                         DrawPolygon(dc, brush, null, rectangle.GetPolygon());
 
                         if (localTransform != null)
@@ -144,7 +146,9 @@
                         if (localTransform != null)
                             dc.PushTransform(localTransform);
 
-                        Brush brush = CreateBrush(layer.Color);
+                        Brush brush = circle.Filled ? CreateBrush(layer.Color) : null;
+                        Pen pen = circle.Filled ? null : CreatePen(layer.Color, circle.Thickness);
+
                         DrawPolygon(dc, brush, null, circle.GetPolygon());
 
                         if (localTransform != null)
@@ -180,8 +184,8 @@
                             brush = CreateBrush(layer.Color);
                             pen = CreatePen(layer.Color, 0.2);
                         }
-                        else
-                            brush = new SolidColorBrush(layer.Color);
+                        else 
+                            brush = new SolidColorBrush(layer.Color);                        
                         DrawPolygon(dc, brush, pen, polygon);
 
                         if (localTransform != null)

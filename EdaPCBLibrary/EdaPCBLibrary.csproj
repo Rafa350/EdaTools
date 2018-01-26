@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Geometry\ArcUtils.cs" />
+    <Compile Include="Geometry\Fonts\VectorFont.cs" />
     <Compile Include="Geometry\Polygons\Infrastructure\Clipper.cs" />
     <Compile Include="Geometry\Polygons\Polygon.cs" />
     <Compile Include="Geometry\Polygons\PolygonBuilder.cs" />

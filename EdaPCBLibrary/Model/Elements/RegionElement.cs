@@ -98,18 +98,40 @@
 
             Point startPosition = new Point();
 
+            Point firstPoint = new Point();
+            double angle = 0;
+
             Polygon polygon = new Polygon();
+            bool first = true;
             foreach (Segment segment in segments) {
-                if (segment.Angle == 0)
+
+                if (first) {
+                    first = false;
+                    firstPoint = segment.Position;
+                }
+
+                if (angle == 0)
                     polygon.AddPoint(segment.Position);
                 else {
-                    Point center = ArcUtils.Center(startPosition, segment.Position, segment.Angle);
-                    double radius = ArcUtils.Radius(startPosition, segment.Position, segment.Angle);
+                    Point center = ArcUtils.Center(startPosition, segment.Position, angle);
+                    double radius = ArcUtils.Radius(startPosition, segment.Position, angle);
                     double startAngle = ArcUtils.StartAngle(startPosition, center);
-                    polygon.AddPoints(PolygonBuilder.ArcPoints(center, radius, startAngle, segment.Angle));
+                    polygon.AddPoints(PolygonBuilder.ArcPoints(center, radius, startAngle, angle, true));
                 }
+
                 startPosition = segment.Position;
+                angle = segment.Angle;
             }
+
+            if (angle == 0)
+                polygon.AddPoint(firstPoint);
+            else {
+                Point center = ArcUtils.Center(startPosition, firstPoint, angle);
+                double radius = ArcUtils.Radius(startPosition, firstPoint, angle);
+                double startAngle = ArcUtils.StartAngle(startPosition, center);
+                polygon.AddPoints(PolygonBuilder.ArcPoints(center, radius, startAngle, angle, true));
+            }
+
             return polygon;
         }
 

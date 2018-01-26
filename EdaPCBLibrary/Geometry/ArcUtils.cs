@@ -3,8 +3,19 @@
     using System;
     using System.Windows;
 
+    /// <summary>
+    /// Operacions amb arcs.
+    /// </summary>
     internal static class ArcUtils {
 
+        /// <summary>
+        /// Calcula el centre d'un arc.
+        /// </summary>
+        /// <param name="startPosition">Posicio inicial.</param>
+        /// <param name="endPosition">Pocicio final.</param>
+        /// <param name="angle">Angle d'apertura.</param>
+        /// <returns>El centre.</returns>
+        /// 
         public static Point Center(Point startPosition, Point endPosition, double angle) {
 
             double rAngle = angle * Math.PI / 180.0;
@@ -42,6 +53,12 @@
         public static double StartAngle(Point startPosition, Point center) {
 
             double a = Math.Atan2(startPosition.Y - center.Y, startPosition.X - center.X);
+            return a * 180.0 / Math.PI;
+        }
+
+        public static double EndAngle(Point endPosition, Point center) {
+
+            double a = Math.Atan2(endPosition.Y - center.Y, endPosition.X - center.X);
             return a * 180.0 / Math.PI;
         }
 
