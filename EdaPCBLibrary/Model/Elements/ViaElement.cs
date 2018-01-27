@@ -100,22 +100,19 @@
         /// 
         public override Polygon GetPourPolygon(BoardSide side, double spacing) {
 
-            Polygon polygon;
+            double size = side == BoardSide.Inner ? InnerSize : OuterSize;
+            ViaShape shape = side == BoardSide.Inner ? ViaShape.Circular : this.shape;
+
             switch (shape) {
                 case ViaShape.Square:
-                    polygon = PolygonBuilder.BuildRectangle(position, new Size(OuterSize + spacing * 2, OuterSize + spacing * 2), 0, 0);
-                    break;
+                    return PolygonBuilder.BuildRectangle(position, new Size(size + spacing * 2, size + spacing * 2), 0, 0);
 
                 case ViaShape.Octogonal:
-                    polygon = PolygonBuilder.BuildRegularPolygon(8, position, (OuterSize / 2) + spacing, 22.5);
-                    break;
+                    return PolygonBuilder.BuildRegularPolygon(8, position, (size / 2) + spacing, 22.5);
 
                 default:
-                    polygon = PolygonBuilder.BuildCircle(position, (OuterSize / 2) + spacing);
-                    break;
+                    return PolygonBuilder.BuildCircle(position, (size / 2) + spacing);
             }
-
-            return polygon;
         }
 
         /// <summary>
@@ -126,7 +123,7 @@
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
-            double size = OuterSize;
+            double size = side == BoardSide.Inner ? InnerSize : OuterSize;
             double hSize = size / 2;
             return new Rect(position.X - hSize, position.Y - hSize, size, size);
         }

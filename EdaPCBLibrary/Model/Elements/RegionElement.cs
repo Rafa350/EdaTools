@@ -23,11 +23,15 @@
             }
 
             public Point Position {
-                get { return position; }
+                get {
+                    return position;
+                }
             }
 
             public double Angle {
-                get { return angle; }
+                get {
+                    return angle;
+                }
             }
         }
 
@@ -175,9 +179,6 @@
         /// <param name="segment">El segment a afeigir.</param>
         /// 
         public void Add(Segment segment) {
-
-            if ((segments.Count == 0) && (segment.Angle != 0))
-                throw new InvalidOperationException("En primer segmento no puede ser un arco.");
 
             segments.Add(segment);
         }

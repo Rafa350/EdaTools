@@ -148,6 +148,11 @@
                     gb.Attribute(".FilePolarity,Positive");
                     break;
 
+                case DrillType.PlatedRoute:
+                    gb.Attribute(String.Format(".FileFunction,Plated,{0},{1},PTH,Route", firstLevel, lastLevel));
+                    gb.Attribute(".FilePolarity,Positive");
+                    break;
+
                 case DrillType.NonPlatedRoute:
                     gb.Attribute(String.Format(".FileFunction,NonPlated,{0},{1},NPTH,Route", firstLevel, lastLevel));
                     gb.Attribute(".FilePolarity,Positive");
