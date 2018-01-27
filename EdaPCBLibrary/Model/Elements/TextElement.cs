@@ -65,9 +65,10 @@
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon() {
+        public override Polygon GetPolygon(BoardSide side) {
 
             return new Polygon();
         }
@@ -75,10 +76,11 @@
         /// <summary>
         /// Crea el poligon espaiat del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPourPolygon(double spacing) {
+        public override Polygon GetPourPolygon(BoardSide side, double spacing) {
 
             return new Polygon();
         }
@@ -86,9 +88,10 @@
         /// <summary>
         /// Calcula el bounding box del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override Rect GetBoundingBox() {
+        public override Rect GetBoundingBox(BoardSide side) {
 
             throw new NotImplementedException();
         }

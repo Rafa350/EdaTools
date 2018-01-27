@@ -72,6 +72,11 @@
             InternalAddChild(child);
         }
 
+        /// <summary>
+        /// Afegeix un conjunt de poligons fills.
+        /// </summary>
+        /// <param name="childs">Els fills a afeigir.</param>
+        /// 
         public void AddChilds(IEnumerable<Polygon> childs) {
 
             if (childs == null)

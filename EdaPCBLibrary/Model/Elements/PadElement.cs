@@ -37,11 +37,12 @@
         /// <summary>
         /// Crea el poligon del thermal.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <param name="spacing">Espaiat.</param>
         /// <param name="width">Amplada dels conductors.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public abstract Polygon GetThermalPolygon(double spacing, double width);
+        public abstract Polygon GetThermalPolygon(BoardSide side, double spacing, double width);
 
         /// <summary>
         /// Obte o asigna el nom.

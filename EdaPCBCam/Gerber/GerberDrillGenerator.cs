@@ -7,6 +7,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Text;
     using System.Windows.Media;
 
     /// <summary>
@@ -16,14 +17,85 @@
 
         public enum DrillType {
             PlatedDrill,
-            NonPlatedDrill
+            NonPlatedDrill,
+            PlatedRoute,
+            NonPlatedRoute,
+            Profile
         }
 
+        /// <summary>
+        /// Constructor de la clase.
+        /// </summary>
+        /// <param name="board"></param>
+        /// 
         public GerberDrillGenerator(Board board) :
             base(board) {
         }
 
-        public void Generate(TextWriter writer, IEnumerable<Layer> layers, DrillType drillType) {
+        /// <summary>
+        /// Genera el nom del fitxer.
+        /// </summary>
+        /// <param name="prefix">Prefix del nom.</param>
+        /// <param name="drillType">Tipus de fitxer a generar.</param>
+        /// <param name="firstLevel">Primer nivell de coure.</param>
+        /// <param name="lastLevel">Ultim nivell de coure.</param>
+        /// <returns>El nom de fitxer.</returns>
+        /// 
+        public string GenerateFileName(string prefix, DrillType drillType, int firstLevel = 0, int lastLevel = 0) {
+
+            if (String.IsNullOrEmpty(prefix))
+                throw new ArgumentNullException("prefix");
+
+            if ((drillType != DrillType.Profile) && (firstLevel == 0))
+                throw new ArgumentOutOfRangeException("firstLevel");
+
+            if ((drillType != DrillType.Profile) && (lastLevel == 0))
+                throw new ArgumentOutOfRangeException("lastLevel");
+
+            if (lastLevel <= firstLevel)
+                throw new ArgumentOutOfRangeException("lastLevel");
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(prefix);
+
+            switch (drillType) {
+                case DrillType.PlatedDrill:
+                    sb.AppendFormat("_Plated${0}${1}$PTH$Drill", firstLevel, lastLevel);
+                    break;
+
+                case DrillType.NonPlatedDrill:
+                    sb.AppendFormat("_NonPlated${0}${1}$NPTH$Drill", firstLevel, lastLevel);
+                    break;
+
+                case DrillType.PlatedRoute:
+                    sb.AppendFormat("_Plated${0}${1}$PTH$Route", firstLevel, lastLevel);
+                    break;
+
+                case DrillType.NonPlatedRoute:
+                    sb.AppendFormat("_NonPlated${0}${1}$NPTH$Route", firstLevel, lastLevel);
+                    break;
+
+                case DrillType.Profile:
+                    sb.AppendFormat("_Profile$NP");
+                    break;
+            }
+
+            sb.Append(".gbr");
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Genera el contingut
+        /// </summary>
+        /// <param name="writer">Escriptor de sortida.</param>
+        /// <param name="layers">Lapes a procesar.</param>
+        /// <param name="drillType">Tipus de forat.</param>
+        /// <param name="firstLevel">Primer nivell de coure.</param>
+        /// <param name="lastLevel">Eltim nivell de coute.</param>
+        /// 
+        public void GenerateContent(TextWriter writer, IEnumerable<Layer> layers, DrillType drillType, int firstLevel, int lastLevel) {
 
             if (writer == null)
                 throw new ArgumentNullException("writer");
@@ -32,7 +104,7 @@
 
             ApertureDictionary apertures = CreateApertures(layers);
 
-            GenerateFileHeader(gb, drillType);
+            GenerateFileHeader(gb, drillType, firstLevel, lastLevel);
             GenerateApertures(gb, apertures);
             GenerateImage(gb, layers, apertures);
             GenerateFileTail(gb);
@@ -56,18 +128,36 @@
         /// </summary>
         /// <param name="gb">El generador de gerbers</param>
         /// <param name="drillType">El tipus de forat.</param>
+        /// <param name="firstLevel">Primer nivell</param>
+        /// <param name="lastLevel">Ultim nivell</param>
         /// 
-        private void GenerateFileHeader(GerberBuilder gb, DrillType drillType) {
+        private void GenerateFileHeader(GerberBuilder gb, DrillType drillType, int firstLevel, int lastLevel) {
 
             gb.Comment("EdaTools v1.0.");
             gb.Comment("EdaTools CAM processor. Gerber generator.");
             gb.Comment("BEGIN HEADER");
 
-            if (drillType == DrillType.PlatedDrill)
-                gb.Attribute(String.Format(".FileFunction,Plated,{0},{1},PTH,Drill", 1, 2));
-            else
-                gb.Attribute(".FileFunction,Profile,NP");
-            gb.Attribute(".FilePolarity,Positive");
+            switch (drillType) {
+                case DrillType.PlatedDrill:
+                    gb.Attribute(String.Format(".FileFunction,Plated,{0},{1},PTH,Drill", firstLevel, lastLevel));
+                    gb.Attribute(".FilePolarity,Positive");
+                    break;
+
+                case DrillType.NonPlatedDrill:
+                    gb.Attribute(String.Format(".FileFunction,NonPlated,{0},{1},NPTH,Drill", firstLevel, lastLevel));
+                    gb.Attribute(".FilePolarity,Positive");
+                    break;
+
+                case DrillType.NonPlatedRoute:
+                    gb.Attribute(String.Format(".FileFunction,NonPlated,{0},{1},NPTH,Route", firstLevel, lastLevel));
+                    gb.Attribute(".FilePolarity,Positive");
+                    break;
+
+                case DrillType.Profile:
+                    gb.Attribute(".FileFunction,Profile,NP");
+                    gb.Attribute(".FilePolarity,Positive");
+                    break;
+            }
             gb.Attribute(".Part,Single");
             gb.SetUnits(Units.Milimeters);
             gb.SetCoordinateFormat(8, 5);
@@ -184,7 +274,7 @@
             }
 
             /// <summary>
-            /// Visita un element de tipus Hole
+            /// Visita un object HoleElement
             /// </summary>
             /// <param name="hole">El element a visitar.</param>
             /// 
@@ -198,9 +288,9 @@
             }
 
             /// <summary>
-            /// Visita un element de tipus Via.
+            /// Visita un objecte ViaElement.
             /// </summary>
-            /// <param name="via">El element a visitar.</param>
+            /// <param name="via">L'objecte a visitar.</param>
             /// 
             public override void Visit(ViaElement via) {
 
@@ -212,9 +302,9 @@
             }
 
             /// <summary>
-            /// Visita un element de tipus ThPadElement
+            /// Visita un objecte ThPadElement
             /// </summary>
-            /// <param name="pad">El element a visitar.</param>
+            /// <param name="pad">L'objecte a visitar.</param>
             /// 
             public override void Visit(ThPadElement pad) {
 
@@ -228,7 +318,7 @@
             /// <summary>
             /// Visita un objecte Part
             /// </summary>
-            /// <param name="part">El objecte a visitar.</param>
+            /// <param name="part">L'objecte a visitar.</param>
             /// 
             public override void Visit(Part part) {
 

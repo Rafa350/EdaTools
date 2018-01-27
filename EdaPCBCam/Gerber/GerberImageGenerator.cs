@@ -8,6 +8,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Text;
     using System.Windows;
     using System.Windows.Media;
 
@@ -17,8 +18,7 @@
     public sealed class GerberImageGenerator : GerberGenerator {
 
         public enum ImageType {
-            Top,
-            Bottom,
+            Copper,
             TopSolderMask,
             BottomSolderMask,
             TopCream,
@@ -38,22 +38,77 @@
         }
 
         /// <summary>
+        /// Genera el nom del fitxer.
+        /// </summary>
+        /// <param name="prefix">Prefix.</param>
+        /// <param name="imageType">Tipus d'imatge.</param>
+        /// <param name="level">Nivell de capa de coure.</param>
+        /// <returns>El nom del fitxer.</returns>
+        /// 
+        public string GenerateFileName(string prefix, ImageType imageType, int level = 0) {
+
+            if (String.IsNullOrEmpty(prefix))
+                throw new ArgumentNullException("prefix");
+
+            if ((imageType == ImageType.Copper) && (level == 0))
+                throw new ArgumentOutOfRangeException("level");
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(prefix);
+
+            switch (imageType) {
+                case ImageType.Copper:
+                    sb.AppendFormat("_Copper$L{0}", level);
+                    break;
+
+                case ImageType.TopSolderMask:
+                    sb.Append("_Soldermask$Top");
+                    break;
+
+                case ImageType.BottomSolderMask:
+                    sb.Append("_Soldermask$Bottom");
+                    break;
+
+                case ImageType.TopLegend:
+                    sb.Append("_Legend$Top");
+                    break;
+
+                case ImageType.BottomLegend:
+                    sb.Append("_Legend$Bottom");
+                    break;
+
+                case ImageType.Profile:
+                    sb.Append("_Profile$NP");
+                    break;
+            }
+
+            sb.Append(".gbr");
+
+            return sb.ToString();
+        }
+
+        /// <summary>
         /// Genera un document gerber.
         /// </summary>
         /// <param name="writer">Writer de sortida.</param>
         /// <param name="layers">Llista de capes a procesar.</param>
-        /// <param name="fileName">Nom del fitxer de sortida.</param>
+        /// <param name="imageType">Tipus de fitxer a generar.</param>
+        /// <param name="level">Nivell de la capa de coure.</param>
         /// 
-        public void Generate(TextWriter writer, IEnumerable<Layer> layers, ImageType imageType) {
+        public void GenerateContent(TextWriter writer, IEnumerable<Layer> layers, ImageType imageType, int level = 0) {
 
             if (writer == null)
                 throw new ArgumentNullException("writer");
+
+            if ((imageType == ImageType.Copper) && (level == 0))
+                throw new ArgumentOutOfRangeException("level");
 
             GerberBuilder gb = new GerberBuilder(writer);
 
             ApertureDictionary apertures = CreateApertures(layers);
 
-            GenerateFileHeader(gb, imageType);
+            GenerateFileHeader(gb, imageType, level);
             GenerateMacros(gb, apertures);
             GenerateApertures(gb, apertures);
             GenerateRergions(gb, layers, apertures);
@@ -79,21 +134,17 @@
         /// </summary>
         /// <param name="gb">El generador de codi gerber.</param>
         /// <param name="imageType">Tipus d'imatge a generar.</param>
+        /// <param name="level">Nivell de capa de coure.</param>
         /// 
-        private void GenerateFileHeader(GerberBuilder gb, ImageType imageType) {
+        private void GenerateFileHeader(GerberBuilder gb, ImageType imageType, int level) {
 
             gb.Comment("EdaTools v1.0.");
             gb.Comment("EdaTools CAM processor. Gerber generator.");
             gb.Comment(String.Format("Start timestamp: {0}", DateTime.Now));
             gb.Comment("BEGIN HEADER");
             switch (imageType) {
-                case ImageType.Top:
-                    gb.Attribute(String.Format(".FileFunction,Copper,L{0},{1},Signal", 1, "Top"));
-                    gb.Attribute(".FilePolarity,Positive");
-                    break;
-
-                case ImageType.Bottom:
-                    gb.Attribute(String.Format(".FileFunction,Copper,L{0},{1},Signal", 2, "Bot"));
+                case ImageType.Copper:
+                    gb.Attribute(String.Format(".FileFunction,Copper,L{0},{1},Signal", level, level == 1 ? "Top" : "Bot"));
                     gb.Attribute(".FilePolarity,Positive");
                     break;
 

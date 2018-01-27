@@ -75,11 +75,12 @@
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon() {
+        public override Polygon GetPolygon(BoardSide side) {
 
-            Polygon polygon = GetPourPolygon(0);
+            Polygon polygon = GetPourPolygon(side, 0);
             polygon.AddChild(PolygonBuilder.BuildCircle(Position, drill / 2));
 
             return polygon;
@@ -88,10 +89,11 @@
         /// <summary>
         /// Crea el poligon espaiat del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPourPolygon(double spacing) {
+        public override Polygon GetPourPolygon(BoardSide side, double spacing) {
 
         Polygon polygon;
             switch (shape) {
@@ -131,16 +133,17 @@
         /// <summary>
         /// Crea el poligon del thermal.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <param name="spacing">Espaiat.</param>
         /// <param name="width">Amplada dels conductors.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetThermalPolygon(double spacing, double width) {
+        public override Polygon GetThermalPolygon(BoardSide side, double spacing, double width) {
 
             double w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize) + (spacing * 2.25);
             double h = topSize + (spacing * 2.25);
 
-            Polygon pour = GetPourPolygon(spacing);
+            Polygon pour = GetPourPolygon(side, spacing);
             Polygon thermal = PolygonBuilder.BuildCross(Position, new Size(w, h), width, rotation);
 
             Polygon polygon = new Polygon();
@@ -153,9 +156,10 @@
         /// <summary>
         /// Calcula el bounding box del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override Rect GetBoundingBox() {
+        public override Rect GetBoundingBox(BoardSide side) {
 
             double w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize);
             double h = topSize;

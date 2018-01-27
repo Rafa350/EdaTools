@@ -92,11 +92,12 @@
         /// <summary>
         /// Creas el poligon del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon() {
+        public override Polygon GetPolygon(BoardSide side) {
 
-            Point startPosition = new Point();
+            Point currentPoint = new Point();
 
             Point firstPoint = new Point();
             double angle = 0;
@@ -108,28 +109,38 @@
                 if (first) {
                     first = false;
                     firstPoint = segment.Position;
-                }
-
-                if (angle == 0)
                     polygon.AddPoint(segment.Position);
-                else {
-                    Point center = ArcUtils.Center(startPosition, segment.Position, angle);
-                    double radius = ArcUtils.Radius(startPosition, segment.Position, angle);
-                    double startAngle = ArcUtils.StartAngle(startPosition, center);
-                    polygon.AddPoints(PolygonBuilder.ArcPoints(center, radius, startAngle, angle, true));
                 }
 
-                startPosition = segment.Position;
+                else {
+                 
+                    // Tram recte
+                    //
+                    if (angle == 0)
+                        polygon.AddPoint(segment.Position);
+
+                    // Tram circular
+                    //
+                    else {
+                        Point center = ArcUtils.Center(currentPoint, segment.Position, angle);
+                        double radius = ArcUtils.Radius(currentPoint, segment.Position, angle);
+                        double startAngle = ArcUtils.StartAngle(currentPoint, center);
+                        polygon.AddPoints(PolygonBuilder.ArcPoints(center, radius, startAngle, angle, false));
+                    }
+                }
+
+                currentPoint = segment.Position;
                 angle = segment.Angle;
             }
 
             if (angle == 0)
                 polygon.AddPoint(firstPoint);
+
             else {
-                Point center = ArcUtils.Center(startPosition, firstPoint, angle);
-                double radius = ArcUtils.Radius(startPosition, firstPoint, angle);
-                double startAngle = ArcUtils.StartAngle(startPosition, center);
-                polygon.AddPoints(PolygonBuilder.ArcPoints(center, radius, startAngle, angle, true));
+                Point center = ArcUtils.Center(currentPoint, firstPoint, angle);
+                double radius = ArcUtils.Radius(currentPoint, firstPoint, angle);
+                double startAngle = ArcUtils.StartAngle(currentPoint, center);
+                polygon.AddPoints(PolygonBuilder.ArcPoints(center, radius, startAngle, angle, false));
             }
 
             return polygon;
@@ -138,10 +149,11 @@
         /// <summary>
         /// Crea el poligon espaiat del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         ///
-        public override Polygon GetPourPolygon(double spacing) {
+        public override Polygon GetPourPolygon(BoardSide side, double spacing) {
 
             throw new NotImplementedException();
         }
@@ -149,9 +161,10 @@
         /// <summary>
         /// Calcula el bounding box del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override Rect GetBoundingBox() {
+        public override Rect GetBoundingBox(BoardSide side) {
 
             throw new NotImplementedException();
         }

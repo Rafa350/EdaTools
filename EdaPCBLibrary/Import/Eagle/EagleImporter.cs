@@ -407,6 +407,7 @@
 
             Element element = new SmdPadElement(name, position, size, rotate, roundnes);
             board.Place(board.GetLayer(layerId), element);
+            board.Place(board.GetLayer(LayerId.Pads), element);
             if (cream)
                 board.Place(board.GetLayer(LayerId.TopCream), element);
             if (stop)
@@ -801,58 +802,77 @@
         /// 
         private Color GetLayerColor(int layerNum) {
 
+            Color color = Colors.White;
+
             switch (layerNum) {
                 case 1: // Top signal
-                    return Colors.Red;
+                    color = Colors.Red;
+                    color.ScA = 0.60f;
+                    break;
 
                 case 16: // Bottom signal
-                    return Colors.Blue;
+                    color = Colors.Blue;
+                    color.ScA = 0.80f;
+                    break;
 
-                case 17: // Through hole pads
-                    return Colors.DarkGoldenrod;
+                case 17: // Pads
+                    color = Color.FromRgb(234, 161, 64);
+                    break;
 
                 case 18: // Vias
-                    return Colors.Green;
+                    color = Colors.Green;
+                    break;
 
                 case 19: // Unrouted
-                    return Colors.Yellow;
+                    color = Colors.Yellow;
+                    break;
 
                 case 21: // Top placement
                 case 22: // Bottom placement
-                    return Color.FromArgb(128, Colors.LightGray.R, Colors.LightGray.G, Colors.LightGray.B); 
+                    color =  Colors.LightGray;
+                    color.ScA = 0.8f;
+                    break;
 
                 case 25:
                 case 26:
-                    return Colors.LightGray;
+                    color = Colors.LightGray;
+                    break;
 
                 case 31:
                 case 32:
-                    return Colors.LightSeaGreen;
+                    color = Colors.LightSeaGreen;
+                    break;
 
                 case 35: // Top glue
                 case 36: // Bottom glue
-                    return Colors.LightSkyBlue;
+                    color = Colors.LightSkyBlue;
+                    break;
 
                 case 39: // Top keepout
                 case 40: // Bottom keepout
-                    return Color.FromArgb(64, Colors.Cyan.R, Colors.Cyan.G, Colors.Cyan.B);
+                    color = Colors.Cyan;
+                    color.ScA = 0.40f;
+                    break;
 
                 case 41: // Top restrict
                 case 42: // Bottom restrict
                 case 43: // Via restrict
-                    return Color.FromArgb(64, Colors.DarkViolet.R, Colors.DarkViolet.G, Colors.DarkViolet.B);
+                    color = Colors.DarkViolet;
+                    color.ScA = 0.40f;
+                    break;
 
                 case 45: // Holes
-                    return Colors.LightCoral;
+                    color = Colors.LightCoral;
+                    break;
 
                 case 51: // Top document
                 case 52: // Bottom document
-                    return Colors.LightGray;
-
-                default:
-                    return Colors.White;
+                    color = Color.FromRgb(160, 160, 160);
+                    color.ScA = 0.80f;
+                    break;
             }
 
+            return color;
         }
 
         /// <summary>

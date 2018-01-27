@@ -52,9 +52,10 @@
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon() {
+        public override Polygon GetPolygon(BoardSide side) {
 
             return PolygonBuilder.BuildRectangle(position, size, 0, rotation);
         }
@@ -62,10 +63,11 @@
         /// <summary>
         /// Crea el poligon espaiat del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPourPolygon(double spacing) {
+        public override Polygon GetPourPolygon(BoardSide side, double spacing) {
 
             return PolygonBuilder.BuildRectangle(position,
                 new Size(size.Width + spacing * 2, size.Height + spacing * 2),
@@ -75,9 +77,10 @@
         /// <summary>
         /// Calcula el bounding box del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override Rect GetBoundingBox() {
+        public override Rect GetBoundingBox(BoardSide side) {
 
             double a = rotation * Math.PI / 180.0;
             double w = size.Width * Math.Cos(a) + size.Height * Math.Sin(a);

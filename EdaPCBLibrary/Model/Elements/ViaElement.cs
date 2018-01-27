@@ -81,11 +81,12 @@
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPolygon() {
+        public override Polygon GetPolygon(BoardSide side) {
 
-            Polygon polygon = GetPourPolygon(0);
+            Polygon polygon = GetPourPolygon(side, 0);
             polygon.AddChild(PolygonBuilder.BuildCircle(position, drill / 2));
             return polygon;
         }
@@ -93,10 +94,11 @@
         /// <summary>
         /// Crea el poligon espaiat del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPourPolygon(double spacing) {
+        public override Polygon GetPourPolygon(BoardSide side, double spacing) {
 
             Polygon polygon;
             switch (shape) {
@@ -119,9 +121,10 @@
         /// <summary>
         /// Calcula el bounding box del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override Rect GetBoundingBox() {
+        public override Rect GetBoundingBox(BoardSide side) {
 
             double size = OuterSize;
             double hSize = size / 2;

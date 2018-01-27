@@ -33,7 +33,7 @@
         private readonly HashSet<Block> blocks = new HashSet<Block>();
 
         // Elements
-        private readonly List<Element> elements = new List<Element>();
+        private readonly HashSet<Element> elements = new HashSet<Element>();
 
         // Components
         readonly private HashSet<Part> parts = new HashSet<Part>();
@@ -114,7 +114,8 @@
             if (element == null)
                 throw new ArgumentNullException("element");
 
-            elements.Add(element);
+            if (!elements.Add(element))
+                throw new InvalidOperationException("El elemento ya existe en la placa.");
         }
 
         #endregion
@@ -478,7 +479,7 @@
 
             if (IsOnLayer(region, layer)) {
 
-                Polygon regionPolygon = region.GetPolygon();
+                Polygon regionPolygon = region.GetPolygon(layer.Side);
                 regionPolygon.Transform(transformation);
 
                 // Si estem en capes de senyal, cal generar els porus i termals
@@ -506,7 +507,7 @@
                                 // Si no esta en la mateixa senyal que la regio, genera un forat.
                                 //
                                 if ((item == null) || (GetSignal(item, null, false) != regionSignal)) {
-                                    Polygon elementPolygon = element.GetPourPolygon(spacing);
+                                    Polygon elementPolygon = element.GetPourPolygon(layer.Side, spacing);
                                     holePolygons.Add(elementPolygon);
                                 }
                             }
@@ -514,7 +515,7 @@
                             // El element esta el la capa restrict
                             //
                             else if (IsOnLayer(element, restrictLayer)) {
-                                Polygon elementPolygon = element.GetPolygon();
+                                Polygon elementPolygon = element.GetPolygon(restrictLayer.Side);
                                 holePolygons.Add(elementPolygon);
                             }
                         }
@@ -533,7 +534,7 @@
                                 // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
                                 //
                                 if ((padElement == null) || (GetSignal(padElement, part, false) != regionSignal)) {
-                                    Polygon elementPolygon = element.GetPourPolygon(spacing);
+                                    Polygon elementPolygon = element.GetPourPolygon(layer.Side, spacing);
                                     elementPolygon.Transform(part.Transformation);
                                     holePolygons.Add(elementPolygon);
                                 }
@@ -541,7 +542,7 @@
                                 // En es un pad i esta conectat per tant, genera un thermal
                                 //
                                 else if (padElement != null) {
-                                    Polygon thermalPolygon = padElement.GetThermalPolygon(spacing, 0.2);
+                                    Polygon thermalPolygon = padElement.GetThermalPolygon(layer.Side, spacing, 0.2);
                                     thermalPolygon.Transform(part.Transformation);
                                     foreach (Polygon polygon in thermalPolygon.Childs)
                                         holePolygons.Add(polygon);

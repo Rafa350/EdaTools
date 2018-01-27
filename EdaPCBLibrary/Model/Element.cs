@@ -18,23 +18,26 @@
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <returns>El poligon</returns>
         /// 
-        public abstract Polygon GetPolygon();
+        public abstract Polygon GetPolygon(BoardSide side);
 
         /// <summary>
         /// Crea el poligon espaiat del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <param name="spacing">Espaiat.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public abstract Polygon GetPourPolygon(double spacing);
+        public abstract Polygon GetPourPolygon(BoardSide side, double spacing);
 
         /// <summary>
         /// Calula el bounding box del element.
         /// </summary>
+        /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public abstract Rect GetBoundingBox();
+        public abstract Rect GetBoundingBox(BoardSide side);
     }
 }
