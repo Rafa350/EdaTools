@@ -22,7 +22,7 @@
             GerberImageGenerator imageGenerator = new GerberImageGenerator(board);
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.Top));
+            layers.Add(board.GetLayer(Layer.TopName));
             fileName = imageGenerator.GenerateFileName(prefix, GerberImageGenerator.ImageType.Copper, 1);
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
@@ -31,7 +31,7 @@
             }
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.Bottom));
+            layers.Add(board.GetLayer(Layer.BottomName));
             fileName = imageGenerator.GenerateFileName(prefix, GerberImageGenerator.ImageType.Copper, 2);
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
@@ -40,7 +40,7 @@
             }
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.TopStop));
+            layers.Add(board.GetLayer(Layer.TopStopName));
             fileName = imageGenerator.GenerateFileName(prefix, GerberImageGenerator.ImageType.TopSolderMask);
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
@@ -49,7 +49,7 @@
             }
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.BottomStop));
+            layers.Add(board.GetLayer(Layer.BottomStopName));
             fileName = imageGenerator.GenerateFileName(prefix, GerberImageGenerator.ImageType.BottomSolderMask);
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
@@ -58,7 +58,7 @@
             }
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.TopPlace));
+            layers.Add(board.GetLayer(Layer.TopPlaceName));
             fileName = imageGenerator.GenerateFileName(prefix, GerberImageGenerator.ImageType.TopLegend);
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
@@ -67,7 +67,7 @@
             }
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.BottomPlace));
+            layers.Add(board.GetLayer(Layer.BottomPlaceName));
             fileName = imageGenerator.GenerateFileName(prefix, GerberImageGenerator.ImageType.BottomLegend);
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
@@ -76,7 +76,7 @@
             }
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.Profile));
+            layers.Add(board.GetLayer(Layer.ProfileName));
             fileName = imageGenerator.GenerateFileName(prefix, GerberImageGenerator.ImageType.Profile);
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
@@ -85,7 +85,7 @@
             }
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.TopPlace));
+            layers.Add(board.GetLayer(Layer.TopPlaceName));
             fileName = imageGenerator.GenerateFileName(prefix, GerberImageGenerator.ImageType.TopLegend);
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
@@ -94,7 +94,7 @@
             }
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.BottomPlace));
+            layers.Add(board.GetLayer(Layer.BottomPlaceName));
             fileName = imageGenerator.GenerateFileName(prefix, GerberImageGenerator.ImageType.BottomLegend);
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
@@ -105,7 +105,7 @@
             GerberDrillGenerator drillGenerator = new GerberDrillGenerator(board);
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.Drills));
+            layers.Add(board.GetLayer(Layer.DrillsName));
             fileName = drillGenerator.GenerateFileName(prefix, GerberDrillGenerator.DrillType.PlatedDrill, 1, 2);
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
@@ -114,7 +114,7 @@
             }
 
             layers.Clear();
-            layers.Add(board.GetLayer(LayerId.Holes));
+            layers.Add(board.GetLayer(Layer.HolesName));
             fileName = drillGenerator.GenerateFileName(prefix, GerberDrillGenerator.DrillType.NonPlatedDrill, 1, 2);
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {

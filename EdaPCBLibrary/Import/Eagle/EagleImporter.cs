@@ -83,11 +83,11 @@
                 // Obte el identificador de la capa
                 //
                 int layerNum = GetAttributeInteger(layerNode, "number");
-                LayerId layerId = GetLayerId(layerNum);
+                string name = GetLayerName(layerNum);
 
                 // Si la capa no existeix, la crea i l'afegeix a la placa.
                 //
-                if ((layerId != LayerId.Unknown) && (board.GetLayer(layerId, false) == null)) {
+                if (board.GetLayer(name, false) == null) {
                     Layer layer = ParseLayerNode(layerNode);
                     board.AddLayer(layer);
                 }
@@ -311,8 +311,8 @@
         /// 
         private Layer ParseLayerNode(XmlNode node) {
 
-            string name = GetAttributeString(node, "name");
             int layerNum = GetAttributeInteger(node, "number");
+            string layerName = GetLayerName(layerNum);
 
             BoardSide side = BoardSide.Unknown;
             if (layerNum == 1) 
@@ -326,10 +326,9 @@
             if (layerNum >= 1 && layerNum <= 16)
                 function = LayerFunction.Signal;
 
-            LayerId layerId = GetLayerId(layerNum);
             Color color = GetLayerColor(layerNum);
 
-            return new Layer(layerId, name, side, function, color);
+            return new Layer(layerName, side, function, color);
         }
 
 
@@ -369,12 +368,12 @@
 
             Element element = new ThPadElement(name, position, rotate, size, shape, drill);
 
-            board.Place(board.GetLayer(LayerId.Pads), element);
-            board.Place(board.GetLayer(LayerId.Drills), element);
-            board.Place(board.GetLayer(LayerId.Top), element);
-            board.Place(board.GetLayer(LayerId.TopStop), element);
-            board.Place(board.GetLayer(LayerId.Bottom), element);
-            board.Place(board.GetLayer(LayerId.BottomStop), element);
+            board.Place(board.GetLayer(Layer.PadsName), element);
+            board.Place(board.GetLayer(Layer.DrillsName), element);
+            board.Place(board.GetLayer(Layer.TopName), element);
+            board.Place(board.GetLayer(Layer.TopStopName), element);
+            board.Place(board.GetLayer(Layer.BottomName), element);
+            board.Place(board.GetLayer(Layer.BottomStopName), element);
 
             return element;
         }
@@ -403,15 +402,15 @@
             bool cream = GetAttributeBoolean(node, "cream", true);
 
             int layerNum = GetAttributeInteger(node, "layer");
-            LayerId layerId = GetLayerId(layerNum);
+            string layerName = GetLayerName(layerNum);
 
             Element element = new SmdPadElement(name, position, size, rotate, roundnes);
-            board.Place(board.GetLayer(layerId), element);
-            board.Place(board.GetLayer(LayerId.Pads), element);
+            board.Place(board.GetLayer(layerName), element);
+            board.Place(board.GetLayer(Layer.PadsName), element);
             if (cream)
-                board.Place(board.GetLayer(LayerId.TopCream), element);
+                board.Place(board.GetLayer(Layer.TopCreamName), element);
             if (stop)
-                board.Place(board.GetLayer(LayerId.TopStop), element);
+                board.Place(board.GetLayer(Layer.TopStopName), element);
 
             return element;
         }
@@ -453,11 +452,11 @@
             Element element = new ViaElement(position, size, drill, shape);
 
             foreach(int layerNum in layerNums) {
-                LayerId layerId = GetLayerId(layerNum);
-                board.Place(board.GetLayer(layerId), element);
+                string layerName = GetLayerName(layerNum);
+                board.Place(board.GetLayer(layerName), element);
             }
-            board.Place(board.GetLayer(LayerId.Vias), element);
-            board.Place(board.GetLayer(LayerId.Drills), element);
+            board.Place(board.GetLayer(Layer.ViasName), element);
+            board.Place(board.GetLayer(Layer.DrillsName), element);
 
             return element;
         }
@@ -482,12 +481,12 @@
             double height = GetAttributeDouble(node, "size");
 
             int layerNum = GetAttributeInteger(node, "layer");
-            LayerId layerId = GetLayerId(layerNum);
+            string layerName = GetLayerName(layerNum);
 
             TextElement element = new TextElement(position, rotate, height, TextElement.TextAlign.TopLeft);
             element.Value = value;
 
-            board.Place(board.GetLayer(layerId), element);
+            board.Place(board.GetLayer(layerName), element);
 
             return element;
         }
@@ -513,7 +512,7 @@
             double thickness = GetAttributeDouble(node, "width");
 
             int layerNum = GetAttributeInteger(node, "layer");
-            LayerId layerId = GetLayerId(layerNum);
+            string layerName = GetLayerName(layerNum);
 
             Element element;
             if (angle == 0)
@@ -521,7 +520,7 @@
             else
                 element = new ArcElement(p1, p2, thickness, angle, lineCap);
 
-            board.Place(board.GetLayer(layerId), element);
+            board.Place(board.GetLayer(layerName), element);
 
             return element;
         }
@@ -545,11 +544,11 @@
             double thickness = GetAttributeDouble(node, "width");
 
             int layerNum = GetAttributeInteger(node, "layer");
-            LayerId layerId = GetLayerId(layerNum);
+            string layerName = GetLayerName(layerNum);
 
             Element element = new RectangleElement(position, size, rotation, thickness);
 
-            board.Place(board.GetLayer(layerId), element);
+            board.Place(board.GetLayer(layerName), element);
 
             return element;
         }
@@ -570,11 +569,11 @@
             double radius = GetAttributeDouble(node, "radius");
 
             int layerNum = GetAttributeInteger(node, "layer");
-            LayerId layerId = GetLayerId(layerNum);
+            string layerName = GetLayerName(layerNum);
 
             Element element = new CircleElement(position, radius, thickness);
 
-            board.Place(board.GetLayer(layerId), element);
+            board.Place(board.GetLayer(layerName), element);
 
             return element;
         }
@@ -590,7 +589,7 @@
             double thickness = GetAttributeDouble(node, "width");
 
             int layerNum = GetAttributeInteger(node, "layer");
-            LayerId layerId = GetLayerId(layerNum);
+            string layerName = GetLayerName(layerNum);
 
             List<RegionElement.Segment> segments = new List<RegionElement.Segment>();
             foreach (XmlNode vertexNode in node.SelectNodes("vertex")) {
@@ -606,7 +605,7 @@
 
             Element element = new RegionElement(thickness, 0, segments);
 
-            board.Place(board.GetLayer(layerId), element);
+            board.Place(board.GetLayer(layerName), element);
 
             return element;
         }
@@ -627,9 +626,9 @@
 
             Element element = new HoleElement(position, drill);
 
-            board.Place(board.GetLayer(LayerId.Holes), element);
-            board.Place(board.GetLayer(LayerId.Top), element);
-            board.Place(board.GetLayer(LayerId.Bottom), element);
+            board.Place(board.GetLayer(Layer.HolesName), element);
+            board.Place(board.GetLayer(Layer.TopName), element);
+            board.Place(board.GetLayer(Layer.BottomName), element);
 
             return element;
         }
@@ -700,97 +699,97 @@
         }
 
         /// <summary>
-        /// Obte el identificador de la capa a partir del seu numero.
+        /// Obte el nom de la capa a partir del seu numero.
         /// </summary>
         /// <param name="layerNum">Numero de la capa.</param>
-        /// <returns>La capa.</returns>
+        /// <returns>El nom de la capa.</returns>
         /// 
-        private static LayerId GetLayerId(int layerNum) {
+        private static string GetLayerName(int layerNum) {
 
             switch (layerNum) {
                 case 1:
-                    return LayerId.Top;
+                    return Layer.TopName;
 
                 case 16:
-                    return LayerId.Bottom;
+                    return Layer.BottomName;
 
                 case 17:
-                    return LayerId.Pads;
+                    return Layer.PadsName;
 
                 case 18:
-                    return LayerId.Vias;
+                    return Layer.ViasName;
 
                 case 19:
-                    return LayerId.Unrouted;
+                    return Layer.UnroutedName;
 
                 case 20:
-                    return LayerId.Profile;
+                    return Layer.ProfileName;
 
                 case 21:
-                    return LayerId.TopPlace;
+                    return Layer.TopPlaceName;
 
                 case 22:
-                    return LayerId.BottomPlace;
+                    return Layer.BottomPlaceName;
 
                 case 25:
-                    return LayerId.TopNames;
+                    return Layer.TopNamesName;
 
                 case 26:
-                    return LayerId.BottomNames;
+                    return Layer.BottomNamesName;
 
                 case 27:
-                    return LayerId.TopValues;
+                    return Layer.TopValuesName;
 
                 case 28:
-                    return LayerId.BottomValues;
+                    return Layer.BottomValuesName;
 
                 case 29:
-                    return LayerId.TopStop;
+                    return Layer.TopStopName;
 
                 case 30:
-                    return LayerId.BottomStop;
+                    return Layer.BottomStopName;
 
                 case 31:
-                    return LayerId.TopCream;
+                    return Layer.TopCreamName;
 
                 case 32:
-                    return LayerId.BottomCream;
+                    return Layer.BottomCreamName;
 
                 case 35:
-                    return LayerId.TopGlue;
+                    return Layer.TopGlueName;
 
                 case 36:
-                    return LayerId.BottomGlue;
+                    return Layer.BottomGlueName;
 
                 case 39:
-                    return LayerId.TopKeepout;
+                    return Layer.TopKeepoutName;
 
                 case 40:
-                    return LayerId.BottomKeepout;
+                    return Layer.BottomKeepoutName;
 
                 case 41:
-                    return LayerId.TopRestrict;
+                    return Layer.TopRestrictName;
 
                 case 42:
-                    return LayerId.BottomRestrict;
+                    return Layer.BottomRestrictName;
 
                 case 43:
-                    return LayerId.ViaRestrict;
+                    return Layer.ViaRestrictName;
 
                 case 44:
-                    return LayerId.Drills;
+                    return Layer.DrillsName;
 
                 case 45:
-                    return LayerId.Holes;
+                    return Layer.HolesName;
 
                 case 51:
-                    return LayerId.TopDocument;
+                    return Layer.TopDocumentName;
 
                 case 52:
-                    return LayerId.BottomDocument;
+                    return Layer.BottomDocumentName;
 
                 default:
-                    return LayerId.Unknown;
+                    return Layer.UnknownName;
             }
         }
 

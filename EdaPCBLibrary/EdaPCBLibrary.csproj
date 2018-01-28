@@ -66,10 +66,11 @@
     <Compile Include="Model\Elements\PadElement.cs" />
     <Compile Include="Model\IConectable.cs" />
     <Compile Include="Model\IName.cs" />
+    <Compile Include="Model\IO\XmlBoardReader.cs" />
+    <Compile Include="Model\IO\XmlNodeHelper.cs" />
     <Compile Include="Model\IPosition.cs" />
     <Compile Include="Model\IRotation.cs" />
     <Compile Include="Model\ISize.cs" />
-    <Compile Include="Model\LayerId.cs" />
     <Compile Include="Model\LayerPair.cs" />
     <Compile Include="Model\Visitors\DefaultVisitor.cs" />
     <Compile Include="Model\Elements\ArcElement.cs" />

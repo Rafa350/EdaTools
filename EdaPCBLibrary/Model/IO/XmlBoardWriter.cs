@@ -324,7 +324,6 @@
                 writer.WriteStartElement("layer");
 
                 writer.WriteAttributeString("name", layer.Name);
-                writer.WriteAttributeString("id", layer.Id.ToString());
                 writer.WriteAttributeString("side", layer.Side.ToString());
                 writer.WriteAttributeString("function", layer.Function.ToString());
                 writer.WriteAttribute("color", layer.Color);

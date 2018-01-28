@@ -159,19 +159,19 @@
         /// <summary>
         /// Obte una capa pel seu Id
         /// </summary>
-        /// <param name="layerId">El identificador de la capa.</param>
+        /// <param name="name">El nom de la capa.</param>
         /// <param name="throwOnError">True si genera una excepcio en cas d'error.</param>
         /// <returns>La capa.</returns>
         /// 
-        public Layer GetLayer(LayerId layerId, bool throwOnError = true) {
+        public Layer GetLayer(string name, bool throwOnError = true) {
 
             foreach (Layer layer in layers)
-                if (layer.Id == layerId)
+                if (layer.Name == name)
                     return layer;
 
             if (throwOnError)
                 throw new InvalidOperationException(
-                    String.Format("No se encontro la capa con el ID '{0}'.", layerId.ToString()));
+                    String.Format("No se encontro la capa con el nombre '{0}'.", name));
 
             return null;
         }
@@ -484,14 +484,14 @@
 
                 // Si estem en capes de senyal, cal generar els porus i termals
                 //
-                if ((layer.Id == LayerId.Top) || (layer.Id == LayerId.Bottom)) {
+                if ((layer.Name == Layer.TopName) || (layer.Name == Layer.BottomName)) {
 
                     Signal regionSignal = GetSignal(region, null, false);
 
                     spacing += region.Thickness / 2;
                     List<Polygon> holePolygons = new List<Polygon>();
 
-                    Layer restrictLayer = GetLayer(LayerId.TopRestrict);
+                    Layer restrictLayer = GetLayer(Layer.TopRestrictName);
 
                     // Procesa els elements de la placa que es troben en la mateixa capa que 
                     // la regio, o en la capa restrict.
