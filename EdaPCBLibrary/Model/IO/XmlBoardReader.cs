@@ -193,7 +193,7 @@
         /// 
         private void ProcessElements() {
 
-            foreach (XmlNode elementNode in doc.SelectNodes("board/elements/element")) {
+            foreach (XmlNode elementNode in doc.SelectNodes("board/elements/*")) {
 
                 Element element = null;
 

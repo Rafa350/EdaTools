@@ -95,12 +95,6 @@
             writer.WriteAttributeString(name, sb.ToString());
         }
 
-        public static void WriteAttribute(this XmlWriter writer, string name, Layer layer) {
-
-            if (layer != null)
-                writer.WriteAttributeString(name, layer.Name);
-        }
-
         public static void WriteAttribute(this XmlWriter writer, string name, IEnumerable<Layer> layers) {
 
             if (layers != null) {
