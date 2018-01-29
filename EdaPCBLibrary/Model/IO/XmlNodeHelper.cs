@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
     using System;
-    using System.Globalization;
     using System.Xml;
     using System.Windows;
     using System.Windows.Media;
@@ -14,7 +13,7 @@
             if (attribute == null)
                 return null;
             else
-                return node.Attributes[name].Value;
+                return attribute.Value;
         }
 
         public static string[] AttributeAsStrings(this XmlNode node, string name) {
@@ -26,13 +25,22 @@
                 return attribute.Value.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries );
         }
 
+        public static bool AttributeAsBoolean(this XmlNode node, string name, bool defValue = false) {
+
+            XmlAttribute attribute = node.Attributes[name];
+            if (attribute == null)
+                return defValue;
+            else
+                return XmlConvert.ToBoolean(attribute.Value);
+        }
+
         public static int AttributeAsInteger(this XmlNode node, string name, int defValue = 0) {
 
             XmlAttribute attribute = node.Attributes[name];
             if (attribute == null)
                 return defValue;
             else
-                return Int32.Parse(attribute.Value);
+                return XmlConvert.ToInt32(attribute.Value);
         }
 
         public static double AttributeAsDouble(this XmlNode node, string name, double defValue = 0) {
@@ -41,7 +49,7 @@
             if (attribute == null)
                 return defValue;
             else
-                return Double.Parse(attribute.Value, CultureInfo.InvariantCulture);
+                return XmlConvert.ToDouble(attribute.Value);
         }
 
         public static Color AttributeAsColor(this XmlNode node, string name) {
@@ -49,10 +57,10 @@
             string colorString = node.Attributes[name].Value;
 
             string[] s = colorString.Split(',');
-            byte a = Byte.Parse(s[0]);
-            byte r = Byte.Parse(s[1]);
-            byte g = Byte.Parse(s[2]);
-            byte b = Byte.Parse(s[3]);
+            byte a = XmlConvert.ToByte(s[0]);
+            byte r = XmlConvert.ToByte(s[1]);
+            byte g = XmlConvert.ToByte(s[2]);
+            byte b = XmlConvert.ToByte(s[3]);
 
             return Color.FromArgb(a, r, g, b);
         }
@@ -62,8 +70,8 @@
             string pointString = node.Attributes[name].Value;
 
             string[] s = pointString.Split(',');
-            double x = Double.Parse(s[0], CultureInfo.InvariantCulture);
-            double y = Double.Parse(s[1], CultureInfo.InvariantCulture);
+            double x = XmlConvert.ToDouble(s[0]);
+            double y = XmlConvert.ToDouble(s[1]);
 
             return new Point(x, y);
         }
@@ -73,8 +81,8 @@
             string pointString = node.Attributes[name].Value;
 
             string[] s = pointString.Split(',');
-            double w = Double.Parse(s[0], CultureInfo.InvariantCulture);
-            double h = Double.Parse(s[1], CultureInfo.InvariantCulture);
+            double w = XmlConvert.ToDouble(s[0]);
+            double h = XmlConvert.ToDouble(s[1]);
 
             return new Size(w, h);
         }

@@ -190,7 +190,7 @@
                             dc.PushTransform(localTransform);
 
                         Color color = GetColor(layer);
-                        bool isSignalLayer = (layer.Id == LayerId.Top) || (layer.Id == LayerId.Bottom);
+                        bool isSignalLayer = (layer.Name == Layer.TopName) || (layer.Name == Layer.BottomName);
                         Pen pen = isSignalLayer ? CreatePen(color, region.Thickness) : null;
                         Brush brush = CreateBrush(color);
                         Polygon polygon = board.GetRegionPolygon(region, layer, 0.15, Matrix.Identity);
@@ -453,42 +453,42 @@
         /// 
         public IEnumerable<Visual> CreateVisuals() {
 
-            List<LayerId> layerIds = new List<LayerId>();
+            List<string> layerNames = new List<string>();
             // layerIds.Add(LayerId.BottomNames);
             // layerIds.Add(LayerId.BottomValues);
-            layerIds.Add(LayerId.BottomDocument);
+            layerNames.Add(Layer.BottomDocumentName);
             //layerIds.Add(LayerId.BottomCream);
-            layerIds.Add(LayerId.BottomGlue);
-            layerIds.Add(LayerId.BottomKeepout);
-            layerIds.Add(LayerId.BottomRestrict);
-            layerIds.Add(LayerId.BottomPlace);
-            layerIds.Add(LayerId.Bottom);
-            layerIds.Add(LayerId.ViaRestrict);
-            layerIds.Add(LayerId.Top);
-            layerIds.Add(LayerId.TopPlace);
-            layerIds.Add(LayerId.TopRestrict);
-            layerIds.Add(LayerId.TopKeepout);
-            layerIds.Add(LayerId.TopGlue);
+            layerNames.Add(Layer.BottomGlueName);
+            layerNames.Add(Layer.BottomKeepoutName);
+            layerNames.Add(Layer.BottomRestrictName);
+            layerNames.Add(Layer.BottomPlaceName);
+            layerNames.Add(Layer.BottomName);
+            layerNames.Add(Layer.ViaRestrictName);
+            layerNames.Add(Layer.TopName);
+            layerNames.Add(Layer.TopPlaceName);
+            layerNames.Add(Layer.TopRestrictName);
+            layerNames.Add(Layer.TopKeepoutName);
+            layerNames.Add(Layer.TopGlueName);
             //layerIds.Add(LayerId.TopCream);
             //layerIds.Add(LayerId.TopDocument);
             //layerIds.Add(LayerId.TopValuest);
             //layerIds.Add(LayerId.TopNames);
-            layerIds.Add(LayerId.Pads);
-            layerIds.Add(LayerId.Vias);
-            layerIds.Add(LayerId.Holes);
-            layerIds.Add(LayerId.TopDocument);
-            layerIds.Add(LayerId.Profile);
+            layerNames.Add(Layer.PadsName);
+            layerNames.Add(Layer.ViasName);
+            layerNames.Add(Layer.HolesName);
+            layerNames.Add(Layer.TopDocumentName);
+            layerNames.Add(Layer.ProfileName);
 
             List<Visual> visuals = new List<Visual>();
-            foreach (LayerId layerId in layerIds)
-                ProcessLayer(board, layerId, visuals);
+            foreach (string layerName in layerNames)
+                ProcessLayer(board, layerName, visuals);
 
             return visuals;
         }
 
-        private void ProcessLayer(Board board, LayerId layerId, IList<Visual> visuals) {
+        private void ProcessLayer(Board board, string layerName, IList<Visual> visuals) {
 
-            Layer layer = board.GetLayer(layerId);
+            Layer layer = board.GetLayer(layerName);
             if (layer.IsVisible) {
                 RenderVisitor visitor = new RenderVisitor(board, layer, visuals);
                 visitor.Visit(board);

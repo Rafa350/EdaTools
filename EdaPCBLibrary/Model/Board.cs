@@ -137,6 +137,22 @@
                     String.Format("El bloque '{0}', ya esta asignado a esta placa.", block.Name));
         }
 
+        public Block GetBlock(string name, bool throwOnError = true) {
+
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            foreach (Block block in blocks)
+                if (block.Name == name)
+                    return block;
+
+            if (throwOnError)
+                throw new InvalidOperationException(
+                    String.Format("El bloque '{0}', no esta asignado a esta placa.", name));
+
+            return null;
+        }
+
         #endregion
 
         #region Metodes per la gestio de capes

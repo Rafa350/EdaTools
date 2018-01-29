@@ -16,9 +16,9 @@
 
             else {
 
-                string inputFileName = args[0];
-                string folder = null;
-                string name = null;
+                string inputFileName = Path.GetFullPath(args[0]);
+                string folder = Path.GetDirectoryName(inputFileName);
+                string name = Path.GetFileNameWithoutExtension(inputFileName);
 
                 if (args.Length > 1) {
                     for (int i = 2; i < args.Length; i++) {
@@ -38,11 +38,11 @@
             WaitKey();
         }
 
-        static void ShowCredits() {
+        private static void ShowCredits() {
 
         }
 
-        static void ShowHelp() {
+        private static void ShowHelp() {
 
             string help =
                 "EdaCAMTool V1.0\r\n" +
@@ -57,18 +57,32 @@
             Console.WriteLine(help);            
         }
 
-        static void WaitKey() {
+        private static void WaitKey() {
 
             Console.WriteLine("Pres key for continue...");
             Console.ReadKey(true);
         }
 
-        static void ProcessBoard(string fileName) {
+        private static void ProcessBoard(string fileName) {
 
-            Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None);
-            XmlBoardReader reader = new XmlBoardReader(stream);
+            Board board = LoadBoard(fileName);
+            SaveBoard(board, @"..\..\..\Data\out.xml");
+        }
 
-            Board board = reader.Read();
+        private static Board LoadBoard(string fileName) {
+
+            using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
+                XmlBoardReader reader = new XmlBoardReader(stream);
+                return reader.Read();
+            }
+        }
+
+        private static void SaveBoard(Board board, string fileName) {
+
+            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
+                XmlBoardWriter writer = new XmlBoardWriter(stream);
+                writer.Write(board);
+            }
         }
     }
 }

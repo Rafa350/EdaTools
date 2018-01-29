@@ -52,7 +52,12 @@
 
             writer.WriteAttributeString(
                 name,
-                String.Format("{0}, {1}, {2}, {3}", color.A, color.R, color.G, color.B));
+                String.Format(
+                    "{0}, {1}, {2}, {3}", 
+                    XmlConvert.ToString(color.A),
+                    XmlConvert.ToString(color.R),
+                    XmlConvert.ToString(color.G),
+                    XmlConvert.ToString(color.B)));
         }
 
         public static void WriteAttribute(this XmlWriter writer, string name, double value) {
@@ -67,7 +72,27 @@
 
         public static void WriteAttribute(this XmlWriter writer, string name, bool value) {
 
-            writer.WriteAttributeString(name, value ? "true" : "false");
+            writer.WriteAttributeString(name, XmlConvert.ToString(value));
+        }
+
+        public static void WriteAttribute(this XmlWriter writer, string name, string value) {
+
+            writer.WriteAttributeString(name, value);
+        }
+
+        public static void WriteAttribute(this XmlWriter writer, string name, string[] values) {
+
+            StringBuilder sb = new StringBuilder();
+            bool first = true;
+            foreach (string value in values) {
+                if (first)
+                    first = false;
+                else
+                    sb.Append(", ");
+                sb.Append(value);
+            }
+
+            writer.WriteAttributeString(name, sb.ToString());
         }
 
         public static void WriteAttribute(this XmlWriter writer, string name, Layer layer) {

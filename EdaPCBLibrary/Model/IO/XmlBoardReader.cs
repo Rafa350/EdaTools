@@ -9,12 +9,20 @@
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
+    /// <summary>
+    /// Clase per la lectura de plaques des d'un stream
+    /// </summary>
     public sealed class XmlBoardReader {
 
         private readonly Stream stream;
         private XmlDocument doc;
         private Board board;
 
+        /// <summary>
+        /// Constructor de la clase.
+        /// </summary>
+        /// <param name="stream">Stream d'entrada.</param>
+        /// 
         public XmlBoardReader(Stream stream) {
 
             if (stream == null)
@@ -23,6 +31,11 @@
             this.stream = stream;
         }
 
+        /// <summary>
+        /// Llegeix una placa.
+        /// </summary>
+        /// <returns>La placa.</returns>
+        /// 
         public Board Read() {
 
             board = new Board();
@@ -31,10 +44,16 @@
             ProcessLayers();
             ProcessSignals();
             ProcessBlocks();
+            ProcessParts();
+            ProcessElements();
 
             return board;
         }
 
+        /// <summary>
+        /// Llegeix el document XML
+        /// </summary>
+        /// 
         private void ReadDocument() {
 
             XmlReaderSettings settings = new XmlReaderSettings();
@@ -44,6 +63,10 @@
             doc.Load(reader);
         }
 
+        /// <summary>
+        /// Procesa les capes.
+        /// </summary>
+        /// 
         private void ProcessLayers() {
 
             foreach (XmlNode layerNode in doc.SelectNodes("board/layers/layer")) {
@@ -52,6 +75,10 @@
             }
         }
 
+        /// <summary>
+        /// Procesa els senyals.
+        /// </summary>
+        /// 
         private void ProcessSignals() {
 
             foreach (XmlNode signalNode in doc.SelectNodes("board/signals/signal")) {
@@ -60,56 +87,151 @@
             }
         }
 
+        /// <summary>
+        /// Procesa els blocs.
+        /// </summary>
+        /// 
         private void ProcessBlocks() {
 
             foreach (XmlNode blockNode in doc.SelectNodes("board/blocks/block")) {
 
                 string name = blockNode.AttributeAsString("name");
 
-                List<Element> elements = new List<Element>();
+                Block block = new Block(name);
+                board.AddBlock(block);
+
                 foreach (XmlNode elementNode in blockNode.SelectNodes("elements/*")) {
+
+                    Element element = null;
 
                     switch (elementNode.Name) {
                         case "line":
-                            elements.Add(ParseLineElement(elementNode));
+                            element = ParseLineElement(elementNode);
                             break;
 
                         case "arc":
-                            elements.Add(ParseArcElement(elementNode));
+                            element = ParseArcElement(elementNode);
                             break;
 
                         case "rectangle":
-                            elements.Add(ParseRectangleElement(elementNode));
+                            element = ParseRectangleElement(elementNode);
                             break;
 
                         case "circle":
-                            elements.Add(ParseCircleElement(elementNode));
+                            element = ParseCircleElement(elementNode);
                             break;
 
                         case "region":
-                            elements.Add(ParseRegionElement(elementNode));
+                            element = ParseRegionElement(elementNode);
                             break;
 
                         case "text":
-                            elements.Add(ParseTextElement(elementNode));
+                            element = ParseTextElement(elementNode);
                             break;
 
                         case "spad":
-                            elements.Add(ParseSmdPadElement(elementNode));
+                            element = ParseSmdPadElement(elementNode);
                             break;
 
                         case "tpad":
-                            elements.Add(ParseThPadElement(elementNode));
+                            element = ParseThPadElement(elementNode);
                             break;
 
                         case "hole":
-                            elements.Add(ParseHoleElement(elementNode));
+                            element = ParseHoleElement(elementNode);
                             break;
                     }
+
+                    if (element != null) {
+                        block.AddElement(element);
+
+                        string[] layerNames = elementNode.AttributeAsStrings("layers");
+                        if (layerNames != null)
+                            foreach (string layerName in layerNames)
+                                board.Place(board.GetLayer(layerName), element);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Procesa els components.
+        /// </summary>
+        /// 
+        private void ProcessParts() {
+
+            foreach (XmlNode partNode in doc.SelectNodes("board/parts/part")) {
+
+                string name = partNode.AttributeAsString("name");
+                Point position = partNode.AttributeAsPoint("position");
+                double rotation = partNode.AttributeAsDouble("rotation");
+                string blockName = partNode.AttributeAsString("block");
+
+                Block block = board.GetBlock(blockName);
+                Part part = new Part(block, name, position, rotation, false);
+                board.AddPart(part);
+
+                Dictionary<string, PadElement> padDictionary = new Dictionary<string, PadElement>();
+                foreach (PadElement pad in part.Pads)
+                    padDictionary.Add(pad.Name, pad);
+
+                foreach (XmlNode padNode in partNode.SelectNodes("pads/pad")) {
+
+                    string padName = padNode.AttributeAsString("name");
+                    string signalName = padNode.AttributeAsString("signal");
+
+                    PadElement pad = padDictionary[padName];
+                    Signal signal = board.GetSignal(signalName);
+                    board.Connect(signal, pad, part);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Procesa els elements.
+        /// </summary>
+        /// 
+        private void ProcessElements() {
+
+            foreach (XmlNode elementNode in doc.SelectNodes("board/elements/element")) {
+
+                Element element = null;
+
+                switch (elementNode.Name) {
+                    case "line":
+                        element = ParseLineElement(elementNode);
+                        break;
+
+                    case "arc":
+                        element = ParseArcElement(elementNode);
+                        break;
+
+                    case "region":
+                        element = ParseRegionElement(elementNode);
+                        break;
+
+                    case "via":
+                        element = ParseViaElement(elementNode);
+                        break;
                 }
 
-                Block block = new Block(name, elements);
-                board.AddBlock(block);
+                if (element != null) {
+
+                    board.AddElement(element);
+
+                    string[] layerNames = elementNode.AttributeAsStrings("layers");
+                    if (layerNames != null)
+                        foreach (string layerName in layerNames)
+                            board.Place(board.GetLayer(layerName), element);
+
+                    if (element is IConectable) {
+                        string signalName = elementNode.AttributeAsString("signal");
+                        if (signalName != null) {
+                            Signal signal = board.GetSignal(signalName);
+                            board.Connect(signal, (IConectable) element);
+                        }
+                    }
+                }
             }
         }
 
@@ -126,8 +248,7 @@
             LayerFunction function = node.AttributeAsEnum<LayerFunction>("function");
             Color color = node.AttributeAsColor("color");
 
-            Layer layer = new Layer(name, side, function, color);
-            return layer;
+            return new Layer(name, side, function, color);
         }
 
         /// <summary>
@@ -140,8 +261,7 @@
 
             string name = node.AttributeAsString("name");
 
-            Signal signal = new Signal(name);
-            return signal;
+            return new Signal(name);
         }
 
         /// <summary>
@@ -156,14 +276,8 @@
             Point endPosition = node.AttributeAsPoint("endPosition");
             double thickness = node.AttributeAsDouble("thickness");
             LineElement.LineCapStyle lineCap = node.AttributeAsEnum<LineElement.LineCapStyle>("lineCap");
-            string[] layerNames = node.AttributeAsStrings("layers");
 
-            LineElement element = new LineElement(startPosition, endPosition, thickness, lineCap);
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), element);
-
-            return element;
+            return new LineElement(startPosition, endPosition, thickness, lineCap);
         }
 
         /// <summary>
@@ -179,14 +293,8 @@
             double thickness = node.AttributeAsDouble("thickness");
             double angle = node.AttributeAsDouble("angle");
             LineElement.LineCapStyle lineCap = node.AttributeAsEnum<LineElement.LineCapStyle>("lineCap");
-            string[] layerNames = node.AttributeAsStrings("layers");
 
-            ArcElement element = new ArcElement(startPosition, endPosition, thickness, angle, lineCap);
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), element);
-
-            return element;
+            return new ArcElement(startPosition, endPosition, thickness, angle, lineCap);
         }
 
         /// <summary>
@@ -202,14 +310,8 @@
             double rotation = node.AttributeAsDouble("rotation");
             double roundness = node.AttributeAsDouble("roundness");
             double thickness = node.AttributeAsDouble("thickness");
-            string[] layerNames = node.AttributeAsStrings("layers");
 
-            RectangleElement element = new RectangleElement(position, size, rotation, thickness);
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), element);
-
-            return element;
+            return new RectangleElement(position, size, rotation, thickness);
         }
 
         /// <summary>
@@ -223,21 +325,31 @@
             Point position = node.AttributeAsPoint("position");
             double radius = node.AttributeAsDouble("radius");
             double thickness = node.AttributeAsDouble("thickness");
-            string[] layerNames = node.AttributeAsStrings("layers");
 
-            CircleElement element = new CircleElement(position, radius, thickness);
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), element);
-
-            return element;
+            return new CircleElement(position, radius, thickness);
         }
 
+        /// <summary>
+        /// Procesa un node 'region'
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>L'objecte 'RegiuonElement' obtingut.</returns>
+        /// 
         private Element ParseRegionElement(XmlNode node) {
 
-            RegionElement element = new RegionElement();
+            double thickness = node.AttributeAsDouble("thickness");
 
-            return element;
+            RegionElement region = new RegionElement(thickness);
+
+            foreach (XmlNode segmentNode in node.SelectNodes("segment")) {
+
+                Point position = segmentNode.AttributeAsPoint("position");
+                double angle = segmentNode.AttributeAsDouble("angle");
+
+                region.Add(new RegionElement.Segment(position, angle));
+            }
+
+            return region;
         }
 
         private Element ParseTextElement(XmlNode node) {
@@ -246,14 +358,9 @@
             double rotation = node.AttributeAsDouble("rotation");
             double height = node.AttributeAsDouble("height");
             string value = node.AttributeAsString("value");
-            string[] layerNames = node.AttributeAsStrings("layers");
 
             TextElement element = new TextElement(position, rotation, height);
             element.Value = value;
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), element);
-
             return element;
         }
 
@@ -271,14 +378,8 @@
             double rotation = node.AttributeAsDouble("rotation");
             double drill = node.AttributeAsDouble("drill");
             ThPadElement.ThPadShape shape = node.AttributeAsEnum<ThPadElement.ThPadShape>("shape");
-            string[] layerNames = node.AttributeAsStrings("layers");
 
-            ThPadElement element = new ThPadElement(name, position, rotation, size, shape, drill);
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), element);
-
-            return element;
+            return new ThPadElement(name, position, rotation, size, shape, drill);
         }
 
         /// <summary>
@@ -294,28 +395,32 @@
             Size size = node.AttributeAsSize("size");
             double rotation = node.AttributeAsDouble("rotation");
             double roundness = node.AttributeAsDouble("roundness");
-            string[] layerNames = node.AttributeAsStrings("layers");
 
-            SmdPadElement element = new SmdPadElement(name, position, size, rotation, roundness);
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), element);
+            return new SmdPadElement(name, position, size, rotation, roundness);
+        }
 
-            return element;
+        /// <summary>
+        /// Procesa un node 'via'
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>L'objecte 'ViaElement' obtingut.</returns>
+        /// 
+        private Element ParseViaElement(XmlNode node) {
+
+            Point position = node.AttributeAsPoint("position");
+            double size = node.AttributeAsDouble("size");
+            double drill = node.AttributeAsDouble("drill");
+            ViaElement.ViaShape shape = node.AttributeAsEnum<ViaElement.ViaShape>("shape");
+
+            return new ViaElement(position, size, drill, shape);
         }
 
         private Element ParseHoleElement(XmlNode node) {
 
             Point position = node.AttributeAsPoint("position");
             double drill = node.AttributeAsDouble("drill");
-            string[] layerNames = node.AttributeAsStrings("layers");
 
-            HoleElement element = new HoleElement(position, drill);
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), element);
-
-            return element;
+            return new HoleElement(position, drill);
         }
     }
 }

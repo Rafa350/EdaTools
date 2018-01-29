@@ -44,11 +44,11 @@
                 if (line.Thickness > 0)
                     writer.WriteAttribute("thickness", line.Thickness);
                 if (line.LineCap != LineElement.LineCapStyle.Round)
-                    writer.WriteAttributeString("lineCap", line.LineCap.ToString());
+                    writer.WriteAttribute("lineCap", line.LineCap.ToString());
 
                 Signal signal = board.GetSignal(line, currentPart, false);
                 if (signal != null)
-                    writer.WriteAttributeString("signal", signal.Name);
+                    writer.WriteAttribute("signal", signal.Name);
 
                 writer.WriteEndElement();
             }
@@ -69,11 +69,11 @@
                 if (arc.Thickness > 0)
                     writer.WriteAttribute("thickness", arc.Thickness);
                 if (arc.LineCap != LineElement.LineCapStyle.Round)
-                    writer.WriteAttributeString("lineCap", arc.LineCap.ToString());
+                    writer.WriteAttribute("lineCap", arc.LineCap.ToString());
 
                 Signal signal = board.GetSignal(arc, currentPart, false);
                 if (signal != null)
-                    writer.WriteAttributeString("signal", signal.Name);
+                    writer.WriteAttribute("signal", signal.Name);
 
                 writer.WriteEndElement();
             }
@@ -125,7 +125,7 @@
                 if (text.Rotation != 0)
                     writer.WriteAttribute("rotation", text.Rotation);
                 if (!String.IsNullOrEmpty(text.Value))
-                    writer.WriteAttributeString("value", text.Value);
+                    writer.WriteAttribute("value", text.Value);
 
                 writer.WriteEndElement();
             }
@@ -150,7 +150,7 @@
 
                 writer.WriteStartElement("spad");
 
-                writer.WriteAttributeString("name", pad.Name);
+                writer.WriteAttribute("name", pad.Name);
                 writer.WriteAttribute("layers", board.GetLayers(pad));
                 writer.WriteAttribute("position", pad.Position);
                 if (pad.Rotation != 0)
@@ -161,7 +161,7 @@
 
                 Signal signal = board.GetSignal(pad, currentPart, false);
                 if (signal != null)
-                    writer.WriteAttributeString("signal", signal.Name);
+                    writer.WriteAttribute("signal", signal.Name);
 
                 writer.WriteEndElement();
             }
@@ -170,7 +170,7 @@
 
                 writer.WriteStartElement("tpad");
 
-                writer.WriteAttributeString("name", pad.Name);
+                writer.WriteAttribute("name", pad.Name);
                 writer.WriteAttribute("layers", board.GetLayers(pad));
                 writer.WriteAttribute("position", pad.Position);
                 if (pad.Rotation != 0)
@@ -178,11 +178,11 @@
                 writer.WriteAttribute("size", pad.Size);
                 writer.WriteAttribute("drill",  pad.Drill);
                 if (pad.Shape != ThPadElement.ThPadShape.Circular)
-                    writer.WriteAttributeString("shape", pad.Shape.ToString());
+                    writer.WriteAttribute("shape", pad.Shape.ToString());
 
                 Signal signal = board.GetSignal(pad, currentPart, false);
                 if (signal != null)
-                    writer.WriteAttributeString("signal", signal.Name);
+                    writer.WriteAttribute("signal", signal.Name);
 
                 writer.WriteEndElement();
             }
@@ -191,12 +191,12 @@
 
                 writer.WriteStartElement("attribute");
 
-                writer.WriteAttributeString("name", parameter.Name);
+                writer.WriteAttribute("name", parameter.Name);
                 if ((parameter.Position.X != 0) || (parameter.Position.Y != 0))
                     writer.WriteAttribute("position", parameter.Position);
                 if (parameter.Rotate != 0)
                     writer.WriteAttribute("rotate", parameter.Rotate);
-                writer.WriteAttributeString("value", parameter.Value);
+                writer.WriteAttribute("value", parameter.Value);
 
                 writer.WriteEndElement();
             }
@@ -212,7 +212,7 @@
                     writer.WriteAttribute("isolation", region.Isolation);
                 Signal signal = board.GetSignal(region, currentPart, false);
                 if (signal != null)
-                    writer.WriteAttributeString("signal", signal.Name);
+                    writer.WriteAttribute("signal", signal.Name);
 
                 foreach (RegionElement.Segment segment in region.Segments) {
                     writer.WriteStartElement("segment");
@@ -240,13 +240,13 @@
 
                     // Escriu els parametres
                     //
-                    writer.WriteAttributeString("name", part.Name);
-                    writer.WriteAttributeString("block", part.Block.Name);
+                    writer.WriteAttribute("name", part.Name);
+                    writer.WriteAttribute("block", part.Block.Name);
                     writer.WriteAttribute("position", part.Position);
                     if (part.Rotation != 0)
                         writer.WriteAttribute("rotation", part.Rotation);
                     if (part.IsFlipped)
-                        writer.WriteAttributeString("flipped", part.IsFlipped.ToString());
+                        writer.WriteAttribute("flipped", part.IsFlipped.ToString());
 
                     // Escriu la llista de pads.
                     //
@@ -259,8 +259,8 @@
                                 writer.WriteStartElement("pads");
                             }
                             writer.WriteStartElement("pad");
-                            writer.WriteAttributeString("name", pad.Name);
-                            writer.WriteAttributeString("signal", signal.Name);
+                            writer.WriteAttribute("name", pad.Name);
+                            writer.WriteAttribute("signal", signal.Name);
                             writer.WriteEndElement();
                         }
                     }
@@ -303,13 +303,13 @@
                 if (via.InnerSize != via.OuterSize)
                     writer.WriteAttribute("innerSize", via.InnerSize);
                 if (via.Shape != ViaElement.ViaShape.Circular)
-                    writer.WriteAttributeString("shape", via.Shape.ToString());
+                    writer.WriteAttribute("shape", via.Shape.ToString());
                 if (via.Type != ViaElement.ViaType.Through)
-                    writer.WriteAttributeString("type", via.Type.ToString());
+                    writer.WriteAttribute("type", via.Type.ToString());
 
                 Signal signal = board.GetSignal(via, null, false);
                 if (signal != null)
-                    writer.WriteAttributeString("signal", signal.Name);
+                    writer.WriteAttribute("signal", signal.Name);
 
                 writer.WriteEndElement();
             }
@@ -323,12 +323,12 @@
 
                 writer.WriteStartElement("layer");
 
-                writer.WriteAttributeString("name", layer.Name);
-                writer.WriteAttributeString("side", layer.Side.ToString());
-                writer.WriteAttributeString("function", layer.Function.ToString());
+                writer.WriteAttribute("name", layer.Name);
+                writer.WriteAttribute("side", layer.Side.ToString());
+                writer.WriteAttribute("function", layer.Function.ToString());
                 writer.WriteAttribute("color", layer.Color);
                 if (!layer.IsVisible)
-                    writer.WriteAttributeString("visible", "false");
+                    writer.WriteAttribute("visible", "false");
 
                 writer.WriteEndElement();
             }
@@ -342,7 +342,7 @@
                 
                 writer.WriteStartElement("signal");
 
-                writer.WriteAttributeString("name", signal.Name);
+                writer.WriteAttribute("name", signal.Name);
 
                 writer.WriteEndElement();
             }
@@ -351,7 +351,7 @@
 
                 writer.WriteStartElement("block");
 
-                writer.WriteAttributeString("name", block.Name);
+                writer.WriteAttribute("name", block.Name);
 
                 writer.WriteStartElement("elements");
                 foreach (Element element in block.Elements)
@@ -367,8 +367,8 @@
 
                 writer.WriteStartElement("board");
 
-                writer.WriteAttributeString("version", "210");
-                writer.WriteAttributeString("units", "mm");
+                writer.WriteAttribute("version", "210");
+                writer.WriteAttribute("units", "mm");
 
                 writer.WriteStartElement("layers");
                 foreach (Layer layer in board.Layers)
