@@ -25,6 +25,7 @@
         private const string path = @"..\..\..\Data";
         private const string inTestFileName = @"board3.brd";
         private const string outTestFileName = @"board3.xml";
+        private const string testFileName = @"out.xml";
 
         private Point prevContentMousePos;
 
@@ -40,12 +41,16 @@
 
         private void Button_Click(object sender, RoutedEventArgs e) {
 
-            Importer importer = new EagleImporter();
-            Board board = importer.LoadBoard(Path.Combine(path, inTestFileName));
+            //Importer importer = new EagleImporter();
+            //Board board = importer.LoadBoard(Path.Combine(path, inTestFileName));
 
-            XmlBoardWriter writer = new XmlBoardWriter(
-                new FileStream(Path.Combine(path, outTestFileName), FileMode.Create, FileAccess.Write, FileShare.None));
-            writer.Write(board);
+            //XmlBoardWriter writer = new XmlBoardWriter(
+            //    new FileStream(Path.Combine(path, outTestFileName), FileMode.Create, FileAccess.Write, FileShare.None));
+            //writer.Write(board);
+
+            XmlBoardReader reader = new XmlBoardReader(
+                new FileStream(Path.Combine(path, testFileName), FileMode.Open, FileAccess.Read, FileShare.None));
+            Board board = reader.Read();
 
             content.ClearVisual();
             VisualGenerator vg = new VisualGenerator(board);

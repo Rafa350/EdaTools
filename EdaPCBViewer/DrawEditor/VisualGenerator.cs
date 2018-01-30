@@ -40,7 +40,22 @@
             }
 
             /// <summary>
-            /// Visita un objecte Part.
+            /// Visita un objecte 'Board'
+            /// </summary>
+            /// <param name="board">L'objecte a visitar.</param>
+            /// 
+            public override void Visit(Board board) {
+
+                foreach (Part part in board.Parts)
+                    part.AcceptVisitor(this);
+
+                foreach (Element element in board.Elements)
+                    if (board.IsOnLayer(element, layer))
+                        element.AcceptVisitor(this);
+            }
+
+            /// <summary>
+            /// Visita un objecte 'Part'.
             /// </summary>
             /// <param name="part">L'objecte a visitar.</param>
             /// 
@@ -57,296 +72,281 @@
             }
 
             /// <summary>
-            /// Visita un objecte LiniaElement
+            /// Visita un objecte 'LiniaElement'
             /// </summary>
-            /// <param name="line">L'element a visitar.</param>
+            /// <param name="line">L'objecte a visitar.</param>
             /// 
             public override void Visit(LineElement line) {
 
-                if (board.IsOnLayer(line, layer)) {
+                DrawingVisual visual = new DrawingVisual();
+                using (DrawingContext dc = visual.RenderOpen()) {
 
-                    DrawingVisual visual = new DrawingVisual();
-                    using (DrawingContext dc = visual.RenderOpen()) {
+                    if (localTransform != null)
+                        dc.PushTransform(localTransform);
 
-                        if (localTransform != null)
-                            dc.PushTransform(localTransform);
+                    Color color = GetColor(layer);
+                    Brush brush = CreateBrush(color);
+                    Polygon polygon = line.GetPolygon(layer.Side);
+                    DrawPolygon(dc, brush, null, polygon);
 
-                        Color color = GetColor(layer);
-                        Brush brush = CreateBrush(color);
-                        Polygon polygon = line.GetPolygon(layer.Side);
-                        DrawPolygon(dc, brush, null, polygon);
-
-                        if (localTransform != null)
-                            dc.Pop();
-                    }
-
-                    visual.Opacity = GetOpacity(layer);
-                    visuals.Add(visual);
+                    if (localTransform != null)
+                        dc.Pop();
                 }
+
+                visual.Opacity = GetOpacity(layer);
+                visuals.Add(visual);
             }
 
             /// <summary>
             /// Visita un objecte ArcElement
             /// </summary>
-            /// <param name="arc">L'element a visitar.</param>
+            /// <param name="arc">L'objecte a visitar.</param>
             /// 
             public override void Visit(ArcElement arc) {
 
-                if (board.IsOnLayer(arc, layer)) {
+                DrawingVisual visual = new DrawingVisual();
+                using (DrawingContext dc = visual.RenderOpen()) {
 
-                    DrawingVisual visual = new DrawingVisual();
-                    using (DrawingContext dc = visual.RenderOpen()) {
+                    if (localTransform != null)
+                        dc.PushTransform(localTransform);
 
-                        if (localTransform != null)
-                            dc.PushTransform(localTransform);
+                    Color color = GetColor(layer);
+                    Brush brush = CreateBrush(color);
+                    Polygon polygon = arc.GetPolygon(layer.Side);
+                    DrawPolygon(dc, brush, null, polygon);
 
-                        Color color = GetColor(layer);
-                        Brush brush = CreateBrush(color);
-                        Polygon polygon = arc.GetPolygon(layer.Side);
-                        DrawPolygon(dc, brush, null, polygon);
-
-                        if (localTransform != null)
-                            dc.Pop();
-                    }
-
-                    visual.Opacity = GetOpacity(layer);
-                    visuals.Add(visual);
+                    if (localTransform != null)
+                        dc.Pop();
                 }
+
+                visual.Opacity = GetOpacity(layer);
+                visuals.Add(visual);
             }
 
             /// <summary>
-            /// Visita un objecte RectangleElement
+            /// Visita un objecte 'RectangleElement'
             /// </summary>
-            /// <param name="rectangle">L'element a visitar.</param>
+            /// <param name="rectangle">L'objecte a visitar.</param>
             /// 
             public override void Visit(RectangleElement rectangle) {
 
-                if (board.IsOnLayer(rectangle, layer)) {
+                DrawingVisual visual = new DrawingVisual();
+                using (DrawingContext dc = visual.RenderOpen()) {
 
-                    DrawingVisual visual = new DrawingVisual();
-                    using (DrawingContext dc = visual.RenderOpen()) {
+                    if (localTransform != null)
+                        dc.PushTransform(localTransform);
 
-                        if (localTransform != null)
-                            dc.PushTransform(localTransform);
+                    Color color = GetColor(layer);
+                    Brush brush = rectangle.Filled ? CreateBrush(color) : null;
+                    Pen pen = rectangle.Filled ? null : CreatePen(color, rectangle.Thickness);
+                    Polygon polygon = rectangle.GetPolygon(layer.Side);
+                    DrawPolygon(dc, brush, pen, polygon);
 
-                        Color color = GetColor(layer);
-                        Brush brush = rectangle.Filled ? CreateBrush(color) : null;
-                        Pen pen = rectangle.Filled ? null : CreatePen(color, rectangle.Thickness);
-                        Polygon polygon = rectangle.GetPolygon(layer.Side);
-                        DrawPolygon(dc, brush, pen, polygon);
-
-                        if (localTransform != null)
-                            dc.Pop();
-                    }
-
-                    visual.Opacity = GetOpacity(layer);
-                    visuals.Add(visual);
+                    if (localTransform != null)
+                        dc.Pop();
                 }
+
+                visual.Opacity = GetOpacity(layer);
+                visuals.Add(visual);
             }
 
             /// <summary>
-            /// Visita un objecte CircleElement.
+            /// Visita un objecte 'CircleElement'.
             /// </summary>
-            /// <param name="circle">L'element a visitar.</param>
+            /// <param name="circle">L'objecte a visitar.</param>
             /// 
             public override void Visit(CircleElement circle) {
 
-                if (board.IsOnLayer(circle, layer)) {
+                DrawingVisual visual = new DrawingVisual();
+                using (DrawingContext dc = visual.RenderOpen()) {
 
-                    DrawingVisual visual = new DrawingVisual();
-                    using (DrawingContext dc = visual.RenderOpen()) {
+                    if (localTransform != null)
+                        dc.PushTransform(localTransform);
 
-                        if (localTransform != null)
-                            dc.PushTransform(localTransform);
+                    Color color = GetColor(layer);
+                    Brush brush = circle.Filled ? CreateBrush(color) : null;
+                    Pen pen = circle.Filled ? null : CreatePen(color, circle.Thickness);
+                    Polygon polygon = circle.GetPolygon(layer.Side);
+                    DrawPolygon(dc, brush, pen, polygon);
 
-                        Color color = GetColor(layer);
-                        Brush brush = circle.Filled ? CreateBrush(color) : null;
-                        Pen pen = circle.Filled ? null : CreatePen(color, circle.Thickness);
-                        Polygon polygon = circle.GetPolygon(layer.Side);
-                        DrawPolygon(dc, brush, pen, polygon);
-
-                        if (localTransform != null)
-                            dc.Pop();
-                    }
-
-                    visual.Opacity = GetOpacity(layer);
-                    visuals.Add(visual);
+                    if (localTransform != null)
+                        dc.Pop();
                 }
+
+                visual.Opacity = GetOpacity(layer);
+                visuals.Add(visual);
             }
 
             /// <summary>
-            /// Visita un objecte RegionElement.
+            /// Visita un objecte 'RegionElement'.
             /// </summary>
             /// <param name="region">L'objecte a visitar.</param>
             /// 
             public override void Visit(RegionElement region) {
 
-                if (board.IsOnLayer(region, layer)) {
+                DrawingVisual visual = new DrawingVisual();
+                using (DrawingContext dc = visual.RenderOpen()) {
 
-                    DrawingVisual visual = new DrawingVisual();
-                    using (DrawingContext dc = visual.RenderOpen()) {
+                    if (localTransform != null)
+                        dc.PushTransform(localTransform);
 
-                        if (localTransform != null)
-                            dc.PushTransform(localTransform);
+                    Color color = GetColor(layer);
+                    bool isSignalLayer = (layer.Name == Layer.TopName) || (layer.Name == Layer.BottomName);
+                    Pen pen = isSignalLayer ? CreatePen(color, region.Thickness) : null;
+                    Brush brush = CreateBrush(color);
+                    Polygon polygon = board.GetRegionPolygon(region, layer, 0.15, Matrix.Identity);
+                    DrawPolygon(dc, brush, pen, polygon);
 
-                        Color color = GetColor(layer);
-                        bool isSignalLayer = (layer.Name == Layer.TopName) || (layer.Name == Layer.BottomName);
-                        Pen pen = isSignalLayer ? CreatePen(color, region.Thickness) : null;
-                        Brush brush = CreateBrush(color);
-                        Polygon polygon = board.GetRegionPolygon(region, layer, 0.15, Matrix.Identity);
-                        DrawPolygon(dc, brush, pen, polygon);
-
-                        if (localTransform != null)
-                            dc.Pop();
-                    }
-
-                    visual.Opacity = GetOpacity(layer);
-                    visuals.Add(visual);
+                    if (localTransform != null)
+                        dc.Pop();
                 }
+
+                visual.Opacity = GetOpacity(layer);
+                visuals.Add(visual);
             }
 
             /// <summary>
-            /// Visita un objecte ViaElement
+            /// Visita un objecte 'ViaElement'
             /// </summary>
             /// <param name="via">L'objecte a visitar.</param>
             /// 
             public override void Visit(ViaElement via) {
 
-                if (board.IsOnLayer(via, layer)) {
+                DrawingVisual visual = new DrawingVisual();
+                using (DrawingContext dc = visual.RenderOpen()) {
 
-                    DrawingVisual visual = new DrawingVisual();
-                    using (DrawingContext dc = visual.RenderOpen()) {
+                    if (localTransform != null)
+                        dc.PushTransform(localTransform);
 
-                        if (localTransform != null)
-                            dc.PushTransform(localTransform);
+                    Color color = GetColor(layer);
+                    Brush polygonBrush = CreateBrush(color);
+                    Polygon polygon = via.GetPolygon(layer.Side);
+                    DrawPolygon(dc, polygonBrush, null, polygon);
 
-                        Color color = GetColor(layer);
-                        Brush polygonBrush = CreateBrush(color);
-                        Polygon polygon = via.GetPolygon(layer.Side);
-                        DrawPolygon(dc, polygonBrush, null, polygon);
-
-                        List<Polygon> polygonHoles = new List<Polygon>(polygon.Childs);
-                        if (polygonHoles.Count == 1) {
-                            Brush holeBrush = CreateBrush(Colors.Black);
-                            DrawPolygon(dc, holeBrush, null, polygonHoles[0]);
-                        }
-
-                        if (localTransform != null)
-                            dc.Pop();
+                    List<Polygon> polygonHoles = new List<Polygon>(polygon.Childs);
+                    if (polygonHoles.Count == 1) {
+                        Brush holeBrush = CreateBrush(Colors.Black);
+                        DrawPolygon(dc, holeBrush, null, polygonHoles[0]);
                     }
 
-                    visual.Opacity = GetOpacity(layer);
-                    visuals.Add(visual);
+                    if (localTransform != null)
+                        dc.Pop();
                 }
+
+                visual.Opacity = GetOpacity(layer);
+                visuals.Add(visual);
             }
 
             /// <summary>
-            /// Visita un objecte SmdPadElement.
+            /// Visita un objecte 'SmdPadElement'.
             /// </summary>
             /// <param name="pad">L'objecte a visitar.</param>
             /// 
             public override void Visit(SmdPadElement pad) {
 
-                if (board.IsOnLayer(pad, layer)) {
+                DrawingVisual visual = new DrawingVisual();
+                using (DrawingContext dc = visual.RenderOpen()) {
 
-                    DrawingVisual visual = new DrawingVisual();
-                    using (DrawingContext dc = visual.RenderOpen()) {
+                    if (localTransform != null)
+                        dc.PushTransform(localTransform);
 
-                        if (localTransform != null)
-                            dc.PushTransform(localTransform);
+                    Color color = GetColor(layer);
+                    Brush brush = CreateBrush(color);
+                    Polygon polygon = pad.GetPolygon(layer.Side);
+                    DrawPolygon(dc, brush, null, polygon);
 
-                        Color color = GetColor(layer);
-                        Brush brush = CreateBrush(color);
-                        Polygon polygon = pad.GetPolygon(layer.Side);
-                        DrawPolygon(dc, brush, null, polygon);
-
-                        if (localTransform != null)
-                            dc.Pop();
-                    }
-
-                    visual.Opacity = GetOpacity(layer);
-                    visuals.Add(visual);
+                    if (localTransform != null)
+                        dc.Pop();
                 }
+
+                visual.Opacity = GetOpacity(layer);
+                visuals.Add(visual);
             }
 
             /// <summary>
-            /// Visita un objecte ThPadElement.
+            /// Visita un objecte 'ThPadElement'.
             /// </summary>
             /// <param name="pad">L'objecte a visitar.</param>
             /// 
             public override void Visit(ThPadElement pad) {
 
-               if (board.IsOnLayer(pad, layer)) {
+                DrawingVisual visual = new DrawingVisual();
+                using (DrawingContext dc = visual.RenderOpen()) {
 
-                    DrawingVisual visual = new DrawingVisual();
-                    using (DrawingContext dc = visual.RenderOpen()) {
+                    if (localTransform != null)
+                        dc.PushTransform(localTransform);
 
-                        if (localTransform != null)
-                            dc.PushTransform(localTransform);
+                    Color color = GetColor(layer);
+                    Brush polygonBrush = CreateBrush(color);
+                    Polygon polygon = pad.GetPolygon(layer.Side);
+                    DrawPolygon(dc, polygonBrush, null, polygon);
 
-                        Color color = GetColor(layer);
-                        Brush polygonBrush = CreateBrush(color);
-                        Polygon polygon = pad.GetPolygon(layer.Side);
-                        DrawPolygon(dc, polygonBrush, null, polygon);
-
-                        List<Polygon> polygonHoles = new List<Polygon>(polygon.Childs);
-                        if (polygonHoles.Count == 1) {
-                            Brush holeBrush = CreateBrush(Colors.Black);
-                            DrawPolygon(dc, holeBrush, null, polygonHoles[0]);
-                        }
-
-                        dc.PushTransform(new ScaleTransform(1, -1, pad.Position.X, pad.Position.Y));
-                        Brush textBrush = CreateBrush(Colors.Yellow);
-                        FormattedText formattedText = new FormattedText(
-                            pad.Name, CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
-                            new Typeface("Arial"), 0.5, textBrush);
-                        formattedText.TextAlignment = TextAlignment.Center;
-                        dc.DrawText(formattedText, new Point(pad.Position.X, pad.Position.Y - formattedText.Height / 2));
-                        dc.Pop();
-
-                        if (localTransform != null)
-                            dc.Pop();
+                    List<Polygon> polygonHoles = new List<Polygon>(polygon.Childs);
+                    if (polygonHoles.Count == 1) {
+                        Brush holeBrush = CreateBrush(Colors.Black);
+                        DrawPolygon(dc, holeBrush, null, polygonHoles[0]);
                     }
 
-                    visual.Opacity = GetOpacity(layer);
-                    visuals.Add(visual);
+                    dc.PushTransform(new ScaleTransform(1, -1, pad.Position.X, pad.Position.Y));
+                    Brush textBrush = CreateBrush(Colors.Yellow);
+                    FormattedText formattedText = new FormattedText(
+                        pad.Name, CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
+                        new Typeface("Arial"), 0.5, textBrush);
+                    formattedText.TextAlignment = TextAlignment.Center;
+                    dc.DrawText(formattedText, new Point(pad.Position.X, pad.Position.Y - formattedText.Height / 2));
+                    dc.Pop();
+
+                    if (localTransform != null)
+                        dc.Pop();
                 }
+
+                visual.Opacity = GetOpacity(layer);
+                visuals.Add(visual);
             }
 
             /// <summary>
-            /// Visita un objecte HoleElement
+            /// Visita un objecte 'HoleElement'
             /// </summary>
             /// <param name="hole">L'objecte a visitar.</param>
             /// 
             public override void Visit(HoleElement hole) {
 
-                if (board.IsOnLayer(hole, layer)) {
+                DrawingVisual visual = new DrawingVisual();
+                using (DrawingContext dc = visual.RenderOpen()) {
 
-                    DrawingVisual visual = new DrawingVisual();
-                    using (DrawingContext dc = visual.RenderOpen()) {
+                    if (localTransform != null)
+                        dc.PushTransform(localTransform);
 
-                        if (localTransform != null)
-                            dc.PushTransform(localTransform);
+                    Color color = GetColor(layer);
+                    Pen pen = CreatePen(color, 0.05);
+                    Brush brush = CreateBrush(Colors.Black);
+                    DrawPolygon(dc, brush, pen, hole.GetPolygon(layer.Side));
 
-                        Color color = GetColor(layer);
-                        Pen pen = CreatePen(color, 0.05);
-                        Brush brush = CreateBrush(Colors.Black);
-                        DrawPolygon(dc, brush, pen, hole.GetPolygon(layer.Side));
-
-                        if (localTransform != null)
-                            dc.Pop();
-                    }
-
-                    visual.Opacity = GetOpacity(layer);
-                    visuals.Add(visual);
+                    if (localTransform != null)
+                        dc.Pop();
                 }
+
+                visual.Opacity = GetOpacity(layer);
+                visuals.Add(visual);
             }
 
+            /// <summary>
+            /// Obte la opacitat de la capa.
+            /// </summary>
+            /// <param name="layer">La capa.</param>
+            /// <returns>La opacitat.</returns>
+            /// 
             private static double GetOpacity(Layer layer) {
 
                 return layer.Color.ScA;
             }
 
+            /// <summary>
+            /// Obte el color pur de la capa.
+            /// </summary>
+            /// <param name="layer">La capa.</param>
+            /// <returns>El color.</returns>
+            /// 
             private static Color GetColor(Layer layer) {
 
                 Color color = layer.Color;
@@ -479,20 +479,25 @@
             layerNames.Add(Layer.TopDocumentName);
             layerNames.Add(Layer.ProfileName);
 
+            // Crea la llista de visuals
+            //
             List<Visual> visuals = new List<Visual>();
-            foreach (string layerName in layerNames)
-                ProcessLayer(board, layerName, visuals);
+
+            // Procesa les capes una a una pel seu ordre establert
+            //
+            foreach (string layerName in layerNames) {
+
+                Layer layer = board.GetLayer(layerName);
+                
+                // Nomes la procesa si es visible
+                //
+                if (layer.IsVisible) {
+                    RenderVisitor visitor = new RenderVisitor(board, layer, visuals);
+                    visitor.Visit(board);
+                }
+            }
 
             return visuals;
-        }
-
-        private void ProcessLayer(Board board, string layerName, IList<Visual> visuals) {
-
-            Layer layer = board.GetLayer(layerName);
-            if (layer.IsVisible) {
-                RenderVisitor visitor = new RenderVisitor(board, layer, visuals);
-                visitor.Visit(board);
-            }
         }
     }
 }

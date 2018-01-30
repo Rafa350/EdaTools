@@ -21,12 +21,15 @@
         /// <summary>
         /// Constructor de la clase.
         /// </summary>
-        /// <param name="stream">Stream d'entrada.</param>
+        /// <param name="stream">Stream de lectura.</param>
         /// 
         public XmlBoardReader(Stream stream) {
 
             if (stream == null)
                 throw new ArgumentNullException("stream");
+
+            if (!stream.CanRead)
+                throw new InvalidOperationException("El stream no es de lectura.");
 
             this.stream = stream;
         }
@@ -206,6 +209,14 @@
                         element = ParseArcElement(elementNode);
                         break;
 
+                    case "rectangle":
+                        element = ParseCircleElement(elementNode);
+                        break;
+
+                    case "circle":
+                        element = ParseRectangleElement(elementNode);
+                        break;
+
                     case "region":
                         element = ParseRegionElement(elementNode);
                         break;
@@ -245,7 +256,7 @@
 
             string name = node.AttributeAsString("name");
             BoardSide side = node.AttributeAsEnum<BoardSide>("side");
-            LayerFunction function = node.AttributeAsEnum<LayerFunction>("function");
+            LayerFunction function = node.AttributeAsEnum<LayerFunction>("function", LayerFunction.Unknown);
             Color color = node.AttributeAsColor("color");
 
             return new Layer(name, side, function, color);
@@ -352,6 +363,12 @@
             return region;
         }
 
+        /// <summary>
+        /// Procesa un node 'text'
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>L'objecte 'TextElement' obtingut.</returns>
+        /// 
         private Element ParseTextElement(XmlNode node) {
 
             Point position = node.AttributeAsPoint("position");
@@ -377,7 +394,7 @@
             double size = node.AttributeAsDouble("size");
             double rotation = node.AttributeAsDouble("rotation");
             double drill = node.AttributeAsDouble("drill");
-            ThPadElement.ThPadShape shape = node.AttributeAsEnum<ThPadElement.ThPadShape>("shape");
+            ThPadElement.ThPadShape shape = node.AttributeAsEnum<ThPadElement.ThPadShape>("shape", ThPadElement.ThPadShape.Circular);
 
             return new ThPadElement(name, position, rotation, size, shape, drill);
         }
@@ -410,11 +427,17 @@
             Point position = node.AttributeAsPoint("position");
             double size = node.AttributeAsDouble("size");
             double drill = node.AttributeAsDouble("drill");
-            ViaElement.ViaShape shape = node.AttributeAsEnum<ViaElement.ViaShape>("shape");
+            ViaElement.ViaShape shape = node.AttributeAsEnum<ViaElement.ViaShape>("shape", ViaElement.ViaShape.Circular);
 
             return new ViaElement(position, size, drill, shape);
         }
 
+        /// <summary>
+        /// Procesa un node 'hole'
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>L'objecte 'HoleElement' obtingut.</returns>
+        /// 
         private Element ParseHoleElement(XmlNode node) {
 
             Point position = node.AttributeAsPoint("position");

@@ -7,6 +7,9 @@
     using System.IO;
     using System.Xml;
 
+    /// <summary>
+    /// Clase per la escriptura de plaques en un stream.
+    /// </summary>
     public sealed class XmlBoardWriter {
 
         private Stream stream;
@@ -410,6 +413,9 @@
 
             if (stream == null)
                 throw new ArgumentNullException("stream");
+
+            if (!stream.CanWrite)
+                throw new InvalidOperationException("El stream no es de escritura.");
 
             this.stream = stream;
         }

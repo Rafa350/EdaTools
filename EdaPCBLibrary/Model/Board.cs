@@ -58,7 +58,7 @@
         #region Metodes per la gestio de parts
 
         /// <summary>
-        /// Afegeix una component.
+        /// Afegeix un component.
         /// </summary>
         /// <param name="part">El component a afeigir.</param>
         /// 
@@ -73,7 +73,7 @@
         }
 
         /// <summary>
-        /// Elimina una peça de la placa.
+        /// Elimina una component de la placa.
         /// </summary>
         /// <param name="part">La peça a eliminar.</param>
         /// 
@@ -83,7 +83,13 @@
                 throw new ArgumentNullException("part");
         }
 
-
+        /// <summary>
+        /// Obte un component pel seu nom.
+        /// </summary>
+        /// <param name="name">El nom del component a buscar.</param>
+        /// <param name="throwOnError">True si cal generar una exceptio si no el troba.</param>
+        /// <returns>El component, o null si no el troba.</returns>
+        /// 
         public Part GetPart(string name, bool throwOnError = false) {
 
             if (String.IsNullOrEmpty(name))
@@ -137,6 +143,13 @@
                     String.Format("El bloque '{0}', ya esta asignado a esta placa.", block.Name));
         }
 
+        /// <summary>
+        /// Obte un bloc pel seu nom.
+        /// </summary>
+        /// <param name="name">El nom del bloc.</param>
+        /// <param name="throwOnError">True si cal generar una excepcio si no el troba.</param>
+        /// <returns>El bloc, o null si no el troba.</returns>
+        /// 
         public Block GetBlock(string name, bool throwOnError = true) {
 
             if (String.IsNullOrEmpty(name))
@@ -173,10 +186,10 @@
         }
 
         /// <summary>
-        /// Obte una capa pel seu Id
+        /// Obte una capa pel seu nom
         /// </summary>
         /// <param name="name">El nom de la capa.</param>
-        /// <param name="throwOnError">True si genera una excepcio en cas d'error.</param>
+        /// <param name="throwOnError">True si cal generar una excepcio si no el troba.</param>
         /// <returns>La capa.</returns>
         /// 
         public Layer GetLayer(string name, bool throwOnError = true) {
@@ -410,7 +423,7 @@
         /// </summary>
         /// <param name="element">El objecte.</param>
         /// <param name="throwOnError">True si cal generar una excepcio en cas d'error.</param>
-        /// <returns>La senyal. Null si no esta conectat.</returns>
+        /// <returns>La senyal o null si no esta conectat.</returns>
         /// 
         public Signal GetSignal(IConectable element, Part part = null, bool throwOnError = true) {
 
@@ -435,7 +448,7 @@
         /// </summary>
         /// <param name="name">Nom de la senyal.</param>
         /// <param name="throwOnError">True si cal generar una exepcio en cas d'error.</param>
-        /// <returns>La senyal. Null si no existeix.</returns>
+        /// <returns>La senyal o null si no existeix.</returns>
         /// 
         public Signal GetSignal(string name, bool throwOnError = true) {
 

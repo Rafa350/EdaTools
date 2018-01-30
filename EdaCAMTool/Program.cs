@@ -2,11 +2,17 @@
 
     using System;
     using System.IO;
+    using MikroPic.EdaTools.v1.Cam;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.IO;
 
     class Program {
 
+        /// <summary>
+        /// Entrada a l'aplicacio.
+        /// </summary>
+        /// <param name="args">Llista d'arguments.</param>
+        /// 
         static void Main(string[] args) {
 
             ShowCredits();
@@ -21,7 +27,7 @@
                 string name = Path.GetFileNameWithoutExtension(inputFileName);
 
                 if (args.Length > 1) {
-                    for (int i = 2; i < args.Length; i++) {
+                    for (int i = 1; i < args.Length; i++) {
                         string arg = args[i];
 
                         if (arg.StartsWith("/n:"))
@@ -32,16 +38,24 @@
                     }
                 }
 
-                ProcessBoard(inputFileName);
+                ProcessBoard(inputFileName, folder, name);
             }
 
             WaitKey();
         }
 
+        /// <summary>
+        /// Mostra els credits.
+        /// </summary>
+        /// 
         private static void ShowCredits() {
 
         }
 
+        /// <summary>
+        /// Mostra l'ajuda.
+        /// </summary>
+        /// 
         private static void ShowHelp() {
 
             string help =
@@ -57,18 +71,35 @@
             Console.WriteLine(help);            
         }
 
+        /// <summary>
+        /// Espera que es premi una tecla per continuar.
+        /// </summary>
+        /// 
         private static void WaitKey() {
 
             Console.WriteLine("Pres key for continue...");
             Console.ReadKey(true);
         }
 
-        private static void ProcessBoard(string fileName) {
+        /// <summary>
+        /// Procesa la placa
+        /// </summary>
+        /// <param name="fileName">Nom del fitxer de la plada.</param>
+        /// 
+        private static void ProcessBoard(string fileName, string folder, string name) {
 
             Board board = LoadBoard(fileName);
-            SaveBoard(board, @"..\..\..\Data\out.xml");
+
+            CAMGenerator cg = new CAMGenerator();
+            cg.Generate(board, folder, name);
         }
 
+        /// <summary>
+        /// Carrega la placa desde un fitxer.
+        /// </summary>
+        /// <param name="fileName">Nom de fitxer.</param>
+        /// <returns>la placa carregada.</returns>
+        /// 
         private static Board LoadBoard(string fileName) {
 
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
@@ -77,6 +108,12 @@
             }
         }
 
+        /// <summary>
+        /// Salva una plada en un fitxer.
+        /// </summary>
+        /// <param name="board">La placa a salvar.</param>
+        /// <param name="fileName">El nom del fitxer.</param>
+        /// 
         private static void SaveBoard(Board board, string fileName) {
 
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
