@@ -52,39 +52,57 @@
                 return XmlConvert.ToDouble(attribute.Value);
         }
 
-        public static Color AttributeAsColor(this XmlNode node, string name) {
+        public static Color AttributeAsColor(this XmlNode node, string name, Color defColor = default(Color)) {
 
-            string colorString = node.Attributes[name].Value;
+            XmlAttribute attribute = node.Attributes[name];
+            if (attribute == null)
+                return defColor;
 
-            string[] s = colorString.Split(',');
-            byte a = XmlConvert.ToByte(s[0]);
-            byte r = XmlConvert.ToByte(s[1]);
-            byte g = XmlConvert.ToByte(s[2]);
-            byte b = XmlConvert.ToByte(s[3]);
+            else {
+                string colorString = node.Attributes[name].Value;
 
-            return Color.FromArgb(a, r, g, b);
+                string[] s = colorString.Split(',');
+                byte a = XmlConvert.ToByte(s[0]);
+                byte r = XmlConvert.ToByte(s[1]);
+                byte g = XmlConvert.ToByte(s[2]);
+                byte b = XmlConvert.ToByte(s[3]);
+
+                return Color.FromArgb(a, r, g, b);
+            }
         }
 
         public static Point AttributeAsPoint(this XmlNode node, string name) {
 
-            string pointString = node.Attributes[name].Value;
+            XmlAttribute attribute = node.Attributes[name];
+            if (attribute == null) 
+                return default(Point);
+            
+            else {
+                string pointString = attribute.Value;
 
-            string[] s = pointString.Split(',');
-            double x = XmlConvert.ToDouble(s[0]);
-            double y = XmlConvert.ToDouble(s[1]);
+                string[] s = pointString.Split(',');
+                double x = XmlConvert.ToDouble(s[0]);
+                double y = XmlConvert.ToDouble(s[1]);
 
-            return new Point(x, y);
+                return new Point(x, y);
+            }
         }
 
         public static Size AttributeAsSize(this XmlNode node, string name) {
 
-            string pointString = node.Attributes[name].Value;
+            XmlAttribute attribute = node.Attributes[name];
+            if (attribute == null)
+                return default(Size);
 
-            string[] s = pointString.Split(',');
-            double w = XmlConvert.ToDouble(s[0]);
-            double h = XmlConvert.ToDouble(s[1]);
+            else {
+                string pointString = attribute.Value;
 
-            return new Size(w, h);
+                string[] s = pointString.Split(',');
+                double w = XmlConvert.ToDouble(s[0]);
+                double h = XmlConvert.ToDouble(s[1]);
+
+                return new Size(w, h);
+            }
         }
 
         public static T AttributeAsEnum<T>(this XmlNode node, string name, T defValue = default(T)) {

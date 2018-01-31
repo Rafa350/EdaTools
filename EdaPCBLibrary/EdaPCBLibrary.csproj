@@ -63,6 +63,7 @@
     <Compile Include="Import\Eagle\EagleImporter.cs" />
     <Compile Include="Import\Importer.cs" />
     <Compile Include="Import\ImporterFactory.cs" />
+    <Compile Include="Model\BlockAttribute.cs" />
     <Compile Include="Model\Elements\PadElement.cs" />
     <Compile Include="Model\IConectable.cs" />
     <Compile Include="Model\IName.cs" />
@@ -82,7 +83,7 @@
     <Compile Include="Model\IO\XmlLibraryWriter.cs" />
     <Compile Include="Model\IO\XmlWriterHelper.cs" />
     <Compile Include="Model\Library.cs" />
-    <Compile Include="Model\Parameter.cs" />
+    <Compile Include="Model\PartAttribute.cs" />
     <Compile Include="Model\Board.cs" />
     <Compile Include="Model\Elements\CircleElement.cs" />
     <Compile Include="Model\Block.cs" />

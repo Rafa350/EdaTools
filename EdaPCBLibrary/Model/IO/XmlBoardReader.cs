@@ -174,6 +174,11 @@
                 Part part = new Part(block, name, position, rotation, false);
                 board.AddPart(part);
 
+                foreach (XmlNode attributeNode in partNode.SelectNodes("attributes/attribute")) {
+                    PartAttribute attr = ParseAttribute(attributeNode);
+                    part.AddAttribute(attr);
+                }
+
                 Dictionary<string, PadElement> padDictionary = new Dictionary<string, PadElement>();
                 foreach (PadElement pad in part.Pads)
                     padDictionary.Add(pad.Name, pad);
@@ -444,6 +449,17 @@
             double drill = node.AttributeAsDouble("drill");
 
             return new HoleElement(position, drill);
+        }
+
+        private PartAttribute ParseAttribute(XmlNode node) {
+
+            string attrName = node.AttributeAsString("name");
+            string attrValue = node.AttributeAsString("value");
+            Point attrPosition = node.AttributeAsPoint("position");
+            double attrRotation = node.AttributeAsDouble("rotation");
+            bool visible = node.AttributeAsBoolean("visible", false);
+
+            return new PartAttribute(attrName, attrPosition, attrRotation, visible, attrValue);
         }
     }
 }

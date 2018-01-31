@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Windows.Media;
+    using System.Windows;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
@@ -37,6 +38,9 @@
 
         // Components
         readonly private HashSet<Part> parts = new HashSet<Part>();
+
+        private Point position;
+        private double rotation;
 
         /// <summary>
         /// Constructor del objecte amb els parametres per defecte.
@@ -593,6 +597,32 @@
         }
 
         #endregion
+
+        /// <summary>
+        /// Obte o asigna la posicio de la placa.
+        /// </summary>
+        /// 
+        public Point Position {
+            get {
+                return position;
+            }
+            set {
+                position = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna l'angle de rotacio de la placa.
+        /// </summary>
+        /// 
+        public double Rotation {
+            get {
+                return rotation;
+            }
+            set {
+                rotation = value;
+            }
+        }
 
         /// <summary>
         /// Obte un enumerador pels blocs.

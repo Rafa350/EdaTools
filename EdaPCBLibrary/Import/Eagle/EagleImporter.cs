@@ -603,7 +603,7 @@
                 segments.Add(new RegionElement.Segment(vertex, angle));
             }
 
-            Element element = new RegionElement(thickness, 0, segments);
+            Element element = new RegionElement(thickness, segments);
 
             board.Place(board.GetLayer(layerName), element);
 
@@ -667,7 +667,7 @@
 
             foreach (XmlNode attrNode in node.SelectNodes("attribute")) {
 
-                Parameter parameter = ParseAttributeNode(attrNode);
+                PartAttribute parameter = ParseAttributeNode(attrNode);
 
                 // Inicialitza els valor per defecte dels parametres NAME i VALUE
                 //
@@ -680,13 +680,13 @@
                 //
                 parameter.Position = new Point(parameter.Position.X - x, parameter.Position.Y - y);
 
-                part.AddParameter(parameter);
+                part.AddAttribute(parameter);
             }
 
             return part;
         }
 
-        private Parameter ParseAttributeNode(XmlNode node) {
+        private PartAttribute ParseAttributeNode(XmlNode node) {
 
             string name = GetAttributeString(node, "name");
             string value = GetAttributeString(node, "value");
@@ -695,7 +695,7 @@
             double rotate = GetAttributeDouble(node, "rotate");
             bool isVisible = GetAttributeString(node, "display") != "off";
 
-            return new Parameter(name, new System.Windows.Point(x, y), rotate, isVisible, value);
+            return new PartAttribute(name, new System.Windows.Point(x, y), rotate, isVisible, value);
         }
 
         /// <summary>

@@ -190,15 +190,15 @@
                 writer.WriteEndElement();
             }
 
-            public override void Visit(Parameter parameter) {
+            public override void Visit(PartAttribute parameter) {
 
                 writer.WriteStartElement("attribute");
 
                 writer.WriteAttribute("name", parameter.Name);
                 if ((parameter.Position.X != 0) || (parameter.Position.Y != 0))
                     writer.WriteAttribute("position", parameter.Position);
-                if (parameter.Rotate != 0)
-                    writer.WriteAttribute("rotate", parameter.Rotate);
+                if (parameter.Rotation != 0)
+                    writer.WriteAttribute("rotate", parameter.Rotation);
                 writer.WriteAttribute("value", parameter.Value);
 
                 writer.WriteEndElement();
@@ -211,8 +211,6 @@
                 writer.WriteAttribute("layers", board.GetLayers(region));
                 if (region.Thickness > 0)
                     writer.WriteAttribute("thickness", region.Thickness);
-                if (region.Isolation > 0)
-                    writer.WriteAttribute("isolation", region.Isolation);
                 Signal signal = board.GetSignal(region, currentPart, false);
                 if (signal != null)
                     writer.WriteAttribute("signal", signal.Name);
@@ -273,12 +271,12 @@
                     // Escriu la llista d'atributs.
                     //
                     first = true;
-                    foreach (Parameter parameter in part.Parameters) {
+                    foreach (PartAttribute attribute in part.Attributes) {
                         if (first) {
                             first = false;
                             writer.WriteStartElement("attributes");
                         }
-                        parameter.AcceptVisitor(this);
+                        attribute.AcceptVisitor(this);
                     }
                     if (!first)
                         writer.WriteEndElement();
@@ -370,8 +368,10 @@
 
                 writer.WriteStartElement("board");
 
-                writer.WriteAttribute("version", "210");
+                writer.WriteAttribute("version", "211");
                 writer.WriteAttribute("units", "mm");
+                writer.WriteAttribute("position", board.Position);
+                writer.WriteAttribute("rotation", board.Rotation);
 
                 writer.WriteStartElement("layers");
                 foreach (Layer layer in board.Layers)

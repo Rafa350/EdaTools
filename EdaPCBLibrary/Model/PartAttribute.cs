@@ -3,19 +3,15 @@
     using System;
     using System.Windows;
 
-    public sealed class Parameter: IVisitable {
+    public sealed class PartAttribute: IVisitable {
 
-        private string name;
+        private readonly string name;
         private string value;
         private Point position;
-        private double rotate;
+        private double rotation;
         private bool isVisible;
-        // private bool usePosition
 
-        public Parameter() {
-        }
-
-        public Parameter(string name, string value) {
+        public PartAttribute(string name, string value) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -24,14 +20,14 @@
             this.value = value;
         }
 
-        public Parameter(string name, Point position, double rotate, bool isVisible, string value) {
+        public PartAttribute(string name, Point position, double rotation, bool isVisible, string value) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
             this.name = name;
             this.position = position;
-            this.rotate = rotate;
+            this.rotation = rotation;
             this.isVisible = isVisible;
             this.value = value;
         }
@@ -45,9 +41,6 @@
             get {
                 return name;
             }
-            set {
-                name = value;
-            }
         }
 
         public Point Position {
@@ -59,12 +52,12 @@
             }
         }
 
-        public double Rotate {
+        public double Rotation {
             get {
-                return rotate;
+                return rotation;
             }
             set {
-                rotate = value;
+                rotation = value;
             }
         }
 

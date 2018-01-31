@@ -25,8 +25,10 @@
                 string inputFileName = Path.GetFullPath(args[0]);
                 string folder = Path.GetDirectoryName(inputFileName);
                 string name = Path.GetFileNameWithoutExtension(inputFileName);
+                bool pause = false;
 
                 if (args.Length > 1) {
+
                     for (int i = 1; i < args.Length; i++) {
                         string arg = args[i];
 
@@ -35,13 +37,18 @@
 
                         else if (arg.StartsWith("/f:"))
                             folder = arg.Substring(3);
+
+                        else if (arg == "/p")
+                            pause = true;
                     }
                 }
 
                 ProcessBoard(inputFileName, folder, name);
+
+                if (pause)
+                    WaitKey();
             }
 
-            WaitKey();
         }
 
         /// <summary>
@@ -66,7 +73,8 @@
                 "   [options]             : Optional parameters.\r\n" +
                 "     /f:<folder>         :   Output folder.\r\n" +
                 "     /n:<name>           :   Output file name prefix.\r\n" +
-                "     /z:<zip>;           :   Output ZIP file name.\r\n";
+                "     /z:<zip>            :   Output ZIP file name.\r\n" +
+                "     /p                  :   Pause at end.\r\n";
 
             Console.WriteLine(help);            
         }
@@ -77,7 +85,7 @@
         /// 
         private static void WaitKey() {
 
-            Console.WriteLine("Pres key for continue...");
+            Console.WriteLine("Press key for continue...");
             Console.ReadKey(true);
         }
 

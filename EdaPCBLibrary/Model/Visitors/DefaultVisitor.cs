@@ -49,7 +49,10 @@
         public virtual void Visit(Block block) {
         }
 
-        public virtual void Visit(Parameter parameter) {
+        public virtual void Visit(PartAttribute attribute) {
+        }
+
+        public virtual void Visit(BlockAttribute attribute) {
         }
     }
 }

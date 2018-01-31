@@ -7,9 +7,10 @@
         void Visit(Board board);
         void Visit(Layer layer);
         void Visit(Part part);
-        void Visit(Parameter parameter);
+        void Visit(PartAttribute attribute);
         void Visit(Signal signal);
         void Visit(Block block);
+        void Visit(BlockAttribute attribute);
         void Visit(LineElement line);
         void Visit(ArcElement arc);
         void Visit(RectangleElement rectangle);

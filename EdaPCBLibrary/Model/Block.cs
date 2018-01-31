@@ -9,6 +9,7 @@
     public sealed class Block: IVisitable {
 
         private readonly HashSet<Element> elements = new HashSet<Element>();
+        private readonly Dictionary<string, BlockAttribute> attributes = new Dictionary<string, BlockAttribute>();
         private string name;
 
         /// <summary>
@@ -24,7 +25,7 @@
         /// <param name="name">Identificador del component.</param>
         /// <param name="elements">Llista d'elements que formen el component.</param>
         /// 
-        public Block(string name, IEnumerable<Element> elements = null) {
+        public Block(string name, IEnumerable<Element> elements = null, IEnumerable<BlockAttribute> attributes = null) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -34,6 +35,10 @@
             if (elements != null)
                 foreach (Element element in elements)
                     AddElement(element);
+
+            if (attributes != null)
+                foreach (BlockAttribute attribute in attributes)
+                    AddAttribute(attribute);
         }
 
         /// <summary>
@@ -76,6 +81,34 @@
             elements.Remove(element);
         }
 
+        public void AddAttribute(BlockAttribute attribute) {
+
+            if (attribute == null)
+                throw new ArgumentNullException("attribute");
+
+            attributes.Add(attribute.Name, attribute);
+        }
+
+        public void RemoveAttribute(BlockAttribute attribute) {
+
+            if (attribute == null)
+                throw new ArgumentNullException("attribute");
+
+            attributes.Remove(attribute.Name);
+        }
+
+        public BlockAttribute GetAttribute(string name) {
+
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            BlockAttribute value;
+            if (attributes.TryGetValue(name, out value))
+                return value;
+
+            return null;
+        }
+
         /// <summary>
         /// Obte o asigna el identificador del component.
         /// </summary>
@@ -96,6 +129,16 @@
         public IEnumerable<Element> Elements {
             get {
                 return elements;
+            }
+        }
+
+        /// <summary>
+        /// obte la llista d'atributs
+        /// </summary>
+        /// 
+        public IEnumerable<BlockAttribute> Attributes {
+            get {
+                return attributes.Values;
             }
         }
     }

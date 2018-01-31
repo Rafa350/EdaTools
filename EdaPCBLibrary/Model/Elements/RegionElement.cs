@@ -37,7 +37,6 @@
 
         private readonly List<Segment> segments = new List<Segment>();
         private double thickness = 0.1;
-        private double isolation = 0;
 
         /// <summary>
         /// Constructor de l'objecte amb els parametres per defecte.
@@ -51,33 +50,26 @@
         /// Constructor del objecte.
         /// </summary>
         /// <param name="thickness">Amplada de linia.</param>
-        /// <param name="isolation">Distancia d'aillament.</param>
         /// 
-        public RegionElement(double thickness = 0, double isolation = 0):
+        public RegionElement(double thickness = 0):
             base() {
 
             if (thickness < 0)
                 throw new ArgumentOutOfRangeException("thickness");
 
-            if (isolation < 0)
-                throw new ArgumentOutOfRangeException("isolation");
-
             this.thickness = thickness;
-            this.isolation = isolation;
         }
 
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
         /// <param name="isolation">D'istancia d'aillament.</param>
-        /// <param name="thickness">Amplada de linia del perfil.</param>
         /// <param name="segments">Llista de segments.</param>
         /// 
-        public RegionElement(double thickness, double isolation, IEnumerable<Segment> segments) :
+        public RegionElement(double thickness, IEnumerable<Segment> segments) :
             base() {
 
             this.thickness = thickness;
-            this.isolation = isolation;
 
             foreach (Segment segment in segments)
                 Add(segment);
@@ -217,22 +209,6 @@
                     throw new ArgumentOutOfRangeException("Tickness");
 
                 thickness = value;
-            }
-        }
-
-        /// <summary>
-        /// Obte o asigna la distancia d'aillament.
-        /// </summary>
-        /// 
-        public double Isolation {
-            get {
-                return isolation;
-            }
-            set {
-                if (value < 0)
-                    throw new ArgumentOutOfRangeException("Isolation");
-
-                isolation = value;
             }
         }
 

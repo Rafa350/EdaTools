@@ -14,7 +14,7 @@
         private double rotation;
         private bool isFlipped;
         private readonly Block block;
-        private Dictionary<string, Parameter> parameters = new Dictionary<string, Parameter>();
+        private Dictionary<string, PartAttribute> attributes = new Dictionary<string, PartAttribute>();
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -38,7 +38,7 @@
         /// <param name="rotation">Angle de rotacio</param>
         /// <param name="isFlipped">Indica si va girat.</param>
         /// 
-        public Part(Block block, string name, Point position, double rotation, bool isFlipped) {
+        public Part(Block block, string name, Point position, double rotation = 0, bool isFlipped = false) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -63,29 +63,29 @@
             visitor.Visit(this);
         }
 
-        public void AddParameter(Parameter parameter) {
+        public void AddAttribute(PartAttribute attribute) {
 
-            if (parameter == null)
-                throw new ArgumentNullException("parameter");
+            if (attribute == null)
+                throw new ArgumentNullException("attribute");
 
-            parameters.Add(parameter.Name, parameter);
+            attributes.Add(attribute.Name, attribute);
         }
 
-        public void RemoveParameter(Parameter parameter) {
+        public void RemoveAttribute(PartAttribute attribute) {
 
-            if (parameter == null)
-                throw new ArgumentNullException("parameter");
+            if (attribute == null)
+                throw new ArgumentNullException("attribute");
 
-            parameters.Remove(parameter.Name);
+            attributes.Remove(attribute.Name);
         }
 
-        public Parameter GetParameter(string name) {
+        public PartAttribute GetAttribute(string name) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            Parameter value;
-            if (parameters.TryGetValue(name, out value))
+            PartAttribute value;
+            if (attributes.TryGetValue(name, out value))
                 return value;
 
             return null;
@@ -183,12 +183,12 @@
         }
 
         /// <summary>
-        /// Obte la llista de parametres.
+        /// Obte la llista d'atributs.
         /// </summary>
         /// 
-        public IEnumerable<Parameter> Parameters {
+        public IEnumerable<PartAttribute> Attributes {
             get {
-                return parameters.Values;
+                return attributes.Values;
             }
         }
     }
