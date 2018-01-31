@@ -124,9 +124,14 @@
         /// 
         private ApertureDictionary CreateApertures(IEnumerable<Layer> layers) {
 
-            ApertureCreatorVisitor visitor = new ApertureCreatorVisitor(Board, layers);
-            visitor.Visit(Board);
-            return visitor.Apertures;
+            ApertureDictionary apertures = new ApertureDictionary();
+
+            foreach (Layer layer in layers) {
+                ApertureCreatorVisitor visitor = new ApertureCreatorVisitor(Board, layer, apertures);
+                visitor.Run();
+            }
+
+            return apertures;
         }
 
         /// <summary>
@@ -220,6 +225,7 @@
         /// </summary>
         /// <param name="gb">El generador de codi gerber.</param>
         /// <param name="apertures">El diccionari d'apertures.</param>
+        /// 
         private void GenerateMacros(GerberBuilder gb, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN MACROS");
@@ -237,8 +243,12 @@
         private void GenerateRergions(GerberBuilder gb, IEnumerable<Layer> layers, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN POLYGONS");
-            IVisitor visitor = new RegionGeneratorVisitor(gb, Board, layers, apertures);
-            visitor.Visit(Board);
+
+            foreach (Layer layer in layers) {
+                IVisitor visitor = new RegionGeneratorVisitor(gb, Board, layer, apertures);
+                visitor.Visit(Board);
+            }
+
             gb.Comment("END POLYGONS");
         }
 
@@ -252,88 +262,88 @@
         private void GenerateImage(GerberBuilder gb, IEnumerable<Layer> layers, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
-            IVisitor visitor = new ImageGeneratorVisitor(gb, Board, layers, apertures);
-            visitor.Visit(Board);
+
+            foreach (Layer layer in layers) {
+                IVisitor visitor = new ImageGeneratorVisitor(gb, Board, layer, apertures);
+                visitor.Run();
+            }
+
             gb.Comment("END IMAGE");
         }
-
+        
         /// <summary>
         /// Clase utilitzada per crear el diccionari d'apertures.
         /// </summary>
         /// 
-        private sealed class ApertureCreatorVisitor : BoardVisitor {
+        private sealed class ApertureCreatorVisitor : ElementVisitor {
 
-            private readonly Board board;
-            private readonly IEnumerable<Layer> layers;
             private readonly ApertureDictionary apertures;
-            private double localRotation = 0;
 
             /// <summary>
             /// Constructor de la clase.
             /// </summary>
-            /// <param name="board">La placa a procesar.</param>
-            /// <param name="layers">El conjunt de capes a consultar.</param>
+            /// <param name="board">La placa.</param>
+            /// <param name="layer">La capa a procesar.</param>
             /// 
-            public ApertureCreatorVisitor(Board board, IEnumerable<Layer> layers) {
+            public ApertureCreatorVisitor(Board board, Layer layer, ApertureDictionary apertures):
+                base(board, layer) {
 
-                this.board = board;
-                this.layers = layers;
-                apertures = new ApertureDictionary();
+                this.apertures = apertures;
             }
 
             /// <summary>
-            /// Visita un objecte 'Board'
+            /// Visita un objecte 'LineElement'
             /// </summary>
-            /// <param name="board">L'objecte a visitar.</param>
+            /// <param name="line">L'objecte a visitar.</param>
             /// 
-            public override void Visit(Board board) {
-
-                foreach (Part part in board.Parts)
-                    part.AcceptVisitor(this);
-
-                foreach (Element element in board.Elements)
-                    if (board.IsOnAnyLayer(element, layers))
-                        element.AcceptVisitor(this);
-            }
-
-            /// <summary>
-            /// Visita un objecte 'Part'
-            /// </summary>
-            /// <param name="part">L'objecte a visitar.</param>
-            /// 
-            public override void Visit(Part part) {
-
-                localRotation = part.Rotation;
-                foreach (Element element in part.Elements)
-                    if (board.IsOnAnyLayer(element, layers))
-                        element.AcceptVisitor(this);
-                localRotation = 0;
-            }
-
             public override void Visit(LineElement line) {
 
                 apertures.DefineCircleAperture(Math.Max(line.Thickness, 0.01));
             }
 
+            /// <summary>
+            /// Visita un objecte 'ArcElement'
+            /// </summary>
+            /// <param name="arc">L'onbjecte a visitar.</param>
+            /// 
             public override void Visit(ArcElement arc) {
 
                 apertures.DefineCircleAperture(Math.Max(arc.Thickness, 0.01));
             }
 
+            /// <summary>
+            /// Visita un objecte 'RectangleElement'
+            /// </summary>
+            /// <param name="rectangle">L'objecte a visitar.</param>
+            /// 
             public override void Visit(RectangleElement rectangle) {
 
-                if (rectangle.Thickness == 0) {
-                    double rotation = localRotation + rectangle.Rotation;
+                // Nomes es 'flashea' en cas que estigui ple.
+                //
+                if (rectangle.Filled) {
+                    double rotation = rectangle.Rotation + (Part == null ? 0 : Part.Rotation);
                     apertures.DefineRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotation);
                 }
             }
 
+            /// <summary>
+            /// Visita un objecte 'CircleElement'
+            /// </summary>
+            /// <param name="circle">L'objecte a visitar.</param>
+            /// 
             public override void Visit(CircleElement circle) {
 
-                if (circle.Thickness == 0)
+                // Nomes es 'flashea' en cas que estigui ple.
+                //
+                if (circle.Filled)
                     apertures.DefineCircleAperture(circle.Diameter);
             }
 
+            /// <summary>
+            /// Visita un objecte 'ViaElement'
+            /// </summary>
+            /// <param name="via">L'objecte a visitar.</param>
+            /// 
             public override void Visit(ViaElement via) {
 
                 switch (via.Shape) {
@@ -351,9 +361,14 @@
                 }
             }
 
+            /// <summary>
+            /// Visita un objecte 'ThPadElement'
+            /// </summary>
+            /// <param name="pad">L'objecte a visitar.</param>
+            /// 
             public override void Visit(ThPadElement pad) {
 
-                double rotation = localRotation + pad.Rotation;
+                double rotation = pad.Rotation + (Part == null ? 0 : Part.Rotation);
                 switch (pad.Shape) {
                     case ThPadElement.ThPadShape.Circular:
                         apertures.DefineCircleAperture(pad.Size);
@@ -373,9 +388,14 @@
                 }
             }
 
+            /// <summary>
+            /// Visita un objecte 'SmdPadElement'
+            /// </summary>
+            /// <param name="pad">L'objecte a visitar.</param>
+            /// 
             public override void Visit(SmdPadElement pad) {
 
-                double rotation = localRotation + pad.Rotation;
+                double rotation = pad.Rotation + (Part == null ? 0 : Part.Rotation);
                 double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
                 if (radius == 0)
                     apertures.DefineRectangleAperture(pad.Size.Width, pad.Size.Height, rotation);
@@ -383,19 +403,14 @@
                     apertures.DefineRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
             }
 
+            /// <summary>
+            /// Visita un objecte 'RegionElement'
+            /// </summary>
+            /// <param name="region">L'objecte a visitar.</param>
+            /// 
             public override void Visit(RegionElement region) {
 
                 apertures.DefineCircleAperture(region.Thickness);
-            }
-
-            /// <summary>
-            /// Obte el diccionari d'apertures generat.
-            /// </summary>
-            /// 
-            public ApertureDictionary Apertures {
-                get {
-                    return apertures;
-                }
             }
         }
 
@@ -403,229 +418,192 @@
         /// Clase generar la imatge a base d'apertures.
         /// </summary>
         /// 
-        private sealed class ImageGeneratorVisitor : BoardVisitor {
+        private sealed class ImageGeneratorVisitor : ElementVisitor {
 
             private readonly GerberBuilder gb;
-            private readonly Board board;
-            private readonly IEnumerable<Layer> layers;
             private readonly ApertureDictionary apertureDict;
-            private Matrix localTransformation = Matrix.Identity;
-            private double localRotation = 0;
 
             /// <summary>
             /// Constructor del objecte.
             /// </summary>
             /// <param name="gb">L'bjecte GerberBuilder.</param>
-            /// <param name="board">La placa a procesar.</param>
-            /// <param name="layers">Capes a tenir en compte.</param>
+            /// <param name="board">La placa.</param>
+            /// <param name="layer">la capa a procesar.</param>
             /// <param name="apertureDict">Diccionari d'apertures.</param>
             /// 
-            public ImageGeneratorVisitor(GerberBuilder gb, Board board, IEnumerable<Layer> layers, ApertureDictionary apertureDict) {
+            public ImageGeneratorVisitor(GerberBuilder gb, Board board, Layer layer, ApertureDictionary apertureDict) :
+                base(board, layer) {
 
                 this.gb = gb;
-                this.board = board;
-                this.layers = layers;
                 this.apertureDict = apertureDict;
             }
 
             /// <summary>
-            /// Visita un objecte Part
+            /// Visita objecte 'LineElement'
             /// </summary>
-            /// <param name="part">L'objecte a visitar</param>
-            /// 
-            public override void Visit(Part part) {
-
-                localTransformation = part.Transformation;
-                localRotation = part.Rotation;
-
-                base.Visit(part);
-
-                localTransformation = Matrix.Identity;
-                localRotation = 0;
-            }
-            
-            /// <summary>
-            /// Visita objecte LineElement
-            /// </summary>
-            /// <param name="line">L'element a visitar.</param>
+            /// <param name="line">L'objecte a visitar.</param>
             /// 
             public override void Visit(LineElement line) {
 
-                if (board.IsOnAnyLayer(line, layers)) {
+                Aperture ap = apertureDict.GetCircleAperture(Math.Max(line.Thickness, 0.01));
+                gb.SelectAperture(ap);
 
-                    Aperture ap = apertureDict.GetCircleAperture(Math.Max(line.Thickness, 0.01));
-                    gb.SelectAperture(ap);
+                Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
+                Point p1 = transformation.Transform(line.StartPosition);
+                Point p2 = transformation.Transform(line.EndPosition);
 
-                    Point p1 = localTransformation.Transform(line.StartPosition);
-                    Point p2 = localTransformation.Transform(line.EndPosition);
-
-                    gb.MoveTo(p1);
-                    gb.LineTo(p2);
-                }
+                gb.MoveTo(p1);
+                gb.LineTo(p2);
             }
 
             /// <summary>
-            /// Visita objecte ArcElement.
+            /// Visita objecte 'ArcElement'.
             /// </summary>
-            /// <param name="arc">L' element a visitar.</param>
+            /// <param name="arc">L'objecte a visitar.</param>
             /// 
             public override void Visit(ArcElement arc) {
 
-                if (board.IsOnAnyLayer(arc, layers)) {
+                Aperture ap = apertureDict.GetCircleAperture(Math.Max(arc.Thickness, 0.01));
+                gb.SelectAperture(ap);
 
-                    Aperture ap = apertureDict.GetCircleAperture(Math.Max(arc.Thickness, 0.01));
-                    gb.SelectAperture(ap);
+                Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
+                Point p1 = transformation.Transform(arc.StartPosition);
+                Point p2 = transformation.Transform(arc.EndPosition);
+                Point c = transformation.Transform(arc.Center);
 
-                    Point p1 = localTransformation.Transform(arc.StartPosition);
-                    Point p2 = localTransformation.Transform(arc.EndPosition);
-                    Point c = localTransformation.Transform(arc.Center);
-
-                    gb.MoveTo(p1);
-                    gb.ArcTo(
-                        p2.X,
-                        p2.Y,
-                        c.X - p1.X,
-                        c.Y - p1.Y,
-                        arc.Angle < 0 ? ArcDirection.CW : ArcDirection.CCW);
-                }
+                gb.MoveTo(p1);
+                gb.ArcTo(
+                    p2.X,
+                    p2.Y,
+                    c.X - p1.X,
+                    c.Y - p1.Y,
+                    arc.Angle < 0 ? ArcDirection.CW : ArcDirection.CCW);
             }
 
             /// <summary>
-            /// Visita un objecte RectangleElement.
+            /// Visita un objecte 'RectangleElement'.
             /// </summary>
-            /// <param name="rectangle">L'element a visitar.</param>
+            /// <param name="rectangle">L'objecte a visitar.</param>
             /// 
             public override void Visit(RectangleElement rectangle) {
 
-                if (board.IsOnAnyLayer(rectangle, layers)) {
+                if (rectangle.Filled) {
 
-                    if (rectangle.Thickness == 0) {
-                        double rotate = localRotation + rectangle.Rotation;
-                        Aperture ap = apertureDict.GetRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotate);
-                        gb.SelectAperture(ap);
+                    double rotation = rectangle.Rotation + (Part == null ? 0 : Part.Rotation);
+                    Aperture ap = apertureDict.GetRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotation);
+                    gb.SelectAperture(ap);
 
-                        Point p = localTransformation.Transform(rectangle.Position);
-                        gb.FlashAt(p);
-                    }
+                    Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
+                    Point p = transformation.Transform(rectangle.Position);
+                    gb.FlashAt(p);
                 }
             }
 
             /// <summary>
             /// Visita un objecte CircleElement
             /// </summary>
-            /// <param name="circle">L'element a visitar.</param>
+            /// <param name="circle">L'objecte a visitar.</param>
             /// 
             public override void Visit(CircleElement circle) {
 
-                if (board.IsOnAnyLayer(circle, layers)) {
+                if (circle.Filled) {
 
-                    if (circle.Thickness == 0) {
-
-                        Aperture ap = apertureDict.GetCircleAperture(circle.Diameter);
-                        gb.SelectAperture(ap);
-
-                        Point p = localTransformation.Transform(circle.Position);
-                        gb.FlashAt(p);
-                    }
-                }
-            }
-
-            /// <summary>
-            /// Visita un element de tipus via.
-            /// </summary>
-            /// <param name="via">L'element a visitar.</param>
-            /// 
-            public override void Visit(ViaElement via) {
-
-                if (board.IsOnAnyLayer(via, layers)) {
-                    Aperture ap = null;
-                    switch (via.Shape) {
-                        default:
-                        case ViaElement.ViaShape.Circular:
-                            ap = apertureDict.GetCircleAperture(via.OuterSize);
-                            break;
-
-                        case ViaElement.ViaShape.Square:
-                            ap = apertureDict.GetRectangleAperture(via.OuterSize, via.OuterSize, 0);
-                            break;
-
-                        case ViaElement.ViaShape.Octogonal:
-                            ap = apertureDict.GetOctagonAperture(via.OuterSize, 0);
-                            break;
-                    }
+                    Aperture ap = apertureDict.GetCircleAperture(circle.Diameter);
                     gb.SelectAperture(ap);
 
-                    gb.FlashAt(via.Position);
-                }
-            }
-
-            /// <summary>
-            /// Visita un element de tipus ThPad
-            /// </summary>
-            /// <param name="pad">L'element a visitar.</param>
-            /// 
-            public override void Visit(ThPadElement pad) {
-
-                if (board.IsOnAnyLayer(pad, layers)) {
-                    double rotate = localRotation + pad.Rotation;
-                    Aperture ap = null;
-                    switch (pad.Shape) {
-                        case ThPadElement.ThPadShape.Circular:
-                            ap = apertureDict.GetCircleAperture(pad.Size);
-                            break;
-
-                        case ThPadElement.ThPadShape.Square:
-                            ap = apertureDict.GetRectangleAperture(pad.Size, pad.Size, rotate);
-                            break;
-
-                        case ThPadElement.ThPadShape.Octogonal:
-                            ap = apertureDict.GetOctagonAperture(pad.Size, rotate);
-                            break;
-
-                        case ThPadElement.ThPadShape.Oval:
-                            ap = apertureDict.GetOvalAperture(pad.Size * 2, pad.Size, rotate);
-                            break;
-                    }
-                    gb.SelectAperture(ap);
-
-                    Point p = localTransformation.Transform(pad.Position);
+                    Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
+                    Point p = transformation.Transform(circle.Position);
                     gb.FlashAt(p);
                 }
             }
 
             /// <summary>
-            /// Visita un objecte SmdPadElement
+            /// Visita un objecte 'ViaElement'.
+            /// </summary>
+            /// <param name="via">L'objecte a visitar.</param>
+            /// 
+            public override void Visit(ViaElement via) {
+
+                Aperture ap = null;
+                switch (via.Shape) {
+                    default:
+                    case ViaElement.ViaShape.Circular:
+                        ap = apertureDict.GetCircleAperture(via.OuterSize);
+                        break;
+
+                    case ViaElement.ViaShape.Square:
+                        ap = apertureDict.GetRectangleAperture(via.OuterSize, via.OuterSize, 0);
+                        break;
+
+                    case ViaElement.ViaShape.Octogonal:
+                        ap = apertureDict.GetOctagonAperture(via.OuterSize, 0);
+                        break;
+                }
+                gb.SelectAperture(ap);
+
+                gb.FlashAt(via.Position);
+            }
+
+            /// <summary>
+            /// Visita un objecte 'ThPadElement'
+            /// </summary>
+            /// <param name="pad">L'objecte a visitar.</param>
+            /// 
+            public override void Visit(ThPadElement pad) {
+
+                double rotation = pad.Rotation + (Part == null ? 0 : Part.Rotation);
+                Aperture ap = null;
+                switch (pad.Shape) {
+                    case ThPadElement.ThPadShape.Circular:
+                        ap = apertureDict.GetCircleAperture(pad.Size);
+                        break;
+
+                    case ThPadElement.ThPadShape.Square:
+                        ap = apertureDict.GetRectangleAperture(pad.Size, pad.Size, rotation);
+                        break;
+
+                    case ThPadElement.ThPadShape.Octogonal:
+                        ap = apertureDict.GetOctagonAperture(pad.Size, rotation);
+                        break;
+
+                    case ThPadElement.ThPadShape.Oval:
+                        ap = apertureDict.GetOvalAperture(pad.Size * 2, pad.Size, rotation);
+                        break;
+                }
+                gb.SelectAperture(ap);
+
+                Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
+                Point p = transformation.Transform(pad.Position);
+                gb.FlashAt(p);
+            }
+
+            /// <summary>
+            /// Visita un objecte 'SmdPadElement'
             /// </summary>
             /// <param name="pad">L'objecte a visitar.</param>
             /// 
             public override void Visit(SmdPadElement pad) {
 
-                if (board.IsOnAnyLayer(pad, layers)) {
+                double rotation = pad.Rotation + (Part == null ? 0 : Part.Rotation);
+                double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
+                Aperture ap = radius == 0 ?
+                    apertureDict.GetRectangleAperture(pad.Size.Width, pad.Size.Height, rotation) :
+                    apertureDict.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
+                gb.SelectAperture(ap);
 
-                    double rotation = localRotation + pad.Rotation;
-                    double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
-                    Aperture ap = radius == 0 ?
-                        apertureDict.GetRectangleAperture(pad.Size.Width, pad.Size.Height, rotation) :
-                        apertureDict.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
-                    gb.SelectAperture(ap);
-
-                    Point p = localTransformation.Transform(pad.Position);
-                    gb.FlashAt(p);
-                }
+                Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
+                Point p = transformation.Transform(pad.Position);
+                gb.FlashAt(p);
             }
         }
 
         /// <summary>
         /// Clase per generar la imatge amb regions poligonals.
         /// </summary>
-        private sealed class RegionGeneratorVisitor : BoardVisitor {
+        private sealed class RegionGeneratorVisitor : ElementVisitor {
 
             private readonly GerberBuilder gb;
-            private readonly Board board;
-            private readonly IEnumerable<Layer> layers;
             private readonly ApertureDictionary apertureDict;
-            private Matrix currentTransformation = Matrix.Identity;
-            private Layer currentLayer;
 
             /// <summary>
             /// Constructor del objecte.
@@ -635,55 +613,11 @@
             /// <param name="layers">El conjunt de capes a procesar.</param>
             /// <param name="apertureDict">Diccionari d'apertures.</param>
             /// 
-            public RegionGeneratorVisitor(GerberBuilder gb, Board board, IEnumerable<Layer> layers, ApertureDictionary apertureDict) {
+            public RegionGeneratorVisitor(GerberBuilder gb, Board board, Layer layer, ApertureDictionary apertureDict):
+                base(board, layer) { 
 
                 this.gb = gb;
-                this.board = board;
-                this.layers = layers;
                 this.apertureDict = apertureDict;
-            }
-
-            /// <summary>
-            /// Visita un objecte Board
-            /// </summary>
-            /// <param name="board">L'objecte a visitar.</param>
-            /// 
-            public override void Visit(Board board) {
-
-                // Procesa capa a capa
-                //
-                foreach (Layer layer in layers) {
-                    currentLayer = layer;
-
-                    // Procesa els elements dels components
-                    //
-                    foreach (Part part in board.Parts)
-                        part.AcceptVisitor(this);
-
-                    // Procesa els components de la placa
-                    //
-                    foreach (Element element in board.Elements)
-                        if (board.IsOnLayer(element, layer))
-                            element.AcceptVisitor(this);
-
-                    currentLayer = null;
-                }
-            }
-
-            /// <summary>
-            /// Visita un objecte Part.
-            /// </summary>
-            /// <param name="part">L'objecte a visitar.</param>
-            /// 
-            public override void Visit(Part part) {
-
-                foreach (Element element in part.Elements) {
-                    if (board.IsOnLayer(element, currentLayer)) {
-                        currentTransformation = part.Transformation;
-                        element.AcceptVisitor(this);
-                        currentTransformation = Matrix.Identity;
-                    }
-                }
             }
             
             /// <summary>
@@ -693,7 +627,8 @@
             /// 
             public override void Visit(RegionElement region) {
 
-                Polygon polygon = board.GetRegionPolygon(region, currentLayer, 0.15, currentTransformation);
+                Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
+                Polygon polygon = Board.GetRegionPolygon(region, Layer, 0.15, transformation);
                 DrawPolygon(polygon, region.Thickness);
             }
 

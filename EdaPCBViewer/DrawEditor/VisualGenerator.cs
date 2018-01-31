@@ -18,7 +18,7 @@
         /// <summary>
         /// Clase per visitar la placa i generar les visuals.
         /// </summary>
-        private sealed class RenderVisitor: BoardVisitor {
+        private sealed class RenderVisitor: AllElementsVisitor {
 
             private readonly Board board;
             private readonly Layer layer;

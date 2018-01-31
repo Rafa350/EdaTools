@@ -8,6 +8,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
+    using System.Windows;
     using System.Windows.Media;
 
     /// <summary>
@@ -118,9 +119,14 @@
         /// 
         private ApertureDictionary CreateApertures(IEnumerable<Layer> layers) {
 
-            AperturesCreatorVisitor visitor = new AperturesCreatorVisitor(Board, layers);
-            visitor.Visit(Board);
-            return visitor.AperturesDict;
+            ApertureDictionary apertures = new ApertureDictionary();
+
+            foreach (Layer layer in layers) {
+                IVisitor visitor = new AperturesCreatorVisitor(Board, layer, apertures);
+                visitor.Run();
+            }
+
+            return apertures;
         }
 
         /// <summary>
@@ -205,76 +211,64 @@
         private void GenerateImage(GerberBuilder gb, IEnumerable<Layer> layers, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
-            IVisitor visitor = new ImageGeneratorVisitor(gb, Board, layers, apertures);
-            visitor.Visit(Board);
+
+            foreach (Layer layer in layers) {
+                IVisitor visitor = new ImageGeneratorVisitor(gb, Board, layer, apertures);
+                visitor.Run();
+            }
+
             gb.Comment("END IMAGE");
         }
 
         /// <summary>
         /// Clase utilitzada per crear les apertures.
         /// </summary>
-        private sealed class AperturesCreatorVisitor : BoardVisitor {
+        private sealed class AperturesCreatorVisitor : ElementVisitor {
 
-            private readonly Board board;
-            private readonly IEnumerable<Layer> layers;
             private readonly ApertureDictionary apertureDict;
 
-            public AperturesCreatorVisitor(Board board, IEnumerable<Layer> layers) {
+            public AperturesCreatorVisitor(Board board, Layer layer, ApertureDictionary apertures):
+                base(board, layer) {
 
-                this.board = board;
-                this.layers = layers;
-                apertureDict = new ApertureDictionary();
+                apertureDict = apertures;
             }
 
             public override void Visit(HoleElement hole) {
 
-                if (board.IsOnAnyLayer(hole, layers)) 
-                    apertureDict.DefineCircleAperture(hole.Drill);
+                apertureDict.DefineCircleAperture(hole.Drill);
             }
 
             public override void Visit(ViaElement via) {
 
-                if (board.IsOnAnyLayer(via, layers))
-                    apertureDict.DefineCircleAperture(via.Drill);
+                apertureDict.DefineCircleAperture(via.Drill);
             }
 
             public override void Visit(ThPadElement pad) {
 
-                if (board.IsOnAnyLayer(pad, layers))
-                    apertureDict.DefineCircleAperture(pad.Drill);
-            }
-
-            public ApertureDictionary AperturesDict {
-                get {
-                    return apertureDict;
-                }
+                apertureDict.DefineCircleAperture(pad.Drill);
             }
         }
 
         /// <summary>
         /// Clase utilitzada per generar la imatge
         /// </summary>
-        private sealed class ImageGeneratorVisitor : BoardVisitor {
+        private sealed class ImageGeneratorVisitor : ElementVisitor {
 
             private readonly GerberBuilder gb;
-            private readonly Board board;
-            private readonly IEnumerable<Layer> layers;
             private readonly ApertureDictionary apertures;
-            private Matrix localTransformation = Matrix.Identity;
 
             /// <summary>
             /// Constructor de la clase.
             /// </summary>
             /// <param name="gb">El generador de gerbers.</param>
-            /// <param name="board">La placa a procesar.</param>
-            /// <param name="layers">Les capes tenir en compte.</param>
+            /// <param name="board">La placa.</param>
+            /// <param name="layer">La capa a procesar.</param>
             /// <param name="apertures">El diccionari d'apertures.</param>
             /// 
-            public ImageGeneratorVisitor(GerberBuilder gb, Board board, IEnumerable<Layer> layers, ApertureDictionary apertures) {
+            public ImageGeneratorVisitor(GerberBuilder gb, Board board, Layer layer, ApertureDictionary apertures) :
+                base(board, layer) {
 
                 this.gb = gb;
-                this.board = board;
-                this.layers = layers;
                 this.apertures = apertures;
             }
 
@@ -285,11 +279,12 @@
             /// 
             public override void Visit(HoleElement hole) {
 
-                if (board.IsOnAnyLayer(hole, layers)) {
-                    Aperture ap = apertures.GetCircleAperture(hole.Drill);
-                    gb.SelectAperture(ap);
-                    gb.FlashAt(localTransformation.Transform(hole.Position));
-                }
+                Aperture ap = apertures.GetCircleAperture(hole.Drill);
+                gb.SelectAperture(ap);
+
+                Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
+                Point position = transformation.Transform(hole.Position);
+                gb.FlashAt(position);
             }
 
             /// <summary>
@@ -299,11 +294,12 @@
             /// 
             public override void Visit(ViaElement via) {
 
-                if (board.IsOnAnyLayer(via, layers)) {
-                    Aperture ap = apertures.GetCircleAperture(via.Drill);
-                    gb.SelectAperture(ap);
-                    gb.FlashAt(localTransformation.Transform(via.Position));
-                }
+                Aperture ap = apertures.GetCircleAperture(via.Drill);
+                gb.SelectAperture(ap);
+
+                Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
+                Point position = transformation.Transform(via.Position);
+                gb.FlashAt(position);
             }
 
             /// <summary>
@@ -313,23 +309,12 @@
             /// 
             public override void Visit(ThPadElement pad) {
 
-                if (board.IsOnAnyLayer(pad, layers)) {
-                    Aperture ap = apertures.GetCircleAperture(pad.Drill);
-                    gb.SelectAperture(ap);
-                    gb.FlashAt(localTransformation.Transform(pad.Position));
-                }
-            }
+                Aperture ap = apertures.GetCircleAperture(pad.Drill);
+                gb.SelectAperture(ap);
 
-            /// <summary>
-            /// Visita un objecte Part
-            /// </summary>
-            /// <param name="part">L'objecte a visitar.</param>
-            /// 
-            public override void Visit(Part part) {
-
-                localTransformation = part.Transformation;
-                base.Visit(part);
-                localTransformation = Matrix.Identity;
+                Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
+                Point position = transformation.Transform(pad.Position);
+                gb.FlashAt(position);
             }
         }
     }

@@ -22,14 +22,25 @@
             private Part currentPart = null;
 
             /// <summary>
-            /// Constructor del objecte. Visita els obectes d'una placa,
+            /// Constructor del objecte. Visita els objectes d'una placa,
             /// per generar el stream de sortida.
             /// </summary>
+            /// <param name="board">La placa a visitar.</param>
             /// <param name="writer">Objecte per escriure el stream de sortida.</param>
             /// 
-            public Visitor(XmlWriter writer) {
+            public Visitor(Board board, XmlWriter writer) {
 
+                this.board = board;
                 this.writer = writer;
+            }
+
+            /// <summary>
+            /// Executa el visitador.
+            /// </summary>
+            /// 
+            public override void Run() {
+
+                board.AcceptVisitor(this);
             }
 
             /// <summary>
@@ -364,8 +375,6 @@
 
             public override void Visit(Board board) {
 
-                this.board = board;
-
                 writer.WriteStartElement("board");
 
                 writer.WriteAttribute("version", "211");
@@ -439,8 +448,8 @@
 
                 writer.WriteStartDocument();
 
-                IVisitor visitor = new Visitor(writer);
-                visitor.Visit(board);
+                IVisitor visitor = new Visitor(board, writer);
+                visitor.Run();
 
                 writer.WriteEndDocument();
             }

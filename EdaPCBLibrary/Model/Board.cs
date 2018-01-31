@@ -510,6 +510,9 @@
             if (region == null)
                 throw new ArgumentNullException("region");
 
+            if (layer == null)
+                throw new ArgumentNullException("layer");
+
             if (IsOnLayer(region, layer)) {
 
                 Polygon regionPolygon = region.GetPolygon(layer.Side);
@@ -524,7 +527,7 @@
                     spacing += region.Thickness / 2;
                     List<Polygon> holePolygons = new List<Polygon>();
 
-                    Layer restrictLayer = GetLayer(Layer.TopRestrictName);
+                    Layer restrictLayer = GetLayer(layer.Side == BoardSide.Top ? Layer.TopRestrictName : Layer.BottomRestrictName);
 
                     // Procesa els elements de la placa que es troben en la mateixa capa que 
                     // la regio, o en la capa restrict.

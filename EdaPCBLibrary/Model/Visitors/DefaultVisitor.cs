@@ -2,7 +2,13 @@
 
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
+    /// <summary>
+    /// Clase visitador per defecte. Defineix tots els visitadors,
+    /// pero no fa cap accio.
+    /// </summary>
     public abstract class DefaultVisitor: IVisitor {
+
+        public abstract void Run();
 
         public virtual void Visit(Board board) {
         }
