@@ -16,11 +16,12 @@
         /// Constructor del objecte.
         /// </summary>
         /// <param name="id">Identificador.</param>
+        /// <param name="tag">Dades opcionals.</param>
         /// <param name="diameter">Diametre extern.</param>
         /// <param name="drill">Diametre del forat.</param>
         /// 
-        public CircleAperture(int id, double diameter, double drill = 0) :
-            base(id) {
+        public CircleAperture(int id, object tag, double diameter, double drill = 0) :
+            base(id, tag) {
 
             if (diameter < 0) // C es l'unica que permet tamany zero
                 throw new ArgumentOutOfRangeException("diameter");

@@ -14,8 +14,8 @@
         private readonly double drill;
         private readonly double angle;
 
-        public PoligonAperture(int id, int vertex, double diameter, double angle, double drill = 0) :
-            base(id) {
+        public PoligonAperture(int id, object tag, int vertex, double diameter, double angle, double drill = 0) :
+            base(id, tag) {
 
             if ((vertex < 3) || (vertex > 12))
                 throw new ArgumentOutOfRangeException("vertex");

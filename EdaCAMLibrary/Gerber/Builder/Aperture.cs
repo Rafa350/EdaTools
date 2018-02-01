@@ -6,14 +6,18 @@
     public abstract class Aperture {
 
         private readonly int id;
+        private readonly object tag;
 
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
+        /// <param name="id">Identificador de l'apertura.</param>
+        /// <param name="tag">Dades opcionals.</param>
         /// 
-        public Aperture(int id) {
+        public Aperture(int id, object tag) {
 
             this.id = id;
+            this.tag = tag;
         }
 
         /// <summary>
@@ -39,6 +43,12 @@
         public string Command {
             get {
                 return GetCommand();
+            }
+        }
+
+        public object Tag {
+            get {
+                return tag;
             }
         }
     }

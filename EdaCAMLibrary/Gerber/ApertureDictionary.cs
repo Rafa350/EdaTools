@@ -143,7 +143,7 @@
 
             int key = GetCircleKey(diameter, tag);
             if (!items.ContainsKey(key)) {
-                Aperture ap = new CircleAperture(apertureId++, diameter);
+                Aperture ap = new CircleAperture(apertureId++, tag, diameter);
                 items.Add(key, ap);
             }
         }
@@ -160,7 +160,7 @@
 
             int key = GetRectangleKey(width, height, rotate, tag);
             if (!items.ContainsKey(key)) {
-                Aperture ap = new MacroAperture(apertureId++, rectangleMacro, width, height, rotate);
+                Aperture ap = new MacroAperture(apertureId++, tag, rectangleMacro, width, height, rotate);
                 items.Add(key, ap);
             }
         }
@@ -178,7 +178,7 @@
 
             int key = GetRoundRectangleKey(width, height, radius, rotate, tag);
             if (!items.ContainsKey(key)) {
-                Aperture ap = new MacroAperture(apertureId++, roundRectangleMacro, width, height, radius, rotate);
+                Aperture ap = new MacroAperture(apertureId++, tag, roundRectangleMacro, width, height, radius, rotate);
                 items.Add(key, ap);
             }
         }
@@ -194,7 +194,7 @@
 
             int key = GetOctagonKey(size, rotate, tag);
             if (!items.ContainsKey(key)) {
-                Aperture ap = new PoligonAperture(apertureId++, 8, size, rotate + 22.5);
+                Aperture ap = new PoligonAperture(apertureId++, tag, 8, size, rotate + 22.5);
                 items.Add(key, ap);
             }
         }
@@ -211,7 +211,7 @@
 
             int key = GetOvalKey(width, height, rotate, tag);
             if (!items.ContainsKey(key)) {
-                Aperture ap = new ObroundAperture(apertureId++, width, height);
+                Aperture ap = new ObroundAperture(apertureId++, tag, width, height);
                 items.Add(key, ap);
             }
         }

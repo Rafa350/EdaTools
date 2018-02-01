@@ -150,9 +150,10 @@
         /// 
         private void GenerateFileHeader(GerberBuilder gb, ImageType imageType, int level) {
 
+            gb.Comment("BEGIN FILE");
             gb.Comment("EdaTools v1.0.");
             gb.Comment("EdaTools CAM processor. Gerber generator.");
-            gb.Comment(String.Format("Start timestamp: {0}", DateTime.Now));
+            gb.Comment(String.Format("Start timestamp: {0:HH:mm:ss.fff}", DateTime.Now));
             gb.Comment("BEGIN HEADER");
             switch (imageType) {
                 case ImageType.Copper:
@@ -210,7 +211,7 @@
         private void GenerateFileTail(GerberBuilder gb) {
 
             gb.EndFile();
-            gb.Comment(String.Format("End timestamp: {0}", DateTime.Now));
+            gb.Comment(String.Format("End timestamp: {0:HH:mm:ss.fff}", DateTime.Now));
             gb.Comment("END FILE");
         }
 
