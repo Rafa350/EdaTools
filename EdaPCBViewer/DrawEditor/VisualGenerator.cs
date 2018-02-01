@@ -18,12 +18,9 @@
         /// <summary>
         /// Clase per visitar la placa i generar les visuals.
         /// </summary>
-        private sealed class RenderVisitor: AllElementsVisitor {
+        private sealed class RenderVisitor: ElementVisitor {
 
-            private readonly Board board;
-            private readonly Layer layer;
             private readonly IList<Visual> visuals;
-            private MatrixTransform localTransform = null;
 
             /// <summary>
             /// Constructor del objecte.
@@ -32,43 +29,10 @@
             /// <param name="layer">La capa on aplicar el proces.</param>
             /// <param name="visuals">Llista de visuals.</param>
             /// 
-            public RenderVisitor(Board board, Layer layer, IList<Visual> visuals) {
+            public RenderVisitor(Board board, Layer layer, IList<Visual> visuals):
+                base(board, layer) {
 
-                this.board = board;
-                this.layer = layer;
                 this.visuals = visuals;
-            }
-
-            /// <summary>
-            /// Visita un objecte 'Board'
-            /// </summary>
-            /// <param name="board">L'objecte a visitar.</param>
-            /// 
-            public override void Visit(Board board) {
-
-                foreach (Part part in board.Parts)
-                    part.AcceptVisitor(this);
-
-                foreach (Element element in board.Elements)
-                    if (board.IsOnLayer(element, layer))
-                        element.AcceptVisitor(this);
-            }
-
-            /// <summary>
-            /// Visita un objecte 'Part'.
-            /// </summary>
-            /// <param name="part">L'objecte a visitar.</param>
-            /// 
-            public override void Visit(Part part) {
-
-                localTransform = new MatrixTransform(part.Transformation);
-
-                foreach (Element element in part.Block.Elements) {
-                    if (board.IsOnLayer(element, layer))
-                        element.AcceptVisitor(this);
-                }
-
-                localTransform = null;
             }
 
             /// <summary>
@@ -81,19 +45,19 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (localTransform != null)
-                        dc.PushTransform(localTransform);
+                    if (Part != null)
+                        dc.PushTransform(GetTransform(Part));
 
-                    Color color = GetColor(layer);
+                    Color color = GetColor(Layer);
                     Brush brush = CreateBrush(color);
-                    Polygon polygon = line.GetPolygon(layer.Side);
+                    Polygon polygon = line.GetPolygon(Layer.Side);
                     DrawPolygon(dc, brush, null, polygon);
 
-                    if (localTransform != null)
+                    if (Part != null)
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(layer);
+                visual.Opacity = GetOpacity(Layer);
                 visuals.Add(visual);
             }
 
@@ -107,19 +71,19 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (localTransform != null)
-                        dc.PushTransform(localTransform);
+                    if (Part != null)
+                        dc.PushTransform(GetTransform(Part));
 
-                    Color color = GetColor(layer);
+                    Color color = GetColor(Layer);
                     Brush brush = CreateBrush(color);
-                    Polygon polygon = arc.GetPolygon(layer.Side);
+                    Polygon polygon = arc.GetPolygon(Layer.Side);
                     DrawPolygon(dc, brush, null, polygon);
 
-                    if (localTransform != null)
+                    if (Part != null)
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(layer);
+                visual.Opacity = GetOpacity(Layer);
                 visuals.Add(visual);
             }
 
@@ -133,20 +97,20 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (localTransform != null)
-                        dc.PushTransform(localTransform);
+                    if (Part != null)
+                        dc.PushTransform(GetTransform(Part));
 
-                    Color color = GetColor(layer);
+                    Color color = GetColor(Layer);
                     Brush brush = rectangle.Filled ? CreateBrush(color) : null;
                     Pen pen = rectangle.Filled ? null : CreatePen(color, rectangle.Thickness);
-                    Polygon polygon = rectangle.GetPolygon(layer.Side);
+                    Polygon polygon = rectangle.GetPolygon(Layer.Side);
                     DrawPolygon(dc, brush, pen, polygon);
 
-                    if (localTransform != null)
+                    if (Part != null)
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(layer);
+                visual.Opacity = GetOpacity(Layer);
                 visuals.Add(visual);
             }
 
@@ -160,20 +124,20 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (localTransform != null)
-                        dc.PushTransform(localTransform);
+                    if (Part != null)
+                        dc.PushTransform(GetTransform(Part));
 
-                    Color color = GetColor(layer);
+                    Color color = GetColor(Layer);
                     Brush brush = circle.Filled ? CreateBrush(color) : null;
                     Pen pen = circle.Filled ? null : CreatePen(color, circle.Thickness);
-                    Polygon polygon = circle.GetPolygon(layer.Side);
+                    Polygon polygon = circle.GetPolygon(Layer.Side);
                     DrawPolygon(dc, brush, pen, polygon);
 
-                    if (localTransform != null)
+                    if (Part != null)
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(layer);
+                visual.Opacity = GetOpacity(Layer);
                 visuals.Add(visual);
             }
 
@@ -187,21 +151,21 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (localTransform != null)
-                        dc.PushTransform(localTransform);
+                    if (Part != null)
+                        dc.PushTransform(GetTransform(Part));
 
-                    Color color = GetColor(layer);
-                    bool isSignalLayer = (layer.Name == Layer.TopName) || (layer.Name == Layer.BottomName);
+                    Color color = GetColor(Layer);
+                    bool isSignalLayer = (Layer.Name == Layer.TopName) || (Layer.Name == Layer.BottomName);
                     Pen pen = isSignalLayer ? CreatePen(color, region.Thickness) : null;
                     Brush brush = CreateBrush(color);
-                    Polygon polygon = board.GetRegionPolygon(region, layer, 0.15, Matrix.Identity);
+                    Polygon polygon = Board.GetRegionPolygon(region, Layer, 0.15, Matrix.Identity);
                     DrawPolygon(dc, brush, pen, polygon);
 
-                    if (localTransform != null)
+                    if (Part != null)
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(layer);
+                visual.Opacity = GetOpacity(Layer);
                 visuals.Add(visual);
             }
 
@@ -215,12 +179,12 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (localTransform != null)
-                        dc.PushTransform(localTransform);
+                    if (Part != null)
+                        dc.PushTransform(GetTransform(Part));
 
-                    Color color = GetColor(layer);
+                    Color color = GetColor(Layer);
                     Brush polygonBrush = CreateBrush(color);
-                    Polygon polygon = via.GetPolygon(layer.Side);
+                    Polygon polygon = via.GetPolygon(Layer.Side);
                     DrawPolygon(dc, polygonBrush, null, polygon);
 
                     List<Polygon> polygonHoles = new List<Polygon>(polygon.Childs);
@@ -229,11 +193,11 @@
                         DrawPolygon(dc, holeBrush, null, polygonHoles[0]);
                     }
 
-                    if (localTransform != null)
+                    if (Part != null)
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(layer);
+                visual.Opacity = GetOpacity(Layer);
                 visuals.Add(visual);
             }
 
@@ -247,19 +211,19 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (localTransform != null)
-                        dc.PushTransform(localTransform);
+                    if (Part != null)
+                        dc.PushTransform(GetTransform(Part));
 
-                    Color color = GetColor(layer);
+                    Color color = GetColor(Layer);
                     Brush brush = CreateBrush(color);
-                    Polygon polygon = pad.GetPolygon(layer.Side);
+                    Polygon polygon = pad.GetPolygon(Layer.Side);
                     DrawPolygon(dc, brush, null, polygon);
 
-                    if (localTransform != null)
+                    if (Part != null)
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(layer);
+                visual.Opacity = GetOpacity(Layer);
                 visuals.Add(visual);
             }
 
@@ -273,12 +237,12 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (localTransform != null)
-                        dc.PushTransform(localTransform);
+                    if (Part != null)
+                        dc.PushTransform(GetTransform(Part));
 
-                    Color color = GetColor(layer);
+                    Color color = GetColor(Layer);
                     Brush polygonBrush = CreateBrush(color);
-                    Polygon polygon = pad.GetPolygon(layer.Side);
+                    Polygon polygon = pad.GetPolygon(Layer.Side);
                     DrawPolygon(dc, polygonBrush, null, polygon);
 
                     List<Polygon> polygonHoles = new List<Polygon>(polygon.Childs);
@@ -296,11 +260,11 @@
                     dc.DrawText(formattedText, new Point(pad.Position.X, pad.Position.Y - formattedText.Height / 2));
                     dc.Pop();
 
-                    if (localTransform != null)
+                    if (Part != null)
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(layer);
+                visual.Opacity = GetOpacity(Layer);
                 visuals.Add(visual);
             }
 
@@ -314,19 +278,19 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (localTransform != null)
-                        dc.PushTransform(localTransform);
+                    if (Part != null)
+                        dc.PushTransform(GetTransform(Part));
 
-                    Color color = GetColor(layer);
+                    Color color = GetColor(Layer);
                     Pen pen = CreatePen(color, 0.05);
                     Brush brush = CreateBrush(Colors.Black);
-                    DrawPolygon(dc, brush, pen, hole.GetPolygon(layer.Side));
+                    DrawPolygon(dc, brush, pen, hole.GetPolygon(Layer.Side));
 
-                    if (localTransform != null)
+                    if (Part != null)
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(layer);
+                visual.Opacity = GetOpacity(Layer);
                 visuals.Add(visual);
             }
 
@@ -351,6 +315,20 @@
 
                 Color color = layer.Color;
                 return Color.FromRgb(color.R, color.G, color.B);
+            }
+
+            /// <summary>
+            /// Obte la transformacio d'un component.
+            /// </summary>
+            /// <param name="part">El component.</param>
+            /// <returns>La transformacio.</returns>
+            /// 
+            private static Transform GetTransform(Part part) {
+
+                Transform transaform = new MatrixTransform(part.Transformation);
+                transaform.Freeze();
+
+                return transaform;
             }
 
             /// <summary>

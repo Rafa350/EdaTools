@@ -64,11 +64,12 @@
         /// Obte la clau unica per una apertura de tipus cercle.
         /// </summary>
         /// <param name="diameter">Diametre.</param>
+        /// <param name="tag">Etiqueta.</param>
         /// <returns>La clau unica.</returns>
         /// 
-        private static int GetCircleKey(double diameter) {
+        private static int GetCircleKey(double diameter, string tag) {
 
-            string s = String.Format(CultureInfo.InvariantCulture, "circle;{0}", diameter);
+            string s = String.Format(CultureInfo.InvariantCulture, "circle;{0};{1}", diameter, tag);
             return s.GetHashCode();
         }
 
@@ -78,11 +79,12 @@
         /// <param name="width">Amplada.</param>
         /// <param name="height">Alçada.</param>
         /// <param name="rotate">Orientacio.</param>
+        /// <param name="tag">Etiqueta.</param>
         /// <returns>La clau unica.</returns>
         /// 
-        private static int GetRectangleKey(double width, double height, double rotate) {
+        private static int GetRectangleKey(double width, double height, double rotate, string tag) {
 
-            string s = String.Format(CultureInfo.InvariantCulture, "rectangle;{0};{1};{2}", width, height, rotate);
+            string s = String.Format(CultureInfo.InvariantCulture, "rectangle;{0};{1};{2};{3}", width, height, rotate, tag);
             return s.GetHashCode();
         }
 
@@ -93,11 +95,12 @@
         /// <param name="height">Alçada.</param>
         /// <param name="radius">Radi de corvatura.</param>
         /// <param name="rotate">Orientacio.</param>
+        /// <param name="tag">Etiqueta.</param>
         /// <returns>La clau unica.</returns>
         /// 
-        private static int GetRoundRectangleKey(double width, double height, double radius, double rotate) {
+        private static int GetRoundRectangleKey(double width, double height, double radius, double rotate, string tag) {
 
-            string s = String.Format(CultureInfo.InvariantCulture, "round;{0};{1};{2};{3}", width, height, radius, rotate);
+            string s = String.Format(CultureInfo.InvariantCulture, "round;{0};{1};{2};{3};{4}", width, height, radius, rotate, tag);
             return s.GetHashCode();
         }
 
@@ -106,11 +109,12 @@
         /// </summary>
         /// <param name="size">Diametre extern..</param>
         /// <param name="rotate">Orientacio.</param>
+        /// <param name="tag">Etiqueta.</param>
         /// <returns>La clau unica.</returns>
         /// 
-        private static int GetOctagonKey(double size, double rotate) {
+        private static int GetOctagonKey(double size, double rotate, string tag) {
 
-            string s = String.Format(CultureInfo.InvariantCulture, "octagon;{0};{1}", size, rotate);
+            string s = String.Format(CultureInfo.InvariantCulture, "octagon;{0};{1};{2}", size, rotate, tag);
             return s.GetHashCode();
         }
 
@@ -120,11 +124,12 @@
         /// <param name="width">Amplada.</param>
         /// <param name="height">Alçada.</param>
         /// <param name="rotate">Orientacio.</param>
+        /// <param name="tag">Etiqueta.</param>
         /// <returns>la clau unica.</returns>
         /// 
-        private static int GetOvalKey(double width, double height, double rotate) {
+        private static int GetOvalKey(double width, double height, double rotate, string tag) {
 
-            string s = String.Format(CultureInfo.InvariantCulture, "oval;{0};{1};{2}", width, height, rotate);
+            string s = String.Format(CultureInfo.InvariantCulture, "oval;{0};{1};{2};{3}", width, height, rotate, tag);
             return s.GetHashCode();
         }
 
@@ -132,10 +137,11 @@
         /// Afegeix una apertura de tipus cercle.
         /// </summary>
         /// <param name="diameter">Diametre.</param>
+        /// <param name="tag">Etiqueta.</param>
         /// 
-        public void DefineCircleAperture(double diameter) {
+        public void DefineCircleAperture(double diameter, string tag = null) {
 
-            int key = GetCircleKey(diameter);
+            int key = GetCircleKey(diameter, tag);
             if (!items.ContainsKey(key)) {
                 Aperture ap = new CircleAperture(apertureId++, diameter);
                 items.Add(key, ap);
@@ -148,10 +154,11 @@
         /// <param name="width">Amplada.</param>
         /// <param name="height">Alçada.</param>
         /// <param name="rotate">Orientacio.</param>
+        /// <param name="tag">Etiqueta.</param>
         /// 
-        public void DefineRectangleAperture(double width, double height, double rotate) {
+        public void DefineRectangleAperture(double width, double height, double rotate, string tag = null) {
 
-            int key = GetRectangleKey(width, height, rotate);
+            int key = GetRectangleKey(width, height, rotate, tag);
             if (!items.ContainsKey(key)) {
                 Aperture ap = new MacroAperture(apertureId++, rectangleMacro, width, height, rotate);
                 items.Add(key, ap);
@@ -165,10 +172,11 @@
         /// <param name="height">Alçada.</param>
         /// <param name="radius">Radi de corvatura.</param>
         /// <param name="rotate">orientacio.</param>
+        /// <param name="tag">Etiqueta.</param>
         /// 
-        public void DefineRoundRectangleAperture(double width, double height, double radius, double rotate) {
+        public void DefineRoundRectangleAperture(double width, double height, double radius, double rotate, string tag = null) {
 
-            int key = GetRoundRectangleKey(width, height, radius, rotate);
+            int key = GetRoundRectangleKey(width, height, radius, rotate, tag);
             if (!items.ContainsKey(key)) {
                 Aperture ap = new MacroAperture(apertureId++, roundRectangleMacro, width, height, radius, rotate);
                 items.Add(key, ap);
@@ -180,10 +188,11 @@
         /// </summary>
         /// <param name="size">Diametre exterior.</param>
         /// <param name="rotate">Orientacio.</param>
+        /// <param name="tag">Etiqueta.</param>
         /// 
-        public void DefineOctagonAperture(double size, double rotate) {
+        public void DefineOctagonAperture(double size, double rotate, string tag = null) {
 
-            int key = GetOctagonKey(size, rotate);
+            int key = GetOctagonKey(size, rotate, tag);
             if (!items.ContainsKey(key)) {
                 Aperture ap = new PoligonAperture(apertureId++, 8, size, rotate + 22.5);
                 items.Add(key, ap);
@@ -196,10 +205,11 @@
         /// <param name="width">Amplada.</param>
         /// <param name="height">Alçada.</param>
         /// <param name="rotate">Orientacio.</param>
+        /// <param name="tag">Etiqueta.</param>
         /// 
-        public void DefineOvalAperture(double width, double height, double rotate) {
+        public void DefineOvalAperture(double width, double height, double rotate, string tag = null) {
 
-            int key = GetOvalKey(width, height, rotate);
+            int key = GetOvalKey(width, height, rotate, tag);
             if (!items.ContainsKey(key)) {
                 Aperture ap = new ObroundAperture(apertureId++, width, height);
                 items.Add(key, ap);
@@ -210,11 +220,12 @@
         /// Obte una aperturew de tipus cercle.
         /// </summary>
         /// <param name="diameter">Diametre.</param>
+        /// <param name="tag">Etiqueta.</param>
         /// <returns>L'apertura.</returns>
         /// 
-        public Aperture GetCircleAperture(double diameter) {
+        public Aperture GetCircleAperture(double diameter, string tag = null) {
 
-            int key = GetCircleKey(diameter);
+            int key = GetCircleKey(diameter, tag);
             return items[key];
         }
 
@@ -224,11 +235,12 @@
         /// <param name="width">Amplada.</param>
         /// <param name="height">Alçada.</param>
         /// <param name="rotate">Rotacio.</param>
+        /// <param name="tag">Etiqueta.</param>
         /// <returns>L'apertura.</returns>
         /// 
-        public Aperture GetRectangleAperture(double width, double height, double rotate) {
+        public Aperture GetRectangleAperture(double width, double height, double rotate, string tag = null) {
 
-            int key = GetRectangleKey(width, height, rotate);
+            int key = GetRectangleKey(width, height, rotate, tag);
             return items[key];
         }
 
@@ -239,11 +251,12 @@
         /// <param name="height">Alçada.</param>
         /// <param name="radius">Radi de corvatura.</param>
         /// <param name="rotate">Rotacio.</param>
+        /// <param name="tag">Etiqueta.</param>
         /// <returns>L'apertura.</returns>
         /// 
-        public Aperture GetRoundRectangleAperture(double width, double height, double radius, double rotate) {
+        public Aperture GetRoundRectangleAperture(double width, double height, double radius, double rotate, string tag = null) {
 
-            int key = GetRoundRectangleKey(width, height, radius, rotate);
+            int key = GetRoundRectangleKey(width, height, radius, rotate, tag);
             return items[key];
         }
 
@@ -252,11 +265,12 @@
         /// </summary>
         /// <param name="size">Diametre extern.</param>
         /// <param name="rotate">Rotacio.</param>
+        /// <param name="tag">Etiqueta.</param>
         /// <returns>L'apertura.</returns>
         /// 
-        public Aperture GetOctagonAperture(double size, double rotate) {
+        public Aperture GetOctagonAperture(double size, double rotate, string tag = null) {
 
-            int key = GetOctagonKey(size, rotate);
+            int key = GetOctagonKey(size, rotate, tag);
             return items[key];
         }
 
@@ -266,11 +280,12 @@
         /// <param name="width">Amplada.</param>
         /// <param name="height">Alçada.</param>
         /// <param name="rotate">Rotacio.</param>
+        /// <param name="tag">Etiqueta.</param>
         /// <returns>L'apertura.</returns>
         /// 
-        public Aperture GetOvalAperture(double width, double height, double rotate) {
+        public Aperture GetOvalAperture(double width, double height, double rotate, string tag = null) {
 
-            int key = GetOvalKey(width, height, rotate);
+            int key = GetOvalKey(width, height, rotate, tag);
             return items[key];
         }
 

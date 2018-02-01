@@ -279,11 +279,12 @@
             /// 
             public override void Visit(HoleElement hole) {
 
-                Aperture ap = apertures.GetCircleAperture(hole.Drill);
-                gb.SelectAperture(ap);
-
                 Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
                 Point position = transformation.Transform(hole.Position);
+
+                Aperture ap = apertures.GetCircleAperture(hole.Drill);
+
+                gb.SelectAperture(ap);
                 gb.FlashAt(position);
             }
 
@@ -294,11 +295,12 @@
             /// 
             public override void Visit(ViaElement via) {
 
-                Aperture ap = apertures.GetCircleAperture(via.Drill);
-                gb.SelectAperture(ap);
-
                 Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
                 Point position = transformation.Transform(via.Position);
+
+                Aperture ap = apertures.GetCircleAperture(via.Drill);
+
+                gb.SelectAperture(ap);
                 gb.FlashAt(position);
             }
 
@@ -309,11 +311,12 @@
             /// 
             public override void Visit(ThPadElement pad) {
 
-                Aperture ap = apertures.GetCircleAperture(pad.Drill);
-                gb.SelectAperture(ap);
-
                 Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
                 Point position = transformation.Transform(pad.Position);
+
+                Aperture ap = apertures.GetCircleAperture(pad.Drill);
+
+                gb.SelectAperture(ap);
                 gb.FlashAt(position);
             }
         }
