@@ -145,31 +145,31 @@
 
             switch (drillType) {
                 case DrillType.PlatedDrill:
-                    gb.Attribute(String.Format(".FileFunction,Plated,{0},{1},PTH,Drill", firstLevel, lastLevel));
-                    gb.Attribute(".FilePolarity,Positive");
+                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,Plated,{0},{1},PTH,Drill", firstLevel, lastLevel));
+                    gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
 
                 case DrillType.NonPlatedDrill:
-                    gb.Attribute(String.Format(".FileFunction,NonPlated,{0},{1},NPTH,Drill", firstLevel, lastLevel));
-                    gb.Attribute(".FilePolarity,Positive");
+                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,NonPlated,{0},{1},NPTH,Drill", firstLevel, lastLevel));
+                    gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
 
                 case DrillType.PlatedRoute:
-                    gb.Attribute(String.Format(".FileFunction,Plated,{0},{1},PTH,Route", firstLevel, lastLevel));
-                    gb.Attribute(".FilePolarity,Positive");
+                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,Plated,{0},{1},PTH,Route", firstLevel, lastLevel));
+                    gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
 
                 case DrillType.NonPlatedRoute:
-                    gb.Attribute(String.Format(".FileFunction,NonPlated,{0},{1},NPTH,Route", firstLevel, lastLevel));
-                    gb.Attribute(".FilePolarity,Positive");
+                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,NonPlated,{0},{1},NPTH,Route", firstLevel, lastLevel));
+                    gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
 
                 case DrillType.Profile:
-                    gb.Attribute(".FileFunction,Profile,NP");
-                    gb.Attribute(".FilePolarity,Positive");
+                    gb.Attribute(AttributeScope.File, ".FileFunction,Profile,NP");
+                    gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
             }
-            gb.Attribute(".Part,Single");
+            gb.Attribute(AttributeScope.File, ".Part,Single");
             gb.SetUnits(Units.Milimeters);
             gb.SetCoordinateFormat(8, 5);
             gb.LoadPolarity(Polarity.Dark);
@@ -225,27 +225,27 @@
         /// </summary>
         private sealed class AperturesCreatorVisitor : ElementVisitor {
 
-            private readonly ApertureDictionary apertureDict;
+            private readonly ApertureDictionary apertures;
 
             public AperturesCreatorVisitor(Board board, Layer layer, ApertureDictionary apertures):
                 base(board, layer) {
 
-                apertureDict = apertures;
+                this.apertures = apertures;
             }
 
             public override void Visit(HoleElement hole) {
 
-                apertureDict.DefineCircleAperture(hole.Drill);
+                apertures.DefineCircleAperture(hole.Drill);
             }
 
             public override void Visit(ViaElement via) {
 
-                apertureDict.DefineCircleAperture(via.Drill);
+                apertures.DefineCircleAperture(via.Drill);
             }
 
             public override void Visit(ThPadElement pad) {
 
-                apertureDict.DefineCircleAperture(pad.Drill);
+                apertures.DefineCircleAperture(pad.Drill);
             }
         }
 

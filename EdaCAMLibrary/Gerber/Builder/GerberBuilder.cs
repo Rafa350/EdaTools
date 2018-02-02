@@ -46,6 +46,12 @@
         Dark
     }
 
+    public enum AttributeScope {
+        File,
+        Aperture,
+        Part
+    }
+
     /// <summary>
     /// Generador de codi Gerber.
     /// </summary>
@@ -107,9 +113,25 @@
         /// </summary>
         /// <param name="attr"></param>
         /// 
-        public void Attribute(string attr) {
+        public void Attribute(AttributeScope scope, string attr) {
 
-            writer.WriteLine(String.Format("%TF{0}*%", attr));
+            string prefix = null;
+
+            switch (scope) {
+                case AttributeScope.File:
+                    prefix = "F";
+                    break;
+
+                case AttributeScope.Aperture:
+                    prefix = "A";
+                    break;
+
+                case AttributeScope.Part:
+                    prefix = "O";
+                    break;
+            }
+
+            writer.WriteLine(String.Format("%T{0}{1}*%", prefix, attr));
         }
 
         /// <summary>

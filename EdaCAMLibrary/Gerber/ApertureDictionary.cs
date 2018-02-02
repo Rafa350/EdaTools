@@ -141,6 +141,9 @@
         /// 
         public void DefineCircleAperture(double diameter, string tag = null) {
 
+            if (diameter <= 0)
+                throw new ArgumentOutOfRangeException("diameter");
+
             int key = GetCircleKey(diameter, tag);
             if (!items.ContainsKey(key)) {
                 Aperture ap = new CircleAperture(apertureId++, tag, diameter);
@@ -157,6 +160,12 @@
         /// <param name="tag">Etiqueta.</param>
         /// 
         public void DefineRectangleAperture(double width, double height, double rotate, string tag = null) {
+
+            if (width <= 0)
+                throw new ArgumentOutOfRangeException("width");
+
+            if (height <= 0)
+                throw new ArgumentOutOfRangeException("height");
 
             int key = GetRectangleKey(width, height, rotate, tag);
             if (!items.ContainsKey(key)) {
@@ -176,6 +185,21 @@
         /// 
         public void DefineRoundRectangleAperture(double width, double height, double radius, double rotate, string tag = null) {
 
+            if (width <= 0)
+                throw new ArgumentOutOfRangeException("width");
+
+            if (height <= 0)
+                throw new ArgumentOutOfRangeException("height");
+
+            if (radius <= 0)
+                throw new ArgumentOutOfRangeException("radius");
+
+            if (width - (2 * radius) <= 0)
+                throw new ArgumentOutOfRangeException("radius");
+
+            if (height - (2 * radius) <= 0)
+                throw new ArgumentOutOfRangeException("radius");
+
             int key = GetRoundRectangleKey(width, height, radius, rotate, tag);
             if (!items.ContainsKey(key)) {
                 Aperture ap = new MacroAperture(apertureId++, tag, roundRectangleMacro, width, height, radius, rotate);
@@ -191,6 +215,9 @@
         /// <param name="tag">Etiqueta.</param>
         /// 
         public void DefineOctagonAperture(double size, double rotate, string tag = null) {
+
+            if (size <= 0)
+                throw new ArgumentOutOfRangeException("size");
 
             int key = GetOctagonKey(size, rotate, tag);
             if (!items.ContainsKey(key)) {
@@ -208,6 +235,12 @@
         /// <param name="tag">Etiqueta.</param>
         /// 
         public void DefineOvalAperture(double width, double height, double rotate, string tag = null) {
+
+            if (width <= 0)
+                throw new ArgumentOutOfRangeException("width");
+
+            if (height <= 0)
+                throw new ArgumentOutOfRangeException("height");
 
             int key = GetOvalKey(width, height, rotate, tag);
             if (!items.ContainsKey(key)) {

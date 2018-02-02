@@ -106,13 +106,13 @@
 
             GerberBuilder gb = new GerberBuilder(writer);
 
-            ApertureDictionary apertureDict = CreateApertures(layers);
+            ApertureDictionary apertures = CreateApertures(layers);
 
             GenerateFileHeader(gb, imageType, level);
-            GenerateMacros(gb, apertureDict);
-            GenerateApertures(gb, apertureDict);
-            GenerateRegions(gb, layers, apertureDict);
-            GenerateImage(gb, layers, apertureDict);
+            GenerateMacros(gb, apertures);
+            GenerateApertures(gb, apertures);
+            GenerateRegions(gb, layers, apertures);
+            GenerateImage(gb, layers, apertures);
             GenerateFileTail(gb);
         }
 
@@ -157,46 +157,46 @@
             gb.Comment("BEGIN HEADER");
             switch (imageType) {
                 case ImageType.Copper:
-                    gb.Attribute(String.Format(".FileFunction,Copper,L{0},{1},Signal", level, level == 1 ? "Top" : "Bot"));
-                    gb.Attribute(".FilePolarity,Positive");
+                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,Copper,L{0},{1},Signal", level, level == 1 ? "Top" : "Bot"));
+                    gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
 
                 case ImageType.TopSolderMask:
-                    gb.Attribute(".FileFunction,Soldermask,Top");
-                    gb.Attribute(".FilePolarity,Negative");
+                    gb.Attribute(AttributeScope.File, ".FileFunction,Soldermask,Top");
+                    gb.Attribute(AttributeScope.File, ".FilePolarity,Negative");
                     break;
 
                 case ImageType.BottomSolderMask:
-                    gb.Attribute(".FileFunction,Soldermask,Bot");
-                    gb.Attribute(".FilePolarity,Negative");
+                    gb.Attribute(AttributeScope.File, ".FileFunction,Soldermask,Bot");
+                    gb.Attribute(AttributeScope.File, ".FilePolarity,Negative");
                     break;
 
                 case ImageType.TopCream:
-                    gb.Attribute(".FileFunction,Paste,Top");
-                    gb.Attribute(".FilePolarity,Negative");
+                    gb.Attribute(AttributeScope.File, ".FileFunction,Paste,Top");
+                    gb.Attribute(AttributeScope.File, ".FilePolarity,Negative");
                     break;
 
                 case ImageType.BottomCream:
-                    gb.Attribute(".FileFunction,Paste,Bot");
-                    gb.Attribute(".FilePolarity,Negative");
+                    gb.Attribute(AttributeScope.File, ".FileFunction,Paste,Bot");
+                    gb.Attribute(AttributeScope.File, ".FilePolarity,Negative");
                     break;
 
                 case ImageType.TopLegend:
-                    gb.Attribute(".FileFunction,Legend,Top");
-                    gb.Attribute(".FilePolarity,Positive");
+                    gb.Attribute(AttributeScope.File, ".FileFunction,Legend,Top");
+                    gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
 
                 case ImageType.BottomLegend:
-                    gb.Attribute(".FileFunction,Legend,Bot");
-                    gb.Attribute(".FilePolarity,Positive");
+                    gb.Attribute(AttributeScope.File, ".FileFunction,Legend,Bot");
+                    gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
 
                 case ImageType.Profile:
-                    gb.Attribute(".FileFunction,Profile,NP");
-                    gb.Attribute(".FilePolarity,Positive");
+                    gb.Attribute(AttributeScope.File, ".FileFunction,Profile,NP");
+                    gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
             }
-            gb.Attribute(".Part,Single");
+            gb.Attribute(AttributeScope.File, ".Part,Single");
             gb.SetUnits(Units.Milimeters);
             gb.SetCoordinateFormat(8, 5);
             gb.LoadPolarity(Polarity.Dark);
@@ -295,19 +295,19 @@
         /// 
         private sealed class ApertureCreatorVisitor : ElementVisitor {
 
-            private readonly ApertureDictionary apertureDict;
+            private readonly ApertureDictionary apertures;
 
             /// <summary>
             /// Constructor de la clase.
             /// </summary>
             /// <param name="board">La placa.</param>
             /// <param name="layer">La capa a procesar.</param>
-            /// <param name="apertureDict">El diccionari d'apertures a omplir.</param>
+            /// <param name="apertures">El diccionari d'apertures a omplir.</param>
             /// 
-            public ApertureCreatorVisitor(Board board, Layer layer, ApertureDictionary apertureDict):
+            public ApertureCreatorVisitor(Board board, Layer layer, ApertureDictionary apertures):
                 base(board, layer) {
 
-                this.apertureDict = apertureDict;
+                this.apertures = apertures;
             }
 
             /// <summary>
@@ -317,7 +317,7 @@
             /// 
             public override void Visit(LineElement line) {
 
-                apertureDict.DefineCircleAperture(Math.Max(line.Thickness, 0.01));
+                apertures.DefineCircleAperture(Math.Max(line.Thickness, 0.01));
             }
 
             /// <summary>
@@ -327,7 +327,7 @@
             /// 
             public override void Visit(ArcElement arc) {
 
-                apertureDict.DefineCircleAperture(Math.Max(arc.Thickness, 0.01));
+                apertures.DefineCircleAperture(Math.Max(arc.Thickness, 0.01));
             }
 
             /// <summary>
@@ -341,13 +341,13 @@
                 //
                 if (rectangle.Filled) {
                     double rotation = rectangle.Rotation + (Part == null ? 0 : Part.Rotation);
-                    apertureDict.DefineRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotation);
+                    apertures.DefineRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotation);
                 }
 
                 // En cas contrari es dibuixa
                 //
                 else
-                    apertureDict.DefineCircleAperture(rectangle.Thickness);
+                    apertures.DefineCircleAperture(rectangle.Thickness);
             }
 
             /// <summary>
@@ -360,12 +360,12 @@
                 // Si es ple, es 'flashea'.
                 //
                 if (circle.Filled)
-                    apertureDict.DefineCircleAperture(circle.Diameter);
+                    apertures.DefineCircleAperture(circle.Diameter);
 
                 // En cas contrari es dibuixa
                 //
                 else
-                    apertureDict.DefineCircleAperture(circle.Thickness);
+                    apertures.DefineCircleAperture(circle.Thickness);
             }
 
             /// <summary>
@@ -377,15 +377,15 @@
 
                 switch (via.Shape) {
                     case ViaElement.ViaShape.Circular:
-                        apertureDict.DefineCircleAperture(via.OuterSize);
+                        apertures.DefineCircleAperture(via.OuterSize);
                         break;
 
                     case ViaElement.ViaShape.Square:
-                        apertureDict.DefineRectangleAperture(via.OuterSize, via.OuterSize, 0);
+                        apertures.DefineRectangleAperture(via.OuterSize, via.OuterSize, 0);
                         break;
 
                     case ViaElement.ViaShape.Octogonal:
-                        apertureDict.DefineOctagonAperture(via.OuterSize, 0);
+                        apertures.DefineOctagonAperture(via.OuterSize, 0);
                         break;
                 }
             }
@@ -400,19 +400,19 @@
                 double rotation = pad.Rotation + (Part == null ? 0 : Part.Rotation);
                 switch (pad.Shape) {
                     case ThPadElement.ThPadShape.Circular:
-                        apertureDict.DefineCircleAperture(pad.Size);
+                        apertures.DefineCircleAperture(pad.Size);
                         break;
 
                     case ThPadElement.ThPadShape.Square:
-                        apertureDict.DefineRectangleAperture(pad.Size, pad.Size, rotation);
+                        apertures.DefineRectangleAperture(pad.Size, pad.Size, rotation);
                         break;
 
                     case ThPadElement.ThPadShape.Octogonal:
-                        apertureDict.DefineOctagonAperture(pad.Size, rotation);
+                        apertures.DefineOctagonAperture(pad.Size, rotation);
                         break;
 
                     case ThPadElement.ThPadShape.Oval:
-                        apertureDict.DefineOvalAperture(pad.Size * 2, pad.Size, rotation);
+                        apertures.DefineOvalAperture(pad.Size * 2, pad.Size, rotation);
                         break;
                 }
             }
@@ -427,9 +427,10 @@
                 double rotation = pad.Rotation + (Part == null ? 0 : Part.Rotation);
                 double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
                 if (radius == 0)
-                    apertureDict.DefineRectangleAperture(pad.Size.Width, pad.Size.Height, rotation);
+                    apertures.DefineRectangleAperture(pad.Size.Width, pad.Size.Height, rotation);
+                // ******************** Detectar oval *********************
                 else
-                    apertureDict.DefineRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
+                    apertures.DefineRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
             }
 
             /// <summary>
@@ -439,7 +440,7 @@
             /// 
             public override void Visit(RegionElement region) {
 
-                apertureDict.DefineCircleAperture(region.Thickness);
+                apertures.DefineCircleAperture(region.Thickness);
             }
         }
 
@@ -450,7 +451,7 @@
         private sealed class ImageGeneratorVisitor : ElementVisitor {
 
             private readonly GerberBuilder gb;
-            private readonly ApertureDictionary apertureDict;
+            private readonly ApertureDictionary apertures;
 
             /// <summary>
             /// Constructor del objecte.
@@ -458,13 +459,13 @@
             /// <param name="gb">L'bjecte GerberBuilder.</param>
             /// <param name="board">La placa.</param>
             /// <param name="layer">la capa a procesar.</param>
-            /// <param name="apertureDict">Diccionari d'apertures.</param>
+            /// <param name="apertures">Diccionari d'apertures.</param>
             /// 
-            public ImageGeneratorVisitor(GerberBuilder gb, Board board, Layer layer, ApertureDictionary apertureDict) :
+            public ImageGeneratorVisitor(GerberBuilder gb, Board board, Layer layer, ApertureDictionary apertures) :
                 base(board, layer) {
 
                 this.gb = gb;
-                this.apertureDict = apertureDict;
+                this.apertures = apertures;
             }
 
             /// <summary>
@@ -482,7 +483,7 @@
 
                 // Selecciona l'apertura
                 //
-                Aperture ap = apertureDict.GetCircleAperture(Math.Max(line.Thickness, 0.01));
+                Aperture ap = apertures.GetCircleAperture(Math.Max(line.Thickness, 0.01));
 
                 // Escriu el gerber
                 //
@@ -507,7 +508,7 @@
 
                 // Selecciona l'apertura
                 //
-                Aperture ap = apertureDict.GetCircleAperture(Math.Max(arc.Thickness, 0.01));
+                Aperture ap = apertures.GetCircleAperture(Math.Max(arc.Thickness, 0.01));
 
                 // Escriu el gerber
                 //
@@ -538,7 +539,7 @@
 
                     // Selecciona l'apertura
                     //
-                    Aperture ap = apertureDict.GetRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotation);
+                    Aperture ap = apertures.GetRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotation);
 
                     // Escriu el gerber
                     //
@@ -549,7 +550,7 @@
                 else {
                     // Selecciona l'apertura
                     //
-                    Aperture ap = apertureDict.GetCircleAperture(rectangle.Thickness);
+                    Aperture ap = apertures.GetCircleAperture(rectangle.Thickness);
 
                     // Obte el poligon
                     //
@@ -580,7 +581,7 @@
 
                     // Selecciona l'apertura
                     //
-                    Aperture ap = apertureDict.GetCircleAperture(circle.Diameter);
+                    Aperture ap = apertures.GetCircleAperture(circle.Diameter);
 
                     // Escriu el gerber
                     //
@@ -592,7 +593,7 @@
 
                     // Selecciona l'apertura
                     //
-                    Aperture ap = apertureDict.GetCircleAperture(circle.Thickness);
+                    Aperture ap = apertures.GetCircleAperture(circle.Thickness);
 
                     // Obte el poligon
                     //
@@ -620,15 +621,15 @@
                 switch (via.Shape) {
                     default:
                     case ViaElement.ViaShape.Circular:
-                        ap = apertureDict.GetCircleAperture(via.OuterSize);
+                        ap = apertures.GetCircleAperture(via.OuterSize);
                         break;
 
                     case ViaElement.ViaShape.Square:
-                        ap = apertureDict.GetRectangleAperture(via.OuterSize, via.OuterSize, 0);
+                        ap = apertures.GetRectangleAperture(via.OuterSize, via.OuterSize, 0);
                         break;
 
                     case ViaElement.ViaShape.Octogonal:
-                        ap = apertureDict.GetOctagonAperture(via.OuterSize, 0);
+                        ap = apertures.GetOctagonAperture(via.OuterSize, 0);
                         break;
                 }
 
@@ -656,19 +657,19 @@
                 Aperture ap = null;
                 switch (pad.Shape) {
                     case ThPadElement.ThPadShape.Circular:
-                        ap = apertureDict.GetCircleAperture(pad.Size);
+                        ap = apertures.GetCircleAperture(pad.Size);
                         break;
 
                     case ThPadElement.ThPadShape.Square:
-                        ap = apertureDict.GetRectangleAperture(pad.Size, pad.Size, rotation);
+                        ap = apertures.GetRectangleAperture(pad.Size, pad.Size, rotation);
                         break;
 
                     case ThPadElement.ThPadShape.Octogonal:
-                        ap = apertureDict.GetOctagonAperture(pad.Size, rotation);
+                        ap = apertures.GetOctagonAperture(pad.Size, rotation);
                         break;
 
                     case ThPadElement.ThPadShape.Oval:
-                        ap = apertureDict.GetOvalAperture(pad.Size * 2, pad.Size, rotation);
+                        ap = apertures.GetOvalAperture(pad.Size * 2, pad.Size, rotation);
                         break;
                 }
 
@@ -694,9 +695,10 @@
 
                 // Selecciona l'apertura
                 //
+                /// ************** Detectar OVAL ********************
                 Aperture ap = radius == 0 ?
-                    apertureDict.GetRectangleAperture(pad.Size.Width, pad.Size.Height, rotation) :
-                    apertureDict.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
+                    apertures.GetRectangleAperture(pad.Size.Width, pad.Size.Height, rotation) :
+                    apertures.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
 
                 // Escriu el gerber
                 //
@@ -711,7 +713,7 @@
         private sealed class RegionGeneratorVisitor : ElementVisitor {
 
             private readonly GerberBuilder gb;
-            private readonly ApertureDictionary apertureDict;
+            private readonly ApertureDictionary apertures;
 
             /// <summary>
             /// Constructor del objecte.
@@ -719,13 +721,13 @@
             /// <param name="gb">Generador de codi gerber.</param>
             /// <param name="board">La placa.</param>
             /// <param name="layer">La capa a procesar.</param>
-            /// <param name="apertureDict">Diccionari d'apertures.</param>
+            /// <param name="apertures">Diccionari d'apertures.</param>
             /// 
-            public RegionGeneratorVisitor(GerberBuilder gb, Board board, Layer layer, ApertureDictionary apertureDict):
+            public RegionGeneratorVisitor(GerberBuilder gb, Board board, Layer layer, ApertureDictionary apertures):
                 base(board, layer) { 
 
                 this.gb = gb;
-                this.apertureDict = apertureDict;
+                this.apertures = apertures;
             }
             
             /// <summary>
@@ -773,7 +775,7 @@
 
                     // Dibuixa el perfil de la regio
                     //
-                    Aperture ap = apertureDict.GetCircleAperture(thickness);
+                    Aperture ap = apertures.GetCircleAperture(thickness);
                     gb.SelectAperture(ap);
                     gb.LoadPolarity(Polarity.Dark);
                     gb.Polygon(polygon.Points);
