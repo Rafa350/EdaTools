@@ -20,7 +20,7 @@
         /// </summary>
         private sealed class RenderVisitor: ElementVisitor {
 
-            private readonly IList<Visual> visuals;
+            private readonly DrawingVisual visual;
 
             /// <summary>
             /// Constructor del objecte.
@@ -29,10 +29,10 @@
             /// <param name="layer">La capa on aplicar el proces.</param>
             /// <param name="visuals">Llista de visuals.</param>
             /// 
-            public RenderVisitor(Board board, Layer layer, IList<Visual> visuals):
+            public RenderVisitor(Board board, Layer layer, DrawingVisual visual):
                 base(board, layer) {
 
-                this.visuals = visuals;
+                this.visual = visual;
             }
 
             /// <summary>
@@ -57,8 +57,7 @@
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(Layer);
-                visuals.Add(visual);
+                this.visual.Children.Add(visual);
             }
 
             /// <summary>
@@ -83,8 +82,7 @@
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(Layer);
-                visuals.Add(visual);
+                this.visual.Children.Add(visual);
             }
 
             /// <summary>
@@ -110,8 +108,7 @@
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(Layer);
-                visuals.Add(visual);
+                this.visual.Children.Add(visual);
             }
 
             /// <summary>
@@ -137,8 +134,7 @@
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(Layer);
-                visuals.Add(visual);
+                this.visual.Children.Add(visual);
             }
 
             /// <summary>
@@ -165,8 +161,7 @@
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(Layer);
-                visuals.Add(visual);
+                this.visual.Children.Add(visual);
             }
 
             /// <summary>
@@ -197,8 +192,7 @@
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(Layer);
-                visuals.Add(visual);
+                this.visual.Children.Add(visual);
             }
 
             /// <summary>
@@ -223,8 +217,7 @@
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(Layer);
-                visuals.Add(visual);
+                this.visual.Children.Add(visual);
             }
 
             /// <summary>
@@ -264,8 +257,7 @@
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(Layer);
-                visuals.Add(visual);
+                this.visual.Children.Add(visual);
             }
 
             /// <summary>
@@ -290,19 +282,7 @@
                         dc.Pop();
                 }
 
-                visual.Opacity = GetOpacity(Layer);
-                visuals.Add(visual);
-            }
-
-            /// <summary>
-            /// Obte la opacitat de la capa.
-            /// </summary>
-            /// <param name="layer">La capa.</param>
-            /// <returns>La opacitat.</returns>
-            /// 
-            private static double GetOpacity(Layer layer) {
-
-                return layer.Color.ScA;
+                this.visual.Children.Add(visual);
             }
 
             /// <summary>
@@ -470,8 +450,13 @@
                 // Nomes la procesa si es visible
                 //
                 if (layer.IsVisible) {
-                    RenderVisitor visitor = new RenderVisitor(board, layer, visuals);
-                    visitor.Visit(board);
+
+                    DrawingVisual visual = new DrawingVisual();
+                    visual.Opacity = layer.Color.ScA;
+                    visuals.Add(visual);
+
+                    RenderVisitor visitor = new RenderVisitor(board, layer, visual);
+                    visitor.Run();
                 }
             }
 

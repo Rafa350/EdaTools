@@ -425,12 +425,14 @@
             public override void Visit(SmdPadElement pad) {
 
                 double rotation = pad.Rotation + (Part == null ? 0 : Part.Rotation);
-                double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
-                if (radius == 0)
+                if (pad.Roundnes == 0)
                     apertures.DefineRectangleAperture(pad.Size.Width, pad.Size.Height, rotation);
-                // ******************** Detectar oval *********************
-                else
+                else if (pad.Roundnes == 1)
+                    apertures.DefineOvalAperture(pad.Size.Width, pad.Size.Height, rotation);
+                else {
+                    double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
                     apertures.DefineRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
+                }
             }
 
             /// <summary>
@@ -695,10 +697,13 @@
 
                 // Selecciona l'apertura
                 //
-                /// ************** Detectar OVAL ********************
-                Aperture ap = radius == 0 ?
-                    apertures.GetRectangleAperture(pad.Size.Width, pad.Size.Height, rotation) :
-                    apertures.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
+                Aperture ap;
+                if (pad.Roundnes == 0)
+                    ap = apertures.GetRectangleAperture(pad.Size.Width, pad.Size.Height, rotation);
+                else if (pad.Roundnes == 1)
+                    ap = apertures.GetOvalAperture(pad.Size.Width, pad.Size.Height, rotation);
+                else
+                    ap = apertures.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
 
                 // Escriu el gerber
                 //
