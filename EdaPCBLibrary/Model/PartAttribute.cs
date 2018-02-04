@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using System;
     using System.Windows;
 
@@ -8,7 +9,7 @@
         private readonly string name;
         private string value;
         private Point position;
-        private double rotation;
+        private Angle rotation;
         private bool isVisible;
 
         public PartAttribute(string name, string value) {
@@ -20,7 +21,7 @@
             this.value = value;
         }
 
-        public PartAttribute(string name, Point position, double rotation, bool isVisible, string value) {
+        public PartAttribute(string name, Point position, Angle rotation, bool isVisible, string value) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -52,7 +53,7 @@
             }
         }
 
-        public double Rotation {
+        public Angle Rotation {
             get {
                 return rotation;
             }

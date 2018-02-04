@@ -22,11 +22,11 @@
 
             double dx = end.X - start.X;
             double dy = end.Y - start.Y;
-            double angle = Math.Atan2(dy, dx) * 180.0 / Math.PI;
+            Angle angle = Angle.FromRadiants(Math.Atan2(dy, dx));
 
             Polygon polygon = new Polygon();
-            polygon.AddPoints(ArcPoints(end, thickness / 2, 270 + angle, 180));
-            polygon.AddPoints(ArcPoints(start, thickness / 2, 90 + angle, 180));
+            polygon.AddPoints(ArcPoints(end, thickness / 2, angle + Angle.Deg270, Angle.FromDegrees(180)));
+            polygon.AddPoints(ArcPoints(start, thickness / 2, angle + Angle.Deg90, Angle.FromDegrees(180)));
 
             return polygon;
         }
@@ -42,7 +42,7 @@
         /// <param name="capRounded">True si els extrems son arrodonits.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public static Polygon BuildArcSegment(Point center, double radius, double startAngle, double angle, double thickness, bool capRounded = true) {
+        public static Polygon BuildArcSegment(Point center, double radius, Angle startAngle, Angle angle, double thickness, bool capRounded = true) {
 
             double innerRadius = radius - (thickness / 2.0);
             double outerRadius = radius + (thickness / 2.0);
@@ -63,7 +63,7 @@
         /// 
         public static Polygon BuildCircle(Point center, double radius) {
 
-            return new Polygon(PolygonPoints(32, center, radius, 0));
+            return new Polygon(PolygonPoints(32, center, radius, Angle.Zero));
         }
 
         /// <summary>
@@ -75,7 +75,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public static Polygon BuildRectangle(Point position, Size size, double radius, double rotation) {
+        public static Polygon BuildRectangle(Point position, Size size, double radius, Angle rotation) {
 
             Polygon polygon = new Polygon();
 
@@ -86,7 +86,7 @@
 
             // En aquestes rotacions, nomes cal intercanviar amplada per alçada
             //
-            if ((rotation == 90) || (rotation == 270)) {
+            if (rotation.IsVertical) {
                 double temp = dx;
                 dx = dy;
                 dy = temp;
@@ -104,17 +104,17 @@
             // Rectangle amb cantonades arrodonides
             //
             else {
-                polygon.AddPoints(ArcPoints(new Point(x + dx, y + dy), radius, 0, 90));
-                polygon.AddPoints(ArcPoints(new Point(x - dx, y + dy), radius, 90, 90));
-                polygon.AddPoints(ArcPoints(new Point(x - dx, y - dy), radius, 180, 90));
-                polygon.AddPoints(ArcPoints(new Point(x + dx, y - dy), radius, 270, 90));
+                polygon.AddPoints(ArcPoints(new Point(x + dx, y + dy), radius, Angle.Zero, Angle.Deg90));
+                polygon.AddPoints(ArcPoints(new Point(x - dx, y + dy), radius, Angle.Deg90, Angle.Deg90));
+                polygon.AddPoints(ArcPoints(new Point(x - dx, y - dy), radius, Angle.Deg180, Angle.Deg90));
+                polygon.AddPoints(ArcPoints(new Point(x + dx, y - dy), radius, Angle.Deg270, Angle.Deg90));
             }
 
             // Si es una rotacio arbitraria, fa servir calcul amb matrius
             //
-            if ((rotation % 90) != 0) {
+            if (!rotation.IsOrthogonal) {
                 Matrix m = new Matrix();
-                m.RotateAt(rotation, x, y);
+                m.RotateAt(rotation.Degrees, x, y);
                 polygon.Transform(m);
             }
 
@@ -130,14 +130,14 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public static Polygon BuildCross(Point position, Size size, double thickness, double rotation) {
+        public static Polygon BuildCross(Point position, Size size, double thickness, Angle rotation) {
 
             double dx = size.Width / 2;
             double dy = size.Height / 2;
 
             // En aquestes rotacions, nomes cal intercanviar amplada per alçada
             //
-            if ((rotation == 90) || (rotation == 270)) {
+            if (rotation.IsVertical) {
                 double temp = dx;
                 dx = dy;
                 dy = temp;
@@ -188,9 +188,9 @@
 
             // Si es una rotacio arbitraria, fa servir calcul amb matrius
             //
-            if ((rotation % 90) != 0) {
+            if (!rotation.IsOrthogonal) {
                 Matrix m = new Matrix();
-                m.RotateAt(rotation, x, y);
+                m.RotateAt(rotation.Degrees, x, y);
                 polygon.Transform(m);
             }
 
@@ -206,7 +206,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public static Polygon BuildRegularPolygon(int sides, Point position, double radius, double rotation) {
+        public static Polygon BuildRegularPolygon(int sides, Point position, double radius, Angle rotation) {
 
             return new Polygon(PolygonPoints(sides, position, radius, rotation));
         }
@@ -223,13 +223,12 @@
         /// coincideix amb en numero de segments.
         /// </returns>
         /// 
-        public static Point[] PolygonPoints(int sides, Point position, double radius, double rotation) {
+        public static Point[] PolygonPoints(int sides, Point position, double radius, Angle rotation) {
 
             // Calcula el punt inicial
             //
-            double startAngle = rotation * Math.PI / 180.0;
-            double x = radius * Math.Cos(startAngle);
-            double y = radius * Math.Sin(startAngle);
+            double x = radius * Math.Cos(rotation.Radiants);
+            double y = radius * Math.Sin(rotation.Radiants);
 
             // Crea l'array de punts
             //
@@ -265,15 +264,15 @@
         /// el numero de segments mes u.
         /// </returns>
         /// 
-        public static Point[] ArcPoints(Point center, double radius, double startAngle, double angle, bool discardLast = false) {
+        public static Point[] ArcPoints(Point center, double radius, Angle startAngle, Angle angle, bool discardLast = false) {
 
-            int numSegments = (int) Math.Floor((Math.Abs(angle)) * 32.0 / 360.0);
+            int numSegments = (int) Math.Floor((Math.Abs(angle.Degrees)) * 32.0 / 360.0);
             int numPoints = numSegments + (discardLast ? 0 : 1);
 
             // Calcula el punt inicial
             //
-            double x = radius * Math.Cos(startAngle * Math.PI / 180.0);
-            double y = radius * Math.Sin(startAngle * Math.PI / 180.0);
+            double x = radius * Math.Cos(startAngle.Radiants);
+            double y = radius * Math.Sin(startAngle.Radiants);
 
             // Crea l'array de punts
             //
@@ -281,8 +280,8 @@
 
             // Genera els punts, aplicant un gir a l'anterior
             //
-            double cos = Math.Cos((angle * Math.PI / 180.0) / (double) numSegments);
-            double sin = Math.Sin((angle * Math.PI / 180.0) / (double) numSegments);
+            double cos = Math.Cos(angle.Radiants / (double) numSegments);
+            double sin = Math.Sin(angle.Radiants / (double) numSegments);
 
             for (int i = 0; i < numPoints; i++) {
                 points[i].X = x + center.X;

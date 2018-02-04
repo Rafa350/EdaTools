@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
     using System.Windows;
@@ -10,7 +11,7 @@
     public sealed class SmdPadElement: PadElement, IRotation {
 
         private Size size;
-        private double rotation;
+        private Angle rotation;
         private double roundnes;
 
         /// <summary>
@@ -30,7 +31,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="roundnes">Percentatge d'arrodoniment de les cantonades.</param>
         /// 
-        public SmdPadElement(string name, Point position, Size size, double rotation, double roundnes) :
+        public SmdPadElement(string name, Point position, Size size, Angle rotation, double roundnes) :
             base(name, position) {
 
             this.size = size;
@@ -101,7 +102,7 @@
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
-            double a = rotation * Math.PI / 180.0;
+            double a = rotation.Radiants;
             double w = size.Width * Math.Cos(a) + size.Height * Math.Sin(a);
             double h = size.Width * Math.Sin(a) + size.Height * Math.Cos(a);
 
@@ -113,7 +114,7 @@
         /// Obte o asigna l'orientacio del pad.
         /// </summary>
         /// 
-        public double Rotation {
+        public Angle Rotation {
             get {
                 return rotation;
             }

@@ -16,9 +16,8 @@
         /// <param name="angle">Angle d'apertura.</param>
         /// <returns>El centre.</returns>
         /// 
-        public static Point Center(Point startPosition, Point endPosition, double angle) {
+        public static Point Center(Point startPosition, Point endPosition, Angle angle) {
 
-            double rAngle = angle * Math.PI / 180.0;
             double x1 = startPosition.X;
             double y1 = startPosition.Y;
             double x2 = endPosition.X;
@@ -35,11 +34,11 @@
 
             // Calcula el radi
             //
-            double r = Math.Abs((d / 2.0) / Math.Sin(rAngle / 2.0));
+            double r = Math.Abs((d / 2.0) / Math.Sin(angle.Radiants / 2.0));
 
             // Calcula el centre
             //
-            if (angle > 0)
+            if (angle.Degrees > 0)
                 return new Point(
                     mx + Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (y1 - y2) / d,
                     my + Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (x2 - x1) / d);
@@ -50,25 +49,22 @@
                     my - Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (x2 - x1) / d);
         }
 
-        public static double StartAngle(Point startPosition, Point center) {
+        public static Angle StartAngle(Point startPosition, Point center) {
 
-            double a = Math.Atan2(startPosition.Y - center.Y, startPosition.X - center.X);
-            return a * 180.0 / Math.PI;
+            return Angle.FromRadiants(Math.Atan2(startPosition.Y - center.Y, startPosition.X - center.X));
         }
 
-        public static double EndAngle(Point endPosition, Point center) {
+        public static Angle EndAngle(Point endPosition, Point center) {
 
-            double a = Math.Atan2(endPosition.Y - center.Y, endPosition.X - center.X);
-            return a * 180.0 / Math.PI;
+            return Angle.FromRadiants(Math.Atan2(endPosition.Y - center.Y, endPosition.X - center.X));
         }
 
-        public static double Radius(Point startPosition, Point endPosition, double angle) {
+        public static double Radius(Point startPosition, Point endPosition, Angle angle) {
 
             double dx = endPosition.X - startPosition.X;
             double dy = endPosition.Y - startPosition.Y;
             double length = Math.Sqrt((dx * dx) + (dy * dy));
-            double a = angle * Math.PI / 180.0;
-            return Math.Abs(length / 2.0 / Math.Sin(a / 2.0));
+            return Math.Abs(length / 2.0 / Math.Sin(angle.Radiants / 2.0));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
     using System.Windows;
@@ -11,7 +12,7 @@
 
         private Point position;
         private Size size;
-        private double rotation;
+        private Angle rotation;
         private double thickness;
 
         /// <summary>
@@ -30,7 +31,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="thickness">Amplada de linia. Si es zero, es un rectangle ple.</param>
         /// 
-        public RectangleElement(Point position, Size size, double rotation, double thickness = 0) :
+        public RectangleElement(Point position, Size size, Angle rotation, double thickness = 0) :
             base() {
 
             this.position = position;
@@ -82,7 +83,7 @@
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
-            double a = rotation * Math.PI / 180.0;
+            double a = rotation.Radiants;
             double w = size.Width * Math.Cos(a) + size.Height * Math.Sin(a);
             double h = size.Width * Math.Sin(a) + size.Height * Math.Cos(a);
 
@@ -119,7 +120,7 @@
         /// Obte o asigna l'angle de rotacio.
         /// </summary>
         /// 
-        public double Rotation {
+        public Angle Rotation {
             get {
                 return rotation;
             }

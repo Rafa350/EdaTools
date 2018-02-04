@@ -8,6 +8,7 @@
     using System.Xml;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
 
     /// <summary>
     /// Clase per la lectura de plaques des d'un stream
@@ -167,7 +168,7 @@
 
                 string name = partNode.AttributeAsString("name");
                 Point position = partNode.AttributeAsPoint("position");
-                double rotation = partNode.AttributeAsDouble("rotation");
+                Angle rotation = partNode.AttributeAsAngle("rotation");
                 string blockName = partNode.AttributeAsString("block");
 
                 Block block = board.GetBlock(blockName);
@@ -307,7 +308,7 @@
             Point startPosition = node.AttributeAsPoint("startPosition");
             Point endPosition = node.AttributeAsPoint("endPosition");
             double thickness = node.AttributeAsDouble("thickness");
-            double angle = node.AttributeAsDouble("angle");
+            Angle angle = node.AttributeAsAngle("angle");
             LineElement.LineCapStyle lineCap = node.AttributeAsEnum<LineElement.LineCapStyle>("lineCap");
 
             return new ArcElement(startPosition, endPosition, thickness, angle, lineCap);
@@ -323,7 +324,7 @@
 
             Point position = node.AttributeAsPoint("position");
             Size size = node.AttributeAsSize("size");
-            double rotation = node.AttributeAsDouble("rotation");
+            Angle rotation = node.AttributeAsAngle("rotation");
             double roundness = node.AttributeAsDouble("roundness");
             double thickness = node.AttributeAsDouble("thickness");
 
@@ -360,7 +361,7 @@
             foreach (XmlNode segmentNode in node.SelectNodes("segment")) {
 
                 Point position = segmentNode.AttributeAsPoint("position");
-                double angle = segmentNode.AttributeAsDouble("angle");
+                Angle angle = segmentNode.AttributeAsAngle("angle");
 
                 region.Add(new RegionElement.Segment(position, angle));
             }
@@ -377,7 +378,7 @@
         private Element ParseTextElement(XmlNode node) {
 
             Point position = node.AttributeAsPoint("position");
-            double rotation = node.AttributeAsDouble("rotation");
+            Angle rotation = node.AttributeAsAngle("rotation");
             double height = node.AttributeAsDouble("height");
             string value = node.AttributeAsString("value");
 
@@ -397,7 +398,7 @@
             string name = node.AttributeAsString("name");
             Point position = node.AttributeAsPoint("position");
             double size = node.AttributeAsDouble("size");
-            double rotation = node.AttributeAsDouble("rotation");
+            Angle rotation = node.AttributeAsAngle("rotation");
             double drill = node.AttributeAsDouble("drill");
             ThPadElement.ThPadShape shape = node.AttributeAsEnum<ThPadElement.ThPadShape>("shape", ThPadElement.ThPadShape.Circular);
 
@@ -415,7 +416,7 @@
             string name = node.AttributeAsString("name");
             Point position = node.AttributeAsPoint("position");
             Size size = node.AttributeAsSize("size");
-            double rotation = node.AttributeAsDouble("rotation");
+            Angle rotation = node.AttributeAsAngle("rotation");
             double roundness = node.AttributeAsDouble("roundness");
 
             return new SmdPadElement(name, position, size, rotation, roundness);
@@ -456,7 +457,7 @@
             string attrName = node.AttributeAsString("name");
             string attrValue = node.AttributeAsString("value");
             Point attrPosition = node.AttributeAsPoint("position");
-            double attrRotation = node.AttributeAsDouble("rotation");
+            Angle attrRotation = node.AttributeAsAngle("rotation");
             bool visible = node.AttributeAsBoolean("visible", false);
 
             return new PartAttribute(attrName, attrPosition, attrRotation, visible, attrValue);

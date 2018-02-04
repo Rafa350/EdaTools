@@ -9,7 +9,7 @@
     /// </summary>
     public sealed class MacroAperture : Aperture {
 
-        private readonly object[] args;
+        private readonly double[] args;
         private readonly Macro macro;
 
         /// <summary>
@@ -20,7 +20,7 @@
         /// <param name="macro">Macro asignat a l'aperture.</param>
         /// <param name="args">Erguments del macro.</param>
         /// 
-        public MacroAperture(int id, object tag, Macro macro, params object[] args) :
+        public MacroAperture(int id, object tag, Macro macro, params double[] args) :
             base(id, tag) {
 
             if (macro == null)
@@ -30,6 +30,11 @@
             this.args = args;
         }
 
+        /// <summary>
+        /// Obte la comanda per definit l'apertura.
+        /// </summary>
+        /// <returns>La comanda.</returns>
+        /// 
         protected override string GetCommand() {
 
             StringBuilder sb = new StringBuilder();
@@ -39,7 +44,7 @@
 
             if (args.Length > 0) {
                 bool first = true;
-                foreach (object arg in args) {
+                foreach (double arg in args) {
                     if (first)
                         first = false;
                     else
@@ -52,13 +57,21 @@
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Obte el macro associat a l'apertura.
+        /// </summary>
+        /// 
         public Macro Macro {
             get {
                 return macro;
             }
         }
 
-        public object[] Args {
+        /// <summary>
+        /// Obte els arguments del macro.
+        /// </summary>
+        /// 
+        public double[] Args {
             get {
                 return args;
             }

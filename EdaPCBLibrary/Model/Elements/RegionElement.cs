@@ -14,9 +14,9 @@
         public struct Segment {
 
             private Point position;
-            private double angle;
+            private Angle angle;
 
-            public Segment(Point position, double angle) {
+            public Segment(Point position, Angle angle) {
 
                 this.position = position;
                 this.angle = angle;
@@ -28,7 +28,7 @@
                 }
             }
 
-            public double Angle {
+            public Angle Angle {
                 get {
                     return angle;
                 }
@@ -96,7 +96,7 @@
             Point currentPoint = new Point();
 
             Point firstPoint = new Point();
-            double angle = 0;
+            Angle angle = Angle.Zero;
 
             Polygon polygon = new Polygon();
             bool first = true;
@@ -112,7 +112,7 @@
                  
                     // Tram recte
                     //
-                    if (angle == 0)
+                    if (angle.IsZero)
                         polygon.AddPoint(segment.Position);
 
                     // Tram circular
@@ -120,7 +120,7 @@
                     else {
                         Point center = ArcUtils.Center(currentPoint, segment.Position, angle);
                         double radius = ArcUtils.Radius(currentPoint, segment.Position, angle);
-                        double startAngle = ArcUtils.StartAngle(currentPoint, center);
+                        Angle startAngle = ArcUtils.StartAngle(currentPoint, center);
                         polygon.AddPoints(PolygonBuilder.ArcPoints(center, radius, startAngle, angle, false));
                     }
                 }
@@ -129,13 +129,13 @@
                 angle = segment.Angle;
             }
 
-            if (angle == 0)
+            if (angle.IsZero)
                 polygon.AddPoint(firstPoint);
 
             else {
                 Point center = ArcUtils.Center(currentPoint, firstPoint, angle);
                 double radius = ArcUtils.Radius(currentPoint, firstPoint, angle);
-                double startAngle = ArcUtils.StartAngle(currentPoint, center);
+                Angle startAngle = ArcUtils.StartAngle(currentPoint, center);
                 polygon.AddPoints(PolygonBuilder.ArcPoints(center, radius, startAngle, angle, false));
             }
 
@@ -182,7 +182,7 @@
         /// 
         public void AddLine(Point position) {
 
-            Add(new Segment(position, 0));
+            Add(new Segment(position, Angle.Zero));
         }
 
         /// <summary>
@@ -191,7 +191,7 @@
         /// <param name="position">Vertec final del arc.</param>
         /// <param name="angle">Angle del arc.</param>
         /// 
-        public void AddArc(Point position, double angle) {
+        public void AddArc(Point position, Angle angle) {
 
             Add(new Segment(position, angle));
         }

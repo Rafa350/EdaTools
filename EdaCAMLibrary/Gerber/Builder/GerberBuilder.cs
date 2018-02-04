@@ -218,8 +218,8 @@
         /// <summary>
         /// Interpola una linia desde la posicio actual fins la especificada.
         /// </summary>
-        /// <param name="x">Coordinada X.</param>
-        /// <param name="y">Coordinada Y.</param>
+        /// <param name="x">Coordinada X de la posicio.</param>
+        /// <param name="y">Coordinada Y de la posicio.</param>
         /// 
         public void LineTo(double x, double y) {
 
@@ -283,14 +283,14 @@
                     sb.Append('Y');
                     sb.Append(FormatNumber(y));
                 }
-                if (state.SetCX(cx)) {
+                //if (state.SetCX(cx)) {
                     sb.Append('I');
                     sb.Append(FormatNumber(cx));
-                }
-                if (state.SetCY(cy)) {
+                //}
+                //if (state.SetCY(cy)) {
                     sb.Append('J');
                     sb.Append(FormatNumber(cy));
-                }
+                //}
 
                 sb.AppendFormat("D01*");
                 writer.WriteLine(sb.ToString());

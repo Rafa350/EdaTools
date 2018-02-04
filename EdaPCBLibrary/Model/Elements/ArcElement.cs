@@ -1,8 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Geometry;
-    using System;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System.Windows;
 
     /// <summary>
@@ -10,7 +9,7 @@
     /// </summary>
     public sealed class ArcElement: LineElement, IConectable {
 
-        private double angle;
+        private Angle angle;
 
         /// <summary>
         /// Constructor de l'objecte, amb els parametres per defecte.
@@ -29,7 +28,7 @@
         /// <param name="angle">Angle del arc.</param>
         /// <param name="lineCap">Extrems de linia.</param>
         /// 
-        public ArcElement(Point startPosition, Point endPosition, double thickness, double angle, LineCapStyle lineCap) :
+        public ArcElement(Point startPosition, Point endPosition, double thickness, Angle angle, LineCapStyle lineCap) :
             base(startPosition, endPosition, thickness, lineCap) {
 
             this.angle = angle;
@@ -72,7 +71,7 @@
         /// Obte o asigna l'angle del arc.
         /// </summary>
         /// 
-        public double Angle {
+        public Angle Angle {
             get {
                 return angle;
             }
@@ -95,7 +94,7 @@
         /// Obte l'angle inicial del arc.
         /// </summary>
         /// 
-        public double StartAngle {
+        public Angle StartAngle {
             get {
                 return ArcUtils.StartAngle(StartPosition, Center);
             }

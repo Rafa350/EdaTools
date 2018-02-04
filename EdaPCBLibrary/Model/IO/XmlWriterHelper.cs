@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using System;
     using System.Collections.Generic;
@@ -15,7 +16,7 @@
     public static class XmlWriterHelper {
 
         /// <summary>
-        /// Escriu un atribut de tipus Point
+        /// Escriu un atribut de tipus 'Point'
         /// </summary>
         /// <param name="writer">El objecte escriptor xml.</param>
         /// <param name="name">Nom del atribut.</param>
@@ -32,7 +33,7 @@
         }
 
         /// <summary>
-        /// Escriu un atribut de tipus Size.
+        /// Escriu un atribut de tipus 'Size'.
         /// </summary>
         /// <param name="writer">El objecte escriptor xml.</param>
         /// <param name="name">El nom del atribut.</param>
@@ -48,6 +49,12 @@
                     XmlConvert.ToString(size.Height)));
         }
 
+        /// <summary>
+        /// Escriu un atribut de tipus 'Color'
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="name"></param>
+        /// <param name="color"></param>
         public static void WriteAttribute(this XmlWriter writer, string name, Color color) {
 
             writer.WriteAttributeString(
@@ -58,6 +65,19 @@
                     XmlConvert.ToString(color.R),
                     XmlConvert.ToString(color.G),
                     XmlConvert.ToString(color.B)));
+        }
+
+        /// <summary>
+        /// Escriu un atribut de tipus 'Angle'.
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="name"></param>
+        /// <param name="angle"></param>
+        public static void WriteAttribute(this XmlWriter writer, string name, Angle angle) {
+
+            writer.WriteAttributeString(
+                name,
+                XmlConvert.ToString(angle.Degrees));
         }
 
         public static void WriteAttribute(this XmlWriter writer, string name, double value) {

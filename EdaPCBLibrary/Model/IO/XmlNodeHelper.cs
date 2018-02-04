@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using System;
     using System.Xml;
     using System.Windows;
@@ -68,6 +69,18 @@
                 byte b = XmlConvert.ToByte(s[3]);
 
                 return Color.FromArgb(a, r, g, b);
+            }
+        }
+
+        public static Angle AttributeAsAngle(this XmlNode node, string name, Angle defAngle = default(Angle)) {
+
+            XmlAttribute attribute = node.Attributes[name];
+            if (attribute == null)
+                return defAngle;
+
+            else {
+                double value = XmlConvert.ToDouble(node.Attributes[name].Value);
+                return Angle.FromDegrees(value);
             }
         }
 

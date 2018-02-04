@@ -5,6 +5,7 @@
     using System.Windows.Media;
     using System.Windows;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
     public enum BoardSide {
@@ -40,7 +41,7 @@
         readonly private HashSet<Part> parts = new HashSet<Part>();
 
         private Point position;
-        private double rotation;
+        private Angle rotation;
 
         /// <summary>
         /// Constructor del objecte amb els parametres per defecte.
@@ -528,6 +529,7 @@
                     List<Polygon> holePolygons = new List<Polygon>();
 
                     Layer restrictLayer = GetLayer(layer.Side == BoardSide.Top ? Layer.TopRestrictName : Layer.BottomRestrictName);
+                    Layer profileLayer = GetLayer(Layer.ProfileName);
 
                     // Procesa els elements de la placa que es troben en la mateixa capa que 
                     // la regio, o en la capa restrict.
@@ -552,6 +554,13 @@
                             //
                             else if (IsOnLayer(element, restrictLayer)) {
                                 Polygon elementPolygon = element.GetPolygon(restrictLayer.Side);
+                                holePolygons.Add(elementPolygon);
+                            }
+
+                            // El element esta el la capa profile
+                            //
+                            else if (IsOnLayer(element, profileLayer)) {
+                                Polygon elementPolygon = element.GetPourPolygon(profileLayer.Side, 0.25);
                                 holePolygons.Add(elementPolygon);
                             }
                         }
@@ -618,7 +627,7 @@
         /// Obte o asigna l'angle de rotacio de la placa.
         /// </summary>
         /// 
-        public double Rotation {
+        public Angle Rotation {
             get {
                 return rotation;
             }

@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
     using System.Windows;
@@ -22,7 +23,7 @@
         }
 
         private Point position;
-        private double rotation;
+        private Angle rotation;
         private double height;
         private TextAlign align = TextAlign.MiddleCenter;
         private string value;
@@ -43,7 +44,7 @@
         /// <param name="height">Alçada de lletra.</param>
         /// <param name="align">Alineacio respecte la posicio.</param>
         /// 
-        public TextElement(Point position, double rotation, double height, TextAlign align = TextAlign.MiddleCenter):
+        public TextElement(Point position, Angle rotation, double height, TextAlign align = TextAlign.MiddleCenter):
             base() {
 
             this.position = position;
@@ -113,7 +114,7 @@
         /// Obte o asigna l'angle de rotacio.
         /// </summary>
         /// 
-        public double Rotation {
+        public Angle Rotation {
             get {
                 return rotation;
             }

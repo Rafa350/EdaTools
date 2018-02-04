@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Import.Eagle {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
@@ -366,7 +367,7 @@
                     break;
             }
 
-            Element element = new ThPadElement(name, position, rotate, size, shape, drill);
+            Element element = new ThPadElement(name, position, Angle.FromDegrees(rotate), size, shape, drill);
 
             board.Place(board.GetLayer(Layer.PadsName), element);
             board.Place(board.GetLayer(Layer.DrillsName), element);
@@ -404,7 +405,7 @@
             int layerNum = GetAttributeInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
 
-            Element element = new SmdPadElement(name, position, size, rotate, roundnes);
+            Element element = new SmdPadElement(name, position, size, Angle.FromDegrees(rotate), roundnes);
             board.Place(board.GetLayer(layerName), element);
             board.Place(board.GetLayer(Layer.PadsName), element);
             if (cream)
@@ -483,7 +484,7 @@
             int layerNum = GetAttributeInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
 
-            TextElement element = new TextElement(position, rotate, height, TextElement.TextAlign.TopLeft);
+            TextElement element = new TextElement(position, Angle.FromDegrees(rotate), height, TextElement.TextAlign.TopLeft);
             element.Value = value;
 
             board.Place(board.GetLayer(layerName), element);
@@ -518,7 +519,7 @@
             if (angle == 0)
                 element = new LineElement(p1, p2, thickness, lineCap);
             else
-                element = new ArcElement(p1, p2, thickness, angle, lineCap);
+                element = new ArcElement(p1, p2, thickness, Angle.FromDegrees(angle), lineCap);
 
             board.Place(board.GetLayer(layerName), element);
 
@@ -546,7 +547,7 @@
             int layerNum = GetAttributeInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
 
-            Element element = new RectangleElement(position, size, rotation, thickness);
+            Element element = new RectangleElement(position, size, Angle.FromDegrees(rotation), thickness);
 
             board.Place(board.GetLayer(layerName), element);
 
@@ -600,7 +601,7 @@
 
                 double angle = GetAttributeDouble(vertexNode, "curve");
 
-                segments.Add(new RegionElement.Segment(vertex, angle));
+                segments.Add(new RegionElement.Segment(vertex, Angle.FromDegrees(angle)));
             }
 
             Element element = new RegionElement(thickness, segments);
@@ -663,7 +664,7 @@
                 rotation = Double.Parse(rot);
             }
 
-            Part part = new Part(GetComponent(componentKey), name, position, rotation, isFlipped);
+            Part part = new Part(GetComponent(componentKey), name, position, Angle.FromDegrees(rotation), isFlipped);
 
             foreach (XmlNode attrNode in node.SelectNodes("attribute")) {
 
@@ -695,7 +696,7 @@
             double rotate = GetAttributeDouble(node, "rotate");
             bool isVisible = GetAttributeString(node, "display") != "off";
 
-            return new PartAttribute(name, new System.Windows.Point(x, y), rotate, isVisible, value);
+            return new PartAttribute(name, new Point(x, y), Angle.FromDegrees(rotate), isVisible, value);
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
     using System.Windows;
@@ -105,10 +106,10 @@
 
             switch (shape) {
                 case ViaShape.Square:
-                    return PolygonBuilder.BuildRectangle(position, new Size(size + spacing * 2, size + spacing * 2), 0, 0);
+                    return PolygonBuilder.BuildRectangle(position, new Size(size + spacing * 2, size + spacing * 2), 0, Angle.FromDegrees(0));
 
                 case ViaShape.Octogonal:
-                    return PolygonBuilder.BuildRegularPolygon(8, position, (size / 2) + spacing, 22.5);
+                    return PolygonBuilder.BuildRegularPolygon(8, position, (size / 2) + spacing, Angle.FromDegrees(22.5));
 
                 default:
                     return PolygonBuilder.BuildCircle(position, (size / 2) + spacing);

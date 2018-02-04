@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -11,7 +12,7 @@
 
         private string name;
         private Point position;
-        private double rotation;
+        private Angle rotation;
         private bool isFlipped;
         private readonly Block block;
         private Dictionary<string, PartAttribute> attributes = new Dictionary<string, PartAttribute>();
@@ -38,7 +39,7 @@
         /// <param name="rotation">Angle de rotacio</param>
         /// <param name="isFlipped">Indica si va girat.</param>
         /// 
-        public Part(Block block, string name, Point position, double rotation = 0, bool isFlipped = false) {
+        public Part(Block block, string name, Point position, Angle rotation, bool isFlipped = false) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -131,7 +132,7 @@
         /// Obte o asigna l'angle de rotacio.
         /// </summary>
         /// 
-        public double Rotation {
+        public Angle Rotation {
             get {
                 return rotation;
             }
@@ -157,7 +158,7 @@
             get {
                 Matrix m = new Matrix();
                 m.Translate(position.X, position.Y);
-                m.RotateAt(rotation, position.X, position.Y);
+                m.RotateAt(rotation.Degrees, position.X, position.Y);
                 return m;
             }
         }

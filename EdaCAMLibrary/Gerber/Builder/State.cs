@@ -15,8 +15,8 @@
         private InterpolationMode interpolationMode = InterpolationMode.Unknown;
         private double x = 0;
         private double y = 0;
-        private double cx = 0;
-        private double cy = 0;
+        //private double cx = 0;
+        //private double cy = 0;
 
         public State() {
 
@@ -79,7 +79,7 @@
         /// <param name="cx">El valor de la coordinada.</param>
         /// <returns>True si ha canviat l'estat.</returns>
         /// 
-        public bool SetCX(double cx) {
+        /*public bool SetCX(double cx) {
 
             if (this.cx != cx) {
                 this.cx = cx;
@@ -87,7 +87,7 @@
             }
             else
                 return false;
-        }
+        }*/
 
         /// <summary>
         /// Asigna el valor de la coordinada Y del centre actual.
@@ -95,7 +95,7 @@
         /// <param name="cy">El valor de la coordinada.</param>
         /// <returns>True si ha canviat l'estat.</returns>
         /// 
-        public bool SetCY(double cy) {
+        /*public bool SetCY(double cy) {
 
             if (this.cy != cy) {
                 this.cy = cy;
@@ -103,7 +103,7 @@
             }
             else
                 return false;
-        }
+        }*/
 
         /// <summary>
         /// Selecciona l'apertura.
@@ -210,21 +210,21 @@
         /// Obte la coordinada X del centre actual.
         /// </summary>
         /// 
-        public double CX {
+        /*public double CX {
             get {
                 return cx;
             }
-        }
+        }*/
 
         /// <summary>
         /// Obte la coordinada Y del centre actual.
         /// </summary>
         /// 
-        public double CY {
+        /*public double CY {
             get {
                 return cy;
             }
-        }
+        }*/
 
         /// <summary>
         /// Obte l'apertura seleccionada.

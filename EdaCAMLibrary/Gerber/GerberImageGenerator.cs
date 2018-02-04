@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
 
     using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
@@ -340,7 +341,7 @@
                 // Si es ple, es 'flashea'
                 //
                 if (rectangle.Filled) {
-                    double rotation = rectangle.Rotation + (Part == null ? 0 : Part.Rotation);
+                    Angle rotation = rectangle.Rotation + (Part == null ? Angle.Zero : Part.Rotation);
                     apertures.DefineRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotation);
                 }
 
@@ -381,11 +382,11 @@
                         break;
 
                     case ViaElement.ViaShape.Square:
-                        apertures.DefineRectangleAperture(via.OuterSize, via.OuterSize, 0);
+                        apertures.DefineRectangleAperture(via.OuterSize, via.OuterSize, Angle.Zero);
                         break;
 
                     case ViaElement.ViaShape.Octogonal:
-                        apertures.DefineOctagonAperture(via.OuterSize, 0);
+                        apertures.DefineOctagonAperture(via.OuterSize, Angle.Zero);
                         break;
                 }
             }
@@ -397,7 +398,9 @@
             /// 
             public override void Visit(ThPadElement pad) {
 
-                double rotation = pad.Rotation + (Part == null ? 0 : Part.Rotation);
+                Angle rotation = pad.Rotation;
+                if (Part != null)
+                    rotation += Part.Rotation;
                 switch (pad.Shape) {
                     case ThPadElement.ThPadShape.Circular:
                         apertures.DefineCircleAperture(pad.Size);
@@ -424,7 +427,9 @@
             /// 
             public override void Visit(SmdPadElement pad) {
 
-                double rotation = pad.Rotation + (Part == null ? 0 : Part.Rotation);
+                Angle rotation = pad.Rotation;
+                if (Part != null)
+                    rotation += Part.Rotation;
                 if (pad.Roundnes == 0)
                     apertures.DefineRectangleAperture(pad.Size.Width, pad.Size.Height, rotation);
                 else if (pad.Roundnes == 1)
@@ -521,7 +526,7 @@
                     endPosition.Y,
                     center.X - startPosition.X,
                     center.Y - startPosition.Y,
-                    arc.Angle < 0 ? ArcDirection.CW : ArcDirection.CCW);
+                    arc.Angle.Degrees < 0 ? ArcDirection.CW : ArcDirection.CCW);
             }
 
             /// <summary>
@@ -535,7 +540,7 @@
 
                     // Calcula les coordinades, mesures, rotacions, etc
                     //
-                    double rotation = rectangle.Rotation + (Part == null ? 0 : Part.Rotation);
+                    Angle rotation = rectangle.Rotation + (Part == null ? Angle.Zero : Part.Rotation);
                     Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
                     Point position = transformation.Transform(rectangle.Position);
 
@@ -627,11 +632,11 @@
                         break;
 
                     case ViaElement.ViaShape.Square:
-                        ap = apertures.GetRectangleAperture(via.OuterSize, via.OuterSize, 0);
+                        ap = apertures.GetRectangleAperture(via.OuterSize, via.OuterSize, Angle.Zero);
                         break;
 
                     case ViaElement.ViaShape.Octogonal:
-                        ap = apertures.GetOctagonAperture(via.OuterSize, 0);
+                        ap = apertures.GetOctagonAperture(via.OuterSize, Angle.Zero);
                         break;
                 }
 
@@ -650,7 +655,9 @@
 
                 // Calcula les coordinades, mesures, rotacions, etc
                 //
-                double rotation = pad.Rotation + (Part == null ? 0 : Part.Rotation);
+                Angle rotation = pad.Rotation;
+                if (Part != null)
+                    rotation += Part.Rotation;
                 Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
                 Point position = transformation.Transform(pad.Position);
 
@@ -690,7 +697,9 @@
 
                 // Calcula les coordinades, mesures, rotacions, etc
                 //
-                double rotation = pad.Rotation + (Part == null ? 0 : Part.Rotation);
+                Angle rotation = pad.Rotation;
+                if (Part != null)
+                    rotation += Part.Rotation;
                 double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
                 Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
                 Point position = transformation.Transform(pad.Position);
