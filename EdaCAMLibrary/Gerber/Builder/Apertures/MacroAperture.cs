@@ -18,7 +18,7 @@
         /// <param name="id">Identificador de l'apertura.</param>
         /// <param name="tag">Dades opcionals.</param>
         /// <param name="macro">Macro asignat a l'aperture.</param>
-        /// <param name="args">Erguments del macro.</param>
+        /// <param name="args">Arguments del macro.</param>
         /// 
         public MacroAperture(int id, object tag, Macro macro, params double[] args) :
             base(id, tag) {

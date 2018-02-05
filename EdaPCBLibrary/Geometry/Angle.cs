@@ -17,19 +17,14 @@
 
         private readonly double value;
 
+        /// <summary>
+        /// Constructor privat.
+        /// </summary>
+        /// <param name="angle">El valor de l'angle.</param>
+        /// 
         private Angle(double angle) {
 
-            value = angle;
-        }
-
-        /// <summary>
-        /// Crea una copia normalitzada del angle.
-        /// </summary>
-        /// <returns>L'angle normalitzat.</returns>
-        /// 
-        public Angle Normalized() {
-
-            return new Angle(Normalize(value));
+            value = angle % 360.0;
         }
 
         /// <summary>
@@ -54,6 +49,12 @@
             return new Angle(value);
         }
 
+        /// <summary>
+        /// Test d'igualtat.
+        /// </summary>
+        /// <param name="obj">L'altre objecte.</param>
+        /// <returns>True si son iguals, false en cas contrari.</returns>
+        /// 
         public override bool Equals(object obj) {
 
             if (obj is Angle)
@@ -62,14 +63,24 @@
                 return false;
         }
 
+        /// <summary>
+        /// Calcula el codi hash del objecte.
+        /// </summary>
+        /// <returns>El codi hash.</returns>
+        /// 
         public override int GetHashCode() {
 
             return value.GetHashCode();
         }
 
+        /// <summary>
+        /// Converteix a string
+        /// </summary>
+        /// <returns>La representacio del valor.</returns>
+        /// 
         public override string ToString() {
 
-            return value.ToString();
+            return Convert.ToString(value);
         }
 
         public static bool operator == (Angle a1, Angle a2) {
@@ -127,17 +138,10 @@
             return new Angle(a.value / v);
         }
 
-        private static double Normalize(double v) {
-
-            if (v >= 360.0 || v <= -360.0)
-                v %= 360.0;
-
-            if (v < 0.0)
-                return 360.0 - v;
-            else
-                return v;
-        }
-
+        /// <summary>
+        /// Comprova si l'angle es zero.
+        /// </summary>
+        /// 
         public bool IsZero {
             get {
                 return value == 0.0;
@@ -150,8 +154,7 @@
         /// 
         public bool IsOrthogonal {
             get {
-                double v = Normalize(value);
-                return (v == 0.0) || (v == 90.0) || (v == 180.0) || (value == 270.0);
+                return Math.Abs(value % 90) == 0.0;
             }
         }
 
@@ -161,8 +164,7 @@
         /// 
         public bool IsDiagonal {
             get {
-                double v = Normalize(value);
-                return (v == 45.0) || (v == 135.0) || (v == 225.0) || (value == 315.0);
+                return Math.Abs(value % 90) == 45.0;
             }
         }
 
@@ -172,8 +174,7 @@
         /// 
         public bool IsVertical {
             get {
-                double v = Normalize(value);
-                return (v == 90.0) || (v == 270.0);
+                return Math.Abs(value % 180) == 90.0;
             }
         }
 
@@ -183,8 +184,7 @@
         /// 
         public bool IsHorizontal {
             get {
-                double v = Normalize(value);
-                return (v == 0.0) || (v == 180.0);
+                return Math.Abs(value % 180) == 0.0;
             }
         }
 

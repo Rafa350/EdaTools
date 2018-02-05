@@ -141,6 +141,7 @@
 
             gb.Comment("EdaTools v1.0.");
             gb.Comment("EdaTools CAM processor. Gerber generator.");
+            gb.Comment(String.Format("Start timestamp: {0:HH:mm:ss.fff}", DateTime.Now));
             gb.Comment("BEGIN HEADER");
 
             switch (drillType) {
@@ -185,6 +186,7 @@
         private void GenerateFileTail(GerberBuilder gb) {
 
             gb.EndFile();
+            gb.Comment(String.Format("End timestamp: {0:HH:mm:ss.fff}", DateTime.Now));
             gb.Comment("END FILE");
         }
 

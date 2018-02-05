@@ -34,7 +34,7 @@
         }
 
         /// <summary>
-        /// Obte la comanda per definit l'apertura.
+        /// Obte la comanda per definir l'apertura.
         /// </summary>
         /// <returns>La comanda.</returns>
         /// 

@@ -283,14 +283,10 @@
                     sb.Append('Y');
                     sb.Append(FormatNumber(y));
                 }
-                //if (state.SetCX(cx)) {
-                    sb.Append('I');
-                    sb.Append(FormatNumber(cx));
-                //}
-                //if (state.SetCY(cy)) {
-                    sb.Append('J');
-                    sb.Append(FormatNumber(cy));
-                //}
+                sb.Append('I');
+                sb.Append(FormatNumber(cx));
+                sb.Append('J');
+                sb.Append(FormatNumber(cy));
 
                 sb.AppendFormat("D01*");
                 writer.WriteLine(sb.ToString());

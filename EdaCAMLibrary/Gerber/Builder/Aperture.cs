@@ -46,6 +46,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte les dades opcionals
+        /// </summary>
+        /// 
         public object Tag {
             get {
                 return tag;
