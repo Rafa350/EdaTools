@@ -54,9 +54,7 @@
 
             content.ClearVisual();
             VisualGenerator vg = new VisualGenerator(board);
-            foreach (Visual visual in vg.CreateVisuals())
-                content.AddVisual(visual);
-            //content.AddVisual(new GridVisual(0.1));
+            content.AddVisual(vg.CreateVisuals());
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e) {
@@ -108,6 +106,7 @@
         /// </summary>
         /// <param name="sender">El control que genera l'event.</param>
         /// <param name="e">Arguments de l'event.</param>
+        /// 
         private void zoomControl_MouseMove(object sender, MouseEventArgs e) {
 
             Point curContentMousePos = e.GetPosition(content);

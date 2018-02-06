@@ -409,7 +409,7 @@
         /// </summary>
         /// <returns>Un enumerador de les visuals creades.</returns>
         /// 
-        public IEnumerable<Visual> CreateVisuals() {
+        public Visual CreateVisuals() {
 
             List<string> layerNames = new List<string>();
             // layerIds.Add(LayerId.BottomNames);
@@ -437,30 +437,23 @@
             layerNames.Add(Layer.TopDocumentName);
             layerNames.Add(Layer.ProfileName);
 
-            // Crea la llista de visuals
-            //
-            List<Visual> visuals = new List<Visual>();
-
-            // Procesa les capes una a una pel seu ordre establert
-            //
+            DrawingVisual boardVisual = new DrawingVisual();
             foreach (string layerName in layerNames) {
 
                 Layer layer = board.GetLayer(layerName);
-                
-                // Nomes la procesa si es visible
-                //
                 if (layer.IsVisible) {
 
-                    DrawingVisual visual = new DrawingVisual();
-                    visual.Opacity = layer.Color.ScA;
-                    visuals.Add(visual);
+                    DrawingVisual layerVisual = new DrawingVisual();
+                    layerVisual.Opacity = layer.Color.ScA;
 
-                    RenderVisitor visitor = new RenderVisitor(board, layer, visual);
+                    RenderVisitor visitor = new RenderVisitor(board, layer, layerVisual);
                     visitor.Run();
+
+                    boardVisual.Children.Add(layerVisual);
                 }
             }
 
-            return visuals;
+            return boardVisual;
         }
     }
 }

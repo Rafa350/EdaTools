@@ -7,7 +7,7 @@
 
         private readonly Board board;
         private readonly Layer layer;
-        private Part currentPart;
+        private Part part;
 
         /// <summary>
         /// Constructor del objecte.
@@ -52,13 +52,13 @@
         /// 
         public override void Visit(Part part) {
 
-            currentPart = part;
+            this.part = part;
 
             foreach (Element element in part.Elements)
                 if ((layer == null) || board.IsOnLayer(element, layer))
                     element.AcceptVisitor(this);
 
-            currentPart = null;
+            this.part = null;
         }
 
         /// <summary>
@@ -77,7 +77,7 @@
         /// 
         protected Part Part {
             get {
-                return currentPart;
+                return part;
             }
         }
 

@@ -76,6 +76,8 @@
     <Compile Include="DrawEditor\Tools\PadTool.cs" />
     <Compile Include="DrawEditor\Tools\RectangleTool.cs" />
     <Compile Include="DrawEditor\Tools\SelectionTool.cs" />
+    <Compile Include="DrawEditor\ViewPoint.cs" />
+    <Compile Include="DrawEditor\VisualContainer.cs" />
     <Compile Include="DrawEditor\VisualGenerator.cs" />
     <Compile Include="DrawEditor\ZoomControl.cs" />
     <Compile Include="MainWindow.xaml.cs">
