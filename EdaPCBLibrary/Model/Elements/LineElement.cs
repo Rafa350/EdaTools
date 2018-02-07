@@ -72,7 +72,7 @@
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPourPolygon(BoardSide side, double spacing) {
+        public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
 
             return PolygonBuilder.BuildLineSegment(startPosition, endPosition, thickness + (spacing * 2));
         }

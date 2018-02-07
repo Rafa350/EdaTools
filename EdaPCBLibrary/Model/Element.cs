@@ -30,7 +30,7 @@
         /// <param name="spacing">Espaiat.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public abstract Polygon GetPourPolygon(BoardSide side, double spacing);
+        public abstract Polygon GetOutlinePolygon(BoardSide side, double spacing);
 
         /// <summary>
         /// Calula el bounding box del element.

@@ -68,7 +68,7 @@
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPourPolygon(BoardSide side, double spacing) {
+        public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
 
             return PolygonBuilder.BuildRectangle(position,
                 new Size(size.Width + spacing * 2, size.Height + spacing * 2),

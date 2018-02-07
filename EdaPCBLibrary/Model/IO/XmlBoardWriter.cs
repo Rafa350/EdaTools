@@ -351,10 +351,12 @@
             /// <param name="signal">La senyal a visitar.</param>
             /// 
             public override void Visit(Signal signal) {
-                
+
                 writer.WriteStartElement("signal");
 
                 writer.WriteAttribute("name", signal.Name);
+                if (signal.Clearance > 0)
+                    writer.WriteAttribute("clearance", signal.Clearance);
 
                 writer.WriteEndElement();
             }

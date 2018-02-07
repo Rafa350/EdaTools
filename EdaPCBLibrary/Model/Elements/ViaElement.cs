@@ -87,7 +87,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Polygon polygon = GetPourPolygon(side, 0);
+            Polygon polygon = GetOutlinePolygon(side, 0);
             polygon.AddChild(PolygonBuilder.BuildCircle(position, drill / 2));
             return polygon;
         }
@@ -99,7 +99,7 @@
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPourPolygon(BoardSide side, double spacing) {
+        public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
 
             double size = side == BoardSide.Inner ? InnerSize : OuterSize;
             ViaShape shape = side == BoardSide.Inner ? ViaShape.Circular : this.shape;

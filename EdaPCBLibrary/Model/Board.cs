@@ -532,7 +532,7 @@
                     Layer profileLayer = GetLayer(Layer.ProfileName);
 
                     // Procesa els elements de la placa que es troben en la mateixa capa que 
-                    // la regio, o en la capa restrict.
+                    // la regio, o en les capes restrict o profile.
                     //
                     foreach (Element element in elements) {
                         if (element != region) {
@@ -545,7 +545,8 @@
                                 // Si no esta en la mateixa senyal que la regio, genera un forat.
                                 //
                                 if ((item == null) || (GetSignal(item, null, false) != regionSignal)) {
-                                    Polygon elementPolygon = element.GetPourPolygon(layer.Side, spacing);
+                                    double clearance = regionSignal.Clearance;
+                                    Polygon elementPolygon = element.GetOutlinePolygon(layer.Side, Math.Max(spacing, clearance));
                                     holePolygons.Add(elementPolygon);
                                 }
                             }
@@ -560,7 +561,7 @@
                             // El element esta el la capa profile
                             //
                             else if (IsOnLayer(element, profileLayer)) {
-                                Polygon elementPolygon = element.GetPourPolygon(profileLayer.Side, 0.25);
+                                Polygon elementPolygon = element.GetOutlinePolygon(profileLayer.Side, 0.25);
                                 holePolygons.Add(elementPolygon);
                             }
                         }
@@ -579,7 +580,7 @@
                                 // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
                                 //
                                 if ((padElement == null) || (GetSignal(padElement, part, false) != regionSignal)) {
-                                    Polygon elementPolygon = element.GetPourPolygon(layer.Side, spacing);
+                                    Polygon elementPolygon = element.GetOutlinePolygon(layer.Side, spacing);
                                     elementPolygon.Transform(part.Transformation);
                                     holePolygons.Add(elementPolygon);
                                 }

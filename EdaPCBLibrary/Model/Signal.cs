@@ -5,6 +5,7 @@
     public sealed class Signal: IName, IVisitable {
 
         private string name;
+        private double clearance;
 
         public Signal() {
 
@@ -36,6 +37,17 @@
                     throw new ArgumentNullException("Name");
 
                 name = value;
+            }
+        }
+
+        public double Clearance {
+            get {
+                return clearance;
+            }
+            set {
+                if (clearance < 0)
+                    throw new ArgumentOutOfRangeException("Clearance");
+                clearance = value;
             }
         }
     }

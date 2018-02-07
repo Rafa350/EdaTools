@@ -67,7 +67,7 @@
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPourPolygon(BoardSide side, double spacing) {
+        public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
 
             return PolygonBuilder.BuildRectangle(Position,
                 new Size(size.Width + (spacing * 2), size.Height + (spacing * 2)), Radius + spacing, rotation);
@@ -83,7 +83,7 @@
         /// 
         public override Polygon GetThermalPolygon(BoardSide side, double spacing, double width) {
 
-            Polygon pour = GetPourPolygon(side, spacing);
+            Polygon pour = GetOutlinePolygon(side, spacing);
             Polygon thermal = PolygonBuilder.BuildCross(Position, 
                 new Size(size.Width + (spacing * 2.25), size.Height + (spacing * 2.25)), width, rotation);
 

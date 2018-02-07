@@ -81,7 +81,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Polygon polygon = GetPourPolygon(side, 0);
+            Polygon polygon = GetOutlinePolygon(side, 0);
             polygon.AddChild(PolygonBuilder.BuildCircle(Position, drill / 2));
 
             return polygon;
@@ -94,7 +94,7 @@
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetPourPolygon(BoardSide side, double spacing) {
+        public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
 
         Polygon polygon;
             switch (shape) {
@@ -144,7 +144,7 @@
             double w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize) + (spacing * 2.25);
             double h = topSize + (spacing * 2.25);
 
-            Polygon pour = GetPourPolygon(side, spacing);
+            Polygon pour = GetOutlinePolygon(side, spacing);
             Polygon thermal = PolygonBuilder.BuildCross(Position, new Size(w, h), width, rotation);
 
             Polygon polygon = new Polygon();
