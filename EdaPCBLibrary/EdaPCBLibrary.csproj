@@ -56,9 +56,10 @@
   <ItemGroup>
     <Compile Include="Geometry\Angle.cs" />
     <Compile Include="Geometry\ArcUtils.cs" />
+    <Compile Include="Geometry\Fonts\FontCache.cs" />
     <Compile Include="Geometry\Fonts\Glyph.cs" />
     <Compile Include="Geometry\Fonts\GlyphTrace.cs" />
-    <Compile Include="Geometry\Fonts\VectorFont.cs" />
+    <Compile Include="Geometry\Fonts\Font.cs" />
     <Compile Include="Geometry\Polygons\Infrastructure\Clipper.cs" />
     <Compile Include="Geometry\Polygons\Polygon.cs" />
     <Compile Include="Geometry\Polygons\PolygonBuilder.cs" />

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <fontResource version="3.0" resourceId="EdaToolsPcbFont">
+        <font name="EdaTools Standard Font" height="37" ascent="30" descent="7">
+            <char code="0x30" left="1" top="23" width="15" height="23" advance="18">
+                <glyph>
+                    <moveTo position=""/>
+                </glyph>
+            </char>
+        </font>
+    </fontResource>
+</resources>

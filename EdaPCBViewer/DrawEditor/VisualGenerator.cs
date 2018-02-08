@@ -2,6 +2,7 @@
 
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
@@ -286,6 +287,30 @@
             }
 
             /// <summary>
+            /// Visita un objecte de tipus 'TextElement'
+            /// </summary>
+            /// <param name="text">L'objwecte a visitar.</param>
+            /// 
+            public override void Visit(TextElement text) {
+
+                DrawingVisual visual = new DrawingVisual();
+                using (DrawingContext dc = visual.RenderOpen()) {
+
+                    if (Part != null)
+                        dc.PushTransform(GetTransform(Part));
+
+                    Color color = GetColor(Layer);
+                    Pen pen = CreatePen(color, 0.05);
+                    DrawText(dc, pen, text.Value);
+
+                    if (Part != null)
+                        dc.Pop();
+                }
+
+                this.visual.Children.Add(visual);
+            }
+
+            /// <summary>
             /// Obte el color pur de la capa.
             /// </summary>
             /// <param name="layer">La capa.</param>
@@ -363,6 +388,26 @@
             }
 
             /// <summary>
+            /// Dibuixa un text
+            /// </summary>
+            /// <param name="dc">El contexte de dibuix.</param>
+            /// <param name="pen">El pen.</param>
+            /// <param name="text">El text a dibuixar.</param>
+            /// 
+            private static void DrawText(DrawingContext dc, Pen pen, string text) {
+
+                StreamGeometry geometry = new StreamGeometry();
+                using (StreamGeometryContext ctx = geometry.Open()) {
+                    foreach (char ch in text) {
+                        Glyph glyph = font.GetGlyph(ch);
+                        StreamGlyph(ctx, glyph);
+                    }
+                }
+                geometry.Freeze();
+                dc.DrawGeometry(null, pen, geometry);
+            }
+
+            /// <summary>
             /// Dibuixa un poligon en una geometria
             /// </summary>
             /// <param name="ctx">Contexte de la geometria.</param>
@@ -387,9 +432,18 @@
                         StreamPolygon(ctx, child, level + 1);
             }
 
+            private static void StreamGlyph(StreamGeometryContext ctx, Glyph glyph) {
+
+            }
         }
 
         private readonly Board board;
+        private static readonly Font font;
+
+        static VisualGenerator() {
+
+            font = Font.Load("font.fnt");
+        }
 
         /// <summary>
         /// Contructor de la clase. 
