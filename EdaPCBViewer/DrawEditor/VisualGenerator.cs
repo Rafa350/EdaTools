@@ -442,7 +442,7 @@
 
         static VisualGenerator() {
 
-            font = Font.Load("font.fnt");
+            font = Font.Load(@"..\..\..\Data\font.xml");
         }
 
         /// <summary>

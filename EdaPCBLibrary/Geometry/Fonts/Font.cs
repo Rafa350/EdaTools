@@ -43,40 +43,37 @@
 
             List<Glyph> glyphs = new List<Glyph>();
 
-            TextReader reader = new StreamReader(stream);
-            string line = reader.ReadLine();
-            do {
-                char code = (char)32;
-                if (line != null) {
-                    List<GlyphTrace> traces = new List<GlyphTrace>();
+            XmlDocument doc = new XmlDocument();
+            doc.Load(stream);
 
-                    line = reader.ReadLine();
+            XmlNode fontNode = doc.SelectSingleNode("/resources/fontResource/font");
 
-                    int symbol = Int32.Parse(line.Substring(0, 4));
-                    int numPairs = Int32.Parse(line.Substring(5, 3));
-                    int leftPos = line[8] - 'R';
-                    int rightPos = line[9] - 'R';
-                    int i = 10;
-                    bool stroke = true;
-                    while (numPairs != 0) {
-                        char ch = line[i++];
-                        if (ch == 'R') {
-                            stroke = false;
-                        }
-                        else {
-                            int x = ch - 'R';
-                            int y = line[i++];
-                            stroke = true;
-                            numPairs--;
+            foreach (XmlNode charNode in fontNode.SelectNodes("char")) {
 
-                            GlyphTrace trace = new GlyphTrace(x, y, stroke);
-                            traces.Add(trace);
-                        }
+                char code = Char.Parse(charNode.Attributes["char"].Value);
+                double left = XmlConvert.ToDouble(charNode.Attributes["left"].Value);
+                double top = XmlConvert.ToDouble(charNode.Attributes["top"].Value);
+                double width = XmlConvert.ToDouble(charNode.Attributes["width"].Value);
+                double height = XmlConvert.ToDouble(charNode.Attributes["height"].Value);
+                double advance = XmlConvert.ToDouble(charNode.Attributes["advance"].Value);
+
+                List<GlyphTrace> traces = new List<GlyphTrace>();
+                foreach (XmlNode strokeNode in charNode.SelectNodes("glyph/*")) {
+
+                    string positionStr = strokeNode.Attributes["position"].Value;
+
+                    switch (strokeNode.Name) {
+                        case "moveTo":
+                            break;
+
+                        case "lineTo":
+                            break;
                     }
-                    Glyph glyph = new Glyph(code++, rightPos - leftPos, traces);
-                    glyphs.Add(glyph);
+
                 }
-            } while (line != null);
+
+                Glyph glyph = new Glyph(code, advance, traces);
+            }
 
             return new Font(glyphs);
         }
