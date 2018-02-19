@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <fontResource version="3.0" resourceId="EdaToolsPcbFont">
-        <font name="EdaTools Standard Font" height="37" ascent="30" descent="7">
-            <char code="0x30" left="1" top="23" width="15" height="23" advance="18">
+        <font name="EdaTools Standard Font" height="7" ascent="6" descent="0">
+            <char code="0x30" left="0" top="6" width="5" height="6" advance="6">
                 <glyph>
-                    <moveTo position=""/>
+                    <moveTo position="0, 1"/>
+                    <lineTo position="1, 0"/>
+                    <lineTo position="3, 0"/>
+                    <lineTo position="4, 1"/>
+                    <lineTo position="4, 5"/>
+                    <lineTo position="3, 6"/>
+                    <lineTo position="1, 6"/>
+                    <lineTo position="0, 5"/>
+                    <lineTo position="0, 1"/>
+                    <lineTo position="4, 5"/>
                 </glyph>
             </char>
         </font>
