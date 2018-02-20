@@ -448,7 +448,7 @@
                 double delta = 0;
                 double scale = height / font.Height; 
                 foreach (char ch in text) {
-                    Glyph glyph = font.GetGlyph('0');
+                    Glyph glyph = font.GetGlyph(ch);
                     if (glyph != null) {
                         bool first = true;
                         foreach (GlyphTrace trace in glyph.Traces) {

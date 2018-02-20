@@ -16,6 +16,29 @@
                     <lineTo position="4, 5"/>
                 </glyph>
             </char>
+            <char code="0x31" left="0" top="6" width="5" height="6" advance="6">
+                <glyph>
+                    <moveTo position="0, 0"/>
+                    <lineTo position="4, 0"/>
+                    <moveTo position="2, 0"/>
+                    <lineTo position="2, 6"/>
+                    <lineTo position="0, 4"/>
+                </glyph>
+            </char>
+            <char code="0x32" left="0" top="6" width="5" height="6" advance="6">
+                <glyph>
+                    <moveTo position="4, 0"/>
+                    <lineTo position="0, 0"/>
+                    <lineTo position="0, 2"/>
+                    <lineTo position="1, 3"/>
+                    <lineTo position="3, 3"/>
+                    <lineTo position="4, 4"/>
+                    <lineTo position="4, 5"/>
+                    <lineTo position="3, 6"/>
+                    <lineTo position="1, 6"/>
+                    <lineTo position="0, 5"/>
+                </glyph>
+            </char>
         </font>
     </fontResource>
 </resources>
