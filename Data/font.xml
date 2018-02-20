@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <fontResource version="3.0" resourceId="EdaToolsPcbFont">
-        <font name="EdaTools Standard Font" height="7" ascent="6" descent="0">
+        <font name="EdaTools Standard Font" height="9" ascent="6" descent="2">
             <char code="0x30" left="0" top="6" width="5" height="6" advance="6">
                 <glyph>
                     <moveTo position="0, 1"/>
