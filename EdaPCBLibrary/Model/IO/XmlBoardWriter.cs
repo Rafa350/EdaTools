@@ -138,6 +138,7 @@
                 writer.WriteAttribute("position", text.Position);
                 if (!text.Rotation.IsZero)
                     writer.WriteAttribute("rotation", text.Rotation);
+                writer.WriteAttribute("height", text.Height);
                 if (!String.IsNullOrEmpty(text.Value))
                     writer.WriteAttribute("value", text.Value);
 

@@ -1,4 +1,6 @@
-﻿namespace Eda.PCBViewer {
+﻿#define ImportTest
+
+namespace Eda.PCBViewer {
 
     using Eda.PCBViewer.DrawEditor;
     using Eda.PCBViewer.DrawEditor.Tools;
@@ -23,7 +25,7 @@
         private bool showDrag = true;
         private readonly double scaleFactor = 1.1;
         private const string path = @"..\..\..\Data";
-        //private const string inFileName = @"board3.brd";
+        private const string inImportFileName = @"board3.brd";
         private const string inFileName = @"board3.xml";
         private const string outFileName = @"out.xml";
 
@@ -41,17 +43,19 @@
 
         private void Button_Click(object sender, RoutedEventArgs e) {
 
-            //Importer importer = new EagleImporter();
-            //Board board = importer.LoadBoard(Path.Combine(path, inTestFileName));
+#if ImportTest
 
+            Importer importer = new EagleImporter();
+            Board board = importer.LoadBoard(Path.Combine(path, inImportFileName));
+
+            XmlBoardWriter writer = new XmlBoardWriter(
+                new FileStream(Path.Combine(path, inFileName), FileMode.Create, FileAccess.Write, FileShare.None));
+            writer.Write(board);
+#else
             XmlBoardReader reader = new XmlBoardReader(
                 new FileStream(Path.Combine(path, inFileName), FileMode.Open, FileAccess.Read, FileShare.None));
             Board board = reader.Read();
-
-            XmlBoardWriter writer = new XmlBoardWriter(
-                new FileStream(Path.Combine(path, outFileName), FileMode.Create, FileAccess.Write, FileShare.None));
-            writer.Write(board);
-
+#endif
             content.ClearVisual();
             VisualGenerator vg = new VisualGenerator(board);
             content.AddVisual(vg.CreateVisuals());
@@ -162,8 +166,8 @@
                             if (child.Part == visual.Part)
                                 child.IsSelected = visual.IsSelected;
                         }*/
-                    }
-                }
+        }
+    }
             }
         }
 

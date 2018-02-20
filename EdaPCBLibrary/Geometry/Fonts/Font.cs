@@ -2,20 +2,24 @@
 
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
-    using System.Text;
     using System.Xml;
 
     public sealed class Font {
 
         private readonly Dictionary<char, Glyph> glyphs = new Dictionary<char, Glyph>();
+        private readonly double height;
 
         /// <summary>
         /// Constructor privat de l'objecte
         /// </summary>
+        /// <param name="height">Alçada del font.</param>
         /// <param name="glyphs">Llista de figures.</param>
         /// 
-        private Font(IEnumerable<Glyph> glyphs) {
+        private Font(double height, IEnumerable<Glyph> glyphs) {
+
+            this.height = height;
 
             foreach (Glyph glyph in glyphs)
                 this.glyphs.Add(glyph.Code, glyph);
@@ -41,16 +45,24 @@
         /// 
         public static Font Load(Stream stream) {
 
-            List<Glyph> glyphs = new List<Glyph>();
-
             XmlDocument doc = new XmlDocument();
             doc.Load(stream);
 
             XmlNode fontNode = doc.SelectSingleNode("/resources/fontResource/font");
 
+            double fontHeight = XmlConvert.ToDouble(fontNode.Attributes["height"].Value);
+            double ascendent = XmlConvert.ToDouble(fontNode.Attributes["ascent"].Value);
+            double descendent = XmlConvert.ToDouble(fontNode.Attributes["descent"].Value);
+
+            List<Glyph> glyphs = new List<Glyph>();
             foreach (XmlNode charNode in fontNode.SelectNodes("char")) {
 
-                char code = Char.Parse(charNode.Attributes["char"].Value);
+                string codeStr = charNode.Attributes["code"].Value;
+                char code;
+                if (codeStr.StartsWith("0x", StringComparison.InvariantCultureIgnoreCase))
+                    code = Convert.ToChar(UInt16.Parse(codeStr.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture));
+                else
+                    code = Convert.ToChar(UInt16.Parse(codeStr));
                 double left = XmlConvert.ToDouble(charNode.Attributes["left"].Value);
                 double top = XmlConvert.ToDouble(charNode.Attributes["top"].Value);
                 double width = XmlConvert.ToDouble(charNode.Attributes["width"].Value);
@@ -61,21 +73,25 @@
                 foreach (XmlNode strokeNode in charNode.SelectNodes("glyph/*")) {
 
                     string positionStr = strokeNode.Attributes["position"].Value;
+                    string[] s = positionStr.Split(',');
+                    double x = XmlConvert.ToDouble(s[0]);
+                    double y = XmlConvert.ToDouble(s[1]);
 
                     switch (strokeNode.Name) {
                         case "moveTo":
+                            traces.Add(new GlyphTrace(x, y, false));
                             break;
 
                         case "lineTo":
+                            traces.Add(new GlyphTrace(x, y, true));
                             break;
                     }
-
                 }
 
-                Glyph glyph = new Glyph(code, advance, traces);
+                glyphs.Add(new Glyph(code, advance, traces));
             }
 
-            return new Font(glyphs);
+            return new Font(fontHeight, glyphs);
         }
 
         /// <summary>
@@ -104,7 +120,7 @@
 
             writer.WriteStartElement("fontResource");
             writer.WriteAttributeString("version", "2.1");
-            writer.WriteAttributeString("resourceId", "Hershey-Gothic-Simplex");
+            writer.WriteAttributeString("resourceId", "Eda-Tools default stroke font");
 
             writer.WriteStartElement("font");
             writer.WriteAttributeString("name", "");
@@ -160,6 +176,12 @@
                 return glyph;
             else
                 return null;
+        }
+
+        public double Height {
+            get {
+                return height;
+            }
         }
     }
 }

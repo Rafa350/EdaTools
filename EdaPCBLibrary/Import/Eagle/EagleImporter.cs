@@ -471,8 +471,6 @@
         private Element ParseTextNode(XmlNode node) {
 
             string value = node.InnerText;
-            if (value.StartsWith(">"))
-                value = String.Format("$({0})", value.Substring(1));
 
             double x = GetAttributeDouble(node, "x");
             double y = GetAttributeDouble(node, "y");

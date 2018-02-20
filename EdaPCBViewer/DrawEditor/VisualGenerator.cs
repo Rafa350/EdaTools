@@ -301,7 +301,15 @@
 
                     Color color = GetColor(Layer);
                     Pen pen = CreatePen(color, 0.05);
-                    DrawText(dc, pen, text.Value);
+
+                    string value = text.Value;
+                    if (Part != null && value.StartsWith(">")) {
+                        PartAttribute pa = Part.GetAttribute(value.Substring(1));
+                        if (pa != null)
+                            value = value.Replace(value, pa.Value);
+                    }
+
+                    DrawText(dc, pen, text.Height, value);
 
                     if (Part != null)
                         dc.Pop();
@@ -394,15 +402,11 @@
             /// <param name="pen">El pen.</param>
             /// <param name="text">El text a dibuixar.</param>
             /// 
-            private static void DrawText(DrawingContext dc, Pen pen, string text) {
+            private static void DrawText(DrawingContext dc, Pen pen, double height, string text) {
 
                 StreamGeometry geometry = new StreamGeometry();
-                using (StreamGeometryContext ctx = geometry.Open()) {
-                    foreach (char ch in text) {
-                        Glyph glyph = font.GetGlyph(ch);
-                        StreamGlyph(ctx, glyph);
-                    }
-                }
+                using (StreamGeometryContext ctx = geometry.Open())
+                    StreamText(ctx, height, text);
                 geometry.Freeze();
                 dc.DrawGeometry(null, pen, geometry);
             }
@@ -432,8 +436,33 @@
                         StreamPolygon(ctx, child, level + 1);
             }
 
-            private static void StreamGlyph(StreamGeometryContext ctx, Glyph glyph) {
 
+            /// <summary>
+            /// Dibuixa un caracter en una geometria
+            /// </summary>
+            /// <param name="ctx">Contexte de dibuix.</param>
+            /// <param name="text">El text a dibuixar.</param>
+            /// 
+            private static void StreamText(StreamGeometryContext ctx, double height, string text) {
+
+                double delta = 0;
+                double scale = height / font.Height; 
+                foreach (char ch in text) {
+                    Glyph glyph = font.GetGlyph('0');
+                    if (glyph != null) {
+                        bool first = true;
+                        foreach (GlyphTrace trace in glyph.Traces) {
+                            Point p = new Point(scale *(trace.X + delta), scale * trace.Y);
+                            if (first) {
+                                first = false;
+                                ctx.BeginFigure(p, true, false);
+                            }
+                            else
+                                ctx.LineTo(p, trace.Stroke, true);
+                        }
+                        delta += glyph.Advance;
+                    }
+                }
             }
         }
 
@@ -466,7 +495,7 @@
         public Visual CreateVisuals() {
 
             List<string> layerNames = new List<string>();
-            // layerIds.Add(LayerId.BottomNames);
+            layerNames.Add(Layer.BottomNamesName);
             // layerIds.Add(LayerId.BottomValues);
             layerNames.Add(Layer.BottomDocumentName);
             //layerIds.Add(LayerId.BottomCream);
@@ -484,7 +513,7 @@
             //layerIds.Add(LayerId.TopCream);
             //layerIds.Add(LayerId.TopDocument);
             //layerIds.Add(LayerId.TopValuest);
-            //layerIds.Add(LayerId.TopNames);
+            layerNames.Add(Layer.TopNamesName);
             layerNames.Add(Layer.PadsName);
             layerNames.Add(Layer.ViasName);
             layerNames.Add(Layer.HolesName);
