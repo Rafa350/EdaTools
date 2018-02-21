@@ -63,10 +63,6 @@
                     code = Convert.ToChar(UInt16.Parse(codeStr.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture));
                 else
                     code = Convert.ToChar(UInt16.Parse(codeStr));
-                double left = XmlConvert.ToDouble(charNode.Attributes["left"].Value);
-                double top = XmlConvert.ToDouble(charNode.Attributes["top"].Value);
-                double width = XmlConvert.ToDouble(charNode.Attributes["width"].Value);
-                double height = XmlConvert.ToDouble(charNode.Attributes["height"].Value);
                 double advance = XmlConvert.ToDouble(charNode.Attributes["advance"].Value);
 
                 List<GlyphTrace> traces = new List<GlyphTrace>();

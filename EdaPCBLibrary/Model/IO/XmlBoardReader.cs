@@ -452,6 +452,12 @@
             return new HoleElement(position, drill);
         }
 
+        /// <summary>
+        /// Procesa un node 'attribute'
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>'L'objecte 'PartAttribute' obtingut.</returns>
+        /// 
         private PartAttribute ParseAttribute(XmlNode node) {
 
             string attrName = node.AttributeAsString("name");
