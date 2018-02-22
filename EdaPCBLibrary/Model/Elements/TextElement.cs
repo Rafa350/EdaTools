@@ -25,6 +25,7 @@
         private Point position;
         private Angle rotation;
         private double height;
+        private double thickness;
         private TextAlign align = TextAlign.MiddleCenter;
         private string value;
 
@@ -42,14 +43,16 @@
         /// <param name="position">Posicio.</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="height">Alçada de lletra.</param>
+        /// <param name="thickness">Amplada de linia.</param>
         /// <param name="align">Alineacio respecte la posicio.</param>
         /// 
-        public TextElement(Point position, Angle rotation, double height, TextAlign align = TextAlign.MiddleCenter):
+        public TextElement(Point position, Angle rotation, double height, double thickness, TextAlign align = TextAlign.MiddleCenter):
             base() {
 
             this.position = position;
             this.rotation = rotation;
             this.height = height;
+            this.thickness = thickness;
             this.align = align;
         }
 
@@ -132,7 +135,26 @@
                 return height;
             }
             set {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException("Height");
+
                 height = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna l'amplada de linia.
+        /// </summary>
+        /// 
+        public double Thickness {
+            get {
+                return thickness;
+            }
+            set {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException("Thickness");
+
+                thickness = value;
             }
         }
 

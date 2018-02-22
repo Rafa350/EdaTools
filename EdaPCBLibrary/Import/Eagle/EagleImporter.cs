@@ -482,7 +482,7 @@
             int layerNum = GetAttributeInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
 
-            TextElement element = new TextElement(position, Angle.FromDegrees(rotate), height, TextElement.TextAlign.TopLeft);
+            TextElement element = new TextElement(position, Angle.FromDegrees(rotate), height, 0.1, TextElement.TextAlign.TopLeft);
             element.Value = value;
 
             board.Place(board.GetLayer(layerName), element);
@@ -678,6 +678,7 @@
                 // Corrigeix perque siguin relatives al component
                 //
                 parameter.Position = new Point(parameter.Position.X - x, parameter.Position.Y - y);
+                parameter.Rotation = parameter.Rotation - Angle.FromDegrees(rotation);
 
                 part.AddAttribute(parameter);
             }

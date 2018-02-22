@@ -162,7 +162,6 @@
                     if (Part != null)
                         dc.Pop();
                 }
-
                 this.visual.Children.Add(visual);
             }
 
@@ -529,8 +528,8 @@
             layerNames.Add(Layer.TopKeepoutName);
             layerNames.Add(Layer.TopGlueName);
             //layerIds.Add(LayerId.TopCream);
-            //layerIds.Add(LayerId.TopDocument);
-            //layerIds.Add(LayerId.TopValuest);
+            layerNames.Add(Layer.TopDocumentName);
+            //layerIds.Add(LayerId.TopValues);
             layerNames.Add(Layer.TopNamesName);
             layerNames.Add(Layer.PadsName);
             layerNames.Add(Layer.ViasName);

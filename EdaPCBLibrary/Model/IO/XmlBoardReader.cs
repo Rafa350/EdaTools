@@ -380,9 +380,10 @@
             Point position = node.AttributeAsPoint("position");
             Angle rotation = node.AttributeAsAngle("rotation");
             double height = node.AttributeAsDouble("height");
+            double thickness = node.AttributeAsDouble("thickness");
             string value = node.AttributeAsString("value");
 
-            TextElement element = new TextElement(position, rotation, height);
+            TextElement element = new TextElement(position, rotation, height, thickness);
             element.Value = value;
             return element;
         }

@@ -139,6 +139,7 @@
                 if (!text.Rotation.IsZero)
                     writer.WriteAttribute("rotation", text.Rotation);
                 writer.WriteAttribute("height", text.Height);
+                writer.WriteAttribute("thickness", text.Thickness);
                 if (!String.IsNullOrEmpty(text.Value))
                     writer.WriteAttribute("value", text.Value);
 
@@ -211,6 +212,8 @@
                     writer.WriteAttribute("position", parameter.Position);
                 if (!parameter.Rotation.IsZero)
                     writer.WriteAttribute("rotate", parameter.Rotation);
+                if (!parameter.IsVisible)
+                    writer.WriteAttribute("visible", parameter.IsVisible);
                 writer.WriteAttribute("value", parameter.Value);
 
                 writer.WriteEndElement();

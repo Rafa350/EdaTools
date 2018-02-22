@@ -56,6 +56,13 @@ namespace Eda.PCBViewer {
                 new FileStream(Path.Combine(path, inFileName), FileMode.Open, FileAccess.Read, FileShare.None));
             Board board = reader.Read();
 #endif
+            /*
+            BitmapCache cache = new BitmapCache();
+            cache.RenderAtScale = 20;
+            cache.SnapsToDevicePixels = true;
+            content.CacheMode = cache;
+            */
+
             content.ClearVisual();
             VisualGenerator vg = new VisualGenerator(board);
             content.AddVisual(vg.CreateVisuals());

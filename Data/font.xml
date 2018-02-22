@@ -159,6 +159,32 @@
                     <lineTo position="4, 1"/>                    
                 </glyph>
             </char>
+            <!-- P -->
+            <char code="0x50" advance="6">
+                <glyph>
+                    <moveTo position="0, 0"/>
+                    <lineTo position="0, 6"/>                    
+                    <lineTo position="3, 6"/>                    
+                    <lineTo position="4, 5"/>                    
+                    <lineTo position="4, 3"/>                    
+                    <lineTo position="3, 2"/>                    
+                    <lineTo position="0, 2"/>                    
+                </glyph>
+            </char>
+            <!-- R -->
+            <char code="0x52" advance="6">
+                <glyph>
+                    <moveTo position="0, 0"/>
+                    <lineTo position="0, 6"/>                    
+                    <lineTo position="3, 6"/>                    
+                    <lineTo position="4, 5"/>                    
+                    <lineTo position="4, 3"/>                    
+                    <lineTo position="3, 2"/>                    
+                    <lineTo position="0, 2"/>                    
+                    <moveTo position="4, 0"/>                    
+                    <lineTo position="3, 2"/>                    
+                </glyph>
+            </char>
             <!-- U -->
             <char code="0x55" advance="6">
                 <glyph>
