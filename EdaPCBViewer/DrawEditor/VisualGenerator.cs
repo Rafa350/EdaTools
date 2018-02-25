@@ -7,6 +7,7 @@
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
+    using System.Linq;
     using System.Globalization;
     using System.Collections.Generic;
     using System.Windows;
@@ -22,19 +23,21 @@
         /// </summary>
         private sealed class RenderVisitor: ElementVisitor {
 
-            private readonly DrawingVisual visual;
+            private readonly Dictionary<Color, Brush> brushCache = new Dictionary<Color, Brush>();
+            private readonly Dictionary<Tuple<Color, double>, Pen> penCache = new Dictionary<Tuple<Color, double>, Pen>();
+            private DrawingVisual parentVisual;
 
             /// <summary>
             /// Constructor del objecte.
             /// </summary>
             /// <param name="board">La placa a procesar.</param>
             /// <param name="layer">La capa on aplicar el proces.</param>
-            /// <param name="visuals">Llista de visuals.</param>
+            /// <param name="rootVisual">El visual arrel.</param>
             /// 
-            public RenderVisitor(Board board, Layer layer, DrawingVisual visual):
+            public RenderVisitor(Board board, Layer layer, DrawingVisual rootVisual):
                 base(board, layer) {
 
-                this.visual = visual;
+                parentVisual = rootVisual;
             }
 
             /// <summary>
@@ -59,7 +62,7 @@
                         dc.Pop();
                 }
 
-                this.visual.Children.Add(visual);
+                AddVisual(visual);
             }
 
             /// <summary>
@@ -84,7 +87,7 @@
                         dc.Pop();
                 }
 
-                this.visual.Children.Add(visual);
+                AddVisual(visual);
             }
 
             /// <summary>
@@ -110,7 +113,7 @@
                         dc.Pop();
                 }
 
-                this.visual.Children.Add(visual);
+                AddVisual(visual);
             }
 
             /// <summary>
@@ -136,7 +139,7 @@
                         dc.Pop();
                 }
 
-                this.visual.Children.Add(visual);
+                AddVisual(visual);
             }
 
             /// <summary>
@@ -162,7 +165,8 @@
                     if (Part != null)
                         dc.Pop();
                 }
-                this.visual.Children.Add(visual);
+
+                AddVisual(visual);
             }
 
             /// <summary>
@@ -193,7 +197,7 @@
                         dc.Pop();
                 }
 
-                this.visual.Children.Add(visual);
+                AddVisual(visual);
             }
 
             /// <summary>
@@ -218,7 +222,7 @@
                         dc.Pop();
                 }
 
-                this.visual.Children.Add(visual);
+                AddVisual(visual);
             }
 
             /// <summary>
@@ -258,7 +262,7 @@
                         dc.Pop();
                 }
 
-                this.visual.Children.Add(visual);
+                AddVisual(visual);
             }
 
             /// <summary>
@@ -283,7 +287,7 @@
                         dc.Pop();
                 }
 
-                this.visual.Children.Add(visual);
+                AddVisual(visual);
             }
 
             /// <summary>
@@ -300,7 +304,7 @@
                         dc.PushTransform(GetTransform(Part));
 
                     Color color = GetColor(Layer);
-                    Pen pen = CreatePen(color, 0.05);
+                    Pen pen = CreatePen(color, text.Thickness);
 
                     Transform attributeTransformation = null;
 
@@ -332,7 +336,37 @@
                         dc.Pop();
                 }
 
-                this.visual.Children.Add(visual);
+                AddVisual(visual);
+            }
+
+            /// <summary>
+            /// Visuta un objecte de tipus 'Part'
+            /// </summary>
+            /// <param name="part">L'objecte a visitar.</param>
+            /// 
+            public override void Visit(Part part) {
+
+                DrawingVisual visual = new DrawingVisual();
+                AddVisual(visual);
+
+                DrawingVisual saveVisual = parentVisual;
+                parentVisual = visual;
+                try {
+                    base.Visit(part);
+                }
+                finally {
+                    parentVisual = saveVisual;
+                }
+            }
+
+            /// <summary>
+            /// Afegeix la visual al seu pare
+            /// </summary>
+            /// <param name="visual">La visual a afeigir</param>
+            /// 
+            private void AddVisual(DrawingVisual visual) {
+
+                parentVisual.Children.Add(visual);
             }
 
             /// <summary>
@@ -368,15 +402,21 @@
             /// <param name="thickness">Amplada de linia.</param>
             /// <returns>El pen.</returns>
             /// 
-            private static Pen CreatePen(Color color, double thickness) {
+            private Pen CreatePen(Color color, double thickness) {
 
-                Brush brush = new SolidColorBrush(color);
-                brush.Freeze();
+                Pen pen;
 
-                Pen pen = new Pen(brush, thickness);
-                pen.StartLineCap = PenLineCap.Round;
-                pen.EndLineCap = PenLineCap.Round;
-                pen.Freeze();
+                if (!penCache.TryGetValue(new Tuple<Color, double>(color, thickness), out pen)) {
+
+                    Brush brush = CreateBrush(color);
+
+                    pen = new Pen(brush, thickness);
+                    pen.StartLineCap = PenLineCap.Round;
+                    pen.EndLineCap = PenLineCap.Round;
+                    pen.Freeze();
+
+                    penCache.Add(new Tuple<Color, double>(color, thickness), pen);
+                }
 
                 return pen;
             }
@@ -387,10 +427,17 @@
             /// <param name="color">Color.</param>
             /// <returns>El brush.</returns>
             /// 
-            private static Brush CreateBrush(Color color) {
+            private Brush CreateBrush(Color color) {
 
-                Brush brush = new SolidColorBrush(color);
-                brush.Freeze();
+                Brush brush;
+
+                if (!brushCache.TryGetValue(color, out brush)) {
+
+                    brush = new SolidColorBrush(color);
+                    brush.Freeze();
+
+                    brushCache.Add(color, brush);
+                }
 
                 return brush;
             }
@@ -438,24 +485,17 @@
             private static void StreamPolygon(StreamGeometryContext ctx, Polygon polygon, int level) {
 
                 if (polygon.HasPoints) {
-                    bool first = true;
-                    foreach (Point point in polygon.Points) {
-                        if (first) {
-                            first = false;
-                            ctx.BeginFigure(point, true, true);
-                        }
-                        else
-                            ctx.LineTo(point, true, true);
-                    }
+                    List<Point> points = new List<Point>(polygon.Points);
+                    ctx.BeginFigure(points[0], true, true);
+                    ctx.PolyLineTo(points.Skip(1).ToList<Point>(), true, true);
                 }
                 if (polygon.HasChilds && (level < 2))
                     foreach (Polygon child in polygon.Childs)
                         StreamPolygon(ctx, child, level + 1);
             }
 
-
             /// <summary>
-            /// Dibuixa un caracter en una geometria
+            /// Dibuixa un text en una geometria
             /// </summary>
             /// <param name="ctx">Contexte de dibuix.</param>
             /// <param name="text">El text a dibuixar.</param>
@@ -472,7 +512,7 @@
                             Point p = new Point(scale *(trace.X + delta), scale * trace.Y);
                             if (first) {
                                 first = false;
-                                ctx.BeginFigure(p, true, false);
+                                ctx.BeginFigure(p, false, false);
                             }
                             else
                                 ctx.LineTo(p, trace.Stroke, true);
@@ -544,12 +584,11 @@
                 if (layer.IsVisible) {
 
                     DrawingVisual layerVisual = new DrawingVisual();
+                    boardVisual.Children.Add(layerVisual);
                     layerVisual.Opacity = layer.Color.ScA;
 
                     RenderVisitor visitor = new RenderVisitor(board, layer, layerVisual);
                     visitor.Run();
-
-                    boardVisual.Children.Add(layerVisual);
                 }
             }
 

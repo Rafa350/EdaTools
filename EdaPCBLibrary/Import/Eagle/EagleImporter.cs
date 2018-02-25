@@ -478,11 +478,12 @@
 
             double rotate = GetAttributeDouble(node, "rot");
             double height = GetAttributeDouble(node, "size");
+            double thickness = 0.1;
 
             int layerNum = GetAttributeInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
 
-            TextElement element = new TextElement(position, Angle.FromDegrees(rotate), height, 0.1, TextElement.TextAlign.TopLeft);
+            TextElement element = new TextElement(position, Angle.FromDegrees(rotate), height, thickness, TextElement.TextAlign.TopLeft);
             element.Value = value;
 
             board.Place(board.GetLayer(layerName), element);
