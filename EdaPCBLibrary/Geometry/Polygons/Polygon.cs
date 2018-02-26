@@ -123,6 +123,19 @@
         }
 
         /// <summary>
+        /// Compacta les llistes internes per ocupar mens espai.
+        /// </summary>
+        /// 
+        public void Pack() {
+
+            if (points != null)
+                points.TrimExcess();
+
+            if (childs != null)
+                childs.TrimExcess();
+        }
+
+        /// <summary>
         /// Afegeix un punt al poligon.
         /// </summary>
         /// <param name="point">El punt a afeigir.</param>
