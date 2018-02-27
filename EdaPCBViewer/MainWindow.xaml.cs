@@ -42,11 +42,13 @@ namespace Eda.PCBViewer {
 
         private void Button_Click(object sender, RoutedEventArgs e) {
 
+            Board board;
+
             // El importa
             //
             Importer importer = new EagleImporter();
-            Board board = importer.Read(Path.Combine(path, inImportFileName));
-
+            board = importer.Read(Path.Combine(path, inImportFileName));
+            
             // El guarda
             //
             using (Stream inStream = new FileStream(Path.Combine(path, fileName), FileMode.Create, FileAccess.Write, FileShare.None)) {

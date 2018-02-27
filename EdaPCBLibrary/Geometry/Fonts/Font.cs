@@ -4,21 +4,28 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
+    using System.Windows;
     using System.Xml;
 
     public sealed class Font {
 
         private readonly Dictionary<char, Glyph> glyphs = new Dictionary<char, Glyph>();
+        private readonly string name;
         private readonly double height;
 
         /// <summary>
         /// Constructor privat de l'objecte
         /// </summary>
+        /// <param name="name">Nom del font.</param>
         /// <param name="height">Alçada del font.</param>
         /// <param name="glyphs">Llista de figures.</param>
         /// 
-        private Font(double height, IEnumerable<Glyph> glyphs) {
+        private Font(string name, double height, IEnumerable<Glyph> glyphs) {
 
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            this.name = name;
             this.height = height;
 
             foreach (Glyph glyph in glyphs)
@@ -50,6 +57,7 @@
 
             XmlNode fontNode = doc.SelectSingleNode("/resources/fontResource/font");
 
+            string fontName = fontNode.Attributes["name"].Value;
             double fontHeight = XmlConvert.ToDouble(fontNode.Attributes["height"].Value);
             double ascendent = XmlConvert.ToDouble(fontNode.Attributes["ascent"].Value);
             double descendent = XmlConvert.ToDouble(fontNode.Attributes["descent"].Value);
@@ -72,14 +80,15 @@
                     string[] s = positionStr.Split(',');
                     double x = XmlConvert.ToDouble(s[0]);
                     double y = XmlConvert.ToDouble(s[1]);
+                    Point position = new Point(x, y);
 
                     switch (strokeNode.Name) {
                         case "moveTo":
-                            traces.Add(new GlyphTrace(x, y, false));
+                            traces.Add(new GlyphTrace(position, false));
                             break;
 
                         case "lineTo":
-                            traces.Add(new GlyphTrace(x, y, true));
+                            traces.Add(new GlyphTrace(position, true));
                             break;
                     }
                 }
@@ -87,7 +96,7 @@
                 glyphs.Add(new Glyph(code, advance, traces));
             }
 
-            return new Font(fontHeight, glyphs);
+            return new Font(fontName, fontHeight, glyphs);
         }
 
         /// <summary>
@@ -140,7 +149,7 @@
                         writer.WriteStartElement("moveTo");
                     else
                         writer.WriteStartElement("lineTo");
-                    writer.WriteAttributeString("position", String.Format("{0}, {1}", XmlConvert.ToString(trace.X), XmlConvert.ToString(trace.Y)));
+                    writer.WriteAttributeString("position", String.Format("{0}, {1}", XmlConvert.ToString(trace.Position.X), XmlConvert.ToString(trace.Position.Y)));
                     writer.WriteEndElement();
                 }
 
@@ -170,6 +179,10 @@
                 return null;
         }
 
+        /// <summary>
+        /// Obte l'a´çada del font.
+        /// </summary>
+        /// 
         public double Height {
             get {
                 return height;

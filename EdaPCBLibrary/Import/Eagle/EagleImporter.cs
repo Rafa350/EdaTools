@@ -476,7 +476,7 @@
             int layerNum = GetAttributeInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
 
-            TextElement element = new TextElement(position, Angle.FromDegrees(rotate), height, thickness, TextElement.TextAlign.TopLeft);
+            TextElement element = new TextElement(position, Angle.FromDegrees(rotate), height, thickness, TextAlign.TopLeft);
             element.Value = value;
 
             board.Place(board.GetLayer(layerName), element);
@@ -680,6 +680,12 @@
             return part;
         }
 
+        /// <summary>
+        /// Procesa un node ATTRIBUTE
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>L'objecte 'PartAttribute' creat.</returns>
+        /// 
         private PartAttribute ParseAttributeNode(XmlNode node) {
 
             string name = GetAttributeString(node, "name");
@@ -689,7 +695,7 @@
             double rotate = GetAttributeDouble(node, "rotate");
             bool isVisible = GetAttributeString(node, "display") != "off";
 
-            return new PartAttribute(name, new Point(x, y), Angle.FromDegrees(rotate), isVisible, value);
+            return new PartAttribute(name, new Point(x, y), Angle.FromDegrees(rotate), TextAlign.TopLeft, isVisible, value);
         }
 
         /// <summary>

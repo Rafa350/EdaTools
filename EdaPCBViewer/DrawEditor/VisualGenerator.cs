@@ -310,6 +310,11 @@
 
                     string value = text.Value;
                     if (Part != null && value.StartsWith(">")) {
+
+                        if (Part.Name == "C10") {
+                            string s = Part.Name;
+                        }
+
                         PartAttribute pa = Part.GetAttribute(value.Substring(1));
                         if (pa != null) {
                             value = value.Replace(value, pa.Value);
@@ -509,7 +514,7 @@
                     if (glyph != null) {
                         bool first = true;
                         foreach (GlyphTrace trace in glyph.Traces) {
-                            Point p = new Point(scale *(trace.X + delta), scale * trace.Y);
+                            Point p = new Point(scale *(trace.Position.X + delta), scale * trace.Position.Y);
                             if (first) {
                                 first = false;
                                 ctx.BeginFigure(p, false, false);

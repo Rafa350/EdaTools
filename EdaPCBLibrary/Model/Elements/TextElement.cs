@@ -10,18 +10,6 @@
     /// </summary>
     public sealed class TextElement: Element, IPosition, IRotation {
 
-        public enum TextAlign {
-            TopLeft,
-            TopCenter,
-            TopRight,
-            MiddleLeft,
-            MiddleCenter,
-            MiddleRight,
-            BottomLeft,
-            BottomCenter,
-            BottomRight,
-        }
-
         private Point position;
         private Angle rotation;
         private double height;

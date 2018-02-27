@@ -10,6 +10,7 @@
         private string value;
         private Point position;
         private Angle rotation;
+        private TextAlign align;
         private bool isVisible;
 
         public PartAttribute(string name, string value) {
@@ -21,7 +22,7 @@
             this.value = value;
         }
 
-        public PartAttribute(string name, Point position, Angle rotation, bool isVisible, string value) {
+        public PartAttribute(string name, Point position, Angle rotation, TextAlign align, bool isVisible, string value) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -29,6 +30,7 @@
             this.name = name;
             this.position = position;
             this.rotation = rotation;
+            this.align = align;
             this.isVisible = isVisible;
             this.value = value;
         }
@@ -68,6 +70,15 @@
             }
             set {
                 isVisible = value;
+            }
+        }
+
+        public TextAlign Align {
+            get {
+                return align;
+            }
+            set {
+                align = value;
             }
         }
 

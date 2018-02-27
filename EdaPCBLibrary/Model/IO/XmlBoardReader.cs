@@ -461,13 +461,13 @@
         /// 
         private PartAttribute ParseAttribute(XmlNode node) {
 
-            string attrName = node.AttributeAsString("name");
-            string attrValue = node.AttributeAsString("value");
-            Point attrPosition = node.AttributeAsPoint("position");
-            Angle attrRotation = node.AttributeAsAngle("rotation");
+            string name = node.AttributeAsString("name");
+            string value = node.AttributeAsString("value");
+            Point position = node.AttributeAsPoint("position");
+            Angle rotation = node.AttributeAsAngle("rotation");
             bool visible = node.AttributeAsBoolean("visible", false);
 
-            return new PartAttribute(attrName, attrPosition, attrRotation, visible, attrValue);
+            return new PartAttribute(name, position, rotation, TextAlign.TopLeft, visible, value);
         }
     }
 }

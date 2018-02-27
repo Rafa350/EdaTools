@@ -8,7 +8,7 @@
     public sealed class Glyph {
 
         private readonly char code;
-        private readonly double width;
+        private readonly double advance;
         private readonly List<GlyphTrace> traces;
 
         /// <summary>
@@ -21,7 +21,7 @@
         public Glyph(char code, double advance, IEnumerable<GlyphTrace> traces) {
 
             this.code = code;
-            this.width = advance;
+            this.advance = advance;
             this.traces = new List<GlyphTrace>(traces);
         }
 
@@ -41,7 +41,7 @@
         /// 
         public double Advance {
             get {
-                return width;
+                return advance;
             }
         }
 
