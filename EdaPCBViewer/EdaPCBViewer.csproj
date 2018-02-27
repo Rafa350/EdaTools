@@ -8,7 +8,7 @@
     <ProjectGuid>{8CEAFC37-67B6-4765-A9C0-6F64EE01C7A9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Eda.PCBViewer</RootNamespace>
+    <RootNamespace>MikroPic.EdaTools.v1.Designer</RootNamespace>
     <AssemblyName>EdaPCBViewer</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>

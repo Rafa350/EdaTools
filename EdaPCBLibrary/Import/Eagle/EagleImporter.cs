@@ -29,7 +29,7 @@
         /// <param name="stream">Stream d'entrada.</param>
         /// <returns>La placa.</returns>
         /// 
-        public override Board LoadBoard(Stream stream) {
+        public override Board Read(Stream stream) {
 
             doc = ReadXmlDocument(stream);
             board = new Board();
@@ -40,13 +40,6 @@
             ProcessElements();
 
             return board;
-        }
-
-        public override Library LoadLibrary(Stream stream) {
-
-            XmlDocument doc = ReadXmlDocument(stream);
-
-            throw new NotImplementedException();
         }
 
         /// <summary>

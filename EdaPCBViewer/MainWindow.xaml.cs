@@ -45,7 +45,7 @@ namespace Eda.PCBViewer {
             // El importa
             //
             Importer importer = new EagleImporter();
-            Board board = importer.LoadBoard(Path.Combine(path, inImportFileName));
+            Board board = importer.Read(Path.Combine(path, inImportFileName));
 
             // El guarda
             //

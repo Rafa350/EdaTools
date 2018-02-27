@@ -5,20 +5,12 @@
 
     public abstract class Importer {
 
-        public Board LoadBoard(string fileName) {
+        public Board Read(string fileName) {
 
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-                return LoadBoard(stream);
+                return Read(stream);
         }
 
-        public Library LoadLibrary(string fileName) {
-
-            using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-                return LoadLibrary(stream);
-        }
-
-        public abstract Board LoadBoard(Stream stream);
-
-        public abstract Library LoadLibrary(Stream stream);
+        public abstract Board Read(Stream stream);
     }
 }

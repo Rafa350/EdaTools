@@ -1,6 +1,5 @@
-﻿namespace MikroPic.EdaTools.v1 {
+﻿namespace MikroPic.EdaTools.v1.Converter {
 
-    using MikroPic.EdaTools.v1.Cam;
     using MikroPic.EdaTools.v1.Pcb.Import;
     using MikroPic.EdaTools.v1.Pcb.Import.Eagle;
     using MikroPic.EdaTools.v1.Pcb.Model;
@@ -14,14 +13,11 @@
             string path = @"..\..\..\Data";
 
             Importer importer = new EagleImporter();
-            Board board = importer.LoadBoard(Path.Combine(path, "board3.brd"));
+            Board board = importer.Read(Path.Combine(path, "board3.brd"));
 
             XmlBoardWriter boardWriter = new XmlBoardWriter(
                 new FileStream(Path.Combine(path, "board3.xml"), FileMode.Create, FileAccess.Write, FileShare.None));
             boardWriter.Write(board);
-
-            CAMGenerator camGenerator = new CAMGenerator();
-            camGenerator.Generate(board, @"..\..\..\Data", "board");
         }
     }
 }

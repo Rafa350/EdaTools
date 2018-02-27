@@ -35,7 +35,7 @@
         /// <summary>
         /// Escriu un atribut de tipus 'Size'.
         /// </summary>
-        /// <param name="writer">El objecte escriptor xml.</param>
+        /// <param name="writer">L'objecte escriptor XML.</param>
         /// <param name="name">El nom del atribut.</param>
         /// <param name="size">El valor del atribut.</param>
         /// 
@@ -52,9 +52,10 @@
         /// <summary>
         /// Escriu un atribut de tipus 'Color'
         /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="name"></param>
-        /// <param name="color"></param>
+        /// <param name="writer">L'objecte escriptor XML.</param>
+        /// <param name="name">El nom de l'atribut.</param>
+        /// <param name="color">El valor de l'atribut.</param>
+        /// 
         public static void WriteAttribute(this XmlWriter writer, string name, Color color) {
 
             writer.WriteAttributeString(
@@ -70,9 +71,10 @@
         /// <summary>
         /// Escriu un atribut de tipus 'Angle'.
         /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="name"></param>
-        /// <param name="angle"></param>
+        /// <param name="writer">L'objecte escriptor XML</param>
+        /// <param name="name">Nom de l'atribut.</param>
+        /// <param name="angle">El valor del atribut.</param>
+        /// 
         public static void WriteAttribute(this XmlWriter writer, string name, Angle angle) {
 
             writer.WriteAttributeString(
