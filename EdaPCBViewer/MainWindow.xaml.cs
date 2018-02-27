@@ -26,8 +26,7 @@ namespace Eda.PCBViewer {
         private readonly double scaleFactor = 1.1;
         private const string path = @"..\..\..\Data";
         private const string inImportFileName = @"board3.brd";
-        private const string inFileName = @"board3.xml";
-        private const string outFileName = @"out.xml";
+        private const string fileName = @"board3.xml";
 
         private Point prevContentMousePos;
 
@@ -43,25 +42,24 @@ namespace Eda.PCBViewer {
 
         private void Button_Click(object sender, RoutedEventArgs e) {
 
-#if ImportTest
-
+            // El importa
+            //
             Importer importer = new EagleImporter();
             Board board = importer.LoadBoard(Path.Combine(path, inImportFileName));
 
-            XmlBoardWriter writer = new XmlBoardWriter(
-                new FileStream(Path.Combine(path, inFileName), FileMode.Create, FileAccess.Write, FileShare.None));
-            writer.Write(board);
-#else
-            XmlBoardReader reader = new XmlBoardReader(
-                new FileStream(Path.Combine(path, inFileName), FileMode.Open, FileAccess.Read, FileShare.None));
-            Board board = reader.Read();
-#endif
-            /*
-            BitmapCache cache = new BitmapCache();
-            cache.RenderAtScale = 20;
-            cache.SnapsToDevicePixels = true;
-            content.CacheMode = cache;
-            */
+            // El guarda
+            //
+            using (Stream inStream = new FileStream(Path.Combine(path, fileName), FileMode.Create, FileAccess.Write, FileShare.None)) {
+                XmlBoardWriter writer = new XmlBoardWriter(inStream);
+                writer.Write(board);
+            }
+
+            // El torna a carregar
+            //
+            using (Stream outStream = new FileStream(Path.Combine(path, fileName), FileMode.Open, FileAccess.Read, FileShare.None)) {
+                XmlBoardReader reader = new XmlBoardReader(outStream);
+                board = reader.Read();
+            }
 
             content.ClearVisual();
             VisualGenerator vg = new VisualGenerator(board);

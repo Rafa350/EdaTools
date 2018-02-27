@@ -26,7 +26,7 @@
         }
 
         /// <summary>
-        /// Crera un font des d'un arxiu.
+        /// Crea un font des d'un arxiu.
         /// </summary>
         /// <param name="fileName">Nom del fitxer.</param>
         /// <returns>L'objecte 'VectorFont' creat</returns>
@@ -130,10 +130,6 @@
 
                 writer.WriteStartElement("char");
                 writer.WriteAttributeString("code", XmlConvert.ToString(glyph.Code));
-                writer.WriteAttributeString("left", "");
-                writer.WriteAttributeString("top", "");
-                writer.WriteAttributeString("width", "");
-                writer.WriteAttributeString("height", "");
                 writer.WriteAttributeString("advance", XmlConvert.ToString(glyph.Advance));
 
                 writer.WriteStartElement("glyph");

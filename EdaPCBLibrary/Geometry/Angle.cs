@@ -199,7 +199,7 @@
         }
 
         /// <summary>
-        /// Obte el valor de l'angle en graus sexagesimals.
+        /// Obte el valor de l'angle en graus.
         /// </summary>
         /// 
         public double Degrees {

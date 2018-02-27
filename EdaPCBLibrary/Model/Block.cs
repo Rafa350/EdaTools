@@ -22,8 +22,9 @@
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="name">Identificador del component.</param>
-        /// <param name="elements">Llista d'elements que formen el component.</param>
+        /// <param name="name">Identificador del bloc.</param>
+        /// <param name="elements">Llista d'elements.</param>
+        /// <param name="attributes">Llista d'atributs.</param>
         /// 
         public Block(string name, IEnumerable<Element> elements = null, IEnumerable<BlockAttribute> attributes = null) {
 
@@ -33,8 +34,7 @@
             this.name = name;
 
             if (elements != null)
-                foreach (Element element in elements)
-                    AddElement(element);
+                AddElements(elements);
 
             if (attributes != null)
                 foreach (BlockAttribute attribute in attributes)
@@ -52,7 +52,7 @@
         }
 
         /// <summary>
-        /// Afeigeix un element al component.
+        /// Afeigeix un element.
         /// </summary>
         /// <param name="element">El element a afeigir.</param>
         /// 
@@ -63,6 +63,21 @@
 
             if (!elements.Add(element))
                 throw new InvalidOperationException("El elemento ya pertenece al bloque.");
+        }
+
+        /// <summary>
+        /// Afeigeix una coleccio d'elements.
+        /// </summary>
+        /// <param name="element">El elements a afeigir.</param>
+        /// 
+        public void AddElements(IEnumerable<Element> elements) {
+
+            if (elements == null)
+                throw new ArgumentNullException("elements");
+
+            foreach (Element element in elements)
+                if (!this.elements.Add(element))
+                    throw new InvalidOperationException("El elemento ya pertenece al bloque.");
         }
 
         /// <summary>

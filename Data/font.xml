@@ -2,7 +2,29 @@
 <resources>
     <fontResource version="3.0" resourceId="EdaToolsPcbFont">
         <font name="EdaTools Standard Font" height="9" ascent="6" descent="2">
-            <!-- 0 -->
+            <!-- ' ' -->
+            <char code="0x20" advance="3">
+                <glyph>
+                </glyph>
+            </char>
+            <!-- '.' -->
+            <char code="0x2D" advance="3">
+                <glyph>
+                    <moveTo position="0, 0"/>
+                    <lineTo position="1, 0"/>
+                    <lineTo position="1, 1"/>
+                    <lineTo position="0, 1"/>
+                    <lineTo position="0, 0"/>
+                </glyph>
+            </char>
+            <!--  '-' -->
+            <char code="0x2E" advance="6">
+                <glyph>
+                    <moveTo position="0, 3"/>
+                    <lineTo position="4, 3"/>
+                </glyph>
+            </char>
+            <!-- '0' -->
             <char code="0x30" advance="6">
                 <glyph>
                     <moveTo position="0, 1"/>
@@ -17,7 +39,7 @@
                     <lineTo position="4, 5"/>
                 </glyph>
             </char>
-            <!-- 1 -->
+            <!-- '1' -->
             <char code="0x31" advance="6">
                 <glyph>
                     <moveTo position="0, 0"/>
@@ -27,7 +49,7 @@
                     <lineTo position="0, 4"/>
                 </glyph>
             </char>
-            <!-- 2 -->
+            <!-- '2' -->
             <char code="0x32" advance="6">
                 <glyph>
                     <moveTo position="4, 0"/>
@@ -42,7 +64,7 @@
                     <lineTo position="0, 5"/>
                 </glyph>
             </char>
-            <!-- 3 -->
+            <!-- '3' -->
             <char code="0x33" advance="6">
                 <glyph>
                     <moveTo position="0, 1"/>
@@ -60,7 +82,7 @@
                     <lineTo position="0, 5"/>
                 </glyph>
             </char>
-            <!-- 4 -->
+            <!-- '4' -->
             <char code="0x34" advance="6">
                 <glyph>
                     <moveTo position="3, 0"/>
@@ -69,7 +91,7 @@
                     <lineTo position="4, 3"/>
                 </glyph>
             </char>
-            <!-- 5 -->
+            <!-- '5' -->
             <char code="0x35" advance="6">
                 <glyph>
                     <moveTo position="0, 1"/>
@@ -84,7 +106,7 @@
                     <lineTo position="4, 6"/>                    
                 </glyph>
             </char>
-            <!-- 6 -->
+            <!-- '6' -->
             <char code="0x36" advance="6">
                 <glyph>
                     <moveTo position="0, 3"/>
@@ -99,7 +121,7 @@
                     <lineTo position="4, 6"/>
                 </glyph>
             </char>
-            <!-- 7 -->
+            <!-- '7' -->
             <char code="0x37" advance="6">
                 <glyph>
                     <moveTo position="0, 6"/>
@@ -109,7 +131,7 @@
                     <lineTo position="0, 0"/>
                 </glyph>
             </char>
-            <!-- 8 -->
+            <!-- '8' -->
             <char code="0x38" advance="6">
                 <glyph>
                     <moveTo position="1, 3"/>
@@ -130,7 +152,7 @@
                     <lineTo position="3, 3"/>
                 </glyph>
             </char>
-            <!-- 9 -->
+            <!-- '9' -->
             <char code="0x39" advance="6">
                 <glyph>
                     <moveTo position="0, 1"/>
@@ -146,7 +168,20 @@
                     <lineTo position="4, 3"/>                
                 </glyph>
             </char>
-            <!-- C -->
+            <!-- 'A' -->
+            <char code="0x41" advance="6">
+                <glyph>
+                    <moveTo position="0, 0"/>
+                    <lineTo position="0, 5"/>                                        
+                    <lineTo position="1, 6"/>                                        
+                    <lineTo position="3, 6"/>                                        
+                    <lineTo position="4, 5"/>                                        
+                    <lineTo position="4, 0"/>                                        
+                    <moveTo position="0, 3"/>                                        
+                    <lineTo position="4, 3"/>                                        
+                </glyph>
+            </char>
+            <!-- 'C' -->
             <char code="0x43" advance="6">
                 <glyph>
                     <moveTo position="4, 5"/>
@@ -159,7 +194,7 @@
                     <lineTo position="4, 1"/>                    
                 </glyph>
             </char>
-            <!-- J -->
+            <!-- 'J' -->
             <char code="0x4A" advance="6">
                 <glyph>
                     <moveTo position="0, 1"/>
@@ -171,7 +206,15 @@
                     <lineTo position="4, 6"/>                    
                 </glyph>
             </char>
-            <!-- P -->
+            <!-- 'L' -->
+            <char code="0x4C" advance="6">
+                <glyph>
+                    <moveTo position="4, 0"/>
+                    <lineTo position="0, 0"/>                    
+                    <lineTo position="0, 6"/>                    
+                </glyph>
+            </char>
+            <!-- 'P' -->
             <char code="0x50" advance="6">
                 <glyph>
                     <moveTo position="0, 0"/>
@@ -183,7 +226,7 @@
                     <lineTo position="0, 2"/>                    
                 </glyph>
             </char>
-            <!-- R -->
+            <!-- 'R' -->
             <char code="0x52" advance="6">
                 <glyph>
                     <moveTo position="0, 0"/>
@@ -197,7 +240,7 @@
                     <lineTo position="3, 2"/>                    
                 </glyph>
             </char>
-            <!-- U -->
+            <!-- 'U' -->
             <char code="0x55" advance="6">
                 <glyph>
                     <moveTo position="0, 6"/>

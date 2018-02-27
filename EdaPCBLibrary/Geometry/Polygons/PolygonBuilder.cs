@@ -27,7 +27,6 @@
             Polygon polygon = new Polygon();
             polygon.AddPoints(ArcPoints(end, thickness / 2, angle + Angle.Deg270, Angle.FromDegrees(180)));
             polygon.AddPoints(ArcPoints(start, thickness / 2, angle + Angle.Deg90, Angle.FromDegrees(180)));
-            polygon.Pack();
 
             return polygon;
         }
@@ -51,7 +50,6 @@
             Polygon polygon = new Polygon();
             polygon.AddPoints(ArcPoints(center, outerRadius, startAngle, angle));
             polygon.AddPoints(ArcPoints(center, innerRadius, startAngle + angle, -angle));
-            polygon.Pack();
 
             return polygon;
         }
@@ -66,7 +64,6 @@
         public static Polygon BuildCircle(Point center, double radius) {
 
             Polygon polygon = new Polygon(PolygonPoints(32, center, radius, Angle.Zero));
-            polygon.Pack();
 
             return polygon;
         }
@@ -122,8 +119,6 @@
                 m.RotateAt(rotation.Degrees, x, y);
                 polygon.Transform(m);
             }
-
-            polygon.Pack();
 
             return polygon;
         }
@@ -201,8 +196,6 @@
                 polygon.Transform(m);
             }
 
-            polygon.Pack();
-
             return polygon;
         }
 
@@ -218,7 +211,6 @@
         public static Polygon BuildRegularPolygon(int sides, Point position, double radius, Angle rotation) {
 
             Polygon polygon = new Polygon(PolygonPoints(sides, position, radius, rotation));
-            polygon.Pack();
 
             return polygon;
         }

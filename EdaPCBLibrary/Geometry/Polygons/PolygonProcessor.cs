@@ -156,11 +156,17 @@
         /// 
         private static List<IntPoint> ToPointList(Polygon polygon) {
 
-            List<IntPoint> intPoints = new List<IntPoint>();
-            if (polygon.PointCount > 0)
-                foreach (Point point in polygon.Points)
-                    intPoints.Add(new IntPoint(point.X * scaleFactor, point.Y * scaleFactor));
-            return intPoints;
+            if (polygon.PointCount > 0) {
+                Point[] srcArray = polygon.PointArray;
+                IntPoint[] dstArray = new IntPoint[srcArray.Length];
+                for (int i = 0; i < srcArray.Length; i++) {
+                    dstArray[i].X = (int)(srcArray[i].X * scaleFactor);
+                    dstArray[i].Y = (int)(srcArray[i].Y * scaleFactor);
+                }
+                return new List<IntPoint>(dstArray);
+            }
+            else
+                return null;
         }
 
         /// <summary>
@@ -169,12 +175,15 @@
         /// <param name="points">La llista de punts.</param>
         /// <returns>El poligon.</returns>
         /// 
-        private static Polygon ToPolygon(IEnumerable<IntPoint> points) {
+        private static Polygon ToPolygon(List<IntPoint> points) {
 
-            Polygon polygon = new Polygon();
-            foreach (IntPoint intPoint in points)
-                polygon.AddPoint(new Point((double)intPoint.X / scaleFactor, (double)intPoint.Y / scaleFactor));
-            return polygon;
+            IntPoint[] srcArray = points.ToArray();
+            Point[] dstArray = new Point[srcArray.Length];
+            for (int i = 0; i < srcArray.Length; i++) {
+                dstArray[i].X = srcArray[i].X / scaleFactor;
+                dstArray[i].Y = srcArray[i].Y / scaleFactor;
+            }
+            return new Polygon(dstArray);
         }
 
         /// <summary>
@@ -187,9 +196,15 @@
 
             Polygon polygon = new Polygon();
 
-            if (polyNode.Contour.Count > 0)
-                foreach (IntPoint intPoint in polyNode.Contour)
-                    polygon.AddPoint(new Point((double)intPoint.X / scaleFactor, (double)intPoint.Y / scaleFactor));
+            if (polyNode.Contour.Count > 0) {
+                IntPoint[] srcArray = polyNode.Contour.ToArray();
+                Point[] dstArray = new Point[srcArray.Length];
+                for (int i = 0; i < srcArray.Length; i++) {
+                    dstArray[i].X = srcArray[i].X / scaleFactor;
+                    dstArray[i].Y = srcArray[i].Y / scaleFactor;
+                }
+                polygon.AddPoints(dstArray);
+            }
 
             if (polyNode.ChildCount > 0) {
                 foreach (PolyNode polyNodeChild in polyNode.Childs)

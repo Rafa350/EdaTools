@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaPCBTool", "EdaPCBTool\EdaPCBTool.csproj", "{D54B130E-6746-482D-B6A7-C261F5DC0684}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaPCBViewer", "EdaPCBViewer\EdaPCBViewer.csproj", "{8CEAFC37-67B6-4765-A9C0-6F64EE01C7A9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaPartFinder", "EdaPartFinder\EdaPartFinder.csproj", "{AD8FC968-D24F-4529-B55D-E979A917BE2D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaImport", "EdaImport\EdaImport.csproj", "{992BECEF-69F9-4071-9ACA-AB3DB04B8B97}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaLibraryEditor", "EdaLibraryEditor\EdaLibraryEditor.csproj", "{CCC8A87B-987C-49D2-908E-A8BAFE27F3CE}"
 EndProject
@@ -24,6 +22,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{92F26718-1D57-463C-8AF1-6BE8F0199D09}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaCAMTool", "EdaCAMTool\EdaCAMTool.csproj", "{EAAAC444-EF61-4A87-8F1C-45908E2D11C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaConverter", "EdaConverter\EdaConverter.csproj", "{992BECEF-69F9-4071-9ACA-AB3DB04B8B97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,6 @@ Global
 		{8CEAFC37-67B6-4765-A9C0-6F64EE01C7A9}.Release|x86.Build.0 = Release|x86
 		{AD8FC968-D24F-4529-B55D-E979A917BE2D}.Debug|x86.ActiveCfg = Debug|x86
 		{AD8FC968-D24F-4529-B55D-E979A917BE2D}.Release|x86.ActiveCfg = Release|x86
-		{992BECEF-69F9-4071-9ACA-AB3DB04B8B97}.Debug|x86.ActiveCfg = Debug|x86
-		{992BECEF-69F9-4071-9ACA-AB3DB04B8B97}.Debug|x86.Build.0 = Debug|x86
-		{992BECEF-69F9-4071-9ACA-AB3DB04B8B97}.Release|x86.ActiveCfg = Release|x86
-		{992BECEF-69F9-4071-9ACA-AB3DB04B8B97}.Release|x86.Build.0 = Release|x86
 		{CCC8A87B-987C-49D2-908E-A8BAFE27F3CE}.Debug|x86.ActiveCfg = Debug|x86
 		{CCC8A87B-987C-49D2-908E-A8BAFE27F3CE}.Release|x86.ActiveCfg = Release|x86
 		{706BC74F-0182-4B56-8D9D-C6B311044076}.Debug|x86.ActiveCfg = Debug|x86
@@ -59,16 +55,20 @@ Global
 		{EAAAC444-EF61-4A87-8F1C-45908E2D11C5}.Debug|x86.Build.0 = Debug|x86
 		{EAAAC444-EF61-4A87-8F1C-45908E2D11C5}.Release|x86.ActiveCfg = Release|x86
 		{EAAAC444-EF61-4A87-8F1C-45908E2D11C5}.Release|x86.Build.0 = Release|x86
+		{992BECEF-69F9-4071-9ACA-AB3DB04B8B97}.Debug|x86.ActiveCfg = Debug|x86
+		{992BECEF-69F9-4071-9ACA-AB3DB04B8B97}.Debug|x86.Build.0 = Debug|x86
+		{992BECEF-69F9-4071-9ACA-AB3DB04B8B97}.Release|x86.ActiveCfg = Release|x86
+		{992BECEF-69F9-4071-9ACA-AB3DB04B8B97}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8CEAFC37-67B6-4765-A9C0-6F64EE01C7A9} = {92F26718-1D57-463C-8AF1-6BE8F0199D09}
-		{992BECEF-69F9-4071-9ACA-AB3DB04B8B97} = {92F26718-1D57-463C-8AF1-6BE8F0199D09}
 		{706BC74F-0182-4B56-8D9D-C6B311044076} = {2AE1055B-66C8-4106-A68A-95A015805086}
 		{9786F647-BCA2-45F5-814C-E41EBA6A4480} = {2AE1055B-66C8-4106-A68A-95A015805086}
 		{EAAAC444-EF61-4A87-8F1C-45908E2D11C5} = {92F26718-1D57-463C-8AF1-6BE8F0199D09}
+		{992BECEF-69F9-4071-9ACA-AB3DB04B8B97} = {92F26718-1D57-463C-8AF1-6BE8F0199D09}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE385F67-7CB1-40F1-B714-28A5F985E431}
