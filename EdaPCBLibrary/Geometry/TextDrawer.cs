@@ -49,17 +49,42 @@
             // Calcula els offsets en funcio de l'aliniacio
             //
             double offsetX = 0;
-            double offsetY = 0;
             switch (align) {
                 case TextAlign.TopLeft:
+                case TextAlign.MiddleLeft:
+                case TextAlign.BottomLeft:
                     break;
 
                 case TextAlign.TopCenter:
+                case TextAlign.MiddleCenter:
+                case TextAlign.BottomCenter:
                     offsetX = -width / 2;
                     break;
 
                 case TextAlign.TopRight:
+                case TextAlign.MiddleRight:
+                case TextAlign.BottomRight:
                     offsetX = -width;
+                    break;
+            }
+
+            double offsetY = 0;
+            switch (align) {
+                case TextAlign.TopLeft:
+                case TextAlign.TopCenter:
+                case TextAlign.TopRight:
+                    offsetY = -font.Height;
+                    break;
+
+                case TextAlign.MiddleLeft:
+                case TextAlign.MiddleCenter:
+                case TextAlign.MiddleRight:
+                    offsetY = -font.Height / 2;
+                    break;
+
+                case TextAlign.BottomLeft:
+                case TextAlign.BottomCenter:
+                case TextAlign.BottomRight:
                     break;
             }
 
@@ -68,7 +93,7 @@
             double scale = height / font.Height;
             Matrix m = new Matrix();
             m.Translate(position.X + offsetX, position.Y + offsetY);
-            m.Scale(scale, scale);
+            m.ScaleAt(scale, scale, position.X, position.Y);
 
             // Dibuixa text
             //

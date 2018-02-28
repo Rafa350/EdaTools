@@ -214,7 +214,7 @@
                 if ((parameter.Position.X != 0) || (parameter.Position.Y != 0))
                     writer.WriteAttribute("position", parameter.Position);
                 if (!parameter.Rotation.IsZero)
-                    writer.WriteAttribute("rotate", parameter.Rotation);
+                    writer.WriteAttribute("rotation", parameter.Rotation);
                 if (parameter.Align != TextAlign.TopLeft)
                     writer.WriteAttribute("align", parameter.Align);
                 if (!parameter.IsVisible)

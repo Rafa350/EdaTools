@@ -44,7 +44,6 @@ namespace Eda.PCBViewer {
 
             Board board;
 
-            /*
             // Importa el fitxer
             //
             Importer importer = new EagleImporter();
@@ -56,7 +55,6 @@ namespace Eda.PCBViewer {
                 XmlBoardWriter writer = new XmlBoardWriter(inStream);
                 writer.Write(board);
             }
-            */
 
             // Carrega el fitxer
             //

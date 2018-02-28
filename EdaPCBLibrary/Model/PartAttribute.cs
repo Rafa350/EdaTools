@@ -4,6 +4,9 @@
     using System;
     using System.Windows;
 
+    /// <summary>
+    /// Clase que representa un atribut d'un component
+    /// </summary>
     public sealed class PartAttribute: IVisitable {
 
         private readonly string name;
@@ -13,6 +16,12 @@
         private TextAlign align;
         private bool isVisible;
 
+        /// <summary>
+        /// Constructor del objecte.
+        /// </summary>
+        /// <param name="name">Nom del atribut</param>
+        /// <param name="value">Valor del atribut.</param>
+        /// 
         public PartAttribute(string name, string value) {
 
             if (String.IsNullOrEmpty(name))
@@ -40,12 +49,20 @@
             visitor.Visit(this);
         }
 
+        /// <summary>
+        /// Obte el nom del atribut.
+        /// </summary>
+        /// 
         public string Name {
             get {
                 return name;
             }
         }
 
+        /// <summary>
+        /// Obte la posicio del atribut.
+        /// </summary>
+        /// 
         public Point Position {
             get {
                 return position;

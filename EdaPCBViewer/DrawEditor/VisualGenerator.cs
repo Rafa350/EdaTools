@@ -516,34 +516,6 @@
                     foreach (Polygon child in polygon.Childs)
                         StreamPolygon(ctx, child, level + 1);
             }
-
-            /// <summary>
-            /// Dibuixa un text en una geometria
-            /// </summary>
-            /// <param name="ctx">Contexte de dibuix.</param>
-            /// <param name="text">El text a dibuixar.</param>
-            /// 
-            private static void StreamText(StreamGeometryContext ctx, double height, string text) {
-
-                double delta = 0;
-                double scale = height / font.Height; 
-                foreach (char ch in text) {
-                    Glyph glyph = font.GetGlyph(ch);
-                    if (glyph != null) {
-                        bool first = true;
-                        foreach (GlyphTrace trace in glyph.Traces) {
-                            Point p = new Point(scale *(trace.Position.X + delta), scale * trace.Position.Y);
-                            if (first) {
-                                first = false;
-                                ctx.BeginFigure(p, false, false);
-                            }
-                            else
-                                ctx.LineTo(p, trace.Stroke, true);
-                        }
-                        delta += glyph.Advance;
-                    }
-                }
-            }
         }
 
         private readonly Board board;

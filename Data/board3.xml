@@ -877,14 +877,14 @@
                 <pad name="2" signal="N$17" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-1.0200000000000031, -0.020000000000003126" rotate="-90" align="BottomCenter" value="R9" />
-                <attribute name="VALUE" position="2.5399999999999991, -1.2700000000000031" rotate="-90" value="270" />
-                <attribute name="R_CASE" rotate="-90" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-90" visible="false" value="270R" />
-                <attribute name="TYPE" rotate="-90" visible="false" value="R" />
-                <attribute name="R_TOLERANCE" rotate="-90" visible="false" value="1%" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="CRCW0805270RFKEA" />
+                <attribute name="NAME" position="-1.0200000000000031, -0.020000000000003126" rotation="-90" align="BottomCenter" value="R9" />
+                <attribute name="VALUE" position="2.5399999999999991, -1.2700000000000031" rotation="-90" value="270" />
+                <attribute name="R_CASE" rotation="-90" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-90" visible="false" value="270R" />
+                <attribute name="TYPE" rotation="-90" visible="false" value="R" />
+                <attribute name="R_TOLERANCE" rotation="-90" visible="false" value="1%" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="CRCW0805270RFKEA" />
             </attributes>
         </part>
         <part name="R10" block="R-0805@smd-parts" position="41.75, 47.875" rotation="90">
@@ -893,14 +893,14 @@
                 <pad name="2" signal="N$18" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-1.0499999999999972, 0.024999999999998579" rotate="-90" align="BottomCenter" value="R10" />
-                <attribute name="VALUE" position="2.5399999999999991, -1.2700000000000031" rotate="-90" value="270" />
-                <attribute name="R_CASE" rotate="-90" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-90" visible="false" value="270R" />
-                <attribute name="TYPE" rotate="-90" visible="false" value="R" />
-                <attribute name="R_TOLERANCE" rotate="-90" visible="false" value="1%" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Vishay" />
+                <attribute name="NAME" position="-1.0499999999999972, 0.024999999999998579" rotation="-90" align="BottomCenter" value="R10" />
+                <attribute name="VALUE" position="2.5399999999999991, -1.2700000000000031" rotation="-90" value="270" />
+                <attribute name="R_CASE" rotation="-90" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-90" visible="false" value="270R" />
+                <attribute name="TYPE" rotation="-90" visible="false" value="R" />
+                <attribute name="R_TOLERANCE" rotation="-90" visible="false" value="1%" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="CRCW0805270RFKEA" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Vishay" />
             </attributes>
         </part>
         <part name="R11" block="R-0805@smd-parts" position="41.75, 43" rotation="90">
@@ -909,14 +909,14 @@
                 <pad name="2" signal="N$25" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-1.0200000000000031, -0.020000000000003126" rotate="-90" align="BottomCenter" value="R11" />
-                <attribute name="VALUE" position="2.5399999999999991, -1.2700000000000031" rotate="-90" value="270" />
-                <attribute name="R_CASE" rotate="-90" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-90" visible="false" value="270R" />
-                <attribute name="TYPE" rotate="-90" visible="false" value="R" />
-                <attribute name="R_TOLERANCE" rotate="-90" visible="false" value="1%" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Vishay" />
+                <attribute name="NAME" position="-1.0200000000000031, -0.020000000000003126" rotation="-90" align="BottomCenter" value="R11" />
+                <attribute name="VALUE" position="2.5399999999999991, -1.2700000000000031" rotation="-90" value="270" />
+                <attribute name="R_CASE" rotation="-90" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-90" visible="false" value="270R" />
+                <attribute name="TYPE" rotation="-90" visible="false" value="R" />
+                <attribute name="R_TOLERANCE" rotation="-90" visible="false" value="1%" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="CRCW0805270RFKEA" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Vishay" />
             </attributes>
         </part>
         <part name="R12" block="R-0805@smd-parts" position="41.75, 38.25" rotation="90">
@@ -925,14 +925,14 @@
                 <pad name="2" signal="N$26" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-1.0200000000000031, -0.020000000000003126" rotate="-90" align="BottomCenter" value="R12" />
-                <attribute name="VALUE" position="2.5399999999999991, -1.2700000000000031" rotate="-90" value="270" />
-                <attribute name="R_CASE" rotate="-90" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-90" visible="false" value="270R" />
-                <attribute name="TYPE" rotate="-90" visible="false" value="R" />
-                <attribute name="R_TOLERANCE" rotate="-90" visible="false" value="1%" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="CRCW0805270RFKEA" />
+                <attribute name="NAME" position="-1.0200000000000031, -0.020000000000003126" rotation="-90" align="BottomCenter" value="R12" />
+                <attribute name="VALUE" position="2.5399999999999991, -1.2700000000000031" rotation="-90" value="270" />
+                <attribute name="R_CASE" rotation="-90" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-90" visible="false" value="270R" />
+                <attribute name="TYPE" rotation="-90" visible="false" value="R" />
+                <attribute name="R_TOLERANCE" rotation="-90" visible="false" value="1%" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="CRCW0805270RFKEA" />
             </attributes>
         </part>
         <part name="U20" block="SO16@maxim" position="13.75, 16.75">
@@ -972,15 +972,15 @@
                 <pad name="2" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, -3" rotate="-270" align="BottomCenter" value="C1" />
-                <attribute name="VALUE" position="-2.54, 1.2699999999999996" rotate="-270" value="100n" />
-                <attribute name="C_CAPACITANCE" rotate="-270" visible="false" value="100nF" />
-                <attribute name="C_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="C_DIELECTRIC" rotate="-270" visible="false" value="X7R" />
-                <attribute name="C_VOLTAGE" rotate="-270" visible="false" value="25V" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="C" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Kemet" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="C0805C104K5RACTU" />
+                <attribute name="NAME" position="0, -3" rotation="-270" align="BottomCenter" value="C1" />
+                <attribute name="VALUE" position="-2.54, 1.2699999999999996" rotation="-270" value="100n" />
+                <attribute name="C_CAPACITANCE" rotation="-270" visible="false" value="100nF" />
+                <attribute name="C_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="C_DIELECTRIC" rotation="-270" visible="false" value="X7R" />
+                <attribute name="C_VOLTAGE" rotation="-270" visible="false" value="25V" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="C" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Kemet" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="C0805C104K5RACTU" />
             </attributes>
         </part>
         <part name="C2" block="C-0805@smd-parts" position="17.25, 9.75" rotation="270">
@@ -989,15 +989,15 @@
                 <pad name="2" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-0.019999999999999574, -2.9800000000000004" rotate="-270" align="BottomCenter" value="C2" />
-                <attribute name="VALUE" position="-2.5399999999999991, 1.2699999999999996" rotate="-270" value="100n" />
-                <attribute name="C_CAPACITANCE" rotate="-270" visible="false" value="100nF" />
-                <attribute name="C_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="C_DIELECTRIC" rotate="-270" visible="false" value="X7R" />
-                <attribute name="C_VOLTAGE" rotate="-270" visible="false" value="25V" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="C" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Kemet" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="C0805C104K5RACTU" />
+                <attribute name="NAME" position="-0.019999999999999574, -2.9800000000000004" rotation="-270" align="BottomCenter" value="C2" />
+                <attribute name="VALUE" position="-2.5399999999999991, 1.2699999999999996" rotation="-270" value="100n" />
+                <attribute name="C_CAPACITANCE" rotation="-270" visible="false" value="100nF" />
+                <attribute name="C_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="C_DIELECTRIC" rotation="-270" visible="false" value="X7R" />
+                <attribute name="C_VOLTAGE" rotation="-270" visible="false" value="25V" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="C" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Kemet" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="C0805C104K5RACTU" />
             </attributes>
         </part>
         <part name="C3" block="C-0805@smd-parts" position="12.25, 9.75" rotation="270">
@@ -1006,15 +1006,15 @@
                 <pad name="2" signal="N$16" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, -3" rotate="-270" align="BottomCenter" value="C3" />
-                <attribute name="VALUE" position="-2.5399999999999991, 1.2699999999999996" rotate="-270" value="100n" />
-                <attribute name="C_CAPACITANCE" rotate="-270" visible="false" value="100nF" />
-                <attribute name="C_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="C_DIELECTRIC" rotate="-270" visible="false" value="X7R" />
-                <attribute name="C_VOLTAGE" rotate="-270" visible="false" value="25V" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="C" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Kemet" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="C0805C104K5RACTU" />
+                <attribute name="NAME" position="0, -3" rotation="-270" align="BottomCenter" value="C3" />
+                <attribute name="VALUE" position="-2.5399999999999991, 1.2699999999999996" rotation="-270" value="100n" />
+                <attribute name="C_CAPACITANCE" rotation="-270" visible="false" value="100nF" />
+                <attribute name="C_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="C_DIELECTRIC" rotation="-270" visible="false" value="X7R" />
+                <attribute name="C_VOLTAGE" rotation="-270" visible="false" value="25V" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="C" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Kemet" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="C0805C104K5RACTU" />
             </attributes>
         </part>
         <part name="C4" block="C-0805@smd-parts" position="15.25, 9.75" rotation="270">
@@ -1023,15 +1023,15 @@
                 <pad name="2" signal="N$30" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, -3" rotate="-270" align="BottomCenter" value="C4" />
-                <attribute name="VALUE" position="-2.5399999999999991, 1.2699999999999996" rotate="-270" value="100n" />
-                <attribute name="C_CAPACITANCE" rotate="-270" visible="false" value="100nF" />
-                <attribute name="C_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="C_DIELECTRIC" rotate="-270" visible="false" value="X7R" />
-                <attribute name="C_VOLTAGE" rotate="-270" visible="false" value="25V" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="C" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Kemet" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="C0805C104K5RACTU" />
+                <attribute name="NAME" position="0, -3" rotation="-270" align="BottomCenter" value="C4" />
+                <attribute name="VALUE" position="-2.5399999999999991, 1.2699999999999996" rotation="-270" value="100n" />
+                <attribute name="C_CAPACITANCE" rotation="-270" visible="false" value="100nF" />
+                <attribute name="C_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="C_DIELECTRIC" rotation="-270" visible="false" value="X7R" />
+                <attribute name="C_VOLTAGE" rotation="-270" visible="false" value="25V" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="C" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Kemet" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="C0805C104K5RACTU" />
             </attributes>
         </part>
         <part name="JP6" block="1X4-SMD-90-E@hirose-df13" position="6.5, 29.25" rotation="90">
@@ -1042,9 +1042,9 @@
                 <pad name="4" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-0.25, 2.75" rotate="-90" value="JP6" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="DF13-4P-1.25H(20)" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Hirose Electric" />
+                <attribute name="NAME" position="-0.25, 2.75" rotation="-90" value="JP6" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="DF13-4P-1.25H(20)" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Hirose Electric" />
             </attributes>
         </part>
         <part name="JP7" block="1X4-SMD-90-E@hirose-df13" position="6.5, 40.75" rotation="90">
@@ -1055,9 +1055,9 @@
                 <pad name="4" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-0.5, -3.75" rotate="-90" value="JP7" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Hirose Electric" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="DF13-4P-1.25H(20)" />
+                <attribute name="NAME" position="-0.5, -3.75" rotation="-90" value="JP7" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Hirose Electric" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="DF13-4P-1.25H(20)" />
             </attributes>
         </part>
         <part name="U$6" block="3,6@holes" position="65.5, 63" />
@@ -1067,15 +1067,15 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, 2" rotate="-270" align="BottomCenter" value="C7" />
-                <attribute name="VALUE" position="-2.5399999999999991, 1.2699999999999996" rotate="-270" value="100n" />
-                <attribute name="C_CAPACITANCE" rotate="-270" visible="false" value="100nF" />
-                <attribute name="C_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="C_DIELECTRIC" rotate="-270" visible="false" value="X7R" />
-                <attribute name="C_VOLTAGE" rotate="-270" visible="false" value="25V" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="C" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Kemet" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="C0805C104K5RACTU" />
+                <attribute name="NAME" position="0, 2" rotation="-270" align="BottomCenter" value="C7" />
+                <attribute name="VALUE" position="-2.5399999999999991, 1.2699999999999996" rotation="-270" value="100n" />
+                <attribute name="C_CAPACITANCE" rotation="-270" visible="false" value="100nF" />
+                <attribute name="C_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="C_DIELECTRIC" rotation="-270" visible="false" value="X7R" />
+                <attribute name="C_VOLTAGE" rotation="-270" visible="false" value="25V" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="C" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Kemet" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="C0805C104K5RACTU" />
             </attributes>
         </part>
         <part name="C6" block="C-0805@smd-parts" position="35.75, 27.75" rotation="270">
@@ -1084,15 +1084,15 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0.125, 2" rotate="-270" align="BottomCenter" value="C6" />
-                <attribute name="VALUE" position="-2.5399999999999991, 1.2699999999999996" rotate="-270" value="10n" />
-                <attribute name="C_CAPACITANCE" rotate="-270" visible="false" value="10nF" />
-                <attribute name="C_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="C_DIELECTRIC" rotate="-270" visible="false" value="X7R" />
-                <attribute name="C_VOLTAGE" rotate="-270" visible="false" value="25V" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="C" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Kemet" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="C0805C103K5RACTU" />
+                <attribute name="NAME" position="0.125, 2" rotation="-270" align="BottomCenter" value="C6" />
+                <attribute name="VALUE" position="-2.5399999999999991, 1.2699999999999996" rotation="-270" value="10n" />
+                <attribute name="C_CAPACITANCE" rotation="-270" visible="false" value="10nF" />
+                <attribute name="C_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="C_DIELECTRIC" rotation="-270" visible="false" value="X7R" />
+                <attribute name="C_VOLTAGE" rotation="-270" visible="false" value="25V" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="C" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Kemet" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="C0805C103K5RACTU" />
             </attributes>
         </part>
         <part name="C5" block="C-0805@smd-parts" position="8.25, 22.25">
@@ -1118,17 +1118,17 @@
                 <pad name="2" signal="N$36" />
             </pads>
             <attributes>
-                <attribute name="OC_NEWARK" rotate="-180" visible="false" value="unknown" />
-                <attribute name="MPN" rotate="-180" visible="false" value="" />
-                <attribute name="MF" rotate="-180" visible="false" value="" />
-                <attribute name="OC_FARNELL" rotate="-180" visible="false" value="unknown" />
-                <attribute name="NAME" position="0.035000000000000142, -3.8329999999999984" rotate="-180" align="BottomCenter" value="Q1" />
-                <attribute name="VALUE" position="5.7150000000000034, 4.064" rotate="-180" value="16MHz" />
-                <attribute name="MANUFACTURER" rotate="-180" visible="false" value="TXC Corporation" />
-                <attribute name="REFERENCE" rotate="-180" visible="false" value="9C-16.000MEEJ-T" />
-                <attribute name="TYPE" rotate="-180" visible="false" value="XTAL" />
-                <attribute name="XTAL_CASE" rotate="-180" visible="false" value="HC-49/S" />
-                <attribute name="XTAL_FREQUENCY" rotate="-180" visible="false" value="16MHz" />
+                <attribute name="OC_NEWARK" rotation="-180" visible="false" value="unknown" />
+                <attribute name="MPN" rotation="-180" visible="false" value="" />
+                <attribute name="MF" rotation="-180" visible="false" value="" />
+                <attribute name="OC_FARNELL" rotation="-180" visible="false" value="unknown" />
+                <attribute name="NAME" position="0.035000000000000142, -3.8329999999999984" rotation="-180" align="BottomCenter" value="Q1" />
+                <attribute name="VALUE" position="5.7150000000000034, 4.064" rotation="-180" value="16MHz" />
+                <attribute name="MANUFACTURER" rotation="-180" visible="false" value="TXC Corporation" />
+                <attribute name="REFERENCE" rotation="-180" visible="false" value="9C-16.000MEEJ-T" />
+                <attribute name="TYPE" rotation="-180" visible="false" value="XTAL" />
+                <attribute name="XTAL_CASE" rotation="-180" visible="false" value="HC-49/S" />
+                <attribute name="XTAL_FREQUENCY" rotation="-180" visible="false" value="16MHz" />
             </attributes>
         </part>
         <part name="C10" block="C-0805@smd-parts" position="31.25, 34.5" rotation="180">
@@ -1137,15 +1137,15 @@
                 <pad name="2" signal="N$8" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, -2" rotate="180" align="TopRight" value="C10" />
-                <attribute name="VALUE" position="1.2700000000000031, 2.5399999999999991" rotate="-180" value="22p" />
-                <attribute name="C_CAPACITANCE" rotate="-180" visible="false" value="22pF" />
-                <attribute name="C_CASE" rotate="-180" visible="false" value="0805" />
-                <attribute name="C_DIELECTRIC" rotate="-180" visible="false" value="X7R" />
-                <attribute name="C_VOLTAGE" rotate="-180" visible="false" value="25V" />
-                <attribute name="TYPE" rotate="-180" visible="false" value="C" />
-                <attribute name="MANUFACTURER" rotate="-180" visible="false" value="AVX" />
-                <attribute name="REFERENCE" rotate="-180" visible="false" value="08051C220JAT2A" />
+                <attribute name="NAME" position="-0.019999999999999574, 1.0200000000000031" rotation="-180" align="BottomCenter" value="C10" />
+                <attribute name="VALUE" position="1.2700000000000031, 2.5399999999999991" rotation="-180" value="22p" />
+                <attribute name="C_CAPACITANCE" rotation="-180" visible="false" value="22pF" />
+                <attribute name="C_CASE" rotation="-180" visible="false" value="0805" />
+                <attribute name="C_DIELECTRIC" rotation="-180" visible="false" value="X7R" />
+                <attribute name="C_VOLTAGE" rotation="-180" visible="false" value="25V" />
+                <attribute name="TYPE" rotation="-180" visible="false" value="C" />
+                <attribute name="MANUFACTURER" rotation="-180" visible="false" value="AVX" />
+                <attribute name="REFERENCE" rotation="-180" visible="false" value="08051C220JAT2A" />
             </attributes>
         </part>
         <part name="C11" block="C-0805@smd-parts" position="23.75, 34.5">
@@ -1171,14 +1171,14 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0.98000000000000043, -0.019999999999999574" rotate="-90" align="TopCenter" value="R17" />
-                <attribute name="VALUE" position="2.5399999999999991, -1.2699999999999996" rotate="-90" value="1K5" />
-                <attribute name="R_CASE" rotate="-90" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-90" visible="false" value="1K5" />
-                <attribute name="TYPE" rotate="-90" visible="false" value="R" />
-                <attribute name="R_TOLERANCE" rotate="-90" visible="false" value="1%" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="CRCW08051K50FKEA" />
+                <attribute name="NAME" position="0.98000000000000043, -0.019999999999999574" rotation="-90" align="TopCenter" value="R17" />
+                <attribute name="VALUE" position="2.5399999999999991, -1.2699999999999996" rotation="-90" value="1K5" />
+                <attribute name="R_CASE" rotation="-90" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-90" visible="false" value="1K5" />
+                <attribute name="TYPE" rotation="-90" visible="false" value="R" />
+                <attribute name="R_TOLERANCE" rotation="-90" visible="false" value="1%" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="CRCW08051K50FKEA" />
             </attributes>
         </part>
         <part name="R18" block="R-0805@smd-parts" position="12.25, 24.5" rotation="90">
@@ -1187,14 +1187,14 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-1.0199999999999996, -0.019999999999999574" rotate="-90" align="BottomCenter" value="R18" />
-                <attribute name="VALUE" position="2.5399999999999991, -1.2699999999999996" rotate="-90" value="1K5" />
-                <attribute name="R_CASE" rotate="-90" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-90" visible="false" value="1K5" />
-                <attribute name="TYPE" rotate="-90" visible="false" value="R" />
-                <attribute name="R_TOLERANCE" rotate="-90" visible="false" value="1%" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="CRCW08051K50FKEA" />
+                <attribute name="NAME" position="-1.0199999999999996, -0.019999999999999574" rotation="-90" align="BottomCenter" value="R18" />
+                <attribute name="VALUE" position="2.5399999999999991, -1.2699999999999996" rotation="-90" value="1K5" />
+                <attribute name="R_CASE" rotation="-90" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-90" visible="false" value="1K5" />
+                <attribute name="TYPE" rotation="-90" visible="false" value="R" />
+                <attribute name="R_TOLERANCE" rotation="-90" visible="false" value="1%" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="CRCW08051K50FKEA" />
             </attributes>
         </part>
         <part name="R13" block="R-0805@smd-parts" position="41.75, 33.5" rotation="90">
@@ -1203,14 +1203,14 @@
                 <pad name="2" signal="N$52" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-1.0200000000000031, -0.020000000000003126" rotate="-90" align="BottomCenter" value="R13" />
-                <attribute name="VALUE" position="2.5399999999999991, -1.2700000000000031" rotate="-90" value="270" />
-                <attribute name="TYPE" rotate="-90" visible="false" value="R" />
-                <attribute name="R_CASE" rotate="-90" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-90" visible="false" value="270R" />
-                <attribute name="R_TOLERANCE" rotate="-90" visible="false" value="1%" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Vishay" />
+                <attribute name="NAME" position="-1.0200000000000031, -0.020000000000003126" rotation="-90" align="BottomCenter" value="R13" />
+                <attribute name="VALUE" position="2.5399999999999991, -1.2700000000000031" rotation="-90" value="270" />
+                <attribute name="TYPE" rotation="-90" visible="false" value="R" />
+                <attribute name="R_CASE" rotation="-90" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-90" visible="false" value="270R" />
+                <attribute name="R_TOLERANCE" rotation="-90" visible="false" value="1%" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="CRCW0805270RFKEA" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Vishay" />
             </attributes>
         </part>
         <part name="R14" block="R-0805@smd-parts" position="41.75, 28.75" rotation="90">
@@ -1219,14 +1219,14 @@
                 <pad name="2" signal="N$53" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-1, 0" rotate="-90" align="BottomCenter" value="R14" />
-                <attribute name="VALUE" position="2.5399999999999991, -1.2699999999999996" rotate="-90" value="270" />
-                <attribute name="R_CASE" rotate="-90" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-90" visible="false" value="270R" />
-                <attribute name="TYPE" rotate="-90" visible="false" value="R" />
-                <attribute name="R_TOLERANCE" rotate="-90" visible="false" value="1%" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Vishay" />
+                <attribute name="NAME" position="-1, 0" rotation="-90" align="BottomCenter" value="R14" />
+                <attribute name="VALUE" position="2.5399999999999991, -1.2699999999999996" rotation="-90" value="270" />
+                <attribute name="R_CASE" rotation="-90" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-90" visible="false" value="270R" />
+                <attribute name="TYPE" rotation="-90" visible="false" value="R" />
+                <attribute name="R_TOLERANCE" rotation="-90" visible="false" value="1%" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="CRCW0805270RFKEA" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Vishay" />
             </attributes>
         </part>
         <part name="U21" block="TQFP44@microchip-pic" position="29.5, 18.5" rotation="90">
@@ -1273,11 +1273,11 @@
                 <pad name="44" signal="TX1" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-6.564, 5.3580000000000005" rotate="-90" value="U21" />
-                <attribute name="VALUE" position="8.1201, -4.064" rotate="-90" value="PIC18F46K22-I/PT" />
-                <attribute name="TYPE" rotate="-90" visible="false" value="IC" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Microchip" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="PIC18F46K22T-I/PT" />
+                <attribute name="NAME" position="-6.564, 5.3580000000000005" rotation="-90" value="U21" />
+                <attribute name="VALUE" position="8.1201, -4.064" rotation="-90" value="PIC18F46K22-I/PT" />
+                <attribute name="TYPE" rotation="-90" visible="false" value="IC" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Microchip" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="PIC18F46K22T-I/PT" />
             </attributes>
         </part>
         <part name="C9" block="C-0805@smd-parts" position="30.375, 9.75" rotation="90">
@@ -1286,15 +1286,15 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, -3" rotate="-90" align="BottomCenter" value="C9" />
-                <attribute name="VALUE" position="2.5399999999999991, -1.2699999999999996" rotate="-90" value="100n" />
-                <attribute name="C_CAPACITANCE" rotate="-90" visible="false" value="100nF" />
-                <attribute name="C_CASE" rotate="-90" visible="false" value="0805" />
-                <attribute name="C_DIELECTRIC" rotate="-90" visible="false" value="X7R" />
-                <attribute name="C_VOLTAGE" rotate="-90" visible="false" value="25V" />
-                <attribute name="TYPE" rotate="-90" visible="false" value="C" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Kemet" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="C0805C104K5RACTU" />
+                <attribute name="NAME" position="0, -3" rotation="-90" align="BottomCenter" value="C9" />
+                <attribute name="VALUE" position="2.5399999999999991, -1.2699999999999996" rotation="-90" value="100n" />
+                <attribute name="C_CAPACITANCE" rotation="-90" visible="false" value="100nF" />
+                <attribute name="C_CASE" rotation="-90" visible="false" value="0805" />
+                <attribute name="C_DIELECTRIC" rotation="-90" visible="false" value="X7R" />
+                <attribute name="C_VOLTAGE" rotation="-90" visible="false" value="25V" />
+                <attribute name="TYPE" rotation="-90" visible="false" value="C" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Kemet" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="C0805C104K5RACTU" />
             </attributes>
         </part>
         <part name="C8" block="C-0805@smd-parts" position="32.5, 9.75" rotation="90">
@@ -1303,15 +1303,15 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, -3" rotate="-90" align="BottomCenter" value="C8" />
-                <attribute name="VALUE" position="2.5399999999999991, -1.2699999999999996" rotate="-90" value="10n" />
-                <attribute name="C_CAPACITANCE" rotate="-90" visible="false" value="10nF" />
-                <attribute name="C_CASE" rotate="-90" visible="false" value="0805" />
-                <attribute name="C_DIELECTRIC" rotate="-90" visible="false" value="X7R" />
-                <attribute name="C_VOLTAGE" rotate="-90" visible="false" value="25V" />
-                <attribute name="TYPE" rotate="-90" visible="false" value="C" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Kemet" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="C0805C103K5RACTU" />
+                <attribute name="NAME" position="0, -3" rotation="-90" align="BottomCenter" value="C8" />
+                <attribute name="VALUE" position="2.5399999999999991, -1.2699999999999996" rotation="-90" value="10n" />
+                <attribute name="C_CAPACITANCE" rotation="-90" visible="false" value="10nF" />
+                <attribute name="C_CASE" rotation="-90" visible="false" value="0805" />
+                <attribute name="C_DIELECTRIC" rotation="-90" visible="false" value="X7R" />
+                <attribute name="C_VOLTAGE" rotation="-90" visible="false" value="25V" />
+                <attribute name="TYPE" rotation="-90" visible="false" value="C" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Kemet" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="C0805C103K5RACTU" />
             </attributes>
         </part>
         <part name="R15" block="R-0805@smd-parts" position="65.625, 28.75" rotation="270">
@@ -1320,14 +1320,14 @@
                 <pad name="2" signal="N$51" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="2, 0" rotate="-270" align="BottomCenter" value="R15" />
-                <attribute name="VALUE" position="-2.5399999999999991, 1.2699999999999996" rotate="-270" value="270" />
-                <attribute name="R_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-270" visible="false" value="270R" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="R" />
-                <attribute name="R_TOLERANCE" rotate="-270" visible="false" value="1%" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Vishay" />
+                <attribute name="NAME" position="2, 0" rotation="-270" align="BottomCenter" value="R15" />
+                <attribute name="VALUE" position="-2.5399999999999991, 1.2699999999999996" rotation="-270" value="270" />
+                <attribute name="R_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-270" visible="false" value="270R" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="R" />
+                <attribute name="R_TOLERANCE" rotation="-270" visible="false" value="1%" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="CRCW0805270RFKEA" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Vishay" />
             </attributes>
         </part>
         <part name="R16" block="R-0805@smd-parts" position="65.625, 33.5" rotation="270">
@@ -1336,14 +1336,14 @@
                 <pad name="2" signal="N$54" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="2, 0" rotate="-270" align="BottomCenter" value="R16" />
-                <attribute name="VALUE" position="-2.5399999999999991, 1.2700000000000031" rotate="-270" value="270" />
-                <attribute name="R_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-270" visible="false" value="270R" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="R" />
-                <attribute name="R_TOLERANCE" rotate="-270" visible="false" value="1%" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Vishay" />
+                <attribute name="NAME" position="2, 0" rotation="-270" align="BottomCenter" value="R16" />
+                <attribute name="VALUE" position="-2.5399999999999991, 1.2700000000000031" rotation="-270" value="270" />
+                <attribute name="R_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-270" visible="false" value="270R" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="R" />
+                <attribute name="R_TOLERANCE" rotation="-270" visible="false" value="1%" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="CRCW0805270RFKEA" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Vishay" />
             </attributes>
         </part>
         <part name="C12" block="C-0805@smd-parts" position="40.5, 14.5" rotation="270">
@@ -1352,15 +1352,15 @@
                 <pad name="2" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, 2" rotate="-270" align="BottomCenter" value="C12" />
-                <attribute name="VALUE" position="-2.5399999999999991, 1.2699999999999996" rotate="-270" value="4u7" />
-                <attribute name="C_CAPACITANCE" rotate="-270" visible="false" value="4.7uF" />
-                <attribute name="C_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="C_DIELECTRIC" rotate="-270" visible="false" value="X7R" />
-                <attribute name="C_VOLTAGE" rotate="-270" visible="false" value="25V" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="C" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Taiyo Yuden" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="TMK212AB7475KG-T" />
+                <attribute name="NAME" position="0, 2" rotation="-270" align="BottomCenter" value="C12" />
+                <attribute name="VALUE" position="-2.5399999999999991, 1.2699999999999996" rotation="-270" value="4u7" />
+                <attribute name="C_CAPACITANCE" rotation="-270" visible="false" value="4.7uF" />
+                <attribute name="C_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="C_DIELECTRIC" rotation="-270" visible="false" value="X7R" />
+                <attribute name="C_VOLTAGE" rotation="-270" visible="false" value="25V" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="C" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Taiyo Yuden" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="TMK212AB7475KG-T" />
             </attributes>
         </part>
         <part name="C13" block="C-0805@smd-parts" position="47.5, 14.5" rotation="90">
@@ -1369,15 +1369,15 @@
                 <pad name="2" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, 2" rotate="-90" align="BottomCenter" value="C13" />
-                <attribute name="VALUE" position="2.5399999999999991, -1.2699999999999996" rotate="-90" value="4u7" />
-                <attribute name="C_CAPACITANCE" rotate="-90" visible="false" value="4.7uF" />
-                <attribute name="C_CASE" rotate="-90" visible="false" value="0805" />
-                <attribute name="C_DIELECTRIC" rotate="-90" visible="false" value="X7R" />
-                <attribute name="C_VOLTAGE" rotate="-90" visible="false" value="25V" />
-                <attribute name="TYPE" rotate="-90" visible="false" value="C" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Taiyo Yuden" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="TMK212AB7475KG-T" />
+                <attribute name="NAME" position="0, 2" rotation="-90" align="BottomCenter" value="C13" />
+                <attribute name="VALUE" position="2.5399999999999991, -1.2699999999999996" rotation="-90" value="4u7" />
+                <attribute name="C_CAPACITANCE" rotation="-90" visible="false" value="4.7uF" />
+                <attribute name="C_CASE" rotation="-90" visible="false" value="0805" />
+                <attribute name="C_DIELECTRIC" rotation="-90" visible="false" value="X7R" />
+                <attribute name="C_VOLTAGE" rotation="-90" visible="false" value="25V" />
+                <attribute name="TYPE" rotation="-90" visible="false" value="C" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Taiyo Yuden" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="TMK212AB7475KG-T" />
             </attributes>
         </part>
         <part name="C14" block="SMC_A@rcl" position="11.5, 45.75" rotation="90">
@@ -1386,15 +1386,15 @@
                 <pad name="-" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-1.125, 0" rotate="-90" align="BottomCenter" value="C14" />
-                <attribute name="VALUE" position="2.5399999999999991, -1.9050000000000011" rotate="-90" value="10u" />
-                <attribute name="C_CAPACITANCE" rotate="-90" visible="false" value="10uF" />
-                <attribute name="C_CASE" rotate="-90" visible="false" value="A" />
-                <attribute name="C_DIELECTRIC" rotate="-90" visible="false" value="TANT" />
-                <attribute name="C_VOLTAGE" rotate="-90" visible="false" value="6.3V" />
-                <attribute name="TYPE" rotate="-90" visible="false" value="C" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="AVX" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="TPSA106K006R1500" />
+                <attribute name="NAME" position="-1.125, 0" rotation="-90" align="BottomCenter" value="C14" />
+                <attribute name="VALUE" position="2.5399999999999991, -1.9050000000000011" rotation="-90" value="10u" />
+                <attribute name="C_CAPACITANCE" rotation="-90" visible="false" value="10uF" />
+                <attribute name="C_CASE" rotation="-90" visible="false" value="A" />
+                <attribute name="C_DIELECTRIC" rotation="-90" visible="false" value="TANT" />
+                <attribute name="C_VOLTAGE" rotation="-90" visible="false" value="6.3V" />
+                <attribute name="TYPE" rotation="-90" visible="false" value="C" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="AVX" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="TPSA106K006R1500" />
             </attributes>
         </part>
         <part name="JP4" block="1X02/90@pinhead" position="63.25, 14.25" rotation="270">
@@ -1403,10 +1403,10 @@
                 <pad name="2" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-2, -4" rotate="-270" value="JP4" />
-                <attribute name="VALUE" position="-3.8100000000000023, -4.445" rotate="-270" value="" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Molex" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="22-27-2021" />
+                <attribute name="NAME" position="-2, -4" rotation="-270" value="JP4" />
+                <attribute name="VALUE" position="-3.8100000000000023, -4.445" rotation="-270" value="" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Molex" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="22-27-2021" />
             </attributes>
         </part>
         <part name="C15" block="C-0805@smd-parts" position="13.75, 45" rotation="270">
@@ -1415,15 +1415,15 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="1, 0" rotate="-270" align="TopCenter" value="C15" />
-                <attribute name="VALUE" position="-2.5399999999999991, 1.2700000000000031" rotate="-270" value="100n" />
-                <attribute name="C_CAPACITANCE" rotate="-270" visible="false" value="100nF" />
-                <attribute name="C_DIELECTRIC" rotate="-270" visible="false" value="X7R" />
-                <attribute name="C_VOLTAGE" rotate="-270" visible="false" value="25V" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="C" />
-                <attribute name="C_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Kemet" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="C0805C104K5RACTU" />
+                <attribute name="NAME" position="1, 0" rotation="-270" align="TopCenter" value="C15" />
+                <attribute name="VALUE" position="-2.5399999999999991, 1.2700000000000031" rotation="-270" value="100n" />
+                <attribute name="C_CAPACITANCE" rotation="-270" visible="false" value="100nF" />
+                <attribute name="C_DIELECTRIC" rotation="-270" visible="false" value="X7R" />
+                <attribute name="C_VOLTAGE" rotation="-270" visible="false" value="25V" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="C" />
+                <attribute name="C_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Kemet" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="C0805C104K5RACTU" />
             </attributes>
         </part>
         <part name="C16" block="SMC_A@rcl" position="40.25, 20.75">
@@ -1449,15 +1449,15 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="2, -0.375" rotate="-180" value="C17" />
-                <attribute name="VALUE" position="1.2700000000000031, 2.5399999999999991" rotate="-180" value="100n" />
-                <attribute name="C_CAPACITANCE" rotate="-180" visible="false" value="100nF" />
-                <attribute name="C_CASE" rotate="-180" visible="false" value="0805" />
-                <attribute name="C_DIELECTRIC" rotate="-180" visible="false" value="X7R" />
-                <attribute name="C_VOLTAGE" rotate="-180" visible="false" value="25V" />
-                <attribute name="TYPE" rotate="-180" visible="false" value="C" />
-                <attribute name="MANUFACTURER" rotate="-180" visible="false" value="Kemet" />
-                <attribute name="REFERENCE" rotate="-180" visible="false" value="C0805C104K5RACTU" />
+                <attribute name="NAME" position="2, -0.375" rotation="-180" value="C17" />
+                <attribute name="VALUE" position="1.2700000000000031, 2.5399999999999991" rotation="-180" value="100n" />
+                <attribute name="C_CAPACITANCE" rotation="-180" visible="false" value="100nF" />
+                <attribute name="C_CASE" rotation="-180" visible="false" value="0805" />
+                <attribute name="C_DIELECTRIC" rotation="-180" visible="false" value="X7R" />
+                <attribute name="C_VOLTAGE" rotation="-180" visible="false" value="25V" />
+                <attribute name="TYPE" rotation="-180" visible="false" value="C" />
+                <attribute name="MANUFACTURER" rotation="-180" visible="false" value="Kemet" />
+                <attribute name="REFERENCE" rotation="-180" visible="false" value="C0805C104K5RACTU" />
             </attributes>
         </part>
         <part name="R19" block="R-0805@smd-parts" position="25.75, 9.75" rotation="90">
@@ -1466,14 +1466,14 @@
                 <pad name="2" signal="LED" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, -3" rotate="-90" align="BottomCenter" value="R19" />
-                <attribute name="VALUE" position="2.5399999999999991, -1.2699999999999996" rotate="-90" value="270" />
-                <attribute name="R_CASE" rotate="-90" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-90" visible="false" value="270R" />
-                <attribute name="TYPE" rotate="-90" visible="false" value="R" />
-                <attribute name="R_TOLERANCE" rotate="-90" visible="false" value="1%" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Vishay" />
+                <attribute name="NAME" position="0, -3" rotation="-90" align="BottomCenter" value="R19" />
+                <attribute name="VALUE" position="2.5399999999999991, -1.2699999999999996" rotation="-90" value="270" />
+                <attribute name="R_CASE" rotation="-90" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-90" visible="false" value="270R" />
+                <attribute name="TYPE" rotation="-90" visible="false" value="R" />
+                <attribute name="R_TOLERANCE" rotation="-90" visible="false" value="1%" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="CRCW0805270RFKEA" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Vishay" />
             </attributes>
         </part>
         <part name="LED1" block="CHIPLED_0805@led" position="23.75, 9.75">
@@ -1496,14 +1496,14 @@
                 <pad name="2" signal="N$1" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="2, 0" rotate="-270" align="BottomCenter" value="R3" />
-                <attribute name="VALUE" position="-2.5399999999999991, 0.634999999999998" rotate="-270" value="270" />
-                <attribute name="R_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-270" visible="false" value="270R" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="R" />
-                <attribute name="R_TOLERANCE" rotate="-270" visible="false" value="1%" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Vishay" />
+                <attribute name="NAME" position="2, 0" rotation="-270" align="BottomCenter" value="R3" />
+                <attribute name="VALUE" position="-2.5399999999999991, 0.634999999999998" rotation="-270" value="270" />
+                <attribute name="R_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-270" visible="false" value="270R" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="R" />
+                <attribute name="R_TOLERANCE" rotation="-270" visible="false" value="1%" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="CRCW0805270RFKEA" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Vishay" />
             </attributes>
         </part>
         <part name="R4" block="R-0805@smd-parts" position="65.625, 43" rotation="270">
@@ -1512,14 +1512,14 @@
                 <pad name="2" signal="N$6" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="2, 0" rotate="-270" align="BottomCenter" value="R4" />
-                <attribute name="VALUE" position="-2.5399999999999991, 0.634999999999998" rotate="-270" value="270" />
-                <attribute name="R_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-270" visible="false" value="270R" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="R" />
-                <attribute name="R_TOLERANCE" rotate="-270" visible="false" value="1%" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Vishay" />
+                <attribute name="NAME" position="2, 0" rotation="-270" align="BottomCenter" value="R4" />
+                <attribute name="VALUE" position="-2.5399999999999991, 0.634999999999998" rotation="-270" value="270" />
+                <attribute name="R_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-270" visible="false" value="270R" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="R" />
+                <attribute name="R_TOLERANCE" rotation="-270" visible="false" value="1%" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="CRCW0805270RFKEA" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Vishay" />
             </attributes>
         </part>
         <part name="U$9" block="3,6@holes" position="4.5, 63" />
@@ -1533,9 +1533,9 @@
                 <pad name="5" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-1.25, -4.75" rotate="-90" value="JP3" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Hirose Electric" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="DF13-5P-1.25H(20)" />
+                <attribute name="NAME" position="-1.25, -4.75" rotation="-90" value="JP3" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Hirose Electric" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="DF13-5P-1.25H(20)" />
             </attributes>
         </part>
         <part name="U19" block="SOT89@microchip-analog" position="44, 13.5" rotation="180">
@@ -1546,12 +1546,12 @@
                 <pad name="2@1" signal="N$5" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, 3" rotate="-180" align="BottomCenter" value="U19" />
-                <attribute name="VALUE" position="2.5399999999999991, 6.4008" rotate="-180" value="MCP1703T-3302E/MB" />
-                <attribute name="TYPE" rotate="-180" visible="false" value="IC" />
-                <attribute name="MANUFACTURER" rotate="-180" visible="false" value="Microchip" />
-                <attribute name="IC_CASE" rotate="-180" visible="false" value="SOT89" />
-                <attribute name="REFERENCE" rotate="-180" visible="false" value="MCP1703T-3302E/MB" />
+                <attribute name="NAME" position="0, 3" rotation="-180" align="BottomCenter" value="U19" />
+                <attribute name="VALUE" position="2.5399999999999991, 6.4008" rotation="-180" value="MCP1703T-3302E/MB" />
+                <attribute name="TYPE" rotation="-180" visible="false" value="IC" />
+                <attribute name="MANUFACTURER" rotation="-180" visible="false" value="Microchip" />
+                <attribute name="IC_CASE" rotation="-180" visible="false" value="SOT89" />
+                <attribute name="REFERENCE" rotation="-180" visible="false" value="MCP1703T-3302E/MB" />
             </attributes>
         </part>
         <part name="L1" block="L0805@rcl-2" position="49.75, 14.5" rotation="90">
@@ -1560,13 +1560,13 @@
                 <pad name="2" signal="N$2" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, 2" rotate="-90" align="BottomCenter" value="L1" />
-                <attribute name="VALUE" position="2.308, -2.208" rotate="-90" value="600R" />
-                <attribute name="L_CASE" rotate="-90" visible="false" value="0805" />
-                <attribute name="L_IMPEDANCE" rotate="-90" visible="false" value="600R" />
-                <attribute name="TYPE" rotate="-90" visible="false" value="L" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="ILBB0805ER601V" />
+                <attribute name="NAME" position="0, 2" rotation="-90" align="BottomCenter" value="L1" />
+                <attribute name="VALUE" position="2.308, -2.208" rotation="-90" value="600R" />
+                <attribute name="L_CASE" rotation="-90" visible="false" value="0805" />
+                <attribute name="L_IMPEDANCE" rotation="-90" visible="false" value="600R" />
+                <attribute name="TYPE" rotation="-90" visible="false" value="L" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="ILBB0805ER601V" />
             </attributes>
         </part>
         <part name="R1" block="R-0805@smd-parts" position="49.75, 10.25" rotation="270">
@@ -1575,14 +1575,14 @@
                 <pad name="2" signal="N$7" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, -2" rotate="-270" align="TopCenter" value="R1" />
-                <attribute name="VALUE" position="-2.5399999999999991, 0.63499999999999979" rotate="-270" value="5R1" />
-                <attribute name="R_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-270" visible="false" value="5R1" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="R" />
-                <attribute name="R_TOLERANCE" rotate="-270" visible="false" value="1%" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="CRCW08055R10FNEA" />
+                <attribute name="NAME" position="0, -2" rotation="-270" align="TopCenter" value="R1" />
+                <attribute name="VALUE" position="-2.5399999999999991, 0.63499999999999979" rotation="-270" value="5R1" />
+                <attribute name="R_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-270" visible="false" value="5R1" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="R" />
+                <attribute name="R_TOLERANCE" rotation="-270" visible="false" value="1%" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="CRCW08055R10FNEA" />
             </attributes>
         </part>
         <part name="R2" block="R-0805@smd-parts" position="26.875, 46.75" rotation="270">
@@ -1591,14 +1591,14 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, -2" rotate="-270" align="TopCenter" value="R2" />
-                <attribute name="VALUE" position="-2.5399999999999991, 0.634999999999998" rotate="-270" value="10K" />
-                <attribute name="R_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-270" visible="false" value="10K" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="R" />
-                <attribute name="R_TOLERANCE" rotate="-270" visible="false" value="1%" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="CRCW080510K0FKEB" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Vishay" />
+                <attribute name="NAME" position="0, -2" rotation="-270" align="TopCenter" value="R2" />
+                <attribute name="VALUE" position="-2.5399999999999991, 0.634999999999998" rotation="-270" value="10K" />
+                <attribute name="R_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-270" visible="false" value="10K" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="R" />
+                <attribute name="R_TOLERANCE" rotation="-270" visible="false" value="1%" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="CRCW080510K0FKEB" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Vishay" />
             </attributes>
         </part>
         <part name="R5" block="R-0805@smd-parts" position="24.375, 46.75" rotation="270">
@@ -1607,14 +1607,14 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, -2" rotate="-270" align="TopCenter" value="R5" />
-                <attribute name="VALUE" position="-2.5399999999999991, 0.634999999999998" rotate="-270" value="10K" />
-                <attribute name="R_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-270" visible="false" value="10K" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="R" />
-                <attribute name="R_TOLERANCE" rotate="-270" visible="false" value="1%" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="CRCW080510K0FKEB" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Vishay" />
+                <attribute name="NAME" position="0, -2" rotation="-270" align="TopCenter" value="R5" />
+                <attribute name="VALUE" position="-2.5399999999999991, 0.634999999999998" rotation="-270" value="10K" />
+                <attribute name="R_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-270" visible="false" value="10K" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="R" />
+                <attribute name="R_TOLERANCE" rotation="-270" visible="false" value="1%" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="CRCW080510K0FKEB" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Vishay" />
             </attributes>
         </part>
         <part name="R6" block="R-0805@smd-parts" position="36.125, 10.75">
@@ -1645,11 +1645,11 @@
                 <pad name="5" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, 4" rotate="-180" align="BottomCenter" value="U1" />
-                <attribute name="VALUE" position="-4.445, 1.9050000000000011" rotate="-180" value="ACPL224" />
-                <attribute name="MANUFACTURER" rotate="-180" visible="false" value="Broadcom Limited" />
-                <attribute name="REFERENCE" rotate="-180" visible="false" value="ACPL-224-500E" />
-                <attribute name="TYPE" rotate="-180" visible="false" value="IC" />
+                <attribute name="NAME" position="0, 4" rotation="-180" align="BottomCenter" value="U1" />
+                <attribute name="VALUE" position="-4.445, 1.9050000000000011" rotation="-180" value="ACPL224" />
+                <attribute name="MANUFACTURER" rotation="-180" visible="false" value="Broadcom Limited" />
+                <attribute name="REFERENCE" rotation="-180" visible="false" value="ACPL-224-500E" />
+                <attribute name="TYPE" rotation="-180" visible="false" value="IC" />
             </attributes>
         </part>
         <part name="U2" block="SO08@optoacopladores" position="8.5, 54" rotation="180">
@@ -1664,11 +1664,11 @@
                 <pad name="5" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, 4" rotate="-180" align="BottomCenter" value="U2" />
-                <attribute name="VALUE" position="-4.445, 1.9050000000000011" rotate="-180" value="ACPL224" />
-                <attribute name="MANUFACTURER" rotate="-180" visible="false" value="Broadcom Limited" />
-                <attribute name="REFERENCE" rotate="-180" visible="false" value="ACPL-224-500E" />
-                <attribute name="TYPE" rotate="-180" visible="false" value="IC" />
+                <attribute name="NAME" position="0, 4" rotation="-180" align="BottomCenter" value="U2" />
+                <attribute name="VALUE" position="-4.445, 1.9050000000000011" rotation="-180" value="ACPL224" />
+                <attribute name="MANUFACTURER" rotation="-180" visible="false" value="Broadcom Limited" />
+                <attribute name="REFERENCE" rotation="-180" visible="false" value="ACPL-224-500E" />
+                <attribute name="TYPE" rotation="-180" visible="false" value="IC" />
             </attributes>
         </part>
         <part name="U3" block="SO08@optoacopladores" position="14, 54" rotation="180">
@@ -1683,11 +1683,11 @@
                 <pad name="5" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, 4" rotate="-180" align="BottomCenter" value="U3" />
-                <attribute name="VALUE" position="-4.445, 1.9050000000000011" rotate="-180" value="ACPL224" />
-                <attribute name="MANUFACTURER" rotate="-180" visible="false" value="Broadcom Limited" />
-                <attribute name="REFERENCE" rotate="-180" visible="false" value="ACPL-224-500E" />
-                <attribute name="TYPE" rotate="-180" visible="false" value="IC" />
+                <attribute name="NAME" position="0, 4" rotation="-180" align="BottomCenter" value="U3" />
+                <attribute name="VALUE" position="-4.445, 1.9050000000000011" rotation="-180" value="ACPL224" />
+                <attribute name="MANUFACTURER" rotation="-180" visible="false" value="Broadcom Limited" />
+                <attribute name="REFERENCE" rotation="-180" visible="false" value="ACPL-224-500E" />
+                <attribute name="TYPE" rotation="-180" visible="false" value="IC" />
             </attributes>
         </part>
         <part name="U4" block="SO08@optoacopladores" position="19.5, 54" rotation="180">
@@ -1702,11 +1702,11 @@
                 <pad name="5" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, 4" rotate="-180" align="BottomCenter" value="U4" />
-                <attribute name="VALUE" position="-4.445, 1.9050000000000011" rotate="-180" value="ACPL224" />
-                <attribute name="MANUFACTURER" rotate="-180" visible="false" value="Broadcom Limited" />
-                <attribute name="REFERENCE" rotate="-180" visible="false" value="ACPL-224-500E" />
-                <attribute name="TYPE" rotate="-180" visible="false" value="IC" />
+                <attribute name="NAME" position="0, 4" rotation="-180" align="BottomCenter" value="U4" />
+                <attribute name="VALUE" position="-4.445, 1.9050000000000011" rotation="-180" value="ACPL224" />
+                <attribute name="MANUFACTURER" rotation="-180" visible="false" value="Broadcom Limited" />
+                <attribute name="REFERENCE" rotation="-180" visible="false" value="ACPL-224-500E" />
+                <attribute name="TYPE" rotation="-180" visible="false" value="IC" />
             </attributes>
         </part>
         <part name="U5" block="SO08@optoacopladores" position="25, 54" rotation="180">
@@ -1721,11 +1721,11 @@
                 <pad name="5" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, 4" rotate="-180" align="BottomCenter" value="U5" />
-                <attribute name="VALUE" position="-4.445, 1.9050000000000011" rotate="-180" value="ACPL224" />
-                <attribute name="MANUFACTURER" rotate="-180" visible="false" value="Broadcom Limited" />
-                <attribute name="REFERENCE" rotate="-180" visible="false" value="ACPL-224-500E" />
-                <attribute name="TYPE" rotate="-180" visible="false" value="IC" />
+                <attribute name="NAME" position="0, 4" rotation="-180" align="BottomCenter" value="U5" />
+                <attribute name="VALUE" position="-4.445, 1.9050000000000011" rotation="-180" value="ACPL224" />
+                <attribute name="MANUFACTURER" rotation="-180" visible="false" value="Broadcom Limited" />
+                <attribute name="REFERENCE" rotation="-180" visible="false" value="ACPL-224-500E" />
+                <attribute name="TYPE" rotation="-180" visible="false" value="IC" />
             </attributes>
         </part>
         <part name="D2" block="SOD123FL@diode" position="47.5, 10.25" rotation="270">
@@ -1734,12 +1734,12 @@
                 <pad name="C" signal="N$5" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, -2.25" rotate="-270" align="TopCenter" value="D2" />
-                <attribute name="VALUE" position="-2.5, 2" rotate="-270" value="MBR0540" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="D" />
-                <attribute name="D_CASE" rotate="-270" visible="false" value="SOD123FL" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Fairchild Semiconductor" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="MBR0540" />
+                <attribute name="NAME" position="0, -2.25" rotation="-270" align="TopCenter" value="D2" />
+                <attribute name="VALUE" position="-2.5, 2" rotation="-270" value="MBR0540" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="D" />
+                <attribute name="D_CASE" rotation="-270" visible="false" value="SOD123FL" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Fairchild Semiconductor" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="MBR0540" />
             </attributes>
         </part>
         <part name="U8" block="SOP04@optoacopladores" position="47, 52.5" rotation="270">
@@ -1750,10 +1750,10 @@
                 <pad name="4" signal="O0" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="4, 0" rotate="-270" align="TopCenter" value="U8" />
-                <attribute name="VALUE" position="-3.8100000000000023, -3.8100000000000023" rotate="-270" value="VO1400" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="VO1400AEFTR" />
+                <attribute name="NAME" position="4, 0" rotation="-270" align="TopCenter" value="U8" />
+                <attribute name="VALUE" position="-3.8100000000000023, -3.8100000000000023" rotation="-270" value="VO1400" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="VO1400AEFTR" />
             </attributes>
         </part>
         <part name="U9" block="SOP04@optoacopladores" position="47, 47.75" rotation="270">
@@ -1764,10 +1764,10 @@
                 <pad name="4" signal="O1" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="4, 0" rotate="-270" align="TopCenter" value="U9" />
-                <attribute name="VALUE" position="-3.8100000000000023, -3.8100000000000023" rotate="-270" value="VO1400" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="VO1400AEFTR" />
+                <attribute name="NAME" position="4, 0" rotation="-270" align="TopCenter" value="U9" />
+                <attribute name="VALUE" position="-3.8100000000000023, -3.8100000000000023" rotation="-270" value="VO1400" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="VO1400AEFTR" />
             </attributes>
         </part>
         <part name="U10" block="SOP04@optoacopladores" position="47, 43" rotation="270">
@@ -1778,10 +1778,10 @@
                 <pad name="4" signal="O2" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="4, 0" rotate="-270" align="TopCenter" value="U10" />
-                <attribute name="VALUE" position="-3.8100000000000023, -3.8100000000000023" rotate="-270" value="VO1400" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="VO1400AEFTR" />
+                <attribute name="NAME" position="4, 0" rotation="-270" align="TopCenter" value="U10" />
+                <attribute name="VALUE" position="-3.8100000000000023, -3.8100000000000023" rotation="-270" value="VO1400" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="VO1400AEFTR" />
             </attributes>
         </part>
         <part name="U11" block="SOP04@optoacopladores" position="47, 38.25" rotation="270">
@@ -1792,10 +1792,10 @@
                 <pad name="4" signal="O3" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="4, 0" rotate="-270" align="TopCenter" value="U11" />
-                <attribute name="VALUE" position="-3.8100000000000023, -3.8100000000000023" rotate="-270" value="VO1400" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="VO1400AEFTR" />
+                <attribute name="NAME" position="4, 0" rotation="-270" align="TopCenter" value="U11" />
+                <attribute name="VALUE" position="-3.8100000000000023, -3.8100000000000023" rotation="-270" value="VO1400" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="VO1400AEFTR" />
             </attributes>
         </part>
         <part name="U12" block="SOP04@optoacopladores" position="47, 33.5" rotation="270">
@@ -1806,10 +1806,10 @@
                 <pad name="4" signal="O4" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="4, 0" rotate="-270" align="TopCenter" value="U12" />
-                <attribute name="VALUE" position="-3.8100000000000023, -3.8099999999999987" rotate="-270" value="VO1400" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="VO1400AEFTR" />
+                <attribute name="NAME" position="4, 0" rotation="-270" align="TopCenter" value="U12" />
+                <attribute name="VALUE" position="-3.8100000000000023, -3.8099999999999987" rotation="-270" value="VO1400" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="VO1400AEFTR" />
             </attributes>
         </part>
         <part name="U13" block="SOP04@optoacopladores" position="47, 28.75" rotation="270">
@@ -1820,10 +1820,10 @@
                 <pad name="4" signal="O5" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="4, -0.25" rotate="-270" align="BottomCenter" value="U13" />
-                <attribute name="VALUE" position="-3.8100000000000023, -3.8099999999999987" rotate="-270" value="VO1400" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="VO1400AEFTR" />
+                <attribute name="NAME" position="4, -0.25" rotation="-270" align="BottomCenter" value="U13" />
+                <attribute name="VALUE" position="-3.8100000000000023, -3.8099999999999987" rotation="-270" value="VO1400" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="VO1400AEFTR" />
             </attributes>
         </part>
         <part name="U14" block="SOP04@optoacopladores" position="60.5, 28.75" rotation="90">
@@ -1834,10 +1834,10 @@
                 <pad name="4" signal="O6" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-4, 0" rotate="-90" align="BottomCenter" value="U14" />
-                <attribute name="VALUE" position="3.8100000000000023, 3.8100000000000023" rotate="-90" value="VO1400" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="VO1400AEFTR" />
+                <attribute name="NAME" position="-4, 0" rotation="-90" align="BottomCenter" value="U14" />
+                <attribute name="VALUE" position="3.8100000000000023, 3.8100000000000023" rotation="-90" value="VO1400" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="VO1400AEFTR" />
             </attributes>
         </part>
         <part name="U15" block="SOP04@optoacopladores" position="60.5, 33.5" rotation="90">
@@ -1848,10 +1848,10 @@
                 <pad name="4" signal="O7" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-4, 0" rotate="-90" align="BottomCenter" value="U15" />
-                <attribute name="VALUE" position="3.8100000000000023, 3.8100000000000023" rotate="-90" value="VO1400" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="VO1400AEFTR" />
+                <attribute name="NAME" position="-4, 0" rotation="-90" align="BottomCenter" value="U15" />
+                <attribute name="VALUE" position="3.8100000000000023, 3.8100000000000023" rotation="-90" value="VO1400" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="VO1400AEFTR" />
             </attributes>
         </part>
         <part name="U16" block="SOP04@optoacopladores" position="60.5, 38.25" rotation="90">
@@ -1862,10 +1862,10 @@
                 <pad name="4" signal="O8" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-4, 0" rotate="-90" align="BottomCenter" value="U16" />
-                <attribute name="VALUE" position="3.8100000000000023, 3.8100000000000023" rotate="-90" value="VO1400" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="VO1400AEFTR" />
+                <attribute name="NAME" position="-4, 0" rotation="-90" align="BottomCenter" value="U16" />
+                <attribute name="VALUE" position="3.8100000000000023, 3.8100000000000023" rotation="-90" value="VO1400" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="VO1400AEFTR" />
             </attributes>
         </part>
         <part name="U17" block="SOP04@optoacopladores" position="60.5, 43" rotation="90">
@@ -1876,10 +1876,10 @@
                 <pad name="4" signal="O9" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-4, 0" rotate="-90" align="BottomCenter" value="U17" />
-                <attribute name="VALUE" position="3.8100000000000023, 3.8100000000000023" rotate="-90" value="VO1400" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="VO1400AEFTR" />
+                <attribute name="NAME" position="-4, 0" rotation="-90" align="BottomCenter" value="U17" />
+                <attribute name="VALUE" position="3.8100000000000023, 3.8100000000000023" rotation="-90" value="VO1400" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="VO1400AEFTR" />
             </attributes>
         </part>
         <part name="R7" block="R-0805@smd-parts" position="32.375, 46.75" rotation="270">
@@ -1888,14 +1888,14 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="R_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="R_TOLERANCE" rotate="-270" visible="false" value="1%" />
-                <attribute name="R_RESISTANCE" rotate="-270" visible="false" value="10K" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="R" />
-                <attribute name="NAME" position="0, -2" rotate="-270" align="TopCenter" value="R7" />
-                <attribute name="VALUE" position="-2.5399999999999991, 0.634999999999998" rotate="-270" value="10K" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="CRCW080510K0FKEB" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Vishay" />
+                <attribute name="R_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="R_TOLERANCE" rotation="-270" visible="false" value="1%" />
+                <attribute name="R_RESISTANCE" rotation="-270" visible="false" value="10K" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="R" />
+                <attribute name="NAME" position="0, -2" rotation="-270" align="TopCenter" value="R7" />
+                <attribute name="VALUE" position="-2.5399999999999991, 0.634999999999998" rotation="-270" value="10K" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="CRCW080510K0FKEB" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Vishay" />
             </attributes>
         </part>
         <part name="R8" block="R-0805@smd-parts" position="29.875, 46.75" rotation="270">
@@ -1904,14 +1904,14 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="R_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="R_TOLERANCE" rotate="-270" visible="false" value="1%" />
-                <attribute name="R_RESISTANCE" rotate="-270" visible="false" value="10K" />
-                <attribute name="TYPE" rotate="-270" visible="false" value="R" />
-                <attribute name="NAME" position="0, -2" rotate="-270" align="TopCenter" value="R8" />
-                <attribute name="VALUE" position="-2.5399999999999991, 0.634999999999998" rotate="-270" value="10K" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="CRCW080510K0FKEB" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Vishay" />
+                <attribute name="R_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="R_TOLERANCE" rotation="-270" visible="false" value="1%" />
+                <attribute name="R_RESISTANCE" rotation="-270" visible="false" value="10K" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="R" />
+                <attribute name="NAME" position="0, -2" rotation="-270" align="TopCenter" value="R8" />
+                <attribute name="VALUE" position="-2.5399999999999991, 0.634999999999998" rotation="-270" value="10K" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="CRCW080510K0FKEB" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Vishay" />
             </attributes>
         </part>
         <part name="U6" block="SO08@optoacopladores" position="30.5, 54" rotation="180">
@@ -1926,10 +1926,10 @@
                 <pad name="5" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, 4" rotate="-180" align="BottomCenter" value="U6" />
-                <attribute name="VALUE" position="-3, -1.5" rotate="-180" value="ACPL224" />
-                <attribute name="MANUFACTURER" rotate="-180" visible="false" value="Broadcom Limited" />
-                <attribute name="REFERENCE" rotate="-180" visible="false" value="ACPL-224-500E" />
+                <attribute name="NAME" position="0, 4" rotation="-180" align="BottomCenter" value="U6" />
+                <attribute name="VALUE" position="-3, -1.5" rotation="-180" value="ACPL224" />
+                <attribute name="MANUFACTURER" rotation="-180" visible="false" value="Broadcom Limited" />
+                <attribute name="REFERENCE" rotation="-180" visible="false" value="ACPL-224-500E" />
             </attributes>
         </part>
         <part name="JP1" block="DF11-18DP-2DSA@hirose-df11" position="20.75, 62.875">
@@ -1990,14 +1990,14 @@
                 <pad name="2" signal="N$9" />
             </pads>
             <attributes>
-                <attribute name="TYPE" rotate="-90" visible="false" value="R" />
-                <attribute name="R_CASE" rotate="-90" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-90" visible="false" value="270R" />
-                <attribute name="R_TOLERANCE" rotate="-90" visible="false" value="1%" />
-                <attribute name="NAME" position="0, 2" rotate="-90" align="BottomCenter" value="R20" />
-                <attribute name="VALUE" position="2.5400000000000063, -0.634999999999998" rotate="-90" value="270" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Vishay" />
+                <attribute name="TYPE" rotation="-90" visible="false" value="R" />
+                <attribute name="R_CASE" rotation="-90" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-90" visible="false" value="270R" />
+                <attribute name="R_TOLERANCE" rotation="-90" visible="false" value="1%" />
+                <attribute name="NAME" position="0, 2" rotation="-90" align="BottomCenter" value="R20" />
+                <attribute name="VALUE" position="2.5400000000000063, -0.634999999999998" rotation="-90" value="270" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="CRCW0805270RFKEA" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Vishay" />
             </attributes>
         </part>
         <part name="R21" block="R-0805@smd-parts" position="68.125, 51" rotation="90">
@@ -2006,14 +2006,14 @@
                 <pad name="2" signal="N$48" />
             </pads>
             <attributes>
-                <attribute name="TYPE" rotate="-90" visible="false" value="R" />
-                <attribute name="R_CASE" rotate="-90" visible="false" value="0805" />
-                <attribute name="R_RESISTANCE" rotate="-90" visible="false" value="270R" />
-                <attribute name="R_TOLERANCE" rotate="-90" visible="false" value="1%" />
-                <attribute name="NAME" position="0.25, 2.125" rotate="-90" align="BottomCenter" value="R21" />
-                <attribute name="VALUE" position="2.5400000000000063, -0.634999999999998" rotate="-90" value="270" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Vishay" />
+                <attribute name="TYPE" rotation="-90" visible="false" value="R" />
+                <attribute name="R_CASE" rotation="-90" visible="false" value="0805" />
+                <attribute name="R_RESISTANCE" rotation="-90" visible="false" value="270R" />
+                <attribute name="R_TOLERANCE" rotation="-90" visible="false" value="1%" />
+                <attribute name="NAME" position="0.25, 2.125" rotation="-90" align="BottomCenter" value="R21" />
+                <attribute name="VALUE" position="2.5400000000000063, -0.634999999999998" rotation="-90" value="270" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="CRCW0805270RFKEA" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Vishay" />
             </attributes>
         </part>
         <part name="U18" block="DIL8-SMD@optoacopladores" position="61, 50.5" rotation="90">
@@ -2028,10 +2028,10 @@
                 <pad name="8" signal="O10A" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="-6, 0" rotate="-90" align="BottomCenter" value="U18" />
-                <attribute name="VALUE" position="3.1749999999999972, 6.3500000000000014" rotate="-90" value="LH1522AAC" />
-                <attribute name="MANUFACTURER" rotate="-90" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-90" visible="false" value="LH1522AAC" />
+                <attribute name="NAME" position="-6, 0" rotation="-90" align="BottomCenter" value="U18" />
+                <attribute name="VALUE" position="3.1749999999999972, 6.3500000000000014" rotation="-90" value="LH1522AAC" />
+                <attribute name="MANUFACTURER" rotation="-90" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-90" visible="false" value="LH1522AAC" />
             </attributes>
         </part>
         <part name="U7" block="SO08@optoacopladores" position="36, 54" rotation="180">
@@ -2046,10 +2046,10 @@
                 <pad name="5" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" position="0, 4" rotate="-180" align="BottomCenter" value="U7" />
-                <attribute name="VALUE" position="-3, -1.5" rotate="-180" value="ACPL224" />
-                <attribute name="MANUFACTURER" rotate="-180" visible="false" value="Broadcom Limited" />
-                <attribute name="REFERENCE" rotate="-180" visible="false" value="ACPL-224-500E" />
+                <attribute name="NAME" position="0, 4" rotation="-180" align="BottomCenter" value="U7" />
+                <attribute name="VALUE" position="-3, -1.5" rotation="-180" value="ACPL224" />
+                <attribute name="MANUFACTURER" rotation="-180" visible="false" value="Broadcom Limited" />
+                <attribute name="REFERENCE" rotation="-180" visible="false" value="ACPL-224-500E" />
             </attributes>
         </part>
         <part name="R22" block="R-0805@smd-parts" position="37.875, 46.75" rotation="270">
@@ -2058,14 +2058,14 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="TYPE" rotate="-270" visible="false" value="R" />
-                <attribute name="R_TOLERANCE" rotate="-270" visible="false" value="1%" />
-                <attribute name="R_RESISTANCE" rotate="-270" visible="false" value="10K" />
-                <attribute name="R_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="NAME" position="0, 3" rotate="-270" align="BottomCenter" value="R22" />
-                <attribute name="VALUE" position="-2.5399999999999991, 0.634999999999998" rotate="-270" value="10K" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="CRCW080510K0FKEB" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Vishay" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="R" />
+                <attribute name="R_TOLERANCE" rotation="-270" visible="false" value="1%" />
+                <attribute name="R_RESISTANCE" rotation="-270" visible="false" value="10K" />
+                <attribute name="R_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="NAME" position="0, 3" rotation="-270" align="BottomCenter" value="R22" />
+                <attribute name="VALUE" position="-2.5399999999999991, 0.634999999999998" rotation="-270" value="10K" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="CRCW080510K0FKEB" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Vishay" />
             </attributes>
         </part>
         <part name="R23" block="R-0805@smd-parts" position="35.375, 46.75" rotation="270">
@@ -2074,14 +2074,14 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="TYPE" rotate="-270" visible="false" value="R" />
-                <attribute name="R_TOLERANCE" rotate="-270" visible="false" value="1%" />
-                <attribute name="R_RESISTANCE" rotate="-270" visible="false" value="10K" />
-                <attribute name="R_CASE" rotate="-270" visible="false" value="0805" />
-                <attribute name="NAME" position="0, -2" rotate="-270" align="BottomCenter" value="R23" />
-                <attribute name="VALUE" position="-2.5399999999999991, 0.634999999999998" rotate="-270" value="10K" />
-                <attribute name="MANUFACTURER" rotate="-270" visible="false" value="Vishay" />
-                <attribute name="REFERENCE" rotate="-270" visible="false" value="CRCW080510K0FKEB" />
+                <attribute name="TYPE" rotation="-270" visible="false" value="R" />
+                <attribute name="R_TOLERANCE" rotation="-270" visible="false" value="1%" />
+                <attribute name="R_RESISTANCE" rotation="-270" visible="false" value="10K" />
+                <attribute name="R_CASE" rotation="-270" visible="false" value="0805" />
+                <attribute name="NAME" position="0, -2" rotation="-270" align="BottomCenter" value="R23" />
+                <attribute name="VALUE" position="-2.5399999999999991, 0.634999999999998" rotation="-270" value="10K" />
+                <attribute name="MANUFACTURER" rotation="-270" visible="false" value="Vishay" />
+                <attribute name="REFERENCE" rotation="-270" visible="false" value="CRCW080510K0FKEB" />
             </attributes>
         </part>
     </parts>
