@@ -380,6 +380,7 @@
             Point position = node.AttributeAsPoint("position");
             Angle rotation = node.AttributeAsAngle("rotation");
             double height = node.AttributeAsDouble("height");
+            TextAlign align = node.AttributeAsEnum<TextAlign>("align", TextAlign.TopLeft);
             double thickness = node.AttributeAsDouble("thickness");
             string value = node.AttributeAsString("value");
 
@@ -465,9 +466,10 @@
             string value = node.AttributeAsString("value");
             Point position = node.AttributeAsPoint("position");
             Angle rotation = node.AttributeAsAngle("rotation");
+            TextAlign align = node.AttributeAsEnum<TextAlign>("align", TextAlign.TopLeft);
             bool visible = node.AttributeAsBoolean("visible", false);
 
-            return new PartAttribute(name, position, rotation, TextAlign.TopLeft, visible, value);
+            return new PartAttribute(name, position, rotation, align, visible, value);
         }
     }
 }

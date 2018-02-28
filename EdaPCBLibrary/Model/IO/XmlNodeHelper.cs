@@ -124,7 +124,7 @@
             if (attribute == null)
                 return defValue;
             else
-                return (T)Enum.Parse(typeof(T), attribute.Value);
+                return (T)Enum.Parse(typeof(T), attribute.Value, true);
         }
     }
 }

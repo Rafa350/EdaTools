@@ -68,6 +68,11 @@
                     XmlConvert.ToString(color.B)));
         }
 
+        public static void WriteAttribute(this XmlWriter writer, string name, Enum value) {
+
+            writer.WriteAttributeString(name, value.ToString());
+        }
+
         /// <summary>
         /// Escriu un atribut de tipus 'Angle'.
         /// </summary>
@@ -77,9 +82,7 @@
         /// 
         public static void WriteAttribute(this XmlWriter writer, string name, Angle angle) {
 
-            writer.WriteAttributeString(
-                name,
-                XmlConvert.ToString(angle.Degrees));
+            writer.WriteAttributeString(name, XmlConvert.ToString(angle.Degrees));
         }
 
         public static void WriteAttribute(this XmlWriter writer, string name, double value) {

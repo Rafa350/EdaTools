@@ -18,6 +18,25 @@
     /// </summary>
     public sealed class VisualGenerator {
 
+        private class RenderTextDrawer: TextDrawer {
+
+            private readonly StreamGeometryContext ctx;
+
+            public RenderTextDrawer(Font font, StreamGeometryContext ctx) : 
+                base(font) {
+
+                this.ctx = ctx;
+            }
+
+            protected override void Trace(Point position, bool stroke, bool first) {
+
+                if (first)
+                    ctx.BeginFigure(position, false, false);
+                else
+                    ctx.LineTo(position, stroke, true);
+            }
+        }
+
         /// <summary>
         /// Clase per visitar la placa i generar les visuals.
         /// </summary>
@@ -306,36 +325,30 @@
                     Color color = GetColor(Layer);
                     Pen pen = CreatePen(color, text.Thickness);
 
-                    Transform attributeTransformation = null;
-
+                    Point position = text.Position;
+                    Angle rotation = Angle.Zero;
+                    TextAlign align = TextAlign.TopLeft;
                     string value = text.Value;
+
                     if (Part != null && value.StartsWith(">")) {
-
-                        if (Part.Name == "C10") {
-                            string s = Part.Name;
-                        }
-
                         PartAttribute pa = Part.GetAttribute(value.Substring(1));
                         if (pa != null) {
                             value = value.Replace(value, pa.Value);
-
-                            Point p = pa.Position;
-                            Angle rotation = pa.Rotation;
-
-                            Matrix m = new Matrix();
-                            m.Translate(p.X, p.Y);
-                            m.Rotate(rotation.Degrees);
-                            attributeTransformation = new MatrixTransform(m);
+                            position = pa.Position;
+                            rotation = pa.Rotation;
+                            align = pa.Align;
                         }
                     }
 
-                    if (attributeTransformation != null)
-                        dc.PushTransform(attributeTransformation);
+                    Matrix m = new Matrix();
+                    m.Translate(position.X, position.Y);
+                    m.Rotate(rotation.Degrees);
+                    dc.PushTransform(new MatrixTransform(m));
 
-                    DrawText(dc, pen, text.Height, value);
+                    DrawText(dc, pen, new Point(0, 0), text.Height, align, value);
+                    dc.DrawEllipse(Brushes.YellowGreen, null, new Point(0, 0), 0.15, 0.15);
 
-                    if (attributeTransformation != null) 
-                        dc.Pop();
+                    dc.Pop();
 
                     if (Part != null)
                         dc.Pop();
@@ -469,13 +482,18 @@
             /// </summary>
             /// <param name="dc">El contexte de dibuix.</param>
             /// <param name="pen">El pen.</param>
+            /// <param name="position">Posicio</param>
+            /// <param name="align">Aliniacio</param>
+            /// <param name="height">Alçada de lletra.</param>
             /// <param name="text">El text a dibuixar.</param>
             /// 
-            private static void DrawText(DrawingContext dc, Pen pen, double height, string text) {
+            private static void DrawText(DrawingContext dc, Pen pen, Point position, double height, TextAlign align, string text) {
 
                 StreamGeometry geometry = new StreamGeometry();
-                using (StreamGeometryContext ctx = geometry.Open())
-                    StreamText(ctx, height, text);
+                using (StreamGeometryContext ctx = geometry.Open()) {
+                    RenderTextDrawer td = new RenderTextDrawer(font, ctx);
+                    td.Draw(text, position, align, height);
+                }
                 geometry.Freeze();
                 dc.DrawGeometry(null, pen, geometry);
             }

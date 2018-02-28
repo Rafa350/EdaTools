@@ -2916,7 +2916,7 @@ Your Eurocircuits Team
                     <via x="22.5" y="47" extent="1-16" drill="0.25"/>
                     <via x="14.125" y="30.25" extent="1-16" drill="0.25"/>
                     <via x="7.5" y="46.5" extent="1-16" drill="0.25"/>
-                    <via x="40" y="54.5" extent="1-16" drill="0.25"/>
+                    <via x="40.125" y="54.375" extent="1-16" drill="0.25"/>
                     <via x="45.5" y="17" extent="1-16" drill="0.25"/>
                     <via x="21.25" y="34.5" extent="1-16" drill="0.25"/>
                     <via x="11.25" y="12" extent="1-16" drill="0.25"/>
@@ -3025,7 +3025,7 @@ Your Eurocircuits Team
                     <contactref element="U17" pad="2"/>
                     <via x="68.875" y="43.875" extent="1-16" drill="0.25"/>
                     <via x="66.875" y="45.375" extent="1-16" drill="0.25"/>
-                    <via x="69.5" y="49.625" extent="1-16" drill="0.25"/>
+                    <via x="69.375" y="49.625" extent="1-16" drill="0.25"/>
                     <via x="36.5" y="18.125" extent="1-16" drill="0.25"/>
                     <via x="37.625" y="16" extent="1-16" drill="0.25"/>
                     <via x="45.25" y="23.25" extent="1-16" drill="0.25"/>

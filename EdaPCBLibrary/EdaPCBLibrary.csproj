@@ -67,6 +67,7 @@
     <Compile Include="Geometry\Polygons\PolygonBuilder.cs" />
     <Compile Include="Geometry\Polygons\PolygonProcessor.cs" />
     <Compile Include="Geometry\TextAlign.cs" />
+    <Compile Include="Geometry\TextDrawer.cs" />
     <Compile Include="Import\Eagle\EagleImporter.cs" />
     <Compile Include="Import\Importer.cs" />
     <Compile Include="Import\ImporterFactory.cs" />

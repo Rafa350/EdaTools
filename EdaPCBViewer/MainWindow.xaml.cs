@@ -44,19 +44,21 @@ namespace Eda.PCBViewer {
 
             Board board;
 
-            // El importa
+            /*
+            // Importa el fitxer
             //
             Importer importer = new EagleImporter();
             board = importer.Read(Path.Combine(path, inImportFileName));
             
-            // El guarda
+            // Guarda el fitxer
             //
             using (Stream inStream = new FileStream(Path.Combine(path, fileName), FileMode.Create, FileAccess.Write, FileShare.None)) {
                 XmlBoardWriter writer = new XmlBoardWriter(inStream);
                 writer.Write(board);
             }
+            */
 
-            // El torna a carregar
+            // Carrega el fitxer
             //
             using (Stream outStream = new FileStream(Path.Combine(path, fileName), FileMode.Open, FileAccess.Read, FileShare.None)) {
                 XmlBoardReader reader = new XmlBoardReader(outStream);

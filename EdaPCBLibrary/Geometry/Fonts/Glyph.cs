@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry.Fonts {
 
     using System.Collections.Generic;
+    using System.Windows.Media;
 
     /// <summary>
     /// Representa la figura d'un caracter.

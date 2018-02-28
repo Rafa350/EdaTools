@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
@@ -58,7 +59,7 @@
                 if (line.Thickness > 0)
                     writer.WriteAttribute("thickness", line.Thickness);
                 if (line.LineCap != LineElement.LineCapStyle.Round)
-                    writer.WriteAttribute("lineCap", line.LineCap.ToString());
+                    writer.WriteAttribute("lineCap", line.LineCap);
 
                 Signal signal = board.GetSignal(line, currentPart, false);
                 if (signal != null)
@@ -83,7 +84,7 @@
                 if (arc.Thickness > 0)
                     writer.WriteAttribute("thickness", arc.Thickness);
                 if (arc.LineCap != LineElement.LineCapStyle.Round)
-                    writer.WriteAttribute("lineCap", arc.LineCap.ToString());
+                    writer.WriteAttribute("lineCap", arc.LineCap);
 
                 Signal signal = board.GetSignal(arc, currentPart, false);
                 if (signal != null)
@@ -140,6 +141,8 @@
                     writer.WriteAttribute("rotation", text.Rotation);
                 writer.WriteAttribute("height", text.Height);
                 writer.WriteAttribute("thickness", text.Thickness);
+                if (text.Align != TextAlign.TopLeft)
+                    writer.WriteAttribute("align", text.Align);
                 if (!String.IsNullOrEmpty(text.Value))
                     writer.WriteAttribute("value", text.Value);
 
@@ -212,6 +215,8 @@
                     writer.WriteAttribute("position", parameter.Position);
                 if (!parameter.Rotation.IsZero)
                     writer.WriteAttribute("rotate", parameter.Rotation);
+                if (parameter.Align != TextAlign.TopLeft)
+                    writer.WriteAttribute("align", parameter.Align);
                 if (!parameter.IsVisible)
                     writer.WriteAttribute("visible", parameter.IsVisible);
                 writer.WriteAttribute("value", parameter.Value);
@@ -262,7 +267,7 @@
                     if (!part.Rotation.IsZero)
                         writer.WriteAttribute("rotation", part.Rotation);
                     if (part.IsFlipped)
-                        writer.WriteAttribute("flipped", part.IsFlipped.ToString());
+                        writer.WriteAttribute("flipped", part.IsFlipped);
 
                     // Escriu la llista de pads.
                     //
@@ -319,9 +324,9 @@
                 if (via.InnerSize != via.OuterSize)
                     writer.WriteAttribute("innerSize", via.InnerSize);
                 if (via.Shape != ViaElement.ViaShape.Circular)
-                    writer.WriteAttribute("shape", via.Shape.ToString());
+                    writer.WriteAttribute("shape", via.Shape);
                 if (via.Type != ViaElement.ViaType.Through)
-                    writer.WriteAttribute("type", via.Type.ToString());
+                    writer.WriteAttribute("type", via.Type);
 
                 Signal signal = board.GetSignal(via, null, false);
                 if (signal != null)
@@ -340,8 +345,8 @@
                 writer.WriteStartElement("layer");
 
                 writer.WriteAttribute("name", layer.Name);
-                writer.WriteAttribute("side", layer.Side.ToString());
-                writer.WriteAttribute("function", layer.Function.ToString());
+                writer.WriteAttribute("side", layer.Side);
+                writer.WriteAttribute("function", layer.Function);
                 writer.WriteAttribute("color", layer.Color);
                 if (!layer.IsVisible)
                     writer.WriteAttribute("visible", "false");
