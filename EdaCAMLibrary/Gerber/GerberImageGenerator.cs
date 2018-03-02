@@ -2,6 +2,7 @@
 
     using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
     using MikroPic.EdaTools.v1.Pcb.Geometry;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
@@ -324,7 +325,7 @@
             /// <summary>
             /// Visita un objecte 'ArcElement'
             /// </summary>
-            /// <param name="arc">L'onbjecte a visitar.</param>
+            /// <param name="arc">L'objecte a visitar.</param>
             /// 
             public override void Visit(ArcElement arc) {
 
@@ -367,6 +368,16 @@
                 //
                 else
                     apertures.DefineCircleAperture(circle.Thickness);
+            }
+
+            /// <summary>
+            /// Visita un objecte 'TextElement'
+            /// </summary>
+            /// <param name="text">L'objecte a visitar.</param>
+            /// 
+            public override void Visit(TextElement text) {
+
+                apertures.DefineCircleAperture(text.Thickness);
             }
 
             /// <summary>
@@ -459,6 +470,7 @@
 
             private readonly GerberBuilder gb;
             private readonly ApertureDictionary apertures;
+            private Font font;
 
             /// <summary>
             /// Constructor del objecte.
@@ -615,6 +627,26 @@
                 }
             }
 
+            public override void Visit(TextElement text) {
+
+                // Selecciona l'apertura
+                //
+                Aperture ap = apertures.GetCircleAperture(text.Thickness);
+
+                // Escriu el gerber
+                //
+                gb.SelectAperture(ap);
+                if (font == null)
+                    font = Font.Load(@"..\..\..\Data\font.xml");
+                GerberTextDrawer dr = new GerberTextDrawer(font, gb);
+
+                Point position = text.Position;
+                if (Part != null)
+                    position = Part.Transformation.Transform(position);
+
+                dr.Draw(text.Value, position, text.Align, text.Height);
+            }
+
             /// <summary>
             /// Visita un objecte 'ViaElement'.
             /// </summary>
@@ -718,6 +750,28 @@
                 //
                 gb.SelectAperture(ap);
                 gb.FlashAt(position);
+            }
+        }
+
+        /// <summary>
+        /// Clase per generar la imatge dels texts
+        /// </summary>
+        private class GerberTextDrawer: TextDrawer {
+
+            private readonly GerberBuilder gb;
+
+            public GerberTextDrawer(Font font, GerberBuilder gb):
+                base(font) {
+
+                this.gb = gb;
+            }
+
+            protected override void Trace(Point position, bool stroke, bool first) {
+
+                if (first || !stroke)
+                    gb.MoveTo(position);
+                else
+                    gb.LineTo(position);
             }
         }
 

@@ -126,5 +126,10 @@
             else
                 return (T)Enum.Parse(typeof(T), attribute.Value, true);
         }
+
+        public static bool AttributeExists(this XmlNode node, string name) {
+
+            return node.Attributes[name] != null;
+        }
     }
 }

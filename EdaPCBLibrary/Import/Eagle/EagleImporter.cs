@@ -691,13 +691,24 @@
 
             string name = GetAttributeAsString(node, "name");
             string value = GetAttributeAsString(node, "value");
-            double x = GetAttributeDouble(node, "x");
-            double y = GetAttributeDouble(node, "y");
-            double rotate = GetAttributeDouble(node, "rotate");
-            TextAlign align = GetAttributeAsTextAlign(node, "align", TextAlign.TopLeft);
-            bool isVisible = GetAttributeAsString(node, "display") != "off";
 
-            return new PartAttribute(name, new Point(x, y), Angle.FromDegrees(rotate), align, isVisible, value);
+            PartAttribute attribute = new PartAttribute(name, value);
+
+            attribute.IsVisible = GetAttributeAsString(node, "display") != "off";
+
+            if (node.Attributes["x"] != null) {
+                double x = GetAttributeDouble(node, "x");
+                double y = GetAttributeDouble(node, "y");
+                attribute.Position = new Point(x, y);
+            }
+
+            if (node.Attributes["rotate"] != null)
+                attribute.Rotation = Angle.FromDegrees(GetAttributeDouble(node, "rotate"));
+
+            if (node.Attributes["align"] != null)
+                attribute.Align = GetAttributeAsTextAlign(node, "align", TextAlign.BottomLeft);
+
+            return attribute;
         }
 
         /// <summary>

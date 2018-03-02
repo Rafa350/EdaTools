@@ -1,6 +1,7 @@
 ﻿namespace Eda.PCBViewer.DrawEditor {
 
     using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Fonts;
@@ -325,20 +326,11 @@
                     Color color = GetColor(Layer);
                     Pen pen = CreatePen(color, text.Thickness);
 
-                    Point position = text.Position;
-                    Angle rotation = Angle.Zero;
-                    TextAlign align = TextAlign.TopLeft;
-                    string value = text.Value;
-
-                    if (Part != null && value.StartsWith(">")) {
-                        PartAttribute pa = Part.GetAttribute(value.Substring(1));
-                        if (pa != null) {
-                            value = value.Replace(value, pa.Value);
-                            position = pa.Position;
-                            rotation = pa.Rotation;
-                            align = pa.Align;
-                        }
-                    }
+                    PartAttributeAdapter pad = new PartAttributeAdapter(Part, text);
+                    Point position = pad.Position;
+                    Angle rotation = pad.Rotation;
+                    TextAlign align = pad.Align;
+                    string value = pad.Value;
 
                     Matrix m = new Matrix();
                     m.Translate(position.X, position.Y);

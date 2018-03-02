@@ -211,15 +211,15 @@
                 writer.WriteStartElement("attribute");
 
                 writer.WriteAttribute("name", parameter.Name);
-                if ((parameter.Position.X != 0) || (parameter.Position.Y != 0))
-                    writer.WriteAttribute("position", parameter.Position);
-                if (!parameter.Rotation.IsZero)
-                    writer.WriteAttribute("rotation", parameter.Rotation);
-                if (parameter.Align != TextAlign.TopLeft)
-                    writer.WriteAttribute("align", parameter.Align);
+                writer.WriteAttribute("value", parameter.Value);
                 if (!parameter.IsVisible)
                     writer.WriteAttribute("visible", parameter.IsVisible);
-                writer.WriteAttribute("value", parameter.Value);
+                if (parameter.UsePosition)
+                    writer.WriteAttribute("position", parameter.Position);
+                if (parameter.UseRotation)
+                    writer.WriteAttribute("rotation", parameter.Rotation);
+                if (parameter.UseAlign)
+                    writer.WriteAttribute("align", parameter.Align);
 
                 writer.WriteEndElement();
             }

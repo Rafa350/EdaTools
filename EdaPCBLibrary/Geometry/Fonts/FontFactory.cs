@@ -1,5 +1,5 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry.Fonts {
 
-    public sealed class FontCache {
+    public sealed class FontFactory {
     }
 }

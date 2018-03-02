@@ -58,8 +58,9 @@
     <Compile Include="Export\OpenScad\OpenScadExporter.cs" />
     <Compile Include="Geometry\Angle.cs" />
     <Compile Include="Geometry\ArcUtils.cs" />
-    <Compile Include="Geometry\Fonts\FontCache.cs" />
+    <Compile Include="Geometry\Fonts\FontFactory.cs" />
     <Compile Include="Geometry\Fonts\Glyph.cs" />
+    <Compile Include="Geometry\Fonts\GlyphPoint.cs" />
     <Compile Include="Geometry\Fonts\GlyphTrace.cs" />
     <Compile Include="Geometry\Fonts\Font.cs" />
     <Compile Include="Geometry\Polygons\Infrastructure\Clipper.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Import\Eagle\EagleImporter.cs" />
     <Compile Include="Import\Importer.cs" />
     <Compile Include="Import\ImporterFactory.cs" />
+    <Compile Include="Infrastructure\PartAttributeAdapter.cs" />
     <Compile Include="Model\BlockAttribute.cs" />
     <Compile Include="Model\Elements\PadElement.cs" />
     <Compile Include="Model\IConectable.cs" />

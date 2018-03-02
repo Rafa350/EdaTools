@@ -59,6 +59,7 @@
 
             layers.Clear();
             layers.Add(board.GetLayer(Layer.TopPlaceName));
+            layers.Add(board.GetLayer(Layer.TopNamesName));
             fileName = imageGenerator.GenerateFileName(prefix, GerberImageGenerator.ImageType.TopLegend);
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
@@ -68,6 +69,7 @@
 
             layers.Clear();
             layers.Add(board.GetLayer(Layer.BottomPlaceName));
+            layers.Add(board.GetLayer(Layer.BottomNamesName));
             fileName = imageGenerator.GenerateFileName(prefix, GerberImageGenerator.ImageType.BottomLegend);
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
@@ -81,24 +83,6 @@
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
                     imageGenerator.GenerateContent(writer, layers, GerberImageGenerator.ImageType.Profile);
-                }
-            }
-
-            layers.Clear();
-            layers.Add(board.GetLayer(Layer.TopPlaceName));
-            fileName = imageGenerator.GenerateFileName(prefix, GerberImageGenerator.ImageType.TopLegend);
-            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
-                using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
-                    imageGenerator.GenerateContent(writer, layers, GerberImageGenerator.ImageType.TopLegend);
-                }
-            }
-
-            layers.Clear();
-            layers.Add(board.GetLayer(Layer.BottomPlaceName));
-            fileName = imageGenerator.GenerateFileName(prefix, GerberImageGenerator.ImageType.BottomLegend);
-            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
-                using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
-                    imageGenerator.GenerateContent(writer, layers, GerberImageGenerator.ImageType.BottomLegend);
                 }
             }
 

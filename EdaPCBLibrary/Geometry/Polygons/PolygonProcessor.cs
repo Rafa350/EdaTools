@@ -194,17 +194,20 @@
         /// 
         private static Polygon ToPolygon(PolyNode polyNode) {
 
-            Polygon polygon = new Polygon();
+            Polygon polygon; // = new Polygon();
 
             if (polyNode.Contour.Count > 0) {
-                IntPoint[] srcArray = polyNode.Contour.ToArray();
+                polygon = ToPolygon(polyNode.Contour);
+                /*IntPoint[] srcArray = polyNode.Contour.ToArray();
                 Point[] dstArray = new Point[srcArray.Length];
                 for (int i = 0; i < srcArray.Length; i++) {
                     dstArray[i].X = srcArray[i].X / scaleFactor;
                     dstArray[i].Y = srcArray[i].Y / scaleFactor;
                 }
-                polygon.AddPoints(dstArray);
+                polygon.AddPoints(dstArray);*/
             }
+            else
+                polygon = new Polygon();
 
             if (polyNode.ChildCount > 0) {
                 foreach (PolyNode polyNodeChild in polyNode.Childs)

@@ -4,14 +4,13 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
-    using System.Windows;
     using System.Xml;
 
     public sealed class Font {
 
         private readonly Dictionary<char, Glyph> glyphs = new Dictionary<char, Glyph>();
         private readonly string name;
-        private readonly double height;
+        private readonly int height;
 
         /// <summary>
         /// Constructor privat de l'objecte
@@ -20,7 +19,7 @@
         /// <param name="height">Alçada del font.</param>
         /// <param name="glyphs">Llista de figures.</param>
         /// 
-        private Font(string name, double height, IEnumerable<Glyph> glyphs) {
+        private Font(string name, int height, IEnumerable<Glyph> glyphs) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -57,10 +56,10 @@
 
             XmlNode fontNode = doc.SelectSingleNode("/resources/fontResource/font");
 
-            string fontName = fontNode.Attributes["name"].Value;
-            double fontHeight = XmlConvert.ToDouble(fontNode.Attributes["height"].Value);
-            double ascendent = XmlConvert.ToDouble(fontNode.Attributes["ascent"].Value);
-            double descendent = XmlConvert.ToDouble(fontNode.Attributes["descent"].Value);
+            string name = fontNode.Attributes["name"].Value;
+            int height = XmlConvert.ToInt32(fontNode.Attributes["height"].Value);
+            int ascendent = XmlConvert.ToInt32(fontNode.Attributes["ascent"].Value);
+            int descendent = XmlConvert.ToInt32(fontNode.Attributes["descent"].Value);
 
             List<Glyph> glyphs = new List<Glyph>();
             foreach (XmlNode charNode in fontNode.SelectNodes("char")) {
@@ -71,16 +70,16 @@
                     code = Convert.ToChar(UInt16.Parse(codeStr.Substring(2), NumberStyles.HexNumber, CultureInfo.InvariantCulture));
                 else
                     code = Convert.ToChar(UInt16.Parse(codeStr));
-                double advance = XmlConvert.ToDouble(charNode.Attributes["advance"].Value);
+                int advance = XmlConvert.ToInt32(charNode.Attributes["advance"].Value);
 
                 List<GlyphTrace> traces = new List<GlyphTrace>();
                 foreach (XmlNode strokeNode in charNode.SelectNodes("glyph/*")) {
 
                     string positionStr = strokeNode.Attributes["position"].Value;
                     string[] s = positionStr.Split(',');
-                    double x = XmlConvert.ToDouble(s[0]);
-                    double y = XmlConvert.ToDouble(s[1]);
-                    Point position = new Point(x, y);
+                    int x = XmlConvert.ToInt32(s[0]);
+                    int y = XmlConvert.ToInt32(s[1]);
+                    GlyphPoint position = new GlyphPoint(x, y);
 
                     switch (strokeNode.Name) {
                         case "moveTo":
@@ -96,7 +95,7 @@
                 glyphs.Add(new Glyph(code, advance, traces));
             }
 
-            return new Font(fontName, fontHeight, glyphs);
+            return new Font(name, height, glyphs);
         }
 
         /// <summary>
@@ -180,10 +179,20 @@
         }
 
         /// <summary>
+        /// Obte el nom del font.
+        /// </summary>
+        /// 
+        public string Name {
+            get {
+                return name;
+            }
+        }
+
+        /// <summary>
         /// Obte l'a´çada del font.
         /// </summary>
         /// 
-        public double Height {
+        public int Height {
             get {
                 return height;
             }

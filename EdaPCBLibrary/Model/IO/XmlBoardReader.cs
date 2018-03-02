@@ -464,12 +464,20 @@
 
             string name = node.AttributeAsString("name");
             string value = node.AttributeAsString("value");
-            Point position = node.AttributeAsPoint("position");
-            Angle rotation = node.AttributeAsAngle("rotation");
-            TextAlign align = node.AttributeAsEnum<TextAlign>("align", TextAlign.TopLeft);
-            bool visible = node.AttributeAsBoolean("visible", false);
+            bool isVisible = node.AttributeAsBoolean("visible", false);
 
-            return new PartAttribute(name, position, rotation, align, visible, value);
+            PartAttribute attribute = new PartAttribute(name, value, isVisible);
+
+            if (node.AttributeExists("position"))
+                attribute.Position = node.AttributeAsPoint("position");
+
+            if (node.AttributeExists("rotation"))
+                attribute.Rotation = node.AttributeAsAngle("rotation");
+
+            if (node.AttributeExists("align"))
+                attribute.Align = node.AttributeAsEnum<TextAlign>("align", TextAlign.TopLeft);
+
+            return attribute;
         }
     }
 }

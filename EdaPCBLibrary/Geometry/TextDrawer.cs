@@ -97,7 +97,7 @@
 
             // Dibuixa text
             //
-            double offset = 0;
+            int offset = 0;
             foreach (char ch in text) {
                 Glyph glyph = font.GetGlyph(ch);
                 if (glyph != null) {
@@ -116,6 +116,13 @@
             }
         }
 
+        /// <summary>
+        /// Dibuixa un segment desde la posicio actual a la posicio final indicada.
+        /// </summary>
+        /// <param name="position">Posicio final del segment.</param>
+        /// <param name="stroke">True si cal dibuixar, false per nomes moure.</param>
+        /// <param name="first">True si es el primer punt.</param>
+        /// 
         protected abstract void Trace(Point position, bool stroke, bool first);
     }
 }
