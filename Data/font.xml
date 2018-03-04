@@ -7,6 +7,7 @@
                 <glyph>
                 </glyph>
             </char>
+            
             <!-- '.' -->
             <char code="0x2D" advance="3">
                 <glyph>
@@ -17,6 +18,7 @@
                     <lineTo position="0, 0"/>
                 </glyph>
             </char>
+            
             <!--  '-' -->
             <char code="0x2E" advance="6">
                 <glyph>
@@ -24,6 +26,7 @@
                     <lineTo position="4, 3"/>
                 </glyph>
             </char>
+            
             <!-- '0' -->
             <char code="0x30" advance="6">
                 <glyph>
@@ -39,6 +42,7 @@
                     <lineTo position="4, 5"/>
                 </glyph>
             </char>
+            
             <!-- '1' -->
             <char code="0x31" advance="6">
                 <glyph>
@@ -49,6 +53,7 @@
                     <lineTo position="0, 4"/>
                 </glyph>
             </char>
+            
             <!-- '2' -->
             <char code="0x32" advance="6">
                 <glyph>
@@ -64,6 +69,7 @@
                     <lineTo position="0, 5"/>
                 </glyph>
             </char>
+            
             <!-- '3' -->
             <char code="0x33" advance="6">
                 <glyph>
@@ -91,6 +97,7 @@
                     <lineTo position="4, 3"/>
                 </glyph>
             </char>
+            
             <!-- '5' -->
             <char code="0x35" advance="6">
                 <glyph>
