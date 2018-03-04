@@ -2,6 +2,7 @@
 
     using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using System.Windows;
 
     /// <summary>
@@ -52,7 +53,8 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            return PolygonBuilder.BuildArcSegment(Center, Radius, StartAngle, angle, Thickness);
+            Point[] points = PolygonBuilder.BuildTrace(Center, Radius, StartAngle, angle, Thickness);
+            return new Polygon(points);
         }
 
         /// <summary>
@@ -64,7 +66,8 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
 
-            return PolygonBuilder.BuildArcSegment(Center, Radius, StartAngle, angle, Thickness + (spacing * 2));
+            Point[] points =  PolygonBuilder.BuildTrace(Center, Radius, StartAngle, angle, Thickness + (spacing * 2));
+            return new Polygon(points);
         }
 
         /// <summary>
@@ -76,7 +79,7 @@
                 return angle;
             }
             set {
-                angle = value;
+                    angle = value;
             }
         }
 

@@ -62,7 +62,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            return new Polygon();
+            return null;
         }
 
         /// <summary>
@@ -74,7 +74,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
 
-            return new Polygon();
+            return null;
         }
 
         /// <summary>

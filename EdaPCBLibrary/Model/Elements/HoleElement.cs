@@ -1,13 +1,14 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using System;
     using System.Windows;
 
     /// <summary>
     /// Clase que representa un forat no conductor.
     /// </summary>
-    public sealed class HoleElement: Element, IPosition {
+    public sealed class HoleElement : Element, IPosition {
 
         private Point position;
         private double drill;
@@ -25,7 +26,7 @@
         /// <param name="position">Pocicio del centre.</param>
         /// <param name="drill">Diametre del forat.</param>
         /// 
-        public HoleElement(Point position, double drill) { 
+        public HoleElement(Point position, double drill) {
 
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException("drill");
@@ -52,7 +53,8 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            return PolygonBuilder.BuildCircle(position, drill / 2);
+            Point[] points = PolygonBuilder.BuildCircle(position, drill / 2);
+            return new Polygon(points);
         }
 
         /// <summary>
@@ -64,7 +66,8 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
 
-            return PolygonBuilder.BuildCircle(position, (drill / 2) + spacing);
+            Point[] points = PolygonBuilder.BuildCircle(position, (drill / 2) + spacing);
+            return new Polygon(points);
         }
 
         /// <summary>
@@ -108,3 +111,4 @@
         }
     }
 }
+

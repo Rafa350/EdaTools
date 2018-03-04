@@ -4,6 +4,7 @@
     using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
@@ -470,7 +471,6 @@
 
             private readonly GerberBuilder gb;
             private readonly ApertureDictionary apertures;
-            private Font font;
 
             /// <summary>
             /// Constructor del objecte.
@@ -574,13 +574,17 @@
                     // Obte el poligon
                     //
                     Polygon polygon = rectangle.GetPolygon(Layer.Side);
-                    if (Part != null)
-                        polygon.Transform(Part.Transformation);
+                    Point[] points = polygon.ClonePoints();
+
+                    if (Part != null) {
+                        Part.Transformation.Transform(points);
+                        //polygon.Transform(Part.Transformation);
+                    }
 
                     // Escriu el gerber
                     //
                     gb.SelectAperture(ap);
-                    gb.Polygon(polygon.Points);
+                    gb.Polygon(points);
                 }
             }
 
@@ -617,13 +621,16 @@
                     // Obte el poligon
                     //
                     Polygon polygon = circle.GetPolygon(Layer.Side);
+                    Point[] points = polygon.ClonePoints();
+
                     if (Part != null)
-                        polygon.Transform(Part.Transformation);
+                        //polygon.Transform(Part.Transformation);
+                        Part.Transformation.Transform(points);
 
                     // Escriu el gerber
                     //
                     gb.SelectAperture(ap);
-                    gb.Polygon(polygon.Points);
+                    gb.Polygon(points);
                 }
             }
 
@@ -636,15 +643,15 @@
                 // Escriu el gerber
                 //
                 gb.SelectAperture(ap);
-                if (font == null)
-                    font = Font.Load(@"..\..\..\Data\font.xml");
+                Font font = FontFactory.Instance.GetFont("Standard");
                 GerberTextDrawer dr = new GerberTextDrawer(font, gb);
 
-                Point position = text.Position;
+                PartAttributeAdapter paa = new PartAttributeAdapter(Part, text);
+                Point position = paa.Position;
                 if (Part != null)
                     position = Part.Transformation.Transform(position);
 
-                dr.Draw(text.Value, position, text.Align, text.Height);
+                dr.Draw(paa.Value, position, paa.Align, text.Height);
             }
 
             /// <summary>
@@ -818,7 +825,7 @@
             /// 
             private void DrawPolygon(Polygon polygon, double thickness) {
 
-                DrawPolygon(polygon, polygon.HasPoints ? 1 : 0, thickness);
+                DrawPolygon(polygon, (polygon.Points != null) ? 1 : 0, thickness);
             }
 
             /// <summary>
@@ -832,7 +839,7 @@
 
                 // Procesa el poligon
                 //
-                if (polygon.HasPoints) {
+                if (polygon.Points != null) {
 
                     // Dibuixa el contingut de la regio
                     //
@@ -851,7 +858,7 @@
 
                 // Processa els fills. Amb level < 2 evitem els poligons orfres
                 //
-                if (polygon.HasChilds && (level < 2))
+                if ((polygon.Childs != null) && (level < 2))
                     foreach (Polygon child in polygon.Childs)
                         DrawPolygon(child, level + 1, thickness);
             }

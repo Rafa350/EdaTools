@@ -16,7 +16,7 @@
         /// Construeix l'objecte amb els parametres per defecte.
         /// </summary>
         /// 
-        public PadElement():
+        public PadElement() :
             base() {
 
         }

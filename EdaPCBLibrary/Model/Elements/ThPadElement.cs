@@ -2,7 +2,9 @@
 
     using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using System;
+    using System.Collections.Generic;
     using System.Windows;
 
     /// <summary>
@@ -73,6 +75,37 @@
             visitor.Visit(this);
         }
 
+        private Point[] BuildPoints(BoardSide side, double spacing) {
+
+            switch (shape) {
+                case ThPadShape.Square:
+                    return PolygonBuilder.BuildRectangle(
+                        Position,
+                        new Size(topSize + (spacing * 2), topSize + (spacing * 2)),
+                        spacing,
+                        rotation);
+
+                case ThPadShape.Octogonal:
+                    return PolygonBuilder.BuildPolygon(
+                        8,
+                        Position,
+                        (topSize / 2) + spacing,
+                        rotation + Angle.FromDegrees(22.5));
+
+                case ThPadShape.Oval:
+                    return PolygonBuilder.BuildRectangle(
+                        Position,
+                        new Size((topSize * 2) + (spacing * 2), topSize + (spacing * 2)),
+                        (topSize / 2) + spacing,
+                        rotation);
+
+                default:
+                    return PolygonBuilder.BuildCircle(
+                        Position,
+                        (topSize / 2) + spacing);
+            }
+        }
+
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
@@ -81,10 +114,9 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Polygon polygon = GetOutlinePolygon(side, 0);
-            polygon.AddChild(PolygonBuilder.BuildCircle(Position, drill / 2));
-
-            return polygon;
+            Point[] points = BuildPoints(side, 0);
+            Point[] holePoints = PolygonBuilder.BuildCircle(Position, drill / 2);
+            return new Polygon(points, new Polygon[] { new Polygon(holePoints) });
         }
 
         /// <summary>
@@ -96,39 +128,8 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
 
-        Polygon polygon;
-            switch (shape) {
-                case ThPadShape.Square:
-                    polygon = PolygonBuilder.BuildRectangle(
-                        Position,
-                        new Size(topSize + (spacing * 2), topSize + (spacing * 2)),
-                        spacing,
-                        rotation);
-                    break;
-
-                case ThPadShape.Octogonal:
-                    polygon = PolygonBuilder.BuildRegularPolygon(
-                        8,
-                        Position,
-                        (topSize / 2) + spacing,
-                        rotation + Angle.FromDegrees(22.5));
-                    break;
-
-                case ThPadShape.Oval:
-                    polygon = PolygonBuilder.BuildRectangle(
-                        Position,
-                        new Size((topSize * 2) + (spacing * 2), topSize + (spacing * 2)),
-                        (topSize / 2) + spacing,
-                        rotation);
-                    break;
-
-                default:
-                    polygon = PolygonBuilder.BuildCircle(
-                        Position,
-                        (topSize / 2) + spacing);
-                    break;
-            }
-            return polygon;
+            Point[] points = BuildPoints(side, spacing);
+            return new Polygon(points);
         }
 
         /// <summary>
@@ -145,13 +146,13 @@
             double h = topSize + (spacing * 2.25);
 
             Polygon pour = GetOutlinePolygon(side, spacing);
-            Polygon thermal = PolygonBuilder.BuildCross(Position, new Size(w, h), width, rotation);
+            Polygon thermal = new Polygon(PolygonBuilder.BuildCross(Position, new Size(w, h), width, rotation));
 
-            Polygon polygon = new Polygon();
-            polygon.AddChilds(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
-            if (polygon.ChildCount != 4)
+            List<Polygon> childs = new List<Polygon>();
+            childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
+            if (childs.Count != 4)
                 throw new InvalidProgramException("Thermal generada incorrectamente.");
-            return polygon;
+            return new Polygon(null, childs.ToArray());
         }
 
         /// <summary>
@@ -177,7 +178,7 @@
                 return rotation;
             }
             set {
-                rotation = value;
+                    rotation = value;
             }
         }
 
@@ -190,7 +191,7 @@
                 return shape;
             }
             set {
-                shape = value;
+                    shape = value;
             }
         }
 
@@ -206,7 +207,7 @@
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Drill");
 
-                drill = value;
+                    drill = value;
             }
         }
 
@@ -220,7 +221,7 @@
                 return Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, dimension));
             }
             set {
-                topSize = value;
+                    topSize = value;
             }
         }
     }

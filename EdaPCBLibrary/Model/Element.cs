@@ -16,7 +16,7 @@
         public abstract void AcceptVisitor(IVisitor visitor);
 
         /// <summary>
-        /// Crea el poligon del element.
+        /// Obte el poligon del element.
         /// </summary>
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El poligon</returns>
@@ -24,7 +24,7 @@
         public abstract Polygon GetPolygon(BoardSide side);
 
         /// <summary>
-        /// Crea el poligon espaiat del element.
+        /// Obte el poligon espaiat del element.
         /// </summary>
         /// <param name="side">Cara de la placa.</param>
         /// <param name="spacing">Espaiat.</param>
@@ -33,7 +33,7 @@
         public abstract Polygon GetOutlinePolygon(BoardSide side, double spacing);
 
         /// <summary>
-        /// Calula el bounding box del element.
+        /// Obte el bounding box del element.
         /// </summary>
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>

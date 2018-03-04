@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using System;
     using System.Windows;
 
@@ -54,7 +55,8 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            return PolygonBuilder.BuildCircle(position, radius);
+            Point[] points = PolygonBuilder.BuildCircle(position, radius);
+            return new Polygon(points);
         }
 
         /// <summary>
@@ -66,7 +68,8 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
 
-            return PolygonBuilder.BuildCircle(position, radius + spacing);
+            Point[] points = PolygonBuilder.BuildCircle(position, radius + spacing);
+            return new Polygon(points);
         }
 
         /// <summary>
@@ -105,7 +108,7 @@
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Radius");
 
-                radius = value;
+                    radius = value;
             }
         }
 
@@ -121,7 +124,7 @@
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Diameter");
 
-                radius = value / 2;
+                Radius = value / 2; // Canvia la propietat, no el camp
             }
         }
 
@@ -137,7 +140,7 @@
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Thickness");
 
-                thickness = value;
+                    thickness = value;
             }
         }
 

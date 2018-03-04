@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <fontResource version="3.0" resourceId="EdaToolsPcbFont">
-        <font name="EdaTools Standard Font" height="9" ascent="6" descent="2">
+        <font name="Standard" height="9" ascent="6" descent="2">
             <!-- ' ' -->
             <char code="0x20" advance="3">
                 <glyph>
@@ -192,6 +192,18 @@
                     <lineTo position="1, 0"/>                    
                     <lineTo position="3, 0"/>                    
                     <lineTo position="4, 1"/>                    
+                </glyph>
+            </char>
+            <!-- 'D' -->
+            <char code="0x44" advance="6">
+                <glyph>
+                    <moveTo position="0, 0"/>
+                    <lineTo position="0, 6"/>
+                    <lineTo position="3, 6"/>                    
+                    <lineTo position="4, 5"/>                    
+                    <lineTo position="4, 1"/>                    
+                    <lineTo position="3, 0"/>                    
+                    <lineTo position="0, 0"/>                    
                 </glyph>
             </char>
             <!-- 'J' -->

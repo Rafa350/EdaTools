@@ -156,12 +156,11 @@
         /// 
         private static List<IntPoint> ToPointList(Polygon polygon) {
 
-            if (polygon.PointCount > 0) {
-                Point[] srcArray = polygon.PointArray;
-                IntPoint[] dstArray = new IntPoint[srcArray.Length];
-                for (int i = 0; i < srcArray.Length; i++) {
-                    dstArray[i].X = (int)(srcArray[i].X * scaleFactor);
-                    dstArray[i].Y = (int)(srcArray[i].Y * scaleFactor);
+            if (polygon.Points != null) {
+                IntPoint[] dstArray = new IntPoint[polygon.Points.Length];
+                for (int i = 0; i < polygon.Points.Length; i++) {
+                    dstArray[i].X = (int)(polygon.Points[i].X * scaleFactor);
+                    dstArray[i].Y = (int)(polygon.Points[i].Y * scaleFactor);
                 }
                 return new List<IntPoint>(dstArray);
             }
@@ -194,27 +193,27 @@
         /// 
         private static Polygon ToPolygon(PolyNode polyNode) {
 
-            Polygon polygon; // = new Polygon();
-
+            Point[] points;
             if (polyNode.Contour.Count > 0) {
-                polygon = ToPolygon(polyNode.Contour);
-                /*IntPoint[] srcArray = polyNode.Contour.ToArray();
-                Point[] dstArray = new Point[srcArray.Length];
-                for (int i = 0; i < srcArray.Length; i++) {
-                    dstArray[i].X = srcArray[i].X / scaleFactor;
-                    dstArray[i].Y = srcArray[i].Y / scaleFactor;
+                points = new Point[polyNode.Contour.Count];
+                for (int i = 0; i < polyNode.Contour.Count; i++) {
+                    points[i].X = polyNode.Contour[i].X / scaleFactor;
+                    points[i].Y = polyNode.Contour[i].Y / scaleFactor;
                 }
-                polygon.AddPoints(dstArray);*/
             }
             else
-                polygon = new Polygon();
+                points = null;
 
+            Polygon[] childs;
             if (polyNode.ChildCount > 0) {
-                foreach (PolyNode polyNodeChild in polyNode.Childs)
-                    polygon.AddChild(ToPolygon(polyNodeChild));
+                childs = new Polygon[polyNode.ChildCount];
+                for (int i = 0; i < polyNode.ChildCount; i++)
+                    childs[i] = ToPolygon(polyNode.Childs[i]);
             }
+            else
+                childs = null;
 
-            return polygon;
+            return new Polygon(points, childs);
         }
 
         /// <summary>

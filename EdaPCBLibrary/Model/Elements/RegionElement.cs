@@ -2,6 +2,7 @@
 
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Geometry;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using System;
     using System.Collections.Generic;
     using System.Windows;
@@ -98,14 +99,15 @@
             Point firstPoint = new Point();
             Angle angle = Angle.Zero;
 
-            Polygon polygon = new Polygon();
+            List<Point> points = new List<Point>();
+
             bool first = true;
             foreach (Segment segment in segments) {
 
                 if (first) {
                     first = false;
                     firstPoint = segment.Position;
-                    polygon.AddPoint(segment.Position);
+                    points.Add(segment.Position);
                 }
 
                 else {
@@ -113,7 +115,7 @@
                     // Tram recte
                     //
                     if (angle.IsZero)
-                        polygon.AddPoint(segment.Position);
+                        points.Add(segment.Position);
 
                     // Tram circular
                     //
@@ -121,7 +123,7 @@
                         Point center = ArcUtils.Center(currentPoint, segment.Position, angle);
                         double radius = ArcUtils.Radius(currentPoint, segment.Position, angle);
                         Angle startAngle = ArcUtils.StartAngle(currentPoint, center);
-                        polygon.AddPoints(PolygonBuilder.ArcPoints(center, radius, startAngle, angle, false));
+                        points.AddRange(PolygonBuilder.BuildArc(center, radius, startAngle, angle, false));
                     }
                 }
 
@@ -130,16 +132,16 @@
             }
 
             if (angle.IsZero)
-                polygon.AddPoint(firstPoint);
+                points.Add(firstPoint);
 
             else {
                 Point center = ArcUtils.Center(currentPoint, firstPoint, angle);
                 double radius = ArcUtils.Radius(currentPoint, firstPoint, angle);
                 Angle startAngle = ArcUtils.StartAngle(currentPoint, center);
-                polygon.AddPoints(PolygonBuilder.ArcPoints(center, radius, startAngle, angle, false));
+                points.AddRange(PolygonBuilder.BuildArc(center, radius, startAngle, angle, false));
             }
 
-            return polygon;
+            return new Polygon(points.ToArray());
         }
 
         /// <summary>

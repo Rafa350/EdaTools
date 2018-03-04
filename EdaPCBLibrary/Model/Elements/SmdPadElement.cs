@@ -2,7 +2,9 @@
 
     using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using System;
+    using System.Collections.Generic;
     using System.Windows;
 
     /// <summary>
@@ -57,7 +59,8 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            return PolygonBuilder.BuildRectangle(Position, Size, Radius, rotation);
+            Point[] points = PolygonBuilder.BuildRectangle(Position, Size, Radius, rotation);
+            return new Polygon(points);
         }
 
         /// <summary>
@@ -69,8 +72,9 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
 
-            return PolygonBuilder.BuildRectangle(Position,
+            Point[] points = PolygonBuilder.BuildRectangle(Position,
                 new Size(size.Width + (spacing * 2), size.Height + (spacing * 2)), Radius + spacing, rotation);
+            return new Polygon(points);
         }
 
         /// <summary>
@@ -84,14 +88,14 @@
         public override Polygon GetThermalPolygon(BoardSide side, double spacing, double width) {
 
             Polygon pour = GetOutlinePolygon(side, spacing);
-            Polygon thermal = PolygonBuilder.BuildCross(Position, 
-                new Size(size.Width + (spacing * 2.25), size.Height + (spacing * 2.25)), width, rotation);
+            Polygon thermal = new Polygon(PolygonBuilder.BuildCross(Position, 
+                new Size(size.Width + (spacing * 2.25), size.Height + (spacing * 2.25)), width, rotation));
 
-            Polygon polygon = new Polygon();
-            polygon.AddChilds(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
-            if (polygon.ChildCount != 4)
+            List<Polygon> childs = new List<Polygon>();
+            childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
+            if (childs.Count != 4)
                 throw new InvalidProgramException("Thermal generada incorrectamente.");
-            return polygon;
+            return new Polygon(null, childs.ToArray());
         }
 
         /// <summary>
@@ -107,7 +111,6 @@
             double h = size.Width * Math.Sin(a) + size.Height * Math.Cos(a);
 
             return new Rect(Position.X - w / 2.0, Position.Y - h / 2.0, w, h);
-
         }
 
         /// <summary>
@@ -119,7 +122,7 @@
                 return rotation;
             }
             set {
-                rotation = value;
+                    rotation = value;
             }
         }
 
@@ -132,7 +135,7 @@
                 return size;
             }
             set {
-                size = value;
+                    size = value;
             }
         }
 
@@ -148,7 +151,7 @@
                 if (value < 0 || roundnes > 1)
                     throw new ArgumentOutOfRangeException("Roundness");
 
-                roundnes = value;
+                    roundnes = value;
             }
         }
 

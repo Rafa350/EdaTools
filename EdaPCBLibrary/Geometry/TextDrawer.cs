@@ -32,16 +32,19 @@
         /// <param name="position">Posicio</param>
         /// <param name="angle">Angle de rotacio.</param>
         /// <param name="align">Aliniacio.</param>
-        /// <param name="height">A´çada de lletra.</param>
+        /// <param name="height">Alçada de lletra.</param>
         /// <returns>La llista de glyphs preparats per dibuixar.</returns>
         /// 
         public void Draw(string text, Point position, TextAlign align, double height) {
 
+            if (String.IsNullOrEmpty(text))
+                return;
+
             // Calcula el tamany del text
             //
             double width = 0;
-            foreach (char ch in text) {
-                Glyph glyph = font.GetGlyph(ch);
+            for (int i = 0; i < text.Length; i++) {
+                Glyph glyph = font.GetGlyph(text[i]);
                 if (glyph != null)
                     width += glyph.Advance;
             }
@@ -98,17 +101,16 @@
             // Dibuixa text
             //
             int offset = 0;
-            foreach (char ch in text) {
-                Glyph glyph = font.GetGlyph(ch);
+            for (int i = 0; i < text.Length; i++) {
+                Glyph glyph = font.GetGlyph(text[i]);
                 if (glyph != null) {
 
-                    bool first = true;
-                    foreach (GlyphTrace glyphTrace in glyph.Traces) {
+                    for (int j = 0; j < glyph.Traces.Length; j++) {
 
-                        Point p = new Point(glyphTrace.Position.X + offset, glyphTrace.Position.Y);
-                        Trace(m.Transform(p), glyphTrace.Stroke, first);
+                        GlyphPoint gp = glyph.Traces[j].Position;
+                        Point p = new Point(gp.X + offset, gp.Y);
 
-                        first = false;
+                        Trace(m.Transform(p), glyph.Traces[j].Stroke, j == 0);
                     }
 
                     offset += glyph.Advance;

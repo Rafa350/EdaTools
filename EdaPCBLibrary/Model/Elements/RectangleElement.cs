@@ -2,6 +2,7 @@
 
     using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using System;
     using System.Windows;
 
@@ -58,7 +59,8 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            return PolygonBuilder.BuildRectangle(position, size, 0, rotation);
+            Point[] points = PolygonBuilder.BuildRectangle(position, size, 0, rotation);
+            return new Polygon(points);
         }
 
         /// <summary>
@@ -70,9 +72,10 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
 
-            return PolygonBuilder.BuildRectangle(position,
+            Point[] points = PolygonBuilder.BuildRectangle(position,
                 new Size(size.Width + spacing * 2, size.Height + spacing * 2),
                 spacing, rotation);
+            return new Polygon(points);
         }
 
         /// <summary>
@@ -99,7 +102,7 @@
                 return position;
             }
             set {
-                position = value;
+                    position = value;
             }
         }
 
@@ -112,7 +115,7 @@
                 return size;
             }
             set {
-                size = value;
+                    size = value;
             }
         }
 
@@ -125,7 +128,7 @@
                 return rotation;
             }
             set {
-                rotation = value;
+                    rotation = value;
             }
         }
 
@@ -141,7 +144,7 @@
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Thickness");
 
-                thickness = value;
+                    thickness = value;
             }
         }
 

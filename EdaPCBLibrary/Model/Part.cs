@@ -1,12 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using MikroPic.EdaTools.v1.Pcb.Geometry;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Windows;
     using System.Windows.Media;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
     public sealed class Part: IPosition, IRotation, IName {
 
@@ -179,7 +178,11 @@
         /// 
         public IEnumerable<PadElement> Pads {
             get {
-                return block.Elements.OfType<PadElement>();
+                foreach (Element element in block.Elements) {
+                    PadElement pad = element as PadElement;
+                    if (pad != null)
+                        yield return pad;
+                }
             }
         }
 

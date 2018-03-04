@@ -1,13 +1,14 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using System;
     using System.Windows;
 
     /// <summary>
     /// Clase que representa una linia.
     /// </summary>
-    public class LineElement: Element, IConectable {
+    public class LineElement : Element, IConectable {
 
         public enum LineCapStyle {
             Round,
@@ -23,7 +24,7 @@
         /// Constructor de l'objecte amb els parametres per defecte.
         /// </summary>
         /// 
-        public LineElement():
+        public LineElement() :
             base() {
         }
 
@@ -62,7 +63,8 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            return PolygonBuilder.BuildLineSegment(startPosition, endPosition, thickness);
+            Point[] points = PolygonBuilder.BuildTrace(startPosition, endPosition, thickness);
+            return new Polygon(points);
         }
 
         /// <summary>
@@ -74,7 +76,8 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
 
-            return PolygonBuilder.BuildLineSegment(startPosition, endPosition, thickness + (spacing * 2));
+            Point[] points = PolygonBuilder.BuildTrace(startPosition, endPosition, thickness + (spacing * 2));
+            return new Polygon(points);
         }
 
         /// <summary>
@@ -110,7 +113,7 @@
                 return endPosition;
             }
             set {
-                endPosition = value;
+                    endPosition = value;
             }
         }
 
@@ -148,7 +151,7 @@
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Thickness");
 
-                thickness = value;
+                    thickness = value;
             }
         }
 
@@ -166,3 +169,4 @@
         }
     }
 }
+

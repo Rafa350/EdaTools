@@ -65,7 +65,7 @@
     <Compile Include="Geometry\Fonts\Font.cs" />
     <Compile Include="Geometry\Polygons\Infrastructure\Clipper.cs" />
     <Compile Include="Geometry\Polygons\Polygon.cs" />
-    <Compile Include="Geometry\Polygons\PolygonBuilder.cs" />
+    <Compile Include="Infrastructure\PolygonBuilder.cs" />
     <Compile Include="Geometry\Polygons\PolygonProcessor.cs" />
     <Compile Include="Geometry\TextAlign.cs" />
     <Compile Include="Geometry\TextDrawer.cs" />
@@ -73,6 +73,7 @@
     <Compile Include="Import\Importer.cs" />
     <Compile Include="Import\ImporterFactory.cs" />
     <Compile Include="Infrastructure\PartAttributeAdapter.cs" />
+    <Compile Include="Infrastructure\PolygonCache.cs" />
     <Compile Include="Model\BlockAttribute.cs" />
     <Compile Include="Model\Elements\PadElement.cs" />
     <Compile Include="Model\IConectable.cs" />

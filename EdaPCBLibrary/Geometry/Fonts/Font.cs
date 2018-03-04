@@ -92,7 +92,7 @@
                     }
                 }
 
-                glyphs.Add(new Glyph(code, advance, traces));
+                glyphs.Add(new Glyph(code, advance, traces.ToArray()));
             }
 
             return new Font(name, height, glyphs);

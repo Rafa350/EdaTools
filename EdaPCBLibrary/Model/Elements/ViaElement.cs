@@ -2,13 +2,14 @@
 
     using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using System;
     using System.Windows;
 
     /// <summary>
     /// Clase que representa una via
     /// </summary>
-    public sealed class ViaElement: Element, IPosition, IConectable {
+    public sealed class ViaElement : Element, IPosition, IConectable {
 
         public enum ViaShape {
             Square,
@@ -40,7 +41,7 @@
         /// Constructor de l'objecte amb els parametres per defecte.
         /// </summary>
         /// 
-        public ViaElement():
+        public ViaElement() :
             base() {
 
         }
@@ -80,6 +81,30 @@
         }
 
         /// <summary>
+        /// Calcula la llista de puns pels poligons
+        /// </summary>
+        /// <param name="side">Cara de la placa.</param>
+        /// <param name="spacing">Espaiat.</param>
+        /// <returns>La llista de punts.</returns>
+        /// 
+        private Point[] BuildPoints(BoardSide side, double spacing) {
+
+            double size = side == BoardSide.Inner ? InnerSize : OuterSize;
+            ViaShape shape = side == BoardSide.Inner ? ViaShape.Circular : this.shape;
+
+            switch (shape) {
+                case ViaShape.Square:
+                    return PolygonBuilder.BuildRectangle(position, new Size(size + spacing * 2, size + spacing * 2), 0, Angle.FromDegrees(0));
+
+                case ViaShape.Octogonal:
+                    return PolygonBuilder.BuildPolygon(8, position, (size / 2) + spacing, Angle.FromDegrees(22.5));
+
+                default:
+                    return PolygonBuilder.BuildCircle(position, (size / 2) + spacing);
+            }
+        }
+
+        /// <summary>
         /// Crea el poligon del element.
         /// </summary>
         /// <param name="side">Cara de la placa.</param>
@@ -87,9 +112,9 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Polygon polygon = GetOutlinePolygon(side, 0);
-            polygon.AddChild(PolygonBuilder.BuildCircle(position, drill / 2));
-            return polygon;
+            Point[] points = BuildPoints(side, 0);
+            Point[] holePoints = PolygonBuilder.BuildCircle(position, drill / 2);
+            return new Polygon(points, new Polygon[] { new Polygon(holePoints) });
         }
 
         /// <summary>
@@ -101,19 +126,8 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
 
-            double size = side == BoardSide.Inner ? InnerSize : OuterSize;
-            ViaShape shape = side == BoardSide.Inner ? ViaShape.Circular : this.shape;
-
-            switch (shape) {
-                case ViaShape.Square:
-                    return PolygonBuilder.BuildRectangle(position, new Size(size + spacing * 2, size + spacing * 2), 0, Angle.FromDegrees(0));
-
-                case ViaShape.Octogonal:
-                    return PolygonBuilder.BuildRegularPolygon(8, position, (size / 2) + spacing, Angle.FromDegrees(22.5));
-
-                default:
-                    return PolygonBuilder.BuildCircle(position, (size / 2) + spacing);
-            }
+            Point[] points = BuildPoints(side, spacing);
+            return new Polygon(points);
         }
 
         /// <summary>

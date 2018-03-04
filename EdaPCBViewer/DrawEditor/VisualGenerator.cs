@@ -76,7 +76,7 @@
                     Color color = GetColor(Layer);
                     Brush brush = CreateBrush(color);
                     Polygon polygon = line.GetPolygon(Layer.Side);
-                    DrawPolygon(dc, brush, null, polygon);
+                    DrawPolygon(dc, null, brush, polygon);
 
                     if (Part != null)
                         dc.Pop();
@@ -101,7 +101,7 @@
                     Color color = GetColor(Layer);
                     Brush brush = CreateBrush(color);
                     Polygon polygon = arc.GetPolygon(Layer.Side);
-                    DrawPolygon(dc, brush, null, polygon);
+                    DrawPolygon(dc, null, brush, polygon);
 
                     if (Part != null)
                         dc.Pop();
@@ -127,7 +127,7 @@
                     Brush brush = rectangle.Filled ? CreateBrush(color) : null;
                     Pen pen = rectangle.Filled ? null : CreatePen(color, rectangle.Thickness);
                     Polygon polygon = rectangle.GetPolygon(Layer.Side);
-                    DrawPolygon(dc, brush, pen, polygon);
+                    DrawPolygon(dc, pen, brush, polygon);
 
                     if (Part != null)
                         dc.Pop();
@@ -153,7 +153,7 @@
                     Brush brush = circle.Filled ? CreateBrush(color) : null;
                     Pen pen = circle.Filled ? null : CreatePen(color, circle.Thickness);
                     Polygon polygon = circle.GetPolygon(Layer.Side);
-                    DrawPolygon(dc, brush, pen, polygon);
+                    DrawPolygon(dc, pen, brush, polygon);
 
                     if (Part != null)
                         dc.Pop();
@@ -180,7 +180,7 @@
                     Pen pen = isSignalLayer ? CreatePen(color, region.Thickness) : null;
                     Brush brush = CreateBrush(color);
                     Polygon polygon = Board.GetRegionPolygon(region, Layer, 0.15, Matrix.Identity);
-                    DrawPolygon(dc, brush, pen, polygon);
+                    DrawPolygon(dc, pen, brush, polygon);
 
                     if (Part != null)
                         dc.Pop();
@@ -205,12 +205,12 @@
                     Color color = GetColor(Layer);
                     Brush polygonBrush = CreateBrush(color);
                     Polygon polygon = via.GetPolygon(Layer.Side);
-                    DrawPolygon(dc, polygonBrush, null, polygon);
+                    DrawPolygon(dc, null, polygonBrush, polygon);
 
                     List<Polygon> polygonHoles = new List<Polygon>(polygon.Childs);
                     if (polygonHoles.Count == 1) {
                         Brush holeBrush = CreateBrush(Colors.Black);
-                        DrawPolygon(dc, holeBrush, null, polygonHoles[0]);
+                        DrawPolygon(dc, null, holeBrush, polygonHoles[0]);
                     }
 
                     if (Part != null)
@@ -236,7 +236,7 @@
                     Color color = GetColor(Layer);
                     Brush brush = CreateBrush(color);
                     Polygon polygon = pad.GetPolygon(Layer.Side);
-                    DrawPolygon(dc, brush, null, polygon);
+                    DrawPolygon(dc, null, brush, polygon);
 
                     if (Part != null)
                         dc.Pop();
@@ -261,12 +261,12 @@
                     Color color = GetColor(Layer);
                     Brush polygonBrush = CreateBrush(color);
                     Polygon polygon = pad.GetPolygon(Layer.Side);
-                    DrawPolygon(dc, polygonBrush, null, polygon);
+                    DrawPolygon(dc, null, polygonBrush, polygon);
 
                     List<Polygon> polygonHoles = new List<Polygon>(polygon.Childs);
                     if (polygonHoles.Count == 1) {
                         Brush holeBrush = CreateBrush(Colors.Black);
-                        DrawPolygon(dc, holeBrush, null, polygonHoles[0]);
+                        DrawPolygon(dc, null, holeBrush, polygonHoles[0]);
                     }
 
                     dc.PushTransform(new ScaleTransform(1, -1, pad.Position.X, pad.Position.Y));
@@ -301,7 +301,7 @@
                     Color color = GetColor(Layer);
                     Pen pen = CreatePen(color, 0.05);
                     Brush brush = CreateBrush(Colors.Black);
-                    DrawPolygon(dc, brush, pen, hole.GetPolygon(Layer.Side));
+                    DrawPolygon(dc, pen, brush, hole.GetPolygon(Layer.Side));
 
                     if (Part != null)
                         dc.Pop();
@@ -326,11 +326,11 @@
                     Color color = GetColor(Layer);
                     Pen pen = CreatePen(color, text.Thickness);
 
-                    PartAttributeAdapter pad = new PartAttributeAdapter(Part, text);
-                    Point position = pad.Position;
-                    Angle rotation = pad.Rotation;
-                    TextAlign align = pad.Align;
-                    string value = pad.Value;
+                    PartAttributeAdapter paa = new PartAttributeAdapter(Part, text);
+                    Point position = paa.Position;
+                    Angle rotation = paa.Rotation;
+                    TextAlign align = paa.Align;
+                    string value = paa.Value;
 
                     Matrix m = new Matrix();
                     m.Translate(position.X, position.Y);
@@ -460,12 +460,13 @@
             /// <param name="pen">El pen.</param>
             /// <param name="polygon">El poligon a dibuixar.</param>
             /// 
-            private static void DrawPolygon(DrawingContext dc, Brush brush, Pen pen, Polygon polygon) {
+            private static void DrawPolygon(DrawingContext dc, Pen pen, Brush brush, Polygon polygon) {
 
                 StreamGeometry geometry = new StreamGeometry();
                 using (StreamGeometryContext ctx = geometry.Open())
-                    StreamPolygon(ctx, polygon, polygon.HasPoints ? 1 : 0);
+                    StreamPolygon(ctx, polygon, polygon.Childs == null ? 1 : 0);
                 geometry.Freeze();
+
                 dc.DrawGeometry(brush, pen, geometry);
             }
 
@@ -487,6 +488,7 @@
                     td.Draw(text, position, align, height);
                 }
                 geometry.Freeze();
+
                 dc.DrawGeometry(null, pen, geometry);
             }
 
@@ -499,14 +501,15 @@
             /// 
             private static void StreamPolygon(StreamGeometryContext ctx, Polygon polygon, int level) {
 
-                if (polygon.HasPoints) {
-                    List<Point> points = new List<Point>(polygon.Points);
+                if (polygon.Points != null) {
+                    Point[] points = polygon.Points;
                     ctx.BeginFigure(points[0], true, true);
-                    ctx.PolyLineTo(points.Skip(1).ToList<Point>(), true, true);
+                    for (int i = 1; i < points.Length; i++) 
+                        ctx.LineTo(points[i], true, true);
                 }
-                if (polygon.HasChilds && (level < 2))
-                    foreach (Polygon child in polygon.Childs)
-                        StreamPolygon(ctx, child, level + 1);
+                if (polygon.Childs != null && (level < 2))
+                    for (int i = 0; i < polygon.Childs.Length; i++)
+                        StreamPolygon(ctx, polygon.Childs[i], level + 1);
             }
         }
 

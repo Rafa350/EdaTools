@@ -426,26 +426,27 @@
         /// <summary>
         /// Obte la senyal conectada a un objecte.
         /// </summary>
-        /// <param name="element">El objecte.</param>
+        /// <param name="conectableElement">El objecte.</param>
         /// <param name="throwOnError">True si cal generar una excepcio en cas d'error.</param>
         /// <returns>La senyal o null si no esta conectat.</returns>
         /// 
-        public Signal GetSignal(IConectable element, Part part = null, bool throwOnError = true) {
+        public Signal GetSignal(Element element, Part part = null, bool throwOnError = true) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
 
-            Tuple<IConectable, Part> item = new Tuple<IConectable, Part>(element, part);
+            Signal signal = null;
 
-            Signal signal;
-            
-            if (signalOfItem.TryGetValue(item, out signal))
-                return signal;
-            else {
-                if (throwOnError)
-                    throw new InvalidOperationException("El item no esta conectado.");
-                return null;
+            IConectable conectableElement = element as IConectable;
+            if (conectableElement != null) {
+                Tuple<IConectable, Part> item = new Tuple<IConectable, Part>(conectableElement, part);
+                signalOfItem.TryGetValue(item, out signal);
             }
+
+            if ((signal == null) && throwOnError)
+                throw new InvalidOperationException("El item no esta conectado.");
+
+            return signal;
         }
 
         /// <summary>
@@ -517,7 +518,7 @@
             if (IsOnLayer(region, layer)) {
 
                 Polygon regionPolygon = region.GetPolygon(layer.Side);
-                regionPolygon.Transform(transformation);
+                regionPolygon = regionPolygon.Transformed(transformation);
 
                 // Si estem en capes de senyal, cal generar els porus i termals
                 //
@@ -540,13 +541,11 @@
                             // El element es en la mateixa capa que la regio
                             //
                             if (IsOnLayer(element, layer)) {
-                                IConectable item = element as IConectable;
 
                                 // Si no esta en la mateixa senyal que la regio, genera un forat.
                                 //
-                                if ((item == null) || (GetSignal(item, null, false) != regionSignal)) {
-                                    double clearance = regionSignal.Clearance;
-                                    Polygon elementPolygon = element.GetOutlinePolygon(layer.Side, Math.Max(spacing, clearance));
+                                if (GetSignal(element, null, false) != regionSignal) {
+                                    Polygon elementPolygon = element.GetOutlinePolygon(layer.Side, Math.Max(spacing, regionSignal.Clearance));
                                     holePolygons.Add(elementPolygon);
                                 }
                             }
@@ -575,23 +574,21 @@
                             if ((element != region) &&
                                 (IsOnLayer(element, layer) || IsOnLayer(element, restrictLayer))) {
 
-                                PadElement padElement = element as PadElement;
-
                                 // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
                                 //
-                                if ((padElement == null) || (GetSignal(padElement, part, false) != regionSignal)) {
-                                    Polygon elementPolygon = element.GetOutlinePolygon(layer.Side, spacing);
-                                    elementPolygon.Transform(part.Transformation);
-                                    holePolygons.Add(elementPolygon);
+                                if (GetSignal(element, part, false) != regionSignal) {
+                                    Polygon outlinePolygon = element.GetOutlinePolygon(layer.Side, spacing);
+                                    outlinePolygon = outlinePolygon.Transformed(part.Transformation);
+                                    holePolygons.Add(outlinePolygon);
                                 }
 
                                 // En es un pad i esta conectat per tant, genera un thermal
                                 //
-                                else if (padElement != null) {
-                                    Polygon thermalPolygon = padElement.GetThermalPolygon(layer.Side, spacing, 0.2);
-                                    thermalPolygon.Transform(part.Transformation);
-                                    foreach (Polygon polygon in thermalPolygon.Childs)
-                                        holePolygons.Add(polygon);
+                                else if (element is PadElement) {
+                                    Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Side, spacing, 0.2);
+                                    thermalPolygon = thermalPolygon.Transformed(part.Transformation);
+                                    for (int i = 0; i < thermalPolygon.Childs.Length; i++)
+                                        holePolygons.Add(thermalPolygon.Childs[i]);
                                 }
                             }
                         }

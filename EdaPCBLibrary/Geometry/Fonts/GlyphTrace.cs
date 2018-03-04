@@ -1,7 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry.Fonts {
 
     /// <summary>
-    /// Representa els traços que formen la figura del caracter
+    /// Representa els traços que formen la figura del caracter. Aquesta clase
+    /// es inmutable.
     /// </summary>
     public struct GlyphTrace {
 
