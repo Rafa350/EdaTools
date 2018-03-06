@@ -79,7 +79,7 @@
                 return angle;
             }
             set {
-                    angle = value;
+                angle = value;
             }
         }
 

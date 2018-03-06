@@ -16,6 +16,8 @@
     /// </summary>
     public sealed class EagleImporter : Importer {
 
+        private const double scaleFactor = 1000000.0;
+
         private readonly Dictionary<string, Block> componentDict = new Dictionary<string, Block>();
         private readonly Dictionary<string, Signal> signalDict = new Dictionary<string, Signal>();
         private readonly Dictionary<Element, string> mapElementSignal = new Dictionary<Element, string>();

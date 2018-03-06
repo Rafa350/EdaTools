@@ -122,7 +122,7 @@
                 return rotation;
             }
             set {
-                    rotation = value;
+                 rotation = value;
             }
         }
 
@@ -135,7 +135,7 @@
                 return size;
             }
             set {
-                    size = value;
+                 size = value;
             }
         }
 
@@ -151,7 +151,7 @@
                 if (value < 0 || roundnes > 1)
                     throw new ArgumentOutOfRangeException("Roundness");
 
-                    roundnes = value;
+                 roundnes = value;
             }
         }
 

@@ -148,7 +148,17 @@
         }
 
         /// <summary>
-        /// obte la llista d'atributs
+        /// Obte els noms dels atributs
+        /// </summary>
+        /// 
+        public IEnumerable<String> AttributeNames {
+            get {
+                return attributes.Keys;
+            }
+        }
+
+        /// <summary>
+        /// Obte els atributs atributs
         /// </summary>
         /// 
         public IEnumerable<BlockAttribute> Attributes {

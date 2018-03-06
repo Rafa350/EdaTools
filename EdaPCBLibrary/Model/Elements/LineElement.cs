@@ -113,29 +113,7 @@
                 return endPosition;
             }
             set {
-                    endPosition = value;
-            }
-        }
-
-        /// <summary>
-        /// Obte la longitut de la linia al quadrat.
-        /// </summary>
-        /// 
-        public double SqrLength {
-            get {
-                double dx = endPosition.X - startPosition.X;
-                double dy = endPosition.Y - startPosition.Y;
-                return (dx * dx) + (dy * dy);
-            }
-        }
-
-        /// <summary>
-        /// Obte la longitut de la linia.
-        /// </summary>
-        /// 
-        public double Length {
-            get {
-                return Math.Sqrt(SqrLength);
+                endPosition = value;
             }
         }
 
@@ -151,7 +129,7 @@
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Thickness");
 
-                    thickness = value;
+                thickness = value;
             }
         }
 

@@ -178,7 +178,7 @@
                 return rotation;
             }
             set {
-                    rotation = value;
+                rotation = value;
             }
         }
 
@@ -191,7 +191,7 @@
                 return shape;
             }
             set {
-                    shape = value;
+                shape = value;
             }
         }
 
@@ -207,7 +207,7 @@
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Drill");
 
-                    drill = value;
+                drill = value;
             }
         }
 
@@ -221,7 +221,7 @@
                 return Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, dimension));
             }
             set {
-                    topSize = value;
+                topSize = value;
             }
         }
     }

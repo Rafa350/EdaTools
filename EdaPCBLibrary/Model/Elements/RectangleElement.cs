@@ -102,7 +102,7 @@
                 return position;
             }
             set {
-                    position = value;
+                position = value;
             }
         }
 
@@ -115,7 +115,7 @@
                 return size;
             }
             set {
-                    size = value;
+                size = value;
             }
         }
 
@@ -128,7 +128,7 @@
                 return rotation;
             }
             set {
-                    rotation = value;
+                rotation = value;
             }
         }
 
@@ -144,7 +144,7 @@
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Thickness");
 
-                    thickness = value;
+                thickness = value;
             }
         }
 

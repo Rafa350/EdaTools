@@ -60,11 +60,13 @@
     <Compile Include="Geometry\ArcUtils.cs" />
     <Compile Include="Geometry\Fonts\FontFactory.cs" />
     <Compile Include="Geometry\Fonts\Glyph.cs" />
-    <Compile Include="Geometry\Fonts\GlyphPoint.cs" />
     <Compile Include="Geometry\Fonts\GlyphTrace.cs" />
     <Compile Include="Geometry\Fonts\Font.cs" />
+    <Compile Include="Geometry\PointInt.cs" />
     <Compile Include="Geometry\Polygons\Infrastructure\Clipper.cs" />
     <Compile Include="Geometry\Polygons\Polygon.cs" />
+    <Compile Include="Geometry\RectInt.cs" />
+    <Compile Include="Geometry\SizeInt.cs" />
     <Compile Include="Infrastructure\PolygonBuilder.cs" />
     <Compile Include="Geometry\Polygons\PolygonProcessor.cs" />
     <Compile Include="Geometry\TextAlign.cs" />

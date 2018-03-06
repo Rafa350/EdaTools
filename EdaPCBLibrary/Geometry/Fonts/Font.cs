@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
+    using System.Windows;
     using System.Xml;
 
     public sealed class Font {
@@ -79,7 +80,7 @@
                     string[] s = positionStr.Split(',');
                     int x = XmlConvert.ToInt32(s[0]);
                     int y = XmlConvert.ToInt32(s[1]);
-                    GlyphPoint position = new GlyphPoint(x, y);
+                    PointInt position = new PointInt(x, y);
 
                     switch (strokeNode.Name) {
                         case "moveTo":

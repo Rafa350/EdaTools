@@ -107,7 +107,7 @@
 
                     for (int j = 0; j < glyph.Traces.Length; j++) {
 
-                        GlyphPoint gp = glyph.Traces[j].Position;
+                        PointInt gp = glyph.Traces[j].Position;
                         Point p = new Point(gp.X + offset, gp.Y);
 
                         Trace(m.Transform(p), glyph.Traces[j].Stroke, j == 0);

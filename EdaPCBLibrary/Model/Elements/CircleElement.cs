@@ -108,7 +108,7 @@
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Radius");
 
-                    radius = value;
+                radius = value;
             }
         }
 
@@ -140,7 +140,7 @@
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Thickness");
 
-                    thickness = value;
+                thickness = value;
             }
         }
 
