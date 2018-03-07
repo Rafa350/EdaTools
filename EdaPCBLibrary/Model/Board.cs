@@ -40,7 +40,7 @@
         // Components
         readonly private HashSet<Part> parts = new HashSet<Part>();
 
-        private Point position;
+        private PointInt position;
         private Angle rotation;
 
         /// <summary>
@@ -507,7 +507,7 @@
         /// <param name="transformation">Transformacio a aplicar al poligon.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public Polygon GetRegionPolygon(RegionElement region, Layer layer, double spacing, Matrix transformation) {
+        public Polygon GetRegionPolygon(RegionElement region, Layer layer, int spacing, Matrix transformation) {
 
             if (region == null)
                 throw new ArgumentNullException("region");
@@ -560,7 +560,7 @@
                             // El element esta el la capa profile
                             //
                             else if (IsOnLayer(element, profileLayer)) {
-                                Polygon elementPolygon = element.GetOutlinePolygon(profileLayer.Side, 0.25);
+                                Polygon elementPolygon = element.GetOutlinePolygon(profileLayer.Side, 250000);
                                 holePolygons.Add(elementPolygon);
                             }
                         }
@@ -585,7 +585,7 @@
                                 // En es un pad i esta conectat per tant, genera un thermal
                                 //
                                 else if (element is PadElement) {
-                                    Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Side, spacing, 0.2);
+                                    Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Side, spacing, 200000);
                                     thermalPolygon = thermalPolygon.Transformed(part.Transformation);
                                     for (int i = 0; i < thermalPolygon.Childs.Length; i++)
                                         holePolygons.Add(thermalPolygon.Childs[i]);
@@ -612,7 +612,7 @@
         /// Obte o asigna la posicio de la placa.
         /// </summary>
         /// 
-        public Point Position {
+        public PointInt Position {
             get {
                 return position;
             }

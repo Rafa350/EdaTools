@@ -12,9 +12,9 @@
     /// </summary>
     public sealed class SmdPadElement: PadElement, IRotation {
 
-        private Size size;
+        private SizeInt size;
         private Angle rotation;
-        private double roundnes;
+        private int roundness;
 
         /// <summary>
         /// Constructor de l'objecte amb els parametres per defecte.
@@ -31,14 +31,14 @@
         /// <param name="position">Posicio.</param>
         /// <param name="size">Tamany</param>
         /// <param name="rotation">Angle de rotacio.</param>
-        /// <param name="roundnes">Percentatge d'arrodoniment de les cantonades.</param>
+        /// <param name="roundness">Percentatge d'arrodoniment de les cantonades.</param>
         /// 
-        public SmdPadElement(string name, Point position, Size size, Angle rotation, double roundnes) :
+        public SmdPadElement(string name, PointInt position, SizeInt size, Angle rotation, int roundness) :
             base(name, position) {
 
             this.size = size;
             this.rotation = rotation;
-            this.roundnes = roundnes;
+            this.roundness = roundness;
         }
 
         /// <summary>
@@ -59,7 +59,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = PolygonBuilder.BuildRectangle(Position, Size, Radius, rotation);
+            PointInt[] points = PolygonBuilder.BuildRectangle(Position, Size, Radius, rotation);
             return new Polygon(points);
         }
 
@@ -70,10 +70,10 @@
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
+        public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = PolygonBuilder.BuildRectangle(Position,
-                new Size(size.Width + (spacing * 2), size.Height + (spacing * 2)), Radius + spacing, rotation);
+            PointInt[] points = PolygonBuilder.BuildRectangle(Position,
+                new SizeInt(size.Width + (spacing * 2), size.Height + (spacing * 2)), Radius + spacing, rotation);
             return new Polygon(points);
         }
 
@@ -85,11 +85,11 @@
         /// <param name="width">Amplada dels conductors.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetThermalPolygon(BoardSide side, double spacing, double width) {
+        public override Polygon GetThermalPolygon(BoardSide side, int spacing, int width) {
 
             Polygon pour = GetOutlinePolygon(side, spacing);
             Polygon thermal = new Polygon(PolygonBuilder.BuildCross(Position, 
-                new Size(size.Width + (spacing * 2.25), size.Height + (spacing * 2.25)), width, rotation));
+                new SizeInt(size.Width + ((spacing * 225) / 100), size.Height + ((spacing * 225) / 100)), width, rotation));
 
             List<Polygon> childs = new List<Polygon>();
             childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
@@ -104,13 +104,13 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override Rect GetBoundingBox(BoardSide side) {
+        public override RectInt GetBoundingBox(BoardSide side) {
 
             double a = rotation.Radiants;
-            double w = size.Width * Math.Cos(a) + size.Height * Math.Sin(a);
-            double h = size.Width * Math.Sin(a) + size.Height * Math.Cos(a);
+            int w = (int) (size.Width * Math.Cos(a) + size.Height * Math.Sin(a));
+            int h = (int) (size.Width * Math.Sin(a) + size.Height * Math.Cos(a));
 
-            return new Rect(Position.X - w / 2.0, Position.Y - h / 2.0, w, h);
+            return new RectInt(Position.X - (w / 2), Position.Y - (h / 2), w, h);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@
         /// Obte o asigna el tamany del pad.
         /// </summary>
         /// 
-        public Size Size {
+        public SizeInt Size {
             get {
                 return size;
             }
@@ -143,15 +143,15 @@
         /// Obte o asigna el factor d'arrodoniment de les cantonades del pad.
         /// </summary>
         /// 
-        public double Roundnes {
+        public int Roundness {
             get {
-                return roundnes;
+                return roundness;
             }
             set {
-                if (value < 0 || roundnes > 1)
+                if (value < 0 || roundness > 1)
                     throw new ArgumentOutOfRangeException("Roundness");
 
-                 roundnes = value;
+                 roundness = value;
             }
         }
 
@@ -159,9 +159,9 @@
         /// Obte el radi de curvatura de les cantonades.
         /// </summary>
         /// 
-        public double Radius {
+        public int Radius {
             get {
-                return Math.Min(size.Width, size.Height) * Roundnes / 2;
+                return Math.Min(size.Width, size.Height) * Roundness / 2;
             }
         }
     }

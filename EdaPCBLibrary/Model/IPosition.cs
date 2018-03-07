@@ -1,12 +1,13 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
-    using System.Windows;
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
+
 
     /// <summary>
     /// Interficie per tots els elements que tenen posicio.
     /// </summary>
     public interface IPosition {
 
-        Point Position { get; set; }
+        PointInt Position { get; set; }
     }
 }

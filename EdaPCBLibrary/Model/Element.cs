@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
-    using System.Windows;
 
     /// <summary>
     /// Clase base per tots els elements de la placa.
@@ -30,7 +30,7 @@
         /// <param name="spacing">Espaiat.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public abstract Polygon GetOutlinePolygon(BoardSide side, double spacing);
+        public abstract Polygon GetOutlinePolygon(BoardSide side, int spacing);
 
         /// <summary>
         /// Obte el bounding box del element.
@@ -38,6 +38,6 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public abstract Rect GetBoundingBox(BoardSide side);
+        public abstract RectInt GetBoundingBox(BoardSide side);
     }
 }

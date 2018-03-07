@@ -11,10 +11,10 @@
     /// </summary>
     public sealed class RectangleElement: Element, IPosition, ISize, IRotation {
 
-        private Point position;
-        private Size size;
+        private PointInt position;
+        private SizeInt size;
         private Angle rotation;
-        private double thickness;
+        private int thickness;
 
         /// <summary>
         ///  Constructor de l'objecte amb els parametres per defecte.
@@ -32,7 +32,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="thickness">Amplada de linia. Si es zero, es un rectangle ple.</param>
         /// 
-        public RectangleElement(Point position, Size size, Angle rotation, double thickness = 0) :
+        public RectangleElement(PointInt position, SizeInt size, Angle rotation, int thickness = 0) :
             base() {
 
             this.position = position;
@@ -59,7 +59,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = PolygonBuilder.BuildRectangle(position, size, 0, rotation);
+            PointInt[] points = PolygonBuilder.BuildRectangle(position, size, 0, rotation);
             return new Polygon(points);
         }
 
@@ -70,10 +70,10 @@
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
+        public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = PolygonBuilder.BuildRectangle(position,
-                new Size(size.Width + spacing * 2, size.Height + spacing * 2),
+            PointInt[] points = PolygonBuilder.BuildRectangle(position,
+                new SizeInt(size.Width + spacing * 2, size.Height + spacing * 2),
                 spacing, rotation);
             return new Polygon(points);
         }
@@ -84,20 +84,20 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override Rect GetBoundingBox(BoardSide side) {
+        public override RectInt GetBoundingBox(BoardSide side) {
 
             double a = rotation.Radiants;
-            double w = size.Width * Math.Cos(a) + size.Height * Math.Sin(a);
-            double h = size.Width * Math.Sin(a) + size.Height * Math.Cos(a);
+            int w = (int) (size.Width * Math.Cos(a) + size.Height * Math.Sin(a));
+            int h = (int) (size.Width * Math.Sin(a) + size.Height * Math.Cos(a));
 
-            return new Rect(position.X - w / 2.0, position.Y - h / 2.0, w, h);
+            return new RectInt(position.X - (w / 2), position.Y - (h / 2), w, h);
         }
 
         /// <summary>
         ///  Obte o asigna la posicio del centre geometric del rectangle.
         /// </summary>
         /// 
-        public Point Position {
+        public PointInt Position {
             get {
                 return position;
             }
@@ -110,7 +110,7 @@
         /// Obte o asigna el tamany del rectangle.
         /// </summary>
         /// 
-        public Size Size {
+        public SizeInt Size {
             get {
                 return size;
             }
@@ -136,7 +136,7 @@
         /// Obte o asigna l'amplada de linia.
         /// </summary>
         /// 
-        public double Thickness {
+        public int Thickness {
             get {
                 return thickness;
             }

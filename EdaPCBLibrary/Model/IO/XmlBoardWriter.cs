@@ -4,8 +4,11 @@
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
+    using System.Windows.Media;
     using System.IO;
+    using System.Text;
     using System.Xml;
 
     /// <summary>
@@ -15,7 +18,7 @@
 
         private Stream stream;
 
-        private class Visitor: DefaultVisitor {
+        private class Visitor : DefaultVisitor {
 
             private readonly XmlWriter writer;
             private readonly CultureInfo ci = CultureInfo.InvariantCulture;
@@ -53,11 +56,11 @@
 
                 writer.WriteStartElement("line");
 
-                writer.WriteAttribute("layers", board.GetLayers(line));
-                writer.WriteAttribute("startPosition", line.StartPosition);
-                writer.WriteAttribute("endPosition", line.EndPosition);
+                writer.WriteAttribute("layers", GetLayerNames(line));
+                writer.WriteAttribute("startPosition", FormatPoint(line.StartPosition));
+                writer.WriteAttribute("endPosition", FormatPoint(line.EndPosition));
                 if (line.Thickness > 0)
-                    writer.WriteAttribute("thickness", line.Thickness);
+                    writer.WriteAttribute("thickness", FormatDimension(line.Thickness));
                 if (line.LineCap != LineElement.LineCapStyle.Round)
                     writer.WriteAttribute("lineCap", line.LineCap);
 
@@ -77,12 +80,12 @@
 
                 writer.WriteStartElement("arc");
 
-                writer.WriteAttribute("layers", board.GetLayers(arc));
-                writer.WriteAttribute("startPosition", arc.StartPosition);
-                writer.WriteAttribute("endPosition", arc.EndPosition);
-                writer.WriteAttribute("angle", arc.Angle);
+                writer.WriteAttribute("layers", GetLayerNames(arc));
+                writer.WriteAttribute("startPosition", FormatPoint(arc.StartPosition));
+                writer.WriteAttribute("endPosition", FormatPoint(arc.EndPosition));
+                writer.WriteAttribute("angle", FormatAngle(arc.Angle));
                 if (arc.Thickness > 0)
-                    writer.WriteAttribute("thickness", arc.Thickness);
+                    writer.WriteAttribute("thickness", FormatDimension(arc.Thickness));
                 if (arc.LineCap != LineElement.LineCapStyle.Round)
                     writer.WriteAttribute("lineCap", arc.LineCap);
 
@@ -102,13 +105,13 @@
 
                 writer.WriteStartElement("rectangle");
 
-                writer.WriteAttribute("layers", board.GetLayers(rectangle));
-                writer.WriteAttribute("position", rectangle.Position);
-                writer.WriteAttribute("size", rectangle.Size);
+                writer.WriteAttribute("layers", GetLayerNames(rectangle));
+                writer.WriteAttribute("position", FormatPoint(rectangle.Position));
+                writer.WriteAttribute("size", FormatSize(rectangle.Size));
                 if (!rectangle.Rotation.IsZero)
-                    writer.WriteAttribute("rotation", rectangle.Rotation);
+                    writer.WriteAttribute("rotation", FormatAngle(rectangle.Rotation));
                 if (rectangle.Thickness > 0)
-                    writer.WriteAttribute("thickness", rectangle.Thickness);
+                    writer.WriteAttribute("thickness", FormatDimension(rectangle.Thickness));
 
                 writer.WriteEndElement();
             }
@@ -122,11 +125,11 @@
 
                 writer.WriteStartElement("circle");
 
-                writer.WriteAttribute("layers", board.GetLayers(circle));
-                writer.WriteAttribute("position", circle.Position);
-                writer.WriteAttribute("radius", circle.Radius);
+                writer.WriteAttribute("layers", GetLayerNames(circle));
+                writer.WriteAttribute("position", FormatPoint(circle.Position));
+                writer.WriteAttribute("radius", FormatDimension(circle.Radius));
                 if (circle.Thickness > 0)
-                    writer.WriteAttribute("thickness", circle.Thickness);
+                    writer.WriteAttribute("thickness", FormatDimension(circle.Thickness));
 
                 writer.WriteEndElement();
             }
@@ -135,12 +138,12 @@
 
                 writer.WriteStartElement("text");
 
-                writer.WriteAttribute("layers", board.GetLayers(text));
-                writer.WriteAttribute("position", text.Position);
+                writer.WriteAttribute("layers", GetLayerNames(text));
+                writer.WriteAttribute("position", FormatPoint(text.Position));
                 if (!text.Rotation.IsZero)
-                    writer.WriteAttribute("rotation", text.Rotation);
-                writer.WriteAttribute("height", text.Height);
-                writer.WriteAttribute("thickness", text.Thickness);
+                    writer.WriteAttribute("rotation", FormatAngle(text.Rotation));
+                writer.WriteAttribute("height", FormatDimension(text.Height));
+                writer.WriteAttribute("thickness", FormatDimension(text.Thickness));
                 if (text.Align != TextAlign.TopLeft)
                     writer.WriteAttribute("align", text.Align);
                 if (!String.IsNullOrEmpty(text.Value))
@@ -158,9 +161,9 @@
 
                 writer.WriteStartElement("hole");
 
-                writer.WriteAttribute("layers", board.GetLayers(hole));
-                writer.WriteAttribute("position", hole.Position);
-                writer.WriteAttribute("drill", hole.Drill);
+                writer.WriteAttribute("layers", GetLayerNames(hole));
+                writer.WriteAttribute("position", FormatPoint(hole.Position));
+                writer.WriteAttribute("drill", FormatDimension(hole.Drill));
 
                 writer.WriteEndElement();
             }
@@ -170,13 +173,13 @@
                 writer.WriteStartElement("spad");
 
                 writer.WriteAttribute("name", pad.Name);
-                writer.WriteAttribute("layers", board.GetLayers(pad));
-                writer.WriteAttribute("position", pad.Position);
+                writer.WriteAttribute("layers", GetLayerNames(pad));
+                writer.WriteAttribute("position", FormatPoint(pad.Position));
                 if (!pad.Rotation.IsZero)
-                    writer.WriteAttribute("rotation", pad.Rotation);
-                writer.WriteAttribute("size", pad.Size);
-                if (pad.Roundnes > 0)
-                    writer.WriteAttribute("roundness", pad.Roundnes);
+                    writer.WriteAttribute("rotation", FormatAngle(pad.Rotation));
+                writer.WriteAttribute("size", FormatSize(pad.Size));
+                if (pad.Roundness > 0)
+                    writer.WriteAttribute("roundness", FormatPercent(pad.Roundness));
 
                 Signal signal = board.GetSignal(pad, currentPart, false);
                 if (signal != null)
@@ -190,12 +193,12 @@
                 writer.WriteStartElement("tpad");
 
                 writer.WriteAttribute("name", pad.Name);
-                writer.WriteAttribute("layers", board.GetLayers(pad));
-                writer.WriteAttribute("position", pad.Position);
+                writer.WriteAttribute("layers", GetLayerNames(pad));
+                writer.WriteAttribute("position", FormatPoint(pad.Position));
                 if (!pad.Rotation.IsZero)
-                    writer.WriteAttribute("rotation", pad.Rotation);
-                writer.WriteAttribute("size", pad.Size);
-                writer.WriteAttribute("drill",  pad.Drill);
+                    writer.WriteAttribute("rotation", FormatAngle(pad.Rotation));
+                writer.WriteAttribute("size", FormatDimension(pad.Size));
+                writer.WriteAttribute("drill", FormatDimension(pad.Drill));
                 if (pad.Shape != ThPadElement.ThPadShape.Circular)
                     writer.WriteAttribute("shape", pad.Shape.ToString());
 
@@ -215,9 +218,9 @@
                 if (!parameter.IsVisible)
                     writer.WriteAttribute("visible", parameter.IsVisible);
                 if (parameter.UsePosition)
-                    writer.WriteAttribute("position", parameter.Position);
+                    writer.WriteAttribute("position", FormatPoint(parameter.Position));
                 if (parameter.UseRotation)
-                    writer.WriteAttribute("rotation", parameter.Rotation);
+                    writer.WriteAttribute("rotation", FormatAngle(parameter.Rotation));
                 if (parameter.UseAlign)
                     writer.WriteAttribute("align", parameter.Align);
 
@@ -228,18 +231,18 @@
 
                 writer.WriteStartElement("region");
 
-                writer.WriteAttribute("layers", board.GetLayers(region));
+                writer.WriteAttribute("layers", GetLayerNames(region));
                 if (region.Thickness > 0)
-                    writer.WriteAttribute("thickness", region.Thickness);
+                    writer.WriteAttribute("thickness", FormatDimension(region.Thickness));
                 Signal signal = board.GetSignal(region, currentPart, false);
                 if (signal != null)
                     writer.WriteAttribute("signal", signal.Name);
 
                 foreach (RegionElement.Segment segment in region.Segments) {
                     writer.WriteStartElement("segment");
-                    writer.WriteAttribute("position", segment.Position);
+                    writer.WriteAttribute("position", FormatPoint(segment.Position));
                     if (!segment.Angle.IsZero)
-                        writer.WriteAttribute("angle", segment.Angle);
+                        writer.WriteAttribute("angle", FormatAngle(segment.Angle));
                     writer.WriteEndElement();
                 }
 
@@ -263,9 +266,9 @@
                     //
                     writer.WriteAttribute("name", part.Name);
                     writer.WriteAttribute("block", part.Block.Name);
-                    writer.WriteAttribute("position", part.Position);
+                    writer.WriteAttribute("position", FormatPoint(part.Position));
                     if (!part.Rotation.IsZero)
-                        writer.WriteAttribute("rotation", part.Rotation);
+                        writer.WriteAttribute("rotation", FormatAngle(part.Rotation));
                     if (part.IsFlipped)
                         writer.WriteAttribute("flipped", part.IsFlipped);
 
@@ -317,12 +320,12 @@
 
                 writer.WriteStartElement("via");
 
-                writer.WriteAttribute("position", via.Position);
-                writer.WriteAttribute("layers", board.GetLayers(via));
-                writer.WriteAttribute("drill", via.Drill);
-                writer.WriteAttribute("outerSize", via.OuterSize);
+                writer.WriteAttribute("position", FormatPoint(via.Position));
+                writer.WriteAttribute("layers", GetLayerNames(via));
+                writer.WriteAttribute("drill", FormatDimension(via.Drill));
+                writer.WriteAttribute("outerSize", FormatDimension(via.OuterSize));
                 if (via.InnerSize != via.OuterSize)
-                    writer.WriteAttribute("innerSize", via.InnerSize);
+                    writer.WriteAttribute("innerSize", FormatDimension(via.InnerSize));
                 if (via.Shape != ViaElement.ViaShape.Circular)
                     writer.WriteAttribute("shape", via.Shape);
                 if (via.Type != ViaElement.ViaType.Through)
@@ -347,7 +350,7 @@
                 writer.WriteAttribute("name", layer.Name);
                 writer.WriteAttribute("side", layer.Side);
                 writer.WriteAttribute("function", layer.Function);
-                writer.WriteAttribute("color", layer.Color);
+                writer.WriteAttribute("color", FormatColor(layer.Color));
                 if (!layer.IsVisible)
                     writer.WriteAttribute("visible", "false");
 
@@ -365,7 +368,7 @@
 
                 writer.WriteAttribute("name", signal.Name);
                 if (signal.Clearance > 0)
-                    writer.WriteAttribute("clearance", signal.Clearance);
+                    writer.WriteAttribute("clearance", FormatDimension(signal.Clearance));
 
                 writer.WriteEndElement();
             }
@@ -390,8 +393,8 @@
 
                 writer.WriteAttribute("version", "211");
                 writer.WriteAttribute("units", "mm");
-                writer.WriteAttribute("position", board.Position);
-                writer.WriteAttribute("rotation", board.Rotation);
+                writer.WriteAttribute("position", FormatPoint(board.Position));
+                writer.WriteAttribute("rotation", FormatAngle(board.Rotation));
 
                 writer.WriteStartElement("layers");
                 foreach (Layer layer in board.Layers)
@@ -421,6 +424,91 @@
                 }
 
                 writer.WriteEndElement();
+            }
+
+            private string[] GetLayerNames(Element element) {
+
+                IEnumerable<Layer> layers = board.GetLayers(element);
+                if (layers != null) {
+                    List<String> names = new List<String>();
+                    foreach (Layer layer in layers)
+                        names.Add(layer.Name);
+                    return names.ToArray();
+                }
+                else
+                    return null;
+            }
+
+            /// <summary>
+            /// Formateja una dimensio en mm
+            /// </summary>
+            /// <param name="value">Valor de la dimensio.</param>
+            /// <returns>El valor formatejat.</returns>
+            /// 
+            private static string FormatDimension(int value) {
+
+                return XmlConvert.ToString(value / 1000000.0);
+            }
+
+            /// <summary>
+            /// Formateja un punt en mm
+            /// </summary>
+            /// <param name="point">El valor del punt.</param>
+            /// <returns>El valor formatejat.</returns>
+            /// 
+            private static string FormatPoint(PointInt point) {
+
+                return String.Format(
+                    "{0}, {1}",
+                    XmlConvert.ToString(point.X / 1000000.0),
+                    XmlConvert.ToString(point.Y / 1000000.0));
+            }
+
+            /// <summary>
+            /// Formateja un tamany en mm
+            /// </summary>
+            /// <param name="size">El tamany a formatejar.</param>
+            /// <returns>El valor formatejat.</returns>
+            /// 
+            private static string FormatSize(SizeInt size) {
+
+                return String.Format(
+                    "{0}, {1}",
+                    XmlConvert.ToString(size.Width / 1000000.0),
+                    XmlConvert.ToString(size.Height / 1000000.0));
+            }
+
+            /// <summary>
+            /// Formateja un angle en graus
+            /// </summary>
+            /// <param name="angle">El valor del angle</param>
+            /// <returns>El angle formatejat.</returns>
+            /// 
+            private static string FormatAngle(Angle angle) {
+
+                return XmlConvert.ToString(angle.Degrees / 100.0);
+            }
+
+            /// <summary>
+            /// Formateja un color a ARGB
+            /// </summary>
+            /// <param name="color">El color a formatejar.</param>
+            /// <returns>El valor formatejat.</returns>
+            /// 
+            private static string FormatColor(Color color) {
+
+                return String.Format("{0}, {1}, {2}, {3}", color.A, color.R, color.G, color.B);
+            }
+
+            /// <summary>
+            /// Formateja un valoe a poercentatge
+            /// </summary>
+            /// <param name="value">El valor del percentatge.</param>
+            /// <returns>El valor formatejat.</returns>
+            /// 
+            private static string FormatPercent(int value) {
+
+                return XmlConvert.ToString(value / 1000.0);
             }
         }
 

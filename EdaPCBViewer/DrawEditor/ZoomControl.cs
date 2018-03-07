@@ -1,4 +1,4 @@
-﻿namespace Eda.PCBViewer.DrawEditor {
+﻿namespace MikroPic.EdaTools.v1.Designer.DrawEditor {
 
     using System;
     using System.Windows;

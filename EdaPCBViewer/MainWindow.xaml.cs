@@ -1,9 +1,9 @@
 ﻿#define ImportTest
 
-namespace Eda.PCBViewer {
+namespace MikroPic.EdaTools.v1.Designer {
 
-    using Eda.PCBViewer.DrawEditor;
-    using Eda.PCBViewer.DrawEditor.Tools;
+    using MikroPic.EdaTools.v1.Designer.DrawEditor;
+    using MikroPic.EdaTools.v1.Designer.DrawEditor.Tools;
     using MikroPic.EdaTools.v1.Pcb.Import;
     using MikroPic.EdaTools.v1.Pcb.Import.Eagle;
     using MikroPic.EdaTools.v1.Pcb.Model;

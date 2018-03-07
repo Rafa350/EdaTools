@@ -1,17 +1,17 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using System;
-    using System.Windows;
 
     /// <summary>
     /// Clase que representa un forat no conductor.
     /// </summary>
     public sealed class HoleElement : Element, IPosition {
 
-        private Point position;
-        private double drill;
+        private PointInt position;
+        private int drill;
 
         /// <summary>
         /// Constructor de l'objecte amb els parametres per defecte.
@@ -26,7 +26,7 @@
         /// <param name="position">Pocicio del centre.</param>
         /// <param name="drill">Diametre del forat.</param>
         /// 
-        public HoleElement(Point position, double drill) {
+        public HoleElement(PointInt position, int drill) {
 
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException("drill");
@@ -53,7 +53,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = PolygonBuilder.BuildCircle(position, drill / 2);
+            PointInt[] points = PolygonBuilder.BuildCircle(position, drill / 2);
             return new Polygon(points);
         }
 
@@ -64,9 +64,9 @@
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
+        public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = PolygonBuilder.BuildCircle(position, (drill / 2) + spacing);
+            PointInt[] points = PolygonBuilder.BuildCircle(position, (drill / 2) + spacing);
             return new Polygon(points);
         }
 
@@ -76,16 +76,16 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override Rect GetBoundingBox(BoardSide side) {
+        public override RectInt GetBoundingBox(BoardSide side) {
 
-            return new Rect(position.X - drill / 2, position.Y - drill / 2, drill, drill);
+            return new RectInt(position.X - drill / 2, position.Y - drill / 2, drill, drill);
         }
 
         /// <summary>
         ///  Obte o asigna la posicio del centre del cercle.
         /// </summary>
         /// 
-        public Point Position {
+        public PointInt Position {
             get {
                 return position;
             }
@@ -98,7 +98,7 @@
         /// Obte o asigna el diametre del forat.
         /// </summary>
         /// 
-        public double Drill {
+        public int Drill {
             get {
                 return drill;
             }

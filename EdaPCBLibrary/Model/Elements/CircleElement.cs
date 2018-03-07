@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using System;
@@ -10,9 +11,9 @@
     /// </summary>
     public sealed class CircleElement: Element, IPosition {
 
-        private Point position;
-        private double radius;
-        private double thickness;
+        private PointInt position;
+        private int radius;
+        private int thickness;
 
         /// <summary>
         ///  Constructor de l'objecte amb els parametres per defecte.
@@ -29,7 +30,7 @@
         /// <param name="radius">Radi.</param>
         /// <param name="thickness">Amplada de linia. Zero indica que es un disc.</param>
         /// 
-        public CircleElement(Point position, double radius, double thickness = 0) :           
+        public CircleElement(PointInt position, int radius, int thickness = 0) :           
             base() {
 
             this.position = position;
@@ -55,7 +56,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = PolygonBuilder.BuildCircle(position, radius);
+            PointInt[] points = PolygonBuilder.BuildCircle(position, radius);
             return new Polygon(points);
         }
 
@@ -66,9 +67,9 @@
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
+        public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = PolygonBuilder.BuildCircle(position, radius + spacing);
+            PointInt[] points = PolygonBuilder.BuildCircle(position, radius + spacing);
             return new Polygon(points);
         }
 
@@ -78,16 +79,16 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override Rect GetBoundingBox(BoardSide side) {
+        public override RectInt GetBoundingBox(BoardSide side) {
 
-            return new Rect(position.X - radius, position.Y - radius, radius + radius, radius + radius);
+            return new RectInt(position.X - radius, position.Y - radius, radius + radius, radius + radius);
         }
 
         /// <summary>
         ///  Obte o asigna la posicio del centre del cercle.
         /// </summary>
         /// 
-        public Point Position {
+        public PointInt Position {
             get {
                 return position;
             }
@@ -100,7 +101,7 @@
         /// Obte o asigna el radi del cercle.
         /// </summary>
         /// 
-        public double Radius {
+        public int Radius {
             get {
                 return radius;
             }
@@ -116,7 +117,7 @@
         /// Obte o asigna el diametre del cercle.
         /// </summary>
         /// 
-        public double Diameter {
+        public int Diameter {
             get {
                 return radius * 2;
             }
@@ -132,7 +133,7 @@
         /// Obte o asigna l'amplada de linia.
         /// </summary>
         /// 
-        public double Thickness {
+        public int Thickness {
             get {
                 return thickness;
             }

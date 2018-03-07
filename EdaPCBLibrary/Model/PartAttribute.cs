@@ -11,7 +11,7 @@
 
         private readonly string name;
         private string value;
-        private Point position;
+        private PointInt position;
         private Angle rotation;
         private TextAlign align;
         private bool usePosition;
@@ -36,7 +36,7 @@
             this.IsVisible = isVisible;
         }
 
-        public PartAttribute(string name, Point position, Angle rotation, TextAlign align, string value) {
+        public PartAttribute(string name, PointInt position, Angle rotation, TextAlign align, string value) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -87,7 +87,7 @@
         /// Obte la posicio del atribut.
         /// </summary>
         /// 
-        public Point Position {
+        public PointInt Position {
             get {
                 return position;
             }

@@ -27,8 +27,6 @@
             Mitter
         }
 
-        private const double scaleFactor = 1000000.0;
-
         private static readonly Clipper cp = new Clipper();
         private static readonly ClipperOffset cpOffset = new ClipperOffset();
 
@@ -127,7 +125,7 @@
             cpOffset.AddPath(ToPointList(sourcePoligon), GetJoinType(oj), EndType.etClosedPolygon);
 
             List<List<IntPoint>> solutions = new List<List<IntPoint>>();
-            cpOffset.Execute(ref solutions, offset * scaleFactor);
+            cpOffset.Execute(ref solutions, offset);
 
             return ToPolygon(solutions[0]);
         }
@@ -139,7 +137,7 @@
                 cpOffset.AddPath(ToPointList(sourcePolygon), GetJoinType(oj), EndType.etClosedPolygon);
 
             List<List<IntPoint>> solutions = new List<List<IntPoint>>();
-            cpOffset.Execute(ref solutions, offset * scaleFactor);
+            cpOffset.Execute(ref solutions, offset);
 
             List<Polygon> results = new List<Polygon>(solutions.Count);
             foreach (List<IntPoint> solution in solutions)
@@ -159,8 +157,8 @@
             if (polygon.Points != null) {
                 IntPoint[] dstArray = new IntPoint[polygon.Points.Length];
                 for (int i = 0; i < polygon.Points.Length; i++) {
-                    dstArray[i].X = (int)(polygon.Points[i].X * scaleFactor);
-                    dstArray[i].Y = (int)(polygon.Points[i].Y * scaleFactor);
+                    dstArray[i].X = polygon.Points[i].X;
+                    dstArray[i].Y = polygon.Points[i].Y;
                 }
                 return new List<IntPoint>(dstArray);
             }
@@ -177,11 +175,9 @@
         private static Polygon ToPolygon(List<IntPoint> points) {
 
             IntPoint[] srcArray = points.ToArray();
-            Point[] dstArray = new Point[srcArray.Length];
-            for (int i = 0; i < srcArray.Length; i++) {
-                dstArray[i].X = srcArray[i].X / scaleFactor;
-                dstArray[i].Y = srcArray[i].Y / scaleFactor;
-            }
+            PointInt[] dstArray = new PointInt[srcArray.Length];
+            for (int i = 0; i < srcArray.Length; i++) 
+                dstArray[i] = new PointInt((int) srcArray[i].X, (int) srcArray[i].Y);
             return new Polygon(dstArray);
         }
 
@@ -193,13 +189,11 @@
         /// 
         private static Polygon ToPolygon(PolyNode polyNode) {
 
-            Point[] points;
+            PointInt[] points;
             if (polyNode.Contour.Count > 0) {
-                points = new Point[polyNode.Contour.Count];
-                for (int i = 0; i < polyNode.Contour.Count; i++) {
-                    points[i].X = polyNode.Contour[i].X / scaleFactor;
-                    points[i].Y = polyNode.Contour[i].Y / scaleFactor;
-                }
+                points = new PointInt[polyNode.Contour.Count];
+                for (int i = 0; i < polyNode.Contour.Count; i++)
+                    points[i] = new PointInt((int)polyNode.Contour[i].X, (int) polyNode.Contour[i].Y);
             }
             else
                 points = null;

@@ -1,4 +1,4 @@
-﻿namespace Eda.PCBViewer.DrawEditor {
+﻿namespace MikroPic.EdaTools.v1.Designer.DrawEditor {
 
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Infrastructure;
@@ -179,7 +179,7 @@
                     bool isSignalLayer = (Layer.Name == Layer.TopName) || (Layer.Name == Layer.BottomName);
                     Pen pen = isSignalLayer ? CreatePen(color, region.Thickness) : null;
                     Brush brush = CreateBrush(color);
-                    Polygon polygon = Board.GetRegionPolygon(region, Layer, 0.15, Matrix.Identity);
+                    Polygon polygon = Board.GetRegionPolygon(region, Layer, 150000, Matrix.Identity);
                     DrawPolygon(dc, pen, brush, polygon);
 
                     if (Part != null)
@@ -327,7 +327,7 @@
                     Pen pen = CreatePen(color, text.Thickness);
 
                     PartAttributeAdapter paa = new PartAttributeAdapter(Part, text);
-                    Point position = paa.Position;
+                    Point position = paa.Position.ToPoint();
                     Angle rotation = paa.Rotation;
                     TextAlign align = paa.Align;
                     string value = paa.Value;
@@ -502,10 +502,10 @@
             private static void StreamPolygon(StreamGeometryContext ctx, Polygon polygon, int level) {
 
                 if (polygon.Points != null) {
-                    Point[] points = polygon.Points;
-                    ctx.BeginFigure(points[0], true, true);
+                    PointInt[] points = polygon.Points;
+                    ctx.BeginFigure(new Point(points[0].X, points[0].Y), true, true);
                     for (int i = 1; i < points.Length; i++) 
-                        ctx.LineTo(points[i], true, true);
+                        ctx.LineTo(new Point(points[i].X, points[i].Y), true, true);
                 }
                 if (polygon.Childs != null && (level < 2))
                     for (int i = 0; i < polygon.Childs.Length; i++)
@@ -568,19 +568,26 @@
             layerNames.Add(Layer.ProfileName);
 
             DrawingVisual boardVisual = new DrawingVisual();
-            foreach (string layerName in layerNames) {
+            using (DrawingContext dc = boardVisual.RenderOpen()) {
 
-                Layer layer = board.GetLayer(layerName);
-                if (layer.IsVisible) {
-
-                    DrawingVisual layerVisual = new DrawingVisual();
-                    boardVisual.Children.Add(layerVisual);
-                    layerVisual.Opacity = layer.Color.ScA;
-
-                    RenderVisitor visitor = new RenderVisitor(board, layer, layerVisual);
-                    visitor.Run();
-                }
+                Transform t = new ScaleTransform(1 / 100000, 1 / 100000);
+                dc.PushTransform(t);
             }
+
+
+                foreach (string layerName in layerNames) {
+
+                    Layer layer = board.GetLayer(layerName);
+                    if (layer.IsVisible) {
+
+                        DrawingVisual layerVisual = new DrawingVisual();
+                        boardVisual.Children.Add(layerVisual);
+                        layerVisual.Opacity = layer.Color.ScA;
+
+                        RenderVisitor visitor = new RenderVisitor(board, layer, layerVisual);
+                        visitor.Run();
+                    }
+                }
 
             return boardVisual;
         }

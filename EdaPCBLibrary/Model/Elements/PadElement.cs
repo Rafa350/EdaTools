@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
-    using System;
-    using System.Windows;
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
     /// <summary>
@@ -10,7 +9,7 @@
     public abstract class PadElement : Element, IPosition, IName, IConectable {
 
         private string name;
-        private Point position;
+        private PointInt position;
 
         /// <summary>
         /// Construeix l'objecte amb els parametres per defecte.
@@ -27,7 +26,7 @@
         /// <param name="name">Nom del pad.</param>
         /// <param name="position">Posicio.</param>
         /// 
-        public PadElement(string name, Point position) :
+        public PadElement(string name, PointInt position) :
             base() {
 
             this.name = name;
@@ -42,7 +41,7 @@
         /// <param name="width">Amplada dels conductors.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public abstract Polygon GetThermalPolygon(BoardSide side, double spacing, double width);
+        public abstract Polygon GetThermalPolygon(BoardSide side, int spacing, int width);
 
         /// <summary>
         /// Obte o asigna el nom.
@@ -61,7 +60,7 @@
         ///  Obte o asigna la posicio del centre geometric del pad.
         /// </summary>
         /// 
-        public Point Position {
+        public PointInt Position {
             get {
                 return position;
             }

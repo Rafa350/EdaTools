@@ -5,7 +5,7 @@
     public sealed class Signal: IName, IVisitable {
 
         private string name;
-        private double clearance;
+        private int clearance;
 
         public Signal() {
 
@@ -40,7 +40,7 @@
             }
         }
 
-        public double Clearance {
+        public int Clearance {
             get {
                 return clearance;
             }

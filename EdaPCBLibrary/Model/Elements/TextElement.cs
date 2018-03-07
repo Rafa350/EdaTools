@@ -10,10 +10,10 @@
     /// </summary>
     public sealed class TextElement: Element, IPosition, IRotation {
 
-        private Point position;
+        private PointInt position;
         private Angle rotation;
-        private double height;
-        private double thickness;
+        private int height;
+        private int thickness;
         private TextAlign align = TextAlign.MiddleCenter;
         private string value;
 
@@ -34,7 +34,7 @@
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="align">Alineacio respecte la posicio.</param>
         /// 
-        public TextElement(Point position, Angle rotation, double height, double thickness, TextAlign align = TextAlign.MiddleCenter):
+        public TextElement(PointInt position, Angle rotation, int height, int thickness, TextAlign align = TextAlign.MiddleCenter):
             base() {
 
             this.position = position;
@@ -72,7 +72,7 @@
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
+        public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
             return null;
         }
@@ -83,7 +83,7 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override Rect GetBoundingBox(BoardSide side) {
+        public override RectInt GetBoundingBox(BoardSide side) {
 
             throw new NotImplementedException();
         }
@@ -92,7 +92,7 @@
         ///  Obte o asigna la posicio del centre del cercle.
         /// </summary>
         /// 
-        public Point Position {
+        public PointInt Position {
             get {
                 return position;
             }
@@ -118,7 +118,7 @@
         /// Obte o asigna l'alçada de lletra.
         /// </summary>
         /// 
-        public double Height {
+        public int Height {
             get {
                 return height;
             }
@@ -134,7 +134,7 @@
         /// Obte o asigna l'amplada de linia.
         /// </summary>
         /// 
-        public double Thickness {
+        public int Thickness {
             get {
                 return thickness;
             }

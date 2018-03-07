@@ -23,17 +23,17 @@
             Buried
         }
 
-        private const double drcOuterSizeMin = 0.125;
-        private const double drcOuterSizeMax = 2.5;
-        private const double drcOuterSizePercent = 0.25;
-        private const double drcInnerSizeMin = 0.125;
-        private const double drcInnerSizeMax = 2.5;
-        private const double drcInnerSizePercent = 0.25;
+        private const int drcOuterSizeMin = 125000;
+        private const int drcOuterSizeMax = 2500000;
+        private const int drcOuterSizePercent = 250000;
+        private const int drcInnerSizeMin = 125000;
+        private const int drcInnerSizeMax = 2500000;
+        private const int drcInnerSizePercent = 250000;
 
-        private Point position;
-        private double drill;
-        private double outerSize = 0;
-        private double innerSize = 0;
+        private PointInt position;
+        private int drill;
+        private int outerSize = 0;
+        private int innerSize = 0;
         private ViaShape shape = ViaShape.Circular;
         private ViaType type = ViaType.Through;
 
@@ -54,7 +54,7 @@
         /// <param name="drill">Diametre del forat.</param>
         /// <param name="shape">Forma de la corona.</param>
         /// 
-        public ViaElement(Point position, double size, double drill, ViaShape shape) :
+        public ViaElement(PointInt position, int size, int drill, ViaShape shape) :
             base() {
 
             if (size < 0)
@@ -87,17 +87,17 @@
         /// <param name="spacing">Espaiat.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        private Point[] BuildPoints(BoardSide side, double spacing) {
+        private PointInt[] BuildPoints(BoardSide side, int spacing) {
 
-            double size = side == BoardSide.Inner ? InnerSize : OuterSize;
+            int size = side == BoardSide.Inner ? InnerSize : OuterSize;
             ViaShape shape = side == BoardSide.Inner ? ViaShape.Circular : this.shape;
 
             switch (shape) {
                 case ViaShape.Square:
-                    return PolygonBuilder.BuildRectangle(position, new Size(size + spacing * 2, size + spacing * 2), 0, Angle.FromDegrees(0));
+                    return PolygonBuilder.BuildRectangle(position, new SizeInt(size + spacing * 2, size + spacing * 2), 0, Angle.FromDegrees(0));
 
                 case ViaShape.Octogonal:
-                    return PolygonBuilder.BuildPolygon(8, position, (size / 2) + spacing, Angle.FromDegrees(22.5));
+                    return PolygonBuilder.BuildPolygon(8, position, (size / 2) + spacing, Angle.FromDegrees(2250));
 
                 default:
                     return PolygonBuilder.BuildCircle(position, (size / 2) + spacing);
@@ -112,8 +112,8 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = BuildPoints(side, 0);
-            Point[] holePoints = PolygonBuilder.BuildCircle(position, drill / 2);
+            PointInt[] points = BuildPoints(side, 0);
+            PointInt[] holePoints = PolygonBuilder.BuildCircle(position, drill / 2);
             return new Polygon(points, new Polygon[] { new Polygon(holePoints) });
         }
 
@@ -124,9 +124,9 @@
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
+        public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = BuildPoints(side, spacing);
+            PointInt[] points = BuildPoints(side, spacing);
             return new Polygon(points);
         }
 
@@ -136,18 +136,17 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override Rect GetBoundingBox(BoardSide side) {
+        public override RectInt GetBoundingBox(BoardSide side) {
 
-            double size = side == BoardSide.Inner ? InnerSize : OuterSize;
-            double hSize = size / 2;
-            return new Rect(position.X - hSize, position.Y - hSize, size, size);
+            int size = side == BoardSide.Inner ? InnerSize : OuterSize;
+            return new RectInt(position.X - (size / 2), position.Y - (size / 2), size, size);
         }
 
         /// <summary>
         ///  Obte o asigna la posicio del centre del cercle.
         /// </summary>
         /// 
-        public Point Position {
+        public PointInt Position {
             get {
                 return position;
             }
@@ -160,7 +159,7 @@
         /// Obte o asigna el diametre del forat
         /// </summary>
         /// 
-        public double Drill {
+        public int Drill {
             get {
                 return drill;
             }
@@ -176,9 +175,9 @@
         /// Obte o asigna el tamany de la corona de les capes externes.
         /// </summary>
         /// 
-        public double OuterSize {
+        public int OuterSize {
             get {
-                double dimension = outerSize == 0 ? 2 * (drill * drcOuterSizePercent) + drill : outerSize;
+                int dimension = outerSize == 0 ? 2 * (drill * drcOuterSizePercent) + drill : outerSize;
                 return Math.Max(drcOuterSizeMin, Math.Min(drcOuterSizeMax, dimension));
             }
             set {
@@ -190,9 +189,9 @@
         /// Obte o asigna el tamany de la corona de les capes internes.
         /// </summary>
         /// 
-        public double InnerSize {
+        public int InnerSize {
             get {
-                double dimension = innerSize == 0 ? 2 * (drill * drcInnerSizePercent) + drill : innerSize;
+                int dimension = innerSize == 0 ? 2 * (drill * drcInnerSizePercent) + drill : innerSize;
                 return Math.Max(drcInnerSizeMin, Math.Min(drcInnerSizeMax, dimension));
             }
             set {

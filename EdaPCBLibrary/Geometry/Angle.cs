@@ -3,50 +3,50 @@
     using System;
 
     /// <summary>
-    /// Clase per representar angles
+    /// Clase per representar angles. Els angles son en centesimes de grau o en radiants
     /// </summary>
     public struct Angle {
 
-        public static readonly Angle Zero = FromDegrees(0.0);
-        public static readonly Angle Deg45 = FromDegrees(45.0);
-        public static readonly Angle Deg90 = FromDegrees(90.0);
-        public static readonly Angle Deg135 = FromDegrees(135.0);
-        public static readonly Angle Deg180 = FromDegrees(180.0);
-        public static readonly Angle Deg270 = FromDegrees(270.0);
-        public static readonly Angle Deg315 = FromDegrees(315.0);
+        public static readonly Angle Zero = new Angle(0);
+        public static readonly Angle Deg45 = new Angle(4500);
+        public static readonly Angle Deg90 = new Angle(9000);
+        public static readonly Angle Deg135 = new Angle(13500);
+        public static readonly Angle Deg180 = new Angle(18000);
+        public static readonly Angle Deg270 = new Angle(27000);
+        public static readonly Angle Deg315 = new Angle(31500);
 
-        private readonly double value;
+        private readonly int value;
 
         /// <summary>
         /// Constructor privat.
         /// </summary>
-        /// <param name="angle">El valor de l'angle.</param>
+        /// <param name="angle">El valor de l'angle en centesimes de grau.</param>
         /// 
-        private Angle(double angle) {
+        private Angle(int angle) {
 
-            value = angle % 360.0;
-        }
-
-        /// <summary>
-        /// Crea un angle a partir del seu valor en radians
-        /// </summary>
-        /// <param name="value">El valor de l'angle en radians.</param>
-        /// <returns>L'angle creat.</returns>
-        /// 
-        public static Angle FromRadiants(double value) {
-
-            return new Angle(value * 180.0 / Math.PI);
+            value = angle % 36000;
         }
 
         /// <summary>
         /// Crea un angle a partir del seu valor en graus.
         /// </summary>
-        /// <param name="value">El valor de l'angle en graus.</param>
+        /// <param name="deg">Valor de l'angle en centesimes de graus.</param>
         /// <returns>L'angle creat.</returns>
         /// 
-        public static Angle FromDegrees(double value) {
+        public static Angle FromDegrees(int deg) {
 
-            return new Angle(value);
+            return new Angle(deg);
+        }
+
+        /// <summary>
+        /// Crea un angle a partir del seu valor en radiants
+        /// </summary>
+        /// <param name="rad">El valor de l'angle en radiants.</param>
+        /// <returns>L'angle creat.</returns>
+        /// 
+        public static Angle FromRadiants(double rad) {
+
+            return new Angle((int)(rad * 18000.0 / Math.PI));
         }
 
         /// <summary>
@@ -128,12 +128,12 @@
             return new Angle(a1.value - a2.value);
         }
 
-        public static Angle operator *(Angle a, double v) {
+        public static Angle operator *(Angle a, int v) {
 
             return new Angle(a.value * v);
         }
 
-        public static Angle operator /(Angle a, double v) {
+        public static Angle operator /(Angle a, int v) {
 
             return new Angle(a.value / v);
         }
@@ -144,7 +144,7 @@
         /// 
         public bool IsZero {
             get {
-                return value == 0.0;
+                return value == 0;
             }
         }
 
@@ -154,7 +154,7 @@
         /// 
         public bool IsOrthogonal {
             get {
-                return Math.Abs(value % 90) == 0.0;
+                return Math.Abs(value % 9000) == 0;
             }
         }
 
@@ -164,7 +164,7 @@
         /// 
         public bool IsDiagonal {
             get {
-                return Math.Abs(value % 90) == 45.0;
+                return Math.Abs(value % 9000) == 4500;
             }
         }
 
@@ -174,7 +174,7 @@
         /// 
         public bool IsVertical {
             get {
-                return Math.Abs(value % 180) == 90.0;
+                return Math.Abs(value % 18000) == 9000;
             }
         }
 
@@ -184,27 +184,27 @@
         /// 
         public bool IsHorizontal {
             get {
-                return Math.Abs(value % 180) == 0.0;
+                return Math.Abs(value % 18000) == 0;
             }
         }
 
         /// <summary>
-        /// Obte el valor de l'angle en radians.
+        /// Obte el valor de l'angle en centesimes graus.
+        /// </summary>
+        /// 
+        public int Degrees {
+            get {
+                return value;
+            }
+        }
+
+        /// <summary>
+        /// Obte el valor de l'angle en radiants
         /// </summary>
         /// 
         public double Radiants {
             get {
-                return value * Math.PI / 180.0;
-            }
-        }
-
-        /// <summary>
-        /// Obte el valor de l'angle en graus.
-        /// </summary>
-        /// 
-        public double Degrees {
-            get {
-                return value;
+                return value * Math.PI / 18000.0;
             }
         }
     }

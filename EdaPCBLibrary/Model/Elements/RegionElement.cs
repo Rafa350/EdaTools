@@ -14,16 +14,16 @@
 
         public struct Segment {
 
-            private Point position;
+            private PointInt position;
             private Angle angle;
 
-            public Segment(Point position, Angle angle) {
+            public Segment(PointInt position, Angle angle) {
 
                 this.position = position;
                 this.angle = angle;
             }
 
-            public Point Position {
+            public PointInt Position {
                 get {
                     return position;
                 }
@@ -37,7 +37,7 @@
         }
 
         private readonly List<Segment> segments = new List<Segment>();
-        private double thickness = 0.1;
+        private int thickness = 100000;
 
         /// <summary>
         /// Constructor de l'objecte amb els parametres per defecte.
@@ -52,7 +52,7 @@
         /// </summary>
         /// <param name="thickness">Amplada de linia.</param>
         /// 
-        public RegionElement(double thickness = 0):
+        public RegionElement(int thickness = 0):
             base() {
 
             if (thickness < 0)
@@ -67,7 +67,7 @@
         /// <param name="isolation">D'istancia d'aillament.</param>
         /// <param name="segments">Llista de segments.</param>
         /// 
-        public RegionElement(double thickness, IEnumerable<Segment> segments) :
+        public RegionElement(int thickness, IEnumerable<Segment> segments) :
             base() {
 
             this.thickness = thickness;
@@ -94,12 +94,12 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point currentPoint = new Point();
+            PointInt currentPoint = new PointInt();
 
-            Point firstPoint = new Point();
+            PointInt firstPoint = new PointInt();
             Angle angle = Angle.Zero;
 
-            List<Point> points = new List<Point>();
+            List<PointInt> points = new List<PointInt>();
 
             bool first = true;
             foreach (Segment segment in segments) {
@@ -120,8 +120,8 @@
                     // Tram circular
                     //
                     else {
-                        Point center = ArcUtils.Center(currentPoint, segment.Position, angle);
-                        double radius = ArcUtils.Radius(currentPoint, segment.Position, angle);
+                        PointInt center = ArcUtils.Center(currentPoint, segment.Position, angle);
+                        int radius = ArcUtils.Radius(currentPoint, segment.Position, angle);
                         Angle startAngle = ArcUtils.StartAngle(currentPoint, center);
                         points.AddRange(PolygonBuilder.BuildArc(center, radius, startAngle, angle, false));
                     }
@@ -135,8 +135,8 @@
                 points.Add(firstPoint);
 
             else {
-                Point center = ArcUtils.Center(currentPoint, firstPoint, angle);
-                double radius = ArcUtils.Radius(currentPoint, firstPoint, angle);
+                PointInt center = ArcUtils.Center(currentPoint, firstPoint, angle);
+                int radius = ArcUtils.Radius(currentPoint, firstPoint, angle);
                 Angle startAngle = ArcUtils.StartAngle(currentPoint, center);
                 points.AddRange(PolygonBuilder.BuildArc(center, radius, startAngle, angle, false));
             }
@@ -151,7 +151,7 @@
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         ///
-        public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
+        public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
             throw new NotImplementedException();
         }
@@ -162,7 +162,7 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override Rect GetBoundingBox(BoardSide side) {
+        public override RectInt GetBoundingBox(BoardSide side) {
 
             throw new NotImplementedException();
         }
@@ -182,7 +182,7 @@
         /// </summary>
         /// <param name="position">Vertex final de la linia</param>
         /// 
-        public void AddLine(Point position) {
+        public void AddLine(PointInt position) {
 
             Add(new Segment(position, Angle.Zero));
         }
@@ -193,7 +193,7 @@
         /// <param name="position">Vertec final del arc.</param>
         /// <param name="angle">Angle del arc.</param>
         /// 
-        public void AddArc(Point position, Angle angle) {
+        public void AddArc(PointInt position, Angle angle) {
 
             Add(new Segment(position, angle));
         }
@@ -202,7 +202,7 @@
         /// Obte o asigna l'amplada de linia del perfil.
         /// </summary>
         /// 
-        public double Thickness {
+        public int Thickness {
             get {
                 return thickness;
             }

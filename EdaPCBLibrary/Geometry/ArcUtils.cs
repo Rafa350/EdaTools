@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using System;
-    using System.Windows;
 
     /// <summary>
     /// Operacions amb arcs.
@@ -16,7 +16,7 @@
         /// <param name="angle">Angle d'apertura.</param>
         /// <returns>El centre.</returns>
         /// 
-        public static Point Center(Point startPosition, Point endPosition, Angle angle) {
+        public static PointInt Center(PointInt startPosition, PointInt endPosition, Angle angle) {
 
             double x1 = startPosition.X;
             double y1 = startPosition.Y;
@@ -38,33 +38,36 @@
 
             // Calcula el centre
             //
-            if (angle.Degrees > 0)
-                return new Point(
-                    mx + Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (y1 - y2) / d,
-                    my + Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (x2 - x1) / d);
+            double cx, cy;
+            if (angle.Degrees > 0) {
+                cx = mx + Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (y1 - y2) / d;
+                cy = my + Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (x2 - x1) / d;
+            }
 
-            else
-                return new Point(
-                    mx - Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (y1 - y2) / d,
-                    my - Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (x2 - x1) / d);
+            else {
+                cx = mx - Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (y1 - y2) / d;
+                cy = my - Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (x2 - x1) / d;
+            }
+
+            return new PointInt((int) cx, (int) cy);
         }
 
-        public static Angle StartAngle(Point startPosition, Point center) {
+        public static Angle StartAngle(PointInt startPosition, PointInt center) {
 
             return Angle.FromRadiants(Math.Atan2(startPosition.Y - center.Y, startPosition.X - center.X));
         }
 
-        public static Angle EndAngle(Point endPosition, Point center) {
+        public static Angle EndAngle(PointInt endPosition, PointInt center) {
 
             return Angle.FromRadiants(Math.Atan2(endPosition.Y - center.Y, endPosition.X - center.X));
         }
 
-        public static double Radius(Point startPosition, Point endPosition, Angle angle) {
+        public static int Radius(PointInt startPosition, PointInt endPosition, Angle angle) {
 
-            double dx = endPosition.X - startPosition.X;
-            double dy = endPosition.Y - startPosition.Y;
+            int dx = endPosition.X - startPosition.X;
+            int dy = endPosition.Y - startPosition.Y;
             double length = Math.Sqrt((dx * dx) + (dy * dy));
-            return Math.Abs(length / 2.0 / Math.Sin(angle.Radiants / 2.0));
+            return (int) Math.Abs(length / 2.0 / Math.Sin(angle.Radiants / 2.0));
         }
     }
 }

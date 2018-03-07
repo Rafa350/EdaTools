@@ -19,16 +19,16 @@
             Oval
         }
 
-        private const double drcTopSizeMin = 0.125;
-        private const double drcTopSizeMax = 2.5;
-        private const double drcTopSizePercent = 0.25;
+        private const int drcTopSizeMin = 125000;
+        private const int drcTopSizeMax = 2500000;
+        private const int drcTopSizePercent = 250000;
 
         private ThPadShape shape = ThPadShape.Circular;
         private Angle rotation;
-        private double topSize;
-        private double innerSize;
-        private double bottomSize;
-        private double drill;
+        private int topSize;
+        private int innerSize;
+        private int bottomSize;
+        private int drill;
 
         /// <summary>
         /// Constructor de l'objecte amb els parametres per defecte.
@@ -48,7 +48,7 @@
         /// <param name="shape">Diametre del forat.</param>
         /// <param name="drill">Forma de la corona.</param>
         /// 
-        public ThPadElement(string name, Point position, Angle rotation, double size, ThPadShape shape, double drill):
+        public ThPadElement(string name, PointInt position, Angle rotation, int size, ThPadShape shape, int drill):
             base(name, position) {
 
             if (size < 0)
@@ -75,13 +75,13 @@
             visitor.Visit(this);
         }
 
-        private Point[] BuildPoints(BoardSide side, double spacing) {
+        private PointInt[] BuildPoints(BoardSide side, int spacing) {
 
             switch (shape) {
                 case ThPadShape.Square:
                     return PolygonBuilder.BuildRectangle(
                         Position,
-                        new Size(topSize + (spacing * 2), topSize + (spacing * 2)),
+                        new SizeInt(topSize + (spacing * 2), topSize + (spacing * 2)),
                         spacing,
                         rotation);
 
@@ -90,12 +90,12 @@
                         8,
                         Position,
                         (topSize / 2) + spacing,
-                        rotation + Angle.FromDegrees(22.5));
+                        rotation + Angle.FromDegrees(2250));
 
                 case ThPadShape.Oval:
                     return PolygonBuilder.BuildRectangle(
                         Position,
-                        new Size((topSize * 2) + (spacing * 2), topSize + (spacing * 2)),
+                        new SizeInt((topSize * 2) + (spacing * 2), topSize + (spacing * 2)),
                         (topSize / 2) + spacing,
                         rotation);
 
@@ -114,8 +114,8 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = BuildPoints(side, 0);
-            Point[] holePoints = PolygonBuilder.BuildCircle(Position, drill / 2);
+            PointInt[] points = BuildPoints(side, 0);
+            PointInt[] holePoints = PolygonBuilder.BuildCircle(Position, drill / 2);
             return new Polygon(points, new Polygon[] { new Polygon(holePoints) });
         }
 
@@ -126,9 +126,9 @@
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
+        public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = BuildPoints(side, spacing);
+            PointInt[] points = BuildPoints(side, spacing);
             return new Polygon(points);
         }
 
@@ -140,13 +140,13 @@
         /// <param name="width">Amplada dels conductors.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetThermalPolygon(BoardSide side, double spacing, double width) {
+        public override Polygon GetThermalPolygon(BoardSide side, int spacing, int width) {
 
-            double w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize) + (spacing * 2.25);
-            double h = topSize + (spacing * 2.25);
+            int w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize) + (spacing * 9 / 4);
+            int h = topSize + (spacing * 9 / 4);
 
             Polygon pour = GetOutlinePolygon(side, spacing);
-            Polygon thermal = new Polygon(PolygonBuilder.BuildCross(Position, new Size(w, h), width, rotation));
+            Polygon thermal = new Polygon(PolygonBuilder.BuildCross(Position, new SizeInt(w, h), width, rotation));
 
             List<Polygon> childs = new List<Polygon>();
             childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
@@ -161,12 +161,12 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override Rect GetBoundingBox(BoardSide side) {
+        public override RectInt GetBoundingBox(BoardSide side) {
 
-            double w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize);
-            double h = topSize;
+            int w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize);
+            int h = topSize;
 
-            return new Rect(Position.X - w / 2, Position.Y - h / 2, w, h);
+            return new RectInt(Position.X - (w / 2), Position.Y - (h / 2), w, h);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@
         /// Obte o asigna el diametre del forat.
         /// </summary>
         /// 
-        public double Drill {
+        public int Drill {
             get {
                 return drill;
             }
@@ -215,9 +215,9 @@
         /// Obte o asigna el tamany del pad.
         /// </summary>
         /// 
-        public double Size {
+        public int Size {
             get {
-                double dimension = topSize == 0 ? 2 * (drill * drcTopSizePercent) + drill : topSize;
+                int dimension = topSize == 0 ? 2 * (drill * drcTopSizePercent) + drill : topSize;
                 return Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, dimension));
             }
             set {

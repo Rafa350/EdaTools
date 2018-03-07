@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Infrastructure {
 
     using System;
-    using System.Windows;
     using System.Windows.Media;
     using MikroPic.EdaTools.v1.Pcb.Geometry;
 
@@ -20,16 +19,16 @@
         /// <param name="capRounded">True si els extrems son arrodinits.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static Point[] BuildTrace(Point start, Point end, double thickness, bool capRounded = true) {
+        public static PointInt[] BuildTrace(PointInt start, PointInt end, int thickness, bool capRounded = true) {
 
-            double dx = end.X - start.X;
-            double dy = end.Y - start.Y;
+            int dx = end.X - start.X;
+            int dy = end.Y - start.Y;
             Angle angle = Angle.FromRadiants(Math.Atan2(dy, dx));
 
-            Point[] a1 = BuildArc(end, thickness / 2, angle + Angle.Deg270, Angle.FromDegrees(180));
-            Point[] a2 = BuildArc(start, thickness / 2, angle + Angle.Deg90, Angle.FromDegrees(180));
+            PointInt[] a1 = BuildArc(end, thickness / 2, angle + Angle.Deg270, Angle.Deg180);
+            PointInt[] a2 = BuildArc(start, thickness / 2, angle + Angle.Deg90, Angle.Deg180);
 
-            Point[] points = new Point[a1.Length + a2.Length];
+            PointInt[] points = new PointInt[a1.Length + a2.Length];
             a1.CopyTo(points, 0);
             a2.CopyTo(points, a1.Length);
 
@@ -47,15 +46,15 @@
         /// <param name="capRounded">True si els extrems son arrodonits.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static Point[] BuildTrace(Point center, double radius, Angle startAngle, Angle angle, double thickness, bool capRounded = true) {
+        public static PointInt[] BuildTrace(PointInt center, int radius, Angle startAngle, Angle angle, int thickness, bool capRounded = true) {
 
-            double innerRadius = radius - (thickness / 2.0);
-            double outerRadius = radius + (thickness / 2.0);
+            int innerRadius = radius - (thickness / 2);
+            int outerRadius = radius + (thickness / 2);
 
-            Point[] a1 = BuildArc(center, outerRadius, startAngle, angle);
-            Point[] a2 = BuildArc(center, innerRadius, startAngle + angle, -angle);
+            PointInt[] a1 = BuildArc(center, outerRadius, startAngle, angle);
+            PointInt[] a2 = BuildArc(center, innerRadius, startAngle + angle, -angle);
 
-            Point[] points = new Point[a1.Length + a2.Length];
+            PointInt[] points = new PointInt[a1.Length + a2.Length];
             a1.CopyTo(points, 0);
             a2.CopyTo(points, a1.Length);
 
@@ -69,7 +68,7 @@
         /// <param name="radius">Radi.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static Point[] BuildCircle(Point center, double radius) {
+        public static PointInt[] BuildCircle(PointInt center, int radius) {
 
             return BuildPolygon(32, center, radius, Angle.Zero);
         }
@@ -84,43 +83,43 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static Point[] BuildRectangle(Point position, Size size, double radius, Angle rotation) {
+        public static PointInt[] BuildRectangle(PointInt position, SizeInt size, int radius, Angle rotation) {
 
-            double x = position.X;
-            double y = position.Y;
-            double dx = (size.Width / 2) - radius;
-            double dy = (size.Height / 2) - radius;
+            int x = position.X;
+            int y = position.Y;
+            int dx = (size.Width / 2) - radius;
+            int dy = (size.Height / 2) - radius;
 
             // En aquestes rotacions, nomes cal intercanviar amplada per alçada
             //
             if (rotation.IsVertical) {
-                double temp = dx;
+                int temp = dx;
                 dx = dy;
                 dy = temp;
             }
 
             // Rectangle sense cantonades arrodonides
             //
-            Point[] points;
+            PointInt[] points;
             if (radius == 0) {
 
-                points = new Point[4];
-                points[0] = new Point(x - dx, y + dy);
-                points[1] = new Point(x + dx, y + dy);
-                points[2] = new Point(x + dx, y - dy);
-                points[3] = new Point(x - dx, y - dy);
+                points = new PointInt[4];
+                points[0] = new PointInt(x - dx, y + dy);
+                points[1] = new PointInt(x + dx, y + dy);
+                points[2] = new PointInt(x + dx, y - dy);
+                points[3] = new PointInt(x - dx, y - dy);
             }
 
             // Rectangle amb cantonades arrodonides
             //
             else {
 
-                Point[] a1 = BuildArc(new Point(x + dx, y + dy), radius, Angle.Zero, Angle.Deg90);
-                Point[] a2 = BuildArc(new Point(x - dx, y + dy), radius, Angle.Deg90, Angle.Deg90);
-                Point[] a3 = BuildArc(new Point(x - dx, y - dy), radius, Angle.Deg180, Angle.Deg90);
-                Point[] a4 = BuildArc(new Point(x + dx, y - dy), radius, Angle.Deg270, Angle.Deg90);
+                PointInt[] a1 = BuildArc(new PointInt(x + dx, y + dy), radius, Angle.Zero, Angle.Deg90);
+                PointInt[] a2 = BuildArc(new PointInt(x - dx, y + dy), radius, Angle.Deg90, Angle.Deg90);
+                PointInt[] a3 = BuildArc(new PointInt(x - dx, y - dy), radius, Angle.Deg180, Angle.Deg90);
+                PointInt[] a4 = BuildArc(new PointInt(x + dx, y - dy), radius, Angle.Deg270, Angle.Deg90);
 
-                points = new Point[a1.Length + a2.Length + a3.Length + a4.Length];
+                points = new PointInt[a1.Length + a2.Length + a3.Length + a4.Length];
                 a1.CopyTo(points, 0);
                 a2.CopyTo(points, a1.Length);
                 a3.CopyTo(points, a1.Length + a2.Length);
@@ -132,7 +131,7 @@
             if (!rotation.IsOrthogonal) {
                 Matrix m = new Matrix();
                 m.RotateAt(rotation.Degrees, x, y);
-                m.Transform(points);
+                //m.Transform(points);
             }
 
             return points;
@@ -147,66 +146,54 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static Point[] BuildCross(Point position, Size size, double thickness, Angle rotation) {
+        public static PointInt[] BuildCross(PointInt position, SizeInt size, int thickness, Angle rotation) {
 
-            double dx = size.Width / 2;
-            double dy = size.Height / 2;
+            int dx = size.Width / 2;
+            int dy = size.Height / 2;
 
             // En aquestes rotacions, nomes cal intercanviar amplada per alçada
             //
             if (rotation.IsVertical) {
-                double temp = dx;
+                int temp = dx;
                 dx = dy;
                 dy = temp;
             }
 
-            double dt = thickness / 2;
+            int dt = thickness / 2;
 
-            double x = position.X;
-            double y = position.Y;
+            int x = position.X;
+            int y = position.Y;
 
-            double xMin = x - dx;
-            double yMin = y - dy;
+            int xMin = x - dx;
+            int yMin = y - dy;
 
-            double xMax = x + dx;
-            double yMax = y + dy;
+            int xMax = x + dx;
+            int yMax = y + dy;
 
-            Point[] points = new Point[12];
+            PointInt[] points = new PointInt[12];
 
-            points[0].X = xMax;
-            points[0].Y = y - dt;
-            points[1].X = x + dt;
-            points[1].Y = y - dt;
-            points[2].X = x + dt;
-            points[2].Y = yMin;
+            points[0] = new PointInt(xMax, y - dt);
+            points[1] = new PointInt(x + dt,  y - dt);
+            points[2] = new PointInt(x + dt, yMin);
 
-            points[3].X = x - dt;
-            points[3].Y = yMin;
-            points[4].X = x - dt;
-            points[4].Y = y - dt;
-            points[5].X = xMin;
-            points[5].Y = y - dt;
+            points[3] = new PointInt(x - dt, yMin);
+            points[4] = new PointInt(x - dt, y - dt);
+            points[5] = new PointInt(xMin, y - dt);
 
-            points[6].X = xMin;
-            points[6].Y = y + dt;
-            points[7].X = x - dt;
-            points[7].Y = y + dt;
-            points[8].X = x - dt;
-            points[8].Y = yMax;
+            points[6] = new PointInt(xMin, y + dt);
+            points[7] = new PointInt(x - dt, y + dt);
+            points[8] = new PointInt(x - dt, yMax);
 
-            points[9].X = x + dt;
-            points[9].Y = yMax;
-            points[10].X = x + dt;
-            points[10].Y = y + dt;
-            points[11].X = xMax;
-            points[11].Y = y + dt;
+            points[9] = new PointInt(x + dt, yMax);
+            points[10] = new PointInt(x + dt, y + dt);
+            points[11] = new PointInt(xMax, y + dt);
 
             // Si es una rotacio arbitraria, fa servir calcul amb matrius
             //
             if (!rotation.IsOrthogonal) {
                 Matrix m = new Matrix();
                 m.RotateAt(rotation.Degrees, x, y);
-                m.Transform(points);
+                //m.Transform(points);
             }
 
             return points;
@@ -224,30 +211,32 @@
         /// coincideix amb en numero de segments.
         /// </returns>
         /// 
-        public static Point[] BuildPolygon(int sides, Point position, double radius, Angle rotation) {
+        public static PointInt[] BuildPolygon(int sides, PointInt position, int radius, Angle rotation) {
 
             // Calcula el punt inicial
             //
             double x = radius * Math.Cos(rotation.Radiants);
             double y = radius * Math.Sin(rotation.Radiants);
 
-            // Crea l'array de punts
-            //
-            Point[] points = new Point[sides];
-
-            // Genera els punts, aplicant un gir a l'anterior
+            // Calcula els sinus i cosinus del gir a aplicar a cada iteracio
             //
             double angle = 2 * Math.PI / sides;
             double cos = Math.Cos(angle);
             double sin = Math.Sin(angle);
 
-            for (int i = 0; i < sides; i++) {
-                points[i].X = x + position.X;
-                points[i].Y = y + position.Y;
+            // Crea l'array de punts
+            //
+            PointInt[] points = new PointInt[sides];
 
-                double temp = x;
-                x = cos * x - sin * y;
-                y = sin * temp + cos * y;
+            // Ompla l'array amb els punts calculats.
+            //
+            for (int i = 0; i < sides; i++) {
+
+                points[i] = new PointInt((int)x + position.X, (int)y + position.Y);
+
+                double tx = x;
+                x = cos * tx - sin * y;
+                y = sin * tx + cos * y;
             }
 
             return points;
@@ -265,9 +254,9 @@
         /// el numero de segments mes un.
         /// </returns>
         /// 
-        public static Point[] BuildArc(Point center, double radius, Angle startAngle, Angle angle, bool discardLast = false) {
+        public static PointInt[] BuildArc(PointInt center, int radius, Angle startAngle, Angle angle, bool discardLast = false) {
 
-            int numSegments = (int) Math.Floor((Math.Abs(angle.Degrees)) * 32.0 / 360.0);
+            int numSegments = Math.Abs((angle.Degrees * 32) / 36000);
             int numPoints = numSegments + (discardLast ? 0 : 1);
 
             // Calcula el punt inicial
@@ -275,22 +264,22 @@
             double x = radius * Math.Cos(startAngle.Radiants);
             double y = radius * Math.Sin(startAngle.Radiants);
 
-            // Crea l'array de punts
-            //
-            Point[] points = new Point[numPoints];
-
-            // Genera els punts, aplicant un gir a l'anterior
+            // Calcula el sinus i el cosinus del gur a aplicar a cada iteracio
             //
             double cos = Math.Cos(angle.Radiants / (double) numSegments);
             double sin = Math.Sin(angle.Radiants / (double) numSegments);
 
-            for (int i = 0; i < numPoints; i++) {
-                points[i].X = x + center.X;
-                points[i].Y = y + center.Y;
+            // Crea l'array de punts
+            //
+            PointInt[] points = new PointInt[numPoints];
 
-                double temp = x;
-                x = cos * x - sin * y;
-                y = sin * temp + cos * y;
+            for (int i = 0; i < numPoints; i++) {
+
+                points[i] = new PointInt((int)x + center.X, (int)y + center.Y);
+
+                double tx = x;
+                x = cos * tx - sin * y;
+                y = sin * tx + cos * y;
             }
 
             return points;

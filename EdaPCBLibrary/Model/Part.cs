@@ -10,7 +10,7 @@
     public sealed class Part: IPosition, IRotation, IName {
 
         private string name;
-        private Point position;
+        private PointInt position;
         private Angle rotation;
         private bool isFlipped;
         private readonly Block block;
@@ -38,7 +38,7 @@
         /// <param name="rotation">Angle de rotacio</param>
         /// <param name="isFlipped">Indica si va girat.</param>
         /// 
-        public Part(Block block, string name, Point position, Angle rotation, bool isFlipped = false) {
+        public Part(Block block, string name, PointInt position, Angle rotation, bool isFlipped = false) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -118,7 +118,7 @@
         /// Obte o asigna la posicio.
         /// </summary>
         /// 
-        public Point Position {
+        public PointInt Position {
             get {
                 return position;
             }

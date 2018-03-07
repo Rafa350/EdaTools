@@ -1,9 +1,8 @@
 ﻿<Window 
-    x:Class="Eda.PCBViewer.MainWindow"
+    x:Class="MikroPic.EdaTools.v1.Designer.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:Eda.PCBViewer"
-    xmlns:local2="clr-namespace:Eda.PCBViewer.DrawEditor"
+    xmlns:local2="clr-namespace:MikroPic.EdaTools.v1.Designer.DrawEditor"
     Title="MainWindow" 
     Height="350" 
     Width="525">

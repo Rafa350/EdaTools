@@ -71,6 +71,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DrawEditor\PointIntHelper.cs" />
     <Compile Include="DrawEditor\Tools\DragTool.cs" />
     <Compile Include="DrawEditor\Tools\LineTool.cs" />
     <Compile Include="DrawEditor\Tools\PadTool.cs" />

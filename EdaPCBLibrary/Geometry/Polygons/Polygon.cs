@@ -9,10 +9,10 @@
     /// </summary>
     public sealed class Polygon {
 
-        private readonly Point[] points;
+        private readonly PointInt[] points;
         private readonly Polygon[] childs;
 
-        public Polygon(Point[] points, Polygon[] childs = null) {
+        public Polygon(PointInt[] points, Polygon[] childs = null) {
 
             if ((points != null) && (points.Length < 3))
                 throw new InvalidOperationException("Lista de puntos invalida.");
@@ -45,12 +45,12 @@
         /// </summary>
         /// <returns>La nova llista de punts.</returns>
         /// 
-        public Point[] ClonePoints() {
+        public PointInt[] ClonePoints() {
 
             if (points == null)
                 return null;
             else {
-                Point[] a = new Point[points.Length];
+                PointInt[] a = new PointInt[points.Length];
                 points.CopyTo(a, 0);
                 return a;
             }
@@ -65,15 +65,15 @@
 
             if (points != null)
                 for (int i = 0; i < points.Length; i++) {
-                    double x = points[i].X;
-                    double y = points[i].Y;
+                    double x = points[i].X / 1000000;
+                    double y = points[i].Y / 1000000;
                     double xadd = y * m.M21 + m.OffsetX;
                     double yadd = x * m.M12 + m.OffsetY;
                     x *= m.M11;
                     x += xadd;
                     y *= m.M22;
                     y += yadd;
-                    points[i] = new Point(x, y);
+                    points[i] = new PointInt((int) x * 1000000, (int) y * 1000000);
                 }
 
             if (childs != null)
@@ -125,7 +125,7 @@
         /// Obte els punta del poligon.
         /// </summary>
         /// 
-        public Point[] Points {
+        public PointInt[] Points {
             get {
                 return points;
             }

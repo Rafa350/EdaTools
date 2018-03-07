@@ -3,7 +3,6 @@
     using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Infrastructure;
-    using System.Windows;
 
     /// <summary>
     /// Clase que representa un arc.
@@ -29,7 +28,7 @@
         /// <param name="angle">Angle del arc.</param>
         /// <param name="lineCap">Extrems de linia.</param>
         /// 
-        public ArcElement(Point startPosition, Point endPosition, double thickness, Angle angle, LineCapStyle lineCap) :
+        public ArcElement(PointInt startPosition, PointInt endPosition, int thickness, Angle angle, LineCapStyle lineCap) :
             base(startPosition, endPosition, thickness, lineCap) {
 
             this.angle = angle;
@@ -53,7 +52,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = PolygonBuilder.BuildTrace(Center, Radius, StartAngle, angle, Thickness);
+            PointInt[] points = PolygonBuilder.BuildTrace(Center, Radius, StartAngle, angle, Thickness);
             return new Polygon(points);
         }
 
@@ -64,9 +63,9 @@
         /// <param name="spacing">Espaiat</param>
         /// <returns>El poligon.</returns>
         /// 
-        public override Polygon GetOutlinePolygon(BoardSide side, double spacing) {
+        public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points =  PolygonBuilder.BuildTrace(Center, Radius, StartAngle, angle, Thickness + (spacing * 2));
+            PointInt[] points =  PolygonBuilder.BuildTrace(Center, Radius, StartAngle, angle, Thickness + (spacing * 2));
             return new Polygon(points);
         }
 
@@ -87,7 +86,7 @@
         /// Obte el centre de l'arc.
         /// </summary>
         /// 
-        public Point Center {
+        public PointInt Center {
             get {
                 return ArcUtils.Center(StartPosition, EndPosition, angle);
             }
@@ -107,7 +106,7 @@
         /// Obte el radi de l'arc.
         /// </summary>
         /// 
-        public double Radius {
+        public int Radius {
             get {
                 return ArcUtils.Radius(StartPosition, EndPosition, angle);
             }

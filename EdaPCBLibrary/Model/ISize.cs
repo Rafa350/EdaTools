@@ -1,7 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
+
     public interface ISize {
 
-        System.Windows.Size Size { get; set; }
+        SizeInt Size { get; set; }
     }
 }
