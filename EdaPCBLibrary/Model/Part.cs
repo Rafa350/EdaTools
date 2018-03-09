@@ -150,19 +150,6 @@
         }
 
         /// <summary>
-        /// Obte la matriu de transformacio per aplicar als elements.
-        /// </summary>
-        /// 
-        public Matrix Transformation {
-            get {
-                Matrix m = new Matrix();
-                m.Translate(position.X, position.Y);
-                m.RotateAt(rotation.Degrees, position.X, position.Y);
-                return m;
-            }
-        }
-
-        /// <summary>
         /// Obte la coleccio d'elements.
         /// </summary>
         /// 

@@ -569,6 +569,13 @@
                     // Procesa els elements dels components
                     //
                     foreach (Part part in parts) {
+
+                        // Obte la matriu de transformacio
+                        //
+                        Matrix m = new Matrix();
+                        m.Translate(part.Position.X, part.Position.Y);
+                        m.RotateAt(part.Rotation.Degrees, part.Position.X, part.Position.Y);
+
                         foreach (Element element in part.Elements) {
 
                             if ((element != region) &&
@@ -578,7 +585,7 @@
                                 //
                                 if (GetSignal(element, part, false) != regionSignal) {
                                     Polygon outlinePolygon = element.GetOutlinePolygon(layer.Side, spacing);
-                                    outlinePolygon = outlinePolygon.Transformed(part.Transformation);
+                                    //outlinePolygon = outlinePolygon.Transformed(m);
                                     holePolygons.Add(outlinePolygon);
                                 }
 
@@ -586,7 +593,7 @@
                                 //
                                 else if (element is PadElement) {
                                     Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Side, spacing, 200000);
-                                    thermalPolygon = thermalPolygon.Transformed(part.Transformation);
+                                    //thermalPolygon = thermalPolygon.Transformed(m);
                                     for (int i = 0; i < thermalPolygon.Childs.Length; i++)
                                         holePolygons.Add(thermalPolygon.Childs[i]);
                                 }

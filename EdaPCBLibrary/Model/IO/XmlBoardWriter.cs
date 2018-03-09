@@ -197,7 +197,7 @@
                 writer.WriteAttribute("position", FormatPoint(pad.Position));
                 if (!pad.Rotation.IsZero)
                     writer.WriteAttribute("rotation", FormatAngle(pad.Rotation));
-                writer.WriteAttribute("size", FormatDimension(pad.Size));
+                writer.WriteAttribute("size", FormatDimension(pad.TopSize));
                 writer.WriteAttribute("drill", FormatDimension(pad.Drill));
                 if (pad.Shape != ThPadElement.ThPadShape.Circular)
                     writer.WriteAttribute("shape", pad.Shape.ToString());

@@ -36,6 +36,9 @@
         public SmdPadElement(string name, PointInt position, SizeInt size, Angle rotation, int roundness) :
             base(name, position) {
 
+            if ((roundness < 0) || (roundness > 1000))
+                throw new ArgumentOutOfRangeException("roundness");
+
             this.size = size;
             this.rotation = rotation;
             this.roundness = roundness;
@@ -89,12 +92,12 @@
 
             Polygon pour = GetOutlinePolygon(side, spacing);
             Polygon thermal = new Polygon(PolygonBuilder.BuildCross(Position, 
-                new SizeInt(size.Width + ((spacing * 225) / 100), size.Height + ((spacing * 225) / 100)), width, rotation));
+                new SizeInt(size.Width + ((spacing * 22500) / 1000), size.Height + ((spacing * 22500) / 1000)), width, rotation));
 
             List<Polygon> childs = new List<Polygon>();
             childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
-            if (childs.Count != 4)
-                throw new InvalidProgramException("Thermal generada incorrectamente.");
+            //if (childs.Count != 4)
+            //    throw new InvalidProgramException("Thermal generada incorrectamente.");
             return new Polygon(null, childs.ToArray());
         }
 
@@ -148,7 +151,7 @@
                 return roundness;
             }
             set {
-                if (value < 0 || roundness > 1)
+                if ((value < 0) || (roundness > 1000))
                     throw new ArgumentOutOfRangeException("Roundness");
 
                  roundness = value;
@@ -161,7 +164,7 @@
         /// 
         public int Radius {
             get {
-                return Math.Min(size.Width, size.Height) * Roundness / 2;
+                return (int)(((double)Math.Min(size.Width, size.Height) * (double)roundness) / 2000L);
             }
         }
     }

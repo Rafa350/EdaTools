@@ -39,6 +39,9 @@
         public LineElement(PointInt startPosition, PointInt endPosition, int thickness, LineCapStyle lineCap) :
             base() {
 
+            if (thickness < 0)
+                throw new ArgumentOutOfRangeException("thickness");
+
             this.startPosition = startPosition;
             this.endPosition = endPosition;
             this.thickness = thickness;

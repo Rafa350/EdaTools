@@ -7,7 +7,7 @@
 
         public static Point ToPoint(this PointInt point) {
 
-            return new Point(point.X, point.Y);
+            return new Point((double)point.X / 1000000.0, (double)point.Y/1000000.0);
         }
     }
 }

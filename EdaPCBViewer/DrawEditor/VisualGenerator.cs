@@ -8,7 +8,6 @@
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
-    using System.Linq;
     using System.Globalization;
     using System.Collections.Generic;
     using System.Windows;
@@ -91,7 +90,7 @@
             /// <param name="arc">L'objecte a visitar.</param>
             /// 
             public override void Visit(ArcElement arc) {
-
+                
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
@@ -125,7 +124,7 @@
 
                     Color color = GetColor(Layer);
                     Brush brush = rectangle.Filled ? CreateBrush(color) : null;
-                    Pen pen = rectangle.Filled ? null : CreatePen(color, rectangle.Thickness);
+                    Pen pen = rectangle.Filled ? null : CreatePen(color, (double)rectangle.Thickness / 1000000.0);
                     Polygon polygon = rectangle.GetPolygon(Layer.Side);
                     DrawPolygon(dc, pen, brush, polygon);
 
@@ -142,7 +141,7 @@
             /// <param name="circle">L'objecte a visitar.</param>
             /// 
             public override void Visit(CircleElement circle) {
-
+                
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
@@ -151,7 +150,7 @@
 
                     Color color = GetColor(Layer);
                     Brush brush = circle.Filled ? CreateBrush(color) : null;
-                    Pen pen = circle.Filled ? null : CreatePen(color, circle.Thickness);
+                    Pen pen = circle.Filled ? null : CreatePen(color, (double)circle.Thickness / 1000000.0);
                     Polygon polygon = circle.GetPolygon(Layer.Side);
                     DrawPolygon(dc, pen, brush, polygon);
 
@@ -168,7 +167,7 @@
             /// <param name="region">L'objecte a visitar.</param>
             /// 
             public override void Visit(RegionElement region) {
-
+                return;
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
@@ -275,7 +274,9 @@
                         pad.Name, CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
                         new Typeface("Arial"), 0.5, textBrush);
                     formattedText.TextAlignment = TextAlignment.Center;
-                    dc.DrawText(formattedText, new Point(pad.Position.X, pad.Position.Y - formattedText.Height / 2));
+
+                    Point textPosition = new Point((double)pad.Position.X / 1000000.0, (double)pad.Position.Y / 1000000.0);
+                    dc.DrawText(formattedText, new Point(textPosition.X, textPosition.Y - formattedText.Height / 2));
                     dc.Pop();
 
                     if (Part != null)
@@ -316,7 +317,7 @@
             /// <param name="text">L'objwecte a visitar.</param>
             /// 
             public override void Visit(TextElement text) {
-
+                
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
@@ -324,7 +325,7 @@
                         dc.PushTransform(GetTransform(Part));
 
                     Color color = GetColor(Layer);
-                    Pen pen = CreatePen(color, text.Thickness);
+                    Pen pen = CreatePen(color, (double)text.Thickness / 1000000.0);
 
                     PartAttributeAdapter paa = new PartAttributeAdapter(Part, text);
                     Point position = paa.Position.ToPoint();
@@ -334,10 +335,10 @@
 
                     Matrix m = new Matrix();
                     m.Translate(position.X, position.Y);
-                    m.Rotate(rotation.Degrees);
+                    m.Rotate((double)rotation.Degrees / 100.0);
                     dc.PushTransform(new MatrixTransform(m));
 
-                    DrawText(dc, pen, new Point(0, 0), text.Height, align, value);
+                    DrawText(dc, pen, new Point(0, 0), (double)text.Height / 1000000.0, align, value);
                     dc.DrawEllipse(Brushes.YellowGreen, null, new Point(0, 0), 0.15, 0.15);
 
                     dc.Pop();
@@ -392,17 +393,24 @@
             }
 
             /// <summary>
-            /// Obte la transformacio d'un component.
+            /// Obte la transformacio d'un component
             /// </summary>
             /// <param name="part">El component.</param>
             /// <returns>La transformacio.</returns>
             /// 
             private static Transform GetTransform(Part part) {
 
-                Transform transaform = new MatrixTransform(part.Transformation);
-                transaform.Freeze();
+                Point position = new Point((double)part.Position.X / 1000000.0, (double)part.Position.Y / 1000000.0);
+                double angle = (double)part.Rotation.Degrees / 100.0;
 
-                return transaform;
+                Matrix m = new Matrix();
+                m.Translate(position.X, position.Y);
+                m.RotateAt(angle, position.X, position.Y);
+
+                Transform transform = new MatrixTransform(m);
+                transform.Freeze();
+
+                return transform;
             }
 
             /// <summary>
@@ -502,10 +510,21 @@
             private static void StreamPolygon(StreamGeometryContext ctx, Polygon polygon, int level) {
 
                 if (polygon.Points != null) {
+
+                    Point p;
                     PointInt[] points = polygon.Points;
-                    ctx.BeginFigure(new Point(points[0].X, points[0].Y), true, true);
-                    for (int i = 1; i < points.Length; i++) 
-                        ctx.LineTo(new Point(points[i].X, points[i].Y), true, true);
+
+                    p = new Point(
+                            (double)points[0].X / 1000000.0,
+                            (double)points[0].Y / 1000000.0);
+                    ctx.BeginFigure(p, true, true);
+
+                    for (int i = 1; i < points.Length; i++) {
+                        p = new Point(
+                            (double)points[i].X / 1000000.0, 
+                            (double)points[i].Y / 1000000.0);
+                        ctx.LineTo(p, true, true);
+                    }
                 }
                 if (polygon.Childs != null && (level < 2))
                     for (int i = 0; i < polygon.Childs.Length; i++)
@@ -543,9 +562,7 @@
 
             List<string> layerNames = new List<string>();
             layerNames.Add(Layer.BottomNamesName);
-            // layerIds.Add(LayerId.BottomValues);
             layerNames.Add(Layer.BottomDocumentName);
-            //layerIds.Add(LayerId.BottomCream);
             layerNames.Add(Layer.BottomGlueName);
             layerNames.Add(Layer.BottomKeepoutName);
             layerNames.Add(Layer.BottomRestrictName);
@@ -557,37 +574,29 @@
             layerNames.Add(Layer.TopRestrictName);
             layerNames.Add(Layer.TopKeepoutName);
             layerNames.Add(Layer.TopGlueName);
-            //layerIds.Add(LayerId.TopCream);
-            layerNames.Add(Layer.TopDocumentName);
-            //layerIds.Add(LayerId.TopValues);
             layerNames.Add(Layer.TopNamesName);
+
             layerNames.Add(Layer.PadsName);
             layerNames.Add(Layer.ViasName);
             layerNames.Add(Layer.HolesName);
             layerNames.Add(Layer.TopDocumentName);
+
             layerNames.Add(Layer.ProfileName);
 
             DrawingVisual boardVisual = new DrawingVisual();
-            using (DrawingContext dc = boardVisual.RenderOpen()) {
+            foreach (string layerName in layerNames) {
 
-                Transform t = new ScaleTransform(1 / 100000, 1 / 100000);
-                dc.PushTransform(t);
-            }
+                Layer layer = board.GetLayer(layerName);
+                if (layer.IsVisible) {
 
+                    DrawingVisual layerVisual = new DrawingVisual();
+                    boardVisual.Children.Add(layerVisual);
+                    layerVisual.Opacity = layer.Color.ScA;
 
-                foreach (string layerName in layerNames) {
-
-                    Layer layer = board.GetLayer(layerName);
-                    if (layer.IsVisible) {
-
-                        DrawingVisual layerVisual = new DrawingVisual();
-                        boardVisual.Children.Add(layerVisual);
-                        layerVisual.Opacity = layer.Color.ScA;
-
-                        RenderVisitor visitor = new RenderVisitor(board, layer, layerVisual);
-                        visitor.Run();
-                    }
+                    RenderVisitor visitor = new RenderVisitor(board, layer, layerVisual);
+                    visitor.Run();
                 }
+            }
 
             return boardVisual;
         }

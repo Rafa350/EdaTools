@@ -247,7 +247,7 @@
                             break;
 
                         case "polygon":
-                            element = ParsePolygonNode(childNode);
+                            //element = ParsePolygonNode(childNode);
                             break;
 
                         case "contactref":
@@ -351,7 +351,7 @@
             // Obte el tamany del forat
             //
             int drill = ParseDimension(GetAttribute(node, "drill"));
-            int size = (drill * 16) / 100;
+            int size = (drill * 16) / 10;
 
             ThPadElement.ThPadShape shape = ThPadElement.ThPadShape.Circular;
             switch (GetAttribute(node, "shape")) {
@@ -540,6 +540,8 @@
                 angle = ParseAngle(GetAttribute(node, "curve"));
             LineElement.LineCapStyle lineCap = GetAttribute(node, "cap") == null ? LineElement.LineCapStyle.Round : LineElement.LineCapStyle.Flat;
             int thickness = ParseDimension(GetAttribute(node, "width"));
+            if (thickness == 0)
+                thickness = 100000;
 
             int layerNum = GetAttributeAsInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
@@ -1007,7 +1009,7 @@
         private static int ParsePercent(string text) {
 
             double value = XmlConvert.ToDouble(text);
-            return (int)(value * 1000.0);
+            return (int)(value * 10.0);
         }
 
 

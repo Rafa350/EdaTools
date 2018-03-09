@@ -64,8 +64,8 @@
 
         public static int Radius(PointInt startPosition, PointInt endPosition, Angle angle) {
 
-            int dx = endPosition.X - startPosition.X;
-            int dy = endPosition.Y - startPosition.Y;
+            double dx = endPosition.X - startPosition.X;
+            double dy = endPosition.Y - startPosition.Y;
             double length = Math.Sqrt((dx * dx) + (dy * dy));
             return (int) Math.Abs(length / 2.0 / Math.Sin(angle.Radiants / 2.0));
         }

@@ -55,14 +55,14 @@ namespace MikroPic.EdaTools.v1.Designer {
                 XmlBoardWriter writer = new XmlBoardWriter(inStream);
                 writer.Write(board);
             }
-
+            /*
             // Carrega el fitxer
             //
             using (Stream outStream = new FileStream(Path.Combine(path, fileName), FileMode.Open, FileAccess.Read, FileShare.None)) {
                 XmlBoardReader reader = new XmlBoardReader(outStream);
                 board = reader.Read();
             }
-
+            */
             content.ClearVisual();
             VisualGenerator vg = new VisualGenerator(board);
             content.AddVisual(vg.CreateVisuals());

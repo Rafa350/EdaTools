@@ -25,10 +25,10 @@
 
         private const int drcOuterSizeMin = 125000;
         private const int drcOuterSizeMax = 2500000;
-        private const int drcOuterSizePercent = 250000;
+        private const int drcOuterSizePercent = 250;
         private const int drcInnerSizeMin = 125000;
         private const int drcInnerSizeMax = 2500000;
-        private const int drcInnerSizePercent = 250000;
+        private const int drcInnerSizePercent = 250;
 
         private PointInt position;
         private int drill;
@@ -177,7 +177,7 @@
         /// 
         public int OuterSize {
             get {
-                int dimension = outerSize == 0 ? 2 * (drill * drcOuterSizePercent) + drill : outerSize;
+                int dimension = outerSize == 0 ? 2 * ((drill * drcOuterSizePercent) / 1000) + drill : outerSize;
                 return Math.Max(drcOuterSizeMin, Math.Min(drcOuterSizeMax, dimension));
             }
             set {
@@ -191,7 +191,7 @@
         /// 
         public int InnerSize {
             get {
-                int dimension = innerSize == 0 ? 2 * (drill * drcInnerSizePercent) + drill : innerSize;
+                int dimension = innerSize == 0 ? 2 * ((drill * drcInnerSizePercent) / 1000) + drill : innerSize;
                 return Math.Max(drcInnerSizeMin, Math.Min(drcInnerSizeMax, dimension));
             }
             set {

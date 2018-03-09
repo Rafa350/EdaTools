@@ -21,7 +21,7 @@
 
         private const int drcTopSizeMin = 125000;
         private const int drcTopSizeMax = 2500000;
-        private const int drcTopSizePercent = 250000;
+        private const int drcTopSizePercent = 250;
 
         private ThPadShape shape = ThPadShape.Circular;
         private Angle rotation;
@@ -77,11 +77,13 @@
 
         private PointInt[] BuildPoints(BoardSide side, int spacing) {
 
+            int size = TopSize;
+
             switch (shape) {
                 case ThPadShape.Square:
                     return PolygonBuilder.BuildRectangle(
                         Position,
-                        new SizeInt(topSize + (spacing * 2), topSize + (spacing * 2)),
+                        new SizeInt(size + (spacing * 2), size + (spacing * 2)),
                         spacing,
                         rotation);
 
@@ -89,20 +91,20 @@
                     return PolygonBuilder.BuildPolygon(
                         8,
                         Position,
-                        (topSize / 2) + spacing,
+                        (size / 2) + spacing,
                         rotation + Angle.FromDegrees(2250));
 
                 case ThPadShape.Oval:
                     return PolygonBuilder.BuildRectangle(
                         Position,
-                        new SizeInt((topSize * 2) + (spacing * 2), topSize + (spacing * 2)),
-                        (topSize / 2) + spacing,
+                        new SizeInt((size * 2) + (spacing * 2), size + (spacing * 2)),
+                        (size / 2) + spacing,
                         rotation);
 
                 default:
                     return PolygonBuilder.BuildCircle(
                         Position,
-                        (topSize / 2) + spacing);
+                        (size / 2) + spacing);
             }
         }
 
@@ -142,8 +144,8 @@
         /// 
         public override Polygon GetThermalPolygon(BoardSide side, int spacing, int width) {
 
-            int w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize) + (spacing * 9 / 4);
-            int h = topSize + (spacing * 9 / 4);
+            int w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize) + ((spacing * 2250) / 1000);
+            int h = topSize + ((spacing * 2250) / 1000);
 
             Polygon pour = GetOutlinePolygon(side, spacing);
             Polygon thermal = new Polygon(PolygonBuilder.BuildCross(Position, new SizeInt(w, h), width, rotation));
@@ -212,12 +214,12 @@
         }
 
         /// <summary>
-        /// Obte o asigna el tamany del pad.
+        /// Obte o asigna el tamany del pad de la cara superior.
         /// </summary>
         /// 
-        public int Size {
+        public int TopSize {
             get {
-                int dimension = topSize == 0 ? 2 * (drill * drcTopSizePercent) + drill : topSize;
+                int dimension = topSize == 0 ? 2 * ((drill * drcTopSizePercent) / 1000) + drill : topSize;
                 return Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, dimension));
             }
             set {

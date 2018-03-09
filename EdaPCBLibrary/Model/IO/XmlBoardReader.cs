@@ -418,8 +418,14 @@
             string name = node.AttributeAsString("name");
             PointInt position = node.AttributeAsPoint("position");
             SizeInt size = node.AttributeAsSize("size");
-            Angle rotation = node.AttributeAsAngle("rotation");
-            int roundness = node.AttributeAsDouble("roundness");
+
+            Angle rotation = Angle.Zero;
+            if (node.AttributeExists("rotation"))
+                rotation = ParseAngle(node.AttributeAsString("rotation"));
+
+            int roundness = 0;
+            if (node.AttributeExists("roundness"))
+                roundness = ParsePercent(node.AttributeAsString("roundness"));
 
             return new SmdPadElement(name, position, size, rotation, roundness);
         }
@@ -478,6 +484,16 @@
                 attribute.Align = node.AttributeAsEnum<TextAlign>("align", TextAlign.TopLeft);
 
             return attribute;
+        }
+
+        private static int ParsePercent(string txt) {
+
+            return (int)(XmlConvert.ToDouble(txt) * 1000.0);
+        }
+
+        private static Angle ParseAngle(string txt) {
+
+            return Angle.FromDegrees((int)(XmlConvert.ToDouble(txt) * 100.0));
         }
     }
 }
