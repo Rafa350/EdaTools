@@ -68,7 +68,7 @@
         /// <param name="tag">Etiqueta.</param>
         /// <returns>La clau unica.</returns>
         /// 
-        private static int GetCircleKey(double diameter, string tag) {
+        private static int GetCircleKey(int diameter, string tag) {
 
             string s = String.Format(CultureInfo.InvariantCulture, "circle;{0};{1}", diameter, tag);
             return s.GetHashCode();
@@ -83,7 +83,7 @@
         /// <param name="tag">Etiqueta.</param>
         /// <returns>La clau unica.</returns>
         /// 
-        private static int GetRectangleKey(double width, double height, Angle rotation, string tag) {
+        private static int GetRectangleKey(int width, int height, Angle rotation, string tag) {
 
             string s = String.Format(CultureInfo.InvariantCulture, "rectangle;{0};{1};{2};{3}", width, height, rotation.Degrees, tag);
             return s.GetHashCode();
@@ -99,7 +99,7 @@
         /// <param name="tag">Etiqueta.</param>
         /// <returns>La clau unica.</returns>
         /// 
-        private static int GetRoundRectangleKey(double width, double height, double radius, Angle rotation, string tag) {
+        private static int GetRoundRectangleKey(int width, int height, int radius, Angle rotation, string tag) {
 
             string s = String.Format(CultureInfo.InvariantCulture, "round;{0};{1};{2};{3};{4}", width, height, radius, rotation.Degrees, tag);
             return s.GetHashCode();
@@ -113,7 +113,7 @@
         /// <param name="tag">Etiqueta.</param>
         /// <returns>La clau unica.</returns>
         /// 
-        private static int GetOctagonKey(double size, Angle rotation, string tag) {
+        private static int GetOctagonKey(int size, Angle rotation, string tag) {
 
             string s = String.Format(CultureInfo.InvariantCulture, "octagon;{0};{1};{2}", size, rotation.Degrees, tag);
             return s.GetHashCode();
@@ -128,7 +128,7 @@
         /// <param name="tag">Etiqueta.</param>
         /// <returns>la clau unica.</returns>
         /// 
-        private static int GetOvalKey(double width, double height, Angle rotation, string tag) {
+        private static int GetOvalKey(int width, int height, Angle rotation, string tag) {
 
             string s = String.Format(CultureInfo.InvariantCulture, "oval;{0};{1};{2};{3}", width, height, rotation.Degrees, tag);
             return s.GetHashCode();
@@ -140,7 +140,7 @@
         /// <param name="diameter">Diametre.</param>
         /// <param name="tag">Etiqueta.</param>
         /// 
-        public void DefineCircleAperture(double diameter, string tag = null) {
+        public void DefineCircleAperture(int diameter, string tag = null) {
 
             if (diameter <= 0)
                 throw new ArgumentOutOfRangeException("diameter");
@@ -160,7 +160,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="tag">Etiqueta.</param>
         /// 
-        public void DefineRectangleAperture(double width, double height, Angle rotation, string tag = null) {
+        public void DefineRectangleAperture(int width, int height, Angle rotation, string tag = null) {
 
             if (width <= 0)
                 throw new ArgumentOutOfRangeException("width");
@@ -190,7 +190,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="tag">Etiqueta.</param>
         /// 
-        public void DefineRoundRectangleAperture(double width, double height, double radius, Angle rotation, string tag = null) {
+        public void DefineRoundRectangleAperture(int width, int height, int radius, Angle rotation, string tag = null) {
 
             if (width <= 0)
                 throw new ArgumentOutOfRangeException("width");
@@ -209,7 +209,7 @@
 
             int key = GetRoundRectangleKey(width, height, radius, rotation, tag);
             if (!items.ContainsKey(key)) {
-                Aperture ap = new MacroAperture(apertureId++, tag, roundRectangleMacro, width, height, radius, rotation.Degrees);
+                Aperture ap = new MacroAperture(apertureId++, tag, roundRectangleMacro, width, height, radius, rotation.Degrees * 10000);
                 items.Add(key, ap);
             }
         }
@@ -221,14 +221,14 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="tag">Etiqueta.</param>
         /// 
-        public void DefineOctagonAperture(double size, Angle rotation, string tag = null) {
+        public void DefineOctagonAperture(int size, Angle rotation, string tag = null) {
 
             if (size <= 0)
                 throw new ArgumentOutOfRangeException("size");
 
             int key = GetOctagonKey(size, rotation, tag);
             if (!items.ContainsKey(key)) {
-                Aperture ap = new PoligonAperture(apertureId++, tag, 8, size, rotation + Angle.FromDegrees(22.5));
+                Aperture ap = new PoligonAperture(apertureId++, tag, 8, size, rotation + Angle.FromDegrees(2250));
                 items.Add(key, ap);
             }
         }
@@ -241,7 +241,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="tag">Etiqueta.</param>
         /// 
-        public void DefineOvalAperture(double width, double height, Angle rotation, string tag = null) {
+        public void DefineOvalAperture(int width, int height, Angle rotation, string tag = null) {
 
             if (width <= 0)
                 throw new ArgumentOutOfRangeException("width");
@@ -263,7 +263,7 @@
         /// <param name="tag">Etiqueta.</param>
         /// <returns>L'apertura.</returns>
         /// 
-        public Aperture GetCircleAperture(double diameter, string tag = null) {
+        public Aperture GetCircleAperture(int diameter, string tag = null) {
 
             int key = GetCircleKey(diameter, tag);
             return items[key];
@@ -278,7 +278,7 @@
         /// <param name="tag">Etiqueta.</param>
         /// <returns>L'apertura.</returns>
         /// 
-        public Aperture GetRectangleAperture(double width, double height, Angle rotation, string tag = null) {
+        public Aperture GetRectangleAperture(int width, int height, Angle rotation, string tag = null) {
 
             int key = GetRectangleKey(width, height, rotation, tag);
             return items[key];
@@ -294,7 +294,7 @@
         /// <param name="tag">Etiqueta.</param>
         /// <returns>L'apertura.</returns>
         /// 
-        public Aperture GetRoundRectangleAperture(double width, double height, double radius, Angle rotation, string tag = null) {
+        public Aperture GetRoundRectangleAperture(int width, int height, int radius, Angle rotation, string tag = null) {
 
             int key = GetRoundRectangleKey(width, height, radius, rotation, tag);
             return items[key];
@@ -308,7 +308,7 @@
         /// <param name="tag">Etiqueta.</param>
         /// <returns>L'apertura.</returns>
         /// 
-        public Aperture GetOctagonAperture(double size, Angle rotation, string tag = null) {
+        public Aperture GetOctagonAperture(int size, Angle rotation, string tag = null) {
 
             int key = GetOctagonKey(size, rotation, tag);
             return items[key];
@@ -323,7 +323,7 @@
         /// <param name="tag">Etiqueta.</param>
         /// <returns>L'apertura.</returns>
         /// 
-        public Aperture GetOvalAperture(double width, double height, Angle rotation, string tag = null) {
+        public Aperture GetOvalAperture(int width, int height, Angle rotation, string tag = null) {
 
             int key = GetOvalKey(width, height, rotation, tag);
             return items[key];

@@ -2,6 +2,7 @@
 
     using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
     using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
@@ -174,7 +175,7 @@
             gb.SetUnits(Units.Milimeters);
             gb.SetCoordinateFormat(8, 5);
             gb.LoadPolarity(Polarity.Dark);
-            gb.LoadRotation(0);
+            gb.LoadRotation(Angle.Zero);
             gb.Comment("END HEADER");
         }
 
@@ -281,8 +282,9 @@
             /// 
             public override void Visit(HoleElement hole) {
 
-                Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
-                Point position = transformation.Transform(hole.Position);
+                PointInt position = hole.Position;
+                if (Part != null)
+                    position = Part.Transformation.ApplyTo(position);
 
                 Aperture ap = apertures.GetCircleAperture(hole.Drill);
 
@@ -297,8 +299,9 @@
             /// 
             public override void Visit(ViaElement via) {
 
-                Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
-                Point position = transformation.Transform(via.Position);
+                PointInt position = via.Position;
+                if (Part != null)
+                    position = Part.Transformation.ApplyTo(position);
 
                 Aperture ap = apertures.GetCircleAperture(via.Drill);
 
@@ -313,8 +316,9 @@
             /// 
             public override void Visit(ThPadElement pad) {
 
-                Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
-                Point position = transformation.Transform(pad.Position);
+                PointInt position = pad.Position;
+                if (Part != null)
+                    position = Part.Transformation.ApplyTo(position);
 
                 Aperture ap = apertures.GetCircleAperture(pad.Drill);
 

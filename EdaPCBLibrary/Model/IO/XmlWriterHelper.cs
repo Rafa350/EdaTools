@@ -1,11 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
-    using MikroPic.EdaTools.v1.Pcb.Model;
     using System;
-    using System.Collections.Generic;
     using System.Text;
-    using System.Windows.Media;
     using System.Xml;
 
     /// <summary>

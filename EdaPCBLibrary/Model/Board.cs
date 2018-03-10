@@ -5,7 +5,6 @@
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
     using System.Collections.Generic;
-    using System.Windows.Media;
 
     public enum BoardSide {
         Unknown,
@@ -506,7 +505,7 @@
         /// <param name="transformation">Transformacio a aplicar al poligon.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public Polygon GetRegionPolygon(RegionElement region, Layer layer, int spacing, Matrix transformation) {
+        public Polygon GetRegionPolygon(RegionElement region, Layer layer, int spacing, Transformation transformation) {
 
             if (region == null)
                 throw new ArgumentNullException("region");
@@ -517,7 +516,8 @@
             if (IsOnLayer(region, layer)) {
 
                 Polygon regionPolygon = region.GetPolygon(layer.Side);
-                regionPolygon = regionPolygon.Transformed(transformation);
+                if (!transformation.IsNull)
+                    regionPolygon = regionPolygon.Transformed(transformation);
 
                 // Si estem en capes de senyal, cal generar els porus i termals
                 //
@@ -525,7 +525,7 @@
 
                     Signal regionSignal = GetSignal(region, null, false);
 
-                    spacing += region.Thickness / 2;
+                    spacing += region.Thickness >> 1;
                     List<Polygon> holePolygons = new List<Polygon>();
 
                     Layer restrictLayer = GetLayer(layer.Side == BoardSide.Top ? Layer.TopRestrictName : Layer.BottomRestrictName);
@@ -569,11 +569,9 @@
                     //
                     foreach (Part part in parts) {
 
-                        // Obte la matriu de transformacio
+                        // Obte la transformacio
                         //
-                        Matrix m = new Matrix();
-                        m.Translate(part.Position.X, part.Position.Y);
-                        m.RotateAt(part.Rotation.Degrees, part.Position.X, part.Position.Y);
+                        Transformation partTransformation = new Transformation(part.Position, part.Rotation);
 
                         foreach (Element element in part.Elements) {
 
@@ -584,7 +582,8 @@
                                 //
                                 if (GetSignal(element, part, false) != regionSignal) {
                                     Polygon outlinePolygon = element.GetOutlinePolygon(layer.Side, spacing);
-                                    outlinePolygon = outlinePolygon.Transformed(m);
+                                    if (!partTransformation.IsNull)
+                                        outlinePolygon = outlinePolygon.Transformed(partTransformation);
                                     holePolygons.Add(outlinePolygon);
                                 }
 
@@ -592,7 +591,8 @@
                                 //
                                 else if (element is PadElement) {
                                     Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Side, spacing, 200000);
-                                    thermalPolygon = thermalPolygon.Transformed(m);
+                                    if (!partTransformation.IsNull)
+                                        thermalPolygon = thermalPolygon.Transformed(partTransformation);
                                     for (int i = 0; i < thermalPolygon.Childs.Length; i++)
                                         holePolygons.Add(thermalPolygon.Childs[i]);
                                 }

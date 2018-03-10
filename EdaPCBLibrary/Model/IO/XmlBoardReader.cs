@@ -1,14 +1,14 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Windows;
-    using System.Windows.Media;
-    using System.Xml;
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
+    using System.Windows.Media;
+    using System.Xml;
 
     /// <summary>
     /// Clase per la lectura de plaques des d'un stream
@@ -44,6 +44,8 @@
 
             board = new Board();
 
+            stream.Position = 0;
+
             ReadDocument();
             ProcessLayers();
             ProcessSignals();
@@ -74,7 +76,7 @@
         private void ProcessLayers() {
 
             foreach (XmlNode layerNode in doc.SelectNodes("board/layers/layer")) {
-                Layer layer = ParseLayer(layerNode);
+                Layer layer = CreateLayer(layerNode);
                 board.AddLayer(layer);
             }
         }
@@ -86,7 +88,7 @@
         private void ProcessSignals() {
 
             foreach (XmlNode signalNode in doc.SelectNodes("board/signals/signal")) {
-                Signal signal = ParseSignal(signalNode);
+                Signal signal = CreateSignal(signalNode);
                 board.AddSignal(signal);
             }
         }
@@ -110,39 +112,39 @@
 
                     switch (elementNode.Name) {
                         case "line":
-                            element = ParseLineElement(elementNode);
+                            element = CreateLineElement(elementNode);
                             break;
 
                         case "arc":
-                            element = ParseArcElement(elementNode);
+                            element = CreateArcElement(elementNode);
                             break;
 
                         case "rectangle":
-                            element = ParseRectangleElement(elementNode);
+                            element = CreateRectangleElement(elementNode);
                             break;
 
                         case "circle":
-                            element = ParseCircleElement(elementNode);
+                            element = CreateCircleElement(elementNode);
                             break;
 
                         case "region":
-                            element = ParseRegionElement(elementNode);
+                            element = CreateRegionElement(elementNode);
                             break;
 
                         case "text":
-                            element = ParseTextElement(elementNode);
+                            element = CreateTextElement(elementNode);
                             break;
 
                         case "spad":
-                            element = ParseSmdPadElement(elementNode);
+                            element = CreateSmdPadElement(elementNode);
                             break;
 
                         case "tpad":
-                            element = ParseThPadElement(elementNode);
+                            element = CreateThPadElement(elementNode);
                             break;
 
                         case "hole":
-                            element = ParseHoleElement(elementNode);
+                            element = CreateHoleElement(elementNode);
                             break;
                     }
 
@@ -167,8 +169,10 @@
             foreach (XmlNode partNode in doc.SelectNodes("board/parts/part")) {
 
                 string name = partNode.AttributeAsString("name");
-                PointInt position = partNode.AttributeAsPoint("position");
-                Angle rotation = partNode.AttributeAsAngle("rotation");
+
+                PointInt position = ParsePoint(partNode.AttributeAsString("position"));
+                Angle rotation = ParseAngle(partNode.AttributeAsString("rotation"));
+
                 string blockName = partNode.AttributeAsString("block");
 
                 Block block = board.GetBlock(blockName);
@@ -176,7 +180,7 @@
                 board.AddPart(part);
 
                 foreach (XmlNode attributeNode in partNode.SelectNodes("attributes/attribute")) {
-                    PartAttribute attr = ParseAttribute(attributeNode);
+                    PartAttribute attr = CreatePartAttribute(attributeNode);
                     part.AddAttribute(attr);
                 }
 
@@ -208,27 +212,27 @@
 
                 switch (elementNode.Name) {
                     case "line":
-                        element = ParseLineElement(elementNode);
+                        element = CreateLineElement(elementNode);
                         break;
 
                     case "arc":
-                        element = ParseArcElement(elementNode);
+                        element = CreateArcElement(elementNode);
                         break;
 
                     case "rectangle":
-                        element = ParseCircleElement(elementNode);
+                        element = CreateCircleElement(elementNode);
                         break;
 
                     case "circle":
-                        element = ParseRectangleElement(elementNode);
+                        element = CreateRectangleElement(elementNode);
                         break;
 
                     case "region":
-                        element = ParseRegionElement(elementNode);
+                        element = CreateRegionElement(elementNode);
                         break;
 
                     case "via":
-                        element = ParseViaElement(elementNode);
+                        element = CreateViaElement(elementNode);
                         break;
                 }
 
@@ -258,12 +262,12 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>El objecte 'Layer' obtingut.</returns>
         /// 
-        private Layer ParseLayer(XmlNode node) {
+        private Layer CreateLayer(XmlNode node) {
 
             string name = node.AttributeAsString("name");
             BoardSide side = node.AttributeAsEnum<BoardSide>("side");
             LayerFunction function = node.AttributeAsEnum<LayerFunction>("function", LayerFunction.Unknown);
-            Color color = node.AttributeAsColor("color");
+            Color color = ParseColor(node.AttributeAsString("color"), Colors.White);
 
             return new Layer(name, side, function, color);
         }
@@ -274,7 +278,7 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'Signal' obtingut.</returns>
         /// 
-        private Signal ParseSignal(XmlNode node) {
+        private Signal CreateSignal(XmlNode node) {
 
             string name = node.AttributeAsString("name");
 
@@ -287,11 +291,11 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'LineElement' obtingut.</returns>
         /// 
-        private Element ParseLineElement(XmlNode node) {
+        private Element CreateLineElement(XmlNode node) {
 
-            PointInt startPosition = node.AttributeAsPoint("startPosition");
-            PointInt endPosition = node.AttributeAsPoint("endPosition");
-            int thickness = node.AttributeAsDouble("thickness");
+            PointInt startPosition = ParsePoint(node.AttributeAsString("startPosition"));
+            PointInt endPosition = ParsePoint(node.AttributeAsString("endPosition"));
+            int thickness = ParseNumber(node.AttributeAsString("thickness"));
             LineElement.LineCapStyle lineCap = node.AttributeAsEnum<LineElement.LineCapStyle>("lineCap");
 
             return new LineElement(startPosition, endPosition, thickness, lineCap);
@@ -303,12 +307,13 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'ArcElement' obtingut.</returns>
         /// 
-        private Element ParseArcElement(XmlNode node) {
+        private Element CreateArcElement(XmlNode node) {
 
-            PointInt startPosition = node.AttributeAsPoint("startPosition");
-            PointInt endPosition = node.AttributeAsPoint("endPosition");
-            int thickness = node.AttributeAsDouble("thickness");
-            Angle angle = node.AttributeAsAngle("angle");
+            PointInt startPosition = ParsePoint(node.AttributeAsString("startPosition"));
+            PointInt endPosition = ParsePoint(node.AttributeAsString("endPosition"));
+            int thickness = ParseNumber(node.AttributeAsString("thickness"));
+            Angle angle = ParseAngle(node.AttributeAsString("angle"));
+
             LineElement.LineCapStyle lineCap = node.AttributeAsEnum<LineElement.LineCapStyle>("lineCap");
 
             return new ArcElement(startPosition, endPosition, thickness, angle, lineCap);
@@ -320,13 +325,12 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'RectanglerElement' obtingut.</returns>
         /// 
-        private Element ParseRectangleElement(XmlNode node) {
+        private Element CreateRectangleElement(XmlNode node) {
 
-            PointInt position = node.AttributeAsPoint("position");
-            SizeInt size = node.AttributeAsSize("size");
-            Angle rotation = node.AttributeAsAngle("rotation");
-            int roundness = node.AttributeAsDouble("roundness");
-            int thickness = node.AttributeAsDouble("thickness");
+            PointInt position = ParsePoint(node.AttributeAsString("position"));
+            SizeInt size = ParseSize(node.AttributeAsString("size"));
+            Angle rotation = ParseAngle(node.AttributeAsString("rotation"));
+            int thickness = ParseNumber(node.AttributeAsString("thickness"));
 
             return new RectangleElement(position, size, rotation, thickness);
         }
@@ -337,11 +341,11 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'CircleElement' obtingut.</returns>
         /// 
-        private Element ParseCircleElement(XmlNode node) {
+        private Element CreateCircleElement(XmlNode node) {
 
-            PointInt position = node.AttributeAsPoint("position");
-            int radius = node.AttributeAsDouble("radius");
-            int thickness = node.AttributeAsDouble("thickness");
+            PointInt position = ParsePoint(node.AttributeAsString("position"));
+            int radius = ParseNumber(node.AttributeAsString("radius"));
+            int thickness = ParseNumber(node.AttributeAsString("thickness"));
 
             return new CircleElement(position, radius, thickness);
         }
@@ -352,16 +356,16 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'RegiuonElement' obtingut.</returns>
         /// 
-        private Element ParseRegionElement(XmlNode node) {
+        private Element CreateRegionElement(XmlNode node) {
 
-            int thickness = node.AttributeAsDouble("thickness");
+            int thickness = ParseNumber(node.AttributeAsString("thickness"));
 
             RegionElement region = new RegionElement(thickness);
 
             foreach (XmlNode segmentNode in node.SelectNodes("segment")) {
 
-                PointInt position = segmentNode.AttributeAsPoint("position");
-                Angle angle = segmentNode.AttributeAsAngle("angle");
+                PointInt position = ParsePoint(segmentNode.AttributeAsString("position"));
+                Angle angle = ParseAngle(segmentNode.AttributeAsString("angle"));
 
                 region.Add(new RegionElement.Segment(position, angle));
             }
@@ -375,13 +379,13 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'TextElement' obtingut.</returns>
         /// 
-        private Element ParseTextElement(XmlNode node) {
+        private Element CreateTextElement(XmlNode node) {
 
-            PointInt position = node.AttributeAsPoint("position");
-            Angle rotation = node.AttributeAsAngle("rotation");
-            int height = node.AttributeAsDouble("height");
+            PointInt position = ParsePoint(node.AttributeAsString("position"));
+            Angle rotation = ParseAngle(node.AttributeAsString("rotation"));
+            int height = ParseNumber(node.AttributeAsString("height"));
             TextAlign align = node.AttributeAsEnum<TextAlign>("align", TextAlign.TopLeft);
-            int thickness = node.AttributeAsDouble("thickness");
+            int thickness = ParseNumber(node.AttributeAsString("thickness"));
             string value = node.AttributeAsString("value");
 
             TextElement element = new TextElement(position, rotation, height, thickness);
@@ -395,13 +399,13 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'ThPadElement' obtingut.</returns>
         /// 
-        private Element ParseThPadElement(XmlNode node) {
+        private Element CreateThPadElement(XmlNode node) {
 
             string name = node.AttributeAsString("name");
-            PointInt position = node.AttributeAsPoint("position");
-            int size = node.AttributeAsDouble("size");
-            Angle rotation = node.AttributeAsAngle("rotation");
-            int drill = node.AttributeAsDouble("drill");
+            PointInt position = ParsePoint(node.AttributeAsString("position"));
+            int size = ParseNumber(node.AttributeAsString("size"));
+            Angle rotation = ParseAngle(node.AttributeAsString("rotation"));
+            int drill = ParseNumber(node.AttributeAsString("drill"));
             ThPadElement.ThPadShape shape = node.AttributeAsEnum<ThPadElement.ThPadShape>("shape", ThPadElement.ThPadShape.Circular);
 
             return new ThPadElement(name, position, rotation, size, shape, drill);
@@ -413,19 +417,13 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'SmdPadElement' obtingut.</returns>
         /// 
-        private Element ParseSmdPadElement(XmlNode node) {
+        private Element CreateSmdPadElement(XmlNode node) {
 
             string name = node.AttributeAsString("name");
-            PointInt position = node.AttributeAsPoint("position");
-            SizeInt size = node.AttributeAsSize("size");
-
-            Angle rotation = Angle.Zero;
-            if (node.AttributeExists("rotation"))
-                rotation = ParseAngle(node.AttributeAsString("rotation"));
-
-            Ratio roundness = Ratio.Zero;
-            if (node.AttributeExists("roundness"))
-                roundness = ParsePercent(node.AttributeAsString("roundness"));
+            PointInt position = ParsePoint(node.AttributeAsString("position"));
+            SizeInt size = ParseSize(node.AttributeAsString("size"));
+            Angle rotation = ParseAngle(node.AttributeAsString("rotation"));
+            Ratio roundness = ParseRatio(node.AttributeAsString("roundness"));
 
             return new SmdPadElement(name, position, size, rotation, roundness);
         }
@@ -436,11 +434,11 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'ViaElement' obtingut.</returns>
         /// 
-        private Element ParseViaElement(XmlNode node) {
+        private Element CreateViaElement(XmlNode node) {
 
-            PointInt position = node.AttributeAsPoint("position");
-            int size = node.AttributeAsDouble("size");
-            int drill = node.AttributeAsDouble("drill");
+            PointInt position = ParsePoint(node.AttributeAsString("position"));
+            int size = ParseNumber(node.AttributeAsString("size"));
+            int drill = ParseNumber(node.AttributeAsString("drill"));
             ViaElement.ViaShape shape = node.AttributeAsEnum<ViaElement.ViaShape>("shape", ViaElement.ViaShape.Circular);
 
             return new ViaElement(position, size, drill, shape);
@@ -452,10 +450,10 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'HoleElement' obtingut.</returns>
         /// 
-        private Element ParseHoleElement(XmlNode node) {
+        private Element CreateHoleElement(XmlNode node) {
 
-            PointInt position = node.AttributeAsPoint("position");
-            int drill = node.AttributeAsDouble("drill");
+            PointInt position = ParsePoint(node.AttributeAsString("position"));
+            int drill = ParseNumber(node.AttributeAsString("drill"));
 
             return new HoleElement(position, drill);
         }
@@ -466,7 +464,7 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>'L'objecte 'PartAttribute' obtingut.</returns>
         /// 
-        private PartAttribute ParseAttribute(XmlNode node) {
+        private PartAttribute CreatePartAttribute(XmlNode node) {
 
             string name = node.AttributeAsString("name");
             string value = node.AttributeAsString("value");
@@ -475,10 +473,10 @@
             PartAttribute attribute = new PartAttribute(name, value, isVisible);
 
             if (node.AttributeExists("position"))
-                attribute.Position = node.AttributeAsPoint("position");
+                attribute.Position = ParsePoint(node.AttributeAsString("position"));
 
             if (node.AttributeExists("rotation"))
-                attribute.Rotation = node.AttributeAsAngle("rotation");
+                attribute.Rotation = ParseAngle(node.AttributeAsString("rotation"));
 
             if (node.AttributeExists("align"))
                 attribute.Align = node.AttributeAsEnum<TextAlign>("align", TextAlign.TopLeft);
@@ -486,14 +484,67 @@
             return attribute;
         }
 
-        private static Ratio ParsePercent(string txt) {
+        private static PointInt ParsePoint(string s) {
 
-            return Ratio.FromPercent((int)(XmlConvert.ToDouble(txt) * 1000.0));
+            string[] ss = s.Split(',');
+            double x = XmlConvert.ToDouble(ss[0]);
+            double y = XmlConvert.ToDouble(ss[1]);
+
+            return new PointInt((int)(x * 1000000.0), (int)(y * 1000000.0));
         }
 
-        private static Angle ParseAngle(string txt) {
+        private static SizeInt ParseSize(string s) {
 
-            return Angle.FromDegrees((int)(XmlConvert.ToDouble(txt) * 100.0));
+            string[] ss = s.Split(',');
+            double w = XmlConvert.ToDouble(ss[0]);
+            double h = XmlConvert.ToDouble(ss[1]);
+
+            return new SizeInt((int)(w * 1000000.0), (int)(h * 1000000.0));
+        }
+
+        private static Ratio ParseRatio(string s) {
+
+            if (String.IsNullOrEmpty(s))
+                return Ratio.Zero;
+            else {
+                double v = XmlConvert.ToDouble(s);
+                return Ratio.FromPercent((int)(v * 1000.0));
+            }
+        }
+
+        private static Angle ParseAngle(string s) {
+
+            if (String.IsNullOrEmpty(s))
+                return Angle.Zero;
+            else {
+                double v = XmlConvert.ToDouble(s);
+                return Angle.FromDegrees((int)(v * 100.0));
+            }
+        }
+
+        private static int ParseNumber(string s) {
+
+            if (String.IsNullOrEmpty(s))
+                return 0;
+            else {
+                double v = XmlConvert.ToDouble(s);
+                return (int)(v * 1000000.0);
+            }
+        }
+
+        private static Color ParseColor(string s, Color defColor) {
+
+            if (String.IsNullOrEmpty(s))
+                return defColor;
+            else {
+                string[] ss = s.Split(',');
+                byte a = XmlConvert.ToByte(ss[0]);
+                byte r = XmlConvert.ToByte(ss[1]);
+                byte g = XmlConvert.ToByte(ss[2]);
+                byte b = XmlConvert.ToByte(ss[3]);
+
+                return Color.FromArgb(a, r, g, b);
+            }
         }
     }
 }

@@ -59,7 +59,7 @@
                 writer.WriteAttribute("startPosition", FormatPoint(line.StartPosition));
                 writer.WriteAttribute("endPosition", FormatPoint(line.EndPosition));
                 if (line.Thickness > 0)
-                    writer.WriteAttribute("thickness", FormatDimension(line.Thickness));
+                    writer.WriteAttribute("thickness", FormatNumber(line.Thickness));
                 if (line.LineCap != LineElement.LineCapStyle.Round)
                     writer.WriteAttribute("lineCap", line.LineCap);
 
@@ -84,7 +84,7 @@
                 writer.WriteAttribute("endPosition", FormatPoint(arc.EndPosition));
                 writer.WriteAttribute("angle", FormatAngle(arc.Angle));
                 if (arc.Thickness > 0)
-                    writer.WriteAttribute("thickness", FormatDimension(arc.Thickness));
+                    writer.WriteAttribute("thickness", FormatNumber(arc.Thickness));
                 if (arc.LineCap != LineElement.LineCapStyle.Round)
                     writer.WriteAttribute("lineCap", arc.LineCap);
 
@@ -110,7 +110,7 @@
                 if (!rectangle.Rotation.IsZero)
                     writer.WriteAttribute("rotation", FormatAngle(rectangle.Rotation));
                 if (rectangle.Thickness > 0)
-                    writer.WriteAttribute("thickness", FormatDimension(rectangle.Thickness));
+                    writer.WriteAttribute("thickness", FormatNumber(rectangle.Thickness));
 
                 writer.WriteEndElement();
             }
@@ -126,9 +126,9 @@
 
                 writer.WriteAttribute("layers", GetLayerNames(circle));
                 writer.WriteAttribute("position", FormatPoint(circle.Position));
-                writer.WriteAttribute("radius", FormatDimension(circle.Radius));
+                writer.WriteAttribute("radius", FormatNumber(circle.Radius));
                 if (circle.Thickness > 0)
-                    writer.WriteAttribute("thickness", FormatDimension(circle.Thickness));
+                    writer.WriteAttribute("thickness", FormatNumber(circle.Thickness));
 
                 writer.WriteEndElement();
             }
@@ -141,8 +141,8 @@
                 writer.WriteAttribute("position", FormatPoint(text.Position));
                 if (!text.Rotation.IsZero)
                     writer.WriteAttribute("rotation", FormatAngle(text.Rotation));
-                writer.WriteAttribute("height", FormatDimension(text.Height));
-                writer.WriteAttribute("thickness", FormatDimension(text.Thickness));
+                writer.WriteAttribute("height", FormatNumber(text.Height));
+                writer.WriteAttribute("thickness", FormatNumber(text.Thickness));
                 if (text.Align != TextAlign.TopLeft)
                     writer.WriteAttribute("align", text.Align);
                 if (!String.IsNullOrEmpty(text.Value))
@@ -162,7 +162,7 @@
 
                 writer.WriteAttribute("layers", GetLayerNames(hole));
                 writer.WriteAttribute("position", FormatPoint(hole.Position));
-                writer.WriteAttribute("drill", FormatDimension(hole.Drill));
+                writer.WriteAttribute("drill", FormatNumber(hole.Drill));
 
                 writer.WriteEndElement();
             }
@@ -196,8 +196,8 @@
                 writer.WriteAttribute("position", FormatPoint(pad.Position));
                 if (!pad.Rotation.IsZero)
                     writer.WriteAttribute("rotation", FormatAngle(pad.Rotation));
-                writer.WriteAttribute("size", FormatDimension(pad.TopSize));
-                writer.WriteAttribute("drill", FormatDimension(pad.Drill));
+                writer.WriteAttribute("size", FormatNumber(pad.TopSize));
+                writer.WriteAttribute("drill", FormatNumber(pad.Drill));
                 if (pad.Shape != ThPadElement.ThPadShape.Circular)
                     writer.WriteAttribute("shape", pad.Shape.ToString());
 
@@ -232,7 +232,7 @@
 
                 writer.WriteAttribute("layers", GetLayerNames(region));
                 if (region.Thickness > 0)
-                    writer.WriteAttribute("thickness", FormatDimension(region.Thickness));
+                    writer.WriteAttribute("thickness", FormatNumber(region.Thickness));
                 Signal signal = board.GetSignal(region, currentPart, false);
                 if (signal != null)
                     writer.WriteAttribute("signal", signal.Name);
@@ -321,10 +321,10 @@
 
                 writer.WriteAttribute("position", FormatPoint(via.Position));
                 writer.WriteAttribute("layers", GetLayerNames(via));
-                writer.WriteAttribute("drill", FormatDimension(via.Drill));
-                writer.WriteAttribute("outerSize", FormatDimension(via.OuterSize));
+                writer.WriteAttribute("drill", FormatNumber(via.Drill));
+                writer.WriteAttribute("outerSize", FormatNumber(via.OuterSize));
                 if (via.InnerSize != via.OuterSize)
-                    writer.WriteAttribute("innerSize", FormatDimension(via.InnerSize));
+                    writer.WriteAttribute("innerSize", FormatNumber(via.InnerSize));
                 if (via.Shape != ViaElement.ViaShape.Circular)
                     writer.WriteAttribute("shape", via.Shape);
                 if (via.Type != ViaElement.ViaType.Through)
@@ -367,7 +367,7 @@
 
                 writer.WriteAttribute("name", signal.Name);
                 if (signal.Clearance > 0)
-                    writer.WriteAttribute("clearance", FormatDimension(signal.Clearance));
+                    writer.WriteAttribute("clearance", FormatNumber(signal.Clearance));
 
                 writer.WriteEndElement();
             }
@@ -444,7 +444,7 @@
             /// <param name="value">Valor de la dimensio.</param>
             /// <returns>El valor formatejat.</returns>
             /// 
-            private static string FormatDimension(int value) {
+            private static string FormatNumber(int value) {
 
                 return XmlConvert.ToString(value / 1000000.0);
             }

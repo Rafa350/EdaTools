@@ -51,18 +51,18 @@ namespace MikroPic.EdaTools.v1.Designer {
             
             // Guarda el fitxer
             //
-            using (Stream inStream = new FileStream(Path.Combine(path, fileName), FileMode.Create, FileAccess.Write, FileShare.None)) {
-                XmlBoardWriter writer = new XmlBoardWriter(inStream);
+            using (Stream outStream = new FileStream(Path.Combine(path, fileName), FileMode.Create, FileAccess.Write, FileShare.None)) {
+                XmlBoardWriter writer = new XmlBoardWriter(outStream);
                 writer.Write(board);
             }
-            /*
+            
             // Carrega el fitxer
             //
-            using (Stream outStream = new FileStream(Path.Combine(path, fileName), FileMode.Open, FileAccess.Read, FileShare.None)) {
-                XmlBoardReader reader = new XmlBoardReader(outStream);
+            using (Stream inStream = new FileStream(Path.Combine(path, fileName), FileMode.Open, FileAccess.Read, FileShare.None)) {
+                XmlBoardReader reader = new XmlBoardReader(inStream);
                 board = reader.Read();
             }
-            */
+            
             content.ClearVisual();
             VisualGenerator vg = new VisualGenerator(board);
             content.AddVisual(vg.CreateVisuals());

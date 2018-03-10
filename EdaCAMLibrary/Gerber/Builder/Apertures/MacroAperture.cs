@@ -9,7 +9,7 @@
     /// </summary>
     public sealed class MacroAperture : Aperture {
 
-        private readonly double[] args;
+        private readonly int[] args;
         private readonly Macro macro;
 
         /// <summary>
@@ -20,7 +20,7 @@
         /// <param name="macro">Macro asignat a l'aperture.</param>
         /// <param name="args">Arguments del macro.</param>
         /// 
-        public MacroAperture(int id, object tag, Macro macro, params double[] args) :
+        public MacroAperture(int id, object tag, Macro macro, params int[] args) :
             base(id, tag) {
 
             if (macro == null)
@@ -44,12 +44,13 @@
 
             if (args.Length > 0) {
                 bool first = true;
-                foreach (double arg in args) {
+                foreach (int arg in args) {
                     if (first)
                         first = false;
                     else
                         sb.Append('X');
-                    sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", arg);
+                    sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", 
+                        (double)arg / 1000000.0);
                 }
             }
             sb.Append("*%");
@@ -71,7 +72,7 @@
         /// Obte els arguments del macro.
         /// </summary>
         /// 
-        public double[] Args {
+        public int[] Args {
             get {
                 return args;
             }

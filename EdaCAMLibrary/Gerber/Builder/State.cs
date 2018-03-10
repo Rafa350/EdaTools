@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Builder {
 
     using System;
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
 
     /// <summary>
     /// Clase que gestiona l'estat intern del generador gerber.
@@ -9,12 +10,12 @@
 
         private Aperture aperture = null;
         private Polarity aperturePolarity = Polarity.Dark;
-        private double apertureAngle = 0;
+        private Angle apertureAngle = Angle.Zero;
         private double apertureScale = 0;
         private bool apertureMirror = false;
         private InterpolationMode interpolationMode = InterpolationMode.Unknown;
-        private double x = 0;
-        private double y = 0;
+        private int x = 0;
+        private int y = 0;
 
         public State() {
 
@@ -45,7 +46,7 @@
         /// <param name="x">El valor de la coordinada.</param>
         /// <returns>True si ha canviat l'estat.</returns>
         /// 
-        public bool SetX(double x) {
+        public bool SetX(int x) {
 
             if (this.x != x) {
                 this.x = x;
@@ -61,7 +62,7 @@
         /// <param name="x">El valor de la coordinada.</param>
         /// <returns>True si ha canviat l'estat.</returns>
         /// 
-        public bool SetY(double y) {
+        public bool SetY(int y) {
 
             if (this.y != y) {
                 this.y = y;
@@ -96,7 +97,7 @@
         /// <param name="apertureAngle">El valor de l'angle en graus.</param>
         /// <returns>True si ha canviat l'estat.</returns>
         /// 
-        public bool SetApertureAngle(double apertureAngle) {
+        public bool SetApertureAngle(Angle apertureAngle) {
 
             if (this.apertureAngle != apertureAngle) {
                 this.apertureAngle = apertureAngle;
@@ -156,7 +157,7 @@
         /// Obte la coordinada X de la posicio actual.
         /// </summary>
         /// 
-        public double X {
+        public int X {
             get {
                 return x;
             }
@@ -166,7 +167,7 @@
         /// Obte la coordinada Y de la posicio actual.
         /// </summary>
         /// 
-        public double Y {
+        public int Y {
             get {
                 return y;
             }
@@ -186,7 +187,7 @@
         /// Obte l'angle de l'apertura.
         /// </summary>
         /// 
-        public double ApertureAngle {
+        public Angle ApertureAngle {
             get {
                 return apertureAngle;
             }

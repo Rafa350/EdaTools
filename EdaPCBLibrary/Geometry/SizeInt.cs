@@ -1,9 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry {
 
+    using System;
+    using System.Globalization;
+
     public struct SizeInt {
 
-        private int width;
-        private int height;
+        private readonly int width;
+        private readonly int height;
 
         public SizeInt(int width, int height) {
 
@@ -11,21 +14,20 @@
             this.height = height;
         }
 
+        public override string ToString() {
+
+            return String.Format(CultureInfo.CurrentCulture, "{0}; {1}", width, height);
+        }
+
         public int Width {
             get {
                 return width;
-            }
-            set {
-                width = value;
             }
         }
 
         public int Height {
             get {
                 return height;
-            }
-            set {
-                height = value;
             }
         }
     }

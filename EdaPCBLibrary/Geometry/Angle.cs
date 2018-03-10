@@ -1,9 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry {
 
     using System;
+    using System.Globalization;
 
     /// <summary>
-    /// Clase per representar angles. Els angles son en centesimes de grau o en radiants
+    /// Clase per representar angles. Els angles son en centesimes 
+    /// de grau
     /// </summary>
     public struct Angle {
 
@@ -80,7 +82,7 @@
         /// 
         public override string ToString() {
 
-            return Convert.ToString((double)value / 100.0);
+            return String.Format(CultureInfo.CurrentCulture, "{0}", value);
         }
 
         public static bool operator == (Angle a1, Angle a2) {

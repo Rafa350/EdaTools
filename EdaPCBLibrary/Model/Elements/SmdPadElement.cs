@@ -71,8 +71,13 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            PointInt[] points = PolygonBuilder.BuildRectangle(Position,
-                new SizeInt(size.Width + (spacing * 2), size.Height + (spacing * 2)), Radius + spacing, rotation);
+            PointInt[] points = PolygonBuilder.BuildRectangle(
+                Position,
+                new SizeInt(
+                    size.Width + spacing + spacing, 
+                    size.Height + spacing + spacing), 
+                Radius + spacing, 
+                rotation);
             return new Polygon(points);
         }
 
@@ -89,15 +94,17 @@
             Polygon pour = GetOutlinePolygon(side, spacing);
             Polygon thermal = new Polygon(
                 PolygonBuilder.BuildCross(
-                    Position, 
-                    new SizeInt(size.Width + (spacing * 2), size.Height + (spacing * 2)), 
+                    Position,
+                    new SizeInt(
+                        size.Width + spacing + spacing,
+                        size.Height + spacing + spacing),
                     width,
                     rotation));
 
             List<Polygon> childs = new List<Polygon>();
             childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
-            //if (childs.Count != 4)
-            //    throw new InvalidProgramException("Thermal generada incorrectamente.");
+            if (childs.Count != 4)
+                throw new InvalidProgramException("Thermal generada incorrectamente.");
             return new Polygon(null, childs.ToArray());
         }
 
@@ -113,7 +120,7 @@
             int w = (int) (size.Width * Math.Cos(a) + size.Height * Math.Sin(a));
             int h = (int) (size.Width * Math.Sin(a) + size.Height * Math.Cos(a));
 
-            return new RectInt(Position.X - (w / 2), Position.Y - (h / 2), w, h);
+            return new RectInt(Position.X - (w >> 1), Position.Y - (h >> 1), w, h);
         }
 
         /// <summary>
@@ -161,7 +168,7 @@
         /// 
         public int Radius {
             get {
-                return (Math.Min(size.Width, size.Height) * roundness) / 2;
+                return (Math.Min(size.Width, size.Height) * roundness) >> 1;
             }
         }
     }

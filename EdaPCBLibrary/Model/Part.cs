@@ -92,6 +92,16 @@
         }
 
         /// <summary>
+        /// Obte la transformacio per aplicar als seus elements.
+        /// </summary>
+        /// 
+        public Transformation Transformation {
+            get {
+                return new Transformation(position, rotation);
+            }
+        }
+
+        /// <summary>
         /// Obte o asigna el nom.
         /// </summary>
         /// 

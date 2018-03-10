@@ -178,7 +178,7 @@
                     bool isSignalLayer = (Layer.Name == Layer.TopName) || (Layer.Name == Layer.BottomName);
                     Pen pen = isSignalLayer ? CreatePen(color, (double)region.Thickness / 1000000.0) : null;
                     Brush brush = CreateBrush(color);
-                    Polygon polygon = Board.GetRegionPolygon(region, Layer, 150000, Matrix.Identity);
+                    Polygon polygon = Board.GetRegionPolygon(region, Layer, 150000, new Transformation());
                     DrawPolygon(dc, pen, brush, polygon);
 
                     if (Part != null)
@@ -268,7 +268,7 @@
                         DrawPolygon(dc, null, holeBrush, polygonHoles[0]);
                     }
 
-                    dc.PushTransform(new ScaleTransform(1, -1, pad.Position.X, pad.Position.Y));
+                    dc.PushTransform(new ScaleTransform(1, -1, (double)pad.Position.X / 1000000.0, (double)pad.Position.Y / 1000000.0));
                     Brush textBrush = CreateBrush(Colors.Yellow);
                     FormattedText formattedText = new FormattedText(
                         pad.Name, CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,

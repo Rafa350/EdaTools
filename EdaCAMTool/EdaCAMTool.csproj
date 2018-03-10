@@ -56,6 +56,10 @@
     <None Include="signature.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EdaCAMLibrary\EdaCAMLibrary.csproj">
+      <Project>{9786f647-bca2-45f5-814c-e41eba6a4480}</Project>
+      <Name>EdaCAMLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EdaPCBLibrary\EdaPCBLibrary.csproj">
       <Project>{706bc74f-0182-4b56-8d9d-c6b311044076}</Project>
       <Name>EdaPCBLibrary</Name>

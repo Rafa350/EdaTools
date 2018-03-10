@@ -123,7 +123,7 @@
                         PointInt center = ArcUtils.Center(currentPoint, segment.Position, angle);
                         int radius = ArcUtils.Radius(currentPoint, segment.Position, angle);
                         Angle startAngle = ArcUtils.StartAngle(currentPoint, center);
-                        points.AddRange(PolygonBuilder.BuildArc(center, radius, startAngle, angle, false));
+                        points.AddRange(PolygonBuilder.BuildArc(center, radius, startAngle, angle));
                     }
                 }
 

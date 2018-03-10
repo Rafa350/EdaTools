@@ -9,8 +9,8 @@
     /// </summary>
     public sealed class CircleAperture : Aperture {
 
-        public readonly double diameter;
-        public readonly double drill;
+        public readonly int diameter;
+        public readonly int drill;
 
         /// <summary>
         /// Constructor del objecte.
@@ -20,7 +20,7 @@
         /// <param name="diameter">Diametre extern.</param>
         /// <param name="drill">Diametre del forat.</param>
         /// 
-        public CircleAperture(int id, object tag, double diameter, double drill = 0) :
+        public CircleAperture(int id, object tag, int diameter, int drill = 0) :
             base(id, tag) {
 
             if (diameter < 0) // C es l'unica que permet tamany zero
@@ -44,9 +44,11 @@
             sb.Append("%ADD");
             sb.AppendFormat("{0}", Id);
             sb.Append("C,");
-            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", diameter);
+            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", 
+                (double)diameter / 1000000.0);
             if (drill > 0)
-                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", drill);
+                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", 
+                    (double)drill / 1000000.0);
             sb.Append("*%");
 
             return sb.ToString();
@@ -56,7 +58,7 @@
         /// Obte el diametre extern.
         /// </summary>
         /// 
-        public double Diameter {
+        public int Diameter {
             get {
                 return diameter;
             }
@@ -66,7 +68,7 @@
         /// Obte el diametre del forat.
         /// </summary>
         /// 
-        public double Drill {
+        public int Drill {
             get {
                 return drill;
             }

@@ -1,6 +1,5 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using System;
 
     /// <summary>

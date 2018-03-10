@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry {
 
     using System;
+    using System.Globalization;
 
     public struct Ratio {
 
@@ -10,7 +11,7 @@
         public static readonly Ratio P75 = new Ratio(750);
         public static readonly Ratio P100 = new Ratio(1000);
 
-        private int value;
+        private readonly int value;
 
         private Ratio(int value) {
 
@@ -47,19 +48,7 @@
         /// 
         public override string ToString() {
 
-            return Convert.ToString((double)value / 1000.0);
-        }
-
-        /// <summary>
-        /// Crea el objecte ratio a partir d'una cadena de text.
-        /// </summary>
-        /// <param name="s">La cadena a convertir.</param>
-        /// <returns>L'objecte creat.</returns>
-        /// 
-        public static Ratio Parse(string s) {
-
-            double value = Double.Parse(s);
-            return new Ratio((int)(value * 1000.0));
+            return String.Format(CultureInfo.CurrentCulture, "{0}", value);
         }
 
         /// <summary>
@@ -69,6 +58,12 @@
         public bool IsZero {
             get {
                 return value == 0;
+            }
+        }
+
+        public bool IsMax {
+            get {
+                return value == 1000.0;
             }
         }
 

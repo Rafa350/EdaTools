@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Performance1.psess = Performance1.psess
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaCAMLibrary", "EdaCAMLibrary\EdaCAMLibrary.csproj", "{9786F647-BCA2-45F5-814C-E41EBA6A4480}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -51,6 +53,10 @@ Global
 		{EAAAC444-EF61-4A87-8F1C-45908E2D11C5}.Debug|x86.ActiveCfg = Debug|x86
 		{EAAAC444-EF61-4A87-8F1C-45908E2D11C5}.Release|x86.ActiveCfg = Release|x86
 		{EAAAC444-EF61-4A87-8F1C-45908E2D11C5}.Release|x86.Build.0 = Release|x86
+		{9786F647-BCA2-45F5-814C-E41EBA6A4480}.Debug|x86.ActiveCfg = Debug|x86
+		{9786F647-BCA2-45F5-814C-E41EBA6A4480}.Debug|x86.Build.0 = Debug|x86
+		{9786F647-BCA2-45F5-814C-E41EBA6A4480}.Release|x86.ActiveCfg = Release|x86
+		{9786F647-BCA2-45F5-814C-E41EBA6A4480}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +65,7 @@ Global
 		{8CEAFC37-67B6-4765-A9C0-6F64EE01C7A9} = {92F26718-1D57-463C-8AF1-6BE8F0199D09}
 		{706BC74F-0182-4B56-8D9D-C6B311044076} = {2AE1055B-66C8-4106-A68A-95A015805086}
 		{EAAAC444-EF61-4A87-8F1C-45908E2D11C5} = {92F26718-1D57-463C-8AF1-6BE8F0199D09}
+		{9786F647-BCA2-45F5-814C-E41EBA6A4480} = {2AE1055B-66C8-4106-A68A-95A015805086}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE385F67-7CB1-40F1-B714-28A5F985E431}

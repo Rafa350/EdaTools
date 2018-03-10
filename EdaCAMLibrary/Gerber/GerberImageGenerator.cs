@@ -12,8 +12,6 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
-    using System.Windows;
-    using System.Windows.Media;
 
     /// <summary>
     /// Clase per generar el fitxers gerber d'imatge
@@ -320,7 +318,7 @@
             /// 
             public override void Visit(LineElement line) {
 
-                apertures.DefineCircleAperture(Math.Max(line.Thickness, 0.01));
+                apertures.DefineCircleAperture(Math.Max(line.Thickness, 10000));
             }
 
             /// <summary>
@@ -330,7 +328,7 @@
             /// 
             public override void Visit(ArcElement arc) {
 
-                apertures.DefineCircleAperture(Math.Max(arc.Thickness, 0.01));
+                apertures.DefineCircleAperture(Math.Max(arc.Thickness, 10000));
             }
 
             /// <summary>
@@ -415,19 +413,19 @@
                     rotation += Part.Rotation;
                 switch (pad.Shape) {
                     case ThPadElement.ThPadShape.Circular:
-                        apertures.DefineCircleAperture(pad.Size);
+                        apertures.DefineCircleAperture(pad.TopSize);
                         break;
 
                     case ThPadElement.ThPadShape.Square:
-                        apertures.DefineRectangleAperture(pad.Size, pad.Size, rotation);
+                        apertures.DefineRectangleAperture(pad.TopSize, pad.TopSize, rotation);
                         break;
 
                     case ThPadElement.ThPadShape.Octogonal:
-                        apertures.DefineOctagonAperture(pad.Size, rotation);
+                        apertures.DefineOctagonAperture(pad.TopSize, rotation);
                         break;
 
                     case ThPadElement.ThPadShape.Oval:
-                        apertures.DefineOvalAperture(pad.Size * 2, pad.Size, rotation);
+                        apertures.DefineOvalAperture(pad.TopSize * 2, pad.TopSize, rotation);
                         break;
                 }
             }
@@ -442,12 +440,12 @@
                 Angle rotation = pad.Rotation;
                 if (Part != null)
                     rotation += Part.Rotation;
-                if (pad.Roundnes == 0)
+                if (pad.Roundness.IsZero)
                     apertures.DefineRectangleAperture(pad.Size.Width, pad.Size.Height, rotation);
-                else if (pad.Roundnes == 1)
+                else if (pad.Roundness.IsMax)
                     apertures.DefineOvalAperture(pad.Size.Width, pad.Size.Height, rotation);
                 else {
-                    double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
+                    int radius = pad.Roundness * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
                     apertures.DefineRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
                 }
             }
@@ -496,13 +494,17 @@
 
                 // Calcula les coordinades, mesures, rotacions, etc
                 //
-                Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
-                Point startPosition = transformation.Transform(line.StartPosition);
-                Point endPosition = transformation.Transform(line.EndPosition);
+                PointInt startPosition = line.StartPosition;
+                PointInt endPosition = line.EndPosition;
+                if (Part != null) {
+                    Transformation t = Part.Transformation;
+                    startPosition = t.ApplyTo(startPosition);
+                    endPosition = t.ApplyTo(endPosition);
+                }
 
                 // Selecciona l'apertura
                 //
-                Aperture ap = apertures.GetCircleAperture(Math.Max(line.Thickness, 0.01));
+                Aperture ap = apertures.GetCircleAperture(Math.Max(line.Thickness, 10000));
 
                 // Escriu el gerber
                 //
@@ -520,14 +522,19 @@
 
                 // Calcula les coordinades, mesures, rotacions, etc
                 //
-                Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
-                Point startPosition = transformation.Transform(arc.StartPosition);
-                Point endPosition = transformation.Transform(arc.EndPosition);
-                Point center = transformation.Transform(arc.Center);
+                PointInt startPosition = arc.StartPosition;
+                PointInt endPosition = arc.EndPosition;
+                PointInt center = arc.Center;
+                if (Part != null) {
+                    Transformation t = Part.Transformation;
+                    startPosition = t.ApplyTo(startPosition);
+                    endPosition = t.ApplyTo(endPosition);
+                    center = t.ApplyTo(center);
+                }
 
                 // Selecciona l'apertura
                 //
-                Aperture ap = apertures.GetCircleAperture(Math.Max(arc.Thickness, 0.01));
+                Aperture ap = apertures.GetCircleAperture(Math.Max(arc.Thickness, 10000));
 
                 // Escriu el gerber
                 //
@@ -552,9 +559,13 @@
 
                     // Calcula les coordinades, mesures, rotacions, etc
                     //
-                    Angle rotation = rectangle.Rotation + (Part == null ? Angle.Zero : Part.Rotation);
-                    Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
-                    Point position = transformation.Transform(rectangle.Position);
+                    PointInt position = rectangle.Position;
+                    Angle rotation = rectangle.Rotation;
+                    if (Part != null) {
+                        Transformation t = Part.Transformation;
+                        position = t.ApplyTo(position);
+                        rotation += Part.Rotation;
+                    }
 
                     // Selecciona l'apertura
                     //
@@ -574,11 +585,11 @@
                     // Obte el poligon
                     //
                     Polygon polygon = rectangle.GetPolygon(Layer.Side);
-                    Point[] points = polygon.ClonePoints();
+                    PointInt[] points = polygon.ClonePoints();
 
                     if (Part != null) {
-                        Part.Transformation.Transform(points);
-                        //polygon.Transform(Part.Transformation);
+                        Transformation t = Part.Transformation;
+                        t.ApplyTo(points);
                     }
 
                     // Escriu el gerber
@@ -599,8 +610,11 @@
 
                     // Calcula les coordinades, mesures, rotacions, etc
                     //
-                    Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
-                    Point position = transformation.Transform(circle.Position);
+                    PointInt position = circle.Position;
+                    if (Part != null) {
+                        Transformation t = Part.Transformation;
+                        position = t.ApplyTo(position);
+                    }
 
                     // Selecciona l'apertura
                     //
@@ -621,11 +635,10 @@
                     // Obte el poligon
                     //
                     Polygon polygon = circle.GetPolygon(Layer.Side);
-                    Point[] points = polygon.ClonePoints();
+                    PointInt[] points = polygon.ClonePoints();
 
                     if (Part != null)
-                        //polygon.Transform(Part.Transformation);
-                        Part.Transformation.Transform(points);
+                        Part.Transformation.ApplyTo(points);
 
                     // Escriu el gerber
                     //
@@ -647,11 +660,13 @@
                 GerberTextDrawer dr = new GerberTextDrawer(font, gb);
 
                 PartAttributeAdapter paa = new PartAttributeAdapter(Part, text);
-                Point position = paa.Position;
+                PointInt position = paa.Position;
                 if (Part != null)
-                    position = Part.Transformation.Transform(position);
+                    position = Part.Transformation.ApplyTo(position);
 
-                dr.Draw(paa.Value, position, paa.Align, text.Height);
+                /*dr.Draw(paa.Value, 
+                    position, 
+                    paa.Align, text.Height);*/
             }
 
             /// <summary>
@@ -694,30 +709,31 @@
 
                 // Calcula les coordinades, mesures, rotacions, etc
                 //
+                PointInt position = pad.Position;
                 Angle rotation = pad.Rotation;
-                if (Part != null)
+                if (Part != null) {
                     rotation += Part.Rotation;
-                Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
-                Point position = transformation.Transform(pad.Position);
+                    position = Part.Transformation.ApplyTo(position);
+                }
 
                 // Selecciona l'apertura
                 //
                 Aperture ap = null;
                 switch (pad.Shape) {
                     case ThPadElement.ThPadShape.Circular:
-                        ap = apertures.GetCircleAperture(pad.Size);
+                        ap = apertures.GetCircleAperture(pad.TopSize);
                         break;
 
                     case ThPadElement.ThPadShape.Square:
-                        ap = apertures.GetRectangleAperture(pad.Size, pad.Size, rotation);
+                        ap = apertures.GetRectangleAperture(pad.TopSize, pad.TopSize, rotation);
                         break;
 
                     case ThPadElement.ThPadShape.Octogonal:
-                        ap = apertures.GetOctagonAperture(pad.Size, rotation);
+                        ap = apertures.GetOctagonAperture(pad.TopSize, rotation);
                         break;
 
                     case ThPadElement.ThPadShape.Oval:
-                        ap = apertures.GetOvalAperture(pad.Size * 2, pad.Size, rotation);
+                        ap = apertures.GetOvalAperture(pad.TopSize * 2, pad.TopSize, rotation);
                         break;
                 }
 
@@ -736,22 +752,22 @@
 
                 // Calcula les coordinades, mesures, rotacions, etc
                 //
+                PointInt position = pad.Position;
                 Angle rotation = pad.Rotation;
-                if (Part != null)
+                if (Part != null) {
                     rotation += Part.Rotation;
-                double radius = pad.Roundnes * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
-                Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
-                Point position = transformation.Transform(pad.Position);
+                    position = Part.Transformation.ApplyTo(position);
+                }
 
                 // Selecciona l'apertura
                 //
                 Aperture ap;
-                if (pad.Roundnes == 0)
+                if (pad.Roundness.IsZero)
                     ap = apertures.GetRectangleAperture(pad.Size.Width, pad.Size.Height, rotation);
-                else if (pad.Roundnes == 1)
+                else if (pad.Roundness.IsMax)
                     ap = apertures.GetOvalAperture(pad.Size.Width, pad.Size.Height, rotation);
-                else
-                    ap = apertures.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
+                else 
+                    ap = apertures.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, pad.Radius, rotation);
 
                 // Escriu el gerber
                 //
@@ -773,12 +789,12 @@
                 this.gb = gb;
             }
 
-            protected override void Trace(Point position, bool stroke, bool first) {
+            protected override void Trace(System.Windows.Point position, bool stroke, bool first) {
 
-                if (first || !stroke)
+/*                if (first || !stroke)
                     gb.MoveTo(position);
                 else
-                    gb.LineTo(position);
+                    gb.LineTo(position);*/
             }
         }
 
@@ -812,8 +828,8 @@
             /// 
             public override void Visit(RegionElement region) {
 
-                Matrix transformation = Part == null ? Matrix.Identity : Part.Transformation;
-                Polygon polygon = Board.GetRegionPolygon(region, Layer, 0.15, transformation);
+                Transformation transformation = Part == null ? new Transformation() : Part.Transformation;
+                Polygon polygon = Board.GetRegionPolygon(region, Layer, 150000, transformation);
                 DrawPolygon(polygon, region.Thickness);
             }
 
@@ -823,7 +839,7 @@
             /// <param name="polygon">El poligon a dibuixar.</param>
             /// <param name="thickness">Amplada del perfil.</param>
             /// 
-            private void DrawPolygon(Polygon polygon, double thickness) {
+            private void DrawPolygon(Polygon polygon, int thickness) {
 
                 DrawPolygon(polygon, (polygon.Points != null) ? 1 : 0, thickness);
             }
@@ -835,7 +851,7 @@
             /// <param name="level">Nivell d'anidad del poligon.</param>
             /// <param name="thickness">Amplada del perfil.</param>
             /// 
-            private void DrawPolygon(Polygon polygon, int level, double thickness) {
+            private void DrawPolygon(Polygon polygon, int level, int thickness) {
 
                 // Procesa el poligon
                 //

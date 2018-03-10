@@ -68,6 +68,7 @@
     <Compile Include="Geometry\Ratio.cs" />
     <Compile Include="Geometry\RectInt.cs" />
     <Compile Include="Geometry\SizeInt.cs" />
+    <Compile Include="Geometry\Transformation.cs" />
     <Compile Include="Infrastructure\PolygonBuilder.cs" />
     <Compile Include="Geometry\Polygons\PolygonProcessor.cs" />
     <Compile Include="Geometry\TextAlign.cs" />

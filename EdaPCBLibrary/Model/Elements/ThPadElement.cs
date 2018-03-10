@@ -74,15 +74,28 @@
             visitor.Visit(this);
         }
 
+        /// <summary>
+        /// Crea la llista de punts d'un poligon
+        /// </summary>
+        /// <param name="side">Cara de la placa</param>
+        /// <param name="spacing">Espaiat.</param>
+        /// <returns>La llista de punts.</returns>
+        /// 
         private PointInt[] BuildPoints(BoardSide side, int spacing) {
 
             int size = TopSize;
+
+            int sizeMul2 = size << 1;
+            int sizeDiv2 = size >> 1;
+
+            int spacingMul2 = spacing << 1;
+            int spacingDiv2 = spacing >> 1;
 
             switch (shape) {
                 case ThPadShape.Square:
                     return PolygonBuilder.BuildRectangle(
                         Position,
-                        new SizeInt(size + (spacing * 2), size + (spacing * 2)),
+                        new SizeInt(size + spacingMul2, size + spacingMul2),
                         spacing,
                         rotation);
 
@@ -90,20 +103,20 @@
                     return PolygonBuilder.BuildPolygon(
                         8,
                         Position,
-                        (size / 2) + spacing,
+                        sizeDiv2 + spacing,
                         rotation + Angle.FromDegrees(2250));
 
                 case ThPadShape.Oval:
                     return PolygonBuilder.BuildRectangle(
                         Position,
-                        new SizeInt((size * 2) + (spacing * 2), size + (spacing * 2)),
-                        (size / 2) + spacing,
+                        new SizeInt(sizeMul2 + spacingMul2, size + spacingMul2),
+                        sizeDiv2 + spacing,
                         rotation);
 
                 default:
                     return PolygonBuilder.BuildCircle(
                         Position,
-                        (size / 2) + spacing);
+                        sizeDiv2 + spacing);
             }
         }
 
@@ -117,6 +130,7 @@
 
             PointInt[] points = BuildPoints(side, 0);
             PointInt[] holePoints = PolygonBuilder.BuildCircle(Position, drill / 2);
+
             return new Polygon(points, new Polygon[] { new Polygon(holePoints) });
         }
 
@@ -130,6 +144,7 @@
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
             PointInt[] points = BuildPoints(side, spacing);
+
             return new Polygon(points);
         }
 
@@ -143,8 +158,8 @@
         /// 
         public override Polygon GetThermalPolygon(BoardSide side, int spacing, int width) {
 
-            int w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize) + spacing * 2;
-            int h = topSize + (spacing * 2);
+            int w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize) + spacing + spacing;
+            int h = topSize + spacing + spacing;
 
             Polygon pour = GetOutlinePolygon(side, spacing);
             Polygon thermal = new Polygon(PolygonBuilder.BuildCross(Position, new SizeInt(w, h), width, rotation));

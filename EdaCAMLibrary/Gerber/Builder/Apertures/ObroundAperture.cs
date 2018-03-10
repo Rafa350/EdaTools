@@ -9,9 +9,9 @@
     /// </summary>
     public sealed class ObroundAperture : Aperture {
 
-        private readonly double width;
-        private readonly double height;
-        private readonly double drill;
+        private readonly int width;
+        private readonly int height;
+        private readonly int drill;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -22,7 +22,7 @@
         /// <param name="height">Alçada.</param>
         /// <param name="drill">Diametre del forat.</param>
         /// 
-        public ObroundAperture(int id, object tag, double width, double height, double drill = 0) :
+        public ObroundAperture(int id, object tag, int width, int height, int drill = 0) :
             base(id, tag) {
 
             if (width <= 0)
@@ -50,10 +50,13 @@
             sb.Append("%ADD");
             sb.AppendFormat("{0}", Id);
             sb.Append("O,");
-            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", width);
-            sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", height);
+            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", 
+                (double)width / 1000000.0);
+            sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", 
+                (double)height / 1000000.0);
             if (drill > 0)
-                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", drill);
+                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", 
+                    (double)drill / 1000000.0);
             sb.Append("*%");
 
             return sb.ToString();
@@ -63,7 +66,7 @@
         /// Obte l'amplada.
         /// </summary>
         /// 
-        public double Width {
+        public int Width {
             get {
                 return width;
             }
@@ -73,7 +76,7 @@
         /// Obte l'alçada.
         /// </summary>
         ///
-        public double Height {
+        public int Height {
             get {
                 return height;
             }
@@ -83,7 +86,7 @@
         /// Obte el diametre del forat.
         /// </summary>
         /// 
-        public double Drill {
+        public int Drill {
             get {
                 return drill;
             }

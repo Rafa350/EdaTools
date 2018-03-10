@@ -1,8 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Infrastructure {
 
-    using System;
-    using System.Windows.Media;
     using MikroPic.EdaTools.v1.Pcb.Geometry;
+    using System;
 
     /// <summary>
     /// Clase que permet la construccio llistes de punts que representen diferentes figures,
@@ -129,9 +128,8 @@
             // Si es una rotacio arbitraria, fa servir calcul amb matrius
             //
             if (!rotation.IsOrthogonal) {
-                Matrix m = new Matrix();
-                m.RotateAt(rotation.Degrees, x, y);
-                //m.Transform(points);
+                Transformation t = new Transformation(position, rotation);
+                t.ApplyTo(points);
             }
 
             return points;
@@ -191,9 +189,8 @@
             // Si es una rotacio arbitraria, fa servir calcul amb matrius
             //
             if (!rotation.IsOrthogonal) {
-                Matrix m = new Matrix();
-                m.RotateAt(rotation.Degrees, x, y);
-                //m.Transform(points);
+                Transformation t = new Transformation(position, rotation);
+                t.ApplyTo(points);
             }
 
             return points;
@@ -232,11 +229,13 @@
             //
             for (int i = 0; i < sides; i++) {
 
-                points[i] = new PointInt((int)x + position.X, (int)y + position.Y);
+                points[i] = new PointInt(
+                    (int)x + position.X, 
+                    (int)y + position.Y);
 
                 double tx = x;
-                x = cos * tx - sin * y;
-                y = sin * tx + cos * y;
+                x = (cos * tx) - (sin * y);
+                y = (sin * tx) + (cos * y);
             }
 
             return points;
@@ -278,8 +277,8 @@
                 points[i] = new PointInt((int)x + center.X, (int)y + center.Y);
 
                 double tx = x;
-                x = cos * tx - sin * y;
-                y = sin * tx + cos * y;
+                x = (cos * tx) - (sin * y);
+                y = (sin * tx) + (cos * y);
             }
 
             return points;

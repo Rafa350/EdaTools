@@ -11,8 +11,8 @@
     public sealed class PoligonAperture : Aperture {
 
         private readonly int vertex;
-        private readonly double diameter;
-        private readonly double drill;
+        private readonly int diameter;
+        private readonly int drill;
         private readonly Angle rotation;
 
         /// <summary>
@@ -25,7 +25,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="drill">Diametre del forat.</param>
         /// 
-        public PoligonAperture(int id, object tag, int vertex, double diameter, Angle rotation, double drill = 0) :
+        public PoligonAperture(int id, object tag, int vertex, int diameter, Angle rotation, int drill = 0) :
             base(id, tag) {
 
             if ((vertex < 3) || (vertex > 12))
@@ -54,12 +54,15 @@
             sb.Append("%ADD");
             sb.AppendFormat("{0}", Id);
             sb.Append("P,");
-            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", diameter);
+            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", 
+                (double)diameter / 1000000.0);
             sb.AppendFormat("X{0}", vertex);
             if ((rotation.Degrees > 0) || (drill > 0))
-                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", rotation.Degrees);
+                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", 
+                    (double)rotation.Degrees / 100.0);
             if (drill > 0)
-                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", drill);
+                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", 
+                    (double)drill / 1000000.0);
             sb.Append("*%");
 
             return sb.ToString();
@@ -79,7 +82,7 @@
         /// Obte el diametre exterior del poligon.
         /// </summary>
         /// 
-        public double Diameter {
+        public int Diameter {
             get {
                 return diameter;
             }
@@ -89,7 +92,7 @@
         /// Obte el diametre del forat.
         /// </summary>
         /// 
-        public double Drill {
+        public int Drill {
             get {
                 return drill;
             }

@@ -2,8 +2,8 @@
 
     public struct RectInt {
 
-        private PointInt position;
-        private SizeInt size;
+        private readonly PointInt position;
+        private readonly SizeInt size;
 
         public RectInt(int x, int y, int width, int height) {
 

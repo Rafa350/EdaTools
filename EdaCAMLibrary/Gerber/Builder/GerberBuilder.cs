@@ -1,8 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Builder {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using System;
     using System.Collections.Generic;
-    using System.Windows;
     using System.IO;
     using System.Text;
 
@@ -140,7 +140,7 @@
         /// </summary>
         /// <param name="position">La posicio.</param>
         /// 
-        public void FlashAt(Point position) {
+        public void FlashAt(PointInt position) {
 
             FlashAt(position.X, position.Y);
         }
@@ -152,7 +152,7 @@
         /// <param name="x">Coordinada X de la posicio.</param>
         /// <param name="y">Coordinada Y de la posicio</param>
         /// 
-        public void FlashAt(double x, double y) {
+        public void FlashAt(int x, int y) {
 
             sb.Clear();
             if (state.SetX(x)) {
@@ -173,7 +173,7 @@
         /// </summary>
         /// <param name="position">La posicio.</param>
         /// 
-        public void MoveTo(Point position) {
+        public void MoveTo(PointInt position) {
 
             MoveTo(position.X, position.Y);
         }
@@ -184,7 +184,7 @@
         /// <param name="x">Coordinada X.</param>
         /// <param name="y">Coordinada Y.</param>
         /// 
-        public void MoveTo(double x, double y) {
+        public void MoveTo(int x, int y) {
 
             // Si no hi ha moviment real, no cal fa res
             //
@@ -210,7 +210,7 @@
         /// </summary>
         /// <param name="position">La posicio.</param>
         /// 
-        public void LineTo(Point position) {
+        public void LineTo(PointInt position) {
 
             LineTo(position.X, position.Y);
         }
@@ -221,7 +221,7 @@
         /// <param name="x">Coordinada X de la posicio.</param>
         /// <param name="y">Coordinada Y de la posicio.</param>
         /// 
-        public void LineTo(double x, double y) {
+        public void LineTo(int x, int y) {
 
             if (state.Aperture == null && !inRegion)
                 throw new InvalidOperationException("Apertura no seleccionada.");
@@ -247,12 +247,12 @@
             }
         }
 
-        public void ArcTo(Point point, Point center, ArcDirection direction, ArcQuadrant quadrant = ArcQuadrant.Multiple) {
+        public void ArcTo(PointInt point, PointInt center, ArcDirection direction, ArcQuadrant quadrant = ArcQuadrant.Multiple) {
 
             ArcTo(point.X, point.Y, center.X, center.Y, direction, quadrant);
         }
 
-        public void ArcTo(double x, double y, double cx, double cy, ArcDirection direction, ArcQuadrant quadrant = ArcQuadrant.Multiple) {
+        public void ArcTo(int x, int y, int cx, int cy, ArcDirection direction, ArcQuadrant quadrant = ArcQuadrant.Multiple) {
 
             if (state.Aperture == null)
                 throw new InvalidOperationException("Apertura no seleccionada.");
@@ -298,9 +298,9 @@
         /// </summary>
         /// <param name="points">Sequencia de punts.</param>
         /// 
-        public void Polyline(IEnumerable<Point> points) {
+        public void Polyline(IEnumerable<PointInt> points) {
 
-            foreach (Point point in points)
+            foreach (PointInt point in points)
                 LineTo(point);
         }
 
@@ -309,11 +309,11 @@
         /// </summary>
         /// <param name="points">Sequencia de punts.</param>
         /// 
-        public void Polygon(IEnumerable<Point> points) {
+        public void Polygon(IEnumerable<PointInt> points) {
 
             bool first = true;
-            Point firstPoint = default(Point);
-            foreach (Point point in points) {
+            PointInt firstPoint = default(PointInt);
+            foreach (PointInt point in points) {
                 if (first) {
                     first = false;
                     firstPoint = point;
@@ -424,11 +424,11 @@
         /// </summary>
         /// <param name="points">La llista de punts que conformen la regio.</param>
         /// 
-        public void Region(IEnumerable<Point> points, bool close = false) {
+        public void Region(IEnumerable<PointInt> points, bool close = false) {
 
             bool first = true;
-            Point firstPoint = default(Point);
-            foreach (Point point in points) {
+            PointInt firstPoint = default(PointInt);
+            foreach (PointInt point in points) {
                 if (first) {
                     first = false;
                     firstPoint = point;
@@ -457,10 +457,10 @@
         /// </summary>
         /// <param name="angle">Angle de rotacio.</param>
         /// 
-        public void LoadRotation(double angle) {
+        public void LoadRotation(Angle angle) {
 
             if (state.SetApertureAngle(angle))
-                writer.WriteLine(String.Format("%LR{0}*%", angle));
+                writer.WriteLine(String.Format("%LR{0}*%", (double)angle.Degrees / 100.0));
         }
 
         public void LoadMirroring() {
@@ -552,14 +552,14 @@
         /// <param name="number">El numero a formatejar.</param>
         /// <returns>El numero formatejat.</returns>
         /// 
-        private string FormatNumber(double number) {
+        private string FormatNumber(int number) {
 
             if (fmtTemplate == null) {
                 fmtTemplate = String.Format("{{0:{0}}}", new String('0', precision));
                 fmtScale = Math.Pow(10, decimals);
             }
 
-            return String.Format(fmtTemplate, Math.Round(number * fmtScale));
+            return String.Format(fmtTemplate, Math.Round(((double) number / 1000000.0) * fmtScale));
         }
     }
 }

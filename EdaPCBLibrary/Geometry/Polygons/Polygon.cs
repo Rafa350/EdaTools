@@ -1,8 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry.Polygons {
 
     using System;
-    using System.Windows;
-    using System.Windows.Media;
 
     /// <summary>
     /// Clase que representa un poligon amb fills. Aquesta clase es inmutable.
@@ -37,7 +35,7 @@
             else
                 clonedChilds = null;
 
-            return new Polygon(points, clonedChilds);
+            return new Polygon(ClonePoints(), clonedChilds);
         }
 
         /// <summary>
@@ -50,41 +48,38 @@
             if (points == null)
                 return null;
             else {
-                PointInt[] a = new PointInt[points.Length];
-                points.CopyTo(a, 0);
-                return a;
+                PointInt[] clonedPoints = new PointInt[points.Length];
+                points.CopyTo(clonedPoints, 0);
+                return clonedPoints;
             }
         }
 
         /// <summary>
-        /// Aplica una matriu de transformacio al poligon.
+        /// Aplica una transformacio al poligon
         /// </summary>
-        /// <param name="m">La matriu.</param>
+        /// <param name="transformation">La transformacio.</param>
         /// 
-        public void Transform(Matrix m) {
+        private void Transform(Transformation transformation) {
 
             if (points != null)
-                for (int i = 0; i < points.Length; i++) {
-                    double x = points[i].X / 1000000.0;
-                    double y = points[i].Y / 1000000.0;
-                    double xadd = y * m.M21 + m.OffsetX;
-                    double yadd = x * m.M12 + m.OffsetY;
-                    x *= m.M11;
-                    x += xadd;
-                    y *= m.M22;
-                    y += yadd;
-                    points[i] = new PointInt((int) (x * 1000000.0), (int) (y * 1000000.0));
-                }
+                transformation.ApplyTo(points);
 
             if (childs != null)
                 for (int i = 0; i < childs.Length; i++)
-                    childs[i].Transform(m);
+                    childs[i].Transform(transformation);
         }
 
-        public Polygon Transformed(Matrix m) {
+        /// <summary>
+        /// Retorna el poligon resultant d'aplicar una transformacio. El
+        /// poligon actual no es modifica.
+        /// </summary>
+        /// <param name="transformation">La transfoprmacio</param>
+        /// <returns>El poligon resultant</returns>
+        /// 
+        public Polygon Transformed(Transformation transformation) {
 
             Polygon polygon = Clone();
-            polygon.Transform(m);
+            polygon.Transform(transformation);
             return polygon;
         }
 
@@ -122,7 +117,7 @@
         }
 
         /// <summary>
-        /// Obte els punta del poligon.
+        /// Obte els punts del poligon.
         /// </summary>
         /// 
         public PointInt[] Points {

@@ -5,7 +5,6 @@
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.IO;
     using System.Windows.Media;
     using System.Xml;
@@ -113,13 +112,13 @@
             //
             foreach (XmlNode libraryNode in doc.SelectNodes("eagle/drawing/board/libraries/library")) {
 
-                string libraryName = GetAttribute(libraryNode, "name");
+                string libraryName = GetAttributeAsString(libraryNode, "name");
 
                 // Procesa el tag <package>
                 //
                 foreach (XmlNode packageNode in libraryNode.SelectNodes("packages/package")) {
 
-                    string packageName = GetAttribute(packageNode, "name");
+                    string packageName = GetAttributeAsString(packageNode, "name");
 
                     List<Element> elements = new List<Element>();
                     foreach (XmlNode childNode in packageNode.ChildNodes) {
@@ -220,12 +219,12 @@
             //
             foreach (XmlNode node in doc.SelectSingleNode("eagle/drawing/board/signals")) {
 
-                string signalName = GetAttribute(node, "name");
+                string signalName = GetAttributeAsString(node, "name");
                 Signal signal = signalDict[signalName];
 
                 foreach (XmlNode childNode in node.SelectNodes("contactref")) {
-                    string partName = GetAttribute(childNode, "element");
-                    string padName = GetAttribute(childNode, "pad");
+                    string partName = GetAttributeAsString(childNode, "element");
+                    string padName = GetAttributeAsString(childNode, "pad");
 
                     Part part = board.GetPart(partName, true);
                     foreach (PadElement pad in part.Pads) {
@@ -291,7 +290,7 @@
         /// 
         private Signal ParseSignalNode(XmlNode node) {
 
-            string signalName = GetAttribute(node, "name");
+            string signalName = GetAttributeAsString(node, "name");
 
             return new Signal(signalName);
         }
@@ -333,27 +332,27 @@
         /// 
         private Element ParsePadNode(XmlNode node) {
 
-            string name = GetAttribute(node, "name");
+            string name = GetAttributeAsString(node, "name");
 
             // Obte la posicio
             //
-            int x = ParseDimension(GetAttribute(node, "x"));
-            int y = ParseDimension(GetAttribute(node, "y"));
+            int x = ParseNumber(GetAttributeAsString(node, "x"));
+            int y = ParseNumber(GetAttributeAsString(node, "y"));
             PointInt position = new PointInt(x, y);
 
             // Obte l'angle de rotacio
             //
             Angle rotation = Angle.Zero;
             if (AttributeExists(node, "rot"))
-                rotation = ParseAngle(GetAttribute(node, "rot"));
+                rotation = ParseAngle(GetAttributeAsString(node, "rot"));
 
             // Obte el tamany del forat
             //
-            int drill = ParseDimension(GetAttribute(node, "drill"));
+            int drill = ParseNumber(GetAttributeAsString(node, "drill"));
             int size = (drill * 16) / 10;
 
             ThPadElement.ThPadShape shape = ThPadElement.ThPadShape.Circular;
-            switch (GetAttribute(node, "shape")) {
+            switch (GetAttributeAsString(node, "shape")) {
                 case "square":
                     shape = ThPadElement.ThPadShape.Square;
                     break;
@@ -387,31 +386,31 @@
         /// 
         private Element ParseSmdNode(XmlNode node) {
 
-            string name = GetAttribute(node, "name");
+            string name = GetAttributeAsString(node, "name");
 
             // Obte la posicio
             //
-            int x = ParseDimension(GetAttribute(node, "x"));
-            int y = ParseDimension(GetAttribute(node, "y"));
+            int x = ParseNumber(GetAttributeAsString(node, "x"));
+            int y = ParseNumber(GetAttributeAsString(node, "y"));
             PointInt position = new PointInt(x, y);
 
             // Obte el tamany
             //
-            int width = ParseDimension(GetAttribute(node, "dx"));
-            int height = ParseDimension(GetAttribute(node, "dy"));
+            int width = ParseNumber(GetAttributeAsString(node, "dx"));
+            int height = ParseNumber(GetAttributeAsString(node, "dy"));
             SizeInt size = new SizeInt(width, height);
 
             // Obte la rotacio
             //
             Angle rotation = Angle.Zero;
             if (AttributeExists(node, "rot"))
-                ParseAngle(GetAttribute(node, "rot"));
+                ParseAngle(GetAttributeAsString(node, "rot"));
 
             // Obte el factor d'arrodoniment
             //
             Ratio roundness = Ratio.Zero;
             if (AttributeExists(node, "roundness"))
-                roundness = ParsePercent(GetAttribute(node, "roundness"));
+                roundness = ParseRatio(GetAttributeAsString(node, "roundness"));
 
             bool stop = GetAttributeAsBoolean(node, "stop", true);
             bool cream = GetAttributeAsBoolean(node, "cream", true);
@@ -438,24 +437,24 @@
         /// 
         private Element ParseViaNode(XmlNode node) {
 
-            int x = ParseDimension(GetAttribute(node, "x"));
-            int y = ParseDimension(GetAttribute(node, "y"));
+            int x = ParseNumber(GetAttributeAsString(node, "x"));
+            int y = ParseNumber(GetAttributeAsString(node, "y"));
             PointInt position = new PointInt(x, y);
 
-            int drill = ParseDimension(GetAttribute(node, "drill"));
+            int drill = ParseNumber(GetAttributeAsString(node, "drill"));
 
             int size = 0;
             if (AttributeExists(node, "diameter"))
-                size = ParseDimension(GetAttribute(node, "diameter"));
+                size = ParseNumber(GetAttributeAsString(node, "diameter"));
 
-            string extent = GetAttribute(node, "extent");
+            string extent = GetAttributeAsString(node, "extent");
             string[] layerNames = extent.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
             int[] layerNums = new int[layerNames.Length];
             for (int i = 0; i < layerNums.Length; i++)
                 layerNums[i] = Int32.Parse(layerNames[i]);
 
             ViaElement.ViaShape shape = ViaElement.ViaShape.Circular;
-            string shapeName = GetAttribute(node, "shape");
+            string shapeName = GetAttributeAsString(node, "shape");
             switch (shapeName) {
                 case "square":
                     shape = ViaElement.ViaShape.Square;
@@ -491,17 +490,17 @@
 
             // Obte la posicio
             //
-            int x = ParseDimension(GetAttribute(node, "x"));
-            int y = ParseDimension(GetAttribute(node, "y"));
+            int x = ParseNumber(GetAttributeAsString(node, "x"));
+            int y = ParseNumber(GetAttributeAsString(node, "y"));
             PointInt position = new PointInt(x, y);
 
             // Obte l'angle de rotacio
             //
             Angle rotation = Angle.Zero;
             if (AttributeExists(node, "rot"))
-                rotation = ParseAngle(GetAttribute(node, "rot"));
+                rotation = ParseAngle(GetAttributeAsString(node, "rot"));
 
-            int height = ParseDimension(GetAttribute(node, "size"));
+            int height = ParseNumber(GetAttributeAsString(node, "size"));
 
             TextAlign align = GetAttributeAsTextAlign(node, "align", TextAlign.TopLeft);
 
@@ -526,19 +525,19 @@
         /// 
         private Element ParseWireNode(XmlNode node) {
 
-            int x1 = ParseDimension(GetAttribute(node, "x1"));
-            int y1 = ParseDimension(GetAttribute(node, "y1"));
+            int x1 = ParseNumber(GetAttributeAsString(node, "x1"));
+            int y1 = ParseNumber(GetAttributeAsString(node, "y1"));
             PointInt p1 = new PointInt(x1, y1);
 
-            int x2 = ParseDimension(GetAttribute(node, "x2"));
-            int y2 = ParseDimension(GetAttribute(node, "y2"));
+            int x2 = ParseNumber(GetAttributeAsString(node, "x2"));
+            int y2 = ParseNumber(GetAttributeAsString(node, "y2"));
             PointInt p2 = new PointInt(x2, y2);
 
             Angle angle = Angle.Zero;
             if (AttributeExists(node, "curve"))
-                angle = ParseAngle(GetAttribute(node, "curve"));
-            LineElement.LineCapStyle lineCap = GetAttribute(node, "cap") == null ? LineElement.LineCapStyle.Round : LineElement.LineCapStyle.Flat;
-            int thickness = ParseDimension(GetAttribute(node, "width"));
+                angle = ParseAngle(GetAttributeAsString(node, "curve"));
+            LineElement.LineCapStyle lineCap = GetAttributeAsString(node, "cap") == null ? LineElement.LineCapStyle.Round : LineElement.LineCapStyle.Flat;
+            int thickness = ParseNumber(GetAttributeAsString(node, "width"));
             if (thickness == 0)
                 thickness = 100000;
 
@@ -566,10 +565,10 @@
 
             // Obte la posicio i el tamany
             //
-            int x1 = ParseDimension(GetAttribute(node, "x1"));
-            int y1 = ParseDimension(GetAttribute(node, "y1"));
-            int x2 = ParseDimension(GetAttribute(node, "x2"));
-            int y2 = ParseDimension(GetAttribute(node, "y2"));
+            int x1 = ParseNumber(GetAttributeAsString(node, "x1"));
+            int y1 = ParseNumber(GetAttributeAsString(node, "y1"));
+            int x2 = ParseNumber(GetAttributeAsString(node, "x2"));
+            int y2 = ParseNumber(GetAttributeAsString(node, "y2"));
             PointInt position = new PointInt((x1 + x2) / 2, (y1 + y2) / 2);
             SizeInt size = new SizeInt(x2 - x1, y2 - y1);
 
@@ -577,13 +576,13 @@
             //
             Angle rotation = Angle.Zero;
             if (AttributeExists(node, "rot"))
-                rotation = ParseAngle(GetAttribute(node, "rot"));
+                rotation = ParseAngle(GetAttributeAsString(node, "rot"));
 
             // Obte l'amplada de linia
             //
             int thickness = 0;
             if (AttributeExists(node, "width"))
-                thickness = ParseDimension(GetAttribute(node, "width"));
+                thickness = ParseNumber(GetAttributeAsString(node, "width"));
 
             int layerNum = GetAttributeAsInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
@@ -605,19 +604,19 @@
 
             // obte la posicio
             //
-            int x = ParseDimension(GetAttribute(node, "x"));
-            int y = ParseDimension(GetAttribute(node, "y"));
+            int x = ParseNumber(GetAttributeAsString(node, "x"));
+            int y = ParseNumber(GetAttributeAsString(node, "y"));
             PointInt position = new PointInt(x, y);
 
             // Obte l'amplada de linia
             //
             int thickness = 0;
             if (AttributeExists(node, "width"))
-                thickness = ParseDimension(GetAttribute(node, "width"));
+                thickness = ParseNumber(GetAttributeAsString(node, "width"));
 
             // Obte el radi
             //
-            int radius = ParseDimension(GetAttribute(node, "radius"));
+            int radius = ParseNumber(GetAttributeAsString(node, "radius"));
 
             int layerNum = GetAttributeAsInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
@@ -639,7 +638,7 @@
 
             // Obte l'amplada de linia
             //
-            int thickness = ParseDimension(GetAttribute(node, "width"));
+            int thickness = ParseNumber(GetAttributeAsString(node, "width"));
 
             int layerNum = GetAttributeAsInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
@@ -649,15 +648,15 @@
 
                 // Obte la posicio
                 //
-                int x = ParseDimension(GetAttribute(vertexNode, "x"));
-                int y = ParseDimension(GetAttribute(vertexNode, "y"));
+                int x = ParseNumber(GetAttributeAsString(vertexNode, "x"));
+                int y = ParseNumber(GetAttributeAsString(vertexNode, "y"));
                 PointInt vertex = new PointInt(x, y);
 
                 // Obte la curvatura
                 //
                 Angle angle = Angle.Zero;
                 if (AttributeExists(vertexNode, "curve"))
-                    angle = ParseAngle(GetAttribute(vertexNode, "curve"));
+                    angle = ParseAngle(GetAttributeAsString(vertexNode, "curve"));
 
                 segments.Add(new RegionElement.Segment(vertex, angle));
             }
@@ -679,13 +678,13 @@
 
             // obte la posicio
             //
-            int x = ParseDimension(GetAttribute(node, "x"));
-            int y = ParseDimension(GetAttribute(node, "y"));
+            int x = ParseNumber(GetAttributeAsString(node, "x"));
+            int y = ParseNumber(GetAttributeAsString(node, "y"));
             PointInt position = new PointInt(x, y);
 
             // Obte el diametre del forat
             //
-            int drill = ParseDimension(GetAttribute(node, "drill"));
+            int drill = ParseNumber(GetAttributeAsString(node, "drill"));
 
             Element element = new HoleElement(position, drill);
 
@@ -704,17 +703,17 @@
         /// 
         private Part ParseElementNode(XmlNode node) {
 
-            string name = GetAttribute(node, "name");
-            string value = GetAttribute(node, "value");
+            string name = GetAttributeAsString(node, "name");
+            string value = GetAttributeAsString(node, "value");
             string componentKey = String.Format(
                 "{0}@{1}",
-                GetAttribute(node, "package"),
-                GetAttribute(node, "library"));
+                GetAttributeAsString(node, "package"),
+                GetAttributeAsString(node, "library"));
 
             // Obte la posicio
             //
-            int x = ParseDimension(GetAttribute(node, "x"));
-            int y = ParseDimension(GetAttribute(node, "y"));
+            int x = ParseNumber(GetAttributeAsString(node, "x"));
+            int y = ParseNumber(GetAttributeAsString(node, "y"));
             PointInt position = new PointInt(x, y);
 
             // Obte l'angle de rotacio
@@ -724,7 +723,7 @@
 
             if (AttributeExists(node, "rot")) {
 
-                string rot = GetAttribute(node, "rot");
+                string rot = GetAttributeAsString(node, "rot");
 
                 int i;
                 for (i = 0; i < rot.Length; i++) {
@@ -771,25 +770,25 @@
         /// 
         private PartAttribute ParseAttributeNode(XmlNode node) {
 
-            string name = GetAttribute(node, "name");
-            string value = GetAttribute(node, "value");
+            string name = GetAttributeAsString(node, "name");
+            string value = GetAttributeAsString(node, "value");
 
             PartAttribute attribute = new PartAttribute(name, value);
 
-            attribute.IsVisible = GetAttribute(node, "display") != "off";
+            attribute.IsVisible = GetAttributeAsString(node, "display") != "off";
 
             // Obte la posicio
             //
             if (AttributeExists(node, "x")) {
-                int x = ParseDimension(GetAttribute(node, "x"));
-                int y = ParseDimension(GetAttribute(node, "y"));
+                int x = ParseNumber(GetAttributeAsString(node, "x"));
+                int y = ParseNumber(GetAttributeAsString(node, "y"));
                 attribute.Position = new PointInt(x, y);
             }
 
             // Obte l'angle de rotacio
             //
             if (AttributeExists(node, "rot"))
-                attribute.Rotation = ParseAngle(GetAttribute(node, "rot"));
+                attribute.Rotation = ParseAngle(GetAttributeAsString(node, "rot"));
 
             // Obte l'aliniacio
             //
@@ -986,82 +985,83 @@
             return componentDict[name];
         }
 
+
+
+        private static int ParseNumber(string s) {
+
+            double value = XmlConvert.ToDouble(s);
+            return (int)(value * 1000000.0);
+        }
+
+
+        private static Ratio ParseRatio(string s) {
+
+            double value = XmlConvert.ToDouble(s);
+            return Ratio.FromPercent((int)(value * 10.0));
+        }
+
+
+        private static Angle ParseAngle(string s) {
+
+            if (s.StartsWith("R"))
+                s = s.Substring(1);
+
+            double value = XmlConvert.ToDouble(s);
+            return Angle.FromDegrees((int)(value * 100.0));
+        }
+
         private static bool AttributeExists(XmlNode node, string name) {
 
             return node.Attributes[name] != null;
         }
 
-        private static string GetAttribute(XmlNode node, string name) {
+        private static string GetAttributeAsString(XmlNode node, string name) {
 
             XmlAttribute attribute = node.Attributes[name];
             return attribute == null ? null : attribute.Value;
         }
 
+        private static double GetAttributeDouble(XmlNode node, string name, int defValue = 0) {
 
-        private static int ParseDimension(string text) {
-
-            double value = XmlConvert.ToDouble(text);
-            return (int)(value * 1000000.0);
-        }
-
-
-        private static Ratio ParsePercent(string text) {
-
-            double value = XmlConvert.ToDouble(text);
-            return Ratio.FromPercent((int)(value * 10.0));
-        }
-
-
-        private static Angle ParseAngle(string text) {
-
-            if (text.StartsWith("R"))
-                text = text.Substring(1);
-
-            double value = XmlConvert.ToDouble(text);
-            return Angle.FromDegrees((int)(value * 100.0));
-        }
-
-        private static int GetAttributeDouble(XmlNode node, string name, int defValue = 0) {
-
-            string value = GetAttribute(node, name);
-            if (String.IsNullOrEmpty(value))
+            XmlAttribute attribute = node.Attributes[name];
+            if (attribute == null)
                 return defValue;
             else {
+                string value = attribute.Value;
                 int start = 0;
                 if (value.IndexOf("R") != -1)
                     start++;
-                double d = Double.Parse(value.Substring(start), CultureInfo.InvariantCulture) * 1000000.0;
-                return (int)d;
+                return XmlConvert.ToDouble(value.Substring(start));
             }
         }
 
         private static int GetAttributeAsInteger(XmlNode node, string name, int defValue = 0) {
 
-            string value = GetAttribute(node, name);
-            if (String.IsNullOrEmpty(value))
+            XmlAttribute attribute = node.Attributes[name];
+            if (attribute == null)
                 return defValue;
-            else
-                return Int32.Parse(value);
+            else 
+                return XmlConvert.ToInt32(attribute.Value);
         }
 
         private static bool GetAttributeAsBoolean(XmlNode node, string name, bool defValue = false) {
 
-            string value = GetAttribute(node, name);
-            if (String.IsNullOrEmpty(value))
+            XmlAttribute attribute = node.Attributes[name];
+            if (attribute == null)
                 return defValue;
             else
                 return
-                    String.Compare(value, "yes", true) == 0 ||
-                    String.Compare(value, "true", true) == 0;
+                   String.Compare(attribute.Value, "yes", true) == 0 ||
+                   String.Compare(attribute.Value, "true", true) == 0;
         }
 
         private static TextAlign GetAttributeAsTextAlign(XmlNode node, string name, TextAlign defValue = TextAlign.TopLeft) {
 
-            string value = GetAttribute(node, name);
-            if (String.IsNullOrEmpty(value))
+            XmlAttribute attribute = node.Attributes[name];
+            if (attribute == null)
                 return defValue;
             else {
-                switch (value) {
+                switch (attribute.Value) {
                     default:
                     case "top-left":
                         return TextAlign.TopLeft;
