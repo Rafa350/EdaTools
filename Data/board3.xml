@@ -741,15 +741,15 @@
                 <rectangle layers="TopPlace" position="8.21095, 3.63535" size="2.2385, 1.0745" />
                 <region layers="TopPlace" thickness="0.1432">
                     <segment position="3.904, 1.0745" />
-                    <segment position="3.904, 0.1075" />
+                    <segment position="3.904, 0.1075" angle="-188.43" />
                     <segment position="3.904, 7.1633" />
-                    <segment position="3.904, 6.1963" />
+                    <segment position="3.904, 6.1963" angle="192.86" />
                 </region>
                 <region layers="TopPlace" thickness="0.1432">
                     <segment position="9.957, 1.0745" />
-                    <segment position="9.957, 0.1075" />
+                    <segment position="9.957, 0.1075" angle="-188.43" />
                     <segment position="9.957, 7.1633" />
-                    <segment position="9.957, 6.1963" />
+                    <segment position="9.957, 6.1963" angle="192.86" />
                 </region>
             </elements>
         </block>
@@ -2113,6 +2113,42 @@
         <line layers="TopRestrict" startPosition="26.75, 23.75" endPosition="28.25, 23.75" thickness="0.2" />
         <line layers="TopRestrict" startPosition="28.25, 23.75" endPosition="28.25, 29" thickness="0.2" />
         <line layers="TopRestrict" startPosition="28.25, 29" endPosition="34.5, 29" thickness="0.2" />
+        <region layers="Top" thickness="0.15" signal="GND">
+            <segment position="0.25, 52.5" />
+            <segment position="39.75, 52.5" />
+            <segment position="39.75, 54.75" />
+            <segment position="45, 54.75" />
+            <segment position="45, 25.25" />
+            <segment position="62.5, 25.25" />
+            <segment position="62.5, 45.5" />
+            <segment position="64, 45.5" />
+            <segment position="64, 55.75" />
+            <segment position="69.75, 55.75" />
+            <segment position="69.75, 0.25" />
+            <segment position="56.25, 0.25" />
+            <segment position="56.25, 6.75" />
+            <segment position="13.75, 6.75" />
+            <segment position="13.75, 0.25" />
+            <segment position="0.25, 0.25" />
+        </region>
+        <region layers="Bottom" thickness="0.15" signal="GND">
+            <segment position="0.25, 52.5" />
+            <segment position="39.75, 52.5" />
+            <segment position="39.75, 54.75" />
+            <segment position="45, 54.75" />
+            <segment position="45, 25.25" />
+            <segment position="62.5, 25.25" />
+            <segment position="62.5, 45.5" />
+            <segment position="64, 45.5" />
+            <segment position="64, 55.75" />
+            <segment position="69.75, 55.75" />
+            <segment position="69.75, 0.25" />
+            <segment position="56.25, 0.25" />
+            <segment position="56.25, 6.75" />
+            <segment position="13.75, 6.75" />
+            <segment position="13.75, 0.25" />
+            <segment position="0.25, 0.25" />
+        </region>
         <via position="2, 45.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.375" signal="GND" />
         <via position="4, 45.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.375" signal="GND" />
         <via position="4, 44.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.375" signal="GND" />

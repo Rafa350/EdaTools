@@ -5,7 +5,6 @@
     using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using System;
     using System.Collections.Generic;
-    using System.Windows;
 
     /// <summary>
     /// Clase que representa un pad superficial
@@ -14,7 +13,7 @@
 
         private SizeInt size;
         private Angle rotation;
-        private int roundness;
+        private Ratio roundness;
 
         /// <summary>
         /// Constructor de l'objecte amb els parametres per defecte.
@@ -33,11 +32,8 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="roundness">Percentatge d'arrodoniment de les cantonades.</param>
         /// 
-        public SmdPadElement(string name, PointInt position, SizeInt size, Angle rotation, int roundness) :
+        public SmdPadElement(string name, PointInt position, SizeInt size, Angle rotation, Ratio roundness) :
             base(name, position) {
-
-            if ((roundness < 0) || (roundness > 1000))
-                throw new ArgumentOutOfRangeException("roundness");
 
             this.size = size;
             this.rotation = rotation;
@@ -91,8 +87,12 @@
         public override Polygon GetThermalPolygon(BoardSide side, int spacing, int width) {
 
             Polygon pour = GetOutlinePolygon(side, spacing);
-            Polygon thermal = new Polygon(PolygonBuilder.BuildCross(Position, 
-                new SizeInt(size.Width + ((spacing * 22500) / 1000), size.Height + ((spacing * 22500) / 1000)), width, rotation));
+            Polygon thermal = new Polygon(
+                PolygonBuilder.BuildCross(
+                    Position, 
+                    new SizeInt(size.Width + (spacing * 2), size.Height + (spacing * 2)), 
+                    width,
+                    rotation));
 
             List<Polygon> childs = new List<Polygon>();
             childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
@@ -146,14 +146,11 @@
         /// Obte o asigna el factor d'arrodoniment de les cantonades del pad.
         /// </summary>
         /// 
-        public int Roundness {
+        public Ratio Roundness {
             get {
                 return roundness;
             }
             set {
-                if ((value < 0) || (roundness > 1000))
-                    throw new ArgumentOutOfRangeException("Roundness");
-
                  roundness = value;
             }
         }
@@ -164,7 +161,7 @@
         /// 
         public int Radius {
             get {
-                return (int)(((double)Math.Min(size.Width, size.Height) * (double)roundness) / 2000L);
+                return (Math.Min(size.Width, size.Height) * roundness) / 2;
             }
         }
     }

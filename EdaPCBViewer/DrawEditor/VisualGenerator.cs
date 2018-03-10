@@ -167,7 +167,7 @@
             /// <param name="region">L'objecte a visitar.</param>
             /// 
             public override void Visit(RegionElement region) {
-                return;
+
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
@@ -176,7 +176,7 @@
 
                     Color color = GetColor(Layer);
                     bool isSignalLayer = (Layer.Name == Layer.TopName) || (Layer.Name == Layer.BottomName);
-                    Pen pen = isSignalLayer ? CreatePen(color, region.Thickness) : null;
+                    Pen pen = isSignalLayer ? CreatePen(color, (double)region.Thickness / 1000000.0) : null;
                     Brush brush = CreateBrush(color);
                     Polygon polygon = Board.GetRegionPolygon(region, Layer, 150000, Matrix.Identity);
                     DrawPolygon(dc, pen, brush, polygon);

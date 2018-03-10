@@ -4,7 +4,6 @@
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using System;
-    using System.Windows;
 
     /// <summary>
     /// Clase que representa un rectangle.

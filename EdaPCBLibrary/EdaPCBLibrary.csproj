@@ -65,6 +65,7 @@
     <Compile Include="Geometry\PointInt.cs" />
     <Compile Include="Geometry\Polygons\Infrastructure\Clipper.cs" />
     <Compile Include="Geometry\Polygons\Polygon.cs" />
+    <Compile Include="Geometry\Ratio.cs" />
     <Compile Include="Geometry\RectInt.cs" />
     <Compile Include="Geometry\SizeInt.cs" />
     <Compile Include="Infrastructure\PolygonBuilder.cs" />

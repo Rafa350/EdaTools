@@ -6,9 +6,8 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.Windows.Media;
     using System.IO;
-    using System.Text;
+    using System.Windows.Media;
     using System.Xml;
 
     /// <summary>
@@ -178,8 +177,8 @@
                 if (!pad.Rotation.IsZero)
                     writer.WriteAttribute("rotation", FormatAngle(pad.Rotation));
                 writer.WriteAttribute("size", FormatSize(pad.Size));
-                if (pad.Roundness > 0)
-                    writer.WriteAttribute("roundness", FormatPercent(pad.Roundness));
+                if (!pad.Roundness.IsZero)
+                    writer.WriteAttribute("roundness", FormRatio(pad.Roundness));
 
                 Signal signal = board.GetSignal(pad, currentPart, false);
                 if (signal != null)
@@ -503,12 +502,12 @@
             /// <summary>
             /// Formateja un valoe a poercentatge
             /// </summary>
-            /// <param name="value">El valor del percentatge.</param>
+            /// <param name="ratio">El valor del percentatge.</param>
             /// <returns>El valor formatejat.</returns>
             /// 
-            private static string FormatPercent(int value) {
+            private static string FormRatio(Ratio ratio) {
 
-                return XmlConvert.ToString(value / 1000.0);
+                return XmlConvert.ToString(ratio.Percent / 1000.0);
             }
         }
 

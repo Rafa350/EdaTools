@@ -7,7 +7,6 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
-    using System.Windows;
     using System.Windows.Media;
     using System.Xml;
 
@@ -247,7 +246,7 @@
                             break;
 
                         case "polygon":
-                            //element = ParsePolygonNode(childNode);
+                            element = ParsePolygonNode(childNode);
                             break;
 
                         case "contactref":
@@ -410,7 +409,7 @@
 
             // Obte el factor d'arrodoniment
             //
-            int roundness = 0;
+            Ratio roundness = Ratio.Zero;
             if (AttributeExists(node, "roundness"))
                 roundness = ParsePercent(GetAttribute(node, "roundness"));
 
@@ -657,7 +656,7 @@
                 // Obte la curvatura
                 //
                 Angle angle = Angle.Zero;
-                if (AttributeExists(node, "curve"))
+                if (AttributeExists(vertexNode, "curve"))
                     angle = ParseAngle(GetAttribute(vertexNode, "curve"));
 
                 segments.Add(new RegionElement.Segment(vertex, angle));
@@ -1006,10 +1005,10 @@
         }
 
 
-        private static int ParsePercent(string text) {
+        private static Ratio ParsePercent(string text) {
 
             double value = XmlConvert.ToDouble(text);
-            return (int)(value * 10.0);
+            return Ratio.FromPercent((int)(value * 10.0));
         }
 
 

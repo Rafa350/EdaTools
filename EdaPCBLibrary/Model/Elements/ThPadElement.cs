@@ -5,7 +5,6 @@
     using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using System;
     using System.Collections.Generic;
-    using System.Windows;
 
     /// <summary>
     /// Clase que representa un pad throug hole
@@ -19,9 +18,9 @@
             Oval
         }
 
-        private const int drcTopSizeMin = 125000;
-        private const int drcTopSizeMax = 2500000;
-        private const int drcTopSizePercent = 250;
+        private int drcTopSizeMin = 125000;
+        private int drcTopSizeMax = 2500000;
+        private Ratio drcTopSizePercent = Ratio.P25;
 
         private ThPadShape shape = ThPadShape.Circular;
         private Angle rotation;
@@ -144,8 +143,8 @@
         /// 
         public override Polygon GetThermalPolygon(BoardSide side, int spacing, int width) {
 
-            int w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize) + ((spacing * 2250) / 1000);
-            int h = topSize + ((spacing * 2250) / 1000);
+            int w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize) + spacing * 2;
+            int h = topSize + (spacing * 2);
 
             Polygon pour = GetOutlinePolygon(side, spacing);
             Polygon thermal = new Polygon(PolygonBuilder.BuildCross(Position, new SizeInt(w, h), width, rotation));
@@ -219,7 +218,7 @@
         /// 
         public int TopSize {
             get {
-                int dimension = topSize == 0 ? 2 * ((drill * drcTopSizePercent) / 1000) + drill : topSize;
+                int dimension = topSize == 0 ? 2 * (drill * drcTopSizePercent) + drill : topSize;
                 return Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, dimension));
             }
             set {

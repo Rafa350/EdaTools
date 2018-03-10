@@ -70,7 +70,7 @@
         /// 
         public override int GetHashCode() {
 
-            return value.GetHashCode();
+            return value;
         }
 
         /// <summary>
@@ -80,7 +80,7 @@
         /// 
         public override string ToString() {
 
-            return Convert.ToString(value);
+            return Convert.ToString((double)value / 100.0);
         }
 
         public static bool operator == (Angle a1, Angle a2) {

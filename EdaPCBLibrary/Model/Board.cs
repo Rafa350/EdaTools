@@ -1,12 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
     using System.Collections.Generic;
     using System.Windows.Media;
-    using System.Windows;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
-    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
 
     public enum BoardSide {
         Unknown,
@@ -585,7 +584,7 @@
                                 //
                                 if (GetSignal(element, part, false) != regionSignal) {
                                     Polygon outlinePolygon = element.GetOutlinePolygon(layer.Side, spacing);
-                                    //outlinePolygon = outlinePolygon.Transformed(m);
+                                    outlinePolygon = outlinePolygon.Transformed(m);
                                     holePolygons.Add(outlinePolygon);
                                 }
 
@@ -593,7 +592,7 @@
                                 //
                                 else if (element is PadElement) {
                                     Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Side, spacing, 200000);
-                                    //thermalPolygon = thermalPolygon.Transformed(m);
+                                    thermalPolygon = thermalPolygon.Transformed(m);
                                     for (int i = 0; i < thermalPolygon.Childs.Length; i++)
                                         holePolygons.Add(thermalPolygon.Childs[i]);
                                 }

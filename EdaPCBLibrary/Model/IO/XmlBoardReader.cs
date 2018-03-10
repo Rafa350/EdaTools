@@ -423,7 +423,7 @@
             if (node.AttributeExists("rotation"))
                 rotation = ParseAngle(node.AttributeAsString("rotation"));
 
-            int roundness = 0;
+            Ratio roundness = Ratio.Zero;
             if (node.AttributeExists("roundness"))
                 roundness = ParsePercent(node.AttributeAsString("roundness"));
 
@@ -486,9 +486,9 @@
             return attribute;
         }
 
-        private static int ParsePercent(string txt) {
+        private static Ratio ParsePercent(string txt) {
 
-            return (int)(XmlConvert.ToDouble(txt) * 1000.0);
+            return Ratio.FromPercent((int)(XmlConvert.ToDouble(txt) * 1000.0));
         }
 
         private static Angle ParseAngle(string txt) {

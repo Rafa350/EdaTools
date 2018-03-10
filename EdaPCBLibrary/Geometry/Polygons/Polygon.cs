@@ -65,15 +65,15 @@
 
             if (points != null)
                 for (int i = 0; i < points.Length; i++) {
-                    double x = points[i].X / 1000000;
-                    double y = points[i].Y / 1000000;
+                    double x = points[i].X / 1000000.0;
+                    double y = points[i].Y / 1000000.0;
                     double xadd = y * m.M21 + m.OffsetX;
                     double yadd = x * m.M12 + m.OffsetY;
                     x *= m.M11;
                     x += xadd;
                     y *= m.M22;
                     y += yadd;
-                    points[i] = new PointInt((int) x * 1000000, (int) y * 1000000);
+                    points[i] = new PointInt((int) (x * 1000000.0), (int) (y * 1000000.0));
                 }
 
             if (childs != null)
@@ -92,16 +92,16 @@
         /// Obte el bounding-box del poligon.
         /// </summary>
         /// 
-        public Rect BoundingBox {
+        public RectInt BoundingBox {
             get {
                 if (points == null)
-                    return Rect.Empty;
+                    return new RectInt(0, 0, 0, 0);
 
                 else {
-                    double minX = Double.MaxValue;
-                    double minY = Double.MaxValue;
-                    double maxX = Double.MinValue;
-                    double maxY = Double.MinValue;
+                    int minX = Int32.MaxValue;
+                    int minY = Int32.MaxValue;
+                    int maxX = Int32.MinValue;
+                    int maxY = Int32.MinValue;
 
                     for (int i = 0; i < points.Length; i++) {
 
@@ -116,7 +116,7 @@
                             maxY = points[i].Y;
                     }
 
-                    return new Rect(minX, minY, maxX - minX, maxY - minY);
+                    return new RectInt(minX, minY, maxX - minX, maxY - minY);
                 }
             }
         }
