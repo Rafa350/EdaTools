@@ -741,15 +741,15 @@
                 <rectangle layers="TopPlace" position="8.21095, 3.63535" size="2.2385, 1.0745" />
                 <region layers="TopPlace" thickness="0.1432">
                     <segment position="3.904, 1.0745" />
-                    <segment position="3.904, 0.1075" angle="-180" />
+                    <segment position="3.904, 0.1075" angle="-188.43" />
                     <segment position="3.904, 7.1633" />
-                    <segment position="3.904, 6.1963" angle="180" />
+                    <segment position="3.904, 6.1963" angle="192.86" />
                 </region>
                 <region layers="TopPlace" thickness="0.1432">
                     <segment position="9.957, 1.0745" />
-                    <segment position="9.957, 0.1075" angle="-180" />
+                    <segment position="9.957, 0.1075" angle="-188.43" />
                     <segment position="9.957, 7.1633" />
-                    <segment position="9.957, 6.1963" angle="180" />
+                    <segment position="9.957, 6.1963" angle="192.86" />
                 </region>
             </elements>
         </block>
