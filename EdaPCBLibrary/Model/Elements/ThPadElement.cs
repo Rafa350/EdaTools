@@ -85,11 +85,11 @@
 
             int size = TopSize;
 
-            int sizeMul2 = size << 1;
-            int sizeDiv2 = size >> 1;
+            int sizeMul2 = size * 2;
+            int sizeDiv2 = size / 2;
 
-            int spacingMul2 = spacing << 1;
-            int spacingDiv2 = spacing >> 1;
+            int spacingMul2 = spacing * 2;
+            int spacingDiv2 = spacing / 2;
 
             switch (shape) {
                 case ThPadShape.Square:

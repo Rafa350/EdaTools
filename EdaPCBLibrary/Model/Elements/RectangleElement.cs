@@ -157,7 +157,7 @@
             }
             set {
                 if (value)
-                    Thickness = 0; // Canvia la propietat
+                    thickness = 0; 
             }
         }
     }

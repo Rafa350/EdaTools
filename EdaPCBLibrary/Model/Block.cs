@@ -6,7 +6,7 @@
     /// <summary>
     /// Clase que representa un bloc predefinit.
     /// </summary>
-    public sealed class Block: IVisitable {
+    public sealed class Block: IVisitable, IName {
 
         private readonly HashSet<Element> elements = new HashSet<Element>();
         private readonly Dictionary<string, BlockAttribute> attributes = new Dictionary<string, BlockAttribute>();

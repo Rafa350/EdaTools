@@ -4,8 +4,6 @@
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
     using System.Collections.Generic;
-    using System.Windows;
-    using System.Windows.Media;
 
     public sealed class Part: IPosition, IRotation, IName {
 

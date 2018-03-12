@@ -1,11 +1,10 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Geometry;
+    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using System;
     using System.Collections.Generic;
-    using System.Windows;
 
     /// <summary>
     /// Clase que representa una regio poligonal.
@@ -224,7 +223,7 @@
             }
             set {
                 if (value)
-                    Thickness = 0; // Canvia la propietat
+                    thickness = 0; 
             }
         }
 

@@ -30,12 +30,21 @@
             visitor.Visit(this);
         }
 
+        /// <summary>
+        /// Obte el nom del atribut
+        /// </summary>
+        /// 
+
         public string Name {
             get {
                 return name;
             }
         }
 
+        /// <summary>
+        /// Obte o asigna el valor del atribut
+        /// </summary>
+        /// 
         public string Value {
             get {
                 return value;

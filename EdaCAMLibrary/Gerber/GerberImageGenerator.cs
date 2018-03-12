@@ -664,9 +664,9 @@
                 if (Part != null)
                     position = Part.Transformation.ApplyTo(position);
 
-                /*dr.Draw(paa.Value, 
+                dr.Draw(paa.Value, 
                     position, 
-                    paa.Align, text.Height);*/
+                    paa.Align, text.Height);
             }
 
             /// <summary>
@@ -789,12 +789,12 @@
                 this.gb = gb;
             }
 
-            protected override void Trace(System.Windows.Point position, bool stroke, bool first) {
-
-/*                if (first || !stroke)
+            protected override void Trace(PointInt position, bool stroke, bool first) {
+                
+                if (first || !stroke)
                     gb.MoveTo(position);
                 else
-                    gb.LineTo(position);*/
+                    gb.LineTo(position);
             }
         }
 

@@ -3,7 +3,6 @@
     using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
     using System;
-    using System.Windows;
 
     /// <summary>
     /// Clase que representa un text.
@@ -36,6 +35,12 @@
         /// 
         public TextElement(PointInt position, Angle rotation, int height, int thickness, TextAlign align = TextAlign.MiddleCenter):
             base() {
+
+            if (height <= 0)
+                throw new ArgumentOutOfRangeException("height");
+
+            if (thickness <= 0)
+                throw new ArgumentOutOfRangeException("thickness");
 
             this.position = position;
             this.rotation = rotation;

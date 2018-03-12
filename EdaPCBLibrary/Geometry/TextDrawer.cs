@@ -1,10 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Fonts;
     using System;
-    using System.Windows;
-    using System.Windows.Media;
 
     /// <summary>
     /// Clase per generar els glyphs d'una cadena
@@ -92,7 +89,7 @@
                     break;
             }
 
-            int scale = height / font.Height;
+            int scale = (int)(height / font.Height);
 
             // Dibuixa text
             //

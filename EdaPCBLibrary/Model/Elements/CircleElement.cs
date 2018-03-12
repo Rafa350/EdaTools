@@ -124,7 +124,7 @@
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Diameter");
 
-                Radius = value / 2; // Canvia la propietat, no el camp
+                radius = value / 2; 
             }
         }
 
@@ -154,7 +154,7 @@
             }
             set {
                 if (value)
-                    Thickness = 0; // Canvia la propietat, no el camp
+                    thickness = 0; 
             }
         }
     }
