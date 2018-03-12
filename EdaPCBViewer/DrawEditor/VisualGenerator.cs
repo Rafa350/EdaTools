@@ -28,12 +28,16 @@
                 this.ctx = ctx;
             }
 
-            protected override void Trace(Point position, bool stroke, bool first) {
+            protected override void Trace(PointInt position, bool stroke, bool first) {
+
+                Point p = new Point(
+                    (double)position.X / 1000000.0,
+                    (double)position.Y / 1000000.0);
 
                 if (first)
-                    ctx.BeginFigure(position, false, false);
+                    ctx.BeginFigure(p, false, false);
                 else
-                    ctx.LineTo(position, stroke, true);
+                    ctx.LineTo(p, stroke, true);
             }
         }
 
@@ -330,6 +334,7 @@
                     PartAttributeAdapter paa = new PartAttributeAdapter(Part, text);
                     Point position = paa.Position.ToPoint();
                     Angle rotation = paa.Rotation;
+                    int height = paa.Height;
                     TextAlign align = paa.Align;
                     string value = paa.Value;
 
@@ -338,8 +343,8 @@
                     m.Rotate((double)rotation.Degrees / 100.0);
                     dc.PushTransform(new MatrixTransform(m));
 
-                    DrawText(dc, pen, new Point(0, 0), (double)text.Height / 1000000.0, align, value);
-                    dc.DrawEllipse(Brushes.YellowGreen, null, new Point(0, 0), 0.15, 0.15);
+                    DrawText(dc, pen, new PointInt(0, 0), height, align, value);
+                    dc.DrawEllipse(Brushes.YellowGreen, null, new Point(0, 0), 0.1, 0.1);
 
                     dc.Pop();
 
@@ -488,7 +493,7 @@
             /// <param name="height">Alçada de lletra.</param>
             /// <param name="text">El text a dibuixar.</param>
             /// 
-            private static void DrawText(DrawingContext dc, Pen pen, Point position, double height, TextAlign align, string text) {
+            private static void DrawText(DrawingContext dc, Pen pen, PointInt position, int height, TextAlign align, string text) {
 
                 StreamGeometry geometry = new StreamGeometry();
                 using (StreamGeometryContext ctx = geometry.Open()) {

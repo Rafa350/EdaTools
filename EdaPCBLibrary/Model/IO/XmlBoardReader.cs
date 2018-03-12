@@ -5,7 +5,6 @@
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.IO;
     using System.Windows.Media;
     using System.Xml;
@@ -478,12 +477,21 @@
             if (node.AttributeExists("rotation"))
                 attribute.Rotation = ParseAngle(node.AttributeAsString("rotation"));
 
+            if (node.AttributeExists("height"))
+                attribute.Height = ParseNumber(node.AttributeAsString("height"));
+
             if (node.AttributeExists("align"))
                 attribute.Align = node.AttributeAsEnum<TextAlign>("align", TextAlign.TopLeft);
 
             return attribute;
         }
 
+        /// <summary>
+        /// Convereteix un string a PointInt
+        /// </summary>
+        /// <param name="s">La string a convertir.</param>
+        /// <returns>El resultat de la converssio.</returns>
+        /// 
         private static PointInt ParsePoint(string s) {
 
             string[] ss = s.Split(',');
@@ -493,6 +501,12 @@
             return new PointInt((int)(x * 1000000.0), (int)(y * 1000000.0));
         }
 
+        /// <summary>
+        /// Converteix una string a SizeInt.
+        /// </summary>
+        /// <param name="s">La string a convertir.</param>
+        /// <returns>El resultat de la conversio.</returns>
+        /// 
         private static SizeInt ParseSize(string s) {
 
             string[] ss = s.Split(',');
@@ -502,6 +516,12 @@
             return new SizeInt((int)(w * 1000000.0), (int)(h * 1000000.0));
         }
 
+        /// <summary>
+        /// Converteix una string a Ratio
+        /// </summary>
+        /// <param name="s">La string a convertir.</param>
+        /// <returns>El resultat de la conversio.</returns>
+        /// 
         private static Ratio ParseRatio(string s) {
 
             if (String.IsNullOrEmpty(s))
@@ -512,6 +532,12 @@
             }
         }
 
+        /// <summary>
+        /// Converteix una string a Angle
+        /// </summary>
+        /// <param name="s">La string a convertir</param>
+        /// <returns>El resultat de la conversio.</returns>
+        /// 
         private static Angle ParseAngle(string s) {
 
             if (String.IsNullOrEmpty(s))
@@ -522,6 +548,12 @@
             }
         }
 
+        /// <summary>
+        /// Converteix una string a int
+        /// </summary>
+        /// <param name="s">La string a convertir.</param>
+        /// <returns>El resultat de la conversio.</returns>
+        /// 
         private static int ParseNumber(string s) {
 
             if (String.IsNullOrEmpty(s))
@@ -532,6 +564,13 @@
             }
         }
 
+        /// <summary>
+        /// Converteix un string a Color
+        /// </summary>
+        /// <param name="s">La string a conversit.</param>
+        /// <param name="defColor">Valor per defecte.</param>
+        /// <returns>El resultat de la conversio.</returns>
+        /// 
         private static Color ParseColor(string s, Color defColor) {
 
             if (String.IsNullOrEmpty(s))

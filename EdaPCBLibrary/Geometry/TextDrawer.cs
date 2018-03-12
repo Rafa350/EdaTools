@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry {
 
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Geometry.Fonts;
     using System;
     using System.Windows;
@@ -35,14 +36,14 @@
         /// <param name="height">Alçada de lletra.</param>
         /// <returns>La llista de glyphs preparats per dibuixar.</returns>
         /// 
-        public void Draw(string text, Point position, TextAlign align, double height) {
+        public void Draw(string text, PointInt position, TextAlign align, int height) {
 
             if (String.IsNullOrEmpty(text))
                 return;
 
             // Calcula el tamany del text
             //
-            double width = 0;
+            int width = 0;
             for (int i = 0; i < text.Length; i++) {
                 Glyph glyph = font.GetGlyph(text[i]);
                 if (glyph != null)
@@ -51,7 +52,7 @@
 
             // Calcula els offsets en funcio de l'aliniacio
             //
-            double offsetX = 0;
+            int offsetX = 0;
             switch (align) {
                 case TextAlign.TopLeft:
                 case TextAlign.MiddleLeft:
@@ -71,18 +72,18 @@
                     break;
             }
 
-            double offsetY = 0;
+            int offsetY = 0;
             switch (align) {
                 case TextAlign.TopLeft:
                 case TextAlign.TopCenter:
                 case TextAlign.TopRight:
-                    offsetY = -font.Height;
+                    offsetY = -font.Ascendent;
                     break;
 
                 case TextAlign.MiddleLeft:
                 case TextAlign.MiddleCenter:
                 case TextAlign.MiddleRight:
-                    offsetY = -font.Height / 2;
+                    offsetY = -font.Ascendent / 2;
                     break;
 
                 case TextAlign.BottomLeft:
@@ -91,12 +92,7 @@
                     break;
             }
 
-            // Calcula la matriu de transformacio
-            //
-            double scale = height / font.Height;
-            Matrix m = new Matrix();
-            m.Translate(position.X + offsetX, position.Y + offsetY);
-            m.ScaleAt(scale, scale, position.X, position.Y);
+            int scale = height / font.Height;
 
             // Dibuixa text
             //
@@ -108,9 +104,11 @@
                     for (int j = 0; j < glyph.Traces.Length; j++) {
 
                         PointInt gp = glyph.Traces[j].Position;
-                        Point p = new Point(gp.X + offset, gp.Y);
+                        PointInt p = new PointInt(
+                            position.X + ((gp.X + offset + offsetX) * scale), 
+                            position.Y + ((gp.Y + offsetY) * scale));
 
-                        Trace(m.Transform(p), glyph.Traces[j].Stroke, j == 0);
+                        Trace(p, glyph.Traces[j].Stroke, j == 0);
                     }
 
                     offset += glyph.Advance;
@@ -125,6 +123,6 @@
         /// <param name="stroke">True si cal dibuixar, false per nomes moure.</param>
         /// <param name="first">True si es el primer punt.</param>
         /// 
-        protected abstract void Trace(Point position, bool stroke, bool first);
+        protected abstract void Trace(PointInt position, bool stroke, bool first);
     }
 }

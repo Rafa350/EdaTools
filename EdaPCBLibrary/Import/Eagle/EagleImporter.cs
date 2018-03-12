@@ -502,7 +502,7 @@
 
             int height = ParseNumber(GetAttributeAsString(node, "size"));
 
-            TextAlign align = GetAttributeAsTextAlign(node, "align", TextAlign.TopLeft);
+            TextAlign align = ParseTextAlign(GetAttributeAsString(node, "align"));
 
             int thickness = 100000;
 
@@ -790,10 +790,15 @@
             if (AttributeExists(node, "rot"))
                 attribute.Rotation = ParseAngle(GetAttributeAsString(node, "rot"));
 
+            // Obte l'alçada de lletra
+            //
+            if (AttributeExists(node, "size"))
+                attribute.Height = ParseNumber(GetAttributeAsString(node, "size"));
+
             // Obte l'aliniacio
             //
             if (AttributeExists(node, "align"))
-                attribute.Align = GetAttributeAsTextAlign(node, "align", TextAlign.BottomLeft);
+                attribute.Align = ParseTextAlign(GetAttributeAsString(node, "align"));
 
             return attribute;
         }
@@ -985,22 +990,36 @@
             return componentDict[name];
         }
 
-
-
+        /// <summary>
+        /// Converteix un text a int
+        /// </summary>
+        /// <param name="s">El text a convertir,</param>
+        /// <returns>El valor obtingut.</returns>
+        /// 
         private static int ParseNumber(string s) {
 
             double value = XmlConvert.ToDouble(s);
             return (int)(value * 1000000.0);
         }
 
-
+        /// <summary>
+        /// Converteix un text a Ratio
+        /// </summary>
+        /// <param name="s">El text a convertir.</param>
+        /// <returns>El valor obtingut.</returns>
+        /// 
         private static Ratio ParseRatio(string s) {
 
             double value = XmlConvert.ToDouble(s);
             return Ratio.FromPercent((int)(value * 10.0));
         }
 
-
+        /// <summary>
+        /// Converteix un text a Angle
+        /// </summary>
+        /// <param name="s">El text a convertir.</param>
+        /// <returns>El valor aobtingut.</returns>
+        /// 
         private static Angle ParseAngle(string s) {
 
             if (s.StartsWith("R"))
@@ -1008,6 +1027,47 @@
 
             double value = XmlConvert.ToDouble(s);
             return Angle.FromDegrees((int)(value * 100.0));
+        }
+
+        /// <summary>
+        /// Converteix un text a TextAlign
+        /// </summary>
+        /// <param name="s">El text a convertir.</param>
+        /// <returns>El valor obtingut.</returns>
+        /// 
+        private static TextAlign ParseTextAlign(string s) {
+
+            switch (s) {
+                case "top-left":
+                    return TextAlign.TopLeft;
+
+                case "top-center":
+                    return TextAlign.TopCenter;
+
+                case "top-right":
+                    return TextAlign.TopRight;
+
+                case "center-left":
+                    return TextAlign.MiddleLeft;
+
+                case "center-center":
+                    return TextAlign.MiddleCenter;
+
+                case "center-right":
+                    return TextAlign.MiddleRight;
+
+                case "bottom-left":
+                    return TextAlign.BottomLeft;
+
+                case "bottom-center":
+                    return TextAlign.BottomCenter;
+
+                case "bottom-right":
+                    return TextAlign.BottomRight;
+
+                default:
+                    return TextAlign.BottomLeft;
+            }
         }
 
         private static bool AttributeExists(XmlNode node, string name) {
@@ -1053,44 +1113,6 @@
                 return
                    String.Compare(attribute.Value, "yes", true) == 0 ||
                    String.Compare(attribute.Value, "true", true) == 0;
-        }
-
-        private static TextAlign GetAttributeAsTextAlign(XmlNode node, string name, TextAlign defValue = TextAlign.TopLeft) {
-
-            XmlAttribute attribute = node.Attributes[name];
-            if (attribute == null)
-                return defValue;
-            else {
-                switch (attribute.Value) {
-                    default:
-                    case "top-left":
-                        return TextAlign.TopLeft;
-
-                    case "top-center":
-                        return TextAlign.TopCenter;
-
-                    case "top-right":
-                        return TextAlign.TopRight;
-
-                    case "center-left":
-                        return TextAlign.MiddleLeft;
-
-                    case "center-center":
-                        return TextAlign.MiddleCenter;
-
-                    case "center-right":
-                        return TextAlign.MiddleRight;
-
-                    case "bottom-left":
-                        return TextAlign.BottomLeft;
-
-                    case "bottom-center":
-                        return TextAlign.BottomCenter;
-
-                    case "bottom-right":
-                        return TextAlign.BottomRight;
-                }
-            }
         }
     }
 }

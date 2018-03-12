@@ -1,10 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Infrastructure {
 
-    using System;
-    using System.Windows;
     using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using System;
 
     public sealed class PartAttributeAdapter {
 
@@ -36,6 +35,12 @@
         public Angle Rotation {
             get {
                 return (attribute != null) && attribute.UseRotation ? attribute.Rotation : text.Rotation;
+            }
+        }
+
+        public int Height {
+            get {
+                return (attribute != null) && attribute.UseHeight ? attribute.Height : text.Height;
             }
         }
 

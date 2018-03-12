@@ -11,6 +11,7 @@
 
         private readonly Dictionary<char, Glyph> glyphs = new Dictionary<char, Glyph>();
         private readonly string name;
+        private readonly int ascendent;
         private readonly int height;
 
         /// <summary>
@@ -18,15 +19,17 @@
         /// </summary>
         /// <param name="name">Nom del font.</param>
         /// <param name="height">Alçada del font.</param>
+        /// <param name="ascendent">Ascendent del font.</param>
         /// <param name="glyphs">Llista de figures.</param>
         /// 
-        private Font(string name, int height, IEnumerable<Glyph> glyphs) {
+        private Font(string name, int height, int ascendent, IEnumerable<Glyph> glyphs) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
             this.name = name;
             this.height = height;
+            this.ascendent = ascendent;
 
             foreach (Glyph glyph in glyphs)
                 this.glyphs.Add(glyph.Code, glyph);
@@ -96,7 +99,7 @@
                 glyphs.Add(new Glyph(code, advance, traces.ToArray()));
             }
 
-            return new Font(name, height, glyphs);
+            return new Font(name, height, ascendent, glyphs);
         }
 
         /// <summary>
@@ -190,12 +193,22 @@
         }
 
         /// <summary>
-        /// Obte l'a´çada del font.
+        /// Obte l'alçada del font.
         /// </summary>
         /// 
         public int Height {
             get {
                 return height;
+            }
+        }
+
+        /// <summary>
+        /// Obte l'ascendent del font.
+        /// </summary>
+        /// 
+        public int Ascendent {
+            get {
+                return ascendent;
             }
         }
     }

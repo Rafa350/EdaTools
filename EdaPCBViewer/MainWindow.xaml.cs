@@ -1,6 +1,4 @@
-﻿#define ImportTest
-
-namespace MikroPic.EdaTools.v1.Designer {
+﻿namespace MikroPic.EdaTools.v1.Designer {
 
     using MikroPic.EdaTools.v1.Designer.DrawEditor;
     using MikroPic.EdaTools.v1.Designer.DrawEditor.Tools;

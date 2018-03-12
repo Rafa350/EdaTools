@@ -13,9 +13,11 @@
         private string value;
         private PointInt position;
         private Angle rotation;
+        private int height;
         private TextAlign align;
         private bool usePosition;
         private bool useRotation;
+        private bool useHeight;
         private bool useAlign;
         private bool isVisible;
 
@@ -33,10 +35,14 @@
 
             this.name = name;
             this.value = value;
-            this.IsVisible = isVisible;
+            IsVisible = isVisible;
+            usePosition = false;
+            useRotation = false;
+            useHeight = false;
+            useAlign = false;
         }
 
-        public PartAttribute(string name, PointInt position, Angle rotation, TextAlign align, string value) {
+        public PartAttribute(string name, PointInt position, Angle rotation, int height, TextAlign align, string value) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -50,6 +56,9 @@
 
             this.rotation = rotation;
             useRotation = true;
+
+            this.height = height;
+            useHeight = true;
 
             this.align = align;
             useAlign = true;
@@ -112,7 +121,7 @@
         }
 
         /// <summary>
-        /// Obte l'aliniacio de l'atribut.
+        /// Obte l'aliniacio del atribut.
         /// </summary>
         /// 
         public TextAlign Align {
@@ -122,6 +131,20 @@
             set {
                 align = value;
                 useAlign = true;
+            }
+        }
+
+        /// <summary>
+        /// Obte l'alçada del atribut.
+        /// </summary>
+        /// 
+        public int Height {
+            get {
+                return height;
+            }
+            set {
+                height = value;
+                useHeight = true;
             }
         }
 
@@ -147,6 +170,12 @@
         public bool UseRotation {
             get {
                 return useRotation;
+            }
+        }
+
+        public bool UseHeight {
+            get {
+                return useHeight;
             }
         }
 

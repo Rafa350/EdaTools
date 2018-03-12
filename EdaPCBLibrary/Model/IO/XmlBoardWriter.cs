@@ -220,6 +220,8 @@
                     writer.WriteAttribute("position", FormatPoint(parameter.Position));
                 if (parameter.UseRotation)
                     writer.WriteAttribute("rotation", FormatAngle(parameter.Rotation));
+                if (parameter.UseHeight)
+                    writer.WriteAttribute("height", FormatNumber(parameter.Height));
                 if (parameter.UseAlign)
                     writer.WriteAttribute("align", parameter.Align);
 
