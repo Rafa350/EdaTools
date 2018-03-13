@@ -283,8 +283,10 @@
             public override void Visit(HoleElement hole) {
 
                 PointInt position = hole.Position;
-                if (Part != null)
-                    position = Part.Transformation.ApplyTo(position);
+                if (Part != null) {
+                    Transformation t = Part.GetLocalTransformation();
+                    position = t.ApplyTo(position);
+                }
 
                 Aperture ap = apertures.GetCircleAperture(hole.Drill);
 
@@ -300,8 +302,10 @@
             public override void Visit(ViaElement via) {
 
                 PointInt position = via.Position;
-                if (Part != null)
-                    position = Part.Transformation.ApplyTo(position);
+                if (Part != null) {
+                    Transformation t = Part.GetLocalTransformation();
+                    position = t.ApplyTo(position);
+                }
 
                 Aperture ap = apertures.GetCircleAperture(via.Drill);
 
@@ -317,8 +321,10 @@
             public override void Visit(ThPadElement pad) {
 
                 PointInt position = pad.Position;
-                if (Part != null)
-                    position = Part.Transformation.ApplyTo(position);
+                if (Part != null) {
+                    Transformation t = Part.GetLocalTransformation();
+                    position = t.ApplyTo(position);
+                }
 
                 Aperture ap = apertures.GetCircleAperture(pad.Drill);
 

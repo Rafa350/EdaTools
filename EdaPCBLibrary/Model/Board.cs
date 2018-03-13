@@ -631,8 +631,7 @@
                 // Obte el poligon de la regio i el transforma si s'escau
                 //
                 Polygon regionPolygon = region.GetPolygon(layer.Side);
-                if (!transformation.IsNull)
-                    regionPolygon = regionPolygon.Transformed(transformation);
+                regionPolygon = regionPolygon.Transformed(transformation);
 
                 // Si estem en capes de senyal, cal generar els porus i termals
                 //
@@ -686,7 +685,7 @@
 
                         // Obte la transformacio
                         //
-                        Transformation partTransformation = new Transformation(part.Position, part.Rotation);
+                        Transformation partTransformation = part.GetLocalTransformation();
 
                         foreach (Element element in part.Elements) {
 
@@ -697,8 +696,7 @@
                                 //
                                 if (GetSignal(element, part, false) != regionSignal) {
                                     Polygon outlinePolygon = element.GetOutlinePolygon(layer.Side, spacing);
-                                    if (!partTransformation.IsNull)
-                                        outlinePolygon = outlinePolygon.Transformed(partTransformation);
+                                    outlinePolygon = outlinePolygon.Transformed(partTransformation);
                                     holePolygons.Add(outlinePolygon);
                                 }
 
@@ -706,8 +704,7 @@
                                 //
                                 else if (element is PadElement) {
                                     Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Side, spacing, 200000);
-                                    if (!partTransformation.IsNull)
-                                        thermalPolygon = thermalPolygon.Transformed(partTransformation);
+                                    thermalPolygon = thermalPolygon.Transformed(partTransformation);
                                     for (int i = 0; i < thermalPolygon.Childs.Length; i++)
                                         holePolygons.Add(thermalPolygon.Childs[i]);
                                 }

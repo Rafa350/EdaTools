@@ -497,7 +497,7 @@
                 PointInt startPosition = line.StartPosition;
                 PointInt endPosition = line.EndPosition;
                 if (Part != null) {
-                    Transformation t = Part.Transformation;
+                    Transformation t = Part.GetLocalTransformation();
                     startPosition = t.ApplyTo(startPosition);
                     endPosition = t.ApplyTo(endPosition);
                 }
@@ -526,7 +526,7 @@
                 PointInt endPosition = arc.EndPosition;
                 PointInt center = arc.Center;
                 if (Part != null) {
-                    Transformation t = Part.Transformation;
+                    Transformation t = Part.GetLocalTransformation();
                     startPosition = t.ApplyTo(startPosition);
                     endPosition = t.ApplyTo(endPosition);
                     center = t.ApplyTo(center);
@@ -562,7 +562,7 @@
                     PointInt position = rectangle.Position;
                     Angle rotation = rectangle.Rotation;
                     if (Part != null) {
-                        Transformation t = Part.Transformation;
+                        Transformation t = Part.GetLocalTransformation();
                         position = t.ApplyTo(position);
                         rotation += Part.Rotation;
                     }
@@ -588,7 +588,7 @@
                     PointInt[] points = polygon.ClonePoints();
 
                     if (Part != null) {
-                        Transformation t = Part.Transformation;
+                        Transformation t = Part.GetLocalTransformation();
                         t.ApplyTo(points);
                     }
 
@@ -612,7 +612,7 @@
                     //
                     PointInt position = circle.Position;
                     if (Part != null) {
-                        Transformation t = Part.Transformation;
+                        Transformation t = Part.GetLocalTransformation();
                         position = t.ApplyTo(position);
                     }
 
@@ -637,8 +637,10 @@
                     Polygon polygon = circle.GetPolygon(Layer.Side);
                     PointInt[] points = polygon.ClonePoints();
 
-                    if (Part != null)
-                        Part.Transformation.ApplyTo(points);
+                    if (Part != null) {
+                        Transformation t = Part.GetLocalTransformation();
+                        t.ApplyTo(points);
+                    }
 
                     // Escriu el gerber
                     //
@@ -661,8 +663,10 @@
 
                 PartAttributeAdapter paa = new PartAttributeAdapter(Part, text);
                 PointInt position = paa.Position;
-                if (Part != null)
-                    position = Part.Transformation.ApplyTo(position);
+                if (Part != null) {
+                    Transformation t = Part.GetLocalTransformation();
+                    position = t.ApplyTo(position);
+                }
 
                 dr.Draw(paa.Value, 
                     position, 
@@ -713,7 +717,8 @@
                 Angle rotation = pad.Rotation;
                 if (Part != null) {
                     rotation += Part.Rotation;
-                    position = Part.Transformation.ApplyTo(position);
+                    Transformation t = Part.GetLocalTransformation();
+                    position = t.ApplyTo(position);
                 }
 
                 // Selecciona l'apertura
@@ -756,7 +761,8 @@
                 Angle rotation = pad.Rotation;
                 if (Part != null) {
                     rotation += Part.Rotation;
-                    position = Part.Transformation.ApplyTo(position);
+                    Transformation t = Part.GetLocalTransformation();
+                    position = t.ApplyTo(position);
                 }
 
                 // Selecciona l'apertura
@@ -828,8 +834,10 @@
             /// 
             public override void Visit(RegionElement region) {
 
-                Transformation transformation = Part == null ? new Transformation() : Part.Transformation;
-                Polygon polygon = Board.GetRegionPolygon(region, Layer, 150000, transformation);
+                Transformation t = new Transformation();
+                if (Part != null)
+                    t = Part.GetLocalTransformation();
+                Polygon polygon = Board.GetRegionPolygon(region, Layer, 150000, t);
                 DrawPolygon(polygon, region.Thickness);
             }
 
