@@ -19,12 +19,22 @@
             this.rotation = rotation;
         }
 
+        /// <summary>
+        /// Constructor del objecte.
+        /// </summary>
+        /// <param name="offset">Offset.</param>
+        /// 
         public Transformation(PointInt offset) {
 
             this.offset = offset;
             this.rotation = Angle.Zero;
         }
 
+        /// <summary>
+        /// Contructor del objecte.
+        /// </summary>
+        /// <param name="rotation">Rotacio.</param>
+        /// 
         public Transformation(Angle rotation) {
 
             this.offset = new PointInt();
@@ -33,19 +43,24 @@
 
         public PointInt ApplyTo(PointInt point) {
 
-            Matrix m = new Matrix();
-            m.Translate(offset.X, offset.Y);
-            m.RotateAt(rotation.Degrees / 100.0, offset.X, offset.Y);
+            if (rotation.IsZero) 
+                return new PointInt(point.X + offset.X, point.Y + offset.Y);
 
-            double x = point.X;
-            double y = point.Y;
-            double xadd = y * m.M21 + m.OffsetX;
-            double yadd = x * m.M12 + m.OffsetY;
-            x *= m.M11;
-            x += xadd;
-            y *= m.M22;
-            y += yadd;
-            return new PointInt((int)x, (int)y);
+            else {
+                Matrix m = new Matrix();
+                m.Translate(offset.X, offset.Y);
+                m.RotateAt(rotation.Degrees / 100.0, offset.X, offset.Y);
+
+                double x = point.X;
+                double y = point.Y;
+                double xadd = y * m.M21 + m.OffsetX;
+                double yadd = x * m.M12 + m.OffsetY;
+                x *= m.M11;
+                x += xadd;
+                y *= m.M22;
+                y += yadd;
+                return new PointInt((int)x, (int)y);
+            }
         }
 
         public void ApplyTo(PointInt[] points) {
@@ -57,6 +72,10 @@
                             points[i].X + offset.X, 
                             points[i].Y + offset.Y);
             }
+            /*else if (rotation.IsOrthogonal) {
+                int sin = 0;
+                int cos = 0;
+            }*/
             else { 
                 Matrix m = new Matrix();
                 m.Translate(offset.X, offset.Y);

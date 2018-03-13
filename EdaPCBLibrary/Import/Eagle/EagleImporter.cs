@@ -84,6 +84,13 @@
                     board.AddLayer(layer);
                 }
             }
+
+            // Crera els parells de capes
+            //
+            board.DefinePair(board.GetLayer("Top"), board.GetLayer("Bottom"));
+            board.DefinePair(board.GetLayer("TopPlace"), board.GetLayer("BottomPlace"));
+            board.DefinePair(board.GetLayer("TopNames"), board.GetLayer("BottomNames"));
+            board.DefinePair(board.GetLayer("TopValues"), board.GetLayer("BottomValues"));
         }
 
         /// <summary>
@@ -307,11 +314,11 @@
             string layerName = GetLayerName(layerNum);
 
             BoardSide side = BoardSide.Unknown;
-            if (layerNum == 1) 
+            if ((layerNum == 1) || layerName.Contains("Top"))
                 side = BoardSide.Top;
             else if (layerNum > 1 && layerNum < 16) 
                 side = BoardSide.Inner;
-            else if (layerNum == 16)
+            else if ((layerNum == 16) || layerName.Contains("Bottom"))
                 side = BoardSide.Bottom;
 
             LayerFunction function = LayerFunction.Unknown;
@@ -737,8 +744,8 @@
                 rotation = ParseAngle(rot.Substring(i));
             }
 
-
             Part part = new Part(GetComponent(componentKey), name, position, rotation, isFlipped);
+
 
             foreach (XmlNode attrNode in node.SelectNodes("attribute")) {
 
@@ -751,9 +758,14 @@
                 else if (parameter.Name == "VALUE")
                     parameter.Value = value;
 
-                // Corrigeix perque siguin relatives al component
+                // Corrigeix perque la posicio sigui relativa al component
                 //
-                parameter.Position = new PointInt(parameter.Position.X - x, parameter.Position.Y - y);
+                Matrix m = new Matrix();
+                m.Translate(position.X, position.Y);
+                m.RotateAt(-rotation.Degrees / 100, position.X, position.Y);
+                System.Windows.Point p = m.Transform(new System.Windows.Point((double)parameter.Position.X, (double)parameter.Position.Y));
+                parameter.Position = new PointInt((int)p.X, (int)p.Y);
+
                 parameter.Rotation = parameter.Rotation - rotation;
 
                 part.AddAttribute(parameter);

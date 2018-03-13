@@ -47,7 +47,7 @@
             }
 
             /// <summary>
-            /// Visita un element de tipus linea
+            /// Visita un element de tipus 'LineElement'
             /// </summary>
             /// <param name="line">L'objecte a visitar.</param>
             /// 
@@ -71,7 +71,7 @@
             }
 
             /// <summary>
-            /// Visita un element de tipus arc.
+            /// Visita un element de tipus 'ArcElement'.
             /// </summary>
             /// <param name="arc">L'objecte a visitar.</param>
             /// 
@@ -96,7 +96,7 @@
             }
 
             /// <summary>
-            /// Visita un element de tipus rectangle.
+            /// Visita un element de tipus 'RectangleElement'.
             /// </summary>
             /// <param name="rectangle">L'objecte a visitar.</param>
             /// 
@@ -116,7 +116,7 @@
             }
 
             /// <summary>
-            /// Visita un element de tipus cervle
+            /// Visita un element de tipus 'CircleElement'
             /// </summary>
             /// <param name="circle">L'element a visitar.</param>
             /// 
@@ -133,6 +133,11 @@
                 writer.WriteEndElement();
             }
 
+            /// <summary>
+            /// Visita un element de tipus 'TextElement'
+            /// </summary>
+            /// <param name="text">L'element a visitar</param>
+            /// 
             public override void Visit(TextElement text) {
 
                 writer.WriteStartElement("text");
@@ -152,7 +157,7 @@
             }
 
             /// <summary>
-            /// Visita un element de tipus forat.
+            /// Visita un element de tipus 'HoleElement'.
             /// </summary>
             /// <param name="hole">L'element a visitar.</param>
             /// 
@@ -167,6 +172,11 @@
                 writer.WriteEndElement();
             }
 
+            /// <summary>
+            /// Visita un element de tipus 'SmdPadElement'
+            /// </summary>
+            /// <param name="pad">L'element a visitar-</param>
+            /// 
             public override void Visit(SmdPadElement pad) {
 
                 writer.WriteStartElement("spad");
@@ -402,6 +412,18 @@
                     layer.AcceptVisitor(this);
                 writer.WriteEndElement();
 
+                writer.WriteStartElement("layerPairs");
+                foreach (Layer layer in board.Layers) {
+                    Layer pairLayer = board.GetLayerPair(layer);
+                    if (pairLayer != null) {
+                        writer.WriteStartElement("pair");
+                        writer.WriteAttribute("layer1", layer.Name);
+                        writer.WriteAttribute("layer2", pairLayer.Name);
+                        writer.WriteEndElement();
+                    }
+                }
+                writer.WriteEndElement();
+
                 writer.WriteStartElement("signals");
                 foreach (Signal signal in board.Signals)
                     signal.AcceptVisitor(this);
@@ -498,7 +520,12 @@
             /// 
             private static string FormatColor(Color color) {
 
-                return String.Format("{0}, {1}, {2}, {3}", color.A, color.R, color.G, color.B);
+                return String.Format(
+                    "{0}, {1}, {2}, {3}", 
+                    XmlConvert.ToString(color.A),
+                    XmlConvert.ToString(color.R),
+                    XmlConvert.ToString(color.G),
+                    XmlConvert.ToString(color.B));
             }
 
             /// <summary>

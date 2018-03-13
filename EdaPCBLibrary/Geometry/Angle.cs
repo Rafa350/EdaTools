@@ -150,6 +150,24 @@
             }
         }
 
+        public bool Is90 {
+            get {
+                return value == 9000;
+            }
+        }
+
+        public bool Is180 {
+            get {
+                return value == 18000;
+            }
+        }
+
+        public bool Is270 {
+            get {
+                return value == 27000;
+            }
+        }
+
         /// <summary>
         /// Comprova si l'angle es ortogonal respecte els eixos
         /// </summary>

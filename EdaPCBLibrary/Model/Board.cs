@@ -189,6 +189,117 @@
         }
 
         /// <summary>
+        /// Afegeix dues capes aparellades
+        /// </summary>
+        /// <param name="layer1">Primera capa del parell.</param>
+        /// <param name="layer2">Segona capa del parell.</param>
+        /// 
+        public void AddLayer(Layer layer1, Layer layer2) {
+
+            if (layer1 == null)
+                throw new ArgumentNullException("layer1");
+
+            if (layer2 == null)
+                throw new ArgumentNullException("layer2");
+
+            if (layers.Contains(layer1))
+                throw new InvalidOperationException(
+                    String.Format("La capa '{0}', ya pertenece a la placa.", layer1.Name));
+
+            if (layers.Contains(layer2))
+                throw new InvalidOperationException(
+                    String.Format("La capa '{0}', ya pertenece a la placa.", layer2.Name));
+
+            if (layerPairs.ContainsKey(layer1))
+                throw new InvalidOperationException(
+                    String.Format("La capa '{0}', ya esta apareada.", layer1.Name));
+
+            if (layerPairs.ContainsKey(layer2))
+                throw new InvalidOperationException(
+                    String.Format("La capa '{0}', ya esta apareada.", layer2.Name));
+
+            if (layer1.Side == layer2.Side)
+                throw new InvalidOperationException("Ambas capas pertenecen a la misma cara de la placa.");
+
+            layers.Add(layer1);
+            layers.Add(layer2);
+            layerPairs.Add(layer1, layer2);
+            layerPairs.Add(layer2, layer2);
+        }
+
+        public void  RemoveLayer(Layer layer) {
+
+            if (layer == null)
+                throw new ArgumentNullException("layer");
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Defineix un parell de capes.
+        /// </summary>
+        /// <param name="layer1">Primera capa del parell.</param>
+        /// <param name="layer2">Segona capa del parell.</param>
+        /// 
+        public void DefinePair(Layer layer1, Layer layer2) {
+
+            if (layer1 == null)
+                throw new ArgumentNullException("layer1");
+
+            if (layer2 == null)
+                throw new ArgumentNullException("layer2");
+
+            if (layerPairs.ContainsKey(layer1))
+                throw new InvalidOperationException(
+                    String.Format("La capa '{0}', ya esta apareada.", layer1.Name));
+
+            if (layerPairs.ContainsKey(layer2))
+                throw new InvalidOperationException(
+                    String.Format("La capa '{0}', ya esta apareada.", layer2.Name));
+
+            layerPairs.Add(layer1, layer2);
+            layerPairs.Add(layer2, layer1);
+        }
+
+
+        /// <summary>
+        /// Anula la definicio de parell de capes
+        /// </summary>
+        /// <param name="layer1">Primera capa del parell.</param>
+        /// <param name="layer2">Segona capa del parell.</param>
+        /// 
+        public void UndefinePair(Layer layer1, Layer layer2) {
+
+            if (layer1 == null)
+                throw new ArgumentNullException("layer1");
+
+            if (layer2 == null)
+                throw new ArgumentNullException("layer2");
+        }
+
+        /// <summary>
+        /// Obte la capa aparellada d'una capa deperminada.
+        /// </summary>
+        /// <param name="layer">La capa.</param>
+        /// <returns>La capa aparellada.</returns>
+        /// 
+        public Layer GetLayerPair(Layer layer, bool throwOnError = false) {
+
+            if (layer == null)
+                throw new ArgumentNullException("layer");
+
+            Layer pairLayer;
+            if (!layerPairs.TryGetValue(layer, out pairLayer)) {
+                if (throwOnError)
+                    throw new InvalidOperationException(
+                        String.Format("La capa '{0}', no esta apareada con otra capa.", layer.Name));
+                return null;
+            }
+            else
+                return pairLayer;
+        }
+
+        /// <summary>
         /// Obte una capa pel seu nom
         /// </summary>
         /// <param name="name">El nom de la capa.</param>
@@ -513,8 +624,12 @@
             if (layer == null)
                 throw new ArgumentNullException("layer");
 
+            // Si el poligon no es troba en la capa d'interes, no cal fer res
+            //
             if (IsOnLayer(region, layer)) {
 
+                // Obte el poligon de la regio i el transforma si s'escau
+                //
                 Polygon regionPolygon = region.GetPolygon(layer.Side);
                 if (!transformation.IsNull)
                     regionPolygon = regionPolygon.Transformed(transformation);
@@ -525,7 +640,7 @@
 
                     Signal regionSignal = GetSignal(region, null, false);
 
-                    spacing += region.Thickness >> 1;
+                    spacing += region.Thickness / 2;
                     List<Polygon> holePolygons = new List<Polygon>();
 
                     Layer restrictLayer = GetLayer(layer.Side == BoardSide.Top ? Layer.TopRestrictName : Layer.BottomRestrictName);
@@ -600,10 +715,12 @@
                         }
                     }
 
+                    // Genera el poligon amb els forats pertinents
+                    //
                     return PolygonProcessor.ClipExtended(regionPolygon, holePolygons, PolygonProcessor.ClipOperation.Diference);
                 }
 
-                // Si no es capa de senyal no cal fer res mes
+                // Si no es capa de senyal no cal fer res mes, ja que no te forats
                 //
                 else
                     return regionPolygon;
