@@ -685,7 +685,7 @@
 
                         // Obte la transformacio
                         //
-                        Transformation partTransformation = part.GetLocalTransformation();
+                        Transformation localTransformation = part.GetLocalTransformation();
 
                         foreach (Element element in part.Elements) {
 
@@ -696,7 +696,7 @@
                                 //
                                 if (GetSignal(element, part, false) != regionSignal) {
                                     Polygon outlinePolygon = element.GetOutlinePolygon(layer.Side, spacing);
-                                    outlinePolygon = outlinePolygon.Transformed(partTransformation);
+                                    outlinePolygon = outlinePolygon.Transformed(localTransformation);
                                     holePolygons.Add(outlinePolygon);
                                 }
 
@@ -704,7 +704,7 @@
                                 //
                                 else if (element is PadElement) {
                                     Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Side, spacing, 200000);
-                                    thermalPolygon = thermalPolygon.Transformed(partTransformation);
+                                    thermalPolygon = thermalPolygon.Transformed(localTransformation);
                                     for (int i = 0; i < thermalPolygon.Childs.Length; i++)
                                         holePolygons.Add(thermalPolygon.Childs[i]);
                                 }

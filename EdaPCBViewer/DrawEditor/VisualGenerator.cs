@@ -343,7 +343,7 @@
                     m.Rotate((double)rotation.Degrees / 100.0);
                     dc.PushTransform(new MatrixTransform(m));
 
-                    DrawText(dc, pen, new PointInt(0, 0), height, align, value);
+                    //DrawText(dc, pen, new PointInt(0, 0), height, align, value);
                     dc.DrawEllipse(Brushes.YellowGreen, null, new Point(0, 0), 0.1, 0.1);
 
                     dc.Pop();

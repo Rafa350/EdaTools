@@ -760,13 +760,20 @@
 
                 // Corrigeix perque la posicio sigui relativa al component
                 //
-                Matrix m = new Matrix();
-                m.Translate(position.X, position.Y);
-                m.RotateAt(-rotation.Degrees / 100, position.X, position.Y);
-                System.Windows.Point p = m.Transform(new System.Windows.Point((double)parameter.Position.X, (double)parameter.Position.Y));
-                parameter.Position = new PointInt((int)p.X, (int)p.Y);
+                //Matrix m = new Matrix();
+                //m.Translate(parameter.Position.X - position.X, parameter.Position.Y - position.Y);
+                //m.RotateAt(-rotation.Degrees / 100, position.X, position.Y);
+                //System.Windows.Point p = m.Transform(new System.Windows.Point((double)parameter.Position.X, (double)parameter.Position.Y));
+                //parameter.Position = new PointInt((int)p.X, (int)p.Y);
 
-                parameter.Rotation = parameter.Rotation - rotation;
+
+                System.Windows.Point p = new System.Windows.Point(parameter.Position.X - position.X, parameter.Position.Y - position.Y);
+                Matrix m = new Matrix();
+                m.Rotate((rotation.Degrees - parameter.Rotation.Degrees) / 100);
+                p = m.Transform(p);
+
+                parameter.Position = new PointInt((int)p.X, (int) p.Y);
+                //parameter.Rotation = parameter.Rotation - rotation;
 
                 part.AddAttribute(parameter);
             }
