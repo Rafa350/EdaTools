@@ -176,8 +176,8 @@
         /// 
         public int OuterSize {
             get {
-                int dimension = outerSize == 0 ? 2 * (drill * drcOuterSizePercent) + drill : outerSize;
-                return Math.Max(drcOuterSizeMin, Math.Min(drcOuterSizeMax, dimension));
+                int ring = Math.Max(drcOuterSizeMin, Math.Min(drcOuterSizeMax, drill * drcOuterSizePercent));
+                return drill + ring * 2;
             }
             set {
                 outerSize = value;
@@ -190,8 +190,8 @@
         /// 
         public int InnerSize {
             get {
-                int dimension = innerSize == 0 ? 2 * (drill * drcInnerSizePercent) + drill : innerSize;
-                return Math.Max(drcInnerSizeMin, Math.Min(drcInnerSizeMax, dimension));
+                int ring = Math.Max(drcInnerSizeMin, Math.Min(drcInnerSizeMax, drill * drcInnerSizePercent));
+                return drill + ring * 2;
             }
             set {
                 innerSize = value;

@@ -18,9 +18,12 @@
             Oval
         }
 
-        private int drcTopSizeMin = 125000;
+        private int drcTopSizeMin = 175000;
         private int drcTopSizeMax = 2500000;
         private Ratio drcTopSizePercent = Ratio.P25;
+        private int drcBottomSizeMin = 175000;
+        private int drcBottomSizeMax = 2500000;
+        private Ratio drcBottomSizePercent = Ratio.P25;
 
         private ThPadShape shape = ThPadShape.Circular;
         private Angle rotation;
@@ -233,8 +236,35 @@
         /// 
         public int TopSize {
             get {
-                int dimension = topSize == 0 ? 2 * (drill * drcTopSizePercent) + drill : topSize;
-                return Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, dimension));
+                int ring = Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, drill * drcTopSizePercent));
+                return drill + ring * 2;
+            }
+            set {
+                topSize = value;
+            }
+        }
+        /// <summary>
+        /// Obte o asigna el tamany del pad de la cara inferior
+        /// </summary>
+        /// 
+        public int BottomSize {
+            get {
+                int ring = Math.Max(drcBottomSizeMin, Math.Min(drcBottomSizeMax, drill * drcBottomSizePercent));
+                return drill + ring * 2;
+            }
+            set {
+                topSize = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna el tamany del pad de la capa interna.
+        /// </summary>
+        /// 
+        public int InnerSize {
+            get {
+                int ring = Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, drill * drcTopSizePercent));
+                return drill + ring * 2;
             }
             set {
                 topSize = value;

@@ -152,6 +152,18 @@
                     builder.SmdPad(position, TestAccess.Top, Part.Name, pad.Name, signal.Name);
                 }
             }
+
+            public override void Visit(ThPadElement pad) {
+
+                Signal signal = Board.GetSignal(pad, Part, false);
+                if (signal != null) {
+
+                    Transformation t = Part.GetLocalTransformation();
+                    PointInt position = t.ApplyTo(pad.Position);
+
+                    builder.ThPad(position, pad.Drill, Part.Name, pad.Name, signal.Name);
+                }
+            }
         }
     }
 }
