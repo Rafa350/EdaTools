@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam {
 
     using MikroPic.EdaTools.v1.Cam.Gerber;
+    using MikroPic.EdaTools.v1.Cam.Ipcd365;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using System;
     using System.Text;
@@ -103,6 +104,14 @@
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
                     drillGenerator.GenerateContent(writer, layers, GerberDrillGenerator.DrillType.NonPlatedDrill, 1, 2);
+                }
+            }
+
+            Icpd365Generator icpd365Generator = new Icpd365Generator(board);
+            fileName = icpd365Generator.GenerateFileName(prefix);
+            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
+                using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
+                    icpd365Generator.GenerateContent(writer);
                 }
             }
         }
