@@ -89,7 +89,7 @@
                     break;
             }
 
-            int scale = (int)(height / font.Height);
+            int scale = (int)(height / font.Ascendent);
 
             // Dibuixa text
             //

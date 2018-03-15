@@ -255,18 +255,29 @@
         /// 
         public static PointInt[] BuildArc(PointInt center, int radius, Angle startAngle, Angle angle, bool discardLast = false) {
 
-            int numSegments = Math.Abs((angle.Degrees * 32) / 36000);
+            // Calcula el numero de segments
+            //
+            int numSegments = (int) Math.Abs(Math.Floor((angle.Degrees * 32.0) / 36000.0));
             int numPoints = numSegments + (discardLast ? 0 : 1);
+
+            // Calcula l'angle de cada segment
+            //
+            double radSegment = angle.Radiants / numSegments;
+
+            // Calcula el centre
+            //
+            double cx = center.X;
+            double cy = center.Y;
 
             // Calcula el punt inicial
             //
             double x = radius * Math.Cos(startAngle.Radiants);
             double y = radius * Math.Sin(startAngle.Radiants);
 
-            // Calcula el sinus i el cosinus del gur a aplicar a cada iteracio
+            // Calcula el sinus i el cosinus del gir a aplicar a cada iteracio
             //
-            double cos = Math.Cos(angle.Radiants / (double) numSegments);
-            double sin = Math.Sin(angle.Radiants / (double) numSegments);
+            double cos = Math.Cos(radSegment);
+            double sin = Math.Sin(radSegment);
 
             // Crea l'array de punts
             //
@@ -274,7 +285,7 @@
 
             for (int i = 0; i < numPoints; i++) {
 
-                points[i] = new PointInt((int)x + center.X, (int)y + center.Y);
+                points[i] = new PointInt((int)(x + cx), (int)(y + cy));
 
                 double tx = x;
                 x = (cos * tx) - (sin * y);

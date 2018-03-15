@@ -31,8 +31,8 @@
             protected override void Trace(PointInt position, bool stroke, bool first) {
 
                 Point p = new Point(
-                    (double)position.X / 1000000.0,
-                    (double)position.Y / 1000000.0);
+                    position.X / 1000000.0,
+                    position.Y / 1000000.0);
 
                 if (first)
                     ctx.BeginFigure(p, false, false);
@@ -73,16 +73,10 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (Part != null)
-                        dc.PushTransform(GetTransform(Part));
-
                     Color color = GetColor(Layer);
                     Brush brush = CreateBrush(color);
                     Polygon polygon = line.GetPolygon(Layer.Side);
                     DrawPolygon(dc, null, brush, polygon);
-
-                    if (Part != null)
-                        dc.Pop();
                 }
 
                 AddVisual(visual);
@@ -98,16 +92,10 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (Part != null)
-                        dc.PushTransform(GetTransform(Part));
-
                     Color color = GetColor(Layer);
                     Brush brush = CreateBrush(color);
                     Polygon polygon = arc.GetPolygon(Layer.Side);
                     DrawPolygon(dc, null, brush, polygon);
-
-                    if (Part != null)
-                        dc.Pop();
                 }
 
                 AddVisual(visual);
@@ -123,17 +111,11 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (Part != null)
-                        dc.PushTransform(GetTransform(Part));
-
                     Color color = GetColor(Layer);
                     Brush brush = rectangle.Filled ? CreateBrush(color) : null;
-                    Pen pen = rectangle.Filled ? null : CreatePen(color, (double)rectangle.Thickness / 1000000.0);
+                    Pen pen = rectangle.Filled ? null : CreatePen(color, rectangle.Thickness / 1000000.0);
                     Polygon polygon = rectangle.GetPolygon(Layer.Side);
                     DrawPolygon(dc, pen, brush, polygon);
-
-                    if (Part != null)
-                        dc.Pop();
                 }
 
                 AddVisual(visual);
@@ -149,17 +131,11 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (Part != null)
-                        dc.PushTransform(GetTransform(Part));
-
                     Color color = GetColor(Layer);
                     Brush brush = circle.Filled ? CreateBrush(color) : null;
-                    Pen pen = circle.Filled ? null : CreatePen(color, (double)circle.Thickness / 1000000.0);
+                    Pen pen = circle.Filled ? null : CreatePen(color, circle.Thickness / 1000000.0);
                     Polygon polygon = circle.GetPolygon(Layer.Side);
                     DrawPolygon(dc, pen, brush, polygon);
-
-                    if (Part != null)
-                        dc.Pop();
                 }
 
                 AddVisual(visual);
@@ -175,18 +151,13 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (Part != null)
-                        dc.PushTransform(GetTransform(Part));
-
                     Color color = GetColor(Layer);
                     bool isSignalLayer = (Layer.Name == Layer.TopName) || (Layer.Name == Layer.BottomName);
-                    Pen pen = isSignalLayer ? CreatePen(color, (double)region.Thickness / 1000000.0) : null;
+                    Pen pen = isSignalLayer ? CreatePen(color, region.Thickness / 1000000.0) : null;
                     Brush brush = CreateBrush(color);
                     Polygon polygon = Board.GetRegionPolygon(region, Layer, 150000, new Transformation());
                     DrawPolygon(dc, pen, brush, polygon);
 
-                    if (Part != null)
-                        dc.Pop();
                 }
 
                 AddVisual(visual);
@@ -202,22 +173,14 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (Part != null)
-                        dc.PushTransform(GetTransform(Part));
-
                     Color color = GetColor(Layer);
                     Brush polygonBrush = CreateBrush(color);
                     Polygon polygon = via.GetPolygon(Layer.Side);
                     DrawPolygon(dc, null, polygonBrush, polygon);
-
-                    List<Polygon> polygonHoles = new List<Polygon>(polygon.Childs);
-                    if (polygonHoles.Count == 1) {
+                    if (polygon.Childs.Length == 1) {
                         Brush holeBrush = CreateBrush(Colors.Black);
-                        DrawPolygon(dc, null, holeBrush, polygonHoles[0]);
+                        DrawPolygon(dc, null, holeBrush, polygon.Childs[0]);
                     }
-
-                    if (Part != null)
-                        dc.Pop();
                 }
 
                 AddVisual(visual);
@@ -233,16 +196,10 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (Part != null)
-                        dc.PushTransform(GetTransform(Part));
-
                     Color color = GetColor(Layer);
                     Brush brush = CreateBrush(color);
                     Polygon polygon = pad.GetPolygon(Layer.Side);
                     DrawPolygon(dc, null, brush, polygon);
-
-                    if (Part != null)
-                        dc.Pop();
                 }
 
                 AddVisual(visual);
@@ -258,33 +215,27 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (Part != null)
-                        dc.PushTransform(GetTransform(Part));
-
                     Color color = GetColor(Layer);
                     Brush polygonBrush = CreateBrush(color);
                     Polygon polygon = pad.GetPolygon(Layer.Side);
                     DrawPolygon(dc, null, polygonBrush, polygon);
-
-                    List<Polygon> polygonHoles = new List<Polygon>(polygon.Childs);
-                    if (polygonHoles.Count == 1) {
+                    if (polygon.Childs.Length == 1) {
                         Brush holeBrush = CreateBrush(Colors.Black);
-                        DrawPolygon(dc, null, holeBrush, polygonHoles[0]);
+                        DrawPolygon(dc, null, holeBrush, polygon.Childs[0]);
                     }
 
-                    dc.PushTransform(new ScaleTransform(1, -1, (double)pad.Position.X / 1000000.0, (double)pad.Position.Y / 1000000.0));
+                    dc.PushTransform(new ScaleTransform(1, -1, pad.Position.X / 1000000.0, pad.Position.Y / 1000000.0));
+
                     Brush textBrush = CreateBrush(Colors.Yellow);
                     FormattedText formattedText = new FormattedText(
                         pad.Name, CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
                         new Typeface("Arial"), 0.5, textBrush);
                     formattedText.TextAlignment = TextAlignment.Center;
 
-                    Point textPosition = new Point((double)pad.Position.X / 1000000.0, (double)pad.Position.Y / 1000000.0);
+                    Point textPosition = new Point(pad.Position.X / 1000000.0, pad.Position.Y / 1000000.0);
                     dc.DrawText(formattedText, new Point(textPosition.X, textPosition.Y - formattedText.Height / 2));
-                    dc.Pop();
 
-                    if (Part != null)
-                        dc.Pop();
+                    dc.Pop();
                 }
 
                 AddVisual(visual);
@@ -300,16 +251,10 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (Part != null)
-                        dc.PushTransform(GetTransform(Part));
-
                     Color color = GetColor(Layer);
                     Pen pen = CreatePen(color, 0.05);
                     Brush brush = CreateBrush(Colors.Black);
                     DrawPolygon(dc, pen, brush, hole.GetPolygon(Layer.Side));
-
-                    if (Part != null)
-                        dc.Pop();
                 }
 
                 AddVisual(visual);
@@ -325,31 +270,22 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
 
-                    if (Part != null)
-                        dc.PushTransform(GetTransform(Part));
-
                     Color color = GetColor(Layer);
-                    Pen pen = CreatePen(color, (double)text.Thickness / 1000000.0);
+                    Pen pen = CreatePen(color, text.Thickness / 1000000.0);
 
                     PartAttributeAdapter paa = new PartAttributeAdapter(Part, text);
                     Point position = paa.Position.ToPoint();
                     Angle rotation = paa.Rotation;
-                    int height = paa.Height;
-                    TextAlign align = paa.Align;
-                    string value = paa.Value;
-
+ 
                     Matrix m = new Matrix();
                     m.Translate(position.X, position.Y);
-                    m.Rotate((double)rotation.Degrees / 100.0);
+                    m.RotateAt(rotation.Degrees / 100.0, position.X, position.Y);
                     dc.PushTransform(new MatrixTransform(m));
 
-                    //DrawText(dc, pen, new PointInt(0, 0), height, align, value);
-                    dc.DrawEllipse(Brushes.YellowGreen, null, new Point(0, 0), 0.1, 0.1);
+                    DrawText(dc, pen, new PointInt(0, 0), paa.Height, paa.Align, paa.Value);
+                    dc.DrawEllipse(Brushes.YellowGreen, null, new Point(0, 0), 0.15, 0.15);
 
                     dc.Pop();
-
-                    if (Part != null)
-                        dc.Pop();
                 }
 
                 AddVisual(visual);
@@ -363,6 +299,7 @@
             public override void Visit(Part part) {
 
                 DrawingVisual visual = new DrawingVisual();
+                visual.Transform = GetTransform(part);
                 AddVisual(visual);
 
                 DrawingVisual saveVisual = parentVisual;
@@ -405,8 +342,8 @@
             /// 
             private static Transform GetTransform(Part part) {
 
-                Point position = new Point((double)part.Position.X / 1000000.0, (double)part.Position.Y / 1000000.0);
-                double angle = (double)part.Rotation.Degrees / 100.0;
+                Point position = new Point(part.Position.X / 1000000.0, part.Position.Y / 1000000.0);
+                double angle = part.Rotation.Degrees / 100.0;
 
                 Matrix m = new Matrix();
                 m.Translate(position.X, position.Y);
@@ -436,6 +373,7 @@
                     pen = new Pen(brush, thickness);
                     pen.StartLineCap = PenLineCap.Round;
                     pen.EndLineCap = PenLineCap.Round;
+                    pen.LineJoin = PenLineJoin.Round;
                     pen.Freeze();
 
                     penCache.Add(new Tuple<Color, double>(color, thickness), pen);
