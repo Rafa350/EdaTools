@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Ipcd365 {
 
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
@@ -54,6 +55,7 @@
             GenerateFileHeader(builder);
             GenerateVias(builder);
             GeneratePads(builder);
+            GenerateNets(builder);
             GenerateFileTail(builder);
         }
 
@@ -69,6 +71,7 @@
             builder.Comment("EdaTools CAM processor. IPC-D-365 generator.");
             builder.Comment(String.Format("Start timestamp: {0:HH:mm:ss.fff}", DateTime.Now));
             builder.Comment("BEGIN HEADER");
+            builder.SetVersion();
             builder.SetUnits();
         }
 
@@ -112,6 +115,28 @@
             visitor.Run();
 
             builder.Comment("END PADS");
+        }
+
+        /// <summary>
+        /// Genera la definicio de senyals
+        /// </summary>
+        /// <param name="builder">El generador de codi.</param>
+        /// 
+        private void GenerateNets(Ipcd365Builder builder) {
+
+            builder.Comment("BEGIN NETS");
+
+            foreach (Signal signal in board.Signals) {
+                IEnumerable<Tuple<IConectable, Part>> items = board.GetConnectedItems(signal);
+                if (items != null)
+                    foreach (Tuple<IConectable, Part> item in items) {
+                        if (item.Item2 is Part) {
+
+                        }
+                    }
+            }
+
+            builder.Comment("END NETS");
         }
 
         private sealed class ViasVisitor: ElementVisitor {

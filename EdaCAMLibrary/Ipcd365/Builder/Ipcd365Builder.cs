@@ -43,6 +43,11 @@
             writer.WriteLine();
         }
 
+        public void SetVersion() {
+
+            writer.WriteLine("P  VER IPC-D-365A");
+        }
+
         /// <summary>
         /// Selecciona les unitats
         /// </summary>

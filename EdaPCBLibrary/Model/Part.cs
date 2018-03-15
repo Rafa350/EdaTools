@@ -61,6 +61,11 @@
             visitor.Visit(this);
         }
 
+        public override string ToString() {
+
+            return String.Format("Part: '{0}'", name);
+        }
+
         public void AddAttribute(PartAttribute attribute) {
 
             if (attribute == null)
