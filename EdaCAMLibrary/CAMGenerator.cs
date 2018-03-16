@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam {
 
     using MikroPic.EdaTools.v1.Cam.Gerber;
-    using MikroPic.EdaTools.v1.Cam.Ipcd365;
+    using MikroPic.EdaTools.v1.Cam.Ipcd356;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using System;
     using System.Text;
@@ -107,11 +107,11 @@
                 }
             }
 
-            Icpd365Generator icpd365Generator = new Icpd365Generator(board);
-            fileName = icpd365Generator.GenerateFileName(prefix);
+            Ipcd356Generator ipcd356Generator = new Ipcd356Generator(board);
+            fileName = ipcd356Generator.GenerateFileName(prefix);
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (TextWriter writer = new StreamWriter(stream, Encoding.ASCII)) {
-                    icpd365Generator.GenerateContent(writer);
+                    ipcd356Generator.GenerateContent(writer);
                 }
             }
         }

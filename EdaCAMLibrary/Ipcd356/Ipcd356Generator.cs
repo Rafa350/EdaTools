@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Ipcd365 {
+﻿namespace MikroPic.EdaTools.v1.Cam.Ipcd356 {
 
     using System;
     using System.Collections.Generic;
@@ -7,12 +7,12 @@
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
-    using MikroPic.EdaTools.v1.Cam.Ipcd365.Builder;
+    using MikroPic.EdaTools.v1.Cam.Ipcd356.Builder;
 
     /// <summary>
-    /// Generador de codi en format IPCD365
+    /// Generador de codi en format IPCD356
     /// </summary>
-    public sealed class Icpd365Generator {
+    public sealed class Ipcd356Generator {
 
         private readonly Board board;
 
@@ -21,7 +21,7 @@
         /// </summary>
         /// <param name="board">La placa.</param>
         /// 
-        public Icpd365Generator(Board board) {
+        public Ipcd356Generator(Board board) {
 
             if (board == null)
                 throw new ArgumentNullException("board");
@@ -50,7 +50,7 @@
             if (writer == null)
                 throw new ArgumentNullException("writer");
 
-            Ipcd365Builder builder = new Ipcd365Builder(writer);
+            Ipcd356Builder builder = new Ipcd356Builder(writer);
 
             GenerateFileHeader(builder);
             GenerateVias(builder);
@@ -64,7 +64,7 @@
         /// </summary>
         /// <param name="builder">El generador de codi.</param>
         /// 
-        private void GenerateFileHeader(Ipcd365Builder builder) {
+        private void GenerateFileHeader(Ipcd356Builder builder) {
 
             builder.Comment("BEGIN FILE");
             builder.Comment("EdaTools v1.0.");
@@ -72,7 +72,8 @@
             builder.Comment(String.Format("Start timestamp: {0:HH:mm:ss.fff}", DateTime.Now));
             builder.Comment("BEGIN HEADER");
             builder.SetVersion();
-            builder.SetUnits();
+            builder.SetUnits(Units.Millimeters);
+            builder.SetImage();
         }
 
         /// <summary>
@@ -80,7 +81,7 @@
         /// </summary>
         /// <param name="builder">El generador de codi.</param>
         /// 
-        private void GenerateFileTail(Ipcd365Builder builder) {
+        private void GenerateFileTail(Ipcd356Builder builder) {
 
             builder.Comment(String.Format("End timestamp: {0:HH:mm:ss.fff}", DateTime.Now));
             builder.Comment("END FILE");
@@ -92,7 +93,7 @@
         /// </summary>
         /// <param name="builder">El generador de codi.</param>
         /// 
-        private void GenerateVias(Ipcd365Builder builder) {
+        private void GenerateVias(Ipcd356Builder builder) {
 
             builder.Comment("BEGIN VIAS");
             
@@ -107,7 +108,7 @@
         /// </summary>
         /// <param name="builder">El generador de codi.</param>
         /// 
-        private void GeneratePads(Ipcd365Builder builder) {
+        private void GeneratePads(Ipcd356Builder builder) {
 
             builder.Comment("BEGIN PADS");
 
@@ -122,28 +123,64 @@
         /// </summary>
         /// <param name="builder">El generador de codi.</param>
         /// 
-        private void GenerateNets(Ipcd365Builder builder) {
+        private void GenerateNets(Ipcd356Builder builder) {
 
             builder.Comment("BEGIN NETS");
 
-            foreach (Signal signal in board.Signals) {
-                IEnumerable<Tuple<IConectable, Part>> items = board.GetConnectedItems(signal);
-                if (items != null)
-                    foreach (Tuple<IConectable, Part> item in items) {
-                        if (item.Item2 is Part) {
-
-                        }
-                    }
-            }
+            IVisitor visitor = new NetsVisitor(builder, board);
+            visitor.Run();
 
             builder.Comment("END NETS");
         }
 
+        private sealed class NetsVisitor: SignalVisitor {
+
+            private readonly Ipcd356Builder builder;
+
+            public NetsVisitor(Ipcd356Builder builder, Board board)
+                : base(board) {
+
+                this.builder = builder;
+            }
+
+            public override void Visit(LineElement line) {
+
+                int layerNum = 3;
+                if (Board.IsOnLayer(line, Board.GetLayer(Layer.TopName)))
+                    layerNum = 1;
+                else if (Board.IsOnLayer(line, Board.GetLayer(Layer.BottomName)))
+                    layerNum = 2;
+
+                if (layerNum > 0) { 
+                    PointInt[] points = new PointInt[2];
+                    points[0] = line.StartPosition;
+                    points[1] = line.EndPosition;
+                    builder.Conductor(points, layerNum, line.Thickness, Signal.Name);
+                }
+            }
+
+            public override void Visit(ArcElement arc) {
+
+                int layerNum = 3;
+                if (Board.IsOnLayer(arc, Board.GetLayer(Layer.TopName)))
+                    layerNum = 1;
+                else if (Board.IsOnLayer(arc, Board.GetLayer(Layer.BottomName)))
+                    layerNum = 2;
+
+                if (layerNum > 0) {
+                    PointInt[] points = new PointInt[2];
+                    points[0] = arc.StartPosition;
+                    points[1] = arc.EndPosition;
+                    builder.Conductor(points, layerNum, arc.Thickness, Signal.Name);
+                }
+            }
+        }
+
         private sealed class ViasVisitor: ElementVisitor {
 
-            private readonly Ipcd365Builder builder;
+            private readonly Ipcd356Builder builder;
 
-            public ViasVisitor(Ipcd365Builder builder, Board board) 
+            public ViasVisitor(Ipcd356Builder builder, Board board) 
                 : base(board, null) {
 
                 this.builder = builder;
@@ -158,9 +195,9 @@
 
         private sealed class PadsVisitor : ElementVisitor {
 
-            private readonly Ipcd365Builder builder;
+            private readonly Ipcd356Builder builder;
 
-            public PadsVisitor(Ipcd365Builder builder, Board board)
+            public PadsVisitor(Ipcd356Builder builder, Board board)
                 : base(board, null) {
 
                 this.builder = builder;

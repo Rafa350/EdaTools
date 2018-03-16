@@ -58,8 +58,8 @@
     <Compile Include="Gerber\Builder\Apertures\MacroAperture.cs" />
     <Compile Include="Gerber\Builder\Apertures\PoligonAperture.cs" />
     <Compile Include="Gerber\Builder\Apertures\RectangleAperture.cs" />
-    <Compile Include="Ipcd365\Builder\Ipcd365Builder.cs" />
-    <Compile Include="Ipcd365\Icpd365Generator.cs" />
+    <Compile Include="Ipcd356\Builder\Ipcd356Builder.cs" />
+    <Compile Include="Ipcd356\Ipcd356Generator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
