@@ -19,36 +19,30 @@
 
             double x1 = startPosition.X;
             double y1 = startPosition.Y;
+
             double x2 = endPosition.X;
             double y2 = endPosition.Y;
 
-            // Calcula el punt central
-            //
             double mx = (x1 + x2) / 2.0;
             double my = (y1 + y2) / 2.0;
 
-            // Calcula la distancia entre els dos punts.
-            //
-            double d = Math.Sqrt(Math.Pow(x2 - x1, 2.0) + Math.Pow(y2 - y1, 2.0));
+            double dx = x2 - x1;
+            double dy = y2 - y1;
+            double d = Math.Sqrt((dx * dx) + (dy * dy));
 
-            // Calcula el radi
-            //
-            double r = Math.Abs((d / 2.0) / Math.Sin(angle.Radiants / 2.0));
+            double a = angle.Radiants / 2.0;
 
-            // Calcula el centre
-            //
-            double cx, cy;
-            if (angle.Degrees > 0) {
-                cx = mx + Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (y1 - y2) / d;
-                cy = my + Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (x2 - x1) / d;
-            }
+            double r = Math.Abs(d / 2.0 / Math.Sin(a));
+            double s = Math.Abs(r * Math.Cos(a));
+            if (a < 0)
+                s = -s;
+            if (Math.Abs(a) > (Math.PI / 2.0))
+                s = -s;
 
-            else {
-                cx = mx - Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (y1 - y2) / d;
-                cy = my - Math.Sqrt(Math.Pow(r, 2.0) - Math.Pow((d / 2.0), 2.0)) * (x2 - x1) / d;
-            }
+            double cx = mx + s * (y1 - y2) / d;
+            double cy = my + s * (x2 - x1) / d;
 
-            return new PointInt((int) cx, (int) cy);
+            return new PointInt((int)cx, (int)cy);
         }
 
         public static Angle StartAngle(PointInt startPosition, PointInt center) {
@@ -65,8 +59,11 @@
 
             double dx = endPosition.X - startPosition.X;
             double dy = endPosition.Y - startPosition.Y;
-            double length = Math.Sqrt((dx * dx) + (dy * dy));
-            return (int) Math.Abs(length / 2.0 / Math.Sin(angle.Radiants / 2.0));
+            double d = Math.Sqrt((dx * dx) + (dy * dy));
+
+            double a = angle.Radiants / 2.0;
+
+            return (int) Math.Abs(d / 2.0 / Math.Sin(a));
         }
     }
 }

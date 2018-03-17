@@ -668,9 +668,7 @@
                     position = t.ApplyTo(position);
                 }
 
-                dr.Draw(paa.Value, 
-                    position, 
-                    paa.Align, text.Height);
+                dr.Draw(paa.Value, position, paa.Align, paa.Height);
             }
 
             /// <summary>

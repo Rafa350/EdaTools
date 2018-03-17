@@ -93,9 +93,8 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            PointInt currentPoint = new PointInt();
-
             PointInt firstPoint = new PointInt();
+            PointInt prevPoint = new PointInt();
             Angle angle = Angle.Zero;
 
             List<PointInt> points = new List<PointInt>();
@@ -103,30 +102,28 @@
             bool first = true;
             foreach (Segment segment in segments) {
 
+                // Guarda el prinper punt, per tancar el poligon
+                //
                 if (first) {
                     first = false;
                     firstPoint = segment.Position;
+                }
+
+                // Tram recte
+                //
+                if (angle.IsZero)
                     points.Add(segment.Position);
-                }
 
+                // Tram circular
+                //
                 else {
-                 
-                    // Tram recte
-                    //
-                    if (angle.IsZero)
-                        points.Add(segment.Position);
-
-                    // Tram circular
-                    //
-                    else {
-                        PointInt center = ArcUtils.Center(currentPoint, segment.Position, angle);
-                        int radius = ArcUtils.Radius(currentPoint, segment.Position, angle);
-                        Angle startAngle = ArcUtils.StartAngle(currentPoint, center);
-                        points.AddRange(PolygonBuilder.BuildArc(center, radius, startAngle, angle));
-                    }
+                    PointInt center = ArcUtils.Center(prevPoint, segment.Position, angle);
+                    int radius = ArcUtils.Radius(prevPoint, segment.Position, angle);
+                    Angle startAngle = ArcUtils.StartAngle(prevPoint, center);
+                    points.AddRange(PolygonBuilder.BuildArc(center, radius, startAngle, angle));
                 }
 
-                currentPoint = segment.Position;
+                prevPoint = segment.Position;
                 angle = segment.Angle;
             }
 
@@ -134,9 +131,9 @@
                 points.Add(firstPoint);
 
             else {
-                PointInt center = ArcUtils.Center(currentPoint, firstPoint, angle);
-                int radius = ArcUtils.Radius(currentPoint, firstPoint, angle);
-                Angle startAngle = ArcUtils.StartAngle(currentPoint, center);
+                PointInt center = ArcUtils.Center(prevPoint, firstPoint, angle);
+                int radius = ArcUtils.Radius(prevPoint, firstPoint, angle);
+                Angle startAngle = ArcUtils.StartAngle(prevPoint, center);
                 points.AddRange(PolygonBuilder.BuildArc(center, radius, startAngle, angle, false));
             }
 

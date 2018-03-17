@@ -39,6 +39,10 @@
         <pair layer1="BottomNames" layer2="TopNames" />
         <pair layer1="TopValues" layer2="BottomValues" />
         <pair layer1="BottomValues" layer2="TopValues" />
+        <pair layer1="TopStop" layer2="BottomStop" />
+        <pair layer1="BottomStop" layer2="TopStop" />
+        <pair layer1="TopCream" layer2="BottomCream" />
+        <pair layer1="BottomCream" layer2="TopCream" />
     </layerPairs>
     <signals>
         <signal name="GND" />

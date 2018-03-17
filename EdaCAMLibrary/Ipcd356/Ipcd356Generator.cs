@@ -1,13 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Ipcd356 {
 
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
+    using MikroPic.EdaTools.v1.Cam.Ipcd356.Builder;
     using MikroPic.EdaTools.v1.Pcb.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
-    using MikroPic.EdaTools.v1.Cam.Ipcd356.Builder;
+    using System;
+    using System.IO;
 
     /// <summary>
     /// Generador de codi en format IPCD356
@@ -133,6 +132,9 @@
             builder.Comment("END NETS");
         }
 
+        /// <summary>
+        /// Visitador per generar els senyals
+        /// </summary>
         private sealed class NetsVisitor: SignalVisitor {
 
             private readonly Ipcd356Builder builder;
@@ -176,6 +178,9 @@
             }
         }
 
+        /// <summary>
+        /// Visitador per generar les definicions de vias
+        /// </summary>
         private sealed class ViasVisitor: ElementVisitor {
 
             private readonly Ipcd356Builder builder;
@@ -193,6 +198,9 @@
             }
         }
 
+        /// <summary>
+        /// Visitador per generar les definicions de pads
+        /// </summary>
         private sealed class PadsVisitor : ElementVisitor {
 
             private readonly Ipcd356Builder builder;

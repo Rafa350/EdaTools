@@ -87,10 +87,12 @@
 
             // Crera els parells de capes
             //
-            board.DefinePair(board.GetLayer("Top"), board.GetLayer("Bottom"));
-            board.DefinePair(board.GetLayer("TopPlace"), board.GetLayer("BottomPlace"));
-            board.DefinePair(board.GetLayer("TopNames"), board.GetLayer("BottomNames"));
-            board.DefinePair(board.GetLayer("TopValues"), board.GetLayer("BottomValues"));
+            board.DefinePair(board.GetLayer(Layer.TopName), board.GetLayer(Layer.BottomName));
+            board.DefinePair(board.GetLayer(Layer.TopPlaceName), board.GetLayer(Layer.BottomPlaceName));
+            board.DefinePair(board.GetLayer(Layer.TopNamesName), board.GetLayer(Layer.BottomNamesName));
+            board.DefinePair(board.GetLayer(Layer.TopValuesName), board.GetLayer(Layer.BottomValuesName));
+            board.DefinePair(board.GetLayer(Layer.TopStopName), board.GetLayer(Layer.BottomStopName));
+            board.DefinePair(board.GetLayer(Layer.TopCreamName), board.GetLayer(Layer.BottomCreamName));
         }
 
         /// <summary>
