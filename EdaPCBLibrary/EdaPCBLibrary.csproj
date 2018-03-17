@@ -87,6 +87,7 @@
     <Compile Include="Model\IPosition.cs" />
     <Compile Include="Model\IRotation.cs" />
     <Compile Include="Model\ISize.cs" />
+    <Compile Include="Model\Visitors\BlockVisitor.cs" />
     <Compile Include="Model\Visitors\DefaultVisitor.cs" />
     <Compile Include="Model\Elements\ArcElement.cs" />
     <Compile Include="Model\Element.cs" />
