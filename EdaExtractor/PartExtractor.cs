@@ -23,23 +23,27 @@
 
                 wr.WriteStartDocument();
                 wr.WriteStartElement("board");
-                wr.WriteStartElement("blocks");
 
-                foreach (Block block in board.Blocks) {
+                foreach (Part part in board.Parts) {
+                    wr.WriteStartElement("part");
+                    wr.WriteAttributeString("name", part.Name);
+                    wr.WriteAttributeString("position", part.Name);
+                    wr.WriteAttributeString("rotation", part.Name);
+                    wr.WriteAttributeString("side", part.Name);
 
-                    wr.WriteStartElement("block");
-
-                    foreach (Part part in board.Parts)
-                        if (part.Block == block) {
-
-                            wr.WriteStartElement("");
-                            wr.WriteEndElement();
-                        }
+                    wr.WriteStartElement("attributes");
+                    foreach (PartAttribute attribute in part.Attributes) {
+                        wr.WriteStartElement("attribute");
+                        wr.WriteAttributeString("name", attribute.Name);
+                        if (attribute.Value != null)
+                            wr.WriteAttributeString("value", attribute.Value);
+                        wr.WriteEndElement();
+                    }
+                    wr.WriteEndElement();
 
                     wr.WriteEndElement();
                 }
 
-                wr.WriteEndElement();
                 wr.WriteEndElement();
                 wr.WriteEndDocument();
             }

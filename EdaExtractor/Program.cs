@@ -15,11 +15,14 @@
 
             else {
 
-                string inFileName = args[0];
-                string outFileName = "";
+                string inputFileName = Path.GetFullPath(args[0]);
+                string folder = Path.GetDirectoryName(inputFileName);
+                string name = Path.GetFileNameWithoutExtension(inputFileName);
 
-                Board board = LoadBoard(inFileName);
-                ExtractData(board, outFileName);
+                string outputFileName = string.Format(@"{0}\{1}_parts.xml", folder, name);
+
+                Board board = LoadBoard(inputFileName);
+                ExtractData(board, outputFileName);
             }
         }
 
