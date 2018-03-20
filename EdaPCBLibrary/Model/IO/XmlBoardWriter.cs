@@ -280,8 +280,8 @@
                     writer.WriteAttribute("position", FormatPoint(part.Position));
                     if (!part.Rotation.IsZero)
                         writer.WriteAttribute("rotation", FormatAngle(part.Rotation));
-                    if (part.IsFlipped)
-                        writer.WriteAttribute("flipped", part.IsFlipped);
+                    if (part.Side != BoardSide.Top)
+                        writer.WriteAttribute("side", part.Side);
 
                     // Escriu la llista de pads.
                     //

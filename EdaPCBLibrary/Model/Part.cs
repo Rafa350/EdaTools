@@ -10,7 +10,7 @@
         private string name;
         private PointInt position;
         private Angle rotation;
-        private bool isFlipped;
+        private BoardSide side = BoardSide.Top;
         private readonly Block block;
         private Dictionary<string, PartAttribute> attributes = new Dictionary<string, PartAttribute>();
 
@@ -34,9 +34,9 @@
         /// <param name="name">El nom.</param>
         /// <param name="position">Posicio.</param>
         /// <param name="rotation">Angle de rotacio</param>
-        /// <param name="isFlipped">Indica si va girat.</param>
+        /// <param name="side">Indica la cara de la placa.</param>
         /// 
-        public Part(Block block, string name, PointInt position, Angle rotation, bool isFlipped = false) {
+        public Part(Block block, string name, PointInt position, Angle rotation, BoardSide side = BoardSide.Top) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -44,10 +44,13 @@
             if (block == null)
                 throw new ArgumentNullException("block");
 
+            if ((side != BoardSide.Top) && (side != BoardSide.Bottom))
+                throw new ArgumentOutOfRangeException("side");
+
             this.name = name;
             this.position = position;
             this.rotation = rotation;
-            this.isFlipped = isFlipped;
+            this.side = side;
             this.block = block;
         }
 
@@ -148,12 +151,14 @@
             }
         }
 
-        public bool IsFlipped {
+        public BoardSide Side {
             get {
-                return isFlipped;
+                return side;
             }
             set {
-                isFlipped = value;
+                if ((value != BoardSide.Top) && (value != BoardSide.Bottom))
+                    throw new ArgumentOutOfRangeException("side");
+                side = value;
             }
         }
 

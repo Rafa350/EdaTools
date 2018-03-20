@@ -171,11 +171,12 @@
 
                 PointInt position = ParsePoint(partNode.AttributeAsString("position"));
                 Angle rotation = ParseAngle(partNode.AttributeAsString("rotation"));
+                BoardSide side = partNode.AttributeAsEnum<BoardSide>("side", BoardSide.Top);
 
                 string blockName = partNode.AttributeAsString("block");
 
                 Block block = board.GetBlock(blockName);
-                Part part = new Part(block, name, position, rotation, false);
+                Part part = new Part(block, name, position, rotation, side);
                 board.AddPart(part);
 
                 foreach (XmlNode attributeNode in partNode.SelectNodes("attributes/attribute")) {

@@ -1,6 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Extractor {
 
     using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Pcb.Geometry;
+    using System;
     using System.IO;
     using System.Xml;
 
@@ -8,12 +10,28 @@
 
         private readonly Board board;
 
+        /// <summary>
+        /// Contructor del objecte.
+        /// </summary>
+        /// <param name="board">La placa.</param>
+        /// 
         public PartExtractor(Board board) {
+
+            if (board == null)
+                throw new ArgumentNullException("board");
 
             this.board = board;
         }
 
+        /// <summary>
+        /// Genera les dades.
+        /// </summary>
+        /// <param name="writer">Es escriptor de sortida.</param>
+        /// 
         public void Extract(TextWriter writer) {
+
+            if (writer == null)
+                throw new ArgumentNullException("writer");
 
             XmlWriterSettings wrSettings = new XmlWriterSettings();
             wrSettings.Indent = true;
@@ -23,13 +41,15 @@
 
                 wr.WriteStartDocument();
                 wr.WriteStartElement("board");
+                wr.WriteAttributeString("units", "mm");
+                wr.WriteStartElement("parts");
 
                 foreach (Part part in board.Parts) {
                     wr.WriteStartElement("part");
                     wr.WriteAttributeString("name", part.Name);
-                    wr.WriteAttributeString("position", part.Name);
-                    wr.WriteAttributeString("rotation", part.Name);
-                    wr.WriteAttributeString("side", part.Name);
+                    wr.WriteAttributeString("position", FormatPoint(part.Position));
+                    wr.WriteAttributeString("rotation", FormatAngle(part.Rotation));
+                    wr.WriteAttributeString("side", part.Side.ToString());
 
                     wr.WriteStartElement("attributes");
                     foreach (PartAttribute attribute in part.Attributes) {
@@ -45,8 +65,45 @@
                 }
 
                 wr.WriteEndElement();
+                wr.WriteEndElement();
                 wr.WriteEndDocument();
             }
+        }
+
+        /// <summary>
+        /// Formateja una dimensio en mm
+        /// </summary>
+        /// <param name="value">Valor de la dimensio.</param>
+        /// <returns>El valor formatejat.</returns>
+        /// 
+        private static string FormatNumber(int value) {
+
+            return XmlConvert.ToString(value / 1000000.0);
+        }
+
+        /// <summary>
+        /// Formateja un punt en mm
+        /// </summary>
+        /// <param name="point">El valor del punt.</param>
+        /// <returns>El valor formatejat.</returns>
+        /// 
+        private static string FormatPoint(PointInt point) {
+
+            return String.Format(
+                "{0}, {1}",
+                XmlConvert.ToString(point.X / 1000000.0),
+                XmlConvert.ToString(point.Y / 1000000.0));
+        }
+
+        /// <summary>
+        /// Formateja un angle en graus
+        /// </summary>
+        /// <param name="angle">El valor del angle</param>
+        /// <returns>El angle formatejat.</returns>
+        /// 
+        private static string FormatAngle(Angle angle) {
+
+            return XmlConvert.ToString(angle.Degrees / 100.0);
         }
     }
 }

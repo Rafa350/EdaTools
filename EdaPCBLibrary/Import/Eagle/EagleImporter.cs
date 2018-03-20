@@ -727,8 +727,11 @@
 
             // Obte l'angle de rotacio
             //
-            bool isFlipped = false;
             Angle rotation = Angle.Zero;
+
+            // obte la cara de la placa
+            //
+            BoardSide side = BoardSide.Top;
 
             if (AttributeExists(node, "rot")) {
 
@@ -737,7 +740,7 @@
                 int i;
                 for (i = 0; i < rot.Length; i++) {
                     if (rot[i] == 'M')
-                        isFlipped = true;
+                       side = BoardSide.Bottom;
 
                     else if (Char.IsDigit(rot[i]))
                         break;
@@ -746,7 +749,7 @@
                 rotation = ParseAngle(rot.Substring(i));
             }
 
-            Part part = new Part(GetComponent(componentKey), name, position, rotation, isFlipped);
+            Part part = new Part(GetComponent(componentKey), name, position, rotation, side);
 
 
             foreach (XmlNode attrNode in node.SelectNodes("attribute")) {

@@ -608,6 +608,16 @@
         #region Metodes per operacions amb poligons
 
         /// <summary>
+        /// Obte el poligon del perfil de la placa. Es calcula amb es elements de la capa profile.
+        /// </summary>
+        /// <returns>El poligon.</returns>
+        /// 
+        public Polygon GetOutlinePolygon() {
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Calcula el poligon d'una regio.
         /// </summary>
         /// <param name="region">L'element de tipus regio.</param>
