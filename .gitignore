@@ -2,6 +2,7 @@ packages
 .vs
 bin
 obj
-*.gbr
 *.rar
-*.ipc
+*.zip
+
+

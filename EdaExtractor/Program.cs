@@ -19,7 +19,7 @@
                 string folder = Path.GetDirectoryName(inputFileName);
                 string name = Path.GetFileNameWithoutExtension(inputFileName);
 
-                string outputFileName = string.Format(@"{0}\{1}_parts.xml", folder, name);
+                string outputFileName = string.Format(@"{0}\{1}_PartList.xml", folder, name);
 
                 Board board = LoadBoard(inputFileName);
                 ExtractData(board, outputFileName);

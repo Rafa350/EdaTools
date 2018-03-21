@@ -51,15 +51,20 @@
                     wr.WriteAttributeString("rotation", FormatAngle(part.Rotation));
                     wr.WriteAttributeString("side", part.Side.ToString());
 
-                    wr.WriteStartElement("attributes");
+                    bool hasAttributes = false;
                     foreach (PartAttribute attribute in part.Attributes) {
+                        if (!hasAttributes) {
+                            hasAttributes = true;
+                            wr.WriteStartElement("attributes");
+                        }
                         wr.WriteStartElement("attribute");
                         wr.WriteAttributeString("name", attribute.Name);
                         if (attribute.Value != null)
                             wr.WriteAttributeString("value", attribute.Value);
                         wr.WriteEndElement();
                     }
-                    wr.WriteEndElement();
+                    if (hasAttributes)
+                        wr.WriteEndElement();
 
                     wr.WriteEndElement();
                 }

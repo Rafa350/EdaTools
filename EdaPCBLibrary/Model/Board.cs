@@ -194,7 +194,7 @@
         /// <param name="layer1">Primera capa del parell.</param>
         /// <param name="layer2">Segona capa del parell.</param>
         /// 
-        public void AddLayer(Layer layer1, Layer layer2) {
+        public void AddLayerPair(Layer layer1, Layer layer2) {
 
             if (layer1 == null)
                 throw new ArgumentNullException("layer1");
@@ -231,6 +231,10 @@
 
             if (layer == null)
                 throw new ArgumentNullException("layer");
+
+            if (!layers.Contains(layer))
+                throw new InvalidOperationException(
+                    String.Format("La capa '{0}', no pertenece a la placa.", layer.Name));
 
             throw new NotImplementedException();
         }
