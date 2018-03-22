@@ -145,6 +145,11 @@
             return results;
         }
 
+        public static Polygon CreateFromSegments(IEnumerable<LineInt> lines) {
+
+            return null;
+        }
+
         /// <summary>
         /// Conversio a llista de punts.
         /// </summary>
