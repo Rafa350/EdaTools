@@ -56,23 +56,7 @@
   <ItemGroup>
     <Compile Include="Export\FreeCad\FreeCadExporter.cs" />
     <Compile Include="Export\OpenScad\OpenScadExporter.cs" />
-    <Compile Include="Geometry\Angle.cs" />
-    <Compile Include="Geometry\ArcUtils.cs" />
-    <Compile Include="Geometry\Fonts\FontFactory.cs" />
-    <Compile Include="Geometry\Fonts\Glyph.cs" />
-    <Compile Include="Geometry\Fonts\GlyphTrace.cs" />
-    <Compile Include="Geometry\Fonts\Font.cs" />
-    <Compile Include="Geometry\PointInt.cs" />
-    <Compile Include="Geometry\Polygons\Infrastructure\Clipper.cs" />
-    <Compile Include="Geometry\Polygons\Polygon.cs" />
-    <Compile Include="Geometry\Ratio.cs" />
-    <Compile Include="Geometry\RectInt.cs" />
-    <Compile Include="Geometry\SizeInt.cs" />
-    <Compile Include="Geometry\Transformation.cs" />
     <Compile Include="Infrastructure\PolygonBuilder.cs" />
-    <Compile Include="Geometry\Polygons\PolygonProcessor.cs" />
-    <Compile Include="Geometry\TextAlign.cs" />
-    <Compile Include="Geometry\TextDrawer.cs" />
     <Compile Include="Import\Eagle\EagleImporter.cs" />
     <Compile Include="Import\Importer.cs" />
     <Compile Include="Import\ImporterFactory.cs" />
@@ -120,6 +104,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="signature.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EdaCommonLibrary\EdaCommonLibrary.csproj">
+      <Project>{1bf8a2de-cc88-4617-b0ce-eebb7b76230f}</Project>
+      <Name>EdaCommonLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

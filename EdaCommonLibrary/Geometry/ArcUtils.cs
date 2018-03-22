@@ -1,11 +1,11 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry {
+﻿namespace MikroPic.EdaTools.v1.Geometry {
 
     using System;
 
     /// <summary>
     /// Operacions amb arcs.
     /// </summary>
-    internal static class ArcUtils {
+    public static class ArcUtils {
 
         /// <summary>
         /// Calcula el centre d'un arc.

@@ -1,8 +1,7 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry.Polygons {
+﻿namespace MikroPic.EdaTools.v1.Geometry.Polygons {
 
-    using System.Windows;
+    using MikroPic.EdaTools.v1.Geometry.Polygons.Infrastructure;
     using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons.Infrastructure;
 
     /// <summary>
     /// Clase per procesar poligons.

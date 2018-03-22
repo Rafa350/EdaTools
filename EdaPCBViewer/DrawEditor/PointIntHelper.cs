@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Designer.DrawEditor {
 
     using System.Windows;
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
+    using MikroPic.EdaTools.v1.Geometry;
 
     public static class PointIntHelper {
 

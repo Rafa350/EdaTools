@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
-    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Geometry.Polygons;
 
     /// <summary>
     /// Clase base per tots els elements de la placa.

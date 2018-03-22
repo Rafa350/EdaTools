@@ -1,8 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
+    using MikroPic.EdaTools.v1.Geometry;
     using System;
-    using System.Windows;
 
     /// <summary>
     /// Clase que representa un atribut d'un component

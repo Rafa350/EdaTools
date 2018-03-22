@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaConverter", "EdaConverte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaExtractor", "EdaExtractor\EdaExtractor.csproj", "{6750C90C-A408-4AC2-A7DD-66E89B68BD14}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaCommonLibrary", "EdaCommonLibrary\EdaCommonLibrary.csproj", "{1BF8A2DE-CC88-4617-B0CE-EEBB7B76230F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -62,6 +64,10 @@ Global
 		{6750C90C-A408-4AC2-A7DD-66E89B68BD14}.Debug|x86.Build.0 = Debug|x86
 		{6750C90C-A408-4AC2-A7DD-66E89B68BD14}.Release|x86.ActiveCfg = Release|x86
 		{6750C90C-A408-4AC2-A7DD-66E89B68BD14}.Release|x86.Build.0 = Release|x86
+		{1BF8A2DE-CC88-4617-B0CE-EEBB7B76230F}.Debug|x86.ActiveCfg = Debug|x86
+		{1BF8A2DE-CC88-4617-B0CE-EEBB7B76230F}.Debug|x86.Build.0 = Debug|x86
+		{1BF8A2DE-CC88-4617-B0CE-EEBB7B76230F}.Release|x86.ActiveCfg = Release|x86
+		{1BF8A2DE-CC88-4617-B0CE-EEBB7B76230F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{9786F647-BCA2-45F5-814C-E41EBA6A4480} = {2AE1055B-66C8-4106-A68A-95A015805086}
 		{992BECEF-69F9-4071-9ACA-AB3DB04B8B97} = {92F26718-1D57-463C-8AF1-6BE8F0199D09}
 		{6750C90C-A408-4AC2-A7DD-66E89B68BD14} = {92F26718-1D57-463C-8AF1-6BE8F0199D09}
+		{1BF8A2DE-CC88-4617-B0CE-EEBB7B76230F} = {2AE1055B-66C8-4106-A68A-95A015805086}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE385F67-7CB1-40F1-B714-28A5F985E431}

@@ -1,6 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
+    using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;

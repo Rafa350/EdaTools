@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Ipcd356 {
 
     using MikroPic.EdaTools.v1.Cam.Ipcd356.Builder;
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
+    using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;

@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Geometry {
+﻿namespace MikroPic.EdaTools.v1.Geometry {
 
     using System;
     using System.Globalization;

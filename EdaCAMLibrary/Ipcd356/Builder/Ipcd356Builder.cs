@@ -2,7 +2,7 @@
 
     using System;
     using System.IO;
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
+    using MikroPic.EdaTools.v1.Geometry;
 
     public enum TestAccess {
         None,

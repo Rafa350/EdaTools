@@ -1,6 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Import.Eagle {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
+    using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;

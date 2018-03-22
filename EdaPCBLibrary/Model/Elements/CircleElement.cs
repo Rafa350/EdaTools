@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
-    using MikroPic.EdaTools.v1.Pcb.Geometry;
-    using MikroPic.EdaTools.v1.Pcb.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using System;
 
