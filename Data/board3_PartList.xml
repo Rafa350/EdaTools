@@ -421,7 +421,7 @@
                 <attribute name="MANUFACTURER" value="Vishay" />
             </attributes>
         </part>
-        <part name="LED1" position="23.75, 9.75" rotation="0" side="Top">
+        <part name="LED1" position="23.75, 9.75" rotation="270" side="Top">
             <attributes>
                 <attribute name="NAME" value="LED1" />
                 <attribute name="VALUE" value="GREEN" />

@@ -9,6 +9,7 @@
     public sealed class PartExtractor {
 
         private readonly Board board;
+        private string ignoreAttributeName = "PARTLIST-IGNORE";
 
         /// <summary>
         /// Contructor del objecte.
@@ -45,28 +46,32 @@
                 wr.WriteStartElement("parts");
 
                 foreach (Part part in board.Parts) {
-                    wr.WriteStartElement("part");
-                    wr.WriteAttributeString("name", part.Name);
-                    wr.WriteAttributeString("position", FormatPoint(part.Position));
-                    wr.WriteAttributeString("rotation", FormatAngle(part.Rotation));
-                    wr.WriteAttributeString("side", part.Side.ToString());
 
-                    bool hasAttributes = false;
-                    foreach (PartAttribute attribute in part.Attributes) {
-                        if (!hasAttributes) {
-                            hasAttributes = true;
-                            wr.WriteStartElement("attributes");
+                    if (part.GetAttribute(ignoreAttributeName) == null) {
+
+                        wr.WriteStartElement("part");
+                        wr.WriteAttributeString("name", part.Name);
+                        wr.WriteAttributeString("position", FormatPoint(part.Position));
+                        wr.WriteAttributeString("rotation", FormatAngle(part.Rotation));
+                        wr.WriteAttributeString("side", part.Side.ToString());
+
+                        bool hasAttributes = false;
+                        foreach (PartAttribute attribute in part.Attributes) {
+                            if (!hasAttributes) {
+                                hasAttributes = true;
+                                wr.WriteStartElement("attributes");
+                            }
+                            wr.WriteStartElement("attribute");
+                            wr.WriteAttributeString("name", attribute.Name);
+                            if (attribute.Value != null)
+                                wr.WriteAttributeString("value", attribute.Value);
+                            wr.WriteEndElement();
                         }
-                        wr.WriteStartElement("attribute");
-                        wr.WriteAttributeString("name", attribute.Name);
-                        if (attribute.Value != null)
-                            wr.WriteAttributeString("value", attribute.Value);
+                        if (hasAttributes)
+                            wr.WriteEndElement();
+
                         wr.WriteEndElement();
                     }
-                    if (hasAttributes)
-                        wr.WriteEndElement();
-
-                    wr.WriteEndElement();
                 }
 
                 wr.WriteEndElement();

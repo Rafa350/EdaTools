@@ -22,7 +22,8 @@
             <xsl:text>,</xsl:text>
             <xsl:for-each select="key('referenceKey', attributes/attribute[@name='REFERENCE']/@value)">
                 <xsl:text> </xsl:text>
-                <xsl:value-of select="attributes/attribute[@name='NAME']/@value"/>
+                <!--<xsl:value-of select="attributes/attribute[@name='NAME']/@value"/>-->
+                <xsl:value-of select="@name"/>
             </xsl:for-each>
             <xsl:text>&#13;&#10;</xsl:text>
         </xsl:for-each>
