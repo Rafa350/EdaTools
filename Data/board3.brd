@@ -815,8 +815,8 @@ Based on the following sources:
 <description>Diode 0805</description>
 <wire x1="-1.75" y1="0.875" x2="0.4725" y2="0.875" width="0.1" layer="21"/>
 <wire x1="-1.75" y1="-0.875" x2="0.4725" y2="-0.875" width="0.1" layer="21"/>
-<smd name="1" x="-0.95" y="0" dx="1.3" dy="1.5" layer="1" roundness="25"/>
-<smd name="2" x="0.95" y="0" dx="1.3" dy="1.5" layer="1" roundness="25"/>
+<smd name="C" x="-0.95" y="0" dx="1.3" dy="1.5" layer="1" roundness="25"/>
+<smd name="A" x="0.95" y="0" dx="1.3" dy="1.5" layer="1" roundness="25"/>
 <text x="-1.875" y="1.25" size="1" layer="25">&gt;NAME</text>
 <text x="-1.875" y="-2.125" size="1" layer="27">&gt;VALUE</text>
 <wire x1="-1.875" y1="1" x2="1.875" y2="1" width="0.1" layer="39"/>
@@ -1105,7 +1105,9 @@ Your Eurocircuits Team
 </pass>
 </autorouter>
 <elements>
-<element name="U$3" library="holes" package="3,6" value="" x="65.5" y="4.5" locked="yes"/>
+<element name="U$3" library="holes" package="3,6" value="" x="65.5" y="4.5" locked="yes">
+<attribute name="PARTLIST-IGNORE" value="" x="65.5" y="4.5" size="1.778" layer="27" display="off"/>
+</element>
 <element name="JP5" library="pinhead200" package="1X05-2MM" value="ICSP" x="39.25" y="8.5" locked="yes" smashed="yes">
 <attribute name="NAME" x="38.75" y="10" size="1.016" layer="25"/>
 <attribute name="VALUE" x="34.25" y="6" size="1.27" layer="27"/>
@@ -1215,7 +1217,9 @@ Your Eurocircuits Team
 <attribute name="MANUFACTURER" value="Hirose Electric" x="6.5" y="40.75" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="REFERENCE" value="DF13-4P-1.25H(20)" x="6.5" y="40.75" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="U$6" library="holes" package="3,6" value="" x="65.5" y="63" locked="yes"/>
+<element name="U$6" library="holes" package="3,6" value="" x="65.5" y="63" locked="yes">
+<attribute name="PARTLIST-IGNORE" value="" x="65.5" y="63" size="1.778" layer="27" display="off"/>
+</element>
 <element name="C7" library="smd-parts" package="C-0805" value="100n" x="38" y="27.75" locked="yes" smashed="yes" rot="R270">
 <attribute name="NAME" x="38" y="29.75" size="1.016" layer="25" align="bottom-center"/>
 <attribute name="VALUE" x="35.46" y="29.02" size="1.27" layer="27" rot="R270"/>
@@ -1483,8 +1487,12 @@ Your Eurocircuits Team
 <attribute name="REFERENCE" value="CRCW0805270RFKEA" x="65.625" y="43" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MANUFACTURER" value="Vishay" x="65.625" y="43" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
-<element name="U$9" library="holes" package="3,6" value="" x="4.5" y="63" locked="yes"/>
-<element name="U$10" library="holes" package="3,6" value="" x="4.5" y="4.5" locked="yes"/>
+<element name="U$9" library="holes" package="3,6" value="" x="4.5" y="63" locked="yes">
+<attribute name="PARTLIST-IGNORE" value="" x="4.5" y="63" size="1.778" layer="27" display="off"/>
+</element>
+<element name="U$10" library="holes" package="3,6" value="" x="4.5" y="4.5" locked="yes">
+<attribute name="PARTLIST-IGNORE" value="" x="4.5" y="4.5" size="1.778" layer="27" display="off"/>
+</element>
 <element name="JP3" library="hirose-df13" package="1X5-SMD-90-E" value="DF13-1X5-SMD-90-E" x="6.5" y="14.25" locked="yes" smashed="yes" rot="R90">
 <attribute name="NAME" x="5.25" y="9.5" size="1" layer="25"/>
 <attribute name="MANUFACTURER" value="Hirose Electric" x="6.5" y="14.25" size="1.778" layer="27" rot="R90" display="off"/>
@@ -1761,7 +1769,7 @@ Your Eurocircuits Team
 <contactref element="C15" pad="1"/>
 <contactref element="C16" pad="2"/>
 <contactref element="C17" pad="1"/>
-<contactref element="LED1" pad="1"/>
+<contactref element="LED1" pad="C"/>
 <polygon width="0.15" layer="1">
 <vertex x="0.25" y="52.5"/>
 <vertex x="39.75" y="52.5"/>
@@ -2891,7 +2899,7 @@ Your Eurocircuits Team
 </signal>
 <signal name="N$22">
 <contactref element="R19" pad="1"/>
-<contactref element="LED1" pad="2"/>
+<contactref element="LED1" pad="A"/>
 <wire x1="23.75" y1="8.7" x2="25.65" y2="8.7" width="0.2" layer="1"/>
 <wire x1="25.65" y1="8.7" x2="25.75" y2="8.8" width="0.2" layer="1"/>
 <wire x1="23.75" y1="8.7" x2="23.75" y2="8.8" width="0" layer="19" extent="1-1"/>
@@ -3830,40 +3838,40 @@ Your Eurocircuits Team
 <approved hash="7,39,f3b6c5b34faeb153"/>
 <approved hash="7,39,e2be39463981e279"/>
 <approved hash="7,39,33b644c19c5cd2d3"/>
-<approved hash="7,39,2d5e6febefcff099"/>
-<approved hash="7,39,2d5ef8c356640207"/>
+<approved hash="7,39,229a602ed8f97f7c"/>
+<approved hash="7,39,389acfd781518dc8"/>
+<approved hash="7,39,1546ca712e3a97ea"/>
+<approved hash="7,39,69356029fa02ff59"/>
+<approved hash="7,39,229ea6a608010dc7"/>
+<approved hash="7,39,225ebdb693f28de4"/>
+<approved hash="7,39,225e60eaaa5a7f7a"/>
 <approved hash="7,39,69f560eae1f07f7a"/>
 <approved hash="7,39,385ebdb6f3f28dce"/>
 <approved hash="7,39,9f1c811c17311d72"/>
-<approved hash="7,39,229ea6a608010dc7"/>
-<approved hash="7,39,69356029fa02ff59"/>
-<approved hash="7,39,225ebdb693f28de4"/>
-<approved hash="7,39,225e60eaaa5a7f7a"/>
-<approved hash="7,39,389acfd781518dc8"/>
-<approved hash="7,39,229a602ed8f97f7c"/>
-<approved hash="7,39,1546ca712e3a97ea"/>
-<approved hash="7,39,229e6029b1a8ff59"/>
-<approved hash="7,39,6931602e93557f7c"/>
-<approved hash="7,39,229acfd7e1518de2"/>
 <approved hash="7,39,389ea6a668010ded"/>
-<approved hash="7,39,9fdc81dc0cc39d52"/>
-<approved hash="7,39,375ef8c33664022d"/>
-<approved hash="7,39,1a82c5b5190f180d"/>
+<approved hash="7,39,229e6029b1a8ff59"/>
 <approved hash="7,39,1542ca75476a17cd"/>
+<approved hash="7,39,9fdc81dc0cc39d52"/>
+<approved hash="7,39,229acfd7e1518de2"/>
+<approved hash="7,39,6931602e93557f7c"/>
 <approved hash="7,39,66f56feba467f099"/>
+<approved hash="7,39,375ef8c33664022d"/>
 <approved hash="7,39,901c8e1c52a69290"/>
 <approved hash="7,39,22c260678375ff05"/>
 <approved hash="7,39,22c294753ad20d9b"/>
+<approved hash="7,39,2d5ef8c356640207"/>
+<approved hash="7,39,2d5e6febefcff099"/>
+<approved hash="7,39,1a82c5b5190f180d"/>
 <approved hash="7,39,9fd881d865941d74"/>
 <approved hash="7,39,38c294755ad20db1"/>
-<approved hash="7,39,151eca2975b9178d"/>
 <approved hash="7,39,69696067c8d1ff05"/>
 <approved hash="7,39,9f8081803e109d1c"/>
+<approved hash="7,39,151eca2975b9178d"/>
 <approved hash="7,39,1582cab55c9997ec"/>
-<approved hash="7,39,2d5ef8e92c4e7807"/>
-<approved hash="7,39,22c2945f40f8779b"/>
 <approved hash="7,39,225ebd9ce9d8f7e4"/>
 <approved hash="7,39,229ea68c722b77c7"/>
+<approved hash="7,39,22c2945f40f8779b"/>
+<approved hash="7,39,2d5ef8e92c4e7807"/>
 <approved hash="7,39,229acffd9b7bf7e2"/>
 <approved hash="7,39,a09ea760a4c720c7"/>
 <approved hash="7,39,7d35602979c4ea59"/>
@@ -3872,17 +3880,17 @@ Your Eurocircuits Team
 <approved hash="7,39,1342fa7540a86acd"/>
 <approved hash="7,39,af5ef905faa22f07"/>
 <approved hash="7,39,af5e6febfa09e599"/>
+<approved hash="7,39,72f56feb27a1e599"/>
 <approved hash="7,39,a09a602ecd3f6a7c"/>
 <approved hash="7,39,a09ace114d97a0e2"/>
-<approved hash="7,39,72f56feb27a1e599"/>
+<approved hash="7,39,455ef9053ea22f29"/>
+<approved hash="7,39,961c881c6364ef90"/>
 <approved hash="7,39,4a9ace118997a0cc"/>
 <approved hash="7,39,7d31602e10936a7c"/>
 <approved hash="7,39,99d887d854566074"/>
 <approved hash="7,39,1346fa7129f8eaea"/>
-<approved hash="7,39,455ef9053ea22f29"/>
 <approved hash="7,39,1c82f5b51ecd650d"/>
 <approved hash="7,39,99dc87dc3d01e052"/>
-<approved hash="7,39,961c881c6364ef90"/>
 <approved hash="7,39,2b5ef92b508c0507"/>
 <approved hash="7,39,249ea74e0ee90ac7"/>
 <approved hash="7,39,249ace3fe7b98ae2"/>

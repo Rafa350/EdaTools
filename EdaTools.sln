@@ -17,11 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Application
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaCAMTool", "EdaCAMTool\EdaCAMTool.csproj", "{EAAAC444-EF61-4A87-8F1C-45908E2D11C5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D919F3DE-5B9B-4EDB-9FE2-A71437CEFD73}"
-	ProjectSection(SolutionItems) = preProject
-		Performance1.psess = Performance1.psess
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaCAMLibrary", "EdaCAMLibrary\EdaCAMLibrary.csproj", "{9786F647-BCA2-45F5-814C-E41EBA6A4480}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaConverter", "EdaConverter\EdaConverter.csproj", "{992BECEF-69F9-4071-9ACA-AB3DB04B8B97}"

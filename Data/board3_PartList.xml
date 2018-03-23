@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <board units="mm">
     <parts>
-        <part name="U$3" position="65.5, 4.5" rotation="0" side="Top" />
         <part name="JP5" position="39.25, 8.5" rotation="0" side="Top">
             <attributes>
                 <attribute name="NAME" value="JP5" />
@@ -135,7 +134,6 @@
                 <attribute name="REFERENCE" value="DF13-4P-1.25H(20)" />
             </attributes>
         </part>
-        <part name="U$6" position="65.5, 63" rotation="0" side="Top" />
         <part name="C7" position="38, 27.75" rotation="270" side="Top">
             <attributes>
                 <attribute name="NAME" value="C7" />
@@ -455,8 +453,6 @@
                 <attribute name="MANUFACTURER" value="Vishay" />
             </attributes>
         </part>
-        <part name="U$9" position="4.5, 63" rotation="0" side="Top" />
-        <part name="U$10" position="4.5, 4.5" rotation="0" side="Top" />
         <part name="JP3" position="6.5, 14.25" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="JP3" />
