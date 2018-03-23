@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Designer {
 
     using MikroPic.EdaTools.v1.Designer.DrawEditor;
-    using MikroPic.EdaTools.v1.Designer.DrawEditor.Tools;
     using MikroPic.EdaTools.v1.Pcb.Import;
     using MikroPic.EdaTools.v1.Pcb.Import.Eagle;
     using MikroPic.EdaTools.v1.Pcb.Model;
@@ -13,12 +12,6 @@
     using System.Windows.Media;
 
     public partial class MainWindow: Window {
-
-        private DesignTool tool;
-        private SelectionTool selectionTool;
-        private LineTool lineTool;
-        private RectangleTool rectangleTool;
-        private PadTool padTool;
 
         private bool showDrag = true;
         private readonly double scaleFactor = 1.1;
@@ -32,10 +25,7 @@
 
             InitializeComponent();
 
-            selectionTool = new SelectionTool(content);
-            padTool = new PadTool(content);
-            lineTool = new LineTool(content);
-            rectangleTool = new RectangleTool(content);
+            DataContext = new MainMenuViewModel();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
@@ -64,43 +54,6 @@
             content.ClearVisual();
             VisualGenerator vg = new VisualGenerator(board);
             content.AddVisual(vg.CreateVisuals());
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e) {
-
-            if (tool != null)
-                tool.Deactivate();
-
-            tool = padTool;
-            tool.Activate();
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e) {
-
-            if (tool != null)
-                tool.Deactivate();
-
-            tool = lineTool;
-            tool.Activate();
-        }
-
-        private void Button_Click_3(object sender, RoutedEventArgs e) {
-
-            if (tool != null)
-                tool.Deactivate();
-
-            tool = rectangleTool;
-            tool.Activate();
-
-        }
-
-        private void Button_Click_4(object sender, RoutedEventArgs e) {
-
-            if (tool != null)
-                tool.Deactivate();
-
-            tool = selectionTool;
-            tool.Activate();
         }
 
         private void UpdatePositionIndicator(Point mousePos) {

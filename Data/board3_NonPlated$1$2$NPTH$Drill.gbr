@@ -1,6 +1,6 @@
 G04 EdaTools v1.0. *
 G04 EdaTools CAM processor. Gerber generator. *
-G04 Start timestamp: 13:08:50.393 *
+G04 Start timestamp: 10:59:19.909 *
 G04 BEGIN HEADER *
 %TF.FileFunction,NonPlated,1,2,NPTH,Drill*%
 %TF.FilePolarity,Positive*%
@@ -29,5 +29,5 @@ X00512500Y01129500D03*
 Y01847500D03*
 G04 END IMAGE *
 M02*
-G04 End timestamp: 13:08:50.395 *
+G04 End timestamp: 10:59:19.909 *
 G04 END FILE *

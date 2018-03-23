@@ -843,8 +843,8 @@
             <elements>
                 <line layers="TopPlace" startPosition="-1.75, 0.875" endPosition="0.4725, 0.875" thickness="0.1" />
                 <line layers="TopPlace" startPosition="-1.75, -0.875" endPosition="0.4725, -0.875" thickness="0.1" />
-                <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
-                <spad name="2" layers="Top, Pads, TopCream, TopStop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
+                <spad name="C" layers="Top, Pads, TopCream, TopStop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
+                <spad name="A" layers="Top, Pads, TopCream, TopStop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
                 <text layers="TopNames" position="-1.875, 1.25" height="1" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
                 <text layers="TopValues" position="-1.875, -2.125" height="1" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
                 <line layers="TopKeepout" startPosition="-1.875, 1" endPosition="1.875, 1" thickness="0.1" />
@@ -904,7 +904,11 @@
         </block>
     </blocks>
     <parts>
-        <part name="U$3" block="3,6@holes" position="65.5, 4.5" />
+        <part name="U$3" block="3,6@holes" position="65.5, 4.5">
+            <attributes>
+                <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
+            </attributes>
+        </part>
         <part name="JP5" block="1X05-2MM@pinhead200" position="39.25, 8.5">
             <pads>
                 <pad name="1" signal="VPP" />
@@ -1107,7 +1111,11 @@
                 <attribute name="REFERENCE" value="DF13-4P-1.25H(20)" visible="false" position="0, 0" rotation="0" height="1.778" />
             </attributes>
         </part>
-        <part name="U$6" block="3,6@holes" position="65.5, 63" />
+        <part name="U$6" block="3,6@holes" position="65.5, 63">
+            <attributes>
+                <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
+            </attributes>
+        </part>
         <part name="C7" block="C-0805@smd-parts" position="38, 27.75" rotation="270">
             <pads>
                 <pad name="1" signal="GND" />
@@ -1525,8 +1533,8 @@
         </part>
         <part name="LED1" block="D-LED-0805@smd-parts" position="23.75, 9.75" rotation="270">
             <pads>
-                <pad name="1" signal="GND" />
-                <pad name="2" signal="N$22" />
+                <pad name="C" signal="GND" />
+                <pad name="A" signal="N$22" />
             </pads>
             <attributes>
                 <attribute name="NAME" value="LED1" position="-0.25, -1" rotation="-180" height="1" align="BottomCenter" />
@@ -1569,8 +1577,16 @@
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
             </attributes>
         </part>
-        <part name="U$9" block="3,6@holes" position="4.5, 63" />
-        <part name="U$10" block="3,6@holes" position="4.5, 4.5" />
+        <part name="U$9" block="3,6@holes" position="4.5, 63">
+            <attributes>
+                <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
+            </attributes>
+        </part>
+        <part name="U$10" block="3,6@holes" position="4.5, 4.5">
+            <attributes>
+                <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
+            </attributes>
+        </part>
         <part name="JP3" block="1X5-SMD-90-E@hirose-df13" position="6.5, 14.25" rotation="90">
             <pads>
                 <pad name="2" signal="N$13" />
