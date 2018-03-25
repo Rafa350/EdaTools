@@ -8,10 +8,33 @@
 
     public sealed class DesignSurface: Canvas {
 
+        public static readonly DependencyProperty VisualProperty;
+
         private readonly List<Visual> visuals = new List<Visual>();
+
+        static DesignSurface() {
+
+            VisualProperty = DependencyProperty.Register(
+                "Visual",
+                typeof(Visual),
+                typeof(DesignSurface),
+                new FrameworkPropertyMetadata(
+                    null,
+                    Visual_PropertyChanged));
+        }
 
         public DesignSurface() {
 
+        }
+
+        private static void Visual_PropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e) {
+
+            DesignSurface sThis = o as DesignSurface;
+            if (sThis != null) {
+                sThis.ClearVisual();
+                if (e.NewValue != null)
+                    sThis.AddVisual(e.NewValue as Visual);
+            }
         }
 
         protected override Visual GetVisualChild(int index) {
@@ -65,6 +88,15 @@
         public IEnumerable<Visual> Visuals {
             get {
                 return visuals;
+            }
+        }
+
+        public Visual Visual {
+            get {
+                return (Visual)GetValue(VisualProperty);
+            }
+            set {
+                SetValue(VisualProperty, value);
             }
         }
     }

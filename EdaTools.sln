@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaExtractor", "EdaExtracto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaCommonLibrary", "EdaCommonLibrary\EdaCommonLibrary.csproj", "{1BF8A2DE-CC88-4617-B0CE-EEBB7B76230F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetMVVMToolkit", "NetMVVMToolKit\NetMVVMToolkit.csproj", "{99ECE676-903B-4562-AF42-70809661F2C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -63,6 +65,10 @@ Global
 		{1BF8A2DE-CC88-4617-B0CE-EEBB7B76230F}.Debug|x86.Build.0 = Debug|x86
 		{1BF8A2DE-CC88-4617-B0CE-EEBB7B76230F}.Release|x86.ActiveCfg = Release|x86
 		{1BF8A2DE-CC88-4617-B0CE-EEBB7B76230F}.Release|x86.Build.0 = Release|x86
+		{99ECE676-903B-4562-AF42-70809661F2C1}.Debug|x86.ActiveCfg = Debug|x86
+		{99ECE676-903B-4562-AF42-70809661F2C1}.Debug|x86.Build.0 = Debug|x86
+		{99ECE676-903B-4562-AF42-70809661F2C1}.Release|x86.ActiveCfg = Release|x86
+		{99ECE676-903B-4562-AF42-70809661F2C1}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{992BECEF-69F9-4071-9ACA-AB3DB04B8B97} = {92F26718-1D57-463C-8AF1-6BE8F0199D09}
 		{6750C90C-A408-4AC2-A7DD-66E89B68BD14} = {92F26718-1D57-463C-8AF1-6BE8F0199D09}
 		{1BF8A2DE-CC88-4617-B0CE-EEBB7B76230F} = {2AE1055B-66C8-4106-A68A-95A015805086}
+		{99ECE676-903B-4562-AF42-70809661F2C1} = {2AE1055B-66C8-4106-A68A-95A015805086}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE385F67-7CB1-40F1-B714-28A5F985E431}

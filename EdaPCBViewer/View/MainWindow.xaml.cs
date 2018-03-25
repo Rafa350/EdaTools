@@ -1,13 +1,8 @@
-﻿namespace MikroPic.EdaTools.v1.Designer {
+﻿namespace MikroPic.EdaTools.v1.Designer.View {
 
-    using MikroPic.EdaTools.v1.Designer.DrawEditor;
-    using MikroPic.EdaTools.v1.Pcb.Import;
-    using MikroPic.EdaTools.v1.Pcb.Import.Eagle;
-    using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.IO;
-    using System;
-    using System.IO;
+    using MikroPic.EdaTools.v1.Designer.ViewModel;
     using System.Windows;
+    using MikroPic.NetMVVMToolkit.v1.WindowState;
     using System.Windows.Input;
     using System.Windows.Media;
 
@@ -18,49 +13,23 @@
         private const string path = @"..\..\..\Data";
         private const string inImportFileName = @"board3.brd";
         private const string fileName = @"board3.xml";
+        private readonly WindowStateAgent sa;
 
         private Point prevContentMousePos;
 
         public MainWindow() {
 
             InitializeComponent();
+            DataContext = new MainViewModel();
 
-            DataContext = new MainMenuViewModel();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e) {
-
-            Board board;
-
-            // Importa el fitxer
-            //
-            Importer importer = new EagleImporter();
-            board = importer.Read(Path.Combine(path, inImportFileName));
-            
-            // Guarda el fitxer
-            //
-            using (Stream outStream = new FileStream(Path.Combine(path, fileName), FileMode.Create, FileAccess.Write, FileShare.None)) {
-                XmlBoardWriter writer = new XmlBoardWriter(outStream);
-                writer.Write(board);
-            }
-            
-            // Carrega el fitxer
-            //
-            using (Stream inStream = new FileStream(Path.Combine(path, fileName), FileMode.Open, FileAccess.Read, FileShare.None)) {
-                XmlBoardReader reader = new XmlBoardReader(inStream);
-                board = reader.Read();
-            }
-            
-            content.ClearVisual();
-            VisualGenerator vg = new VisualGenerator(board);
-            content.AddVisual(vg.CreateVisuals());
+            sa = new WindowStateAgent(this);
         }
 
         private void UpdatePositionIndicator(Point mousePos) {
 
-            ctrlPosition.Content = String.Format("X:{0} Y:{1}",
+            /*ctrlPosition.Content = String.Format("X:{0} Y:{1}",
                 Math.Round(mousePos.X, 2),
-                Math.Round(mousePos.Y, 2));
+                Math.Round(mousePos.Y, 2));*/
         }
 
         /// <summary>

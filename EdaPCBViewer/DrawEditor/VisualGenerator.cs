@@ -497,11 +497,11 @@
         }
 
         /// <summary>
-        /// Genera totes les visuals per representasr la placa.
+        /// Crea la visual per renderitzar la placa.
         /// </summary>
-        /// <returns>Un enumerador de les visuals creades.</returns>
+        /// <returns>El objecte visual arrel de la placa.</returns>
         /// 
-        public Visual CreateVisuals() {
+        public Visual CreateVisual() {
 
             List<string> layerNames = new List<string>();
             layerNames.Add(Layer.BottomNamesName);
