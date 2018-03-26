@@ -480,7 +480,8 @@
 
         static VisualGenerator() {
 
-            font = Font.Load(@"..\..\..\Data\font.xml");
+            FontFactory ff = FontFactory.Instance;
+            font = ff.GetFont("Standard");
         }
 
         /// <summary>

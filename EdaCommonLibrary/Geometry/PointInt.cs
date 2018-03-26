@@ -23,9 +23,28 @@
             this.y = y;
         }
 
+        public static PointInt Parse(string s) {
+
+            return Parse(s, CultureInfo.CurrentCulture);
+        }
+
+        public static PointInt Parse(string s, IFormatProvider provider) {
+
+            string[] ss = s.Split(',');
+            int x = Int32.Parse(ss[0], provider);
+            int y = Int32.Parse(ss[1], provider);
+
+            return new PointInt(x, y);
+        }
+
         public override string ToString() {
 
-            return String.Format(CultureInfo.CurrentCulture, "X:{0}; Y:{1}", x, y);
+            return ToString(CultureInfo.CurrentCulture);
+        }
+
+        public string ToString(IFormatProvider provider) {
+
+            return String.Format(provider, "{0}, {1}", x, y);
         }
 
         /// <summary>

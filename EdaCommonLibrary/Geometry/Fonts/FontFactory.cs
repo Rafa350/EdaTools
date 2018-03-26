@@ -16,7 +16,7 @@
 
             Font font;
             if (!fontCache.TryGetValue(fontName, out font)) {
-                font = Font.Load(@"..\..\..\Data\font.xml");
+                font = Font.Load(@"Data\font.xml");
                 fontCache.Add(font.Name, font);
             }
             return font;

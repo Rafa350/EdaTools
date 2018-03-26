@@ -67,5 +67,10 @@
   <ItemGroup>
     <None Include="signature.pfx" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\font.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
