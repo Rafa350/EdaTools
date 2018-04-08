@@ -530,8 +530,8 @@
             DrawingVisual boardVisual = new DrawingVisual();
             foreach (string layerName in layerNames) {
 
-                Layer layer = board.GetLayer(layerName);
-                if (layer.IsVisible) {
+                Layer layer = board.GetLayer(layerName, false);
+                if ((layer != null) && layer.IsVisible) {
 
                     DrawingVisual layerVisual = new DrawingVisual();
                     boardVisual.Children.Add(layerVisual);
