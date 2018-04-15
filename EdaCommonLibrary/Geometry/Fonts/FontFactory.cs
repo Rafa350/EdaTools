@@ -1,5 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Geometry.Fonts {
 
+    using System.IO;
+    using System.Reflection;
     using System.Collections.Generic;
 
     public sealed class FontFactory {
@@ -15,8 +17,14 @@
         public Font GetFont(string fontName) {
 
             Font font;
+
             if (!fontCache.TryGetValue(fontName, out font)) {
-                font = Font.Load(@"Data\font.xml");
+
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                string location = assembly.Location;
+                string path = Path.Combine(Path.GetDirectoryName(location), @"Data\font.xml");
+
+                font = Font.Load(path);
                 fontCache.Add(font.Name, font);
             }
             return font;

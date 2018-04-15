@@ -1,7 +1,7 @@
 C  BEGIN FILE
 C  EdaTools v1.0.
 C  EdaTools CAM processor. IPC-D-365 generator.
-C  Start timestamp: 11:45:43.230
+C  Start timestamp: 13:25:42.469
 C  BEGIN HEADER
 P  VER   IPC-D-356
 P  UNITS CUST 1
@@ -1412,6 +1412,6 @@ C  BEGIN NETS
 378O11B           L01 X0400Y0000 X+056855Y+061875 X+056855Y+054935*
 378O11B           L01 X0400Y0000 X+056855Y+054935 X+056230Y+054310*
 C  END NETS
-C  End timestamp: 11:45:43.294
+C  End timestamp: 13:25:42.516
 C  END FILE
 999
