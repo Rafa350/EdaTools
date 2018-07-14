@@ -2,6 +2,7 @@
 <resources>
     <fontResource version="3.0" resourceId="EdaToolsPcbFont">
         <font name="Standard" height="9" ascent="6" descent="2">
+          
             <!-- ' ' -->
             <char code="0x20" advance="3">
                 <glyph>
@@ -113,6 +114,7 @@
                     <lineTo position="4, 6"/>                    
                 </glyph>
             </char>
+          
             <!-- '6' -->
             <char code="0x36" advance="6">
                 <glyph>
@@ -128,6 +130,7 @@
                     <lineTo position="4, 6"/>
                 </glyph>
             </char>
+          
             <!-- '7' -->
             <char code="0x37" advance="6">
                 <glyph>
@@ -138,6 +141,7 @@
                     <lineTo position="0, 0"/>
                 </glyph>
             </char>
+          
             <!-- '8' -->
             <char code="0x38" advance="6">
                 <glyph>
@@ -159,6 +163,7 @@
                     <lineTo position="3, 3"/>
                 </glyph>
             </char>
+          
             <!-- '9' -->
             <char code="0x39" advance="6">
                 <glyph>
@@ -175,6 +180,7 @@
                     <lineTo position="4, 3"/>                
                 </glyph>
             </char>
+          
             <!-- 'A' -->
             <char code="0x41" advance="6">
                 <glyph>
@@ -201,6 +207,7 @@
                     <lineTo position="4, 1"/>                    
                 </glyph>
             </char>
+          
             <!-- 'D' -->
             <char code="0x44" advance="6">
                 <glyph>
@@ -213,6 +220,7 @@
                     <lineTo position="0, 0"/>                    
                 </glyph>
             </char>
+          
             <!-- 'J' -->
             <char code="0x4A" advance="6">
                 <glyph>
@@ -233,6 +241,7 @@
                     <lineTo position="0, 6"/>                    
                 </glyph>
             </char>
+          
             <!-- 'P' -->
             <char code="0x50" advance="6">
                 <glyph>
@@ -245,6 +254,7 @@
                     <lineTo position="0, 2"/>                    
                 </glyph>
             </char>
+          
             <!-- 'R' -->
             <char code="0x52" advance="6">
                 <glyph>
@@ -270,6 +280,7 @@
                     <lineTo position="4, 6"/>                    
                 </glyph>
             </char>
+        
         </font>
     </fontResource>
 </resources>

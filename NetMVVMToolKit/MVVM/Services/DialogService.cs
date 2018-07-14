@@ -11,6 +11,7 @@
     /// <summary>
     /// Gestiona la presentacio de cuadres de dialeg.
     /// </summary>
+    /// 
     public sealed class DialogService: IDialogService {
 
         private static DialogService instance;
@@ -19,6 +20,7 @@
         /// <summary>
         /// Constructor de la clase.
         /// </summary>
+        /// 
         private DialogService() {
 
             register = new Dictionary<Type, Type>();
@@ -29,6 +31,7 @@
         /// </summary>
         /// <param name="viewModelType">El tipus de ViewModel.</param>
         /// <param name="viewType">El tipus de View.</param>
+        /// 
         public void Register(Type viewModelType, Type viewType) {
 
             if (viewModelType == null)
@@ -65,6 +68,7 @@
         /// <param name="title">Titol.</param>
         /// <param name="text">Text a mostrar.</param>
         /// <returns>True si es respon 'Ok', false en cas contrari.</returns>
+        /// 
         public bool ShowAskOkCancel(string title, string text) {
 
             if (String.IsNullOrEmpty(title))
