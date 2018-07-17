@@ -1041,10 +1041,13 @@
         /// 
         private static Angle ParseAngle(string s) {
 
-            if (s.StartsWith("R"))
-                s = s.Substring(1);
+            int index = 0;
+            if (!Char.IsDigit(s[index]))
+                index++;
+            if (!Char.IsDigit(s[index]))
+                index++;
 
-            double value = XmlConvert.ToDouble(s);
+            double value = XmlConvert.ToDouble(s.Substring(index));
             return Angle.FromDegrees((int)(value * 100.0));
         }
 

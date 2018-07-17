@@ -10,13 +10,11 @@
 
         static void Main(string[] args) {
 
-            string path = @"..\..\..\Data";
-
             Importer importer = new EagleImporter();
-            Board board = importer.Read(Path.Combine(path, "board3.brd"));
+            Board board = importer.Read(args[0]);
 
             XmlBoardWriter boardWriter = new XmlBoardWriter(
-                new FileStream(Path.Combine(path, "board3.xml"), FileMode.Create, FileAccess.Write, FileShare.None));
+                new FileStream(args[1], FileMode.Create, FileAccess.Write, FileShare.None));
             boardWriter.Write(board);
         }
     }

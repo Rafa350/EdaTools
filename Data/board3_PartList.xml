@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <board units="mm">
     <parts>
-        <part name="JP5" position="39.25, 8.5" rotation="0" side="Top">
+        <part name="U$3" position="65.5, 4.5" rotation="0" side="Top" />
+        <part name="JP5" position="43.5, 14.5" rotation="270" side="Top">
             <attributes>
                 <attribute name="NAME" value="JP5" />
                 <attribute name="VALUE" value="ICSP" />
             </attributes>
         </part>
-        <part name="R9" position="41.75, 52.75" rotation="90" side="Top">
+        <part name="R9" position="38, 39.5" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="R9" />
                 <attribute name="VALUE" value="270" />
@@ -15,11 +16,9 @@
                 <attribute name="R_RESISTANCE" value="270R" />
                 <attribute name="TYPE" value="R" />
                 <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="MANUFACTURER" value="Vishay" />
-                <attribute name="REFERENCE" value="CRCW0805270RFKEA" />
             </attributes>
         </part>
-        <part name="R10" position="41.75, 47.875" rotation="90" side="Top">
+        <part name="R10" position="40, 39.5" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="R10" />
                 <attribute name="VALUE" value="270" />
@@ -27,11 +26,9 @@
                 <attribute name="R_RESISTANCE" value="270R" />
                 <attribute name="TYPE" value="R" />
                 <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="REFERENCE" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" value="Vishay" />
             </attributes>
         </part>
-        <part name="R11" position="41.75, 43" rotation="90" side="Top">
+        <part name="R11" position="47, 39.5" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="R11" />
                 <attribute name="VALUE" value="270" />
@@ -39,11 +36,9 @@
                 <attribute name="R_RESISTANCE" value="270R" />
                 <attribute name="TYPE" value="R" />
                 <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="REFERENCE" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" value="Vishay" />
             </attributes>
         </part>
-        <part name="R12" position="41.75, 38.25" rotation="90" side="Top">
+        <part name="R12" position="43, 39.5" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="R12" />
                 <attribute name="VALUE" value="270" />
@@ -51,24 +46,22 @@
                 <attribute name="R_RESISTANCE" value="270R" />
                 <attribute name="TYPE" value="R" />
                 <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="MANUFACTURER" value="Vishay" />
-                <attribute name="REFERENCE" value="CRCW0805270RFKEA" />
             </attributes>
         </part>
-        <part name="U20" position="13.75, 16.75" rotation="0" side="Top">
+        <part name="U11" position="13.5, 15" rotation="90" side="Top">
             <attributes>
                 <attribute name="OC_NEWARK" value="90C2890" />
                 <attribute name="MPN" value="MAX3232CSE" />
                 <attribute name="MF" value="" />
                 <attribute name="OC_FARNELL" value="9725490" />
                 <attribute name="VALUE" value="MAX3232CSE" />
-                <attribute name="NAME" value="U20" />
+                <attribute name="NAME" value="U11" />
                 <attribute name="TYPE" value="IC" />
                 <attribute name="MANUFACTURER" value="Maxim" />
-                <attribute name="REFERENCE" value="MAX3232ECDR" />
+                <attribute name="REFERENCE" value="MAX3232CSE" />
             </attributes>
         </part>
-        <part name="C1" position="10.25, 9.75" rotation="270" side="Top">
+        <part name="C1" position="20, 10.5" rotation="0" side="Top">
             <attributes>
                 <attribute name="NAME" value="C1" />
                 <attribute name="VALUE" value="100n" />
@@ -77,11 +70,9 @@
                 <attribute name="C_DIELECTRIC" value="X7R" />
                 <attribute name="C_VOLTAGE" value="25V" />
                 <attribute name="TYPE" value="C" />
-                <attribute name="MANUFACTURER" value="Kemet" />
-                <attribute name="REFERENCE" value="C0805C104K5RACTU" />
             </attributes>
         </part>
-        <part name="C2" position="17.25, 9.75" rotation="270" side="Top">
+        <part name="C2" position="20, 18.5" rotation="0" side="Top">
             <attributes>
                 <attribute name="NAME" value="C2" />
                 <attribute name="VALUE" value="100n" />
@@ -90,11 +81,9 @@
                 <attribute name="C_DIELECTRIC" value="X7R" />
                 <attribute name="C_VOLTAGE" value="25V" />
                 <attribute name="TYPE" value="C" />
-                <attribute name="MANUFACTURER" value="Kemet" />
-                <attribute name="REFERENCE" value="C0805C104K5RACTU" />
             </attributes>
         </part>
-        <part name="C3" position="12.25, 9.75" rotation="270" side="Top">
+        <part name="C3" position="20, 13" rotation="0" side="Top">
             <attributes>
                 <attribute name="NAME" value="C3" />
                 <attribute name="VALUE" value="100n" />
@@ -103,11 +92,9 @@
                 <attribute name="C_DIELECTRIC" value="X7R" />
                 <attribute name="C_VOLTAGE" value="25V" />
                 <attribute name="TYPE" value="C" />
-                <attribute name="MANUFACTURER" value="Kemet" />
-                <attribute name="REFERENCE" value="C0805C104K5RACTU" />
             </attributes>
         </part>
-        <part name="C4" position="15.25, 9.75" rotation="270" side="Top">
+        <part name="C4" position="20, 16" rotation="0" side="Top">
             <attributes>
                 <attribute name="NAME" value="C4" />
                 <attribute name="VALUE" value="100n" />
@@ -116,25 +103,24 @@
                 <attribute name="C_DIELECTRIC" value="X7R" />
                 <attribute name="C_VOLTAGE" value="25V" />
                 <attribute name="TYPE" value="C" />
-                <attribute name="MANUFACTURER" value="Kemet" />
-                <attribute name="REFERENCE" value="C0805C104K5RACTU" />
             </attributes>
         </part>
-        <part name="JP6" position="6.5, 29.25" rotation="90" side="Top">
+        <part name="JP6" position="6.5, 26" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="JP6" />
                 <attribute name="REFERENCE" value="DF13-4P-1.25H(20)" />
                 <attribute name="MANUFACTURER" value="Hirose Electric" />
             </attributes>
         </part>
-        <part name="JP7" position="6.5, 40.75" rotation="90" side="Top">
+        <part name="JP8" position="6.5, 37.25" rotation="90" side="Top">
             <attributes>
-                <attribute name="NAME" value="JP7" />
+                <attribute name="NAME" value="JP8" />
                 <attribute name="MANUFACTURER" value="Hirose Electric" />
                 <attribute name="REFERENCE" value="DF13-4P-1.25H(20)" />
             </attributes>
         </part>
-        <part name="C7" position="38, 27.75" rotation="270" side="Top">
+        <part name="U$6" position="65.5, 63" rotation="0" side="Top" />
+        <part name="C7" position="42, 27.5" rotation="270" side="Top">
             <attributes>
                 <attribute name="NAME" value="C7" />
                 <attribute name="VALUE" value="100n" />
@@ -143,11 +129,9 @@
                 <attribute name="C_DIELECTRIC" value="X7R" />
                 <attribute name="C_VOLTAGE" value="25V" />
                 <attribute name="TYPE" value="C" />
-                <attribute name="MANUFACTURER" value="Kemet" />
-                <attribute name="REFERENCE" value="C0805C104K5RACTU" />
             </attributes>
         </part>
-        <part name="C6" position="35.75, 27.75" rotation="270" side="Top">
+        <part name="C6" position="39.75, 27.5" rotation="270" side="Top">
             <attributes>
                 <attribute name="NAME" value="C6" />
                 <attribute name="VALUE" value="10n" />
@@ -156,11 +140,9 @@
                 <attribute name="C_DIELECTRIC" value="X7R" />
                 <attribute name="C_VOLTAGE" value="25V" />
                 <attribute name="TYPE" value="C" />
-                <attribute name="MANUFACTURER" value="Kemet" />
-                <attribute name="REFERENCE" value="C0805C103K5RACTU" />
             </attributes>
         </part>
-        <part name="C5" position="8.25, 22.25" rotation="0" side="Top">
+        <part name="C5" position="10.5, 8" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="C5" />
                 <attribute name="VALUE" value="100n" />
@@ -169,11 +151,9 @@
                 <attribute name="C_DIELECTRIC" value="X7R" />
                 <attribute name="C_VOLTAGE" value="25V" />
                 <attribute name="TYPE" value="C" />
-                <attribute name="MANUFACTURER" value="Kemet" />
-                <attribute name="REFERENCE" value="C0805C104K5RACTU" />
             </attributes>
         </part>
-        <part name="Q1" position="27.5, 31" rotation="180" side="Top">
+        <part name="Q1" position="32, 31" rotation="180" side="Top">
             <attributes>
                 <attribute name="OC_NEWARK" value="unknown" />
                 <attribute name="MPN" value="" />
@@ -188,7 +168,7 @@
                 <attribute name="XTAL_FREQUENCY" value="16MHz" />
             </attributes>
         </part>
-        <part name="C10" position="31.25, 34.5" rotation="180" side="Top">
+        <part name="C10" position="34.5, 34.5" rotation="180" side="Top">
             <attributes>
                 <attribute name="NAME" value="C10" />
                 <attribute name="VALUE" value="22p" />
@@ -197,11 +177,9 @@
                 <attribute name="C_DIELECTRIC" value="X7R" />
                 <attribute name="C_VOLTAGE" value="25V" />
                 <attribute name="TYPE" value="C" />
-                <attribute name="MANUFACTURER" value="AVX" />
-                <attribute name="REFERENCE" value="08051C220JAT2A" />
             </attributes>
         </part>
-        <part name="C11" position="23.75, 34.5" rotation="0" side="Top">
+        <part name="C11" position="29.5, 34.5" rotation="0" side="Top">
             <attributes>
                 <attribute name="NAME" value="C11" />
                 <attribute name="VALUE" value="22p" />
@@ -210,11 +188,9 @@
                 <attribute name="C_DIELECTRIC" value="X7R" />
                 <attribute name="C_VOLTAGE" value="25V" />
                 <attribute name="TYPE" value="C" />
-                <attribute name="MANUFACTURER" value="AVX" />
-                <attribute name="REFERENCE" value="08051C220JAT2A" />
             </attributes>
         </part>
-        <part name="R17" position="14.5, 24.5" rotation="90" side="Top">
+        <part name="R17" position="25, 21" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="R17" />
                 <attribute name="VALUE" value="1K5" />
@@ -222,11 +198,9 @@
                 <attribute name="R_RESISTANCE" value="1K5" />
                 <attribute name="TYPE" value="R" />
                 <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="MANUFACTURER" value="Vishay" />
-                <attribute name="REFERENCE" value="CRCW08051K50FKEA" />
             </attributes>
         </part>
-        <part name="R18" position="12.25, 24.5" rotation="90" side="Top">
+        <part name="R18" position="25, 16.75" rotation="270" side="Top">
             <attributes>
                 <attribute name="NAME" value="R18" />
                 <attribute name="VALUE" value="1K5" />
@@ -234,11 +208,9 @@
                 <attribute name="R_RESISTANCE" value="1K5" />
                 <attribute name="TYPE" value="R" />
                 <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="MANUFACTURER" value="Vishay" />
-                <attribute name="REFERENCE" value="CRCW08051K50FKEA" />
             </attributes>
         </part>
-        <part name="R13" position="41.75, 33.5" rotation="90" side="Top">
+        <part name="R13" position="45, 39.5" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="R13" />
                 <attribute name="VALUE" value="270" />
@@ -246,11 +218,9 @@
                 <attribute name="R_CASE" value="0805" />
                 <attribute name="R_RESISTANCE" value="270R" />
                 <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="REFERENCE" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" value="Vishay" />
             </attributes>
         </part>
-        <part name="R14" position="41.75, 28.75" rotation="90" side="Top">
+        <part name="R14" position="50.5, 39.5" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="R14" />
                 <attribute name="VALUE" value="270" />
@@ -258,20 +228,17 @@
                 <attribute name="R_RESISTANCE" value="270R" />
                 <attribute name="TYPE" value="R" />
                 <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="REFERENCE" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" value="Vishay" />
             </attributes>
         </part>
-        <part name="U21" position="29.5, 18.5" rotation="90" side="Top">
+        <part name="U10" position="34, 18.5" rotation="90" side="Top">
             <attributes>
-                <attribute name="NAME" value="U21" />
+                <attribute name="NAME" value="U10" />
                 <attribute name="VALUE" value="PIC18F46K22-I/PT" />
                 <attribute name="TYPE" value="IC" />
                 <attribute name="MANUFACTURER" value="Microchip" />
-                <attribute name="REFERENCE" value="PIC18F46K22T-I/PT" />
             </attributes>
         </part>
-        <part name="C9" position="30.375, 9.75" rotation="90" side="Top">
+        <part name="C9" position="35, 9" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="C9" />
                 <attribute name="VALUE" value="100n" />
@@ -280,11 +247,9 @@
                 <attribute name="C_DIELECTRIC" value="X7R" />
                 <attribute name="C_VOLTAGE" value="25V" />
                 <attribute name="TYPE" value="C" />
-                <attribute name="MANUFACTURER" value="Kemet" />
-                <attribute name="REFERENCE" value="C0805C104K5RACTU" />
             </attributes>
         </part>
-        <part name="C8" position="32.5, 9.75" rotation="90" side="Top">
+        <part name="C8" position="37.25, 9" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="C8" />
                 <attribute name="VALUE" value="10n" />
@@ -293,11 +258,9 @@
                 <attribute name="C_DIELECTRIC" value="X7R" />
                 <attribute name="C_VOLTAGE" value="25V" />
                 <attribute name="TYPE" value="C" />
-                <attribute name="MANUFACTURER" value="Kemet" />
-                <attribute name="REFERENCE" value="C0805C103K5RACTU" />
             </attributes>
         </part>
-        <part name="R15" position="65.625, 28.75" rotation="270" side="Top">
+        <part name="R15" position="54.5, 39.5" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="R15" />
                 <attribute name="VALUE" value="270" />
@@ -305,11 +268,9 @@
                 <attribute name="R_RESISTANCE" value="270R" />
                 <attribute name="TYPE" value="R" />
                 <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="REFERENCE" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" value="Vishay" />
             </attributes>
         </part>
-        <part name="R16" position="65.625, 33.5" rotation="270" side="Top">
+        <part name="R16" position="58.5, 39.5" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="R16" />
                 <attribute name="VALUE" value="270" />
@@ -317,11 +278,9 @@
                 <attribute name="R_RESISTANCE" value="270R" />
                 <attribute name="TYPE" value="R" />
                 <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="REFERENCE" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" value="Vishay" />
             </attributes>
         </part>
-        <part name="C12" position="40.5, 14.5" rotation="270" side="Top">
+        <part name="C12" position="62, 32" rotation="0" side="Top">
             <attributes>
                 <attribute name="NAME" value="C12" />
                 <attribute name="VALUE" value="4u7" />
@@ -330,11 +289,9 @@
                 <attribute name="C_DIELECTRIC" value="X7R" />
                 <attribute name="C_VOLTAGE" value="25V" />
                 <attribute name="TYPE" value="C" />
-                <attribute name="MANUFACTURER" value="Taiyo Yuden" />
-                <attribute name="REFERENCE" value="TMK212AB7475KG-T" />
             </attributes>
         </part>
-        <part name="C13" position="47.5, 14.5" rotation="90" side="Top">
+        <part name="C13" position="62, 39" rotation="180" side="Top">
             <attributes>
                 <attribute name="NAME" value="C13" />
                 <attribute name="VALUE" value="4u7" />
@@ -343,11 +300,9 @@
                 <attribute name="C_DIELECTRIC" value="X7R" />
                 <attribute name="C_VOLTAGE" value="25V" />
                 <attribute name="TYPE" value="C" />
-                <attribute name="MANUFACTURER" value="Taiyo Yuden" />
-                <attribute name="REFERENCE" value="TMK212AB7475KG-T" />
             </attributes>
         </part>
-        <part name="C14" position="11.5, 45.75" rotation="90" side="Top">
+        <part name="C14" position="23.5, 39" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="C14" />
                 <attribute name="VALUE" value="10u" />
@@ -356,19 +311,15 @@
                 <attribute name="C_DIELECTRIC" value="TANT" />
                 <attribute name="C_VOLTAGE" value="6.3V" />
                 <attribute name="TYPE" value="C" />
-                <attribute name="MANUFACTURER" value="AVX" />
-                <attribute name="REFERENCE" value="TPSA106K006R1500" />
             </attributes>
         </part>
-        <part name="JP4" position="63.25, 14.25" rotation="270" side="Top">
+        <part name="JP4" position="62, 27.5" rotation="270" side="Top">
             <attributes>
                 <attribute name="NAME" value="JP4" />
                 <attribute name="VALUE" value="" />
-                <attribute name="MANUFACTURER" value="Molex" />
-                <attribute name="REFERENCE" value="22-27-2021" />
             </attributes>
         </part>
-        <part name="C15" position="13.75, 45" rotation="270" side="Top">
+        <part name="C15" position="25.5, 38.25" rotation="270" side="Top">
             <attributes>
                 <attribute name="NAME" value="C15" />
                 <attribute name="VALUE" value="100n" />
@@ -377,11 +328,9 @@
                 <attribute name="C_VOLTAGE" value="25V" />
                 <attribute name="TYPE" value="C" />
                 <attribute name="C_CASE" value="0805" />
-                <attribute name="MANUFACTURER" value="Kemet" />
-                <attribute name="REFERENCE" value="C0805C104K5RACTU" />
             </attributes>
         </part>
-        <part name="C16" position="40.25, 20.75" rotation="0" side="Top">
+        <part name="C16" position="48.5, 14.75" rotation="270" side="Top">
             <attributes>
                 <attribute name="NAME" value="C16" />
                 <attribute name="VALUE" value="10u" />
@@ -390,11 +339,9 @@
                 <attribute name="C_VOLTAGE" value="6.3V" />
                 <attribute name="TYPE" value="C" />
                 <attribute name="C_CASE" value="A" />
-                <attribute name="MANUFACTURER" value="TPSA106K006R1500" />
-                <attribute name="REFERENCE" value="TPSA106K006R1500" />
             </attributes>
         </part>
-        <part name="C17" position="39.625, 18.75" rotation="180" side="Top">
+        <part name="C17" position="46.5, 15.5" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="C17" />
                 <attribute name="VALUE" value="100n" />
@@ -403,11 +350,9 @@
                 <attribute name="C_DIELECTRIC" value="X7R" />
                 <attribute name="C_VOLTAGE" value="25V" />
                 <attribute name="TYPE" value="C" />
-                <attribute name="MANUFACTURER" value="Kemet" />
-                <attribute name="REFERENCE" value="C0805C104K5RACTU" />
             </attributes>
         </part>
-        <part name="R19" position="25.75, 9.75" rotation="90" side="Top">
+        <part name="R19" position="30, 9" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="R19" />
                 <attribute name="VALUE" value="270" />
@@ -415,21 +360,19 @@
                 <attribute name="R_RESISTANCE" value="270R" />
                 <attribute name="TYPE" value="R" />
                 <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="REFERENCE" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" value="Vishay" />
             </attributes>
         </part>
-        <part name="LED1" position="23.75, 9.75" rotation="270" side="Top">
+        <part name="LED1" position="26.5, 9.5" rotation="0" side="Top">
             <attributes>
                 <attribute name="NAME" value="LED1" />
                 <attribute name="VALUE" value="GREEN" />
-                <attribute name="LED_CASE" value="0805" />
-                <attribute name="MANUFACTURER" value="Broadcom Limited" />
-                <attribute name="REFERENCE" value="HSMG-C170" />
+                <attribute name="LED_CASE" value="1206" />
+                <attribute name="MANUFACTURER" value="Avago" />
+                <attribute name="REFERENCE" value="HSMG-C150" />
                 <attribute name="TYPE" value="LED" />
             </attributes>
         </part>
-        <part name="R3" position="65.625, 38.25" rotation="270" side="Top">
+        <part name="R3" position="56.5, 39.5" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="R3" />
                 <attribute name="VALUE" value="270" />
@@ -437,11 +380,9 @@
                 <attribute name="R_RESISTANCE" value="270R" />
                 <attribute name="TYPE" value="R" />
                 <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="REFERENCE" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" value="Vishay" />
             </attributes>
         </part>
-        <part name="R4" position="65.625, 43" rotation="270" side="Top">
+        <part name="R4" position="52.5, 39.5" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="R4" />
                 <attribute name="VALUE" value="270" />
@@ -449,28 +390,47 @@
                 <attribute name="R_RESISTANCE" value="270R" />
                 <attribute name="TYPE" value="R" />
                 <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="REFERENCE" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" value="Vishay" />
             </attributes>
         </part>
-        <part name="JP3" position="6.5, 14.25" rotation="90" side="Top">
+        <part name="X1" position="22, 56.5" rotation="0" side="Top">
+            <attributes>
+                <attribute name="OC_NEWARK" value="97K6709" />
+                <attribute name="MPN" value="N2514-5002RB" />
+                <attribute name="MF" value="" />
+                <attribute name="OC_FARNELL" value="1788673" />
+                <attribute name="NAME" value="X1" />
+                <attribute name="VALUE" value="2514-5" />
+            </attributes>
+        </part>
+        <part name="X2" position="48, 56.5" rotation="0" side="Top">
+            <attributes>
+                <attribute name="OC_NEWARK" value="97K6709" />
+                <attribute name="MPN" value="N2514-5002RB" />
+                <attribute name="MF" value="" />
+                <attribute name="OC_FARNELL" value="1788673" />
+                <attribute name="NAME" value="X2" />
+                <attribute name="VALUE" value="2514-5" />
+            </attributes>
+        </part>
+        <part name="U$9" position="4.5, 63" rotation="0" side="Top" />
+        <part name="U$10" position="4.5, 4.5" rotation="0" side="Top" />
+        <part name="JP3" position="6.5, 13.25" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="JP3" />
                 <attribute name="MANUFACTURER" value="Hirose Electric" />
                 <attribute name="REFERENCE" value="DF13-5P-1.25H(20)" />
             </attributes>
         </part>
-        <part name="U19" position="44, 13.5" rotation="180" side="Top">
+        <part name="U9" position="62.5, 35.5" rotation="270" side="Top">
             <attributes>
-                <attribute name="NAME" value="U19" />
-                <attribute name="VALUE" value="MCP1703T-3302E/MB" />
+                <attribute name="NAME" value="U9" />
+                <attribute name="VALUE" value="MCP17033302I/MB" />
                 <attribute name="TYPE" value="IC" />
                 <attribute name="MANUFACTURER" value="Microchip" />
                 <attribute name="IC_CASE" value="SOT89" />
-                <attribute name="REFERENCE" value="MCP1703T-3302E/MB" />
             </attributes>
         </part>
-        <part name="L1" position="49.75, 14.5" rotation="90" side="Top">
+        <part name="L1" position="67.5, 32" rotation="180" side="Top">
             <attributes>
                 <attribute name="NAME" value="L1" />
                 <attribute name="VALUE" value="600R" />
@@ -481,7 +441,7 @@
                 <attribute name="REFERENCE" value="ILBB0805ER601V" />
             </attributes>
         </part>
-        <part name="R1" position="49.75, 10.25" rotation="270" side="Top">
+        <part name="R1" position="67.5, 35.5" rotation="90" side="Top">
             <attributes>
                 <attribute name="NAME" value="R1" />
                 <attribute name="VALUE" value="5R1" />
@@ -489,11 +449,10 @@
                 <attribute name="R_RESISTANCE" value="5R1" />
                 <attribute name="TYPE" value="R" />
                 <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="MANUFACTURER" value="Vishay" />
-                <attribute name="REFERENCE" value="CRCW08055R10FNEA" />
             </attributes>
         </part>
-        <part name="R2" position="26.875, 46.75" rotation="270" side="Top">
+        <part name="U$1" position="44.5, 28.5" rotation="0" side="Top" />
+        <part name="R2" position="30.5, 39.5" rotation="270" side="Top">
             <attributes>
                 <attribute name="NAME" value="R2" />
                 <attribute name="VALUE" value="10K" />
@@ -501,11 +460,9 @@
                 <attribute name="R_RESISTANCE" value="10K" />
                 <attribute name="TYPE" value="R" />
                 <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="REFERENCE" value="CRCW080510K0FKEB" />
-                <attribute name="MANUFACTURER" value="Vishay" />
             </attributes>
         </part>
-        <part name="R5" position="24.375, 46.75" rotation="270" side="Top">
+        <part name="R5" position="32.5, 39.5" rotation="270" side="Top">
             <attributes>
                 <attribute name="NAME" value="R5" />
                 <attribute name="VALUE" value="10K" />
@@ -513,11 +470,9 @@
                 <attribute name="R_RESISTANCE" value="10K" />
                 <attribute name="TYPE" value="R" />
                 <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="REFERENCE" value="CRCW080510K0FKEB" />
-                <attribute name="MANUFACTURER" value="Vishay" />
             </attributes>
         </part>
-        <part name="R6" position="36.125, 10.75" rotation="0" side="Top">
+        <part name="R6" position="47.25, 18.75" rotation="0" side="Top">
             <attributes>
                 <attribute name="NAME" value="R6" />
                 <attribute name="VALUE" value="10K" />
@@ -525,56 +480,54 @@
                 <attribute name="R_RESISTANCE" value="10K" />
                 <attribute name="TYPE" value="R" />
                 <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="MANUFACTURER" value="Vishay" />
-                <attribute name="REFERENCE" value="CRCW080510K0FKEB" />
             </attributes>
         </part>
-        <part name="U1" position="3, 54" rotation="180" side="Top">
+        <part name="U1" position="3, 47.5" rotation="180" side="Top">
             <attributes>
                 <attribute name="NAME" value="U1" />
                 <attribute name="VALUE" value="ACPL224" />
-                <attribute name="MANUFACTURER" value="Broadcom Limited" />
+                <attribute name="MANUFACTURER" value="Avago" />
                 <attribute name="REFERENCE" value="ACPL-224-500E" />
                 <attribute name="TYPE" value="IC" />
             </attributes>
         </part>
-        <part name="U2" position="8.5, 54" rotation="180" side="Top">
+        <part name="U2" position="9, 47.5" rotation="180" side="Top">
             <attributes>
                 <attribute name="NAME" value="U2" />
                 <attribute name="VALUE" value="ACPL224" />
-                <attribute name="MANUFACTURER" value="Broadcom Limited" />
+                <attribute name="MANUFACTURER" value="Avago" />
                 <attribute name="REFERENCE" value="ACPL-224-500E" />
                 <attribute name="TYPE" value="IC" />
             </attributes>
         </part>
-        <part name="U3" position="14, 54" rotation="180" side="Top">
+        <part name="U3" position="15, 47.5" rotation="180" side="Top">
             <attributes>
                 <attribute name="NAME" value="U3" />
                 <attribute name="VALUE" value="ACPL224" />
-                <attribute name="MANUFACTURER" value="Broadcom Limited" />
+                <attribute name="MANUFACTURER" value="Avago" />
                 <attribute name="REFERENCE" value="ACPL-224-500E" />
                 <attribute name="TYPE" value="IC" />
             </attributes>
         </part>
-        <part name="U4" position="19.5, 54" rotation="180" side="Top">
+        <part name="U4" position="21, 47.5" rotation="180" side="Top">
             <attributes>
                 <attribute name="NAME" value="U4" />
                 <attribute name="VALUE" value="ACPL224" />
-                <attribute name="MANUFACTURER" value="Broadcom Limited" />
+                <attribute name="MANUFACTURER" value="Avago" />
                 <attribute name="REFERENCE" value="ACPL-224-500E" />
                 <attribute name="TYPE" value="IC" />
             </attributes>
         </part>
-        <part name="U5" position="25, 54" rotation="180" side="Top">
+        <part name="U12" position="27, 47.5" rotation="180" side="Top">
             <attributes>
-                <attribute name="NAME" value="U5" />
+                <attribute name="NAME" value="U12" />
                 <attribute name="VALUE" value="ACPL224" />
-                <attribute name="MANUFACTURER" value="Broadcom Limited" />
+                <attribute name="MANUFACTURER" value="Avago" />
                 <attribute name="REFERENCE" value="ACPL-224-500E" />
                 <attribute name="TYPE" value="IC" />
             </attributes>
         </part>
-        <part name="D2" position="47.5, 10.25" rotation="270" side="Top">
+        <part name="D2" position="67, 39" rotation="0" side="Top">
             <attributes>
                 <attribute name="NAME" value="D2" />
                 <attribute name="VALUE" value="MBR0540" />
@@ -584,7 +537,31 @@
                 <attribute name="REFERENCE" value="MBR0540" />
             </attributes>
         </part>
-        <part name="U8" position="47, 52.5" rotation="270" side="Top">
+        <part name="U5" position="39.5, 47" rotation="0" side="Top">
+            <attributes>
+                <attribute name="NAME" value="U5" />
+                <attribute name="VALUE" value="VO1400" />
+                <attribute name="MANUFACTURER" value="Vishay" />
+                <attribute name="REFERENCE" value="VO1400AEFTR" />
+            </attributes>
+        </part>
+        <part name="U6" position="34.5, 47" rotation="0" side="Top">
+            <attributes>
+                <attribute name="NAME" value="U6" />
+                <attribute name="VALUE" value="VO1400" />
+                <attribute name="MANUFACTURER" value="Vishay" />
+                <attribute name="REFERENCE" value="VO1400AEFTR" />
+            </attributes>
+        </part>
+        <part name="U7" position="44.5, 47" rotation="0" side="Top">
+            <attributes>
+                <attribute name="NAME" value="U7" />
+                <attribute name="VALUE" value="VO1400" />
+                <attribute name="MANUFACTURER" value="Vishay" />
+                <attribute name="REFERENCE" value="VO1400AEFTR" />
+            </attributes>
+        </part>
+        <part name="U8" position="44, 47" rotation="0" side="Bottom">
             <attributes>
                 <attribute name="NAME" value="U8" />
                 <attribute name="VALUE" value="VO1400" />
@@ -592,39 +569,7 @@
                 <attribute name="REFERENCE" value="VO1400AEFTR" />
             </attributes>
         </part>
-        <part name="U9" position="47, 47.75" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="U9" />
-                <attribute name="VALUE" value="VO1400" />
-                <attribute name="MANUFACTURER" value="Vishay" />
-                <attribute name="REFERENCE" value="VO1400AEFTR" />
-            </attributes>
-        </part>
-        <part name="U10" position="47, 43" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="U10" />
-                <attribute name="VALUE" value="VO1400" />
-                <attribute name="MANUFACTURER" value="Vishay" />
-                <attribute name="REFERENCE" value="VO1400AEFTR" />
-            </attributes>
-        </part>
-        <part name="U11" position="47, 38.25" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="U11" />
-                <attribute name="VALUE" value="VO1400" />
-                <attribute name="MANUFACTURER" value="Vishay" />
-                <attribute name="REFERENCE" value="VO1400AEFTR" />
-            </attributes>
-        </part>
-        <part name="U12" position="47, 33.5" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="U12" />
-                <attribute name="VALUE" value="VO1400" />
-                <attribute name="MANUFACTURER" value="Vishay" />
-                <attribute name="REFERENCE" value="VO1400AEFTR" />
-            </attributes>
-        </part>
-        <part name="U13" position="47, 28.75" rotation="270" side="Top">
+        <part name="U13" position="49.5, 47" rotation="0" side="Top">
             <attributes>
                 <attribute name="NAME" value="U13" />
                 <attribute name="VALUE" value="VO1400" />
@@ -632,7 +577,7 @@
                 <attribute name="REFERENCE" value="VO1400AEFTR" />
             </attributes>
         </part>
-        <part name="U14" position="60.5, 28.75" rotation="90" side="Top">
+        <part name="U14" position="49.5, 47" rotation="0" side="Bottom">
             <attributes>
                 <attribute name="NAME" value="U14" />
                 <attribute name="VALUE" value="VO1400" />
@@ -640,7 +585,7 @@
                 <attribute name="REFERENCE" value="VO1400AEFTR" />
             </attributes>
         </part>
-        <part name="U15" position="60.5, 33.5" rotation="90" side="Top">
+        <part name="U15" position="54.5, 47" rotation="0" side="Top">
             <attributes>
                 <attribute name="NAME" value="U15" />
                 <attribute name="VALUE" value="VO1400" />
@@ -648,7 +593,7 @@
                 <attribute name="REFERENCE" value="VO1400AEFTR" />
             </attributes>
         </part>
-        <part name="U16" position="60.5, 38.25" rotation="90" side="Top">
+        <part name="U16" position="55, 47" rotation="0" side="Bottom">
             <attributes>
                 <attribute name="NAME" value="U16" />
                 <attribute name="VALUE" value="VO1400" />
@@ -656,7 +601,7 @@
                 <attribute name="REFERENCE" value="VO1400AEFTR" />
             </attributes>
         </part>
-        <part name="U17" position="60.5, 43" rotation="90" side="Top">
+        <part name="U17" position="59.5, 47" rotation="0" side="Top">
             <attributes>
                 <attribute name="NAME" value="U17" />
                 <attribute name="VALUE" value="VO1400" />
@@ -664,115 +609,14 @@
                 <attribute name="REFERENCE" value="VO1400AEFTR" />
             </attributes>
         </part>
-        <part name="R7" position="32.375, 46.75" rotation="270" side="Top">
-            <attributes>
-                <attribute name="R_CASE" value="0805" />
-                <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="R_RESISTANCE" value="10K" />
-                <attribute name="TYPE" value="R" />
-                <attribute name="NAME" value="R7" />
-                <attribute name="VALUE" value="10K" />
-                <attribute name="REFERENCE" value="CRCW080510K0FKEB" />
-                <attribute name="MANUFACTURER" value="Vishay" />
-            </attributes>
-        </part>
-        <part name="R8" position="29.875, 46.75" rotation="270" side="Top">
-            <attributes>
-                <attribute name="R_CASE" value="0805" />
-                <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="R_RESISTANCE" value="10K" />
-                <attribute name="TYPE" value="R" />
-                <attribute name="NAME" value="R8" />
-                <attribute name="VALUE" value="10K" />
-                <attribute name="REFERENCE" value="CRCW080510K0FKEB" />
-                <attribute name="MANUFACTURER" value="Vishay" />
-            </attributes>
-        </part>
-        <part name="U6" position="30.5, 54" rotation="180" side="Top">
-            <attributes>
-                <attribute name="NAME" value="U6" />
-                <attribute name="VALUE" value="ACPL224" />
-                <attribute name="MANUFACTURER" value="Broadcom Limited" />
-                <attribute name="REFERENCE" value="ACPL-224-500E" />
-            </attributes>
-        </part>
-        <part name="JP1" position="20.75, 62.875" rotation="0" side="Top">
-            <attributes>
-                <attribute name="REFERENCE" value="DF11-18DP-2DSA(08)" />
-                <attribute name="MANUFACTURER" value="Hirose Electric" />
-            </attributes>
-        </part>
-        <part name="JP2" position="49.875, 62.875" rotation="0" side="Top">
-            <attributes>
-                <attribute name="MANUFACTURER" value="Hirose Electric" />
-                <attribute name="REFERENCE" value="DF11-16DP-2DSA(08)" />
-            </attributes>
-        </part>
-        <part name="U$1" position="10, 35" rotation="0" side="Top" />
-        <part name="U$2" position="48.5, 20.5" rotation="0" side="Top" />
-        <part name="R20" position="68.125, 46" rotation="90" side="Top">
-            <attributes>
-                <attribute name="TYPE" value="R" />
-                <attribute name="R_CASE" value="0805" />
-                <attribute name="R_RESISTANCE" value="270R" />
-                <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="NAME" value="R20" />
-                <attribute name="VALUE" value="270" />
-                <attribute name="REFERENCE" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" value="Vishay" />
-            </attributes>
-        </part>
-        <part name="R21" position="68.125, 51" rotation="90" side="Top">
-            <attributes>
-                <attribute name="TYPE" value="R" />
-                <attribute name="R_CASE" value="0805" />
-                <attribute name="R_RESISTANCE" value="270R" />
-                <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="NAME" value="R21" />
-                <attribute name="VALUE" value="270" />
-                <attribute name="REFERENCE" value="CRCW0805270RFKEA" />
-                <attribute name="MANUFACTURER" value="Vishay" />
-            </attributes>
-        </part>
-        <part name="U18" position="61, 50.5" rotation="90" side="Top">
+        <part name="U18" position="64.5, 47" rotation="0" side="Top">
             <attributes>
                 <attribute name="NAME" value="U18" />
-                <attribute name="VALUE" value="LH1522AAC" />
+                <attribute name="VALUE" value="VO1400" />
                 <attribute name="MANUFACTURER" value="Vishay" />
-                <attribute name="REFERENCE" value="LH1522AAC" />
+                <attribute name="REFERENCE" value="VO1400AEFTR" />
             </attributes>
         </part>
-        <part name="U7" position="36, 54" rotation="180" side="Top">
-            <attributes>
-                <attribute name="NAME" value="U7" />
-                <attribute name="VALUE" value="ACPL224" />
-                <attribute name="MANUFACTURER" value="Broadcom Limited" />
-                <attribute name="REFERENCE" value="ACPL-224-500E" />
-            </attributes>
-        </part>
-        <part name="R22" position="37.875, 46.75" rotation="270" side="Top">
-            <attributes>
-                <attribute name="TYPE" value="R" />
-                <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="R_RESISTANCE" value="10K" />
-                <attribute name="R_CASE" value="0805" />
-                <attribute name="NAME" value="R22" />
-                <attribute name="VALUE" value="10K" />
-                <attribute name="REFERENCE" value="CRCW080510K0FKEB" />
-                <attribute name="MANUFACTURER" value="Vishay" />
-            </attributes>
-        </part>
-        <part name="R23" position="35.375, 46.75" rotation="270" side="Top">
-            <attributes>
-                <attribute name="TYPE" value="R" />
-                <attribute name="R_TOLERANCE" value="1%" />
-                <attribute name="R_RESISTANCE" value="10K" />
-                <attribute name="R_CASE" value="0805" />
-                <attribute name="NAME" value="R23" />
-                <attribute name="VALUE" value="10K" />
-                <attribute name="MANUFACTURER" value="Vishay" />
-                <attribute name="REFERENCE" value="CRCW080510K0FKEB" />
-            </attributes>
-        </part>
+        <part name="U$2" position="11.25, 27.75" rotation="0" side="Top" />
     </parts>
 </board>
