@@ -4,7 +4,8 @@
 
 	<xsl:output method="text" encoding="windows-1252"/>
 
-    <xsl:key name="referenceKey" match="part" use="attributes/attribute[@name='REFERENCE']/@value"/>
+    <xsl:key 
+        name="referenceKey" match="part" use="attributes/attribute[@name='REFERENCE']/@value"/>
 
     <xsl:template match="/">
         <xsl:text>manufacturer part number, manufacturer, quantity, reference designators</xsl:text>
