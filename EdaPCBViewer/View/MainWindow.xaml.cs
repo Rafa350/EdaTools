@@ -93,8 +93,8 @@
                             if (child.Part == visual.Part)
                                 child.IsSelected = visual.IsSelected;
                         }*/
-        }
-    }
+                    }
+                }
             }
         }
 

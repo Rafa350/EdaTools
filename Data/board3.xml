@@ -205,7 +205,7 @@
         <block name="3,6@holes">
             <elements>
                 <arc layers="TopDocument" startPosition="-2.159, 0" endPosition="0, -2.159" angle="90" thickness="2.4892" lineCap="Flat" />
-                <arc layers="TopDocument" startPosition="0, 2.159" endPosition="2.159, 0" angle="90" thickness="2.4892" lineCap="Flat" />
+                <arc layers="TopDocument" startPosition="0, 2.159" endPosition="2.159, 0" angle="-90" thickness="2.4892" lineCap="Flat" />
                 <circle layers="TopPlace" position="0, 0" radius="3.429" thickness="0.1524" />
                 <circle layers="TopDocument" position="0, 0" radius="0.762" thickness="0.4572" />
                 <circle layers="TopKeepout" position="0, 0" radius="3.048" thickness="2.7686" />
@@ -300,15 +300,15 @@
             <elements>
                 <line layers="TopPlace" startPosition="4.699, 1.9558" endPosition="-4.699, 1.9558" thickness="0.1524" />
                 <arc layers="TopPlace" startPosition="4.699, -1.9558" endPosition="5.08, -1.5748" angle="90" thickness="0.1524" />
-                <arc layers="TopPlace" startPosition="-5.08, 1.5748" endPosition="-4.699, 1.9558" angle="90" thickness="0.1524" />
-                <arc layers="TopPlace" startPosition="4.699, 1.9558" endPosition="5.08, 1.5748" angle="90" thickness="0.1524" />
+                <arc layers="TopPlace" startPosition="-5.08, 1.5748" endPosition="-4.699, 1.9558" angle="-90" thickness="0.1524" />
+                <arc layers="TopPlace" startPosition="4.699, 1.9558" endPosition="5.08, 1.5748" angle="-90" thickness="0.1524" />
                 <arc layers="TopPlace" startPosition="-5.08, -1.5748" endPosition="-4.699, -1.9558" angle="90" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="-4.699, -1.9558" endPosition="4.699, -1.9558" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="5.08, -1.5748" endPosition="5.08, 1.5748" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="-5.08, 1.5748" endPosition="-5.08, 0.508" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="-5.08, 0.508" endPosition="-5.08, -0.508" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="-5.08, -0.508" endPosition="-5.08, -1.5748" thickness="0.1524" />
-                <arc layers="TopPlace" startPosition="-5.08, 0.508" endPosition="-5.08, -0.508" angle="180" thickness="0.1524" />
+                <arc layers="TopPlace" startPosition="-5.08, 0.508" endPosition="-5.08, -0.508" angle="-180" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="-5.08, -1.6002" endPosition="5.08, -1.6002" thickness="0.0508" />
                 <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-4.445, -3.0734" size="0.6604, 2.032" />
                 <spad name="16" layers="Top, Pads, TopCream, TopStop" position="-4.445, 3.0734" size="0.6604, 2.032" />
@@ -359,25 +359,25 @@
                 <line layers="TopDocument" startPosition="-5.715, 0.381" endPosition="-6.477, 0.381" thickness="0.1524" />
                 <line layers="TopDocument" startPosition="-5.715, -0.381" endPosition="-6.477, -0.381" thickness="0.1524" />
                 <line layers="TopDocument" startPosition="-6.477, 0.381" endPosition="-6.477, -0.381" thickness="0.1524" />
-                <arc layers="TopPlace" startPosition="-5.715, 2.159" endPosition="-5.461, 2.413" angle="90" thickness="0.1524" />
+                <arc layers="TopPlace" startPosition="-5.715, 2.159" endPosition="-5.461, 2.413" angle="-90" thickness="0.1524" />
                 <line layers="TopDocument" startPosition="-5.715, 1.143" endPosition="-5.715, -1.143" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="-5.715, 2.159" endPosition="-5.715, 1.143" thickness="0.1524" />
-                <arc layers="TopPlace" startPosition="-3.9826, 1.143" endPosition="-3.429, 1.27" angle="25.84" thickness="0.0508" />
+                <arc layers="TopPlace" startPosition="-3.9826, 1.143" endPosition="-3.429, 1.27" angle="-25.84" thickness="0.0508" />
                 <arc layers="TopPlace" startPosition="-3.9826, -1.143" endPosition="-3.429, -1.27" angle="25.84" thickness="0.0508" />
-                <arc layers="TopPlace" startPosition="-5.1091, 1.143" endPosition="-3.429, 2.032099" angle="55.77" thickness="0.0508" />
+                <arc layers="TopPlace" startPosition="-5.1091, 1.143" endPosition="-3.429, 2.032099" angle="-55.77" thickness="0.0508" />
                 <arc layers="TopDocument" startPosition="-3.9826, 1.143" endPosition="-3.9826, -1.143" angle="128.31" thickness="0.0508" />
                 <arc layers="TopDocument" startPosition="-5.1091, 1.143" endPosition="-5.1091, -1.143" angle="68.45" thickness="0.0508" />
-                <arc layers="TopPlace" startPosition="3.429, 2.032" endPosition="5.1091, 1.143" angle="55.77" thickness="0.0508" />
-                <arc layers="TopDocument" startPosition="3.9826, 1.143" endPosition="3.9826, -1.143" angle="128.31" thickness="0.0508" />
-                <arc layers="TopPlace" startPosition="3.429, 1.27" endPosition="3.9826, 1.143" angle="25.84" thickness="0.0508" />
+                <arc layers="TopPlace" startPosition="3.429, 2.032" endPosition="5.1091, 1.143" angle="-55.77" thickness="0.0508" />
+                <arc layers="TopDocument" startPosition="3.9826, 1.143" endPosition="3.9826, -1.143" angle="-128.31" thickness="0.0508" />
+                <arc layers="TopPlace" startPosition="3.429, 1.27" endPosition="3.9826, 1.143" angle="-25.84" thickness="0.0508" />
                 <arc layers="TopPlace" startPosition="3.429, -1.27" endPosition="3.9826, -1.143" angle="25.84" thickness="0.0508" />
                 <line layers="TopDocument" startPosition="6.477, 0.381" endPosition="6.477, -0.381" thickness="0.1524" />
-                <arc layers="TopDocument" startPosition="5.1091, 1.143" endPosition="5.1091, -1.143" angle="68.45" thickness="0.0508" />
+                <arc layers="TopDocument" startPosition="5.1091, 1.143" endPosition="5.1091, -1.143" angle="-68.45" thickness="0.0508" />
                 <line layers="TopDocument" startPosition="5.715, 1.143" endPosition="5.715, 0.381" thickness="0.1524" />
                 <line layers="TopDocument" startPosition="5.715, 0.381" endPosition="5.715, -0.381" thickness="0.1524" />
                 <line layers="TopDocument" startPosition="5.715, -0.381" endPosition="5.715, -1.143" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="5.715, 2.159" endPosition="5.715, 1.143" thickness="0.1524" />
-                <arc layers="TopPlace" startPosition="5.461, 2.413" endPosition="5.715, 2.159" angle="90" thickness="0.1524" />
+                <arc layers="TopPlace" startPosition="5.461, 2.413" endPosition="5.715, 2.159" angle="-90" thickness="0.1524" />
                 <line layers="TopDocument" startPosition="5.715, 0.381" endPosition="6.477, 0.381" thickness="0.1524" />
                 <line layers="TopDocument" startPosition="5.715, -0.381" endPosition="6.477, -0.381" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="3.429, -2.032" endPosition="-3.429, -2.032" thickness="0.0508" />
@@ -695,13 +695,13 @@
                 <rectangle layers="TopPlace" position="4.585, 2.03" size="1.25, 0.6" />
                 <region layers="TopPlace" thickness="0.08">
                     <segment position="2.18, 0.6" />
-                    <segment position="2.18, 0.06" angle="188.43" />
+                    <segment position="2.18, 0.06" angle="-188.43" />
                     <segment position="2.18, 4" />
                     <segment position="2.18, 3.46" angle="192.86" />
                 </region>
                 <region layers="TopPlace" thickness="0.08">
                     <segment position="5.56, 0.6" />
-                    <segment position="5.56, 0.06" angle="188.43" />
+                    <segment position="5.56, 0.06" angle="-188.43" />
                     <segment position="5.56, 4" />
                     <segment position="5.56, 3.46" angle="192.86" />
                 </region>

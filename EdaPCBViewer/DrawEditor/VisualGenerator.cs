@@ -16,6 +16,7 @@
     /// <summary>
     /// Clase que genera les visuals de la placa.
     /// </summary>
+    /// 
     public sealed class VisualGenerator {
 
         private class RenderTextDrawer: TextDrawer {
@@ -44,6 +45,7 @@
         /// <summary>
         /// Clase per visitar la placa i generar les visuals.
         /// </summary>
+        /// 
         private sealed class RenderVisitor: ElementVisitor {
 
             private readonly Dictionary<Color, Brush> brushCache = new Dictionary<Color, Brush>();

@@ -12,6 +12,7 @@
     /// <summary>
     /// Clase per importar una placa desde Eagle
     /// </summary>
+    /// 
     public sealed class EagleImporter : Importer {
 
         private readonly Dictionary<string, Block> componentDict = new Dictionary<string, Block>();
@@ -725,28 +726,16 @@
             int y = ParseNumber(GetAttributeAsString(node, "y"));
             PointInt position = new PointInt(x, y);
 
-            // Obte l'angle de rotacio
+            // Obte l'angle de rotacio i la cara
             //
             Angle rotation = Angle.Zero;
-
-            // obte la cara de la placa
-            //
             BoardSide side = BoardSide.Top;
-
             if (AttributeExists(node, "rot")) {
-
                 string rot = GetAttributeAsString(node, "rot");
+                if (rot.Contains("M"))
+                   side = BoardSide.Bottom;
 
-                int i;
-                for (i = 0; i < rot.Length; i++) {
-                    if (rot[i] == 'M')
-                       side = BoardSide.Bottom;
-
-                    else if (Char.IsDigit(rot[i]))
-                        break;
-                }
-
-                rotation = ParseAngle(rot.Substring(i));
+                rotation = ParseAngle(rot);
             }
 
             Part part = new Part(GetComponent(componentKey), name, position, rotation, side);
@@ -1037,14 +1026,14 @@
         /// Converteix un text a Angle
         /// </summary>
         /// <param name="s">El text a convertir.</param>
-        /// <returns>El valor aobtingut.</returns>
+        /// <returns>El valor obtingut.</returns>
         /// 
         private static Angle ParseAngle(string s) {
 
             int index = 0;
-            if (!Char.IsDigit(s[index]))
+            if (Char.IsLetter(s[index]))
                 index++;
-            if (!Char.IsDigit(s[index]))
+            if (Char.IsLetter(s[index]))
                 index++;
 
             double value = XmlConvert.ToDouble(s.Substring(index));
@@ -1103,20 +1092,31 @@
             return attribute == null ? null : attribute.Value;
         }
 
+        /// <summary>
+        /// Obte el valor d'un atribut.
+        /// </summary>
+        /// <param name="node">El node.</param>
+        /// <param name="name">El nom de l'atribut.</param>
+        /// <param name="defValue">El valor per defecte..</param>
+        /// <returns>El seu valor com a double.</returns>
+        /// 
         private static double GetAttributeDouble(XmlNode node, string name, int defValue = 0) {
 
             XmlAttribute attribute = node.Attributes[name];
             if (attribute == null)
                 return defValue;
-            else {
-                string value = attribute.Value;
-                int start = 0;
-                if (value.IndexOf("R") != -1)
-                    start++;
-                return XmlConvert.ToDouble(value.Substring(start));
-            }
+            else
+                return XmlConvert.ToDouble(attribute.Value);
         }
 
+        /// <summary>
+        /// Obte el valor d'un atribut.
+        /// </summary>
+        /// <param name="node">El node.</param>
+        /// <param name="name">El nom de l'atribut.</param>
+        /// <param name="defValue">El valor per defecte.</param>
+        /// <returns>El valor com integer.</returns>
+        /// 
         private static int GetAttributeAsInteger(XmlNode node, string name, int defValue = 0) {
 
             XmlAttribute attribute = node.Attributes[name];
@@ -1126,6 +1126,14 @@
                 return XmlConvert.ToInt32(attribute.Value);
         }
 
+        /// <summary>
+        /// Obte el valor d'un atribut.
+        /// </summary>
+        /// <param name="node">El node.</param>
+        /// <param name="name">El nom de l'atribut.</param>
+        /// <param name="defValue">El valor per defecte.</param>
+        /// <returns>El valor com boolean.</returns>
+        /// 
         private static bool GetAttributeAsBoolean(XmlNode node, string name, bool defValue = false) {
 
             XmlAttribute attribute = node.Attributes[name];
