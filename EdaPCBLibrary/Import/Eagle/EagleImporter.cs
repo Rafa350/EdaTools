@@ -239,7 +239,14 @@
                     Part part = board.GetPart(partName, true);
                     foreach (PadElement pad in part.Pads) {
                         if (pad.Name == padName)
-                            board.Connect(signal, pad, part);
+                            try {
+                                board.Connect(signal, pad, part);
+                            }
+                            catch {
+                                throw new InvalidOperationException(
+                                    String.Format("El pad '{0}' del elemento '{1}', ya esta conectado a la señal '{2}'",
+                                    pad.Name, part.Name, signal.Name));
+                            }
                     }
                 }
 
@@ -1023,10 +1030,11 @@
         }
 
         /// <summary>
-        /// Converteix un text a Angle
+        /// Converteix un text a Angle.
         /// </summary>
         /// <param name="s">El text a convertir.</param>
         /// <returns>El valor obtingut.</returns>
+        /// <remarks>L'angle pot portar un prefix, que cal descartar.</remarks>
         /// 
         private static Angle ParseAngle(string s) {
 
@@ -1086,6 +1094,13 @@
             return node.Attributes[name] != null;
         }
 
+        /// <summary>
+        /// Obte el valor d'un atribut.
+        /// </summary>
+        /// <param name="node">El node.</param>
+        /// <param name="name">El nom del atribut.</param>
+        /// <returns>El valor obtingut.</returns>
+        /// 
         private static string GetAttributeAsString(XmlNode node, string name) {
 
             XmlAttribute attribute = node.Attributes[name];
