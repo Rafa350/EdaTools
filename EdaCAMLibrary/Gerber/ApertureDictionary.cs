@@ -251,7 +251,15 @@
 
             int key = GetOvalKey(width, height, rotation, tag);
             if (!items.ContainsKey(key)) {
-                Aperture ap = new ObroundAperture(apertureId++, tag, width, height);
+
+                Aperture ap = null;
+                if (rotation == Angle.Zero || rotation == Angle.Deg180)
+                    ap = new ObroundAperture(apertureId++, tag, width, height);
+                else if (rotation == Angle.Deg90 || rotation == Angle.Deg270)
+                    ap = new ObroundAperture(apertureId++, tag, height, width);
+                else
+                    throw new NotImplementedException("Angulo de rotacion no implementado para la apertura oval.");
+
                 items.Add(key, ap);
             }
         }
