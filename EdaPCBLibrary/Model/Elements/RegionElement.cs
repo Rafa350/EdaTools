@@ -149,7 +149,7 @@
         ///
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            throw new NotImplementedException();
+            return PolygonProcessor.Offset(GetPolygon(side), spacing);
         }
 
         /// <summary>
