@@ -1,506 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <board units="mm">
     <parts>
-        <part name="JP1" position="35, 58" rotation="0" side="Top">
+        <part name="U1" position="42.5, 37" rotation="180" side="Top">
+            <attributes>
+                <attribute name="NAME" value="U1" />
+                <attribute name="VALUE" value="RAC10-24SC/227" />
+                <attribute name="MOUSER" value="919-RAC10-24SC/277" />
+            </attributes>
+        </part>
+        <part name="LD1" position="23.5, 50" rotation="270" side="Top">
+            <attributes>
+                <attribute name="NAME" value="LD1" />
+                <attribute name="VALUE" value="HSMS-C170" />
+                <attribute name="MANUFACTURER" value="AVAGO" />
+                <attribute name="REFERENCE" value="HSMS-C170" />
+            </attributes>
+        </part>
+        <part name="R1" position="22.5, 54.5" rotation="90" side="Top">
+            <attributes>
+                <attribute name="NAME" value="R1" />
+                <attribute name="VALUE" value="4K3" />
+                <attribute name="MANUFACTURER" value="GENERIC" />
+                <attribute name="REFERENCE" value="GPR08054K3" />
+            </attributes>
+        </part>
+        <part name="C1" position="24.75, 54.5" rotation="270" side="Top">
+            <attributes>
+                <attribute name="NAME" value="C1" />
+                <attribute name="VALUE" value="100n/50V" />
+                <attribute name="MANUFACTURER" value="GENERIC" />
+                <attribute name="REFERENCE" value="GPC0805104" />
+            </attributes>
+        </part>
+        <part name="R3" position="73, 39.5" rotation="90" side="Top">
+            <attributes>
+                <attribute name="NAME" value="R3" />
+                <attribute name="VALUE" value="S14K250" />
+            </attributes>
+        </part>
+        <part name="F1" position="68, 15" rotation="90" side="Top">
+            <attributes>
+                <attribute name="OC_NEWARK" value="96F8317" />
+                <attribute name="MPN" value="0031.8201" />
+                <attribute name="MF" value="SCHURTER" />
+                <attribute name="OC_FARNELL" value="1162740" />
+                <attribute name="NAME" value="F1" />
+                <attribute name="VALUE" value="T1.5A/250" />
+                <attribute name="NP" value="" />
+            </attributes>
+        </part>
+        <part name="U$1" position="4.5, 55.5" rotation="0" side="Top" />
+        <part name="U$6" position="80.5, 55.5" rotation="0" side="Top" />
+        <part name="F2" position="40.25, 9.5" rotation="180" side="Top">
+            <attributes>
+                <attribute name="NAME" value="F2" />
+                <attribute name="VALUE" value="FN-406-05-02" />
+                <attribute name="MOUSER" value="631-FN406-0.5/02" />
+                <attribute name="NP" value="" />
+            </attributes>
+        </part>
+        <part name="J2" position="79, 17.5" rotation="90" side="Top">
+            <attributes>
+                <attribute name="NAME" value="J2" />
+                <attribute name="VALUE" value="" />
+                <attribute name="NP" value="" />
+            </attributes>
+        </part>
+        <part name="U2" position="38.5, 54" rotation="0" side="Top">
+            <attributes>
+                <attribute name="NAME" value="U2" />
+                <attribute name="VALUE" value="RS-2405S" />
+                <attribute name="MOUSER" value="RS-2405S" />
+                <attribute name="NP" value="" />
+            </attributes>
+        </part>
+        <part name="C2" position="74.25, 54.5" rotation="270" side="Top">
+            <attributes>
+                <attribute name="NAME" value="C2" />
+                <attribute name="VALUE" value="10n/50V" />
+                <attribute name="MANUFACTURER" value="GENERIC" />
+                <attribute name="REFERENCE" value="GPC0805103" />
+            </attributes>
+        </part>
+        <part name="R2" position="70, 54.5" rotation="90" side="Top">
+            <attributes>
+                <attribute name="NAME" value="R2" />
+                <attribute name="VALUE" value="560" />
+                <attribute name="MANUFACTURER" value="GENERIC" />
+                <attribute name="REFERENCE" value="GPR0805560R" />
+            </attributes>
+        </part>
+        <part name="LD2" position="71, 50" rotation="270" side="Top">
+            <attributes>
+                <attribute name="NAME" value="LD2" />
+                <attribute name="VALUE" value="HSMS-C170" />
+                <attribute name="MANUFACTURER" value="AVAGO" />
+                <attribute name="REFERENCE" value="HSMS-C170" />
+            </attributes>
+        </part>
+        <part name="U$2" position="4.5, 4.5" rotation="0" side="Top" />
+        <part name="U$3" position="80.5, 4.5" rotation="0" side="Top" />
+        <part name="U$5" position="16, 2.5" rotation="90" side="Top" />
+        <part name="U3" position="29, 31.25" rotation="0" side="Top">
+            <attributes>
+                <attribute name="NAME" value="U3" />
+                <attribute name="VALUE" value="IRM-20-24" />
+                <attribute name="MANUFACTURER" value="Mean Well" />
+                <attribute name="NP" value="" />
+            </attributes>
+        </part>
+        <part name="C3" position="26.75, 54.5" rotation="270" side="Top">
+            <attributes>
+                <attribute name="NAME" value="C3" />
+                <attribute name="VALUE" value="10n/50V" />
+                <attribute name="MANUFACTURER" value="GENERIC" />
+                <attribute name="REFERENCE" value="GPC0805103" />
+            </attributes>
+        </part>
+        <part name="C4" position="72.25, 54.5" rotation="270" side="Top">
+            <attributes>
+                <attribute name="NAME" value="C4" />
+                <attribute name="VALUE" value="100n/50V" />
+                <attribute name="MANUFACTURER" value="GENERIC" />
+                <attribute name="REFERENCE" value="GPC0805104" />
+            </attributes>
+        </part>
+        <part name="JP1" position="15, 52" rotation="0" side="Top">
             <attributes>
                 <attribute name="NAME" value="JP1" />
                 <attribute name="VALUE" value="" />
+                <attribute name="NP" value="" />
             </attributes>
         </part>
-        <part name="JP3" position="56.5775, 9.5" rotation="0" side="Top">
+        <part name="JP2" position="60.5, 52" rotation="0" side="Top">
             <attributes>
-                <attribute name="NAME" value="JP3" />
+                <attribute name="NAME" value="JP2" />
                 <attribute name="VALUE" value="" />
-            </attributes>
-        </part>
-        <part name="JP4" position="13.3975, 9.5" rotation="0" side="Top">
-            <attributes>
-                <attribute name="NAME" value="JP4" />
-                <attribute name="VALUE" value="" />
-            </attributes>
-        </part>
-        <part name="U$1" position="4.5, 63" rotation="0" side="Top" />
-        <part name="U$2" position="4.5, 4.5" rotation="0" side="Top" />
-        <part name="U$3" position="65.5, 4.5" rotation="0" side="Top" />
-        <part name="U$4" position="65.5, 63" rotation="0" side="Top" />
-        <part name="C1" position="10.5, 54" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C1" />
-                <attribute name="VALUE" value="1u/25V" />
-                <attribute name="C_CAPACITANCE" value="1uF" />
-                <attribute name="C_CASE" value="0805" />
-                <attribute name="C_DIELECTRIC" value="X7R" />
-                <attribute name="C_TOLERANCE" value="10%" />
-                <attribute name="C_VOLTAGE" value="25V" />
-                <attribute name="TYPE" value="C" />
-            </attributes>
-        </part>
-        <part name="C2" position="13, 54" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C2" />
-                <attribute name="VALUE" value="1u/25V" />
-                <attribute name="C_CAPACITANCE" value="1uF" />
-                <attribute name="C_DIELECTRIC" value="X7R" />
-                <attribute name="C_TOLERANCE" value="10%" />
-                <attribute name="C_VOLTAGE" value="25V" />
-                <attribute name="TYPE" value="C" />
-                <attribute name="C_CASE" value="0805" />
-            </attributes>
-        </part>
-        <part name="C3" position="15.5, 54" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C3" />
-                <attribute name="VALUE" value="1u/25V" />
-                <attribute name="C_CAPACITANCE" value="1uF" />
-                <attribute name="C_CASE" value="0805" />
-                <attribute name="C_DIELECTRIC" value="X7R" />
-                <attribute name="C_TOLERANCE" value="10%" />
-                <attribute name="C_VOLTAGE" value="25V" />
-                <attribute name="TYPE" value="C" />
-            </attributes>
-        </part>
-        <part name="C4" position="18, 54" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C4" />
-                <attribute name="VALUE" value="1u/25V" />
-                <attribute name="C_CAPACITANCE" value="1uF" />
-                <attribute name="C_CASE" value="0805" />
-                <attribute name="C_DIELECTRIC" value="X7R" />
-                <attribute name="C_TOLERANCE" value="10%" />
-                <attribute name="C_VOLTAGE" value="25V" />
-                <attribute name="TYPE" value="C" />
-            </attributes>
-        </part>
-        <part name="C5" position="20.5, 54" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C5" />
-                <attribute name="VALUE" value="1u/25V" />
-            </attributes>
-        </part>
-        <part name="C6" position="27.5, 55" rotation="180" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C6" />
-                <attribute name="VALUE" value="1u/25V" />
-            </attributes>
-        </part>
-        <part name="C7" position="31.5, 54" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C7" />
-                <attribute name="VALUE" value="1u/25V" />
-            </attributes>
-        </part>
-        <part name="C8" position="36, 54" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C8" />
-                <attribute name="VALUE" value="1u/25V" />
-            </attributes>
-        </part>
-        <part name="C9" position="39, 54" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C9" />
-                <attribute name="VALUE" value="1u/25V" />
-            </attributes>
-        </part>
-        <part name="JP6" position="16.5, 42" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="JP6" />
-                <attribute name="VALUE" value="PINHD-1X5-2MM" />
-            </attributes>
-        </part>
-        <part name="R5" position="46.5, 46.5" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="R5" />
-                <attribute name="VALUE" value="1K5" />
-            </attributes>
-        </part>
-        <part name="R6" position="44.25, 46.5" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="R6" />
-                <attribute name="VALUE" value="1K5" />
-            </attributes>
-        </part>
-        <part name="C13" position="36.5, 44.5" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C13" />
-                <attribute name="VALUE" value="100n" />
-            </attributes>
-        </part>
-        <part name="C16" position="38.75, 44.5" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C16" />
-                <attribute name="VALUE" value="10n" />
-            </attributes>
-        </part>
-        <part name="U1" position="36, 36" rotation="0" side="Top">
-            <attributes>
-                <attribute name="NAME" value="U1" />
-                <attribute name="VALUE" value="PIC18F26K22-I/SO" />
-            </attributes>
-        </part>
-        <part name="C10" position="45.25, 54" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C10" />
-                <attribute name="VALUE" value="100n" />
-            </attributes>
-        </part>
-        <part name="JP7" position="6.5, 50" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="JP7" />
-            </attributes>
-        </part>
-        <part name="C11" position="11.5, 48.75" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C11" />
-                <attribute name="VALUE" value="100n" />
-                <attribute name="C_CAPACITANCE" value="10uF" />
-                <attribute name="C_DIELECTRIC" value="X7R" />
-                <attribute name="C_TOLERANCE" value="10%" />
-                <attribute name="C_VOLTAGE" value="6.3V" />
-                <attribute name="TYPE" value="C" />
-                <attribute name="C_CASE" value="0805" />
-            </attributes>
-        </part>
-        <part name="JP11" position="35, 61.5" rotation="180" side="Top" />
-        <part name="C12" position="42.5, 24.5" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C12" />
-                <attribute name="VALUE" value="100n" />
-            </attributes>
-        </part>
-        <part name="C14" position="37.75, 24.5" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C14" />
-                <attribute name="VALUE" value="100n" />
-            </attributes>
-        </part>
-        <part name="R4" position="40.25, 24.5" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="R4" />
-                <attribute name="VALUE" value="47k" />
-            </attributes>
-        </part>
-        <part name="R8" position="35.5, 24.5" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="R8" />
-                <attribute name="VALUE" value="47k" />
-            </attributes>
-        </part>
-        <part name="C15" position="58.5, 51.25" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C15" />
-                <attribute name="VALUE" value="100n" />
-                <attribute name="C_CAPACITANCE" value="10uF" />
-                <attribute name="C_DIELECTRIC" value="X7R" />
-                <attribute name="C_TOLERANCE" value="10%" />
-                <attribute name="C_VOLTAGE" value="6.3V" />
-                <attribute name="TYPE" value="C" />
-                <attribute name="C_CASE" value="0805" />
-            </attributes>
-        </part>
-        <part name="C17" position="13.5, 48" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C17" />
-                <attribute name="VALUE" value="10u/6.3V" />
-                <attribute name="C_CAPACITANCE" value="10uF" />
-                <attribute name="C_DIELECTRIC" value="TANTAL" />
-                <attribute name="C_TOLERANCE" value="10%" />
-                <attribute name="C_VOLTAGE" value="6.3uF" />
-                <attribute name="TYPE" value="C" />
-                <attribute name="C_CASE" value="A" />
-            </attributes>
-        </part>
-        <part name="U2" position="59, 22.5" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="U2" />
-                <attribute name="VALUE" value="" />
-            </attributes>
-        </part>
-        <part name="R1" position="59, 18.5" rotation="180" side="Top">
-            <attributes>
-                <attribute name="NAME" value="R1" />
-                <attribute name="VALUE" value="6R98" />
-            </attributes>
-        </part>
-        <part name="C18" position="54, 21" rotation="0" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C18" />
-                <attribute name="VALUE" value="1u/25V" />
-            </attributes>
-        </part>
-        <part name="C19" position="63.5, 23.5" rotation="0" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C19" />
-                <attribute name="VALUE" value="10u" />
-            </attributes>
-        </part>
-        <part name="L1" position="59, 29" rotation="180" side="Top">
-            <attributes>
-                <attribute name="NAME" value="L1" />
-                <attribute name="VALUE" value="" />
-                <attribute name="REF" value="DR-73-470-R" />
-            </attributes>
-        </part>
-        <part name="D1" position="54, 23.5" rotation="0" side="Top">
-            <attributes>
-                <attribute name="NAME" value="D1" />
-                <attribute name="VALUE" value="MBR0540" />
-                <attribute name="REF" value="MBR1H100SFT3G" />
-            </attributes>
-        </part>
-        <part name="U3" position="55.5, 44.5" rotation="0" side="Top">
-            <attributes>
-                <attribute name="NAME" value="U3" />
-                <attribute name="VALUE" value="25LC1024-I/SM" />
-            </attributes>
-        </part>
-        <part name="C21" position="54, 51.25" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C21" />
-                <attribute name="VALUE" value="100n" />
-            </attributes>
-        </part>
-        <part name="JP12" position="56.5, 63" rotation="180" side="Top">
-            <attributes>
-                <attribute name="NAME" value="JP12" />
-                <attribute name="VALUE" value="" />
-            </attributes>
-        </part>
-        <part name="C20" position="60.5, 51.75" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C20" />
-                <attribute name="VALUE" value="10u/6.3V" />
-                <attribute name="C_CAPACITANCE" value="10uF" />
-                <attribute name="C_DIELECTRIC" value="TANTAL" />
-                <attribute name="C_TOLERANCE" value="10%" />
-                <attribute name="C_VOLTAGE" value="6.3V" />
-                <attribute name="TYPE" value="C" />
-                <attribute name="C_CASE" value="A" />
-            </attributes>
-        </part>
-        <part name="U4" position="20.5, 33.5" rotation="0" side="Top">
-            <attributes>
-                <attribute name="NAME" value="U4" />
-                <attribute name="VALUE" value="MCP79520-I/MS" />
-            </attributes>
-        </part>
-        <part name="C22" position="17.5, 34.5" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C22" />
-                <attribute name="VALUE" value="100n" />
-            </attributes>
-        </part>
-        <part name="BAT1" position="7.5, 30.5" rotation="180" side="Top" />
-        <part name="C23" position="17.75, 28.5" rotation="180" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C23" />
-                <attribute name="VALUE" value="8p" />
-            </attributes>
-        </part>
-        <part name="C24" position="21.75, 28.5" rotation="0" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C24" />
-                <attribute name="VALUE" value="8p" />
-            </attributes>
-        </part>
-        <part name="Q1" position="19.75, 26" rotation="180" side="Top">
-            <attributes>
-                <attribute name="OC_NEWARK" value="unknown" />
-                <attribute name="MPN" value="" />
-                <attribute name="MF" value="" />
-                <attribute name="OC_FARNELL" value="unknown" />
-                <attribute name="NAME" value="Q1" />
-                <attribute name="VALUE" value="32Khz" />
-            </attributes>
-        </part>
-        <part name="U5" position="20, 40.5" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="U5" />
-                <attribute name="VALUE" value="TC1047" />
-            </attributes>
-        </part>
-        <part name="C25" position="33, 24.5" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C25" />
-                <attribute name="VALUE" value="100n" />
-            </attributes>
-        </part>
-        <part name="C26" position="28.25, 24.5" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C26" />
-                <attribute name="VALUE" value="100n" />
-            </attributes>
-        </part>
-        <part name="R2" position="30.75, 24.5" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="R2" />
-                <attribute name="VALUE" value="47k" />
-            </attributes>
-        </part>
-        <part name="R3" position="26, 24.5" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="R3" />
-                <attribute name="VALUE" value="47k" />
-            </attributes>
-        </part>
-        <part name="C27" position="19, 44.5" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C27" />
-                <attribute name="VALUE" value="100n" />
-            </attributes>
-        </part>
-        <part name="JP8" position="42.75, 16" rotation="180" side="Top">
-            <attributes>
-                <attribute name="NAME" value="JP8" />
-            </attributes>
-        </part>
-        <part name="JP9" position="31, 16" rotation="180" side="Top">
-            <attributes>
-                <attribute name="NAME" value="JP9" />
-            </attributes>
-        </part>
-        <part name="C28" position="37.5, 18.75" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C28" />
-                <attribute name="VALUE" value="100n" />
-                <attribute name="C_CAPACITANCE" value="100nF" />
-                <attribute name="C_DIELECTRIC" value="X7R" />
-                <attribute name="C_TOLERANCE" value="10%" />
-                <attribute name="C_VOLTAGE" value="25V" />
-                <attribute name="TYPE" value="C" />
-                <attribute name="C_CASE" value="0805" />
-            </attributes>
-        </part>
-        <part name="C29" position="49.25, 18.75" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C29" />
-                <attribute name="VALUE" value="100n" />
-                <attribute name="C_CAPACITANCE" value="100nF" />
-                <attribute name="C_CASE" value="0805" />
-                <attribute name="C_DIELECTRIC" value="X7R" />
-                <attribute name="C_TOLERANCE" value="10%" />
-                <attribute name="C_VOLTAGE" value="25V" />
-                <attribute name="TYPE" value="C" />
-            </attributes>
-        </part>
-        <part name="L2" position="9.5, 48.75" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="L2" />
-                <attribute name="VALUE" value="600R" />
-            </attributes>
-        </part>
-        <part name="L4" position="35, 18.75" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="L4" />
-                <attribute name="VALUE" value="600R" />
-            </attributes>
-        </part>
-        <part name="L5" position="46.75, 18.75" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="L5" />
-                <attribute name="VALUE" value="600R" />
-            </attributes>
-        </part>
-        <part name="L6" position="65.25, 57.5" rotation="0" side="Top">
-            <attributes>
-                <attribute name="NAME" value="L6" />
-                <attribute name="VALUE" value="600R" />
-            </attributes>
-        </part>
-        <part name="U6" position="66, 46.5" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="U6" />
-                <attribute name="VALUE" value="MCP17033302I/MB" />
-            </attributes>
-        </part>
-        <part name="C30" position="65.25, 50.25" rotation="180" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C30" />
-                <attribute name="VALUE" value="4u7" />
-                <attribute name="C_CAPACITANCE" value="4.7uF" />
-                <attribute name="C_CASE" value="0805" />
-                <attribute name="C_DIELECTRIC" value="X7R" />
-                <attribute name="C_TOLERANCE" value="10%" />
-                <attribute name="C_VOLTAGE" value="25V" />
-                <attribute name="TYPE" value="C" />
-            </attributes>
-        </part>
-        <part name="C31" position="65.25, 42.75" rotation="180" side="Top">
-            <attributes>
-                <attribute name="NAME" value="C31" />
-                <attribute name="VALUE" value="4u7" />
-                <attribute name="C_CAPACITANCE" value="4.7uF" />
-                <attribute name="C_CASE" value="0805" />
-                <attribute name="C_TOLERANCE" value="10%" />
-                <attribute name="C_VOLTAGE" value="25V" />
-                <attribute name="TYPE" value="C" />
-                <attribute name="C_DIELECTRIC" value="X7R" />
-            </attributes>
-        </part>
-        <part name="R7" position="65.25, 53" rotation="180" side="Top">
-            <attributes>
-                <attribute name="NAME" value="R7" />
-                <attribute name="VALUE" value="5R" />
-            </attributes>
-        </part>
-        <part name="U$5" position="61, 11.5" rotation="0" side="Top" />
-        <part name="U$6" position="17.5, 7" rotation="0" side="Top" />
-        <part name="R9" position="63.5, 21" rotation="0" side="Top">
-            <attributes>
-                <attribute name="NAME" value="R9" />
-                <attribute name="VALUE" value="4K7" />
-            </attributes>
-        </part>
-        <part name="R11" position="19, 48.75" rotation="90" side="Top">
-            <attributes>
-                <attribute name="NAME" value="R11" />
-                <attribute name="VALUE" value="10K" />
-            </attributes>
-        </part>
-        <part name="JP10" position="18.5, 63" rotation="180" side="Top">
-            <attributes>
-                <attribute name="NAME" value="JP10" />
-                <attribute name="VALUE" value="" />
-            </attributes>
-        </part>
-        <part name="JP2" position="56.5775, 14.58" rotation="0" side="Top">
-            <attributes>
-                <attribute name="VALUE" value="" />
-            </attributes>
-        </part>
-        <part name="JP5" position="13.3975, 14.58" rotation="0" side="Top">
-            <attributes>
-                <attribute name="VALUE" value="" />
-            </attributes>
-        </part>
-        <part name="D2" position="65.25, 55.25" rotation="0" side="Top">
-            <attributes>
-                <attribute name="REF" value="MBR1H100SFT3G" />
-                <attribute name="NAME" value="D2" />
-                <attribute name="VALUE" value="MBR0540" />
-            </attributes>
-        </part>
-        <part name="JP13" position="47.5, 63" rotation="180" side="Top">
-            <attributes>
-                <attribute name="NAME" value="JP13" />
-                <attribute name="VALUE" value="" />
-            </attributes>
-        </part>
-        <part name="D3" position="49.5, 23.5" rotation="270" side="Top">
-            <attributes>
-                <attribute name="NAME" value="D3" />
-                <attribute name="VALUE" value="BZX84C24" />
-            </attributes>
-        </part>
-        <part name="R10" position="60, 38" rotation="0" side="Top">
-            <attributes>
-                <attribute name="NAME" value="R10" />
-                <attribute name="VALUE" value="4K7" />
-            </attributes>
-        </part>
-        <part name="R12" position="60, 35.75" rotation="180" side="Top">
-            <attributes>
-                <attribute name="NAME" value="R12" />
-                <attribute name="VALUE" value="1K5" />
+                <attribute name="NP" value="" />
             </attributes>
         </part>
     </parts>

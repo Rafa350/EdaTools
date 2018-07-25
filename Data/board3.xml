@@ -62,10 +62,10 @@
     <blocks>
         <block name="RAC10-SB@recom">
             <elements>
-                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-15.24, -5.08" rotation="180" size="1.8" drill="1.2" shape="Octogonal" />
-                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-15.24, 15.24" rotation="180" size="1.8" drill="1.2" shape="Octogonal" />
-                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="30.48, 15.24" rotation="180" size="1.8" drill="1.2" shape="Octogonal" />
-                <tpad name="4" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="30.48, 5.08" rotation="180" size="1.8" drill="1.2" shape="Octogonal" />
+                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-15.24, -5.08" rotation="180" size="3" drill="1.2" shape="Octogonal" />
+                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-15.24, 15.24" rotation="180" size="3" drill="1.2" shape="Octogonal" />
+                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="30.48, 15.24" rotation="180" size="3" drill="1.2" shape="Octogonal" />
+                <tpad name="4" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="30.48, 5.08" rotation="180" size="3" drill="1.2" shape="Octogonal" />
                 <line layers="TopPlace" startPosition="-19.05, 19.05" endPosition="-19.05, -8.89" thickness="0.127" />
                 <line layers="TopPlace" startPosition="-19.05, -8.89" endPosition="34.29, -8.89" thickness="0.127" />
                 <line layers="TopPlace" startPosition="34.29, -8.89" endPosition="34.29, 19.05" thickness="0.127" />
@@ -76,13 +76,13 @@
         </block>
         <block name="RS@recom">
             <elements>
-                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-7.62, 0" rotation="90" size="1.2" drill="0.8" shape="Oval" />
-                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-5.08, 0" rotation="90" size="1.2" drill="0.8" shape="Oval" />
-                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-2.54, 0" rotation="90" size="1.2" drill="0.8" shape="Oval" />
-                <tpad name="5" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="2.54, 0" rotation="90" size="1.2" drill="0.8" shape="Oval" />
-                <tpad name="6" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="5.08, 0" rotation="90" size="1.2" drill="0.8" shape="Oval" />
-                <tpad name="7" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="7.62, 0" rotation="90" size="1.2" drill="0.8" shape="Oval" />
-                <tpad name="8" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="10.16, 0" rotation="90" size="1.2" drill="0.8" shape="Oval" />
+                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-7.62, 0" rotation="90" size="1.28" drill="0.8" shape="Oval" />
+                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-5.08, 0" rotation="90" size="1.28" drill="0.8" shape="Oval" />
+                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-2.54, 0" rotation="90" size="1.28" drill="0.8" shape="Oval" />
+                <tpad name="5" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="2.54, 0" rotation="90" size="1.28" drill="0.8" shape="Oval" />
+                <tpad name="6" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="5.08, 0" rotation="90" size="1.28" drill="0.8" shape="Oval" />
+                <tpad name="7" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="7.62, 0" rotation="90" size="1.28" drill="0.8" shape="Oval" />
+                <tpad name="8" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="10.16, 0" rotation="90" size="1.28" drill="0.8" shape="Oval" />
                 <line layers="TopPlace" startPosition="-10.16, 3.81" endPosition="12.7, 3.81" thickness="0.127" />
                 <line layers="TopPlace" startPosition="12.7, 3.81" endPosition="12.7, -6.35" thickness="0.127" />
                 <line layers="TopPlace" startPosition="12.7, -6.35" endPosition="-10.16, -6.35" thickness="0.127" />
@@ -174,8 +174,8 @@
                 <line layers="TopPlace" startPosition="-1.651, -8.255" endPosition="1.651, -8.255" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="2.286, 4.953" endPosition="2.286, 7.62" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="-2.286, -7.62" endPosition="-2.286, -4.953" thickness="0.1524" />
-                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-1.524, -3.81" size="1.524" drill="1.016" shape="Oval" />
-                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="1.524, 3.81" size="1.524" drill="1.016" shape="Oval" />
+                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-1.524, -3.81" size="1.6256" drill="1.016" shape="Oval" />
+                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="1.524, 3.81" size="1.6256" drill="1.016" shape="Oval" />
                 <text layers="TopNames" position="-3.302, -6.35" rotation="90" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
                 <text layers="TopValues" position="-3.302, -0.381" rotation="90" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
             </elements>
@@ -225,8 +225,8 @@
                 <line layers="TopPlace" startPosition="-12.573, 3.937" endPosition="-12.573, 1.651" thickness="0.1524" />
                 <line layers="TopDocument" startPosition="-12.573, -1.651" endPosition="-12.573, 1.651" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="-12.573, -1.651" endPosition="-12.573, -3.937" thickness="0.1524" />
-                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-11.2522, 0" rotation="90" size="1.9812" drill="1.3208" shape="Oval" />
-                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="11.2522, 0" rotation="90" size="1.9812" drill="1.3208" shape="Oval" />
+                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-11.2522, 0" rotation="90" size="2.54" drill="1.3208" shape="Oval" />
+                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="11.2522, 0" rotation="90" size="2.54" drill="1.3208" shape="Oval" />
                 <text layers="TopNames" position="-12.7, -6.096" height="1.778" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
                 <text layers="TopValues" position="1.143, -6.096" height="1.778" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
                 <rectangle layers="TopDocument" position="-10.3505, 0" size="0.381, 4.064" />
@@ -262,9 +262,9 @@
                 <line layers="TopPlace" startPosition="-6.3754, 6.35" endPosition="6.3246, 6.35" thickness="0.4064" />
                 <line layers="TopPlace" startPosition="-6.3754, 3.81" endPosition="6.3246, 3.81" thickness="0.3048" />
                 <line layers="TopPlace" startPosition="-6.3754, -3.81" endPosition="6.3246, -3.81" thickness="0.4064" />
-                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-3.9878, 0" rotation="90" size="2.5146" drill="1.6764" shape="Oval" />
-                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-0.0254, 0" rotation="90" size="2.5146" drill="1.6764" shape="Oval" />
-                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="3.937, 0" rotation="90" size="2.5146" drill="1.6764" shape="Oval" />
+                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-3.9878, 0" rotation="90" size="2.68224" drill="1.6764" shape="Oval" />
+                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-0.0254, 0" rotation="90" size="2.68224" drill="1.6764" shape="Oval" />
+                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="3.937, 0" rotation="90" size="2.68224" drill="1.6764" shape="Oval" />
                 <text layers="TopNames" position="-3.9116, -7.0612" height="1.778" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
                 <text layers="TopValues" position="-5.5182, 4.4148" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
                 <rectangle layers="TopPlace" position="3.937, 0" size="1.016, 1.016" />
@@ -289,11 +289,11 @@
         </block>
         <block name="FN-406@schaffner">
             <elements>
-                <tpad name="P$1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-15.24, 0" rotation="90" size="1.8" drill="1.2" shape="Octogonal" />
-                <tpad name="P$2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-7.62, 0" rotation="90" size="1.8" drill="1.2" shape="Octogonal" />
-                <tpad name="P$3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="0, 0" rotation="90" size="1.8" drill="1.2" shape="Octogonal" />
-                <tpad name="P$4" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="17.78, 0" rotation="90" size="1.8" drill="1.2" shape="Octogonal" />
-                <tpad name="P$5" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="10.16, 0" rotation="90" size="1.8" drill="1.2" shape="Octogonal" />
+                <tpad name="P$1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-15.24, 0" rotation="90" size="2.4" drill="1.2" shape="Octogonal" />
+                <tpad name="P$2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-7.62, 0" rotation="90" size="2.4" drill="1.2" shape="Octogonal" />
+                <tpad name="P$3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="0, 0" rotation="90" size="2.4" drill="1.2" shape="Octogonal" />
+                <tpad name="P$4" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="17.78, 0" rotation="90" size="2.4" drill="1.2" shape="Octogonal" />
+                <tpad name="P$5" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="10.16, 0" rotation="90" size="2.4" drill="1.2" shape="Octogonal" />
                 <line layers="TopPlace" startPosition="-21.2725, 7.62" endPosition="-21.2725, -7.62" thickness="0.127" />
                 <line layers="TopPlace" startPosition="-21.2725, -7.62" endPosition="23.8125, -7.62" thickness="0.127" />
                 <line layers="TopPlace" startPosition="23.8125, -7.62" endPosition="23.8125, 7.62" thickness="0.127" />
@@ -321,10 +321,10 @@
         </block>
         <block name="IRM-20@meanwell">
             <elements>
-                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="22.86, -10.16" rotation="180" size="1.8" drill="1.2" shape="Octogonal" />
-                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="22.86, 10.64" rotation="180" size="1.8" drill="1.2" shape="Octogonal" />
-                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-22.14, 10.64" rotation="180" size="1.8" drill="1.2" shape="Octogonal" />
-                <tpad name="4" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-22.14, 2.64" rotation="180" size="1.8" drill="1.2" shape="Octogonal" />
+                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="22.86, -10.16" rotation="180" size="3" drill="1.2" shape="Octogonal" />
+                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="22.86, 10.64" rotation="180" size="3" drill="1.2" shape="Octogonal" />
+                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-22.14, 10.64" rotation="180" size="3" drill="1.2" shape="Octogonal" />
+                <tpad name="4" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-22.14, 2.64" rotation="180" size="3" drill="1.2" shape="Octogonal" />
                 <text layers="TopNames" position="26.19, 15.66" rotation="180" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
                 <text layers="TopValues" position="-25.46, -15.13" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
                 <line layers="TopPlace" startPosition="-25.54, 13.84" endPosition="-25.54, -13.36" thickness="0.127" />
@@ -364,10 +364,10 @@
                 <line layers="TopPlace" startPosition="3.175, 1.27" endPosition="2.54, 0.635" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="2.54, -0.635" endPosition="3.175, -1.27" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="4.445, -1.27" endPosition="3.175, -1.27" thickness="0.1524" />
-                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-3.81, 0" rotation="90" size="1.524" drill="1.016" shape="Oval" />
-                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-1.27, 0" rotation="90" size="1.524" drill="1.016" shape="Oval" />
-                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="1.27, 0" rotation="90" size="1.524" drill="1.016" shape="Oval" />
-                <tpad name="4" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="3.81, 0" rotation="90" size="1.524" drill="1.016" shape="Oval" />
+                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-3.81, 0" rotation="90" size="1.6256" drill="1.016" shape="Oval" />
+                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-1.27, 0" rotation="90" size="1.6256" drill="1.016" shape="Oval" />
+                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="1.27, 0" rotation="90" size="1.6256" drill="1.016" shape="Oval" />
+                <tpad name="4" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="3.81, 0" rotation="90" size="1.6256" drill="1.016" shape="Oval" />
                 <text layers="TopNames" position="-5.1562, 1.8288" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
                 <text layers="TopValues" position="-5.08, -3.175" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
                 <rectangle layers="TopDocument" position="1.27, 0" size="0.508, 0.508" />
@@ -421,12 +421,12 @@
                 <line layers="TopPlace" startPosition="5.715, 1.27" endPosition="5.08, 0.635" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="5.08, -0.635" endPosition="5.715, -1.27" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="6.985, -1.27" endPosition="5.715, -1.27" thickness="0.1524" />
-                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-6.35, 0" rotation="90" size="1.524" drill="1.016" shape="Oval" />
-                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-3.81, 0" rotation="90" size="1.524" drill="1.016" shape="Oval" />
-                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-1.27, 0" rotation="90" size="1.524" drill="1.016" shape="Oval" />
-                <tpad name="4" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="1.27, 0" rotation="90" size="1.524" drill="1.016" shape="Oval" />
-                <tpad name="5" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="3.81, 0" rotation="90" size="1.524" drill="1.016" shape="Oval" />
-                <tpad name="6" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="6.35, 0" rotation="90" size="1.524" drill="1.016" shape="Oval" />
+                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-6.35, 0" rotation="90" size="1.6256" drill="1.016" shape="Oval" />
+                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-3.81, 0" rotation="90" size="1.6256" drill="1.016" shape="Oval" />
+                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-1.27, 0" rotation="90" size="1.6256" drill="1.016" shape="Oval" />
+                <tpad name="4" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="1.27, 0" rotation="90" size="1.6256" drill="1.016" shape="Oval" />
+                <tpad name="5" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="3.81, 0" rotation="90" size="1.6256" drill="1.016" shape="Oval" />
+                <tpad name="6" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="6.35, 0" rotation="90" size="1.6256" drill="1.016" shape="Oval" />
                 <text layers="TopNames" position="-7.6962, 1.8288" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
                 <text layers="TopValues" position="-7.62, -3.175" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
                 <rectangle layers="TopDocument" position="3.81, 0" size="0.508, 0.508" />
@@ -715,7 +715,7 @@
         <line layers="Top" startPosition="24.75, 56.75" endPosition="25, 57" thickness="2" signal="V24" />
         <line layers="Top" startPosition="26.75, 55.45" endPosition="26.75, 56.75" thickness="1" signal="V24" />
         <line layers="Top" startPosition="26.75, 56.75" endPosition="27, 57" thickness="2" signal="V24" />
-        <region layers="Top" thickness="0.25" signal="GND-V24">
+        <region layers="Top" thickness="0.25" clearance="0.4" signal="GND-V24">
             <segment position="0.5, 47.5" />
             <segment position="0.5, 22" />
             <segment position="3, 19.5" />
@@ -729,7 +729,7 @@
             <segment position="33.5, 59.5" />
             <segment position="12.5, 59.5" />
         </region>
-        <region layers="Bottom" thickness="0.25" signal="GND-V24">
+        <region layers="Bottom" thickness="0.25" clearance="0.4" signal="GND-V24">
             <segment position="3, 19.5" />
             <segment position="0.5, 22" />
             <segment position="0.5, 47.5" />
@@ -796,7 +796,7 @@
         <line layers="Bottom" startPosition="79, 13.5122" endPosition="75.0122, 13.5122" thickness="2" signal="N$9" />
         <line layers="Bottom" startPosition="75.0122, 13.5122" endPosition="68, 6.5" thickness="2" signal="N$9" />
         <line layers="Bottom" startPosition="68, 6.5" endPosition="68, 3.7478" thickness="2" signal="N$9" />
-        <region layers="Top" thickness="0.15" signal="PE">
+        <region layers="Top" thickness="0.15" clearance="1" signal="PE">
             <segment position="84.5, 0.5" />
             <segment position="23, 0.5" />
             <segment position="19.5, 4" />
@@ -805,7 +805,7 @@
             <segment position="80, 44" />
             <segment position="84.5, 39.5" />
         </region>
-        <region layers="Bottom" thickness="0.15" signal="PE">
+        <region layers="Bottom" thickness="0.15" clearance="1" signal="PE">
             <segment position="84.5, 0.5" />
             <segment position="23, 0.5" />
             <segment position="19.5, 4" />
@@ -897,7 +897,7 @@
         <line layers="Top" startPosition="74.25, 55.45" endPosition="74.25, 56.75" thickness="1" signal="V3.3" />
         <line layers="Top" startPosition="74.25, 56.75" endPosition="74, 57" thickness="2" signal="V3.3" />
         <line layers="Top" startPosition="74, 57" endPosition="72, 57" thickness="2" signal="V3.3" />
-        <region layers="Top" thickness="0.25" signal="GND-V3.3">
+        <region layers="Top" thickness="0.25" clearance="0.4" signal="GND-V3.3">
             <segment position="41, 57" />
             <segment position="41, 50" />
             <segment position="43.5, 47.5" />
@@ -907,7 +907,7 @@
             <segment position="73.5, 59.5" />
             <segment position="43.5, 59.5" />
         </region>
-        <region layers="Bottom" thickness="0.25" signal="GND-V3.3">
+        <region layers="Bottom" thickness="0.25" clearance="0.4" signal="GND-V3.3">
             <segment position="43.5, 59.5" />
             <segment position="41, 57" />
             <segment position="41, 50" />
