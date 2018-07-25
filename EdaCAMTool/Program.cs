@@ -92,7 +92,7 @@
         /// <summary>
         /// Procesa la placa
         /// </summary>
-        /// <param name="fileName">Nom del fitxer de la plada.</param>
+        /// <param name="fileName">Nom del fitxer de la placa.</param>
         /// 
         private static void ProcessBoard(string fileName, string folder, string name) {
 
@@ -117,7 +117,7 @@
         }
 
         /// <summary>
-        /// Salva una plada en un fitxer.
+        /// Salva una placa en un fitxer.
         /// </summary>
         /// <param name="board">La placa a salvar.</param>
         /// <param name="fileName">El nom del fitxer.</param>

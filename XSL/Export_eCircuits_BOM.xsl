@@ -11,6 +11,13 @@
         <xsl:text>manufacturer part number, manufacturer, quantity, reference designators</xsl:text>
         <xsl:text>&#13;&#10;</xsl:text>
         <xsl:apply-templates select="/board/parts"/>
+        
+        <!-- eCircuits requereix un fitxer de mes de 300 caracters -->
+        <xsl:text>                                                                      </xsl:text>
+        <xsl:text>                                                                      </xsl:text>
+        <xsl:text>                                                                      </xsl:text>
+        <!-- -->
+        
     </xsl:template>
 
     <xsl:template match="parts">

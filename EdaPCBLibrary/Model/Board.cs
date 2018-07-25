@@ -174,7 +174,7 @@
         #region Metodes per la gestio de capes
 
         /// <summary>
-        /// Afegeix una capa a la placa.
+        /// Afegeix una capa a la placa. L'ordre en que s'afegeixen corresponen a l'apilament fisic de la placa.
         /// </summary>
         /// <param name="layer">La capa a afeigir.</param>
         /// 
@@ -189,44 +189,10 @@
         }
 
         /// <summary>
-        /// Afegeix dues capes aparellades
+        /// Elimina una capa de la placa.
         /// </summary>
-        /// <param name="layer1">Primera capa del parell.</param>
-        /// <param name="layer2">Segona capa del parell.</param>
+        /// <param name="layer">La capa a eliminar.</param>
         /// 
-        public void AddLayerPair(Layer layer1, Layer layer2) {
-
-            if (layer1 == null)
-                throw new ArgumentNullException("layer1");
-
-            if (layer2 == null)
-                throw new ArgumentNullException("layer2");
-
-            if (layers.Contains(layer1))
-                throw new InvalidOperationException(
-                    String.Format("La capa '{0}', ya pertenece a la placa.", layer1.Name));
-
-            if (layers.Contains(layer2))
-                throw new InvalidOperationException(
-                    String.Format("La capa '{0}', ya pertenece a la placa.", layer2.Name));
-
-            if (layerPairs.ContainsKey(layer1))
-                throw new InvalidOperationException(
-                    String.Format("La capa '{0}', ya esta apareada.", layer1.Name));
-
-            if (layerPairs.ContainsKey(layer2))
-                throw new InvalidOperationException(
-                    String.Format("La capa '{0}', ya esta apareada.", layer2.Name));
-
-            if (layer1.Side == layer2.Side)
-                throw new InvalidOperationException("Ambas capas pertenecen a la misma cara de la placa.");
-
-            layers.Add(layer1);
-            layers.Add(layer2);
-            layerPairs.Add(layer1, layer2);
-            layerPairs.Add(layer2, layer2);
-        }
-
         public void  RemoveLayer(Layer layer) {
 
             if (layer == null)
@@ -321,6 +287,20 @@
                     String.Format("No se encontro la capa con el nombre '{0}'.", name));
 
             return null;
+        }
+
+        /// <summary>
+        /// Obte la llista de capes de senyal, ordenades de la capa TOP a la BOTTOM
+        /// </summary>
+        /// <returns></returns>
+        public IReadOnlyList<Layer> GetSignalLayers() {
+
+            List<Layer> layers = new List<Layer>();
+            foreach (Layer layer in this.layers) {
+                if (layer.Function == LayerFunction.Signal)
+                    layers.Add(layer);
+            }
+            return layers;
         }
 
         /// <summary>
