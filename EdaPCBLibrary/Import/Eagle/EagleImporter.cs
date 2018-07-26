@@ -3,6 +3,7 @@
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure.Xml;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -210,6 +211,10 @@
                         element = ParseRectangleNode(node);
                         break;
 
+                    case "circle":
+                        element = ParseCircleNode(node);
+                        break;
+
                     case "text":
                         element = ParseTextNode(node);
                         break;
@@ -360,13 +365,18 @@
             // Obte l'angle de rotacio
             //
             Angle rotation = Angle.Zero;
-            if (AttributeExists(node, "rot"))
+            if (node.AttributeExists("rot"))
                 rotation = ParseAngle(GetAttributeAsString(node, "rot"));
 
             // Obte el tamany del forat
             //
             int drill = ParseNumber(GetAttributeAsString(node, "drill"));
+
+            // Obte el diametre
+            //
             int size = (drill * 16) / 10;
+            if (node.AttributeExists("diameter"))
+                size = ParseNumber(GetAttributeAsString(node, "diameter"));
 
             ThPadElement.ThPadShape shape = ThPadElement.ThPadShape.Circular;
             switch (GetAttributeAsString(node, "shape")) {
@@ -420,13 +430,13 @@
             // Obte la rotacio
             //
             Angle rotation = Angle.Zero;
-            if (AttributeExists(node, "rot"))
+            if (node.AttributeExists("rot"))
                 ParseAngle(GetAttributeAsString(node, "rot"));
 
             // Obte el factor d'arrodoniment
             //
             Ratio roundness = Ratio.Zero;
-            if (AttributeExists(node, "roundness"))
+            if (node.AttributeExists("roundness"))
                 roundness = ParseRatio(GetAttributeAsString(node, "roundness"));
 
             bool stop = GetAttributeAsBoolean(node, "stop", true);
@@ -461,7 +471,7 @@
             int drill = ParseNumber(GetAttributeAsString(node, "drill"));
 
             int size = 0;
-            if (AttributeExists(node, "diameter"))
+            if (node.AttributeExists("diameter"))
                 size = ParseNumber(GetAttributeAsString(node, "diameter"));
 
             string extent = GetAttributeAsString(node, "extent");
@@ -514,7 +524,7 @@
             // Obte l'angle de rotacio
             //
             Angle rotation = Angle.Zero;
-            if (AttributeExists(node, "rot"))
+            if (node.AttributeExists("rot"))
                 rotation = ParseAngle(GetAttributeAsString(node, "rot"));
 
             int height = ParseNumber(GetAttributeAsString(node, "size"));
@@ -551,7 +561,7 @@
             PointInt p2 = new PointInt(x2, y2);
 
             Angle angle = Angle.Zero;
-            if (AttributeExists(node, "curve"))
+            if (node.AttributeExists("curve"))
                 angle = ParseAngle(GetAttributeAsString(node, "curve"));
             LineElement.LineCapStyle lineCap = GetAttributeAsString(node, "cap") == null ? LineElement.LineCapStyle.Round : LineElement.LineCapStyle.Flat;
             int thickness = ParseNumber(GetAttributeAsString(node, "width"));
@@ -592,19 +602,19 @@
             // Obte l'angle de rotacio
             //
             Angle rotation = Angle.Zero;
-            if (AttributeExists(node, "rot"))
+            if (node.AttributeExists("rot"))
                 rotation = ParseAngle(GetAttributeAsString(node, "rot"));
 
             // Obte l'amplada de linia
             //
             int thickness = 0;
-            if (AttributeExists(node, "width"))
+            if (node.AttributeExists("width"))
                 thickness = ParseNumber(GetAttributeAsString(node, "width"));
 
             int layerNum = GetAttributeAsInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
 
-            Element element = new RectangleElement(position, size, rotation, thickness);
+            Element element = new RectangleElement(position, size, Ratio.Zero, rotation, thickness);
 
             board.Place(board.GetLayer(layerName), element);
 
@@ -628,7 +638,7 @@
             // Obte l'amplada de linia
             //
             int thickness = 0;
-            if (AttributeExists(node, "width"))
+            if (node.AttributeExists("width"))
                 thickness = ParseNumber(GetAttributeAsString(node, "width"));
 
             // Obte el radi
@@ -657,6 +667,12 @@
             //
             int thickness = ParseNumber(GetAttributeAsString(node, "width"));
 
+            // Obte l'aillament
+            //
+            int clearance = 0;
+            if (node.AttributeExists("isolate"))
+                clearance = ParseNumber(GetAttributeAsString(node, "isolate"));
+
             int layerNum = GetAttributeAsInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
 
@@ -672,13 +688,13 @@
                 // Obte la curvatura
                 //
                 Angle angle = Angle.Zero;
-                if (AttributeExists(vertexNode, "curve"))
+                if (vertexNode.AttributeExists("curve"))
                     angle = ParseAngle(GetAttributeAsString(vertexNode, "curve"));
 
                 segments.Add(new RegionElement.Segment(vertex, angle));
             }
 
-            Element element = new RegionElement(thickness, segments);
+            Element element = new RegionElement(thickness, clearance, segments);
 
             board.Place(board.GetLayer(layerName), element);
 
@@ -703,7 +719,7 @@
             //
             int drill = ParseNumber(GetAttributeAsString(node, "drill"));
 
-            Element element = new HoleElement(position, drill);
+            HoleElement element = new HoleElement(position, drill);
 
             board.Place(board.GetLayer(Layer.HolesName), element);
             board.Place(board.GetLayer(Layer.TopName), element);
@@ -737,7 +753,7 @@
             //
             Angle rotation = Angle.Zero;
             BoardSide side = BoardSide.Top;
-            if (AttributeExists(node, "rot")) {
+            if (node.AttributeExists("rot")) {
                 string rot = GetAttributeAsString(node, "rot");
                 if (rot.Contains("M"))
                    side = BoardSide.Bottom;
@@ -794,7 +810,7 @@
 
             // Obte la posicio
             //
-            if (AttributeExists(node, "x")) {
+            if (node.AttributeExists("x")) {
                 int x = ParseNumber(GetAttributeAsString(node, "x"));
                 int y = ParseNumber(GetAttributeAsString(node, "y"));
                 attribute.Position = new PointInt(x, y);
@@ -802,17 +818,17 @@
 
             // Obte l'angle de rotacio
             //
-            if (AttributeExists(node, "rot"))
+            if (node.AttributeExists("rot"))
                 attribute.Rotation = ParseAngle(GetAttributeAsString(node, "rot"));
 
             // Obte l'alçada de lletra
             //
-            if (AttributeExists(node, "size"))
+            if (node.AttributeExists("size"))
                 attribute.Height = ParseNumber(GetAttributeAsString(node, "size"));
 
             // Obte l'aliniacio
             //
-            if (AttributeExists(node, "align"))
+            if (node.AttributeExists("align"))
                 attribute.Align = ParseTextAlign(GetAttributeAsString(node, "align"));
 
             return attribute;
@@ -1087,11 +1103,6 @@
                 default:
                     return TextAlign.BottomLeft;
             }
-        }
-
-        private static bool AttributeExists(XmlNode node, string name) {
-
-            return node.Attributes[name] != null;
         }
 
         /// <summary>

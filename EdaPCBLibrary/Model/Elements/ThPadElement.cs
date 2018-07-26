@@ -236,8 +236,12 @@
         /// 
         public int TopSize {
             get {
-                int ring = Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, drill * drcTopSizePercent));
-                return drill + ring * 2;
+                if (topSize == 0) {
+                    int ring = Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, drill * drcTopSizePercent));
+                    return drill + ring * 2;
+                }
+                else
+                    return topSize;
             }
             set {
                 topSize = value;
@@ -249,11 +253,15 @@
         /// 
         public int BottomSize {
             get {
-                int ring = Math.Max(drcBottomSizeMin, Math.Min(drcBottomSizeMax, drill * drcBottomSizePercent));
-                return drill + ring * 2;
+                if (bottomSize == 0) {
+                    int ring = Math.Max(drcBottomSizeMin, Math.Min(drcBottomSizeMax, drill * drcBottomSizePercent));
+                    return drill + ring * 2;
+                }
+                else
+                    return bottomSize;
             }
             set {
-                topSize = value;
+                bottomSize = value;
             }
         }
 
@@ -263,11 +271,15 @@
         /// 
         public int InnerSize {
             get {
-                int ring = Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, drill * drcTopSizePercent));
-                return drill + ring * 2;
+                if (innerSize == 0) {
+                    int ring = Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, drill * drcTopSizePercent));
+                    return drill + ring * 2;
+                }
+                else
+                    return innerSize;
             }
             set {
-                topSize = value;
+                innerSize = value;
             }
         }
     }

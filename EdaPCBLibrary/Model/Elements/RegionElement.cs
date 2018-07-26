@@ -37,6 +37,7 @@
 
         private readonly List<Segment> segments = new List<Segment>();
         private int thickness = 100000;
+        private int clearance;
 
         /// <summary>
         /// Constructor de l'objecte amb els parametres per defecte.
@@ -50,26 +51,39 @@
         /// Constructor del objecte.
         /// </summary>
         /// <param name="thickness">Amplada de linia.</param>
+        /// <param name="clearance">Distancia d'aillament.</param>
         /// 
-        public RegionElement(int thickness = 0):
+        public RegionElement(int thickness, int clearance):
             base() {
 
             if (thickness < 0)
                 throw new ArgumentOutOfRangeException("thickness");
 
+            if (clearance < 0)
+                throw new ArgumentOutOfRangeException("clearance");
+
             this.thickness = thickness;
+            this.clearance = clearance;
         }
 
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
-        /// <param name="isolation">D'istancia d'aillament.</param>
+        /// <param name="thickness">Amplada de linia.</param>
+        /// <param name="clearance">Distancia d'aillament.</param>
         /// <param name="segments">Llista de segments.</param>
         /// 
-        public RegionElement(int thickness, IEnumerable<Segment> segments) :
+        public RegionElement(int thickness, int clearance, IEnumerable<Segment> segments) :
             base() {
 
+            if (thickness < 0)
+                throw new ArgumentOutOfRangeException("thickness");
+
+            if (clearance < 0)
+                throw new ArgumentOutOfRangeException("clearance");
+
             this.thickness = thickness;
+            this.clearance = clearance;
 
             foreach (Segment segment in segments)
                 Add(segment);
@@ -207,6 +221,22 @@
                     throw new ArgumentOutOfRangeException("Tickness");
 
                 thickness = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna l'amplada del aillament
+        /// </summary>
+        /// 
+        public int Clearance {
+            get {
+                return clearance;
+            }
+            set {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("Clearance");
+
+                clearance = value;
             }
         }
 

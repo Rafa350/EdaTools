@@ -835,7 +835,7 @@
                 Transformation t = new Transformation();
                 if (Part != null)
                     t = Part.GetLocalTransformation();
-                Polygon polygon = Board.GetRegionPolygon(region, Layer, 150000, t);
+                Polygon polygon = Board.GetRegionPolygon(region, Layer, t);
                 DrawPolygon(polygon, region.Thickness);
             }
 

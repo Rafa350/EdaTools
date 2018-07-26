@@ -55,8 +55,15 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            PointInt[] points = PolygonBuilder.BuildCircle(position, radius);
-            return new Polygon(points);
+            if (thickness == 0) {
+                PointInt[] points = PolygonBuilder.BuildCircle(position, radius);
+                return new Polygon(points);
+            }
+            else {
+                PointInt[] outerPoints = PolygonBuilder.BuildCircle(position, radius + (thickness / 2));
+                PointInt[] innerPoints = PolygonBuilder.BuildCircle(position, radius - (thickness / 2));
+                return new Polygon(outerPoints, new Polygon[] { new Polygon(innerPoints) });
+            }
         }
 
         /// <summary>
@@ -68,7 +75,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            PointInt[] points = PolygonBuilder.BuildCircle(position, radius + spacing);
+            PointInt[] points = PolygonBuilder.BuildCircle(position, radius + (thickness / 2) + spacing);
             return new Polygon(points);
         }
 
@@ -80,7 +87,8 @@
         /// 
         public override RectInt GetBoundingBox(BoardSide side) {
 
-            return new RectInt(position.X - radius, position.Y - radius, radius + radius, radius + radius);
+            int r = radius + (thickness / 2);
+            return new RectInt(position.X - r, position.Y - r, r + r, r + r);
         }
 
         /// <summary>

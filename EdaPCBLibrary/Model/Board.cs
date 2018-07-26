@@ -606,11 +606,10 @@
         /// </summary>
         /// <param name="region">L'element de tipus regio.</param>
         /// <param name="layer">La capa a procesar.</param>
-        /// <param name="spacing">Espaiat.</param>
         /// <param name="transformation">Transformacio a aplicar al poligon.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public Polygon GetRegionPolygon(RegionElement region, Layer layer, int spacing, Transformation transformation) {
+        public Polygon GetRegionPolygon(RegionElement region, Layer layer, Transformation transformation) {
 
             if (region == null)
                 throw new ArgumentNullException("region");
@@ -633,7 +632,7 @@
 
                     Signal regionSignal = GetSignal(region, null, false);
 
-                    spacing += region.Thickness / 2;
+                    int thicknessCompensation = 150000 + region.Thickness / 2;
                     List<Polygon> holePolygons = new List<Polygon>();
 
                     Layer restrictLayer = GetLayer(layer.Side == BoardSide.Top ? Layer.TopRestrictName : Layer.BottomRestrictName);
@@ -652,7 +651,8 @@
                                 // Si no esta en la mateixa senyal que la regio, genera un forat.
                                 //
                                 if (GetSignal(element, null, false) != regionSignal) {
-                                    Polygon elementPolygon = element.GetOutlinePolygon(layer.Side, Math.Max(spacing, regionSignal.Clearance));
+                                    int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
+                                    Polygon elementPolygon = element.GetOutlinePolygon(layer.Side, clearance);
                                     holePolygons.Add(elementPolygon);
                                 }
                             }
@@ -689,7 +689,8 @@
                                 // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
                                 //
                                 if (GetSignal(element, part, false) != regionSignal) {
-                                    Polygon outlinePolygon = element.GetOutlinePolygon(layer.Side, spacing);
+                                    int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
+                                    Polygon outlinePolygon = element.GetOutlinePolygon(layer.Side, clearance);
                                     outlinePolygon = outlinePolygon.Transformed(localTransformation);
                                     holePolygons.Add(outlinePolygon);
                                 }
@@ -697,7 +698,8 @@
                                 // En es un pad i esta conectat per tant, genera un thermal
                                 //
                                 else if (element is PadElement) {
-                                    Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Side, spacing, 200000);
+                                    int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
+                                    Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Side, clearance, 200000);
                                     thermalPolygon = thermalPolygon.Transformed(localTransformation);
                                     for (int i = 0; i < thermalPolygon.Childs.Length; i++)
                                         holePolygons.Add(thermalPolygon.Childs[i]);

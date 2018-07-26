@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
     using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure.Xml;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
@@ -220,11 +221,11 @@
                         break;
 
                     case "rectangle":
-                        element = CreateCircleElement(elementNode);
+                        element = CreateRectangleElement(elementNode);
                         break;
 
                     case "circle":
-                        element = CreateRectangleElement(elementNode);
+                        element = CreateCircleElement(elementNode);
                         break;
 
                     case "region":
@@ -330,9 +331,14 @@
             PointInt position = ParsePoint(node.AttributeAsString("position"));
             SizeInt size = ParseSize(node.AttributeAsString("size"));
             Angle rotation = ParseAngle(node.AttributeAsString("rotation"));
-            int thickness = ParseNumber(node.AttributeAsString("thickness"));
+            int thickness = 0;
+            if (node.AttributeExists("thickness"))
+                thickness = ParseNumber(node.AttributeAsString("thickness"));
+            Ratio roundness = Ratio.Zero;
+            if (node.AttributeExists("roundness"))
+                roundness = ParseRatio(node.AttributeAsString("roundness"));
 
-            return new RectangleElement(position, size, rotation, thickness);
+            return new RectangleElement(position, size, roundness, rotation, thickness);
         }
 
         /// <summary>
@@ -359,8 +365,11 @@
         private Element CreateRegionElement(XmlNode node) {
 
             int thickness = ParseNumber(node.AttributeAsString("thickness"));
+            int clearance = 0;
+            if (node.AttributeExists("clearance"))
+                clearance = ParseNumber(node.AttributeAsString("clearance"));
 
-            RegionElement region = new RegionElement(thickness);
+            RegionElement region = new RegionElement(thickness, clearance);
 
             foreach (XmlNode segmentNode in node.SelectNodes("segment")) {
 

@@ -112,12 +112,10 @@
 
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
-
                     Color color = GetColor(Layer);
-                    Brush brush = rectangle.Filled ? CreateBrush(color) : null;
-                    Pen pen = rectangle.Filled ? null : CreatePen(color, rectangle.Thickness / 1000000.0);
+                    Brush brush = CreateBrush(color);
                     Polygon polygon = rectangle.GetPolygon(Layer.Side);
-                    DrawPolygon(dc, pen, brush, polygon);
+                    DrawPolygon(dc, null, brush, polygon);
                 }
 
                 AddVisual(visual);
@@ -132,12 +130,10 @@
                 
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
-
                     Color color = GetColor(Layer);
-                    Brush brush = circle.Filled ? CreateBrush(color) : null;
-                    Pen pen = circle.Filled ? null : CreatePen(color, circle.Thickness / 1000000.0);
+                    Brush brush = CreateBrush(color);
                     Polygon polygon = circle.GetPolygon(Layer.Side);
-                    DrawPolygon(dc, pen, brush, polygon);
+                    DrawPolygon(dc, null, brush, polygon);
                 }
 
                 AddVisual(visual);
@@ -157,7 +153,7 @@
                     bool isSignalLayer = (Layer.Name == Layer.TopName) || (Layer.Name == Layer.BottomName);
                     Pen pen = isSignalLayer ? CreatePen(color, region.Thickness / 1000000.0) : null;
                     Brush brush = CreateBrush(color);
-                    Polygon polygon = Board.GetRegionPolygon(region, Layer, 150000, new Transformation());
+                    Polygon polygon = Board.GetRegionPolygon(region, Layer, new Transformation());
                     DrawPolygon(dc, pen, brush, polygon);
 
                 }

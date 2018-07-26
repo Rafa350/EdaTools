@@ -13,6 +13,7 @@
         private PointInt position;
         private SizeInt size;
         private Angle rotation;
+        private Ratio roundness;
         private int thickness;
 
         /// <summary>
@@ -28,14 +29,16 @@
         /// </summary>
         /// <param name="position">Posicio del centre geometric.</param>
         /// <param name="size">Amplada i alçada del rectangle.</param>
+        /// <param name="roundness">Factor d'arrodoniment de les cantonades.</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="thickness">Amplada de linia. Si es zero, es un rectangle ple.</param>
         /// 
-        public RectangleElement(PointInt position, SizeInt size, Angle rotation, int thickness = 0) :
+        public RectangleElement(PointInt position, SizeInt size, Ratio roundness, Angle rotation, int thickness = 0) :
             base() {
 
             this.position = position;
             this.size = size;
+            this.roundness = roundness;
             this.rotation = rotation;
             this.thickness = thickness;
         }
@@ -58,8 +61,19 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            PointInt[] points = PolygonBuilder.BuildRectangle(position, size, 0, rotation);
-            return new Polygon(points);
+            if (thickness == 0) {
+                PointInt[] points = PolygonBuilder.BuildRectangle(position, size, Radius, rotation);
+                return new Polygon(points);
+            }
+            else {
+                SizeInt outerSize = new SizeInt(size.Width + thickness, size.Height + thickness);
+                PointInt[] outerPoints = PolygonBuilder.BuildRectangle(position, outerSize, Radius, rotation);
+
+                SizeInt innerSize = new SizeInt(size.Width - thickness, size.Height - thickness);
+                PointInt[] innerPoints = PolygonBuilder.BuildRectangle(position, innerSize, Math.Max(0, Radius - thickness), rotation);
+
+                return new Polygon(outerPoints, new Polygon[] { new Polygon(innerPoints) });
+            }
         }
 
         /// <summary>
@@ -128,6 +142,29 @@
             }
             set {
                 rotation = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna el factor d'arrodoniment de les cantonades.
+        /// </summary>
+        /// 
+        public Ratio Roundness {
+            get {
+                return roundness;
+            }
+            set {
+                roundness = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte el radi de curvatura de les cantonades.
+        /// </summary>
+        /// 
+        public int Radius {
+            get {
+                return (Math.Min(size.Width, size.Height) * roundness) >> 1;
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
     using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure.Xml;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
@@ -245,6 +246,8 @@
                 writer.WriteAttribute("layers", GetLayerNames(region));
                 if (region.Thickness > 0)
                     writer.WriteAttribute("thickness", FormatNumber(region.Thickness));
+                if (region.Clearance > 0)
+                    writer.WriteAttribute("clearance", FormatNumber(region.Clearance));
                 Signal signal = board.GetSignal(region, currentPart, false);
                 if (signal != null)
                     writer.WriteAttribute("signal", signal.Name);
