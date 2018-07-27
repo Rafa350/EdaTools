@@ -74,13 +74,10 @@
 
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
-
                     Color color = GetColor(Layer);
-                    Brush brush = CreateBrush(color);
-                    Polygon polygon = line.GetPolygon(Layer.Side);
-                    DrawPolygon(dc, null, brush, polygon);
+                    Pen pen = CreatePen(color, line.Thickness / 1000000.0);
+                    dc.DrawLine(pen, line.StartPosition.ToPoint(), line.EndPosition.ToPoint());
                 }
-
                 AddVisual(visual);
             }
 
@@ -93,13 +90,11 @@
                 
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
-
                     Color color = GetColor(Layer);
                     Brush brush = CreateBrush(color);
                     Polygon polygon = arc.GetPolygon(Layer.Side);
                     DrawPolygon(dc, null, brush, polygon);
                 }
-
                 AddVisual(visual);
             }
 
@@ -113,11 +108,15 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
-                    Brush brush = CreateBrush(color);
-                    Polygon polygon = rectangle.GetPolygon(Layer.Side);
-                    DrawPolygon(dc, null, brush, polygon);
+                    Pen pen = rectangle.Thickness == 0 ? null : CreatePen(color, rectangle.Thickness / 1000000.0);
+                    Brush brush = rectangle.Thickness == 0 ? CreateBrush(color) : null;
+                    Rect rect = new Rect(
+                        (rectangle.Position.X - rectangle.Size.Width / 2) / 1000000.0,
+                        (rectangle.Position.Y - rectangle.Size.Height / 2) / 1000000.0,
+                        rectangle.Size.Width / 1000000.0,
+                        rectangle.Size.Height / 1000000.0);
+                    dc.DrawRectangle(brush, pen, rect);
                 }
-
                 AddVisual(visual);
             }
 
@@ -131,11 +130,10 @@
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
-                    Brush brush = CreateBrush(color);
-                    Polygon polygon = circle.GetPolygon(Layer.Side);
-                    DrawPolygon(dc, null, brush, polygon);
+                    Pen pen = circle.Thickness == 0 ? null : CreatePen(color, circle.Thickness / 1000000.0);
+                    Brush brush = circle.Thickness == 0 ? CreateBrush(color) : null;
+                    dc.DrawEllipse(brush, pen, circle.Position.ToPoint(), circle.Radius / 1000000.0, circle.Radius / 1000000.0);
                 }
-
                 AddVisual(visual);
             }
 
@@ -172,15 +170,22 @@
                 using (DrawingContext dc = visual.RenderOpen()) {
 
                     Color color = GetColor(Layer);
-                    Brush polygonBrush = CreateBrush(color);
-                    Polygon polygon = via.GetPolygon(Layer.Side);
-                    DrawPolygon(dc, null, polygonBrush, polygon);
-                    if (polygon.Childs.Length == 1) {
-                        Brush holeBrush = CreateBrush(Colors.Black);
-                        DrawPolygon(dc, null, holeBrush, polygon.Childs[0]);
+
+                    if (via.Shape == ViaElement.ViaShape.Circular) {
+                        Pen pen = CreatePen(color, (via.OuterSize - via.Drill) / 2000000.0);
+                        int radius = (via.OuterSize + via.Drill) / 2;
+                        dc.DrawEllipse(Brushes.Black, pen, via.Position.ToPoint(), radius / 1000000.0, radius / 1000000.0);
+                    }
+                    else {
+                        Brush brush = CreateBrush(color);
+                        Polygon polygon = via.GetPolygon(Layer.Side);
+                        DrawPolygon(dc, null, brush, polygon);
+                        if (polygon.Childs.Length == 1) {
+                            Brush holeBrush = CreateBrush(Colors.Black);
+                            DrawPolygon(dc, null, holeBrush, polygon.Childs[0]);
+                        }
                     }
                 }
-
                 AddVisual(visual);
             }
 
@@ -193,13 +198,11 @@
 
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
-
                     Color color = GetColor(Layer);
                     Brush brush = CreateBrush(color);
                     Polygon polygon = pad.GetPolygon(Layer.Side);
                     DrawPolygon(dc, null, brush, polygon);
                 }
-
                 AddVisual(visual);
             }
 
@@ -248,13 +251,11 @@
 
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext dc = visual.RenderOpen()) {
-
                     Color color = GetColor(Layer);
                     Pen pen = CreatePen(color, 0.05);
                     Brush brush = CreateBrush(Colors.Black);
-                    DrawPolygon(dc, pen, brush, hole.GetPolygon(Layer.Side));
+                    dc.DrawEllipse(brush, pen, hole.Position.ToPoint(), hole.Drill / 2000000.0, hole.Drill / 2000000.0);
                 }
-
                 AddVisual(visual);
             }
 

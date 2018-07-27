@@ -67,7 +67,7 @@
         }
 
         /// <summary>
-        /// Crea el poligon espaiat del element.
+        /// Crea el poligon exterior del element.
         /// </summary>
         /// <param name="side">Cara de la placa.</param>
         /// <param name="spacing">Espaiat</param>

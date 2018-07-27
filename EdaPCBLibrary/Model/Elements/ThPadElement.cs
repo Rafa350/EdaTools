@@ -84,7 +84,7 @@
         /// <param name="spacing">Espaiat.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        private PointInt[] BuildPoints(BoardSide side, int spacing) {
+        private PointInt[] MakePoints(BoardSide side, int spacing) {
 
             int size = TopSize;
 
@@ -131,14 +131,13 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            PointInt[] points = BuildPoints(side, 0);
+            PointInt[] points = MakePoints(side, 0);
             PointInt[] holePoints = PolygonBuilder.BuildCircle(Position, drill / 2);
-
             return new Polygon(points, new Polygon[] { new Polygon(holePoints) });
         }
 
         /// <summary>
-        /// Crea el poligon espaiat del element.
+        /// Crea el poligon exterior del element.
         /// </summary>
         /// <param name="side">Cara de la placa.</param>
         /// <param name="spacing">Espaiat</param>
@@ -146,8 +145,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            PointInt[] points = BuildPoints(side, spacing);
-
+            PointInt[] points = MakePoints(side, spacing);
             return new Polygon(points);
         }
 

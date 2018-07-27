@@ -77,7 +77,7 @@
         }
 
         /// <summary>
-        /// Crea el poligon espaiat del element.
+        /// Crea el poligon exterior del element.
         /// </summary>
         /// <param name="side">Cara de la placa.</param>
         /// <param name="spacing">Espaiat</param>
@@ -85,9 +85,8 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            PointInt[] points = PolygonBuilder.BuildRectangle(position,
-                new SizeInt(size.Width + spacing * 2, size.Height + spacing * 2),
-                spacing, rotation);
+            SizeInt outerSize = new SizeInt(size.Width + thickness + spacing * 2, size.Height + thickness + spacing * 2);
+            PointInt[] points = PolygonBuilder.BuildRectangle(position, outerSize, Radius, rotation);
             return new Polygon(points);
         }
 
