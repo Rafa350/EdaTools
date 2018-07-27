@@ -7,6 +7,7 @@
     using MikroPic.EdaTools.v1.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
+    using MikroPic.EdaTools.v1.Designer.DrawEditor.Infrastructure;
     using System;
     using System.Globalization;
     using System.Collections.Generic;
@@ -73,11 +74,13 @@
             public override void Visit(LineElement line) {
 
                 DrawingVisual visual = new DrawingVisual();
+
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
-                    Pen pen = CreatePen(color, line.Thickness / 1000000.0);
+                    Pen pen = CreatePen(color, line.Thickness / 1000000.0, line.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
                     dc.DrawLine(pen, line.StartPosition.ToPoint(), line.EndPosition.ToPoint());
                 }
+
                 AddVisual(visual);
             }
 
@@ -89,12 +92,14 @@
             public override void Visit(ArcElement arc) {
                 
                 DrawingVisual visual = new DrawingVisual();
+
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
-                    Brush brush = CreateBrush(color);
-                    Polygon polygon = arc.GetPolygon(Layer.Side);
-                    DrawPolygon(dc, null, brush, polygon);
+                    Pen pen = CreatePen(color, arc.Thickness / 1000000.0, arc.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
+                    Size size = new Size(arc.Radius / 1000000.0, arc.Radius / 1000000.0);
+                    dc.DrawArc(pen, arc.StartPosition.ToPoint(), arc.EndPosition.ToPoint(), size, arc.Angle.Degrees / 100.0);
                 }
+
                 AddVisual(visual);
             }
 
@@ -106,6 +111,7 @@
             public override void Visit(RectangleElement rectangle) {
 
                 DrawingVisual visual = new DrawingVisual();
+
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
                     Pen pen = rectangle.Thickness == 0 ? null : CreatePen(color, rectangle.Thickness / 1000000.0);
@@ -115,8 +121,9 @@
                         (rectangle.Position.Y - rectangle.Size.Height / 2) / 1000000.0,
                         rectangle.Size.Width / 1000000.0,
                         rectangle.Size.Height / 1000000.0);
-                    dc.DrawRectangle(brush, pen, rect);
+                    dc.DrawRoundedRectangle(brush, pen, rect, rectangle.Radius / 1000000.0, rectangle.Radius / 1000000.0);
                 }
+
                 AddVisual(visual);
             }
 
@@ -128,12 +135,14 @@
             public override void Visit(CircleElement circle) {
                 
                 DrawingVisual visual = new DrawingVisual();
+
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
                     Pen pen = circle.Thickness == 0 ? null : CreatePen(color, circle.Thickness / 1000000.0);
                     Brush brush = circle.Thickness == 0 ? CreateBrush(color) : null;
                     dc.DrawEllipse(brush, pen, circle.Position.ToPoint(), circle.Radius / 1000000.0, circle.Radius / 1000000.0);
                 }
+
                 AddVisual(visual);
             }
 
@@ -145,6 +154,7 @@
             public override void Visit(RegionElement region) {
 
                 DrawingVisual visual = new DrawingVisual();
+
                 using (DrawingContext dc = visual.RenderOpen()) {
 
                     Color color = GetColor(Layer);
@@ -167,13 +177,14 @@
             public override void Visit(ViaElement via) {
 
                 DrawingVisual visual = new DrawingVisual();
+
                 using (DrawingContext dc = visual.RenderOpen()) {
 
                     Color color = GetColor(Layer);
 
                     if (via.Shape == ViaElement.ViaShape.Circular) {
                         Pen pen = CreatePen(color, (via.OuterSize - via.Drill) / 2000000.0);
-                        int radius = (via.OuterSize + via.Drill) / 2;
+                        int radius = (via.OuterSize + via.Drill) / 4;
                         dc.DrawEllipse(Brushes.Black, pen, via.Position.ToPoint(), radius / 1000000.0, radius / 1000000.0);
                     }
                     else {
@@ -186,6 +197,7 @@
                         }
                     }
                 }
+
                 AddVisual(visual);
             }
 
@@ -197,12 +209,14 @@
             public override void Visit(SmdPadElement pad) {
 
                 DrawingVisual visual = new DrawingVisual();
+
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
                     Brush brush = CreateBrush(color);
                     Polygon polygon = pad.GetPolygon(Layer.Side);
                     DrawPolygon(dc, null, brush, polygon);
                 }
+
                 AddVisual(visual);
             }
 
@@ -214,6 +228,7 @@
             public override void Visit(ThPadElement pad) {
 
                 DrawingVisual visual = new DrawingVisual();
+
                 using (DrawingContext dc = visual.RenderOpen()) {
 
                     Color color = GetColor(Layer);
@@ -250,12 +265,14 @@
             public override void Visit(HoleElement hole) {
 
                 DrawingVisual visual = new DrawingVisual();
+
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
                     Pen pen = CreatePen(color, 0.05);
                     Brush brush = CreateBrush(Colors.Black);
                     dc.DrawEllipse(brush, pen, hole.Position.ToPoint(), hole.Drill / 2000000.0, hole.Drill / 2000000.0);
                 }
+
                 AddVisual(visual);
             }
 
@@ -361,7 +378,7 @@
             /// <param name="thickness">Amplada de linia.</param>
             /// <returns>El pen.</returns>
             /// 
-            private Pen CreatePen(Color color, double thickness) {
+            private Pen CreatePen(Color color, double thickness, PenLineCap lineCap = PenLineCap.Round) {
 
                 Pen pen;
 
@@ -370,8 +387,8 @@
                     Brush brush = CreateBrush(color);
 
                     pen = new Pen(brush, thickness);
-                    pen.StartLineCap = PenLineCap.Round;
-                    pen.EndLineCap = PenLineCap.Round;
+                    pen.StartLineCap = lineCap;
+                    pen.EndLineCap = lineCap;
                     pen.LineJoin = PenLineJoin.Round;
                     pen.Freeze();
 

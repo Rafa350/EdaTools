@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("EdaPCBModel")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyProduct("EdaTools")]
+[assembly: AssemblyCopyright("Copyright ©  2015-2019 Rafael Serrano")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

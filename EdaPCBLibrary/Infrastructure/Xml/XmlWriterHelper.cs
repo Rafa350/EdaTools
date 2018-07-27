@@ -8,7 +8,7 @@
     /// Clase amb metodes d'extensio per la clase XmlWriter
     /// </summary>
     /// 
-    public static class XmlWriterHelper {
+    internal static class XmlWriterHelper {
 
         public static void WriteAttribute(this XmlWriter writer, string name, Enum value) {
 

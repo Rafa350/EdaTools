@@ -2,7 +2,7 @@
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure.Polygons;
     using System;
     using System.Collections.Generic;
 

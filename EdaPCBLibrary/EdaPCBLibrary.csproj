@@ -56,12 +56,12 @@
   <ItemGroup>
     <Compile Include="Export\FreeCad\FreeCadExporter.cs" />
     <Compile Include="Export\OpenScad\OpenScadExporter.cs" />
-    <Compile Include="Infrastructure\PolygonBuilder.cs" />
+    <Compile Include="Infrastructure\Polygons\PolygonBuilder.cs" />
     <Compile Include="Import\Eagle\EagleImporter.cs" />
     <Compile Include="Import\Importer.cs" />
     <Compile Include="Import\ImporterFactory.cs" />
     <Compile Include="Infrastructure\PartAttributeAdapter.cs" />
-    <Compile Include="Infrastructure\PolygonCache.cs" />
+    <Compile Include="Infrastructure\Polygons\PolygonCache.cs" />
     <Compile Include="Model\BlockAttribute.cs" />
     <Compile Include="Model\Elements\PadElement.cs" />
     <Compile Include="Model\IConectable.cs" />

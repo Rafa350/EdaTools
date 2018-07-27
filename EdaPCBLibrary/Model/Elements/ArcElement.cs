@@ -2,7 +2,7 @@
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure.Polygons;
 
     /// <summary>
     /// Clase que representa un arc.
@@ -52,7 +52,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            PointInt[] points = PolygonBuilder.BuildTrace(Center, Radius, StartAngle, angle, Thickness);
+            PointInt[] points = PolygonBuilder.BuildTrace(Center, Radius, StartAngle, angle, Thickness, LineCap == LineCapStyle.Round);
             return new Polygon(points);
         }
 
@@ -65,7 +65,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            PointInt[] points =  PolygonBuilder.BuildTrace(Center, Radius, StartAngle, angle, Thickness + (spacing * 2));
+            PointInt[] points =  PolygonBuilder.BuildTrace(Center, Radius, StartAngle, angle, Thickness + (spacing * 2), LineCap == LineCapStyle.Round);
             return new Polygon(points);
         }
 
@@ -99,6 +99,16 @@
         public Angle StartAngle {
             get {
                 return ArcUtils.StartAngle(StartPosition, Center);
+            }
+        }
+
+        /// <summary>
+        /// Obtel'angle final del arc.
+        /// </summary>
+        /// 
+        public Angle EndAngle {
+            get {
+                return ArcUtils.EndAngle(EndPosition, Center);
             }
         }
 

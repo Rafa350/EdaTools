@@ -1,10 +1,10 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Infrastructure {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Infrastructure.Polygons {
 
     using MikroPic.EdaTools.v1.Geometry.Polygons;
     using System;
     using System.Collections.Generic;
 
-    public static class PolygonCache {
+    internal static class PolygonCache {
 
         private static readonly Dictionary<string, Polygon> cache = new Dictionary<string, Polygon>();
 

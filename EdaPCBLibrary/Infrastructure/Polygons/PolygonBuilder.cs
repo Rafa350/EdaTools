@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Infrastructure {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Infrastructure.Polygons {
 
     using MikroPic.EdaTools.v1.Geometry;
     using System;
@@ -7,7 +7,7 @@
     /// Clase que permet la construccio llistes de punts que representen diferentes figures,
     /// utilitzades comunment pel les plaques.
     /// </summary>
-    public static class PolygonBuilder {
+    internal static class PolygonBuilder {
 
         /// <summary>
         /// Crea una llista de punts en forma de segment de linia amb finals arrodonits
@@ -18,7 +18,7 @@
         /// <param name="capRounded">True si els extrems son arrodinits.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static PointInt[] BuildTrace(PointInt start, PointInt end, int thickness, bool capRounded = true) {
+        public static PointInt[] BuildTrace(PointInt start, PointInt end, int thickness, bool capRounded) {
 
             int dx = end.X - start.X;
             int dy = end.Y - start.Y;
@@ -45,7 +45,7 @@
         /// <param name="capRounded">True si els extrems son arrodonits.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static PointInt[] BuildTrace(PointInt center, int radius, Angle startAngle, Angle angle, int thickness, bool capRounded = true) {
+        public static PointInt[] BuildTrace(PointInt center, int radius, Angle startAngle, Angle angle, int thickness, bool capRounded) {
 
             int innerRadius = radius - (thickness / 2);
             int outerRadius = radius + (thickness / 2);

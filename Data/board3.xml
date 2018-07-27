@@ -2174,7 +2174,7 @@
         <line layers="TopRestrict" startPosition="26.75, 23.75" endPosition="28.25, 23.75" thickness="0.2" />
         <line layers="TopRestrict" startPosition="28.25, 23.75" endPosition="28.25, 29" thickness="0.2" />
         <line layers="TopRestrict" startPosition="28.25, 29" endPosition="34.5, 29" thickness="0.2" />
-        <region layers="Top" thickness="0.15" signal="GND">
+        <region layers="Top" thickness="0.075" signal="GND">
             <segment position="0.25, 52.5" />
             <segment position="39.75, 52.5" />
             <segment position="39.75, 54.75" />
@@ -2192,7 +2192,7 @@
             <segment position="13.75, 0.25" />
             <segment position="0.25, 0.25" />
         </region>
-        <region layers="Bottom" thickness="0.15" signal="GND">
+        <region layers="Bottom" thickness="0.075" signal="GND">
             <segment position="0.25, 52.5" />
             <segment position="39.75, 52.5" />
             <segment position="39.75, 54.75" />

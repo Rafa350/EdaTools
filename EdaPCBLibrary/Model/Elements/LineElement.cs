@@ -2,7 +2,7 @@
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure.Polygons;
     using System;
 
     /// <summary>
@@ -66,7 +66,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            PointInt[] points = PolygonBuilder.BuildTrace(startPosition, endPosition, thickness);
+            PointInt[] points = PolygonBuilder.BuildTrace(startPosition, endPosition, thickness, LineCap == LineCapStyle.Round);
             return new Polygon(points);
         }
 
@@ -79,7 +79,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            PointInt[] points = PolygonBuilder.BuildTrace(startPosition, endPosition, thickness + (spacing * 2));
+            PointInt[] points = PolygonBuilder.BuildTrace(startPosition, endPosition, thickness + (spacing * 2), lineCap == LineCapStyle.Round);
             return new Polygon(points);
         }
 
