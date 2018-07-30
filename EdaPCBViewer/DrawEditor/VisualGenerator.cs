@@ -74,8 +74,7 @@
             /// 
             public override void Visit(LineElement line) {
 
-                DrawingVisual visual = new LineVisual(line);
-                AddVisual(visual);
+                DrawingVisual visual = new LineVisual(parentVisual, line);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
@@ -92,8 +91,7 @@
             /// 
             public override void Visit(ArcElement arc) {
                 
-                DrawingVisual visual = new ArcVisual(arc);
-                AddVisual(visual);
+                DrawingVisual visual = new ArcVisual(parentVisual, arc);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
@@ -112,8 +110,7 @@
             /// 
             public override void Visit(RectangleElement rectangle) {
 
-                DrawingVisual visual = new RectangleVisual(rectangle);
-                AddVisual(visual);
+                DrawingVisual visual = new RectangleVisual(parentVisual, rectangle);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
@@ -135,8 +132,7 @@
             /// 
             public override void Visit(CircleElement circle) {
                 
-                DrawingVisual visual = new CircleVisual(circle);
-                AddVisual(visual);
+                DrawingVisual visual = new CircleVisual(parentVisual, circle);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
@@ -175,8 +171,7 @@
             /// 
             public override void Visit(ViaElement via) {
 
-                DrawingVisual visual = new DrawingVisual();
-                AddVisual(visual);
+                DrawingVisual visual = new ViaVisual(parentVisual, via);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
 
@@ -206,8 +201,7 @@
             /// 
             public override void Visit(SmdPadElement pad) {
 
-                DrawingVisual visual = new DrawingVisual();
-                AddVisual(visual);
+                DrawingVisual visual = new SmdPadVisual(parentVisual, pad);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);

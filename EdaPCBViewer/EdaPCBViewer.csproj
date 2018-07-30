@@ -74,6 +74,8 @@
     <Compile Include="DrawEditor\Visuals\LineVisual.cs" />
     <Compile Include="DrawEditor\Visuals\CircleVisual.cs" />
     <Compile Include="DrawEditor\Visuals\RectangleVisual.cs" />
+    <Compile Include="DrawEditor\Visuals\SmdPadVisual.cs" />
+    <Compile Include="DrawEditor\Visuals\ViaVisual.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\IAppService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

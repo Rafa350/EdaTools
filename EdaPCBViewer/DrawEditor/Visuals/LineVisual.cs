@@ -1,11 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.Designer.DrawEditor.Visuals {
 
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using System.Windows.Media;
 
     public sealed class LineVisual : ElementVisual {
 
-        public LineVisual(LineElement line) : 
-            base(line) {
+        public LineVisual(DrawingVisual parent, LineElement line) : 
+            base(parent, line) {
 
         }
 

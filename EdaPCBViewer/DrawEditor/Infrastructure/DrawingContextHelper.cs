@@ -19,11 +19,11 @@
         public static void DrawArc(this DrawingContext dc, Pen pen, Point start, Point end, Size size, double angle) {
 
             StreamGeometry g = new StreamGeometry();
-
             using (StreamGeometryContext gc = g.Open()) {
                 gc.BeginFigure(start, false, false);
                 gc.ArcTo(end, size, angle, Math.Abs(angle) > 180.0, angle < 0 ? SweepDirection.Counterclockwise : SweepDirection.Clockwise, true, false);
             }
+            g.Freeze();
 
             dc.DrawGeometry(null, pen, g);
         }

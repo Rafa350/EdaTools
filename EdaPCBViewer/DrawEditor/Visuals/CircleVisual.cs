@@ -1,11 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.Designer.DrawEditor.Visuals {
 
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using System.Windows.Media;
 
     public sealed class CircleVisual: ElementVisual {
 
-        public CircleVisual(CircleElement circle) : 
-            base(circle) {
+        public CircleVisual(DrawingVisual parent, CircleElement circle) : 
+            base(parent, circle) {
 
         }
 
