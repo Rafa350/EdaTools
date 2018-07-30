@@ -52,7 +52,7 @@
 
             private readonly BrushCache brushCache = new BrushCache();
             private readonly PenCache penCache = new PenCache();
-            private DrawingVisual parentVisual;
+            private VisualItem parentVisual;
 
             /// <summary>
             /// Constructor del objecte.
@@ -61,7 +61,7 @@
             /// <param name="layer">La capa on aplicar el proces.</param>
             /// <param name="rootVisual">El visual arrel.</param>
             /// 
-            public RenderVisitor(Board board, Layer layer, DrawingVisual rootVisual):
+            public RenderVisitor(Board board, Layer layer, VisualItem rootVisual):
                 base(board, layer) {
 
                 parentVisual = rootVisual;
@@ -74,7 +74,7 @@
             /// 
             public override void Visit(LineElement line) {
 
-                DrawingVisual visual = new LineVisual(parentVisual, line);
+                VisualItem visual = new LineVisual(parentVisual, line);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
@@ -91,7 +91,7 @@
             /// 
             public override void Visit(ArcElement arc) {
                 
-                DrawingVisual visual = new ArcVisual(parentVisual, arc);
+                VisualItem visual = new ArcVisual(parentVisual, arc);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
@@ -110,7 +110,7 @@
             /// 
             public override void Visit(RectangleElement rectangle) {
 
-                DrawingVisual visual = new RectangleVisual(parentVisual, rectangle);
+                VisualItem visual = new RectangleVisual(parentVisual, rectangle);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
@@ -132,7 +132,7 @@
             /// 
             public override void Visit(CircleElement circle) {
                 
-                DrawingVisual visual = new CircleVisual(parentVisual, circle);
+                VisualItem visual = new CircleVisual(parentVisual, circle);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
@@ -149,7 +149,7 @@
             /// 
             public override void Visit(RegionElement region) {
 
-                DrawingVisual visual = new DrawingVisual();
+                VisualItem visual = new VisualItem();
                 AddVisual(visual);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
@@ -171,7 +171,7 @@
             /// 
             public override void Visit(ViaElement via) {
 
-                DrawingVisual visual = new ViaVisual(parentVisual, via);
+                VisualItem visual = new ViaVisual(parentVisual, via);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
 
@@ -201,7 +201,7 @@
             /// 
             public override void Visit(SmdPadElement pad) {
 
-                DrawingVisual visual = new SmdPadVisual(parentVisual, pad);
+                VisualItem visual = new SmdPadVisual(parentVisual, pad);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
@@ -218,7 +218,7 @@
             /// 
             public override void Visit(ThPadElement pad) {
 
-                DrawingVisual visual = new DrawingVisual();
+                VisualItem visual = new VisualItem();
                 AddVisual(visual);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
@@ -254,7 +254,7 @@
             /// 
             public override void Visit(HoleElement hole) {
 
-                DrawingVisual visual = new DrawingVisual();
+                VisualItem visual = new VisualItem();
                 AddVisual(visual);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
@@ -272,7 +272,7 @@
             /// 
             public override void Visit(TextElement text) {
                 
-                DrawingVisual visual = new DrawingVisual();
+                VisualItem visual = new VisualItem();
                 AddVisual(visual);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
@@ -303,12 +303,12 @@
             /// 
             public override void Visit(Part part) {
 
-                DrawingVisual visual = new DrawingVisual();
+                VisualItem visual = new VisualItem();
                 AddVisual(visual);
 
                 visual.Transform = GetTransform(part);
 
-                DrawingVisual saveVisual = parentVisual;
+                VisualItem saveVisual = parentVisual;
                 parentVisual = visual;
                 try {
                     base.Visit(part);
@@ -323,7 +323,7 @@
             /// </summary>
             /// <param name="visual">La visual a afeigir</param>
             /// 
-            private void AddVisual(DrawingVisual visual) {
+            private void AddVisual(VisualItem visual) {
 
                 parentVisual.Children.Add(visual);
             }
@@ -471,7 +471,7 @@
         /// </summary>
         /// <returns>El objecte visual arrel de la placa.</returns>
         /// 
-        public Visual CreateVisual() {
+        public VisualItem CreateVisual() {
 
             List<string> layerNames = new List<string>();
             layerNames.Add(Layer.BottomNamesName);
@@ -480,9 +480,9 @@
             layerNames.Add(Layer.BottomKeepoutName);
             layerNames.Add(Layer.BottomRestrictName);
             layerNames.Add(Layer.BottomPlaceName);
-            layerNames.Add(Layer.BottomName);
+            //layerNames.Add(Layer.BottomName);
             layerNames.Add(Layer.ViaRestrictName);
-            layerNames.Add(Layer.TopName);
+            //layerNames.Add(Layer.TopName);
             layerNames.Add(Layer.TopPlaceName);
             layerNames.Add(Layer.TopRestrictName);
             layerNames.Add(Layer.TopKeepoutName);
@@ -496,13 +496,13 @@
 
             layerNames.Add(Layer.ProfileName);
 
-            DrawingVisual boardVisual = new DrawingVisual();
+            VisualItem boardVisual = new VisualItem();
             foreach (string layerName in layerNames) {
 
                 Layer layer = board.GetLayer(layerName, false);
                 if ((layer != null) && layer.IsVisible) {
 
-                    DrawingVisual layerVisual = new DrawingVisual();
+                    VisualItem layerVisual = new VisualItem();
                     boardVisual.Children.Add(layerVisual);
                     layerVisual.Opacity = layer.Color.ScA;
 

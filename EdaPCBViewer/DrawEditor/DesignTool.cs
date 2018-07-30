@@ -16,10 +16,10 @@
             Dragging
         }
 
-        private readonly DesignSurface surface;
+        private readonly ContentBox surface;
         private State state = State.Idle;
         private bool autoDeactivate = false;
-        private DrawingVisual visual;
+        private VisualItem visual;
         private double xSnap = 1;
         private double ySnap = 1;
         private double aSnap = 0;
@@ -35,7 +35,7 @@
         public event DesignToolMouseEventHandler OnMouseDown;
         public event DesignToolMouseEventHandler OnMouseMove;
 
-        public DesignTool(DesignSurface surface) {
+        public DesignTool(ContentBox surface) {
 
             if (surface == null)
                 throw new ArgumentNullException("surface");
@@ -95,13 +95,13 @@
 
         private void ShowObject() {
 
-            visual = new DrawingVisual();
-            surface.AddVisual(visual);
+            visual = new VisualItem();
+            surface.AddItem(visual);
         }
 
         private void HideObject() {
 
-            surface.RemoveVisual(visual);
+            surface.RemoveItem(visual);
         }
 
         private void RenderObject() {
@@ -185,7 +185,7 @@
             }
         }
 
-        protected DesignSurface Surface {
+        protected ContentBox Surface {
             get {
                 return surface;
             }

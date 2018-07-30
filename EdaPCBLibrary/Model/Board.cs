@@ -737,6 +737,17 @@
             }
         }
 
+
+        /// <summary>
+        /// Obte el tamany de la placa, definit pel seu contingut.
+        /// </summary>
+        /// 
+        public SizeInt Size {
+            get {
+                return new SizeInt(100000000, 100000000);
+            }
+        }
+
         /// <summary>
         /// Obte o asigna l'angle de rotacio de la placa.
         /// </summary>

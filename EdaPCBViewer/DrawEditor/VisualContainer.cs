@@ -17,7 +17,7 @@
         /// </summary>
         /// <param name="item">El item a afeigir.</param>
         /// 
-        public void AddItem(Visual item) {
+        public void AddItem(VisualItem item) {
 
             if (item == null)
                 throw new ArgumentNullException("item");
@@ -36,12 +36,12 @@
         /// </summary>
         /// <param name="items">Els items a afeigir.</param>
         /// 
-        public void AddItems(IEnumerable<Visual> items) {
+        public void AddItems(IEnumerable<VisualItem> items) {
 
             if (items == null)
                 throw new ArgumentNullException("items");
 
-            foreach (Visual item in items)
+            foreach (VisualItem item in items)
                 AddItem(item);
         }
 
@@ -50,7 +50,7 @@
         /// </summary>
         /// <param name="item">El item a eliminar.</param>
         /// 
-        public void RemoveItem(Visual item) {
+        public void RemoveItem(VisualItem item) {
 
             if (item == null)
                 throw new ArgumentNullException("item");

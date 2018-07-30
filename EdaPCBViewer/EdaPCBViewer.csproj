@@ -62,13 +62,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DrawEditor\DesignSurface.cs">
+    <Compile Include="DrawEditor\ContentBox.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DrawEditor\DesignTool.cs" />
     <Compile Include="DrawEditor\Infrastructure\DrawingContextHelper.cs" />
     <Compile Include="DrawEditor\Infrastructure\BrushCache.cs" />
     <Compile Include="DrawEditor\Infrastructure\PenCache.cs" />
+    <Compile Include="DrawEditor\VisualItem.cs" />
     <Compile Include="DrawEditor\Visuals\ArcVisual.cs" />
     <Compile Include="DrawEditor\Visuals\ElementVisual.cs" />
     <Compile Include="DrawEditor\Visuals\LineVisual.cs" />
@@ -79,6 +80,10 @@
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\IAppService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Page Include="View\BoardEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -91,7 +96,9 @@
     <Compile Include="DrawEditor\ViewPoint.cs" />
     <Compile Include="DrawEditor\VisualContainer.cs" />
     <Compile Include="DrawEditor\VisualGenerator.cs" />
-    <Compile Include="DrawEditor\ZoomControl.cs" />
+    <Compile Include="View\BoardEditorView.xaml.cs">
+      <DependentUpon>BoardEditorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

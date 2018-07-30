@@ -4,7 +4,7 @@
     using System;
     using System.Windows.Media;
 
-    public abstract class ElementVisual: DrawingVisual {
+    public abstract class ElementVisual: VisualItem {
 
         private readonly Element element;
 

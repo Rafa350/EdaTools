@@ -2,7 +2,7 @@
     x:Class="MikroPic.EdaTools.v1.Designer.View.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local2="clr-namespace:MikroPic.EdaTools.v1.Designer.DrawEditor"
+    xmlns:views="clr-namespace:MikroPic.EdaTools.v1.Designer.View"
     Title="{Binding Title}" 
     Height="350" 
     Width="525">
@@ -38,27 +38,13 @@
             Padding="5"
             BorderThickness="1"
             Background="Black">
-            <Border.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="1" ScaleY="-1"/>
-                    <TranslateTransform Y="{Binding ElementName=_this, Path=ActualHeight}"/>
-                </TransformGroup>
-            </Border.RenderTransform>
-            <local2:ZoomControl
-                x:Name="zoomControl"
-                ClipToBounds="True" 
-                MouseMove="zoomControl_MouseMove" 
-                MouseUp="zoomControl_MouseUp" 
-                MouseWheel="zoomControl_MouseWheel" 
-                MouseDown="zoomControl_MouseDown">
-                <local2:DesignSurface
-                    x:Name="content"
-                    ClipToBounds="True"
-                    SnapsToDevicePixels="True"
-                    Background="Transparent"
-                    Visual="{Binding VisualSource}">
-                </local2:DesignSurface>
-            </local2:ZoomControl>
+            <views:BoardEditorView
+                x:Name="content"
+                ClipToBounds="True"
+                SnapsToDevicePixels="True"
+                Background="Transparent"
+                Board="{Binding Board}">
+            </views:BoardEditorView>
         </Border>
     </DockPanel>
 </Window>

@@ -44,7 +44,7 @@
 
             appService.NewBoard();
 
-            NotifyPropertyChanges("Title", "VisualSource");
+            NotifyPropertyChanges("Title", "Board");
         }
 
         /// <summary>
@@ -66,7 +66,7 @@
             if (dlgService.ShowOpenFileDialog(data)) {
 
                 appService.OpenBoard(data.FileName);
-                NotifyPropertyChanges("Title", "VisualSource");
+                NotifyPropertyChanges("Title", "Board");
             }
         }
 
@@ -127,15 +127,9 @@
             }
         }
 
-        public Visual VisualSource {
+        public Board Board {
             get {
-                Board board = appService.Board;
-                if (board != null) {
-                    VisualGenerator generator = new VisualGenerator(board);
-                    return generator.CreateVisual();
-                }
-                else
-                    return null;
+                return appService.Board;
             }
         }
 
