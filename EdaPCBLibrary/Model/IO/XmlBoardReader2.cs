@@ -334,11 +334,14 @@
             int thickness = 0;
             if (node.AttributeExists("thickness"))
                 thickness = ParseNumber(node.AttributeAsString("thickness"));
+            bool filled = thickness == 0;
+            if (node.AttributeExists("filled"))
+               filled = node.AttributeAsBoolean("filled");
             Ratio roundness = Ratio.Zero;
             if (node.AttributeExists("roundness"))
                 roundness = ParseRatio(node.AttributeAsString("roundness"));
 
-            return new RectangleElement(position, size, roundness, rotation, thickness);
+            return new RectangleElement(position, size, roundness, rotation, thickness, filled);
         }
 
         /// <summary>
@@ -352,8 +355,9 @@
             PointInt position = ParsePoint(node.AttributeAsString("position"));
             int radius = ParseNumber(node.AttributeAsString("radius"));
             int thickness = ParseNumber(node.AttributeAsString("thickness"));
+            bool filled = node.AttributeAsBoolean("filled");
 
-            return new CircleElement(position, radius, thickness);
+            return new CircleElement(position, radius, thickness, filled);
         }
 
         /// <summary>
@@ -365,11 +369,14 @@
         private Element CreateRegionElement(XmlNode node) {
 
             int thickness = ParseNumber(node.AttributeAsString("thickness"));
+            bool filled = thickness == 0;
+            if (node.AttributeExists("filled"))
+                filled = node.AttributeAsBoolean("filled");
             int clearance = 0;
             if (node.AttributeExists("clearance"))
                 clearance = ParseNumber(node.AttributeAsString("clearance"));
 
-            RegionElement region = new RegionElement(thickness, clearance);
+            RegionElement region = new RegionElement(thickness, filled, clearance);
 
             foreach (XmlNode segmentNode in node.SelectNodes("segment")) {
 

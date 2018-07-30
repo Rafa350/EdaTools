@@ -611,7 +611,7 @@
                 <rectangle layers="TopStop" position="0, -1.9875" size="1.05, 1.575" />
                 <rectangle layers="TopCream" position="1.5, -1.98" size="0.8, 1.4" />
                 <rectangle layers="TopCream" position="-1.5, -1.98" size="0.8, 1.4" />
-                <region layers="TopDocument" thickness="0.1998">
+                <region layers="TopDocument" thickness="0.1998" filled="true">
                     <segment position="-0.7874, 1.3208" />
                     <segment position="-0.7874, 1.5748" />
                     <segment position="-0.3556, 2.0066" />
@@ -699,13 +699,13 @@
         <block name="CE_7.3MM@logo">
             <elements>
                 <rectangle layers="TopPlace" position="8.21095, 3.63535" size="2.2385, 1.0745" />
-                <region layers="TopPlace" thickness="0.1432">
+                <region layers="TopPlace" thickness="0.1432" filled="true">
                     <segment position="3.904, 1.0745" />
                     <segment position="3.904, 0.1075" angle="-188.43" />
                     <segment position="3.904, 7.1633" />
                     <segment position="3.904, 6.1963" angle="192.86" />
                 </region>
-                <region layers="TopPlace" thickness="0.1432">
+                <region layers="TopPlace" thickness="0.1432" filled="true">
                     <segment position="9.957, 1.0745" />
                     <segment position="9.957, 0.1075" angle="-188.43" />
                     <segment position="9.957, 7.1633" />
@@ -715,7 +715,7 @@
         </block>
         <block name="ESD_10.00@logo">
             <elements>
-                <region layers="TopPlace" thickness="0.047">
+                <region layers="TopPlace" thickness="0.047" filled="true">
                     <segment position="0.0943, 0.0943" />
                     <segment position="2.2156, 3.8184" />
                     <segment position="3.1113, 3.3942" />
@@ -749,7 +749,7 @@
                     <segment position="10.0411, 0.1886" />
                     <segment position="10.0411, 0.0943" />
                 </region>
-                <region layers="TopPlace" thickness="0.047">
+                <region layers="TopPlace" thickness="0.047" filled="true">
                     <segment position="2.6399, 4.337" />
                     <segment position="5.0913, 8.5797" />
                     <segment position="6.9769, 5.327" />
@@ -759,7 +759,7 @@
                     <segment position="3.677, 3.8656" />
                     <segment position="3.5827, 3.8656" />
                 </region>
-                <region layers="TopPlace" thickness="0.047">
+                <region layers="TopPlace" thickness="0.047" filled="true">
                     <segment position="4.5256, 3.3942" />
                     <segment position="4.8556, 3.6299" />
                     <segment position="4.9498, 3.6299" />
@@ -769,7 +769,7 @@
                     <segment position="5.6098, 3.0642" />
                     <segment position="5.5155, 2.9228" />
                 </region>
-                <region layers="TopPlace" thickness="0.047">
+                <region layers="TopPlace" thickness="0.047" filled="true">
                     <segment position="9.2868, 1.2257" />
                     <segment position="6.9298, 2.3571" />
                     <segment position="6.9298, 2.4042" />
@@ -853,7 +853,7 @@
                 <arc layers="TopDocument" startPosition="-1, 0.25" endPosition="-1, -0.25" angle="-180" thickness="0.1" />
                 <arc layers="TopDocument" startPosition="1, -0.25" endPosition="1, 0.25" angle="-180" thickness="0.1" />
                 <circle layers="TopDocument" position="-0.875, -0.375" radius="0.05" thickness="0.02" />
-                <region layers="TopDocument" thickness="0.1">
+                <region layers="TopDocument" thickness="0.1" filled="true">
                     <segment position="-1, 0.5" />
                     <segment position="-1, 0.25" />
                     <segment position="-0.875, 0.25" />
@@ -865,7 +865,7 @@
                     <segment position="-0.5, -0.5" />
                     <segment position="-0.5, 0.5" />
                 </region>
-                <region layers="TopDocument" thickness="0.1">
+                <region layers="TopDocument" thickness="0.1" filled="true">
                     <segment position="1, 0.25" />
                     <segment position="1, 0.5" />
                     <segment position="0.5, 0.5" />
@@ -2174,7 +2174,7 @@
         <line layers="TopRestrict" startPosition="26.75, 23.75" endPosition="28.25, 23.75" thickness="0.2" />
         <line layers="TopRestrict" startPosition="28.25, 23.75" endPosition="28.25, 29" thickness="0.2" />
         <line layers="TopRestrict" startPosition="28.25, 29" endPosition="34.5, 29" thickness="0.2" />
-        <region layers="Top" thickness="0.075" signal="GND">
+        <region layers="Top" thickness="0.15" filled="true" signal="GND">
             <segment position="0.25, 52.5" />
             <segment position="39.75, 52.5" />
             <segment position="39.75, 54.75" />
@@ -2192,7 +2192,7 @@
             <segment position="13.75, 0.25" />
             <segment position="0.25, 0.25" />
         </region>
-        <region layers="Bottom" thickness="0.075" signal="GND">
+        <region layers="Bottom" thickness="0.15" filled="true" signal="GND">
             <segment position="0.25, 52.5" />
             <segment position="39.75, 52.5" />
             <segment position="39.75, 54.75" />

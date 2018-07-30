@@ -37,6 +37,7 @@
 
         private readonly List<Segment> segments = new List<Segment>();
         private int thickness = 100000;
+        private bool filled;
         private int clearance;
 
         /// <summary>
@@ -51,9 +52,10 @@
         /// Constructor del objecte.
         /// </summary>
         /// <param name="thickness">Amplada de linia.</param>
+        /// <param name="filled">True si es ple.</param>
         /// <param name="clearance">Distancia d'aillament.</param>
         /// 
-        public RegionElement(int thickness, int clearance):
+        public RegionElement(int thickness, bool filled, int clearance):
             base() {
 
             if (thickness < 0)
@@ -63,6 +65,7 @@
                 throw new ArgumentOutOfRangeException("clearance");
 
             this.thickness = thickness;
+            this.filled = filled;
             this.clearance = clearance;
         }
 
@@ -70,10 +73,11 @@
         /// Constructor del objecte.
         /// </summary>
         /// <param name="thickness">Amplada de linia.</param>
+        /// <param name="filled">True si es ple.</param>
         /// <param name="clearance">Distancia d'aillament.</param>
         /// <param name="segments">Llista de segments.</param>
         /// 
-        public RegionElement(int thickness, int clearance, IEnumerable<Segment> segments) :
+        public RegionElement(int thickness, bool filled, int clearance, IEnumerable<Segment> segments) :
             base() {
 
             if (thickness < 0)
@@ -83,6 +87,7 @@
                 throw new ArgumentOutOfRangeException("clearance");
 
             this.thickness = thickness;
+            this.filled = filled;
             this.clearance = clearance;
 
             foreach (Segment segment in segments)
@@ -246,11 +251,10 @@
         /// 
         public bool Filled {
             get {
-                return thickness == 0;
+                return (thickness == 0) || filled;
             }
             set {
-                if (value)
-                    thickness = 0; 
+                filled = value;
             }
         }
 

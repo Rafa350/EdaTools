@@ -110,8 +110,11 @@
                 writer.WriteAttribute("size", FormatSize(rectangle.Size));
                 if (!rectangle.Rotation.IsZero)
                     writer.WriteAttribute("rotation", FormatAngle(rectangle.Rotation));
-                if (rectangle.Thickness > 0)
+                if (rectangle.Thickness > 0) {
                     writer.WriteAttribute("thickness", FormatNumber(rectangle.Thickness));
+                    if (rectangle.Filled)
+                        writer.WriteAttribute("filled", "true");
+                }
 
                 writer.WriteEndElement();
             }
@@ -128,8 +131,11 @@
                 writer.WriteAttribute("layers", GetLayerNames(circle));
                 writer.WriteAttribute("position", FormatPoint(circle.Position));
                 writer.WriteAttribute("radius", FormatNumber(circle.Radius));
-                if (circle.Thickness > 0)
+                if (circle.Thickness > 0) {
                     writer.WriteAttribute("thickness", FormatNumber(circle.Thickness));
+                    if (circle.Filled)
+                        writer.WriteAttribute("filled", "true");
+                }
 
                 writer.WriteEndElement();
             }
@@ -244,8 +250,11 @@
                 writer.WriteStartElement("region");
 
                 writer.WriteAttribute("layers", GetLayerNames(region));
-                if (region.Thickness > 0)
+                if (region.Thickness > 0) {
                     writer.WriteAttribute("thickness", FormatNumber(region.Thickness));
+                    if (region.Filled)
+                        writer.WriteAttribute("filled", "true");
+                }
                 if (region.Clearance > 0)
                     writer.WriteAttribute("clearance", FormatNumber(region.Clearance));
                 Signal signal = board.GetSignal(region, currentPart, false);

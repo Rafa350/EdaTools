@@ -614,7 +614,7 @@
             int layerNum = GetAttributeAsInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
 
-            Element element = new RectangleElement(position, size, Ratio.Zero, rotation, thickness);
+            Element element = new RectangleElement(position, size, Ratio.Zero, rotation, thickness, thickness == 0);
 
             board.Place(board.GetLayer(layerName), element);
 
@@ -648,7 +648,7 @@
             int layerNum = GetAttributeAsInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
 
-            Element element = new CircleElement(position, radius, thickness);
+            Element element = new CircleElement(position, radius, thickness, thickness == 0);
 
             board.Place(board.GetLayer(layerName), element);
 
@@ -694,7 +694,7 @@
                 segments.Add(new RegionElement.Segment(vertex, angle));
             }
 
-            Element element = new RegionElement(thickness, clearance, segments);
+            Element element = new RegionElement(thickness, true, clearance, segments);
 
             board.Place(board.GetLayer(layerName), element);
 

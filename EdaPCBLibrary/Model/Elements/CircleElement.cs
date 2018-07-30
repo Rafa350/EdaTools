@@ -13,6 +13,7 @@
         private PointInt position;
         private int radius;
         private int thickness;
+        private bool filled;
 
         /// <summary>
         ///  Constructor de l'objecte amb els parametres per defecte.
@@ -27,14 +28,16 @@
         /// </summary>
         /// <param name="position">Posicio del centre.</param>
         /// <param name="radius">Radi.</param>
-        /// <param name="thickness">Amplada de linia. Zero indica que es un disc.</param>
+        /// <param name="thickness">Amplada de linia.</param>
+        /// <param name="filled">True si cal omplir el cercle.</param>
         /// 
-        public CircleElement(PointInt position, int radius, int thickness = 0) :           
+        public CircleElement(PointInt position, int radius, int thickness, bool filled) :           
             base() {
 
             this.position = position;
             this.radius = radius;
             this.thickness = thickness;
+            this.filled = filled;
         }
 
         /// <summary>
@@ -158,11 +161,10 @@
         /// 
         public bool Filled {
             get {
-                return thickness == 0;
+                return (thickness == 0) || filled;
             }
             set {
-                if (value)
-                    thickness = 0; 
+                filled = value;
             }
         }
     }

@@ -67,6 +67,13 @@
     </Compile>
     <Compile Include="DrawEditor\DesignTool.cs" />
     <Compile Include="DrawEditor\Infrastructure\DrawingContextHelper.cs" />
+    <Compile Include="DrawEditor\Infrastructure\BrushCache.cs" />
+    <Compile Include="DrawEditor\Infrastructure\PenCache.cs" />
+    <Compile Include="DrawEditor\Visuals\ArcVisual.cs" />
+    <Compile Include="DrawEditor\Visuals\ElementVisual.cs" />
+    <Compile Include="DrawEditor\Visuals\LineVisual.cs" />
+    <Compile Include="DrawEditor\Visuals\CircleVisual.cs" />
+    <Compile Include="DrawEditor\Visuals\RectangleVisual.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\IAppService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

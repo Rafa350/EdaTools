@@ -15,6 +15,7 @@
         private Angle rotation;
         private Ratio roundness;
         private int thickness;
+        private bool filled;
 
         /// <summary>
         ///  Constructor de l'objecte amb els parametres per defecte.
@@ -32,8 +33,9 @@
         /// <param name="roundness">Factor d'arrodoniment de les cantonades.</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="thickness">Amplada de linia. Si es zero, es un rectangle ple.</param>
+        /// <param name="filled">True indica si cal omplir el rectangle.</param>
         /// 
-        public RectangleElement(PointInt position, SizeInt size, Ratio roundness, Angle rotation, int thickness = 0) :
+        public RectangleElement(PointInt position, SizeInt size, Ratio roundness, Angle rotation, int thickness, bool filled) :
             base() {
 
             this.position = position;
@@ -41,6 +43,7 @@
             this.roundness = roundness;
             this.rotation = rotation;
             this.thickness = thickness;
+            this.filled = filled;
         }
 
         /// <summary>
@@ -189,11 +192,10 @@
         /// 
         public bool Filled {
             get {
-                return thickness == 0;
+                return (thickness == 0) || filled;
             }
             set {
-                if (value)
-                    thickness = 0; 
+                filled = value;
             }
         }
     }
