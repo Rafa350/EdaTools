@@ -6,18 +6,19 @@
     using System.Windows.Media;
 
     /// <summary>
-    /// Contenidor d'items de tipus Visual.
+    /// Contenidor d'items de tipus VisualItem.
     /// </summary>
+    /// 
     public abstract class VisualContainer: FrameworkElement {
 
         private VisualCollection items;
 
         /// <summary>
-        /// Afegeix un item a la llista.
+        /// Afegeix un item al contenidor.
         /// </summary>
         /// <param name="item">El item a afeigir.</param>
         /// 
-        public void AddItem(VisualItem item) {
+        public void Add(VisualItem item) {
 
             if (item == null)
                 throw new ArgumentNullException("item");
@@ -32,25 +33,25 @@
         }
 
         /// <summary>
-        /// Afegeix diversos items a la llista.
+        /// Afegeix diversos items al contenidor.
         /// </summary>
         /// <param name="items">Els items a afeigir.</param>
         /// 
-        public void AddItems(IEnumerable<VisualItem> items) {
+        public void Add(IEnumerable<VisualItem> items) {
 
             if (items == null)
                 throw new ArgumentNullException("items");
 
             foreach (VisualItem item in items)
-                AddItem(item);
+                Add(item);
         }
 
         /// <summary>
-        /// Elimina un item de la llista.
+        /// Elimina un item del contenidor.
         /// </summary>
         /// <param name="item">El item a eliminar.</param>
         /// 
-        public void RemoveItem(VisualItem item) {
+        public void Remove(VisualItem item) {
 
             if (item == null)
                 throw new ArgumentNullException("item");
@@ -65,7 +66,7 @@
         }
 
         /// <summary>
-        /// Elimina tots els items.
+        /// Elimina tots els items del contenidor.
         /// </summary>
         /// 
         public void RemoveAll() {

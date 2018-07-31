@@ -96,12 +96,12 @@
         private void ShowObject() {
 
             visual = new VisualItem();
-            surface.AddItem(visual);
+            surface.Add(visual);
         }
 
         private void HideObject() {
 
-            surface.RemoveItem(visual);
+            surface.Remove(visual);
         }
 
         private void RenderObject() {

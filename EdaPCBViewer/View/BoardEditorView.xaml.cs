@@ -42,28 +42,44 @@
         private static void Board_PropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e) {
 
             BoardEditorView sThis = o as BoardEditorView;
-            if (sThis != null) {
-                Board board = e.NewValue as Board;
-                if (board != null) {
-                    VisualGenerator vg = new VisualGenerator(board);
-                    Visual root = vg.CreateVisual();
-                    sThis.contentBox.Visual = root;
-                }
-            }
+            if (sThis != null)
+                sThis.UpdateBoard();
         }
 
         private void ViewPoint_Changed(object sender, System.EventArgs e) {
 
-            contentBox.ViewTransform = new MatrixTransform(viewPoint.Matrix);
+            if (contentBox.Visual != null)
+                UpdateViewPoint();
+        }
+
+        private void UpdateBoard() {
+
+            if (contentBox.Visual != null)
+                contentBox.Visual = null;
+
+            if (Board != null) { 
+                VisualGenerator vg = new VisualGenerator(Board);
+                contentBox.Visual = vg.CreateVisual();
+                contentBox.Visual.Transform = new MatrixTransform(viewPoint.Matrix);
+            }
+        }
+
+        private void UpdateViewPoint() {
+
+            if (contentBox.Visual != null)
+                contentBox.Visual.Transform = new MatrixTransform(viewPoint.Matrix);
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e) {
 
-            SizeInt boardSize = Board.Size;
+            if (Board != null) {
 
-            viewPoint.Reset(
-                new Size(contentBox.ActualWidth, contentBox.ActualHeight),
-                new Rect(0, 0, boardSize.Width / 1000000.0, boardSize.Height / 1000000.0));
+                SizeInt boardSize = Board.Size;
+
+                viewPoint.Reset(
+                    new Size(contentBox.ActualWidth, contentBox.ActualHeight),
+                    new Rect(0, 0, boardSize.Width / 1000000.0, boardSize.Height / 1000000.0));
+            }
         }
 
         /// <summary>

@@ -30,9 +30,15 @@
             return brush;
         }
 
+        /// <summary>
+        /// Obte el hash del brush
+        /// </summary>
+        /// <param name="color">El color del brussh.</param>
+        /// <returns>El valor del hash.</returns>
+        /// 
         private static int MakeHash(Color color) {
 
-            return color.GetHashCode();
+            return color.A << 24 | color.R << 16 | color.G << 8 | color.B;
         }
     }
 }

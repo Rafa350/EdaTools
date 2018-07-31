@@ -5,10 +5,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MikroPic.EdaTools.v1.Designer.DrawEditor"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" 
+             d:DesignWidth="800"
+             x:Name="control">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="97*"/>
+        </Grid.ColumnDefinitions>
         <local:ContentBox
-            x:Name="contentBox">
+            x:Name="contentBox" Grid.ColumnSpan="2">
+            <local:ContentBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1" ScaleY="-1"/>
+                    <TranslateTransform Y="{Binding ElementName=control, Path=ActualHeight}"/>
+                </TransformGroup>
+            </local:ContentBox.RenderTransform>
         </local:ContentBox>
     </Grid>
 </UserControl>

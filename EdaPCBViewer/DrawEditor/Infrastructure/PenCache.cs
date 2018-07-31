@@ -41,11 +41,11 @@
         /// <param name="brush">El brush.</param>
         /// <param name="thickness">L'amplada de linia.</param>
         /// <param name="lineCap">El tipus de final de linia.</param>
-        /// <returns>El codi hash.</returns>
+        /// <returns>El valor del hash.</returns>
         /// 
         private static int MakeHash(Brush brush, double thickness, PenLineCap lineCap = PenLineCap.Round) {
 
-            return brush.GetHashCode() + (thickness.GetHashCode() << 3) + (lineCap.GetHashCode() << 7);
+            return brush.GetHashCode() ^ (thickness.GetHashCode() << 3) ^ (lineCap.GetHashCode() << 7);
         }
     }
 }

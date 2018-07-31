@@ -50,8 +50,8 @@
         /// 
         private sealed class RenderVisitor: ElementVisitor {
 
-            private readonly BrushCache brushCache = new BrushCache();
-            private readonly PenCache penCache = new PenCache();
+            private readonly BrushCache brushCache;
+            private readonly PenCache penCache;
             private VisualItem parentVisual;
 
             /// <summary>
@@ -61,10 +61,12 @@
             /// <param name="layer">La capa on aplicar el proces.</param>
             /// <param name="rootVisual">El visual arrel.</param>
             /// 
-            public RenderVisitor(Board board, Layer layer, VisualItem rootVisual):
+            public RenderVisitor(Board board, Layer layer, VisualItem rootVisual, PenCache penCache, BrushCache brushCache):
                 base(board, layer) {
 
                 parentVisual = rootVisual;
+                this.penCache = penCache;
+                this.brushCache = brushCache;
             }
 
             /// <summary>
@@ -473,6 +475,9 @@
         /// 
         public VisualItem CreateVisual() {
 
+            BrushCache brushCache = new BrushCache();
+            PenCache penCache = new PenCache();
+
             List<string> layerNames = new List<string>();
             layerNames.Add(Layer.BottomNamesName);
             layerNames.Add(Layer.BottomDocumentName);
@@ -480,9 +485,9 @@
             layerNames.Add(Layer.BottomKeepoutName);
             layerNames.Add(Layer.BottomRestrictName);
             layerNames.Add(Layer.BottomPlaceName);
-            //layerNames.Add(Layer.BottomName);
+            layerNames.Add(Layer.BottomName);
             layerNames.Add(Layer.ViaRestrictName);
-            //layerNames.Add(Layer.TopName);
+            layerNames.Add(Layer.TopName);
             layerNames.Add(Layer.TopPlaceName);
             layerNames.Add(Layer.TopRestrictName);
             layerNames.Add(Layer.TopKeepoutName);
@@ -497,6 +502,7 @@
             layerNames.Add(Layer.ProfileName);
 
             VisualItem boardVisual = new VisualItem();
+
             foreach (string layerName in layerNames) {
 
                 Layer layer = board.GetLayer(layerName, false);
@@ -506,7 +512,7 @@
                     boardVisual.Children.Add(layerVisual);
                     layerVisual.Opacity = layer.Color.ScA;
 
-                    RenderVisitor visitor = new RenderVisitor(board, layer, layerVisual);
+                    RenderVisitor visitor = new RenderVisitor(board, layer, layerVisual, penCache, brushCache);
                     visitor.Run();
                 }
             }
