@@ -91,7 +91,11 @@
         /// 
         public override RectInt GetBoundingBox(BoardSide side) {
 
-            throw new NotImplementedException();
+            return new RectInt(
+                Math.Min(startPosition.X, endPosition.X) - thickness / 2,
+                Math.Min(startPosition.Y, endPosition.Y) - thickness / 2,
+                Math.Abs(endPosition.X - startPosition.X) + thickness,
+                Math.Abs(endPosition.Y - startPosition.Y) + thickness);
         }
 
         /// <summary>

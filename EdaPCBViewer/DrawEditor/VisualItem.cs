@@ -3,12 +3,5 @@
     using System.Windows.Media;
 
     public class VisualItem: DrawingVisual {
-
-        public VisualItem() {
-        }
-
-        public void Refresh() {
-
-        }
     }
 }

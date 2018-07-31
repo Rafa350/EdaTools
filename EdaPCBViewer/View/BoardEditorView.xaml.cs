@@ -41,9 +41,7 @@
 
         private static void Board_PropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e) {
 
-            BoardEditorView sThis = o as BoardEditorView;
-            if (sThis != null)
-                sThis.UpdateBoard();
+            (o as BoardEditorView).UpdateBoard();
         }
 
         private void ViewPoint_Changed(object sender, System.EventArgs e) {
@@ -57,10 +55,17 @@
             if (contentBox.Visual != null)
                 contentBox.Visual = null;
 
-            if (Board != null) { 
+            if (Board != null) {
+
+                SizeInt boardSize = Board.Size;
+                viewPoint.Reset(
+                    new Size(contentBox.ActualWidth, contentBox.ActualHeight),
+                    new Rect(0, 0, boardSize.Width / 1000000.0, boardSize.Height / 1000000.0));
+
                 VisualGenerator vg = new VisualGenerator(Board);
-                contentBox.Visual = vg.CreateVisual();
-                contentBox.Visual.Transform = new MatrixTransform(viewPoint.Matrix);
+                VisualItem visual = vg.CreateVisual();
+                visual.Transform = new MatrixTransform(viewPoint.Matrix);
+                contentBox.Visual = visual;
             }
         }
 
@@ -75,7 +80,6 @@
             if (Board != null) {
 
                 SizeInt boardSize = Board.Size;
-
                 viewPoint.Reset(
                     new Size(contentBox.ActualWidth, contentBox.ActualHeight),
                     new Rect(0, 0, boardSize.Width / 1000000.0, boardSize.Height / 1000000.0));

@@ -1,17 +1,17 @@
 ﻿namespace MikroPic.EdaTools.v1.Designer.DrawEditor {
 
-    using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
-    using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Geometry.Fonts;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-    using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using MikroPic.EdaTools.v1.Designer.DrawEditor.Infrastructure;
     using MikroPic.EdaTools.v1.Designer.DrawEditor.Visuals;
+    using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Geometry.Fonts;
+    using MikroPic.EdaTools.v1.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
+    using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
-    using System.Globalization;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Windows;
     using System.Windows.Media;
 
@@ -157,12 +157,10 @@
                 using (DrawingContext dc = visual.RenderOpen()) {
 
                     Color color = GetColor(Layer);
-                    bool isSignalLayer = true; // (Layer.Name == Layer.TopName) || (Layer.Name == Layer.BottomName);
-                    Pen pen = isSignalLayer ? CreatePen(color, region.Thickness / 1000000.0, PenLineCap.Round) : null;
-                    Brush brush = CreateBrush(color);
+                    Pen pen = region.Thickness > 0 ? CreatePen(color, region.Thickness / 1000000.0, PenLineCap.Round) : null;
+                    Brush brush = region.Filled ? CreateBrush(color) : null;
                     Polygon polygon = Board.GetRegionPolygon(region, Layer, new Transformation());
                     DrawPolygon(dc, pen, brush, polygon);
-
                 }
             }
 

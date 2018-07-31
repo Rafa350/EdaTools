@@ -65,7 +65,7 @@
             else {
                 PointInt[] outerPoints = PolygonBuilder.BuildCircle(position, radius + (thickness / 2));
                 PointInt[] innerPoints = PolygonBuilder.BuildCircle(position, radius - (thickness / 2));
-                return new Polygon(outerPoints, new Polygon[] { new Polygon(innerPoints) });
+                return new Polygon(outerPoints, new Polygon(innerPoints));
             }
         }
 

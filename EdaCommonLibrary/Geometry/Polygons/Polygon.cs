@@ -10,7 +10,26 @@
         private readonly PointInt[] points;
         private readonly Polygon[] childs;
 
-        public Polygon(PointInt[] points, Polygon[] childs = null) {
+        /// <summary>
+        /// Constructor del poligon.
+        /// </summary>
+        /// <param name="points">Llista de punts.</param>
+        /// 
+        public Polygon(params PointInt[] points) {
+
+            if ((points != null) && (points.Length < 3))
+                throw new InvalidOperationException("Lista de puntos invalida.");
+
+            this.points = points;
+        }
+
+        /// <summary>
+        /// Constructor del poligon.
+        /// </summary>
+        /// <param name="points">Plista de punts.</param>
+        /// <param name="childs">Llista de fills.</param>
+        /// 
+        public Polygon(PointInt[] points, params Polygon[] childs) {
 
             if ((points != null) && (points.Length < 3))
                 throw new InvalidOperationException("Lista de puntos invalida.");

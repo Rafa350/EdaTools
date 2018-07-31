@@ -28,5 +28,29 @@
                 return size;
             }
         }
+
+        public int MinX {
+            get {
+                return position.X;
+            }
+        }
+
+        public int MinY {
+            get {
+                return position.Y;
+            }
+        }
+
+        public int MaxX {
+            get {
+                return position.X + size.Width;
+            }
+        }
+
+        public int MaxY {
+            get {
+                return position.Y + size.Height;
+            }
+        }
     }
 }

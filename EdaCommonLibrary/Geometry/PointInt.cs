@@ -6,6 +6,7 @@
     /// <summary>
     /// Estructura que representa un punt. Aquesta estructura es inmutable.
     /// </summary>
+    /// 
     public struct PointInt {
 
         private readonly int x;
@@ -35,6 +36,18 @@
             int y = Int32.Parse(ss[1], provider);
 
             return new PointInt(x, y);
+        }
+
+        /// <summary>
+        /// Obte un punt desplaçat.
+        /// </summary>
+        /// <param name="offsetX">Desplaçament X</param>
+        /// <param name="offsetY">Desplaçament Y</param>
+        /// <returns>El nou punt resultant.</returns>
+        /// 
+        public PointInt Offset(int offsetX, int offsetY) {
+
+            return new PointInt(x + offsetX, y + offsetY);
         }
 
         public override string ToString() {

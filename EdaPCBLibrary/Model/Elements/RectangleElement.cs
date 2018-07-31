@@ -75,7 +75,7 @@
                 SizeInt innerSize = new SizeInt(size.Width - thickness, size.Height - thickness);
                 PointInt[] innerPoints = PolygonBuilder.BuildRectangle(position, innerSize, Math.Max(0, Radius - thickness), rotation);
 
-                return new Polygon(outerPoints, new Polygon[] { new Polygon(innerPoints) });
+                return new Polygon(outerPoints, new Polygon(innerPoints));
             }
         }
 

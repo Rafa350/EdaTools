@@ -744,7 +744,28 @@
         /// 
         public SizeInt Size {
             get {
-                return new SizeInt(100000000, 100000000);
+                Layer layer = GetLayer(Layer.ProfileName, false);
+                if (layer != null) {
+                    int minX = Int32.MaxValue;
+                    int minY = Int32.MaxValue;
+                    int maxX = Int32.MinValue;
+                    int maxY = Int32.MinValue;
+                    foreach (Element element in GetElements(layer)) {
+                        RectInt r = element.GetBoundingBox(BoardSide.Top);
+                        if (minX > r.MinX)
+                            minX = r.MinX;
+                        if (minY > r.MinY)
+                            minY = r.MinY;
+                        if (maxX < r.MaxX)
+                            maxX = r.MaxX;
+                        if (maxY < r.MaxY)
+                            maxY = r.MaxY;
+                    }
+
+                    return new SizeInt(maxX - minX, maxY - minY);
+                }
+                else
+                    return new SizeInt(100000000, 100000000);
             }
         }
 

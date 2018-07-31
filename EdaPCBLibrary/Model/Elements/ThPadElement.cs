@@ -133,7 +133,7 @@
 
             PointInt[] points = MakePoints(side, 0);
             PointInt[] holePoints = PolygonBuilder.BuildCircle(Position, drill / 2);
-            return new Polygon(points, new Polygon[] { new Polygon(holePoints) });
+            return new Polygon(points, new Polygon(holePoints));
         }
 
         /// <summary>
