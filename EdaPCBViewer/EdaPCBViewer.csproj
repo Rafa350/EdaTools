@@ -69,14 +69,6 @@
     <Compile Include="DrawEditor\Infrastructure\DrawingContextHelper.cs" />
     <Compile Include="DrawEditor\Infrastructure\BrushCache.cs" />
     <Compile Include="DrawEditor\Infrastructure\PenCache.cs" />
-    <Compile Include="DrawEditor\VisualItem.cs" />
-    <Compile Include="DrawEditor\Visuals\ArcVisual.cs" />
-    <Compile Include="DrawEditor\Visuals\ElementVisual.cs" />
-    <Compile Include="DrawEditor\Visuals\LineVisual.cs" />
-    <Compile Include="DrawEditor\Visuals\CircleVisual.cs" />
-    <Compile Include="DrawEditor\Visuals\RectangleVisual.cs" />
-    <Compile Include="DrawEditor\Visuals\SmdPadVisual.cs" />
-    <Compile Include="DrawEditor\Visuals\ViaVisual.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\IAppService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -94,7 +86,7 @@
     </Compile>
     <Compile Include="DrawEditor\PointIntHelper.cs" />
     <Compile Include="DrawEditor\ViewPoint.cs" />
-    <Compile Include="DrawEditor\VisualContainer.cs" />
+    <Compile Include="DrawEditor\DrawingVisualContainer.cs" />
     <Compile Include="DrawEditor\VisualGenerator.cs" />
     <Compile Include="View\BoardEditorView.xaml.cs">
       <DependentUpon>BoardEditorView.xaml</DependentUpon>

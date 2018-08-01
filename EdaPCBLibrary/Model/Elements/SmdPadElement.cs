@@ -168,7 +168,7 @@
         /// 
         public int Radius {
             get {
-                return (Math.Min(size.Width, size.Height) * roundness) >> 1;
+                return (Math.Min(size.Width, size.Height) * roundness) / 2;
             }
         }
     }

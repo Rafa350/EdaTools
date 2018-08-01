@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Designer.DrawEditor {
 
     using MikroPic.EdaTools.v1.Designer.DrawEditor.Infrastructure;
-    using MikroPic.EdaTools.v1.Designer.DrawEditor.Visuals;
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
@@ -52,7 +51,7 @@
 
             private readonly BrushCache brushCache;
             private readonly PenCache penCache;
-            private VisualItem parentVisual;
+            private DrawingVisual parentVisual;
 
             /// <summary>
             /// Constructor del objecte.
@@ -61,7 +60,7 @@
             /// <param name="layer">La capa on aplicar el proces.</param>
             /// <param name="rootVisual">El visual arrel.</param>
             /// 
-            public RenderVisitor(Board board, Layer layer, VisualItem rootVisual, PenCache penCache, BrushCache brushCache):
+            public RenderVisitor(Board board, Layer layer, DrawingVisual rootVisual, PenCache penCache, BrushCache brushCache):
                 base(board, layer) {
 
                 parentVisual = rootVisual;
@@ -76,13 +75,16 @@
             /// 
             public override void Visit(LineElement line) {
 
-                VisualItem visual = new LineVisual(parentVisual, line);
+                DrawingVisual visual = new DrawingVisual();
+                AddVisual(visual);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
                     Pen pen = CreatePen(color, line.Thickness / 1000000.0, 
                         line.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
-                    dc.DrawLine(pen, line.StartPosition.ToPoint(), line.EndPosition.ToPoint());
+                    Point start = line.StartPosition.ToPoint();
+                    Point end = line.EndPosition.ToPoint();
+                    dc.DrawLine(pen, start, end);
                 }
             }
 
@@ -93,15 +95,17 @@
             /// 
             public override void Visit(ArcElement arc) {
                 
-                VisualItem visual = new ArcVisual(parentVisual, arc);
+                DrawingVisual visual = new DrawingVisual();
+                AddVisual(visual);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
                     Pen pen = CreatePen(color, arc.Thickness / 1000000.0, 
                         arc.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
-                    dc.DrawArc(
-                        pen, arc.StartPosition.ToPoint(), arc.EndPosition.ToPoint(),
-                        new Size(arc.Radius / 1000000.0, arc.Radius / 1000000.0), arc.Angle.Degrees / 100.0);
+                    Point start = arc.StartPosition.ToPoint();
+                    Point end = arc.EndPosition.ToPoint();
+                    Size size = new Size(arc.Radius / 1000000.0, arc.Radius / 1000000.0);
+                    dc.DrawArc(pen, start, end, size, arc.Angle.Degrees / 100.0);
                 }
             }
 
@@ -112,7 +116,8 @@
             /// 
             public override void Visit(RectangleElement rectangle) {
 
-                VisualItem visual = new RectangleVisual(parentVisual, rectangle);
+                DrawingVisual visual = new DrawingVisual();
+                AddVisual(visual);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
@@ -134,13 +139,15 @@
             /// 
             public override void Visit(CircleElement circle) {
                 
-                VisualItem visual = new CircleVisual(parentVisual, circle);
+                DrawingVisual visual = new DrawingVisual();
+                AddVisual(visual);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
                     Pen pen = circle.Thickness == 0 ? null : CreatePen(color, circle.Thickness / 1000000.0, PenLineCap.Flat);
                     Brush brush = circle.Filled ? CreateBrush(color) : null;
-                    dc.DrawEllipse(brush, pen, circle.Position.ToPoint(), circle.Radius / 1000000.0, circle.Radius / 1000000.0);
+                    Point center = circle.Position.ToPoint();
+                    dc.DrawEllipse(brush, pen, center, circle.Radius / 1000000.0, circle.Radius / 1000000.0);
                 }
             }
 
@@ -150,8 +157,8 @@
             /// <param name="region">L'objecte a visitar.</param>
             /// 
             public override void Visit(RegionElement region) {
-
-                VisualItem visual = new VisualItem();
+                
+                DrawingVisual visual = new DrawingVisual();
                 AddVisual(visual);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
@@ -159,7 +166,9 @@
                     Color color = GetColor(Layer);
                     Pen pen = region.Thickness > 0 ? CreatePen(color, region.Thickness / 1000000.0, PenLineCap.Round) : null;
                     Brush brush = region.Filled ? CreateBrush(color) : null;
-                    Polygon polygon = Board.GetRegionPolygon(region, Layer, new Transformation());
+                    Polygon polygon = Layer.Function == LayerFunction.Signal ?
+                        Board.GetRegionPolygon(region, Layer, new Transformation()) :
+                        region.GetPolygon(Layer.Side);
                     DrawPolygon(dc, pen, brush, polygon);
                 }
             }
@@ -171,7 +180,8 @@
             /// 
             public override void Visit(ViaElement via) {
 
-                VisualItem visual = new ViaVisual(parentVisual, via);
+                DrawingVisual visual = new DrawingVisual();
+                AddVisual(visual);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
 
@@ -201,13 +211,18 @@
             /// 
             public override void Visit(SmdPadElement pad) {
 
-                VisualItem visual = new SmdPadVisual(parentVisual, pad);
+                DrawingVisual visual = new DrawingVisual();
+                AddVisual(visual);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
                     Brush brush = CreateBrush(color);
-                    Polygon polygon = pad.GetPolygon(Layer.Side);
-                    DrawPolygon(dc, null, brush, polygon);
+                    Rect rect = new Rect(
+                        (pad.Position.X - pad.Size.Width / 2) / 1000000.0,
+                        (pad.Position.Y - pad.Size.Height / 2) / 1000000.0,
+                        pad.Size.Width / 1000000.0,
+                        pad.Size.Height / 1000000.0);
+                    dc.DrawRoundedRectangle(brush, null, rect, pad.Radius / 1000000.0, pad.Radius / 1000000.0);
                 }
             }
 
@@ -218,7 +233,7 @@
             /// 
             public override void Visit(ThPadElement pad) {
 
-                VisualItem visual = new VisualItem();
+                DrawingVisual visual = new DrawingVisual();
                 AddVisual(visual);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
@@ -254,14 +269,15 @@
             /// 
             public override void Visit(HoleElement hole) {
 
-                VisualItem visual = new VisualItem();
+                DrawingVisual visual = new DrawingVisual();
                 AddVisual(visual);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
                     Color color = GetColor(Layer);
                     Pen pen = CreatePen(color, 0.05, PenLineCap.Flat);
                     Brush brush = CreateBrush(Colors.Black);
-                    dc.DrawEllipse(brush, pen, hole.Position.ToPoint(), hole.Drill / 2000000.0, hole.Drill / 2000000.0);
+                    Point center = hole.Position.ToPoint();
+                    dc.DrawEllipse(brush, pen, center, hole.Drill / 2000000.0, hole.Drill / 2000000.0);
                 }
             }
 
@@ -272,7 +288,7 @@
             /// 
             public override void Visit(TextElement text) {
                 
-                VisualItem visual = new VisualItem();
+                DrawingVisual visual = new DrawingVisual();
                 AddVisual(visual);
 
                 using (DrawingContext dc = visual.RenderOpen()) {
@@ -303,12 +319,12 @@
             /// 
             public override void Visit(Part part) {
 
-                VisualItem visual = new VisualItem();
+                DrawingVisual visual = new DrawingVisual();
                 AddVisual(visual);
 
                 visual.Transform = GetTransform(part);
 
-                VisualItem saveVisual = parentVisual;
+                DrawingVisual saveVisual = parentVisual;
                 parentVisual = visual;
                 try {
                     base.Visit(part);
@@ -323,7 +339,7 @@
             /// </summary>
             /// <param name="visual">La visual a afeigir</param>
             /// 
-            private void AddVisual(VisualItem visual) {
+            private void AddVisual(DrawingVisual visual) {
 
                 parentVisual.Children.Add(visual);
             }
@@ -471,7 +487,7 @@
         /// </summary>
         /// <returns>El objecte visual arrel de la placa.</returns>
         /// 
-        public VisualItem CreateVisual() {
+        public DrawingVisual CreateVisual() {
 
             BrushCache brushCache = new BrushCache();
             PenCache penCache = new PenCache();
@@ -499,14 +515,14 @@
 
             layerNames.Add(Layer.ProfileName);
 
-            VisualItem boardVisual = new VisualItem();
+            DrawingVisual boardVisual = new DrawingVisual();
 
             foreach (string layerName in layerNames) {
 
                 Layer layer = board.GetLayer(layerName, false);
                 if ((layer != null) && layer.IsVisible) {
 
-                    VisualItem layerVisual = new VisualItem();
+                    DrawingVisual layerVisual = new DrawingVisual();
                     boardVisual.Children.Add(layerVisual);
                     layerVisual.Opacity = layer.Color.ScA;
 

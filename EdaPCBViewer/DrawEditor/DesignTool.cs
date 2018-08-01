@@ -19,7 +19,7 @@
         private readonly ContentBox surface;
         private State state = State.Idle;
         private bool autoDeactivate = false;
-        private VisualItem visual;
+        private DrawingVisual visual;
         private double xSnap = 1;
         private double ySnap = 1;
         private double aSnap = 0;
@@ -95,7 +95,7 @@
 
         private void ShowObject() {
 
-            visual = new VisualItem();
+            visual = new DrawingVisual();
             surface.Add(visual);
         }
 

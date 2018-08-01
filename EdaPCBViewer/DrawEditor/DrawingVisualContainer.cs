@@ -9,7 +9,7 @@
     /// Contenidor d'items de tipus VisualItem.
     /// </summary>
     /// 
-    public abstract class VisualContainer: FrameworkElement {
+    public abstract class DrawingVisualContainer: FrameworkElement {
 
         private VisualCollection items;
 
@@ -18,7 +18,7 @@
         /// </summary>
         /// <param name="item">El item a afeigir.</param>
         /// 
-        public void Add(VisualItem item) {
+        public void Add(DrawingVisual item) {
 
             if (item == null)
                 throw new ArgumentNullException("item");
@@ -37,12 +37,12 @@
         /// </summary>
         /// <param name="items">Els items a afeigir.</param>
         /// 
-        public void Add(IEnumerable<VisualItem> items) {
+        public void Add(IEnumerable<DrawingVisual> items) {
 
             if (items == null)
                 throw new ArgumentNullException("items");
 
-            foreach (VisualItem item in items)
+            foreach (DrawingVisual item in items)
                 Add(item);
         }
 
@@ -51,7 +51,7 @@
         /// </summary>
         /// <param name="item">El item a eliminar.</param>
         /// 
-        public void Remove(VisualItem item) {
+        public void Remove(DrawingVisual item) {
 
             if (item == null)
                 throw new ArgumentNullException("item");

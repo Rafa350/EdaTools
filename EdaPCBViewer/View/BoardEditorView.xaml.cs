@@ -63,7 +63,7 @@
                     new Rect(0, 0, boardSize.Width / 1000000.0, boardSize.Height / 1000000.0));
 
                 VisualGenerator vg = new VisualGenerator(Board);
-                VisualItem visual = vg.CreateVisual();
+                DrawingVisual visual = vg.CreateVisual();
                 visual.Transform = new MatrixTransform(viewPoint.Matrix);
                 contentBox.Visual = visual;
             }

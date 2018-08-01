@@ -9,6 +9,7 @@
     /// <summary>
     /// Clase que controla el punt de vista de la escena
     /// </summary>
+    /// 
     public sealed class ViewPoint {
 
         private Matrix m = new Matrix();
@@ -67,7 +68,7 @@
             double scaleY = vHeight / wHeight;
             
             m = new Matrix();
-            m.Translate(-wX, -wY);
+            m.Translate((wWidth - wRect.Width) / 2, (wHeight - wRect.Height) / 2);
             m.Scale(scaleX, scaleY);
 
             NotifyChange();
@@ -146,7 +147,7 @@
         }
 
         /// <summary>
-        /// Zoom per costar
+        /// Zoom per acostar
         /// </summary>
         /// 
         public void ZoomIn(double z) {

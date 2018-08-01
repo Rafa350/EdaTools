@@ -2,8 +2,9 @@
 
     using System.ComponentModel;
     using System.Windows;
+    using System.Windows.Media;
 
-    public sealed class ContentBox: VisualContainer {
+    public sealed class ContentBox: DrawingVisualContainer {
 
         public static readonly DependencyProperty VisualProperty;
 
@@ -13,7 +14,7 @@
             //
             VisualProperty = DependencyProperty.Register(
                 "Visual",
-                typeof(VisualItem),
+                typeof(DrawingVisual),
                 typeof(ContentBox),
                 new FrameworkPropertyMetadata {
                     DefaultValue = null,
@@ -30,7 +31,7 @@
 
             ContentBox sThis = o as ContentBox;
             if (sThis != null) {
-                VisualItem visual = e.NewValue as VisualItem;
+                DrawingVisual visual = e.NewValue as DrawingVisual;
                 if (visual != null) {
                     sThis.RemoveAll();
                     sThis.Add(visual);
@@ -40,9 +41,9 @@
 
         [BindableAttribute(true)]
         [Category("Content")]
-        public VisualItem Visual {
+        public DrawingVisual Visual {
             get {
-                return (VisualItem)GetValue(VisualProperty);
+                return (DrawingVisual)GetValue(VisualProperty);
             }
             set {
                 SetValue(VisualProperty, value);
