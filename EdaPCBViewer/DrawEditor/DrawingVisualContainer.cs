@@ -6,100 +6,100 @@
     using System.Windows.Media;
 
     /// <summary>
-    /// Contenidor d'items de tipus VisualItem.
+    /// Contenidor d'objectes de tipus VisualItem.
     /// </summary>
     /// 
     public abstract class DrawingVisualContainer: FrameworkElement {
 
-        private VisualCollection items;
+        private VisualCollection visuals;
 
         /// <summary>
-        /// Afegeix un item al contenidor.
+        /// Afegeix un objecte al contenidor.
         /// </summary>
-        /// <param name="item">El item a afeigir.</param>
+        /// <param name="visual">L'objecte a afeigir.</param>
         /// 
-        public void Add(DrawingVisual item) {
+        public void Add(DrawingVisual visual) {
 
-            if (item == null)
-                throw new ArgumentNullException("item");
+            if (visual == null)
+                throw new ArgumentNullException("visual");
 
-            if ((items != null) && items.Contains(item))
-                throw new InvalidOperationException("El item ya pertenece a la coleccion.");
+            if ((visuals != null) && visuals.Contains(visual))
+                throw new InvalidOperationException("El objeto ya pertenece al contenedor.");
 
-            if (items == null)
-                items = new VisualCollection(this);
+            if (visuals == null)
+                visuals = new VisualCollection(this);
 
-            items.Add(item);
+            visuals.Add(visual);
         }
 
         /// <summary>
-        /// Afegeix diversos items al contenidor.
+        /// Afegeix diversos objectes al contenidor.
         /// </summary>
-        /// <param name="items">Els items a afeigir.</param>
+        /// <param name="visuals">Els objectes a afeigir.</param>
         /// 
-        public void Add(IEnumerable<DrawingVisual> items) {
+        public void Add(IEnumerable<DrawingVisual> visuals) {
 
-            if (items == null)
-                throw new ArgumentNullException("items");
+            if (visuals == null)
+                throw new ArgumentNullException("visuals");
 
-            foreach (DrawingVisual item in items)
+            foreach (DrawingVisual item in visuals)
                 Add(item);
         }
 
         /// <summary>
         /// Elimina un item del contenidor.
         /// </summary>
-        /// <param name="item">El item a eliminar.</param>
+        /// <param name="visual">El item a eliminar.</param>
         /// 
-        public void Remove(DrawingVisual item) {
+        public void Remove(DrawingVisual visual) {
 
-            if (item == null)
-                throw new ArgumentNullException("item");
+            if (visual == null)
+                throw new ArgumentNullException("visual");
 
-            if (items == null || !items.Contains(item))
-                throw new InvalidOperationException("El item no pertenece a la coleccion.");
+            if (visuals == null || !visuals.Contains(visual))
+                throw new InvalidOperationException("El objeto no pertenece a la contenedor.");
 
-            items.Remove(item);
+            visuals.Remove(visual);
 
-            if (items.Count == 0)
-                items = null;
+            if (visuals.Count == 0)
+                visuals = null;
         }
 
         /// <summary>
-        /// Elimina tots els items del contenidor.
+        /// Elimina tots els objectes del contenidor.
         /// </summary>
         /// 
         public void RemoveAll() {
 
-            if (items != null) {
-                while (items.Count > 0)
-                    items.Remove(items[0]);
-                items = null;
+            if (visuals != null) {
+                while (visuals.Count > 0)
+                    visuals.Remove(visuals[0]);
+                visuals = null;
             }
         }
 
         /// <summary>
-        /// Obte el item especificat.
+        /// Obte l'objecte especificat.
         /// </summary>
-        /// <param name="index">Index del item a obtenir.</param>
-        /// <returns>El item.</returns>
+        /// <param name="index">Index de l'objecte.</param>
+        /// <returns>L'objecte.</returns>
         /// 
         protected override Visual GetVisualChild(int index) {
 
-            if ((items == null) || (index < 0) || (index >= items.Count))
+            if ((visuals == null) || (index < 0) || (index >= visuals.Count))
                 throw new ArgumentOutOfRangeException("index");
 
-            return items[index];
+            return visuals[index];
         }
 
         /// <summary>
-        /// Obte el numero d'items.
+        /// Obte el numero d'objectes en el contenidor.
         /// </summary>
-        /// <returns>El numero d'items.</returns>
+        /// <returns>El numero d'objectes.</returns>
         /// 
         protected override int VisualChildrenCount {
             get {
-                return items == null ? 0 : items.Count;
+                return visuals == null ? 0 : visuals.Count;
             }
         }
     }
