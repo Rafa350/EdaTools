@@ -7,7 +7,7 @@
     public delegate void ViewPointChangedEventHandler(object sender, EventArgs e);
 
     /// <summary>
-    /// Clase que controla el punt de vista de la escena
+    /// Clase que controla el punt de vista de l'escena
     /// </summary>
     /// 
     public sealed class ViewPoint {
@@ -47,8 +47,6 @@
             double vWidth = vSize.Width;
             double vHeight = vSize.Height;
 
-            double wX = wRect.X;
-            double wY = wRect.Y;
             double wWidth = wRect.Width;
             double wHeight = wRect.Height;
 
@@ -63,13 +61,10 @@
 
             else if (vAspect > wAspect) 
                 wWidth = wHeight * vAspect;
-
-            double scaleX = vWidth / wWidth;
-            double scaleY = vHeight / wHeight;
-            
+           
             m = new Matrix();
             m.Translate((wWidth - wRect.Width) / 2, (wHeight - wRect.Height) / 2);
-            m.Scale(scaleX, scaleY);
+            m.Scale(vWidth / wWidth, vHeight / wHeight);
 
             NotifyChange();
         }
@@ -186,6 +181,41 @@
         public void ZoomOut(double z) {
 
             ZoomOut(z, 0, 0);
+        }
+
+        /// <summary>
+        /// Rotacio
+        /// </summary>
+        /// <param name="angle">L'angle de rotacio.</param>
+        /// 
+        public void Rotate(double angle) {
+
+            m.RotatePrepend(angle);
+            NotifyChange();
+        }
+
+        /// <summary>
+        /// Rotacio
+        /// </summary>
+        /// <param name="angle">L'angle de rotacio.</param>
+        /// <param name="centerX">Coordinada X del center de rotacio.</param>
+        /// <param name="centerY">Coordinada Y del centre de rotacio.</param>
+        /// 
+        public void Rotate(double angle, double centerX, double centerY) {
+
+            m.RotateAtPrepend(angle, centerX, centerY);
+            NotifyChange();
+        }
+
+        /// <summary>
+        /// Rotacio.
+        /// </summary>
+        /// <param name="angle">Angle de rotacio.</param>
+        /// <param name="center">Centre de rotacio.</param>
+        /// 
+        public void Rotate(double angle, Point center) {
+
+            Rotate(angle, center.X, center.Y);
         }
 
         /// <summary>

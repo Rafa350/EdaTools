@@ -6,15 +6,15 @@
     using System.Windows.Media;
 
     /// <summary>
-    /// Contenidor d'objectes de tipus VisualItem.
+    /// FrameworkElement que gestiona una col·leccio d'objectes de tipus DrawingVisual.
     /// </summary>
     /// 
-    public abstract class DrawingVisualContainer: FrameworkElement {
+    public abstract class VisualFrameworkElement: FrameworkElement {
 
         private VisualCollection visuals;
 
         /// <summary>
-        /// Afegeix un objecte al contenidor.
+        /// Afegeix un objecte a la col·leccio.
         /// </summary>
         /// <param name="visual">L'objecte a afeigir.</param>
         /// 
@@ -24,7 +24,7 @@
                 throw new ArgumentNullException("visual");
 
             if ((visuals != null) && visuals.Contains(visual))
-                throw new InvalidOperationException("El objeto ya pertenece al contenedor.");
+                throw new InvalidOperationException("El objeto ya pertenece a la coleccion.");
 
             if (visuals == null)
                 visuals = new VisualCollection(this);
@@ -33,7 +33,7 @@
         }
 
         /// <summary>
-        /// Afegeix diversos objectes al contenidor.
+        /// Afegeix diversos objectes a la cole·leccio.
         /// </summary>
         /// <param name="visuals">Els objectes a afeigir.</param>
         /// 
@@ -47,9 +47,9 @@
         }
 
         /// <summary>
-        /// Elimina un item del contenidor.
+        /// Elimina un objecte de la col·leccio.
         /// </summary>
-        /// <param name="visual">El item a eliminar.</param>
+        /// <param name="visual">El objecte a eliminar.</param>
         /// 
         public void Remove(DrawingVisual visual) {
 
@@ -57,7 +57,7 @@
                 throw new ArgumentNullException("visual");
 
             if (visuals == null || !visuals.Contains(visual))
-                throw new InvalidOperationException("El objeto no pertenece a la contenedor.");
+                throw new InvalidOperationException("El objeto no pertenece a la coleccion.");
 
             visuals.Remove(visual);
 
@@ -66,7 +66,7 @@
         }
 
         /// <summary>
-        /// Elimina tots els objectes del contenidor.
+        /// Elimina tots els objectes de la col·leccio.
         /// </summary>
         /// 
         public void RemoveAll() {
@@ -93,7 +93,7 @@
         }
 
         /// <summary>
-        /// Obte el numero d'objectes en el contenidor.
+        /// Obte el numero d'objectes de la col·leccio.
         /// </summary>
         /// <returns>El numero d'objectes.</returns>
         /// 

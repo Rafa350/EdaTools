@@ -4,7 +4,7 @@
     using System.Windows;
     using System.Windows.Media;
 
-    public sealed class ContentBox: DrawingVisualContainer {
+    public sealed class ContentBox: VisualFrameworkElement {
 
         public static readonly DependencyProperty VisualProperty;
 

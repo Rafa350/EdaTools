@@ -86,7 +86,7 @@
     </Compile>
     <Compile Include="DrawEditor\PointIntHelper.cs" />
     <Compile Include="DrawEditor\ViewPoint.cs" />
-    <Compile Include="DrawEditor\DrawingVisualContainer.cs" />
+    <Compile Include="DrawEditor\VisualFrameworkElement.cs" />
     <Compile Include="DrawEditor\VisualGenerator.cs" />
     <Compile Include="View\BoardEditorView.xaml.cs">
       <DependentUpon>BoardEditorView.xaml</DependentUpon>
