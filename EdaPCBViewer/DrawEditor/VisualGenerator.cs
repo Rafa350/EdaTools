@@ -3,14 +3,11 @@
     using MikroPic.EdaTools.v1.Designer.DrawEditor.Infrastructure;
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Fonts;
-    using MikroPic.EdaTools.v1.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Windows;
     using System.Windows.Media;
 
@@ -32,9 +29,7 @@
 
             protected override void Trace(PointInt position, bool stroke, bool first) {
 
-                Point p = new Point(
-                    position.X / 1000000.0,
-                    position.Y / 1000000.0);
+                Point p = new Point(position.X, position.Y);
 
                 if (first)
                     ctx.BeginFigure(p, false, false);
@@ -49,8 +44,7 @@
         /// 
         private sealed class RenderVisitor: ElementVisitor {
 
-            private readonly BrushCache brushCache;
-            private readonly PenCache penCache;
+            private readonly VisualDrawer drawer;
             private DrawingVisual parentVisual;
 
             /// <summary>
@@ -60,12 +54,11 @@
             /// <param name="layer">La capa on aplicar el proces.</param>
             /// <param name="rootVisual">El visual arrel.</param>
             /// 
-            public RenderVisitor(Board board, Layer layer, DrawingVisual rootVisual, PenCache penCache, BrushCache brushCache):
+            public RenderVisitor(Board board, Layer layer, DrawingVisual rootVisual, VisualDrawer drawer):
                 base(board, layer) {
 
+                this.drawer = drawer;
                 parentVisual = rootVisual;
-                this.penCache = penCache;
-                this.brushCache = brushCache;
             }
 
             /// <summary>
@@ -77,15 +70,7 @@
 
                 DrawingVisual visual = new DrawingVisual();
                 AddVisual(visual);
-
-                using (DrawingContext dc = visual.RenderOpen()) {
-                    Color color = GetColor(Layer);
-                    Pen pen = CreatePen(color, line.Thickness / 1000000.0, 
-                        line.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
-                    Point start = line.StartPosition.ToPoint();
-                    Point end = line.EndPosition.ToPoint();
-                    dc.DrawLine(pen, start, end);
-                }
+                drawer.DrawLineElement(visual, Layer, line);
             }
 
             /// <summary>
@@ -97,16 +82,7 @@
                 
                 DrawingVisual visual = new DrawingVisual();
                 AddVisual(visual);
-
-                using (DrawingContext dc = visual.RenderOpen()) {
-                    Color color = GetColor(Layer);
-                    Pen pen = CreatePen(color, arc.Thickness / 1000000.0, 
-                        arc.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
-                    Point start = arc.StartPosition.ToPoint();
-                    Point end = arc.EndPosition.ToPoint();
-                    Size size = new Size(arc.Radius / 1000000.0, arc.Radius / 1000000.0);
-                    dc.DrawArc(pen, start, end, size, arc.Angle.Degrees / 100.0);
-                }
+                drawer.DrawArcElement(visual, Layer, arc);
             }
 
             /// <summary>
@@ -118,18 +94,7 @@
 
                 DrawingVisual visual = new DrawingVisual();
                 AddVisual(visual);
-
-                using (DrawingContext dc = visual.RenderOpen()) {
-                    Color color = GetColor(Layer);
-                    Pen pen = rectangle.Thickness == 0 ? null : CreatePen(color, rectangle.Thickness / 1000000.0, PenLineCap.Round);
-                    Brush brush = rectangle.Filled ? CreateBrush(color) : null;
-                    Rect rect = new Rect(
-                        (rectangle.Position.X - rectangle.Size.Width / 2) / 1000000.0,
-                        (rectangle.Position.Y - rectangle.Size.Height / 2) / 1000000.0,
-                        rectangle.Size.Width / 1000000.0,
-                        rectangle.Size.Height / 1000000.0);
-                    dc.DrawRoundedRectangle(brush, pen, rect, rectangle.Radius / 1000000.0, rectangle.Radius / 1000000.0);
-                }
+                drawer.DrawRectangleElement(visual, Layer, rectangle);
             }
 
             /// <summary>
@@ -141,14 +106,7 @@
                 
                 DrawingVisual visual = new DrawingVisual();
                 AddVisual(visual);
-
-                using (DrawingContext dc = visual.RenderOpen()) {
-                    Color color = GetColor(Layer);
-                    Pen pen = circle.Thickness == 0 ? null : CreatePen(color, circle.Thickness / 1000000.0, PenLineCap.Flat);
-                    Brush brush = circle.Filled ? CreateBrush(color) : null;
-                    Point center = circle.Position.ToPoint();
-                    dc.DrawEllipse(brush, pen, center, circle.Radius / 1000000.0, circle.Radius / 1000000.0);
-                }
+                drawer.DrawCircleElement(visual, Layer, circle);
             }
 
             /// <summary>
@@ -160,17 +118,7 @@
                 
                 DrawingVisual visual = new DrawingVisual();
                 AddVisual(visual);
-
-                using (DrawingContext dc = visual.RenderOpen()) {
-
-                    Color color = GetColor(Layer);
-                    Pen pen = region.Thickness > 0 ? CreatePen(color, region.Thickness / 1000000.0, PenLineCap.Round) : null;
-                    Brush brush = region.Filled ? CreateBrush(color) : null;
-                    Polygon polygon = Layer.Function == LayerFunction.Signal ?
-                        Board.GetRegionPolygon(region, Layer, new Transformation()) :
-                        region.GetPolygon(Layer.Side);
-                    DrawPolygon(dc, pen, brush, polygon);
-                }
+                drawer.DrawRegionElement(visual, Layer, Board, region);
             }
 
             /// <summary>
@@ -182,26 +130,7 @@
 
                 DrawingVisual visual = new DrawingVisual();
                 AddVisual(visual);
-
-                using (DrawingContext dc = visual.RenderOpen()) {
-
-                    Color color = GetColor(Layer);
-
-                    if (via.Shape == ViaElement.ViaShape.Circular) {
-                        Pen pen = CreatePen(color, (via.OuterSize - via.Drill) / 2000000.0, PenLineCap.Flat);
-                        int radius = (via.OuterSize + via.Drill) / 4;
-                        dc.DrawEllipse(Brushes.Black, pen, via.Position.ToPoint(), radius / 1000000.0, radius / 1000000.0);
-                    }
-                    else {
-                        Brush brush = CreateBrush(color);
-                        Polygon polygon = via.GetPolygon(Layer.Side);
-                        DrawPolygon(dc, null, brush, polygon);
-                        if (polygon.Childs.Length == 1) {
-                            Brush holeBrush = CreateBrush(Colors.Black);
-                            DrawPolygon(dc, null, holeBrush, polygon.Childs[0]);
-                        }
-                    }
-                }
+                drawer.DrawViaElement(visual, Layer, via);
             }
 
             /// <summary>
@@ -213,17 +142,7 @@
 
                 DrawingVisual visual = new DrawingVisual();
                 AddVisual(visual);
-
-                using (DrawingContext dc = visual.RenderOpen()) {
-                    Color color = GetColor(Layer);
-                    Brush brush = CreateBrush(color);
-                    Rect rect = new Rect(
-                        (pad.Position.X - pad.Size.Width / 2) / 1000000.0,
-                        (pad.Position.Y - pad.Size.Height / 2) / 1000000.0,
-                        pad.Size.Width / 1000000.0,
-                        pad.Size.Height / 1000000.0);
-                    dc.DrawRoundedRectangle(brush, null, rect, pad.Radius / 1000000.0, pad.Radius / 1000000.0);
-                }
+                drawer.DrawSmdPadElement(visual, Layer, pad);
             }
 
             /// <summary>
@@ -235,31 +154,7 @@
 
                 DrawingVisual visual = new DrawingVisual();
                 AddVisual(visual);
-
-                using (DrawingContext dc = visual.RenderOpen()) {
-
-                    Color color = GetColor(Layer);
-                    Brush polygonBrush = CreateBrush(color);
-                    Polygon polygon = pad.GetPolygon(Layer.Side);
-                    DrawPolygon(dc, null, polygonBrush, polygon);
-                    if (polygon.Childs.Length == 1) {
-                        Brush holeBrush = CreateBrush(Colors.Black);
-                        DrawPolygon(dc, null, holeBrush, polygon.Childs[0]);
-                    }
-
-                    dc.PushTransform(new ScaleTransform(1, -1, pad.Position.X / 1000000.0, pad.Position.Y / 1000000.0));
-
-                    Brush textBrush = CreateBrush(Colors.Yellow);
-                    FormattedText formattedText = new FormattedText(
-                        pad.Name, CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
-                        new Typeface("Arial"), 0.5, textBrush);
-                    formattedText.TextAlignment = TextAlignment.Center;
-
-                    Point textPosition = new Point(pad.Position.X / 1000000.0, pad.Position.Y / 1000000.0);
-                    dc.DrawText(formattedText, new Point(textPosition.X, textPosition.Y - formattedText.Height / 2));
-
-                    dc.Pop();
-                }
+                drawer.DrawThPadElement(visual, Layer, pad);
             }
 
             /// <summary>
@@ -271,14 +166,7 @@
 
                 DrawingVisual visual = new DrawingVisual();
                 AddVisual(visual);
-
-                using (DrawingContext dc = visual.RenderOpen()) {
-                    Color color = GetColor(Layer);
-                    Pen pen = CreatePen(color, 0.05, PenLineCap.Flat);
-                    Brush brush = CreateBrush(Colors.Black);
-                    Point center = hole.Position.ToPoint();
-                    dc.DrawEllipse(brush, pen, center, hole.Drill / 2000000.0, hole.Drill / 2000000.0);
-                }
+                drawer.DrawHoleElement(visual, Layer, hole);
             }
 
             /// <summary>
@@ -290,26 +178,7 @@
                 
                 DrawingVisual visual = new DrawingVisual();
                 AddVisual(visual);
-
-                using (DrawingContext dc = visual.RenderOpen()) {
-
-                    Color color = GetColor(Layer);
-                    Pen pen = CreatePen(color, text.Thickness / 1000000.0, PenLineCap.Round);
-
-                    PartAttributeAdapter paa = new PartAttributeAdapter(Part, text);
-                    Point position = paa.Position.ToPoint();
-                    Angle rotation = paa.Rotation;
- 
-                    Matrix m = new Matrix();
-                    m.Translate(position.X, position.Y);
-                    m.RotateAt(rotation.Degrees / 100.0, position.X, position.Y);
-                    dc.PushTransform(new MatrixTransform(m));
-
-                    DrawText(dc, pen, new PointInt(0, 0), paa.Height, paa.Align, paa.Value);
-                    dc.DrawEllipse(Brushes.YellowGreen, null, new Point(0, 0), 0.15, 0.15);
-
-                    dc.Pop();
-                }
+                drawer.DrawTextElement(visual, Layer, Part, text);
             }
 
             /// <summary>
@@ -344,29 +213,6 @@
                 parentVisual.Children.Add(visual);
             }
 
-            private Pen CreatePen(Color color, double thickness, PenLineCap lineCap) {
-
-                Brush brush = brushCache.GetBrush(color);
-                return penCache.GetPen(brush, thickness, lineCap);
-            }
-
-            private Brush CreateBrush(Color color) {
-
-                return brushCache.GetBrush(color);
-            }
-
-            /// <summary>
-            /// Obte el color pur de la capa.
-            /// </summary>
-            /// <param name="layer">La capa.</param>
-            /// <returns>El color.</returns>
-            /// 
-            private static Color GetColor(Layer layer) {
-
-                Color color = layer.Color;
-                return Color.FromRgb(color.R, color.G, color.B);
-            }
-
             /// <summary>
             /// Obte la transformacio d'un component
             /// </summary>
@@ -375,7 +221,7 @@
             /// 
             private static Transform GetTransform(Part part) {
 
-                Point position = new Point(part.Position.X / 1000000.0, part.Position.Y / 1000000.0);
+                Point position = new Point(part.Position.X, part.Position.Y);
                 double angle = part.Rotation.Degrees / 100.0;
 
                 Matrix m = new Matrix();
@@ -387,87 +233,9 @@
 
                 return transform;
             }
-
-            /// <summary>
-            /// Dibuixa un poligon.
-            /// </summary>
-            /// <param name="dc">El contexte de dibuix.</param>
-            /// <param name="brush">El brush.</param>
-            /// <param name="pen">El pen.</param>
-            /// <param name="polygon">El poligon a dibuixar.</param>
-            /// 
-            private static void DrawPolygon(DrawingContext dc, Pen pen, Brush brush, Polygon polygon) {
-
-                StreamGeometry geometry = new StreamGeometry();
-                using (StreamGeometryContext ctx = geometry.Open())
-                    StreamPolygon(ctx, polygon, polygon.Childs == null ? 1 : 0);
-                geometry.Freeze();
-
-                dc.DrawGeometry(brush, pen, geometry);
-            }
-
-            /// <summary>
-            /// Dibuixa un text
-            /// </summary>
-            /// <param name="dc">El contexte de dibuix.</param>
-            /// <param name="pen">El pen.</param>
-            /// <param name="position">Posicio</param>
-            /// <param name="align">Aliniacio</param>
-            /// <param name="height">Alçada de lletra.</param>
-            /// <param name="text">El text a dibuixar.</param>
-            /// 
-            private static void DrawText(DrawingContext dc, Pen pen, PointInt position, int height, TextAlign align, string text) {
-
-                StreamGeometry geometry = new StreamGeometry();
-                using (StreamGeometryContext ctx = geometry.Open()) {
-                    RenderTextDrawer td = new RenderTextDrawer(font, ctx);
-                    td.Draw(text, position, align, height);
-                }
-                geometry.Freeze();
-
-                dc.DrawGeometry(null, pen, geometry);
-            }
-
-            /// <summary>
-            /// Dibuixa un poligon en una geometria
-            /// </summary>
-            /// <param name="ctx">Contexte de la geometria.</param>
-            /// <param name="polygon">El poligon a dibuixar.</param>
-            /// <param name="level">Nivell del poligon.</param>
-            /// 
-            private static void StreamPolygon(StreamGeometryContext ctx, Polygon polygon, int level) {
-
-                if (polygon.Points != null) {
-
-                    Point p;
-                    PointInt[] points = polygon.Points;
-
-                    p = new Point(
-                            (double)points[0].X / 1000000.0,
-                            (double)points[0].Y / 1000000.0);
-                    ctx.BeginFigure(p, true, true);
-
-                    for (int i = 1; i < points.Length; i++) {
-                        p = new Point(
-                            (double)points[i].X / 1000000.0, 
-                            (double)points[i].Y / 1000000.0);
-                        ctx.LineTo(p, true, true);
-                    }
-                }
-                if (polygon.Childs != null && (level < 2))
-                    for (int i = 0; i < polygon.Childs.Length; i++)
-                        StreamPolygon(ctx, polygon.Childs[i], level + 1);
-            }
         }
 
         private readonly Board board;
-        private static readonly Font font;
-
-        static VisualGenerator() {
-
-            FontFactory ff = FontFactory.Instance;
-            font = ff.GetFont("Standard");
-        }
 
         /// <summary>
         /// Contructor de la clase. 
@@ -475,7 +243,7 @@
         /// <param name="board">La placa a procesar.</param>
         /// 
         public VisualGenerator(Board board) {
-
+ 
             if (board == null)
                 throw new ArgumentNullException("board");
 
@@ -489,8 +257,7 @@
         /// 
         public DrawingVisual CreateVisual() {
 
-            BrushCache brushCache = new BrushCache();
-            PenCache penCache = new PenCache();
+            VisualDrawer drawer = new VisualDrawer();
 
             List<string> layerNames = new List<string>();
             layerNames.Add(Layer.BottomNamesName);
@@ -526,7 +293,7 @@
                     boardVisual.Children.Add(layerVisual);
                     layerVisual.Opacity = layer.Color.ScA;
 
-                    RenderVisitor visitor = new RenderVisitor(board, layer, layerVisual, penCache, brushCache);
+                    RenderVisitor visitor = new RenderVisitor(board, layer, layerVisual, drawer);
                     visitor.Run();
                 }
             }

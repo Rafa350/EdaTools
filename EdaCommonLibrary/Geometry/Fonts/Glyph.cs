@@ -5,6 +5,7 @@
     /// <summary>
     /// Representa la figura d'un caracter. Aquesta clase es inmutable.
     /// </summary>
+    /// 
     public sealed class Glyph {
 
         private readonly char code;

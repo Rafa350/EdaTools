@@ -5,6 +5,7 @@
     /// <summary>
     /// Clase que representa un poligon amb fills. Aquesta clase es inmutable.
     /// </summary>
+    /// 
     public sealed class Polygon {
 
         private readonly PointInt[] points;

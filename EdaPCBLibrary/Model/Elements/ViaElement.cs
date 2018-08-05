@@ -8,6 +8,7 @@
     /// <summary>
     /// Clase que representa una via
     /// </summary>
+    /// 
     public sealed class ViaElement : Element, IPosition, IConectable {
 
         public enum ViaShape {
@@ -89,17 +90,33 @@
         private PointInt[] MakePoints(BoardSide side, int spacing) {
 
             int size = side == BoardSide.Inner ? InnerSize : OuterSize;
+            int sizeM2 = size * 2;
+            int sizeD2 = size / 2;
+
+            int spacingM2 = spacing * 2;
+            int spacingD2 = spacing / 2;
+
             ViaShape shape = side == BoardSide.Inner ? ViaShape.Circular : this.shape;
 
             switch (shape) {
                 case ViaShape.Square:
-                    return PolygonBuilder.BuildRectangle(position, new SizeInt(size + spacing * 2, size + spacing * 2), 0, Angle.FromDegrees(0));
+                    return PolygonBuilder.BuildRectangle(
+                        position, 
+                        new SizeInt(size + spacingM2, size + spacingM2), 
+                        0, 
+                        Angle.FromDegrees(0));
 
                 case ViaShape.Octogonal:
-                    return PolygonBuilder.BuildPolygon(8, position, (size / 2) + spacing, Angle.FromDegrees(2250));
+                    return PolygonBuilder.BuildPolygon(
+                        8, 
+                        position, 
+                        (int)((double)sizeD2 / Math.Cos(22.5 * Math.PI / 180.0)) + spacing, 
+                        Angle.FromDegrees(2250));
 
                 default:
-                    return PolygonBuilder.BuildCircle(position, (size / 2) + spacing);
+                    return PolygonBuilder.BuildCircle(
+                        position, 
+                        sizeD2 + spacing);
             }
         }
 

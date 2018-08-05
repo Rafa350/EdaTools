@@ -82,7 +82,7 @@
                 SizeInt boardSize = Board.Size;
                 viewPoint.Reset(
                     new Size(contentBox.ActualWidth, contentBox.ActualHeight),
-                    new Rect(0, 0, boardSize.Width / 1000000.0, boardSize.Height / 1000000.0));
+                    new Rect(0, 0, boardSize.Width, boardSize.Height));
             }
         }
 
@@ -195,7 +195,7 @@
                 SizeInt boardSize = Board.Size;
                 viewPoint.Reset(
                     new Size(contentBox.ActualWidth, contentBox.ActualHeight),
-                    new Rect(0, 0, boardSize.Width / 1000000.0, boardSize.Height / 1000000.0));
+                    new Rect(0, 0, boardSize.Width, boardSize.Height));
 
                 VisualGenerator vg = new VisualGenerator(Board);
                 DrawingVisual visual = vg.CreateVisual();

@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Windows.Media;
 
-    public sealed class BrushCache {
+    internal sealed class BrushCache {
 
         private readonly Dictionary<int, Brush> cache = new Dictionary<int, Brush>();
 

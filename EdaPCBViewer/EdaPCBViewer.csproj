@@ -69,6 +69,7 @@
     <Compile Include="DrawEditor\Infrastructure\DrawingContextHelper.cs" />
     <Compile Include="DrawEditor\Infrastructure\BrushCache.cs" />
     <Compile Include="DrawEditor\Infrastructure\PenCache.cs" />
+    <Compile Include="DrawEditor\Infrastructure\VisualDrawer.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\IAppService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -84,7 +85,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DrawEditor\PointIntHelper.cs" />
     <Compile Include="DrawEditor\ViewPoint.cs" />
     <Compile Include="DrawEditor\VisualFrameworkElement.cs" />
     <Compile Include="DrawEditor\VisualGenerator.cs" />

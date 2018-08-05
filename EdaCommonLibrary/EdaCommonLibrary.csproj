@@ -60,7 +60,7 @@
     <Compile Include="Geometry\RectInt.cs" />
     <Compile Include="Geometry\SizeInt.cs" />
     <Compile Include="Geometry\TextAlign.cs" />
-    <Compile Include="Geometry\TextDrawer.cs" />
+    <Compile Include="Geometry\Fonts\TextDrawer.cs" />
     <Compile Include="Geometry\Transformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

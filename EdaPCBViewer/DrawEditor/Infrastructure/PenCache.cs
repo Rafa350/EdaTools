@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Windows.Media;
 
-    public sealed class PenCache {
+    internal sealed class PenCache {
 
         private readonly Dictionary<int, Pen> cache = new Dictionary<int, Pen>();
 

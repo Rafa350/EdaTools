@@ -86,40 +86,44 @@
         /// 
         private PointInt[] MakePoints(BoardSide side, int spacing) {
 
-            int size = TopSize;
+            int size =
+                side == BoardSide.Top ? TopSize :
+                side == BoardSide.Bottom ? BottomSize :
+                InnerSize;
+            int sizeM2 = size * 2;
+            int sizeD2 = size / 2;
 
-            int sizeMul2 = size * 2;
-            int sizeDiv2 = size / 2;
-
-            int spacingMul2 = spacing * 2;
-            int spacingDiv2 = spacing / 2;
+            int spacingM2 = spacing * 2;
+            int spacingD2 = spacing / 2;
 
             switch (shape) {
                 case ThPadShape.Square:
                     return PolygonBuilder.BuildRectangle(
                         Position,
-                        new SizeInt(size + spacingMul2, size + spacingMul2),
+                        new SizeInt(size + spacingM2, size + spacingM2),
                         spacing,
                         rotation);
 
-                case ThPadShape.Octogonal:
+                case ThPadShape.Octogonal: {
+                    int s = (int)((double)sizeD2 / Math.Cos(22.5 * Math.PI / 180.0));
                     return PolygonBuilder.BuildPolygon(
                         8,
                         Position,
-                        sizeDiv2 + spacing,
+                        s + spacing,
                         rotation + Angle.FromDegrees(2250));
+                }
 
                 case ThPadShape.Oval:
                     return PolygonBuilder.BuildRectangle(
                         Position,
-                        new SizeInt(sizeMul2 + spacingMul2, size + spacingMul2),
-                        sizeDiv2 + spacing,
+                        new SizeInt(sizeM2 + spacingM2, size + spacingM2),
+                        sizeD2 + spacing,
                         rotation);
 
                 default:
                     return PolygonBuilder.BuildCircle(
                         Position,
-                        sizeDiv2 + spacing);
+                        sizeD2 + spacing);
             }
         }
 
