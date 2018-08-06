@@ -6,6 +6,7 @@
     using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Windows;
@@ -130,35 +131,18 @@
                 Color color = GetLayerColor(layer);
                 int size = layer.Side == BoardSide.Inner ? via.InnerSize : via.OuterSize;
 
-                switch (via.Shape) {
-
-                    case ViaElement.ViaShape.Circular: {
-
-                        Pen pen = GetPen(color, (size - via.Drill) / 2, PenLineCap.Flat);
-
-                        DrawCircle(dc, pen, Brushes.Black, via.Position, (size + via.Drill) / 4);
+                if (via.Shape == ViaElement.ViaShape.Circular) {
+                    Pen pen = GetPen(color, (size - via.Drill) / 2, PenLineCap.Flat);
+                    DrawCircle(dc, pen, Brushes.Black, via.Position, (size + via.Drill) / 4);
+                }
+                else {
+                    Brush brush = GetBrush(color);
+                    Polygon polygon = via.GetPolygon(layer.Side);
+                    DrawPolygon(dc, null, brush, polygon);
+                    if (polygon.Childs.Length == 1) {
+                        Brush holeBrush = GetBrush(Colors.Black);
+                        DrawPolygon(dc, null, holeBrush, polygon.Childs[0]);
                     }
-                    break;
-
-                    case ViaElement.ViaShape.Square: {
-
-                        Brush brush = GetBrush(color);
-
-                        DrawRectangle(dc, null, brush, via.Position, new SizeInt(size, size), 0, Angle.Zero);
-                        DrawCircle(dc, null, Brushes.Black, via.Position, via.Drill / 2);
-                    }
-                    break;
-
-                    default: {
-                        Brush brush = GetBrush(color);
-                        Polygon polygon = via.GetPolygon(layer.Side);
-                        DrawPolygon(dc, null, brush, polygon);
-                        if (polygon.Childs.Length == 1) {
-                            Brush holeBrush = GetBrush(Colors.Black);
-                            DrawPolygon(dc, null, holeBrush, polygon.Childs[0]);
-                        }
-                    }
-                    break;
                 }
             }
         }
@@ -194,60 +178,47 @@
             using (DrawingContext dc = visual.RenderOpen()) {
 
                 Color color = GetLayerColor(layer);
-                int size = 
-                    layer.Side == BoardSide.Top ? pad.TopSize :
-                    layer.Side == BoardSide.Bottom ? pad.BottomSize :
-                    pad.InnerSize;
 
-                switch (pad.Shape) {
+                if (pad.Shape == ThPadElement.ThPadShape.Circular) {
 
-                    case ThPadElement.ThPadShape.Circular: {
+                    int size =
+                        layer.Side == BoardSide.Top ? pad.TopSize :
+                        layer.Side == BoardSide.Bottom ? pad.BottomSize :
+                        pad.InnerSize;
 
-                        Pen pen = GetPen(color, (size - pad.Drill) / 2, PenLineCap.Flat);
+                    Pen pen = GetPen(color, (size - pad.Drill) / 2, PenLineCap.Flat);
 
-                        DrawCircle(dc, pen, Brushes.Black, pad.Position, size / 2);
-                    }
-                    break;
+                    DrawCircle(dc, pen, Brushes.Black, pad.Position, size / 2);
+                }
 
-                    case ThPadElement.ThPadShape.Square: {
+                else {
 
-                        Brush brush = GetBrush(color);
+                    Brush polygonBrush = GetBrush(color);
 
-                        DrawRectangle(dc, null, brush, pad.Position, new SizeInt(size, size), 0, pad.Rotation);
-                        DrawCircle(dc, null, Brushes.Black, pad.Position, pad.Drill / 2);
-                    }
-                    break;
+                    Polygon polygon = pad.GetPolygon(layer.Side);
 
-                    default: {
-
-                        Brush polygonBrush = GetBrush(color);
-
-                        Polygon polygon = pad.GetPolygon(layer.Side);
-
-                        DrawPolygon(dc, null, polygonBrush, polygon);
-                        if (polygon.Childs.Length == 1) {
-                            Brush holeBrush = GetBrush(Colors.Black);
-                            DrawPolygon(dc, null, holeBrush, polygon.Childs[0]);
-                        }
-
-                        dc.PushTransform(new ScaleTransform(1, -1, pad.Position.X, pad.Position.Y));
-
-                        Brush textBrush = GetBrush(Colors.Yellow);
-                        FormattedText formattedText = new FormattedText(
-                            pad.Name, CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
-                            new Typeface("Arial"), 0.5, textBrush);
-                        formattedText.TextAlignment = TextAlignment.Center;
-
-                        Point textPosition = new Point(pad.Position.X, pad.Position.Y);
-                        dc.DrawText(formattedText, new Point(textPosition.X, textPosition.Y - formattedText.Height / 2));
-
-                        dc.Pop();
+                    DrawPolygon(dc, null, polygonBrush, polygon);
+                    if (polygon.Childs.Length == 1) {
+                        Brush holeBrush = GetBrush(Colors.Black);
+                        DrawPolygon(dc, null, holeBrush, polygon.Childs[0]);
                     }
 
-                    break;
+                    dc.PushTransform(new ScaleTransform(1, -1, pad.Position.X, pad.Position.Y));
+
+                    Brush textBrush = GetBrush(Colors.Yellow);
+                    FormattedText formattedText = new FormattedText(
+                        pad.Name, CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
+                        new Typeface("Arial"), 0.5, textBrush);
+                    formattedText.TextAlignment = TextAlignment.Center;
+
+                    Point textPosition = new Point(pad.Position.X, pad.Position.Y);
+                    dc.DrawText(formattedText, new Point(textPosition.X, textPosition.Y - formattedText.Height / 2));
+
+                    dc.Pop();
                 }
             }
         }
+        
 
         /// <summary>
         /// Dibuixa un hole en un visual.
@@ -262,7 +233,7 @@
 
                 Color color = GetLayerColor(layer);
 
-                Pen pen = GetPen(color, 0.05, PenLineCap.Flat);
+                Pen pen = GetPen(color, 0.05 * 1000000.0, PenLineCap.Flat);
                 Brush brush = GetBrush(Colors.Black);
 
                 DrawCircle(dc, pen, brush, hole.Position, hole.Drill / 2);
@@ -389,13 +360,24 @@
         /// 
         private static void DrawArc(DrawingContext dc, Pen pen, PointInt start, PointInt end, int radius, Angle angle) {
 
-            dc.DrawArc(
-                pen, 
-                new Point(start.X, start.Y),
-                new Point(end.X, end.Y), 
-                new Size(radius, radius), 
-                angle.Degrees / 100.0);
+            StreamGeometry g = new StreamGeometry();
+            using (StreamGeometryContext gc = g.Open()) {
+                gc.BeginFigure(
+                    new Point(start.X, start.Y), 
+                    false, 
+                    false);
+                gc.ArcTo(
+                    new Point(end.X, end.Y),
+                    new Size(radius, radius), 
+                    angle.Degrees / 100, 
+                    Math.Abs(angle.Degrees) > 18000.0, 
+                    angle.Degrees < 0 ? SweepDirection.Counterclockwise : SweepDirection.Clockwise, 
+                    true, 
+                    false);
+            }
+            g.Freeze();
 
+            dc.DrawGeometry(null, pen, g);
         }
 
         /// <summary>
@@ -436,26 +418,7 @@
                 new Point(center.X, center.Y), 
                 radius, 
                 radius);
-        }
-
-        /// <summary>
-        /// Primitiva de dibuix d'octagons.
-        /// </summary>
-        /// <param name="dc">En context de dibuix.</param>
-        /// <param name="pen">El pen per dibuixar.</param>
-        /// <param name="brush">El brush per dibuixar.</param>
-        /// <param name="center">El centre.</param>
-        /// <param name="radius">El radi exterir.</param>
-        /// 
-        private static void DrawOctagon(DrawingContext dc, Pen pen, Brush brush, PointInt center, int radius) {
-
-            dc.DrawEllipse(
-                brush,
-                pen,
-                new Point(center.X, center.Y),
-                radius,
-                radius);
-        }
+        }       
 
         /// <summary>
         /// Primitiva de dibuix de poligonns.
