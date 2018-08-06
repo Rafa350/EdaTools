@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CAMGenerator.cs" />
+    <Compile Include="DXF\Builder\DXFBuilder.cs" />
+    <Compile Include="DXF\DXFGenerator.cs" />
     <Compile Include="Gerber\ApertureDictionary.cs" />
     <Compile Include="Gerber\Builder\Aperture.cs" />
     <Compile Include="Gerber\Builder\Apertures\ObroundAperture.cs" />
