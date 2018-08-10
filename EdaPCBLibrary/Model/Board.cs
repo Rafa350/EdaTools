@@ -127,6 +127,21 @@
                 throw new InvalidOperationException("El elemento ya existe en la placa.");
         }
 
+        /// <summary>
+        /// Afegeig una col·leccio d'elements.
+        /// </summary>
+        /// <param name="elements">Els elements a afeigir.</param>
+        /// 
+        public void AddElements(IEnumerable<Element> elements) {
+
+            if (elements == null)
+                throw new ArgumentNullException("elements");
+
+            foreach (Element element in elements)
+                if (!this.elements.Add(element))
+                    throw new InvalidOperationException("El elemento ya existe en la placa.");
+        }
+
         #endregion
 
         #region Metodes per la gestio de blocs

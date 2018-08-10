@@ -14,6 +14,7 @@
     /// <summary>
     /// Clase per la escriptura de plaques en un stream.
     /// </summary>
+    /// 
     public sealed class XmlBoardWriter {
 
         private Stream stream;
@@ -204,6 +205,11 @@
                 writer.WriteEndElement();
             }
 
+            /// <summary>
+            /// Visita un element de tipus 'ThPadElement'
+            /// </summary>
+            /// <param name="pad">L'element a visitar.</param>
+            /// 
             public override void Visit(ThPadElement pad) {
 
                 writer.WriteStartElement("tpad");
@@ -241,6 +247,16 @@
                     writer.WriteAttribute("height", FormatNumber(parameter.Height));
                 if (parameter.UseAlign)
                     writer.WriteAttribute("align", parameter.Align);
+
+                writer.WriteEndElement();
+            }
+
+            public override void Visit(BlockAttribute parameter) {
+
+                writer.WriteStartElement("attribute");
+
+                writer.WriteAttribute("name", parameter.Name);
+                writer.WriteAttribute("value", parameter.Value);
 
                 writer.WriteEndElement();
             }
@@ -316,16 +332,12 @@
 
                     // Escriu la llista d'atributs.
                     //
-                    first = true;
-                    foreach (PartAttribute attribute in part.Attributes) {
-                        if (first) {
-                            first = false;
-                            writer.WriteStartElement("attributes");
-                        }
-                        attribute.AcceptVisitor(this);
-                    }
-                    if (!first)
+                    if (part.HasAttributes) {
+                        writer.WriteStartElement("attributes");
+                        foreach (PartAttribute attribute in part.Attributes) 
+                            attribute.AcceptVisitor(this);
                         writer.WriteEndElement();
+                    }
 
                     writer.WriteEndElement();
                 }
@@ -396,6 +408,11 @@
                 writer.WriteEndElement();
             }
 
+            /// <summary>
+            /// Visita un bloc
+            /// </summary>
+            /// <param name="block">El bloc a visitar.</param>
+            /// 
             public override void Visit(Block block) {
 
                 writer.WriteStartElement("block");
@@ -407,9 +424,21 @@
                     element.AcceptVisitor(this);
                 writer.WriteEndElement();
 
+                if (block.HasAttributes) {
+                    writer.WriteStartElement("attributes");
+                    foreach (BlockAttribute attribute in block.Attributes)
+                        attribute.AcceptVisitor(this);
+                    writer.WriteEndElement();
+                }
+
                 writer.WriteEndElement();
             }
 
+            /// <summary>
+            /// Visita una placa.
+            /// </summary>
+            /// <param name="board">La placa a visitar.</param>
+            /// 
             public override void Visit(Board board) {
 
                 writer.WriteStartElement("board");
@@ -425,12 +454,13 @@
                 writer.WriteEndElement();
 
                 writer.WriteStartElement("layerPairs");
-                foreach (Layer layer in board.Layers) {
-                    Layer pairLayer = board.GetLayerPair(layer);
-                    if (pairLayer != null) {
+
+                foreach (Layer layer1 in board.Layers) {
+                    Layer layer2 = board.GetLayerPair(layer1);
+                    if (layer2 != null) {
                         writer.WriteStartElement("pair");
-                        writer.WriteAttribute("layer1", layer.Name);
-                        writer.WriteAttribute("layer2", pairLayer.Name);
+                        writer.WriteAttribute("layer1", layer1.Name);
+                        writer.WriteAttribute("layer2", layer2.Name);
                         writer.WriteEndElement();
                     }
                 }

@@ -47,8 +47,8 @@
             this.fileName = fileName;
             isDirty = false;
 
-            using (Stream inStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                XmlBoardReader reader = new XmlBoardReader(inStream);
+            using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
+                XmlBoardReader reader = new XmlBoardReader(stream);
                 board = reader.Read();
             }
         }

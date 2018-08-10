@@ -12,7 +12,7 @@
         private Angle rotation;
         private BoardSide side = BoardSide.Top;
         private readonly Block block;
-        private Dictionary<string, PartAttribute> attributes = new Dictionary<string, PartAttribute>();
+        private Dictionary<string, PartAttribute> attributes;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -69,30 +69,77 @@
             return String.Format("Part: '{0}'", name);
         }
 
+        /// <summary>
+        /// Afegeix un atribut.
+        /// </summary>
+        /// <param name="attribute">L'atribut a afeigir.</param>
+        /// 
         public void AddAttribute(PartAttribute attribute) {
 
             if (attribute == null)
                 throw new ArgumentNullException("attribute");
 
+            if (attributes == null)
+                attributes = new Dictionary<string, PartAttribute>();
+
             attributes.Add(attribute.Name, attribute);
         }
 
+        /// <summary>
+        /// Elimina un atribut.
+        /// </summary>
+        /// <param name="attribute">L'atribut a eliminar.</param>
+        /// 
         public void RemoveAttribute(PartAttribute attribute) {
 
             if (attribute == null)
                 throw new ArgumentNullException("attribute");
 
             attributes.Remove(attribute.Name);
+
+            if (attributes.Count == 0)
+                attributes = null;
         }
 
+        /// <summary>
+        /// Obte el valor d'un atribut.
+        /// </summary>
+        /// <param name="name">El nom de l'atribut.</param>
+        /// <returns>El seu valor. Null si no existeix.</returns>
+        /// 
         public PartAttribute GetAttribute(string name) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            PartAttribute value;
-            if (attributes.TryGetValue(name, out value))
-                return value;
+            if (attributes != null) {
+                PartAttribute value;
+                if (attributes.TryGetValue(name, out value))
+                    return value;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Obte un pad pel seu nom.
+        /// </summary>
+        /// <param name="name">El nom del pad.</param>
+        /// <param name="throwOnError">True si dispara una execpcio si no el troba.</param>
+        /// <returns>El pad. Null si no el troba.</returns>
+        /// 
+        public PadElement GetPad(string name, bool throwOnError = true) {
+
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            PadElement pad = block.GetPad(name, false);
+            if (pad != null)
+                return pad;
+
+            if (throwOnError)
+                throw new InvalidOperationException(
+                    String.Format("No se encontro el pad '{0}' en el part '{1}'.", name, this.name));
 
             return null;
         }
@@ -178,11 +225,17 @@
         /// 
         public IEnumerable<PadElement> Pads {
             get {
-                foreach (Element element in block.Elements) {
-                    PadElement pad = element as PadElement;
-                    if (pad != null)
-                        yield return pad;
-                }
+                return block.Pads;
+            }
+        }
+
+        /// <summary>
+        /// Indica si conte atributs.
+        /// </summary>
+        /// 
+        public bool HasAttributes {
+            get {
+                return attributes != null;
             }
         }
 

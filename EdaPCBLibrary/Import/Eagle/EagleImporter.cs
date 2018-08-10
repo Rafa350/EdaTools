@@ -763,7 +763,6 @@
 
             Part part = new Part(GetComponent(componentKey), name, position, rotation, side);
 
-
             foreach (XmlNode attrNode in node.SelectNodes("attribute")) {
 
                 PartAttribute parameter = ParseAttributeNode(attrNode);
