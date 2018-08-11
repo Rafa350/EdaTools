@@ -6,6 +6,7 @@
     /// <summary>
     /// Clase base per tots els elements de la placa.
     /// </summary>
+    /// 
     public abstract class Element : IVisitable {
 
         /// <summary>

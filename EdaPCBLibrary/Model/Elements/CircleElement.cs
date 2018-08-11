@@ -16,14 +16,6 @@
         private bool filled;
 
         /// <summary>
-        ///  Constructor de l'objecte amb els parametres per defecte.
-        /// </summary>
-        /// 
-        public CircleElement():
-            base() {
-        }
-
-        /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="position">Posicio del centre.</param>

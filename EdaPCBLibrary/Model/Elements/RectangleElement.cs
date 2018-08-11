@@ -8,6 +8,7 @@
     /// <summary>
     /// Clase que representa un rectangle.
     /// </summary>
+    /// 
     public sealed class RectangleElement: Element, IPosition, ISize, IRotation {
 
         private PointInt position;
@@ -16,14 +17,6 @@
         private Ratio roundness;
         private int thickness;
         private bool filled;
-
-        /// <summary>
-        ///  Constructor de l'objecte amb els parametres per defecte.
-        /// </summary>
-        /// 
-        public RectangleElement(): 
-            base() {
-        }
 
         /// <summary>
         /// Constructor del objecte.

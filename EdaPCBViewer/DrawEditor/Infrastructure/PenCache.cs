@@ -26,6 +26,7 @@
                 pen = new Pen(brush, thickness);
                 pen.StartLineCap = lineCap;
                 pen.EndLineCap = lineCap;
+                pen.DashCap = lineCap;
                 pen.LineJoin = PenLineJoin.Round;
                 pen.Freeze();
 
@@ -45,7 +46,7 @@
         /// 
         private static int MakeHash(Brush brush, double thickness, PenLineCap lineCap = PenLineCap.Round) {
 
-            return brush.GetHashCode() ^ (thickness.GetHashCode() << 3) ^ (lineCap.GetHashCode() << 7);
+            return brush.GetHashCode() + thickness.GetHashCode() + lineCap.GetHashCode() * 7323463;
         }
     }
 }

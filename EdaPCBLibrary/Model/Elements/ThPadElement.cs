@@ -9,6 +9,7 @@
     /// <summary>
     /// Clase que representa un pad throug hole
     /// </summary>
+    /// 
     public sealed class ThPadElement: PadElement, IRotation {
 
         public enum ThPadShape {
@@ -31,14 +32,6 @@
         private int innerSize;
         private int bottomSize;
         private int drill;
-
-        /// <summary>
-        /// Constructor de l'objecte amb els parametres per defecte.
-        /// </summary>
-        /// 
-        public ThPadElement():
-            base() {
-        }
 
         /// <summary>
         /// Constructor del objecte.

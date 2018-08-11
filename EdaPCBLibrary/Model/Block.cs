@@ -7,19 +7,13 @@
     /// <summary>
     /// Clase que representa un bloc predefinit.
     /// </summary>
+    /// 
     public sealed class Block : IVisitable, IName {
 
         private readonly HashSet<Element> elements = new HashSet<Element>();
         private Dictionary<string, PadElement> pads;
         private Dictionary<string, BlockAttribute> attributes;
         private string name;
-
-        /// <summary>
-        /// Constructor per defecte de l'objecte.
-        /// </summary>
-        /// 
-        public Block() {
-        }
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -66,6 +60,8 @@
             if (!elements.Add(element))
                 throw new InvalidOperationException("El elemento ya pertenece al bloque.");
 
+            // Si l'element es un Pad, l'afegeix la la llista de pads.
+            //
             PadElement pad = element as PadElement;
             if (pad != null) {
                 if (pads == null)
@@ -103,6 +99,8 @@
 
             elements.Remove(element);
 
+            // Si l'element es un pad, tambe l'elimina de la llista de pads.
+            //
             PadElement pad = element as PadElement;
             if (pads != null) {
                 pads.Remove(pad.Name);
@@ -120,11 +118,8 @@
         /// 
         public PadElement GetPad(string name, bool throwOnError = true) {
 
-            if (pads != null) {
-                PadElement pad;
-                if (pads.TryGetValue(name, out pad))
-                    return pad;
-            }
+            if ((pads != null) && pads.TryGetValue(name, out PadElement pad))
+                return pad;
 
             if (throwOnError)
                 throw new InvalidOperationException(
@@ -176,11 +171,8 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            if (attributes != null) {
-                BlockAttribute value;
-                if (attributes.TryGetValue(name, out value))
-                    return value;
-            }
+            if ((attributes != null) && attributes.TryGetValue(name, out BlockAttribute attribute))
+                return attribute;
 
             return null;
         }
@@ -194,6 +186,9 @@
                 return name;
             }
             set {
+                if (String.IsNullOrEmpty(value))
+                    throw new ArgumentNullException("Block.Name");
+
                 name = value;
             }
         }
@@ -219,18 +214,28 @@
         }
 
         /// <summary>
-        /// Obte la llista de pads.
+        /// Enumera el nom dels pads.
+        /// </summary>
+        /// 
+        public IEnumerable<string> PadNames {
+            get {
+                if (pads == null)
+                    throw new InvalidOperationException("El bloque no contiene pads.");
+
+                return pads.Keys;
+            }
+        }
+
+        /// <summary>
+        /// Enumera els pads.
         /// </summary>
         /// 
         public IEnumerable<PadElement> Pads {
             get {
-                return pads.Values;
-            }
-        }
+                if (pads == null)
+                    throw new InvalidOperationException("El bloque no contiene pads.");
 
-        public IEnumerable<string> PadNames {
-            get {
-                return pads.Keys;
+                return pads.Values;
             }
         }
 
@@ -245,21 +250,27 @@
         }
 
         /// <summary>
-        /// Obte els noms dels atributs
+        /// Enumera els noms dels atributs
         /// </summary>
         /// 
         public IEnumerable<String> AttributeNames {
             get {
+                if (attributes == null)
+                    throw new InvalidOperationException("El bloque no contiene atributos.");
+
                 return attributes.Keys;
             }
         }
 
         /// <summary>
-        /// Obte els atributs atributs
+        /// Enumera els atributs
         /// </summary>
         /// 
         public IEnumerable<BlockAttribute> Attributes {
             get {
+                if (attributes == null)
+                    throw new InvalidOperationException("El bloque no contiene atributos.");
+
                 return attributes.Values;
             }
         }

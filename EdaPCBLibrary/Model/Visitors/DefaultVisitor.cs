@@ -6,6 +6,7 @@
     /// Clase visitador per defecte. Defineix tots els visitadors,
     /// pero no fa cap accio.
     /// </summary>
+    /// 
     public abstract class DefaultVisitor: IVisitor {
 
         public abstract void Run();

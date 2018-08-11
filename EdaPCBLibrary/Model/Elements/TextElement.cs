@@ -7,6 +7,7 @@
     /// <summary>
     /// Clase que representa un text.
     /// </summary>
+    /// 
     public sealed class TextElement: Element, IPosition, IRotation {
 
         private PointInt position;
@@ -15,14 +16,6 @@
         private int thickness;
         private TextAlign align = TextAlign.MiddleCenter;
         private string value;
-
-        /// <summary>
-        /// Constructor de l'objecte amb els parametres per defecte.
-        /// </summary>
-        /// 
-        public TextElement():
-            base() {
-        }
 
         /// <summary>
         /// Constructor de l'objecte.

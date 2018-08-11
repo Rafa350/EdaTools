@@ -1,24 +1,17 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
+    using System;
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
 
     /// <summary>
     /// Clase que representa un pad.
     /// </summary>
+    /// 
     public abstract class PadElement : Element, IPosition, IName, IConectable {
 
         private string name;
         private PointInt position;
-
-        /// <summary>
-        /// Construeix l'objecte amb els parametres per defecte.
-        /// </summary>
-        /// 
-        public PadElement() :
-            base() {
-
-        }
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -52,6 +45,9 @@
                 return name;
             }
             set {
+                if (String.IsNullOrEmpty(value))
+                    throw new ArgumentNullException("Pad.Name");
+
                 name = value;
             }
         }

@@ -38,15 +38,6 @@
         private ViaType type = ViaType.Through;
 
         /// <summary>
-        /// Constructor de l'objecte amb els parametres per defecte.
-        /// </summary>
-        /// 
-        public ViaElement() :
-            base() {
-
-        }
-
-        /// <summary>
         /// Constructor del objecte.
         /// </summary>
         /// <param name="position">Posicio.</param>

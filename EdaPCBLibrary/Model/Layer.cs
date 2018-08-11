@@ -1,7 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
+    using System;
     using System.Windows.Media;
     
+    /// <summary>
+    /// Funcio de la capa.
+    /// </summary>
+    /// 
     public enum LayerFunction {
         Unknown,
         Signal,
@@ -9,6 +14,10 @@
         Mechanical,
     }
 
+    /// <summary>
+    /// Clare quie representa una capa de la placa.
+    /// </summary>
+    /// 
     public sealed class Layer: IVisitable {
 
         public static readonly string TopName = "Top";
@@ -85,6 +94,11 @@
             this.isVisible = isVisible;
         }
 
+        /// <summary>
+        /// Accepta un visitador.
+        /// </summary>
+        /// <param name="visitor">El visitador.</param>
+        /// 
         public void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
@@ -119,6 +133,9 @@
                 return name;
             }
             set {
+                if (String.IsNullOrEmpty(value))
+                    throw new ArgumentNullException("Layer.Name");
+
                 name = value;
             }
         }

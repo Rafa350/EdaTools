@@ -5,6 +5,7 @@
     /// <summary>
     /// Interficie per tots els objectes que tenen posicio.
     /// </summary>
+    /// 
     public interface IPosition {
 
         PointInt Position { get; set; }

@@ -129,7 +129,7 @@
         }
 
         /// <summary>
-        /// Comprova si existeig un atribut.
+        /// Comprova si existeix un atribut.
         /// </summary>
         /// <param name="name">El nom de l'atribut.</param>
         /// <returns>True si existeix, false en cas contrari.</returns>
@@ -142,6 +142,13 @@
             return attributes.ContainsKey(name);
         }
 
+        /// <summary>
+        /// Obte el valor d'un atribut com string.
+        /// </summary>
+        /// <param name="name">Nom de l'atribut.</param>
+        /// <param name="defValue">Valor per defecte.</param>
+        /// <returns>El valor de l'atribut.</returns>
+        /// 
         public string AttributeAsString(string name, string defValue = null) {
 
             if (String.IsNullOrEmpty(name))
@@ -153,6 +160,13 @@
                 return defValue;
         }
 
+        /// <summary>
+        /// Obte el valor de l'atribut en format array de strings.
+        /// </summary>
+        /// <param name="name">Nom de l'atribut.</param>
+        /// <param name="defValue">Valor per defecte.</param>
+        /// <returns>El valor de l'atribut.</returns>
+        /// 
         public string[] AttributeAsStrings(string name, string[] defValue = null) {
 
             if (String.IsNullOrEmpty(name))
@@ -164,6 +178,13 @@
                 return defValue;
         }
 
+        /// <summary>
+        /// Obte el valor d'un atribut com a boolean.
+        /// </summary>
+        /// <param name="name">Nom de l'atribut.</param>
+        /// <param name="defValue">Valor per defecte.</param>
+        /// <returns>El valor de l'atribut.</returns>
+        /// 
         public bool AttributeAsBoolean(string name, bool defValue = false) {
 
             if (String.IsNullOrEmpty(name))
@@ -175,6 +196,32 @@
                 return defValue;
         }
 
+        /// <summary>
+        /// Obte el valor d'un atribut com a int
+        /// </summary>
+        /// <param name="name">Nom de l'atribut.</param>
+        /// <param name="defValue">Valor per defecte.</param>
+        /// <returns>El valor de l'atribut.</returns>
+        /// 
+        public int AttributeAsInteger(string name, int defValue = 0) {
+
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            if (attributes.ContainsKey(name))
+                return XmlConvert.ToInt32(attributes[name]);
+            else
+                return defValue;
+        }
+
+        /// <summary>
+        /// Obte el valor d'un atribut com a enumerador.
+        /// </summary>
+        /// <typeparam name="T">El tipus enumerador.</typeparam>
+        /// <param name="name">El nom de l'atribut.</param>
+        /// <param name="defValue">Valor per defecte.</param>
+        /// <returns>El valor de l'atribut.</returns>
+        /// 
         public T AttributeAsEnum<T>(string name, T defValue) {
 
             if (String.IsNullOrEmpty(name))
@@ -223,16 +270,6 @@
         public bool HasAttributes {
             get {
                 return attributes.Count > 0;
-            }
-        }
-
-        /// <summary>
-        /// Obte el diccionari d'atributs.
-        /// </summary>
-        /// 
-        public IDictionary<string, string> Attributes {
-            get {
-                return attributes;
             }
         }
     }

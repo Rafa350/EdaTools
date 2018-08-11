@@ -21,14 +21,6 @@
         private LineCapStyle lineCap = LineCapStyle.Round;
 
         /// <summary>
-        /// Constructor de l'objecte amb els parametres per defecte.
-        /// </summary>
-        /// 
-        public LineElement() :
-            base() {
-        }
-
-        /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="startPosition">La posicio inicial.</param>

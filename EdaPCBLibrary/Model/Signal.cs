@@ -7,10 +7,6 @@
         private string name;
         private int clearance;
 
-        public Signal() {
-
-        }
-
         public Signal(string name) {
 
             if (String.IsNullOrEmpty(name))
@@ -34,7 +30,7 @@
             }
             set {
                 if (String.IsNullOrEmpty(value))
-                    throw new ArgumentNullException("Name");
+                    throw new ArgumentNullException("Signal.Name");
 
                 name = value;
             }

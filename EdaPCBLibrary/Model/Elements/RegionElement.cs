@@ -41,14 +41,6 @@
         private int clearance;
 
         /// <summary>
-        /// Constructor de l'objecte amb els parametres per defecte.
-        /// </summary>
-        /// 
-        public RegionElement():
-            base() {
-        }
-
-        /// <summary>
         /// Constructor del objecte.
         /// </summary>
         /// <param name="thickness">Amplada de linia.</param>

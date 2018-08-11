@@ -1,8 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Designer.DrawEditor {
 
     using MikroPic.EdaTools.v1.Designer.DrawEditor.Infrastructure;
-    using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
@@ -16,27 +14,6 @@
     /// </summary>
     /// 
     public sealed class VisualGenerator {
-
-        private class RenderTextDrawer: TextDrawer {
-
-            private readonly StreamGeometryContext ctx;
-
-            public RenderTextDrawer(Font font, StreamGeometryContext ctx) : 
-                base(font) {
-
-                this.ctx = ctx;
-            }
-
-            protected override void Trace(PointInt position, bool stroke, bool first) {
-
-                Point p = new Point(position.X, position.Y);
-
-                if (first)
-                    ctx.BeginFigure(p, false, false);
-                else
-                    ctx.LineTo(p, stroke, true);
-            }
-        }
 
         /// <summary>
         /// Clase per visitar la placa i generar les visuals.
@@ -257,8 +234,6 @@
         /// 
         public DrawingVisual CreateVisual() {
 
-            VisualDrawer drawer = new VisualDrawer();
-
             List<string> layerNames = new List<string>();
             layerNames.Add(Layer.BottomNamesName);
             layerNames.Add(Layer.BottomDocumentName);
@@ -282,6 +257,7 @@
 
             layerNames.Add(Layer.ProfileName);
 
+            VisualDrawer drawer = new VisualDrawer();
             DrawingVisual boardVisual = new DrawingVisual();
 
             foreach (string layerName in layerNames) {

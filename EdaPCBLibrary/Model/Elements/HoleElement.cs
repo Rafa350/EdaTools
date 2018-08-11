@@ -14,13 +14,6 @@
         private int drill;
 
         /// <summary>
-        /// Constructor de l'objecte amb els parametres per defecte.
-        /// </summary>
-        /// 
-        public HoleElement() {
-        }
-
-        /// <summary>
         /// Constructir de l'objecte.
         /// </summary>
         /// <param name="position">Pocicio del centre.</param>

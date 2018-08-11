@@ -12,14 +12,6 @@
         private Angle angle;
 
         /// <summary>
-        /// Constructor de l'objecte, amb els parametres per defecte.
-        /// </summary>
-        /// 
-        public ArcElement():
-            base() {
-        }
-
-        /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="startPosition">Punt inicial.</param>

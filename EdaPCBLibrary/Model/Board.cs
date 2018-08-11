@@ -6,6 +6,10 @@
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Identifica la cara de la placa.
+    /// </summary>
+    /// 
     public enum BoardSide {
         Unknown,
         Top,
@@ -16,6 +20,7 @@
     /// <summary>
     /// Clase que representa una placa.
     /// </summary>
+    /// 
     public sealed class Board: IVisitable {
 
         // Capes

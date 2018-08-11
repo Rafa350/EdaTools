@@ -295,8 +295,6 @@
             /// 
             public override void Visit(Part part) {
 
-                bool first;
-
                 currentPart = part;
                 try {
                     writer.WriteStartElement("part");
@@ -313,22 +311,19 @@
 
                     // Escriu la llista de pads.
                     //
-                    first = true;
-                    foreach (PadElement pad in part.Pads) {
-                        Signal signal = board.GetSignal(pad, part, false);
-                        if (signal != null) {
-                            if (first) {
-                                first = false;
-                                writer.WriteStartElement("pads");
+                    if (part.HasPads) {
+                        writer.WriteStartElement("pads");
+                        foreach (PadElement pad in part.Pads) {
+                            Signal signal = board.GetSignal(pad, part, false);
+                            if (signal != null) {
+                                writer.WriteStartElement("pad");
+                                writer.WriteAttribute("name", pad.Name);
+                                writer.WriteAttribute("signal", signal.Name);
+                                writer.WriteEndElement();
                             }
-                            writer.WriteStartElement("pad");
-                            writer.WriteAttribute("name", pad.Name);
-                            writer.WriteAttribute("signal", signal.Name);
-                            writer.WriteEndElement();
                         }
-                    }
-                    if (!first)
                         writer.WriteEndElement();
+                    }
 
                     // Escriu la llista d'atributs.
                     //

@@ -17,19 +17,6 @@
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="block">El bloc associat.</param>
-        /// 
-        public Part(Block block) {
-
-            if (block == null)
-                throw new ArgumentNullException("block");
-
-            this.block = block;
-        }
-
-        /// <summary>
-        /// Constructor de l'objecte.
-        /// </summary>
         /// <param name="block">El component associat.</param>
         /// <param name="name">El nom.</param>
         /// <param name="position">Posicio.</param>
@@ -112,11 +99,8 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            if (attributes != null) {
-                PartAttribute value;
-                if (attributes.TryGetValue(name, out value))
-                    return value;
-            }
+            if ((attributes != null) && attributes.TryGetValue(name, out PartAttribute attribute))
+                return attribute;
 
             return null;
         }
@@ -158,6 +142,9 @@
                 return name;
             }
             set {
+                if (String.IsNullOrEmpty(value))
+                    throw new ArgumentNullException("Part.Name");
+
                 name = value;
             }
         }
@@ -204,13 +191,14 @@
             }
             set {
                 if ((value != BoardSide.Top) && (value != BoardSide.Bottom))
-                    throw new ArgumentOutOfRangeException("side");
+                    throw new ArgumentOutOfRangeException("Part.Side");
+
                 side = value;
             }
         }
 
         /// <summary>
-        /// Obte la coleccio d'elements.
+        /// Enumera els elements.
         /// </summary>
         /// 
         public IEnumerable<Element> Elements {
@@ -220,7 +208,17 @@
         }
 
         /// <summary>
-        /// Obte la llista d'elements que son Pad's
+        /// Indica si conte pads.
+        /// </summary>
+        /// 
+        public bool HasPads {
+            get {
+                return block.HasPads;
+            }
+        }
+
+        /// <summary>
+        /// Enumera els pads
         /// </summary>
         /// 
         public IEnumerable<PadElement> Pads {
@@ -245,6 +243,8 @@
         /// 
         public IEnumerable<PartAttribute> Attributes {
             get {
+                if (attributes == null)
+                    throw new InvalidOperationException("No contiene atributos.");
                 return attributes.Values;
             }
         }

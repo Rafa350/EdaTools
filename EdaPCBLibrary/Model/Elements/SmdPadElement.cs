@@ -16,14 +16,6 @@
         private Ratio roundness;
 
         /// <summary>
-        /// Constructor de l'objecte amb els parametres per defecte.
-        /// </summary>
-        /// 
-        public SmdPadElement():
-            base() {
-        }
-
-        /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="name">Nom del pad.</param>

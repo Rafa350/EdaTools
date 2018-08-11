@@ -33,8 +33,9 @@
             foreach (Element element in block.Elements)
                 element.AcceptVisitor(this);
 
-            foreach (BlockAttribute attribute in block.Attributes)
-                attribute.AcceptVisitor(this);
+            if (block.HasAttributes)
+                foreach (BlockAttribute attribute in block.Attributes)
+                    attribute.AcceptVisitor(this);
 
             this.block = null;
         }
