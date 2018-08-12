@@ -7,7 +7,7 @@
     /// Estructura que representa un punt. Aquesta estructura es inmutable.
     /// </summary>
     /// 
-    public struct PointInt {
+    public struct Point {
 
         private readonly int x;
         private readonly int y;
@@ -18,24 +18,24 @@
         /// <param name="x">Copordinada X</param>
         /// <param name="y">Coordinada Y</param>
         /// 
-        public PointInt(int x, int y) {
+        public Point(int x, int y) {
 
             this.x = x;
             this.y = y;
         }
 
-        public static PointInt Parse(string s) {
+        public static Point Parse(string s) {
 
             return Parse(s, CultureInfo.CurrentCulture);
         }
 
-        public static PointInt Parse(string s, IFormatProvider provider) {
+        public static Point Parse(string s, IFormatProvider provider) {
 
             string[] ss = s.Split(',');
             int x = Int32.Parse(ss[0], provider);
             int y = Int32.Parse(ss[1], provider);
 
-            return new PointInt(x, y);
+            return new Point(x, y);
         }
 
         /// <summary>
@@ -45,9 +45,9 @@
         /// <param name="offsetY">Desplaçament Y</param>
         /// <returns>El nou punt resultant.</returns>
         /// 
-        public PointInt Offset(int offsetX, int offsetY) {
+        public Point Offset(int offsetX, int offsetY) {
 
-            return new PointInt(x + offsetX, y + offsetY);
+            return new Point(x + offsetX, y + offsetY);
         }
 
         public override string ToString() {

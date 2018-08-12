@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using System;
-    using System.Windows.Media;
+    using MikroPic.EdaTools.v1.Geometry;
     
     /// <summary>
     /// Funcio de la capa.
@@ -70,13 +70,6 @@
         private bool isVisible = true;
 
         /// <summary>
-        /// Constructor per defecte.
-        /// </summary>
-        /// 
-        public Layer() {
-        }
-
-        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="name">Nom de la capa.</param>
@@ -86,6 +79,9 @@
         /// <param name="isVisible">Indica si la capa es visible.</param>
         /// 
         public Layer(string name, BoardSide side, LayerFunction function, Color color, bool isVisible = true) {
+
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
 
             this.name = name;
             this.side = side;
@@ -153,6 +149,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna la visibilitat de la capa.
+        /// </summary>
+        /// 
         public bool IsVisible {
             get {
                 return isVisible;

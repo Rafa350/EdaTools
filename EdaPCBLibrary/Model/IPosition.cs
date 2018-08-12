@@ -8,6 +8,6 @@
     /// 
     public interface IPosition {
 
-        PointInt Position { get; set; }
+        Point Position { get; set; }
     }
 }

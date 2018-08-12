@@ -10,7 +10,7 @@
 
         private readonly string name;
         private string value;
-        private PointInt position;
+        private Point position;
         private Angle rotation;
         private int height;
         private TextAlign align;
@@ -41,7 +41,7 @@
             useAlign = false;
         }
 
-        public PartAttribute(string name, PointInt position, Angle rotation, int height, TextAlign align, string value) {
+        public PartAttribute(string name, Point position, Angle rotation, int height, TextAlign align, string value) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -95,7 +95,7 @@
         /// Obte la posicio del atribut.
         /// </summary>
         /// 
-        public PointInt Position {
+        public Point Position {
             get {
                 return position;
             }

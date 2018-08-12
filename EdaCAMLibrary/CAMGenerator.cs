@@ -10,16 +10,36 @@
 
     public sealed class CAMGenerator {
 
+        /// <summary>
+        /// Genera els fitxers CAM
+        /// </summary>
+        /// <param name="board">La placa.</param>
+        /// <param name="folder">La carpeta on deixar el resultat.</param>
+        /// <param name="name">El nom base del fitxer.</param>
+        /// 
         public void Generate(Board board, string folder, string name) {
 
             if (board == null)
                 throw new ArgumentNullException("board");
 
+            GenerateImageGerbers(board, folder, name);
+            GenerateDrillGerbers(board, folder, name);
+            GenerateIPCD(board, folder, name);
+        }
+
+        /// <summary>
+        /// Genera els fitxers gerber d'imatges.
+        /// </summary>
+        /// <param name="board">La placa.</param>
+        /// <param name="folder">La carpeta on deixar el resultat.</param>
+        /// <param name="name">El nom base del fitxer.</param>
+        /// 
+        private void GenerateImageGerbers(Board board, string folder, string name) {
+
             string prefix = Path.Combine(folder, name);
             string fileName;
 
             IReadOnlyList<Layer> signalLayers = board.GetSignalLayers();
-
             List<Layer> layers = new List<Layer>();
 
             GerberImageGenerator imageGenerator = new GerberImageGenerator(board);
@@ -93,6 +113,22 @@
                     imageGenerator.GenerateContent(writer, layers, GerberImageGenerator.ImageType.Profile);
                 }
             }
+        }
+
+        /// <summary>
+        /// Genera els fitxers gerber dels forats.
+        /// </summary>
+        /// <param name="board">La placa.</param>
+        /// <param name="folder">La carpeta on deixar el resultat.</param>
+        /// <param name="name">El nom base del fitxer.</param>
+        /// 
+        private void GenerateDrillGerbers(Board board, string folder, string name) {
+
+            string prefix = Path.Combine(folder, name);
+            string fileName;
+
+            IReadOnlyList<Layer> signalLayers = board.GetSignalLayers();
+            List<Layer> layers = new List<Layer>();
 
             GerberDrillGenerator drillGenerator = new GerberDrillGenerator(board);
 
@@ -117,6 +153,19 @@
                     drillGenerator.GenerateContent(writer, layers, GerberDrillGenerator.DrillType.NonPlatedDrill, 1, signalLayers.Count);
                 }
             }
+        }
+
+        /// <summary>
+        /// Genera el fitxer IPCD.
+        /// </summary>
+        /// <param name="board">La placa.</param>
+        /// <param name="folder">La carpeta on deixar el resultat.</param>
+        /// <param name="name">El nom base del fitxer.</param>
+        /// 
+        private void GenerateIPCD(Board board, string folder, string name) {
+
+            string prefix = Path.Combine(folder, name);
+            string fileName;
 
             // Arxiu de conexions per verificacio
             //

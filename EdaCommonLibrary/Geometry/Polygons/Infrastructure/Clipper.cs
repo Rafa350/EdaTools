@@ -4365,6 +4365,7 @@ namespace MikroPic.EdaTools.v1.Geometry.Polygons.Infrastructure {
         //------------------------------------------------------------------------------
     }
 
+    [Serializable]
     class ClipperException : Exception {
         public ClipperException(string description) : base(description) { }
     }

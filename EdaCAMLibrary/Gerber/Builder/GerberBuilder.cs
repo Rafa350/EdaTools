@@ -140,7 +140,7 @@
         /// </summary>
         /// <param name="position">La posicio.</param>
         /// 
-        public void FlashAt(PointInt position) {
+        public void FlashAt(Point position) {
 
             FlashAt(position.X, position.Y);
         }
@@ -173,7 +173,7 @@
         /// </summary>
         /// <param name="position">La posicio.</param>
         /// 
-        public void MoveTo(PointInt position) {
+        public void MoveTo(Point position) {
 
             MoveTo(position.X, position.Y);
         }
@@ -210,7 +210,7 @@
         /// </summary>
         /// <param name="position">La posicio.</param>
         /// 
-        public void LineTo(PointInt position) {
+        public void LineTo(Point position) {
 
             LineTo(position.X, position.Y);
         }
@@ -247,7 +247,7 @@
             }
         }
 
-        public void ArcTo(PointInt point, PointInt center, ArcDirection direction, ArcQuadrant quadrant = ArcQuadrant.Multiple) {
+        public void ArcTo(Point point, Point center, ArcDirection direction, ArcQuadrant quadrant = ArcQuadrant.Multiple) {
 
             ArcTo(point.X, point.Y, center.X, center.Y, direction, quadrant);
         }
@@ -298,9 +298,9 @@
         /// </summary>
         /// <param name="points">Sequencia de punts.</param>
         /// 
-        public void Polyline(IEnumerable<PointInt> points) {
+        public void Polyline(IEnumerable<Point> points) {
 
-            foreach (PointInt point in points)
+            foreach (Point point in points)
                 LineTo(point);
         }
 
@@ -309,11 +309,11 @@
         /// </summary>
         /// <param name="points">Sequencia de punts.</param>
         /// 
-        public void Polygon(IEnumerable<PointInt> points) {
+        public void Polygon(IEnumerable<Point> points) {
 
             bool first = true;
-            PointInt firstPoint = default(PointInt);
-            foreach (PointInt point in points) {
+            Point firstPoint = default(Point);
+            foreach (Point point in points) {
                 if (first) {
                     first = false;
                     firstPoint = point;
@@ -424,11 +424,11 @@
         /// </summary>
         /// <param name="points">La llista de punts que conformen la regio.</param>
         /// 
-        public void Region(IEnumerable<PointInt> points, bool close = false) {
+        public void Region(IEnumerable<Point> points, bool close = false) {
 
             bool first = true;
-            PointInt firstPoint = default(PointInt);
-            foreach (PointInt point in points) {
+            Point firstPoint = default(Point);
+            foreach (Point point in points) {
                 if (first) {
                     first = false;
                     firstPoint = point;

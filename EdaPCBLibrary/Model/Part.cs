@@ -8,7 +8,7 @@
     public sealed class Part: IPosition, IRotation, IName {
 
         private string name;
-        private PointInt position;
+        private Point position;
         private Angle rotation;
         private BoardSide side = BoardSide.Top;
         private readonly Block block;
@@ -23,7 +23,7 @@
         /// <param name="rotation">Angle de rotacio</param>
         /// <param name="side">Indica la cara de la placa.</param>
         /// 
-        public Part(Block block, string name, PointInt position, Angle rotation, BoardSide side = BoardSide.Top) {
+        public Part(Block block, string name, Point position, Angle rotation, BoardSide side = BoardSide.Top) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -163,7 +163,7 @@
         /// Obte o asigna la posicio.
         /// </summary>
         /// 
-        public PointInt Position {
+        public Point Position {
             get {
                 return position;
             }

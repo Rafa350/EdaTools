@@ -8,7 +8,7 @@
     /// 
     public sealed class Polygon {
 
-        private readonly PointInt[] points;
+        private readonly Point[] points;
         private readonly Polygon[] childs;
 
         /// <summary>
@@ -16,7 +16,7 @@
         /// </summary>
         /// <param name="points">Llista de punts.</param>
         /// 
-        public Polygon(params PointInt[] points) {
+        public Polygon(params Point[] points) {
 
             if ((points != null) && (points.Length < 3))
                 throw new InvalidOperationException("Lista de puntos invalida.");
@@ -30,7 +30,7 @@
         /// <param name="points">Plista de punts.</param>
         /// <param name="childs">Llista de fills.</param>
         /// 
-        public Polygon(PointInt[] points, params Polygon[] childs) {
+        public Polygon(Point[] points, params Polygon[] childs) {
 
             if ((points != null) && (points.Length < 3))
                 throw new InvalidOperationException("Lista de puntos invalida.");
@@ -63,12 +63,12 @@
         /// </summary>
         /// <returns>La nova llista de punts.</returns>
         /// 
-        public PointInt[] ClonePoints() {
+        public Point[] ClonePoints() {
 
             if (points == null)
                 return null;
             else {
-                PointInt[] clonedPoints = new PointInt[points.Length];
+                Point[] clonedPoints = new Point[points.Length];
                 points.CopyTo(clonedPoints, 0);
                 return clonedPoints;
             }
@@ -107,10 +107,10 @@
         /// Obte el bounding-box del poligon.
         /// </summary>
         /// 
-        public RectInt BoundingBox {
+        public Rect BoundingBox {
             get {
                 if (points == null)
-                    return new RectInt(0, 0, 0, 0);
+                    return new Rect(0, 0, 0, 0);
 
                 else {
                     int minX = Int32.MaxValue;
@@ -131,7 +131,7 @@
                             maxY = points[i].Y;
                     }
 
-                    return new RectInt(minX, minY, maxX - minX, maxY - minY);
+                    return new Rect(minX, minY, maxX - minX, maxY - minY);
                 }
             }
         }
@@ -140,7 +140,7 @@
         /// Obte els punts del poligon.
         /// </summary>
         /// 
-        public PointInt[] Points {
+        public Point[] Points {
             get {
                 return points;
             }

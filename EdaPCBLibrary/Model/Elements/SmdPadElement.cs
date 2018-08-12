@@ -11,7 +11,7 @@
     /// </summary>
     public sealed class SmdPadElement: PadElement, IRotation {
 
-        private SizeInt size;
+        private Size size;
         private Angle rotation;
         private Ratio roundness;
 
@@ -24,7 +24,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="roundness">Percentatge d'arrodoniment de les cantonades.</param>
         /// 
-        public SmdPadElement(string name, PointInt position, SizeInt size, Angle rotation, Ratio roundness) :
+        public SmdPadElement(string name, Point position, Size size, Angle rotation, Ratio roundness) :
             base(name, position) {
 
             this.size = size;
@@ -50,7 +50,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            PointInt[] points = PolygonBuilder.BuildRectangle(Position, Size, Radius, rotation);
+            Point[] points = PolygonBuilder.BuildRectangle(Position, Size, Radius, rotation);
             return new Polygon(points);
         }
 
@@ -63,9 +63,9 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            PointInt[] points = PolygonBuilder.BuildRectangle(
+            Point[] points = PolygonBuilder.BuildRectangle(
                 Position,
-                new SizeInt(
+                new Size(
                     size.Width + spacing + spacing, 
                     size.Height + spacing + spacing), 
                 Radius + spacing, 
@@ -87,7 +87,7 @@
             Polygon thermal = new Polygon(
                 PolygonBuilder.BuildCross(
                     Position,
-                    new SizeInt(
+                    new Size(
                         size.Width + spacing + spacing,
                         size.Height + spacing + spacing),
                     width,
@@ -106,13 +106,13 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override RectInt GetBoundingBox(BoardSide side) {
+        public override Rect GetBoundingBox(BoardSide side) {
 
             double a = rotation.Radiants;
             int w = (int) (size.Width * Math.Cos(a) + size.Height * Math.Sin(a));
             int h = (int) (size.Width * Math.Sin(a) + size.Height * Math.Cos(a));
 
-            return new RectInt(Position.X - (w >> 1), Position.Y - (h >> 1), w, h);
+            return new Rect(Position.X - (w >> 1), Position.Y - (h >> 1), w, h);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@
         /// Obte o asigna el tamany del pad.
         /// </summary>
         /// 
-        public SizeInt Size {
+        public Size Size {
             get {
                 return size;
             }

@@ -10,7 +10,7 @@
     /// </summary>
     public sealed class HoleElement : Element, IPosition {
 
-        private PointInt position;
+        private Point position;
         private int drill;
 
         /// <summary>
@@ -19,7 +19,7 @@
         /// <param name="position">Pocicio del centre.</param>
         /// <param name="drill">Diametre del forat.</param>
         /// 
-        public HoleElement(PointInt position, int drill) {
+        public HoleElement(Point position, int drill) {
 
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException("drill");
@@ -46,7 +46,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            PointInt[] points = PolygonBuilder.BuildCircle(position, drill / 2);
+            Point[] points = PolygonBuilder.BuildCircle(position, drill / 2);
             return new Polygon(points);
         }
 
@@ -59,7 +59,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            PointInt[] points = PolygonBuilder.BuildCircle(position, (drill / 2) + spacing);
+            Point[] points = PolygonBuilder.BuildCircle(position, (drill / 2) + spacing);
             return new Polygon(points);
         }
 
@@ -69,16 +69,16 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override RectInt GetBoundingBox(BoardSide side) {
+        public override Rect GetBoundingBox(BoardSide side) {
 
-            return new RectInt(position.X - drill / 2, position.Y - drill / 2, drill, drill);
+            return new Rect(position.X - drill / 2, position.Y - drill / 2, drill, drill);
         }
 
         /// <summary>
         ///  Obte o asigna la posicio del centre del cercle.
         /// </summary>
         /// 
-        public PointInt Position {
+        public Point Position {
             get {
                 return position;
             }

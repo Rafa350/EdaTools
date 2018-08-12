@@ -11,8 +11,8 @@
     /// 
     public sealed class RectangleElement: Element, IPosition, ISize, IRotation {
 
-        private PointInt position;
-        private SizeInt size;
+        private Point position;
+        private Size size;
         private Angle rotation;
         private Ratio roundness;
         private int thickness;
@@ -28,7 +28,7 @@
         /// <param name="thickness">Amplada de linia. Si es zero, es un rectangle ple.</param>
         /// <param name="filled">True indica si cal omplir el rectangle.</param>
         /// 
-        public RectangleElement(PointInt position, SizeInt size, Ratio roundness, Angle rotation, int thickness, bool filled) :
+        public RectangleElement(Point position, Size size, Ratio roundness, Angle rotation, int thickness, bool filled) :
             base() {
 
             this.position = position;
@@ -58,15 +58,15 @@
         public override Polygon GetPolygon(BoardSide side) {
 
             if (thickness == 0) {
-                PointInt[] points = PolygonBuilder.BuildRectangle(position, size, Radius, rotation);
+                Point[] points = PolygonBuilder.BuildRectangle(position, size, Radius, rotation);
                 return new Polygon(points);
             }
             else {
-                SizeInt outerSize = new SizeInt(size.Width + thickness, size.Height + thickness);
-                PointInt[] outerPoints = PolygonBuilder.BuildRectangle(position, outerSize, Radius, rotation);
+                Size outerSize = new Size(size.Width + thickness, size.Height + thickness);
+                Point[] outerPoints = PolygonBuilder.BuildRectangle(position, outerSize, Radius, rotation);
 
-                SizeInt innerSize = new SizeInt(size.Width - thickness, size.Height - thickness);
-                PointInt[] innerPoints = PolygonBuilder.BuildRectangle(position, innerSize, Math.Max(0, Radius - thickness), rotation);
+                Size innerSize = new Size(size.Width - thickness, size.Height - thickness);
+                Point[] innerPoints = PolygonBuilder.BuildRectangle(position, innerSize, Math.Max(0, Radius - thickness), rotation);
 
                 return new Polygon(outerPoints, new Polygon(innerPoints));
             }
@@ -81,8 +81,8 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            SizeInt outerSize = new SizeInt(size.Width + thickness + spacing * 2, size.Height + thickness + spacing * 2);
-            PointInt[] points = PolygonBuilder.BuildRectangle(position, outerSize, Radius, rotation);
+            Size outerSize = new Size(size.Width + thickness + spacing * 2, size.Height + thickness + spacing * 2);
+            Point[] points = PolygonBuilder.BuildRectangle(position, outerSize, Radius, rotation);
             return new Polygon(points);
         }
 
@@ -92,20 +92,20 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override RectInt GetBoundingBox(BoardSide side) {
+        public override Rect GetBoundingBox(BoardSide side) {
 
             double a = rotation.Radiants;
             int w = (int) (size.Width * Math.Cos(a) + size.Height * Math.Sin(a));
             int h = (int) (size.Width * Math.Sin(a) + size.Height * Math.Cos(a));
 
-            return new RectInt(position.X - (w / 2), position.Y - (h / 2), w, h);
+            return new Rect(position.X - (w / 2), position.Y - (h / 2), w, h);
         }
 
         /// <summary>
         ///  Obte o asigna la posicio del centre geometric del rectangle.
         /// </summary>
         /// 
-        public PointInt Position {
+        public Point Position {
             get {
                 return position;
             }
@@ -118,7 +118,7 @@
         /// Obte o asigna el tamany del rectangle.
         /// </summary>
         /// 
-        public SizeInt Size {
+        public Size Size {
             get {
                 return size;
             }

@@ -1,14 +1,13 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
     using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Pcb.Infrastructure.Xml;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.IO.Infrastructure;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
-    using System.Windows.Media;
     using System.Xml;
 
     /// <summary>
@@ -23,7 +22,7 @@
 
             private readonly XmlWriter writer;
             private readonly CultureInfo ci = CultureInfo.InvariantCulture;
-            private Board board;
+            private readonly Board board;
             private Part currentPart = null;
 
             /// <summary>
@@ -231,36 +230,51 @@
                 writer.WriteEndElement();
             }
 
-            public override void Visit(PartAttribute parameter) {
+            /// <summary>
+            /// Visita un objecte de tipus 'PartAttribute'
+            /// </summary>
+            /// <param name="attr">L'objecte a visitar.</param>
+            /// 
+            public override void Visit(PartAttribute attr) {
 
                 writer.WriteStartElement("attribute");
 
-                writer.WriteAttribute("name", parameter.Name);
-                writer.WriteAttribute("value", parameter.Value);
-                if (!parameter.IsVisible)
-                    writer.WriteAttribute("visible", parameter.IsVisible);
-                if (parameter.UsePosition)
-                    writer.WriteAttribute("position", FormatPoint(parameter.Position));
-                if (parameter.UseRotation)
-                    writer.WriteAttribute("rotation", FormatAngle(parameter.Rotation));
-                if (parameter.UseHeight)
-                    writer.WriteAttribute("height", FormatNumber(parameter.Height));
-                if (parameter.UseAlign)
-                    writer.WriteAttribute("align", parameter.Align);
+                writer.WriteAttribute("name", attr.Name);
+                writer.WriteAttribute("value", attr.Value);
+                if (!attr.IsVisible)
+                    writer.WriteAttribute("visible", attr.IsVisible);
+                if (attr.UsePosition)
+                    writer.WriteAttribute("position", FormatPoint(attr.Position));
+                if (attr.UseRotation)
+                    writer.WriteAttribute("rotation", FormatAngle(attr.Rotation));
+                if (attr.UseHeight)
+                    writer.WriteAttribute("height", FormatNumber(attr.Height));
+                if (attr.UseAlign)
+                    writer.WriteAttribute("align", attr.Align);
 
                 writer.WriteEndElement();
             }
 
-            public override void Visit(BlockAttribute parameter) {
+            /// <summary>
+            /// Visita un objecte de tipus 'BlockAttribute'
+            /// </summary>
+            /// <param name="attr">L'objecte a visitar.</param>
+            /// 
+            public override void Visit(BlockAttribute attr) {
 
                 writer.WriteStartElement("attribute");
 
-                writer.WriteAttribute("name", parameter.Name);
-                writer.WriteAttribute("value", parameter.Value);
+                writer.WriteAttribute("name", attr.Name);
+                writer.WriteAttribute("value", attr.Value);
 
                 writer.WriteEndElement();
             }
 
+            /// <summary>
+            /// Visita un objecte de tipus 'RegionElement'
+            /// </summary>
+            /// <param name="region">L'objecte a visitar.</param>
+            /// 
             public override void Visit(RegionElement region) {
 
                 writer.WriteStartElement("region");
@@ -289,7 +303,7 @@
             }
 
             /// <summary>
-            /// Visita un objecte Part
+            /// Visita un objecte de tipus 'Part'
             /// </summary>
             /// <param name="part">L'objecte a visitar.</param>
             /// 
@@ -309,20 +323,25 @@
                     if (part.Side != BoardSide.Top)
                         writer.WriteAttribute("side", part.Side);
 
-                    // Escriu la llista de pads.
+                    // Escriu la llista de pads que tenen conexio.
                     //
                     if (part.HasPads) {
-                        writer.WriteStartElement("pads");
+                        bool empty = true;
                         foreach (PadElement pad in part.Pads) {
                             Signal signal = board.GetSignal(pad, part, false);
                             if (signal != null) {
+                                if (empty) {
+                                    empty = false;
+                                    writer.WriteStartElement("pads");
+                                }
                                 writer.WriteStartElement("pad");
                                 writer.WriteAttribute("name", pad.Name);
                                 writer.WriteAttribute("signal", signal.Name);
                                 writer.WriteEndElement();
                             }
                         }
-                        writer.WriteEndElement();
+                        if (!empty)
+                            writer.WriteEndElement();
                     }
 
                     // Escriu la llista d'atributs.
@@ -342,9 +361,9 @@
             }
 
             /// <summary>
-            /// Visita una via.
+            /// Visita un objecte de tipus 'ViaElement'.
             /// </summary>
-            /// <param name="via">La via a visitar.</param>
+            /// <param name="via">L'objecte a visitar.</param>
             /// 
             public override void Visit(ViaElement via) {
 
@@ -369,9 +388,9 @@
             }
 
             /// <summary>
-            /// Visita una capa.
+            /// Visita un objecte de tipus 'Layer'.
             /// </summary>
-            /// <param name="layer">La capa a visitar.</param>
+            /// <param name="layer">L'objecte a visitar.</param>
             /// 
             public override void Visit(Layer layer) {
 
@@ -388,9 +407,9 @@
             }
 
             /// <summary>
-            /// Visita una senyal.
+            /// Visita un objecte de tipous 'Signal'.
             /// </summary>
-            /// <param name="signal">La senyal a visitar.</param>
+            /// <param name="signal">L'objecte a visitar.</param>
             /// 
             public override void Visit(Signal signal) {
 
@@ -404,9 +423,9 @@
             }
 
             /// <summary>
-            /// Visita un bloc
+            /// Visita un objecte de tipus 'Block'
             /// </summary>
-            /// <param name="block">El bloc a visitar.</param>
+            /// <param name="block">E'objecte a visitar.</param>
             /// 
             public override void Visit(Block block) {
 
@@ -516,7 +535,7 @@
             /// <param name="point">El valor del punt.</param>
             /// <returns>El valor formatejat.</returns>
             /// 
-            private static string FormatPoint(PointInt point) {
+            private static string FormatPoint(Point point) {
 
                 return String.Format(
                     "{0}, {1}",
@@ -530,7 +549,7 @@
             /// <param name="size">El tamany a formatejar.</param>
             /// <returns>El valor formatejat.</returns>
             /// 
-            private static string FormatSize(SizeInt size) {
+            private static string FormatSize(Size size) {
 
                 return String.Format(
                     "{0}, {1}",

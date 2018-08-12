@@ -3,12 +3,12 @@
     using System;
     using System.Globalization;
 
-    public struct SizeInt {
+    public struct Size {
 
         private readonly int width;
         private readonly int height;
 
-        public SizeInt(int width, int height) {
+        public Size(int width, int height) {
 
             this.width = width;
             this.height = height;

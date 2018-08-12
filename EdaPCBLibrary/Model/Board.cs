@@ -43,7 +43,7 @@
         // Components
         readonly private HashSet<Part> parts = new HashSet<Part>();
 
-        private PointInt position;
+        private Point position;
         private Angle rotation;
 
         /// <summary>
@@ -748,7 +748,7 @@
         /// Obte o asigna la posicio de la placa.
         /// </summary>
         /// 
-        public PointInt Position {
+        public Point Position {
             get {
                 return position;
             }
@@ -762,7 +762,7 @@
         /// Obte el tamany de la placa, definit pel seu contingut.
         /// </summary>
         /// 
-        public SizeInt Size {
+        public Size Size {
             get {
                 Layer layer = GetLayer(Layer.ProfileName, false);
                 if (layer != null) {
@@ -771,7 +771,7 @@
                     int maxX = Int32.MinValue;
                     int maxY = Int32.MinValue;
                     foreach (Element element in GetElements(layer)) {
-                        RectInt r = element.GetBoundingBox(BoardSide.Top);
+                        Rect r = element.GetBoundingBox(BoardSide.Top);
                         if (minX > r.MinX)
                             minX = r.MinX;
                         if (minY > r.MinY)
@@ -782,10 +782,10 @@
                             maxY = r.MaxY;
                     }
 
-                    return new SizeInt(maxX - minX, maxY - minY);
+                    return new Size(maxX - minX, maxY - minY);
                 }
                 else
-                    return new SizeInt(100000000, 100000000);
+                    return new Size(100000000, 100000000);
             }
         }
 

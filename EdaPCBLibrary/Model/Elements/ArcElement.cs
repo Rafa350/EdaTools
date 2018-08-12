@@ -20,7 +20,7 @@
         /// <param name="angle">Angle del arc.</param>
         /// <param name="lineCap">Extrems de linia.</param>
         /// 
-        public ArcElement(PointInt startPosition, PointInt endPosition, int thickness, Angle angle, LineCapStyle lineCap) :
+        public ArcElement(Point startPosition, Point endPosition, int thickness, Angle angle, LineCapStyle lineCap) :
             base(startPosition, endPosition, thickness, lineCap) {
 
             this.angle = angle;
@@ -44,7 +44,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            PointInt[] points = PolygonBuilder.BuildTrace(Center, Radius, StartAngle, angle, Thickness, LineCap == LineCapStyle.Round);
+            Point[] points = PolygonBuilder.BuildTrace(Center, Radius, StartAngle, angle, Thickness, LineCap == LineCapStyle.Round);
             return new Polygon(points);
         }
 
@@ -57,7 +57,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            PointInt[] points =  PolygonBuilder.BuildTrace(Center, Radius, StartAngle, angle, Thickness + (spacing * 2), LineCap == LineCapStyle.Round);
+            Point[] points =  PolygonBuilder.BuildTrace(Center, Radius, StartAngle, angle, Thickness + (spacing * 2), LineCap == LineCapStyle.Round);
             return new Polygon(points);
         }
 
@@ -78,7 +78,7 @@
         /// Obte el centre de l'arc.
         /// </summary>
         /// 
-        public PointInt Center {
+        public Point Center {
             get {
                 return ArcUtils.Center(StartPosition, EndPosition, angle);
             }

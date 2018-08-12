@@ -13,16 +13,16 @@
 
         public struct Segment {
 
-            private PointInt position;
+            private Point position;
             private Angle angle;
 
-            public Segment(PointInt position, Angle angle) {
+            public Segment(Point position, Angle angle) {
 
                 this.position = position;
                 this.angle = angle;
             }
 
-            public PointInt Position {
+            public Point Position {
                 get {
                     return position;
                 }
@@ -104,11 +104,11 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            PointInt firstPoint = new PointInt();
-            PointInt prevPoint = new PointInt();
+            Point firstPoint = new Point();
+            Point prevPoint = new Point();
             Angle angle = Angle.Zero;
 
-            List<PointInt> points = new List<PointInt>();
+            List<Point> points = new List<Point>();
 
             bool first = true;
             foreach (Segment segment in segments) {
@@ -128,7 +128,7 @@
                 // Tram circular
                 //
                 else {
-                    PointInt center = ArcUtils.Center(prevPoint, segment.Position, angle);
+                    Point center = ArcUtils.Center(prevPoint, segment.Position, angle);
                     int radius = ArcUtils.Radius(prevPoint, segment.Position, angle);
                     Angle startAngle = ArcUtils.StartAngle(prevPoint, center);
                     points.AddRange(PolygonBuilder.BuildArc(center, radius, startAngle, angle));
@@ -142,7 +142,7 @@
                 points.Add(firstPoint);
 
             else {
-                PointInt center = ArcUtils.Center(prevPoint, firstPoint, angle);
+                Point center = ArcUtils.Center(prevPoint, firstPoint, angle);
                 int radius = ArcUtils.Radius(prevPoint, firstPoint, angle);
                 Angle startAngle = ArcUtils.StartAngle(prevPoint, center);
                 points.AddRange(PolygonBuilder.BuildArc(center, radius, startAngle, angle, false));
@@ -169,7 +169,7 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override RectInt GetBoundingBox(BoardSide side) {
+        public override Rect GetBoundingBox(BoardSide side) {
 
             throw new NotImplementedException();
         }
@@ -189,7 +189,7 @@
         /// </summary>
         /// <param name="position">Vertex final de la linia</param>
         /// 
-        public void AddLine(PointInt position) {
+        public void AddLine(Point position) {
 
             Add(new Segment(position, Angle.Zero));
         }
@@ -200,7 +200,7 @@
         /// <param name="position">Vertec final del arc.</param>
         /// <param name="angle">Angle del arc.</param>
         /// 
-        public void AddArc(PointInt position, Angle angle) {
+        public void AddArc(Point position, Angle angle) {
 
             Add(new Segment(position, angle));
         }

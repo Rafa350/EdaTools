@@ -26,7 +26,7 @@
             }
         }
 
-        public PointInt Position {
+        public Point Position {
             get {
                 return (attribute != null) && attribute.UsePosition ? attribute.Position : text.Position;
             }

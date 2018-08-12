@@ -10,6 +10,10 @@
     using System.Windows.Media;
     using System.Xml;
 
+    using Color = MikroPic.EdaTools.v1.Geometry.Color;
+    using SysColor = System.Windows.Media.Color;
+    using SysPoint = System.Windows.Point;
+
     /// <summary>
     /// Clase per importar una placa desde Eagle
     /// </summary>
@@ -360,7 +364,7 @@
             //
             int x = ParseNumber(GetAttributeAsString(node, "x"));
             int y = ParseNumber(GetAttributeAsString(node, "y"));
-            PointInt position = new PointInt(x, y);
+            Point position = new Point(x, y);
 
             // Obte l'angle de rotacio
             //
@@ -419,13 +423,13 @@
             //
             int x = ParseNumber(GetAttributeAsString(node, "x"));
             int y = ParseNumber(GetAttributeAsString(node, "y"));
-            PointInt position = new PointInt(x, y);
+            Point position = new Point(x, y);
 
             // Obte el tamany
             //
             int width = ParseNumber(GetAttributeAsString(node, "dx"));
             int height = ParseNumber(GetAttributeAsString(node, "dy"));
-            SizeInt size = new SizeInt(width, height);
+            Size size = new Size(width, height);
 
             // Obte la rotacio
             //
@@ -466,7 +470,7 @@
 
             int x = ParseNumber(GetAttributeAsString(node, "x"));
             int y = ParseNumber(GetAttributeAsString(node, "y"));
-            PointInt position = new PointInt(x, y);
+            Point position = new Point(x, y);
 
             int drill = ParseNumber(GetAttributeAsString(node, "drill"));
 
@@ -519,7 +523,7 @@
             //
             int x = ParseNumber(GetAttributeAsString(node, "x"));
             int y = ParseNumber(GetAttributeAsString(node, "y"));
-            PointInt position = new PointInt(x, y);
+            Point position = new Point(x, y);
 
             // Obte l'angle de rotacio
             //
@@ -554,11 +558,11 @@
 
             int x1 = ParseNumber(GetAttributeAsString(node, "x1"));
             int y1 = ParseNumber(GetAttributeAsString(node, "y1"));
-            PointInt p1 = new PointInt(x1, y1);
+            Point p1 = new Point(x1, y1);
 
             int x2 = ParseNumber(GetAttributeAsString(node, "x2"));
             int y2 = ParseNumber(GetAttributeAsString(node, "y2"));
-            PointInt p2 = new PointInt(x2, y2);
+            Point p2 = new Point(x2, y2);
 
             Angle angle = Angle.Zero;
             if (node.AttributeExists("curve"))
@@ -596,8 +600,8 @@
             int y1 = ParseNumber(GetAttributeAsString(node, "y1"));
             int x2 = ParseNumber(GetAttributeAsString(node, "x2"));
             int y2 = ParseNumber(GetAttributeAsString(node, "y2"));
-            PointInt position = new PointInt((x1 + x2) / 2, (y1 + y2) / 2);
-            SizeInt size = new SizeInt(x2 - x1, y2 - y1);
+            Point position = new Point((x1 + x2) / 2, (y1 + y2) / 2);
+            Size size = new Size(x2 - x1, y2 - y1);
 
             // Obte l'angle de rotacio
             //
@@ -633,7 +637,7 @@
             //
             int x = ParseNumber(GetAttributeAsString(node, "x"));
             int y = ParseNumber(GetAttributeAsString(node, "y"));
-            PointInt position = new PointInt(x, y);
+            Point position = new Point(x, y);
 
             // Obte l'amplada de linia
             //
@@ -683,7 +687,7 @@
                 //
                 int x = ParseNumber(GetAttributeAsString(vertexNode, "x"));
                 int y = ParseNumber(GetAttributeAsString(vertexNode, "y"));
-                PointInt vertex = new PointInt(x, y);
+                Point vertex = new Point(x, y);
 
                 // Obte la curvatura
                 //
@@ -713,7 +717,7 @@
             //
             int x = ParseNumber(GetAttributeAsString(node, "x"));
             int y = ParseNumber(GetAttributeAsString(node, "y"));
-            PointInt position = new PointInt(x, y);
+            Point position = new Point(x, y);
 
             // Obte el diametre del forat
             //
@@ -747,7 +751,7 @@
             //
             int x = ParseNumber(GetAttributeAsString(node, "x"));
             int y = ParseNumber(GetAttributeAsString(node, "y"));
-            PointInt position = new PointInt(x, y);
+            Point position = new Point(x, y);
 
             // Obte l'angle de rotacio i la cara
             //
@@ -763,31 +767,43 @@
 
             Part part = new Part(GetComponent(componentKey), name, position, rotation, side);
 
+            bool hasNameAttribute = false;
+            bool hasValueAttribute = false;
             foreach (XmlNode attrNode in node.SelectNodes("attribute")) {
 
                 PartAttribute parameter = ParseAttributeNode(attrNode);
 
                 // Inicialitza els valor per defecte dels parametres NAME i VALUE
                 //
-                if (parameter.Name == "NAME")
+                if (parameter.Name == "NAME") {
                     parameter.Value = name;
-                else if (parameter.Name == "VALUE")
+                    hasNameAttribute = true;
+                }
+                else if (parameter.Name == "VALUE") {
                     parameter.Value = value;
+                    hasValueAttribute = true;
+                }
 
                 // Corrigeix perque la posicio sigui relativa al component
                 //
-                System.Windows.Point p = new System.Windows.Point(parameter.Position.X, parameter.Position.Y);
+                SysPoint p = new SysPoint(parameter.Position.X, parameter.Position.Y);
 
                 Matrix m = new Matrix();
                 m.RotateAt(-rotation.Degrees / 100, position.X, position.Y);
                 m.Translate(-position.X, -position.Y);
                 p = m.Transform(p);
 
-                parameter.Position = new PointInt((int)p.X, (int)p.Y);
+                parameter.Position = new Point((int)p.X, (int)p.Y);
                 parameter.Rotation = parameter.Rotation - rotation;
 
                 part.AddAttribute(parameter);
             }
+
+            if (!hasNameAttribute)
+                part.AddAttribute(new PartAttribute("NAME", name, true));
+            
+            if (!hasValueAttribute) 
+                part.AddAttribute(new PartAttribute("VALUE", value, true));
 
             return part;
         }
@@ -812,7 +828,7 @@
             if (node.AttributeExists("x")) {
                 int x = ParseNumber(GetAttributeAsString(node, "x"));
                 int y = ParseNumber(GetAttributeAsString(node, "y"));
-                attribute.Position = new PointInt(x, y);
+                attribute.Position = new Point(x, y);
             }
 
             // Obte l'angle de rotacio
@@ -936,7 +952,7 @@
         /// 
         private Color GetLayerColor(int layerNum) {
 
-            Color color = Colors.White;
+            SysColor color = Colors.White;
 
             switch (layerNum) {
                 case 1: // Top signal
@@ -950,7 +966,7 @@
                     break;
 
                 case 17: // Pads
-                    color = Color.FromRgb(234, 161, 64);
+                    color = SysColor.FromRgb(234, 161, 64);
                     break;
 
                 case 18: // Vias
@@ -1001,12 +1017,12 @@
 
                 case 51: // Top document
                 case 52: // Bottom document
-                    color = Color.FromRgb(160, 160, 160);
+                    color = SysColor.FromRgb(160, 160, 160);
                     color.ScA = 0.80f;
                     break;
             }
 
-            return color;
+            return new Color(color.A, color.R, color.G, color.B);
         }
 
         /// <summary>

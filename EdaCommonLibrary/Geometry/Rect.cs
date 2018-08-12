@@ -1,29 +1,29 @@
 ﻿namespace MikroPic.EdaTools.v1.Geometry {
 
-    public struct RectInt {
+    public struct Rect {
 
-        private readonly PointInt position;
-        private readonly SizeInt size;
+        private readonly Point position;
+        private readonly Size size;
 
-        public RectInt(int x, int y, int width, int height) {
+        public Rect(int x, int y, int width, int height) {
 
-            position = new PointInt(x, y);
-            size = new SizeInt(width, height);
+            position = new Point(x, y);
+            size = new Size(width, height);
         }
 
-        public RectInt(PointInt position, SizeInt size) {
+        public Rect(Point position, Size size) {
 
             this.position = position;
             this.size = size;
         }
 
-        public PointInt Position {
+        public Point Position {
             get {
                 return position;
             }
         }
 
-        public SizeInt Size {
+        public Size Size {
             get {
                 return size;
             }

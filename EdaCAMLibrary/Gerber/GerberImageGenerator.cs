@@ -494,8 +494,8 @@
 
                 // Calcula les coordinades, mesures, rotacions, etc
                 //
-                PointInt startPosition = line.StartPosition;
-                PointInt endPosition = line.EndPosition;
+                Point startPosition = line.StartPosition;
+                Point endPosition = line.EndPosition;
                 if (Part != null) {
                     Transformation t = Part.GetLocalTransformation();
                     startPosition = t.ApplyTo(startPosition);
@@ -522,9 +522,9 @@
 
                 // Calcula les coordinades, mesures, rotacions, etc
                 //
-                PointInt startPosition = arc.StartPosition;
-                PointInt endPosition = arc.EndPosition;
-                PointInt center = arc.Center;
+                Point startPosition = arc.StartPosition;
+                Point endPosition = arc.EndPosition;
+                Point center = arc.Center;
                 if (Part != null) {
                     Transformation t = Part.GetLocalTransformation();
                     startPosition = t.ApplyTo(startPosition);
@@ -559,7 +559,7 @@
 
                     // Calcula les coordinades, mesures, rotacions, etc
                     //
-                    PointInt position = rectangle.Position;
+                    Point position = rectangle.Position;
                     Angle rotation = rectangle.Rotation;
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
@@ -585,7 +585,7 @@
                     // Obte el poligon
                     //
                     Polygon polygon = rectangle.GetPolygon(Layer.Side);
-                    PointInt[] points = polygon.ClonePoints();
+                    Point[] points = polygon.ClonePoints();
 
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
@@ -610,7 +610,7 @@
 
                     // Calcula les coordinades, mesures, rotacions, etc
                     //
-                    PointInt position = circle.Position;
+                    Point position = circle.Position;
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
                         position = t.ApplyTo(position);
@@ -635,7 +635,7 @@
                     // Obte el poligon
                     //
                     Polygon polygon = circle.GetPolygon(Layer.Side);
-                    PointInt[] points = polygon.ClonePoints();
+                    Point[] points = polygon.ClonePoints();
 
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
@@ -662,7 +662,7 @@
                 GerberTextDrawer dr = new GerberTextDrawer(font, gb);
 
                 PartAttributeAdapter paa = new PartAttributeAdapter(Part, text);
-                PointInt position = paa.Position;
+                Point position = paa.Position;
                 if (Part != null) {
                     Transformation t = Part.GetLocalTransformation();
                     position = t.ApplyTo(position);
@@ -711,7 +711,7 @@
 
                 // Calcula les coordinades, mesures, rotacions, etc
                 //
-                PointInt position = pad.Position;
+                Point position = pad.Position;
                 Angle rotation = pad.Rotation;
                 if (Part != null) {
                     rotation += Part.Rotation;
@@ -755,7 +755,7 @@
 
                 // Calcula les coordinades, mesures, rotacions, etc
                 //
-                PointInt position = pad.Position;
+                Point position = pad.Position;
                 Angle rotation = pad.Rotation;
                 if (Part != null) {
                     rotation += Part.Rotation;
@@ -793,7 +793,7 @@
                 this.gb = gb;
             }
 
-            protected override void Trace(PointInt position, bool stroke, bool first) {
+            protected override void Trace(Point position, bool stroke, bool first) {
                 
                 if (first || !stroke)
                     gb.MoveTo(position);

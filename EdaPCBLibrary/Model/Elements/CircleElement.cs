@@ -10,7 +10,7 @@
     /// </summary>
     public sealed class CircleElement: Element, IPosition {
 
-        private PointInt position;
+        private Point position;
         private int radius;
         private int thickness;
         private bool filled;
@@ -23,7 +23,7 @@
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="filled">True si cal omplir el cercle.</param>
         /// 
-        public CircleElement(PointInt position, int radius, int thickness, bool filled) :           
+        public CircleElement(Point position, int radius, int thickness, bool filled) :           
             base() {
 
             this.position = position;
@@ -51,12 +51,12 @@
         public override Polygon GetPolygon(BoardSide side) {
 
             if (thickness == 0) {
-                PointInt[] points = PolygonBuilder.BuildCircle(position, radius);
+                Point[] points = PolygonBuilder.BuildCircle(position, radius);
                 return new Polygon(points);
             }
             else {
-                PointInt[] outerPoints = PolygonBuilder.BuildCircle(position, radius + (thickness / 2));
-                PointInt[] innerPoints = PolygonBuilder.BuildCircle(position, radius - (thickness / 2));
+                Point[] outerPoints = PolygonBuilder.BuildCircle(position, radius + (thickness / 2));
+                Point[] innerPoints = PolygonBuilder.BuildCircle(position, radius - (thickness / 2));
                 return new Polygon(outerPoints, new Polygon(innerPoints));
             }
         }
@@ -70,7 +70,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            PointInt[] points = PolygonBuilder.BuildCircle(position, radius + (thickness / 2) + spacing);
+            Point[] points = PolygonBuilder.BuildCircle(position, radius + (thickness / 2) + spacing);
             return new Polygon(points);
         }
 
@@ -80,17 +80,17 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override RectInt GetBoundingBox(BoardSide side) {
+        public override Rect GetBoundingBox(BoardSide side) {
 
             int r = radius + (thickness / 2);
-            return new RectInt(position.X - r, position.Y - r, r + r, r + r);
+            return new Rect(position.X - r, position.Y - r, r + r, r + r);
         }
 
         /// <summary>
         ///  Obte o asigna la posicio del centre del cercle.
         /// </summary>
         /// 
-        public PointInt Position {
+        public Point Position {
             get {
                 return position;
             }

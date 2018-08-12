@@ -1,6 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Geometry.Fonts {
 
-    using System.Windows;
+    using MikroPic.EdaTools.v1.Geometry;
 
     /// <summary>
     /// Representa els traços que formen la figura del caracter. Aquesta clase
@@ -8,7 +8,7 @@
     /// </summary>
     public struct GlyphTrace {
 
-        private readonly PointInt position;
+        private readonly Geometry.Point position;
         private readonly bool stroke;
 
         /// <summary>
@@ -17,7 +17,7 @@
         /// <param name="position">Posicio final del traç.</param>
         /// <param name="stroke">Tres si es dibuixa el traç fins a la posicio final.</param>.
         /// 
-        public GlyphTrace(PointInt position, bool stroke) {
+        public GlyphTrace(Point position, bool stroke) {
 
             this.position = position;
             this.stroke = stroke;
@@ -27,7 +27,7 @@
         /// Obte la posicio.
         /// </summary>
         /// 
-        public PointInt Position {
+        public Point Position {
             get {
                 return position;
             }

@@ -15,7 +15,7 @@
         /// <param name="angle">Angle d'apertura.</param>
         /// <returns>El centre.</returns>
         /// 
-        public static PointInt Center(PointInt startPosition, PointInt endPosition, Angle angle) {
+        public static Point Center(Point startPosition, Point endPosition, Angle angle) {
 
             double x1 = startPosition.X;
             double y1 = startPosition.Y;
@@ -42,20 +42,20 @@
             double cx = mx + s * (y1 - y2) / d;
             double cy = my + s * (x2 - x1) / d;
 
-            return new PointInt((int)cx, (int)cy);
+            return new Point((int)cx, (int)cy);
         }
 
-        public static Angle StartAngle(PointInt startPosition, PointInt center) {
+        public static Angle StartAngle(Point startPosition, Point center) {
 
             return Angle.FromRadiants(Math.Atan2(startPosition.Y - center.Y, startPosition.X - center.X));
         }
 
-        public static Angle EndAngle(PointInt endPosition, PointInt center) {
+        public static Angle EndAngle(Point endPosition, Point center) {
 
             return Angle.FromRadiants(Math.Atan2(endPosition.Y - center.Y, endPosition.X - center.X));
         }
 
-        public static int Radius(PointInt startPosition, PointInt endPosition, Angle angle) {
+        public static int Radius(Point startPosition, Point endPosition, Angle angle) {
 
             double dx = endPosition.X - startPosition.X;
             double dy = endPosition.Y - startPosition.Y;

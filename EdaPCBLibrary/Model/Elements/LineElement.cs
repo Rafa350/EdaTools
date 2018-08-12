@@ -15,8 +15,8 @@
             Flat
         }
 
-        private PointInt startPosition;
-        private PointInt endPosition;
+        private Point startPosition;
+        private Point endPosition;
         private int thickness;
         private LineCapStyle lineCap = LineCapStyle.Round;
 
@@ -28,7 +28,7 @@
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="lineCap">Forma dels extrems de linia.</param>
         /// 
-        public LineElement(PointInt startPosition, PointInt endPosition, int thickness, LineCapStyle lineCap) :
+        public LineElement(Point startPosition, Point endPosition, int thickness, LineCapStyle lineCap) :
             base() {
 
             if (thickness < 0)
@@ -58,7 +58,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            PointInt[] points = PolygonBuilder.BuildTrace(startPosition, endPosition, thickness, LineCap == LineCapStyle.Round);
+            Point[] points = PolygonBuilder.BuildTrace(startPosition, endPosition, thickness, LineCap == LineCapStyle.Round);
             return new Polygon(points);
         }
 
@@ -71,7 +71,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            PointInt[] points = PolygonBuilder.BuildTrace(startPosition, endPosition, thickness + (spacing * 2), lineCap == LineCapStyle.Round);
+            Point[] points = PolygonBuilder.BuildTrace(startPosition, endPosition, thickness + (spacing * 2), lineCap == LineCapStyle.Round);
             return new Polygon(points);
         }
 
@@ -81,9 +81,9 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override RectInt GetBoundingBox(BoardSide side) {
+        public override Rect GetBoundingBox(BoardSide side) {
 
-            return new RectInt(
+            return new Rect(
                 Math.Min(startPosition.X, endPosition.X) - thickness / 2,
                 Math.Min(startPosition.Y, endPosition.Y) - thickness / 2,
                 Math.Abs(endPosition.X - startPosition.X) + thickness,
@@ -94,7 +94,7 @@
         /// Obte o asigna la posicio inicial.
         /// </summary>
         /// 
-        public PointInt StartPosition {
+        public Point StartPosition {
             get {
                 return startPosition;
             }
@@ -107,7 +107,7 @@
         /// Obte o asigna la posicio final.
         /// </summary>
         /// 
-        public PointInt EndPosition {
+        public Point EndPosition {
             get {
                 return endPosition;
             }

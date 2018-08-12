@@ -33,7 +33,7 @@
         /// <param name="height">Alçada de lletra.</param>
         /// <returns>La llista de glyphs preparats per dibuixar.</returns>
         /// 
-        public IEnumerable<GlyphTrace> Draw(string text, PointInt position, TextAlign align, int height) {
+        public IEnumerable<GlyphTrace> Draw(string text, Point position, TextAlign align, int height) {
 
             List<GlyphTrace> glyphTraces = new List<GlyphTrace>();
 
@@ -102,8 +102,8 @@
                         for (int j = 0; j < glyph.Traces.Length; j++) {
 
                             bool stroke = glyph.Traces[j].Stroke;
-                            PointInt gp = glyph.Traces[j].Position;
-                            PointInt p = new PointInt(
+                            Point gp = glyph.Traces[j].Position;
+                            Point p = new Point(
                                 position.X + ((gp.X + offset + offsetX) * scale),
                                 position.Y + ((gp.Y + offsetY) * scale));
 
@@ -127,7 +127,7 @@
         /// <param name="stroke">True si cal dibuixar, false per nomes moure.</param>
         /// <param name="first">True si es el primer punt.</param>
         /// 
-        protected virtual void Trace(PointInt position, bool stroke, bool first) {
+        protected virtual void Trace(Point position, bool stroke, bool first) {
 
         }
     }

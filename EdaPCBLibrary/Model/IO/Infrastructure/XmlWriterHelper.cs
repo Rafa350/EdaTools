@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Infrastructure.Xml {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO.Infrastructure {
 
     using System;
     using System.Text;

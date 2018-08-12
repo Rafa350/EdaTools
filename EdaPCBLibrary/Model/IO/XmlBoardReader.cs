@@ -3,10 +3,10 @@
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.IO.Infrastructure;
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Windows.Media;
     using System.Xml;
 
     /// <summary>
@@ -112,7 +112,7 @@
             string name = reader.AttributeAsString("name");
             BoardSide side = ParseEnumAttribute("side", BoardSide.Unknown);
             LayerFunction function = ParseEnumAttribute("function", LayerFunction.Unknown);
-            Color color = ParseColorAttribute("color", Colors.Wheat);
+            Color color = ParseColorAttribute("color", new Color(128, 128, 128));
             bool isVisible = ParseBoolAttribute("isVisible", true);
 
             // Crea la capa i l'afeigeig a la placa.
@@ -416,7 +416,7 @@
             // Obte els atributs de l'objecte
             //
             string name = reader.AttributeAsString("name");
-            PointInt position = ParsePointAttribute("position");
+            Point position = ParsePointAttribute("position");
             Angle rotation = ParseAngleAttribute("rotation");
             BoardSide side = ParseEnumAttribute("side", BoardSide.Top);
             string blockName = reader.AttributeAsString("block");
@@ -549,8 +549,8 @@
 
             // Obte els atributs del element
             //
-            PointInt startPosition = ParsePointAttribute("startPosition");
-            PointInt endPosition = ParsePointAttribute("endPosition");
+            Point startPosition = ParsePointAttribute("startPosition");
+            Point endPosition = ParsePointAttribute("endPosition");
             int thickness = ParseNumberAttribute("thickness");
             LineElement.LineCapStyle lineCap = ParseEnumAttribute("lineCap", LineElement.LineCapStyle.Round);
             string[] layerNames = reader.AttributeAsStrings("layers");
@@ -595,8 +595,8 @@
 
             // Obte els atributs de l'element
             //
-            PointInt startPosition = ParsePointAttribute("startPosition");
-            PointInt endPosition = ParsePointAttribute("endPosition");
+            Point startPosition = ParsePointAttribute("startPosition");
+            Point endPosition = ParsePointAttribute("endPosition");
             int thickness = ParseNumberAttribute("thickness");
             Angle angle = ParseAngleAttribute("angle");
             string[] layerNames = reader.AttributeAsStrings("layers");
@@ -640,8 +640,8 @@
 
             // Obte els atributs de l'element.
             //
-            PointInt position = ParsePointAttribute("position");
-            SizeInt size = ParseSizeAttribute("size");
+            Point position = ParsePointAttribute("position");
+            Size size = ParseSizeAttribute("size");
             Angle rotation = ParseAngleAttribute("rotation");
             int thickness = ParseNumberAttribute("thickness");
             bool filled = ParseBoolAttribute("filled", thickness == 0);
@@ -676,7 +676,7 @@
 
             // Obte els atributs de l'element.
             //
-            PointInt position = ParsePointAttribute("position");
+            Point position = ParsePointAttribute("position");
             int radius = ParseNumberAttribute("radius");
             int thickness = ParseNumberAttribute("thickness");
             bool filled = ParseBoolAttribute("filled", thickness == 0);
@@ -754,7 +754,7 @@
 
             // Obte els atributs del segment
             //
-            PointInt position = ParsePointAttribute("position");
+            Point position = ParsePointAttribute("position");
             Angle angle = ParseAngleAttribute("angle");
 
             // Crea el segment i l'afegeix a la regio.
@@ -780,7 +780,7 @@
             // Obte els atributs de l'element
             //
             string name = reader.AttributeAsString("name");
-            PointInt position = ParsePointAttribute("position");
+            Point position = ParsePointAttribute("position");
             int size = ParseNumberAttribute("size");
             Angle rotation = ParseAngleAttribute("rotation");
             int drill = ParseNumberAttribute("drill");
@@ -828,8 +828,8 @@
             // Obte els atributs de l'element.
             //
             string name = reader.AttributeAsString("name");
-            PointInt position = ParsePointAttribute("position");
-            SizeInt size = ParseSizeAttribute("size");
+            Point position = ParsePointAttribute("position");
+            Size size = ParseSizeAttribute("size");
             Angle rotation = ParseAngleAttribute("rotation");
             Ratio roundness = ParseRatioAttribute("roundness");
             string[] layerNames = reader.AttributeAsStrings("layers");
@@ -872,7 +872,7 @@
 
             // Obte els atributs de l'element
             //
-            PointInt position = ParsePointAttribute("position");
+            Point position = ParsePointAttribute("position");
             int size = ParseNumberAttribute("size");
             int drill = ParseNumberAttribute("drill");
             ViaElement.ViaShape shape = ParseEnumAttribute("shape", ViaElement.ViaShape.Circular);
@@ -916,7 +916,7 @@
 
             // Obte els atributs de l'element
             //
-            PointInt position = ParsePointAttribute("position");
+            Point position = ParsePointAttribute("position");
             int drill = ParseNumberAttribute("drill");
             string[] layerNames = reader.AttributeAsStrings("layers");
 
@@ -948,7 +948,7 @@
 
             // Obte els parametres de l'objecte
             //
-            PointInt position = ParsePointAttribute("position");
+            Point position = ParsePointAttribute("position");
             Angle rotation = ParseAngleAttribute("rotation");
             int height = ParseNumberAttribute("height");
             TextAlign align = ParseEnumAttribute("align", TextAlign.TopLeft);
@@ -979,7 +979,7 @@
         /// <param name="name">Nom del atribut.</param>
         /// <returns>El valor de l'atribut.</returns>
         /// 
-        private PointInt ParsePointAttribute(string name) {
+        private Point ParsePointAttribute(string name) {
 
             string s = reader.AttributeAsString(name);
 
@@ -987,7 +987,7 @@
             double x = XmlConvert.ToDouble(ss[0]);
             double y = XmlConvert.ToDouble(ss[1]);
 
-            return new PointInt((int)(x * 1000000.0), (int)(y * 1000000.0));
+            return new Point((int)(x * 1000000.0), (int)(y * 1000000.0));
         }
 
         /// <summary>
@@ -996,7 +996,7 @@
         /// <param name="name">El nom de l'atribut.</param>
         /// <returns>El valor de l'atribut.</returns>
         /// 
-        private SizeInt ParseSizeAttribute(string name) {
+        private Size ParseSizeAttribute(string name) {
 
             string s = reader.AttributeAsString(name);
 
@@ -1004,7 +1004,7 @@
             double w = XmlConvert.ToDouble(ss[0]);
             double h = XmlConvert.ToDouble(ss[1]);
 
-            return new SizeInt((int)(w * 1000000.0), (int)(h * 1000000.0));
+            return new Size((int)(w * 1000000.0), (int)(h * 1000000.0));
         }
 
         /// <summary>
@@ -1016,8 +1016,7 @@
         private Ratio ParseRatioAttribute(string name) {
 
             if (reader.AttributeExists(name)) {
-                string s = reader.AttributeAsString(name);
-                double v = XmlConvert.ToDouble(s);
+                double v = reader.AttributeAsDouble(name);
                 return Ratio.FromPercent((int)(v * 1000.0));
             }
             else
@@ -1033,8 +1032,7 @@
         private Angle ParseAngleAttribute(string name) {
 
             if (reader.AttributeExists(name)) {
-                string s = reader.AttributeAsString(name);
-                double v = XmlConvert.ToDouble(s);
+                double v = reader.AttributeAsDouble(name);
                 return Angle.FromDegrees((int)(v * 100.0));
             }
             else
@@ -1051,8 +1049,7 @@
         private int ParseNumberAttribute(string name, int defValue = 0) {
 
             if (reader.AttributeExists(name)) {
-                string s = reader.AttributeAsString(name);
-                double v = XmlConvert.ToDouble(s);
+                double v = reader.AttributeAsDouble(name, defValue);
                 return (int)(v * 1000000.0);
             }
             else
@@ -1070,12 +1067,7 @@
 
             if (reader.AttributeExists(name)) {
                 string s = reader.AttributeAsString(name);
-                string[] ss = s.Split(',');
-                byte a = XmlConvert.ToByte(ss[0]);
-                byte r = XmlConvert.ToByte(ss[1]);
-                byte g = XmlConvert.ToByte(ss[2]);
-                byte b = XmlConvert.ToByte(ss[3]);
-                return Color.FromArgb(a, r, g, b);
+                return Color.Parse(s);
             }
             else
                 return defColor;

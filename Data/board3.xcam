@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cam version="100">
+    <outputs>
+        <output file="$(OutputFolder)$(FileName)_Copper$L1.gbr" type="gerber">
+            <layers>
+                <layer name="Top"/>
+            </layers>
+        </output>
+        <output file="$(OutputFolder)$(FileName)_Copper$L2.gbr" type="gerber">
+            <layers>
+                <layer name="Bottom"/>
+            </layers>
+        </output>
+        <output file="$(OutputFolder)$(FileName)_Legend$Top.gbr" type="gerber">
+            <layers>
+                <layer name="TopPlace"/>
+                <layer name="TopNames"/>
+            </layers>
+        </output>
+        <output file="$(OutputFolder)$(FileName)_Legend$Bottom.gbr" type="gerber">
+            <layers>
+                <layer name="BottomPlace"/>
+                <layer name="BottomNames"/>
+            </layers>
+        </output>
+    </outputs>
+</cam>

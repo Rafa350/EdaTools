@@ -282,7 +282,7 @@
             /// 
             public override void Visit(HoleElement hole) {
 
-                PointInt position = hole.Position;
+                Geometry.Point position = hole.Position;
                 if (Part != null) {
                     Transformation t = Part.GetLocalTransformation();
                     position = t.ApplyTo(position);
@@ -301,7 +301,7 @@
             /// 
             public override void Visit(ViaElement via) {
 
-                PointInt position = via.Position;
+                Geometry.Point position = via.Position;
                 if (Part != null) {
                     Transformation t = Part.GetLocalTransformation();
                     position = t.ApplyTo(position);
@@ -320,7 +320,7 @@
             /// 
             public override void Visit(ThPadElement pad) {
 
-                PointInt position = pad.Position;
+                Geometry.Point position = pad.Position;
                 if (Part != null) {
                     Transformation t = Part.GetLocalTransformation();
                     position = t.ApplyTo(position);

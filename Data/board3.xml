@@ -905,6 +905,8 @@
         <part name="U$3" block="3,6@holes" position="65.5, 4.5">
             <attributes>
                 <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
+                <attribute name="NAME" value="U$3" />
+                <attribute name="VALUE" value="" />
             </attributes>
         </part>
         <part name="JP5" block="1X05-2MM@pinhead200" position="39.25, 8.5">
@@ -1094,6 +1096,7 @@
                 <attribute name="NAME" value="JP6" position="2.75, 0.249999" rotation="-90" height="1" />
                 <attribute name="REFERENCE" value="DF13-4P-1.25H(20)" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="MANUFACTURER" value="Hirose Electric" visible="false" position="0, 0" rotation="0" height="1.778" />
+                <attribute name="VALUE" value="DF13-1X4-SMD-90-E" />
             </attributes>
         </part>
         <part name="JP7" block="1X4-SMD-90-E@hirose-df13" position="3, 40.75" rotation="90">
@@ -1107,11 +1110,14 @@
                 <attribute name="NAME" value="JP7" position="-3.75, 0.499999" rotation="-90" height="1" />
                 <attribute name="MANUFACTURER" value="Hirose Electric" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="DF13-4P-1.25H(20)" visible="false" position="0, 0" rotation="0" height="1.778" />
+                <attribute name="VALUE" value="DF13-1X4-SMD-90-E" />
             </attributes>
         </part>
         <part name="U$6" block="3,6@holes" position="65.5, 63">
             <attributes>
                 <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
+                <attribute name="NAME" value="U$6" />
+                <attribute name="VALUE" value="" />
             </attributes>
         </part>
         <part name="C7" block="C-0805@smd-parts" position="38, 27.75" rotation="270">
@@ -1578,11 +1584,15 @@
         <part name="U$9" block="3,6@holes" position="4.5, 63">
             <attributes>
                 <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
+                <attribute name="NAME" value="U$9" />
+                <attribute name="VALUE" value="" />
             </attributes>
         </part>
         <part name="U$10" block="3,6@holes" position="4.5, 4.5">
             <attributes>
                 <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
+                <attribute name="NAME" value="U$10" />
+                <attribute name="VALUE" value="" />
             </attributes>
         </part>
         <part name="JP3" block="1X5-SMD-90-E@hirose-df13" position="3, 14.875" rotation="90">
@@ -1597,6 +1607,7 @@
                 <attribute name="NAME" value="JP3" position="-4.75, 1.25" rotation="-90" height="1" />
                 <attribute name="MANUFACTURER" value="Hirose Electric" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="DF13-5P-1.25H(20)" visible="false" position="0, 0" rotation="0" height="1.778" />
+                <attribute name="VALUE" value="DF13-1X5-SMD-90-E" />
             </attributes>
         </part>
         <part name="U19" block="SOT89@microchip-analog" position="44, 13.5" rotation="180">
@@ -2017,6 +2028,8 @@
             <attributes>
                 <attribute name="REFERENCE" value="DF11-18DP-2DSA(08)" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="MANUFACTURER" value="Hirose Electric" visible="false" position="0, 0" rotation="0" height="1.778" />
+                <attribute name="NAME" value="JP1" />
+                <attribute name="VALUE" value="DF11-18DP-2DSA" />
             </attributes>
         </part>
         <part name="JP2" block="DF11-16DP-2DSA@hirose-df11" position="49.875, 62.875">
@@ -2041,10 +2054,22 @@
             <attributes>
                 <attribute name="MANUFACTURER" value="Hirose Electric" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="DF11-16DP-2DSA(08)" visible="false" position="0, 0" rotation="0" height="1.778" />
+                <attribute name="NAME" value="JP2" />
+                <attribute name="VALUE" value="DF11-16DP-2DSA" />
             </attributes>
         </part>
-        <part name="U$1" block="CE_7.3MM@logo" position="10, 35" />
-        <part name="U$2" block="ESD_10.00@logo" position="48.5, 20.5" />
+        <part name="U$1" block="CE_7.3MM@logo" position="10, 35">
+            <attributes>
+                <attribute name="NAME" value="U$1" />
+                <attribute name="VALUE" value="" />
+            </attributes>
+        </part>
+        <part name="U$2" block="ESD_10.00@logo" position="48.5, 20.5">
+            <attributes>
+                <attribute name="NAME" value="U$2" />
+                <attribute name="VALUE" value="" />
+            </attributes>
+        </part>
         <part name="R20" block="R-0805@smd-parts" position="68.125, 46" rotation="90">
             <pads>
                 <pad name="1" signal="OUT10" />

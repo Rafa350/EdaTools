@@ -26,6 +26,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>..\bin\x86\Release\</OutputPath>
@@ -45,8 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CAMGenerator.cs" />
-    <Compile Include="DXF\Builder\DXFBuilder.cs" />
-    <Compile Include="DXF\DXFGenerator.cs" />
     <Compile Include="Gerber\ApertureDictionary.cs" />
     <Compile Include="Gerber\Builder\Aperture.cs" />
     <Compile Include="Gerber\Builder\Apertures\ObroundAperture.cs" />
@@ -62,6 +61,8 @@
     <Compile Include="Gerber\Builder\Apertures\RectangleAperture.cs" />
     <Compile Include="Ipcd356\Builder\Ipcd356Builder.cs" />
     <Compile Include="Ipcd356\Ipcd356Generator.cs" />
+    <Compile Include="Model\IO\XmlProjectReader.cs" />
+    <Compile Include="Model\Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

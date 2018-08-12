@@ -12,21 +12,32 @@
     using System.Windows;
     using System.Windows.Media;
 
+    using Color = MikroPic.EdaTools.v1.Geometry.Color;
+    using Size = MikroPic.EdaTools.v1.Geometry.Size;
+    using Rect = MikroPic.EdaTools.v1.Geometry.Rect;
+    using SysColor = System.Windows.Media.Color;
+    using SysSize = System.Windows.Size;
+    using SysPoint = System.Windows.Point;
+    using SysRect = System.Windows.Rect;
+
     internal sealed class VisualDrawer {
 
-        private readonly TextDrawer td;
+        private static readonly TextDrawer td;
         private readonly PenCache penCache;
         private readonly BrushCache brushCache;
+
+        static VisualDrawer() {
+
+            FontFactory ff = FontFactory.Instance;
+            Font font = ff.GetFont("Standard");
+            td = new TextDrawer(font);
+        }
 
         /// <summary>
         /// Contructor del objecte.
         /// </summary>
         /// 
         public VisualDrawer() {
-
-            FontFactory ff = FontFactory.Instance;
-            Font font = ff.GetFont("Standard");
-            td = new TextDrawer(font);
 
             penCache = new PenCache();
             brushCache = new BrushCache();
@@ -43,10 +54,10 @@
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                Point start = new Point(line.StartPosition.X, line.StartPosition.Y);
-                Point end = new Point(line.EndPosition.X, line.EndPosition.Y);
+                SysPoint start = new SysPoint(line.StartPosition.X, line.StartPosition.Y);
+                SysPoint end = new SysPoint(line.EndPosition.X, line.EndPosition.Y);
 
-                Color color = GetLayerColor(layer);
+                SysColor color = GetLayerColor(layer);
                 Pen pen = GetPen(color, line.Thickness, line.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
                 dc.DrawLine(pen, start, end);
             }
@@ -63,12 +74,12 @@
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                Point start = new Point(arc.StartPosition.X, arc.StartPosition.Y);
-                Point end = new Point(arc.EndPosition.X, arc.EndPosition.Y);
-                Size size = new Size(arc.Radius, arc.Radius);
+                SysPoint start = new SysPoint(arc.StartPosition.X, arc.StartPosition.Y);
+                SysPoint end = new SysPoint(arc.EndPosition.X, arc.EndPosition.Y);
+                SysSize size = new SysSize(arc.Radius, arc.Radius);
                 double angle = arc.Angle.Degrees;
 
-                Color color = GetLayerColor(layer);
+                SysColor color = GetLayerColor(layer);
                 Pen pen = GetPen(color, arc.Thickness, arc.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
 
                 StreamGeometry g = new StreamGeometry();
@@ -94,13 +105,13 @@
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                Rect rect = new Rect(
+                SysRect rect = new SysRect(
                     rectangle.Position.X - (rectangle.Size.Width / 2),
                     rectangle.Position.Y - (rectangle.Size.Height / 2),
                     rectangle.Size.Width,
                     rectangle.Size.Height);
 
-                Color color = GetLayerColor(layer);
+                SysColor color = GetLayerColor(layer);
                 Pen pen = rectangle.Thickness == 0 ? null : GetPen(color, rectangle.Thickness, PenLineCap.Round);
                 Brush brush = rectangle.Filled ? GetBrush(color) : null;
                 dc.DrawRoundedRectangle(brush, pen, rect, rectangle.Radius, rectangle.Radius);
@@ -118,10 +129,10 @@
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                Point center = new Point(circle.Position.X, circle.Position.Y);
+                SysPoint center = new SysPoint(circle.Position.X, circle.Position.Y);
                 int radius = circle.Radius;
 
-                Color color = GetLayerColor(layer);
+                SysColor color = GetLayerColor(layer);
                 Pen pen = circle.Thickness == 0 ? null : GetPen(color, circle.Thickness, PenLineCap.Flat);
                 Brush brush = circle.Filled ? GetBrush(color) : null;
                 dc.DrawEllipse(brush, pen, center, radius, radius);
@@ -139,13 +150,13 @@
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                Color color = GetLayerColor(layer);
+                SysColor color = GetLayerColor(layer);
 
                 if (via.Shape == ViaElement.ViaShape.Circular) {
 
                     int size = layer.Side == BoardSide.Inner ? via.InnerSize : via.OuterSize;
                     int radius = (size + via.Drill) / 4;
-                    Point center = new Point(via.Position.X, via.Position.Y);
+                    SysPoint center = new SysPoint(via.Position.X, via.Position.Y);
 
                     Pen pen = GetPen(color, (size - via.Drill) / 2, PenLineCap.Flat);
                     dc.DrawEllipse(Brushes.Black, pen, center, radius, radius);
@@ -174,14 +185,14 @@
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                Rect rect = new Rect(
+                SysRect rect = new SysRect(
                     pad.Position.X - (pad.Size.Width / 2),
                     pad.Position.Y - (pad.Size.Height / 2),
                     pad.Size.Width,
                     pad.Size.Height);
                 int radius = pad.Radius;
 
-                Color color = GetLayerColor(layer);
+                SysColor color = GetLayerColor(layer);
                 Brush brush = GetBrush(color);
                 dc.DrawRoundedRectangle(brush, null, rect, radius, radius);
             }
@@ -198,7 +209,7 @@
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                Color color = GetLayerColor(layer);
+                SysColor color = GetLayerColor(layer);
 
                 if (pad.Shape == ThPadElement.ThPadShape.Circular) {
 
@@ -207,7 +218,7 @@
                         layer.Side == BoardSide.Bottom ? pad.BottomSize :
                         pad.InnerSize;
                     int radius = size / 2;
-                    Point center = new Point(pad.Position.X, pad.Position.Y);
+                    SysPoint center = new SysPoint(pad.Position.X, pad.Position.Y);
 
                     Pen pen = GetPen(color, (size - pad.Drill) / 2, PenLineCap.Flat);
                     dc.DrawEllipse(Brushes.Black, pen, center, radius, radius);
@@ -230,8 +241,8 @@
                         new Typeface("Arial"), 0.5, textBrush);
                     formattedText.TextAlignment = TextAlignment.Center;
 
-                    Point textPosition = new Point(pad.Position.X, pad.Position.Y);
-                    dc.DrawText(formattedText, new Point(textPosition.X, textPosition.Y - formattedText.Height / 2));
+                    SysPoint textPosition = new SysPoint(pad.Position.X, pad.Position.Y);
+                    dc.DrawText(formattedText, new SysPoint(textPosition.X, textPosition.Y - formattedText.Height / 2));
 
                     dc.Pop();
                 }
@@ -251,9 +262,9 @@
             using (DrawingContext dc = visual.RenderOpen()) {
 
                 int radius = hole.Drill / 2;
-                Point center = new Point(hole.Position.X, hole.Position.Y);
+                SysPoint center = new SysPoint(hole.Position.X, hole.Position.Y);
 
-                Color color = GetLayerColor(layer);
+                SysColor color = GetLayerColor(layer);
                 Pen pen = GetPen(color, 0.05 * 1000000.0, PenLineCap.Flat);
                 dc.DrawEllipse(Brushes.Black, pen, center, radius, radius);
             }
@@ -271,19 +282,19 @@
             using (DrawingContext dc = visual.RenderOpen()) {
 
                 PartAttributeAdapter paa = new PartAttributeAdapter(part, text);
-                Point position = new Point(paa.Position.X, paa.Position.Y);
+                SysPoint position = new SysPoint(paa.Position.X, paa.Position.Y);
                 Angle rotation = paa.Rotation;
-                IEnumerable<GlyphTrace> glyphTraces = td.Draw(paa.Value, new PointInt(0, 0), paa.Align, paa.Height);
+                IEnumerable<GlyphTrace> glyphTraces = td.Draw(paa.Value, new v1.Geometry.Point(0, 0), paa.Align, paa.Height);
 
                 Matrix m = new Matrix();
                 m.Translate(position.X, position.Y);
                 m.RotateAt(rotation.Degrees / 100.0, position.X, position.Y);
                 dc.PushTransform(new MatrixTransform(m));
 
-                Color color = GetLayerColor(layer);
+                SysColor color = GetLayerColor(layer);
                 Pen pen = GetPen(color, text.Thickness, PenLineCap.Round);
                 DrawGlyphs(dc, pen, null, glyphTraces);
-                dc.DrawEllipse(Brushes.YellowGreen, null, new Point(0, 0), 0.15 * 1000000.0, 0.15 * 1000000.0);
+                dc.DrawEllipse(Brushes.YellowGreen, null, new SysPoint(0, 0), 0.15 * 1000000.0, 0.15 * 1000000.0);
 
                 dc.Pop();
             }
@@ -304,7 +315,7 @@
                     board.GetRegionPolygon(region, layer, new Transformation()) :
                     region.GetPolygon(layer.Side);
 
-                Color color = GetLayerColor(layer);
+                SysColor color = GetLayerColor(layer);
                 Pen pen = region.Thickness > 0 ? GetPen(color, region.Thickness, PenLineCap.Round) : null;
                 Brush brush = region.Filled ? GetBrush(color) : null;
                 DrawPolygon(dc, pen, brush, polygon);
@@ -317,10 +328,10 @@
         /// <param name="layer">La capa.</param>
         /// <returns>El color.</returns>
         /// 
-        private static Color GetLayerColor(Layer layer) {
+        private static SysColor GetLayerColor(Layer layer) {
 
             Color color = layer.Color;
-            return Color.FromRgb(color.R, color.G, color.B);
+            return SysColor.FromRgb(color.R, color.G, color.B);
         }
 
         /// <summary>
@@ -331,7 +342,7 @@
         /// <param name="lineCap">Forma dels extrems de linia.</param>
         /// <returns>El pen.</returns>
         /// 
-        private Pen GetPen(Color color, double thickness, PenLineCap lineCap) {
+        private Pen GetPen(SysColor color, double thickness, PenLineCap lineCap) {
 
             Brush brush = GetBrush(color);
             return penCache.GetPen(brush, thickness, lineCap);
@@ -343,7 +354,7 @@
         /// <param name="color">El color.</param>
         /// <returns>El brush.</returns>
         /// 
-        private Brush GetBrush(Color color) {
+        private Brush GetBrush(SysColor color) {
 
             return brushCache.GetBrush(color);
         }
@@ -381,7 +392,7 @@
 
                 bool first = true;
                 foreach (GlyphTrace glyphTrace in glyphTraces) {
-                    Point p = new Point(glyphTrace.Position.X, glyphTrace.Position.Y);
+                    SysPoint p = new SysPoint(glyphTrace.Position.X, glyphTrace.Position.Y);
                     if (first) {
                         ctx.BeginFigure(p, false, false);
                         first = false;
@@ -408,14 +419,14 @@
             //
             if (polygon.Points != null) {
 
-                Point p;
-                PointInt[] points = polygon.Points;
+                SysPoint p;
+                v1.Geometry.Point[] points = polygon.Points;
 
-                p = new Point(points[0].X, points[0].Y);
+                p = new SysPoint(points[0].X, points[0].Y);
                 ctx.BeginFigure(p, true, true);
 
                 for (int i = 1; i < points.Length; i++) {
-                    p = new Point(points[i].X, points[i].Y);
+                    p = new SysPoint(points[i].X, points[i].Y);
                     ctx.LineTo(p, true, true);
                 }
             }

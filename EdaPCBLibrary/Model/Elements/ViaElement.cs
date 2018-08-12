@@ -30,7 +30,7 @@
         private int drcInnerSizeMax = 2500000;
         private Ratio drcInnerSizePercent = Ratio.P25;
 
-        private PointInt position;
+        private Point position;
         private int drill;
         private int outerSize = 0;
         private int innerSize = 0;
@@ -45,7 +45,7 @@
         /// <param name="drill">Diametre del forat.</param>
         /// <param name="shape">Forma de la corona.</param>
         /// 
-        public ViaElement(PointInt position, int size, int drill, ViaShape shape) :
+        public ViaElement(Point position, int size, int drill, ViaShape shape) :
             base() {
 
             if (size < 0)
@@ -78,7 +78,7 @@
         /// <param name="spacing">Espaiat.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        private PointInt[] MakePoints(BoardSide side, int spacing) {
+        private Point[] MakePoints(BoardSide side, int spacing) {
 
             int size = side == BoardSide.Inner ? InnerSize : OuterSize;
             int sizeM2 = size * 2;
@@ -93,7 +93,7 @@
                 case ViaShape.Square:
                     return PolygonBuilder.BuildRectangle(
                         position, 
-                        new SizeInt(size + spacingM2, size + spacingM2), 
+                        new Size(size + spacingM2, size + spacingM2), 
                         0, 
                         Angle.FromDegrees(0));
 
@@ -119,8 +119,8 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            PointInt[] points = MakePoints(side, 0);
-            PointInt[] holePoints = PolygonBuilder.BuildCircle(position, drill / 2);
+            Point[] points = MakePoints(side, 0);
+            Point[] holePoints = PolygonBuilder.BuildCircle(position, drill / 2);
             return new Polygon(points, new Polygon(holePoints));
         }
 
@@ -133,7 +133,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            PointInt[] points = MakePoints(side, spacing);
+            Point[] points = MakePoints(side, spacing);
             return new Polygon(points);
         }
 
@@ -143,17 +143,17 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override RectInt GetBoundingBox(BoardSide side) {
+        public override Rect GetBoundingBox(BoardSide side) {
 
             int size = side == BoardSide.Inner ? InnerSize : OuterSize;
-            return new RectInt(position.X - (size / 2), position.Y - (size / 2), size, size);
+            return new Rect(position.X - (size / 2), position.Y - (size / 2), size, size);
         }
 
         /// <summary>
         ///  Obte o asigna la posicio del centre del cercle.
         /// </summary>
         /// 
-        public PointInt Position {
+        public Point Position {
             get {
                 return position;
             }

@@ -26,6 +26,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>..\bin\x86\Release\</OutputPath>
@@ -47,18 +48,19 @@
   <ItemGroup>
     <Compile Include="Geometry\Angle.cs" />
     <Compile Include="Geometry\ArcUtils.cs" />
+    <Compile Include="Geometry\Color.cs" />
     <Compile Include="Geometry\Fonts\Font.cs" />
     <Compile Include="Geometry\Fonts\FontFactory.cs" />
     <Compile Include="Geometry\Fonts\Glyph.cs" />
     <Compile Include="Geometry\Fonts\GlyphTrace.cs" />
-    <Compile Include="Geometry\LineInt.cs" />
-    <Compile Include="Geometry\PointInt.cs" />
+    <Compile Include="Geometry\Line.cs" />
+    <Compile Include="Geometry\Point.cs" />
     <Compile Include="Geometry\Polygons\Infrastructure\Clipper.cs" />
     <Compile Include="Geometry\Polygons\Polygon.cs" />
     <Compile Include="Geometry\Polygons\PolygonProcessor.cs" />
     <Compile Include="Geometry\Ratio.cs" />
-    <Compile Include="Geometry\RectInt.cs" />
-    <Compile Include="Geometry\SizeInt.cs" />
+    <Compile Include="Geometry\Rect.cs" />
+    <Compile Include="Geometry\Size.cs" />
     <Compile Include="Geometry\TextAlign.cs" />
     <Compile Include="Geometry\Fonts\TextDrawer.cs" />
     <Compile Include="Geometry\Transformation.cs" />

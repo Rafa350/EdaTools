@@ -8,6 +8,6 @@
     /// 
     public interface ISize {
 
-        SizeInt Size { get; set; }
+        Size Size { get; set; }
     }
 }

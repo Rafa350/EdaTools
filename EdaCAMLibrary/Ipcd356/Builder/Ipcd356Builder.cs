@@ -49,19 +49,28 @@
             writer.WriteLine();
         }
 
+        /// <summary>
+        /// Declara la versio IPCD.
+        /// </summary>
+        /// 
         public void SetVersion() {
 
             writer.WriteLine("P  VER   IPC-D-356");
         }
 
+        /// <summary>
+        /// Declara el tipus d'imatge.
+        /// </summary>
+        /// 
         public void SetImage() {
 
             writer.WriteLine("P  IMAGE PRIMARY");
         }
 
         /// <summary>
-        /// Selecciona les unitats
+        /// Declara les unitats a utilitzar.
         /// </summary>
+        /// <param name="units">Les unitatas a seleccionar.</param>
         /// 
         public void SetUnits(Units units) {
 
@@ -76,7 +85,15 @@
             }
         }
 
-        public void Conductor(PointInt[] points, int layerNum, int thickness, string netName) {
+        /// <summary>
+        /// Declara un conductor.
+        /// </summary>
+        /// <param name="points">Llista les posicions dels nodes del conductor.</param>
+        /// <param name="layerNum">Numero de capa.</param>
+        /// <param name="thickness">Amplada del conductor.</param>
+        /// <param name="netName">Nom de la xarxa del conductor.</param>
+        /// 
+        public void Conductor(Point[] points, int layerNum, int thickness, string netName) {
 
             if (points == null)
                 throw new ArgumentNullException("points");
@@ -120,10 +137,15 @@
         }
 
         /// <summary>
-        /// Escriu una definicio de pad throug hole
+        /// Declara un pad throug hole
         /// </summary>
+        /// <param name="position">Posicio del pad.</param>
+        /// <param name="drill">Diametre del forat.</param>
+        /// <param name="partId">Identificador del component.</param>
+        /// <param name="padId">Identificador del pad.</param>
+        /// <param name="netName">Nom de la xarxa a la que pertany el pad.</param>
         /// 
-        public void ThPad(PointInt position, int drill, string partId, string padId, string netName) {
+        public void ThPad(Point position, int drill, string partId, string padId, string netName) {
 
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException("drill");
@@ -151,13 +173,13 @@
         /// <summary>
         /// Escriu una definicio de pad smd
         /// </summary>
-        /// <param name="position"></param>
-        /// <param name="access"></param>
-        /// <param name="partId"></param>
-        /// <param name="padId"></param>
-        /// <param name="netName"></param>
+        /// <param name="position">Posicio del pad.</param>
+        /// <param name="access">Capa a la que pertany.</param>
+        /// <param name="partId">Identificador del component.</param>
+        /// <param name="padId">Identificador del pad.</param>
+        /// <param name="netName">Nom de la xarxa a la que pertany el pad.</param>
         /// 
-        public void SmdPad(PointInt position, TestAccess access, string partId, string padId, string netName) {
+        public void SmdPad(Point position, TestAccess access, string partId, string padId, string netName) {
 
             if (String.IsNullOrEmpty(partId))
                 throw new ArgumentNullException("partId");
@@ -182,11 +204,11 @@
         /// <summary>
         /// Escriu una definicio de via
         /// </summary>
-        /// <param name="position"></param>
-        /// <param name="drill"></param>
-        /// <param name="netName"></param>
+        /// <param name="position">Posicio de la via.</param>
+        /// <param name="drill">Diametre del forat.</param>
+        /// <param name="netName">Nom de la arxa a la que pertany la via.</param>
         /// 
-        public void Via(PointInt position, int drill, string netName) {
+        public void Via(Point position, int drill, string netName) {
 
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException("drill");
@@ -204,7 +226,7 @@
         }
 
         /// <summary>
-        /// Escriu el indicador de final de fitxer
+        /// Declara el final de fitxer
         /// </summary>
         /// 
         public void EndFile() {
@@ -237,6 +259,12 @@
             return String.Format("{0}{1:000000}", sign ? '+' : '-', value);
         }
 
+        /// <summary>
+        /// Formateja el numero de capa.
+        /// </summary>
+        /// <param name="layerNum">El numero de capa.</param>
+        /// <returns>La cadena formatejada.</returns>
+        /// 
         private string FormatLayerNum(int layerNum) {
 
             return String.Format("{0:00}", layerNum);

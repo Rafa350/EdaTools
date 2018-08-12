@@ -18,16 +18,16 @@
         /// <param name="capRounded">True si els extrems son arrodinits.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static PointInt[] BuildTrace(PointInt start, PointInt end, int thickness, bool capRounded) {
+        public static Point[] BuildTrace(Point start, Point end, int thickness, bool capRounded) {
 
             int dx = end.X - start.X;
             int dy = end.Y - start.Y;
             Angle angle = Angle.FromRadiants(Math.Atan2(dy, dx));
 
-            PointInt[] a1 = BuildArc(end, thickness / 2, angle + Angle.Deg270, Angle.Deg180);
-            PointInt[] a2 = BuildArc(start, thickness / 2, angle + Angle.Deg90, Angle.Deg180);
+            Point[] a1 = BuildArc(end, thickness / 2, angle + Angle.Deg270, Angle.Deg180);
+            Point[] a2 = BuildArc(start, thickness / 2, angle + Angle.Deg90, Angle.Deg180);
 
-            PointInt[] points = new PointInt[a1.Length + a2.Length];
+            Point[] points = new Point[a1.Length + a2.Length];
             a1.CopyTo(points, 0);
             a2.CopyTo(points, a1.Length);
 
@@ -45,15 +45,15 @@
         /// <param name="capRounded">True si els extrems son arrodonits.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static PointInt[] BuildTrace(PointInt center, int radius, Angle startAngle, Angle angle, int thickness, bool capRounded) {
+        public static Point[] BuildTrace(Point center, int radius, Angle startAngle, Angle angle, int thickness, bool capRounded) {
 
             int innerRadius = radius - (thickness / 2);
             int outerRadius = radius + (thickness / 2);
 
-            PointInt[] a1 = BuildArc(center, outerRadius, startAngle, angle);
-            PointInt[] a2 = BuildArc(center, innerRadius, startAngle + angle, -angle);
+            Point[] a1 = BuildArc(center, outerRadius, startAngle, angle);
+            Point[] a2 = BuildArc(center, innerRadius, startAngle + angle, -angle);
 
-            PointInt[] points = new PointInt[a1.Length + a2.Length];
+            Point[] points = new Point[a1.Length + a2.Length];
             a1.CopyTo(points, 0);
             a2.CopyTo(points, a1.Length);
 
@@ -67,7 +67,7 @@
         /// <param name="radius">Radi.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static PointInt[] BuildCircle(PointInt center, int radius) {
+        public static Point[] BuildCircle(Point center, int radius) {
 
             return BuildPolygon(32, center, radius, Angle.Zero);
         }
@@ -82,7 +82,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static PointInt[] BuildRectangle(PointInt position, SizeInt size, int radius, Angle rotation) {
+        public static Point[] BuildRectangle(Point position, Size size, int radius, Angle rotation) {
 
             int x = position.X;
             int y = position.Y;
@@ -99,26 +99,26 @@
 
             // Rectangle sense cantonades arrodonides
             //
-            PointInt[] points;
+            Point[] points;
             if (radius == 0) {
 
-                points = new PointInt[4];
-                points[0] = new PointInt(x - dx, y + dy);
-                points[1] = new PointInt(x + dx, y + dy);
-                points[2] = new PointInt(x + dx, y - dy);
-                points[3] = new PointInt(x - dx, y - dy);
+                points = new Point[4];
+                points[0] = new Point(x - dx, y + dy);
+                points[1] = new Point(x + dx, y + dy);
+                points[2] = new Point(x + dx, y - dy);
+                points[3] = new Point(x - dx, y - dy);
             }
 
             // Rectangle amb cantonades arrodonides
             //
             else {
 
-                PointInt[] a1 = BuildArc(new PointInt(x + dx, y + dy), radius, Angle.Zero, Angle.Deg90);
-                PointInt[] a2 = BuildArc(new PointInt(x - dx, y + dy), radius, Angle.Deg90, Angle.Deg90);
-                PointInt[] a3 = BuildArc(new PointInt(x - dx, y - dy), radius, Angle.Deg180, Angle.Deg90);
-                PointInt[] a4 = BuildArc(new PointInt(x + dx, y - dy), radius, Angle.Deg270, Angle.Deg90);
+                Point[] a1 = BuildArc(new Point(x + dx, y + dy), radius, Angle.Zero, Angle.Deg90);
+                Point[] a2 = BuildArc(new Point(x - dx, y + dy), radius, Angle.Deg90, Angle.Deg90);
+                Point[] a3 = BuildArc(new Point(x - dx, y - dy), radius, Angle.Deg180, Angle.Deg90);
+                Point[] a4 = BuildArc(new Point(x + dx, y - dy), radius, Angle.Deg270, Angle.Deg90);
 
-                points = new PointInt[a1.Length + a2.Length + a3.Length + a4.Length];
+                points = new Point[a1.Length + a2.Length + a3.Length + a4.Length];
                 a1.CopyTo(points, 0);
                 a2.CopyTo(points, a1.Length);
                 a3.CopyTo(points, a1.Length + a2.Length);
@@ -144,7 +144,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static PointInt[] BuildCross(PointInt position, SizeInt size, int thickness, Angle rotation) {
+        public static Point[] BuildCross(Point position, Size size, int thickness, Angle rotation) {
 
             int dx = size.Width / 2;
             int dy = size.Height / 2;
@@ -168,23 +168,23 @@
             int xMax = x + dx;
             int yMax = y + dy;
 
-            PointInt[] points = new PointInt[12];
+            Point[] points = new Point[12];
 
-            points[0] = new PointInt(xMax, y - dt);
-            points[1] = new PointInt(x + dt,  y - dt);
-            points[2] = new PointInt(x + dt, yMin);
+            points[0] = new Point(xMax, y - dt);
+            points[1] = new Point(x + dt,  y - dt);
+            points[2] = new Point(x + dt, yMin);
 
-            points[3] = new PointInt(x - dt, yMin);
-            points[4] = new PointInt(x - dt, y - dt);
-            points[5] = new PointInt(xMin, y - dt);
+            points[3] = new Point(x - dt, yMin);
+            points[4] = new Point(x - dt, y - dt);
+            points[5] = new Point(xMin, y - dt);
 
-            points[6] = new PointInt(xMin, y + dt);
-            points[7] = new PointInt(x - dt, y + dt);
-            points[8] = new PointInt(x - dt, yMax);
+            points[6] = new Point(xMin, y + dt);
+            points[7] = new Point(x - dt, y + dt);
+            points[8] = new Point(x - dt, yMax);
 
-            points[9] = new PointInt(x + dt, yMax);
-            points[10] = new PointInt(x + dt, y + dt);
-            points[11] = new PointInt(xMax, y + dt);
+            points[9] = new Point(x + dt, yMax);
+            points[10] = new Point(x + dt, y + dt);
+            points[11] = new Point(xMax, y + dt);
 
             // Si es una rotacio arbitraria, fa servir calcul amb matrius
             //
@@ -208,7 +208,7 @@
         /// coincideix amb en numero de segments.
         /// </returns>
         /// 
-        public static PointInt[] BuildPolygon(int sides, PointInt position, int radius, Angle rotation) {
+        public static Point[] BuildPolygon(int sides, Point position, int radius, Angle rotation) {
 
             // Calcula el punt inicial
             //
@@ -223,13 +223,13 @@
 
             // Crea l'array de punts
             //
-            PointInt[] points = new PointInt[sides];
+            Point[] points = new Point[sides];
 
             // Ompla l'array amb els punts calculats.
             //
             for (int i = 0; i < sides; i++) {
 
-                points[i] = new PointInt(
+                points[i] = new Point(
                     (int)x + position.X, 
                     (int)y + position.Y);
 
@@ -253,7 +253,7 @@
         /// el numero de segments mes un.
         /// </returns>
         /// 
-        public static PointInt[] BuildArc(PointInt center, int radius, Angle startAngle, Angle angle, bool discardLast = false) {
+        public static Point[] BuildArc(Point center, int radius, Angle startAngle, Angle angle, bool discardLast = false) {
 
             // Calcula el numero de segments
             //
@@ -281,11 +281,11 @@
 
             // Crea l'array de punts
             //
-            PointInt[] points = new PointInt[numPoints];
+            Point[] points = new Point[numPoints];
 
             for (int i = 0; i < numPoints; i++) {
 
-                points[i] = new PointInt((int)(x + cx), (int)(y + cy));
+                points[i] = new Point((int)(x + cx), (int)(y + cy));
 
                 double tx = x;
                 x = (cos * tx) - (sin * y);

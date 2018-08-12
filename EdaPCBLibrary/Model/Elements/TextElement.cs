@@ -10,7 +10,7 @@
     /// 
     public sealed class TextElement: Element, IPosition, IRotation {
 
-        private PointInt position;
+        private Point position;
         private Angle rotation;
         private int height;
         private int thickness;
@@ -26,7 +26,7 @@
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="align">Alineacio respecte la posicio.</param>
         /// 
-        public TextElement(PointInt position, Angle rotation, int height, int thickness, TextAlign align = TextAlign.MiddleCenter):
+        public TextElement(Point position, Angle rotation, int height, int thickness, TextAlign align = TextAlign.MiddleCenter):
             base() {
 
             if (height <= 0)
@@ -81,7 +81,7 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override RectInt GetBoundingBox(BoardSide side) {
+        public override Rect GetBoundingBox(BoardSide side) {
 
             throw new NotImplementedException();
         }
@@ -90,7 +90,7 @@
         ///  Obte o asigna la posicio del centre del cercle.
         /// </summary>
         /// 
-        public PointInt Position {
+        public Point Position {
             get {
                 return position;
             }

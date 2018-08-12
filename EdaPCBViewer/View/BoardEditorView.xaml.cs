@@ -10,6 +10,8 @@
     using System.Windows.Media;
     using System.Windows.Threading;
 
+    using Point = System.Windows.Point;
+
     public partial class BoardEditorView : UserControl {
 
         public static readonly DependencyProperty BoardProperty;
@@ -79,10 +81,10 @@
 
             if (Board != null) {
 
-                SizeInt boardSize = Board.Size;
+                v1.Geometry.Size boardSize = Board.Size;
                 viewPoint.Reset(
-                    new Size(contentBox.ActualWidth, contentBox.ActualHeight),
-                    new Rect(0, 0, boardSize.Width, boardSize.Height));
+                    new System.Windows.Size(contentBox.ActualWidth, contentBox.ActualHeight),
+                    new System.Windows.Rect(0, 0, boardSize.Width, boardSize.Height));
             }
         }
 
@@ -192,10 +194,10 @@
 
             if (Board != null) {
 
-                SizeInt boardSize = Board.Size;
+                v1.Geometry.Size boardSize = Board.Size;
                 viewPoint.Reset(
-                    new Size(contentBox.ActualWidth, contentBox.ActualHeight),
-                    new Rect(0, 0, boardSize.Width, boardSize.Height));
+                    new System.Windows.Size(contentBox.ActualWidth, contentBox.ActualHeight),
+                    new System.Windows.Rect(0, 0, boardSize.Width, boardSize.Height));
 
                 VisualGenerator vg = new VisualGenerator(Board);
                 DrawingVisual visual = vg.CreateVisual();

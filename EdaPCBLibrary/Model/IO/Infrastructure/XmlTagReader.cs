@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO.Infrastructure {
 
     using System;
     using System.Collections.Generic;
@@ -125,7 +125,7 @@
 
         public override string ToString() {
 
-            return String.Format("{0} '{1}'", isStart ? "Start" : "End", tagName);
+            return String.Format(isStart ? "<{0}>" : "</{0}>", tagName);
         }
 
         /// <summary>
@@ -210,6 +210,24 @@
 
             if (attributes.ContainsKey(name))
                 return XmlConvert.ToInt32(attributes[name]);
+            else
+                return defValue;
+        }
+
+        /// <summary>
+        /// Obte el valor d'un atribut com a double
+        /// </summary>
+        /// <param name="name">Nom de l'atribut.</param>
+        /// <param name="defValue">Valor per defecte.</param>
+        /// <returns>El valor de l'atribut.</returns>
+        /// 
+        public double AttributeAsDouble(string name, double defValue = 0.0) {
+
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            if (attributes.ContainsKey(name))
+                return XmlConvert.ToDouble(attributes[name]);
             else
                 return defValue;
         }

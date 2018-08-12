@@ -1,23 +1,23 @@
 ﻿namespace MikroPic.EdaTools.v1.Geometry {
 
-    public struct LineInt {
+    public struct Line {
 
-        private PointInt start;
-        private PointInt end;
+        private Point start;
+        private Point end;
 
-        public LineInt(PointInt start, PointInt end) {
+        public Line(Point start, Point end) {
 
             this.start = start;
             this.end = end;
         }
 
-        public PointInt Start {
+        public Point Start {
             get {
                 return start;
             }
         }
 
-        public PointInt End {
+        public Point End {
             get {
                 return end;
             }

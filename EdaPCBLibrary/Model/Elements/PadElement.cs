@@ -11,7 +11,7 @@
     public abstract class PadElement : Element, IPosition, IName, IConectable {
 
         private string name;
-        private PointInt position;
+        private Point position;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -19,7 +19,7 @@
         /// <param name="name">Nom del pad.</param>
         /// <param name="position">Posicio.</param>
         /// 
-        public PadElement(string name, PointInt position) :
+        public PadElement(string name, Point position) :
             base() {
 
             this.name = name;
@@ -56,7 +56,7 @@
         ///  Obte o asigna la posicio del centre geometric del pad.
         /// </summary>
         /// 
-        public PointInt Position {
+        public Point Position {
             get {
                 return position;
             }

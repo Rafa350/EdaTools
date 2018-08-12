@@ -145,7 +145,7 @@
             return results;
         }
 
-        public static Polygon CreateFromSegments(IEnumerable<LineInt> lines) {
+        public static Polygon CreateFromSegments(IEnumerable<Line> lines) {
 
             return null;
         }
@@ -179,9 +179,9 @@
         private static Polygon ToPolygon(List<IntPoint> points) {
 
             IntPoint[] srcArray = points.ToArray();
-            PointInt[] dstArray = new PointInt[srcArray.Length];
+            Point[] dstArray = new Point[srcArray.Length];
             for (int i = 0; i < srcArray.Length; i++) 
-                dstArray[i] = new PointInt((int) srcArray[i].X, (int) srcArray[i].Y);
+                dstArray[i] = new Point((int) srcArray[i].X, (int) srcArray[i].Y);
             return new Polygon(dstArray);
         }
 
@@ -193,11 +193,11 @@
         /// 
         private static Polygon ToPolygon(PolyNode polyNode) {
 
-            PointInt[] points;
+            Point[] points;
             if (polyNode.Contour.Count > 0) {
-                points = new PointInt[polyNode.Contour.Count];
+                points = new Point[polyNode.Contour.Count];
                 for (int i = 0; i < polyNode.Contour.Count; i++)
-                    points[i] = new PointInt((int)polyNode.Contour[i].X, (int) polyNode.Contour[i].Y);
+                    points[i] = new Point((int)polyNode.Contour[i].X, (int) polyNode.Contour[i].Y);
             }
             else
                 points = null;

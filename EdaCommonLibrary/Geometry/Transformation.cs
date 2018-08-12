@@ -4,7 +4,7 @@
 
     public struct Transformation {
 
-        private readonly PointInt offset;
+        private readonly Point offset;
         private readonly Angle rotation;
 
         /// <summary>
@@ -13,7 +13,7 @@
         /// <param name="offset">Translacio.</param>
         /// <param name="rotation">Rotacio</param>
         /// 
-        public Transformation(PointInt offset, Angle rotation) {
+        public Transformation(Point offset, Angle rotation) {
 
             this.offset = offset;
             this.rotation = rotation;
@@ -24,7 +24,7 @@
         /// </summary>
         /// <param name="offset">Offset.</param>
         /// 
-        public Transformation(PointInt offset) {
+        public Transformation(Point offset) {
 
             this.offset = offset;
             this.rotation = Angle.Zero;
@@ -37,14 +37,14 @@
         /// 
         public Transformation(Angle rotation) {
 
-            this.offset = new PointInt();
+            this.offset = new Point();
             this.rotation = rotation;
         }
 
-        public PointInt ApplyTo(PointInt point) {
+        public Point ApplyTo(Point point) {
 
             if (rotation.IsZero) 
-                return new PointInt(point.X + offset.X, point.Y + offset.Y);
+                return new Point(point.X + offset.X, point.Y + offset.Y);
 
             else {
                 Matrix m = new Matrix();
@@ -59,16 +59,16 @@
                 x += xadd;
                 y *= m.M22;
                 y += yadd;
-                return new PointInt((int)x, (int)y);
+                return new Point((int)x, (int)y);
             }
         }
 
-        public void ApplyTo(PointInt[] points) {
+        public void ApplyTo(Point[] points) {
 
             if (rotation.IsZero) {
                 if ((offset.X != 0) || (offset.Y != 0))
                     for (int i = 0; i < points.Length; i++)
-                        points[i] = new PointInt(
+                        points[i] = new Point(
                             points[i].X + offset.X, 
                             points[i].Y + offset.Y);
             }
@@ -90,12 +90,12 @@
                     x += xadd;
                     y *= m.M22;
                     y += yadd;
-                    points[i] = new PointInt((int)x, (int)y);
+                    points[i] = new Point((int)x, (int)y);
                 }
             }
         }
 
-        public PointInt Offset {
+        public Point Offset {
             get {
                 return offset;
             }

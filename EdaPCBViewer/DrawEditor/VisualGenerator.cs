@@ -267,7 +267,7 @@
 
                     DrawingVisual layerVisual = new DrawingVisual();
                     boardVisual.Children.Add(layerVisual);
-                    layerVisual.Opacity = layer.Color.ScA;
+                    layerVisual.Opacity = layer.Color.A / 255.0;
 
                     RenderVisitor visitor = new RenderVisitor(board, layer, layerVisual, drawer);
                     visitor.Run();

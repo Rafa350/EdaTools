@@ -39,6 +39,6 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public abstract RectInt GetBoundingBox(BoardSide side);
+        public abstract Rect GetBoundingBox(BoardSide side);
     }
 }

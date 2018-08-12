@@ -43,7 +43,7 @@
         /// <param name="shape">Diametre del forat.</param>
         /// <param name="drill">Forma de la corona.</param>
         /// 
-        public ThPadElement(string name, PointInt position, Angle rotation, int size, ThPadShape shape, int drill):
+        public ThPadElement(string name, Point position, Angle rotation, int size, ThPadShape shape, int drill):
             base(name, position) {
 
             if (size < 0)
@@ -77,7 +77,7 @@
         /// <param name="spacing">Espaiat.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        private PointInt[] MakePoints(BoardSide side, int spacing) {
+        private Point[] MakePoints(BoardSide side, int spacing) {
 
             int size =
                 side == BoardSide.Top ? TopSize :
@@ -93,7 +93,7 @@
                 case ThPadShape.Square:
                     return PolygonBuilder.BuildRectangle(
                         Position,
-                        new SizeInt(size + spacingM2, size + spacingM2),
+                        new Size(size + spacingM2, size + spacingM2),
                         spacing,
                         rotation);
 
@@ -109,7 +109,7 @@
                 case ThPadShape.Oval:
                     return PolygonBuilder.BuildRectangle(
                         Position,
-                        new SizeInt(sizeM2 + spacingM2, size + spacingM2),
+                        new Size(sizeM2 + spacingM2, size + spacingM2),
                         sizeD2 + spacing,
                         rotation);
 
@@ -128,8 +128,8 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            PointInt[] points = MakePoints(side, 0);
-            PointInt[] holePoints = PolygonBuilder.BuildCircle(Position, drill / 2);
+            Point[] points = MakePoints(side, 0);
+            Point[] holePoints = PolygonBuilder.BuildCircle(Position, drill / 2);
             return new Polygon(points, new Polygon(holePoints));
         }
 
@@ -142,7 +142,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            PointInt[] points = MakePoints(side, spacing);
+            Point[] points = MakePoints(side, spacing);
             return new Polygon(points);
         }
 
@@ -160,7 +160,7 @@
             int h = topSize + spacing + spacing;
 
             Polygon pour = GetOutlinePolygon(side, spacing);
-            Polygon thermal = new Polygon(PolygonBuilder.BuildCross(Position, new SizeInt(w, h), width, rotation));
+            Polygon thermal = new Polygon(PolygonBuilder.BuildCross(Position, new Size(w, h), width, rotation));
 
             List<Polygon> childs = new List<Polygon>();
             childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
@@ -175,12 +175,12 @@
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public override RectInt GetBoundingBox(BoardSide side) {
+        public override Rect GetBoundingBox(BoardSide side) {
 
             int w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize);
             int h = topSize;
 
-            return new RectInt(Position.X - (w / 2), Position.Y - (h / 2), w, h);
+            return new Rect(Position.X - (w / 2), Position.Y - (h / 2), w, h);
         }
 
         /// <summary>

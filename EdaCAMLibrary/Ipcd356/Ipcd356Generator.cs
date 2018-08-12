@@ -154,7 +154,7 @@
                     layerNum = 2;
 
                 if (layerNum > 0) { 
-                    PointInt[] points = new PointInt[2];
+                    Point[] points = new Point[2];
                     points[0] = line.StartPosition;
                     points[1] = line.EndPosition;
                     builder.Conductor(points, layerNum, line.Thickness, Signal.Name);
@@ -170,7 +170,7 @@
                     layerNum = 2;
 
                 if (layerNum > 0) {
-                    PointInt[] points = new PointInt[2];
+                    Point[] points = new Point[2];
                     points[0] = arc.StartPosition;
                     points[1] = arc.EndPosition;
                     builder.Conductor(points, layerNum, arc.Thickness, Signal.Name);
@@ -217,7 +217,7 @@
                 if (signal != null) {
 
                     Transformation t = Part.GetLocalTransformation();
-                    PointInt position = t.ApplyTo(pad.Position);
+                    Point position = t.ApplyTo(pad.Position);
 
                     builder.SmdPad(position, TestAccess.Top, Part.Name, pad.Name, signal.Name);
                 }
@@ -229,7 +229,7 @@
                 if (signal != null) {
 
                     Transformation t = Part.GetLocalTransformation();
-                    PointInt position = t.ApplyTo(pad.Position);
+                    Point position = t.ApplyTo(pad.Position);
 
                     builder.ThPad(position, pad.Drill, Part.Name, pad.Name, signal.Name);
                 }

@@ -97,7 +97,7 @@
         /// <param name="point">El valor del punt.</param>
         /// <returns>El valor formatejat.</returns>
         /// 
-        private static string FormatPoint(PointInt point) {
+        private static string FormatPoint(Point point) {
 
             return String.Format(
                 "{0}, {1}",
