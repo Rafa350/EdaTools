@@ -1,19 +1,14 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO.Infrastructure {
+﻿namespace MikroPic.EdaTools.v1.Xml {
 
     using System;
     using System.Collections.Generic;
-    using System.IO;
-    using System.Reflection;
     using System.Xml;
-    using System.Xml.Schema;
-    
+
     /// <summary>
     /// Clase per lleigir un fitxer XML tag a tag de forma sequencial.
     /// </summary>
     /// 
-    internal sealed class XmlTagReader {
-
-        private const string schemaResourceName = "";
+    public sealed class XmlReaderAdapter {
 
         private readonly XmlReader reader;
         private readonly IDictionary<string, string> attributes = new Dictionary<string, string>();
@@ -21,36 +16,12 @@
         private bool isEmpty;
         private bool isStart;
 
-        public XmlTagReader(Stream stream) {
-
-            if (stream == null)
-                throw new ArgumentNullException("stream");
-
-            /*Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(schemaResourceName);
-            if (resourceStream == null)
-                throw new Exception(String.Format("No se encontro el recurso '{0}'", schemaResourceName));
-            XmlSchema schema = XmlSchema.Read(resourceStream, null);
-            */
-            XmlReaderSettings settings = new XmlReaderSettings();
-            settings.IgnoreProcessingInstructions = true;
-            settings.IgnoreWhitespace = true;
-            settings.IgnoreComments = true;
-            settings.CloseInput = false;
-            //settings.ValidationType = ValidationType.Schema;
-            //settings.Schemas.Add(schema);
-            settings.MaxCharactersInDocument = 1000000;
-            settings.ConformanceLevel = ConformanceLevel.Document;
-
-            reader = XmlTextReader.Create(stream, settings);
-            isEmpty = false;
-        }
-
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="reader">El lector XML.</param>
         /// 
-        public XmlTagReader(XmlReader reader) {
+        public XmlReaderAdapter(XmlReader reader) {
 
             if (reader == null)
                 throw new ArgumentNullException("reader");
@@ -262,12 +233,6 @@
         public bool IsStart {
             get {
                 return isStart;
-            }
-        }
-
-        public bool IsEnd {
-            get {
-                return !isStart;
             }
         }
 

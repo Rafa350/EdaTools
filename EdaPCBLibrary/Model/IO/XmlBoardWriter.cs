@@ -1,9 +1,10 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
     using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-    using MikroPic.EdaTools.v1.Pcb.Model.IO.Infrastructure;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
+    using MikroPic.EdaTools.v1.Xml;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
@@ -20,7 +21,7 @@
 
         private class Visitor : DefaultVisitor {
 
-            private readonly XmlWriter writer;
+            private readonly XmlWriterAdapter wr;
             private readonly CultureInfo ci = CultureInfo.InvariantCulture;
             private readonly Board board;
             private Part currentPart = null;
@@ -35,7 +36,7 @@
             public Visitor(Board board, XmlWriter writer) {
 
                 this.board = board;
-                this.writer = writer;
+                wr = new XmlWriterAdapter(writer);
             }
 
             /// <summary>
@@ -54,21 +55,21 @@
             /// 
             public override void Visit(LineElement line) {
 
-                writer.WriteStartElement("line");
+                wr.WriteStartElement("line");
 
-                writer.WriteAttribute("layers", GetLayerNames(line));
-                writer.WriteAttribute("startPosition", FormatPoint(line.StartPosition));
-                writer.WriteAttribute("endPosition", FormatPoint(line.EndPosition));
+                wr.WriteAttribute("layers", GetLayerNames(line));
+                wr.WriteAttribute("startPosition", line.StartPosition);
+                wr.WriteAttribute("endPosition", line.EndPosition);
                 if (line.Thickness > 0)
-                    writer.WriteAttribute("thickness", FormatNumber(line.Thickness));
+                    wr.WriteAttribute("thickness", FormatNumber(line.Thickness));
                 if (line.LineCap != LineElement.LineCapStyle.Round)
-                    writer.WriteAttribute("lineCap", line.LineCap);
+                    wr.WriteAttribute("lineCap", line.LineCap);
 
                 Signal signal = board.GetSignal(line, currentPart, false);
                 if (signal != null)
-                    writer.WriteAttribute("signal", signal.Name);
+                    wr.WriteAttribute("signal", signal.Name);
 
-                writer.WriteEndElement();
+                wr.WriteEndElement();
             }
 
             /// <summary>
@@ -78,22 +79,22 @@
             /// 
             public override void Visit(ArcElement arc) {
 
-                writer.WriteStartElement("arc");
+                wr.WriteStartElement("arc");
 
-                writer.WriteAttribute("layers", GetLayerNames(arc));
-                writer.WriteAttribute("startPosition", FormatPoint(arc.StartPosition));
-                writer.WriteAttribute("endPosition", FormatPoint(arc.EndPosition));
-                writer.WriteAttribute("angle", FormatAngle(arc.Angle));
+                wr.WriteAttribute("layers", GetLayerNames(arc));
+                wr.WriteAttribute("startPosition", arc.StartPosition);
+                wr.WriteAttribute("endPosition", arc.EndPosition);
+                wr.WriteAttribute("angle", arc.Angle);
                 if (arc.Thickness > 0)
-                    writer.WriteAttribute("thickness", FormatNumber(arc.Thickness));
+                    wr.WriteAttribute("thickness", FormatNumber(arc.Thickness));
                 if (arc.LineCap != LineElement.LineCapStyle.Round)
-                    writer.WriteAttribute("lineCap", arc.LineCap);
+                    wr.WriteAttribute("lineCap", arc.LineCap);
 
                 Signal signal = board.GetSignal(arc, currentPart, false);
                 if (signal != null)
-                    writer.WriteAttribute("signal", signal.Name);
+                    wr.WriteAttribute("signal", signal.Name);
 
-                writer.WriteEndElement();
+                wr.WriteEndElement();
             }
 
             /// <summary>
@@ -103,20 +104,20 @@
             /// 
             public override void Visit(RectangleElement rectangle) {
 
-                writer.WriteStartElement("rectangle");
+                wr.WriteStartElement("rectangle");
 
-                writer.WriteAttribute("layers", GetLayerNames(rectangle));
-                writer.WriteAttribute("position", FormatPoint(rectangle.Position));
-                writer.WriteAttribute("size", FormatSize(rectangle.Size));
+                wr.WriteAttribute("layers", GetLayerNames(rectangle));
+                wr.WriteAttribute("position", rectangle.Position);
+                wr.WriteAttribute("size", rectangle.Size);
                 if (!rectangle.Rotation.IsZero)
-                    writer.WriteAttribute("rotation", FormatAngle(rectangle.Rotation));
+                    wr.WriteAttribute("rotation", rectangle.Rotation);
                 if (rectangle.Thickness > 0) {
-                    writer.WriteAttribute("thickness", FormatNumber(rectangle.Thickness));
+                    wr.WriteAttribute("thickness", FormatNumber(rectangle.Thickness));
                     if (rectangle.Filled)
-                        writer.WriteAttribute("filled", "true");
+                        wr.WriteAttribute("filled", "true");
                 }
 
-                writer.WriteEndElement();
+                wr.WriteEndElement();
             }
 
             /// <summary>
@@ -126,18 +127,18 @@
             /// 
             public override void Visit(CircleElement circle) {
 
-                writer.WriteStartElement("circle");
+                wr.WriteStartElement("circle");
 
-                writer.WriteAttribute("layers", GetLayerNames(circle));
-                writer.WriteAttribute("position", FormatPoint(circle.Position));
-                writer.WriteAttribute("radius", FormatNumber(circle.Radius));
+                wr.WriteAttribute("layers", GetLayerNames(circle));
+                wr.WriteAttribute("position", circle.Position);
+                wr.WriteAttribute("radius", FormatNumber(circle.Radius));
                 if (circle.Thickness > 0) {
-                    writer.WriteAttribute("thickness", FormatNumber(circle.Thickness));
+                    wr.WriteAttribute("thickness", FormatNumber(circle.Thickness));
                     if (circle.Filled)
-                        writer.WriteAttribute("filled", "true");
+                        wr.WriteAttribute("filled", "true");
                 }
 
-                writer.WriteEndElement();
+                wr.WriteEndElement();
             }
 
             /// <summary>
@@ -147,20 +148,20 @@
             /// 
             public override void Visit(TextElement text) {
 
-                writer.WriteStartElement("text");
+                wr.WriteStartElement("text");
 
-                writer.WriteAttribute("layers", GetLayerNames(text));
-                writer.WriteAttribute("position", FormatPoint(text.Position));
+                wr.WriteAttribute("layers", GetLayerNames(text));
+                wr.WriteAttribute("position", text.Position);
                 if (!text.Rotation.IsZero)
-                    writer.WriteAttribute("rotation", FormatAngle(text.Rotation));
-                writer.WriteAttribute("height", FormatNumber(text.Height));
-                writer.WriteAttribute("thickness", FormatNumber(text.Thickness));
+                    wr.WriteAttribute("rotation", text.Rotation);
+                wr.WriteAttribute("height", FormatNumber(text.Height));
+                wr.WriteAttribute("thickness", FormatNumber(text.Thickness));
                 if (text.Align != TextAlign.TopLeft)
-                    writer.WriteAttribute("align", text.Align);
+                    wr.WriteAttribute("align", text.Align);
                 if (!String.IsNullOrEmpty(text.Value))
-                    writer.WriteAttribute("value", text.Value);
+                    wr.WriteAttribute("value", text.Value);
 
-                writer.WriteEndElement();
+                wr.WriteEndElement();
             }
 
             /// <summary>
@@ -170,13 +171,13 @@
             /// 
             public override void Visit(HoleElement hole) {
 
-                writer.WriteStartElement("hole");
+                wr.WriteStartElement("hole");
 
-                writer.WriteAttribute("layers", GetLayerNames(hole));
-                writer.WriteAttribute("position", FormatPoint(hole.Position));
-                writer.WriteAttribute("drill", FormatNumber(hole.Drill));
+                wr.WriteAttribute("layers", GetLayerNames(hole));
+                wr.WriteAttribute("position", hole.Position);
+                wr.WriteAttribute("drill", FormatNumber(hole.Drill));
 
-                writer.WriteEndElement();
+                wr.WriteEndElement();
             }
 
             /// <summary>
@@ -186,22 +187,22 @@
             /// 
             public override void Visit(SmdPadElement pad) {
 
-                writer.WriteStartElement("spad");
+                wr.WriteStartElement("spad");
 
-                writer.WriteAttribute("name", pad.Name);
-                writer.WriteAttribute("layers", GetLayerNames(pad));
-                writer.WriteAttribute("position", FormatPoint(pad.Position));
+                wr.WriteAttribute("name", pad.Name);
+                wr.WriteAttribute("layers", GetLayerNames(pad));
+                wr.WriteAttribute("position", pad.Position);
                 if (!pad.Rotation.IsZero)
-                    writer.WriteAttribute("rotation", FormatAngle(pad.Rotation));
-                writer.WriteAttribute("size", FormatSize(pad.Size));
+                    wr.WriteAttribute("rotation", pad.Rotation);
+                wr.WriteAttribute("size", pad.Size);
                 if (!pad.Roundness.IsZero)
-                    writer.WriteAttribute("roundness", FormRatio(pad.Roundness));
+                    wr.WriteAttribute("roundness", pad.Roundness);
 
                 Signal signal = board.GetSignal(pad, currentPart, false);
                 if (signal != null)
-                    writer.WriteAttribute("signal", signal.Name);
+                    wr.WriteAttribute("signal", signal.Name);
 
-                writer.WriteEndElement();
+                wr.WriteEndElement();
             }
 
             /// <summary>
@@ -211,23 +212,23 @@
             /// 
             public override void Visit(ThPadElement pad) {
 
-                writer.WriteStartElement("tpad");
+                wr.WriteStartElement("tpad");
 
-                writer.WriteAttribute("name", pad.Name);
-                writer.WriteAttribute("layers", GetLayerNames(pad));
-                writer.WriteAttribute("position", FormatPoint(pad.Position));
+                wr.WriteAttribute("name", pad.Name);
+                wr.WriteAttribute("layers", GetLayerNames(pad));
+                wr.WriteAttribute("position", pad.Position);
                 if (!pad.Rotation.IsZero)
-                    writer.WriteAttribute("rotation", FormatAngle(pad.Rotation));
-                writer.WriteAttribute("size", FormatNumber(pad.TopSize));
-                writer.WriteAttribute("drill", FormatNumber(pad.Drill));
+                    wr.WriteAttribute("rotation", pad.Rotation);
+                wr.WriteAttribute("size", FormatNumber(pad.TopSize));
+                wr.WriteAttribute("drill", FormatNumber(pad.Drill));
                 if (pad.Shape != ThPadElement.ThPadShape.Circular)
-                    writer.WriteAttribute("shape", pad.Shape.ToString());
+                    wr.WriteAttribute("shape", pad.Shape.ToString());
 
                 Signal signal = board.GetSignal(pad, currentPart, false);
                 if (signal != null)
-                    writer.WriteAttribute("signal", signal.Name);
+                    wr.WriteAttribute("signal", signal.Name);
 
-                writer.WriteEndElement();
+                wr.WriteEndElement();
             }
 
             /// <summary>
@@ -237,22 +238,22 @@
             /// 
             public override void Visit(PartAttribute attr) {
 
-                writer.WriteStartElement("attribute");
+                wr.WriteStartElement("attribute");
 
-                writer.WriteAttribute("name", attr.Name);
-                writer.WriteAttribute("value", attr.Value);
+                wr.WriteAttribute("name", attr.Name);
+                wr.WriteAttribute("value", attr.Value);
                 if (!attr.IsVisible)
-                    writer.WriteAttribute("visible", attr.IsVisible);
+                    wr.WriteAttribute("visible", attr.IsVisible);
                 if (attr.UsePosition)
-                    writer.WriteAttribute("position", FormatPoint(attr.Position));
+                    wr.WriteAttribute("position", attr.Position);
                 if (attr.UseRotation)
-                    writer.WriteAttribute("rotation", FormatAngle(attr.Rotation));
+                    wr.WriteAttribute("rotation", attr.Rotation);
                 if (attr.UseHeight)
-                    writer.WriteAttribute("height", FormatNumber(attr.Height));
+                    wr.WriteAttribute("height", FormatNumber(attr.Height));
                 if (attr.UseAlign)
-                    writer.WriteAttribute("align", attr.Align);
+                    wr.WriteAttribute("align", attr.Align);
 
-                writer.WriteEndElement();
+                wr.WriteEndElement();
             }
 
             /// <summary>
@@ -262,12 +263,12 @@
             /// 
             public override void Visit(BlockAttribute attr) {
 
-                writer.WriteStartElement("attribute");
+                wr.WriteStartElement("attribute");
 
-                writer.WriteAttribute("name", attr.Name);
-                writer.WriteAttribute("value", attr.Value);
+                wr.WriteAttribute("name", attr.Name);
+                wr.WriteAttribute("value", attr.Value);
 
-                writer.WriteEndElement();
+                wr.WriteEndElement();
             }
 
             /// <summary>
@@ -277,29 +278,29 @@
             /// 
             public override void Visit(RegionElement region) {
 
-                writer.WriteStartElement("region");
+                wr.WriteStartElement("region");
 
-                writer.WriteAttribute("layers", GetLayerNames(region));
+                wr.WriteAttribute("layers", GetLayerNames(region));
                 if (region.Thickness > 0) {
-                    writer.WriteAttribute("thickness", FormatNumber(region.Thickness));
+                    wr.WriteAttribute("thickness", FormatNumber(region.Thickness));
                     if (region.Filled)
-                        writer.WriteAttribute("filled", "true");
+                        wr.WriteAttribute("filled", "true");
                 }
                 if (region.Clearance > 0)
-                    writer.WriteAttribute("clearance", FormatNumber(region.Clearance));
+                    wr.WriteAttribute("clearance", FormatNumber(region.Clearance));
                 Signal signal = board.GetSignal(region, currentPart, false);
                 if (signal != null)
-                    writer.WriteAttribute("signal", signal.Name);
+                    wr.WriteAttribute("signal", signal.Name);
 
                 foreach (RegionElement.Segment segment in region.Segments) {
-                    writer.WriteStartElement("segment");
-                    writer.WriteAttribute("position", FormatPoint(segment.Position));
+                    wr.WriteStartElement("segment");
+                    wr.WriteAttribute("position", segment.Position);
                     if (!segment.Angle.IsZero)
-                        writer.WriteAttribute("angle", FormatAngle(segment.Angle));
-                    writer.WriteEndElement();
+                        wr.WriteAttribute("angle", segment.Angle);
+                    wr.WriteEndElement();
                 }
 
-                writer.WriteEndElement();
+                wr.WriteEndElement();
             }
 
             /// <summary>
@@ -311,17 +312,17 @@
 
                 currentPart = part;
                 try {
-                    writer.WriteStartElement("part");
+                    wr.WriteStartElement("part");
 
                     // Escriu els parametres
                     //
-                    writer.WriteAttribute("name", part.Name);
-                    writer.WriteAttribute("block", part.Block.Name);
-                    writer.WriteAttribute("position", FormatPoint(part.Position));
+                    wr.WriteAttribute("name", part.Name);
+                    wr.WriteAttribute("block", part.Block.Name);
+                    wr.WriteAttribute("position", part.Position);
                     if (!part.Rotation.IsZero)
-                        writer.WriteAttribute("rotation", FormatAngle(part.Rotation));
+                        wr.WriteAttribute("rotation", part.Rotation);
                     if (part.Side != BoardSide.Top)
-                        writer.WriteAttribute("side", part.Side);
+                        wr.WriteAttribute("side", part.Side);
 
                     // Escriu la llista de pads que tenen conexio.
                     //
@@ -332,28 +333,28 @@
                             if (signal != null) {
                                 if (empty) {
                                     empty = false;
-                                    writer.WriteStartElement("pads");
+                                    wr.WriteStartElement("pads");
                                 }
-                                writer.WriteStartElement("pad");
-                                writer.WriteAttribute("name", pad.Name);
-                                writer.WriteAttribute("signal", signal.Name);
-                                writer.WriteEndElement();
+                                wr.WriteStartElement("pad");
+                                wr.WriteAttribute("name", pad.Name);
+                                wr.WriteAttribute("signal", signal.Name);
+                                wr.WriteEndElement();
                             }
                         }
                         if (!empty)
-                            writer.WriteEndElement();
+                            wr.WriteEndElement();
                     }
 
                     // Escriu la llista d'atributs.
                     //
                     if (part.HasAttributes) {
-                        writer.WriteStartElement("attributes");
+                        wr.WriteStartElement("attributes");
                         foreach (PartAttribute attribute in part.Attributes) 
                             attribute.AcceptVisitor(this);
-                        writer.WriteEndElement();
+                        wr.WriteEndElement();
                     }
 
-                    writer.WriteEndElement();
+                    wr.WriteEndElement();
                 }
                 finally {
                     currentPart = null;
@@ -367,24 +368,24 @@
             /// 
             public override void Visit(ViaElement via) {
 
-                writer.WriteStartElement("via");
+                wr.WriteStartElement("via");
 
-                writer.WriteAttribute("position", FormatPoint(via.Position));
-                writer.WriteAttribute("layers", GetLayerNames(via));
-                writer.WriteAttribute("drill", FormatNumber(via.Drill));
-                writer.WriteAttribute("outerSize", FormatNumber(via.OuterSize));
+                wr.WriteAttribute("position", via.Position);
+                wr.WriteAttribute("layers", GetLayerNames(via));
+                wr.WriteAttribute("drill", FormatNumber(via.Drill));
+                wr.WriteAttribute("outerSize", FormatNumber(via.OuterSize));
                 if (via.InnerSize != via.OuterSize)
-                    writer.WriteAttribute("innerSize", FormatNumber(via.InnerSize));
+                    wr.WriteAttribute("innerSize", FormatNumber(via.InnerSize));
                 if (via.Shape != ViaElement.ViaShape.Circular)
-                    writer.WriteAttribute("shape", via.Shape);
+                    wr.WriteAttribute("shape", via.Shape);
                 if (via.Type != ViaElement.ViaType.Through)
-                    writer.WriteAttribute("type", via.Type);
+                    wr.WriteAttribute("type", via.Type);
 
                 Signal signal = board.GetSignal(via, null, false);
                 if (signal != null)
-                    writer.WriteAttribute("signal", signal.Name);
+                    wr.WriteAttribute("signal", signal.Name);
 
-                writer.WriteEndElement();
+                wr.WriteEndElement();
             }
 
             /// <summary>
@@ -394,16 +395,17 @@
             /// 
             public override void Visit(Layer layer) {
 
-                writer.WriteStartElement("layer");
+                wr.WriteStartElement("layer");
 
-                writer.WriteAttribute("name", layer.Name);
-                writer.WriteAttribute("side", layer.Side);
-                writer.WriteAttribute("function", layer.Function);
-                writer.WriteAttribute("color", FormatColor(layer.Color));
+                wr.WriteAttribute("name", layer.Name);
+                wr.WriteAttribute("side", layer.Side);
+                wr.WriteAttribute("function", layer.Function);
+                //wr.WriteAttribute("color", FormatColor(layer.Color));
+                wr.WriteAttribute("color", layer.Color);
                 if (!layer.IsVisible)
-                    writer.WriteAttribute("visible", "false");
+                    wr.WriteAttribute("visible", "false");
 
-                writer.WriteEndElement();
+                wr.WriteEndElement();
             }
 
             /// <summary>
@@ -413,13 +415,13 @@
             /// 
             public override void Visit(Signal signal) {
 
-                writer.WriteStartElement("signal");
+                wr.WriteStartElement("signal");
 
-                writer.WriteAttribute("name", signal.Name);
+                wr.WriteAttribute("name", signal.Name);
                 if (signal.Clearance > 0)
-                    writer.WriteAttribute("clearance", FormatNumber(signal.Clearance));
+                    wr.WriteAttribute("clearance", FormatNumber(signal.Clearance));
 
-                writer.WriteEndElement();
+                wr.WriteEndElement();
             }
 
             /// <summary>
@@ -429,23 +431,23 @@
             /// 
             public override void Visit(Block block) {
 
-                writer.WriteStartElement("block");
+                wr.WriteStartElement("block");
 
-                writer.WriteAttribute("name", block.Name);
+                wr.WriteAttribute("name", block.Name);
 
-                writer.WriteStartElement("elements");
+                wr.WriteStartElement("elements");
                 foreach (Element element in block.Elements)
                     element.AcceptVisitor(this);
-                writer.WriteEndElement();
+                wr.WriteEndElement();
 
                 if (block.HasAttributes) {
-                    writer.WriteStartElement("attributes");
+                    wr.WriteStartElement("attributes");
                     foreach (BlockAttribute attribute in block.Attributes)
                         attribute.AcceptVisitor(this);
-                    writer.WriteEndElement();
+                    wr.WriteEndElement();
                 }
 
-                writer.WriteEndElement();
+                wr.WriteEndElement();
             }
 
             /// <summary>
@@ -455,54 +457,54 @@
             /// 
             public override void Visit(Board board) {
 
-                writer.WriteStartElement("board");
+                wr.WriteStartElement("board");
 
-                writer.WriteAttribute("version", "211");
-                writer.WriteAttribute("units", "mm");
-                writer.WriteAttribute("position", FormatPoint(board.Position));
-                writer.WriteAttribute("rotation", FormatAngle(board.Rotation));
+                wr.WriteAttribute("version", "211");
+                wr.WriteAttribute("units", "mm");
+                wr.WriteAttribute("position", board.Position);
+                wr.WriteAttribute("rotation", board.Rotation);
 
-                writer.WriteStartElement("layers");
+                wr.WriteStartElement("layers");
                 foreach (Layer layer in board.Layers)
                     layer.AcceptVisitor(this);
-                writer.WriteEndElement();
+                wr.WriteEndElement();
 
-                writer.WriteStartElement("layerPairs");
+                wr.WriteStartElement("layerPairs");
 
                 foreach (Layer layer1 in board.Layers) {
                     Layer layer2 = board.GetLayerPair(layer1);
                     if (layer2 != null) {
-                        writer.WriteStartElement("pair");
-                        writer.WriteAttribute("layer1", layer1.Name);
-                        writer.WriteAttribute("layer2", layer2.Name);
-                        writer.WriteEndElement();
+                        wr.WriteStartElement("pair");
+                        wr.WriteAttribute("layer1", layer1.Name);
+                        wr.WriteAttribute("layer2", layer2.Name);
+                        wr.WriteEndElement();
                     }
                 }
-                writer.WriteEndElement();
+                wr.WriteEndElement();
 
-                writer.WriteStartElement("signals");
+                wr.WriteStartElement("signals");
                 foreach (Signal signal in board.Signals)
                     signal.AcceptVisitor(this);
-                writer.WriteEndElement();
+                wr.WriteEndElement();
 
-                writer.WriteStartElement("blocks");
+                wr.WriteStartElement("blocks");
                 foreach (Block block in board.Blocks)
                     block.AcceptVisitor(this);
-                writer.WriteEndElement();
+                wr.WriteEndElement();
 
-                writer.WriteStartElement("parts");
+                wr.WriteStartElement("parts");
                 foreach (Part part in board.Parts)
                     part.AcceptVisitor(this);
-                writer.WriteEndElement();
+                wr.WriteEndElement();
 
                 if (board.Elements != null) {
-                    writer.WriteStartElement("elements");
+                    wr.WriteStartElement("elements");
                     foreach (Element element in board.Elements)
                         element.AcceptVisitor(this);
-                    writer.WriteEndElement();
+                    wr.WriteEndElement();
                 }
 
-                writer.WriteEndElement();
+                wr.WriteEndElement();
             }
 
             private string[] GetLayerNames(Element element) {
@@ -527,72 +529,6 @@
             private static string FormatNumber(int value) {
 
                 return XmlConvert.ToString(value / 1000000.0);
-            }
-
-            /// <summary>
-            /// Formateja un punt en mm
-            /// </summary>
-            /// <param name="point">El valor del punt.</param>
-            /// <returns>El valor formatejat.</returns>
-            /// 
-            private static string FormatPoint(Point point) {
-
-                return String.Format(
-                    "{0}, {1}",
-                    XmlConvert.ToString(point.X / 1000000.0),
-                    XmlConvert.ToString(point.Y / 1000000.0));
-            }
-
-            /// <summary>
-            /// Formateja un tamany en mm
-            /// </summary>
-            /// <param name="size">El tamany a formatejar.</param>
-            /// <returns>El valor formatejat.</returns>
-            /// 
-            private static string FormatSize(Size size) {
-
-                return String.Format(
-                    "{0}, {1}",
-                    XmlConvert.ToString(size.Width / 1000000.0),
-                    XmlConvert.ToString(size.Height / 1000000.0));
-            }
-
-            /// <summary>
-            /// Formateja un angle en graus
-            /// </summary>
-            /// <param name="angle">El valor del angle</param>
-            /// <returns>El angle formatejat.</returns>
-            /// 
-            private static string FormatAngle(Angle angle) {
-
-                return XmlConvert.ToString(angle.Degrees / 100.0);
-            }
-
-            /// <summary>
-            /// Formateja un color a ARGB
-            /// </summary>
-            /// <param name="color">El color a formatejar.</param>
-            /// <returns>El valor formatejat.</returns>
-            /// 
-            private static string FormatColor(Color color) {
-
-                return String.Format(
-                    "{0}, {1}, {2}, {3}", 
-                    XmlConvert.ToString(color.A),
-                    XmlConvert.ToString(color.R),
-                    XmlConvert.ToString(color.G),
-                    XmlConvert.ToString(color.B));
-            }
-
-            /// <summary>
-            /// Formateja un valoe a poercentatge
-            /// </summary>
-            /// <param name="ratio">El valor del percentatge.</param>
-            /// <returns>El valor formatejat.</returns>
-            /// 
-            private static string FormRatio(Ratio ratio) {
-
-                return XmlConvert.ToString(ratio.Percent / 1000.0);
             }
         }
 
@@ -628,7 +564,6 @@
             settings.CloseOutput = true;
 
             using (XmlWriter writer = XmlWriter.Create(stream, settings)) {
-
                 writer.WriteStartDocument();
 
                 IVisitor visitor = new Visitor(board, writer);

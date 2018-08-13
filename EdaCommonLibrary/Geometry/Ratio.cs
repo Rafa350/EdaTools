@@ -2,6 +2,8 @@
 
     using System;
     using System.Globalization;
+    using System.Xml;
+    using MikroPic.EdaTools.v1.Xml;
 
     public struct Ratio {
 
@@ -48,7 +50,12 @@
         /// 
         public override string ToString() {
 
-            return String.Format(CultureInfo.CurrentCulture, "{0}", value);
+            return ToString(CultureInfo.CurrentCulture);
+        }
+
+        public string ToString(IFormatProvider provider) {
+
+            return String.Format(provider, "{0}", value);
         }
 
         /// <summary>
@@ -71,6 +78,16 @@
             get {
                 return value;
             }
+        }
+    }
+
+
+    public static class RatioHelper {
+
+        public static void WriteAttribute(this XmlWriterAdapter wr, string name, Ratio ratio) {
+
+            string s = XmlConvert.ToString(ratio.Percent / 1000.0);
+            wr.WriteAttribute(name, s);
         }
     }
 }

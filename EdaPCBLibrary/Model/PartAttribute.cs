@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Geometry.Fonts;
     using System;
 
     /// <summary>

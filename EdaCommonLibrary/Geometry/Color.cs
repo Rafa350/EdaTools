@@ -2,7 +2,12 @@
 
     using System;
     using System.Globalization;
+    using MikroPic.EdaTools.v1.Xml;
 
+    /// <summary>
+    /// Clase que representa un color RGB
+    /// </summary>
+    /// 
     public struct Color {
 
         private byte a;
@@ -60,28 +65,65 @@
             return String.Format(provider, "{0}, {1}, {2}, {3}", a, r, g, b);
         }
 
+        /// <summary>
+        /// Obte el valor de la component A
+        /// </summary>
+        /// 
         public byte A {
             get {
                 return a;
             }
         }
 
+        /// <summary>
+        /// Obte el valor de la component R.
+        /// </summary>
+        /// 
         public byte R {
             get {
                 return r;
             }
         }
 
+        /// <summary>
+        /// Obte el valor de la component G.
+        /// </summary>
+        /// 
         public byte G {
             get {
                 return g;
             }
         }
 
+        /// <summary>
+        /// Obte el valor de la component B.
+        /// </summary>
+        /// 
         public byte B {
             get {
                 return b;
             }
+        }
+    }
+
+
+    /// <summary>
+    /// Clase que implementa metodes d'extensio.
+    /// </summary>
+    /// 
+    public static class ColorHelper {
+
+        /// <summary>
+        /// Escriu un atribut de tipus 'Color'
+        /// </summary>
+        /// <param name="wr">L'objecte 'XmlWriterAdapter'</param>
+        /// <param name="name">Nom de l'atribut.</param>
+        /// <param name="color">El valor a escriure.</param>
+        /// 
+        public static void WriteAttribute(this XmlWriterAdapter wr, string name, Color color) {
+
+            string s = color.ToString(CultureInfo.InvariantCulture);
+            wr.WriteAttribute(name, s);
         }
     }
 }

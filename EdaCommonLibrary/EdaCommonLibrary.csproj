@@ -47,8 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Geometry\Angle.cs" />
+    <Compile Include="Geometry\AngularUnits.cs" />
     <Compile Include="Geometry\ArcUtils.cs" />
     <Compile Include="Geometry\Color.cs" />
+    <Compile Include="Geometry\DistanceUnits.cs" />
     <Compile Include="Geometry\Fonts\Font.cs" />
     <Compile Include="Geometry\Fonts\FontFactory.cs" />
     <Compile Include="Geometry\Fonts\Glyph.cs" />
@@ -61,10 +63,12 @@
     <Compile Include="Geometry\Ratio.cs" />
     <Compile Include="Geometry\Rect.cs" />
     <Compile Include="Geometry\Size.cs" />
-    <Compile Include="Geometry\TextAlign.cs" />
+    <Compile Include="Geometry\Fonts\TextAlign.cs" />
     <Compile Include="Geometry\Fonts\TextDrawer.cs" />
     <Compile Include="Geometry\Transformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Xml\XmlReaderAdapter.cs" />
+    <Compile Include="Xml\XmlWriterAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="signature.pfx" />

@@ -1,9 +1,10 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
     using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-    using MikroPic.EdaTools.v1.Pcb.Model.IO.Infrastructure;
+    using MikroPic.EdaTools.v1.Xml;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -15,7 +16,7 @@
     /// 
     public sealed class XmlBoardReader {
 
-        private readonly XmlTagReader reader;
+        private readonly XmlReaderAdapter rd;
         private Board board;
         private int version;
 
@@ -32,7 +33,24 @@
             if (!stream.CanRead)
                 throw new InvalidOperationException("El stream no es de lectura.");
 
-            reader = new XmlTagReader(stream);
+
+            /*Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(schemaResourceName);
+            if (resourceStream == null)
+                throw new Exception(String.Format("No se encontro el recurso '{0}'", schemaResourceName));
+            XmlSchema schema = XmlSchema.Read(resourceStream, null);
+            */
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.IgnoreProcessingInstructions = true;
+            settings.IgnoreWhitespace = true;
+            settings.IgnoreComments = true;
+            settings.CloseInput = false;
+            //settings.ValidationType = ValidationType.Schema;
+            //settings.Schemas.Add(schema);
+            settings.MaxCharactersInDocument = 1000000;
+            settings.ConformanceLevel = ConformanceLevel.Document;
+
+            XmlReader reader = XmlReader.Create(stream, settings);
+            rd = new XmlReaderAdapter(reader);
         }
 
         /// <summary>
@@ -44,7 +62,7 @@
 
             board = new Board();
 
-            reader.NextTag();
+            rd.NextTag();
             ParseBoardNode(board);
 
             return board;
@@ -57,27 +75,27 @@
         /// 
         private void ParseBoardNode(Board board) {
 
-            if (!reader.IsStartTag("board"))
+            if (!rd.IsStartTag("board"))
                 throw new InvalidDataException("Se esperaba <board>");
 
-            version = reader.AttributeAsInteger("version");
+            version = rd.AttributeAsInteger("version");
 
-            reader.NextTag();
+            rd.NextTag();
             ParseLayersNode(board);
 
-            reader.NextTag();
+            rd.NextTag();
             ParseLayerPairsNode(board);
 
-            reader.NextTag();
+            rd.NextTag();
             ParseSignalsNode(board);
 
-            reader.NextTag();
+            rd.NextTag();
             ParseBlocksNode(board);
 
-            reader.NextTag();
+            rd.NextTag();
             ParsePartsNode(board);
 
-            reader.NextTag();
+            rd.NextTag();
             ParseBoardElementsNode(board);
         }
 
@@ -88,10 +106,10 @@
         /// 
         private void ParseLayersNode(Board board) {
 
-            if (!reader.IsStartTag("layers"))
+            if (!rd.IsStartTag("layers"))
                 throw new InvalidDataException("Se esperaba <layers>");
 
-            while (reader.NextTag() && reader.IsStartTag("layer"))
+            while (rd.NextTag() && rd.IsStartTag("layer"))
                 ParseLayerNode(board);
         }
 
@@ -104,12 +122,12 @@
 
             // Comprova que el node sigui correcte
             //
-            if (!reader.IsStartTag("layer"))
+            if (!rd.IsStartTag("layer"))
                 throw new InvalidDataException("Se esperaba <layer>");
 
             // Obte els atributs de la capa
             //
-            string name = reader.AttributeAsString("name");
+            string name = rd.AttributeAsString("name");
             BoardSide side = ParseEnumAttribute("side", BoardSide.Unknown);
             LayerFunction function = ParseEnumAttribute("function", LayerFunction.Unknown);
             Color color = ParseColorAttribute("color", new Color(128, 128, 128));
@@ -122,7 +140,7 @@
 
             // Llegeix el tag final
             //
-            reader.NextTag();
+            rd.NextTag();
         }
 
         /// <summary>
@@ -134,10 +152,10 @@
 
             // Comprova que el node sigui correcte
             //
-            if (!reader.IsStartTag("layerPairs"))
+            if (!rd.IsStartTag("layerPairs"))
                 throw new InvalidDataException("Se esperaba <layerPairs>");
 
-            while (reader.NextTag() && reader.IsStartTag("pair"))
+            while (rd.NextTag() && rd.IsStartTag("pair"))
                 ParsePairNode(board);
         }
 
@@ -150,13 +168,13 @@
 
             // Comprova que el node sigui correcte
             //
-            if (!reader.IsStartTag("pair"))
+            if (!rd.IsStartTag("pair"))
                 throw new InvalidDataException("Se esperaba <pair>");
 
             // Obte els atributs del parell de capes
             //
-            string name1 = reader.AttributeAsString("layer1");
-            string name2 = reader.AttributeAsString("layer2");
+            string name1 = rd.AttributeAsString("layer1");
+            string name2 = rd.AttributeAsString("layer2");
 
             // Defineix el parell de capes
             //
@@ -169,7 +187,7 @@
                 // Ignora el error
             }
 
-            reader.NextTag();
+            rd.NextTag();
         }
 
         /// <summary>
@@ -181,10 +199,10 @@
 
             // Comprova que el node sigui correcte
             //
-            if (!reader.IsStartTag("signals"))
+            if (!rd.IsStartTag("signals"))
                 throw new InvalidDataException("Se esperaba <signals>");
 
-            while (reader.NextTag() && reader.IsStartTag("signal"))
+            while (rd.NextTag() && rd.IsStartTag("signal"))
                 ParseSignalNode(board);
         }
 
@@ -197,19 +215,19 @@
 
             // Comprova que el node sigui correcte
             //
-            if (!reader.IsStartTag("signal"))
+            if (!rd.IsStartTag("signal"))
                 throw new InvalidDataException("Se esperaba <signal>");
 
             // Obte els atributs de la senyal
             //
-            string name = reader.AttributeAsString("name");
+            string name = rd.AttributeAsString("name");
 
             // Crea la senyal i l'afegeix a la placa
             //
             Signal signal = new Signal(name);
             board.AddSignal(signal);
 
-            reader.NextTag();
+            rd.NextTag();
         }
 
         /// <summary>
@@ -221,10 +239,10 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("blocks"))
+            if (!rd.IsStartTag("blocks"))
                 throw new InvalidDataException("Se esperaba <blocks>");
 
-            while (reader.NextTag() && reader.IsStartTag("block"))
+            while (rd.NextTag() && rd.IsStartTag("block"))
                ParseBlockNode(board);
         }
 
@@ -237,22 +255,22 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("block"))
+            if (!rd.IsStartTag("block"))
                 throw new InvalidDataException("Se esperaba <block>");
 
             // Obte els atriburs del bloc
             //
-            string name = reader.AttributeAsString("name");
+            string name = rd.AttributeAsString("name");
 
             // Crea el bloc i l'afegeix a la placa
             //
             Block block = new Block(name);
             board.AddBlock(block);
 
-            reader.NextTag();
+            rd.NextTag();
             ParseBlockElementsNode(block);
 
-            reader.NextTag();
+            rd.NextTag();
         }
 
         /// <summary>
@@ -264,14 +282,14 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("elements"))
+            if (!rd.IsStartTag("elements"))
                 throw new InvalidDataException("Se esperaba <elements>");
 
             // Obte els elements
             //
             List<Element> elementList = new List<Element>();
-            while (reader.NextTag() && reader.IsStart) {
-                switch (reader.TagName) {
+            while (rd.NextTag() && rd.IsStart) {
+                switch (rd.TagName) {
                     case "line":
                         ParseLineNode(elementList);
                         break;
@@ -327,14 +345,14 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("elements"))
+            if (!rd.IsStartTag("elements"))
                 throw new InvalidDataException("Se esperaba <elements>");
 
             // Obte els elements
             //
             List<Element> elementList = new List<Element>();
-            while (reader.NextTag() && reader.IsStart) {
-                switch (reader.TagName) {
+            while (rd.NextTag() && rd.IsStart) {
+                switch (rd.TagName) {
                     case "line":
                         ParseLineNode(elementList);
                         break;
@@ -394,10 +412,10 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("parts"))
+            if (!rd.IsStartTag("parts"))
                 throw new InvalidDataException("Se esperaba <parts>");
 
-            while (reader.NextTag() && reader.IsStartTag("part"))
+            while (rd.NextTag() && rd.IsStartTag("part"))
                 ParsePartNode(board);
         }
 
@@ -410,16 +428,16 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("part"))
+            if (!rd.IsStartTag("part"))
                 throw new InvalidDataException("Se esperaba <part>");
 
             // Obte els atributs de l'objecte
             //
-            string name = reader.AttributeAsString("name");
+            string name = rd.AttributeAsString("name");
             Point position = ParsePointAttribute("position");
             Angle rotation = ParseAngleAttribute("rotation");
             BoardSide side = ParseEnumAttribute("side", BoardSide.Top);
-            string blockName = reader.AttributeAsString("block");
+            string blockName = rd.AttributeAsString("block");
 
             // Crea l'objecte i l'afegeix a la placa
             //
@@ -427,8 +445,8 @@
             Part part = new Part(block, name, position, rotation, side);
             board.AddPart(part);
 
-            while (reader.NextTag() && reader.IsStart) {
-                switch (reader.TagName) {
+            while (rd.NextTag() && rd.IsStart) {
+                switch (rd.TagName) {
                     case "attributes":
                         ParsePartAttributesNode(part);
                         break;
@@ -452,10 +470,10 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("attributes"))
+            if (!rd.IsStartTag("attributes"))
                 throw new InvalidDataException("Se esperaba <attributes>");
 
-            while (reader.NextTag() && reader.IsStartTag("attribute"))
+            while (rd.NextTag() && rd.IsStartTag("attribute"))
                 ParsePartAttributeNode(part);
         }
 
@@ -468,13 +486,13 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("attribute"))
+            if (!rd.IsStartTag("attribute"))
                throw new InvalidDataException("Se esperaba <attribute>");
 
             // Obte els atributs de l'objecte
             //
-            string name = reader.AttributeAsString("name");
-            string value = reader.AttributeAsString("value");
+            string name = rd.AttributeAsString("name");
+            string value = rd.AttributeAsString("value");
             bool isVisible = ParseBoolAttribute("visible", false);
 
             // Crea l'objecte i l'afegeix a la llista
@@ -482,19 +500,19 @@
             PartAttribute attribute = new PartAttribute(name, value, isVisible);
             part.AddAttribute(attribute);
 
-            if (reader.AttributeExists("position"))
+            if (rd.AttributeExists("position"))
                 attribute.Position = ParsePointAttribute("position");
 
-            if (reader.AttributeExists("rotation"))
+            if (rd.AttributeExists("rotation"))
                 attribute.Rotation = ParseAngleAttribute("rotation");
 
-            if (reader.AttributeExists("height"))
+            if (rd.AttributeExists("height"))
                 attribute.Height = ParseNumberAttribute("height");
 
-            if (reader.AttributeExists("align"))
+            if (rd.AttributeExists("align"))
                 attribute.Align = ParseEnumAttribute("align", TextAlign.TopLeft);
 
-            reader.NextTag();
+            rd.NextTag();
         }
 
         /// <summary>
@@ -506,10 +524,10 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("pads"))
+            if (!rd.IsStartTag("pads"))
                 throw new InvalidDataException("Se esperaba <attributes>");
 
-            while (reader.NextTag() && reader.IsStartTag("pad"))
+            while (rd.NextTag() && rd.IsStartTag("pad"))
                 ParsePartPadNode(part);
         }
 
@@ -522,17 +540,17 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("pad"))
+            if (!rd.IsStartTag("pad"))
                 throw new InvalidDataException("Se esperaba <pad>");
 
-            string padName = reader.AttributeAsString("name");
-            string signalName = reader.AttributeAsString("signal");
+            string padName = rd.AttributeAsString("name");
+            string signalName = rd.AttributeAsString("signal");
 
             PadElement pad = part.GetPad(padName);
             Signal signal = board.GetSignal(signalName);
             board.Connect(signal, pad, part);
 
-            reader.NextTag();
+            rd.NextTag();
         }
 
         /// <summary>
@@ -544,7 +562,7 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("line"))
+            if (!rd.IsStartTag("line"))
                 throw new InvalidDataException("Se esperaba <line>");
 
             // Obte els atributs del element
@@ -553,7 +571,7 @@
             Point endPosition = ParsePointAttribute("endPosition");
             int thickness = ParseNumberAttribute("thickness");
             LineElement.LineCapStyle lineCap = ParseEnumAttribute("lineCap", LineElement.LineCapStyle.Round);
-            string[] layerNames = reader.AttributeAsStrings("layers");
+            string[] layerNames = rd.AttributeAsStrings("layers");
 
             // Crea l'element i l'afegeix a la llista
             //
@@ -568,8 +586,8 @@
 
             // Assigna la senyal 
             //
-            if (reader.AttributeExists("signal")) {
-                string signalName = reader.AttributeAsString("signal");
+            if (rd.AttributeExists("signal")) {
+                string signalName = rd.AttributeAsString("signal");
                 if (signalName != null) {
                     Signal signal = board.GetSignal(signalName);
                     board.Connect(signal, line);
@@ -578,7 +596,7 @@
 
             // Llegeix el final del node
             //
-            reader.NextTag();
+            rd.NextTag();
         }
 
         /// <summary>
@@ -590,7 +608,7 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("arc"))
+            if (!rd.IsStartTag("arc"))
                 throw new InvalidDataException("Se esperaba <arc>");
 
             // Obte els atributs de l'element
@@ -599,7 +617,7 @@
             Point endPosition = ParsePointAttribute("endPosition");
             int thickness = ParseNumberAttribute("thickness");
             Angle angle = ParseAngleAttribute("angle");
-            string[] layerNames = reader.AttributeAsStrings("layers");
+            string[] layerNames = rd.AttributeAsStrings("layers");
             LineElement.LineCapStyle lineCap = ParseEnumAttribute("lineCap", LineElement.LineCapStyle.Round);
 
             // Crea l'element i l'afegeix a la llista
@@ -615,15 +633,15 @@
 
             // Assigna la senyal 
             //
-            if (reader.AttributeExists("signal")) {
-                string signalName = reader.AttributeAsString("signal");
+            if (rd.AttributeExists("signal")) {
+                string signalName = rd.AttributeAsString("signal");
                 if (signalName != null) {
                     Signal signal = board.GetSignal(signalName);
                     board.Connect(signal, arc);
                 }
             }
 
-            reader.NextTag();
+            rd.NextTag();
         }
 
         /// <summary>
@@ -635,7 +653,7 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("rectangle"))
+            if (!rd.IsStartTag("rectangle"))
                 throw new InvalidDataException("Se esperaba <rectangle>");
 
             // Obte els atributs de l'element.
@@ -646,7 +664,7 @@
             int thickness = ParseNumberAttribute("thickness");
             bool filled = ParseBoolAttribute("filled", thickness == 0);
             Ratio roundness = ParseRatioAttribute("roundness");
-            string[] layerNames = reader.AttributeAsStrings("layers");
+            string[] layerNames = rd.AttributeAsStrings("layers");
 
             // Crea l'element i l'afegeix a la llista
             //
@@ -659,7 +677,7 @@
                 foreach (string layerName in layerNames)
                     board.Place(board.GetLayer(layerName), rectangle);
 
-            reader.NextTag();
+            rd.NextTag();
         }
 
         /// <summary>
@@ -671,7 +689,7 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("circle"))
+            if (!rd.IsStartTag("circle"))
                 throw new InvalidDataException("Se esperaba <circle>");
 
             // Obte els atributs de l'element.
@@ -680,7 +698,7 @@
             int radius = ParseNumberAttribute("radius");
             int thickness = ParseNumberAttribute("thickness");
             bool filled = ParseBoolAttribute("filled", thickness == 0);
-            string[] layerNames = reader.AttributeAsStrings("layers");
+            string[] layerNames = rd.AttributeAsStrings("layers");
 
             // Crea l'element i l'afegeix a la llista
             //
@@ -693,7 +711,7 @@
                 foreach (string layerName in layerNames)
                     board.Place(board.GetLayer(layerName), circle);
 
-            reader.NextTag();
+            rd.NextTag();
         }
 
         /// <summary>
@@ -705,15 +723,15 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("region"))
+            if (!rd.IsStartTag("region"))
                 throw new InvalidDataException("Se esperaba <region>");
 
             // Obte els atributs de l'element
             //
             int thickness = ParseNumberAttribute("thickness");
-            bool filled = reader.AttributeAsBoolean("filled", thickness == 0);
+            bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
             int clearance = ParseNumberAttribute("clearance");
-            string[] layerNames = reader.AttributeAsStrings("layers");
+            string[] layerNames = rd.AttributeAsStrings("layers");
 
             // Crea l'element i l'afegeix a la llista
             //
@@ -728,15 +746,15 @@
 
             // Assigna la senyal 
             //
-            if (reader.AttributeExists("signal")) {
-                string signalName = reader.AttributeAsString("signal");
+            if (rd.AttributeExists("signal")) {
+                string signalName = rd.AttributeAsString("signal");
                 if (signalName != null) {
                     Signal signal = board.GetSignal(signalName);
                     board.Connect(signal, region);
                 }
             }
 
-            while (reader.NextTag() && reader.IsStart)
+            while (rd.NextTag() && rd.IsStart)
                 ParseRegionSegmentNode(region);
         }
 
@@ -749,7 +767,7 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("segment"))
+            if (!rd.IsStartTag("segment"))
                 throw new InvalidDataException("Se esperaba <segment>");
 
             // Obte els atributs del segment
@@ -762,7 +780,7 @@
             RegionElement.Segment segment = new RegionElement.Segment(position, angle);
             region.Add(segment);
 
-            reader.NextTag();
+            rd.NextTag();
         }
 
         /// <summary>
@@ -774,18 +792,18 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("tpad"))
+            if (!rd.IsStartTag("tpad"))
                 throw new InvalidDataException("Se esperaba <tpad>");
 
             // Obte els atributs de l'element
             //
-            string name = reader.AttributeAsString("name");
+            string name = rd.AttributeAsString("name");
             Point position = ParsePointAttribute("position");
             int size = ParseNumberAttribute("size");
             Angle rotation = ParseAngleAttribute("rotation");
             int drill = ParseNumberAttribute("drill");
             ThPadElement.ThPadShape shape = ParseEnumAttribute("shape", ThPadElement.ThPadShape.Circular);
-            string[] layerNames = reader.AttributeAsStrings("layers");
+            string[] layerNames = rd.AttributeAsStrings("layers");
 
             // Crea l'element i l'afegeix a la llista
             //
@@ -800,8 +818,8 @@
 
             // Assigna la senyal 
             //
-            if (reader.AttributeExists("signal")) {
-                string signalName = reader.AttributeAsString("signal");
+            if (rd.AttributeExists("signal")) {
+                string signalName = rd.AttributeAsString("signal");
                 if (signalName != null) {
                     Signal signal = board.GetSignal(signalName);
                     board.Connect(signal, pad);
@@ -810,7 +828,7 @@
 
             // Llegeix el final del node
             //
-            reader.NextTag();
+            rd.NextTag();
         }
 
         /// <summary>
@@ -822,17 +840,17 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("spad"))
+            if (!rd.IsStartTag("spad"))
                 throw new InvalidDataException("Se esperaba <spad>");
 
             // Obte els atributs de l'element.
             //
-            string name = reader.AttributeAsString("name");
+            string name = rd.AttributeAsString("name");
             Point position = ParsePointAttribute("position");
             Size size = ParseSizeAttribute("size");
             Angle rotation = ParseAngleAttribute("rotation");
             Ratio roundness = ParseRatioAttribute("roundness");
-            string[] layerNames = reader.AttributeAsStrings("layers");
+            string[] layerNames = rd.AttributeAsStrings("layers");
 
             // Crea l'element i l'afegeix a la llista
             //
@@ -847,15 +865,15 @@
 
             // Assigna la senyal 
             //
-            if (reader.AttributeExists("signal")) {
-                string signalName = reader.AttributeAsString("signal");
+            if (rd.AttributeExists("signal")) {
+                string signalName = rd.AttributeAsString("signal");
                 if (signalName != null) {
                     Signal signal = board.GetSignal(signalName);
                     board.Connect(signal, pad);
                 }
             }
 
-            reader.NextTag();
+            rd.NextTag();
         }
 
         /// <summary>
@@ -867,7 +885,7 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("via"))
+            if (!rd.IsStartTag("via"))
                 throw new InvalidDataException("Se esperaba <via>");
 
             // Obte els atributs de l'element
@@ -876,7 +894,7 @@
             int size = ParseNumberAttribute("size");
             int drill = ParseNumberAttribute("drill");
             ViaElement.ViaShape shape = ParseEnumAttribute("shape", ViaElement.ViaShape.Circular);
-            string[] layerNames = reader.AttributeAsStrings("layers");
+            string[] layerNames = rd.AttributeAsStrings("layers");
 
             // Crtea l'element i l'afegeix a la llista
             //
@@ -891,15 +909,15 @@
 
             // Assigna la senyal 
             //
-            if (reader.AttributeExists("signal")) {
-                string signalName = reader.AttributeAsString("signal");
+            if (rd.AttributeExists("signal")) {
+                string signalName = rd.AttributeAsString("signal");
                 if (signalName != null) {
                     Signal signal = board.GetSignal(signalName);
                     board.Connect(signal, via);
                 }
             }
 
-            reader.NextTag();
+            rd.NextTag();
         }
 
         /// <summary>
@@ -911,14 +929,14 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("hole"))
+            if (!rd.IsStartTag("hole"))
                 throw new InvalidDataException("Se esperaba <hole>");
 
             // Obte els atributs de l'element
             //
             Point position = ParsePointAttribute("position");
             int drill = ParseNumberAttribute("drill");
-            string[] layerNames = reader.AttributeAsStrings("layers");
+            string[] layerNames = rd.AttributeAsStrings("layers");
 
             // Crea l'element i l'afegeix a la llista
             //
@@ -931,7 +949,7 @@
                 foreach (string layerName in layerNames)
                     board.Place(board.GetLayer(layerName), hole);
 
-            reader.NextTag();
+            rd.NextTag();
         }
 
         /// <summary>
@@ -943,7 +961,7 @@
 
             // Comprova que el node sigui el correcte
             //
-            if (!reader.IsStartTag("text"))
+            if (!rd.IsStartTag("text"))
                 throw new InvalidDataException("Se esperaba <text>");
 
             // Obte els parametres de l'objecte
@@ -953,8 +971,8 @@
             int height = ParseNumberAttribute("height");
             TextAlign align = ParseEnumAttribute("align", TextAlign.TopLeft);
             int thickness = ParseNumberAttribute("thickness");
-            string value = reader.AttributeAsString("value");
-            string[] layerNames = reader.AttributeAsStrings("layers");
+            string value = rd.AttributeAsString("value");
+            string[] layerNames = rd.AttributeAsStrings("layers");
 
             // Crea l'objecte i l'afegeix al la llista
             //
@@ -970,7 +988,7 @@
 
             // Llegeix el final del node
             //
-            reader.NextTag();
+            rd.NextTag();
         }
 
         /// <summary>
@@ -981,7 +999,7 @@
         /// 
         private Point ParsePointAttribute(string name) {
 
-            string s = reader.AttributeAsString(name);
+            string s = rd.AttributeAsString(name);
 
             string[] ss = s.Split(',');
             double x = XmlConvert.ToDouble(ss[0]);
@@ -998,7 +1016,7 @@
         /// 
         private Size ParseSizeAttribute(string name) {
 
-            string s = reader.AttributeAsString(name);
+            string s = rd.AttributeAsString(name);
 
             string[] ss = s.Split(',');
             double w = XmlConvert.ToDouble(ss[0]);
@@ -1015,8 +1033,8 @@
         /// 
         private Ratio ParseRatioAttribute(string name) {
 
-            if (reader.AttributeExists(name)) {
-                double v = reader.AttributeAsDouble(name);
+            if (rd.AttributeExists(name)) {
+                double v = rd.AttributeAsDouble(name);
                 return Ratio.FromPercent((int)(v * 1000.0));
             }
             else
@@ -1031,8 +1049,8 @@
         /// 
         private Angle ParseAngleAttribute(string name) {
 
-            if (reader.AttributeExists(name)) {
-                double v = reader.AttributeAsDouble(name);
+            if (rd.AttributeExists(name)) {
+                double v = rd.AttributeAsDouble(name);
                 return Angle.FromDegrees((int)(v * 100.0));
             }
             else
@@ -1048,8 +1066,8 @@
         /// 
         private int ParseNumberAttribute(string name, int defValue = 0) {
 
-            if (reader.AttributeExists(name)) {
-                double v = reader.AttributeAsDouble(name, defValue);
+            if (rd.AttributeExists(name)) {
+                double v = rd.AttributeAsDouble(name, defValue);
                 return (int)(v * 1000000.0);
             }
             else
@@ -1065,8 +1083,8 @@
         /// 
         private Color ParseColorAttribute(string name, Color defColor) {
 
-            if (reader.AttributeExists(name)) {
-                string s = reader.AttributeAsString(name);
+            if (rd.AttributeExists(name)) {
+                string s = rd.AttributeAsString(name);
                 return Color.Parse(s);
             }
             else
@@ -1082,7 +1100,7 @@
         /// 
         private bool ParseBoolAttribute(string name, bool defValue) {
 
-            return reader.AttributeAsBoolean(name, defValue);
+            return rd.AttributeAsBoolean(name, defValue);
         }
 
         /// <summary>
@@ -1095,7 +1113,7 @@
         /// 
         private T ParseEnumAttribute<T>(string name, T defValue) {
 
-            return reader.AttributeAsEnum(name, defValue);
+            return rd.AttributeAsEnum(name, defValue);
         }
     }
 }

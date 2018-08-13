@@ -2,6 +2,7 @@
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Geometry.Fonts;
     using System;
 
     /// <summary>

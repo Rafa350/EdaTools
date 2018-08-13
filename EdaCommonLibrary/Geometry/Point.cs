@@ -2,6 +2,8 @@
 
     using System;
     using System.Globalization;
+    using System.Xml;
+    using MikroPic.EdaTools.v1.Xml;
 
     /// <summary>
     /// Estructura que representa un punt. Aquesta estructura es inmutable.
@@ -78,6 +80,19 @@
             get {
                 return y;
             }
+        }
+    }
+
+
+    public static class PointHelper {
+
+        public static void WriteAttribute(this XmlWriterAdapter wr, string name, Point point) {
+
+            string s = String.Format(
+                "{0}, {1}",
+                XmlConvert.ToString(point.X / 1000000.0),
+                XmlConvert.ToString(point.Y / 1000000.0));
+            wr.WriteAttribute(name, s);
         }
     }
 }

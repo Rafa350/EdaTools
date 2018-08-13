@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Geometry {
+﻿namespace MikroPic.EdaTools.v1.Geometry.Fonts {
 
     public enum TextAlign {
         TopLeft,

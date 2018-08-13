@@ -196,6 +196,24 @@
                 </glyph>
             </char>
           
+            <!-- 'B' -->
+            <char code="0x42" advance="6">
+                <glyph>
+                    <moveTo position="0, 0"/>
+                    <lineTo position="0, 6"/>                    
+                    <lineTo position="3, 6"/>                    
+                    <lineTo position="4, 5"/>                    
+                    <lineTo position="4, 4"/>                    
+                    <lineTo position="3, 3"/>                    
+                    <lineTo position="4, 2"/>                    
+                    <lineTo position="4, 1"/>                    
+                    <lineTo position="3, 0"/>                    
+                    <lineTo position="0, 0"/>                    
+                    <moveTo position="0, 3"/>
+                    <lineTo position="3, 3"/>                    
+                </glyph>
+            </char>
+
             <!-- 'C' -->
             <char code="0x43" advance="6">
                 <glyph>
@@ -246,7 +264,31 @@
                 </glyph>
             </char>
 
-          <!-- 'J' -->
+            <!-- 'H' -->
+            <char code="0x48" advance="6">
+                <glyph>
+                    <moveTo position="0, 0"/>
+                    <lineTo position="0, 6"/>
+                    <moveTo position="4, 0"/>
+                    <lineTo position="4, 6"/>
+                    <moveTo position="0, 3"/>
+                    <lineTo position="5, 4"/>
+                </glyph>
+            </char>
+            
+            <!-- 'I' -->
+            <char code="0x49" advance="6">
+                <glyph>
+                    <moveTo position="0, 0"/>
+                    <lineTo position="4, 0"/>
+                    <moveTo position="0, 6"/>
+                    <lineTo position="4, 6"/>
+                    <moveTo position="3, 0"/>
+                    <lineTo position="3, 6"/>                
+                </glyph>
+            </char>
+                
+            <!-- 'J' -->
             <char code="0x4A" advance="6">
                 <glyph>
                     <moveTo position="0, 1"/>

@@ -36,7 +36,7 @@
         }
 
         private readonly List<Segment> segments = new List<Segment>();
-        private int thickness = 100000;
+        private int thickness;
         private bool filled;
         private int clearance;
 
