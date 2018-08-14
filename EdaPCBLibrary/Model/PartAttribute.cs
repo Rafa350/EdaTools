@@ -14,7 +14,8 @@
         private Point position;
         private Angle rotation;
         private int height;
-        private TextAlign align;
+        private HorizontalTextAlign horizontalAlign;
+        private VerticalTextAlign verticalAlign;
         private bool usePosition;
         private bool useRotation;
         private bool useHeight;
@@ -36,13 +37,16 @@
             this.name = name;
             this.value = value;
             IsVisible = isVisible;
+            horizontalAlign = HorizontalTextAlign.Left;
+            verticalAlign = VerticalTextAlign.Bottom;
             usePosition = false;
             useRotation = false;
             useHeight = false;
             useAlign = false;
         }
 
-        public PartAttribute(string name, Point position, Angle rotation, int height, TextAlign align, string value) {
+        public PartAttribute(string name, Point position, Angle rotation, int height, 
+            HorizontalTextAlign horizontalAlign, VerticalTextAlign verticalAlign, string value) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -60,7 +64,8 @@
             this.height = height;
             useHeight = true;
 
-            this.align = align;
+            this.horizontalAlign = horizontalAlign;
+            this.verticalAlign = verticalAlign;
             useAlign = true;
         }
 
@@ -124,12 +129,26 @@
         /// Obte l'aliniacio del atribut.
         /// </summary>
         /// 
-        public TextAlign Align {
+        public HorizontalTextAlign HorizontalAlign {
             get {
-                return align;
+                return horizontalAlign;
             }
             set {
-                align = value;
+                horizontalAlign = value;
+                useAlign = true;
+            }
+        }
+
+        /// <summary>
+        /// Obte l'aliniacio del atribut.
+        /// </summary>
+        /// 
+        public VerticalTextAlign VerticalAlign {
+            get {
+                return verticalAlign;
+            }
+            set {
+                verticalAlign = value;
                 useAlign = true;
             }
         }

@@ -29,11 +29,13 @@
         /// <param name="text">El text.</param>
         /// <param name="position">Posicio</param>
         /// <param name="angle">Angle de rotacio.</param>
-        /// <param name="align">Aliniacio.</param>
+        /// <param name="horizontalAlign">Aliniacio horitzontal.</param>
+        /// <param name="verticalAlign">Aliniacio vertical.</param>
         /// <param name="height">Alçada de lletra.</param>
         /// <returns>La llista de glyphs preparats per dibuixar.</returns>
         /// 
-        public IEnumerable<GlyphTrace> Draw(string text, Point position, TextAlign align, int height) {
+        public IEnumerable<GlyphTrace> Draw(string text, Point position, HorizontalTextAlign horizontalAlign, 
+            VerticalTextAlign verticalAlign, int height) {
 
             List<GlyphTrace> glyphTraces = new List<GlyphTrace>();
 
@@ -51,42 +53,30 @@
                 // Calcula els offsets en funcio de l'aliniacio
                 //
                 int offsetX = 0;
-                switch (align) {
-                    case TextAlign.TopLeft:
-                    case TextAlign.MiddleLeft:
-                    case TextAlign.BottomLeft:
+                switch (horizontalAlign) {
+                    case HorizontalTextAlign.Left:
                         break;
 
-                    case TextAlign.TopCenter:
-                    case TextAlign.MiddleCenter:
-                    case TextAlign.BottomCenter:
+                    case HorizontalTextAlign.Center:
                         offsetX = -width / 2;
                         break;
 
-                    case TextAlign.TopRight:
-                    case TextAlign.MiddleRight:
-                    case TextAlign.BottomRight:
+                    case HorizontalTextAlign.Right:
                         offsetX = -width;
                         break;
                 }
 
                 int offsetY = 0;
-                switch (align) {
-                    case TextAlign.TopLeft:
-                    case TextAlign.TopCenter:
-                    case TextAlign.TopRight:
+                switch (verticalAlign) {
+                    case VerticalTextAlign.Top:
                         offsetY = -font.Ascendent;
                         break;
 
-                    case TextAlign.MiddleLeft:
-                    case TextAlign.MiddleCenter:
-                    case TextAlign.MiddleRight:
+                    case VerticalTextAlign.Middle:
                         offsetY = -font.Ascendent / 2;
                         break;
 
-                    case TextAlign.BottomLeft:
-                    case TextAlign.BottomCenter:
-                    case TextAlign.BottomRight:
+                    case VerticalTextAlign.Bottom:
                         break;
                 }
 

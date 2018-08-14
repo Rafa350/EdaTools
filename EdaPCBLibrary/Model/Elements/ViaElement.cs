@@ -13,8 +13,8 @@
 
         public enum ViaShape {
             Square,
-            Octogonal,
-            Circular
+            Octagon,
+            Circle
         }
 
         public enum ViaType {
@@ -34,7 +34,7 @@
         private int drill;
         private int outerSize = 0;
         private int innerSize = 0;
-        private ViaShape shape = ViaShape.Circular;
+        private ViaShape shape = ViaShape.Circle;
         private ViaType type = ViaType.Through;
 
         /// <summary>
@@ -87,7 +87,7 @@
             int spacingM2 = spacing * 2;
             int spacingD2 = spacing / 2;
 
-            ViaShape shape = side == BoardSide.Inner ? ViaShape.Circular : this.shape;
+            ViaShape shape = side == BoardSide.Inner ? ViaShape.Circle : this.shape;
 
             switch (shape) {
                 case ViaShape.Square:
@@ -97,7 +97,7 @@
                         0, 
                         Angle.FromDegrees(0));
 
-                case ViaShape.Octogonal:
+                case ViaShape.Octagon:
                     return PolygonBuilder.BuildPolygon(
                         8, 
                         position, 

@@ -15,7 +15,8 @@
         private Angle rotation;
         private int height;
         private int thickness;
-        private TextAlign align = TextAlign.MiddleCenter;
+        private HorizontalTextAlign horizontalAlign;
+        private VerticalTextAlign verticalAlign;
         private string value;
 
         /// <summary>
@@ -25,9 +26,12 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="height">Alçada de lletra.</param>
         /// <param name="thickness">Amplada de linia.</param>
-        /// <param name="align">Alineacio respecte la posicio.</param>
+        /// <param name="horizontalAlign">Aliniacio horitzontal.</param>
+        /// <param name="verticalAlign">Aliniacio vertical.</param>
         /// 
-        public TextElement(Point position, Angle rotation, int height, int thickness, TextAlign align = TextAlign.MiddleCenter):
+        public TextElement(Point position, Angle rotation, int height, int thickness, 
+            HorizontalTextAlign horizontalAlign = HorizontalTextAlign.Left,
+            VerticalTextAlign verticalAlign = VerticalTextAlign.Bottom):
             base() {
 
             if (height <= 0)
@@ -40,7 +44,8 @@
             this.rotation = rotation;
             this.height = height;
             this.thickness = thickness;
-            this.align = align;
+            this.horizontalAlign = horizontalAlign;
+            this.verticalAlign = verticalAlign;
         }
 
         /// <summary>
@@ -146,15 +151,28 @@
         }
 
         /// <summary>
-        /// Obte o asigna l'aliniacio del text.
+        /// Obte o asigna l'aliniacio horitzontal del text.
         /// </summary>
         /// 
-        public TextAlign Align {
+        public HorizontalTextAlign HorizontalAlign {
             get {
-                return align;
+                return horizontalAlign;
             }
             set {
-                align = value;
+                horizontalAlign = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna l'aliniacio vertical del text.
+        /// </summary>
+        /// 
+        public VerticalTextAlign VerticalAlign {
+            get {
+                return verticalAlign;
+            }
+            set {
+                verticalAlign = value;
             }
         }
 

@@ -15,7 +15,7 @@
     /// Clase per la escriptura de plaques en un stream.
     /// </summary>
     /// 
-    public sealed class XmlBoardWriter {
+    public sealed class BoardWriter {
 
         private Stream stream;
 
@@ -156,8 +156,10 @@
                     wr.WriteAttribute("rotation", text.Rotation);
                 wr.WriteAttribute("height", FormatNumber(text.Height));
                 wr.WriteAttribute("thickness", FormatNumber(text.Thickness));
-                if (text.Align != TextAlign.TopLeft)
-                    wr.WriteAttribute("align", text.Align);
+                if (text.HorizontalAlign != HorizontalTextAlign.Left)
+                    wr.WriteAttribute("horizontalAlign", text.HorizontalAlign);
+                if (text.VerticalAlign != VerticalTextAlign.Bottom)
+                    wr.WriteAttribute("verticalAlign", text.VerticalAlign);
                 if (!String.IsNullOrEmpty(text.Value))
                     wr.WriteAttribute("value", text.Value);
 
@@ -221,8 +223,8 @@
                     wr.WriteAttribute("rotation", pad.Rotation);
                 wr.WriteAttribute("size", FormatNumber(pad.TopSize));
                 wr.WriteAttribute("drill", FormatNumber(pad.Drill));
-                if (pad.Shape != ThPadElement.ThPadShape.Circular)
-                    wr.WriteAttribute("shape", pad.Shape.ToString());
+                if (pad.Shape != ThPadElement.ThPadShape.Circle)
+                    wr.WriteAttribute("shape", pad.Shape);
 
                 Signal signal = board.GetSignal(pad, currentPart, false);
                 if (signal != null)
@@ -250,8 +252,12 @@
                     wr.WriteAttribute("rotation", attr.Rotation);
                 if (attr.UseHeight)
                     wr.WriteAttribute("height", FormatNumber(attr.Height));
-                if (attr.UseAlign)
-                    wr.WriteAttribute("align", attr.Align);
+                if (attr.UseAlign) {
+                    if (attr.HorizontalAlign != HorizontalTextAlign.Left)
+                        wr.WriteAttribute("horizontalAlign", attr.HorizontalAlign);
+                    if (attr.VerticalAlign != VerticalTextAlign.Bottom)
+                        wr.WriteAttribute("verticalAlign", attr.VerticalAlign);
+                }
 
                 wr.WriteEndElement();
             }
@@ -376,7 +382,7 @@
                 wr.WriteAttribute("outerSize", FormatNumber(via.OuterSize));
                 if (via.InnerSize != via.OuterSize)
                     wr.WriteAttribute("innerSize", FormatNumber(via.InnerSize));
-                if (via.Shape != ViaElement.ViaShape.Circular)
+                if (via.Shape != ViaElement.ViaShape.Circle)
                     wr.WriteAttribute("shape", via.Shape);
                 if (via.Type != ViaElement.ViaType.Through)
                     wr.WriteAttribute("type", via.Type);
@@ -400,7 +406,6 @@
                 wr.WriteAttribute("name", layer.Name);
                 wr.WriteAttribute("side", layer.Side);
                 wr.WriteAttribute("function", layer.Function);
-                //wr.WriteAttribute("color", FormatColor(layer.Color));
                 wr.WriteAttribute("color", layer.Color);
                 if (!layer.IsVisible)
                     wr.WriteAttribute("visible", "false");
@@ -457,7 +462,7 @@
             /// 
             public override void Visit(Board board) {
 
-                wr.WriteStartElement("board");
+                wr.WriteStartElement("board", "http://MikroPic.com/schemas/edatools/v1/XBRD.xsd");
 
                 wr.WriteAttribute("version", "211");
                 wr.WriteAttribute("units", "mm");
@@ -537,7 +542,7 @@
         /// </summary>
         /// <param name="stream">Stream de sortida.</param>
         /// 
-        public XmlBoardWriter(Stream stream) {
+        public BoardWriter(Stream stream) {
 
             if (stream == null)
                 throw new ArgumentNullException("stream");

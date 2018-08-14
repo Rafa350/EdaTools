@@ -8,24 +8,42 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Reflection;
     using System.Xml;
+    using System.Xml.Schema;
 
     /// <summary>
     /// Clase per la lectura de plaques des d'un stream
     /// </summary>
     /// 
-    public sealed class XmlBoardReader {
+    public sealed class BoardReader {
+
+        private static readonly XmlSchemaSet schemas;
 
         private readonly XmlReaderAdapter rd;
         private Board board;
         private int version;
+
+        static BoardReader() {
+
+            schemas = new XmlSchemaSet();
+
+            string schemaResourceName = "MikroPic.EdaTools.v1.Pcb.Model.IO.Schemas.XBRD.xsd";
+            Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(schemaResourceName);
+            if (resourceStream == null)
+                throw new Exception(String.Format("No se encontro el recurso '{0}'", schemaResourceName));
+            XmlSchema schema = XmlSchema.Read(resourceStream, null);
+            schemas.Add(schema);
+
+            schemas.Compile();
+        }
 
         /// <summary>
         /// Constructor de la clase.
         /// </summary>
         /// <param name="stream">Stream de lectura.</param>
         /// 
-        public XmlBoardReader(Stream stream) {
+        public BoardReader(Stream stream) {
 
             if (stream == null)
                 throw new ArgumentNullException("stream");
@@ -33,20 +51,13 @@
             if (!stream.CanRead)
                 throw new InvalidOperationException("El stream no es de lectura.");
 
-
-            /*Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(schemaResourceName);
-            if (resourceStream == null)
-                throw new Exception(String.Format("No se encontro el recurso '{0}'", schemaResourceName));
-            XmlSchema schema = XmlSchema.Read(resourceStream, null);
-            */
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.IgnoreProcessingInstructions = true;
             settings.IgnoreWhitespace = true;
             settings.IgnoreComments = true;
             settings.CloseInput = false;
-            //settings.ValidationType = ValidationType.Schema;
-            //settings.Schemas.Add(schema);
-            settings.MaxCharactersInDocument = 1000000;
+            settings.ValidationType = ValidationType.Schema;
+            settings.Schemas = schemas;
             settings.ConformanceLevel = ConformanceLevel.Document;
 
             XmlReader reader = XmlReader.Create(stream, settings);
@@ -509,8 +520,11 @@
             if (rd.AttributeExists("height"))
                 attribute.Height = ParseNumberAttribute("height");
 
-            if (rd.AttributeExists("align"))
-                attribute.Align = ParseEnumAttribute("align", TextAlign.TopLeft);
+            if (rd.AttributeExists("horizontalAlign"))
+                attribute.HorizontalAlign = ParseEnumAttribute("horizontalAlign", HorizontalTextAlign.Left);
+
+            if (rd.AttributeExists("verticalAlign"))
+                attribute.VerticalAlign = ParseEnumAttribute("verticalAlign", VerticalTextAlign.Bottom);
 
             rd.NextTag();
         }
@@ -802,7 +816,7 @@
             int size = ParseNumberAttribute("size");
             Angle rotation = ParseAngleAttribute("rotation");
             int drill = ParseNumberAttribute("drill");
-            ThPadElement.ThPadShape shape = ParseEnumAttribute("shape", ThPadElement.ThPadShape.Circular);
+            ThPadElement.ThPadShape shape = ParseEnumAttribute("shape", ThPadElement.ThPadShape.Circle);
             string[] layerNames = rd.AttributeAsStrings("layers");
 
             // Crea l'element i l'afegeix a la llista
@@ -893,7 +907,7 @@
             Point position = ParsePointAttribute("position");
             int size = ParseNumberAttribute("size");
             int drill = ParseNumberAttribute("drill");
-            ViaElement.ViaShape shape = ParseEnumAttribute("shape", ViaElement.ViaShape.Circular);
+            ViaElement.ViaShape shape = ParseEnumAttribute("shape", ViaElement.ViaShape.Circle);
             string[] layerNames = rd.AttributeAsStrings("layers");
 
             // Crtea l'element i l'afegeix a la llista
@@ -969,14 +983,15 @@
             Point position = ParsePointAttribute("position");
             Angle rotation = ParseAngleAttribute("rotation");
             int height = ParseNumberAttribute("height");
-            TextAlign align = ParseEnumAttribute("align", TextAlign.TopLeft);
+            HorizontalTextAlign horizontalAlign = ParseEnumAttribute("horizontalAlign", HorizontalTextAlign.Left);
+            VerticalTextAlign verticalAlign = ParseEnumAttribute("verticalAlign", VerticalTextAlign.Bottom);
             int thickness = ParseNumberAttribute("thickness");
             string value = rd.AttributeAsString("value");
             string[] layerNames = rd.AttributeAsStrings("layers");
 
             // Crea l'objecte i l'afegeix al la llista
             //
-            TextElement text = new TextElement(position, rotation, height, thickness);
+            TextElement text = new TextElement(position, rotation, height, thickness, horizontalAlign, verticalAlign);
             elementList.Add(text);
             text.Value = value;
 

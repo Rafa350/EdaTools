@@ -1,34 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<board version="211" units="mm" position="0, 0" rotation="0">
+<board version="211" units="mm" position="0, 0" rotation="0" xmlns="http://MikroPic.com/schemas/edatools/v1/XBRD.xsd">
     <layers>
-        <layer name="Top" side="Top" function="Signal" color="153, 255, 0, 0" />
-        <layer name="Bottom" side="Bottom" function="Signal" color="204, 0, 0, 255" />
-        <layer name="Pads" side="Unknown" function="Unknown" color="255, 234, 161, 64" />
-        <layer name="Vias" side="Unknown" function="Unknown" color="255, 0, 128, 0" />
-        <layer name="Unrouted" side="Unknown" function="Unknown" color="255, 255, 255, 0" />
-        <layer name="Profile" side="Unknown" function="Unknown" color="255, 255, 255, 255" />
-        <layer name="TopPlace" side="Top" function="Unknown" color="204, 211, 211, 211" />
-        <layer name="BottomPlace" side="Bottom" function="Unknown" color="204, 211, 211, 211" />
-        <layer name="Unknown" side="Unknown" function="Unknown" color="255, 255, 255, 255" />
-        <layer name="TopNames" side="Top" function="Unknown" color="255, 211, 211, 211" />
-        <layer name="BottomNames" side="Bottom" function="Unknown" color="255, 211, 211, 211" />
-        <layer name="TopValues" side="Top" function="Unknown" color="255, 255, 255, 255" />
-        <layer name="BottomValues" side="Bottom" function="Unknown" color="255, 255, 255, 255" />
-        <layer name="TopStop" side="Top" function="Unknown" color="255, 255, 255, 255" />
-        <layer name="BottomStop" side="Bottom" function="Unknown" color="255, 255, 255, 255" />
-        <layer name="TopCream" side="Top" function="Unknown" color="255, 32, 178, 170" />
-        <layer name="BottomCream" side="Bottom" function="Unknown" color="255, 32, 178, 170" />
-        <layer name="TopGlue" side="Top" function="Unknown" color="255, 135, 206, 250" />
-        <layer name="BottomGlue" side="Bottom" function="Unknown" color="255, 135, 206, 250" />
-        <layer name="TopKeepout" side="Top" function="Unknown" color="102, 0, 255, 255" />
-        <layer name="BottomKeepout" side="Bottom" function="Unknown" color="102, 0, 255, 255" />
-        <layer name="TopRestrict" side="Top" function="Unknown" color="102, 148, 0, 211" />
-        <layer name="BottomRestrict" side="Bottom" function="Unknown" color="102, 148, 0, 211" />
-        <layer name="ViaRestrict" side="Unknown" function="Unknown" color="102, 148, 0, 211" />
-        <layer name="Drills" side="Unknown" function="Unknown" color="255, 255, 255, 255" />
-        <layer name="Holes" side="Unknown" function="Unknown" color="255, 240, 128, 128" />
-        <layer name="TopDocument" side="Top" function="Unknown" color="204, 160, 160, 160" />
-        <layer name="BottomDocument" side="Bottom" function="Unknown" color="204, 160, 160, 160" />
+        <layer name="Top" side="top" function="signal" color="153, 255, 0, 0" />
+        <layer name="Bottom" side="bottom" function="signal" color="204, 0, 0, 255" />
+        <layer name="Pads" side="unknown" function="unknown" color="255, 234, 161, 64" />
+        <layer name="Vias" side="unknown" function="unknown" color="255, 0, 128, 0" />
+        <layer name="Unrouted" side="unknown" function="unknown" color="255, 255, 255, 0" />
+        <layer name="Profile" side="unknown" function="unknown" color="255, 255, 255, 255" />
+        <layer name="TopPlace" side="top" function="unknown" color="204, 211, 211, 211" />
+        <layer name="BottomPlace" side="bottom" function="unknown" color="204, 211, 211, 211" />
+        <layer name="Unknown" side="unknown" function="unknown" color="255, 255, 255, 255" />
+        <layer name="TopNames" side="top" function="unknown" color="255, 211, 211, 211" />
+        <layer name="BottomNames" side="bottom" function="unknown" color="255, 211, 211, 211" />
+        <layer name="TopValues" side="top" function="unknown" color="255, 255, 255, 255" />
+        <layer name="BottomValues" side="bottom" function="unknown" color="255, 255, 255, 255" />
+        <layer name="TopStop" side="top" function="unknown" color="255, 255, 255, 255" />
+        <layer name="BottomStop" side="bottom" function="unknown" color="255, 255, 255, 255" />
+        <layer name="TopCream" side="top" function="unknown" color="255, 32, 178, 170" />
+        <layer name="BottomCream" side="bottom" function="unknown" color="255, 32, 178, 170" />
+        <layer name="TopGlue" side="top" function="unknown" color="255, 135, 206, 250" />
+        <layer name="BottomGlue" side="bottom" function="unknown" color="255, 135, 206, 250" />
+        <layer name="TopKeepout" side="top" function="unknown" color="102, 0, 255, 255" />
+        <layer name="BottomKeepout" side="bottom" function="unknown" color="102, 0, 255, 255" />
+        <layer name="TopRestrict" side="top" function="unknown" color="102, 148, 0, 211" />
+        <layer name="BottomRestrict" side="bottom" function="unknown" color="102, 148, 0, 211" />
+        <layer name="ViaRestrict" side="unknown" function="unknown" color="102, 148, 0, 211" />
+        <layer name="Drills" side="unknown" function="unknown" color="255, 255, 255, 255" />
+        <layer name="Holes" side="unknown" function="unknown" color="255, 240, 128, 128" />
+        <layer name="TopDocument" side="top" function="unknown" color="204, 160, 160, 160" />
+        <layer name="BottomDocument" side="bottom" function="unknown" color="204, 160, 160, 160" />
     </layers>
     <layerPairs>
         <pair layer1="Top" layer2="Bottom" />
@@ -180,10 +180,10 @@
                 <line layers="TopPlace" startPosition="2.54, -1.905" endPosition="2.54, 0.635" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="2.54, 0.635" endPosition="0, 0.635" thickness="0.1524" />
                 <line layers="TopPlace" startPosition="1.27, 6.985" endPosition="1.27, 1.27" thickness="0.762" />
-                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-1.27, -3.81" rotation="90" size="1.6256" drill="1.016" shape="Oval" />
-                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="1.27, -3.81" rotation="90" size="1.6256" drill="1.016" shape="Oval" />
-                <text layers="TopNames" position="-3.175, -3.81" rotation="90" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
-                <text layers="TopValues" position="4.445, -3.81" rotation="90" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
+                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-1.27, -3.81" rotation="90" size="1.6256" drill="1.016" shape="oval" />
+                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="1.27, -3.81" rotation="90" size="1.6256" drill="1.016" shape="oval" />
+                <text layers="TopNames" position="-3.175, -3.81" rotation="90" height="1.27" thickness="0.1" value="&gt;NAME" />
+                <text layers="TopValues" position="4.445, -3.81" rotation="90" height="1.27" thickness="0.1" value="&gt;VALUE" />
                 <rectangle layers="TopPlace" position="-1.27, 0.889" size="0.762, 0.508" />
                 <rectangle layers="TopPlace" position="1.27, 0.889" size="0.762, 0.508" />
                 <rectangle layers="TopPlace" position="-1.27, -2.413" size="0.762, 1.016" />
@@ -192,8 +192,8 @@
         </block>
         <block name="3,6@holes">
             <elements>
-                <arc layers="TopDocument" startPosition="-2.159, 0" endPosition="0, -2.159" angle="90" thickness="2.4892" lineCap="Flat" />
-                <arc layers="TopDocument" startPosition="0, 2.159" endPosition="2.159, 0" angle="-90" thickness="2.4892" lineCap="Flat" />
+                <arc layers="TopDocument" startPosition="-2.159, 0" endPosition="0, -2.159" angle="90" thickness="2.4892" lineCap="flat" />
+                <arc layers="TopDocument" startPosition="0, 2.159" endPosition="2.159, 0" angle="-90" thickness="2.4892" lineCap="flat" />
                 <circle layers="TopPlace" position="0, 0" radius="3.429" thickness="0.1524" />
                 <circle layers="TopDocument" position="0, 0" radius="0.762" thickness="0.4572" />
                 <circle layers="TopKeepout" position="0, 0" radius="3.048" thickness="2.7686" />
@@ -223,8 +223,8 @@
                 <spad name="8" layers="Top, Pads, TopCream, TopStop" position="-1.905, 3.0425" size="0.6, 1.8" roundness="0.25" />
                 <spad name="6" layers="Top, Pads, TopCream, TopStop" position="0.635, 3.0425" size="0.6, 1.8" roundness="0.25" />
                 <spad name="5" layers="Top, Pads, TopCream, TopStop" position="1.905, 3.0425" size="0.6, 1.8" roundness="0.25" />
-                <text layers="TopNames" position="-3, -1.5" rotation="90" height="1" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
-                <text layers="TopValues" position="3, 1.5" rotation="270" height="1" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
+                <text layers="TopNames" position="-3, -1.5" rotation="90" height="1" thickness="0.1" value="&gt;NAME" />
+                <text layers="TopValues" position="3, 1.5" rotation="270" height="1" thickness="0.1" value="&gt;VALUE" />
                 <rectangle layers="TopDocument" position="-1.905, -2.23255" size="0.4902, 1.1001" />
                 <rectangle layers="TopDocument" position="-0.635, -2.23255" size="0.4902, 1.1001" />
                 <rectangle layers="TopDocument" position="0.635, -2.23255" size="0.4902, 1.1001" />
@@ -250,8 +250,8 @@
                 <spad name="2" layers="Top, Pads, TopCream, TopStop" position="1.27, -3.1" size="1, 1.25" roundness="0.25" />
                 <spad name="3" layers="Top, Pads, TopCream, TopStop" position="1.27, 3.1" size="1, 1.25" roundness="0.25" />
                 <spad name="4" layers="Top, Pads, TopCream, TopStop" position="-1.27, 3.1" size="1, 1.25" roundness="0.25" />
-                <text layers="TopNames" position="-2.54, -3.81" rotation="90" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
-                <text layers="TopValues" position="3.81, -3.81" rotation="90" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
+                <text layers="TopNames" position="-2.54, -3.81" rotation="90" height="1.27" thickness="0.1" value="&gt;NAME" />
+                <text layers="TopValues" position="3.81, -3.81" rotation="90" height="1.27" thickness="0.1" value="&gt;VALUE" />
                 <rectangle layers="TopDocument" position="-1.27, -2.60745" size="0.4998, 1.1301" />
                 <rectangle layers="TopDocument" position="1.27, -2.60745" size="0.4998, 1.1301" />
                 <rectangle layers="TopDocument" position="1.27, 2.60745" size="0.4998, 1.1301" />
@@ -275,8 +275,8 @@
                 <spad name="6" layers="Top, Pads, TopCream, TopStop" position="1.27, 4.77" size="1.6, 2" roundness="0.25" />
                 <spad name="7" layers="Top, Pads, TopCream, TopStop" position="-1.27, 4.77" size="1.6, 2" roundness="0.25" />
                 <spad name="8" layers="Top, Pads, TopCream, TopStop" position="-3.81, 4.77" size="1.6, 2" roundness="0.25" />
-                <text layers="TopNames" position="-5.08, -3.175" rotation="90" height="1" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
-                <text layers="TopValues" position="6.35, -3.175" rotation="90" height="1" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
+                <text layers="TopNames" position="-5.08, -3.175" rotation="90" height="1" thickness="0.1" value="&gt;NAME" />
+                <text layers="TopValues" position="6.35, -3.175" rotation="90" height="1" thickness="0.1" value="&gt;VALUE" />
                 <rectangle layers="TopDocument" position="-3.8025, -4.175" size="1.225, 1.95" />
                 <rectangle layers="TopDocument" position="-1.2625, -4.175" size="1.225, 1.95" />
                 <rectangle layers="TopDocument" position="1.2775, -4.175" size="1.225, 1.95" />
@@ -296,13 +296,13 @@
                 <line layers="TopPlace" startPosition="-3, 1" endPosition="5, 1" thickness="0.127" />
                 <line layers="TopPlace" startPosition="5, 1" endPosition="5, -1" thickness="0.127" />
                 <line layers="TopPlace" startPosition="-3, 1" endPosition="-3, -1" thickness="0.127" />
-                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-4, 0" rotation="90" size="1.28" drill="0.8" shape="Square" />
-                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-2, 0" rotation="90" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="0, 0" rotation="90" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="4" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="2, 0" rotation="90" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="5" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="4, 0" rotation="90" size="1.28" drill="0.8" shape="Octogonal" />
-                <text layers="TopNames" position="-5, 1.5" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
-                <text layers="TopValues" position="-5, -2.5" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
+                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-4, 0" rotation="90" size="1.28" drill="0.8" shape="square" />
+                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-2, 0" rotation="90" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="0, 0" rotation="90" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="4" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="2, 0" rotation="90" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="5" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="4, 0" rotation="90" size="1.28" drill="0.8" shape="octagon" />
+                <text layers="TopNames" position="-5, 1.5" height="1.27" thickness="0.1" value="&gt;NAME" />
+                <text layers="TopValues" position="-5, -2.5" height="1.27" thickness="0.1" value="&gt;VALUE" />
                 <rectangle layers="TopDocument" position="4, 0" size="0.508, 0.508" />
                 <rectangle layers="TopDocument" position="2, 0" size="0.508, 0.508" />
                 <rectangle layers="TopDocument" position="0, 0" size="0.508, 0.508" />
@@ -340,8 +340,8 @@
                 <spad name="10" layers="Top, Pads, TopCream, TopStop" position="3.175, 3.0734" size="0.6604, 2.032" />
                 <spad name="8" layers="Top, Pads, TopCream, TopStop" position="4.445, -3.0734" size="0.6604, 2.032" />
                 <spad name="9" layers="Top, Pads, TopCream, TopStop" position="4.445, 3.0734" size="0.6604, 2.032" />
-                <text layers="TopValues" position="-4.064, -0.635" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
-                <text layers="TopNames" position="-5.461, -2.032" rotation="90" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
+                <text layers="TopValues" position="-4.064, -0.635" height="1.27" thickness="0.1" value="&gt;VALUE" />
+                <text layers="TopNames" position="-5.461, -2.032" rotation="90" height="1.27" thickness="0.1" value="&gt;NAME" />
                 <rectangle layers="TopDocument" position="-0.635, 2.5273" size="0.508, 1.143" />
                 <rectangle layers="TopDocument" position="-4.445, -2.5273" size="0.508, 1.143" />
                 <rectangle layers="TopDocument" position="-3.175, -2.5273" size="0.508, 1.143" />
@@ -410,8 +410,8 @@
                 <line layers="TopPlace" startPosition="0.635, 0" endPosition="1.143, 0" thickness="0.0508" />
                 <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-4.826, 0" size="5.08, 1.778" />
                 <spad name="2" layers="Top, Pads, TopCream, TopStop" position="4.826, 0" size="5.08, 1.778" />
-                <text layers="TopNames" position="-5.715, 2.667" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
-                <text layers="TopValues" position="-5.715, -4.064" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
+                <text layers="TopNames" position="-5.715, 2.667" height="1.27" thickness="0.1" value="&gt;NAME" />
+                <text layers="TopValues" position="-5.715, -4.064" height="1.27" thickness="0.1" value="&gt;VALUE" />
                 <rectangle layers="ViaRestrict" position="0, 0.127" size="13.208, 5.334" />
             </elements>
         </block>
@@ -470,8 +470,8 @@
                 <spad name="42" layers="Top, Pads, TopCream, TopStop" position="-2.4, 5.8" size="0.5, 1.5" roundness="0.5" />
                 <spad name="43" layers="Top, Pads, TopCream, TopStop" position="-3.2, 5.8" size="0.5, 1.5" roundness="0.5" />
                 <spad name="44" layers="Top, Pads, TopCream, TopStop" position="-4, 5.8" size="0.5, 1.5" roundness="0.5" />
-                <text layers="TopNames" position="-4.064, 6.858" height="1" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
-                <text layers="TopValues" position="-4.064, -8.1201" height="1" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
+                <text layers="TopNames" position="-4.064, 6.858" height="1" thickness="0.1" value="&gt;NAME" />
+                <text layers="TopValues" position="-4.064, -8.1201" height="1" thickness="0.1" value="&gt;VALUE" />
                 <rectangle layers="TopDocument" position="-5.52505, 4" size="1.1501, 0.3998" />
                 <rectangle layers="TopDocument" position="-5.52505, 3.2" size="1.1501, 0.4" />
                 <rectangle layers="TopDocument" position="-5.52505, 2.3999" size="1.1501, 0.4" />
@@ -540,7 +540,7 @@
                 <spad name="S1" layers="Top, Pads, TopCream, TopStop" position="-5, 0" size="2.25, 3" roundness="0.25" />
                 <spad name="S2" layers="Top, Pads, TopCream, TopStop" position="5, 0" size="2.25, 3" roundness="0.25" />
                 <spad name="5" layers="Top, Pads, TopCream, TopStop" position="2.52, -3.5" size="0.7, 1.8" roundness="0.5" />
-                <text layers="TopNames" position="-3.75, 2.75" height="1" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
+                <text layers="TopNames" position="-3.75, 2.75" height="1" thickness="0.1" value="&gt;NAME" />
                 <rectangle layers="TopDocument" position="-2.5, -3.25" size="0.5, 1.5" />
                 <rectangle layers="TopDocument" position="-1.25, -3.25" size="0.5, 1.5" />
                 <rectangle layers="TopDocument" position="0, -3.25" size="0.5, 1.5" />
@@ -573,7 +573,7 @@
                 <spad name="4" layers="Top, Pads, TopCream, TopStop" position="1.875, -3.5" size="0.7, 1.8" roundness="0.5" />
                 <spad name="S1" layers="Top, Pads, TopCream, TopStop" position="-4.375, 0" size="2.25, 3" roundness="0.25" />
                 <spad name="S2" layers="Top, Pads, TopCream, TopStop" position="4.375, 0" size="2.25, 3" roundness="0.25" />
-                <text layers="TopNames" position="-3.175, 2.85" height="1" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
+                <text layers="TopNames" position="-3.175, 2.85" height="1" thickness="0.1" value="&gt;NAME" />
                 <rectangle layers="TopDocument" position="-1.875, -3.25" size="0.5, 1.5" />
                 <rectangle layers="TopDocument" position="-0.625, -3.25" size="0.5, 1.5" />
                 <rectangle layers="TopDocument" position="0.625, -3.25" size="0.5, 1.5" />
@@ -600,8 +600,8 @@
                 <spad name="3" layers="Top, Pads" position="1.499, -1.981" size="1, 1.5" />
                 <spad name="2" layers="Top, Pads" position="0, -1.727" size="1, 2" />
                 <spad name="2@1" layers="Top, Pads, TopStop" position="0, 0.94" size="2.2, 3.7" roundness="1" />
-                <text layers="TopNames" position="-2.54, 3.175" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
-                <text layers="TopValues" position="-2.4051, -4.3449" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
+                <text layers="TopNames" position="-2.54, 3.175" height="1.27" thickness="0.1" value="&gt;NAME" />
+                <text layers="TopValues" position="-2.4051, -4.3449" height="1.27" thickness="0.1" value="&gt;VALUE" />
                 <rectangle layers="TopDocument" position="-1.4986, -1.6891" size="0.4572, 0.8382" />
                 <rectangle layers="TopDocument" position="1.4986, -1.6891" size="0.4572, 0.8382" />
                 <rectangle layers="TopDocument" position="0, -1.6891" size="0.5588, 0.8382" />
@@ -633,8 +633,8 @@
                 <line layers="TopPlace" startPosition="0.85, -0.8" endPosition="-0.85, -0.8" thickness="0.2032" />
                 <spad name="A" layers="Top, Pads, TopCream, TopStop" position="1.625, 0" size="0.91, 1.22" />
                 <spad name="C" layers="Top, Pads, TopCream, TopStop" position="-1.625, 0" size="0.91, 1.22" />
-                <text layers="TopNames" position="-2, 1" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
-                <text layers="TopValues" position="-2, -2.5" height="1.27" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
+                <text layers="TopNames" position="-2, 1" height="1.27" thickness="0.1" value="&gt;NAME" />
+                <text layers="TopValues" position="-2, -2.5" height="1.27" thickness="0.1" value="&gt;VALUE" />
                 <rectangle layers="TopDocument" position="-1.6125, 0" size="0.375, 1.1" />
                 <rectangle layers="TopDocument" position="1.6125, 0" size="0.375, 1.1" rotation="180" />
                 <rectangle layers="TopPlace" position="-0.8, 0.0125" size="0.3, 1.575" />
@@ -642,58 +642,58 @@
         </block>
         <block name="DF11-16DP-2DSA@hirose-df11">
             <elements>
-                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-7.02, -1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-7.02, 1" size="1.28" drill="0.8" shape="Square" />
-                <tpad name="4" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-5.02, -1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-5.02, 1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="6" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-3.02, -1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="5" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-3.02, 1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="8" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-1.02, -1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="7" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-1.02, 1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="10" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="0.98, -1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="9" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="0.98, 1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="12" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="2.98, -1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="11" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="2.98, 1" size="1.28" drill="0.8" shape="Octogonal" />
-                <text layers="TopNames" position="-9.02, 2.5" height="1" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
-                <text layers="TopValues" position="8.98, -2.5" rotation="180" height="1" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
+                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-7.02, -1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-7.02, 1" size="1.28" drill="0.8" shape="square" />
+                <tpad name="4" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-5.02, -1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-5.02, 1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="6" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-3.02, -1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="5" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-3.02, 1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="8" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-1.02, -1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="7" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-1.02, 1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="10" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="0.98, -1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="9" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="0.98, 1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="12" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="2.98, -1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="11" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="2.98, 1" size="1.28" drill="0.8" shape="octagon" />
+                <text layers="TopNames" position="-9.02, 2.5" height="1" thickness="0.1" value="&gt;NAME" />
+                <text layers="TopValues" position="8.98, -2.5" rotation="180" height="1" thickness="0.1" value="&gt;VALUE" />
                 <line layers="TopPlace" startPosition="-9.02, -2.25" endPosition="8.98, -2.25" thickness="0.127" />
                 <line layers="TopPlace" startPosition="8.98, -2.25" endPosition="8.98, 2.25" thickness="0.127" />
                 <line layers="TopPlace" startPosition="8.98, 2.25" endPosition="-9.02, 2.25" thickness="0.127" />
                 <line layers="TopPlace" startPosition="-9.02, 2.25" endPosition="-9.02, -2.25" thickness="0.127" />
                 <rectangle layers="TopPlace" position="-7.52, 1.125" size="3, 2.25" />
-                <tpad name="14" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="4.98, -1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="13" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="4.98, 1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="16" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="6.98, -1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="15" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="6.98, 1" size="1.28" drill="0.8" shape="Octogonal" />
+                <tpad name="14" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="4.98, -1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="13" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="4.98, 1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="16" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="6.98, -1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="15" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="6.98, 1" size="1.28" drill="0.8" shape="octagon" />
             </elements>
         </block>
         <block name="DF11-18DP-2DSA@hirose-df11">
             <elements>
-                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-8.02, -1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-8.02, 1" size="1.28" drill="0.8" shape="Square" />
-                <tpad name="4" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-6.02, -1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-6.02, 1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="6" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-4.019999, -1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="5" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-4.019999, 1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="8" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-2.02, -1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="7" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-2.02, 1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="10" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-0.02, -1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="9" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-0.02, 1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="12" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="1.98, -1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="11" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="1.98, 1" size="1.28" drill="0.8" shape="Octogonal" />
-                <text layers="TopNames" position="-10.02, 2.5" height="1" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
-                <text layers="TopValues" position="9.98, -2.5" rotation="180" height="1" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
+                <tpad name="2" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-8.02, -1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="1" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-8.02, 1" size="1.28" drill="0.8" shape="square" />
+                <tpad name="4" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-6.02, -1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="3" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-6.02, 1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="6" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-4.019999, -1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="5" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-4.019999, 1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="8" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-2.02, -1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="7" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-2.02, 1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="10" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-0.02, -1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="9" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="-0.02, 1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="12" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="1.98, -1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="11" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="1.98, 1" size="1.28" drill="0.8" shape="octagon" />
+                <text layers="TopNames" position="-10.02, 2.5" height="1" thickness="0.1" value="&gt;NAME" />
+                <text layers="TopValues" position="9.98, -2.5" rotation="180" height="1" thickness="0.1" value="&gt;VALUE" />
                 <line layers="TopPlace" startPosition="-10.02, -2.25" endPosition="9.98, -2.25" thickness="0.127" />
                 <line layers="TopPlace" startPosition="9.98, -2.25" endPosition="9.98, 2.25" thickness="0.127" />
                 <line layers="TopPlace" startPosition="9.98, 2.25" endPosition="-10.02, 2.25" thickness="0.127" />
                 <line layers="TopPlace" startPosition="-10.02, 2.25" endPosition="-10.02, -2.25" thickness="0.127" />
                 <rectangle layers="TopPlace" position="-8.52, 1.125" size="3, 2.25" />
-                <tpad name="14" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="3.98, -1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="13" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="3.98, 1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="16" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="5.98, -1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="15" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="5.98, 1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="17" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="7.98, 1" size="1.28" drill="0.8" shape="Octogonal" />
-                <tpad name="18" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="7.98, -1" size="1.28" drill="0.8" shape="Octogonal" />
+                <tpad name="14" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="3.98, -1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="13" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="3.98, 1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="16" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="5.98, -1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="15" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="5.98, 1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="17" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="7.98, 1" size="1.28" drill="0.8" shape="octagon" />
+                <tpad name="18" layers="Pads, Drills, Top, TopStop, Bottom, BottomStop" position="7.98, -1" size="1.28" drill="0.8" shape="octagon" />
             </elements>
         </block>
         <block name="CE_7.3MM@logo">
@@ -783,8 +783,8 @@
                 <line layers="TopPlace" startPosition="-0.4725, -0.875" endPosition="0.4725, -0.875" thickness="0.1" />
                 <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
                 <spad name="2" layers="Top, Pads, TopCream, TopStop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
-                <text layers="TopNames" position="-1.875, 1.25" height="1" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
-                <text layers="TopValues" position="-1.875, -2.125" height="1" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
+                <text layers="TopNames" position="-1.875, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
+                <text layers="TopValues" position="-1.875, -2.125" height="1" thickness="0.1" value="&gt;VALUE" />
                 <rectangle layers="TopGlue" position="0, 0" size="0.3998, 1.0002" />
                 <rectangle layers="TopDocument" position="-0.96875, 0" size="0.5625, 1.375" />
                 <rectangle layers="TopDocument" position="0.96875, 0" size="0.5625, 1.375" />
@@ -800,8 +800,8 @@
             <elements>
                 <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
                 <spad name="2" layers="Top, Pads, TopCream, TopStop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
-                <text layers="TopNames" position="-1.88, 1.25" height="1" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
-                <text layers="TopValues" position="-1.88, -2.25" height="1" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
+                <text layers="TopNames" position="-1.88, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
+                <text layers="TopValues" position="-1.88, -2.25" height="1" thickness="0.1" value="&gt;VALUE" />
                 <rectangle layers="TopGlue" position="0, 0" size="0.2002, 0.8002" />
                 <line layers="TopPlace" startPosition="-0.4725, 0.8825" endPosition="0.4725, 0.8825" thickness="0.1" />
                 <line layers="TopPlace" startPosition="-0.4725, -0.8825" endPosition="0.4725, -0.8825" thickness="0.1" />
@@ -823,8 +823,8 @@
                 <line layers="TopDocument" startPosition="-1.45, -0.75" endPosition="-1.45, 0.75" thickness="0.1016" />
                 <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-1.4, 0" size="2, 1.2" roundness="0.25" />
                 <spad name="2" layers="Top, Pads, TopCream, TopStop" position="1.4, 0" size="2, 1.2" roundness="0.25" />
-                <text layers="TopNames" position="-2.25, 1.25" height="1" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
-                <text layers="TopValues" position="-2.25, -2.25" height="1" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
+                <text layers="TopNames" position="-2.25, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
+                <text layers="TopValues" position="-2.25, -2.25" height="1" thickness="0.1" value="&gt;VALUE" />
                 <rectangle layers="TopDocument" position="-1.5, 0" size="0.2, 1.2" />
                 <rectangle layers="TopDocument" position="1.5, 0" size="0.2, 1.2" rotation="180" />
                 <rectangle layers="TopDocument" position="-1.125, 0" size="0.65, 1.5" />
@@ -843,8 +843,8 @@
                 <line layers="TopPlace" startPosition="-1.75, -0.875" endPosition="0.4725, -0.875" thickness="0.1" />
                 <spad name="C" layers="Top, Pads, TopCream, TopStop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
                 <spad name="A" layers="Top, Pads, TopCream, TopStop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
-                <text layers="TopNames" position="-1.875, 1.25" height="1" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
-                <text layers="TopValues" position="-1.875, -2.125" height="1" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
+                <text layers="TopNames" position="-1.875, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
+                <text layers="TopValues" position="-1.875, -2.125" height="1" thickness="0.1" value="&gt;VALUE" />
                 <line layers="TopKeepout" startPosition="-1.875, 1" endPosition="1.875, 1" thickness="0.1" />
                 <line layers="TopKeepout" startPosition="1.875, -1" endPosition="1.875, 1" thickness="0.1" />
                 <line layers="TopKeepout" startPosition="-1.875, -1" endPosition="1.875, -1" thickness="0.1" />
@@ -888,8 +888,8 @@
                 <spad name="2" layers="Top, Pads, TopCream, TopStop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
                 <line layers="TopPlace" startPosition="-0.4725, 0.875" endPosition="0.4725, 0.875" thickness="0.1" />
                 <line layers="TopPlace" startPosition="-0.4725, -0.875" endPosition="0.4725, -0.875" thickness="0.1" />
-                <text layers="TopNames" position="-1.875, 1.25" height="1" thickness="0.1" align="BottomLeft" value="&gt;NAME" />
-                <text layers="TopValues" position="-1.875, -2.125" height="1" thickness="0.1" align="BottomLeft" value="&gt;VALUE" />
+                <text layers="TopNames" position="-1.875, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
+                <text layers="TopValues" position="-1.875, -2.125" height="1" thickness="0.1" value="&gt;VALUE" />
                 <rectangle layers="TopDocument" position="-0.96875, 0" size="0.5625, 1.375" />
                 <rectangle layers="TopDocument" position="0.96875, 0" size="0.5625, 1.375" />
                 <rectangle layers="TopDocument" position="0, 0.4975" size="1.5, 0.25" />
@@ -928,7 +928,7 @@
                 <pad name="2" signal="N$17" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="R9" position="-0.02, 1.02" rotation="0" height="1.016" align="BottomCenter" />
+                <attribute name="NAME" value="R9" position="-0.02, 1.02" rotation="0" height="1.016" horizontalAlign="center" />
                 <attribute name="VALUE" value="270" position="-1.27, -2.539999" rotation="0" height="1.27" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -944,7 +944,7 @@
                 <pad name="2" signal="N$18" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="R10" position="0.024999, 1.05" rotation="0" height="1.016" align="BottomCenter" />
+                <attribute name="NAME" value="R10" position="0.024999, 1.05" rotation="0" height="1.016" horizontalAlign="center" />
                 <attribute name="VALUE" value="270" position="-1.27, -2.539999" rotation="0" height="1.27" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -960,7 +960,7 @@
                 <pad name="2" signal="N$25" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="R11" position="-0.02, 1.02" rotation="0" height="1.016" align="BottomCenter" />
+                <attribute name="NAME" value="R11" position="-0.02, 1.02" rotation="0" height="1.016" horizontalAlign="center" />
                 <attribute name="VALUE" value="270" position="-1.27, -2.539999" rotation="0" height="1.27" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -976,7 +976,7 @@
                 <pad name="2" signal="N$26" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="R12" position="-0.02, 1.02" rotation="0" height="1.016" align="BottomCenter" />
+                <attribute name="NAME" value="R12" position="-0.02, 1.02" rotation="0" height="1.016" horizontalAlign="center" />
                 <attribute name="VALUE" value="270" position="-1.27, -2.539999" rotation="0" height="1.27" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1023,7 +1023,7 @@
                 <pad name="2" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="C1" position="2.999999, 0" rotation="-270" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="C1" position="2.999999, 0" rotation="-270" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="100n" position="-1.27, -2.54" rotation="0" height="1.27" />
                 <attribute name="C_CAPACITANCE" value="100nF" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1040,7 +1040,7 @@
                 <pad name="2" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="C2" position="2.98, -0.02" rotation="-270" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="C2" position="2.98, -0.02" rotation="-270" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="100n" position="-1.269999, -2.54" rotation="0" height="1.27" />
                 <attribute name="C_CAPACITANCE" value="100nF" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1057,7 +1057,7 @@
                 <pad name="2" signal="N$16" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="C3" position="2.999999, 0" rotation="-270" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="C3" position="2.999999, 0" rotation="-270" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="100n" position="-1.27, -2.54" rotation="0" height="1.27" />
                 <attribute name="C_CAPACITANCE" value="100nF" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1074,7 +1074,7 @@
                 <pad name="2" signal="N$30" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="C4" position="3, 0" rotation="-270" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="C4" position="3, 0" rotation="-270" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="100n" position="-1.269999, -2.54" rotation="0" height="1.27" />
                 <attribute name="C_CAPACITANCE" value="100nF" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1126,7 +1126,7 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="C7" position="-1.999999, 0" rotation="-270" height="1.016" align="BottomCenter" />
+                <attribute name="NAME" value="C7" position="-1.999999, 0" rotation="-270" height="1.016" horizontalAlign="center" />
                 <attribute name="VALUE" value="100n" position="-1.269999, -2.539999" rotation="0" height="1.27" />
                 <attribute name="C_CAPACITANCE" value="100nF" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1143,7 +1143,7 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="C6" position="-1.999999, 0.125" rotation="-270" height="1.016" align="BottomCenter" />
+                <attribute name="NAME" value="C6" position="-1.999999, 0.125" rotation="-270" height="1.016" horizontalAlign="center" />
                 <attribute name="VALUE" value="10n" position="-1.269999, -2.539999" rotation="0" height="1.27" />
                 <attribute name="C_CAPACITANCE" value="10nF" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1160,7 +1160,7 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="C5" position="0, 1" rotation="0" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="C5" position="0, 1" rotation="0" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="100n" position="-1.27, -2.54" rotation="0" height="1.27" />
                 <attribute name="C_CAPACITANCE" value="100nF" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1181,7 +1181,7 @@
                 <attribute name="MPN" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="MF" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="OC_FARNELL" value="unknown" visible="false" position="0, 0" rotation="0" height="1.778" />
-                <attribute name="NAME" value="Q1" position="-0.035, 3.832999" rotation="-180" height="1.016" align="BottomCenter" />
+                <attribute name="NAME" value="Q1" position="-0.035, 3.832999" rotation="-180" height="1.016" horizontalAlign="center" />
                 <attribute name="VALUE" value="16MHz" position="-5.715, -4.064" rotation="0" height="1.27" />
                 <attribute name="MANUFACTURER" value="TXC Corporation" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="9C-16.000MEEJ-T" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1196,7 +1196,7 @@
                 <pad name="2" signal="N$8" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="C10" position="0, -1.02" rotation="-180" height="1.016" align="BottomCenter" />
+                <attribute name="NAME" value="C10" position="0, -1.02" rotation="-180" height="1.016" horizontalAlign="center" />
                 <attribute name="VALUE" value="22p" position="-1.27, -2.54" rotation="0" height="1.27" />
                 <attribute name="C_CAPACITANCE" value="22pF" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1213,7 +1213,7 @@
                 <pad name="2" signal="N$36" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="C11" position="0, 1.02" rotation="0" height="1.016" align="BottomCenter" />
+                <attribute name="NAME" value="C11" position="0, 1.02" rotation="0" height="1.016" horizontalAlign="center" />
                 <attribute name="VALUE" value="22p" position="-1.27, -2.54" rotation="0" height="1.27" />
                 <attribute name="C_CAPACITANCE" value="22pF" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1230,7 +1230,7 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="R17" position="-0.019999, -0.979999" rotation="0" height="1.016" align="TopCenter" />
+                <attribute name="NAME" value="R17" position="-0.019999, -0.979999" rotation="0" height="1.016" horizontalAlign="center" verticalAlign="top" />
                 <attribute name="VALUE" value="1K5" position="-1.269999, -2.539999" rotation="0" height="1.27" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="1K5" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1246,7 +1246,7 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="R18" position="-0.019999, 1.02" rotation="0" height="1.016" align="BottomCenter" />
+                <attribute name="NAME" value="R18" position="-0.019999, 1.02" rotation="0" height="1.016" horizontalAlign="center" />
                 <attribute name="VALUE" value="1K5" position="-1.269999, -2.539999" rotation="0" height="1.27" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="1K5" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1262,7 +1262,7 @@
                 <pad name="2" signal="N$52" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="R13" position="-0.020001, 1.02" rotation="0" height="1.016" align="BottomCenter" />
+                <attribute name="NAME" value="R13" position="-0.020001, 1.02" rotation="0" height="1.016" horizontalAlign="center" />
                 <attribute name="VALUE" value="270" position="-1.270001, -2.539999" rotation="0" height="1.27" />
                 <attribute name="TYPE" value="R" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1278,7 +1278,7 @@
                 <pad name="2" signal="N$53" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="R14" position="0, 1" rotation="0" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="R14" position="0, 1" rotation="0" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="270" position="-1.27, -2.539999" rotation="0" height="1.27" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1345,7 +1345,7 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="C9" position="-3, 0" rotation="-90" height="1.016" align="BottomCenter" />
+                <attribute name="NAME" value="C9" position="-3, 0" rotation="-90" height="1.016" horizontalAlign="center" />
                 <attribute name="VALUE" value="100n" position="-1.27, -2.539999" rotation="0" height="1.27" />
                 <attribute name="C_CAPACITANCE" value="100nF" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1362,7 +1362,7 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="C8" position="-3, 0" rotation="-90" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="C8" position="-3, 0" rotation="-90" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="10n" position="-1.27, -2.539999" rotation="0" height="1.27" />
                 <attribute name="C_CAPACITANCE" value="10nF" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1379,7 +1379,7 @@
                 <pad name="2" signal="N$51" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="R15" position="0, 2" rotation="-180" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="R15" position="0, 2" rotation="-180" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="270" position="-1.269999, -2.539999" rotation="0" height="1.27" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1395,7 +1395,7 @@
                 <pad name="2" signal="N$54" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="R16" position="0, 2" rotation="-180" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="R16" position="0, 2" rotation="-180" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="270" position="-1.269999, -2.539999" rotation="0" height="1.27" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1411,7 +1411,7 @@
                 <pad name="2" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="C12" position="-2, 0" rotation="-270" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="C12" position="-2, 0" rotation="-270" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="4u7" position="-1.269999, -2.54" rotation="0" height="1.27" />
                 <attribute name="C_CAPACITANCE" value="4.7uF" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1428,7 +1428,7 @@
                 <pad name="2" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="C13" position="1.999999, 0" rotation="-90" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="C13" position="1.999999, 0" rotation="-90" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="4u7" position="-1.27, -2.539999" rotation="0" height="1.27" />
                 <attribute name="C_CAPACITANCE" value="4.7uF" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1445,7 +1445,7 @@
                 <pad name="2" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="C14" position="0, 1.124999" rotation="0" height="1.016" align="BottomCenter" />
+                <attribute name="NAME" value="C14" position="0, 1.124999" rotation="0" height="1.016" horizontalAlign="center" />
                 <attribute name="VALUE" value="10u" position="-1.904999, -2.54" rotation="0" height="1.016" />
                 <attribute name="C_CAPACITANCE" value="10uF" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="C_CASE" value="A" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1474,7 +1474,7 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="C15" position="0, 0.999999" rotation="-180" height="1.016" align="TopCenter" />
+                <attribute name="NAME" value="C15" position="0, 0.999999" rotation="-180" height="1.016" horizontalAlign="center" verticalAlign="top" />
                 <attribute name="VALUE" value="100n" position="-1.27, -2.54" rotation="0" height="1.27" />
                 <attribute name="C_CAPACITANCE" value="100nF" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="C_DIELECTRIC" value="X7R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1525,7 +1525,7 @@
                 <pad name="2" signal="LED" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="R19" position="-3, 0" rotation="-90" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="R19" position="-3, 0" rotation="-90" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="270" position="-1.27, -2.539999" rotation="0" height="1.27" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1541,7 +1541,7 @@
                 <pad name="A" signal="N$22" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="LED1" position="-0.25, -1" rotation="-180" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="LED1" position="-0.25, -1" rotation="-180" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="GREEN" position="-1.27, -2.54" rotation="0" height="1.27" />
                 <attribute name="LED_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="MANUFACTURER" value="Broadcom Limited" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1555,7 +1555,7 @@
                 <pad name="2" signal="N$1" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="R3" position="0, 2" rotation="-180" height="1.016" align="BottomCenter" />
+                <attribute name="NAME" value="R3" position="0, 2" rotation="-180" height="1.016" horizontalAlign="center" />
                 <attribute name="VALUE" value="270" position="-0.634999, -2.539999" rotation="0" height="1.27" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1571,7 +1571,7 @@
                 <pad name="2" signal="N$6" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="R4" position="0, 1.999999" rotation="-180" height="1.016" align="BottomCenter" />
+                <attribute name="NAME" value="R4" position="0, 1.999999" rotation="-180" height="1.016" horizontalAlign="center" />
                 <attribute name="VALUE" value="270" position="-0.634999, -2.54" rotation="0" height="1.27" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1618,7 +1618,7 @@
                 <pad name="2@1" signal="N$5" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U19" position="0, -3" rotation="-180" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="U19" position="0, -3" rotation="-180" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="MCP1703T-3302E/MB" position="-2.54, -6.4008" rotation="0" height="1.27" />
                 <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="MANUFACTURER" value="Microchip" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1632,7 +1632,7 @@
                 <pad name="2" signal="N$2" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="L1" position="1.999999, 0" rotation="-90" height="1.016" align="BottomCenter" />
+                <attribute name="NAME" value="L1" position="1.999999, 0" rotation="-90" height="1.016" horizontalAlign="center" />
                 <attribute name="VALUE" value="600R" position="-2.208, -2.307999" rotation="0" height="1.27" />
                 <attribute name="L_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="L_IMPEDANCE" value="600R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1647,7 +1647,7 @@
                 <pad name="2" signal="N$7" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="R1" position="1.999999, 0" rotation="-270" height="1.016" align="TopCenter" />
+                <attribute name="NAME" value="R1" position="1.999999, 0" rotation="-270" height="1.016" horizontalAlign="center" verticalAlign="top" />
                 <attribute name="VALUE" value="5R1" position="-0.635, -2.54" rotation="0" height="1.27" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="5R1" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1663,7 +1663,7 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="R2" position="1.999999, 0" rotation="-270" height="1" align="TopCenter" />
+                <attribute name="NAME" value="R2" position="1.999999, 0" rotation="-270" height="1" horizontalAlign="center" verticalAlign="top" />
                 <attribute name="VALUE" value="10K" position="-0.635, -2.54" rotation="0" height="1.27" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="10K" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1679,7 +1679,7 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="R5" position="1.999999, 0" rotation="-270" height="1" align="TopCenter" />
+                <attribute name="NAME" value="R5" position="1.999999, 0" rotation="-270" height="1" horizontalAlign="center" verticalAlign="top" />
                 <attribute name="VALUE" value="10K" position="-0.635, -2.54" rotation="0" height="1.27" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="10K" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1695,7 +1695,7 @@
                 <pad name="2" signal="VCC" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="R6" position="0, 1" rotation="0" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="R6" position="0, 1" rotation="0" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="10K" position="-0.635, -2.54" rotation="0" height="1.27" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="10K" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1717,7 +1717,7 @@
                 <pad name="5" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U1" position="0, -4" rotation="-180" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="U1" position="0, -4" rotation="-180" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="ACPL224" position="4.445, -1.905" rotation="90" height="1.27" />
                 <attribute name="MANUFACTURER" value="Broadcom Limited" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="ACPL-224-500E" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1736,7 +1736,7 @@
                 <pad name="5" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U2" position="0, -4" rotation="-180" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="U2" position="0, -4" rotation="-180" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="ACPL224" position="4.445001, -1.905" rotation="90" height="1.27" />
                 <attribute name="MANUFACTURER" value="Broadcom Limited" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="ACPL-224-500E" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1755,7 +1755,7 @@
                 <pad name="5" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U3" position="0, -4" rotation="-180" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="U3" position="0, -4" rotation="-180" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="ACPL224" position="4.445, -1.905" rotation="90" height="1.27" />
                 <attribute name="MANUFACTURER" value="Broadcom Limited" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="ACPL-224-500E" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1774,7 +1774,7 @@
                 <pad name="5" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U4" position="0, -4" rotation="-180" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="U4" position="0, -4" rotation="-180" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="ACPL224" position="4.445, -1.905" rotation="90" height="1.27" />
                 <attribute name="MANUFACTURER" value="Broadcom Limited" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="ACPL-224-500E" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1793,7 +1793,7 @@
                 <pad name="5" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U5" position="0, -4" rotation="-180" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="U5" position="0, -4" rotation="-180" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="ACPL224" position="4.445, -1.905" rotation="90" height="1.27" />
                 <attribute name="MANUFACTURER" value="Broadcom Limited" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="ACPL-224-500E" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1806,7 +1806,7 @@
                 <pad name="C" signal="N$5" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="D2" position="2.249999, 0" rotation="-270" height="1" align="TopCenter" />
+                <attribute name="NAME" value="D2" position="2.249999, 0" rotation="-270" height="1" horizontalAlign="center" verticalAlign="top" />
                 <attribute name="VALUE" value="MBR0540" position="-2, -2.5" rotation="0" height="1.27" />
                 <attribute name="TYPE" value="D" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="D_CASE" value="SOD123FL" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1822,7 +1822,7 @@
                 <pad name="4" signal="O0" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U8" position="0, 4" rotation="-180" height="1" align="TopCenter" />
+                <attribute name="NAME" value="U8" position="0, 4" rotation="-180" height="1" horizontalAlign="center" verticalAlign="top" />
                 <attribute name="VALUE" value="VO1400" position="3.809999, -3.809999" rotation="-270" height="1.27" />
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1836,7 +1836,7 @@
                 <pad name="4" signal="O1" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U9" position="0, 3.999999" rotation="-180" height="1" align="TopCenter" />
+                <attribute name="NAME" value="U9" position="0, 3.999999" rotation="-180" height="1" horizontalAlign="center" verticalAlign="top" />
                 <attribute name="VALUE" value="VO1400" position="3.809999, -3.81" rotation="-270" height="1.27" />
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1850,7 +1850,7 @@
                 <pad name="4" signal="O2" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U10" position="0, 3.999999" rotation="-180" height="1" align="TopCenter" />
+                <attribute name="NAME" value="U10" position="0, 3.999999" rotation="-180" height="1" horizontalAlign="center" verticalAlign="top" />
                 <attribute name="VALUE" value="VO1400" position="3.809999, -3.809999" rotation="-270" height="1.27" />
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1864,7 +1864,7 @@
                 <pad name="4" signal="O3" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U11" position="0, 4" rotation="-180" height="1" align="TopCenter" />
+                <attribute name="NAME" value="U11" position="0, 4" rotation="-180" height="1" horizontalAlign="center" verticalAlign="top" />
                 <attribute name="VALUE" value="VO1400" position="3.809999, -3.809999" rotation="-270" height="1.27" />
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1878,7 +1878,7 @@
                 <pad name="4" signal="O4" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U12" position="0, 4" rotation="-180" height="1" align="TopCenter" />
+                <attribute name="NAME" value="U12" position="0, 4" rotation="-180" height="1" horizontalAlign="center" verticalAlign="top" />
                 <attribute name="VALUE" value="VO1400" position="3.809999, -3.809999" rotation="-270" height="1.27" />
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1892,7 +1892,7 @@
                 <pad name="4" signal="O5" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U13" position="0.249999, 4" rotation="-180" height="1" align="TopCenter" />
+                <attribute name="NAME" value="U13" position="0.249999, 4" rotation="-180" height="1" horizontalAlign="center" verticalAlign="top" />
                 <attribute name="VALUE" value="VO1400" position="3.809999, -3.809999" rotation="-270" height="1.27" />
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1906,7 +1906,7 @@
                 <pad name="4" signal="O6" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U14" position="0, 4" rotation="0" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="U14" position="0, 4" rotation="0" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="VO1400" position="3.809999, -3.809999" rotation="90" height="1.27" />
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1920,7 +1920,7 @@
                 <pad name="4" signal="O7" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U15" position="0, 4" rotation="0" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="U15" position="0, 4" rotation="0" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="VO1400" position="3.809999, -3.809999" rotation="90" height="1.27" />
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1934,7 +1934,7 @@
                 <pad name="4" signal="O8" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U16" position="0, 4" rotation="0" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="U16" position="0, 4" rotation="0" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="VO1400" position="3.809999, -3.809999" rotation="90" height="1.27" />
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1948,7 +1948,7 @@
                 <pad name="4" signal="O9" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U17" position="0, 4" rotation="0" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="U17" position="0, 4" rotation="0" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="VO1400" position="3.809999, -3.809999" rotation="90" height="1.27" />
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1964,7 +1964,7 @@
                 <attribute name="R_TOLERANCE" value="1%" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="10K" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="TYPE" value="R" visible="false" position="0, 0" rotation="0" height="1.778" />
-                <attribute name="NAME" value="R7" position="1.999999, 0" rotation="-270" height="1" align="TopCenter" />
+                <attribute name="NAME" value="R7" position="1.999999, 0" rotation="-270" height="1" horizontalAlign="center" verticalAlign="top" />
                 <attribute name="VALUE" value="10K" position="-0.635, -2.54" rotation="0" height="1.27" />
                 <attribute name="REFERENCE" value="CRCW080510K0FKEB" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1980,7 +1980,7 @@
                 <attribute name="R_TOLERANCE" value="1%" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="10K" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="TYPE" value="R" visible="false" position="0, 0" rotation="0" height="1.778" />
-                <attribute name="NAME" value="R8" position="1.999999, 0" rotation="-270" height="1" align="TopCenter" />
+                <attribute name="NAME" value="R8" position="1.999999, 0" rotation="-270" height="1" horizontalAlign="center" verticalAlign="top" />
                 <attribute name="VALUE" value="10K" position="-0.635, -2.54" rotation="0" height="1.27" />
                 <attribute name="REFERENCE" value="CRCW080510K0FKEB" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1998,7 +1998,7 @@
                 <pad name="5" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U6" position="0, -4" rotation="-180" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="U6" position="0, -4" rotation="-180" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="ACPL224" position="3, 1.5" rotation="-90" height="1" />
                 <attribute name="MANUFACTURER" value="Broadcom Limited" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="ACPL-224-500E" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -2080,7 +2080,7 @@
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_TOLERANCE" value="1%" visible="false" position="0, 0" rotation="0" height="1.778" />
-                <attribute name="NAME" value="R20" position="1.999999, 0" rotation="-90" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="R20" position="1.999999, 0" rotation="-90" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="270" position="-0.635, -2.539999" rotation="0" height="1.27" />
                 <attribute name="REFERENCE" value="CRCW0805270RFKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -2096,7 +2096,7 @@
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_TOLERANCE" value="1%" visible="false" position="0, 0" rotation="0" height="1.778" />
-                <attribute name="NAME" value="R21" position="2.124999, -0.249999" rotation="-90" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="R21" position="2.124999, -0.249999" rotation="-90" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="270" position="-0.635, -2.539999" rotation="0" height="1.27" />
                 <attribute name="REFERENCE" value="CRCW0805270RFKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -2114,7 +2114,7 @@
                 <pad name="8" signal="O10A" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U18" position="0, 6" rotation="0" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="U18" position="0, 6" rotation="0" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="LH1522AAC" position="6.349999, -3.174999" rotation="90" height="1" />
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="LH1522AAC" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -2132,7 +2132,7 @@
                 <pad name="5" signal="GND" />
             </pads>
             <attributes>
-                <attribute name="NAME" value="U7" position="0, -4" rotation="-180" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="U7" position="0, -4" rotation="-180" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="ACPL224" position="3, 1.499999" rotation="-90" height="1" />
                 <attribute name="MANUFACTURER" value="Broadcom Limited" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="ACPL-224-500E" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -2148,7 +2148,7 @@
                 <attribute name="R_TOLERANCE" value="1%" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="10K" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
-                <attribute name="NAME" value="R22" position="-3, 0" rotation="-90" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="R22" position="-3, 0" rotation="-90" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="10K" position="-0.635, -2.54" rotation="0" height="1.27" />
                 <attribute name="REFERENCE" value="CRCW080510K0FKEB" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -2164,7 +2164,7 @@
                 <attribute name="R_TOLERANCE" value="1%" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_RESISTANCE" value="10K" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
-                <attribute name="NAME" value="R23" position="1.999999, 0" rotation="-90" height="1" align="BottomCenter" />
+                <attribute name="NAME" value="R23" position="1.999999, 0" rotation="-90" height="1" horizontalAlign="center" />
                 <attribute name="VALUE" value="10K" position="-0.635, -2.54" rotation="0" height="1.27" />
                 <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 <attribute name="REFERENCE" value="CRCW080510K0FKEB" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -2180,7 +2180,7 @@
         <line layers="Profile" startPosition="70, 0" endPosition="70, 67.5" thickness="0.1" />
         <line layers="Profile" startPosition="70, 67.5" endPosition="0, 67.5" thickness="0.1" />
         <line layers="Profile" startPosition="0, 67.5" endPosition="0, 0" thickness="0.1" />
-        <text layers="TopPlace" position="42.25, 56.5" height="1.778" thickness="0.1" align="BottomLeft" value="MD-CPU04D-v1.1" />
+        <text layers="TopPlace" position="42.25, 56.5" height="1.778" thickness="0.1" value="MD-CPU04D-v1.1" />
         <line layers="TopRestrict" startPosition="20, 33" endPosition="35, 33" thickness="0.2" />
         <line layers="TopRestrict" startPosition="35, 33" endPosition="35, 29.875" thickness="0.2" />
         <line layers="TopRestrict" startPosition="35, 29.875" endPosition="34.5, 29.875" thickness="0.2" />

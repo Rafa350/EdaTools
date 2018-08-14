@@ -358,7 +358,7 @@
             /// 
             public override void Visit(CircleElement circle) {
 
-                // Si es ple, es 'flashea'.
+                // Si es ple, es 'flashea'
                 //
                 if (circle.Filled)
                     apertures.DefineCircleAperture(circle.Diameter);
@@ -387,7 +387,7 @@
             public override void Visit(ViaElement via) {
 
                 switch (via.Shape) {
-                    case ViaElement.ViaShape.Circular:
+                    case ViaElement.ViaShape.Circle:
                         apertures.DefineCircleAperture(via.OuterSize);
                         break;
 
@@ -395,7 +395,7 @@
                         apertures.DefineRectangleAperture(via.OuterSize, via.OuterSize, Angle.Zero);
                         break;
 
-                    case ViaElement.ViaShape.Octogonal:
+                    case ViaElement.ViaShape.Octagon:
                         apertures.DefineOctagonAperture(via.OuterSize, Angle.Zero);
                         break;
                 }
@@ -412,7 +412,7 @@
                 if (Part != null)
                     rotation += Part.Rotation;
                 switch (pad.Shape) {
-                    case ThPadElement.ThPadShape.Circular:
+                    case ThPadElement.ThPadShape.Circle:
                         apertures.DefineCircleAperture(pad.TopSize);
                         break;
 
@@ -420,7 +420,7 @@
                         apertures.DefineRectangleAperture(pad.TopSize, pad.TopSize, rotation);
                         break;
 
-                    case ThPadElement.ThPadShape.Octogonal:
+                    case ThPadElement.ThPadShape.Octagon:
                         apertures.DefineOctagonAperture(pad.TopSize, rotation);
                         break;
 
@@ -668,7 +668,7 @@
                     position = t.ApplyTo(position);
                 }
 
-                dr.Draw(paa.Value, position, paa.Align, paa.Height);
+                dr.Draw(paa.Value, position, paa.HorizontalAlign, paa.VerticalAlign, paa.Height);
             }
 
             /// <summary>
@@ -683,7 +683,7 @@
                 Aperture ap = null;
                 switch (via.Shape) {
                     default:
-                    case ViaElement.ViaShape.Circular:
+                    case ViaElement.ViaShape.Circle:
                         ap = apertures.GetCircleAperture(via.OuterSize);
                         break;
 
@@ -691,7 +691,7 @@
                         ap = apertures.GetRectangleAperture(via.OuterSize, via.OuterSize, Angle.Zero);
                         break;
 
-                    case ViaElement.ViaShape.Octogonal:
+                    case ViaElement.ViaShape.Octagon:
                         ap = apertures.GetOctagonAperture(via.OuterSize, Angle.Zero);
                         break;
                 }
@@ -723,7 +723,7 @@
                 //
                 Aperture ap = null;
                 switch (pad.Shape) {
-                    case ThPadElement.ThPadShape.Circular:
+                    case ThPadElement.ThPadShape.Circle:
                         ap = apertures.GetCircleAperture(pad.TopSize);
                         break;
 
@@ -731,7 +731,7 @@
                         ap = apertures.GetRectangleAperture(pad.TopSize, pad.TopSize, rotation);
                         break;
 
-                    case ThPadElement.ThPadShape.Octogonal:
+                    case ThPadElement.ThPadShape.Octagon:
                         ap = apertures.GetOctagonAperture(pad.TopSize, rotation);
                         break;
 

@@ -50,12 +50,9 @@
             sb.Append("%ADD");
             sb.AppendFormat("{0}", Id);
             sb.Append("R,");
-            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}X{1}",
-                (double)width / 1000000.0,
-                (double)height / 1000000.0);
+            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}X{1}", width / 1000000.0, height / 1000000.0);
             if (drill > 0)
-                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", 
-                    (double)drill / 1000000.0);
+                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", drill / 1000000.0);
             sb.Append("*%");
 
             return sb.ToString();

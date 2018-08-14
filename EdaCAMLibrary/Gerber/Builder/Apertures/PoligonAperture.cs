@@ -54,15 +54,12 @@
             sb.Append("%ADD");
             sb.AppendFormat("{0}", Id);
             sb.Append("P,");
-            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", 
-                (double)diameter / 1000000.0);
+            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", diameter / 1000000.0);
             sb.AppendFormat("X{0}", vertex);
             if ((rotation.Degrees > 0) || (drill > 0))
-                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", 
-                    (double)rotation.Degrees / 100.0);
+                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", rotation.Degrees / 100.0);
             if (drill > 0)
-                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", 
-                    (double)drill / 1000000.0);
+                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", drill / 1000000.0);
             sb.Append("*%");
 
             return sb.ToString();

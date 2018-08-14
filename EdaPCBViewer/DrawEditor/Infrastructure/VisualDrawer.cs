@@ -14,6 +14,7 @@
 
     using Color = MikroPic.EdaTools.v1.Geometry.Color;
     using Size = MikroPic.EdaTools.v1.Geometry.Size;
+    using Point = MikroPic.EdaTools.v1.Geometry.Point;
     using Rect = MikroPic.EdaTools.v1.Geometry.Rect;
     using SysColor = System.Windows.Media.Color;
     using SysSize = System.Windows.Size;
@@ -152,7 +153,7 @@
 
                 SysColor color = GetLayerColor(layer);
 
-                if (via.Shape == ViaElement.ViaShape.Circular) {
+                if (via.Shape == ViaElement.ViaShape.Circle) {
 
                     int size = layer.Side == BoardSide.Inner ? via.InnerSize : via.OuterSize;
                     int radius = (size + via.Drill) / 4;
@@ -211,7 +212,7 @@
 
                 SysColor color = GetLayerColor(layer);
 
-                if (pad.Shape == ThPadElement.ThPadShape.Circular) {
+                if (pad.Shape == ThPadElement.ThPadShape.Circle) {
 
                     int size =
                         layer.Side == BoardSide.Top ? pad.TopSize :
@@ -284,7 +285,7 @@
                 PartAttributeAdapter paa = new PartAttributeAdapter(part, text);
                 SysPoint position = new SysPoint(paa.Position.X, paa.Position.Y);
                 Angle rotation = paa.Rotation;
-                IEnumerable<GlyphTrace> glyphTraces = td.Draw(paa.Value, new v1.Geometry.Point(0, 0), paa.Align, paa.Height);
+                IEnumerable<GlyphTrace> glyphTraces = td.Draw(paa.Value, new Point(0, 0), paa.HorizontalAlign, paa.VerticalAlign, paa.Height);
 
                 Matrix m = new Matrix();
                 m.Translate(position.X, position.Y);

@@ -49,8 +49,7 @@
                         first = false;
                     else
                         sb.Append('X');
-                    sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", 
-                        (double)arg / 1000000.0);
+                    sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", arg / 1000000.0);
                 }
             }
             sb.Append("*%");

@@ -31,15 +31,6 @@
         }
 
         /// <summary>
-        /// Finalitza la lectura
-        /// </summary>
-        /// 
-        public void Close() {
-
-            reader.Close();
-        }
-
-        /// <summary>
         /// Avança al seguent tag
         /// </summary>
         /// <returns>True si hi ha tag. False en cas contrari.</returns>
@@ -217,7 +208,7 @@
                 throw new ArgumentNullException("name");
 
             if (attributes.ContainsKey(name))
-                return (T)Enum.Parse(typeof(T), attributes[name]);
+                return (T)Enum.Parse(typeof(T), attributes[name], true);
             else
                 return defValue;
         }

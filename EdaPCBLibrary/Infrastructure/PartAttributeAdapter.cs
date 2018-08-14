@@ -45,9 +45,14 @@
             }
         }
 
-        public TextAlign Align {
+        public HorizontalTextAlign HorizontalAlign {
             get {
-                return (attribute != null) && attribute.UseAlign ? attribute.Align: text.Align;
+                return (attribute != null) && attribute.UseAlign ? attribute.HorizontalAlign: text.HorizontalAlign;
+            }
+        }
+        public VerticalTextAlign VerticalAlign {
+            get {
+                return (attribute != null) && attribute.UseAlign ? attribute.VerticalAlign : text.VerticalAlign;
             }
         }
     }

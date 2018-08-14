@@ -10,7 +10,7 @@
     /// 
     public sealed class Block : IVisitable, IName {
 
-        private readonly HashSet<Element> elements = new HashSet<Element>();
+        private HashSet<Element> elements;
         private Dictionary<string, PadElement> pads;
         private Dictionary<string, BlockAttribute> attributes;
         private string name;
@@ -33,8 +33,7 @@
                 AddElements(elements);
 
             if (attributes != null)
-                foreach (BlockAttribute attribute in attributes)
-                    AddAttribute(attribute);
+                AddAttributes(attributes);
         }
 
         /// <summary>
@@ -56,6 +55,9 @@
 
             if (element == null)
                 throw new ArgumentNullException("element");
+
+            if (elements == null)
+                elements = new HashSet<Element>();
 
             if (!elements.Add(element))
                 throw new InvalidOperationException("El elemento ya pertenece al bloque.");
@@ -94,10 +96,12 @@
             if (element == null)
                 throw new ArgumentNullException("element");
 
-            if (!elements.Contains(element))
+            if ((elements == null) || !elements.Contains(element))
                 throw new InvalidOperationException("El elemento no pertenece al bloque.");
 
             elements.Remove(element);
+            if (elements.Count == 0)
+                elements = null;
 
             // Si l'element es un pad, tambe l'elimina de la llista de pads.
             //
@@ -142,6 +146,20 @@
                 attributes = new Dictionary<string, BlockAttribute>();
 
             attributes.Add(attribute.Name, attribute);
+        }
+
+        /// <summary>
+        /// Afegeis una col·leccio d'atributs.
+        /// </summary>
+        /// <param name="attributes">La col·leccio d'atributs.</param>
+        /// 
+        public void AddAttributes(IEnumerable<BlockAttribute> attributes) {
+
+            if (Attributes == null)
+                throw new ArgumentNullException("attributes");
+
+            foreach (BlockAttribute attribute in attributes)
+                AddAttribute(attribute);
         }
 
         /// <summary>
@@ -194,11 +212,24 @@
         }
 
         /// <summary>
+        /// Indica si conte elements.
+        /// </summary>
+        /// 
+        public bool HasElements {
+            get {
+                return elements != null;
+            }
+        }
+
+        /// <summary>
         /// Obte la llista d'elements.
         /// </summary>
         /// 
         public IEnumerable<Element> Elements {
             get {
+                if (elements == null)
+                    throw new InvalidOperationException("El bloque no contiene elementos.");
+
                 return elements;
             }
         }

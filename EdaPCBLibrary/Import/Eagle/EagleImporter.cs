@@ -4,7 +4,6 @@
     using MikroPic.EdaTools.v1.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-    using MikroPic.EdaTools.v1.Pcb.Infrastructure.Xml;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -370,7 +369,7 @@
             // Obte l'angle de rotacio
             //
             Angle rotation = Angle.Zero;
-            if (node.AttributeExists("rot"))
+            if (AttributeExists(node, "rot"))
                 rotation = ParseAngle(GetAttributeAsString(node, "rot"));
 
             // Obte el tamany del forat
@@ -380,17 +379,17 @@
             // Obte el diametre
             //
             int size = (drill * 16) / 10;
-            if (node.AttributeExists("diameter"))
+            if (AttributeExists(node, "diameter"))
                 size = ParseNumber(GetAttributeAsString(node, "diameter"));
 
-            ThPadElement.ThPadShape shape = ThPadElement.ThPadShape.Circular;
+            ThPadElement.ThPadShape shape = ThPadElement.ThPadShape.Circle;
             switch (GetAttributeAsString(node, "shape")) {
                 case "square":
                     shape = ThPadElement.ThPadShape.Square;
                     break;
 
                 case "octagon":
-                    shape = ThPadElement.ThPadShape.Octogonal;
+                    shape = ThPadElement.ThPadShape.Octagon;
                     break;
 
                 case "long":
@@ -435,13 +434,13 @@
             // Obte la rotacio
             //
             Angle rotation = Angle.Zero;
-            if (node.AttributeExists("rot"))
+            if (AttributeExists(node, "rot"))
                 ParseAngle(GetAttributeAsString(node, "rot"));
 
             // Obte el factor d'arrodoniment
             //
             Ratio roundness = Ratio.Zero;
-            if (node.AttributeExists("roundness"))
+            if (AttributeExists(node, "roundness"))
                 roundness = ParseRatio(GetAttributeAsString(node, "roundness"));
 
             bool stop = GetAttributeAsBoolean(node, "stop", true);
@@ -476,7 +475,7 @@
             int drill = ParseNumber(GetAttributeAsString(node, "drill"));
 
             int size = 0;
-            if (node.AttributeExists("diameter"))
+            if (AttributeExists(node, "diameter"))
                 size = ParseNumber(GetAttributeAsString(node, "diameter"));
 
             string extent = GetAttributeAsString(node, "extent");
@@ -485,7 +484,7 @@
             for (int i = 0; i < layerNums.Length; i++)
                 layerNums[i] = Int32.Parse(layerNames[i]);
 
-            ViaElement.ViaShape shape = ViaElement.ViaShape.Circular;
+            ViaElement.ViaShape shape = ViaElement.ViaShape.Circle;
             string shapeName = GetAttributeAsString(node, "shape");
             switch (shapeName) {
                 case "square":
@@ -493,7 +492,7 @@
                     break;
 
                 case "octagon":
-                    shape = ViaElement.ViaShape.Octogonal;
+                    shape = ViaElement.ViaShape.Octagon;
                     break;
             }
 
@@ -529,19 +528,20 @@
             // Obte l'angle de rotacio
             //
             Angle rotation = Angle.Zero;
-            if (node.AttributeExists("rot"))
+            if (AttributeExists(node, "rot"))
                 rotation = ParseAngle(GetAttributeAsString(node, "rot"));
 
             int height = ParseNumber(GetAttributeAsString(node, "size"));
 
-            TextAlign align = ParseTextAlign(GetAttributeAsString(node, "align"));
+            HorizontalTextAlign horizontalAlign = ParseHorizontalTextAlign(GetAttributeAsString(node, "align"));
+            VerticalTextAlign verticalAlign = ParseVerticalTextAlign(GetAttributeAsString(node, "align"));
 
             int thickness = 100000;
 
             int layerNum = GetAttributeAsInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
 
-            TextElement element = new TextElement(position, rotation, height, thickness, align);
+            TextElement element = new TextElement(position, rotation, height, thickness, horizontalAlign, verticalAlign);
             element.Value = value;
 
             board.Place(board.GetLayer(layerName), element);
@@ -566,7 +566,7 @@
             Point p2 = new Point(x2, y2);
 
             Angle angle = Angle.Zero;
-            if (node.AttributeExists("curve"))
+            if (AttributeExists(node, "curve"))
                 angle = ParseAngle(GetAttributeAsString(node, "curve"));
             LineElement.LineCapStyle lineCap = GetAttributeAsString(node, "cap") == null ? LineElement.LineCapStyle.Round : LineElement.LineCapStyle.Flat;
             int thickness = ParseNumber(GetAttributeAsString(node, "width"));
@@ -607,13 +607,13 @@
             // Obte l'angle de rotacio
             //
             Angle rotation = Angle.Zero;
-            if (node.AttributeExists("rot"))
+            if (AttributeExists(node, "rot"))
                 rotation = ParseAngle(GetAttributeAsString(node, "rot"));
 
             // Obte l'amplada de linia
             //
             int thickness = 0;
-            if (node.AttributeExists("width"))
+            if (AttributeExists(node, "width"))
                 thickness = ParseNumber(GetAttributeAsString(node, "width"));
 
             int layerNum = GetAttributeAsInteger(node, "layer");
@@ -643,7 +643,7 @@
             // Obte l'amplada de linia
             //
             int thickness = 0;
-            if (node.AttributeExists("width"))
+            if (AttributeExists(node, "width"))
                 thickness = ParseNumber(GetAttributeAsString(node, "width"));
 
             // Obte el radi
@@ -675,7 +675,7 @@
             // Obte l'aillament
             //
             int clearance = 0;
-            if (node.AttributeExists("isolate"))
+            if (AttributeExists(node, "isolate"))
                 clearance = ParseNumber(GetAttributeAsString(node, "isolate"));
 
             int layerNum = GetAttributeAsInteger(node, "layer");
@@ -693,7 +693,7 @@
                 // Obte la curvatura
                 //
                 Angle angle = Angle.Zero;
-                if (vertexNode.AttributeExists("curve"))
+                if (AttributeExists(vertexNode, "curve"))
                     angle = ParseAngle(GetAttributeAsString(vertexNode, "curve"));
 
                 segments.Add(new RegionElement.Segment(vertex, angle));
@@ -758,7 +758,7 @@
             //
             Angle rotation = Angle.Zero;
             BoardSide side = BoardSide.Top;
-            if (node.AttributeExists("rot")) {
+            if (AttributeExists(node, "rot")) {
                 string rot = GetAttributeAsString(node, "rot");
                 if (rot.Contains("M"))
                    side = BoardSide.Bottom;
@@ -826,7 +826,7 @@
 
             // Obte la posicio
             //
-            if (node.AttributeExists("x")) {
+            if (AttributeExists(node, "x")) {
                 int x = ParseNumber(GetAttributeAsString(node, "x"));
                 int y = ParseNumber(GetAttributeAsString(node, "y"));
                 attribute.Position = new Point(x, y);
@@ -834,18 +834,24 @@
 
             // Obte l'angle de rotacio
             //
-            if (node.AttributeExists("rot"))
+            if (AttributeExists(node, "rot"))
                 attribute.Rotation = ParseAngle(GetAttributeAsString(node, "rot"));
 
             // Obte l'alçada de lletra
             //
-            if (node.AttributeExists("size"))
+            if (AttributeExists(node, "size"))
                 attribute.Height = ParseNumber(GetAttributeAsString(node, "size"));
 
             // Obte l'aliniacio
             //
-            if (node.AttributeExists("align"))
-                attribute.Align = ParseTextAlign(GetAttributeAsString(node, "align"));
+            if (AttributeExists(node, "align")) {
+                attribute.HorizontalAlign = ParseHorizontalTextAlign(GetAttributeAsString(node, "align"));
+                attribute.VerticalAlign = ParseVerticalTextAlign(GetAttributeAsString(node, "align"));
+            }
+            else {
+                attribute.HorizontalAlign = HorizontalTextAlign.Left;
+                attribute.VerticalAlign = VerticalTextAlign.Bottom;
+            }
 
             return attribute;
         }
@@ -1086,39 +1092,57 @@
         /// <param name="s">El text a convertir.</param>
         /// <returns>El valor obtingut.</returns>
         /// 
-        private static TextAlign ParseTextAlign(string s) {
+        private static HorizontalTextAlign ParseHorizontalTextAlign(string s) {
 
             switch (s) {
                 case "top-left":
-                    return TextAlign.TopLeft;
+                case "center-left":
+                case "bottom-left":
+                default:
+                    return HorizontalTextAlign.Left;
 
                 case "top-center":
-                    return TextAlign.TopCenter;
+                case "center-center":
+                case "bottom-center":
+                    return HorizontalTextAlign.Center;
 
                 case "top-right":
-                    return TextAlign.TopRight;
+                case "center-right":
+                case "bottom-right":
+                    return HorizontalTextAlign.Right;
+            }
+        }
+
+        /// <summary>
+        /// Converteix un text a TextAlign
+        /// </summary>
+        /// <param name="s">El text a convertir.</param>
+        /// <returns>El valor obtingut.</returns>
+        /// 
+        private static VerticalTextAlign ParseVerticalTextAlign(string s) {
+
+            switch (s) {
+                case "top-left":
+                case "top-center":
+                case "top-right":
+                    return VerticalTextAlign.Top;
 
                 case "center-left":
-                    return TextAlign.MiddleLeft;
-
                 case "center-center":
-                    return TextAlign.MiddleCenter;
-
                 case "center-right":
-                    return TextAlign.MiddleRight;
+                    return VerticalTextAlign.Middle;
 
                 case "bottom-left":
-                    return TextAlign.BottomLeft;
-
                 case "bottom-center":
-                    return TextAlign.BottomCenter;
-
                 case "bottom-right":
-                    return TextAlign.BottomRight;
-
                 default:
-                    return TextAlign.BottomLeft;
+                    return VerticalTextAlign.Bottom;
             }
+        }
+
+        private static bool AttributeExists(XmlNode node, string name) {
+
+            return node.Attributes[name] != null;
         }
 
         /// <summary>

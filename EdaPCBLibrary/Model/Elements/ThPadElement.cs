@@ -14,8 +14,8 @@
 
         public enum ThPadShape {
             Square,
-            Octogonal,
-            Circular,
+            Octagon,
+            Circle,
             Oval
         }
 
@@ -26,7 +26,7 @@
         private int drcBottomSizeMax = 2500000;
         private Ratio drcBottomSizePercent = Ratio.P25;
 
-        private ThPadShape shape = ThPadShape.Circular;
+        private ThPadShape shape = ThPadShape.Circle;
         private Angle rotation;
         private int topSize;
         private int innerSize;
@@ -97,7 +97,7 @@
                         spacing,
                         rotation);
 
-                case ThPadShape.Octogonal: {
+                case ThPadShape.Octagon: {
                     int s = (int)((double)sizeD2 / Math.Cos(22.5 * Math.PI / 180.0));
                     return PolygonBuilder.BuildPolygon(
                         8,

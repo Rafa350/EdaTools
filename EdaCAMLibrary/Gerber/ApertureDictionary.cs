@@ -15,7 +15,7 @@
         // Definicio del macro per l'apertura rectangle arrodonit.
         // $1: Amplada.
         // $2: Alçada.
-        // $3: Radi de corvatura.
+        // $3: Radi de curvatura.
         // $4: Angle de rotacio.
         //
         private static readonly Macro roundRectangleMacro = new Macro(

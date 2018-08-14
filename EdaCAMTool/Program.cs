@@ -111,7 +111,7 @@
         private static Board LoadBoard(string fileName) {
 
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                XmlBoardReader reader = new XmlBoardReader(stream);
+                BoardReader reader = new BoardReader(stream);
                 return reader.Read();
             }
         }
@@ -125,7 +125,7 @@
         private static void SaveBoard(Board board, string fileName) {
 
             using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
-                XmlBoardWriter writer = new XmlBoardWriter(stream);
+                BoardWriter writer = new BoardWriter(stream);
                 writer.Write(board);
             }
         }
