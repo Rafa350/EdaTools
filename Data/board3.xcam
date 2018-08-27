@@ -1,27 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <cam version="100">
-    <outputs>
-        <output file="$(OutputFolder)$(FileName)_Copper$L1.gbr" type="gerber">
+    <panel>
+        <board fileName="board3.xml" position="0, 0" orientation="0"/>
+        <board fileName="board3.xml" position="100, 0" orientation="0"/>
+        <board fileName="board3.xml" position="0, 100" orientation="0"/>
+        <board fileName="board3.xml" position="100, 100" orientation="0"/>
+    </panel>
+    <targets>
+        <target target="$(targetFolder)$(fName)_Copper$L1.gbr" type="gerber">
             <layers>
                 <layer name="Top"/>
             </layers>
-        </output>
-        <output file="$(OutputFolder)$(FileName)_Copper$L2.gbr" type="gerber">
+        </target>
+        
+        <target target="$(targetFolder)$(fName)_Copper$L2.gbr" type="gerber">
             <layers>
                 <layer name="Bottom"/>
             </layers>
-        </output>
-        <output file="$(OutputFolder)$(FileName)_Legend$Top.gbr" type="gerber">
+        </target>
+        
+        <target target="$(targetFolder)$(fName)_Legend$Top.gbr" type="gerber">
             <layers>
                 <layer name="TopPlace"/>
                 <layer name="TopNames"/>
             </layers>
-        </output>
-        <output file="$(OutputFolder)$(FileName)_Legend$Bottom.gbr" type="gerber">
+        </target>
+        
+        <target target="$(targetFolder)$(fName)_Legend$Bottom.gbr" type="gerber">
             <layers>
                 <layer name="BottomPlace"/>
                 <layer name="BottomNames"/>
             </layers>
-        </output>
-    </outputs>
+        </target>
+
+        <!-- Forats no platejats capes 1-2 -->
+        <target target="$(targetFolder)$(fname)_NonPlated$1$2$NPTH$Drill.gbr" type="gerber-drill">
+            <layers>
+                <layer name="Holes"/>
+            </layers>
+            <options>
+                <option name="firstLevel" value="1"/>
+                <option name="lastLevel" value="2"/>
+                <option name="DrillType" value="NonPlatedDrill"/>
+            </options>
+        </target>
+
+        <!-- Forats platejats capes 1-2 -->
+        <target target="$(targetFolder)$(fName)_Plated$1$2$PTH$Drill.gbr" type="gerber-drill">
+            <layers>
+                <layer name="Drills"/>
+            </layers>
+            <options>
+                <option name="firstLevel" value="1"/>
+                <option name="lastLevel" value="2"/>
+                <option name="DrillType" value="PlatedDrill"/>
+            </options>
+        </target>
+
+        <!-- Perfil -->
+        <target target="$(targetFolder)$(fName)_Profile$NP.gbr" type="gerber-drill">
+            <layers>
+                <layer name="Profile"/>
+            </layers>
+            <options>
+                <option name="DrillType" value="Profile"/>
+            </options>
+        </target>
+
+    </targets>
 </cam>
