@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
 
     using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
+    using MikroPic.EdaTools.v1.Cam.Model;
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
@@ -16,7 +17,9 @@
     /// <summary>
     /// Clase per generar el fitxers gerber d'imatge
     /// </summary>
-    public sealed class GerberImageGenerator : GerberGenerator {
+    public sealed class GerberImageGenerator : Generator {
+
+        private Board board;
 
         public enum ImageType {
             Copper,
@@ -29,13 +32,9 @@
             BottomLegend
         }
 
-        /// <summary>
-        /// Constructor del objecte.
-        /// </summary>
-        /// <param name="board">La placa a procesar.</param>
-        /// 
-        public GerberImageGenerator(Board board):
-            base(board) {
+        public GerberImageGenerator(Target target):
+            base(target) {
+
         }
 
         /// <summary>
@@ -89,6 +88,10 @@
             return sb.ToString();
         }
 
+        public override void GenerateContent(Panel panel) {
+
+        }
+
         /// <summary>
         /// Genera un document gerber.
         /// </summary>
@@ -135,7 +138,7 @@
 
                 // Procesa una capa per omplir el diccionari d'apertures
                 //
-                ApertureCreatorVisitor visitor = new ApertureCreatorVisitor(Board, layer, apertures);
+                ApertureCreatorVisitor visitor = new ApertureCreatorVisitor(board, layer, apertures);
                 visitor.Run();
             }
 
@@ -259,8 +262,8 @@
 
                 // Procesa una capa, i escriu els poligons en el gerber
                 //
-                IVisitor visitor = new RegionGeneratorVisitor(gb, Board, layer, apertures);
-                visitor.Visit(Board);
+                IVisitor visitor = new RegionGeneratorVisitor(gb, board, layer, apertures);
+                visitor.Visit(board);
             }
 
             gb.Comment("END POLYGONS");
@@ -283,7 +286,7 @@
 
                 // Procesa una capa, i escriu la geometria en el gerger
                 //
-                IVisitor visitor = new ImageGeneratorVisitor(gb, Board, layer, apertures);
+                IVisitor visitor = new ImageGeneratorVisitor(gb, board, layer, apertures);
                 visitor.Run();
             }
 

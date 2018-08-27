@@ -2,6 +2,7 @@
 
     using MikroPic.EdaTools.v1.Cam.Gerber;
     using MikroPic.EdaTools.v1.Cam.Ipcd356;
+    using MikroPic.EdaTools.v1.Cam.Model;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using System;
     using System.Text;
@@ -22,11 +23,90 @@
             if (board == null)
                 throw new ArgumentNullException("board");
 
-            GenerateImageGerbers(board, folder, name);
-            GenerateDrillGerbers(board, folder, name);
-            GenerateIPCD(board, folder, name);
+            //GenerateImageGerbers(board, folder, name);
+            //GenerateDrillGerbers(board, folder, name);
+            //GenerateIPCD(board, folder, name);
         }
 
+        /// <summary>
+        /// Genera els fitxers per defecte.
+        /// </summary>
+        /// <param name="panel">El panell.</param>
+        /// <param name="folder">La carpeta on deixar els fitxers.</param>
+        /// <param name="name">Prefix del nom dels fitxers de sortida.</param>
+        /// 
+        public void Generate(Panel panel, string folder, string name) {
+
+            if (panel == null)
+                throw new ArgumentNullException("panel");
+
+            Target[] targets = new Target[] {
+
+                // Forats sense platejar
+                //
+                new Target(
+                    Path.Combine(folder, String.Format("PANEL_{0}_NonPlated$1$2$NPTH$Drill.gbr", name)), 
+                    "gerber-drill", 
+                    new string[] { Layer.HolesName }),
+
+                // Forats platejats
+                //
+                new Target(
+                    Path.Combine(folder, String.Format("PANEL_{0}_Plated$1$2$PTH$Drill.gbr", name)), 
+                    "gerber-drill", 
+                    new string[] { Layer.DrillsName })
+            };
+
+            Generate(panel, targets);
+        }
+
+        /// <summary>
+        /// Genera els fitxers especificats el la llista de targets.
+        /// </summary>
+        /// <param name="panel">El panell a processar.</param>
+        /// <param name="targets">La llista de targets.</param>
+        /// 
+        public void Generate(Panel panel, IEnumerable<Target> targets) {
+
+            if (panel == null)
+                throw new ArgumentNullException("panel");
+
+            if (targets == null)
+                throw new ArgumentNullException("targets");
+
+            foreach (Target target in targets) {
+                Generator generator = LoadGenerator(target);
+                generator.GenerateContent(panel);
+            }
+        }
+
+        /// <summary>
+        /// Carrega un generador en funcio del target.
+        /// </summary>
+        /// <param name="target">El target.</param>
+        /// <returns>El generador.</returns>
+        /// 
+        private Generator LoadGenerator(Target target) {
+
+            if (target == null)
+                throw new ArgumentNullException("target");
+
+            switch (target.GeneratorName) {
+                //case "gerber":
+                //    return new GerberImageGenerator(target);
+
+                case "gerber-drill":
+                    return new GerberDrillGenerator(target);
+
+                //case "IPCD356":
+                //    return new Ipcd356Generator(target);
+
+                default:
+                    throw new InvalidOperationException("Tipo de generador desconocido.");
+            }
+        }
+
+        /*
         /// <summary>
         /// Genera els fitxers gerber d'imatges.
         /// </summary>
@@ -176,7 +256,7 @@
                     ipcd356Generator.GenerateContent(writer);
                 }
             }
-        }
+        }*/
     }
 }
 

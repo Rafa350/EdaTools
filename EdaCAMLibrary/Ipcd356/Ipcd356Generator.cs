@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Ipcd356 {
 
+    using MikroPic.EdaTools.v1.Cam.Model;
     using MikroPic.EdaTools.v1.Cam.Ipcd356.Builder;
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
@@ -11,21 +12,13 @@
     /// <summary>
     /// Generador de codi en format IPCD356
     /// </summary>
-    public sealed class Ipcd356Generator {
+    public sealed class Ipcd356Generator: Generator {
 
         private readonly Board board;
 
-        /// <summary>
-        /// Contructor del objecte
-        /// </summary>
-        /// <param name="board">La placa.</param>
-        /// 
-        public Ipcd356Generator(Board board) {
+        public Ipcd356Generator(Target target):
+            base(target) {
 
-            if (board == null)
-                throw new ArgumentNullException("board");
-
-            this.board = board;
         }
 
         /// <summary>
@@ -37,6 +30,10 @@
         public string GenerateFileName(string prefix) {
 
             return prefix + ".ipc";
+        }
+
+        public override void GenerateContent(Panel panel) {
+
         }
 
         /// <summary>

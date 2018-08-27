@@ -1,133 +1,147 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
 
     using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
-    using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Cam.Model;
     using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.IO;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Text;
-    using System.Windows;
-    using System.Windows.Media;
 
     /// <summary>
     /// Clase per generar fitxers gerber de taladrat.
     /// </summary>
-    public sealed class GerberDrillGenerator: GerberGenerator {
+    public sealed class GerberDrillGenerator : Generator {
+
+        private Dictionary<string, Board> boardCache = new Dictionary<string, Board>();
 
         public enum DrillType {
             PlatedDrill,
             NonPlatedDrill,
             PlatedRoute,
-            NonPlatedRoute,
-            Profile
+            NonPlatedRoute
         }
 
         /// <summary>
-        /// Constructor de la clase.
+        /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="board"></param>
+        /// <param name="target">El target.</param>
         /// 
-        public GerberDrillGenerator(Board board) :
-            base(board) {
+        public GerberDrillGenerator(Target target) :
+            base(target) {
         }
 
         /// <summary>
-        /// Genera el nom del fitxer.
+        /// Genera el fitxer corresponent al panell.
         /// </summary>
-        /// <param name="prefix">Prefix del nom.</param>
-        /// <param name="drillType">Tipus de fitxer a generar.</param>
-        /// <param name="firstLevel">Primer nivell de coure.</param>
-        /// <param name="lastLevel">Ultim nivell de coure.</param>
-        /// <returns>El nom de fitxer.</returns>
+        /// <param name="panel">El panell.</param>
         /// 
-        public string GenerateFileName(string prefix, DrillType drillType, int firstLevel = 0, int lastLevel = 0) {
+        public override void GenerateContent(Panel panel) {
 
-            if (String.IsNullOrEmpty(prefix))
-                throw new ArgumentNullException("prefix");
+            // Crea el fitxer de sortida
+            //
+            using (TextWriter writer = new StreamWriter(
+                new FileStream(Target.FileName, FileMode.Create, FileAccess.Write, FileShare.None))) {
 
-            if ((drillType != DrillType.Profile) && (firstLevel == 0))
-                throw new ArgumentOutOfRangeException("firstLevel");
+                // Carrega les plaques a procesar
+                //
+                List<Board> boards = new List<Board>();
+                foreach (PanelElement element in panel.Elements) {
+                    if (element is PanelElement) {
+                        PanelBoard panelBoard = (PanelBoard)element;
+                        Board board = GetBoard(panelBoard);
+                        boards.Add(board);
+                    }
+                }
 
-            if ((drillType != DrillType.Profile) && (lastLevel == 0))
-                throw new ArgumentOutOfRangeException("lastLevel");
+                // Prepara el diccionari d'apertures
+                //
+                ApertureDictionary apertures = new ApertureDictionary();
+                foreach (PanelElement element in panel.Elements) {
+                    if (element is PanelElement) {
+                        PanelBoard panelBoard = (PanelBoard)element;
+                        Board board = GetBoard(panelBoard);
+                        PrepareApertures(apertures, board, Target.LayerNames);
+                    }
+                }
 
-            if (lastLevel <= firstLevel)
-                throw new ArgumentOutOfRangeException("lastLevel");
+                GerberBuilder gb = new GerberBuilder(writer);
 
-            StringBuilder sb = new StringBuilder();
+                // Genera la capcelera del fitxer
+                //
+                GenerateFileHeader(gb, DrillType.NonPlatedDrill, 1, 2);
 
-            sb.Append(prefix);
+                // Genera la llista d'apertures
+                //
+                GenerateApertures(gb, apertures);
 
-            switch (drillType) {
-                case DrillType.PlatedDrill:
-                    sb.AppendFormat("_Plated${0}${1}$PTH$Drill", firstLevel, lastLevel);
-                    break;
+                // Genera les imatges de les plaques
+                //
+                foreach (PanelElement element in panel.Elements) {
+                    if (element is PanelElement) {
+                        PanelBoard panelBoard = (PanelBoard)element;
+                        Board board = GetBoard(panelBoard);
+                        GenerateImage(gb, board, Target.LayerNames, panelBoard.Position, apertures);
+                    }
+                }
 
-                case DrillType.NonPlatedDrill:
-                    sb.AppendFormat("_NonPlated${0}${1}$NPTH$Drill", firstLevel, lastLevel);
-                    break;
-
-                case DrillType.PlatedRoute:
-                    sb.AppendFormat("_Plated${0}${1}$PTH$Route", firstLevel, lastLevel);
-                    break;
-
-                case DrillType.NonPlatedRoute:
-                    sb.AppendFormat("_NonPlated${0}${1}$NPTH$Route", firstLevel, lastLevel);
-                    break;
-
-                case DrillType.Profile:
-                    sb.AppendFormat("_Profile$NP");
-                    break;
+                // Genera el final del fitxer
+                //
+                GenerateFileTail(gb);
             }
-
-            sb.Append(".gbr");
-
-            return sb.ToString();
         }
 
         /// <summary>
-        /// Genera el contingut
+        /// Obte la placa del panell.
         /// </summary>
-        /// <param name="writer">Escriptor de sortida.</param>
-        /// <param name="layers">Lapes a procesar.</param>
-        /// <param name="drillType">Tipus de forat.</param>
-        /// <param name="firstLevel">Primer nivell de coure.</param>
-        /// <param name="lastLevel">Eltim nivell de coute.</param>
+        /// <param name="panelBoard">El panell.</param>
+        /// <returns>La placa.</returns>
         /// 
-        public void GenerateContent(TextWriter writer, IEnumerable<Layer> layers, DrillType drillType, int firstLevel, int lastLevel) {
+        private Board GetBoard(PanelBoard panelBoard) {
 
-            if (writer == null)
-                throw new ArgumentNullException("writer");
-
-            GerberBuilder gb = new GerberBuilder(writer);
-
-            ApertureDictionary apertures = CreateApertures(layers);
-
-            GenerateFileHeader(gb, drillType, firstLevel, lastLevel);
-            GenerateApertures(gb, apertures);
-            GenerateImage(gb, layers, apertures);
-            GenerateFileTail(gb);
+            Board board;
+            if (!boardCache.TryGetValue(panelBoard.FileName, out board)) {
+                using (Stream stream = new FileStream(panelBoard.FileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
+                    BoardReader reader = new BoardReader(stream);
+                    board = reader.Read();
+                    boardCache.Add(panelBoard.FileName, board);
+                }
+            }
+            return board;
         }
 
         /// <summary>
-        /// Crea el diccionari d'aperturess.
+        /// Enumera les capes d'una placa en particular.
         /// </summary>
-        /// <param name="layers">Les capes a tenir en compte.</param>
-        /// <returns>El diccionari d'aperturees.</returns>
+        /// <param name="board">La placa.</param>
+        /// <param name="layerNames">El noms de les capes a obtenir.</param>
+        /// <returns>L'enumeracio de capes.</returns>
         /// 
-        private ApertureDictionary CreateApertures(IEnumerable<Layer> layers) {
+        private IEnumerable<Layer> GetLayers(Board board, IEnumerable<string> layerNames) {
 
-            ApertureDictionary apertures = new ApertureDictionary();
+            List<Layer> layers = new List<Layer>();
+            foreach (string layerName in layerNames)
+                layers.Add(board.GetLayer(layerName, false));
 
-            foreach (Layer layer in layers) {
-                IVisitor visitor = new AperturesCreatorVisitor(Board, layer, apertures);
+            return layers;
+        }
+
+        /// <summary>
+        /// Prepare el diccionari d'apertures
+        /// </summary>
+        /// <param name="apertures">El diccionari d'apertures.</param>
+        /// <param name="board">La placa.</param>
+        /// <param name="layerNames">Els noms de les capes a procesar.</param>
+        /// 
+        private void PrepareApertures(ApertureDictionary apertures, Board board, IEnumerable<string> layerNames) {
+
+            foreach (Layer layer in GetLayers(board, layerNames)) {
+                IVisitor visitor = new PrepareAperturesVisitor(board, layer, apertures);
                 visitor.Run();
             }
-
-            return apertures;
         }
 
         /// <summary>
@@ -163,11 +177,6 @@
 
                 case DrillType.NonPlatedRoute:
                     gb.Attribute(AttributeScope.File, String.Format(".FileFunction,NonPlated,{0},{1},NPTH,Route", firstLevel, lastLevel));
-                    gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
-                    break;
-
-                case DrillType.Profile:
-                    gb.Attribute(AttributeScope.File, ".FileFunction,Profile,NP");
                     gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
             }
@@ -211,26 +220,24 @@
         /// <param name="layers">Les capes a tenir en compte.</param>
         /// <param name="apertures">El diccionari d'apoertures.</param>
         /// 
-        private void GenerateImage(GerberBuilder gb, IEnumerable<Layer> layers, ApertureDictionary apertures) {
+        private void GenerateImage(GerberBuilder gb, Board board, IEnumerable<string> layerNames, Point position, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
-
-            foreach (Layer layer in layers) {
-                IVisitor visitor = new ImageGeneratorVisitor(gb, Board, layer, apertures);
+            foreach (Layer layer in GetLayers(board, layerNames)) {
+                IVisitor visitor = new ImageGeneratorVisitor(gb, board, layer, position, apertures);
                 visitor.Run();
             }
-
             gb.Comment("END IMAGE");
         }
 
         /// <summary>
         /// Clase utilitzada per crear les apertures.
         /// </summary>
-        private sealed class AperturesCreatorVisitor : ElementVisitor {
+        private sealed class PrepareAperturesVisitor : ElementVisitor {
 
             private readonly ApertureDictionary apertures;
 
-            public AperturesCreatorVisitor(Board board, Layer layer, ApertureDictionary apertures):
+            public PrepareAperturesVisitor(Board board, Layer layer, ApertureDictionary apertures) :
                 base(board, layer) {
 
                 this.apertures = apertures;
@@ -259,6 +266,7 @@
 
             private readonly GerberBuilder gb;
             private readonly ApertureDictionary apertures;
+            private readonly Point boardPosition;
 
             /// <summary>
             /// Constructor de la clase.
@@ -268,11 +276,12 @@
             /// <param name="layer">La capa a procesar.</param>
             /// <param name="apertures">El diccionari d'apertures.</param>
             /// 
-            public ImageGeneratorVisitor(GerberBuilder gb, Board board, Layer layer, ApertureDictionary apertures) :
+            public ImageGeneratorVisitor(GerberBuilder gb, Board board, Layer layer, Point position, ApertureDictionary apertures) :
                 base(board, layer) {
 
                 this.gb = gb;
                 this.apertures = apertures;
+                this.boardPosition = position;
             }
 
             /// <summary>
@@ -334,3 +343,4 @@
         }
     }
 }
+

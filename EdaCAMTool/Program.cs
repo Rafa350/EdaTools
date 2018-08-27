@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using MikroPic.EdaTools.v1.Cam;
+    using MikroPic.EdaTools.v1.Cam.Model;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.IO;
 
@@ -98,8 +99,11 @@
 
             Board board = LoadBoard(fileName);
 
+            Panel panel = new Panel();
+            panel.AddElement(new PanelBoard(fileName));
+
             CAMGenerator cg = new CAMGenerator();
-            cg.Generate(board, folder, name);
+            cg.Generate(panel, folder, name);
         }
 
         /// <summary>
