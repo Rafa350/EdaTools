@@ -31,7 +31,7 @@
         /// 
         public void NewBoard() {
 
-            fileName = "unnamed.xml";
+            fileName = "unnamed.xbrd";
             isDirty = true;
 
             board = new Board();

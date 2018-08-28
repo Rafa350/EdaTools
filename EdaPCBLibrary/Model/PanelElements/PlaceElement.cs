@@ -7,13 +7,11 @@
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.IO;
 
-    public sealed class PlaceElement: PanelElement, IPosition {
+    public sealed class PlaceElement: PanelElement {
 
         private static Dictionary<string, Board> boardCache = new Dictionary<string, Board>();
 
         private string fileName;
-        private Point position;
-        private Angle orientation;
         private Board board;
 
         /// <summary>
@@ -30,17 +28,15 @@
         /// </summary>
         /// <param name="fileName">Nom del fitxer de la placa.</param>
         /// <param name="position">Posicio de la placa d'ins del panell.</param>
-        /// <param name="orientation">Orientacio de la placa centrat en la posicio.</param>
+        /// <param name="rotation">Angle de rotacio de la placa centrat en la posicio.</param>
         /// 
-        public PlaceElement(string fileName, Point position, Angle orientation):
-            base(position, orientation) {
+        public PlaceElement(string fileName, Point position, Angle rotation):
+            base(position, rotation) {
 
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException("fileName");
 
             this.fileName = fileName;
-            this.position = position;
-            this.orientation = orientation;
         }
 
         /// <summary>
@@ -67,21 +63,6 @@
         public string FileName {
             get {
                 return fileName;
-            }
-        }
-
-        public Point Position {
-            set {
-                position = value;
-            }
-            get {
-                return position;
-            }
-        }
-
-        public Angle Orientation {
-            get {
-                return orientation;
             }
         }
 

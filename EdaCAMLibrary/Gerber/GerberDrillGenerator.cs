@@ -12,9 +12,9 @@
     using System.IO;
 
     /// <summary>
-    /// Clase per generar fitxers gerber de taladrat.
+    /// Clase per generar fitxers gerber de forats i fresats.
     /// </summary>
-    public sealed class GerberDrillGenerator : Generator {
+    public sealed class GerberDrillGenerator: Generator {
 
         public enum DrillType {
             PlatedDrill,
@@ -53,19 +53,17 @@
                 foreach (PanelElement element in panel.Elements) {
                     if (element is PanelElement) {
                         PlaceElement panelBoard = (PlaceElement)element;
-                        Board board = panelBoard.Board;
-                        PrepareApertures(apertures, board, Target.LayerNames);
+                        PrepareApertures(apertures, panelBoard.Board);
                     }
                 }
 
+                // Prepara el generador de gerbers
+                //
                 GerberBuilder gb = new GerberBuilder(writer);
 
                 // Genera la capcelera del fitxer
                 //
-                DrillType drillType = (DrillType) Enum.Parse(typeof(DrillType), Target.GetOptionValue("DrillType"));
-                int topLayer = Int32.Parse(Target.GetOptionValue("topLayer"));
-                int bottomLayer = Int32.Parse(Target.GetOptionValue("bottomLayer")); 
-                GenerateFileHeader(gb, drillType, topLayer, bottomLayer);
+                GenerateFileHeader(gb);
 
                 // Genera la llista d'apertures
                 //
@@ -76,8 +74,7 @@
                 foreach (PanelElement element in panel.Elements) {
                     if (element is PanelElement) {
                         PlaceElement panelBoard = (PlaceElement)element;
-                        Board board = panelBoard.Board;
-                        GenerateImage(gb, board, Target.LayerNames, panelBoard.Position, apertures);
+                        GenerateImage(gb, panelBoard.Board, panelBoard.Position, apertures);
                     }
                 }
 
@@ -94,25 +91,25 @@
         /// <param name="layerNames">El noms de les capes a obtenir.</param>
         /// <returns>L'enumeracio de capes.</returns>
         /// 
-        private IEnumerable<Layer> GetLayers(Board board, IEnumerable<string> layerNames) {
+        private IEnumerable<Layer> GetLayers(Board board) {
 
             List<Layer> layers = new List<Layer>();
-            foreach (string layerName in layerNames)
+            foreach (string layerName in Target.LayerNames)
                 layers.Add(board.GetLayer(layerName, false));
 
             return layers;
         }
 
         /// <summary>
-        /// Prepare el diccionari d'apertures
+        /// Prepara el diccionari d'apertures
         /// </summary>
         /// <param name="apertures">El diccionari d'apertures.</param>
         /// <param name="board">La placa.</param>
         /// <param name="layerNames">Els noms de les capes a procesar.</param>
         /// 
-        private void PrepareApertures(ApertureDictionary apertures, Board board, IEnumerable<string> layerNames) {
+        private void PrepareApertures(ApertureDictionary apertures, Board board) {
 
-            foreach (Layer layer in GetLayers(board, layerNames)) {
+            foreach (Layer layer in GetLayers(board)) {
                 IVisitor visitor = new PrepareAperturesVisitor(board, layer, apertures);
                 visitor.Run();
             }
@@ -122,35 +119,36 @@
         /// Genera la capcelera del fitxer.
         /// </summary>
         /// <param name="gb">El generador de gerbers</param>
-        /// <param name="drillType">El tipus de forat.</param>
-        /// <param name="firstLevel">Primer nivell</param>
-        /// <param name="lastLevel">Ultim nivell</param>
         /// 
-        private void GenerateFileHeader(GerberBuilder gb, DrillType drillType, int firstLevel, int lastLevel) {
+        private void GenerateFileHeader(GerberBuilder gb) {
 
             gb.Comment("EdaTools v1.0.");
             gb.Comment("EdaTools CAM processor. Gerber generator.");
             gb.Comment(String.Format("Start timestamp: {0:HH:mm:ss.fff}", DateTime.Now));
             gb.Comment("BEGIN HEADER");
 
+            DrillType drillType = (DrillType)Enum.Parse(typeof(DrillType), Target.GetOptionValue("drillType"));
+            int topLevel = Int32.Parse(Target.GetOptionValue("topLevel"));
+            int bottomLevel = Int32.Parse(Target.GetOptionValue("bottomLevel"));
+
             switch (drillType) {
                 case DrillType.PlatedDrill:
-                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,Plated,{0},{1},PTH,Drill", firstLevel, lastLevel));
+                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,Plated,{0},{1},PTH,Drill", topLevel, bottomLevel));
                     gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
 
                 case DrillType.NonPlatedDrill:
-                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,NonPlated,{0},{1},NPTH,Drill", firstLevel, lastLevel));
+                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,NonPlated,{0},{1},NPTH,Drill", topLevel, bottomLevel));
                     gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
 
                 case DrillType.PlatedRoute:
-                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,Plated,{0},{1},PTH,Route", firstLevel, lastLevel));
+                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,Plated,{0},{1},PTH,Route", topLevel, bottomLevel));
                     gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
 
                 case DrillType.NonPlatedRoute:
-                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,NonPlated,{0},{1},NPTH,Route", firstLevel, lastLevel));
+                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,NonPlated,{0},{1},NPTH,Route", topLevel, bottomLevel));
                     gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
             }
@@ -191,13 +189,14 @@
         /// Genera la imatge.
         /// </summary>
         /// <param name="gb">El generador de gerbers.</param>
-        /// <param name="layers">Les capes a tenir en compte.</param>
+        /// <param name="board">La placa a procesar.</param>
+        /// <param name="position">Posicio de la placa.</param>
         /// <param name="apertures">El diccionari d'apoertures.</param>
         /// 
-        private void GenerateImage(GerberBuilder gb, Board board, IEnumerable<string> layerNames, Point position, ApertureDictionary apertures) {
+        private void GenerateImage(GerberBuilder gb, Board board, Point position, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
-            foreach (Layer layer in GetLayers(board, layerNames)) {
+            foreach (Layer layer in GetLayers(board)) {
                 IVisitor visitor = new ImageGeneratorVisitor(gb, board, layer, position, apertures);
                 visitor.Run();
             }
@@ -205,28 +204,50 @@
         }
 
         /// <summary>
-        /// Visitador per preparar les apertures.
+        /// Visitador per preparar les apertures. Visita els element que tenen forats.
         /// </summary>
         private sealed class PrepareAperturesVisitor : ElementVisitor {
 
             private readonly ApertureDictionary apertures;
 
+            /// <summary>
+            /// Constructor de l'objecte.
+            /// </summary>
+            /// <param name="board">La placa a procesar.</param>
+            /// <param name="layer">Les capes a procesar.</param>
+            /// <param name="apertures">El diccionari d'apertures a preparar.</param>
+            /// 
             public PrepareAperturesVisitor(Board board, Layer layer, ApertureDictionary apertures) :
                 base(board, layer) {
 
                 this.apertures = apertures;
             }
 
+            /// <summary>
+            /// Visita un element de tipus 'HoleElement'
+            /// </summary>
+            /// <param name="hole">L'element a visitar.</param>
+            /// 
             public override void Visit(HoleElement hole) {
 
                 apertures.DefineCircleAperture(hole.Drill);
             }
 
+            /// <summary>
+            /// Visita un element de tipus 'ViaElement'
+            /// </summary>
+            /// <param name="via">L'element a visitar.</param>
+            /// 
             public override void Visit(ViaElement via) {
 
                 apertures.DefineCircleAperture(via.Drill);
             }
 
+            /// <summary>
+            /// Viita un element de tipus 'ThPadElement'
+            /// </summary>
+            /// <param name="pad">L'element a visitar.</param>
+            /// 
             public override void Visit(ThPadElement pad) {
 
                 apertures.DefineCircleAperture(pad.Drill);
@@ -234,7 +255,7 @@
         }
 
         /// <summary>
-        /// Visitador per generar la imatge
+        /// Visitador per generar la imatge. Visita els elements que tenen forars.
         /// </summary>
         private sealed class ImageGeneratorVisitor : ElementVisitor {
 
@@ -260,7 +281,7 @@
             }
 
             /// <summary>
-            /// Visita un object HoleElement
+            /// Visita un object 'HoleElement'
             /// </summary>
             /// <param name="hole">El element a visitar.</param>
             /// 
@@ -279,7 +300,7 @@
             }
 
             /// <summary>
-            /// Visita un objecte ViaElement.
+            /// Visita un objecte 'ViaElement'.
             /// </summary>
             /// <param name="via">L'objecte a visitar.</param>
             /// 
@@ -298,7 +319,7 @@
             }
 
             /// <summary>
-            /// Visita un objecte ThPadElement
+            /// Visita un objecte 'ThPadElement'.
             /// </summary>
             /// <param name="pad">L'objecte a visitar.</param>
             /// 

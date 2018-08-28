@@ -5,8 +5,8 @@
 
     public sealed class JoinElement: PanelElement {
 
-        public JoinElement(Point position, Angle orientation):
-            base(position, orientation) {
+        public JoinElement(Point position, Angle rotation):
+            base(position, rotation) {
 
         }
     }

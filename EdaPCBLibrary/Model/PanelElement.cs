@@ -5,12 +5,12 @@
     public abstract class PanelElement {
 
         private Point position;
-        private Angle orientation;
+        private Angle rotation;
 
-        public PanelElement(Point position, Angle orientation) {
+        public PanelElement(Point position, Angle rotation) {
 
             this.position = position;
-            this.orientation = orientation;
+            this.rotation = rotation;
         }
     }
 }

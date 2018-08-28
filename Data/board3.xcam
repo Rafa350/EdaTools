@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <cam version="100">
     <panel>
-        <board fileName="board3.xml" position="0, 0" orientation="0"/>
-        <board fileName="board3.xml" position="100, 0" orientation="0"/>
-        <board fileName="board3.xml" position="0, 100" orientation="0"/>
-        <board fileName="board3.xml" position="100, 100" orientation="0"/>
+        <board fileName="board3.xbrd" position="0, 0" orientation="0"/>
+        <board fileName="board3.xbrd" position="100, 0" orientation="0"/>
+        <board fileName="board3.xbrd" position="0, 100" orientation="0"/>
+        <board fileName="board3.xbrd" position="100, 100" orientation="0"/>
     </panel>
     
     <targets>

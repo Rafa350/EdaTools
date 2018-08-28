@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+    elementFormDefault="qualified"
+    targetNamespace="http://MikroPic.com/schemas/edatools/v1/XPNL.xsd"
+    xmlns="http://MikroPic.com/schemas/edatools/v1/XPNL.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    
+    <xs:element
+        name="panel">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="elements" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="version" use="required" type="xs:string"/>
+            <xs:attribute name="units" use="required" type="distanceUnits"/>
+            <xs:attribute name="position" use="optional" type="double2"/>
+            <xs:attribute name="rotation" use="optional" type="xs:double"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element
+        name="attributes">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="attribute" maxOccurs="unbounded" minOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element
+        name="attribute">
+        <xs:complexType>
+            <xs:attribute name="name" use="required" type="xs:string"/>
+            <xs:attribute name="value" use="required" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element
+        name="elements">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="place"/>
+                    <xs:element ref="join"/>
+                </xs:choice>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element
+        name="place">
+        <xs:complexType>
+            <xs:attribute name="position" use="required" type="double2"/>
+            <xs:attribute name="rotation" use="required" type="xs:double"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element
+        name="join">
+        <xs:complexType>
+            <xs:attribute name="position" use="required" type="double2"/>
+            <xs:attribute name="rotation" use="required" type="xs:double"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType
+        name="double2">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$"/>
+        </xs:restriction>        
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="lineCap">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="round"/>
+            <xs:enumeration value="flat"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="viaShape">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="square"/>
+            <xs:enumeration value="octagon"/>
+            <xs:enumeration value="circle"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType
+        name="tpadShape">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="square"/>
+            <xs:enumeration value="octagon"/>
+            <xs:enumeration value="circle"/>
+            <xs:enumeration value="oval"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="horizontalTextAlign">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="right"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="verticalTextAlign">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="top"/>
+            <xs:enumeration value="middle"/>
+            <xs:enumeration value="bottom"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="distanceUnits">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="mm"/>
+            <xs:enumeration value="um"/>
+            <xs:enumeration value="nm"/>
+            <xs:enumeration value="inches"/>
+            <xs:enumeration value="mills"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="angleUnits">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="deg"/>
+            <xs:enumeration value="rad"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="boardSide">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="top"/>
+            <xs:enumeration value="bottom"/>
+            <xs:enumeration value="inner"/>
+            <xs:enumeration value="unknown"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="layerFunction">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="signal"/>
+            <xs:enumeration value="design"/>
+            <xs:enumeration value="mechanical"/>
+            <xs:enumeration value="unknown"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

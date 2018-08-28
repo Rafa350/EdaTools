@@ -55,12 +55,12 @@
         private void OpenExecute(object parameter) {
 
             OpenFileDialogViewModel data = new OpenFileDialogViewModel(null);
-            data.Title = "Open PCB Board";
+            data.Title = "Open PCB file";
             data.MultiSelect = false;
             data.CheckFileExist = true;
-            data.Filter = "PCB board|*.xml";
+            data.Filter = "PCB board (*.xbrd)|*.xbrd|PCB Panel (*.xpnl)|*.xpnl";
             data.FilterIndex = 0;
-            data.DefaultExt = ".xml";
+            data.DefaultExt = ".xbrd";
             data.AddExtension = true;
 
             if (dlgService.ShowOpenFileDialog(data)) {

@@ -108,6 +108,9 @@
     <EmbeddedResource Include="Model\IO\Schemas\XBRD.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Model\IO\Schemas\XPNL.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="signature.pfx" />
   </ItemGroup>
   <ItemGroup>

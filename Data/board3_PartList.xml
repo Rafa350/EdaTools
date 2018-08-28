@@ -125,6 +125,7 @@
                 <attribute name="NAME" value="JP6" />
                 <attribute name="REFERENCE" value="DF13-4P-1.25H(20)" />
                 <attribute name="MANUFACTURER" value="Hirose Electric" />
+                <attribute name="VALUE" value="DF13-1X4-SMD-90-E" />
             </attributes>
         </part>
         <part name="JP7" position="3, 40.75" rotation="90" side="Top">
@@ -132,6 +133,7 @@
                 <attribute name="NAME" value="JP7" />
                 <attribute name="MANUFACTURER" value="Hirose Electric" />
                 <attribute name="REFERENCE" value="DF13-4P-1.25H(20)" />
+                <attribute name="VALUE" value="DF13-1X4-SMD-90-E" />
             </attributes>
         </part>
         <part name="C7" position="38, 27.75" rotation="270" side="Top">
@@ -458,6 +460,7 @@
                 <attribute name="NAME" value="JP3" />
                 <attribute name="MANUFACTURER" value="Hirose Electric" />
                 <attribute name="REFERENCE" value="DF13-5P-1.25H(20)" />
+                <attribute name="VALUE" value="DF13-1X5-SMD-90-E" />
             </attributes>
         </part>
         <part name="U19" position="44, 13.5" rotation="180" side="Top">
@@ -700,16 +703,30 @@
             <attributes>
                 <attribute name="REFERENCE" value="DF11-18DP-2DSA(08)" />
                 <attribute name="MANUFACTURER" value="Hirose Electric" />
+                <attribute name="NAME" value="JP1" />
+                <attribute name="VALUE" value="DF11-18DP-2DSA" />
             </attributes>
         </part>
         <part name="JP2" position="49.875, 62.875" rotation="0" side="Top">
             <attributes>
                 <attribute name="MANUFACTURER" value="Hirose Electric" />
                 <attribute name="REFERENCE" value="DF11-16DP-2DSA(08)" />
+                <attribute name="NAME" value="JP2" />
+                <attribute name="VALUE" value="DF11-16DP-2DSA" />
             </attributes>
         </part>
-        <part name="U$1" position="10, 35" rotation="0" side="Top" />
-        <part name="U$2" position="48.5, 20.5" rotation="0" side="Top" />
+        <part name="U$1" position="10, 35" rotation="0" side="Top">
+            <attributes>
+                <attribute name="NAME" value="U$1" />
+                <attribute name="VALUE" value="" />
+            </attributes>
+        </part>
+        <part name="U$2" position="48.5, 20.5" rotation="0" side="Top">
+            <attributes>
+                <attribute name="NAME" value="U$2" />
+                <attribute name="VALUE" value="" />
+            </attributes>
+        </part>
         <part name="R20" position="68.125, 46" rotation="90" side="Top">
             <attributes>
                 <attribute name="TYPE" value="R" />

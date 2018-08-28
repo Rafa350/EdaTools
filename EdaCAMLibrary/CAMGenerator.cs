@@ -40,35 +40,53 @@
             if (panel == null)
                 throw new ArgumentNullException("panel");
 
+            List<Target> targets = new List<Target>();
+            
             // Forats sense platejar
             //
             Target target1 = new Target(
-                    Path.Combine(folder, String.Format("PANEL_{0}_NonPlated$1$2$NPTH$Drill.gbr", name)),
+                    Path.Combine(folder, String.Format("{0}_NonPlated$1$2$NPTH$Drill.gbr", name)),
                     "gerber-drill",
                     new string[] { Layer.HolesName });
-            target1.AddOption("DrillType", "NonPlatedDrill");
-            target1.AddOption("topLayer", "1");
-            target1.AddOption("bottomLayer", "2");
+            target1.AddOption("drillType", "NonPlatedDrill");
+            target1.AddOption("topLevel", "1");
+            target1.AddOption("bottomLevel", "2");
+            targets.Add(target1);
 
             // Forats platejats
             //
             Target target2 = new Target(
-                    Path.Combine(folder, String.Format("PANEL_{0}_Plated$1$2$PTH$Drill.gbr", name)),
+                    Path.Combine(folder, String.Format("{0}_Plated$1$2$PTH$Drill.gbr", name)),
                     "gerber-drill",
                     new string[] { Layer.DrillsName });
-            target2.AddOption("DrillType", "PlatedDrill");
-            target2.AddOption("topLayer", "1");
-            target2.AddOption("bottomLayer", "2");
+            target2.AddOption("drillType", "PlatedDrill");
+            target2.AddOption("topLevel", "1");
+            target2.AddOption("bottomLevel", "2");
+            targets.Add(target2);
 
             // Perfil
             //
             Target target3 = new Target(
-                    Path.Combine(folder, String.Format("PANEL_{0}_Profile$NP.gbr", name)),
+                    Path.Combine(folder, String.Format("{0}_Profile$NP.gbr", name)),
                     "gerber-image",
                     new string[] { Layer.ProfileName });
-            target3.AddOption("ImageType", "Profile");
+            target3.AddOption("imageType", "Profile");
+            targets.Add(target3);
 
-            Generate(panel, new Target[] { target1, target2, target3 });
+            // Coure
+            //
+            int level = 1;
+            foreach (string layerName in new string[] { "Top", "Bottom" } ) {
+                Target target = new Target(
+                        Path.Combine(folder, String.Format("{0}_Copper$L{1}.gbr", name, level++)),
+                        "gerber-image",
+                        new string[] { layerName });
+                target.AddOption("imageType", "Copper");
+                target.AddOption("layerLevel", level.ToString());
+                targets.Add(target);
+            }
+
+            Generate(panel, targets);
         }
 
         /// <summary>
