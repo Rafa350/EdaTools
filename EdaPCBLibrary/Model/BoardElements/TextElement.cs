@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
@@ -9,7 +9,7 @@
     /// Clase que representa un text.
     /// </summary>
     /// 
-    public sealed class TextElement: Element, IPosition, IRotation {
+    public sealed class TextElement: BoardElement, IPosition, IRotation {
 
         private Point position;
         private Angle rotation;

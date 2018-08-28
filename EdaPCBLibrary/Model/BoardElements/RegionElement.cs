@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
@@ -9,7 +9,7 @@
     /// <summary>
     /// Clase que representa una regio poligonal.
     /// </summary>
-    public sealed class RegionElement: Element, IConectable {
+    public sealed class RegionElement: BoardElement, IConectable {
 
         public struct Segment {
 

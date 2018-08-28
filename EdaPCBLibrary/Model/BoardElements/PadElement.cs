@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
 
     using System;
     using MikroPic.EdaTools.v1.Geometry;
@@ -8,10 +8,11 @@
     /// Clase que representa un pad.
     /// </summary>
     /// 
-    public abstract class PadElement : Element, IPosition, IName, IConectable {
+    public abstract class PadElement : BoardElement, IPosition, IRotation, IName, IConectable {
 
         private string name;
         private Point position;
+        private Angle rotation;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -19,11 +20,12 @@
         /// <param name="name">Nom del pad.</param>
         /// <param name="position">Posicio.</param>
         /// 
-        public PadElement(string name, Point position) :
+        public PadElement(string name, Point position, Angle rotation) :
             base() {
 
             this.name = name;
             this.position = position;
+            this.rotation = rotation;
         }
 
         /// <summary>
@@ -62,6 +64,19 @@
             }
             set {
                 position = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna l'orientacio del pad.
+        /// </summary>
+        /// 
+        public Angle Rotation {
+            get {
+                return rotation;
+            }
+            set {
+                rotation = value;
             }
         }
     }

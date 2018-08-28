@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Model {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using System;
     using System.Collections.Generic;
@@ -7,6 +7,11 @@
 
         private HashSet<PanelElement> elements;
 
+        /// <summary>
+        /// Afegeix un element
+        /// </summary>
+        /// <param name="element">L'element a afeigir.</param>
+        /// 
         public void AddElement(PanelElement element) {
 
             if (element == null)
@@ -18,12 +23,20 @@
             elements.Add(element);
         }
 
+        /// <summary>
+        /// Indica si te elements
+        /// </summary>
+        /// 
         public bool HasElements {
             get {
                 return elements != null;
             }
         }
 
+        /// <summary>
+        /// Enumera els elements
+        /// </summary>
+        /// 
         public IEnumerable<PanelElement> Elements {
             get {
                 if (elements == null)

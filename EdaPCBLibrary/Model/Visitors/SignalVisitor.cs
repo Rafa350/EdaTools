@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
 
     public abstract class SignalVisitor : DefaultVisitor {
 
@@ -36,7 +36,7 @@
             IEnumerable<Tuple<IConectable, Part>> items = board.GetConnectedItems(signal);
             if (items != null)
                 foreach (Tuple<IConectable, Part> item in items) {
-                    Element element = item.Item1 as Element;
+                    BoardElement element = item.Item1 as BoardElement;
                     if (element != null)
                         element.AcceptVisitor(this);
                 }

@@ -7,7 +7,7 @@
     /// Clase base per tots els elements de la placa.
     /// </summary>
     /// 
-    public abstract class Element : IVisitable {
+    public abstract class BoardElement : IVisitable {
 
         /// <summary>
         /// Accepta un visitador.

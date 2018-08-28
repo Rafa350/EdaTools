@@ -4,8 +4,8 @@
     using MikroPic.EdaTools.v1.Cam.Model;
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-    using MikroPic.EdaTools.v1.Pcb.Model.IO;
+    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
+    using MikroPic.EdaTools.v1.Pcb.Model.PanelElements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
     using System.Collections.Generic;
@@ -15,8 +15,6 @@
     /// Clase per generar fitxers gerber de taladrat.
     /// </summary>
     public sealed class GerberDrillGenerator : Generator {
-
-        private Dictionary<string, Board> boardCache = new Dictionary<string, Board>();
 
         public enum DrillType {
             PlatedDrill,
@@ -41,29 +39,21 @@
         /// 
         public override void GenerateContent(Panel panel) {
 
+            if (panel == null)
+                throw new ArgumentNullException("panel");
+
             // Crea el fitxer de sortida
             //
             using (TextWriter writer = new StreamWriter(
                 new FileStream(Target.FileName, FileMode.Create, FileAccess.Write, FileShare.None))) {
-
-                // Carrega les plaques a procesar
-                //
-                List<Board> boards = new List<Board>();
-                foreach (PanelElement element in panel.Elements) {
-                    if (element is PanelElement) {
-                        PanelBoard panelBoard = (PanelBoard)element;
-                        Board board = GetBoard(panelBoard);
-                        boards.Add(board);
-                    }
-                }
 
                 // Prepara el diccionari d'apertures
                 //
                 ApertureDictionary apertures = new ApertureDictionary();
                 foreach (PanelElement element in panel.Elements) {
                     if (element is PanelElement) {
-                        PanelBoard panelBoard = (PanelBoard)element;
-                        Board board = GetBoard(panelBoard);
+                        PlaceElement panelBoard = (PlaceElement)element;
+                        Board board = panelBoard.Board;
                         PrepareApertures(apertures, board, Target.LayerNames);
                     }
                 }
@@ -72,7 +62,10 @@
 
                 // Genera la capcelera del fitxer
                 //
-                GenerateFileHeader(gb, DrillType.NonPlatedDrill, 1, 2);
+                DrillType drillType = (DrillType) Enum.Parse(typeof(DrillType), Target.GetOptionValue("DrillType"));
+                int topLayer = Int32.Parse(Target.GetOptionValue("topLayer"));
+                int bottomLayer = Int32.Parse(Target.GetOptionValue("bottomLayer")); 
+                GenerateFileHeader(gb, drillType, topLayer, bottomLayer);
 
                 // Genera la llista d'apertures
                 //
@@ -82,8 +75,8 @@
                 //
                 foreach (PanelElement element in panel.Elements) {
                     if (element is PanelElement) {
-                        PanelBoard panelBoard = (PanelBoard)element;
-                        Board board = GetBoard(panelBoard);
+                        PlaceElement panelBoard = (PlaceElement)element;
+                        Board board = panelBoard.Board;
                         GenerateImage(gb, board, Target.LayerNames, panelBoard.Position, apertures);
                     }
                 }
@@ -92,25 +85,6 @@
                 //
                 GenerateFileTail(gb);
             }
-        }
-
-        /// <summary>
-        /// Obte la placa del panell.
-        /// </summary>
-        /// <param name="panelBoard">El panell.</param>
-        /// <returns>La placa.</returns>
-        /// 
-        private Board GetBoard(PanelBoard panelBoard) {
-
-            Board board;
-            if (!boardCache.TryGetValue(panelBoard.FileName, out board)) {
-                using (Stream stream = new FileStream(panelBoard.FileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                    BoardReader reader = new BoardReader(stream);
-                    board = reader.Read();
-                    boardCache.Add(panelBoard.FileName, board);
-                }
-            }
-            return board;
         }
 
         /// <summary>
@@ -231,7 +205,7 @@
         }
 
         /// <summary>
-        /// Clase utilitzada per crear les apertures.
+        /// Visitador per preparar les apertures.
         /// </summary>
         private sealed class PrepareAperturesVisitor : ElementVisitor {
 
@@ -260,7 +234,7 @@
         }
 
         /// <summary>
-        /// Clase utilitzada per generar la imatge
+        /// Visitador per generar la imatge
         /// </summary>
         private sealed class ImageGeneratorVisitor : ElementVisitor {
 
@@ -274,6 +248,7 @@
             /// <param name="gb">El generador de gerbers.</param>
             /// <param name="board">La placa.</param>
             /// <param name="layer">La capa a procesar.</param>
+            /// <param name="position">Posicio de la imatge.</param>
             /// <param name="apertures">El diccionari d'apertures.</param>
             /// 
             public ImageGeneratorVisitor(GerberBuilder gb, Board board, Layer layer, Point position, ApertureDictionary apertures) :

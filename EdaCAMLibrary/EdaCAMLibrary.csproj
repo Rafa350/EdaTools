@@ -62,12 +62,9 @@
     <Compile Include="Ipcd356\Builder\Ipcd356Builder.cs" />
     <Compile Include="Ipcd356\Ipcd356Generator.cs" />
     <Compile Include="Model\IO\ProjectReader.cs" />
-    <Compile Include="Model\Panel.cs" />
-    <Compile Include="Model\PanelElement.cs" />
-    <Compile Include="Model\PanelJoin.cs" />
     <Compile Include="Model\Project.cs" />
-    <Compile Include="Model\PanelBoard.cs" />
     <Compile Include="Model\Target.cs" />
+    <Compile Include="Model\TargetOption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

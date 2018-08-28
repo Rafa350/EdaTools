@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Model {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using MikroPic.EdaTools.v1.Geometry;
 

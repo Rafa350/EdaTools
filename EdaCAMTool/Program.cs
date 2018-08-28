@@ -1,11 +1,10 @@
 ﻿namespace MikroPic.EdaTools.v1.CamTool {
 
+    using MikroPic.EdaTools.v1.Cam;
+    using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Pcb.Model.PanelElements;
     using System;
     using System.IO;
-    using MikroPic.EdaTools.v1.Cam;
-    using MikroPic.EdaTools.v1.Cam.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.IO;
 
     class Program {
 
@@ -97,41 +96,11 @@
         /// 
         private static void ProcessBoard(string fileName, string folder, string name) {
 
-            Board board = LoadBoard(fileName);
-
             Panel panel = new Panel();
-            panel.AddElement(new PanelBoard(fileName));
+            panel.AddElement(new PlaceElement(fileName));
 
             CAMGenerator cg = new CAMGenerator();
             cg.Generate(panel, folder, name);
-        }
-
-        /// <summary>
-        /// Carrega la placa desde un fitxer.
-        /// </summary>
-        /// <param name="fileName">Nom de fitxer.</param>
-        /// <returns>la placa carregada.</returns>
-        /// 
-        private static Board LoadBoard(string fileName) {
-
-            using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                BoardReader reader = new BoardReader(stream);
-                return reader.Read();
-            }
-        }
-
-        /// <summary>
-        /// Salva una placa en un fitxer.
-        /// </summary>
-        /// <param name="board">La placa a salvar.</param>
-        /// <param name="fileName">El nom del fitxer.</param>
-        /// 
-        private static void SaveBoard(Board board, string fileName) {
-
-            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
-                BoardWriter writer = new BoardWriter(stream);
-                writer.Write(board);
-            }
         }
     }
 }

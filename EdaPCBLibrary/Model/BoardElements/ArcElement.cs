@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;

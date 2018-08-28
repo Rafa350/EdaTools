@@ -1,6 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
 
     public interface IVisitor {
 

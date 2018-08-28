@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
@@ -9,7 +9,7 @@
     /// Clase que representa un rectangle.
     /// </summary>
     /// 
-    public sealed class RectangleElement: Element, IPosition, ISize, IRotation {
+    public sealed class RectangleElement: BoardElement, IPosition, ISize, IRotation {
 
         private Point position;
         private Size size;

@@ -1,6 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Visitors {
 
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
 
     /// <summary>
     /// Clase visitador per defecte. Defineix tots els visitadors,

@@ -2,7 +2,7 @@
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
     using System;
     using System.Collections.Generic;
 
@@ -26,8 +26,8 @@
         // Capes
         private readonly HashSet<Layer> layers = new HashSet<Layer>();
         private readonly Dictionary<Layer, Layer> layerPairs = new Dictionary<Layer, Layer>();
-        private readonly Dictionary<Layer, HashSet<Element>> elementsOfLayer = new Dictionary<Layer, HashSet<Element>>();
-        private readonly Dictionary<Element, HashSet<Layer>> layersOfElement = new Dictionary<Element, HashSet<Layer>>();
+        private readonly Dictionary<Layer, HashSet<BoardElement>> elementsOfLayer = new Dictionary<Layer, HashSet<BoardElement>>();
+        private readonly Dictionary<BoardElement, HashSet<Layer>> layersOfElement = new Dictionary<BoardElement, HashSet<Layer>>();
 
         // Senyals
         private readonly HashSet<Signal> signals = new HashSet<Signal>();
@@ -38,7 +38,7 @@
         private readonly HashSet<Block> blocks = new HashSet<Block>();
 
         // Elements
-        private readonly HashSet<Element> elements = new HashSet<Element>();
+        private readonly HashSet<BoardElement> elements = new HashSet<BoardElement>();
 
         // Components
         readonly private HashSet<Part> parts = new HashSet<Part>();
@@ -123,7 +123,7 @@
         /// </summary>
         /// <param name="element">L'element a afeigir.</param>
         /// 
-        public void AddElement(Element element) {
+        public void AddElement(BoardElement element) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
@@ -137,12 +137,12 @@
         /// </summary>
         /// <param name="elements">Els elements a afeigir.</param>
         /// 
-        public void AddElements(IEnumerable<Element> elements) {
+        public void AddElements(IEnumerable<BoardElement> elements) {
 
             if (elements == null)
                 throw new ArgumentNullException("elements");
 
-            foreach (Element element in elements)
+            foreach (BoardElement element in elements)
                 if (!this.elements.Add(element))
                     throw new InvalidOperationException("El elemento ya existe en la placa.");
         }
@@ -329,7 +329,7 @@
         /// <param name="layer">La capa.</param>
         /// <param name="element">El element.</param>
         /// 
-        public void Place(Layer layer, Element element) {
+        public void Place(Layer layer, BoardElement element) {
 
             if (layer == null)
                 throw new ArgumentNullException("layer");
@@ -343,9 +343,9 @@
 
             // Afegeix l'element al conjunt d'elements de la capa
             //
-            HashSet<Element> elementSet;
+            HashSet<BoardElement> elementSet;
             if (!elementsOfLayer.TryGetValue(layer, out elementSet)) {
-                elementSet = new HashSet<Element>();
+                elementSet = new HashSet<BoardElement>();
                 elementsOfLayer.Add(layer, elementSet);
             }
             if (!elementSet.Add(element))
@@ -365,7 +365,7 @@
                     String.Format("El elemento ya esta contenido en la capa '{0}'.", layer.Name));
         }
 
-        public void Unplace(Element element) {
+        public void Unplace(BoardElement element) {
 
         }
 
@@ -375,7 +375,7 @@
         /// <param name="layer">La capa.</param>
         /// <returns>La coleccio d'elements o null si no n'hi ha</returns>
         /// 
-        public IEnumerable<Element> GetElements(Layer layer) {
+        public IEnumerable<BoardElement> GetElements(Layer layer) {
 
             if (layer == null)
                 throw new ArgumentNullException("layer");
@@ -384,7 +384,7 @@
                 throw new InvalidOperationException(
                     String.Format("La capa '{0}', no esta asignada a esta placa.", layer.Name));
 
-            HashSet<Element> elementSet;
+            HashSet<BoardElement> elementSet;
             if (elementsOfLayer.TryGetValue(layer, out elementSet))
                 return elementSet;
             else
@@ -397,7 +397,7 @@
         /// <param name="element">El element.</param>
         /// <returns>La coleccio de capes o null si n'hi ha.</returns>
         /// 
-        public IEnumerable<Layer> GetLayers(Element element) {
+        public IEnumerable<Layer> GetLayers(BoardElement element) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
@@ -416,7 +416,7 @@
         /// <param name="layer">La capa.</param>
         /// <returns>True si pertany, false en cas contrari.</returns>
         /// 
-        public bool IsOnLayer(Element element, Layer layer) {
+        public bool IsOnLayer(BoardElement element, Layer layer) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
@@ -438,7 +438,7 @@
         /// <param name="layers">La coleccio de capes a verificar.</param>
         /// <returns>True si pertany a qualsevol de les capes, false si no pertany a cap.</returns>
         /// 
-        public bool IsOnAnyLayer(Element element, IEnumerable<Layer> layers) {
+        public bool IsOnAnyLayer(BoardElement element, IEnumerable<Layer> layers) {
 
             HashSet<Layer> layerCollection;
             if (layersOfElement.TryGetValue(element, out layerCollection)) 
@@ -543,7 +543,7 @@
         /// <param name="throwOnError">True si cal generar una excepcio en cas d'error.</param>
         /// <returns>La senyal o null si no esta conectat.</returns>
         /// 
-        public Signal GetSignal(Element element, Part part = null, bool throwOnError = true) {
+        public Signal GetSignal(BoardElement element, Part part = null, bool throwOnError = true) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
@@ -661,7 +661,7 @@
                     // Procesa els elements de la placa que es troben en la mateixa capa que 
                     // la regio, o en les capes restrict o profile.
                     //
-                    foreach (Element element in elements) {
+                    foreach (BoardElement element in elements) {
                         if (element != region) {
 
                             // El element es en la mateixa capa que la regio
@@ -701,7 +701,7 @@
                         //
                         Transformation localTransformation = part.GetLocalTransformation();
 
-                        foreach (Element element in part.Elements) {
+                        foreach (BoardElement element in part.Elements) {
 
                             if ((element != region) &&
                                 (IsOnLayer(element, layer) || IsOnLayer(element, restrictLayer))) {
@@ -770,7 +770,7 @@
                     int minY = Int32.MaxValue;
                     int maxX = Int32.MinValue;
                     int maxY = Int32.MinValue;
-                    foreach (Element element in GetElements(layer)) {
+                    foreach (BoardElement element in GetElements(layer)) {
                         Rect r = element.GetBoundingBox(BoardSide.Top);
                         if (minX > r.MinX)
                             minX = r.MinX;
@@ -846,7 +846,7 @@
         /// Obte un enunerador pels elements.
         /// </summary>
         /// 
-        public IEnumerable<Element> Elements {
+        public IEnumerable<BoardElement> Elements {
             get {
                 return elements;
             }

@@ -6,30 +6,42 @@
         <board fileName="board3.xml" position="0, 100" orientation="0"/>
         <board fileName="board3.xml" position="100, 100" orientation="0"/>
     </panel>
+    
     <targets>
-        <target target="$(targetFolder)$(fName)_Copper$L1.gbr" type="gerber">
+        <!-- Capa coure L1 top -->
+        <target target="$(targetFolder)$(fName)_Copper$L1.gbr" type="gerber-image">
             <layers>
                 <layer name="Top"/>
             </layers>
         </target>
-        
-        <target target="$(targetFolder)$(fName)_Copper$L2.gbr" type="gerber">
+     
+        <!-- Capa coure L2 bottom -->
+        <target target="$(targetFolder)$(fName)_Copper$L2.gbr" type="gerber-image">
             <layers>
                 <layer name="Bottom"/>
             </layers>
         </target>
         
-        <target target="$(targetFolder)$(fName)_Legend$Top.gbr" type="gerber">
+        <!-- Capa silk top -->
+        <target target="$(targetFolder)$(fName)_Legend$Top.gbr" type="gerber-image">
             <layers>
                 <layer name="TopPlace"/>
                 <layer name="TopNames"/>
             </layers>
         </target>
         
-        <target target="$(targetFolder)$(fName)_Legend$Bottom.gbr" type="gerber">
+        <!-- Capa silk bottom -->
+        <target target="$(targetFolder)$(fName)_Legend$Bottom.gbr" type="gerber-image">
             <layers>
                 <layer name="BottomPlace"/>
                 <layer name="BottomNames"/>
+            </layers>
+        </target>
+
+        <!-- Perfil -->
+        <target target="$(targetFolder)$(fName)_Profile$NP.gbr" type="gerber-image">
+            <layers>
+                <layer name="Profile"/>
             </layers>
         </target>
 
@@ -39,9 +51,9 @@
                 <layer name="Holes"/>
             </layers>
             <options>
-                <option name="firstLevel" value="1"/>
-                <option name="lastLevel" value="2"/>
-                <option name="DrillType" value="NonPlatedDrill"/>
+                <option name="drillType" value="NonPlated"/>
+                <option name="topLayer" value="1"/>
+                <option name="bottomLayer" value="2"/>
             </options>
         </target>
 
@@ -51,19 +63,9 @@
                 <layer name="Drills"/>
             </layers>
             <options>
-                <option name="firstLevel" value="1"/>
-                <option name="lastLevel" value="2"/>
-                <option name="DrillType" value="PlatedDrill"/>
-            </options>
-        </target>
-
-        <!-- Perfil -->
-        <target target="$(targetFolder)$(fName)_Profile$NP.gbr" type="gerber-drill">
-            <layers>
-                <layer name="Profile"/>
-            </layers>
-            <options>
-                <option name="DrillType" value="Profile"/>
+                <option name="drillType" value="Plated"/>
+                <option name="topLayer" value="1"/>
+                <option name="bottomLayer" value="2"/>
             </options>
         </target>
 

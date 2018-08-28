@@ -2,6 +2,7 @@
 
     using System;
     using MikroPic.EdaTools.v1.Cam.Model;
+    using MikroPic.EdaTools.v1.Pcb.Model;
 
     public abstract class Generator {
 

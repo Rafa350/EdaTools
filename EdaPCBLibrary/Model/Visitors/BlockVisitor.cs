@@ -30,7 +30,7 @@
 
             this.block = block;
 
-            foreach (Element element in block.Elements)
+            foreach (BoardElement element in block.Elements)
                 element.AcceptVisitor(this);
 
             if (block.HasAttributes)

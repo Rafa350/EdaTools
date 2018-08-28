@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
@@ -10,7 +10,7 @@
     /// Clase que representa un pad throug hole
     /// </summary>
     /// 
-    public sealed class ThPadElement: PadElement, IRotation {
+    public sealed class ThPadElement: PadElement {
 
         public enum ThPadShape {
             Square,
@@ -27,7 +27,6 @@
         private Ratio drcBottomSizePercent = Ratio.P25;
 
         private ThPadShape shape = ThPadShape.Circle;
-        private Angle rotation;
         private int topSize;
         private int innerSize;
         private int bottomSize;
@@ -44,7 +43,7 @@
         /// <param name="drill">Forma de la corona.</param>
         /// 
         public ThPadElement(string name, Point position, Angle rotation, int size, ThPadShape shape, int drill):
-            base(name, position) {
+            base(name, position, rotation) {
 
             if (size < 0)
                 throw new ArgumentOutOfRangeException("size");
@@ -52,7 +51,6 @@
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException("drill");
 
-            this.rotation = rotation;
             this.topSize = size;
             this.innerSize = size;
             this.bottomSize = size;
@@ -95,7 +93,7 @@
                         Position,
                         new Size(size + spacingM2, size + spacingM2),
                         spacing,
-                        rotation);
+                        Rotation);
 
                 case ThPadShape.Octagon: {
                     int s = (int)((double)sizeD2 / Math.Cos(22.5 * Math.PI / 180.0));
@@ -103,7 +101,7 @@
                         8,
                         Position,
                         s + spacing,
-                        rotation + Angle.FromDegrees(2250));
+                        Rotation + Angle.FromDegrees(2250));
                 }
 
                 case ThPadShape.Oval:
@@ -111,7 +109,7 @@
                         Position,
                         new Size(sizeM2 + spacingM2, size + spacingM2),
                         sizeD2 + spacing,
-                        rotation);
+                        Rotation);
 
                 default:
                     return PolygonBuilder.BuildCircle(
@@ -160,7 +158,7 @@
             int h = topSize + spacing + spacing;
 
             Polygon pour = GetOutlinePolygon(side, spacing);
-            Polygon thermal = new Polygon(PolygonBuilder.BuildCross(Position, new Size(w, h), width, rotation));
+            Polygon thermal = new Polygon(PolygonBuilder.BuildCross(Position, new Size(w, h), width, Rotation));
 
             List<Polygon> childs = new List<Polygon>();
             childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
@@ -181,19 +179,6 @@
             int h = topSize;
 
             return new Rect(Position.X - (w / 2), Position.Y - (h / 2), w, h);
-        }
-
-        /// <summary>
-        /// Obte o asigna l'orientacio del pad.
-        /// </summary>
-        /// 
-        public Angle Rotation {
-            get {
-                return rotation;
-            }
-            set {
-                rotation = value;
-            }
         }
 
         /// <summary>

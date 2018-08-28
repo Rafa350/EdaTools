@@ -7,7 +7,8 @@
     using MikroPic.EdaTools.v1.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
+    using MikroPic.EdaTools.v1.Pcb.Model.PanelElements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
     using System.Collections.Generic;
@@ -18,8 +19,6 @@
     /// Clase per generar el fitxers gerber d'imatge
     /// </summary>
     public sealed class GerberImageGenerator : Generator {
-
-        private Board board;
 
         public enum ImageType {
             Copper,
@@ -38,111 +37,91 @@
         }
 
         /// <summary>
-        /// Genera el nom del fitxer.
+        /// Genera el fitxer corresponent al panell.
         /// </summary>
-        /// <param name="prefix">Prefix.</param>
-        /// <param name="imageType">Tipus d'imatge.</param>
-        /// <param name="level">Nivell de capa de coure.</param>
-        /// <returns>El nom del fitxer.</returns>
+        /// <param name="panel">El panell.</param>
         /// 
-        public string GenerateFileName(string prefix, ImageType imageType, int level = 0) {
-
-            if (String.IsNullOrEmpty(prefix))
-                throw new ArgumentNullException("prefix");
-
-            if ((imageType == ImageType.Copper) && (level == 0))
-                throw new ArgumentOutOfRangeException("level");
-
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append(prefix);
-
-            switch (imageType) {
-                case ImageType.Copper:
-                    sb.AppendFormat("_Copper$L{0}", level);
-                    break;
-
-                case ImageType.TopSolderMask:
-                    sb.Append("_Soldermask$Top");
-                    break;
-
-                case ImageType.BottomSolderMask:
-                    sb.Append("_Soldermask$Bottom");
-                    break;
-
-                case ImageType.TopLegend:
-                    sb.Append("_Legend$Top");
-                    break;
-
-                case ImageType.BottomLegend:
-                    sb.Append("_Legend$Bottom");
-                    break;
-
-                case ImageType.Profile:
-                    sb.Append("_Profile$NP");
-                    break;
-            }
-
-            sb.Append(".gbr");
-
-            return sb.ToString();
-        }
-
         public override void GenerateContent(Panel panel) {
 
-        }
+            if (panel == null)
+                throw new ArgumentNullException("panel");
 
-        /// <summary>
-        /// Genera un document gerber.
-        /// </summary>
-        /// <param name="writer">Writer de sortida.</param>
-        /// <param name="layers">Llista de capes a procesar.</param>
-        /// <param name="imageType">Tipus de fitxer a generar.</param>
-        /// <param name="level">Nivell de la capa de coure.</param>
-        /// 
-        public void GenerateContent(TextWriter writer, IEnumerable<Layer> layers, ImageType imageType, int level = 0) {
-
-            if (writer == null)
-                throw new ArgumentNullException("writer");
-
-            if ((imageType == ImageType.Copper) && (level == 0))
-                throw new ArgumentOutOfRangeException("level");
-
-            GerberBuilder gb = new GerberBuilder(writer);
-
-            ApertureDictionary apertures = CreateApertures(layers);
-
-            GenerateFileHeader(gb, imageType, level);
-            GenerateMacros(gb, apertures);
-            GenerateApertures(gb, apertures);
-            GenerateRegions(gb, layers, apertures);
-            GenerateImage(gb, layers, apertures);
-            GenerateFileTail(gb);
-        }
-
-        /// <summary>
-        /// Genera el diccionari d'apertures.
-        /// </summary>
-        /// <param name="layers">La coleccio de capes a comprobar.</param>
-        /// <returns>El diccionari.</returns>
-        /// 
-        private ApertureDictionary CreateApertures(IEnumerable<Layer> layers) {
-
-            // Crea un diccionari d'apertures buit
+            // Crea el fitxer de sortida
             //
-            ApertureDictionary apertures = new ApertureDictionary();
+            using (TextWriter writer = new StreamWriter(
+                new FileStream(Target.FileName, FileMode.Create, FileAccess.Write, FileShare.None))) {
 
-            // Recorre totes les capes seleccionades
-            //
-            foreach (Layer layer in layers) {
 
-                // Procesa una capa per omplir el diccionari d'apertures
+                GerberBuilder gb = new GerberBuilder(writer);
+
+                // Prepara el diccionari d'apertures
                 //
+                ApertureDictionary apertures = new ApertureDictionary();
+                foreach (PanelElement element in panel.Elements) {
+                    if (element is PanelElement) {
+                        PlaceElement panelBoard = (PlaceElement)element;
+                        Board board = panelBoard.Board;
+                        PrepareApertures(apertures, board, Target.LayerNames);
+                    }
+                }
+
+                // Genera la capcelera del fitxer
+                //
+                ImageType imageType = (ImageType)Enum.Parse(typeof(ImageType), Target.GetOptionValue("ImageType"));
+                GenerateFileHeader(gb, imageType, 1);
+
+                // Genera el diccionari de macros i apertures
+                //
+                GenerateMacros(gb, apertures);
+                GenerateApertures(gb, apertures);
+
+                // Genera la imatge de les plaques
+                //
+                foreach (PanelElement element in panel.Elements) {
+                    if (element is PanelElement) {
+                        PlaceElement panelBoard = (PlaceElement)element;
+                        Board board = panelBoard.Board;
+
+                        GenerateRegions(gb, board, Target.LayerNames, apertures);
+                        GenerateImage(gb, board, Target.LayerNames, apertures);
+                    }
+                }
+
+                // Genera el final del fitxer
+                //
+                GenerateFileTail(gb);
+            }
+        }
+
+        /// <summary>
+        /// Prepara el diccionari d'apertures.
+        /// </summary>
+        /// <param name="apertures">El diccionari a preparar.</param>
+        /// <param name="board">La placa a procesar.</param>
+        /// <param name="layers">Els noms de les capes a procesar.</param>
+        /// 
+        private void PrepareApertures(ApertureDictionary apertures, Board board, IEnumerable<string> layerNames) {
+
+            foreach (Layer layer in GetLayers(board, layerNames)) {
                 ApertureCreatorVisitor visitor = new ApertureCreatorVisitor(board, layer, apertures);
                 visitor.Run();
             }
+        }
 
-            return apertures;
+        /// <summary>
+        /// Enumera les capes d'una placa en particular.
+        /// </summary>
+        /// <param name="board">La placa.</param>
+        /// <param name="layerNames">El noms de les capes a obtenir.</param>
+        /// <returns>L'enumeracio de capes.</returns>
+        /// 
+        private IEnumerable<Layer> GetLayers(Board board, IEnumerable<string> layerNames) {
+
+            List<Layer> layers = new List<Layer>();
+            foreach (string layerName in layerNames)
+                layers.Add(board.GetLayer(layerName, false));
+
+            return layers;
         }
 
         /// <summary>
@@ -252,20 +231,13 @@
         /// <param name="layers">Les capes a procesar.</param>
         /// <param name="apertures">El diccionari d'apertures.</param>
         /// 
-        private void GenerateRegions(GerberBuilder gb, IEnumerable<Layer> layers, ApertureDictionary apertures) {
+        private void GenerateRegions(GerberBuilder gb, Board board, IEnumerable<string> layerNames, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN POLYGONS");
-
-            // Recorre totes les caper seleccionades
-            //
-            foreach (Layer layer in layers) {
-
-                // Procesa una capa, i escriu els poligons en el gerber
-                //
+            foreach (Layer layer in GetLayers(board, layerNames)) {
                 IVisitor visitor = new RegionGeneratorVisitor(gb, board, layer, apertures);
                 visitor.Visit(board);
             }
-
             gb.Comment("END POLYGONS");
         }
 
@@ -276,20 +248,13 @@
         /// <param name="layers">Les capes a procesar.</param>
         /// <param name="apertures">El diccionari d'apertures.</param>
         /// 
-        private void GenerateImage(GerberBuilder gb, IEnumerable<Layer> layers, ApertureDictionary apertures) {
+        private void GenerateImage(GerberBuilder gb, Board board, IEnumerable<string> layerNames, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
-
-            // Recorre les capes una a una
-            //
-            foreach (Layer layer in layers) {
-
-                // Procesa una capa, i escriu la geometria en el gerger
-                //
+            foreach (Layer layer in GetLayers(board, layerNames)) {
                 IVisitor visitor = new ImageGeneratorVisitor(gb, board, layer, apertures);
                 visitor.Run();
             }
-
             gb.Comment("END IMAGE");
         }
         

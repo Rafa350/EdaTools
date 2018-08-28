@@ -2,7 +2,7 @@
 
     using System;
     using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
 
     /// <summary>
     /// Clase que representa un bloc predefinit.
@@ -10,7 +10,7 @@
     /// 
     public sealed class Block : IVisitable, IName {
 
-        private HashSet<Element> elements;
+        private HashSet<BoardElement> elements;
         private Dictionary<string, PadElement> pads;
         private Dictionary<string, BlockAttribute> attributes;
         private string name;
@@ -22,7 +22,7 @@
         /// <param name="elements">Llista d'elements.</param>
         /// <param name="attributes">Llista d'atributs.</param>
         /// 
-        public Block(string name, IEnumerable<Element> elements = null, IEnumerable<BlockAttribute> attributes = null) {
+        public Block(string name, IEnumerable<BoardElement> elements = null, IEnumerable<BlockAttribute> attributes = null) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -51,13 +51,13 @@
         /// </summary>
         /// <param name="element">El element a afeigir.</param>
         /// 
-        public void AddElement(Element element) {
+        public void AddElement(BoardElement element) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
 
             if (elements == null)
-                elements = new HashSet<Element>();
+                elements = new HashSet<BoardElement>();
 
             if (!elements.Add(element))
                 throw new InvalidOperationException("El elemento ya pertenece al bloque.");
@@ -77,12 +77,12 @@
         /// </summary>
         /// <param name="element">El elements a afeigir.</param>
         /// 
-        public void AddElements(IEnumerable<Element> elements) {
+        public void AddElements(IEnumerable<BoardElement> elements) {
 
             if (elements == null)
                 throw new ArgumentNullException("elements");
 
-            foreach (Element element in elements)
+            foreach (BoardElement element in elements)
                 AddElement(element);
         }
 
@@ -91,7 +91,7 @@
         /// </summary>
         /// <param name="element">El element a eliminar.</param>
         /// 
-        public void RemoveElement(Element element) {
+        public void RemoveElement(BoardElement element) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
@@ -225,7 +225,7 @@
         /// Obte la llista d'elements.
         /// </summary>
         /// 
-        public IEnumerable<Element> Elements {
+        public IEnumerable<BoardElement> Elements {
             get {
                 if (elements == null)
                     throw new InvalidOperationException("El bloque no contiene elementos.");

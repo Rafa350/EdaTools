@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
@@ -9,10 +9,9 @@
     /// <summary>
     /// Clase que representa un pad superficial
     /// </summary>
-    public sealed class SmdPadElement: PadElement, IRotation {
+    public sealed class SmdPadElement: PadElement {
 
         private Size size;
-        private Angle rotation;
         private Ratio roundness;
 
         /// <summary>
@@ -25,10 +24,9 @@
         /// <param name="roundness">Percentatge d'arrodoniment de les cantonades.</param>
         /// 
         public SmdPadElement(string name, Point position, Size size, Angle rotation, Ratio roundness) :
-            base(name, position) {
+            base(name, position, rotation) {
 
             this.size = size;
-            this.rotation = rotation;
             this.roundness = roundness;
         }
 
@@ -50,7 +48,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = PolygonBuilder.BuildRectangle(Position, Size, Radius, rotation);
+            Point[] points = PolygonBuilder.BuildRectangle(Position, Size, Radius, Rotation);
             return new Polygon(points);
         }
 
@@ -69,7 +67,7 @@
                     size.Width + spacing + spacing, 
                     size.Height + spacing + spacing), 
                 Radius + spacing, 
-                rotation);
+                Rotation);
             return new Polygon(points);
         }
 
@@ -91,7 +89,7 @@
                         size.Width + spacing + spacing,
                         size.Height + spacing + spacing),
                     width,
-                    rotation));
+                    Rotation));
 
             List<Polygon> childs = new List<Polygon>();
             childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
@@ -108,24 +106,11 @@
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
-            double a = rotation.Radiants;
+            double a = Rotation.Radiants;
             int w = (int) (size.Width * Math.Cos(a) + size.Height * Math.Sin(a));
             int h = (int) (size.Width * Math.Sin(a) + size.Height * Math.Cos(a));
 
             return new Rect(Position.X - (w >> 1), Position.Y - (h >> 1), w, h);
-        }
-
-        /// <summary>
-        /// Obte o asigna l'orientacio del pad.
-        /// </summary>
-        /// 
-        public Angle Rotation {
-            get {
-                return rotation;
-            }
-            set {
-                 rotation = value;
-            }
         }
 
         /// <summary>

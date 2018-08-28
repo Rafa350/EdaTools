@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
     using System;
     using System.Collections.Generic;
 
@@ -201,7 +201,7 @@
         /// Enumera els elements.
         /// </summary>
         /// 
-        public IEnumerable<Element> Elements {
+        public IEnumerable<BoardElement> Elements {
             get {
                 return block.Elements;
             }

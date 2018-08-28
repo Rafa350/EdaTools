@@ -40,24 +40,35 @@
             if (panel == null)
                 throw new ArgumentNullException("panel");
 
-            Target[] targets = new Target[] {
+            // Forats sense platejar
+            //
+            Target target1 = new Target(
+                    Path.Combine(folder, String.Format("PANEL_{0}_NonPlated$1$2$NPTH$Drill.gbr", name)),
+                    "gerber-drill",
+                    new string[] { Layer.HolesName });
+            target1.AddOption("DrillType", "NonPlatedDrill");
+            target1.AddOption("topLayer", "1");
+            target1.AddOption("bottomLayer", "2");
 
-                // Forats sense platejar
-                //
-                new Target(
-                    Path.Combine(folder, String.Format("PANEL_{0}_NonPlated$1$2$NPTH$Drill.gbr", name)), 
-                    "gerber-drill", 
-                    new string[] { Layer.HolesName }),
+            // Forats platejats
+            //
+            Target target2 = new Target(
+                    Path.Combine(folder, String.Format("PANEL_{0}_Plated$1$2$PTH$Drill.gbr", name)),
+                    "gerber-drill",
+                    new string[] { Layer.DrillsName });
+            target2.AddOption("DrillType", "PlatedDrill");
+            target2.AddOption("topLayer", "1");
+            target2.AddOption("bottomLayer", "2");
 
-                // Forats platejats
-                //
-                new Target(
-                    Path.Combine(folder, String.Format("PANEL_{0}_Plated$1$2$PTH$Drill.gbr", name)), 
-                    "gerber-drill", 
-                    new string[] { Layer.DrillsName })
-            };
+            // Perfil
+            //
+            Target target3 = new Target(
+                    Path.Combine(folder, String.Format("PANEL_{0}_Profile$NP.gbr", name)),
+                    "gerber-image",
+                    new string[] { Layer.ProfileName });
+            target3.AddOption("ImageType", "Profile");
 
-            Generate(panel, targets);
+            Generate(panel, new Target[] { target1, target2, target3 });
         }
 
         /// <summary>
@@ -92,8 +103,8 @@
                 throw new ArgumentNullException("target");
 
             switch (target.GeneratorName) {
-                //case "gerber":
-                //    return new GerberImageGenerator(target);
+                case "gerber-image":
+                    return new GerberImageGenerator(target);
 
                 case "gerber-drill":
                     return new GerberDrillGenerator(target);

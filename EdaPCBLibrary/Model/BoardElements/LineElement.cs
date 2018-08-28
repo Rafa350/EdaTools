@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
@@ -6,34 +6,42 @@
     using System;
 
     /// <summary>
-    /// Clase que representa un cercle.
+    /// Clase que representa una linia.
     /// </summary>
-    public sealed class CircleElement: Element, IPosition {
+    public class LineElement : BoardElement, IConectable {
 
-        private Point position;
-        private int radius;
+        public enum LineCapStyle {
+            Round,
+            Flat
+        }
+
+        private Point startPosition;
+        private Point endPosition;
         private int thickness;
-        private bool filled;
+        private LineCapStyle lineCap = LineCapStyle.Round;
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="position">Posicio del centre.</param>
-        /// <param name="radius">Radi.</param>
+        /// <param name="startPosition">La posicio inicial.</param>
+        /// <param name="endPosition">La posicio final.</param>
         /// <param name="thickness">Amplada de linia.</param>
-        /// <param name="filled">True si cal omplir el cercle.</param>
+        /// <param name="lineCap">Forma dels extrems de linia.</param>
         /// 
-        public CircleElement(Point position, int radius, int thickness, bool filled) :           
+        public LineElement(Point startPosition, Point endPosition, int thickness, LineCapStyle lineCap) :
             base() {
 
-            this.position = position;
-            this.radius = radius;
+            if (thickness < 0)
+                throw new ArgumentOutOfRangeException("thickness");
+
+            this.startPosition = startPosition;
+            this.endPosition = endPosition;
             this.thickness = thickness;
-            this.filled = filled;
+            this.lineCap = lineCap;
         }
 
         /// <summary>
-        /// Accepta un visitador del objecte.
+        /// Accepta un visitador.
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
@@ -50,15 +58,8 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            if (thickness == 0) {
-                Point[] points = PolygonBuilder.BuildCircle(position, radius);
-                return new Polygon(points);
-            }
-            else {
-                Point[] outerPoints = PolygonBuilder.BuildCircle(position, radius + (thickness / 2));
-                Point[] innerPoints = PolygonBuilder.BuildCircle(position, radius - (thickness / 2));
-                return new Polygon(outerPoints, new Polygon(innerPoints));
-            }
+            Point[] points = PolygonBuilder.BuildTrace(startPosition, endPosition, thickness, LineCap == LineCapStyle.Round);
+            return new Polygon(points);
         }
 
         /// <summary>
@@ -70,7 +71,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = PolygonBuilder.BuildCircle(position, radius + (thickness / 2) + spacing);
+            Point[] points = PolygonBuilder.BuildTrace(startPosition, endPosition, thickness + (spacing * 2), lineCap == LineCapStyle.Round);
             return new Polygon(points);
         }
 
@@ -82,57 +83,41 @@
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
-            int r = radius + (thickness / 2);
-            return new Rect(position.X - r, position.Y - r, r + r, r + r);
+            return new Rect(
+                Math.Min(startPosition.X, endPosition.X) - thickness / 2,
+                Math.Min(startPosition.Y, endPosition.Y) - thickness / 2,
+                Math.Abs(endPosition.X - startPosition.X) + thickness,
+                Math.Abs(endPosition.Y - startPosition.Y) + thickness);
         }
 
         /// <summary>
-        ///  Obte o asigna la posicio del centre del cercle.
+        /// Obte o asigna la posicio inicial.
         /// </summary>
         /// 
-        public Point Position {
+        public Point StartPosition {
             get {
-                return position;
+                return startPosition;
             }
             set {
-                position = value;
+                startPosition = value;
             }
         }
 
         /// <summary>
-        /// Obte o asigna el radi del cercle.
+        /// Obte o asigna la posicio final.
         /// </summary>
         /// 
-        public int Radius {
+        public Point EndPosition {
             get {
-                return radius;
+                return endPosition;
             }
             set {
-                if (value <= 0)
-                    throw new ArgumentOutOfRangeException("Radius");
-
-                radius = value;
+                endPosition = value;
             }
         }
 
         /// <summary>
-        /// Obte o asigna el diametre del cercle.
-        /// </summary>
-        /// 
-        public int Diameter {
-            get {
-                return radius * 2;
-            }
-            set {
-                if (value <= 0)
-                    throw new ArgumentOutOfRangeException("Diameter");
-
-                radius = value / 2; 
-            }
-        }
-
-        /// <summary>
-        /// Obte o asigna l'amplada de linia.
+        ///  Obte o asigna l'amplada de linia.
         /// </summary>
         /// 
         public int Thickness {
@@ -148,16 +133,17 @@
         }
 
         /// <summary>
-        /// Obte o asigna el indicador de cercle ple.
+        /// Obte o asigna el tipus d'extrem de linia.
         /// </summary>
         /// 
-        public bool Filled {
+        public LineCapStyle LineCap {
             get {
-                return (thickness == 0) || filled;
+                return lineCap;
             }
             set {
-                filled = value;
+                lineCap = value;
             }
         }
     }
 }
+
