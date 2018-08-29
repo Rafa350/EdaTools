@@ -37,7 +37,7 @@
         /// </summary>
         /// <param name="panel">El panell.</param>
         /// 
-        public override void GenerateContent(Panel panel) {
+        public override void Generate(Panel panel) {
 
             if (panel == null)
                 throw new ArgumentNullException("panel");
@@ -73,8 +73,9 @@
                 //
                 foreach (PanelElement element in panel.Elements) {
                     if (element is PanelElement) {
-                        PlaceElement panelBoard = (PlaceElement)element;
-                        GenerateImage(gb, panelBoard.Board, panelBoard.Position, apertures);
+                        PlaceElement place = (PlaceElement)element;
+                        gb.SetTransformation(place.Position, place.Rotation);
+                        GenerateImage(gb, place.Board, place.Position, apertures);
                     }
                 }
 

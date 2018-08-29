@@ -82,7 +82,7 @@
             if (elements == null)
                 throw new ArgumentNullException("elements");
 
-            foreach (BoardElement element in elements)
+            foreach (var element in elements)
                 AddElement(element);
         }
 

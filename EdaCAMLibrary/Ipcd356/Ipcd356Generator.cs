@@ -32,7 +32,7 @@
             return prefix + ".ipc";
         }
 
-        public override void GenerateContent(Panel panel) {
+        public override void Generate(Panel panel) {
 
         }
 

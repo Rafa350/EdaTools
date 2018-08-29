@@ -24,6 +24,20 @@
         }
 
         /// <summary>
+        /// Afegeix una coleccio d'elements.
+        /// </summary>
+        /// <param name="elements">Ele elements a afeigir.</param>
+        /// 
+        public void AddElements(IEnumerable<PanelElement> elements) {
+
+            if (elements == null)
+                throw new ArgumentNullException("elements");
+
+            foreach (var element in elements)
+                AddElement(element);
+        }
+
+        /// <summary>
         /// Indica si te elements
         /// </summary>
         /// 

@@ -12,23 +12,6 @@
     public sealed class CAMGenerator {
 
         /// <summary>
-        /// Genera els fitxers CAM
-        /// </summary>
-        /// <param name="board">La placa.</param>
-        /// <param name="folder">La carpeta on deixar el resultat.</param>
-        /// <param name="name">El nom base del fitxer.</param>
-        /// 
-        public void Generate(Board board, string folder, string name) {
-
-            if (board == null)
-                throw new ArgumentNullException("board");
-
-            //GenerateImageGerbers(board, folder, name);
-            //GenerateDrillGerbers(board, folder, name);
-            //GenerateIPCD(board, folder, name);
-        }
-
-        /// <summary>
         /// Genera els fitxers per defecte.
         /// </summary>
         /// <param name="panel">El panell.</param>
@@ -105,7 +88,7 @@
 
             foreach (Target target in targets) {
                 Generator generator = LoadGenerator(target);
-                generator.GenerateContent(panel);
+                generator.Generate(panel);
             }
         }
 

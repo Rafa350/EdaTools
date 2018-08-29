@@ -37,7 +37,7 @@
         private static Board LoadBoard(string fileName) {
 
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                BoardReader reader = new BoardReader(stream);
+                BoardStreamReader reader = new BoardStreamReader(stream);
                 return reader.Read();
             }
         }

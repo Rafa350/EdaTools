@@ -16,7 +16,7 @@
     /// Clase per la lectura de plaques des d'un stream
     /// </summary>
     /// 
-    public sealed class BoardReader {
+    public sealed class BoardStreamReader {
 
         private static readonly XmlSchemaSet schemas;
 
@@ -24,7 +24,11 @@
         private Board board;
         private int version;
 
-        static BoardReader() {
+        /// <summary>
+        /// Constructor estatic de la clase
+        /// </summary>
+        /// 
+        static BoardStreamReader() {
 
             schemas = new XmlSchemaSet();
 
@@ -43,7 +47,7 @@
         /// </summary>
         /// <param name="stream">Stream de lectura.</param>
         /// 
-        public BoardReader(Stream stream) {
+        public BoardStreamReader(Stream stream) {
 
             if (stream == null)
                 throw new ArgumentNullException("stream");

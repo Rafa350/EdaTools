@@ -13,7 +13,7 @@
             Importer importer = new EagleImporter();
             Board board = importer.Read(args[0]);
 
-            BoardWriter boardWriter = new BoardWriter(
+            BoardStreamWriter boardWriter = new BoardStreamWriter(
                 new FileStream(args[1], FileMode.Create, FileAccess.Write, FileShare.None));
             boardWriter.Write(board);
         }

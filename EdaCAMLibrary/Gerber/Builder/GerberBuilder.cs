@@ -63,6 +63,9 @@
         private bool inRegion = false;
         private int precision = 7;
         private int decimals = 4;
+        private int offsetX = 0;
+        private int offsetY = 0;
+        private Angle rotation = Angle.Zero;
         private string fmtTemplate = null;
         private double fmtScale = 0;
 
@@ -78,7 +81,7 @@
 
             this.writer = writer;
         }
-
+     
         /// <summary>
         /// Marca el final del fitxer.
         /// </summary>
@@ -154,6 +157,9 @@
         /// 
         public void FlashAt(int x, int y) {
 
+            x += offsetX;
+            y += offsetY;
+
             sb.Clear();
             if (state.SetX(x)) {
                 sb.Append('X');
@@ -185,6 +191,9 @@
         /// <param name="y">Coordinada Y.</param>
         /// 
         public void MoveTo(int x, int y) {
+
+            x += offsetX;
+            y += offsetY;
 
             // Si no hi ha moviment real, no cal fa res
             //
@@ -223,6 +232,9 @@
         /// 
         public void LineTo(int x, int y) {
 
+            x += offsetX;
+            y += offsetY;
+
             if (state.Aperture == null && !inRegion)
                 throw new InvalidOperationException("Apertura no seleccionada.");
 
@@ -253,6 +265,11 @@
         }
 
         public void ArcTo(int x, int y, int cx, int cy, ArcDirection direction, ArcQuadrant quadrant = ArcQuadrant.Multiple) {
+
+            x += offsetX;
+            y += offsetY;
+            cx += offsetX;
+            cy += offsetY;
 
             if (state.Aperture == null)
                 throw new InvalidOperationException("Apertura no seleccionada.");
@@ -544,6 +561,42 @@
                 throw new ArgumentOutOfRangeException("units");
 
             writer.WriteLine(String.Format("%MO{0}*%", units == Units.Inches ? "IN" : "MM"));
+        }
+
+        /// <summary>
+        /// Asigna una transformacio de coordinades.
+        /// </summary>
+        /// <param name="offset">Desplaçament</param>
+        /// <param name="rotation">Rotacio respecte el punt especificat com a desplaxament.</param>
+        /// 
+        public void SetTransformation(Point offset, Angle rotation) {
+
+            SetTransformation(offset.X, offset.Y, rotation);
+        }
+        
+        /// <summary>
+        /// Asigna una transformacio de coordinades.
+        /// </summary>
+        /// <param name="offsetX">Desplaçament X</param>
+        /// <param name="offsetY">Desplaçament y</param>
+        /// <param name="rotation">Rotacio respecte el punt especificat com a desplaxament.</param>
+        /// 
+        public void SetTransformation(int offsetX, int offsetY, Angle rotation) {
+
+            this.offsetX = offsetX;
+            this.offsetY = offsetY;
+            this.rotation = rotation;
+        }
+
+        /// <summary>
+        /// Desactiva la transformacio de coordinades.
+        /// </summary>
+        /// 
+        public void ResetTransformation() {
+
+            offsetX = 0;
+            offsetY = 0;
+            rotation = Angle.Zero;
         }
 
         /// <summary>

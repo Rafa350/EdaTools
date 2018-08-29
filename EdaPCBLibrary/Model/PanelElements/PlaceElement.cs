@@ -17,10 +17,15 @@
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="fileName">Nom del fitxer de la plada.</param>
+        /// <param name="fileName">Nom del fitxer de la placa.</param>
         /// 
         public PlaceElement(string fileName):
-            this(fileName, new Point(0, 0), Angle.Zero) { 
+            base() { 
+            
+            if (String.IsNullOrEmpty(fileName))
+                throw new ArgumentNullException("fileName");
+
+            this.fileName = fileName;
         }
 
         /// <summary>
@@ -48,7 +53,7 @@
 
             if (!boardCache.TryGetValue(fileName, out board)) {
                 using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                    BoardReader reader = new BoardReader(stream);
+                    BoardStreamReader reader = new BoardStreamReader(stream);
                     board = reader.Read();
                     boardCache.Add(fileName, board);
                 }
@@ -57,15 +62,24 @@
         }
 
         /// <summary>
-        /// Obte el nom del fitxer.
+        /// Obte o asigna el nom del fitxer de la placa.
         /// </summary>
         /// 
         public string FileName {
+            set {
+                if (String.IsNullOrEmpty(value))
+                    throw new ArgumentNullException("PlaveElement.FileName");
+
+                fileName = value;
+            }
             get {
                 return fileName;
             }
         }
 
+        /// <summary>
+        /// Obte la placa.
+        /// </summary>
         public Board Board {
             get {
                 return GetBoard();

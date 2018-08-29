@@ -45,7 +45,7 @@
         /// </summary>
         /// <param name="panel">El panell.</param>
         /// 
-        public override void GenerateContent(Panel panel) {
+        public override void Generate(Panel panel) {
 
             if (panel == null)
                 throw new ArgumentNullException("panel");
@@ -58,10 +58,10 @@
                 // Prepara el diccionari d'apertures
                 //
                 ApertureDictionary apertures = new ApertureDictionary();
-                foreach (PanelElement element in panel.Elements) {
-                    if (element is PanelElement) {
-                        PlaceElement panelBoard = (PlaceElement)element;
-                        PrepareApertures(apertures, panelBoard.Board);
+                foreach (var element in panel.Elements) {
+                    if (element is PlaceElement) {
+                        PlaceElement place = (PlaceElement)element;
+                        PrepareApertures(apertures, place.Board);
                     }
                 }
 
@@ -80,13 +80,18 @@
 
                 // Genera la imatge de les plaques
                 //
-                foreach (PanelElement element in panel.Elements) {
-                    if (element is PanelElement) {
-                        PlaceElement panelBoard = (PlaceElement)element;
-                        Board board = panelBoard.Board;
+                int boardId = 1;
+                foreach (var element in panel.Elements) {
+                    if (element is PlaceElement) {
+                        PlaceElement place = (PlaceElement)element;
 
-                        GenerateRegions(gb, board, apertures);
-                        GenerateImage(gb, board, apertures);
+                        gb.Comment(String.Format("BEGIN BOARD {0}", boardId));
+                        gb.SetTransformation(place.Position, place.Rotation);
+                        GenerateRegions(gb, place.Board, apertures);
+                        GenerateImage(gb, place.Board, apertures);
+                        gb.Comment(String.Format("END BOARD {0}", boardId));
+
+                        boardId++;
                     }
                 }
 
@@ -231,6 +236,7 @@
         /// Genera la seccio de poligons del fitxer.
         /// </summary>
         /// <param name="gb">El generador de codi gerber.</param>
+        /// <param name="board">La placa.</param>
         /// <param name="apertures">El diccionari d'apertures.</param>
         /// 
         private void GenerateRegions(GerberBuilder gb, Board board, ApertureDictionary apertures) {
@@ -247,6 +253,7 @@
         /// Genera la seccio d'imatges del fitxer.
         /// </summary>
         /// <param name="gb">El generador de codi gerber.</param>
+        /// <param name="board">La placa.</param>
         /// <param name="apertures">El diccionari d'apertures.</param>
         /// 
         private void GenerateImage(GerberBuilder gb, Board board, ApertureDictionary apertures) {
@@ -509,11 +516,8 @@
                 //
                 gb.SelectAperture(ap);
                 gb.MoveTo(startPosition);
-                gb.ArcTo(
-                    endPosition.X,
-                    endPosition.Y,
-                    center.X - startPosition.X,
-                    center.Y - startPosition.Y,
+                gb.ArcTo(endPosition.X, endPosition.Y, 
+                    center.X - startPosition.X, center.Y - startPosition.Y,
                     arc.Angle.Degrees < 0 ? ArcDirection.CW : ArcDirection.CCW);
             }
 
@@ -778,6 +782,7 @@
 
             private readonly GerberBuilder gb;
             private readonly ApertureDictionary apertures;
+            private readonly Point boardPosition;
 
             /// <summary>
             /// Constructor del objecte.

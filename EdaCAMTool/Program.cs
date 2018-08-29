@@ -2,6 +2,7 @@
 
     using MikroPic.EdaTools.v1.Cam;
     using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Pcb.Model.IO;
     using MikroPic.EdaTools.v1.Pcb.Model.PanelElements;
     using System;
     using System.IO;
@@ -43,7 +44,17 @@
                     }
                 }
 
-                ProcessBoard(inputFileName, folder, name);
+                string extension = Path.GetExtension(inputFileName);
+                if (!String.IsNullOrEmpty(extension))
+                    switch (extension.ToUpper()) {
+                        case ".XBRD":
+                            ProcessBoard(inputFileName, folder, name);
+                            break;
+
+                        case ".XPNL":
+                            ProcessPanel(inputFileName, folder, name);
+                            break;
+                    }
 
                 if (pause)
                     WaitKey();
@@ -66,10 +77,10 @@
         private static void ShowHelp() {
 
             string help =
-                "EdaCAMTool V1.0\r\n" +
+                "EdaCAMTool V1.1\r\n" +
                 "---------------\r\n" +
                 "edacamtool <board> [options]\r\n" +
-                "   <board>               : PCB input file name.\r\n" +
+                "   <input>               : Board/Panel input file name.\r\n" +
                 "   [options]             : Optional parameters.\r\n" +
                 "     /f:<folder>         :   Output folder.\r\n" +
                 "     /n:<name>           :   Output file name prefix.\r\n" +
@@ -90,7 +101,7 @@
         }
 
         /// <summary>
-        /// Procesa la placa
+        /// Procesa una placa
         /// </summary>
         /// <param name="fileName">Nom del fitxer de la placa.</param>
         /// 
@@ -98,6 +109,31 @@
 
             Panel panel = new Panel();
             panel.AddElement(new PlaceElement(fileName));
+
+            CAMGenerator cg = new CAMGenerator();
+            cg.Generate(panel, folder, name);
+        }
+
+        /// <summary>
+        /// Procesa un panell
+        /// </summary>
+        /// <param name="fileName">Nom del fitxer de la placa.</param>
+        /// 
+        private static void ProcessPanel(string fileName, string folder, string name) {
+
+            Panel panel;
+
+            using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
+                PanelStreamReader reader = new PanelStreamReader(stream);
+                panel = reader.Read();
+            }
+
+            foreach (var element in panel.Elements) {
+                if (element is PlaceElement) {
+                    PlaceElement place = (PlaceElement) element;
+                    place.FileName = Path.Combine(folder, place.FileName);
+                }
+            }
 
             CAMGenerator cg = new CAMGenerator();
             cg.Generate(panel, folder, name);

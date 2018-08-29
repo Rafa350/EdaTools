@@ -103,7 +103,7 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            foreach (Part part in parts)
+            foreach (var part in parts)
                 if (part.Name == name)
                     return part;
 
@@ -142,7 +142,7 @@
             if (elements == null)
                 throw new ArgumentNullException("elements");
 
-            foreach (BoardElement element in elements)
+            foreach (var element in elements)
                 if (!this.elements.Add(element))
                     throw new InvalidOperationException("El elemento ya existe en la placa.");
         }
@@ -178,7 +178,7 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            foreach (Block block in blocks)
+            foreach (var block in blocks)
                 if (block.Name == name)
                     return block;
 
@@ -316,7 +316,7 @@
         public IReadOnlyList<Layer> GetSignalLayers() {
 
             List<Layer> layers = new List<Layer>();
-            foreach (Layer layer in this.layers) {
+            foreach (var layer in this.layers) {
                 if (layer.Function == LayerFunction.Signal)
                     layers.Add(layer);
             }
@@ -574,7 +574,7 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            foreach (Signal signal in signals)
+            foreach (var signal in signals)
                 if (signal.Name == name)
                     return signal;
 
@@ -661,7 +661,7 @@
                     // Procesa els elements de la placa que es troben en la mateixa capa que 
                     // la regio, o en les capes restrict o profile.
                     //
-                    foreach (BoardElement element in elements) {
+                    foreach (var element in elements) {
                         if (element != region) {
 
                             // El element es en la mateixa capa que la regio
@@ -695,13 +695,13 @@
 
                     // Procesa els elements dels components
                     //
-                    foreach (Part part in parts) {
+                    foreach (var part in parts) {
 
                         // Obte la transformacio
                         //
                         Transformation localTransformation = part.GetLocalTransformation();
 
-                        foreach (BoardElement element in part.Elements) {
+                        foreach (var element in part.Elements) {
 
                             if ((element != region) &&
                                 (IsOnLayer(element, layer) || IsOnLayer(element, restrictLayer))) {
