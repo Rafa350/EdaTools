@@ -55,9 +55,10 @@
     <Compile Include="Geometry\Fonts\FontFactory.cs" />
     <Compile Include="Geometry\Fonts\Glyph.cs" />
     <Compile Include="Geometry\Fonts\GlyphTrace.cs" />
-    <Compile Include="Geometry\Line.cs" />
+    <Compile Include="Geometry\Segment.cs" />
     <Compile Include="Geometry\Point.cs" />
     <Compile Include="Geometry\Polygons\Infrastructure\Clipper.cs" />
+    <Compile Include="Geometry\Polygons\Infrastructure\Polygonizer.cs" />
     <Compile Include="Geometry\Polygons\Polygon.cs" />
     <Compile Include="Geometry\Polygons\PolygonProcessor.cs" />
     <Compile Include="Geometry\Ratio.cs" />

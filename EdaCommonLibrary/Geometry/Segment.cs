@@ -1,11 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Geometry {
 
-    public struct Line {
+    public struct Segment {
 
-        private Point start;
-        private Point end;
+        private readonly Point start;
+        private readonly Point end;
 
-        public Line(Point start, Point end) {
+        public Segment(Point start, Point end) {
 
             this.start = start;
             this.end = end;

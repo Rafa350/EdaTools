@@ -145,7 +145,7 @@
             return results;
         }
 
-        public static Polygon CreateFromSegments(IEnumerable<Line> lines) {
+        public static Polygon CreateFromSegments(IEnumerable<Segment> lines) {
 
             return null;
         }
