@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<board version="211" units="mm" position="0, 0" rotation="0" xmlns="http://MikroPic.com/schemas/edatools/v1/XBRD.xsd">
+<board version="211" distanceUnits="mm" angleUnits="deg" position="0, 0" rotation="0" xmlns="http://MikroPic.com/schemas/edatools/v1/XBRD.xsd">
     <layers>
         <layer name="Top" side="top" function="signal" color="153, 255, 0, 0" />
         <layer name="Bottom" side="bottom" function="signal" color="204, 0, 0, 255" />

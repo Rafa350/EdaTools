@@ -69,6 +69,14 @@
                 targets.Add(target);
             }
 
+            // NetList
+            //
+            Target target4 = new Target(
+                    Path.Combine(folder, String.Format("{0}.ipc", name)),
+                    "ipc-D356");
+            targets.Add(target4);
+            targets.Add(target4);
+
             Generate(panel, targets);
         }
 
@@ -110,8 +118,8 @@
                 case "gerber-drill":
                     return new GerberDrillGenerator(target);
 
-                //case "IPCD356":
-                //    return new Ipcd356Generator(target);
+                case "ipc-D356":
+                    return new Ipcd356Generator(target);
 
                 default:
                     throw new InvalidOperationException("Tipo de generador desconocido.");

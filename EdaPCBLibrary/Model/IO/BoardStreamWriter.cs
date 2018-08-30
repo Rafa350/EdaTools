@@ -465,7 +465,8 @@
                 wr.WriteStartElement("board", "http://MikroPic.com/schemas/edatools/v1/XBRD.xsd");
 
                 wr.WriteAttribute("version", "211");
-                wr.WriteAttribute("units", "mm");
+                wr.WriteAttribute("distanceUnits", "mm");
+                wr.WriteAttribute("angleUnits", "deg");
                 wr.WriteAttribute("position", board.Position);
                 wr.WriteAttribute("rotation", board.Rotation);
 

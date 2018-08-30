@@ -1,10 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Ipcd356 {
 
-    using MikroPic.EdaTools.v1.Cam.Model;
     using MikroPic.EdaTools.v1.Cam.Ipcd356.Builder;
+    using MikroPic.EdaTools.v1.Cam.Model;
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
+    using MikroPic.EdaTools.v1.Pcb.Model.PanelElements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
     using System.IO;
@@ -14,45 +15,45 @@
     /// </summary>
     public sealed class Ipcd356Generator: Generator {
 
-        private readonly Board board;
-
         public Ipcd356Generator(Target target):
             base(target) {
 
         }
 
         /// <summary>
-        /// Genera el nom del fitxer
+        /// Genera el fitxer corresponent al panell.
         /// </summary>
-        /// <param name="prefix">Prefix del nom.</param>
-        /// <returns>El nom del fitxer.</returns>
+        /// <param name="panel">El panell.</param>
         /// 
-        public string GenerateFileName(string prefix) {
-
-            return prefix + ".ipc";
-        }
-
         public override void Generate(Panel panel) {
 
-        }
+            if (panel == null)
+                throw new ArgumentNullException("panel");
 
-        /// <summary>
-        /// Genera el contingut del fitxer
-        /// </summary>
-        /// <param name="writer">Esciptor del text de sortida.</param>
-        /// 
-        public void GenerateContent(TextWriter writer) {
+            // Crea el fitxer de sortida
+            //
+            using (TextWriter writer = new StreamWriter(
+                new FileStream(Target.FileName, FileMode.Create, FileAccess.Write, FileShare.None))) {
 
-            if (writer == null)
-                throw new ArgumentNullException("writer");
+                Ipcd356Builder builder = new Ipcd356Builder(writer);
 
-            Ipcd356Builder builder = new Ipcd356Builder(writer);
+                GenerateFileHeader(builder);
+                int boardId = 1;
+                foreach (PanelElement element in panel.Elements) {
+                    if (element is PanelElement) {
+                        PlaceElement place = (PlaceElement)element;
+                        builder.SetTransformation(place.Position, place.Rotation);
+                        builder.Comment(String.Format("BEGIN BOARD {0}", boardId));
+                        GenerateVias(builder, place.Board);
+                        GeneratePads(builder, place.Board);
+                        GenerateNets(builder, place.Board);
+                        builder.Comment(String.Format("END BOARD {0}", boardId));
 
-            GenerateFileHeader(builder);
-            GenerateVias(builder);
-            GeneratePads(builder);
-            GenerateNets(builder);
-            GenerateFileTail(builder);
+                        boardId++;
+                    }
+                }
+                GenerateFileTail(builder);
+            }
         }
 
         /// <summary>
@@ -64,7 +65,7 @@
 
             builder.Comment("BEGIN FILE");
             builder.Comment("EdaTools v1.0.");
-            builder.Comment("EdaTools CAM processor. IPC-D-365 generator.");
+            builder.Comment("EdaTools CAM processor. IPC-D-356 generator.");
             builder.Comment(String.Format("Start timestamp: {0:HH:mm:ss.fff}", DateTime.Now));
             builder.Comment("BEGIN HEADER");
             builder.SetVersion();
@@ -88,8 +89,9 @@
         /// Genera la definicio de vias
         /// </summary>
         /// <param name="builder">El generador de codi.</param>
+        /// <param name="board">La placa a procesar.</param>
         /// 
-        private void GenerateVias(Ipcd356Builder builder) {
+        private void GenerateVias(Ipcd356Builder builder, Board board) {
 
             builder.Comment("BEGIN VIAS");
             
@@ -103,8 +105,9 @@
         /// Genera la definicio de pads
         /// </summary>
         /// <param name="builder">El generador de codi.</param>
+        /// <param name="board">La placa a procesar.</param>
         /// 
-        private void GeneratePads(Ipcd356Builder builder) {
+        private void GeneratePads(Ipcd356Builder builder, Board board) {
 
             builder.Comment("BEGIN PADS");
 
@@ -118,8 +121,9 @@
         /// Genera la definicio de senyals
         /// </summary>
         /// <param name="builder">El generador de codi.</param>
+        /// <param name="board">La placa a procesar.</param>
         /// 
-        private void GenerateNets(Ipcd356Builder builder) {
+        private void GenerateNets(Ipcd356Builder builder, Board board) {
 
             builder.Comment("BEGIN NETS");
 

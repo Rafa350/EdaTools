@@ -31,7 +31,7 @@
     <xs:element
         name="attribute">
         <xs:complexType>
-            <xs:attribute name="name" use="required" type="xs:string"/>
+            <xs:attribute name="name" use="required" type="nameType"/>
             <xs:attribute name="value" use="required" type="xs:string"/>
         </xs:complexType>
     </xs:element>
@@ -64,7 +64,12 @@
             <xs:attribute name="rotation" use="required" type="xs:double"/>
         </xs:complexType>
     </xs:element>
-
+    
+    <xs:simpleType
+        name="nameType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    
     <xs:simpleType
         name="pointType">
         <xs:restriction base="xs:string">

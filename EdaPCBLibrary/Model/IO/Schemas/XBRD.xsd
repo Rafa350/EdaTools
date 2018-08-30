@@ -17,9 +17,10 @@
                 <xs:element ref="elements" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
             <xs:attribute name="version" use="required" type="xs:string"/>
-            <xs:attribute name="units" use="required" type="distanceUnits"/>
-            <xs:attribute name="position" use="optional" type="double2"/>
-            <xs:attribute name="rotation" use="optional" type="xs:double"/>
+            <xs:attribute name="distanceUnits" use="required" type="distanceUnitsType"/>
+            <xs:attribute name="angleUnits" use="required" type="angleUnitsType"/>
+            <xs:attribute name="position" use="optional" type="pointType"/>
+            <xs:attribute name="rotation" use="optional" type="angleType"/>
         </xs:complexType>
     </xs:element>
     
@@ -71,9 +72,9 @@
     <xs:element
         name="layer">
         <xs:complexType>
-            <xs:attribute name="name" use="required" type="xs:string"/>
-            <xs:attribute name="side" use="required" type="boardSide"/>
-            <xs:attribute name="function" use="required" type="layerFunction"/>
+            <xs:attribute name="name" use="required" type="nameType"/>
+            <xs:attribute name="side" use="required" type="boardSideType"/>
+            <xs:attribute name="function" use="required" type="layerFunctionType"/>
             <xs:attribute name="color" use="required" type="xs:string"/>
         </xs:complexType>
     </xs:element>
@@ -81,15 +82,15 @@
     <xs:element
         name="pair">
         <xs:complexType>
-            <xs:attribute name="layer1" use="required" type="xs:string"/>
-            <xs:attribute name="layer2" use="required" type="xs:string"/>
+            <xs:attribute name="layer1" use="required" type="nameType"/>
+            <xs:attribute name="layer2" use="required" type="nameType"/>
         </xs:complexType>
     </xs:element>
 
     <xs:element
         name="signal">
         <xs:complexType>
-            <xs:attribute name="name" use="required" type="xs:string"/>
+            <xs:attribute name="name" use="required" type="nameType"/>
         </xs:complexType>
     </xs:element>
     
@@ -99,7 +100,7 @@
             <xs:sequence>
                 <xs:element ref="elements" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
-            <xs:attribute name="name" use="required" type="xs:string"/>
+            <xs:attribute name="name" use="required" type="nameType"/>
         </xs:complexType>
     </xs:element>
 
@@ -110,10 +111,10 @@
                 <xs:element ref="pads" minOccurs="0" maxOccurs="1"/>
                 <xs:element ref="attributes" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
-            <xs:attribute name="name" use="required" type="xs:string"/>
-            <xs:attribute name="block" use="required" type="xs:string"/>
-            <xs:attribute name="position" use="required" type="xs:string"/>
-            <xs:attribute name="rotation" use="optional" type="xs:double"/>
+            <xs:attribute name="name" use="required" type="nameType"/>
+            <xs:attribute name="block" use="required" type="nameType"/>
+            <xs:attribute name="position" use="required" type="pointType"/>
+            <xs:attribute name="rotation" use="optional" type="angleType"/>
         </xs:complexType>        
     </xs:element>
 
@@ -129,14 +130,14 @@
     <xs:element
         name="attribute">
         <xs:complexType>
-            <xs:attribute name="name" use="required" type="xs:string"/>
+            <xs:attribute name="name" use="required" type="nameType"/>
             <xs:attribute name="value" use="required" type="xs:string"/>
             <xs:attribute name="visible" use="optional" type="xs:boolean"/>
-            <xs:attribute name="position" use="optional" type="double2"/>
-            <xs:attribute name="rotation" use="optional" type="xs:double"/>
+            <xs:attribute name="position" use="optional" type="pointType"/>
+            <xs:attribute name="rotation" use="optional" type="angleType"/>
             <xs:attribute name="height" use="optional" type="xs:double"/>
-            <xs:attribute name="horizontalAlign" use="optional" type="horizontalTextAlign"/>
-            <xs:attribute name="verticalAlign" use="optional" type="verticalTextAlign"/>
+            <xs:attribute name="horizontalAlign" use="optional" type="horizontalTextAlignType"/>
+            <xs:attribute name="verticalAlign" use="optional" type="verticalTextAlignType"/>
         </xs:complexType>
     </xs:element>
 
@@ -152,8 +153,8 @@
     <xs:element
         name="pad">
         <xs:complexType>
-            <xs:attribute name="name" use="required" type="xs:string"/>
-            <xs:attribute name="signal" use="required" type="xs:string"/>
+            <xs:attribute name="name" use="required" type="nameType"/>
+            <xs:attribute name="signal" use="required" type="nameType"/>
         </xs:complexType>
     </xs:element>
 
@@ -181,11 +182,11 @@
         name="line">
         <xs:complexType>
             <xs:attribute name="layers" use="required" type="xs:string"/>
-            <xs:attribute name="startPosition" use="required" type="double2"/>
-            <xs:attribute name="endPosition" use="required" type="double2"/>
+            <xs:attribute name="startPosition" use="required" type="pointType"/>
+            <xs:attribute name="endPosition" use="required" type="pointType"/>
             <xs:attribute name="thickness" use="required" type="xs:double"/>
-            <xs:attribute name="lineCap" use="optional" type="lineCap"/>
-            <xs:attribute name="signal" use="optional" type="xs:string"/>
+            <xs:attribute name="lineCap" use="optional" type="lineCapType"/>
+            <xs:attribute name="signal" use="optional" type="nameType"/>
         </xs:complexType>
     </xs:element>
     
@@ -193,12 +194,12 @@
         name="arc">
         <xs:complexType>
             <xs:attribute name="layers" use="required" type="xs:string"/>
-            <xs:attribute name="startPosition" use="required" type="double2"/>
-            <xs:attribute name="endPosition" use="required" type="double2"/>
-            <xs:attribute name="angle" use="required" type="xs:double"/>
+            <xs:attribute name="startPosition" use="required" type="pointType"/>
+            <xs:attribute name="endPosition" use="required" type="pointType"/>
+            <xs:attribute name="angle" use="required" type="angleType"/>
             <xs:attribute name="thickness" use="required" type="xs:double"/>
-            <xs:attribute name="lineCap" use="optional" type="lineCap"/>
-            <xs:attribute name="signal" use="optional" type="xs:string"/>
+            <xs:attribute name="lineCap" use="optional" type="lineCapType"/>
+            <xs:attribute name="signal" use="optional" type="nameType"/>
         </xs:complexType>
     </xs:element>
     
@@ -206,9 +207,9 @@
         name="rectangle">
         <xs:complexType>
             <xs:attribute name="layers" use="required" type="xs:string"/>
-            <xs:attribute name="position" use="required" type="double2"/>
-            <xs:attribute name="size" use="required" type="double2"/>
-            <xs:attribute name="rotation" use="optional" type="xs:double"/>
+            <xs:attribute name="position" use="required" type="pointType"/>
+            <xs:attribute name="size" use="required" type="sizeType"/>
+            <xs:attribute name="rotation" use="optional" type="angleType"/>
             <xs:attribute name="thickness" use="optional" type="xs:double"/>
         </xs:complexType>
     </xs:element>
@@ -217,7 +218,7 @@
         name="circle">
         <xs:complexType>
             <xs:attribute name="layers" use="required" type="xs:string"/>
-            <xs:attribute name="position" use="required" type="double2"/>
+            <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="thickness" use="optional" type="xs:double"/>
             <xs:attribute name="radius" use="required" type="xs:double"/>
         </xs:complexType>
@@ -239,8 +240,8 @@
     <xs:element
         name="segment">
         <xs:complexType>
-            <xs:attribute name="position" use="required" type="double2"/>
-            <xs:attribute name="angle" use="optional" type="xs:double"/>
+            <xs:attribute name="position" use="required" type="pointType"/>
+            <xs:attribute name="angle" use="optional" type="angleType"/>
         </xs:complexType>
     </xs:element>
 
@@ -248,10 +249,10 @@
         name="via">
         <xs:complexType>
             <xs:attribute name="layers" use="required" type="xs:string"/>
-            <xs:attribute name="position" use="required" type="double2"/>
+            <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="outerSize" use="required" type="xs:double"/>
             <xs:attribute name="drill" use="required" type="xs:double"/>
-            <xs:attribute name="shape" use="optional" type="viaShape"/>
+            <xs:attribute name="shape" use="optional" type="viaShapeType"/>
             <xs:attribute name="signal" use="optional" type="xs:string"/>
         </xs:complexType>
     </xs:element>
@@ -261,22 +262,22 @@
         <xs:complexType>
             <xs:attribute name="name" use="required" type="xs:string"/>
             <xs:attribute name="layers" use="required" type="xs:string"/>
-            <xs:attribute name="position" use="required" type="double2"/>
+            <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="size" use="required" type="xs:double"/>
             <xs:attribute name="drill" use="required" type="xs:double"/>
-            <xs:attribute name="rotation" use="optional" type="xs:double"/>
-            <xs:attribute name="shape" use="optional" type="tpadShape"/>
+            <xs:attribute name="rotation" use="optional" type="angleType"/>
+            <xs:attribute name="shape" use="optional" type="tpadShapeType"/>
         </xs:complexType>
     </xs:element>
 
     <xs:element
         name="spad">
         <xs:complexType>
-            <xs:attribute name="name" use="required" type="xs:string"/>
+            <xs:attribute name="name" use="required" type="nameType"/>
             <xs:attribute name="layers" use="required" type="xs:string"/>
-            <xs:attribute name="position" use="required" type="double2"/>
-            <xs:attribute name="size" use="required" type="double2"/>
-            <xs:attribute name="rotation" use="optional" type="xs:double"/>
+            <xs:attribute name="position" use="required" type="pointType"/>
+            <xs:attribute name="size" use="required" type="sizeType"/>
+            <xs:attribute name="rotation" use="optional" type="angleType"/>
             <xs:attribute name="roundness" use="optional" type="xs:double"/>
         </xs:complexType>
     </xs:element>
@@ -285,12 +286,12 @@
         name="text">
         <xs:complexType>
             <xs:attribute name="layers" use="required" type="xs:string"/>
-            <xs:attribute name="position" use="required" type="double2"/>
+            <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="height" use="required" type="xs:double"/>
             <xs:attribute name="thickness" use="required" type="xs:double"/>
-            <xs:attribute name="horizontalAlign" use="optional" type="horizontalTextAlign"/>
-            <xs:attribute name="verticalAlign" use="optional" type="verticalTextAlign"/>
-            <xs:attribute name="rotation" use="optional" type="xs:double"/>
+            <xs:attribute name="horizontalAlign" use="optional" type="horizontalTextAlignType"/>
+            <xs:attribute name="verticalAlign" use="optional" type="verticalTextAlignType"/>
+            <xs:attribute name="rotation" use="optional" type="angleType"/>
             <xs:attribute name="value" use="optional" type="xs:string"/>
         </xs:complexType>
     </xs:element>
@@ -299,20 +300,37 @@
         name="hole">
         <xs:complexType>
             <xs:attribute name="layers" use="required" type="xs:string"/>
-            <xs:attribute name="position" use="required" type="double2"/>
+            <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="drill" use="required" type="xs:double"/>
         </xs:complexType>
     </xs:element>
 
     <xs:simpleType
-        name="double2">
+        name="pointType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$"/>
+        </xs:restriction>        
+    </xs:simpleType>
+    
+    <xs:simpleType
+        name="sizeType">
         <xs:restriction base="xs:string">
             <xs:pattern value="^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$"/>
         </xs:restriction>        
     </xs:simpleType>
 
     <xs:simpleType
-        name="lineCap">
+        name="angleType">
+        <xs:restriction base="xs:double"/>
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="nameType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="lineCapType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="round"/>
             <xs:enumeration value="flat"/>
@@ -320,7 +338,7 @@
     </xs:simpleType>
 
     <xs:simpleType
-        name="viaShape">
+        name="viaShapeType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="square"/>
             <xs:enumeration value="octagon"/>
@@ -329,7 +347,7 @@
     </xs:simpleType>
     
     <xs:simpleType
-        name="tpadShape">
+        name="tpadShapeType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="square"/>
             <xs:enumeration value="octagon"/>
@@ -339,7 +357,7 @@
     </xs:simpleType>
 
     <xs:simpleType
-        name="horizontalTextAlign">
+        name="horizontalTextAlignType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="left"/>
             <xs:enumeration value="center"/>
@@ -348,7 +366,7 @@
     </xs:simpleType>
 
     <xs:simpleType
-        name="verticalTextAlign">
+        name="verticalTextAlignType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="top"/>
             <xs:enumeration value="middle"/>
@@ -357,7 +375,7 @@
     </xs:simpleType>
 
     <xs:simpleType
-        name="distanceUnits">
+        name="distanceUnitsType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="mm"/>
             <xs:enumeration value="um"/>
@@ -368,7 +386,7 @@
     </xs:simpleType>
 
     <xs:simpleType
-        name="angleUnits">
+        name="angleUnitsType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="deg"/>
             <xs:enumeration value="rad"/>
@@ -376,7 +394,7 @@
     </xs:simpleType>
 
     <xs:simpleType
-        name="boardSide">
+        name="boardSideType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="top"/>
             <xs:enumeration value="bottom"/>
@@ -386,7 +404,7 @@
     </xs:simpleType>
 
     <xs:simpleType
-        name="layerFunction">
+        name="layerFunctionType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="signal"/>
             <xs:enumeration value="design"/>

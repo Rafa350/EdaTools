@@ -22,6 +22,9 @@
     public sealed class Ipcd356Builder {
 
         private readonly TextWriter writer;
+        private int offsetX;
+        private int offsetY;
+        private Angle rotation;
 
         /// <summary>
         /// Constructor del objecte
@@ -65,6 +68,42 @@
         public void SetImage() {
 
             writer.WriteLine("P  IMAGE PRIMARY");
+        }
+
+        /// <summary>
+        /// Asigna una transformacio de coordinades.
+        /// </summary>
+        /// <param name="offset">Desplaçament</param>
+        /// <param name="rotation">Rotacio respecte el punt especificat com a desplaxament.</param>
+        /// 
+        public void SetTransformation(Point offset, Angle rotation) {
+
+            SetTransformation(offset.X, offset.Y, rotation);
+        }
+
+        /// <summary>
+        /// Asigna una transformacio de coordinades.
+        /// </summary>
+        /// <param name="offsetX">Desplaçament X</param>
+        /// <param name="offsetY">Desplaçament y</param>
+        /// <param name="rotation">Rotacio respecte el punt especificat com a desplaxament.</param>
+        /// 
+        public void SetTransformation(int offsetX, int offsetY, Angle rotation) {
+
+            this.offsetX = offsetX;
+            this.offsetY = offsetY;
+            this.rotation = rotation;
+        }
+        
+        /// <summary>
+        /// Desactiva la transformacio de coordinades.
+        /// </summary>
+        /// 
+        public void ResetTransformation() {
+
+            offsetX = 0;
+            offsetY = 0;
+            rotation = Angle.Zero;
         }
 
         /// <summary>
@@ -115,10 +154,10 @@
                 netName,
                 FormatLayerNum(layerNum),
                 FormatDiameter(thickness),
-                FormatCoordinate(points[0].X),
-                FormatCoordinate(points[0].Y),
-                FormatCoordinate(points[1].X),
-                FormatCoordinate(points[1].Y),
+                FormatCoordinate(points[0].X + offsetX),
+                FormatCoordinate(points[0].Y + offsetY),
+                FormatCoordinate(points[1].X + offsetX),
+                FormatCoordinate(points[1].Y + offsetY),
                 points.Length > 2 ? ' ' : '*');
 
             if (points.Length > 2) {
@@ -127,8 +166,8 @@
                 for (int i = 2; i < points.Length; i++) {
                     writer.Write(
                         " X{0}Y{1}",
-                        FormatCoordinate(points[i].X),
-                        FormatCoordinate(points[i].Y));
+                        FormatCoordinate(points[i].X + offsetX),
+                        FormatCoordinate(points[i].Y + offsetY));
                 }
                 writer.Write("*");
             }
@@ -162,8 +201,8 @@
             writer.Write(
                 "317{0,-14}   {3,-6}-{4,-4} D{5}PA00X{1}Y{2}",
                 netName,
-                FormatCoordinate(position.X),
-                FormatCoordinate(position.Y),
+                FormatCoordinate(position.X + offsetX),
+                FormatCoordinate(position.Y + offsetY),
                 partId,
                 padId,
                 FormatDiameter(drill));
@@ -193,8 +232,8 @@
             writer.Write(
                 "327{0,-14}   {3,-6}-{4,-4}       A{5}X{1}Y{2}",
                 netName,
-                FormatCoordinate(position.X),
-                FormatCoordinate(position.Y),
+                FormatCoordinate(position.X + offsetX),
+                FormatCoordinate(position.Y + offsetY),
                 partId,
                 padId,
                 FormatAccess(access));
@@ -219,8 +258,8 @@
             writer.Write(
                 "317{0,-14}   VIA   -     D{3}PA00X{1}Y{2}",
                 netName,
-                FormatCoordinate(position.X),
-                FormatCoordinate(position.Y),
+                FormatCoordinate(position.X + offsetX),
+                FormatCoordinate(position.Y + offsetY),
                 FormatDiameter(drill));
             writer.WriteLine();
         }
