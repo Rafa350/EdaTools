@@ -78,9 +78,27 @@
             board = new Board();
 
             rd.NextTag();
-            ParseBoardNode(board);
+            ParseDocumentNode(board);
 
             return board;
+        }
+
+        /// <summary>
+        /// Procesa el node 'document'
+        /// </summary>
+        /// <param name="board">La placa.</param>
+        /// 
+        private void ParseDocumentNode(Board board) {
+
+            if (!rd.IsStartTag("document"))
+                throw new InvalidDataException("Se esperaba <document>");
+
+            rd.NextTag();
+            ParseBoardNode(board);
+
+            // Llegeix el tag final
+            //
+            rd.NextTag();
         }
 
         /// <summary>
@@ -112,6 +130,10 @@
 
             rd.NextTag();
             ParseBoardElementsNode(board);
+
+            // Llegeix el tag final
+            //
+            rd.NextTag();
         }
 
         /// <summary>

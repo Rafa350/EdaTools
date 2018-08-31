@@ -45,18 +45,34 @@
         /// <param name="drill">Diametre del forat.</param>
         /// <param name="shape">Forma de la corona.</param>
         /// 
-        public ViaElement(Point position, int size, int drill, ViaShape shape) :
+        public ViaElement(Point position, int size, int drill, ViaShape shape):
+            this(position, size, size, drill, shape) {
+        }
+
+        /// <summary>
+        /// Constructor del objecte.
+        /// </summary>
+        /// <param name="position">Posicio.</param>
+        /// <param name="outerSize">Tamany/diametre de la corona per capes externes.</param>
+        /// <param name="innerSize">Tamany/diametre de la corona per capes internes.</param>
+        /// <param name="drill">Diametre del forat.</param>
+        /// <param name="shape">Forma de la corona.</param>
+        /// 
+        public ViaElement(Point position, int outerSize, int innerSize, int drill, ViaShape shape) :
             base() {
 
-            if (size < 0)
-                throw new ArgumentOutOfRangeException("size");
+            if (innerSize < 0)
+                throw new ArgumentOutOfRangeException("innerSize");
+
+            if (outerSize < 0)
+                throw new ArgumentOutOfRangeException("outerSize");
 
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException("drill");
 
             this.position = position;
-            this.outerSize = size;
-            this.innerSize = size;
+            this.outerSize = outerSize;
+            this.innerSize = innerSize;
             this.drill = drill;
             this.shape = shape;
         }

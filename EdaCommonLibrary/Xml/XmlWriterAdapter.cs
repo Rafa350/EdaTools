@@ -70,16 +70,20 @@
         /// 
         public void WriteAttribute(string name, string[] values) {
 
-            StringBuilder sb = new StringBuilder();
-            bool first = true;
-            foreach (string value in values) {
-                if (first)
-                    first = false;
-                else
-                    sb.Append(", ");
-                sb.Append(value);
+            if (values == null)
+                writer.WriteAttributeString(name, "");
+            else {
+                StringBuilder sb = new StringBuilder();
+                bool first = true;
+                foreach (string value in values) {
+                    if (first)
+                        first = false;
+                    else
+                        sb.Append(", ");
+                    sb.Append(value);
+                }
+                writer.WriteAttributeString(name, sb.ToString());
             }
-            writer.WriteAttributeString(name, sb.ToString());
         }
 
         /// <summary>

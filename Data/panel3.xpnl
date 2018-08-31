@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document version="100" documentType="panel" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/XPNL.xsd">
+    <panel>
+        <elements>
+            <place fileName="board3.xbrd" position="0, 0" rotation="0"/>
+            <place fileName="board3.xbrd" position="80, 0" rotation="0"/>
+            <place fileName="board3.xbrd" position="0, 80" rotation="0"/>
+            <place fileName="board3.xbrd" position="80, 80" rotation="0"/>
+        </elements>
+    </panel>
+</document>

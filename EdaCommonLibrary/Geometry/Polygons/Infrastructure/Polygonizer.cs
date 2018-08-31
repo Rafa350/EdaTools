@@ -7,41 +7,64 @@ namespace MikroPic.EdaTools.v1.Geometry.Polygons.Infrastructure {
         
         static public Point[] Poligonize(IEnumerable<Segment> segments) {
 
-            int vertexCount = 0;
-            Point firstVertex = new Point();
-            Dictionary<Point, Point> conectionMap = new Dictionary<Point, Point>();
-            List<Point> vertexList = new List<Point>();
+            if (segments == null)
+                throw new ArgumentNullException("segments");
 
+            Point p = default(Point);
+            bool first = true;
+            HashSet<Segment> segmentPool = new HashSet<Segment>();
             foreach (var segment in segments) {
-                if (!vertexList.Contains(segment.Start))
-                    vertexList.Add(segment.Start);
-                if (!vertexList.Contains(segment.End))
-                    vertexList.Add(segment.End);
+                if (first) {
+                    first = false;
+                    p = segment.Start;
+                }
+                segmentPool.Add(segment);
             }
 
-            foreach (var segment in segments) {
+            if (segmentPool.Count > 2) {
 
-                if (!conectionMap.ContainsKey(segment.Start)) {
-                    conectionMap.Add(segment.Start, segment.End);
-                    if (vertexCount++ == 0)
-                        firstVertex = segment.Start;
+                List<Point> polygon = new List<Point>();
+
+                while (segmentPool.Count > 0) {
+                    Segment s;
+                    if (FindSegmentWidthVertex(segmentPool, p, out s)) {
+                        if (Compare(p, s.Start))
+                            p = s.End;
+                        else
+                            p = s.Start;
+                        polygon.Add(p);
+                        segmentPool.Remove(s);
+                    }
+                    else
+                        return null;
+                }
+                return polygon.ToArray();
+            }
+            else
+                return null;
+        }
+
+        private static bool Compare(Point p1, Point p2) {
+
+            return (p1.X == p2.X) && (p1.Y == p2.Y);
+        }
+
+        private static bool FindSegmentWidthVertex(IEnumerable<Segment> segments, Point point, out Segment result) {
+
+            result = default(Segment);
+            foreach (var segment in segments) {
+                if (Compare(segment.Start, point)) {
+                    result = segment;
+                    return true;
                 }
 
-                else if (!conectionMap.ContainsKey(segment.End)) {
-                    conectionMap.Add(segment.End, segment.Start);
-                    if (vertexCount++ == 0) 
-                        firstVertex = segment.End;
+                else if (Compare(segment.End, point)) {
+                    result = segment;
+                    return true;
                 }
             }
 
-            List<Point> points = new List<Point>();
-            Point p = firstVertex;
-            for (int i = 0; i < vertexCount; i++) { 
-                points.Add(p);
-                p = conectionMap[p];
-            }
-
-            return points.ToArray();
+            return false;
         }
     }
 }

@@ -147,7 +147,8 @@
 
         public static Polygon CreateFromSegments(IEnumerable<Segment> lines) {
 
-            return null;
+            Point[] points = Polygonizer.Poligonize(lines);
+            return points == null ? null : new Polygon(points);
         }
 
         /// <summary>

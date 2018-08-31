@@ -2,9 +2,11 @@
 
     using System;
     using System.Collections.Generic;
+    using MikroPic.EdaTools.v1.Geometry;
 
-    public sealed class Panel {
+    public sealed class Panel: ISize {
 
+        private Size size;
         private HashSet<PanelElement> elements;
 
         /// <summary>
@@ -57,6 +59,19 @@
                     throw new InvalidOperationException("El panel no posee elementos.");
 
                 return elements;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna el tamany del panell
+        /// </summary>
+        /// 
+        public Size Size {
+            get {
+                return size;
+            }
+            set {
+                size = value;
             }
         }
     }

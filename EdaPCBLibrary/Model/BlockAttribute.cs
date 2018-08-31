@@ -25,6 +25,16 @@
             this.value = value;
         }
 
+        /// <summary>
+        /// Clone l'objecte.
+        /// </summary>
+        /// <returns>El nou objecte clonat.</returns>
+        /// 
+        public BlockAttribute Clone() {
+
+            return new BlockAttribute(name, value);
+        }
+
         public void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);

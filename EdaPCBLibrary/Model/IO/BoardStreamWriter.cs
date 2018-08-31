@@ -31,12 +31,12 @@
             /// per generar el stream de sortida.
             /// </summary>
             /// <param name="board">La placa a visitar.</param>
-            /// <param name="writer">Objecte per escriure el stream de sortida.</param>
+            /// <param name="wr">Objecte per escriure el stream de sortida.</param>
             /// 
-            public Visitor(Board board, XmlWriter writer) {
+            public Visitor(Board board, XmlWriterAdapter wr) {
 
                 this.board = board;
-                wr = new XmlWriterAdapter(writer);
+                this.wr = wr;
             }
 
             /// <summary>
@@ -462,11 +462,7 @@
             /// 
             public override void Visit(Board board) {
 
-                wr.WriteStartElement("board", "http://MikroPic.com/schemas/edatools/v1/XBRD.xsd");
-
-                wr.WriteAttribute("version", "211");
-                wr.WriteAttribute("distanceUnits", "mm");
-                wr.WriteAttribute("angleUnits", "deg");
+                wr.WriteStartElement("board");
                 wr.WriteAttribute("position", board.Position);
                 wr.WriteAttribute("rotation", board.Rotation);
 
@@ -572,8 +568,18 @@
             using (XmlWriter writer = XmlWriter.Create(stream, settings)) {
                 writer.WriteStartDocument();
 
-                IVisitor visitor = new Visitor(board, writer);
+                XmlWriterAdapter wr = new XmlWriterAdapter(writer);
+
+                wr.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/XBRD.xsd");
+                wr.WriteAttribute("version", "212");
+                wr.WriteAttribute("documentType", "board");
+                wr.WriteAttribute("distanceUnits", "mm");
+                wr.WriteAttribute("angleUnits", "deg");
+
+                IVisitor visitor = new Visitor(board, wr);
                 visitor.Run();
+
+                wr.WriteEndElement();
 
                 writer.WriteEndDocument();
             }

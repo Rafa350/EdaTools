@@ -618,7 +618,15 @@
         /// 
         public Polygon GetOutlinePolygon() {
 
-            throw new NotImplementedException();
+            IEnumerable<BoardElement> elements = GetElements(GetLayer(Layer.ProfileName));
+            List<Segment> segments = new List<Segment>();
+            foreach (var element in elements) {
+                if (element is LineElement) {
+                    LineElement line = (LineElement)element;
+                    segments.Add(new Segment(line.StartPosition, line.EndPosition));
+                }
+            }
+            return PolygonProcessor.CreateFromSegments(segments);
         }
 
         /// <summary>
