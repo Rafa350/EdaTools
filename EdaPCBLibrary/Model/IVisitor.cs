@@ -20,6 +20,7 @@
         void Visit(ViaElement via);
         void Visit(SmdPadElement pad);
         void Visit(ThPadElement pad);
+        void Visit(SlotElement pad);
         void Visit(RegionElement region);
         void Visit(TextElement text);
         void Visit(HoleElement hole);

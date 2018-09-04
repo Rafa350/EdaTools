@@ -64,6 +64,7 @@
     <Compile Include="Infrastructure\PartAttributeAdapter.cs" />
     <Compile Include="Model\BlockAttribute.cs" />
     <Compile Include="Model\BoardElements\PadElement.cs" />
+    <Compile Include="Model\BoardElements\SlotElement.cs" />
     <Compile Include="Model\IConectable.cs" />
     <Compile Include="Model\IName.cs" />
     <Compile Include="Model\IO\PanelStreamReader.cs" />

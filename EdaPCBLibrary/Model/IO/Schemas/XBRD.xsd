@@ -242,8 +242,9 @@
             </xs:sequence>
             <xs:attribute name="layers" use="required" type="xs:string"/>
             <xs:attribute name="thickness" use="optional" type="xs:double"/>
+            <xs:attribute name="clearance" use="optional" type="xs:double"/>
             <xs:attribute name="filled" use="optional" type="xs:boolean"/>
-            <xs:attribute name="signal" use="optional" type="xs:string"/>
+            <xs:attribute name="signal" use="optional" type="nameType"/>
         </xs:complexType>
     </xs:element>
 
@@ -263,14 +264,14 @@
             <xs:attribute name="outerSize" use="required" type="xs:double"/>
             <xs:attribute name="drill" use="required" type="xs:double"/>
             <xs:attribute name="shape" use="optional" type="viaShapeType"/>
-            <xs:attribute name="signal" use="optional" type="xs:string"/>
+            <xs:attribute name="signal" use="optional" type="nameType"/>
         </xs:complexType>
     </xs:element>
 
     <xs:element
         name="tpad">
         <xs:complexType>
-            <xs:attribute name="name" use="required" type="xs:string"/>
+            <xs:attribute name="name" use="required" type="nameType"/>
             <xs:attribute name="layers" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="size" use="required" type="xs:double"/>
