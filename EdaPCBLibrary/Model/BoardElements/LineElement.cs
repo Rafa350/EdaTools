@@ -41,6 +41,11 @@
             this.lineCap = lineCap;
         }
 
+        public override BoardElement Clone() {
+
+            return new LineElement(LayerSet, startPosition, endPosition, thickness, lineCap);
+        }
+
         /// <summary>
         /// Accepta un visitador.
         /// </summary>

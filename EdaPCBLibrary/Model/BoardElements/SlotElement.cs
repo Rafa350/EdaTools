@@ -35,6 +35,11 @@
             this.length = length;
         }
 
+        public override BoardElement Clone() {
+
+            return new SlotElement(Name, LayerSet, Position, Rotation, topSize, innerSize, bottomSize, drill, length);
+        }
+
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);

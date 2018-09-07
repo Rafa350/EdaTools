@@ -31,6 +31,11 @@
             this.roundness = roundness;
         }
 
+        public override BoardElement Clone() {
+
+            return new SmdPadElement(Name, LayerSet, Position, size, Rotation, roundness);
+        }
+
         /// <summary>
         /// Accepta un visitador.
         /// </summary>

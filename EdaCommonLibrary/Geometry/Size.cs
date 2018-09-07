@@ -18,7 +18,12 @@
 
         public override string ToString() {
 
-            return String.Format(CultureInfo.CurrentCulture, "{0}; {1}", width, height);
+            return ToString(CultureInfo.CurrentCulture);
+        }
+
+        public string ToString(IFormatProvider provider) {
+
+            return String.Format(provider, "{0}; {1}", width, height);
         }
 
         public int Width {
@@ -44,6 +49,17 @@
                 XmlConvert.ToString(size.Width / 1000000.0),
                 XmlConvert.ToString(size.Height / 1000000.0));
             wr.WriteAttribute(name, s);
+        }
+
+        public static Size AttributeAsSize(this XmlReaderAdapter rd, string name) {
+
+            string s = rd.AttributeAsString(name);
+
+            string[] ss = s.Split(',');
+            double w = XmlConvert.ToDouble(ss[0]);
+            double h = XmlConvert.ToDouble(ss[1]);
+
+            return new Size((int)(w * 1000000.0), (int)(h * 1000000.0));
         }
     }
 }

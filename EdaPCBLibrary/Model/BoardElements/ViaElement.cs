@@ -79,6 +79,11 @@
             this.shape = shape;
         }
 
+        public override BoardElement Clone() {
+
+            return new ViaElement(LayerSet, position, outerSize, innerSize, drill, shape);
+        }
+
         /// <summary>
         /// Accepta un visitador.
         /// </summary>

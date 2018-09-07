@@ -1,67 +1,61 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb {
 
     using MikroPic.EdaTools.v1.Xml;
+    using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Text;
-
-    using LayerId = System.String;
 
     /// <summary>
     /// Objecte que representa un conjunt de capes. Es un objecte invariant.
     /// </summary>
-    public struct LayerSet: IEnumerable<LayerId> {
+    public struct LayerSet: IEnumerable<string> {
 
-        private readonly LayerId[] data;
+        private readonly string[] data;
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="id0">Identificador de la capa.</param>
+        /// <param name="name">Identificador de la capa.</param>
         /// 
-        public LayerSet(LayerId id0) {
+        public LayerSet(string name) {
 
-            data = new LayerId[1];
-            data[0] = id0;
+            data = new string[1] { name };
         }
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="id0">Identificador de la primera capa.</param>
-        /// <param name="id1">Identificador de la segona capa.</param>
+        /// <param name="name1">Identificador de la primera capa.</param>
+        /// <param name="name2">Identificador de la segona capa.</param>
         /// 
-        public LayerSet(LayerId id0, LayerId id1) {
+        public LayerSet(string name1, string name2) {
 
-            data = new LayerId[2];
-            data[0] = id0;
-            data[1] = id1;
+            data = new string[2] { name1, name2 };
         }
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="id0">Identificador de la primera capa.</param>
-        /// <param name="id1">Identificador de la segona capa.</param>
-        /// <param name="id2">Identificador de la tercera capa.</param>
+        /// <param name="name1">Identificador de la primera capa.</param>
+        /// <param name="name2">Identificador de la segona capa.</param>
+        /// <param name="name3">Identificador de la tercera capa.</param>
         /// 
-        public LayerSet(LayerId id0, LayerId id1, LayerId id2) {
+        public LayerSet(string name1, string name2, string name3) {
 
-            data = new LayerId[3];
-            data[0] = id0;
-            data[1] = id1;
-            data[2] = id2;
+            data = new string[3] { name1, name2, name3 };
         }
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="ids">Llista d'identificadors.</param>
+        /// <param name="names">Llista d'identificadors.</param>
         /// 
-        public LayerSet(params LayerId[] ids) {
+        public LayerSet(params string[] names) {
 
-            data = new LayerId[ids.Length];
-            ids.CopyTo(data, 0);
+            data = new string[names.Length];
+            names.CopyTo(data, 0);
         }
 
         /// <summary>
@@ -71,37 +65,58 @@
         /// 
         public LayerSet(LayerSet other) {
 
-            data = new LayerId[other.data.Length];
+            data = new string[other.data.Length];
             other.data.CopyTo(data, 0);
         }
 
         /// <summary>
         /// Comprova si un identificador pertany al conjunt.
         /// </summary>
-        /// <param name="id">El identificadord e la capa.</param>
+        /// <param name="name">El identificadord e la capa.</param>
         /// <returns>True si pertany, false en cas contrari.</returns>
         /// 
-        public bool Contains(LayerId id) {
+        public bool Contains(string name) {
 
             foreach (var i in data)
-                if (id == i)
+                if (name == i)
                     return true;
 
             return false;
         }
 
         /// <summary>
-        /// Unio de dos conjunts.
+        /// Operador suma
         /// </summary>
-        /// <param name="other">L'altre conjunt</param>
-        /// <returns>El resultat de la unio.</returns>
+        /// <param name="a">Primer operand.</param>
+        /// <param name="b">Segon operand.</param>
+        /// <returns>El resultat de l'operacio.</returns>
         /// 
-        public LayerSet Union(LayerSet other) {
+        public static LayerSet operator +(LayerSet a, LayerSet b) {
 
-            LayerId[] a = new LayerId[data.Length + other.data.Length];
-            data.CopyTo(a, 0);
-            other.data.CopyTo(a, data.Length);
-            return new LayerSet(a);
+            string[] s = new string[a.data.Length + b.data.Length];
+            a.data.CopyTo(s, 0);
+            b.data.CopyTo(s, a.data.Length);
+            return new LayerSet(s);
+        }
+
+        /// <summary>
+        /// Operador suma
+        /// </summary>
+        /// <param name="a">Primer operand.</param>
+        /// <param name="b">Segon operand.</param>
+        /// <returns>El resultat de l'operacio.</returns>
+        /// 
+        public static LayerSet operator +(LayerSet a, string b) {
+
+            string[] s = new string[a.data.Length + 1];
+            a.data.CopyTo(s, 0);
+            s[a.data.Length] = b;
+            return new LayerSet(s);
+        }
+
+        public override string ToString() {
+
+            return ToString(CultureInfo.CurrentCulture);
         }
 
         /// <summary>
@@ -109,7 +124,7 @@
         /// </summary>
         /// <returns>El resultat de la conversio.</returns>
         /// 
-        public override string ToString() {
+        public string ToString(IFormatProvider provider) {
 
             if ((data != null) && (data.Length > 0)) {
 
@@ -123,7 +138,6 @@
                     sb.Append(id.ToString());
                 }
                 return sb.ToString();
-
             }
             else
                 return null;
@@ -177,8 +191,8 @@
         /// 
         public static LayerSet AttributeAsLayerSet(this XmlReaderAdapter rd, string name) {
 
-            string[] s = rd.AttributeAsStrings("layers");
-            return new LayerSet(s);
+            string s = rd.AttributeAsString("layers");
+            return LayerSet.Parse(s);
         }
     }
 }

@@ -26,8 +26,6 @@
         // Capes
         private readonly HashSet<Layer> layers = new HashSet<Layer>();
         private readonly Dictionary<Layer, Layer> layerPairs = new Dictionary<Layer, Layer>();
-        private readonly Dictionary<Layer, HashSet<BoardElement>> elementsOfLayer = new Dictionary<Layer, HashSet<BoardElement>>();
-        private readonly Dictionary<BoardElement, HashSet<Layer>> layersOfElement = new Dictionary<BoardElement, HashSet<Layer>>();
 
         // Senyals
         private readonly HashSet<Signal> signals = new HashSet<Signal>();
@@ -324,58 +322,13 @@
         }
 
         /// <summary>
-        /// Asigna un element a una capa.
-        /// </summary>
-        /// <param name="layer">La capa.</param>
-        /// <param name="element">El element.</param>
-        /// 
-        /*public void Place(Layer layer, BoardElement element) {
-
-            if (layer == null)
-                throw new ArgumentNullException("layer");
-
-            if (element == null)
-                throw new ArgumentNullException("element");
-
-            if (!layers.Contains(layer))
-                throw new InvalidOperationException(
-                    String.Format("La capa '{0}', no esta asignada a esta placa.", layer.Name));
-
-            // Afegeix l'element al conjunt d'elements de la capa
-            //
-            HashSet<BoardElement> elementSet;
-            if (!elementsOfLayer.TryGetValue(layer, out elementSet)) {
-                elementSet = new HashSet<BoardElement>();
-                elementsOfLayer.Add(layer, elementSet);
-            }
-            if (!elementSet.Add(element))
-                if (elementSet.Contains(element))
-                    throw new InvalidOperationException(
-                        String.Format("La capa '{0}', ya contiene este elemento.", layer.Name));
-
-            // Afegeix la capa al conjunt de capes del element
-            //
-            HashSet<Layer> layerSet;
-            if (!layersOfElement.TryGetValue(element, out layerSet)) {
-                layerSet = new HashSet<Layer>();
-                layersOfElement.Add(element, layerSet);
-            }
-            if (!layerSet.Add(layer))
-                throw new InvalidOperationException(
-                    String.Format("El elemento ya esta contenido en la capa '{0}'.", layer.Name));
-        }*/
-
-        /*public void Unplace(BoardElement element) {
-
-        }*/
-
-        /// <summary>
         /// Obte la coleccio d'elements d'una capa.
         /// </summary>
         /// <param name="layer">La capa.</param>
+        /// <param name="includeBlocks">Indica si cal incluir els elements dels blocs.</param>
         /// <returns>La coleccio d'elements.</returns>
         /// 
-        public IEnumerable<BoardElement> GetElements(Layer layer) {
+        public IEnumerable<BoardElement> GetElements(Layer layer, bool includeBlocks = true) {
 
             if (layer == null)
                 throw new ArgumentNullException("layer");
@@ -386,22 +339,13 @@
                 if (element.IsOnLayer(layer))
                     list.Add(element);
 
-            foreach (var block in blocks)
-                foreach (var element in block.Elements)
-                    if (element.IsOnLayer(layer))
-                        list.Add(element);
+            if (includeBlocks)
+                foreach (var block in blocks)
+                    foreach (var element in block.Elements)
+                        if (element.IsOnLayer(layer))
+                            list.Add(element);
 
             return list;
-
-/*            if (!layers.Contains(layer))
-                throw new InvalidOperationException(
-                    String.Format("La capa '{0}', no esta asignada a esta placa.", layer.Name));
-
-            HashSet<BoardElement> elementSet;
-            if (elementsOfLayer.TryGetValue(layer, out elementSet))
-                return elementSet;
-            else
-                return null;*/
         }
 
         /// <summary>
@@ -424,57 +368,7 @@
             }
 
             return list;
-            /*
-            if (element == null)
-                throw new ArgumentNullException("element");
-
-            HashSet<Layer> layerSet;
-            if (layersOfElement.TryGetValue(element, out layerSet))
-                return layerSet;
-            else
-                return null;*/
         }
-
-        /// <summary>
-        /// Comproba si un element pertany a una capa.
-        /// </summary>
-        /// <param name="element">El element.</param>
-        /// <param name="layer">La capa.</param>
-        /// <returns>True si pertany, false en cas contrari.</returns>
-        /// 
-        /*public bool IsOnLayer(BoardElement element, Layer layer) {
-
-            if (element == null)
-                throw new ArgumentNullException("element");
-
-            if (layer == null)
-                throw new ArgumentNullException("layer");
-
-            return element.LayerSet.Contains(layer.Name);
-            
-            HashSet<Layer> layerCollection;
-            if (layersOfElement.TryGetValue(element, out layerCollection))
-                return layerCollection.Contains(layer);
-
-            return false;
-            
-        }*/
-
-        /// <summary>
-        /// Comprova si un element pertany a qualsevol capa de les especificades.
-        /// </summary>
-        /// <param name="element">El element.</param>
-        /// <param name="layers">La coleccio de capes a verificar.</param>
-        /// <returns>True si pertany a qualsevol de les capes, false si no pertany a cap.</returns>
-        /// 
-        /*public bool IsOnAnyLayer(BoardElement element, IEnumerable<Layer> layers) {
-
-            HashSet<Layer> layerCollection;
-            if (layersOfElement.TryGetValue(element, out layerCollection)) 
-                return layerCollection.Overlaps(layers);
-
-            return false;
-        }*/
         #endregion
 
         #region Metodes de gestio de les senyals

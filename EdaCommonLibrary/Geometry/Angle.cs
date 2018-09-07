@@ -246,10 +246,16 @@
         /// <param name="name">El nom de l'atribut.</param>
         /// <param name="angle">El valor a escriure.</param>
         /// 
-        public static void WriteAttribute(this XmlWriterAdapter  wr, string name, Angle angle) {
+        public static void WriteAttribute(this XmlWriterAdapter wr, string name, Angle angle) {
 
             string s = XmlConvert.ToString(angle.Degrees / 100.0);
             wr.WriteAttribute(name, s);
+        }
+
+        public static Angle AttributeAsAngle(this XmlReaderAdapter rd, string name) {
+
+            double v = rd.AttributeAsDouble(name);
+            return Angle.FromDegrees((int)(v * 100.0));
         }
     }
 }

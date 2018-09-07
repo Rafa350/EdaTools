@@ -30,6 +30,11 @@
             this.drill = drill;
         }
 
+        public override BoardElement Clone() {
+
+            return new HoleElement(LayerSet, position, drill);
+        }
+
         /// <summary>
         /// Accepta un visitador del objecte.
         /// </summary>

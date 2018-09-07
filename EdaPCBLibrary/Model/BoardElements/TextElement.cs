@@ -49,6 +49,11 @@
             this.verticalAlign = verticalAlign;
         }
 
+        public override BoardElement Clone() {
+
+            return new TextElement(LayerSet, position, rotation, height, thickness, horizontalAlign, verticalAlign);
+        }
+
         /// <summary>
         /// Accepta  un visitador.
         /// </summary>

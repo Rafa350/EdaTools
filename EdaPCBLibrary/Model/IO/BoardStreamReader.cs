@@ -471,8 +471,8 @@
             // Obte els atributs de l'objecte
             //
             string name = rd.AttributeAsString("name");
-            Point position = ParsePointAttribute("position");
-            Angle rotation = ParseAngleAttribute("rotation");
+            Point position = rd.AttributeAsPoint("position");
+            Angle rotation = rd.AttributeAsAngle("rotation");
             BoardSide side = rd.AttributeAsEnum<BoardSide>("side", BoardSide.Top);
             string blockName = rd.AttributeAsString("block");
 
@@ -538,19 +538,19 @@
             part.AddAttribute(attribute);
 
             if (rd.AttributeExists("position"))
-                attribute.Position = ParsePointAttribute("position");
+                attribute.Position = rd.AttributeAsPoint("position");
 
             if (rd.AttributeExists("rotation"))
-                attribute.Rotation = ParseAngleAttribute("rotation");
+                attribute.Rotation = rd.AttributeAsAngle("rotation");
 
             if (rd.AttributeExists("height"))
                 attribute.Height = ParseNumberAttribute("height");
 
             if (rd.AttributeExists("horizontalAlign"))
-                attribute.HorizontalAlign = rd.AttributeAsEnum<HorizontalTextAlign>("horizontalAlign", HorizontalTextAlign.Left);
+                attribute.HorizontalAlign = rd.AttributeAsEnum("horizontalAlign", HorizontalTextAlign.Left);
 
             if (rd.AttributeExists("verticalAlign"))
-                attribute.VerticalAlign = rd.AttributeAsEnum<VerticalTextAlign>("verticalAlign", VerticalTextAlign.Bottom);
+                attribute.VerticalAlign = rd.AttributeAsEnum("verticalAlign", VerticalTextAlign.Bottom);
 
             rd.NextTag();
         }
@@ -608,8 +608,8 @@
             // Obte els atributs del element
             //
             LayerSet layerSet = rd.AttributeAsLayerSet("layers");
-            Point startPosition = ParsePointAttribute("startPosition");
-            Point endPosition = ParsePointAttribute("endPosition");
+            Point startPosition =  rd.AttributeAsPoint("startPosition");
+            Point endPosition = rd.AttributeAsPoint("endPosition");
             int thickness = ParseNumberAttribute("thickness");
             LineElement.LineCapStyle lineCap = rd.AttributeAsEnum<LineElement.LineCapStyle>("lineCap", LineElement.LineCapStyle.Round);
 
@@ -648,10 +648,10 @@
             // Obte els atributs de l'element
             //
             LayerSet layerSet = rd.AttributeAsLayerSet("layers");
-            Point startPosition = ParsePointAttribute("startPosition");
-            Point endPosition = ParsePointAttribute("endPosition");
+            Point startPosition = rd.AttributeAsPoint("startPosition");
+            Point endPosition = rd.AttributeAsPoint("endPosition");
             int thickness = ParseNumberAttribute("thickness");
-            Angle angle = ParseAngleAttribute("angle");
+            Angle angle = rd.AttributeAsAngle("angle");
             LineElement.LineCapStyle lineCap = rd.AttributeAsEnum<LineElement.LineCapStyle>("lineCap", LineElement.LineCapStyle.Round);
 
             // Crea l'element i l'afegeix a la llista
@@ -687,12 +687,12 @@
             // Obte els atributs de l'element.
             //
             LayerSet layerSet = rd.AttributeAsLayerSet("layers");
-            Point position = ParsePointAttribute("position");
-            Size size = ParseSizeAttribute("size");
-            Angle rotation = ParseAngleAttribute("rotation");
+            Point position = rd.AttributeAsPoint("position");
+            Size size = rd.AttributeAsSize("size");
+            Angle rotation = rd.AttributeAsAngle("rotation");
             int thickness = ParseNumberAttribute("thickness");
             bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
-            Ratio roundness = ParseRatioAttribute("roundness");
+            Ratio roundness = rd.AttributeAsRatio("roundness");
 
             // Crea l'element i l'afegeix a la llista
             //
@@ -717,7 +717,7 @@
             // Obte els atributs de l'element.
             //
             LayerSet layerSet = rd.AttributeAsLayerSet("layers");
-            Point position = ParsePointAttribute("position");
+            Point position = rd.AttributeAsPoint("position");
             int radius = ParseNumberAttribute("radius");
             int thickness = ParseNumberAttribute("thickness");
             bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
@@ -782,8 +782,8 @@
 
             // Obte els atributs del segment
             //
-            Point position = ParsePointAttribute("position");
-            Angle angle = ParseAngleAttribute("angle");
+            Point position = rd.AttributeAsPoint("position");
+            Angle angle = rd.AttributeAsAngle("angle");
 
             // Crea el segment i l'afegeix a la regio.
             //
@@ -809,9 +809,9 @@
             //
             string name = rd.AttributeAsString("name");
             LayerSet layerSet = rd.AttributeAsLayerSet("layers");
-            Point position = ParsePointAttribute("position");
+            Point position = rd.AttributeAsPoint("position");
             int size = ParseNumberAttribute("size");
-            Angle rotation = ParseAngleAttribute("rotation");
+            Angle rotation = rd.AttributeAsAngle("rotation");
             int drill = ParseNumberAttribute("drill");
             ThPadElement.ThPadShape shape = rd.AttributeAsEnum<ThPadElement.ThPadShape>("shape", ThPadElement.ThPadShape.Circle);
 
@@ -851,10 +851,10 @@
             //
             string name = rd.AttributeAsString("name");
             LayerSet layerSet = rd.AttributeAsLayerSet("layers");
-            Point position = ParsePointAttribute("position");
-            Size size = ParseSizeAttribute("size");
-            Angle rotation = ParseAngleAttribute("rotation");
-            Ratio roundness = ParseRatioAttribute("roundness");
+            Point position = rd.AttributeAsPoint("position");
+            Size size = rd.AttributeAsSize("size");
+            Angle rotation = rd.AttributeAsAngle("rotation");
+            Ratio roundness = rd.AttributeAsRatio("roundness");
 
             // Crea l'element i l'afegeix a la llista
             //
@@ -889,7 +889,7 @@
             // Obte els atributs de l'element
             //
             LayerSet layerSet = rd.AttributeAsLayerSet("layers");
-            Point position = ParsePointAttribute("position");
+            Point position = rd.AttributeAsPoint("position");
             int size = ParseNumberAttribute("size");
             int drill = ParseNumberAttribute("drill");
             ViaElement.ViaShape shape = rd.AttributeAsEnum<ViaElement.ViaShape>("shape", ViaElement.ViaShape.Circle);
@@ -927,7 +927,7 @@
             // Obte els atributs de l'element
             //
             LayerSet layerSet = rd.AttributeAsLayerSet("layers");
-            Point position = ParsePointAttribute("position");
+            Point position = rd.AttributeAsPoint("position");
             int drill = ParseNumberAttribute("drill");
 
             // Crea l'element i l'afegeix a la llista
@@ -953,11 +953,11 @@
             // Obte els parametres de l'objecte
             //
             LayerSet layerSet = rd.AttributeAsLayerSet("layers");
-            Point position = ParsePointAttribute("position");
-            Angle rotation = ParseAngleAttribute("rotation");
+            Point position = rd.AttributeAsPoint("position");
+            Angle rotation = rd.AttributeAsAngle("rotation");
             int height = ParseNumberAttribute("height");
-            HorizontalTextAlign horizontalAlign = rd.AttributeAsEnum<HorizontalTextAlign>("horizontalAlign", HorizontalTextAlign.Left);
-            VerticalTextAlign verticalAlign = rd.AttributeAsEnum<VerticalTextAlign>("verticalAlign", VerticalTextAlign.Bottom);
+            HorizontalTextAlign horizontalAlign = rd.AttributeAsEnum("horizontalAlign", HorizontalTextAlign.Left);
+            VerticalTextAlign verticalAlign = rd.AttributeAsEnum("verticalAlign", VerticalTextAlign.Bottom);
             int thickness = ParseNumberAttribute("thickness");
             string value = rd.AttributeAsString("value");
 
@@ -970,72 +970,6 @@
             // Llegeix el final del node
             //
             rd.NextTag();
-        }
-
-        /// <summary>
-        /// Procesa un atribut de tipus 'PointInt'
-        /// </summary>
-        /// <param name="name">Nom del atribut.</param>
-        /// <returns>El valor de l'atribut.</returns>
-        /// 
-        private Point ParsePointAttribute(string name) {
-
-            string s = rd.AttributeAsString(name);
-
-            string[] ss = s.Split(',');
-            double x = XmlConvert.ToDouble(ss[0]);
-            double y = XmlConvert.ToDouble(ss[1]);
-
-            return new Point((int)(x * 1000000.0), (int)(y * 1000000.0));
-        }
-
-        /// <summary>
-        /// Procesa un atribut de tipus 'SizeInt'.
-        /// </summary>
-        /// <param name="name">El nom de l'atribut.</param>
-        /// <returns>El valor de l'atribut.</returns>
-        /// 
-        private Size ParseSizeAttribute(string name) {
-
-            string s = rd.AttributeAsString(name);
-
-            string[] ss = s.Split(',');
-            double w = XmlConvert.ToDouble(ss[0]);
-            double h = XmlConvert.ToDouble(ss[1]);
-
-            return new Size((int)(w * 1000000.0), (int)(h * 1000000.0));
-        }
-
-        /// <summary>
-        /// Procesa un atribut de tipus 'Ratio'
-        /// </summary>
-        /// <param name="name">El nom de l'atribut.</param>
-        /// <returns>El valor de l'atribut, o Ratio.Zero si no existeix.</returns>
-        /// 
-        private Ratio ParseRatioAttribute(string name) {
-
-            if (rd.AttributeExists(name)) {
-                double v = rd.AttributeAsDouble(name);
-                return Ratio.FromPercent((int)(v * 1000.0));
-            }
-            else
-                return Ratio.Zero;
-        }
-
-        /// <summary>
-        /// Procesa un atribut de tipus 'Angle'
-        /// </summary>
-        /// <param name="name">El nom de l'atribut.</param>
-        /// <returns>El valor de l'atribut. Si no existeix retorna Angle.Zero.</returns>
-        /// 
-        private Angle ParseAngleAttribute(string name) {
-
-            if (rd.AttributeExists(name)) {
-                double v = rd.AttributeAsDouble(name);
-                return Angle.FromDegrees((int)(v * 100.0));
-            }
-            else
-                return Angle.Zero;
         }
 
         /// <summary>

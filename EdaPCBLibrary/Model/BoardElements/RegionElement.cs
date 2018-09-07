@@ -88,6 +88,14 @@
                 Add(segment);
         }
 
+        public override BoardElement Clone() {
+
+            RegionElement region = new RegionElement(LayerSet, thickness, filled, clearance);
+            foreach (var segment in segments)
+                region.Add(new Segment(segment.Position, segment.Angle));
+            return region;
+        }
+
         /// <summary>
         /// Accepta un visitador.
         /// </summary>

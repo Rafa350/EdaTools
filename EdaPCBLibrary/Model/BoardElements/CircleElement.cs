@@ -33,6 +33,11 @@
             this.filled = filled;
         }
 
+        public override BoardElement Clone() {
+
+            return new CircleElement(LayerSet, position, radius, thickness, filled);
+        }
+
         /// <summary>
         /// Accepta un visitador del objecte.
         /// </summary>

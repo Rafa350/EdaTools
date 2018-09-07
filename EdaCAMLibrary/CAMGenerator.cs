@@ -5,9 +5,8 @@
     using MikroPic.EdaTools.v1.Cam.Model;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using System;
-    using System.Text;
-    using System.IO;
     using System.Collections.Generic;
+    using System.IO;
 
     public sealed class CAMGenerator {
 

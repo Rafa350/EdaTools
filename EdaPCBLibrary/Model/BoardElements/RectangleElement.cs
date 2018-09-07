@@ -40,6 +40,11 @@
             this.filled = filled;
         }
 
+        public override BoardElement Clone() {
+
+            return new RectangleElement(LayerSet, position, size, roundness, rotation, thickness, filled);
+        }
+
         /// <summary>
         /// Accepta un visitador del objecte.
         /// </summary>

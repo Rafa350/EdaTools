@@ -109,25 +109,11 @@
         /// 
         private void PrepareApertures(ApertureDictionary apertures, Board board) {
 
-            foreach (Layer layer in GetLayers(board)) {
+            foreach (var layerName in Target.LayerNames) {
+                Layer layer = board.GetLayer(layerName);
                 ApertureCreatorVisitor visitor = new ApertureCreatorVisitor(board, layer, apertures);
                 visitor.Run();
             }
-        }
-
-        /// <summary>
-        /// Enumera les capes d'una placa en particular.
-        /// </summary>
-        /// <param name="board">La placa.</param>
-        /// <returns>L'enumerador de capes.</returns>
-        /// 
-        private IEnumerable<Layer> GetLayers(Board board) {
-
-            List<Layer> layers = new List<Layer>();
-            foreach (string layerName in Target.LayerNames)
-                layers.Add(board.GetLayer(layerName, false));
-
-            return layers;
         }
 
         /// <summary>
@@ -242,7 +228,8 @@
         private void GenerateRegions(GerberBuilder gb, Board board, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN POLYGONS");
-            foreach (Layer layer in GetLayers(board)) {
+            foreach (var layerName in Target.LayerNames) {
+                Layer layer = board.GetLayer(layerName);
                 IVisitor visitor = new RegionGeneratorVisitor(gb, board, layer, apertures);
                 visitor.Visit(board);
             }
@@ -259,7 +246,8 @@
         private void GenerateImage(GerberBuilder gb, Board board, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
-            foreach (Layer layer in GetLayers(board)) {
+            foreach (var layerName in Target.LayerNames) {
+                Layer layer = board.GetLayer(layerName);
                 IVisitor visitor = new ImageGeneratorVisitor(gb, board, layer, apertures);
                 visitor.Run();
             }

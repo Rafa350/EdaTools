@@ -242,9 +242,9 @@
                 <xs:element ref="segment" minOccurs="1" maxOccurs="unbounded"/>
             </xs:sequence>
             <xs:attribute name="layers" use="required" type="xs:string"/>
-            <xs:attribute name="thickness" use="optional" type="xs:double"/>
-            <xs:attribute name="clearance" use="optional" type="xs:double"/>
-            <xs:attribute name="filled" use="optional" type="xs:boolean"/>
+            <xs:attribute name="thickness" use="optional" type="xs:double" default="0"/>
+            <xs:attribute name="clearance" use="optional" type="xs:double" default="0"/>
+            <xs:attribute name="filled" use="optional" type="xs:boolean" default="false"/>
             <xs:attribute name="signal" use="optional" type="nameType"/>
         </xs:complexType>
     </xs:element>
@@ -253,7 +253,7 @@
         name="segment">
         <xs:complexType>
             <xs:attribute name="position" use="required" type="pointType"/>
-            <xs:attribute name="angle" use="optional" type="angleType"/>
+            <xs:attribute name="angle" use="optional" type="angleType" default="0"/>
         </xs:complexType>
     </xs:element>
 
@@ -264,7 +264,7 @@
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="outerSize" use="required" type="xs:double"/>
             <xs:attribute name="drill" use="required" type="xs:double"/>
-            <xs:attribute name="shape" use="optional" type="viaShapeType"/>
+            <xs:attribute name="shape" use="optional" type="viaShapeType" default="circle"/>
             <xs:attribute name="signal" use="optional" type="nameType"/>
         </xs:complexType>
     </xs:element>
@@ -277,8 +277,8 @@
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="size" use="required" type="xs:double"/>
             <xs:attribute name="drill" use="required" type="xs:double"/>
-            <xs:attribute name="rotation" use="optional" type="angleType"/>
-            <xs:attribute name="shape" use="optional" type="tpadShapeType"/>
+            <xs:attribute name="rotation" use="optional" type="angleType" default="0"/>
+            <xs:attribute name="shape" use="optional" type="tpadShapeType" default="octagon"/>
         </xs:complexType>
     </xs:element>
 
@@ -289,8 +289,8 @@
             <xs:attribute name="layers" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="size" use="required" type="sizeType"/>
-            <xs:attribute name="rotation" use="optional" type="angleType"/>
-            <xs:attribute name="roundness" use="optional" type="xs:double"/>
+            <xs:attribute name="rotation" use="optional" type="angleType" default="0"/>
+            <xs:attribute name="roundness" use="optional" type="xs:double" default="0"/>
         </xs:complexType>
     </xs:element>
 
@@ -301,9 +301,9 @@
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="height" use="required" type="xs:double"/>
             <xs:attribute name="thickness" use="required" type="xs:double"/>
-            <xs:attribute name="horizontalAlign" use="optional" type="horizontalTextAlignType"/>
-            <xs:attribute name="verticalAlign" use="optional" type="verticalTextAlignType"/>
-            <xs:attribute name="rotation" use="optional" type="angleType"/>
+            <xs:attribute name="horizontalAlign" use="optional" type="horizontalTextAlignType" default="left"/>
+            <xs:attribute name="verticalAlign" use="optional" type="verticalTextAlignType" default="top"/>
+            <xs:attribute name="rotation" use="optional" type="angleType" default="0"/>
             <xs:attribute name="value" use="optional" type="xs:string"/>
         </xs:complexType>
     </xs:element>

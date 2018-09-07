@@ -27,6 +27,11 @@
             this.angle = angle;
         }
 
+        public override BoardElement Clone() {
+
+            return new ArcElement(LayerSet, StartPosition, EndPosition, Thickness, angle, LineCap);
+        }
+
         /// <summary>
         /// Accepta un visitador.
         /// </summary>

@@ -200,13 +200,6 @@
                     if (clonedElement == null)
                         throw new InvalidOperationException("No se ha posido clonar el elemento.");
 
-                    // Situa l'element clonat en la capa corresponent
-                    //
-                    /*foreach (var layer in board.GetLayers(element)) {
-                        Layer dstLayer = dstBoard.GetLayer(layer.Name);
-                        dstBoard.Place(dstLayer, clonedElement);
-                    }*/
-
                     clonedElements.Add(clonedElement);
                 }
             }

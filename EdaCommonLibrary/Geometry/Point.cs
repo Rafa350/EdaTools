@@ -1,9 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Geometry {
 
+    using MikroPic.EdaTools.v1.Xml;
     using System;
     using System.Globalization;
     using System.Xml;
-    using MikroPic.EdaTools.v1.Xml;
 
     /// <summary>
     /// Estructura que representa un punt. Aquesta estructura es inmutable.
@@ -115,6 +115,17 @@
                 XmlConvert.ToString(point.X / 1000000.0),
                 XmlConvert.ToString(point.Y / 1000000.0));
             wr.WriteAttribute(name, s);
+        }
+
+        public static Point AttributeAsPoint(this XmlReaderAdapter rd, string name) {
+
+            string s = rd.AttributeAsString(name);
+
+            string[] ss = s.Split(',');
+            double x = XmlConvert.ToDouble(ss[0]);
+            double y = XmlConvert.ToDouble(ss[1]);
+
+            return new Point((int)(x * 1000000.0), (int)(y * 1000000.0));
         }
     }
 }

@@ -443,9 +443,9 @@
             string layerName = GetLayerName(layerNum);
             LayerSet layerSet = new LayerSet(layerName);
             if (cream) 
-                layerSet = layerSet.Union(new LayerSet(Layer.TopCreamName));
+                layerSet = layerSet + Layer.TopCreamName;
             if (stop) 
-                layerSet = layerSet.Union(new LayerSet(Layer.TopStopName));
+                layerSet = layerSet + Layer.TopStopName;
 
             return new SmdPadElement(name, layerSet, position, size, rotation, roundness);
         }

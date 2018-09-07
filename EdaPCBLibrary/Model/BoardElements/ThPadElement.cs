@@ -83,6 +83,11 @@
             this.shape = shape;
         }
 
+        public override BoardElement Clone() {
+
+            return new ThPadElement(Name, LayerSet, Position, Rotation, topSize, innerSize, bottomSize, shape, drill);
+        }
+
         /// <summary>
         /// Accepta un visitador.
         /// </summary>

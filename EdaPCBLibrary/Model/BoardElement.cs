@@ -23,6 +23,13 @@
         }
 
         /// <summary>
+        /// Obte una copia en profunditat de l'objecte.
+        /// </summary>
+        /// <returns>La copia de l'objecte.</returns>
+        /// 
+        public abstract BoardElement Clone();
+
+        /// <summary>
         /// Comprova si l'element pertany a una capa.
         /// </summary>
         /// <param name="layer">La capa.</param>
