@@ -18,13 +18,14 @@
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="position">Posicio del centre.</param>
         /// <param name="radius">Radi.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="filled">True si cal omplir el cercle.</param>
         /// 
-        public CircleElement(Point position, int radius, int thickness, bool filled) :           
-            base() {
+        public CircleElement(LayerSet layerSet, Point position, int radius, int thickness, bool filled) :           
+            base(layerSet) {
 
             this.position = position;
             this.radius = radius;

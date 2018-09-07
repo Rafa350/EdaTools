@@ -40,26 +40,28 @@
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="position">Posicio.</param>
         /// <param name="size">Tamany/diametre de la corona.</param>
         /// <param name="drill">Diametre del forat.</param>
         /// <param name="shape">Forma de la corona.</param>
         /// 
-        public ViaElement(Point position, int size, int drill, ViaShape shape):
-            this(position, size, size, drill, shape) {
+        public ViaElement(LayerSet layerSet, Point position, int size, int drill, ViaShape shape):
+            this(layerSet, position, size, size, drill, shape) {
         }
 
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="position">Posicio.</param>
         /// <param name="outerSize">Tamany/diametre de la corona per capes externes.</param>
         /// <param name="innerSize">Tamany/diametre de la corona per capes internes.</param>
         /// <param name="drill">Diametre del forat.</param>
         /// <param name="shape">Forma de la corona.</param>
         /// 
-        public ViaElement(Point position, int outerSize, int innerSize, int drill, ViaShape shape) :
-            base() {
+        public ViaElement(LayerSet layerSet, Point position, int outerSize, int innerSize, int drill, ViaShape shape) :
+            base(layerSet) {
 
             if (innerSize < 0)
                 throw new ArgumentOutOfRangeException("innerSize");

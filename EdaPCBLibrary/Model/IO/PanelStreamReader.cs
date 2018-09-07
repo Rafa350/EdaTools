@@ -77,15 +77,33 @@
             panel = new Panel();
 
             rd.NextTag();
-            ParsePanelNode(panel);
+            ParseDocumentNode(panel);
 
             return panel;
         }
 
         /// <summary>
-        /// Procesa el node 'board'
+        /// Procesa el node 'document'
         /// </summary>
-        /// <param name="board">La placa.</param>
+        /// <param name="panel">El panell.</param>
+        /// 
+        private void ParseDocumentNode(Panel panel) {
+
+            if (!rd.IsStartTag("document"))
+                throw new InvalidDataException("Se esperaba <document>");
+
+            rd.NextTag();
+            ParsePanelNode(panel);
+
+            // Llegeix el tag final
+            //
+            rd.NextTag();
+        }
+
+        /// <summary>
+        /// Procesa el node 'panel'
+        /// </summary>
+        /// <param name="panel">El panell.</param>
         /// 
         private void ParsePanelNode(Panel panel) {
 

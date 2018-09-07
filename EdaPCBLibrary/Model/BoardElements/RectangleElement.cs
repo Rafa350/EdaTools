@@ -21,6 +21,7 @@
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="position">Posicio del centre geometric.</param>
         /// <param name="size">Amplada i alçada del rectangle.</param>
         /// <param name="roundness">Factor d'arrodoniment de les cantonades.</param>
@@ -28,8 +29,8 @@
         /// <param name="thickness">Amplada de linia. Si es zero, es un rectangle ple.</param>
         /// <param name="filled">True indica si cal omplir el rectangle.</param>
         /// 
-        public RectangleElement(Point position, Size size, Ratio roundness, Angle rotation, int thickness, bool filled) :
-            base() {
+        public RectangleElement(LayerSet layerSet, Point position, Size size, Ratio roundness, Angle rotation, int thickness, bool filled) :
+            base(layerSet) {
 
             this.position = position;
             this.size = size;

@@ -16,10 +16,12 @@
         /// <summary>
         /// Constructir de l'objecte.
         /// </summary>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="position">Pocicio del centre.</param>
         /// <param name="drill">Diametre del forat.</param>
         /// 
-        public HoleElement(Point position, int drill) {
+        public HoleElement(LayerSet layerSet, Point position, int drill):
+            base(layerSet) {
 
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException("drill");

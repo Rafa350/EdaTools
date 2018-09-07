@@ -43,12 +43,13 @@
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="filled">True si es ple.</param>
         /// <param name="clearance">Distancia d'aillament.</param>
         /// 
-        public RegionElement(int thickness, bool filled, int clearance):
-            base() {
+        public RegionElement(LayerSet layerSet, int thickness, bool filled, int clearance):
+            base(layerSet) {
 
             if (thickness < 0)
                 throw new ArgumentOutOfRangeException("thickness");
@@ -64,13 +65,14 @@
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="filled">True si es ple.</param>
         /// <param name="clearance">Distancia d'aillament.</param>
         /// <param name="segments">Llista de segments.</param>
         /// 
-        public RegionElement(int thickness, bool filled, int clearance, IEnumerable<Segment> segments) :
-            base() {
+        public RegionElement(LayerSet layerSet, int thickness, bool filled, int clearance, IEnumerable<Segment> segments) :
+            base(layerSet) {
 
             if (thickness < 0)
                 throw new ArgumentOutOfRangeException("thickness");

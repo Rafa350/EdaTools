@@ -216,14 +216,14 @@
                     <line layers="TopPlace" startPosition="2.4, -1.5825" endPosition="-2.4, -1.5825" thickness="0.125" />
                     <line layers="TopPlace" startPosition="-2.4, -1.5825" endPosition="-2.4, 1.5825" thickness="0.125" />
                     <line layers="TopPlace" startPosition="-2.4, 1.5825" endPosition="2.4, 1.5825" thickness="0.125" />
-                    <spad name="2" layers="Top, Pads, TopCream, TopStop" position="-0.635, -3.0425" size="0.6, 1.8" roundness="0.25" />
-                    <spad name="7" layers="Top, Pads, TopCream, TopStop" position="-0.635, 3.0425" size="0.6, 1.8" roundness="0.25" />
-                    <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-1.905, -3.0425" size="0.6, 1.8" roundness="0.25" />
-                    <spad name="3" layers="Top, Pads, TopCream, TopStop" position="0.635, -3.0425" size="0.6, 1.8" roundness="0.25" />
-                    <spad name="4" layers="Top, Pads, TopCream, TopStop" position="1.905, -3.0425" size="0.6, 1.8" roundness="0.25" />
-                    <spad name="8" layers="Top, Pads, TopCream, TopStop" position="-1.905, 3.0425" size="0.6, 1.8" roundness="0.25" />
-                    <spad name="6" layers="Top, Pads, TopCream, TopStop" position="0.635, 3.0425" size="0.6, 1.8" roundness="0.25" />
-                    <spad name="5" layers="Top, Pads, TopCream, TopStop" position="1.905, 3.0425" size="0.6, 1.8" roundness="0.25" />
+                    <spad name="2" layers="Top, TopCream, TopStop" position="-0.635, -3.0425" size="0.6, 1.8" roundness="0.25" />
+                    <spad name="7" layers="Top, TopCream, TopStop" position="-0.635, 3.0425" size="0.6, 1.8" roundness="0.25" />
+                    <spad name="1" layers="Top, TopCream, TopStop" position="-1.905, -3.0425" size="0.6, 1.8" roundness="0.25" />
+                    <spad name="3" layers="Top, TopCream, TopStop" position="0.635, -3.0425" size="0.6, 1.8" roundness="0.25" />
+                    <spad name="4" layers="Top, TopCream, TopStop" position="1.905, -3.0425" size="0.6, 1.8" roundness="0.25" />
+                    <spad name="8" layers="Top, TopCream, TopStop" position="-1.905, 3.0425" size="0.6, 1.8" roundness="0.25" />
+                    <spad name="6" layers="Top, TopCream, TopStop" position="0.635, 3.0425" size="0.6, 1.8" roundness="0.25" />
+                    <spad name="5" layers="Top, TopCream, TopStop" position="1.905, 3.0425" size="0.6, 1.8" roundness="0.25" />
                     <text layers="TopNames" position="-3, -1.5" rotation="90" height="1" thickness="0.1" value="&gt;NAME" />
                     <text layers="TopValues" position="3, 1.5" rotation="270" height="1" thickness="0.1" value="&gt;VALUE" />
                     <rectangle layers="TopDocument" position="-1.905, -2.23255" size="0.4902, 1.1001" />
@@ -247,10 +247,10 @@
                     <line layers="TopPlace" startPosition="-2.1175, -1.9425" endPosition="-2.1175, 1.9425" thickness="0.125" />
                     <line layers="TopPlace" startPosition="-2.1175, 1.9425" endPosition="2.1175, 1.9425" thickness="0.125" />
                     <line layers="TopKeepout" startPosition="2.28875, -3.9" endPosition="-2.28875, -3.9" thickness="0.1998" />
-                    <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-1.27, -3.1" size="1, 1.25" roundness="0.25" />
-                    <spad name="2" layers="Top, Pads, TopCream, TopStop" position="1.27, -3.1" size="1, 1.25" roundness="0.25" />
-                    <spad name="3" layers="Top, Pads, TopCream, TopStop" position="1.27, 3.1" size="1, 1.25" roundness="0.25" />
-                    <spad name="4" layers="Top, Pads, TopCream, TopStop" position="-1.27, 3.1" size="1, 1.25" roundness="0.25" />
+                    <spad name="1" layers="Top, TopCream, TopStop" position="-1.27, -3.1" size="1, 1.25" roundness="0.25" />
+                    <spad name="2" layers="Top, TopCream, TopStop" position="1.27, -3.1" size="1, 1.25" roundness="0.25" />
+                    <spad name="3" layers="Top, TopCream, TopStop" position="1.27, 3.1" size="1, 1.25" roundness="0.25" />
+                    <spad name="4" layers="Top, TopCream, TopStop" position="-1.27, 3.1" size="1, 1.25" roundness="0.25" />
                     <text layers="TopNames" position="-2.54, -3.81" rotation="90" height="1.27" thickness="0.1" value="&gt;NAME" />
                     <text layers="TopValues" position="3.81, -3.81" rotation="90" height="1.27" thickness="0.1" value="&gt;VALUE" />
                     <rectangle layers="TopDocument" position="-1.27, -2.60745" size="0.4998, 1.1301" />
@@ -268,14 +268,14 @@
                     <line layers="TopPlace" startPosition="4.855, -3.18" endPosition="-4.855, -3.18" thickness="0.1524" />
                     <line layers="TopPlace" startPosition="-4.855, -3.18" endPosition="-4.855, 3.18" thickness="0.1524" />
                     <line layers="TopPlace" startPosition="4.855, -2.164" endPosition="-4.855, -2.164" thickness="0.1524" />
-                    <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-3.81, -4.77" size="1.6, 2" roundness="0.25" />
-                    <spad name="2" layers="Top, Pads, TopCream, TopStop" position="-1.27, -4.77" size="1.6, 2" roundness="0.25" />
-                    <spad name="3" layers="Top, Pads, TopCream, TopStop" position="1.27, -4.77" size="1.6, 2" roundness="0.25" />
-                    <spad name="4" layers="Top, Pads, TopCream, TopStop" position="3.81, -4.77" size="1.6, 2" roundness="0.25" />
-                    <spad name="5" layers="Top, Pads, TopCream, TopStop" position="3.81, 4.77" size="1.6, 2" roundness="0.25" />
-                    <spad name="6" layers="Top, Pads, TopCream, TopStop" position="1.27, 4.77" size="1.6, 2" roundness="0.25" />
-                    <spad name="7" layers="Top, Pads, TopCream, TopStop" position="-1.27, 4.77" size="1.6, 2" roundness="0.25" />
-                    <spad name="8" layers="Top, Pads, TopCream, TopStop" position="-3.81, 4.77" size="1.6, 2" roundness="0.25" />
+                    <spad name="1" layers="Top, TopCream, TopStop" position="-3.81, -4.77" size="1.6, 2" roundness="0.25" />
+                    <spad name="2" layers="Top, TopCream, TopStop" position="-1.27, -4.77" size="1.6, 2" roundness="0.25" />
+                    <spad name="3" layers="Top, TopCream, TopStop" position="1.27, -4.77" size="1.6, 2" roundness="0.25" />
+                    <spad name="4" layers="Top, TopCream, TopStop" position="3.81, -4.77" size="1.6, 2" roundness="0.25" />
+                    <spad name="5" layers="Top, TopCream, TopStop" position="3.81, 4.77" size="1.6, 2" roundness="0.25" />
+                    <spad name="6" layers="Top, TopCream, TopStop" position="1.27, 4.77" size="1.6, 2" roundness="0.25" />
+                    <spad name="7" layers="Top, TopCream, TopStop" position="-1.27, 4.77" size="1.6, 2" roundness="0.25" />
+                    <spad name="8" layers="Top, TopCream, TopStop" position="-3.81, 4.77" size="1.6, 2" roundness="0.25" />
                     <text layers="TopNames" position="-5.08, -3.175" rotation="90" height="1" thickness="0.1" value="&gt;NAME" />
                     <text layers="TopValues" position="6.35, -3.175" rotation="90" height="1" thickness="0.1" value="&gt;VALUE" />
                     <rectangle layers="TopDocument" position="-3.8025, -4.175" size="1.225, 1.95" />
@@ -325,22 +325,22 @@
                     <line layers="TopPlace" startPosition="-5.08, -0.508" endPosition="-5.08, -1.5748" thickness="0.1524" />
                     <arc layers="TopPlace" startPosition="-5.08, 0.508" endPosition="-5.08, -0.508" angle="-180" thickness="0.1524" />
                     <line layers="TopPlace" startPosition="-5.08, -1.6002" endPosition="5.08, -1.6002" thickness="0.0508" />
-                    <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-4.445, -3.0734" size="0.6604, 2.032" />
-                    <spad name="16" layers="Top, Pads, TopCream, TopStop" position="-4.445, 3.0734" size="0.6604, 2.032" />
-                    <spad name="2" layers="Top, Pads, TopCream, TopStop" position="-3.175, -3.0734" size="0.6604, 2.032" />
-                    <spad name="3" layers="Top, Pads, TopCream, TopStop" position="-1.905, -3.0734" size="0.6604, 2.032" />
-                    <spad name="15" layers="Top, Pads, TopCream, TopStop" position="-3.175, 3.0734" size="0.6604, 2.032" />
-                    <spad name="14" layers="Top, Pads, TopCream, TopStop" position="-1.905, 3.0734" size="0.6604, 2.032" />
-                    <spad name="4" layers="Top, Pads, TopCream, TopStop" position="-0.635, -3.0734" size="0.6604, 2.032" />
-                    <spad name="13" layers="Top, Pads, TopCream, TopStop" position="-0.635, 3.0734" size="0.6604, 2.032" />
-                    <spad name="5" layers="Top, Pads, TopCream, TopStop" position="0.635, -3.0734" size="0.6604, 2.032" />
-                    <spad name="12" layers="Top, Pads, TopCream, TopStop" position="0.635, 3.0734" size="0.6604, 2.032" />
-                    <spad name="6" layers="Top, Pads, TopCream, TopStop" position="1.905, -3.0734" size="0.6604, 2.032" />
-                    <spad name="7" layers="Top, Pads, TopCream, TopStop" position="3.175, -3.0734" size="0.6604, 2.032" />
-                    <spad name="11" layers="Top, Pads, TopCream, TopStop" position="1.905, 3.0734" size="0.6604, 2.032" />
-                    <spad name="10" layers="Top, Pads, TopCream, TopStop" position="3.175, 3.0734" size="0.6604, 2.032" />
-                    <spad name="8" layers="Top, Pads, TopCream, TopStop" position="4.445, -3.0734" size="0.6604, 2.032" />
-                    <spad name="9" layers="Top, Pads, TopCream, TopStop" position="4.445, 3.0734" size="0.6604, 2.032" />
+                    <spad name="1" layers="Top, TopCream, TopStop" position="-4.445, -3.0734" size="0.6604, 2.032" />
+                    <spad name="16" layers="Top, TopCream, TopStop" position="-4.445, 3.0734" size="0.6604, 2.032" />
+                    <spad name="2" layers="Top, TopCream, TopStop" position="-3.175, -3.0734" size="0.6604, 2.032" />
+                    <spad name="3" layers="Top, TopCream, TopStop" position="-1.905, -3.0734" size="0.6604, 2.032" />
+                    <spad name="15" layers="Top, TopCream, TopStop" position="-3.175, 3.0734" size="0.6604, 2.032" />
+                    <spad name="14" layers="Top, TopCream, TopStop" position="-1.905, 3.0734" size="0.6604, 2.032" />
+                    <spad name="4" layers="Top, TopCream, TopStop" position="-0.635, -3.0734" size="0.6604, 2.032" />
+                    <spad name="13" layers="Top, TopCream, TopStop" position="-0.635, 3.0734" size="0.6604, 2.032" />
+                    <spad name="5" layers="Top, TopCream, TopStop" position="0.635, -3.0734" size="0.6604, 2.032" />
+                    <spad name="12" layers="Top, TopCream, TopStop" position="0.635, 3.0734" size="0.6604, 2.032" />
+                    <spad name="6" layers="Top, TopCream, TopStop" position="1.905, -3.0734" size="0.6604, 2.032" />
+                    <spad name="7" layers="Top, TopCream, TopStop" position="3.175, -3.0734" size="0.6604, 2.032" />
+                    <spad name="11" layers="Top, TopCream, TopStop" position="1.905, 3.0734" size="0.6604, 2.032" />
+                    <spad name="10" layers="Top, TopCream, TopStop" position="3.175, 3.0734" size="0.6604, 2.032" />
+                    <spad name="8" layers="Top, TopCream, TopStop" position="4.445, -3.0734" size="0.6604, 2.032" />
+                    <spad name="9" layers="Top, TopCream, TopStop" position="4.445, 3.0734" size="0.6604, 2.032" />
                     <text layers="TopValues" position="-4.064, -0.635" height="1.27" thickness="0.1" value="&gt;VALUE" />
                     <text layers="TopNames" position="-5.461, -2.032" rotation="90" height="1.27" thickness="0.1" value="&gt;NAME" />
                     <rectangle layers="TopDocument" position="-0.635, 2.5273" size="0.508, 1.143" />
@@ -409,8 +409,8 @@
                     <line layers="TopPlace" startPosition="0.635, 0.635" endPosition="0.635, 0" thickness="0.1524" />
                     <line layers="TopPlace" startPosition="0.635, 0" endPosition="0.635, -0.635" thickness="0.1524" />
                     <line layers="TopPlace" startPosition="0.635, 0" endPosition="1.143, 0" thickness="0.0508" />
-                    <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-4.826, 0" size="5.08, 1.778" />
-                    <spad name="2" layers="Top, Pads, TopCream, TopStop" position="4.826, 0" size="5.08, 1.778" />
+                    <spad name="1" layers="Top, TopCream, TopStop" position="-4.826, 0" size="5.08, 1.778" />
+                    <spad name="2" layers="Top, TopCream, TopStop" position="4.826, 0" size="5.08, 1.778" />
                     <text layers="TopNames" position="-5.715, 2.667" height="1.27" thickness="0.1" value="&gt;NAME" />
                     <text layers="TopValues" position="-5.715, -4.064" height="1.27" thickness="0.1" value="&gt;VALUE" />
                     <rectangle layers="ViaRestrict" position="0, 0.127" size="13.208, 5.334" />
@@ -427,50 +427,50 @@
                     <line layers="TopPlace" startPosition="-4.4, -4.8" endPosition="-4.8, -4.4" thickness="0.2032" />
                     <line layers="TopPlace" startPosition="-4.8, -4.4" endPosition="-4.8, 4.4" thickness="0.2032" />
                     <circle layers="TopPlace" position="-4, 4" radius="0.3048" />
-                    <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-5.8, 4" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="2" layers="Top, Pads, TopCream, TopStop" position="-5.8, 3.2" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="3" layers="Top, Pads, TopCream, TopStop" position="-5.8, 2.4" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="4" layers="Top, Pads, TopCream, TopStop" position="-5.8, 1.6" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="5" layers="Top, Pads, TopCream, TopStop" position="-5.8, 0.8" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="6" layers="Top, Pads, TopCream, TopStop" position="-5.8, 0" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="7" layers="Top, Pads, TopCream, TopStop" position="-5.8, -0.8" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="8" layers="Top, Pads, TopCream, TopStop" position="-5.8, -1.6" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="9" layers="Top, Pads, TopCream, TopStop" position="-5.8, -2.4" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="10" layers="Top, Pads, TopCream, TopStop" position="-5.8, -3.2" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="11" layers="Top, Pads, TopCream, TopStop" position="-5.8, -4" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="12" layers="Top, Pads, TopCream, TopStop" position="-4, -5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="13" layers="Top, Pads, TopCream, TopStop" position="-3.2, -5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="14" layers="Top, Pads, TopCream, TopStop" position="-2.4, -5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="15" layers="Top, Pads, TopCream, TopStop" position="-1.6, -5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="16" layers="Top, Pads, TopCream, TopStop" position="-0.8, -5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="17" layers="Top, Pads, TopCream, TopStop" position="0, -5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="18" layers="Top, Pads, TopCream, TopStop" position="0.8, -5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="19" layers="Top, Pads, TopCream, TopStop" position="1.6, -5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="20" layers="Top, Pads, TopCream, TopStop" position="2.4, -5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="21" layers="Top, Pads, TopCream, TopStop" position="3.2, -5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="22" layers="Top, Pads, TopCream, TopStop" position="4, -5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="23" layers="Top, Pads, TopCream, TopStop" position="5.8, -4" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="24" layers="Top, Pads, TopCream, TopStop" position="5.8, -3.2" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="25" layers="Top, Pads, TopCream, TopStop" position="5.8, -2.4" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="26" layers="Top, Pads, TopCream, TopStop" position="5.8, -1.6" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="27" layers="Top, Pads, TopCream, TopStop" position="5.8, -0.8" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="28" layers="Top, Pads, TopCream, TopStop" position="5.8, 0" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="29" layers="Top, Pads, TopCream, TopStop" position="5.8, 0.8" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="30" layers="Top, Pads, TopCream, TopStop" position="5.8, 1.6" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="31" layers="Top, Pads, TopCream, TopStop" position="5.8, 2.4" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="32" layers="Top, Pads, TopCream, TopStop" position="5.8, 3.2" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="33" layers="Top, Pads, TopCream, TopStop" position="5.8, 4" size="1.5, 0.5" roundness="0.5" />
-                    <spad name="34" layers="Top, Pads, TopCream, TopStop" position="4, 5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="35" layers="Top, Pads, TopCream, TopStop" position="3.2, 5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="36" layers="Top, Pads, TopCream, TopStop" position="2.4, 5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="37" layers="Top, Pads, TopCream, TopStop" position="1.6, 5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="38" layers="Top, Pads, TopCream, TopStop" position="0.8, 5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="39" layers="Top, Pads, TopCream, TopStop" position="0, 5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="40" layers="Top, Pads, TopCream, TopStop" position="-0.8, 5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="41" layers="Top, Pads, TopCream, TopStop" position="-1.6, 5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="42" layers="Top, Pads, TopCream, TopStop" position="-2.4, 5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="43" layers="Top, Pads, TopCream, TopStop" position="-3.2, 5.8" size="0.5, 1.5" roundness="0.5" />
-                    <spad name="44" layers="Top, Pads, TopCream, TopStop" position="-4, 5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="1" layers="Top, TopCream, TopStop" position="-5.8, 4" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="2" layers="Top, TopCream, TopStop" position="-5.8, 3.2" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="3" layers="Top, TopCream, TopStop" position="-5.8, 2.4" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="4" layers="Top, TopCream, TopStop" position="-5.8, 1.6" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="5" layers="Top, TopCream, TopStop" position="-5.8, 0.8" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="6" layers="Top, TopCream, TopStop" position="-5.8, 0" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="7" layers="Top, TopCream, TopStop" position="-5.8, -0.8" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="8" layers="Top, TopCream, TopStop" position="-5.8, -1.6" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="9" layers="Top, TopCream, TopStop" position="-5.8, -2.4" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="10" layers="Top, TopCream, TopStop" position="-5.8, -3.2" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="11" layers="Top, TopCream, TopStop" position="-5.8, -4" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="12" layers="Top, TopCream, TopStop" position="-4, -5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="13" layers="Top, TopCream, TopStop" position="-3.2, -5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="14" layers="Top, TopCream, TopStop" position="-2.4, -5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="15" layers="Top, TopCream, TopStop" position="-1.6, -5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="16" layers="Top, TopCream, TopStop" position="-0.8, -5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="17" layers="Top, TopCream, TopStop" position="0, -5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="18" layers="Top, TopCream, TopStop" position="0.8, -5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="19" layers="Top, TopCream, TopStop" position="1.6, -5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="20" layers="Top, TopCream, TopStop" position="2.4, -5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="21" layers="Top, TopCream, TopStop" position="3.2, -5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="22" layers="Top, TopCream, TopStop" position="4, -5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="23" layers="Top, TopCream, TopStop" position="5.8, -4" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="24" layers="Top, TopCream, TopStop" position="5.8, -3.2" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="25" layers="Top, TopCream, TopStop" position="5.8, -2.4" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="26" layers="Top, TopCream, TopStop" position="5.8, -1.6" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="27" layers="Top, TopCream, TopStop" position="5.8, -0.8" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="28" layers="Top, TopCream, TopStop" position="5.8, 0" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="29" layers="Top, TopCream, TopStop" position="5.8, 0.8" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="30" layers="Top, TopCream, TopStop" position="5.8, 1.6" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="31" layers="Top, TopCream, TopStop" position="5.8, 2.4" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="32" layers="Top, TopCream, TopStop" position="5.8, 3.2" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="33" layers="Top, TopCream, TopStop" position="5.8, 4" size="1.5, 0.5" roundness="0.5" />
+                    <spad name="34" layers="Top, TopCream, TopStop" position="4, 5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="35" layers="Top, TopCream, TopStop" position="3.2, 5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="36" layers="Top, TopCream, TopStop" position="2.4, 5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="37" layers="Top, TopCream, TopStop" position="1.6, 5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="38" layers="Top, TopCream, TopStop" position="0.8, 5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="39" layers="Top, TopCream, TopStop" position="0, 5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="40" layers="Top, TopCream, TopStop" position="-0.8, 5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="41" layers="Top, TopCream, TopStop" position="-1.6, 5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="42" layers="Top, TopCream, TopStop" position="-2.4, 5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="43" layers="Top, TopCream, TopStop" position="-3.2, 5.8" size="0.5, 1.5" roundness="0.5" />
+                    <spad name="44" layers="Top, TopCream, TopStop" position="-4, 5.8" size="0.5, 1.5" roundness="0.5" />
                     <text layers="TopNames" position="-4.064, 6.858" height="1" thickness="0.1" value="&gt;NAME" />
                     <text layers="TopValues" position="-4.064, -8.1201" height="1" thickness="0.1" value="&gt;VALUE" />
                     <rectangle layers="TopDocument" position="-5.52505, 4" size="1.1501, 0.3998" />
@@ -534,13 +534,13 @@
                     <line layers="TopDocument" startPosition="3.895, 1.375" endPosition="4.144999, 1.375" thickness="0.127" />
                     <line layers="TopDocument" startPosition="4.144999, 1.375" endPosition="4.144999, -1.625" thickness="0.127" />
                     <line layers="TopDocument" startPosition="4.144999, -1.625" endPosition="3.895, -1.625" thickness="0.127" />
-                    <spad name="2" layers="Top, Pads, TopCream, TopStop" position="-1.25, -3.5" size="0.7, 1.8" roundness="0.5" />
-                    <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-2.5, -3.5" size="0.7, 1.8" roundness="0.5" />
-                    <spad name="3" layers="Top, Pads, TopCream, TopStop" position="0, -3.5" size="0.7, 1.8" roundness="0.5" />
-                    <spad name="4" layers="Top, Pads, TopCream, TopStop" position="1.25, -3.5" size="0.7, 1.8" roundness="0.5" />
-                    <spad name="S1" layers="Top, Pads, TopCream, TopStop" position="-5, 0" size="2.25, 3" roundness="0.25" />
-                    <spad name="S2" layers="Top, Pads, TopCream, TopStop" position="5, 0" size="2.25, 3" roundness="0.25" />
-                    <spad name="5" layers="Top, Pads, TopCream, TopStop" position="2.52, -3.5" size="0.7, 1.8" roundness="0.5" />
+                    <spad name="2" layers="Top, TopCream, TopStop" position="-1.25, -3.5" size="0.7, 1.8" roundness="0.5" />
+                    <spad name="1" layers="Top, TopCream, TopStop" position="-2.5, -3.5" size="0.7, 1.8" roundness="0.5" />
+                    <spad name="3" layers="Top, TopCream, TopStop" position="0, -3.5" size="0.7, 1.8" roundness="0.5" />
+                    <spad name="4" layers="Top, TopCream, TopStop" position="1.25, -3.5" size="0.7, 1.8" roundness="0.5" />
+                    <spad name="S1" layers="Top, TopCream, TopStop" position="-5, 0" size="2.25, 3" roundness="0.25" />
+                    <spad name="S2" layers="Top, TopCream, TopStop" position="5, 0" size="2.25, 3" roundness="0.25" />
+                    <spad name="5" layers="Top, TopCream, TopStop" position="2.52, -3.5" size="0.7, 1.8" roundness="0.5" />
                     <text layers="TopNames" position="-3.75, 2.75" height="1" thickness="0.1" value="&gt;NAME" />
                     <rectangle layers="TopDocument" position="-2.5, -3.25" size="0.5, 1.5" />
                     <rectangle layers="TopDocument" position="-1.25, -3.25" size="0.5, 1.5" />
@@ -568,12 +568,12 @@
                     <line layers="TopDocument" startPosition="3.25, 1.375" endPosition="3.5, 1.375" thickness="0.127" />
                     <line layers="TopDocument" startPosition="3.5, 1.375" endPosition="3.5, -1.625" thickness="0.127" />
                     <line layers="TopDocument" startPosition="3.5, -1.625" endPosition="3.25, -1.625" thickness="0.127" />
-                    <spad name="2" layers="Top, Pads, TopCream, TopStop" position="-0.625, -3.5" size="0.7, 1.8" roundness="0.5" />
-                    <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-1.875, -3.5" size="0.7, 1.8" roundness="0.5" />
-                    <spad name="3" layers="Top, Pads, TopCream, TopStop" position="0.625, -3.5" size="0.7, 1.8" roundness="0.5" />
-                    <spad name="4" layers="Top, Pads, TopCream, TopStop" position="1.875, -3.5" size="0.7, 1.8" roundness="0.5" />
-                    <spad name="S1" layers="Top, Pads, TopCream, TopStop" position="-4.375, 0" size="2.25, 3" roundness="0.25" />
-                    <spad name="S2" layers="Top, Pads, TopCream, TopStop" position="4.375, 0" size="2.25, 3" roundness="0.25" />
+                    <spad name="2" layers="Top, TopCream, TopStop" position="-0.625, -3.5" size="0.7, 1.8" roundness="0.5" />
+                    <spad name="1" layers="Top, TopCream, TopStop" position="-1.875, -3.5" size="0.7, 1.8" roundness="0.5" />
+                    <spad name="3" layers="Top, TopCream, TopStop" position="0.625, -3.5" size="0.7, 1.8" roundness="0.5" />
+                    <spad name="4" layers="Top, TopCream, TopStop" position="1.875, -3.5" size="0.7, 1.8" roundness="0.5" />
+                    <spad name="S1" layers="Top, TopCream, TopStop" position="-4.375, 0" size="2.25, 3" roundness="0.25" />
+                    <spad name="S2" layers="Top, TopCream, TopStop" position="4.375, 0" size="2.25, 3" roundness="0.25" />
                     <text layers="TopNames" position="-3.175, 2.85" height="1" thickness="0.1" value="&gt;NAME" />
                     <rectangle layers="TopDocument" position="-1.875, -3.25" size="0.5, 1.5" />
                     <rectangle layers="TopDocument" position="-0.625, -3.25" size="0.5, 1.5" />
@@ -597,10 +597,10 @@
                     <line layers="TopDocument" startPosition="0.7874, 1.5748" endPosition="0.7874, 1.2954" thickness="0.1998" />
                     <line layers="TopDocument" startPosition="0.7874, 1.2954" endPosition="-0.7874, 1.2954" thickness="0.1998" />
                     <line layers="TopDocument" startPosition="-0.7874, 1.2954" endPosition="-0.7874, 1.5748" thickness="0.1998" />
-                    <spad name="1" layers="Top, Pads" position="-1.499, -1.981" size="1, 1.5" />
-                    <spad name="3" layers="Top, Pads" position="1.499, -1.981" size="1, 1.5" />
-                    <spad name="2" layers="Top, Pads" position="0, -1.727" size="1, 2" />
-                    <spad name="2@1" layers="Top, Pads, TopStop" position="0, 0.94" size="2.2, 3.7" roundness="1" />
+                    <spad name="1" layers="Top" position="-1.499, -1.981" size="1, 1.5" />
+                    <spad name="3" layers="Top" position="1.499, -1.981" size="1, 1.5" />
+                    <spad name="2" layers="Top" position="0, -1.727" size="1, 2" />
+                    <spad name="2@1" layers="Top, TopStop" position="0, 0.94" size="2.2, 3.7" roundness="1" />
                     <text layers="TopNames" position="-2.54, 3.175" height="1.27" thickness="0.1" value="&gt;NAME" />
                     <text layers="TopValues" position="-2.4051, -4.3449" height="1.27" thickness="0.1" value="&gt;VALUE" />
                     <rectangle layers="TopDocument" position="-1.4986, -1.6891" size="0.4572, 0.8382" />
@@ -632,8 +632,8 @@
                     <line layers="TopDocument" startPosition="-1.35, -0.8" endPosition="-1.35, 0.8" thickness="0.2032" />
                     <line layers="TopPlace" startPosition="-0.85, 0.8" endPosition="0.85, 0.8" thickness="0.2032" />
                     <line layers="TopPlace" startPosition="0.85, -0.8" endPosition="-0.85, -0.8" thickness="0.2032" />
-                    <spad name="A" layers="Top, Pads, TopCream, TopStop" position="1.625, 0" size="0.91, 1.22" />
-                    <spad name="C" layers="Top, Pads, TopCream, TopStop" position="-1.625, 0" size="0.91, 1.22" />
+                    <spad name="A" layers="Top, TopCream, TopStop" position="1.625, 0" size="0.91, 1.22" />
+                    <spad name="C" layers="Top, TopCream, TopStop" position="-1.625, 0" size="0.91, 1.22" />
                     <text layers="TopNames" position="-2, 1" height="1.27" thickness="0.1" value="&gt;NAME" />
                     <text layers="TopValues" position="-2, -2.5" height="1.27" thickness="0.1" value="&gt;VALUE" />
                     <rectangle layers="TopDocument" position="-1.6125, 0" size="0.375, 1.1" />
@@ -782,8 +782,8 @@
                 <elements>
                     <line layers="TopPlace" startPosition="-0.4725, 0.875" endPosition="0.4725, 0.875" thickness="0.1" />
                     <line layers="TopPlace" startPosition="-0.4725, -0.875" endPosition="0.4725, -0.875" thickness="0.1" />
-                    <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
-                    <spad name="2" layers="Top, Pads, TopCream, TopStop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
+                    <spad name="1" layers="Top, TopCream, TopStop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
+                    <spad name="2" layers="Top, TopCream, TopStop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
                     <text layers="TopNames" position="-1.875, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
                     <text layers="TopValues" position="-1.875, -2.125" height="1" thickness="0.1" value="&gt;VALUE" />
                     <rectangle layers="TopGlue" position="0, 0" size="0.3998, 1.0002" />
@@ -799,8 +799,8 @@
             </block>
             <block name="C-0805@smd-parts">
                 <elements>
-                    <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
-                    <spad name="2" layers="Top, Pads, TopCream, TopStop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
+                    <spad name="1" layers="Top, TopCream, TopStop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
+                    <spad name="2" layers="Top, TopCream, TopStop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
                     <text layers="TopNames" position="-1.88, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
                     <text layers="TopValues" position="-1.88, -2.25" height="1" thickness="0.1" value="&gt;VALUE" />
                     <rectangle layers="TopGlue" position="0, 0" size="0.2002, 0.8002" />
@@ -822,8 +822,8 @@
                     <line layers="TopDocument" startPosition="1.45, 0.75" endPosition="1.45, -0.75" thickness="0.1016" />
                     <line layers="TopDocument" startPosition="1.45, -0.75" endPosition="-1.45, -0.75" thickness="0.1016" />
                     <line layers="TopDocument" startPosition="-1.45, -0.75" endPosition="-1.45, 0.75" thickness="0.1016" />
-                    <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-1.4, 0" size="2, 1.2" roundness="0.25" />
-                    <spad name="2" layers="Top, Pads, TopCream, TopStop" position="1.4, 0" size="2, 1.2" roundness="0.25" />
+                    <spad name="1" layers="Top, TopCream, TopStop" position="-1.4, 0" size="2, 1.2" roundness="0.25" />
+                    <spad name="2" layers="Top, TopCream, TopStop" position="1.4, 0" size="2, 1.2" roundness="0.25" />
                     <text layers="TopNames" position="-2.25, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
                     <text layers="TopValues" position="-2.25, -2.25" height="1" thickness="0.1" value="&gt;VALUE" />
                     <rectangle layers="TopDocument" position="-1.5, 0" size="0.2, 1.2" />
@@ -842,8 +842,8 @@
                 <elements>
                     <line layers="TopPlace" startPosition="-1.75, 0.875" endPosition="0.4725, 0.875" thickness="0.1" />
                     <line layers="TopPlace" startPosition="-1.75, -0.875" endPosition="0.4725, -0.875" thickness="0.1" />
-                    <spad name="C" layers="Top, Pads, TopCream, TopStop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
-                    <spad name="A" layers="Top, Pads, TopCream, TopStop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
+                    <spad name="C" layers="Top, TopCream, TopStop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
+                    <spad name="A" layers="Top, TopCream, TopStop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
                     <text layers="TopNames" position="-1.875, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
                     <text layers="TopValues" position="-1.875, -2.125" height="1" thickness="0.1" value="&gt;VALUE" />
                     <line layers="TopKeepout" startPosition="-1.875, 1" endPosition="1.875, 1" thickness="0.1" />
@@ -885,8 +885,8 @@
             </block>
             <block name="L-0805@smd-parts">
                 <elements>
-                    <spad name="1" layers="Top, Pads, TopCream, TopStop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
-                    <spad name="2" layers="Top, Pads, TopCream, TopStop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
+                    <spad name="1" layers="Top, TopCream, TopStop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
+                    <spad name="2" layers="Top, TopCream, TopStop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
                     <line layers="TopPlace" startPosition="-0.4725, 0.875" endPosition="0.4725, 0.875" thickness="0.1" />
                     <line layers="TopPlace" startPosition="-0.4725, -0.875" endPosition="0.4725, -0.875" thickness="0.1" />
                     <text layers="TopNames" position="-1.875, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
@@ -2236,206 +2236,206 @@
                 <segment position="13.75, 0.25" />
                 <segment position="0.25, 0.25" />
             </region>
-            <via position="2, 45.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4, 45.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4, 44.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="2, 44.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="2, 36.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="2, 35.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4, 35.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4, 36.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="2, 34.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4, 34.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4, 33.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="2, 33.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="2, 25.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4, 25.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4, 24.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="2, 24.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="2, 20.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4, 20.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4, 19.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="2, 19.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="2, 10.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="2, 9.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4, 9.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4, 10.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="17.25, 26.625" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="33.75, 7.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="44, 38.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="44, 33.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="41.5, 12.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="46, 12.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="51.5, 14" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="52.5, 10.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="55, 8" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="56, 10.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="56.5, 14" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="20.25, 36" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="14, 27.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="17.25, 46.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="28.25, 47.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="20.25, 43" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="19.5, 31.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="14, 34.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="14, 38.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="14, 42.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="3.5, 48.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="9.5, 43" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="10.25, 40.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4.5, 42.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="6.5, 44" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4.5, 31" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="6, 33" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4.5, 29" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4.5, 40" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="6, 35" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="10.5, 27.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="10.5, 32" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="10.5, 36.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="14, 7.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="18.75, 7.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="19, 10.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="12.5, 12" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="10, 12" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="19, 24.625" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="26.25, 35" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="21.75, 44.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="27.25, 37.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="22.5, 47" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="14.125, 30.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="7.5, 46.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="40.125, 54.375" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="45.5, 17" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="21.25, 34.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="11.25, 12" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="10.25, 7.625" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="29.125, 11.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="65.75, 25.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="62.75, 24.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="57.75, 24.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="54.25, 23.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="49.75, 24.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="45, 24.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="45.5, 21.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="48.5, 21.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="41.125, 22" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="42.5, 18.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="46.5, 18.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="51.5, 18.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="56, 17.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="59.5, 18.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="63.5, 18.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="67, 17.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="68.5, 18.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="64.5, 21.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="60, 21.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="57, 21.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="63.5, 28.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="63.5, 33.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="63.5, 38.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="63.5, 43" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="69.375, 55.375" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="64.375, 55.375" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="64.375, 47.875" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="69.375, 42.625" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="67.5, 40.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="69.375, 34.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="69.375, 27.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="45.5, 10" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="42, 10" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="42, 14" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="35, 13.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="33.5, 21.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="32.5, 19" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="29.75, 18.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="30, 16.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="21.75, 13.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="21.25, 16" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="19.25, 18" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="17, 17" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="19.25, 13.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="11.5, 17" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="12, 18" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="8, 11" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="6.5, 9" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="10, 6.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="12.5, 5.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="23.25, 7.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="33, 37" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="34, 34.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="29.25, 37" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="24.25, 43" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="19.75, 39" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="37.5, 44.125" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="41, 50.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="21.5, 27.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="26.25, 28.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="24.25, 25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="28.75, 25.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="28.75, 28.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="30.75, 25.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="34.25, 24.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="35.75, 23.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="37.875, 22.125" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="37.5, 19" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="37, 12.375" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="36.5, 7.375" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="15, 17" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="13.375, 24.375" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="7.5, 21" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="40.5, 25.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="40, 30.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="40.25, 35.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="40, 40.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="37.5, 39.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="37.75, 35.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="38, 31.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="38.75, 52" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="44, 52.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="44, 47.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="44, 43" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="41.75, 45.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="44, 28.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="40.5, 24.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="27.375, 18.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="39.5, 17" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="68.875, 43.875" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="66.875, 45.375" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="69.375, 49.625" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="36.5, 18.125" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="37.625, 16" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="45.25, 23.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="60.5, 23.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="29.75, 22.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="30, 14" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="27.5, 14" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="24.625, 13.625" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="26.25, 25.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="21.75, 21.875" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4.5, 16.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="4, 13" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="1.5, 15" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="2, 30.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="2, 41.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="1, 49.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="8.5, 49.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="5.75, 52" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="11.25, 52" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="16.75, 52" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="22.25, 52" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="27.75, 52" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="33.25, 52" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="16.75, 48.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="14.75, 49.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="13.75, 47.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="12.25, 48.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="9, 46" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="26, 16.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="37.875, 25.625" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="35.75, 24.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="37.875, 23.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
-            <via position="37.875, 24.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="2, 45.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4, 45.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4, 44.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="2, 44.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="2, 36.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="2, 35.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4, 35.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4, 36.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="2, 34.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4, 34.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4, 33.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="2, 33.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="2, 25.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4, 25.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4, 24.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="2, 24.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="2, 20.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4, 20.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4, 19.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="2, 19.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="2, 10.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="2, 9.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4, 9.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4, 10.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="17.25, 26.625" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="33.75, 7.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="44, 38.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="44, 33.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="41.5, 12.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="46, 12.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="51.5, 14" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="52.5, 10.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="55, 8" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="56, 10.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="56.5, 14" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="20.25, 36" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="14, 27.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="17.25, 46.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="28.25, 47.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="20.25, 43" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="19.5, 31.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="14, 34.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="14, 38.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="14, 42.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="3.5, 48.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="9.5, 43" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="10.25, 40.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4.5, 42.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="6.5, 44" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4.5, 31" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="6, 33" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4.5, 29" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4.5, 40" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="6, 35" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="10.5, 27.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="10.5, 32" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="10.5, 36.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="14, 7.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="18.75, 7.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="19, 10.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="12.5, 12" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="10, 12" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="19, 24.625" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="26.25, 35" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="21.75, 44.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="27.25, 37.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="22.5, 47" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="14.125, 30.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="7.5, 46.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="40.125, 54.375" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="45.5, 17" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="21.25, 34.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="11.25, 12" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="10.25, 7.625" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="29.125, 11.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="65.75, 25.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="62.75, 24.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="57.75, 24.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="54.25, 23.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="49.75, 24.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="45, 24.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="45.5, 21.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="48.5, 21.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="41.125, 22" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="42.5, 18.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="46.5, 18.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="51.5, 18.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="56, 17.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="59.5, 18.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="63.5, 18.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="67, 17.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="68.5, 18.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="64.5, 21.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="60, 21.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="57, 21.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="63.5, 28.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="63.5, 33.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="63.5, 38.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="63.5, 43" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="69.375, 55.375" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="64.375, 55.375" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="64.375, 47.875" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="69.375, 42.625" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="67.5, 40.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="69.375, 34.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="69.375, 27.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="45.5, 10" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="42, 10" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="42, 14" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="35, 13.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="33.5, 21.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="32.5, 19" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="29.75, 18.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="30, 16.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="21.75, 13.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="21.25, 16" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="19.25, 18" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="17, 17" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="19.25, 13.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="11.5, 17" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="12, 18" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="8, 11" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="6.5, 9" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="10, 6.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="12.5, 5.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="23.25, 7.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="33, 37" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="34, 34.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="29.25, 37" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="24.25, 43" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="19.75, 39" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="37.5, 44.125" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="41, 50.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="21.5, 27.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="26.25, 28.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="24.25, 25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="28.75, 25.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="28.75, 28.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="30.75, 25.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="34.25, 24.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="35.75, 23.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="37.875, 22.125" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="37.5, 19" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="37, 12.375" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="36.5, 7.375" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="15, 17" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="13.375, 24.375" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="7.5, 21" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="40.5, 25.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="40, 30.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="40.25, 35.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="40, 40.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="37.5, 39.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="37.75, 35.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="38, 31.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="38.75, 52" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="44, 52.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="44, 47.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="44, 43" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="41.75, 45.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="44, 28.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="40.5, 24.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="27.375, 18.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="39.5, 17" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="68.875, 43.875" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="66.875, 45.375" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="69.375, 49.625" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="36.5, 18.125" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="37.625, 16" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="45.25, 23.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="60.5, 23.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="29.75, 22.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="30, 14" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="27.5, 14" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="24.625, 13.625" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="26.25, 25.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="21.75, 21.875" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4.5, 16.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="4, 13" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="1.5, 15" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="2, 30.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="2, 41.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="1, 49.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="8.5, 49.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="5.75, 52" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="11.25, 52" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="16.75, 52" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="22.25, 52" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="27.75, 52" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="33.25, 52" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="16.75, 48.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="14.75, 49.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="13.75, 47.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="12.25, 48.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="9, 46" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="26, 16.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="37.875, 25.625" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="35.75, 24.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="37.875, 23.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
+            <via position="37.875, 24.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="GND" />
             <line layers="Top" startPosition="38, 26.8" endPosition="35.75, 26.8" thickness="0.6" signal="VCC" />
             <line layers="Top" startPosition="35.75, 26.8" endPosition="30.8, 26.8" thickness="0.6" signal="VCC" />
             <line layers="Top" startPosition="30.8, 26.8" endPosition="29.5, 25.5" thickness="0.6" signal="VCC" />
@@ -2444,26 +2444,26 @@
             <line layers="Top" startPosition="9.305, 22.145" endPosition="9.2, 22.25" thickness="0.6" signal="VCC" />
             <line layers="Top" startPosition="37.25, 8.5" endPosition="37.25, 10.575" thickness="0.8" signal="VCC" />
             <line layers="Top" startPosition="37.25, 10.575" endPosition="37.075, 10.75" thickness="0.6" signal="VCC" />
-            <via position="33.75, 10.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="VCC" />
+            <via position="33.75, 10.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="VCC" />
             <line layers="Bottom" startPosition="33.75, 10.5" endPosition="36.75, 10.5" thickness="0.8" signal="VCC" />
             <line layers="Bottom" startPosition="36.75, 10.5" endPosition="37.25, 10" thickness="0.8" signal="VCC" />
             <line layers="Bottom" startPosition="37.25, 10" endPosition="37.25, 8.5" thickness="0.8" signal="VCC" />
             <line layers="Top" startPosition="6.5, 27.375" endPosition="6.875, 27.375" thickness="0.6" signal="VCC" />
-            <via position="7.625, 27.375" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="VCC" />
+            <via position="7.625, 27.375" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="VCC" />
             <line layers="Bottom" startPosition="7.625, 27.375" endPosition="7.625, 38.875" thickness="0.8" signal="VCC" />
-            <via position="7.625, 38.875" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="VCC" />
+            <via position="7.625, 38.875" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="VCC" />
             <line layers="Top" startPosition="7.625, 38.875" endPosition="6.5, 38.875" thickness="0.6" signal="VCC" />
             <line layers="Bottom" startPosition="7.625, 38.875" endPosition="7.625, 43.625" thickness="0.8" signal="VCC" />
             <line layers="Bottom" startPosition="7.625, 43.625" endPosition="7.75, 43.75" thickness="0.6" signal="VCC" />
             <line layers="Bottom" startPosition="7.75, 43.75" endPosition="8.25, 44.25" thickness="0.8" signal="VCC" />
-            <via position="8.25, 44.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="VCC" />
+            <via position="8.25, 44.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="VCC" />
             <line layers="Top" startPosition="8.25, 44.25" endPosition="11.5, 44.25" thickness="0.8" signal="VCC" />
             <line layers="Top" startPosition="11.5, 44.25" endPosition="13.55, 44.25" thickness="0.8" signal="VCC" />
             <line layers="Top" startPosition="13.55, 44.25" endPosition="13.75, 44.05" thickness="0.6" signal="VCC" />
             <line layers="Top" startPosition="13.75, 44.05" endPosition="14.05, 44.05" thickness="0.6" signal="VCC" />
             <line layers="Top" startPosition="14.05, 44.05" endPosition="14.25, 44.25" thickness="0.6" signal="VCC" />
             <line layers="Top" startPosition="14.5, 25.45" endPosition="12.25, 25.45" thickness="0.6" signal="VCC" />
-            <via position="7.625, 25.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="VCC" />
+            <via position="7.625, 25.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="VCC" />
             <line layers="Top" startPosition="7.625, 25.5" endPosition="9.25, 25.5" thickness="0.8" signal="VCC" />
             <line layers="Top" startPosition="9.25, 25.5" endPosition="12.2, 25.5" thickness="0.6" signal="VCC" />
             <line layers="Top" startPosition="12.2, 25.5" endPosition="12.25, 25.45" thickness="0.6" signal="VCC" />
@@ -2473,7 +2473,7 @@
             <line layers="Bottom" startPosition="39.125, 45.75" endPosition="39.125, 26.5" thickness="0.8" signal="VCC" />
             <line layers="Bottom" startPosition="39.125, 26.5" endPosition="38.75, 26.125" thickness="0.8" signal="VCC" />
             <line layers="Top" startPosition="15.25, 44.25" endPosition="14.25, 44.25" thickness="0.8" signal="VCC" />
-            <via position="38.75, 26.125" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="VCC" />
+            <via position="38.75, 26.125" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="VCC" />
             <line layers="Top" startPosition="7.625, 27.375" endPosition="6.5, 27.375" thickness="0.8" signal="VCC" />
             <line layers="Top" startPosition="33.75, 10.5" endPosition="32.45, 10.5" thickness="0.6" signal="VCC" />
             <line layers="Top" startPosition="32.45, 10.5" endPosition="32.5, 10.7" thickness="0.6" signal="VCC" />
@@ -2494,8 +2494,8 @@
             <line layers="Top" startPosition="38.5, 18.575" endPosition="38.675, 18.75" thickness="0.8" signal="VCC" />
             <line layers="Top" startPosition="38.75, 20.75" endPosition="38.75, 26.125" thickness="0.8" signal="VCC" />
             <line layers="Top" startPosition="38.75, 18.75" endPosition="38.75, 20.75" thickness="0.8" signal="VCC" />
-            <via position="39.125, 45.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="VCC" />
-            <via position="7.625, 43.625" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="VCC" />
+            <via position="39.125, 45.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="VCC" />
+            <via position="7.625, 43.625" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="VCC" />
             <line layers="Top" startPosition="7.625, 43.625" endPosition="8.25, 44.25" thickness="0.8" signal="VCC" />
             <line layers="Bottom" startPosition="7.625, 27.375" endPosition="7.625, 25.5" thickness="0.8" signal="VCC" />
             <line layers="Bottom" startPosition="6.25, 24.125" endPosition="6.25, 10.5" thickness="0.8" signal="VCC" />
@@ -2539,13 +2539,13 @@
             <line layers="Top" startPosition="32.7, 24.3" endPosition="32.7, 24.95" thickness="0.2" signal="OUT0" />
             <line layers="Top" startPosition="32.7, 24.95" endPosition="32.75, 25" thickness="0.2" signal="OUT0" />
             <line layers="Top" startPosition="32.75, 25" endPosition="32.75, 25.375" thickness="0.2" signal="OUT0" />
-            <via position="32.75, 25.375" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT0" />
+            <via position="32.75, 25.375" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT0" />
             <line layers="Bottom" startPosition="32.75, 25.375" endPosition="32.75, 25.5" thickness="0.2" signal="OUT0" />
             <line layers="Bottom" startPosition="32.75, 25.5" endPosition="35.5, 28.25" thickness="0.2" signal="OUT0" />
             <line layers="Bottom" startPosition="35.5, 28.25" endPosition="35.5, 46.25" thickness="0.2" signal="OUT0" />
             <line layers="Bottom" startPosition="35.5, 46.25" endPosition="37.5, 48.25" thickness="0.2" signal="OUT0" />
             <line layers="Bottom" startPosition="37.5, 48.25" endPosition="39.5, 48.25" thickness="0.2" signal="OUT0" />
-            <via position="39.5, 48.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT0" />
+            <via position="39.5, 48.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT0" />
             <line layers="Top" startPosition="41.7, 51.75" endPosition="41.75, 51.8" thickness="0.2" signal="OUT0" />
             <line layers="Top" startPosition="41.75, 51.8" endPosition="40.55, 51.8" thickness="0.2" signal="OUT0" />
             <line layers="Top" startPosition="40.55, 51.8" endPosition="40.25, 51.5" thickness="0.2" signal="OUT0" />
@@ -2553,8 +2553,8 @@
             <line layers="Top" startPosition="40.25, 49" endPosition="39.5, 48.25" thickness="0.2" signal="OUT0" />
             <line layers="Top" startPosition="41.7, 47" endPosition="41.75, 46.925" thickness="0.2" signal="OUT1" />
             <line layers="Top" startPosition="33.5, 24.3" endPosition="33.5, 25.375" thickness="0.2" signal="OUT1" />
-            <via position="33.5, 25.375" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT1" />
-            <via position="39.5, 47" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT1" />
+            <via position="33.5, 25.375" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT1" />
+            <via position="39.5, 47" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT1" />
             <line layers="Top" startPosition="39.5, 47" endPosition="41.675, 47" thickness="0.2" signal="OUT1" />
             <line layers="Top" startPosition="41.675, 47" endPosition="41.75, 46.925" thickness="0.2" signal="OUT1" />
             <line layers="Bottom" startPosition="33.5, 25.375" endPosition="33.5, 25.75" thickness="0.2" signal="OUT1" />
@@ -2567,22 +2567,22 @@
             <line layers="Top" startPosition="35.3, 20.9" endPosition="36.15, 20.9" thickness="0.2" signal="OUT4" />
             <line layers="Top" startPosition="36.15, 20.9" endPosition="36.875, 21.625" thickness="0.2" signal="OUT4" />
             <line layers="Top" startPosition="36.875, 21.625" endPosition="36.875, 25.25" thickness="0.2" signal="OUT4" />
-            <via position="36.875, 25.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT4" />
+            <via position="36.875, 25.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT4" />
             <line layers="Bottom" startPosition="36.875, 25.25" endPosition="36.875, 26.125" thickness="0.2" signal="OUT4" />
             <line layers="Bottom" startPosition="36.875, 26.125" endPosition="37.5, 26.75" thickness="0.2" signal="OUT4" />
             <line layers="Bottom" startPosition="37.5, 26.75" endPosition="37.5, 32.25" thickness="0.2" signal="OUT4" />
             <line layers="Bottom" startPosition="37.5, 32.25" endPosition="37.75, 32.5" thickness="0.2" signal="OUT4" />
-            <via position="37.75, 32.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT4" />
+            <via position="37.75, 32.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT4" />
             <line layers="Top" startPosition="37.75, 32.5" endPosition="41.7, 32.5" thickness="0.2" signal="OUT4" />
             <line layers="Top" startPosition="41.7, 32.5" endPosition="41.75, 32.549999" thickness="0.2" signal="OUT4" />
             <line layers="Top" startPosition="35.3, 21.7" endPosition="36.2, 21.7" thickness="0.2" signal="OUT3" />
             <line layers="Top" startPosition="36.2, 21.7" endPosition="36.5, 22" thickness="0.2" signal="OUT3" />
-            <via position="36.375, 24.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT3" />
+            <via position="36.375, 24.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT3" />
             <line layers="Bottom" startPosition="36.375, 24.75" endPosition="36.375, 26.125" thickness="0.2" signal="OUT3" />
             <line layers="Bottom" startPosition="36.375, 26.125" endPosition="37.125, 26.875" thickness="0.2" signal="OUT3" />
             <line layers="Bottom" startPosition="37.125, 26.875" endPosition="37.125, 36.875" thickness="0.2" signal="OUT3" />
             <line layers="Bottom" startPosition="37.125, 36.875" endPosition="37.5, 37.25" thickness="0.2" signal="OUT3" />
-            <via position="37.5, 37.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT3" />
+            <via position="37.5, 37.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT3" />
             <line layers="Top" startPosition="37.5, 37.25" endPosition="41.7, 37.25" thickness="0.2" signal="OUT3" />
             <line layers="Top" startPosition="41.7, 37.25" endPosition="41.75, 37.3" thickness="0.2" signal="OUT3" />
             <line layers="Top" startPosition="36.375, 24.75" endPosition="36.5, 24.625" thickness="0.2" signal="OUT3" />
@@ -2590,12 +2590,12 @@
             <line layers="Top" startPosition="6.5, 12.375" endPosition="7.125, 12.375" thickness="0.2" signal="N$4" />
             <line layers="Top" startPosition="7.125, 12.375" endPosition="7.25, 12.25" thickness="0.2" signal="N$4" />
             <line layers="Top" startPosition="7.25, 12.25" endPosition="7.75, 12.25" thickness="0.2" signal="N$4" />
-            <via position="7.75, 12.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="N$4" />
+            <via position="7.75, 12.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="N$4" />
             <line layers="Bottom" startPosition="7.75, 12.25" endPosition="7.75, 14" thickness="0.2" signal="N$4" />
             <line layers="Bottom" startPosition="7.75, 14" endPosition="7.25, 14.5" thickness="0.2" signal="N$4" />
             <line layers="Bottom" startPosition="7.25, 14.5" endPosition="7.25, 18.25" thickness="0.2" signal="N$4" />
             <line layers="Bottom" startPosition="7.25, 18.25" endPosition="7.5, 18.5" thickness="0.2" signal="N$4" />
-            <via position="7.5, 18.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="N$4" />
+            <via position="7.5, 18.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="N$4" />
             <line layers="Top" startPosition="7.5, 18.5" endPosition="11.25, 18.5" thickness="0.2" signal="N$4" />
             <line layers="Top" startPosition="11.845, 19.8234" endPosition="11.845, 19.095" thickness="0.2" signal="N$4" />
             <line layers="Top" startPosition="11.845, 19.095" endPosition="11.25, 18.5" thickness="0.2" signal="N$4" />
@@ -2609,10 +2609,10 @@
             <line layers="Top" startPosition="6.5, 14.875" endPosition="7.125, 14.875" thickness="0.2" signal="N$14" />
             <line layers="Top" startPosition="7.125, 14.875" endPosition="7.25, 15" thickness="0.2" signal="N$14" />
             <line layers="Top" startPosition="7.25, 15" endPosition="7.75, 15" thickness="0.2" signal="N$14" />
-            <via position="7.75, 15" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="N$14" />
+            <via position="7.75, 15" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="N$14" />
             <line layers="Bottom" startPosition="7.75, 15" endPosition="7.75, 16.5" thickness="0.2" signal="N$14" />
             <line layers="Bottom" startPosition="7.75, 16.5" endPosition="8.75, 17.5" thickness="0.2" signal="N$14" />
-            <via position="8.75, 17.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="N$14" />
+            <via position="8.75, 17.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="N$14" />
             <line layers="Top" startPosition="8.75, 17.5" endPosition="12.75, 17.5" thickness="0.2" signal="N$14" />
             <line layers="Top" startPosition="13.115, 19.8234" endPosition="13.115, 17.865" thickness="0.2" signal="N$14" />
             <line layers="Top" startPosition="13.115, 17.865" endPosition="12.75, 17.5" thickness="0.2" signal="N$14" />
@@ -2649,18 +2649,18 @@
             <line layers="Top" startPosition="14.385, 19.8234" endPosition="14.385, 19.385" thickness="0.2" signal="RX1" />
             <line layers="Top" startPosition="14.385, 19.385" endPosition="14.375, 19.125" thickness="0.2" signal="RX1" />
             <line layers="Top" startPosition="14.375, 19.125" endPosition="14.375, 18.25" thickness="0.2" signal="RX1" />
-            <via position="14.375, 18.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="RX1" />
+            <via position="14.375, 18.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="RX1" />
             <line layers="Bottom" startPosition="14.375, 18.25" endPosition="14.375, 14.125" thickness="0.2" signal="RX1" />
             <line layers="Bottom" startPosition="14.375, 14.125" endPosition="16.125, 12.375" thickness="0.2" signal="RX1" />
             <line layers="Bottom" startPosition="16.125, 12.375" endPosition="24.875, 12.375" thickness="0.2" signal="RX1" />
-            <via position="24.875, 12.375" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="RX1" />
+            <via position="24.875, 12.375" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="RX1" />
             <line layers="Top" startPosition="24.875, 12.375" endPosition="25.5, 12.375" thickness="0.2" signal="RX1" />
             <line layers="Top" startPosition="25.5, 12.375" endPosition="25.5, 12.7" thickness="0.2" signal="RX1" />
             <line layers="Top" startPosition="28.7, 12.7" endPosition="28.7, 12.3" thickness="0.2" signal="RX2" />
             <line layers="Top" startPosition="28.7, 12.3" endPosition="28.625, 12.125" thickness="0.2" signal="RX2" />
-            <via position="28.625, 10.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="RX2" />
+            <via position="28.625, 10.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="RX2" />
             <line layers="Bottom" startPosition="28.625, 10.5" endPosition="21, 10.5" thickness="0.2" signal="RX2" />
-            <via position="21, 10.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="RX2" />
+            <via position="21, 10.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="RX2" />
             <line layers="Top" startPosition="21, 10.5" endPosition="21, 15.25" thickness="0.2" signal="RX2" />
             <line layers="Top" startPosition="21, 15.25" endPosition="18.195, 18.055" thickness="0.2" signal="RX2" />
             <line layers="Top" startPosition="18.195, 19.8234" endPosition="18.195, 18.055" thickness="0.2" signal="RX2" />
@@ -2668,18 +2668,18 @@
             <line layers="Top" startPosition="15.655, 19.8234" endPosition="15.655, 19.155" thickness="0.2" signal="TX1" />
             <line layers="Top" startPosition="15.655, 19.155" endPosition="15.625, 19" thickness="0.2" signal="TX1" />
             <line layers="Top" startPosition="15.625, 19" endPosition="15.625, 18.25" thickness="0.2" signal="TX1" />
-            <via position="15.625, 18.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="TX1" />
+            <via position="15.625, 18.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="TX1" />
             <line layers="Bottom" startPosition="15.625, 18.25" endPosition="15.625, 15.375" thickness="0.2" signal="TX1" />
             <line layers="Bottom" startPosition="15.625, 15.375" endPosition="16.5, 14.5" thickness="0.2" signal="TX1" />
             <line layers="Bottom" startPosition="16.5, 14.5" endPosition="22.5, 14.5" thickness="0.2" signal="TX1" />
-            <via position="22.5, 14.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="TX1" />
+            <via position="22.5, 14.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="TX1" />
             <line layers="Top" startPosition="23.75, 14.45" endPosition="23.7, 14.5" thickness="0.2" signal="TX1" />
             <line layers="Top" startPosition="22.5, 14.5" endPosition="23.7, 14.5" thickness="0.2" signal="TX1" />
             <line layers="Top" startPosition="27.875, 12.5" endPosition="27.875, 11.5" thickness="0.2" signal="TX2" />
             <line layers="Top" startPosition="27.875, 12.5" endPosition="27.9, 12.7" thickness="0.2" signal="TX2" />
-            <via position="27.875, 11.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="TX2" />
+            <via position="27.875, 11.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="TX2" />
             <line layers="Bottom" startPosition="27.875, 11.5" endPosition="20, 11.5" thickness="0.2" signal="TX2" />
-            <via position="20, 11.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="TX2" />
+            <via position="20, 11.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="TX2" />
             <line layers="Top" startPosition="20, 11.5" endPosition="20, 15" thickness="0.2" signal="TX2" />
             <line layers="Top" startPosition="20, 15" endPosition="16.925, 18.075" thickness="0.2" signal="TX2" />
             <line layers="Top" startPosition="16.925, 19.8234" endPosition="16.925, 18.075" thickness="0.2" signal="TX2" />
@@ -2710,40 +2710,40 @@
             <line layers="Top" startPosition="42.07, 30.02" endPosition="41.75, 29.7" thickness="0.2" signal="N$53" />
             <line layers="Top" startPosition="35.3, 22.5" endPosition="35.125, 22.5" thickness="0.2" signal="OUT2" />
             <line layers="Top" startPosition="35.125, 22.5" endPosition="35.125, 25.375" thickness="0.2" signal="OUT2" />
-            <via position="35.125, 25.375" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT2" />
+            <via position="35.125, 25.375" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT2" />
             <line layers="Bottom" startPosition="35.125, 25.375" endPosition="36.75, 27" thickness="0.2" signal="OUT2" />
             <line layers="Bottom" startPosition="36.75, 27" endPosition="36.75, 41.25" thickness="0.2" signal="OUT2" />
             <line layers="Bottom" startPosition="36.75, 41.25" endPosition="37.5, 42" thickness="0.2" signal="OUT2" />
-            <via position="37.5, 42" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT2" />
+            <via position="37.5, 42" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT2" />
             <line layers="Top" startPosition="37.5, 42" endPosition="41.7, 42" thickness="0.2" signal="OUT2" />
             <line layers="Top" startPosition="41.7, 42" endPosition="41.75, 42.05" thickness="0.2" signal="OUT2" />
             <line layers="Top" startPosition="35.3, 20.1" endPosition="36.1, 20.1" thickness="0.2" signal="OUT5" />
             <line layers="Top" startPosition="36.1, 20.1" endPosition="37.25, 21.25" thickness="0.2" signal="OUT5" />
             <line layers="Top" startPosition="37.25, 21.25" endPosition="37.25, 24.625" thickness="0.2" signal="OUT5" />
             <line layers="Top" startPosition="37.25, 24.625" endPosition="37.375, 24.75" thickness="0.2" signal="OUT5" />
-            <via position="37.375, 24.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT5" />
+            <via position="37.375, 24.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT5" />
             <line layers="Bottom" startPosition="37.375, 24.75" endPosition="41.75, 24.75" thickness="0.2" signal="OUT5" />
-            <via position="41.75, 24.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT5" />
+            <via position="41.75, 24.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT5" />
             <line layers="Top" startPosition="41.75, 24.75" endPosition="41.75, 27.8" thickness="0.2" signal="OUT5" />
             <line layers="Top" startPosition="3.635, 56.9175" endPosition="3.635, 57.885" thickness="0.4" signal="I0" />
             <line layers="Top" startPosition="3.635, 57.885" endPosition="4, 58.25" thickness="0.4" signal="I0" />
             <line layers="Top" startPosition="4, 58.25" endPosition="6, 58.25" thickness="0.4" signal="I0" />
             <line layers="Top" startPosition="6, 58.25" endPosition="9.5, 61.75" thickness="0.4" signal="I0" />
             <line layers="Top" startPosition="9.5, 61.75" endPosition="9.5, 64" thickness="0.4" signal="I0" />
-            <via position="9.5, 64" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="I0" />
+            <via position="9.5, 64" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="I0" />
             <line layers="Bottom" startPosition="9.5, 64" endPosition="12.605, 64" thickness="0.4" signal="I0" />
             <line layers="Bottom" startPosition="12.605, 64" endPosition="12.73, 63.875" thickness="0.4" signal="I0" />
             <line layers="Unrouted" startPosition="3.635, 56.9175" endPosition="3.635, 57.0425" thickness="0.1" signal="I0" />
             <line layers="Bottom" startPosition="12.73, 61.875" endPosition="9.625, 61.875" thickness="0.4" signal="I1" />
             <line layers="Bottom" startPosition="9.625, 61.875" endPosition="6, 58.25" thickness="0.4" signal="I1" />
             <line layers="Bottom" startPosition="6, 58.25" endPosition="1.125, 58.25" thickness="0.4" signal="I1" />
-            <via position="1.125, 58.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="I1" />
+            <via position="1.125, 58.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="I1" />
             <line layers="Top" startPosition="1.125, 58.25" endPosition="1.125, 56.9475" thickness="0.4" signal="I1" />
             <line layers="Top" startPosition="1.125, 56.9475" endPosition="1.095, 56.9175" thickness="0.4" signal="I1" />
             <line layers="Unrouted" startPosition="1.125, 56.9475" endPosition="1.095, 57.0425" thickness="0.1" signal="I1" />
-            <via position="9.125, 60" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="I2" />
+            <via position="9.125, 60" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="I2" />
             <line layers="Bottom" startPosition="9.125, 60" endPosition="13.75, 60" thickness="0.4" signal="I2" />
-            <via position="13.75, 60" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="I2" />
+            <via position="13.75, 60" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="I2" />
             <line layers="Top" startPosition="13.75, 60" endPosition="13.75, 62.895" thickness="0.4" signal="I2" />
             <line layers="Top" startPosition="13.75, 62.895" endPosition="14.73, 63.875" thickness="0.4" signal="I2" />
             <line layers="Top" startPosition="9.125, 60" endPosition="9.125, 56.9275" thickness="0.4" signal="I2" />
@@ -2751,9 +2751,9 @@
             <line layers="Unrouted" startPosition="9.125, 56.9275" endPosition="9.135, 57.0425" thickness="0.1" signal="I2" />
             <line layers="Top" startPosition="6.595, 56.9175" endPosition="6.595, 57.845" thickness="0.4" signal="I3" />
             <line layers="Top" startPosition="6.595, 57.845" endPosition="8, 59.25" thickness="0.4" signal="I3" />
-            <via position="8, 59.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="I3" />
+            <via position="8, 59.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="I3" />
             <line layers="Bottom" startPosition="8, 59.25" endPosition="14.75, 59.25" thickness="0.4" signal="I3" />
-            <via position="14.75, 59.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="I3" />
+            <via position="14.75, 59.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="I3" />
             <line layers="Top" startPosition="14.75, 59.25" endPosition="14.75, 61.855" thickness="0.4" signal="I3" />
             <line layers="Top" startPosition="14.75, 61.855" endPosition="14.73, 61.875" thickness="0.4" signal="I3" />
             <line layers="Unrouted" startPosition="6.595, 56.9175" endPosition="6.595, 57.0425" thickness="0.1" signal="I3" />
@@ -2764,9 +2764,9 @@
             <line layers="Top" startPosition="15, 58.25" endPosition="15.75, 58.25" thickness="0.4" signal="I4" />
             <line layers="Top" startPosition="15.75, 58.25" endPosition="16.75, 59.25" thickness="0.4" signal="I4" />
             <line layers="Unrouted" startPosition="14.635, 56.9175" endPosition="14.635, 57.0425" thickness="0.1" signal="I4" />
-            <via position="12.125, 60.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="I5" />
+            <via position="12.125, 60.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="I5" />
             <line layers="Bottom" startPosition="12.125, 60.75" endPosition="17.75, 60.75" thickness="0.4" signal="I5" />
-            <via position="17.75, 60.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="I5" />
+            <via position="17.75, 60.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="I5" />
             <line layers="Top" startPosition="17.75, 60.75" endPosition="17.75, 62.895" thickness="0.4" signal="I5" />
             <line layers="Top" startPosition="17.75, 62.895" endPosition="18.73, 63.875" thickness="0.4" signal="I5" />
             <line layers="Top" startPosition="12.125, 60.75" endPosition="12.125, 56.9475" thickness="0.4" signal="I5" />
@@ -2776,9 +2776,9 @@
             <line layers="Top" startPosition="18.73, 59.52" endPosition="20.135, 58.115" thickness="0.4" signal="I6" />
             <line layers="Top" startPosition="20.135, 56.9175" endPosition="20.135, 58.115" thickness="0.4" signal="I6" />
             <line layers="Unrouted" startPosition="20.135, 56.9175" endPosition="20.135, 57.0425" thickness="0.1" signal="I6" />
-            <via position="17.625, 59.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="I7" />
+            <via position="17.625, 59.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="I7" />
             <line layers="Bottom" startPosition="17.625, 59.75" endPosition="19.75, 59.75" thickness="0.4" signal="I7" />
-            <via position="19.75, 59.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="I7" />
+            <via position="19.75, 59.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="I7" />
             <line layers="Top" startPosition="19.75, 59.75" endPosition="19.75, 62.895" thickness="0.4" signal="I7" />
             <line layers="Top" startPosition="19.75, 62.895" endPosition="20.73, 63.875" thickness="0.4" signal="I7" />
             <line layers="Top" startPosition="17.625, 59.75" endPosition="17.625, 56.9475" thickness="0.4" signal="I7" />
@@ -2788,11 +2788,11 @@
             <line layers="Bottom" startPosition="15, 26.25" endPosition="24.25, 17" thickness="0.2" signal="IN5" />
             <line layers="Bottom" startPosition="24.25, 17" endPosition="33.25, 17" thickness="0.2" signal="IN5" />
             <line layers="Bottom" startPosition="33.25, 17" endPosition="34.125, 16.125" thickness="0.2" signal="IN5" />
-            <via position="34.125, 16.125" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN5" />
+            <via position="34.125, 16.125" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN5" />
             <line layers="Top" startPosition="34.125, 16.125" endPosition="35.275, 16.125" thickness="0.2" signal="IN5" />
             <line layers="Top" startPosition="35.275, 16.125" endPosition="35.3, 16.1" thickness="0.2" signal="IN5" />
             <line layers="Bottom" startPosition="15, 48.25" endPosition="13.375, 49.875" thickness="0.2" signal="IN5" />
-            <via position="13.375, 49.875" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN5" />
+            <via position="13.375, 49.875" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN5" />
             <line layers="Top" startPosition="13.375, 49.875" endPosition="13.375, 51.0725" thickness="0.2" signal="IN5" />
             <line layers="Top" startPosition="13.375, 51.0725" endPosition="13.365, 51.0825" thickness="0.2" signal="IN5" />
             <line layers="Unrouted" startPosition="13.375, 51.0725" endPosition="13.365, 50.9575" thickness="0.1" signal="IN5" />
@@ -2801,10 +2801,10 @@
             <line layers="Bottom" startPosition="15.375, 26.375" endPosition="24.375, 17.375" thickness="0.2" signal="IN4" />
             <line layers="Bottom" startPosition="24.375, 17.375" endPosition="33.625, 17.375" thickness="0.2" signal="IN4" />
             <line layers="Bottom" startPosition="33.625, 17.375" endPosition="34.125, 16.875" thickness="0.2" signal="IN4" />
-            <via position="34.125, 16.875" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN4" />
+            <via position="34.125, 16.875" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN4" />
             <line layers="Top" startPosition="34.125, 16.875" endPosition="35.275, 16.875" thickness="0.2" signal="IN4" />
             <line layers="Top" startPosition="35.275, 16.875" endPosition="35.3, 16.9" thickness="0.2" signal="IN4" />
-            <via position="15.875, 49.875" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN4" />
+            <via position="15.875, 49.875" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN4" />
             <line layers="Top" startPosition="15.875, 49.875" endPosition="15.875, 51.0525" thickness="0.2" signal="IN4" />
             <line layers="Top" startPosition="15.875, 51.0525" endPosition="15.905, 51.0825" thickness="0.2" signal="IN4" />
             <line layers="Unrouted" startPosition="15.875, 51.0525" endPosition="15.905, 50.9575" thickness="0.1" signal="IN4" />
@@ -2813,25 +2813,25 @@
             <line layers="Bottom" startPosition="12.625, 26.875" endPosition="23.875, 15.625" thickness="0.2" signal="IN3" />
             <line layers="Bottom" startPosition="23.875, 15.625" endPosition="31.875, 15.625" thickness="0.2" signal="IN3" />
             <line layers="Bottom" startPosition="31.875, 15.625" endPosition="32.125, 15.375" thickness="0.2" signal="IN3" />
-            <via position="32.125, 15.375" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN3" />
+            <via position="32.125, 15.375" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN3" />
             <line layers="Top" startPosition="32.125, 15.375" endPosition="32.2, 15.3" thickness="0.2" signal="IN3" />
             <line layers="Top" startPosition="32.75, 12.75" endPosition="32.75, 14.75" thickness="0.2" signal="IN3" />
             <line layers="Top" startPosition="32.75, 14.75" endPosition="32.125, 15.375" thickness="0.2" signal="IN3" />
             <line layers="Bottom" startPosition="12.625, 46.375" endPosition="9.125, 49.875" thickness="0.2" signal="IN3" />
             <line layers="Bottom" startPosition="9.125, 49.875" endPosition="7.75, 49.875" thickness="0.2" signal="IN3" />
-            <via position="7.75, 49.875" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN3" />
+            <via position="7.75, 49.875" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN3" />
             <line layers="Top" startPosition="7.75, 49.875" endPosition="7.75, 50.9675" thickness="0.2" signal="IN3" />
             <line layers="Top" startPosition="7.75, 50.9675" endPosition="7.865, 51.0825" thickness="0.2" signal="IN3" />
             <line layers="Unrouted" startPosition="7.75, 50.9675" endPosition="7.865, 50.9575" thickness="0.1" signal="IN3" />
             <line layers="Bottom" startPosition="13, 46.5" endPosition="13, 27" thickness="0.2" signal="IN2" />
             <line layers="Bottom" startPosition="13, 27" endPosition="24, 16" thickness="0.2" signal="IN2" />
             <line layers="Bottom" startPosition="24, 16" endPosition="32.625, 16" thickness="0.2" signal="IN2" />
-            <via position="32.625, 16" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN2" />
+            <via position="32.625, 16" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN2" />
             <line layers="Top" startPosition="33.5, 12.7" endPosition="33.5, 15.125" thickness="0.2" signal="IN2" />
             <line layers="Top" startPosition="33.5, 15.125" endPosition="32.625, 16" thickness="0.2" signal="IN2" />
             <line layers="Bottom" startPosition="13, 46.5" endPosition="10.375, 49.125" thickness="0.2" signal="IN2" />
             <line layers="Bottom" startPosition="10.375, 49.125" endPosition="10.375, 49.875" thickness="0.2" signal="IN2" />
-            <via position="10.375, 49.875" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN2" />
+            <via position="10.375, 49.875" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN2" />
             <line layers="Top" startPosition="10.375, 49.875" endPosition="10.375, 51.0525" thickness="0.2" signal="IN2" />
             <line layers="Top" startPosition="10.375, 51.0525" endPosition="10.405, 51.0825" thickness="0.2" signal="IN2" />
             <line layers="Unrouted" startPosition="10.375, 51.0525" endPosition="10.405, 50.9575" thickness="0.1" signal="IN2" />
@@ -2839,12 +2839,12 @@
             <line layers="Bottom" startPosition="11.875, 26.625" endPosition="23.625, 14.875" thickness="0.2" signal="IN1" />
             <line layers="Bottom" startPosition="23.625, 14.875" endPosition="30.375, 14.875" thickness="0.2" signal="IN1" />
             <line layers="Bottom" startPosition="30.375, 14.875" endPosition="31.125, 14.125" thickness="0.2" signal="IN1" />
-            <via position="31.125, 14.125" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN1" />
+            <via position="31.125, 14.125" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN1" />
             <line layers="Top" startPosition="31.125, 12.8" endPosition="31.1, 12.7" thickness="0.2" signal="IN1" />
             <line layers="Top" startPosition="31.125, 12.8" endPosition="31.125, 14.125" thickness="0.2" signal="IN1" />
             <line layers="Bottom" startPosition="11.875, 46" endPosition="10.125, 47.75" thickness="0.2" signal="IN1" />
             <line layers="Bottom" startPosition="10.125, 47.75" endPosition="2.375, 47.75" thickness="0.2" signal="IN1" />
-            <via position="2.375, 47.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN1" />
+            <via position="2.375, 47.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN1" />
             <line layers="Top" startPosition="2.375, 47.75" endPosition="2.375, 51.0725" thickness="0.2" signal="IN1" />
             <line layers="Top" startPosition="2.375, 51.0725" endPosition="2.365, 51.0825" thickness="0.2" signal="IN1" />
             <line layers="Unrouted" startPosition="2.375, 51.0725" endPosition="2.365, 50.9575" thickness="0.1" signal="IN1" />
@@ -2852,14 +2852,14 @@
             <line layers="Bottom" startPosition="12.25, 26.75" endPosition="23.75, 15.25" thickness="0.2" signal="IN0" />
             <line layers="Bottom" startPosition="23.75, 15.25" endPosition="31.125, 15.25" thickness="0.2" signal="IN0" />
             <line layers="Bottom" startPosition="31.125, 15.25" endPosition="31.625, 14.75" thickness="0.2" signal="IN0" />
-            <via position="31.625, 14.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN0" />
+            <via position="31.625, 14.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN0" />
             <line layers="Top" startPosition="31.9, 12.7" endPosition="31.9, 14.475" thickness="0.2" signal="IN0" />
             <line layers="Top" startPosition="31.9, 14.475" endPosition="31.625, 14.75" thickness="0.2" signal="IN0" />
             <line layers="Bottom" startPosition="12.25, 46.125" endPosition="10.125, 48.25" thickness="0.2" signal="IN0" />
             <line layers="Top" startPosition="4.905, 51.0825" endPosition="4.905, 50.405" thickness="0.2" signal="IN0" />
             <line layers="Top" startPosition="4.905, 50.405" endPosition="4.875, 50.375" thickness="0.2" signal="IN0" />
             <line layers="Top" startPosition="4.875, 50.375" endPosition="4.875, 48.25" thickness="0.2" signal="IN0" />
-            <via position="4.875, 48.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN0" />
+            <via position="4.875, 48.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN0" />
             <line layers="Bottom" startPosition="4.875, 48.25" endPosition="10.125, 48.25" thickness="0.2" signal="IN0" />
             <line layers="Unrouted" startPosition="4.905, 51.0825" endPosition="4.905, 50.9575" thickness="0.1" signal="IN0" />
             <line layers="Top" startPosition="50.1, 53.77" endPosition="50.1, 54.4" thickness="0.4" signal="O0" />
@@ -2911,7 +2911,7 @@
             <line layers="Top" startPosition="48.75, 63.75" endPosition="47.875, 62.875" thickness="0.4" signal="O5" />
             <line layers="Top" startPosition="47.875, 62.875" endPosition="47.875, 59.375" thickness="0.4" signal="O5" />
             <line layers="Unrouted" startPosition="48.75, 63.875" endPosition="48.855, 63.875" thickness="0.1" signal="O5" />
-            <via position="55.25, 27.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="O6" />
+            <via position="55.25, 27.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="O6" />
             <line layers="Bottom" startPosition="48.75, 61.77" endPosition="48.75, 55.75" thickness="0.4" signal="O6" />
             <line layers="Bottom" startPosition="48.75, 55.75" endPosition="49.75, 54.75" thickness="0.4" signal="O6" />
             <line layers="Bottom" startPosition="49.75, 54.75" endPosition="49.75, 33" thickness="0.4" signal="O6" />
@@ -2919,13 +2919,13 @@
             <line layers="Top" startPosition="55.25, 27.5" endPosition="57.38, 27.5" thickness="0.4" signal="O6" />
             <line layers="Top" startPosition="57.38, 27.5" endPosition="57.4, 27.48" thickness="0.4" signal="O6" />
             <line layers="Unrouted" startPosition="48.75, 61.77" endPosition="48.855, 61.875" thickness="0.1" signal="O6" />
-            <via position="49.875, 60.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="O7" />
+            <via position="49.875, 60.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="O7" />
             <line layers="Bottom" startPosition="49.875, 60.75" endPosition="49.875, 55.5" thickness="0.4" signal="O7" />
             <line layers="Bottom" startPosition="49.875, 55.5" endPosition="50.375, 55" thickness="0.4" signal="O7" />
             <line layers="Bottom" startPosition="50.375, 55" endPosition="50.375, 37.125" thickness="0.4" signal="O7" />
             <line layers="Top" startPosition="57.38, 32.25" endPosition="57.4, 32.229999" thickness="0.4" signal="O7" />
             <line layers="Top" startPosition="57.38, 32.25" endPosition="55.25, 32.25" thickness="0.4" signal="O7" />
-            <via position="55.25, 32.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="O7" />
+            <via position="55.25, 32.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="O7" />
             <line layers="Bottom" startPosition="55.25, 32.25" endPosition="50.375, 37.125" thickness="0.4" signal="O7" />
             <line layers="Top" startPosition="49.875, 60.75" endPosition="49.875, 62.895" thickness="0.4" signal="O7" />
             <line layers="Top" startPosition="49.875, 62.895" endPosition="50.855, 63.875" thickness="0.4" signal="O7" />
@@ -2933,10 +2933,10 @@
             <line layers="Top" startPosition="65.43, 27.48" endPosition="65.625, 27.8" thickness="0.2" signal="N$51" />
             <line layers="Top" startPosition="63.6, 32.229999" endPosition="65.43, 32.229999" thickness="0.2" signal="N$54" />
             <line layers="Top" startPosition="65.43, 32.229999" endPosition="65.625, 32.549999" thickness="0.2" signal="N$54" />
-            <via position="25.5, 20.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT6" />
+            <via position="25.5, 20.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT6" />
             <line layers="Bottom" startPosition="25.5, 20.75" endPosition="65.25, 20.75" thickness="0.2" signal="OUT6" />
             <line layers="Bottom" startPosition="65.25, 20.75" endPosition="65.375, 20.875" thickness="0.2" signal="OUT6" />
-            <via position="65.375, 20.875" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT6" />
+            <via position="65.375, 20.875" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT6" />
             <line layers="Top" startPosition="65.375, 20.875" endPosition="65.375, 23" thickness="0.2" signal="OUT6" />
             <line layers="Top" startPosition="65.375, 23" endPosition="67, 24.625" thickness="0.2" signal="OUT6" />
             <line layers="Top" startPosition="67, 24.625" endPosition="67, 29.5" thickness="0.2" signal="OUT6" />
@@ -2950,10 +2950,10 @@
             <line layers="Top" startPosition="23.7, 15.3" endPosition="26.55, 15.3" thickness="0.2" signal="OUT7" />
             <line layers="Top" startPosition="26.55, 15.3" endPosition="28.125, 16.875" thickness="0.2" signal="OUT7" />
             <line layers="Top" startPosition="28.125, 16.875" endPosition="28.125, 19.25" thickness="0.2" signal="OUT7" />
-            <via position="28.125, 19.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT7" />
+            <via position="28.125, 19.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT7" />
             <line layers="Bottom" startPosition="28.125, 19.25" endPosition="28.5, 19.625" thickness="0.2" signal="OUT7" />
             <line layers="Bottom" startPosition="28.5, 19.625" endPosition="66.375, 19.625" thickness="0.2" signal="OUT7" />
-            <via position="66.375, 19.625" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT7" />
+            <via position="66.375, 19.625" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT7" />
             <line layers="Top" startPosition="66.375, 19.625" endPosition="66.375, 23.5" thickness="0.2" signal="OUT7" />
             <line layers="Top" startPosition="66.375, 23.5" endPosition="67.375, 24.5" thickness="0.2" signal="OUT7" />
             <line layers="Top" startPosition="67.375, 24.5" endPosition="67.375, 33.875" thickness="0.2" signal="OUT7" />
@@ -2963,7 +2963,7 @@
             <line layers="Bottom" startPosition="15.75, 46.75" endPosition="15.75, 26.5" thickness="0.2" signal="IN7/PGC" />
             <line layers="Bottom" startPosition="15.75, 26.5" endPosition="24.5, 17.75" thickness="0.2" signal="IN7/PGC" />
             <line layers="Bottom" startPosition="24.5, 17.75" endPosition="34.125, 17.75" thickness="0.2" signal="IN7/PGC" />
-            <via position="34.125, 17.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN7/PGC" />
+            <via position="34.125, 17.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN7/PGC" />
             <line layers="Top" startPosition="34.125, 17.75" endPosition="35.25, 17.75" thickness="0.2" signal="IN7/PGC" />
             <line layers="Top" startPosition="35.25, 17.75" endPosition="35.3, 17.7" thickness="0.2" signal="IN7/PGC" />
             <line layers="Top" startPosition="35.35, 17.75" endPosition="35.3, 17.7" thickness="0.2" signal="IN7/PGC" />
@@ -2975,12 +2975,12 @@
             <line layers="Bottom" startPosition="40.25, 11.875" endPosition="34.375, 17.75" thickness="0.2" signal="IN7/PGC" />
             <line layers="Bottom" startPosition="34.375, 17.75" endPosition="34.125, 17.75" thickness="0.2" signal="IN7/PGC" />
             <line layers="Bottom" startPosition="15.75, 46.75" endPosition="18.875, 49.875" thickness="0.2" signal="IN7/PGC" />
-            <via position="18.875, 49.875" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN7/PGC" />
+            <via position="18.875, 49.875" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN7/PGC" />
             <line layers="Top" startPosition="18.875, 49.875" endPosition="18.875, 51.0725" thickness="0.2" signal="IN7/PGC" />
             <line layers="Top" startPosition="18.875, 51.0725" endPosition="18.865, 51.0825" thickness="0.2" signal="IN7/PGC" />
             <line layers="Unrouted" startPosition="18.875, 51.0725" endPosition="18.865, 50.9575" thickness="0.1" signal="IN7/PGC" />
             <line layers="Top" startPosition="35.3, 18.5" endPosition="34.125, 18.5" thickness="0.2" signal="IN6/PGD" />
-            <via position="34.125, 18.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN6/PGD" />
+            <via position="34.125, 18.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN6/PGD" />
             <line layers="Bottom" startPosition="16.125, 44.625" endPosition="16.125, 26.625" thickness="0.2" signal="IN6/PGD" />
             <line layers="Bottom" startPosition="16.125, 26.625" endPosition="24.625, 18.125" thickness="0.2" signal="IN6/PGD" />
             <line layers="Bottom" startPosition="24.625, 18.125" endPosition="33.75, 18.125" thickness="0.2" signal="IN6/PGD" />
@@ -2989,7 +2989,7 @@
             <line layers="Bottom" startPosition="40.625, 12" endPosition="40.625, 9.125" thickness="0.2" signal="IN6/PGD" />
             <line layers="Bottom" startPosition="40.625, 9.125" endPosition="41.25, 8.5" thickness="0.2" signal="IN6/PGD" />
             <line layers="Bottom" startPosition="16.125, 44.625" endPosition="21.375, 49.875" thickness="0.2" signal="IN6/PGD" />
-            <via position="21.375, 49.875" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN6/PGD" />
+            <via position="21.375, 49.875" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN6/PGD" />
             <line layers="Top" startPosition="21.375, 49.875" endPosition="21.375, 51.0525" thickness="0.2" signal="IN6/PGD" />
             <line layers="Top" startPosition="21.375, 51.0525" endPosition="21.405, 51.0825" thickness="0.2" signal="IN6/PGD" />
             <line layers="Unrouted" startPosition="21.375, 51.0525" endPosition="21.405, 50.9575" thickness="0.1" signal="IN6/PGD" />
@@ -3003,23 +3003,23 @@
             <line layers="Top" startPosition="26.75, 11" endPosition="26.05, 11" thickness="0.2" signal="LED" />
             <line layers="Top" startPosition="26.05, 11" endPosition="25.75, 10.7" thickness="0.2" signal="LED" />
             <line layers="Top" startPosition="6.5, 40.125" endPosition="9.25, 40.125" thickness="0.2" signal="SCL2" />
-            <via position="9.25, 40.125" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="SCL2" />
+            <via position="9.25, 40.125" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="SCL2" />
             <line layers="Bottom" startPosition="9.25, 40.125" endPosition="9.25, 28.625" thickness="0.2" signal="SCL2" />
-            <via position="9.25, 28.625" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="SCL2" />
+            <via position="9.25, 28.625" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="SCL2" />
             <line layers="Top" startPosition="9.25, 28.625" endPosition="6.5, 28.625" thickness="0.2" signal="SCL2" />
             <line layers="Bottom" startPosition="9.25, 28.625" endPosition="9.25, 23.375" thickness="0.2" signal="SCL2" />
             <line layers="Bottom" startPosition="9.25, 23.375" endPosition="10.375, 22.25" thickness="0.2" signal="SCL2" />
             <line layers="Bottom" startPosition="10.375, 22.25" endPosition="14.5, 22.25" thickness="0.2" signal="SCL2" />
-            <via position="14.5, 22.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="SCL2" />
+            <via position="14.5, 22.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="SCL2" />
             <line layers="Top" startPosition="14.5, 22.25" endPosition="19.125, 22.25" thickness="0.2" signal="SCL2" />
             <line layers="Top" startPosition="19.125, 22.25" endPosition="22.125, 19.25" thickness="0.2" signal="SCL2" />
             <line layers="Top" startPosition="22.125, 19.25" endPosition="23.65, 19.25" thickness="0.2" signal="SCL2" />
             <line layers="Top" startPosition="23.65, 19.25" endPosition="23.7, 19.3" thickness="0.2" signal="SCL2" />
             <line layers="Top" startPosition="14.5, 23.55" endPosition="14.5, 22.25" thickness="0.2" signal="SCL2" />
             <line layers="Top" startPosition="6.5, 41.375" endPosition="8.75, 41.375" thickness="0.2" signal="SDA2" />
-            <via position="8.75, 41.375" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="SDA2" />
+            <via position="8.75, 41.375" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="SDA2" />
             <line layers="Bottom" startPosition="8.75, 41.375" endPosition="8.75, 29.875" thickness="0.2" signal="SDA2" />
-            <via position="8.75, 29.875" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="SDA2" />
+            <via position="8.75, 29.875" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="SDA2" />
             <line layers="Top" startPosition="8.75, 29.875" endPosition="6.5, 29.875" thickness="0.2" signal="SDA2" />
             <line layers="Top" startPosition="12.25, 21.75" endPosition="19, 21.75" thickness="0.2" signal="SDA2" />
             <line layers="Top" startPosition="19, 21.75" endPosition="22.25, 18.5" thickness="0.2" signal="SDA2" />
@@ -3027,7 +3027,7 @@
             <line layers="Bottom" startPosition="8.75, 29.875" endPosition="8.75, 23.25" thickness="0.2" signal="SDA2" />
             <line layers="Bottom" startPosition="8.75, 23.25" endPosition="10.25, 21.75" thickness="0.2" signal="SDA2" />
             <line layers="Bottom" startPosition="10.25, 21.75" endPosition="12.25, 21.75" thickness="0.2" signal="SDA2" />
-            <via position="12.25, 21.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="SDA2" />
+            <via position="12.25, 21.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="SDA2" />
             <line layers="Top" startPosition="12.25, 23.55" endPosition="12.25, 21.75" thickness="0.2" signal="SDA2" />
             <line layers="Top" startPosition="23.75, 8.7" endPosition="25.65, 8.7" thickness="0.2" signal="N$22" />
             <line layers="Top" startPosition="25.65, 8.7" endPosition="25.75, 8.8" thickness="0.2" signal="N$22" />
@@ -3039,14 +3039,14 @@
             <line layers="Unrouted" startPosition="25.635, 56.9175" endPosition="25.635, 57.0425" thickness="0.1" signal="I8" />
             <line layers="Top" startPosition="57.38, 37" endPosition="57.4, 36.98" thickness="0.4" signal="O8" />
             <line layers="Top" startPosition="57.38, 37" endPosition="55.25, 37" thickness="0.4" signal="O8" />
-            <via position="55.25, 37" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="O8" />
+            <via position="55.25, 37" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="O8" />
             <line layers="Bottom" startPosition="55.25, 37" endPosition="51, 41.25" thickness="0.4" signal="O8" />
             <line layers="Bottom" startPosition="51, 41.25" endPosition="51, 61.73" thickness="0.4" signal="O8" />
             <line layers="Bottom" startPosition="51, 61.73" endPosition="50.855, 61.875" thickness="0.4" signal="O8" />
             <line layers="Top" startPosition="31.9, 24.3" endPosition="31.9, 23.9" thickness="0.2" signal="IN8" />
             <line layers="Top" startPosition="31.9, 23.9" endPosition="32, 23.625" thickness="0.2" signal="IN8" />
             <line layers="Top" startPosition="32, 23.625" endPosition="32, 21.875" thickness="0.2" signal="IN8" />
-            <via position="32, 21.875" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN8" />
+            <via position="32, 21.875" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN8" />
             <line layers="Bottom" startPosition="32, 21.875" endPosition="31, 21.875" thickness="0.2" signal="IN8" />
             <line layers="Bottom" startPosition="31, 21.875" endPosition="30.75, 21.625" thickness="0.2" signal="IN8" />
             <line layers="Bottom" startPosition="30.75, 21.625" endPosition="24.75, 21.625" thickness="0.2" signal="IN8" />
@@ -3057,11 +3057,11 @@
             <line layers="Top" startPosition="26.905, 47.73" endPosition="26.875, 47.7" thickness="0.2" signal="IN8" />
             <line layers="Bottom" startPosition="18.125, 43.625" endPosition="23.5, 49" thickness="0.2" signal="IN8" />
             <line layers="Bottom" startPosition="23.5, 49" endPosition="26.905, 49" thickness="0.2" signal="IN8" />
-            <via position="26.905, 49" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN8" />
+            <via position="26.905, 49" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN8" />
             <line layers="Bottom" startPosition="18.125, 28.75" endPosition="24, 22.875" thickness="0.2" signal="IN8" />
             <line layers="Bottom" startPosition="24, 22.875" endPosition="24, 22.375" thickness="0.2" signal="IN8" />
             <line layers="Unrouted" startPosition="26.905, 51.0825" endPosition="26.905, 50.9575" thickness="0.1" signal="IN8" />
-            <via position="31.125, 21.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN9" />
+            <via position="31.125, 21.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN9" />
             <line layers="Bottom" startPosition="31.125, 21.25" endPosition="24.625, 21.25" thickness="0.2" signal="IN9" />
             <line layers="Bottom" startPosition="17.75, 28.625" endPosition="17.75, 43.75" thickness="0.2" signal="IN9" />
             <line layers="Top" startPosition="24.365, 51.0825" endPosition="24.365, 49.5" thickness="0.2" signal="IN9" />
@@ -3069,7 +3069,7 @@
             <line layers="Top" startPosition="24.365, 47.71" endPosition="24.375, 47.7" thickness="0.2" signal="IN9" />
             <line layers="Bottom" startPosition="17.75, 43.75" endPosition="23.5, 49.5" thickness="0.2" signal="IN9" />
             <line layers="Bottom" startPosition="23.5, 49.5" endPosition="24.365, 49.5" thickness="0.2" signal="IN9" />
-            <via position="24.365, 49.5" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN9" />
+            <via position="24.365, 49.5" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN9" />
             <line layers="Bottom" startPosition="24.625, 21.25" endPosition="23.625, 22.25" thickness="0.2" signal="IN9" />
             <line layers="Bottom" startPosition="23.625, 22.25" endPosition="23.625, 22.75" thickness="0.2" signal="IN9" />
             <line layers="Bottom" startPosition="23.625, 22.75" endPosition="17.75, 28.625" thickness="0.2" signal="IN9" />
@@ -3078,13 +3078,13 @@
             <line layers="Unrouted" startPosition="24.365, 51.0825" endPosition="24.365, 50.9575" thickness="0.1" signal="IN9" />
             <line layers="Top" startPosition="63.6, 36.98" endPosition="65.43, 36.98" thickness="0.2" signal="N$1" />
             <line layers="Top" startPosition="65.43, 36.98" endPosition="65.625, 37.3" thickness="0.2" signal="N$1" />
-            <via position="25, 20.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT8" />
+            <via position="25, 20.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT8" />
             <line layers="Bottom" startPosition="25, 20.25" endPosition="26.25, 20.25" thickness="0.2" signal="OUT8" />
             <line layers="Bottom" startPosition="26.25, 20.25" endPosition="26.375, 20.375" thickness="0.2" signal="OUT8" />
             <line layers="Bottom" startPosition="26.375, 20.375" endPosition="65.875, 20.375" thickness="0.2" signal="OUT8" />
             <line layers="Bottom" startPosition="65.875, 20.375" endPosition="66.25, 20.75" thickness="0.2" signal="OUT8" />
             <line layers="Bottom" startPosition="66.25, 20.75" endPosition="67.25, 20.75" thickness="0.2" signal="OUT8" />
-            <via position="67.25, 20.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT8" />
+            <via position="67.25, 20.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT8" />
             <line layers="Top" startPosition="67.25, 20.75" endPosition="67.25, 23.875" thickness="0.2" signal="OUT8" />
             <line layers="Top" startPosition="67.25, 23.875" endPosition="67.75, 24.375" thickness="0.2" signal="OUT8" />
             <line layers="Top" startPosition="67.75, 24.375" endPosition="67.75, 38.25" thickness="0.2" signal="OUT8" />
@@ -3099,11 +3099,11 @@
             <line layers="Top" startPosition="66.675, 43.95" endPosition="68.125, 42.5" thickness="0.2" signal="OUT9" />
             <line layers="Top" startPosition="68.125, 42.5" endPosition="68.125, 24" thickness="0.2" signal="OUT9" />
             <line layers="Top" startPosition="68.125, 24" endPosition="67.875, 23.75" thickness="0.2" signal="OUT9" />
-            <via position="67.875, 23.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT9" />
+            <via position="67.875, 23.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT9" />
             <line layers="Bottom" startPosition="67.875, 23.75" endPosition="30, 23.75" thickness="0.2" signal="OUT9" />
             <line layers="Bottom" startPosition="30, 23.75" endPosition="29.25, 23" thickness="0.2" signal="OUT9" />
             <line layers="Bottom" startPosition="29.25, 23" endPosition="26.25, 23" thickness="0.2" signal="OUT9" />
-            <via position="26.25, 23" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT9" />
+            <via position="26.25, 23" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT9" />
             <line layers="Top" startPosition="26.25, 23" endPosition="26.25, 24.225" thickness="0.2" signal="OUT9" />
             <line layers="Top" startPosition="26.25, 24.225" endPosition="26.3, 24.3" thickness="0.2" signal="OUT9" />
             <line layers="Top" startPosition="63.6, 41.73" endPosition="65.43, 41.73" thickness="0.2" signal="N$6" />
@@ -3172,9 +3172,9 @@
             <line layers="Top" startPosition="32.405, 47.73" endPosition="32.375, 47.7" thickness="0.2" signal="IN10" />
             <line layers="Bottom" startPosition="18.875, 36.625" endPosition="31.25, 49" thickness="0.2" signal="IN10" />
             <line layers="Bottom" startPosition="31.25, 49" endPosition="32.405, 49" thickness="0.2" signal="IN10" />
-            <via position="32.405, 49" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN10" />
+            <via position="32.405, 49" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN10" />
             <line layers="Top" startPosition="23.7, 16.9" endPosition="24.65, 16.9" thickness="0.2" signal="IN10" />
-            <via position="25.25, 22.625" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN10" />
+            <via position="25.25, 22.625" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN10" />
             <line layers="Top" startPosition="26, 21.875" endPosition="26, 18.25" thickness="0.2" signal="IN10" />
             <line layers="Top" startPosition="26, 18.25" endPosition="24.65, 16.9" thickness="0.2" signal="IN10" />
             <line layers="Bottom" startPosition="18.875, 29" endPosition="25.25, 22.625" thickness="0.2" signal="IN10" />
@@ -3185,7 +3185,7 @@
             <line layers="Top" startPosition="26.25, 13.25" endPosition="26.25, 13.75" thickness="0.2" signal="IN11" />
             <line layers="Top" startPosition="26.25, 13.75" endPosition="29, 16.5" thickness="0.2" signal="IN11" />
             <line layers="Top" startPosition="29, 16.5" endPosition="29, 22.125" thickness="0.2" signal="IN11" />
-            <via position="29, 22.125" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN11" />
+            <via position="29, 22.125" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN11" />
             <line layers="Bottom" startPosition="18.5, 28.875" endPosition="18.5, 38.75" thickness="0.2" signal="IN11" />
             <line layers="Bottom" startPosition="29, 22.125" endPosition="24.75, 22.125" thickness="0.2" signal="IN11" />
             <line layers="Top" startPosition="29.865, 51.0825" endPosition="29.865, 49" thickness="0.2" signal="IN11" />
@@ -3193,7 +3193,7 @@
             <line layers="Top" startPosition="29.865, 47.71" endPosition="29.875, 47.7" thickness="0.2" signal="IN11" />
             <line layers="Bottom" startPosition="18.5, 38.75" endPosition="28.75, 49" thickness="0.2" signal="IN11" />
             <line layers="Bottom" startPosition="28.75, 49" endPosition="29.865, 49" thickness="0.2" signal="IN11" />
-            <via position="29.865, 49" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN11" />
+            <via position="29.865, 49" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN11" />
             <line layers="Bottom" startPosition="18.5, 28.875" endPosition="24.375, 23" thickness="0.2" signal="IN11" />
             <line layers="Bottom" startPosition="24.375, 23" endPosition="24.375, 22.5" thickness="0.2" signal="IN11" />
             <line layers="Bottom" startPosition="24.375, 22.5" endPosition="24.75, 22.125" thickness="0.2" signal="IN11" />
@@ -3232,7 +3232,7 @@
             <line layers="Top" startPosition="48.77, 36.98" endPosition="48.75, 37" thickness="0.8" signal="OC0" />
             <line layers="Bottom" startPosition="46.855, 61.875" endPosition="46.855, 56.145" thickness="0.8" signal="OC0" />
             <line layers="Bottom" startPosition="46.855, 56.145" endPosition="48.75, 54.25" thickness="0.8" signal="OC0" />
-            <via position="48.75, 54.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OC0" />
+            <via position="48.75, 54.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OC0" />
             <line layers="Top" startPosition="57.4, 44.27" endPosition="58.48, 44.27" thickness="0.8" signal="OC1" />
             <line layers="Top" startPosition="58.48, 44.27" endPosition="58.75, 44" thickness="0.8" signal="OC1" />
             <line layers="Top" startPosition="58.75, 44" endPosition="58.75, 39.5" thickness="0.8" signal="OC1" />
@@ -3253,21 +3253,21 @@
             <line layers="Bottom" startPosition="56, 59.25" endPosition="57, 58.25" thickness="0.8" signal="OC1" />
             <line layers="Bottom" startPosition="57, 58.25" endPosition="57, 45.75" thickness="0.8" signal="OC1" />
             <line layers="Bottom" startPosition="57, 45.75" endPosition="58.75, 44" thickness="0.8" signal="OC1" />
-            <via position="58.75, 44" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OC1" />
-            <via position="68.875, 22.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT11" />
+            <via position="58.75, 44" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OC1" />
+            <via position="68.875, 22.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT11" />
             <line layers="Bottom" startPosition="68.875, 22.75" endPosition="30.25, 22.75" thickness="0.2" signal="OUT11" />
-            <via position="30.25, 22.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT11" />
+            <via position="30.25, 22.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT11" />
             <line layers="Top" startPosition="30.25, 22.75" endPosition="30.25, 24.25" thickness="0.2" signal="OUT11" />
             <line layers="Top" startPosition="30.25, 24.25" endPosition="30.3, 24.3" thickness="0.2" signal="OUT11" />
             <line layers="Top" startPosition="69.5, 43.5" endPosition="68.875, 42.875" thickness="0.2" signal="OUT11" />
             <line layers="Top" startPosition="68.875, 42.875" endPosition="68.875, 22.75" thickness="0.2" signal="OUT11" />
             <line layers="Top" startPosition="69.5, 43.5" endPosition="69.5, 48.675" thickness="0.2" signal="OUT11" />
             <line layers="Top" startPosition="69.5, 48.675" endPosition="68.125, 50.05" thickness="0.2" signal="OUT11" />
-            <via position="25.5, 19.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT10" />
+            <via position="25.5, 19.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT10" />
             <line layers="Bottom" startPosition="26.5, 20" endPosition="66, 20" thickness="0.2" signal="OUT10" />
             <line layers="Bottom" startPosition="66, 20" endPosition="66.25, 20.25" thickness="0.2" signal="OUT10" />
             <line layers="Bottom" startPosition="66.25, 20.25" endPosition="68.25, 20.25" thickness="0.2" signal="OUT10" />
-            <via position="68.25, 20.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT10" />
+            <via position="68.25, 20.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="OUT10" />
             <line layers="Top" startPosition="68.25, 20.25" endPosition="68.25, 22.875" thickness="0.2" signal="OUT10" />
             <line layers="Top" startPosition="68.25, 22.875" endPosition="68.5, 23.125" thickness="0.2" signal="OUT10" />
             <line layers="Top" startPosition="68.125, 43.125" endPosition="68.5, 42.75" thickness="0.2" signal="OUT10" />
@@ -3313,9 +3313,9 @@
             <line layers="Bottom" startPosition="33.875, 50.25" endPosition="34.875, 49.25" thickness="0.2" signal="IN12" />
             <line layers="Bottom" startPosition="34.875, 49.25" endPosition="37.885, 49.25" thickness="0.2" signal="IN12" />
             <line layers="Bottom" startPosition="37.885, 49.25" endPosition="37.905, 49.23" thickness="0.2" signal="IN12" />
-            <via position="37.905, 49.23" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN12" />
+            <via position="37.905, 49.23" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN12" />
             <line layers="Bottom" startPosition="17.375, 28.5" endPosition="23, 22.875" thickness="0.2" signal="IN12" />
-            <via position="26.5, 19.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN12" />
+            <via position="26.5, 19.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN12" />
             <line layers="Top" startPosition="37.905, 49.23" endPosition="37.905, 47.73" thickness="0.2" signal="IN12" />
             <line layers="Top" startPosition="37.905, 47.73" endPosition="37.875, 47.7" thickness="0.2" signal="IN12" />
             <line layers="Top" startPosition="23.7, 16.1" endPosition="24.6, 16.1" thickness="0.2" signal="IN12" />
@@ -3331,13 +3331,13 @@
             <line layers="Top" startPosition="23.7, 20.1" endPosition="22.9, 20.1" thickness="0.2" signal="IN13" />
             <line layers="Top" startPosition="22.9, 20.1" endPosition="22.5, 20.5" thickness="0.2" signal="IN13" />
             <line layers="Top" startPosition="22.5, 20.5" endPosition="22.5, 22.25" thickness="0.2" signal="IN13" />
-            <via position="22.5, 22.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN13" />
+            <via position="22.5, 22.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN13" />
             <line layers="Bottom" startPosition="22.5, 22.25" endPosition="22.5, 22.875" thickness="0.2" signal="IN13" />
             <line layers="Bottom" startPosition="22.5, 22.875" endPosition="17, 28.375" thickness="0.2" signal="IN13" />
             <line layers="Bottom" startPosition="17, 28.375" endPosition="17, 44" thickness="0.2" signal="IN13" />
             <line layers="Bottom" startPosition="17, 44" endPosition="23.625, 50.625" thickness="0.2" signal="IN13" />
             <line layers="Bottom" startPosition="23.625, 50.625" endPosition="34.115, 50.625" thickness="0.2" signal="IN13" />
-            <via position="35.365, 49.75" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="IN13" />
+            <via position="35.365, 49.75" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="IN13" />
             <line layers="Bottom" startPosition="35.365, 49.75" endPosition="34.99, 49.75" thickness="0.2" signal="IN13" />
             <line layers="Bottom" startPosition="34.99, 49.75" endPosition="34.115, 50.625" thickness="0.2" signal="IN13" />
             <line layers="Unrouted" startPosition="35.365, 51.0825" endPosition="35.365, 50.9575" thickness="0.1" signal="IN13" />
@@ -3351,7 +3351,7 @@
             <line layers="Unrouted" startPosition="34.095, 56.9175" endPosition="34.095, 57.0425" thickness="0.1" signal="I13B" />
             <line layers="Top" startPosition="56.23, 49.23" endPosition="58.23, 49.23" thickness="0.4" signal="O10B" />
             <line layers="Top" startPosition="58.23, 49.23" endPosition="58.25, 49.25" thickness="0.4" signal="O10B" />
-            <via position="58.25, 49.25" layers="Top, Bottom, Vias, Drills" drill="0.25" outerSize="0.5" signal="O10B" />
+            <via position="58.25, 49.25" layers="Vias, Drills" drill="0.25" outerSize="0.5" signal="O10B" />
             <line layers="Bottom" startPosition="58.25, 49.25" endPosition="58.25, 60" thickness="0.4" signal="O10B" />
             <line layers="Bottom" startPosition="58.25, 60" endPosition="57.75, 60.5" thickness="0.4" signal="O10B" />
             <line layers="Bottom" startPosition="57.75, 60.5" endPosition="55.5, 60.5" thickness="0.4" signal="O10B" />

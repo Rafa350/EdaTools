@@ -14,14 +14,15 @@
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="startPosition">Punt inicial.</param>
         /// <param name="endPosition">Punt final.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="angle">Angle del arc.</param>
         /// <param name="lineCap">Extrems de linia.</param>
         /// 
-        public ArcElement(Point startPosition, Point endPosition, int thickness, Angle angle, LineCapStyle lineCap) :
-            base(startPosition, endPosition, thickness, lineCap) {
+        public ArcElement(LayerSet layerSet, Point startPosition, Point endPosition, int thickness, Angle angle, LineCapStyle lineCap) :
+            base(layerSet, startPosition, endPosition, thickness, lineCap) {
 
             this.angle = angle;
         }

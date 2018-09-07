@@ -149,9 +149,9 @@
             public override void Visit(LineElement line) {
 
                 int layerNum = 3;
-                if (Board.IsOnLayer(line, Board.GetLayer(Layer.TopName)))
+                if (line.IsOnLayer(Board.GetLayer(Layer.TopName)))
                     layerNum = 1;
-                else if (Board.IsOnLayer(line, Board.GetLayer(Layer.BottomName)))
+                else if (line.IsOnLayer(Board.GetLayer(Layer.BottomName)))
                     layerNum = 2;
 
                 if (layerNum > 0) { 
@@ -165,9 +165,9 @@
             public override void Visit(ArcElement arc) {
 
                 int layerNum = 3;
-                if (Board.IsOnLayer(arc, Board.GetLayer(Layer.TopName)))
+                if (arc.IsOnLayer(Board.GetLayer(Layer.TopName)))
                     layerNum = 1;
-                else if (Board.IsOnLayer(arc, Board.GetLayer(Layer.BottomName)))
+                else if (arc.IsOnLayer(Board.GetLayer(Layer.BottomName)))
                     layerNum = 2;
 
                 if (layerNum > 0) {

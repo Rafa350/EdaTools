@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
 
+    using System;
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
 
@@ -11,9 +12,27 @@
         private int innerSize;
         private int bottomSize;
 
-        SlotElement(string name, Point position, Angle rotation):
-            base(name, position, rotation) {
+        SlotElement(string name, LayerSet layerSet, Point position, Angle rotation, int topSize, 
+            int innerSize, int bottomSize, int drill, int length):
+            base(name, layerSet, position, rotation) {
 
+            if (topSize < 0)
+                throw new ArgumentOutOfRangeException("topSize");
+
+            if (innerSize < 0)
+                throw new ArgumentOutOfRangeException("innerSize");
+
+            if (bottomSize < 0)
+                throw new ArgumentOutOfRangeException("bottomSize");
+
+            if (drill <= 0)
+                throw new ArgumentOutOfRangeException("drill");
+
+            this.topSize = topSize;
+            this.innerSize = innerSize;
+            this.bottomSize = bottomSize;
+            this.drill = drill;
+            this.length = length;
         }
 
         public override void AcceptVisitor(IVisitor visitor) {
@@ -35,6 +54,45 @@
 
         public override Polygon GetThermalPolygon(BoardSide side, int spacing, int width) {
             throw new System.NotImplementedException();
+        }
+
+        public int Length {
+            get {
+                return length;
+            }
+        }
+
+        public int TopSize {
+            get {
+                return topSize;
+            }
+        }
+
+        public int InnerSize {
+            get {
+                return innerSize;
+            }
+        }
+
+        public int BottomSize {
+            get {
+                return bottomSize;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna el diametre del forst.
+        /// </summary>
+        /// 
+        public int Drill {
+            get {
+                return drill;
+            }
+            set {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException("SlotElement.Drill");
+                drill = value;
+            }
         }
     }
 }

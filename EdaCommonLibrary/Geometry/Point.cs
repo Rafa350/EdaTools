@@ -26,11 +26,24 @@
             this.y = y;
         }
 
+        /// <summary>
+        /// Procesa una cadena per crear un objecte 'Point'
+        /// </summary>
+        /// <param name="s">La cadena a procesar.</param>
+        /// <returns>L'objecte 'Point'</returns>
+        /// 
         public static Point Parse(string s) {
 
             return Parse(s, CultureInfo.CurrentCulture);
         }
 
+        /// <summary>
+        /// Procesa una cadena per crear un objecte 'Point'
+        /// </summary>
+        /// <param name="s">La cadena a procesar.</param>
+        /// <param name="provider">Objecte proveidor de format.</param>
+        /// <returns>L'objecte 'Point'</returns>
+        /// 
         public static Point Parse(string s, IFormatProvider provider) {
 
             string[] ss = s.Split(',');
@@ -83,9 +96,18 @@
         }
     }
 
-
+    /// <summary>
+    /// Clase que implementa metodes d'ectensio
+    /// </summary>
     public static class PointHelper {
 
+        /// <summary>
+        /// Escriu un atribut de tipus 'Point'
+        /// </summary>
+        /// <param name="wr">El objecte XmlWriterAdapter.</param>
+        /// <param name="name">El nom de l'atribut.</param>
+        /// <param name="point">El valor a escriure.</param>
+        /// 
         public static void WriteAttribute(this XmlWriterAdapter wr, string name, Point point) {
 
             string s = String.Format(

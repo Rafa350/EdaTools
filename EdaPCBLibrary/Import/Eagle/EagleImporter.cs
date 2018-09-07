@@ -305,6 +305,7 @@
                 Part part = ParseElementNode(childNode);
                 parts.Add(part);
             }
+
             return parts;
         }
 
@@ -397,16 +398,8 @@
                     break;
             }
 
-            BoardElement element = new ThPadElement(name, position, rotation, size, shape, drill);
-
-            board.Place(board.GetLayer(Layer.PadsName), element);
-            board.Place(board.GetLayer(Layer.DrillsName), element);
-            board.Place(board.GetLayer(Layer.TopName), element);
-            board.Place(board.GetLayer(Layer.TopStopName), element);
-            board.Place(board.GetLayer(Layer.BottomName), element);
-            board.Place(board.GetLayer(Layer.BottomStopName), element);
-
-            return element;
+            LayerSet layerSet = new LayerSet(Layer.PadsName, Layer.DrillsName, Layer.TopName, Layer.TopStopName, Layer.BottomName, Layer.BottomStopName);
+            return new ThPadElement(name, layerSet, position, rotation, size, shape, drill);
         }
 
         /// <summary>
@@ -448,16 +441,13 @@
 
             int layerNum = GetAttributeAsInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
+            LayerSet layerSet = new LayerSet(layerName);
+            if (cream) 
+                layerSet = layerSet.Union(new LayerSet(Layer.TopCreamName));
+            if (stop) 
+                layerSet = layerSet.Union(new LayerSet(Layer.TopStopName));
 
-            BoardElement element = new SmdPadElement(name, position, size, rotation, roundness);
-            board.Place(board.GetLayer(layerName), element);
-            board.Place(board.GetLayer(Layer.PadsName), element);
-            if (cream)
-                board.Place(board.GetLayer(Layer.TopCreamName), element);
-            if (stop)
-                board.Place(board.GetLayer(Layer.TopStopName), element);
-
-            return element;
+            return new SmdPadElement(name, layerSet, position, size, rotation, roundness);
         }
 
         /// <summary>
@@ -496,15 +486,16 @@
                     break;
             }
 
-            List<Layer> layers = new List<Layer>();
-            BoardElement element = new ViaElement(position, size, drill, shape);
+            LayerSet layerSet = new LayerSet(Layer.ViasName, Layer.DrillsName);
+            BoardElement element = new ViaElement(layerSet, position, size, drill, shape);
 
-            foreach(int layerNum in layerNums) {
+            List<Layer> layers = new List<Layer>();
+            foreach (int layerNum in layerNums) {
                 string layerName = GetLayerName(layerNum);
-                board.Place(board.GetLayer(layerName), element);
+                //board.Place(board.GetLayer(layerName), element);
             }
-            board.Place(board.GetLayer(Layer.ViasName), element);
-            board.Place(board.GetLayer(Layer.DrillsName), element);
+            //board.Place(board.GetLayer(Layer.ViasName), element);
+            //board.Place(board.GetLayer(Layer.DrillsName), element);
 
             return element;
         }
@@ -540,11 +531,10 @@
 
             int layerNum = GetAttributeAsInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
+            LayerSet layerSet = new LayerSet(layerName);
 
-            TextElement element = new TextElement(position, rotation, height, thickness, horizontalAlign, verticalAlign);
+            TextElement element = new TextElement(layerSet, position, rotation, height, thickness, horizontalAlign, verticalAlign);
             element.Value = value;
-
-            board.Place(board.GetLayer(layerName), element);
 
             return element;
         }
@@ -575,14 +565,13 @@
 
             int layerNum = GetAttributeAsInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
+            LayerSet layerSet = new LayerSet(layerName);
 
             BoardElement element;
             if (angle.IsZero)
-                element = new LineElement(p1, p2, thickness, lineCap);
+                element = new LineElement(layerSet, p1, p2, thickness, lineCap);
             else
-                element = new ArcElement(p1, p2, thickness, angle, lineCap);
-
-            board.Place(board.GetLayer(layerName), element);
+                element = new ArcElement(layerSet, p1, p2, thickness, angle, lineCap);
 
             return element;
         }
@@ -618,10 +607,9 @@
 
             int layerNum = GetAttributeAsInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
+            LayerSet layerSet = new LayerSet(layerName);
 
-            BoardElement element = new RectangleElement(position, size, Ratio.Zero, rotation, thickness, thickness == 0);
-
-            board.Place(board.GetLayer(layerName), element);
+            BoardElement element = new RectangleElement(layerSet, position, size, Ratio.Zero, rotation, thickness, thickness == 0);
 
             return element;
         }
@@ -652,10 +640,9 @@
 
             int layerNum = GetAttributeAsInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
+            LayerSet layerSet = new LayerSet(layerName);
 
-            BoardElement element = new CircleElement(position, radius, thickness, thickness == 0);
-
-            board.Place(board.GetLayer(layerName), element);
+            BoardElement element = new CircleElement(layerSet, position, radius, thickness, thickness == 0);
 
             return element;
         }
@@ -680,6 +667,7 @@
 
             int layerNum = GetAttributeAsInteger(node, "layer");
             string layerName = GetLayerName(layerNum);
+            LayerSet layerSet = new LayerSet(layerName);
 
             List<RegionElement.Segment> segments = new List<RegionElement.Segment>();
             foreach (XmlNode vertexNode in node.SelectNodes("vertex")) {
@@ -699,9 +687,7 @@
                 segments.Add(new RegionElement.Segment(vertex, angle));
             }
 
-            BoardElement element = new RegionElement(thickness, true, clearance, segments);
-
-            board.Place(board.GetLayer(layerName), element);
+            BoardElement element = new RegionElement(layerSet, thickness, true, clearance, segments);
 
             return element;
         }
@@ -724,11 +710,8 @@
             //
             int drill = ParseNumber(GetAttributeAsString(node, "drill"));
 
-            HoleElement element = new HoleElement(position, drill);
-
-            board.Place(board.GetLayer(Layer.HolesName), element);
-            board.Place(board.GetLayer(Layer.TopName), element);
-            board.Place(board.GetLayer(Layer.BottomName), element);
+            LayerSet layerSet = new LayerSet(Layer.HolesName, Layer.TopName, Layer.BottomName);
+            HoleElement element = new HoleElement(layerSet, position, drill);
 
             return element;
         }

@@ -23,13 +23,14 @@
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="startPosition">La posicio inicial.</param>
         /// <param name="endPosition">La posicio final.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="lineCap">Forma dels extrems de linia.</param>
         /// 
-        public LineElement(Point startPosition, Point endPosition, int thickness, LineCapStyle lineCap) :
-            base() {
+        public LineElement(LayerSet layerSet, Point startPosition, Point endPosition, int thickness, LineCapStyle lineCap) :
+            base(layerSet) {
 
             if (thickness < 0)
                 throw new ArgumentOutOfRangeException("thickness");

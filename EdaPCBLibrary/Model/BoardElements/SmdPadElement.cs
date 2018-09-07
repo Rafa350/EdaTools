@@ -18,13 +18,14 @@
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="name">Nom del pad.</param>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="position">Posicio.</param>
         /// <param name="size">Tamany</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="roundness">Percentatge d'arrodoniment de les cantonades.</param>
         /// 
-        public SmdPadElement(string name, Point position, Size size, Angle rotation, Ratio roundness) :
-            base(name, position, rotation) {
+        public SmdPadElement(string name, LayerSet layerSet, Point position, Size size, Angle rotation, Ratio roundness) :
+            base(name, layerSet, position, rotation) {
 
             this.size = size;
             this.roundness = roundness;

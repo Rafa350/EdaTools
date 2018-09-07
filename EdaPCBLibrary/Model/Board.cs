@@ -329,7 +329,7 @@
         /// <param name="layer">La capa.</param>
         /// <param name="element">El element.</param>
         /// 
-        public void Place(Layer layer, BoardElement element) {
+        /*public void Place(Layer layer, BoardElement element) {
 
             if (layer == null)
                 throw new ArgumentNullException("layer");
@@ -363,24 +363,37 @@
             if (!layerSet.Add(layer))
                 throw new InvalidOperationException(
                     String.Format("El elemento ya esta contenido en la capa '{0}'.", layer.Name));
-        }
+        }*/
 
-        public void Unplace(BoardElement element) {
+        /*public void Unplace(BoardElement element) {
 
-        }
+        }*/
 
         /// <summary>
         /// Obte la coleccio d'elements d'una capa.
         /// </summary>
         /// <param name="layer">La capa.</param>
-        /// <returns>La coleccio d'elements o null si no n'hi ha</returns>
+        /// <returns>La coleccio d'elements.</returns>
         /// 
         public IEnumerable<BoardElement> GetElements(Layer layer) {
 
             if (layer == null)
                 throw new ArgumentNullException("layer");
 
-            if (!layers.Contains(layer))
+            List<BoardElement> list = new List<BoardElement>();
+
+            foreach (var element in elements)
+                if (element.IsOnLayer(layer))
+                    list.Add(element);
+
+            foreach (var block in blocks)
+                foreach (var element in block.Elements)
+                    if (element.IsOnLayer(layer))
+                        list.Add(element);
+
+            return list;
+
+/*            if (!layers.Contains(layer))
                 throw new InvalidOperationException(
                     String.Format("La capa '{0}', no esta asignada a esta placa.", layer.Name));
 
@@ -388,17 +401,30 @@
             if (elementsOfLayer.TryGetValue(layer, out elementSet))
                 return elementSet;
             else
-                return null;
+                return null;*/
         }
 
         /// <summary>
         /// Obte la coleccio de capes d'un element.
         /// </summary>
         /// <param name="element">El element.</param>
-        /// <returns>La coleccio de capes o null si n'hi ha.</returns>
+        /// <returns>La coleccio de capes.</returns>
         /// 
         public IEnumerable<Layer> GetLayers(BoardElement element) {
 
+            if (element == null)
+                throw new ArgumentNullException("element");
+
+            List<Layer> list = new List<Layer>();
+
+            foreach (var layerId in element.LayerSet) {
+                Layer layer = GetLayer(layerId, false);
+                if (layer != null)
+                    list.Add(layer);
+            }
+
+            return list;
+            /*
             if (element == null)
                 throw new ArgumentNullException("element");
 
@@ -406,7 +432,7 @@
             if (layersOfElement.TryGetValue(element, out layerSet))
                 return layerSet;
             else
-                return null;
+                return null;*/
         }
 
         /// <summary>
@@ -416,7 +442,7 @@
         /// <param name="layer">La capa.</param>
         /// <returns>True si pertany, false en cas contrari.</returns>
         /// 
-        public bool IsOnLayer(BoardElement element, Layer layer) {
+        /*public bool IsOnLayer(BoardElement element, Layer layer) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
@@ -424,12 +450,15 @@
             if (layer == null)
                 throw new ArgumentNullException("layer");
 
+            return element.LayerSet.Contains(layer.Name);
+            
             HashSet<Layer> layerCollection;
             if (layersOfElement.TryGetValue(element, out layerCollection))
                 return layerCollection.Contains(layer);
 
             return false;
-        }
+            
+        }*/
 
         /// <summary>
         /// Comprova si un element pertany a qualsevol capa de les especificades.
@@ -438,14 +467,14 @@
         /// <param name="layers">La coleccio de capes a verificar.</param>
         /// <returns>True si pertany a qualsevol de les capes, false si no pertany a cap.</returns>
         /// 
-        public bool IsOnAnyLayer(BoardElement element, IEnumerable<Layer> layers) {
+        /*public bool IsOnAnyLayer(BoardElement element, IEnumerable<Layer> layers) {
 
             HashSet<Layer> layerCollection;
             if (layersOfElement.TryGetValue(element, out layerCollection)) 
                 return layerCollection.Overlaps(layers);
 
             return false;
-        }
+        }*/
         #endregion
 
         #region Metodes de gestio de les senyals
@@ -647,7 +676,7 @@
 
             // Si el poligon no es troba en la capa d'interes, no cal fer res
             //
-            if (IsOnLayer(region, layer)) {
+            if (region.IsOnLayer(layer)) {
 
                 // Obte el poligon de la regio i el transforma si s'escau
                 //
@@ -674,7 +703,7 @@
 
                             // El element es en la mateixa capa que la regio
                             //
-                            if (IsOnLayer(element, layer)) {
+                            if (element.IsOnLayer(layer)) {
 
                                 // Si no esta en la mateixa senyal que la regio, genera un forat.
                                 //
@@ -687,14 +716,14 @@
 
                             // El element esta el la capa restrict
                             //
-                            else if (IsOnLayer(element, restrictLayer)) {
+                            else if (element.IsOnLayer(restrictLayer)) {
                                 Polygon elementPolygon = element.GetPolygon(restrictLayer.Side);
                                 holePolygons.Add(elementPolygon);
                             }
 
                             // El element esta el la capa profile
                             //
-                            else if (IsOnLayer(element, profileLayer)) {
+                            else if (element.IsOnLayer(profileLayer)) {
                                 Polygon elementPolygon = element.GetOutlinePolygon(profileLayer.Side, 250000);
                                 holePolygons.Add(elementPolygon);
                             }
@@ -712,7 +741,7 @@
                         foreach (var element in part.Elements) {
 
                             if ((element != region) &&
-                                (IsOnLayer(element, layer) || IsOnLayer(element, restrictLayer))) {
+                                (element.IsOnLayer(layer) || element.IsOnLayer(restrictLayer))) {
 
                                 // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
                                 //

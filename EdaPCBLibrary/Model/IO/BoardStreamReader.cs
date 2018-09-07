@@ -165,14 +165,14 @@
             // Obte els atributs de la capa
             //
             string name = rd.AttributeAsString("name");
-            BoardSide side = ParseEnumAttribute("side", BoardSide.Unknown);
-            LayerFunction function = ParseEnumAttribute("function", LayerFunction.Unknown);
-            Color color = ParseColorAttribute("color", new Color(128, 128, 128));
-            bool isVisible = ParseBoolAttribute("isVisible", true);
+            BoardSide side = rd.AttributeAsEnum<BoardSide>("side", BoardSide.Unknown);
+            LayerFunction function = rd.AttributeAsEnum<LayerFunction>("function", LayerFunction.Unknown);
+            Color color = rd.AttributeAsColor("color");
+            bool visible = rd.AttributeAsBoolean("visible");
 
             // Crea la capa i l'afeigeig a la placa.
             //
-            Layer layer = new Layer(name, side, function, color, isVisible);
+            Layer layer = new Layer(name, side, function, color, visible);
             board.AddLayer(layer);
 
             // Llegeix el tag final
@@ -473,7 +473,7 @@
             string name = rd.AttributeAsString("name");
             Point position = ParsePointAttribute("position");
             Angle rotation = ParseAngleAttribute("rotation");
-            BoardSide side = ParseEnumAttribute("side", BoardSide.Top);
+            BoardSide side = rd.AttributeAsEnum<BoardSide>("side", BoardSide.Top);
             string blockName = rd.AttributeAsString("block");
 
             // Crea l'objecte i l'afegeix a la placa
@@ -530,11 +530,11 @@
             //
             string name = rd.AttributeAsString("name");
             string value = rd.AttributeAsString("value");
-            bool isVisible = ParseBoolAttribute("visible", false);
+            bool visible = rd.AttributeAsBoolean("visible", false);
 
             // Crea l'objecte i l'afegeix a la llista
             //
-            PartAttribute attribute = new PartAttribute(name, value, isVisible);
+            PartAttribute attribute = new PartAttribute(name, value, visible);
             part.AddAttribute(attribute);
 
             if (rd.AttributeExists("position"))
@@ -547,10 +547,10 @@
                 attribute.Height = ParseNumberAttribute("height");
 
             if (rd.AttributeExists("horizontalAlign"))
-                attribute.HorizontalAlign = ParseEnumAttribute("horizontalAlign", HorizontalTextAlign.Left);
+                attribute.HorizontalAlign = rd.AttributeAsEnum<HorizontalTextAlign>("horizontalAlign", HorizontalTextAlign.Left);
 
             if (rd.AttributeExists("verticalAlign"))
-                attribute.VerticalAlign = ParseEnumAttribute("verticalAlign", VerticalTextAlign.Bottom);
+                attribute.VerticalAlign = rd.AttributeAsEnum<VerticalTextAlign>("verticalAlign", VerticalTextAlign.Bottom);
 
             rd.NextTag();
         }
@@ -607,22 +607,16 @@
 
             // Obte els atributs del element
             //
+            LayerSet layerSet = rd.AttributeAsLayerSet("layers");
             Point startPosition = ParsePointAttribute("startPosition");
             Point endPosition = ParsePointAttribute("endPosition");
             int thickness = ParseNumberAttribute("thickness");
-            LineElement.LineCapStyle lineCap = ParseEnumAttribute("lineCap", LineElement.LineCapStyle.Round);
-            string[] layerNames = rd.AttributeAsStrings("layers");
+            LineElement.LineCapStyle lineCap = rd.AttributeAsEnum<LineElement.LineCapStyle>("lineCap", LineElement.LineCapStyle.Round);
 
             // Crea l'element i l'afegeix a la llista
             //
-            LineElement line = new LineElement(startPosition, endPosition, thickness, lineCap);
+            LineElement line = new LineElement(layerSet, startPosition, endPosition, thickness, lineCap);
             elementList.Add(line);
-
-            // Asigna les capes al element
-            //
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), line);
 
             // Assigna la senyal 
             //
@@ -653,23 +647,17 @@
 
             // Obte els atributs de l'element
             //
+            LayerSet layerSet = rd.AttributeAsLayerSet("layers");
             Point startPosition = ParsePointAttribute("startPosition");
             Point endPosition = ParsePointAttribute("endPosition");
             int thickness = ParseNumberAttribute("thickness");
             Angle angle = ParseAngleAttribute("angle");
-            string[] layerNames = rd.AttributeAsStrings("layers");
-            LineElement.LineCapStyle lineCap = ParseEnumAttribute("lineCap", LineElement.LineCapStyle.Round);
+            LineElement.LineCapStyle lineCap = rd.AttributeAsEnum<LineElement.LineCapStyle>("lineCap", LineElement.LineCapStyle.Round);
 
             // Crea l'element i l'afegeix a la llista
             //
-            ArcElement arc = new ArcElement(startPosition, endPosition, thickness, angle, lineCap);
+            ArcElement arc = new ArcElement(layerSet, startPosition, endPosition, thickness, angle, lineCap);
             elementList.Add(arc);
-
-            // Asigna les capes a l'element
-            //
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), arc);
 
             // Assigna la senyal 
             //
@@ -698,24 +686,18 @@
 
             // Obte els atributs de l'element.
             //
+            LayerSet layerSet = rd.AttributeAsLayerSet("layers");
             Point position = ParsePointAttribute("position");
             Size size = ParseSizeAttribute("size");
             Angle rotation = ParseAngleAttribute("rotation");
             int thickness = ParseNumberAttribute("thickness");
-            bool filled = ParseBoolAttribute("filled", thickness == 0);
+            bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
             Ratio roundness = ParseRatioAttribute("roundness");
-            string[] layerNames = rd.AttributeAsStrings("layers");
 
             // Crea l'element i l'afegeix a la llista
             //
-            RectangleElement rectangle = new RectangleElement(position, size, roundness, rotation, thickness, filled);
+            RectangleElement rectangle = new RectangleElement(layerSet, position, size, roundness, rotation, thickness, filled);
             elementList.Add(rectangle);
-
-            // Asigna les capes a l'element
-            //
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), rectangle);
 
             rd.NextTag();
         }
@@ -734,22 +716,16 @@
 
             // Obte els atributs de l'element.
             //
+            LayerSet layerSet = rd.AttributeAsLayerSet("layers");
             Point position = ParsePointAttribute("position");
             int radius = ParseNumberAttribute("radius");
             int thickness = ParseNumberAttribute("thickness");
-            bool filled = ParseBoolAttribute("filled", thickness == 0);
-            string[] layerNames = rd.AttributeAsStrings("layers");
-
+            bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
+ 
             // Crea l'element i l'afegeix a la llista
             //
-            CircleElement circle = new CircleElement(position, radius, thickness, filled);
+            CircleElement circle = new CircleElement(layerSet, position, radius, thickness, filled);
             elementList.Add(circle);
-
-            // Asigna les capes a l'element
-            //
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), circle);
 
             rd.NextTag();
         }
@@ -768,21 +744,15 @@
 
             // Obte els atributs de l'element
             //
+            LayerSet layerSet = rd.AttributeAsLayerSet("layers");
             int thickness = ParseNumberAttribute("thickness");
             bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
             int clearance = ParseNumberAttribute("clearance");
-            string[] layerNames = rd.AttributeAsStrings("layers");
 
             // Crea l'element i l'afegeix a la llista
             //
-            RegionElement region = new RegionElement(thickness, filled, clearance);
+            RegionElement region = new RegionElement(layerSet, thickness, filled, clearance);
             elementList.Add(region);
-
-            // Asigna les capes a l'element
-            //
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), region);
 
             // Assigna la senyal 
             //
@@ -838,23 +808,17 @@
             // Obte els atributs de l'element
             //
             string name = rd.AttributeAsString("name");
+            LayerSet layerSet = rd.AttributeAsLayerSet("layers");
             Point position = ParsePointAttribute("position");
             int size = ParseNumberAttribute("size");
             Angle rotation = ParseAngleAttribute("rotation");
             int drill = ParseNumberAttribute("drill");
-            ThPadElement.ThPadShape shape = ParseEnumAttribute("shape", ThPadElement.ThPadShape.Circle);
-            string[] layerNames = rd.AttributeAsStrings("layers");
+            ThPadElement.ThPadShape shape = rd.AttributeAsEnum<ThPadElement.ThPadShape>("shape", ThPadElement.ThPadShape.Circle);
 
             // Crea l'element i l'afegeix a la llista
             //
-            ThPadElement pad = new ThPadElement(name, position, rotation, size, shape, drill);
+            ThPadElement pad = new ThPadElement(name, layerSet, position, rotation, size, shape, drill);
             elementList.Add(pad);
-
-            // Asigna les capes a l'element.
-            //
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), pad);
 
             // Assigna la senyal 
             //
@@ -886,22 +850,16 @@
             // Obte els atributs de l'element.
             //
             string name = rd.AttributeAsString("name");
+            LayerSet layerSet = rd.AttributeAsLayerSet("layers");
             Point position = ParsePointAttribute("position");
             Size size = ParseSizeAttribute("size");
             Angle rotation = ParseAngleAttribute("rotation");
             Ratio roundness = ParseRatioAttribute("roundness");
-            string[] layerNames = rd.AttributeAsStrings("layers");
 
             // Crea l'element i l'afegeix a la llista
             //
-            SmdPadElement pad = new SmdPadElement(name, position, size, rotation, roundness);
+            SmdPadElement pad = new SmdPadElement(name, layerSet, position, size, rotation, roundness);
             elementList.Add(pad);
-
-            // Asigna les capes a l'element
-            //
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), pad);
 
             // Assigna la senyal 
             //
@@ -930,22 +888,16 @@
 
             // Obte els atributs de l'element
             //
+            LayerSet layerSet = rd.AttributeAsLayerSet("layers");
             Point position = ParsePointAttribute("position");
             int size = ParseNumberAttribute("size");
             int drill = ParseNumberAttribute("drill");
-            ViaElement.ViaShape shape = ParseEnumAttribute("shape", ViaElement.ViaShape.Circle);
-            string[] layerNames = rd.AttributeAsStrings("layers");
+            ViaElement.ViaShape shape = rd.AttributeAsEnum<ViaElement.ViaShape>("shape", ViaElement.ViaShape.Circle);
 
             // Crtea l'element i l'afegeix a la llista
             //
-            ViaElement via = new ViaElement(position, size, drill, shape);
+            ViaElement via = new ViaElement(layerSet, position, size, drill, shape);
             elementList.Add(via);
-
-            // Asigna les capes a l'element
-            //
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), via);
 
             // Assigna la senyal 
             //
@@ -974,20 +926,14 @@
 
             // Obte els atributs de l'element
             //
+            LayerSet layerSet = rd.AttributeAsLayerSet("layers");
             Point position = ParsePointAttribute("position");
             int drill = ParseNumberAttribute("drill");
-            string[] layerNames = rd.AttributeAsStrings("layers");
 
             // Crea l'element i l'afegeix a la llista
             //
-            HoleElement hole = new HoleElement(position, drill);
+            HoleElement hole = new HoleElement(layerSet, position, drill);
             elementList.Add(hole);
-
-            // Asigna les capes a l'element
-            //
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), hole);
 
             rd.NextTag();
         }
@@ -1006,26 +952,20 @@
 
             // Obte els parametres de l'objecte
             //
+            LayerSet layerSet = rd.AttributeAsLayerSet("layers");
             Point position = ParsePointAttribute("position");
             Angle rotation = ParseAngleAttribute("rotation");
             int height = ParseNumberAttribute("height");
-            HorizontalTextAlign horizontalAlign = ParseEnumAttribute("horizontalAlign", HorizontalTextAlign.Left);
-            VerticalTextAlign verticalAlign = ParseEnumAttribute("verticalAlign", VerticalTextAlign.Bottom);
+            HorizontalTextAlign horizontalAlign = rd.AttributeAsEnum<HorizontalTextAlign>("horizontalAlign", HorizontalTextAlign.Left);
+            VerticalTextAlign verticalAlign = rd.AttributeAsEnum<VerticalTextAlign>("verticalAlign", VerticalTextAlign.Bottom);
             int thickness = ParseNumberAttribute("thickness");
             string value = rd.AttributeAsString("value");
-            string[] layerNames = rd.AttributeAsStrings("layers");
 
             // Crea l'objecte i l'afegeix al la llista
             //
-            TextElement text = new TextElement(position, rotation, height, thickness, horizontalAlign, verticalAlign);
+            TextElement text = new TextElement(layerSet, position, rotation, height, thickness, horizontalAlign, verticalAlign);
             elementList.Add(text);
             text.Value = value;
-
-            // Asigna les capes a l'element
-            //
-            if (layerNames != null)
-                foreach (string layerName in layerNames)
-                    board.Place(board.GetLayer(layerName), text);
 
             // Llegeix el final del node
             //
@@ -1113,48 +1053,6 @@
             }
             else
                 return defValue;
-        }
-
-        /// <summary>
-        /// Procesa un atribut de tipus 'Color'
-        /// </summary>
-        /// <param name="name">El nom de l'atribut.</param>
-        /// <param name="defColor">Valor per defecte.</param>
-        /// <returns>El valor de l'atribut, o el valor per defecte si no existeix.</returns>
-        /// 
-        private Color ParseColorAttribute(string name, Color defColor) {
-
-            if (rd.AttributeExists(name)) {
-                string s = rd.AttributeAsString(name);
-                return Color.Parse(s);
-            }
-            else
-                return defColor;
-        }
-
-        /// <summary>
-        /// Procesa un atribut de tipus 'bool'
-        /// </summary>
-        /// <param name="name">En nom de l'atribut.</param>
-        /// <param name="defValue">El valor per defecte.</param>
-        /// <returns>El valor de l'atribut, o el valor per defecte si no existeix.</returns>
-        /// 
-        private bool ParseBoolAttribute(string name, bool defValue) {
-
-            return rd.AttributeAsBoolean(name, defValue);
-        }
-
-        /// <summary>
-        /// Procesa un atribut de tipus 'enum'
-        /// </summary>
-        /// <typeparam name="T">El tipus enum</typeparam>
-        /// <param name="name">El nom de l'atribut.</param>
-        /// <param name="defValue">El valor per defecte.</param>
-        /// <returns>El valor de l'atribut, o el valor per defecte si no existeix.</returns>
-        /// 
-        private T ParseEnumAttribute<T>(string name, T defValue) {
-
-            return rd.AttributeAsEnum(name, defValue);
         }
     }
 }

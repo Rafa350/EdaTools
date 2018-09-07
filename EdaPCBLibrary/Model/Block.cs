@@ -10,6 +10,8 @@
     /// 
     public sealed class Block : IVisitable, IName {
 
+        private static Dictionary<BoardElement, Block> elementBlock = new Dictionary<BoardElement, Block>();
+
         private HashSet<BoardElement> elements;
         private Dictionary<string, PadElement> pads;
         private Dictionary<string, BlockAttribute> attributes;
@@ -62,6 +64,8 @@
             if (!elements.Add(element))
                 throw new InvalidOperationException("El elemento ya pertenece al bloque.");
 
+            elementBlock.Add(element, this);
+
             // Si l'element es un Pad, l'afegeix la la llista de pads.
             //
             PadElement pad = element as PadElement;
@@ -102,6 +106,8 @@
             elements.Remove(element);
             if (elements.Count == 0)
                 elements = null;
+
+            elementBlock.Remove(element);
 
             // Si l'element es un pad, tambe l'elimina de la llista de pads.
             //
@@ -193,6 +199,23 @@
                 return attribute;
 
             return null;
+        }
+
+        /// <summary>
+        /// Obte el bloc al que pertany l'element
+        /// </summary>
+        /// <param name="element">L'element.</param>
+        /// <returns>El bloc al que pertany, null si no pertany a cap.</returns>
+        /// 
+        public static Block GetBlock(BoardElement element) {
+
+            if (element == null)
+                throw new ArgumentNullException("element");
+
+            if (elementBlock.TryGetValue(element, out Block block))
+                return block;
+            else
+                return null;
         }
 
         /// <summary>

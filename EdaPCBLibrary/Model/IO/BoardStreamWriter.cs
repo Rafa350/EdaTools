@@ -6,7 +6,6 @@
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using MikroPic.EdaTools.v1.Xml;
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using System.Xml;
@@ -17,7 +16,7 @@
     /// 
     public sealed class BoardStreamWriter {
 
-        private Stream stream;
+        private readonly Stream stream;
 
         private class Visitor : DefaultVisitor {
 
@@ -57,7 +56,7 @@
 
                 wr.WriteStartElement("line");
 
-                wr.WriteAttribute("layers", GetLayerNames(line));
+                wr.WriteAttribute("layers", line.LayerSet);
                 wr.WriteAttribute("startPosition", line.StartPosition);
                 wr.WriteAttribute("endPosition", line.EndPosition);
                 if (line.Thickness > 0)
@@ -81,7 +80,7 @@
 
                 wr.WriteStartElement("arc");
 
-                wr.WriteAttribute("layers", GetLayerNames(arc));
+                wr.WriteAttribute("layers", arc.LayerSet);
                 wr.WriteAttribute("startPosition", arc.StartPosition);
                 wr.WriteAttribute("endPosition", arc.EndPosition);
                 wr.WriteAttribute("angle", arc.Angle);
@@ -106,7 +105,7 @@
 
                 wr.WriteStartElement("rectangle");
 
-                wr.WriteAttribute("layers", GetLayerNames(rectangle));
+                wr.WriteAttribute("layers", rectangle.LayerSet);
                 wr.WriteAttribute("position", rectangle.Position);
                 wr.WriteAttribute("size", rectangle.Size);
                 if (!rectangle.Rotation.IsZero)
@@ -129,7 +128,7 @@
 
                 wr.WriteStartElement("circle");
 
-                wr.WriteAttribute("layers", GetLayerNames(circle));
+                wr.WriteAttribute("layers", circle.LayerSet);
                 wr.WriteAttribute("position", circle.Position);
                 wr.WriteAttribute("radius", FormatNumber(circle.Radius));
                 if (circle.Thickness > 0) {
@@ -150,7 +149,7 @@
 
                 wr.WriteStartElement("text");
 
-                wr.WriteAttribute("layers", GetLayerNames(text));
+                wr.WriteAttribute("layers", text.LayerSet);
                 wr.WriteAttribute("position", text.Position);
                 if (!text.Rotation.IsZero)
                     wr.WriteAttribute("rotation", text.Rotation);
@@ -175,7 +174,7 @@
 
                 wr.WriteStartElement("hole");
 
-                wr.WriteAttribute("layers", GetLayerNames(hole));
+                wr.WriteAttribute("layers", hole.LayerSet);
                 wr.WriteAttribute("position", hole.Position);
                 wr.WriteAttribute("drill", FormatNumber(hole.Drill));
 
@@ -192,7 +191,7 @@
                 wr.WriteStartElement("spad");
 
                 wr.WriteAttribute("name", pad.Name);
-                wr.WriteAttribute("layers", GetLayerNames(pad));
+                wr.WriteAttribute("layers", pad.LayerSet);
                 wr.WriteAttribute("position", pad.Position);
                 if (!pad.Rotation.IsZero)
                     wr.WriteAttribute("rotation", pad.Rotation);
@@ -217,7 +216,7 @@
                 wr.WriteStartElement("tpad");
 
                 wr.WriteAttribute("name", pad.Name);
-                wr.WriteAttribute("layers", GetLayerNames(pad));
+                wr.WriteAttribute("layers", pad.LayerSet);
                 wr.WriteAttribute("position", pad.Position);
                 if (!pad.Rotation.IsZero)
                     wr.WriteAttribute("rotation", pad.Rotation);
@@ -286,7 +285,7 @@
 
                 wr.WriteStartElement("region");
 
-                wr.WriteAttribute("layers", GetLayerNames(region));
+                wr.WriteAttribute("layers", region.LayerSet);
                 if (region.Thickness > 0) {
                     wr.WriteAttribute("thickness", FormatNumber(region.Thickness));
                     if (region.Filled)
@@ -377,7 +376,7 @@
                 wr.WriteStartElement("via");
 
                 wr.WriteAttribute("position", via.Position);
-                wr.WriteAttribute("layers", GetLayerNames(via));
+                wr.WriteAttribute("layers", via.LayerSet);
                 wr.WriteAttribute("drill", FormatNumber(via.Drill));
                 wr.WriteAttribute("outerSize", FormatNumber(via.OuterSize));
                 if (via.InnerSize != via.OuterSize)
@@ -440,10 +439,12 @@
 
                 wr.WriteAttribute("name", block.Name);
 
-                wr.WriteStartElement("elements");
-                foreach (BoardElement element in block.Elements)
-                    element.AcceptVisitor(this);
-                wr.WriteEndElement();
+                if (block.HasElements) {
+                    wr.WriteStartElement("elements");
+                    foreach (BoardElement element in block.Elements)
+                        element.AcceptVisitor(this);
+                    wr.WriteEndElement();
+                }
 
                 if (block.HasAttributes) {
                     wr.WriteStartElement("attributes");
@@ -507,19 +508,6 @@
                 }
 
                 wr.WriteEndElement();
-            }
-
-            private string[] GetLayerNames(BoardElement element) {
-
-                IEnumerable<Layer> layers = board.GetLayers(element);
-                if (layers != null) {
-                    List<String> names = new List<String>();
-                    foreach (Layer layer in layers)
-                        names.Add(layer.Name);
-                    return names.ToArray();
-                }
-                else
-                    return null;
             }
 
             /// <summary>

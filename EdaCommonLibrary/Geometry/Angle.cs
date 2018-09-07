@@ -242,7 +242,7 @@
         /// <summary>
         /// Escriu un atribut de tipus 'Angle'.
         /// </summary>
-        /// <param name="wr">El objecte 'XmlWriterAdapter'</param>
+        /// <param name="wr">L'objecte 'XmlWriterAdapter'</param>
         /// <param name="name">El nom de l'atribut.</param>
         /// <param name="angle">El valor a escriure.</param>
         /// 

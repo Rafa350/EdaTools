@@ -18,10 +18,11 @@
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="name">Nom del pad.</param>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="position">Posicio.</param>
         /// 
-        public PadElement(string name, Point position, Angle rotation) :
-            base() {
+        public PadElement(string name, LayerSet layerSet, Point position, Angle rotation) :
+            base(layerSet) {
 
             this.name = name;
             this.position = position;

@@ -6,16 +6,24 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
     
     <xs:element
+        name="document">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="panel" maxOccurs="unbounded" minOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="version" use="required" type="xs:string"/>
+            <xs:attribute name="documentType" use="required" type="xs:string"/>
+            <xs:attribute name="distanceUnits" use="required" type="distanceUnitsType"/>
+            <xs:attribute name="angleUnits" use="required" type="angleUnitsType"/>            
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element
         name="panel">
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="elements" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
-            <xs:attribute name="version" use="required" type="xs:string"/>
-            <xs:attribute name="distanceUnits" use="required" type="distanceUnitsType"/>
-            <xs:attribute name="angleUnits" use="required" type="angleUnitsType"/>
-            <xs:attribute name="position" use="optional" type="pointType"/>
-            <xs:attribute name="rotation" use="optional" type="xs:double"/>
         </xs:complexType>
     </xs:element>
     

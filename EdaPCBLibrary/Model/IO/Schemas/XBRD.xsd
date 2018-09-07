@@ -86,6 +86,7 @@
             <xs:attribute name="side" use="required" type="boardSideType"/>
             <xs:attribute name="function" use="required" type="layerFunctionType"/>
             <xs:attribute name="color" use="required" type="xs:string"/>
+            <xs:attribute name="visible" use="optional" type="xs:boolean" default="true"/>        
         </xs:complexType>
     </xs:element>
     
@@ -142,7 +143,7 @@
         <xs:complexType>
             <xs:attribute name="name" use="required" type="nameType"/>
             <xs:attribute name="value" use="required" type="xs:string"/>
-            <xs:attribute name="visible" use="optional" type="xs:boolean"/>
+            <xs:attribute name="visible" use="optional" type="xs:boolean" default="false"/>
             <xs:attribute name="position" use="optional" type="pointType"/>
             <xs:attribute name="rotation" use="optional" type="angleType"/>
             <xs:attribute name="height" use="optional" type="xs:double"/>

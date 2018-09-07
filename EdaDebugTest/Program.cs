@@ -1,15 +1,9 @@
 ﻿namespace EdaDebugTest {
 
-    using System;
-    using System.IO;
-    using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Geometry.Polygons.Infrastructure;
     using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.PanelElements;
-    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
     using MikroPic.EdaTools.v1.Pcb.Model.IO;
+    using MikroPic.EdaTools.v1.Pcb.Model.PanelElements;
+    using System.IO;
 
     class Program {
 
@@ -51,32 +45,11 @@
         private static Board GenerateBoard(Panel panel) {
 
             Board board = new Board();
-            board.AddLayer(new Layer(Layer.ProfileName, BoardSide.Unknown, LayerFunction.Unknown, Color.Parse("255, 255, 255, 255")));
 
-
-
-            List<Polygon> polygons = new List<Polygon>();
-            foreach (var element in panel.Elements) {
-                if (element is PlaceElement) {
-                    PlaceElement place = (PlaceElement)element;
-                    Polygon polygon = place.Board.GetOutlinePolygon();
-                    polygons.Add(polygon);
-                }
-            }
+            Panelizer panelizer = new Panelizer(board);
+            panelizer.Panelize(panel);
 
             return board;
-        }
-
-        private static void MergeLayers(Board dstBoard, Board srcBoard) {
-
-            // Genera les capes
-            //
-            foreach (Layer srcLayer in srcBoard.Layers) {
-                if (dstBoard.GetLayer(srcLayer.Name, false) == null) {
-                    Layer layer = new Layer(srcLayer.Name, srcLayer.Side, srcLayer.Function, srcLayer.Color, srcLayer.IsVisible);
-                    dstBoard.AddLayer(layer);
-                }
-            }
         }
     }
 }

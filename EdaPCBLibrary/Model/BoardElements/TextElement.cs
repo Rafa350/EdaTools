@@ -22,6 +22,7 @@
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="position">Posicio.</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="height">Alçada de lletra.</param>
@@ -29,10 +30,10 @@
         /// <param name="horizontalAlign">Aliniacio horitzontal.</param>
         /// <param name="verticalAlign">Aliniacio vertical.</param>
         /// 
-        public TextElement(Point position, Angle rotation, int height, int thickness, 
+        public TextElement(LayerSet layerSet, Point position, Angle rotation, int height, int thickness, 
             HorizontalTextAlign horizontalAlign = HorizontalTextAlign.Left,
             VerticalTextAlign verticalAlign = VerticalTextAlign.Bottom):
-            base() {
+            base(layerSet) {
 
             if (height <= 0)
                 throw new ArgumentOutOfRangeException("height");

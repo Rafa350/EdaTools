@@ -10,7 +10,7 @@
     /// Clase que representa un pad throug hole
     /// </summary>
     /// 
-    public sealed class ThPadElement: PadElement {
+    public sealed class ThPadElement : PadElement {
 
         public enum ThPadShape {
             Square,
@@ -36,24 +36,49 @@
         /// Constructor del objecte.
         /// </summary>
         /// <param name="name">Nom.</param>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="position">Posicio.</param>
         /// <param name="rotation">Orientacio.</param>
         /// <param name="size">Tamany/diametre del pad.</param>
         /// <param name="shape">Diametre del forat.</param>
         /// <param name="drill">Forma de la corona.</param>
         /// 
-        public ThPadElement(string name, Point position, Angle rotation, int size, ThPadShape shape, int drill):
-            base(name, position, rotation) {
+        public ThPadElement(string name, LayerSet layerSet, Point position, Angle rotation, int size, ThPadShape shape, int drill) :
+            this(name, layerSet, position, rotation, size, size, size, shape, drill) { 
+        }
 
-            if (size < 0)
-                throw new ArgumentOutOfRangeException("size");
+        /// <summary>
+        /// Constructor del objecte.
+        /// </summary>
+        /// <param name="name">Nom.</param>
+        /// <param name="layerSet">El conjunt de capes.</param>
+        /// <param name="position">Posicio.</param>
+        /// <param name="rotation">Orientacio.</param>
+        /// <param name="topSize">Tamany/diametre del pad.</param>
+        /// <param name="innerSize">Tamany/diametre del pad.</param>
+        /// <param name="innerSize">Tamany/diametre del pad.</param>
+        /// <param name="bottom">Diametre del forat.</param>
+        /// <param name="drill">Forma de la corona.</param>
+        /// 
+        public ThPadElement(string name, LayerSet layerSet, Point position, Angle rotation, int topSize, int innerSize,
+            int bottomSize, ThPadShape shape, int drill):
+            base(name, layerSet, position, rotation) {
+
+            if (topSize < 0)
+                throw new ArgumentOutOfRangeException("topSize");
+
+            if (innerSize < 0)
+                throw new ArgumentOutOfRangeException("innerSize");
+
+            if (bottomSize < 0)
+                throw new ArgumentOutOfRangeException("bottomSize");
 
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException("drill");
 
-            this.topSize = size;
-            this.innerSize = size;
-            this.bottomSize = size;
+            this.topSize = topSize;
+            this.innerSize = innerSize;
+            this.bottomSize = bottomSize;
             this.drill = drill;
             this.shape = shape;
         }

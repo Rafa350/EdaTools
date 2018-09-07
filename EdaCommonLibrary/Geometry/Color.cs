@@ -125,5 +125,18 @@
             string s = color.ToString(CultureInfo.InvariantCulture);
             wr.WriteAttribute(name, s);
         }
+
+        /// <summary>
+        /// Llegeix un atribut de tipus 'Color'
+        /// </summary>
+        /// <param name="rd">L'objecte 'XmlReaderAdapter'.</param>
+        /// <param name="name">El nom de l'atribut.</param>
+        /// <returns>El valor lleigit.</returns>
+        /// 
+        public static Color AttributeAsColor(this XmlReaderAdapter rd, string name) {
+
+            string s = rd.AttributeAsString(name);
+            return Color.Parse(s);
+        }
     }
 }
