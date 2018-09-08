@@ -11,7 +11,7 @@
     /// </summary>
     /// 
     public enum BoardSide {
-        Unknown,
+        None,
         Top,
         Inner,
         Bottom
@@ -23,11 +23,9 @@
     /// 
     public sealed class Board: IVisitable {
 
-        private static Dictionary<Block, Board> blockBoard = new Dictionary<Block, Board>();
-
         // Capes
-        private readonly HashSet<Layer> layers = new HashSet<Layer>();
-        private readonly Dictionary<Layer, Layer> layerPairs = new Dictionary<Layer, Layer>();
+        private readonly Dictionary<LayerId, Layer> layers = new Dictionary<LayerId, Layer>();
+        private Layer outlineLayer = null;
 
         // Senyals
         private readonly HashSet<Signal> signals = new HashSet<Signal>();
@@ -35,7 +33,8 @@
         private readonly Dictionary<Tuple<IConectable, Part>, Signal> signalOfItem = new Dictionary<Tuple<IConectable, Part>, Signal>();
 
         // Blocs
-        private readonly HashSet<Block> blocks = new HashSet<Block>();
+        private static Dictionary<Block, Board> blockBoard = new Dictionary<Block, Board>();
+        private readonly Dictionary<string, Block> blocks = new Dictionary<string, Block>();
 
         // Elements
         private readonly HashSet<BoardElement> elements = new HashSet<BoardElement>();
@@ -174,10 +173,11 @@
             if (block == null)
                 throw new ArgumentNullException("block");
 
-            if (!blocks.Add(block))
+            if (blocks.ContainsKey(block.Name))
                 throw new InvalidOperationException(
                     String.Format("El bloque '{0}', ya esta asignado a esta placa.", block.Name));
 
+            blocks.Add(block.Name, block);
             blockBoard.Add(block, this);
         }
 
@@ -191,10 +191,11 @@
             if (block == null)
                 throw new ArgumentNullException("block");
 
-            if (!blocks.Remove(block))
+            if (!blocks.ContainsKey(block.Name))
                 throw new InvalidOperationException(
-                    String.Format("El bloque '{0}', no esta asignado a esta placa.", block.Name));
+                    String.Format("No se encontro el bloque '{0}'.", block.Name));
 
+            blocks.Remove(block.Name);
             blockBoard.Remove(block);
         }
 
@@ -210,15 +211,15 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            foreach (var block in blocks)
-                if (block.Name == name)
-                    return block;
+            if (blocks.TryGetValue(name, out Block block))
+                return block;
 
-            if (throwOnError)
+            else if (throwOnError)
                 throw new InvalidOperationException(
                     String.Format("El bloque '{0}', no esta asignado a esta placa.", name));
 
-            return null;
+            else
+                return null;
         }
 
         /// <summary>
@@ -234,6 +235,7 @@
 
             if (blockBoard.TryGetValue(block, out Board board))
                 return board;
+
             else
                 return null;
         }
@@ -252,9 +254,18 @@
             if (layer == null)
                 throw new ArgumentNullException("layer");
 
-            if (!layers.Add(layer))
+            if (layers.ContainsKey(layer.Id))
                 throw new InvalidOperationException(
-                    String.Format("La capa '{0}', ya esta asignada a esta placa.", layer.Name));
+                    String.Format("La capa '{0}', ya esta asignada a esta placa.", layer.Id.FullName));
+
+            layers.Add(layer.Id, layer);
+
+            if (layer.Function == LayerFunction.Outline) {
+                if (outlineLayer == null)
+                    outlineLayer = layer;
+                else
+                    throw new InvalidOperationException("Solo puede haber una capa con la funcion 'Outline'");
+            }
         }
 
         /// <summary>
@@ -262,100 +273,39 @@
         /// </summary>
         /// <param name="layer">La capa a eliminar.</param>
         /// 
-        public void  RemoveLayer(Layer layer) {
+        public void RemoveLayer(Layer layer) {
 
             if (layer == null)
                 throw new ArgumentNullException("layer");
 
-            if (!layers.Contains(layer))
+            if (!layers.ContainsKey(layer.Id))
                 throw new InvalidOperationException(
-                    String.Format("La capa '{0}', no pertenece a la placa.", layer.Name));
+                    String.Format("No se encontro la capa '{0}'.", layer.Id.FullName));
 
-            throw new NotImplementedException();
-        }
+            layers.Remove(layer.Id);
 
-        /// <summary>
-        /// Defineix un parell de capes.
-        /// </summary>
-        /// <param name="layer1">Primera capa del parell.</param>
-        /// <param name="layer2">Segona capa del parell.</param>
-        /// 
-        public void DefinePair(Layer layer1, Layer layer2) {
-
-            if (layer1 == null)
-                throw new ArgumentNullException("layer1");
-
-            if (layer2 == null)
-                throw new ArgumentNullException("layer2");
-
-            if (layerPairs.ContainsKey(layer1))
-                throw new InvalidOperationException(
-                    String.Format("La capa '{0}', ya esta apareada.", layer1.Name));
-
-            if (layerPairs.ContainsKey(layer2))
-                throw new InvalidOperationException(
-                    String.Format("La capa '{0}', ya esta apareada.", layer2.Name));
-
-            layerPairs.Add(layer1, layer2);
-            layerPairs.Add(layer2, layer1);
-        }
-
-
-        /// <summary>
-        /// Anula la definicio de parell de capes
-        /// </summary>
-        /// <param name="layer1">Primera capa del parell.</param>
-        /// <param name="layer2">Segona capa del parell.</param>
-        /// 
-        public void UndefinePair(Layer layer1, Layer layer2) {
-
-            if (layer1 == null)
-                throw new ArgumentNullException("layer1");
-
-            if (layer2 == null)
-                throw new ArgumentNullException("layer2");
-        }
-
-        /// <summary>
-        /// Obte la capa aparellada d'una capa deperminada.
-        /// </summary>
-        /// <param name="layer">La capa.</param>
-        /// <returns>La capa aparellada.</returns>
-        /// 
-        public Layer GetLayerPair(Layer layer, bool throwOnError = false) {
-
-            if (layer == null)
-                throw new ArgumentNullException("layer");
-
-            Layer pairLayer;
-            if (!layerPairs.TryGetValue(layer, out pairLayer)) {
-                if (throwOnError)
-                    throw new InvalidOperationException(
-                        String.Format("La capa '{0}', no esta apareada con otra capa.", layer.Name));
-                return null;
-            }
-            else
-                return pairLayer;
+            if (outlineLayer == layer)
+                outlineLayer = null;
         }
 
         /// <summary>
         /// Obte una capa pel seu nom
         /// </summary>
-        /// <param name="name">El nom de la capa.</param>
+        /// <param name="layerId">L'identificador de la capa.</param>
         /// <param name="throwOnError">True si cal generar una excepcio si no el troba.</param>
         /// <returns>La capa.</returns>
         /// 
-        public Layer GetLayer(string name, bool throwOnError = true) {
+        public Layer GetLayer(LayerId layerId, bool throwOnError = true) {
 
-            foreach (Layer layer in layers)
-                if (layer.Name == name)
-                    return layer;
+            if (layers.TryGetValue(layerId, out Layer layer))
+                return layer;
 
-            if (throwOnError)
+            else if (throwOnError)
                 throw new InvalidOperationException(
-                    String.Format("No se encontro la capa con el nombre '{0}'.", name));
+                    String.Format("No se encontro la capa '{0}'.", layerId.FullName));
 
-            return null;
+            else
+                return null;
         }
 
         /// <summary>
@@ -364,12 +314,12 @@
         /// <returns></returns>
         public IReadOnlyList<Layer> GetSignalLayers() {
 
-            List<Layer> layers = new List<Layer>();
-            foreach (var layer in this.layers) {
+            List<Layer> signalLayers = new List<Layer>();
+            foreach (var layer in layers.Values) {
                 if (layer.Function == LayerFunction.Signal)
-                    layers.Add(layer);
+                    signalLayers.Add(layer);
             }
-            return layers;
+            return signalLayers;
         }
 
         /// <summary>
@@ -391,7 +341,7 @@
                     list.Add(element);
 
             if (includeBlocks)
-                foreach (var block in blocks)
+                foreach (var block in blocks.Values)
                     foreach (var element in block.Elements)
                         if (element.IsOnLayer(layer))
                             list.Add(element);
@@ -592,12 +542,18 @@
         /// 
         public Polygon GetOutlinePolygon() {
 
-            IEnumerable<BoardElement> elements = GetElements(GetLayer(Layer.ProfileName));
+            // TODO: Utilitzar la capa en 'outlineLayer'
+
+            IEnumerable<BoardElement> elements = GetElements(GetLayer(Layer.ProfileId));
             List<Segment> segments = new List<Segment>();
             foreach (var element in elements) {
                 if (element is LineElement) {
                     LineElement line = (LineElement)element;
                     segments.Add(new Segment(line.StartPosition, line.EndPosition));
+                }
+                else if (element is ArcElement) {
+                    ArcElement arc = (ArcElement)element;
+                    segments.Add(new Segment(arc.StartPosition, arc.EndPosition));
                 }
             }
             return PolygonProcessor.CreateFromSegments(segments);
@@ -625,20 +581,20 @@
 
                 // Obte el poligon de la regio i el transforma si s'escau
                 //
-                Polygon regionPolygon = region.GetPolygon(layer.Side);
+                Polygon regionPolygon = region.GetPolygon(layer.Id.Side);
                 regionPolygon = regionPolygon.Transformed(transformation);
 
                 // Si estem en capes de senyal, cal generar els porus i termals
                 //
-                if ((layer.Name == Layer.TopName) || (layer.Name == Layer.BottomName)) {
+                // TODO: Utilitzar function == Signal
+                if ((layer.Id == Layer.TopId) || (layer.Id == Layer.BottomId)) {
 
                     Signal regionSignal = GetSignal(region, null, false);
 
                     int thicknessCompensation = 150000 + region.Thickness / 2;
                     List<Polygon> holePolygons = new List<Polygon>();
 
-                    Layer restrictLayer = GetLayer(layer.Side == BoardSide.Top ? Layer.TopRestrictName : Layer.BottomRestrictName);
-                    Layer profileLayer = GetLayer(Layer.ProfileName);
+                    Layer restrictLayer = GetLayer(layer.Id.Side == BoardSide.Top ? Layer.TopRestrictId : Layer.BottomRestrictId);
 
                     // Procesa els elements de la placa que es troben en la mateixa capa que 
                     // la regio, o en les capes restrict o profile.
@@ -655,7 +611,7 @@
                                 if (GetSignal(element, null, false) != regionSignal) {
                                     int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
                                     int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
-                                    Polygon elementPolygon = element.GetOutlinePolygon(layer.Side, clearance);
+                                    Polygon elementPolygon = element.GetOutlinePolygon(layer.Id.Side, clearance);
                                     holePolygons.Add(elementPolygon);
                                 }
                             }
@@ -663,14 +619,14 @@
                             // El element esta el la capa restrict
                             //
                             else if (element.IsOnLayer(restrictLayer)) {
-                                Polygon elementPolygon = element.GetPolygon(restrictLayer.Side);
+                                Polygon elementPolygon = element.GetPolygon(restrictLayer.Id.Side);
                                 holePolygons.Add(elementPolygon);
                             }
 
                             // El element esta el la capa profile
                             //
-                            else if (element.IsOnLayer(profileLayer)) {
-                                Polygon elementPolygon = element.GetOutlinePolygon(profileLayer.Side, 250000);
+                            else if (element.IsOnLayer(outlineLayer)) {
+                                Polygon elementPolygon = element.GetOutlinePolygon(BoardSide.None, 250000);
                                 holePolygons.Add(elementPolygon);
                             }
                         }
@@ -693,7 +649,7 @@
                                 //
                                 if (GetSignal(element, part, false) != regionSignal) {
                                     int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
-                                    Polygon outlinePolygon = element.GetOutlinePolygon(layer.Side, clearance);
+                                    Polygon outlinePolygon = element.GetOutlinePolygon(layer.Id.Side, clearance);
                                     outlinePolygon = outlinePolygon.Transformed(localTransformation);
                                     holePolygons.Add(outlinePolygon);
                                 }
@@ -703,7 +659,7 @@
                                 else if (element is PadElement) {
                                     int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
                                     int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
-                                    Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Side, clearance, 200000);
+                                    Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Id.Side, clearance, 200000);
                                     thermalPolygon = thermalPolygon.Transformed(localTransformation);
                                     for (int i = 0; i < thermalPolygon.Childs.Length; i++)
                                         holePolygons.Add(thermalPolygon.Childs[i]);
@@ -747,7 +703,7 @@
         /// 
         public Size Size {
             get {
-                Layer layer = GetLayer(Layer.ProfileName, false);
+                Layer layer = GetLayer(Layer.ProfileId, false);
                 if (layer != null) {
                     int minX = Int32.MaxValue;
                     int minY = Int32.MaxValue;
@@ -801,7 +757,7 @@
         /// 
         public IEnumerable<Block> Blocks {
             get {
-                return blocks;
+                return blocks.Values;
             }
         }
 
@@ -831,7 +787,7 @@
         /// 
         public IEnumerable<Layer> Layers {
             get {
-                return layers;
+                return layers.Values;
             }
         }
 

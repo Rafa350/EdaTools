@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using MikroPic.EdaTools.v1.Xml;
     using System;
@@ -10,52 +10,52 @@
     /// <summary>
     /// Objecte que representa un conjunt de capes. Es un objecte invariant.
     /// </summary>
-    public struct LayerSet: IEnumerable<string> {
+    public struct LayerSet: IEnumerable<LayerId> {
 
-        private readonly string[] data;
+        private readonly LayerId[] data;
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="name">Identificador de la capa.</param>
         /// 
-        public LayerSet(string name) {
+        public LayerSet(LayerId id) {
 
-            data = new string[1] { name };
+            data = new LayerId[1] { id };
         }
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="name1">Identificador de la primera capa.</param>
-        /// <param name="name2">Identificador de la segona capa.</param>
+        /// <param name="id1">Identificador de la primera capa.</param>
+        /// <param name="id2">Identificador de la segona capa.</param>
         /// 
-        public LayerSet(string name1, string name2) {
+        public LayerSet(LayerId id1, LayerId id2) {
 
-            data = new string[2] { name1, name2 };
+            data = new LayerId[2] { id1, id2 };
         }
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="name1">Identificador de la primera capa.</param>
-        /// <param name="name2">Identificador de la segona capa.</param>
-        /// <param name="name3">Identificador de la tercera capa.</param>
+        /// <param name="id1">Identificador de la primera capa.</param>
+        /// <param name="id2">Identificador de la segona capa.</param>
+        /// <param name="id3">Identificador de la tercera capa.</param>
         /// 
-        public LayerSet(string name1, string name2, string name3) {
+        public LayerSet(LayerId id1, LayerId id2, LayerId id3) {
 
-            data = new string[3] { name1, name2, name3 };
+            data = new LayerId[3] { id1, id2, id3 };
         }
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="names">Llista d'identificadors.</param>
+        /// <param name="ids">Llista d'identificadors.</param>
         /// 
-        public LayerSet(params string[] names) {
+        public LayerSet(params LayerId[] ids) {
 
-            data = new string[names.Length];
-            names.CopyTo(data, 0);
+            data = new LayerId[ids.Length];
+            ids.CopyTo(data, 0);
         }
 
         /// <summary>
@@ -65,20 +65,20 @@
         /// 
         public LayerSet(LayerSet other) {
 
-            data = new string[other.data.Length];
+            data = new LayerId[other.data.Length];
             other.data.CopyTo(data, 0);
         }
 
         /// <summary>
         /// Comprova si un identificador pertany al conjunt.
         /// </summary>
-        /// <param name="name">El identificadord e la capa.</param>
+        /// <param name="id">El identificadord e la capa.</param>
         /// <returns>True si pertany, false en cas contrari.</returns>
         /// 
-        public bool Contains(string name) {
+        public bool Contains(LayerId id) {
 
             foreach (var i in data)
-                if (name == i)
+                if (id == i)
                     return true;
 
             return false;
@@ -93,7 +93,7 @@
         /// 
         public static LayerSet operator +(LayerSet a, LayerSet b) {
 
-            string[] s = new string[a.data.Length + b.data.Length];
+            LayerId[] s = new LayerId[a.data.Length + b.data.Length];
             a.data.CopyTo(s, 0);
             b.data.CopyTo(s, a.data.Length);
             return new LayerSet(s);
@@ -106,9 +106,9 @@
         /// <param name="b">Segon operand.</param>
         /// <returns>El resultat de l'operacio.</returns>
         /// 
-        public static LayerSet operator +(LayerSet a, string b) {
+        public static LayerSet operator +(LayerSet a, LayerId b) {
 
-            string[] s = new string[a.data.Length + 1];
+            LayerId[] s = new LayerId[a.data.Length + 1];
             a.data.CopyTo(s, 0);
             s[a.data.Length] = b;
             return new LayerSet(s);
@@ -151,17 +151,28 @@
         /// 
         public static LayerSet Parse(string s) {
 
-            string[] ss = s.Split(',');
-            return new LayerSet(ss);
+            try {
+                string[] ss = s.Split(',');
+                LayerId[] ids = new LayerId[ss.Length];
+                for (int i = 0; i < ss.Length; i++)
+                    ids[i] = LayerId.Parse(ss[i]);
+                return new LayerSet(ids);
+            }
+            catch (Exception ex) {
+                throw new InvalidOperationException(
+                    String.Format("No se pudo convertir el texto '{0}' a 'LayerSet'", s),
+                    ex);
+            }
         }
 
-        public IEnumerator<string> GetEnumerator() {
+        public IEnumerator<LayerId> GetEnumerator() {
 
-            return ((IEnumerable<string>)data).GetEnumerator();
+            return ((IEnumerable<LayerId>)data).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() {
-            return ((IEnumerable<string>)data).GetEnumerator();
+
+            return ((IEnumerable<LayerId>)data).GetEnumerator();
         }
     }
 

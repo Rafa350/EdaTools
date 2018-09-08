@@ -118,11 +118,6 @@
             ParseLayersNode(board);
             rd.NextTag();
 
-            if (rd.TagName == "layerPairs") {
-                ParseLayerPairsNode(board);
-                rd.NextTag();
-            }
-
             if (rd.TagName == "signals") {
                 ParseSignalsNode(board);
                 rd.NextTag();
@@ -170,66 +165,18 @@
 
             // Obte els atributs de la capa
             //
-            string name = rd.AttributeAsString("name");
-            BoardSide side = rd.AttributeAsEnum("side", BoardSide.Unknown);
+            LayerId layerId = rd.AttributeAsLayerId("id");
             LayerFunction function = rd.AttributeAsEnum<LayerFunction>("function", LayerFunction.Unknown);
             Color color = rd.AttributeAsColor("color");
             bool visible = rd.AttributeAsBoolean("visible");
 
             // Crea la capa i l'afeigeig a la placa.
             //
-            Layer layer = new Layer(name, side, function, color, visible);
+            Layer layer = new Layer(layerId, function, color, visible);
             board.AddLayer(layer);
 
             // Llegeix el tag final
             //
-            rd.NextTag();
-        }
-
-        /// <summary>
-        /// Procesa el node 'layerPairs'.
-        /// </summary>
-        /// <param name="board">La placa.</param>
-        /// 
-        private void ParseLayerPairsNode(Board board) {
-
-            // Comprova que el node sigui correcte
-            //
-            if (!rd.IsStartTag("layerPairs"))
-                throw new InvalidDataException("Se esperaba <layerPairs>");
-
-            while (rd.NextTag() && rd.IsStartTag("pair"))
-                ParsePairNode(board);
-        }
-
-        /// <summary>
-        /// Procesa el node 'pair'.
-        /// </summary>
-        /// <param name="board">La placa.</param>
-        /// 
-        private void ParsePairNode(Board board) {
-
-            // Comprova que el node sigui correcte
-            //
-            if (!rd.IsStartTag("pair"))
-                throw new InvalidDataException("Se esperaba <pair>");
-
-            // Obte els atributs del parell de capes
-            //
-            string name1 = rd.AttributeAsString("layer1");
-            string name2 = rd.AttributeAsString("layer2");
-
-            // Defineix el parell de capes
-            //
-            Layer layer1 = board.GetLayer(name1);
-            Layer layer2 = board.GetLayer(name2);
-            try {
-                board.DefinePair(layer1, layer2);
-            }
-            catch {
-                // Ignora el error
-            }
-
             rd.NextTag();
         }
 

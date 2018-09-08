@@ -38,19 +38,25 @@
         }
 
         /// <summary>
-        /// Procesa una cadena per crear un objecte 'Point'
+        /// Procesa un text per crear un objecte 'Point'
         /// </summary>
-        /// <param name="s">La cadena a procesar.</param>
+        /// <param name="s">El text a procesar.</param>
         /// <param name="provider">Objecte proveidor de format.</param>
         /// <returns>L'objecte 'Point'</returns>
         /// 
         public static Point Parse(string s, IFormatProvider provider) {
 
-            string[] ss = s.Split(',');
-            int x = Int32.Parse(ss[0], provider);
-            int y = Int32.Parse(ss[1], provider);
+            try {
+                string[] ss = s.Split(',');
+                int x = Int32.Parse(ss[0], provider);
+                int y = Int32.Parse(ss[1], provider);
 
-            return new Point(x, y);
+                return new Point(x, y);
+            }
+            catch (Exception ex) {
+                throw new InvalidOperationException(
+                    String.Format("No se pudo convertir el texto '{0}' a 'Point'.", s), ex);
+            }
         }
 
         /// <summary>

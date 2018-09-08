@@ -234,35 +234,35 @@
         /// 
         public DrawingVisual CreateVisual() {
 
-            List<string> layerNames = new List<string>();
-            layerNames.Add(Layer.BottomNamesName);
-            layerNames.Add(Layer.BottomDocumentName);
-            layerNames.Add(Layer.BottomGlueName);
-            layerNames.Add(Layer.BottomKeepoutName);
-            layerNames.Add(Layer.BottomRestrictName);
-            layerNames.Add(Layer.BottomPlaceName);
-            layerNames.Add(Layer.BottomName);
-            layerNames.Add(Layer.ViaRestrictName);
-            layerNames.Add(Layer.TopName);
-            layerNames.Add(Layer.TopPlaceName);
-            layerNames.Add(Layer.TopRestrictName);
-            layerNames.Add(Layer.TopKeepoutName);
-            layerNames.Add(Layer.TopGlueName);
-            layerNames.Add(Layer.TopNamesName);
+            List<LayerId> layerIds = new List<LayerId>();
+            layerIds.Add(Layer.BottomNamesId);
+            layerIds.Add(Layer.BottomDocumentId);
+            layerIds.Add(Layer.BottomGlueId);
+            layerIds.Add(Layer.BottomKeepoutId);
+            layerIds.Add(Layer.BottomRestrictId);
+            layerIds.Add(Layer.BottomPlaceId);
+            layerIds.Add(Layer.BottomId);
+            layerIds.Add(Layer.ViaRestrictId);
+            layerIds.Add(Layer.TopId);
+            layerIds.Add(Layer.TopPlaceId);
+            layerIds.Add(Layer.TopRestrictId);
+            layerIds.Add(Layer.TopKeepoutId);
+            layerIds.Add(Layer.TopGlueId);
+            layerIds.Add(Layer.TopNamesId);
 
-            layerNames.Add(Layer.PadsName);
-            layerNames.Add(Layer.ViasName);
-            layerNames.Add(Layer.HolesName);
-            layerNames.Add(Layer.TopDocumentName);
+            layerIds.Add(Layer.PadsId);
+            layerIds.Add(Layer.ViasId);
+            layerIds.Add(Layer.HolesId);
+            layerIds.Add(Layer.TopDocumentId);
 
-            layerNames.Add(Layer.ProfileName);
+            layerIds.Add(Layer.ProfileId);
 
             VisualDrawer drawer = new VisualDrawer();
             DrawingVisual boardVisual = new DrawingVisual();
 
-            foreach (string layerName in layerNames) {
+            foreach (LayerId layerId in layerIds) {
 
-                Layer layer = board.GetLayer(layerName, false);
+                Layer layer = board.GetLayer(layerId, false);
                 if ((layer != null) && layer.IsVisible) {
 
                     DrawingVisual layerVisual = new DrawingVisual();

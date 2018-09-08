@@ -11,10 +11,14 @@
     /// </summary>
     public sealed class RegionElement: BoardElement, IConectable {
 
-        public struct Segment {
+        public class Segment {
 
             private Point position;
             private Angle angle;
+
+            public Segment() {
+
+            }
 
             public Segment(Point position, Angle angle) {
 
@@ -26,11 +30,17 @@
                 get {
                     return position;
                 }
+                set {
+                    position = value;
+                }
             }
 
             public Angle Angle {
                 get {
                     return angle;
+                }
+                set {
+                    angle = value;
                 }
             }
         }

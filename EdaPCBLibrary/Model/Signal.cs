@@ -23,6 +23,11 @@
             this.name = name;
         }
 
+        public Signal Clone() {
+
+            return new Signal(name);
+        }
+
         /// <summary>
         /// Accepta un visitador.
         /// </summary>

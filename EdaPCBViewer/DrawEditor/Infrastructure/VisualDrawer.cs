@@ -155,7 +155,7 @@
 
                 if (via.Shape == ViaElement.ViaShape.Circle) {
 
-                    int size = layer.Side == BoardSide.Inner ? via.InnerSize : via.OuterSize;
+                    int size = layer.Id.Side == BoardSide.Inner ? via.InnerSize : via.OuterSize;
                     int radius = (size + via.Drill) / 4;
                     SysPoint center = new SysPoint(via.Position.X, via.Position.Y);
 
@@ -165,7 +165,7 @@
 
                 else {
 
-                    Polygon polygon = via.GetPolygon(layer.Side);
+                    Polygon polygon = via.GetPolygon(layer.Id.Side);
 
                     Brush brush = GetBrush(color);
                     DrawPolygon(dc, null, brush, polygon);
@@ -215,8 +215,8 @@
                 if (pad.Shape == ThPadElement.ThPadShape.Circle) {
 
                     int size =
-                        layer.Side == BoardSide.Top ? pad.TopSize :
-                        layer.Side == BoardSide.Bottom ? pad.BottomSize :
+                        layer.Id.Side == BoardSide.Top ? pad.TopSize :
+                        layer.Id.Side == BoardSide.Bottom ? pad.BottomSize :
                         pad.InnerSize;
                     int radius = size / 2;
                     SysPoint center = new SysPoint(pad.Position.X, pad.Position.Y);
@@ -227,7 +227,7 @@
 
                 else {
 
-                    Polygon polygon = pad.GetPolygon(layer.Side);
+                    Polygon polygon = pad.GetPolygon(layer.Id.Side);
 
                     Brush polygonBrush = GetBrush(color);
                     DrawPolygon(dc, null, polygonBrush, polygon);
@@ -314,7 +314,7 @@
 
                 Polygon polygon = layer.Function == LayerFunction.Signal ?
                     board.GetRegionPolygon(region, layer, new Transformation()) :
-                    region.GetPolygon(layer.Side);
+                    region.GetPolygon(layer.Id.Side);
 
                 SysColor color = GetLayerColor(layer);
                 Pen pen = region.Thickness > 0 ? GetPen(color, region.Thickness, PenLineCap.Round) : null;

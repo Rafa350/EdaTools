@@ -29,7 +29,7 @@
             Target target1 = new Target(
                     Path.Combine(folder, String.Format("{0}_NonPlated$1$2$NPTH$Drill.gbr", name)),
                     "gerber-drill",
-                    new string[] { Layer.HolesName });
+                    new LayerId[] {Layer.HolesId });
             target1.AddOption("drillType", "NonPlatedDrill");
             target1.AddOption("topLevel", "1");
             target1.AddOption("bottomLevel", "2");
@@ -40,7 +40,7 @@
             Target target2 = new Target(
                     Path.Combine(folder, String.Format("{0}_Plated$1$2$PTH$Drill.gbr", name)),
                     "gerber-drill",
-                    new string[] { Layer.DrillsName });
+                    new LayerId[] { Layer.DrillsId });
             target2.AddOption("drillType", "PlatedDrill");
             target2.AddOption("topLevel", "1");
             target2.AddOption("bottomLevel", "2");
@@ -51,18 +51,18 @@
             Target target3 = new Target(
                     Path.Combine(folder, String.Format("{0}_Profile$NP.gbr", name)),
                     "gerber-image",
-                    new string[] { Layer.ProfileName });
+                    new LayerId[] { Layer.ProfileId });
             target3.AddOption("imageType", "Profile");
             targets.Add(target3);
 
             // Coure
             //
             int level = 1;
-            foreach (string layerName in new string[] { "Top", "Bottom" } ) {
+            foreach (LayerId layerId in new LayerId[] { Layer.TopId, Layer.BottomId } ) {
                 Target target = new Target(
                         Path.Combine(folder, String.Format("{0}_Copper$L{1}.gbr", name, level++)),
                         "gerber-image",
-                        new string[] { layerName });
+                        new LayerId[] { layerId });
                 target.AddOption("imageType", "Copper");
                 target.AddOption("layerLevel", level.ToString());
                 targets.Add(target);

@@ -40,7 +40,7 @@
             if (layer == null)
                 throw new ArgumentNullException("layer");
 
-            return layerSet.Contains(layer.Name);
+            return layerSet.Contains(layer.Id);
         }
 
         /// <summary>

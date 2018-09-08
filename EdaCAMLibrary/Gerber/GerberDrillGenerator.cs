@@ -94,8 +94,8 @@
         /// 
         private void PrepareApertures(ApertureDictionary apertures, Board board) {
 
-            foreach (var layerName in Target.LayerNames) {
-                Layer layer = board.GetLayer(layerName);
+            foreach (var layerId in Target.LayerIds) {
+                Layer layer = board.GetLayer(layerId);
                 IVisitor visitor = new PrepareAperturesVisitor(board, layer, apertures);
                 visitor.Run();
             }
@@ -182,7 +182,7 @@
         private void GenerateImage(GerberBuilder gb, Board board, Point position, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
-            foreach (var layerName in Target.LayerNames) {
+            foreach (var layerName in Target.LayerIds) {
                 Layer layer = board.GetLayer(layerName);
                 IVisitor visitor = new ImageGeneratorVisitor(gb, board, layer, position, apertures);
                 visitor.Run();

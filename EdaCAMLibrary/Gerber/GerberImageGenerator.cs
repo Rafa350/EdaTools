@@ -109,7 +109,7 @@
         /// 
         private void PrepareApertures(ApertureDictionary apertures, Board board) {
 
-            foreach (var layerName in Target.LayerNames) {
+            foreach (var layerName in Target.LayerIds) {
                 Layer layer = board.GetLayer(layerName);
                 ApertureCreatorVisitor visitor = new ApertureCreatorVisitor(board, layer, apertures);
                 visitor.Run();
@@ -228,7 +228,7 @@
         private void GenerateRegions(GerberBuilder gb, Board board, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN POLYGONS");
-            foreach (var layerName in Target.LayerNames) {
+            foreach (var layerName in Target.LayerIds) {
                 Layer layer = board.GetLayer(layerName);
                 IVisitor visitor = new RegionGeneratorVisitor(gb, board, layer, apertures);
                 visitor.Visit(board);
@@ -246,7 +246,7 @@
         private void GenerateImage(GerberBuilder gb, Board board, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
-            foreach (var layerName in Target.LayerNames) {
+            foreach (var layerName in Target.LayerIds) {
                 Layer layer = board.GetLayer(layerName);
                 IVisitor visitor = new ImageGeneratorVisitor(gb, board, layer, apertures);
                 visitor.Run();
@@ -545,7 +545,7 @@
 
                     // Obte el poligon
                     //
-                    Polygon polygon = rectangle.GetPolygon(Layer.Side);
+                    Polygon polygon = rectangle.GetPolygon(Layer.Id.Side);
                     Point[] points = polygon.ClonePoints();
 
                     if (Part != null) {

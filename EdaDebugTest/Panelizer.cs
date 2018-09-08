@@ -39,8 +39,14 @@
             // Afegeix les capes que no existeixin en la placa de destinacio
             //
             foreach (var layer in board.Layers)
-                if (dstBoard.GetLayer(layer.Name, false) == null)
+                if (dstBoard.GetLayer(layer.Id, false) == null)
                     dstBoard.AddLayer(layer.Clone());
+
+            // Afegeix els senyals
+            //
+            foreach (var signal in board.Signals)
+                if (dstBoard.GetSignal(signal.Name, false) == null)
+                    dstBoard.AddSignal(signal.Clone());
 
             // Afegeix els blocs que no existeixin en la placa de destinacio.
             //
@@ -77,6 +83,9 @@
 
                 dstBoard.AddElements(elements);
             }
+
+            // Realitza les conexions a les senyals
+            //
         }
 
         private sealed class TransformVisitor: DefaultVisitor {
@@ -131,6 +140,12 @@
             public override void Visit(ViaElement via) {
 
                 via.Position = transformation.ApplyTo(via.Position);
+            }
+
+            public override void Visit(RegionElement region) {
+
+                foreach (var segment in region.Segments)
+                    segment.Position = transformation.ApplyTo(segment.Position);
             }
 
             public override void Visit(HoleElement hole) {

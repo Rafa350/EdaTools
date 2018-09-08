@@ -9,9 +9,9 @@
 
         static void Main(string[] args) {
 
-            Panel panel = LoadPanel(@"..\..\..\..\Data\Panel3.XPNL");
+            Panel panel = LoadPanel(@"..\..\..\..\Data\Panel3.xpnl");
             Board board = GenerateBoard(panel);
-            SaveBoard(board, @"..\..\..\..\Data\Panel3.XBRD");
+            SaveBoard(board, @"..\..\..\..\Data\panel3.xbrd");
         }
 
         private static Panel LoadPanel(string fileName) {

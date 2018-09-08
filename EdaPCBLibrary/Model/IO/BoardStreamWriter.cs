@@ -402,8 +402,7 @@
 
                 wr.WriteStartElement("layer");
 
-                wr.WriteAttribute("name", layer.Name);
-                wr.WriteAttribute("side", layer.Side);
+                wr.WriteAttribute("id", layer.Id);
                 wr.WriteAttribute("function", layer.Function);
                 wr.WriteAttribute("color", layer.Color);
                 if (!layer.IsVisible)
@@ -470,19 +469,6 @@
                 wr.WriteStartElement("layers");
                 foreach (Layer layer in board.Layers)
                     layer.AcceptVisitor(this);
-                wr.WriteEndElement();
-
-                wr.WriteStartElement("layerPairs");
-
-                foreach (Layer layer1 in board.Layers) {
-                    Layer layer2 = board.GetLayerPair(layer1);
-                    if (layer2 != null) {
-                        wr.WriteStartElement("pair");
-                        wr.WriteAttribute("layer1", layer1.Name);
-                        wr.WriteAttribute("layer2", layer2.Name);
-                        wr.WriteEndElement();
-                    }
-                }
                 wr.WriteEndElement();
 
                 if (board.HasSignals) {

@@ -23,7 +23,6 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="layers" minOccurs="0" maxOccurs="1"/>
-                <xs:element ref="layerPairs" minOccurs="0" maxOccurs="1"/>
                 <xs:element ref="signals" minOccurs="0" maxOccurs="1"/>
                 <xs:element ref="blocks" minOccurs="0" maxOccurs="1"/>
                 <xs:element ref="parts" minOccurs="0" maxOccurs="1"/>
@@ -39,15 +38,6 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="layer" maxOccurs="unbounded" minOccurs="1"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    
-    <xs:element
-        name="layerPairs">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="pair" maxOccurs="unbounded" minOccurs="1"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -82,19 +72,10 @@
     <xs:element
         name="layer">
         <xs:complexType>
-            <xs:attribute name="name" use="required" type="nameType"/>
-            <xs:attribute name="side" use="required" type="boardSideType"/>
+            <xs:attribute name="id" use="required" type="nameType"/>
             <xs:attribute name="function" use="required" type="layerFunctionType"/>
             <xs:attribute name="color" use="required" type="xs:string"/>
             <xs:attribute name="visible" use="optional" type="xs:boolean" default="true"/>        
-        </xs:complexType>
-    </xs:element>
-    
-    <xs:element
-        name="pair">
-        <xs:complexType>
-            <xs:attribute name="layer1" use="required" type="nameType"/>
-            <xs:attribute name="layer2" use="required" type="nameType"/>
         </xs:complexType>
     </xs:element>
 
@@ -411,7 +392,7 @@
             <xs:enumeration value="top"/>
             <xs:enumeration value="bottom"/>
             <xs:enumeration value="inner"/>
-            <xs:enumeration value="unknown"/>
+            <xs:enumeration value="none"/>
         </xs:restriction>
     </xs:simpleType>
 
@@ -421,6 +402,7 @@
             <xs:enumeration value="signal"/>
             <xs:enumeration value="design"/>
             <xs:enumeration value="mechanical"/>
+            <xs:enumeration value="outline"/>
             <xs:enumeration value="unknown"/>
         </xs:restriction>
     </xs:simpleType>

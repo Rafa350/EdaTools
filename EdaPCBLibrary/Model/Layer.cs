@@ -1,8 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
-    using System;
     using MikroPic.EdaTools.v1.Geometry;
-    
+
     /// <summary>
     /// Funcio de la capa.
     /// </summary>
@@ -12,6 +11,7 @@
         Signal,
         Design,
         Mechanical,
+        Outline
     }
 
     /// <summary>
@@ -20,71 +20,65 @@
     /// 
     public sealed class Layer: IVisitable {
 
-        public static readonly string TopName = "Top";
-        public static readonly string Inner1Name = "Inner1";
-        public static readonly string Inner2Name = "Inner2";
-        public static readonly string Inner3Name = "Inner3";
-        public static readonly string Inner4Name = "Inner4";
-        public static readonly string Inner5Name = "Inner5";
-        public static readonly string Inner6Name = "Inner6";
-        public static readonly string Inner7Name = "Inner7";
-        public static readonly string Inner8Name = "Inner8";
-        public static readonly string Inner9Name = "Inner9";
-        public static readonly string Inner10Name = "Inner10";
-        public static readonly string Inner11Name = "Inner11";
-        public static readonly string Inner12Name = "Inner12";
-        public static readonly string Inner13Name = "Inner13";
-        public static readonly string Inner14Name = "Inner14";
-        public static readonly string BottomName = "Bottom";
-        public static readonly string TopStopName = "TopStop";
-        public static readonly string BottomStopName = "BottomStop";
-        public static readonly string TopCreamName = "TopCream";
-        public static readonly string BottomCreamName = "BottomCream";
-        public static readonly string TopGlueName = "TopGlue";
-        public static readonly string BottomGlueName = "BottomGlue";
-        public static readonly string TopPlaceName = "TopPlace";
-        public static readonly string BottomPlaceName = "BottomPlace";
-        public static readonly string TopDocumentName = "TopDocument";
-        public static readonly string BottomDocumentName = "BottomDocument";
-        public static readonly string TopNamesName = "TopNames";
-        public static readonly string BottomNamesName = "BottomNames";
-        public static readonly string TopValuesName = "TopValues";
-        public static readonly string BottomValuesName = "BottomValues";
-        public static readonly string TopRestrictName = "TopRestrict";
-        public static readonly string BottomRestrictName = "BottomRestrict";
-        public static readonly string ViaRestrictName = "ViaRestrict";
-        public static readonly string TopKeepoutName = "TopKeepout";
-        public static readonly string BottomKeepoutName = "BottomKeepout";
-        public static readonly string DrillsName = "Drills";
-        public static readonly string HolesName = "Holes";
-        public static readonly string PadsName = "Pads";
-        public static readonly string ViasName = "Vias";
-        public static readonly string UnroutedName = "Unrouted";
-        public static readonly string ProfileName = "Profile";
-        public static readonly string UnknownName = "Unknown";
+        public static readonly LayerId TopId = new LayerId("Top", BoardSide.Top);
+        public static readonly LayerId Inner1Id = new LayerId("Inner1", BoardSide.Inner);
+        public static readonly LayerId Inner2Id = new LayerId("Inner2", BoardSide.Inner);
+        public static readonly LayerId Inner3Id = new LayerId("Inner3", BoardSide.Inner);
+        public static readonly LayerId Inner4Id = new LayerId("Inner4", BoardSide.Inner);
+        public static readonly LayerId Inner5Id = new LayerId("Inner5", BoardSide.Inner);
+        public static readonly LayerId Inner6Id = new LayerId("Inner6", BoardSide.Inner);
+        public static readonly LayerId Inner7Id = new LayerId("Inner7", BoardSide.Inner);
+        public static readonly LayerId Inner8Id = new LayerId("Inner8", BoardSide.Inner);
+        public static readonly LayerId Inner9Id = new LayerId("Inner9", BoardSide.Inner);
+        public static readonly LayerId Inner10Id = new LayerId("Inner10", BoardSide.Inner);
+        public static readonly LayerId Inner11Id = new LayerId("Inner11", BoardSide.Inner);
+        public static readonly LayerId Inner12Id = new LayerId("Inner12", BoardSide.Inner);
+        public static readonly LayerId Inner13Id = new LayerId("Inner13", BoardSide.Inner);
+        public static readonly LayerId Inner14Id = new LayerId("Inner14", BoardSide.Inner);
+        public static readonly LayerId BottomId = new LayerId("Bottom", BoardSide.Bottom);
+        public static readonly LayerId TopStopId = new LayerId("Stop", BoardSide.Top);
+        public static readonly LayerId BottomStopId = new LayerId("Stop", BoardSide.Bottom);
+        public static readonly LayerId TopCreamId = new LayerId("Cream", BoardSide.Top);
+        public static readonly LayerId BottomCreamId = new LayerId("Cream", BoardSide.Bottom);
+        public static readonly LayerId TopGlueId = new LayerId("Glue", BoardSide.Top);
+        public static readonly LayerId BottomGlueId = new LayerId("Glue", BoardSide.Bottom);
+        public static readonly LayerId TopPlaceId = new LayerId("Place", BoardSide.Top);
+        public static readonly LayerId BottomPlaceId = new LayerId("Place", BoardSide.Bottom);
+        public static readonly LayerId TopDocumentId = new LayerId("Document", BoardSide.Top);
+        public static readonly LayerId BottomDocumentId = new LayerId("Document", BoardSide.Bottom);
+        public static readonly LayerId TopNamesId = new LayerId("Names", BoardSide.Top);
+        public static readonly LayerId BottomNamesId = new LayerId("Names", BoardSide.Bottom);
+        public static readonly LayerId TopValuesId = new LayerId("Values", BoardSide.Top);
+        public static readonly LayerId BottomValuesId = new LayerId("Values", BoardSide.Bottom);
+        public static readonly LayerId TopRestrictId = new LayerId("Restrict", BoardSide.Top);
+        public static readonly LayerId BottomRestrictId = new LayerId("Restrict", BoardSide.Bottom);
+        public static readonly LayerId ViaRestrictId = new LayerId("ViaRestrict");
+        public static readonly LayerId TopKeepoutId = new LayerId("Keepout", BoardSide.Top);
+        public static readonly LayerId BottomKeepoutId = new LayerId("Keepout", BoardSide.Bottom);
+        public static readonly LayerId DrillsId = new LayerId("Drills");
+        public static readonly LayerId HolesId = new LayerId("Holes");
+        public static readonly LayerId PadsId = new LayerId("Pads");
+        public static readonly LayerId ViasId = new LayerId("Vias");
+        public static readonly LayerId UnroutedId = new LayerId("Unrouted");
+        public static readonly LayerId ProfileId = new LayerId("Profile");
+        public static readonly LayerId UnknownId = new LayerId("Unknown");
 
-        private readonly BoardSide side = BoardSide.Unknown;
         private readonly LayerFunction function = LayerFunction.Unknown;
-        private string name;
+        private readonly LayerId id;
         private Color color;
         private bool isVisible = true;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="name">Nom de la capa.</param>
-        /// <param name="side">Cara on es troba la capa.</param>
+        /// <param name="id">Identificador de la capa.</param>
         /// <param name="function">Functio de la capa.</param>
         /// <param name="color">Color dels elements.</param>
         /// <param name="isVisible">Indica si la capa es visible.</param>
         /// 
-        public Layer(string name, BoardSide side, LayerFunction function, Color color, bool isVisible = true) {
+        public Layer(LayerId id, LayerFunction function, Color color, bool isVisible = true) {
 
-            if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
-
-            this.name = name;
-            this.side = side;
+            this.id = id;
             this.function = function;
             this.color = color;
             this.isVisible = isVisible;
@@ -92,7 +86,7 @@
 
         public Layer Clone() {
 
-            return new Layer(name, side, function, color, isVisible);
+            return new Layer(id, function, color, isVisible);
         }
 
         /// <summary>
@@ -106,38 +100,42 @@
         }
 
         /// <summary>
+        /// Obte l'identificador de la capa.
+        /// </summary>
+        /// 
+        public LayerId Id {
+            get {
+                return id;
+            }
+        }
+
+        /// <summary>
+        /// Obte el nom.
+        /// </summary>
+        /// 
+        public string Name {
+            get {
+                return id.FullName;
+            }
+        }
+
+        /// <summary>
+        /// Obte la cara
+        /// </summary>
+        /// 
+        public BoardSide Side {
+            get {
+                return id.Side;
+            }
+        }
+
+        /// <summary>
         /// Obte la funcio de la capa
         /// </summary>
         /// 
         public LayerFunction Function {
             get {
                 return function;
-            }
-        }
-
-        /// <summary>
-        /// Obte el cara on es troba la capa de la capa.
-        /// </summary>
-        /// 
-        public BoardSide Side {
-            get {
-                return side;
-            }
-        }
-
-        /// <summary>
-        /// Obte o asigna el nom de la capa.
-        /// </summary>
-        /// 
-        public string Name {
-            get {
-                return name;
-            }
-            set {
-                if (String.IsNullOrEmpty(value))
-                    throw new ArgumentNullException("Layer.Name");
-
-                name = value;
             }
         }
 
