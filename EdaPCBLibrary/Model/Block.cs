@@ -39,6 +39,26 @@
         }
 
         /// <summary>
+        /// Clona l'objecte en profunditat.
+        /// </summary>
+        /// <returns>El clon de l'objecte.</returns>
+        /// 
+        public Block Clone() {
+
+            Block block = new Block(name);
+
+            if (HasElements)
+                foreach (var element in elements)
+                    block.AddElement(element.Clone());
+
+            if (HasAttributes)
+                foreach (var attribute in attributes.Values)
+                    block.AddAttribute(attribute.Clone());
+
+            return block;
+        }
+
+        /// <summary>
         /// Accepta un visitador.
         /// </summary>
         /// <param name="visitor">El visitador.</param>
@@ -207,7 +227,7 @@
         /// <param name="element">L'element.</param>
         /// <returns>El bloc al que pertany, null si no pertany a cap.</returns>
         /// 
-        public static Block GetBlock(BoardElement element) {
+        internal static Block GetBlock(BoardElement element) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
@@ -231,6 +251,16 @@
                     throw new ArgumentNullException("Block.Name");
 
                 name = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte la placa a la que pertany.
+        /// </summary>
+        /// 
+        public Board Board {
+            get {
+                return Board.GetBoard(this);
             }
         }
 

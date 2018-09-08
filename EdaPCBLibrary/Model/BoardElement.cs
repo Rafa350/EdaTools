@@ -44,16 +44,6 @@
         }
 
         /// <summary>
-        /// Obte el bloc al que perteny l'element
-        /// </summary>
-        /// <returns>El bloc al que pertany o null si no pertany a cap.</returns>
-        //
-        Block GetBlock() {
-
-            return Block.GetBlock(this);
-        }
-
-        /// <summary>
         /// Obte la placa a la que pertany l'element.
         /// </summary>
         /// <returns>La placa a la que pertany o nul si no pertany a cap.</returns>
@@ -105,6 +95,27 @@
             }
             set {
                 layerSet = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte el bloc al que pertany
+        /// </summary>
+        /// 
+        public Block Block {
+            get {
+                return Block.GetBlock(this);
+            }
+        }
+
+        /// <summary>
+        /// Obte l'etiqueta a la que pertany
+        /// </summary>
+        /// 
+        public Board Board {
+            get {
+                Block block = Block.GetBlock(this);
+                return block == null ? null : block.Board;
             }
         }
     }

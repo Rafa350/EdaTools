@@ -44,7 +44,7 @@
         public Point ApplyTo(Point point) {
 
             if (rotation.IsZero) 
-                return new Point(point.X + offset.X, point.Y + offset.Y);
+                return point.Offset(offset.X, offset.Y);
 
             else {
                 Matrix m = new Matrix();

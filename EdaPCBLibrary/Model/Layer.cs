@@ -90,6 +90,11 @@
             this.isVisible = isVisible;
         }
 
+        public Layer Clone() {
+
+            return new Layer(name, side, function, color, isVisible);
+        }
+
         /// <summary>
         /// Accepta un visitador.
         /// </summary>

@@ -166,8 +166,8 @@
             // Obte els atributs del element
             //
             string fileName = rd.AttributeAsString("fileName");
-            Point position = ParsePointAttribute("position");
-            Angle rotation = ParseAngleAttribute("rotation");
+            Point position = rd.AttributeAsPoint("position");
+            Angle rotation = rd.AttributeAsAngle("rotation");
 
             // Crea l'element i l'afegeix a la llista
             //
@@ -193,8 +193,8 @@
 
             // Obte els atributs de l'element
             //
-            Point position = ParsePointAttribute("position");
-            Angle rotation = ParseAngleAttribute("rotation");
+            Point position = rd.AttributeAsPoint("position");
+            Angle rotation = rd.AttributeAsAngle("rotation");
 
             // Crea l'element i l'afegeix a la llista
             //
@@ -202,72 +202,6 @@
             elementList.Add(join);
 
             rd.NextTag();
-        }
-
-        /// <summary>
-        /// Procesa un atribut de tipus 'PointInt'
-        /// </summary>
-        /// <param name="name">Nom del atribut.</param>
-        /// <returns>El valor de l'atribut.</returns>
-        /// 
-        private Point ParsePointAttribute(string name) {
-
-            string s = rd.AttributeAsString(name);
-
-            string[] ss = s.Split(',');
-            double x = XmlConvert.ToDouble(ss[0]);
-            double y = XmlConvert.ToDouble(ss[1]);
-
-            return new Point((int)(x * 1000000.0), (int)(y * 1000000.0));
-        }
-
-        /// <summary>
-        /// Procesa un atribut de tipus 'SizeInt'.
-        /// </summary>
-        /// <param name="name">El nom de l'atribut.</param>
-        /// <returns>El valor de l'atribut.</returns>
-        /// 
-        private Size ParseSizeAttribute(string name) {
-
-            string s = rd.AttributeAsString(name);
-
-            string[] ss = s.Split(',');
-            double w = XmlConvert.ToDouble(ss[0]);
-            double h = XmlConvert.ToDouble(ss[1]);
-
-            return new Size((int)(w * 1000000.0), (int)(h * 1000000.0));
-        }
-
-        /// <summary>
-        /// Procesa un atribut de tipus 'Ratio'
-        /// </summary>
-        /// <param name="name">El nom de l'atribut.</param>
-        /// <returns>El valor de l'atribut, o Ratio.Zero si no existeix.</returns>
-        /// 
-        private Ratio ParseRatioAttribute(string name) {
-
-            if (rd.AttributeExists(name)) {
-                double v = rd.AttributeAsDouble(name);
-                return Ratio.FromPercent((int)(v * 1000.0));
-            }
-            else
-                return Ratio.Zero;
-        }
-
-        /// <summary>
-        /// Procesa un atribut de tipus 'Angle'
-        /// </summary>
-        /// <param name="name">El nom de l'atribut.</param>
-        /// <returns>El valor de l'atribut. Si no existeix retorna Angle.Zero.</returns>
-        /// 
-        private Angle ParseAngleAttribute(string name) {
-
-            if (rd.AttributeExists(name)) {
-                double v = rd.AttributeAsDouble(name);
-                return Angle.FromDegrees((int)(v * 100.0));
-            }
-            else
-                return Angle.Zero;
         }
 
         /// <summary>
@@ -285,48 +219,6 @@
             }
             else
                 return defValue;
-        }
-
-        /// <summary>
-        /// Procesa un atribut de tipus 'Color'
-        /// </summary>
-        /// <param name="name">El nom de l'atribut.</param>
-        /// <param name="defColor">Valor per defecte.</param>
-        /// <returns>El valor de l'atribut, o el valor per defecte si no existeix.</returns>
-        /// 
-        private Color ParseColorAttribute(string name, Color defColor) {
-
-            if (rd.AttributeExists(name)) {
-                string s = rd.AttributeAsString(name);
-                return Color.Parse(s);
-            }
-            else
-                return defColor;
-        }
-
-        /// <summary>
-        /// Procesa un atribut de tipus 'bool'
-        /// </summary>
-        /// <param name="name">En nom de l'atribut.</param>
-        /// <param name="defValue">El valor per defecte.</param>
-        /// <returns>El valor de l'atribut, o el valor per defecte si no existeix.</returns>
-        /// 
-        private bool ParseBoolAttribute(string name, bool defValue) {
-
-            return rd.AttributeAsBoolean(name, defValue);
-        }
-
-        /// <summary>
-        /// Procesa un atribut de tipus 'enum'
-        /// </summary>
-        /// <typeparam name="T">El tipus enum</typeparam>
-        /// <param name="name">El nom de l'atribut.</param>
-        /// <param name="defValue">El valor per defecte.</param>
-        /// <returns>El valor de l'atribut, o el valor per defecte si no existeix.</returns>
-        /// 
-        private T ParseEnumAttribute<T>(string name, T defValue) {
-
-            return rd.AttributeAsEnum(name, defValue);
         }
     }
 }

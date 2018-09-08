@@ -5,7 +5,7 @@
     using System;
     using System.Collections.Generic;
 
-    public sealed class Part: IPosition, IRotation, IName {
+    public sealed class Part: IPosition, IRotation, IName, IVisitable {
 
         private string name;
         private Point position;
@@ -39,6 +39,11 @@
             this.rotation = rotation;
             this.side = side;
             this.block = block;
+        }
+
+        public Part Clone(Block block) {
+
+            return new Part(block, name, position, rotation, side);
         }
 
         /// <summary>

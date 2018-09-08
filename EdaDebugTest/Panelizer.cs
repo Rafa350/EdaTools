@@ -4,6 +4,7 @@
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
     using MikroPic.EdaTools.v1.Pcb.Model.PanelElements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
     using System.Collections.Generic;
 
@@ -37,185 +38,110 @@
 
             // Afegeix les capes que no existeixin en la placa de destinacio
             //
-            foreach (var layer in board.Layers) 
+            foreach (var layer in board.Layers)
                 if (dstBoard.GetLayer(layer.Name, false) == null)
-                    CloneLayer(layer);
+                    dstBoard.AddLayer(layer.Clone());
 
             // Afegeix els blocs que no existeixin en la placa de destinacio.
             //
-            foreach (var block in board.Blocks) {
-                if (dstBoard.GetBlock(block.Name, false) == null) {
-                    CloneBlock(block, board);
-                }
+            if (board.HasBlocks) {
+                foreach (var block in board.Blocks)
+                    if (dstBoard.GetBlock(block.Name, false) == null)
+                        dstBoard.AddBlock(block.Clone());
             }
-        }
 
-        /// <summary>
-        /// Clona una capa.
-        /// </summary>
-        /// <param name="layer">La capa a clonar.</param>
-        /// 
-        private void CloneLayer(Layer layer) {
-
-            Layer clonedLayer = new Layer(layer.Name, layer.Side, layer.Function, 
-                layer.Color, layer.IsVisible);
-
-            dstBoard.AddLayer(clonedLayer);
-        }
-
-        /// <summary>
-        /// Clona un block.
-        /// </summary>
-        /// <param name="block">El bloc a clonar.</param>
-        /// 
-        private void CloneBlock(Block block, Board board) {
-
-            // Clona els elements del bloc
+            // Afegeix els parts a la placa
             //
-            List<BoardElement> clonedElements = null;
-            if (block.HasElements) {
-                clonedElements = new List<BoardElement>();
-                foreach (var element in block.Elements) {
-
-                    BoardElement clonedElement = null;
-                    Type elementType = element.GetType();
-
-                    // Intenta clonar un 'LineElement'
-                    //
-                    if (elementType == typeof(LineElement)) {
-                        LineElement line = element as LineElement;
-                        clonedElement = new LineElement(
-                            line.LayerSet,
-                            line.StartPosition,
-                            line.EndPosition,
-                            line.Thickness,
-                            line.LineCap);
-                    }
-
-                    // Intenta clonar un 'ArcElement'
-                    //
-                    if (elementType == typeof(ArcElement)) {
-                        ArcElement arc = element as ArcElement;
-                        clonedElement = new ArcElement(
-                            arc.LayerSet,
-                            arc.StartPosition,
-                            arc.EndPosition,
-                            arc.Thickness,
-                            arc.Angle,
-                            arc.LineCap);
-                    }
-
-                    // Intenta clonar un 'RectangleElement'
-                    //
-                    else if (elementType == typeof(RectangleElement)) {
-                        RectangleElement rectangle = element as RectangleElement;
-                        clonedElement = new RectangleElement(
-                            rectangle.LayerSet,
-                            rectangle.Position,
-                            rectangle.Size,
-                            rectangle.Roundness,
-                            rectangle.Rotation,
-                            rectangle.Thickness,
-                            rectangle.Filled);
-                    }
-
-                    // Intenta clonar un 'CircleElement'
-                    //
-                    else if (elementType == typeof(CircleElement)) {
-                        CircleElement circle = element as CircleElement;
-                        clonedElement = new CircleElement(
-                            circle.LayerSet,
-                            circle.Position,
-                            circle.Radius,
-                            circle.Thickness,
-                            circle.Filled);
-                    }
-
-                    // Intenta clonar un 'SmdPadElement'
-                    //
-                    else if (elementType == typeof(SmdPadElement)) {
-                        SmdPadElement pad = element as SmdPadElement;
-                        clonedElement = new SmdPadElement(
-                            pad.Name,
-                            pad.LayerSet,
-                            pad.Position, 
-                            pad.Size,
-                            pad.Rotation,
-                            pad.Roundness);
-                    }
-
-                    // Intenta clonar un 'ThPadElement'
-                    //
-                    else if (elementType == typeof(ThPadElement)) {
-                        ThPadElement pad = element as ThPadElement;
-                        clonedElement = new ThPadElement(
-                            pad.Name,
-                            pad.LayerSet,
-                            pad.Position,
-                            pad.Rotation,
-                            pad.TopSize,
-                            pad.InnerSize,
-                            pad.BottomSize,
-                            pad.Shape,
-                            pad.Drill);
-                    }
-
-                    // Intenta clonar un 'HoleElement'
-                    //
-                    else if (elementType == typeof(HoleElement)) {
-                        HoleElement hole = element as HoleElement;
-                        clonedElement = new HoleElement(
-                            hole.LayerSet,
-                            hole.Position,
-                            hole.Drill);
-                    }
-
-                    // Intenta clonar un 'RegionElement'
-                    //
-                    else if (elementType == typeof(RegionElement)) {
-                        RegionElement region = element as RegionElement;
-                        clonedElement = new RegionElement(
-                            region.LayerSet,
-                            region.Thickness,
-                            region.Filled, 
-                            region.Clearance);
-                        foreach (var segment in region.Segments)
-                            (clonedElement as RegionElement).Add(new RegionElement.Segment(segment.Position, segment.Angle));
-                    }
-
-                    // Intenta clonar un 'TextElement'
-                    //
-                    else if (elementType == typeof(TextElement)) {
-                        TextElement text = element as TextElement;
-                        clonedElement = new TextElement(
-                            text.LayerSet,
-                            text.Position,
-                            text.Rotation,
-                            text.Height,
-                            text.Thickness,
-                            text.HorizontalAlign,
-                            text.VerticalAlign);
-                    }
-
-                    if (clonedElement == null)
-                        throw new InvalidOperationException("No se ha posido clonar el elemento.");
-
-                    clonedElements.Add(clonedElement);
+            if (board.HasParts) {
+                List<Part> parts = new List<Part>();
+                foreach (var part in board.Parts) {
+                    Block block = dstBoard.GetBlock(part.Block.Name);
+                    parts.Add(part.Clone(block));
                 }
+
+                TransformVisitor visitor = new TransformVisitor(parts, position, rotation);
+                visitor.Run();
+
+                dstBoard.AddParts(parts);
             }
 
-            // Clona els atributs del bloc
+            // Afegeix els elements de la placa
             //
-            List<BlockAttribute> clonedAttributes = null;
-            if (block.HasAttributes) {
-                foreach (var attribute in block.Attributes) {
-                    BlockAttribute clonedAttribute = new BlockAttribute(attribute.Name, attribute.Value);
-                    clonedAttributes.Add(clonedAttribute);
-                }
-            }
+            if (board.HasElements) {
+                List<BoardElement> elements = new List<BoardElement>();
+                foreach (var element in board.Elements)
+                    elements.Add(element.Clone());
 
-            dstBoard.AddBlock(new Block(block.Name, clonedElements, clonedAttributes));
+                TransformVisitor visitor = new TransformVisitor(elements, position, rotation);
+                visitor.Run();
+
+                dstBoard.AddElements(elements);
+            }
         }
 
+        private sealed class TransformVisitor: DefaultVisitor {
+
+            private readonly IEnumerable<IVisitable> visitables;
+            private readonly Transformation transformation;
+
+            public TransformVisitor(IEnumerable<IVisitable> visitables, Point offset, Angle rotation) {
+
+                this.visitables = visitables;
+                transformation = new Transformation(offset, rotation);
+            }
+
+            public override void Run() {
+
+                foreach (var visitable in visitables)
+                    visitable.AcceptVisitor(this);
+            }
+
+            public override void Visit(LineElement line) {
+
+                line.StartPosition = transformation.ApplyTo(line.StartPosition);
+                line.EndPosition = transformation.ApplyTo(line.EndPosition);
+            }
+
+            public override void Visit(ArcElement arc) {
+
+                arc.StartPosition = transformation.ApplyTo(arc.StartPosition);
+                arc.EndPosition = transformation.ApplyTo(arc.EndPosition);
+            }
+
+            public override void Visit(RectangleElement rectangle) {
+
+                rectangle.Position = transformation.ApplyTo(rectangle.Position);
+            }
+
+            public override void Visit(CircleElement circle) {
+
+                circle.Position = transformation.ApplyTo(circle.Position);
+            }
+
+            public override void Visit(SmdPadElement pad) {
+
+                pad.Position = transformation.ApplyTo(pad.Position);
+            }
+
+            public override void Visit(ThPadElement pad) {
+
+                pad.Position = transformation.ApplyTo(pad.Position);
+            }
+
+            public override void Visit(ViaElement via) {
+
+                via.Position = transformation.ApplyTo(via.Position);
+            }
+
+            public override void Visit(HoleElement hole) {
+
+                hole.Position = transformation.ApplyTo(hole.Position);
+            }
+
+            public override void Visit(Part part) {
+
+                part.Position = transformation.ApplyTo(part.Position);
+            }
+        }
     }
 }

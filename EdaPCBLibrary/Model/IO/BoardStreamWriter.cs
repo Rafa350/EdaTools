@@ -485,22 +485,28 @@
                 }
                 wr.WriteEndElement();
 
-                wr.WriteStartElement("signals");
-                foreach (Signal signal in board.Signals)
-                    signal.AcceptVisitor(this);
-                wr.WriteEndElement();
+                if (board.HasSignals) {
+                    wr.WriteStartElement("signals");
+                    foreach (Signal signal in board.Signals)
+                        signal.AcceptVisitor(this);
+                    wr.WriteEndElement();
+                }
 
-                wr.WriteStartElement("blocks");
-                foreach (Block block in board.Blocks)
-                    block.AcceptVisitor(this);
-                wr.WriteEndElement();
+                if (board.HasBlocks) {
+                    wr.WriteStartElement("blocks");
+                    foreach (Block block in board.Blocks)
+                        block.AcceptVisitor(this);
+                    wr.WriteEndElement();
+                }
 
-                wr.WriteStartElement("parts");
-                foreach (Part part in board.Parts)
-                    part.AcceptVisitor(this);
-                wr.WriteEndElement();
+                if (board.HasParts) {
+                    wr.WriteStartElement("parts");
+                    foreach (Part part in board.Parts)
+                        part.AcceptVisitor(this);
+                    wr.WriteEndElement();
+                }
 
-                if (board.Elements != null) {
+                if (board.HasElements) {
                     wr.WriteStartElement("elements");
                     foreach (BoardElement element in board.Elements)
                         element.AcceptVisitor(this);

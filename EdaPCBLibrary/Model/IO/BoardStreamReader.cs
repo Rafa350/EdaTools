@@ -114,25 +114,31 @@
             version = rd.AttributeAsInteger("version");
 
             rd.NextTag();
+
             ParseLayersNode(board);
-
             rd.NextTag();
-            ParseLayerPairsNode(board);
 
-            rd.NextTag();
-            ParseSignalsNode(board);
+            if (rd.TagName == "layerPairs") {
+                ParseLayerPairsNode(board);
+                rd.NextTag();
+            }
 
-            rd.NextTag();
-            ParseBlocksNode(board);
+            if (rd.TagName == "signals") {
+                ParseSignalsNode(board);
+                rd.NextTag();
+            }
 
-            rd.NextTag();
-            ParsePartsNode(board);
+            if (rd.TagName == "blocks") {
+                ParseBlocksNode(board);
+                rd.NextTag();
+            }
 
-            rd.NextTag();
+            if (rd.TagName == "parts") {
+                ParsePartsNode(board);
+                rd.NextTag();
+            }
+
             ParseBoardElementsNode(board);
-
-            // Llegeix el tag final
-            //
             rd.NextTag();
         }
 
@@ -165,7 +171,7 @@
             // Obte els atributs de la capa
             //
             string name = rd.AttributeAsString("name");
-            BoardSide side = rd.AttributeAsEnum<BoardSide>("side", BoardSide.Unknown);
+            BoardSide side = rd.AttributeAsEnum("side", BoardSide.Unknown);
             LayerFunction function = rd.AttributeAsEnum<LayerFunction>("function", LayerFunction.Unknown);
             Color color = rd.AttributeAsColor("color");
             bool visible = rd.AttributeAsBoolean("visible");
@@ -473,7 +479,7 @@
             string name = rd.AttributeAsString("name");
             Point position = rd.AttributeAsPoint("position");
             Angle rotation = rd.AttributeAsAngle("rotation");
-            BoardSide side = rd.AttributeAsEnum<BoardSide>("side", BoardSide.Top);
+            BoardSide side = rd.AttributeAsEnum("side", BoardSide.Top);
             string blockName = rd.AttributeAsString("block");
 
             // Crea l'objecte i l'afegeix a la placa

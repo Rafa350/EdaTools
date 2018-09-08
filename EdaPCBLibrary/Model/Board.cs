@@ -23,6 +23,8 @@
     /// 
     public sealed class Board: IVisitable {
 
+        private static Dictionary<Block, Board> blockBoard = new Dictionary<Block, Board>();
+
         // Capes
         private readonly HashSet<Layer> layers = new HashSet<Layer>();
         private readonly Dictionary<Layer, Layer> layerPairs = new Dictionary<Layer, Layer>();
@@ -76,6 +78,20 @@
             if (!parts.Add(part))
                 throw new InvalidOperationException(
                     String.Format("El componente '{0}' ya esta asignado a esta la placa.", part.Name));
+        }
+
+        /// <summary>
+        /// Afegeix una coleccio de components.
+        /// </summary>
+        /// <param name="parts">Els components a afeigir</param>
+        /// 
+        public void AddParts(IEnumerable<Part> parts) {
+
+            if (parts == null)
+                throw new ArgumentException("parts");
+
+            foreach (var part in parts)
+                AddPart(part);
         }
 
         /// <summary>
@@ -141,8 +157,7 @@
                 throw new ArgumentNullException("elements");
 
             foreach (var element in elements)
-                if (!this.elements.Add(element))
-                    throw new InvalidOperationException("El elemento ya existe en la placa.");
+                AddElement(element);
         }
 
         #endregion
@@ -162,6 +177,25 @@
             if (!blocks.Add(block))
                 throw new InvalidOperationException(
                     String.Format("El bloque '{0}', ya esta asignado a esta placa.", block.Name));
+
+            blockBoard.Add(block, this);
+        }
+
+        /// <summary>
+        /// Elimina un block.
+        /// </summary>
+        /// <param name="block">El bloc a eliminar.</param>
+        /// 
+        public void RemoveBlock(Block block) {
+
+            if (block == null)
+                throw new ArgumentNullException("block");
+
+            if (!blocks.Remove(block))
+                throw new InvalidOperationException(
+                    String.Format("El bloque '{0}', no esta asignado a esta placa.", block.Name));
+
+            blockBoard.Remove(block);
         }
 
         /// <summary>
@@ -185,6 +219,23 @@
                     String.Format("El bloque '{0}', no esta asignado a esta placa.", name));
 
             return null;
+        }
+
+        /// <summary>
+        /// Obte la placa al que pertany el bloc
+        /// </summary>
+        /// <param name="block">L'element.</param>
+        /// <returns>El bloc al que pertany, null si no pertany a cap.</returns>
+        /// 
+        internal static Board GetBoard(Block block) {
+
+            if (block == null)
+                throw new ArgumentNullException("block");
+
+            if (blockBoard.TryGetValue(block, out Board board))
+                return board;
+            else
+                return null;
         }
 
         #endregion
@@ -602,7 +653,8 @@
                                 // Si no esta en la mateixa senyal que la regio, genera un forat.
                                 //
                                 if (GetSignal(element, null, false) != regionSignal) {
-                                    int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
+                                    int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
+                                    int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
                                     Polygon elementPolygon = element.GetOutlinePolygon(layer.Side, clearance);
                                     holePolygons.Add(elementPolygon);
                                 }
@@ -649,7 +701,8 @@
                                 // En es un pad i esta conectat per tant, genera un thermal
                                 //
                                 else if (element is PadElement) {
-                                    int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
+                                    int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
+                                    int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
                                     Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Side, clearance, 200000);
                                     thermalPolygon = thermalPolygon.Transformed(localTransformation);
                                     for (int i = 0; i < thermalPolygon.Childs.Length; i++)
@@ -687,7 +740,6 @@
                 position = value;
             }
         }
-
 
         /// <summary>
         /// Obte el tamany de la placa, definit pel seu contingut.
@@ -734,12 +786,32 @@
         }
 
         /// <summary>
+        /// Indica si conte blocs
+        /// </summary>
+        /// 
+        public bool HasBlocks {
+            get {
+                return (blocks != null) && (blocks.Count > 0);
+            }
+        }
+
+        /// <summary>
         /// Obte un enumerador pels blocs.
         /// </summary>
         /// 
         public IEnumerable<Block> Blocks {
             get {
                 return blocks;
+            }
+        }
+
+        /// <summary>
+        /// Indica si conte parts.
+        /// </summary>
+        /// 
+        public bool HasParts {
+            get {
+                return (parts != null) && (parts.Count > 0);
             }
         }
 
@@ -764,12 +836,32 @@
         }
 
         /// <summary>
+        /// Indica si la placa conte senyals
+        /// </summary>
+        /// 
+        public bool HasSignals {
+            get {
+                return (signals != null) && (signals.Count > 0);
+            }
+        }
+
+        /// <summary>
         /// Obte un enunerador per les senyals.
         /// </summary>
         /// 
         public IEnumerable<Signal> Signals {
             get {
                 return signals;
+            }
+        }
+
+        /// <summary>
+        /// Indica si conte elements.
+        /// </summary>
+        /// 
+        public bool HasElements {
+            get {
+                return (elements != null) && (elements.Count > 0);
             }
         }
 
