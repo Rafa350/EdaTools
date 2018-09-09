@@ -3,6 +3,7 @@
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
     using System;
     using System.Collections.Generic;
 
@@ -37,10 +38,10 @@
         private readonly Dictionary<string, Block> blocks = new Dictionary<string, Block>();
 
         // Elements
-        private readonly HashSet<BoardElement> elements = new HashSet<BoardElement>();
+        private ParentChildCollection<Board, BoardElement> elements;
 
         // Components
-        readonly private HashSet<Part> parts = new HashSet<Part>();
+        private ParentChildCollection<Board, Part> parts;
 
         private Point position;
         private Angle rotation;
@@ -74,9 +75,13 @@
             if (part == null)
                 throw new ArgumentNullException("part");
 
-            if (!parts.Add(part))
+            if ((parts != null) && parts.Contains(part))
                 throw new InvalidOperationException(
                     String.Format("El componente '{0}' ya esta asignado a esta la placa.", part.Name));
+
+            if (parts == null)
+                parts = new ParentChildCollection<Board, Part>(this);
+            parts.Add(part);
         }
 
         /// <summary>
@@ -102,6 +107,13 @@
 
             if (part == null)
                 throw new ArgumentNullException("part");
+
+            if ((parts == null) || !parts.Contains(part))
+                throw new InvalidOperationException("El componente no pertenece a la placa.");
+
+            parts.Remove(part);
+            if (parts.IsEmpty)
+                parts = null;
         }
 
         /// <summary>
@@ -141,8 +153,12 @@
             if (element == null)
                 throw new ArgumentNullException("element");
 
-            if (!elements.Add(element))
+            if ((elements != null) && elements.Contains(element))
                 throw new InvalidOperationException("El elemento ya existe en la placa.");
+
+            if (elements == null)
+                elements = new ParentChildCollection<Board, BoardElement>(this);
+            elements.Add(element);
         }
 
         /// <summary>
@@ -729,6 +745,11 @@
             }
         }
 
+        internal static Board GetBoard(BoardElement element) {
+
+            return ParentChildCollection<Board, BoardElement>.GetParent(element);
+        }
+
         /// <summary>
         /// Obte o asigna l'angle de rotacio de la placa.
         /// </summary>
@@ -818,7 +839,7 @@
         /// 
         public bool HasElements {
             get {
-                return (elements != null) && (elements.Count > 0);
+                return elements != null;
             }
         }
 

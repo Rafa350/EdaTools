@@ -115,7 +115,7 @@
         public Board Board {
             get {
                 Block block = Block.GetBlock(this);
-                return block == null ? null : block.Board;
+                return block == null ? Board.GetBoard(this) : block.Board;
             }
         }
     }

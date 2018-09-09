@@ -1,8 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
+    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
     using System;
     using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
 
     /// <summary>
     /// Clase que representa un bloc predefinit.
@@ -10,9 +11,7 @@
     /// 
     public sealed class Block : IVisitable, IName {
 
-        private static Dictionary<BoardElement, Block> elementBlock = new Dictionary<BoardElement, Block>();
-
-        private List<BoardElement> elements;
+        private ParentChildCollection<Block, BoardElement> elements;
         private Dictionary<string, PadElement> pads;
         private Dictionary<string, BlockAttribute> attributes;
         private string name;
@@ -86,9 +85,8 @@
             // Afegeix l'element a la llista d'elements
             //
             if (elements == null)
-                elements = new List<BoardElement>();
+                elements = new ParentChildCollection<Block, BoardElement>(this);
             elements.Add(element);
-            elementBlock.Add(element, this);
 
             // Si l'element es un Pad, l'afegeix la la llista de pads.
             //
@@ -132,9 +130,8 @@
             // Elimina l'element de la llista d'elements
             //
             elements.Remove(element);
-            if (elements.Count == 0)
+            if (elements.IsEmpty)
                 elements = null;
-            elementBlock.Remove(element);
 
             // Si l'element es un pad, tambe l'elimina de la llista de pads.
             //
@@ -254,10 +251,7 @@
             if (element == null)
                 throw new ArgumentNullException("element");
 
-            if (elementBlock.TryGetValue(element, out Block block))
-                return block;
-            else
-                return null;
+            return ParentChildCollection<Block, BoardElement>.GetParent(element);
         }
 
         /// <summary>
