@@ -18,7 +18,7 @@
     }
 
     /// <summary>
-    /// Clase que representa una placa.
+    /// Clase que representa una placa de circuit impres.
     /// </summary>
     /// 
     public sealed class Board: IVisitable {
@@ -28,7 +28,7 @@
         private Layer outlineLayer = null;
 
         // Senyals
-        private readonly HashSet<Signal> signals = new HashSet<Signal>();
+        private readonly Dictionary<string, Signal> signals = new Dictionary<string, Signal>();
         private readonly Dictionary<Signal, HashSet<Tuple<IConectable, Part>>> itemsOfSignal = new Dictionary<Signal, HashSet<Tuple<IConectable, Part>>>();
         private readonly Dictionary<Tuple<IConectable, Part>, Signal> signalOfItem = new Dictionary<Tuple<IConectable, Part>, Signal>();
 
@@ -384,9 +384,11 @@
             if (signal == null)
                 throw new ArgumentNullException("signal");
 
-            if (!signals.Add(signal))
+            if (signals.ContainsKey(signal.Name))
                 throw new InvalidOperationException(
-                    String.Format("La señal '{0}', ya esta asignada a esta placa.", signal.Name));
+                    String.Format("Ya existe una señal con el nombre '{0}' en la placa.", signal.Name));
+
+            signals.Add(signal.Name, signal);
         }
 
         /// <summary>
@@ -399,15 +401,15 @@
             if (signal == null)
                 throw new ArgumentNullException("signal");
 
-            if (!signals.Contains(signal))
+            if (!signals.ContainsKey(signal.Name))
                 throw new InvalidOperationException(
-                    String.Format("La señal '{0}', no esta asignada a esta placa.", signal.Name));
+                    String.Format("No se encontro ninguna señal con el nombre '{0}', en la placa.", signal.Name));
 
             if (itemsOfSignal.ContainsKey(signal))
                 throw new InvalidOperationException(
                     String.Format("La señal '{0}', esta en uso y no puede ser retirada de la placa.", signal.Name));
 
-            signals.Remove(signal);
+            signals.Remove(signal.Name);
         }
 
         /// <summary>
@@ -425,7 +427,7 @@
             if (element == null)
                 throw new ArgumentNullException("element");
 
-            if (!signals.Contains(signal))
+            if (!signals.ContainsKey(signal.Name))
                 throw new InvalidOperationException(
                     String.Format("La senyal '{0}', no esta asignada a esta placa.", signal.Name));
 
@@ -463,7 +465,8 @@
         /// <summary>
         /// Obte la senyal conectada a un objecte.
         /// </summary>
-        /// <param name="conectableElement">El objecte.</param>
+        /// <param name="element">El objecte.</param>
+        /// <param name="part">El part al que pertany l'element. Null si pertany a la placa.</param>
         /// <param name="throwOnError">True si cal generar una excepcio en cas d'error.</param>
         /// <returns>La senyal o null si no esta conectat.</returns>
         /// 
@@ -498,15 +501,15 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            foreach (var signal in signals)
-                if (signal.Name == name)
-                    return signal;
+            if (signals.TryGetValue(name, out Signal signal))
+                return signal;
 
-            if (throwOnError)
+            else if (throwOnError)
                 throw new InvalidOperationException(
                     String.Format("No se encontro la señal '{0}'.", name));
 
-            return null;
+            else 
+                return null;
         }
 
         /// <summary>
@@ -520,7 +523,7 @@
             if (signal == null)
                 throw new ArgumentNullException("signal");
 
-            if (!signals.Contains(signal))
+            if (!signals.ContainsKey(signal.Name))
                 throw new InvalidOperationException(
                     String.Format("La señal '{0}', no esta asignada a esta placa.", signal.Name));
 
@@ -586,8 +589,7 @@
 
                 // Si estem en capes de senyal, cal generar els porus i termals
                 //
-                // TODO: Utilitzar function == Signal
-                if ((layer.Id == Layer.TopId) || (layer.Id == Layer.BottomId)) {
+                if (layer.Function == LayerFunction.Signal) {
 
                     Signal regionSignal = GetSignal(region, null, false);
 
@@ -703,13 +705,12 @@
         /// 
         public Size Size {
             get {
-                Layer layer = GetLayer(Layer.ProfileId, false);
-                if (layer != null) {
+                if (outlineLayer != null) {
                     int minX = Int32.MaxValue;
                     int minY = Int32.MaxValue;
                     int maxX = Int32.MinValue;
                     int maxY = Int32.MinValue;
-                    foreach (BoardElement element in GetElements(layer)) {
+                    foreach (BoardElement element in GetElements(outlineLayer)) {
                         Rect r = element.GetBoundingBox(BoardSide.Top);
                         if (minX > r.MinX)
                             minX = r.MinX;
@@ -807,7 +808,7 @@
         /// 
         public IEnumerable<Signal> Signals {
             get {
-                return signals;
+                return signals.Values;
             }
         }
 

@@ -10,7 +10,7 @@
 
     public sealed class Panelizer {
 
-        private readonly Board dstBoard;
+        private readonly Board panelBoard;
 
         /// <summary>
         /// Constructor del objecte.
@@ -22,70 +22,85 @@
             if (board == null)
                 throw new ArgumentNullException("board");
 
-            this.dstBoard = board;
+            this.panelBoard = board;
         }
 
         public void Panelize(Panel panel) {
 
+            int index = 0;
             foreach (var element in panel.Elements) {
                 PlaceElement place = element as PlaceElement;
                 if (place != null)
-                    Panelize(place.Board, place.Position, place.Rotation);
+                    Panelize(place.Board, index++, place.Position, place.Rotation);
             }
         }
 
-        public void Panelize(Board board, Point position, Angle rotation) {
+        public void Panelize(Board board, int index, Point position, Angle rotation) {
 
             // Afegeix les capes que no existeixin en la placa de destinacio
             //
             foreach (var layer in board.Layers)
-                if (dstBoard.GetLayer(layer.Id, false) == null)
-                    dstBoard.AddLayer(layer.Clone());
+                if (panelBoard.GetLayer(layer.Id, false) == null)
+                    panelBoard.AddLayer(layer.Clone());
 
             // Afegeix els senyals
             //
             foreach (var signal in board.Signals)
-                if (dstBoard.GetSignal(signal.Name, false) == null)
-                    dstBoard.AddSignal(signal.Clone());
+                if (panelBoard.GetSignal(signal.Name, false) == null)
+                    panelBoard.AddSignal(signal.Clone());
 
             // Afegeix els blocs que no existeixin en la placa de destinacio.
             //
             if (board.HasBlocks) {
                 foreach (var block in board.Blocks)
-                    if (dstBoard.GetBlock(block.Name, false) == null)
-                        dstBoard.AddBlock(block.Clone());
+                    if (panelBoard.GetBlock(block.Name, false) == null)
+                        panelBoard.AddBlock(block.Clone());
             }
 
             // Afegeix els parts a la placa
             //
             if (board.HasParts) {
-                List<Part> parts = new List<Part>();
+                List<Part> transformableParts = new List<Part>();
                 foreach (var part in board.Parts) {
-                    Block block = dstBoard.GetBlock(part.Block.Name);
-                    parts.Add(part.Clone(block));
+                    Block block = panelBoard.GetBlock(part.Block.Name);
+                    Part panelPart = part.Clone(block);
+                    transformableParts.Add(panelPart);
+                    panelBoard.AddPart(panelPart);
+
+                    foreach (var panelElement in panelPart.Elements) {
+                        PadElement panelPad = panelElement as PadElement;
+                        if (panelPad != null) {
+                            Signal signal = board.GetSignal(part.GetPad(panelPad.Name), part, false);
+                            if (signal != null)
+                                panelBoard.Connect(panelBoard.GetSignal(signal.Name), panelPad, panelPart);
+                        }
+                    }
                 }
 
-                TransformVisitor visitor = new TransformVisitor(parts, position, rotation);
+                TransformVisitor visitor = new TransformVisitor(transformableParts, position, rotation);
                 visitor.Run();
-
-                dstBoard.AddParts(parts);
             }
 
             // Afegeix els elements de la placa
             //
             if (board.HasElements) {
-                List<BoardElement> elements = new List<BoardElement>();
-                foreach (var element in board.Elements)
-                    elements.Add(element.Clone());
+                List<BoardElement> transformableElements = new List<BoardElement>();
+                foreach (var element in board.Elements) {
 
-                TransformVisitor visitor = new TransformVisitor(elements, position, rotation);
+                    BoardElement panelElement = element.Clone();
+                    transformableElements.Add(panelElement);
+                    panelBoard.AddElement(panelElement);
+
+                    if (element is IConectable) {
+                        Signal signal = board.GetSignal(element, null, false);
+                        if (signal != null)
+                            panelBoard.Connect(panelBoard.GetSignal(signal.Name), panelElement as IConectable);
+                    }
+                }
+
+                TransformVisitor visitor = new TransformVisitor(transformableElements, position, rotation);
                 visitor.Run();
-
-                dstBoard.AddElements(elements);
             }
-
-            // Realitza les conexions a les senyals
-            //
         }
 
         private sealed class TransformVisitor: DefaultVisitor {

@@ -69,6 +69,22 @@
             useAlign = true;
         }
 
+        public PartAttribute Clone() {
+
+            PartAttribute attribute = new PartAttribute(name, value, isVisible);
+            attribute.position = position;
+            attribute.usePosition = usePosition;
+            attribute.rotation = rotation;
+            attribute.useRotation = useRotation;
+            attribute.height = height;
+            attribute.useHeight = useHeight;
+            attribute.horizontalAlign = horizontalAlign;
+            attribute.verticalAlign = verticalAlign;
+            attribute.useAlign = useAlign;
+
+            return attribute;
+        }
+
         public void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);

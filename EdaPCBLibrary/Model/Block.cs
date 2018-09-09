@@ -12,7 +12,7 @@
 
         private static Dictionary<BoardElement, Block> elementBlock = new Dictionary<BoardElement, Block>();
 
-        private HashSet<BoardElement> elements;
+        private List<BoardElement> elements;
         private Dictionary<string, PadElement> pads;
         private Dictionary<string, BlockAttribute> attributes;
         private string name;
@@ -47,11 +47,11 @@
 
             Block block = new Block(name);
 
-            if (HasElements)
+            if (elements != null)
                 foreach (var element in elements)
                     block.AddElement(element.Clone());
 
-            if (HasAttributes)
+            if (attributes != null)
                 foreach (var attribute in attributes.Values)
                     block.AddAttribute(attribute.Clone());
 
@@ -78,12 +78,16 @@
             if (element == null)
                 throw new ArgumentNullException("element");
 
-            if (elements == null)
-                elements = new HashSet<BoardElement>();
-
-            if (!elements.Add(element))
+            // Comprova que l'element no estigui afeigit amb anterioritat
+            //
+            if ((elements != null) && elements.Contains(element))
                 throw new InvalidOperationException("El elemento ya pertenece al bloque.");
 
+            // Afegeix l'element a la llista d'elements
+            //
+            if (elements == null)
+                elements = new List<BoardElement>();
+            elements.Add(element);
             elementBlock.Add(element, this);
 
             // Si l'element es un Pad, l'afegeix la la llista de pads.
@@ -120,13 +124,16 @@
             if (element == null)
                 throw new ArgumentNullException("element");
 
+            // Comprova que l'element estigui en la llista
+            //
             if ((elements == null) || !elements.Contains(element))
                 throw new InvalidOperationException("El elemento no pertenece al bloque.");
 
+            // Elimina l'element de la llista d'elements
+            //
             elements.Remove(element);
             if (elements.Count == 0)
                 elements = null;
-
             elementBlock.Remove(element);
 
             // Si l'element es un pad, tambe l'elimina de la llista de pads.
@@ -151,11 +158,12 @@
             if ((pads != null) && pads.TryGetValue(name, out PadElement pad))
                 return pad;
 
-            if (throwOnError)
+            else if (throwOnError)
                 throw new InvalidOperationException(
                     String.Format("No se encontro el pad '{0}' en el part '{1}'.", name, this.name));
 
-            return null;
+            else
+                return null;
         }
 
         /// <summary>
@@ -168,9 +176,16 @@
             if (attribute == null)
                 throw new ArgumentNullException("attribute");
 
+            // Comprova que l'atribut no estigui afeigit amb anterioritat
+            //
+            if ((attributes != null) && attributes.ContainsKey(attribute.Name))
+                throw new InvalidOperationException(
+                    String.Format("Ya existe un atributo con el nomnre '{0}'.", attribute.Name));
+
+            // Afegeix l'atribut a la llista d'atributs
+            //
             if (attributes == null)
                 attributes = new Dictionary<string, BlockAttribute>();
-
             attributes.Add(attribute.Name, attribute);
         }
 
@@ -198,8 +213,15 @@
             if (attribute == null)
                 throw new ArgumentNullException("attribute");
 
-            attributes.Remove(attribute.Name);
+            // Comprova que l'atribut estigui a la llista
+            //
+            if ((attributes == null) || !attributes.ContainsKey(attribute.Name))
+                throw new InvalidOperationException(
+                    String.Format("No se encontro el atributo '{0}'.", attribute.Name));
 
+            // Elimina l'aqtribut de la llista d'atributs
+            //
+            attributes.Remove(attribute.Name);
             if (attributes.Count == 0)
                 attributes = null;
         }
@@ -217,8 +239,8 @@
 
             if ((attributes != null) && attributes.TryGetValue(name, out BlockAttribute attribute))
                 return attribute;
-
-            return null;
+            else
+                return null;
         }
 
         /// <summary>

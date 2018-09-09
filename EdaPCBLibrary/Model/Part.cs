@@ -41,9 +41,19 @@
             this.block = block;
         }
 
+        /// <summary>
+        /// Clona l'objecte.
+        /// </summary>
+        /// <param name="block">El bloc a asignar.</param>
+        /// <returns>El clon de l'objecte obtingut.</returns>
+        /// 
         public Part Clone(Block block) {
 
-            return new Part(block, name, position, rotation, side);
+            Part part = new Part(block, name, position, rotation, side);
+            foreach (var attribute in attributes.Values)
+                part.AddAttribute(attribute.Clone());
+
+            return part;
         }
 
         /// <summary>
