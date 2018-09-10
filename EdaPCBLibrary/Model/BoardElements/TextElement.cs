@@ -29,10 +29,11 @@
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="horizontalAlign">Aliniacio horitzontal.</param>
         /// <param name="verticalAlign">Aliniacio vertical.</param>
+        /// <param name="value">El valor del text.</param>
         /// 
         public TextElement(LayerSet layerSet, Point position, Angle rotation, int height, int thickness, 
             HorizontalTextAlign horizontalAlign = HorizontalTextAlign.Left,
-            VerticalTextAlign verticalAlign = VerticalTextAlign.Bottom):
+            VerticalTextAlign verticalAlign = VerticalTextAlign.Bottom, string value = null):
             base(layerSet) {
 
             if (height <= 0)
@@ -47,11 +48,13 @@
             this.thickness = thickness;
             this.horizontalAlign = horizontalAlign;
             this.verticalAlign = verticalAlign;
+            this.value = value;
         }
 
         public override BoardElement Clone() {
 
-            return new TextElement(LayerSet, position, rotation, height, thickness, horizontalAlign, verticalAlign);
+            return new TextElement(LayerSet, position, rotation, height, thickness, 
+                horizontalAlign, verticalAlign, value);
         }
 
         /// <summary>

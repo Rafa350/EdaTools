@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
 
     /// <summary>
     /// Funcio de la capa.
@@ -18,7 +19,7 @@
     /// Clare quie representa una capa de la placa.
     /// </summary>
     /// 
-    public sealed class Layer: IVisitable {
+    public sealed class Layer: IVisitable, IKey<LayerId> {
 
         public static readonly LayerId TopId = new LayerId("Top", BoardSide.Top);
         public static readonly LayerId Inner1Id = new LayerId("Inner1", BoardSide.Inner);
@@ -84,6 +85,11 @@
             this.isVisible = isVisible;
         }
 
+        /// <summary>
+        /// Obte un clon de l'objecte.
+        /// </summary>
+        /// <returns>El clon obtingut.</returns>
+        /// 
         public Layer Clone() {
 
             return new Layer(id, function, color, isVisible);
@@ -97,6 +103,16 @@
         public void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
+        }
+
+        /// <summary>
+        /// Implementa el metode IKeyedCollectionItem
+        /// </summary>
+        /// <returns>La clau de l'item.</returns>
+        /// 
+        public LayerId GetKey() {
+
+            return id;
         }
 
         /// <summary>

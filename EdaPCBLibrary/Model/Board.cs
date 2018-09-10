@@ -25,11 +25,11 @@
     public sealed class Board: IVisitable {
 
         // Capes
-        private readonly Dictionary<LayerId, Layer> layers = new Dictionary<LayerId, Layer>();
+        private readonly KeyCollection<Layer, LayerId> layers = new KeyCollection<Layer, LayerId>();
         private Layer outlineLayer = null;
 
         // Senyals
-        private readonly Dictionary<string, Signal> signals = new Dictionary<string, Signal>();
+        private readonly KeyCollection<Signal, String> signals = new KeyCollection<Signal, String>();
         private readonly Dictionary<Signal, HashSet<Tuple<IConectable, Part>>> itemsOfSignal = new Dictionary<Signal, HashSet<Tuple<IConectable, Part>>>();
         private readonly Dictionary<Tuple<IConectable, Part>, Signal> signalOfItem = new Dictionary<Tuple<IConectable, Part>, Signal>();
 
@@ -270,11 +270,11 @@
             if (layer == null)
                 throw new ArgumentNullException("layer");
 
-            if (layers.ContainsKey(layer.Id))
+            if (layers.Contains(layer))
                 throw new InvalidOperationException(
                     String.Format("La capa '{0}', ya esta asignada a esta placa.", layer.Id.FullName));
 
-            layers.Add(layer.Id, layer);
+            layers.Add(layer);
 
             if (layer.Function == LayerFunction.Outline) {
                 if (outlineLayer == null)
@@ -294,11 +294,11 @@
             if (layer == null)
                 throw new ArgumentNullException("layer");
 
-            if (!layers.ContainsKey(layer.Id))
+            if (!layers.Contains(layer))
                 throw new InvalidOperationException(
                     String.Format("No se encontro la capa '{0}'.", layer.Id.FullName));
 
-            layers.Remove(layer.Id);
+            layers.Remove(layer);
 
             if (outlineLayer == layer)
                 outlineLayer = null;
@@ -313,7 +313,8 @@
         /// 
         public Layer GetLayer(LayerId layerId, bool throwOnError = true) {
 
-            if (layers.TryGetValue(layerId, out Layer layer))
+            Layer layer = layers.Get(layerId);
+            if (layer != null)
                 return layer;
 
             else if (throwOnError)
@@ -331,7 +332,7 @@
         public IReadOnlyList<Layer> GetSignalLayers() {
 
             List<Layer> signalLayers = new List<Layer>();
-            foreach (var layer in layers.Values) {
+            foreach (var layer in layers) {
                 if (layer.Function == LayerFunction.Signal)
                     signalLayers.Add(layer);
             }
@@ -400,11 +401,11 @@
             if (signal == null)
                 throw new ArgumentNullException("signal");
 
-            if (signals.ContainsKey(signal.Name))
+            if (signals.Contains(signal))
                 throw new InvalidOperationException(
                     String.Format("Ya existe una señal con el nombre '{0}' en la placa.", signal.Name));
 
-            signals.Add(signal.Name, signal);
+            signals.Add(signal);
         }
 
         /// <summary>
@@ -417,7 +418,7 @@
             if (signal == null)
                 throw new ArgumentNullException("signal");
 
-            if (!signals.ContainsKey(signal.Name))
+            if (!signals.Contains(signal))
                 throw new InvalidOperationException(
                     String.Format("No se encontro ninguna señal con el nombre '{0}', en la placa.", signal.Name));
 
@@ -425,7 +426,7 @@
                 throw new InvalidOperationException(
                     String.Format("La señal '{0}', esta en uso y no puede ser retirada de la placa.", signal.Name));
 
-            signals.Remove(signal.Name);
+            signals.Remove(signal);
         }
 
         /// <summary>
@@ -443,7 +444,7 @@
             if (element == null)
                 throw new ArgumentNullException("element");
 
-            if (!signals.ContainsKey(signal.Name))
+            if (!signals.Contains(signal))
                 throw new InvalidOperationException(
                     String.Format("La senyal '{0}', no esta asignada a esta placa.", signal.Name));
 
@@ -517,15 +518,14 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            if (signals.TryGetValue(name, out Signal signal))
-                return signal;
+            Signal signal = signals?.Get(name);
 
-            else if (throwOnError)
+            if ((signal == null) && throwOnError)
                 throw new InvalidOperationException(
                     String.Format("No se encontro la señal '{0}'.", name));
 
             else 
-                return null;
+                return signal;
         }
 
         /// <summary>
@@ -539,7 +539,7 @@
             if (signal == null)
                 throw new ArgumentNullException("signal");
 
-            if (!signals.ContainsKey(signal.Name))
+            if (!signals.Contains(signal))
                 throw new InvalidOperationException(
                     String.Format("La señal '{0}', no esta asignada a esta placa.", signal.Name));
 
@@ -727,7 +727,7 @@
                     int maxX = Int32.MinValue;
                     int maxY = Int32.MinValue;
                     foreach (BoardElement element in GetElements(outlineLayer)) {
-                        Rect r = element.GetBoundingBox(BoardSide.Top);
+                        Rect r = element.GetBoundingBox(BoardSide.None);
                         if (minX > r.MinX)
                             minX = r.MinX;
                         if (minY > r.MinY)
@@ -809,7 +809,7 @@
         /// 
         public IEnumerable<Layer> Layers {
             get {
-                return layers.Values;
+                return layers;
             }
         }
 
@@ -819,7 +819,7 @@
         /// 
         public bool HasSignals {
             get {
-                return (signals != null) && (signals.Count > 0);
+                return signals != null;
             }
         }
 
@@ -829,7 +829,7 @@
         /// 
         public IEnumerable<Signal> Signals {
             get {
-                return signals.Values;
+                return signals;
             }
         }
 

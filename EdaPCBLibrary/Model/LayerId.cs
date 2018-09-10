@@ -100,11 +100,25 @@
             }
         }
 
+        /// <summary>
+        /// Operador ==
+        /// </summary>
+        /// <param name="a">Primer operand.</param>
+        /// <param name="b">Segon operand.</param>
+        /// <returns>Resultat de l'operacio.</returns>
+        /// 
         public static bool operator ==(LayerId a, LayerId b) {
 
             return (a.name == b.name) && (a.side == b.side);
         }
 
+        /// <summary>
+        /// Operador !=
+        /// </summary>
+        /// <param name="a">Primer operand.</param>
+        /// <param name="b">Segon operand.</param>
+        /// <returns>Resultat de l'operacio.</returns>
+        /// 
         public static bool operator !=(LayerId a, LayerId b) {
 
             return (a.name != b.name) || (a.side != b.side);

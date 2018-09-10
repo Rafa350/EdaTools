@@ -62,9 +62,10 @@
     <Compile Include="Import\Importer.cs" />
     <Compile Include="Import\ImporterFactory.cs" />
     <Compile Include="Infrastructure\PartAttributeAdapter.cs" />
-    <Compile Include="Model\Collections\GenericKeyedCollection.cs" />
-    <Compile Include="Model\Collections\GenericCollection.cs" />
-    <Compile Include="Model\Collections\IKeyedCollectionItem.cs" />
+    <Compile Include="Model\Collections\KeyCollection.cs" />
+    <Compile Include="Model\Collections\Collection.cs" />
+    <Compile Include="Model\Collections\IKey.cs" />
+    <Compile Include="Model\Collections\ParentChildKeyCollection.cs" />
     <Compile Include="Model\Collections\ParentChildCollection.cs" />
     <Compile Include="Model\LayerId.cs" />
     <Compile Include="Model\LayerSet.cs" />

@@ -85,7 +85,7 @@
         }
 
         /// <summary>
-        /// Operador suma
+        /// Operador +
         /// </summary>
         /// <param name="a">Primer operand.</param>
         /// <param name="b">Segon operand.</param>
@@ -100,7 +100,7 @@
         }
 
         /// <summary>
-        /// Operador suma
+        /// Operador +
         /// </summary>
         /// <param name="a">Primer operand.</param>
         /// <param name="b">Segon operand.</param>
@@ -114,6 +114,11 @@
             return new LayerSet(s);
         }
 
+        /// <summary>
+        /// Converteix a string
+        /// </summary>
+        /// <returns>El resultat de la conversio.</returns>
+        /// 
         public override string ToString() {
 
             return ToString(CultureInfo.CurrentCulture);
@@ -122,6 +127,7 @@
         /// <summary>
         /// Converteix a string
         /// </summary>
+        /// <param name="provider">Objecte proveidor de format.</param>
         /// <returns>El resultat de la conversio.</returns>
         /// 
         public string ToString(IFormatProvider provider) {

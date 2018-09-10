@@ -8,11 +8,10 @@
     /// </summary>
     /// <typeparam name="TParent">Tipus del pare.</typeparam>
     /// <typeparam name="TChild">Tipus del fill.</typeparam>
-    /// <typeparam name="TKey">El tipus de la clau.</typeparam>
     /// 
-    public sealed class ParentChildKeyCollection<TParent, TChild, TKey> : KeyCollection<TChild, TKey>
+    public sealed class ParentChildCollection<TParent, TChild> : Collection<TChild>
         where TParent: class
-        where TChild: class, IKey<TKey> {
+        where TChild: class {
 
         private static readonly Dictionary<TChild, TParent> parents = new Dictionary<TChild, TParent>();
         private readonly TParent parent;
@@ -22,7 +21,7 @@
         /// </summary>
         /// <param name="parent">Pare dels items de la coleccio.</param>
         /// 
-        public ParentChildKeyCollection(TParent parent) {
+        public ParentChildCollection(TParent parent) {
 
             this.parent = parent;
         }

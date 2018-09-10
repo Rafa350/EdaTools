@@ -3,12 +3,13 @@
     using System;
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
 
     /// <summary>
     /// Clase que representa un pad.
     /// </summary>
     /// 
-    public abstract class PadElement : BoardElement, IPosition, IRotation, IName, IConectable {
+    public abstract class PadElement : BoardElement, IPosition, IRotation, IName, IConectable, IKey<String> {
 
         private string name;
         private Point position;
@@ -38,6 +39,17 @@
         /// <returns>El poligon.</returns>
         /// 
         public abstract Polygon GetThermalPolygon(BoardSide side, int spacing, int width);
+
+        /// <summary>
+        /// Obte la clau.
+        /// </summary>
+        /// <returns>El valor de la clau.</returns>
+        /// <remarks>Implementa IKey.GetKey()</String></remarks>
+        /// 
+        public string GetKey() {
+
+            return name;
+        }
 
         /// <summary>
         /// Obte o asigna el nom.

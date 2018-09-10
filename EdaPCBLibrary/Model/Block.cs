@@ -12,8 +12,8 @@
     public sealed class Block : IVisitable, IName {
 
         private ParentChildCollection<Block, BoardElement> elements;
-        private Dictionary<string, PadElement> pads;
-        private Dictionary<string, BlockAttribute> attributes;
+        private KeyCollection<PadElement, String> pads;
+        private KeyCollection<BlockAttribute, String> attributes;
         private string name;
 
         /// <summary>
@@ -51,7 +51,7 @@
                     block.AddElement(element.Clone());
 
             if (attributes != null)
-                foreach (var attribute in attributes.Values)
+                foreach (var attribute in attributes)
                     block.AddAttribute(attribute.Clone());
 
             return block;
@@ -93,8 +93,8 @@
             PadElement pad = element as PadElement;
             if (pad != null) {
                 if (pads == null)
-                    pads = new Dictionary<string, PadElement>();
-                pads.Add(pad.Name, pad);
+                    pads = new KeyCollection<PadElement, string>();
+                pads.Add(pad);
             }
         }
 
@@ -137,8 +137,8 @@
             //
             PadElement pad = element as PadElement;
             if (pads != null) {
-                pads.Remove(pad.Name);
-                if (pads.Count == 0)
+                pads.Remove(pad);
+                if (pads.IsEmpty)
                     pads = null;
             }
         }
@@ -152,15 +152,13 @@
         /// 
         public PadElement GetPad(string name, bool throwOnError = true) {
 
-            if ((pads != null) && pads.TryGetValue(name, out PadElement pad))
-                return pad;
+            PadElement pad = pads?.Get(name);
 
-            else if (throwOnError)
+            if ((pad == null) && throwOnError)
                 throw new InvalidOperationException(
                     String.Format("No se encontro el pad '{0}' en el part '{1}'.", name, this.name));
-
             else
-                return null;
+                return pad;
         }
 
         /// <summary>
@@ -175,15 +173,15 @@
 
             // Comprova que l'atribut no estigui afeigit amb anterioritat
             //
-            if ((attributes != null) && attributes.ContainsKey(attribute.Name))
+            if ((attributes != null) && attributes.Contains(attribute))
                 throw new InvalidOperationException(
-                    String.Format("Ya existe un atributo con el nomnre '{0}'.", attribute.Name));
+                    String.Format("Ya existe un atributo con el nombre '{0}'.", attribute.Name));
 
             // Afegeix l'atribut a la llista d'atributs
             //
             if (attributes == null)
-                attributes = new Dictionary<string, BlockAttribute>();
-            attributes.Add(attribute.Name, attribute);
+                attributes = new KeyCollection<BlockAttribute, string>();
+            attributes.Add(attribute);
         }
 
         /// <summary>
@@ -212,14 +210,14 @@
 
             // Comprova que l'atribut estigui a la llista
             //
-            if ((attributes == null) || !attributes.ContainsKey(attribute.Name))
+            if ((attributes == null) || !attributes.Contains(attribute))
                 throw new InvalidOperationException(
                     String.Format("No se encontro el atributo '{0}'.", attribute.Name));
 
             // Elimina l'aqtribut de la llista d'atributs
             //
-            attributes.Remove(attribute.Name);
-            if (attributes.Count == 0)
+            attributes.Remove(attribute);
+            if (attributes.IsEmpty)
                 attributes = null;
         }
 
@@ -234,10 +232,7 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            if ((attributes != null) && attributes.TryGetValue(name, out BlockAttribute attribute))
-                return attribute;
-            else
-                return null;
+            return attributes?.Get(name);
         }
 
         /// <summary>
@@ -335,7 +330,7 @@
                 if (pads == null)
                     throw new InvalidOperationException("El bloque no contiene pads.");
 
-                return pads.Values;
+                return pads;
             }
         }
 
@@ -371,7 +366,7 @@
                 if (attributes == null)
                     throw new InvalidOperationException("El bloque no contiene atributos.");
 
-                return attributes.Values;
+                return attributes;
             }
         }
     }

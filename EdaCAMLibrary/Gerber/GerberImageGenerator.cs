@@ -770,7 +770,6 @@
 
             private readonly GerberBuilder gb;
             private readonly ApertureDictionary apertures;
-            private readonly Point boardPosition;
 
             /// <summary>
             /// Constructor del objecte.

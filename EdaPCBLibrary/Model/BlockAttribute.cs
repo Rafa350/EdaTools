@@ -1,11 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using System;
+    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
 
     /// <summary>
     /// Clase que representa un atribut d'un bloc.
     /// </summary>
-    public sealed class BlockAttribute: IVisitable {
+    public sealed class BlockAttribute: IVisitable, IKey<String> {
 
         private readonly string name;
         private string value;
@@ -41,10 +42,20 @@
         }
 
         /// <summary>
+        /// Obte el valor de la clau;
+        /// </summary>
+        /// <returns>El valor de la clau.</returns>
+        /// <remarks>Implementa el metode IKey.GetKey()</remarks>
+        /// 
+        public string GetKey() {
+
+            return name;
+        }
+
+        /// <summary>
         /// Obte el nom del atribut
         /// </summary>
         /// 
-
         public string Name {
             get {
                 return name;

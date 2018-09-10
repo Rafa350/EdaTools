@@ -1,11 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
-    
+
+    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
     using System;
 
     /// <summary>
     /// Clase que representa una senyal.
     /// </summary>
-    public sealed class Signal: IName, IVisitable {
+    public sealed class Signal: IName, IVisitable, IKey<String> {
 
         private string name;
         private int clearance;
@@ -36,6 +37,17 @@
         public void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
+        }
+
+        /// <summary>
+        /// Obte la clau.
+        /// </summary>
+        /// <returns>La clau</returns>
+        /// <remarks>Implementa IKey.GetKey()</remarks>
+        /// 
+        public string GetKey() {
+
+            return name;
         }
 
         /// <summary>

@@ -1,13 +1,14 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
+    using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
     using System;
     using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Geometry;
 
     public sealed class Panel: ISize {
 
         private Size size;
-        private HashSet<PanelElement> elements;
+        private Collection<PanelElement> elements;
 
         /// <summary>
         /// Afegeix un element
@@ -20,7 +21,7 @@
                 throw new ArgumentNullException("element");
 
             if (elements == null)
-                elements = new HashSet<PanelElement>();
+                elements = new Collection<PanelElement>();
 
             elements.Add(element);
         }
