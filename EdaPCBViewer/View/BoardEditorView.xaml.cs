@@ -199,7 +199,8 @@
                     new System.Windows.Size(contentBox.ActualWidth, contentBox.ActualHeight),
                     new System.Windows.Rect(0, 0, boardSize.Width, boardSize.Height));
 
-                VisualGenerator vg = new VisualGenerator(Board);
+                //VisualGenerator vg = new VisualGenerator(Board);
+                BitmapGenerator vg = new BitmapGenerator(Board);
                 DrawingVisual visual = vg.CreateVisual();
                 visual.Transform = new MatrixTransform(viewPoint.Matrix);
                 contentBox.Visual = visual;
