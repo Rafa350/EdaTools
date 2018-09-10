@@ -194,13 +194,11 @@
 
             if (Board != null) {
 
-                v1.Geometry.Size boardSize = Board.Size;
                 viewPoint.Reset(
                     new System.Windows.Size(contentBox.ActualWidth, contentBox.ActualHeight),
-                    new System.Windows.Rect(0, 0, boardSize.Width, boardSize.Height));
+                    new System.Windows.Rect(0, 0, Board.Size.Width, Board.Size.Height));
 
-                //VisualGenerator vg = new VisualGenerator(Board);
-                BitmapGenerator vg = new BitmapGenerator(Board);
+                VisualGenerator vg = new VisualGenerator(Board);
                 DrawingVisual visual = vg.CreateVisual();
                 visual.Transform = new MatrixTransform(viewPoint.Matrix);
                 contentBox.Visual = visual;

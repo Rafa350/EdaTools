@@ -9,7 +9,7 @@
     /// Clase que representa un bloc predefinit.
     /// </summary>
     /// 
-    public sealed class Block : IVisitable, IName {
+    public sealed class Block : IVisitable, IName, IKey<String> {
 
         private ParentChildCollection<Block, BoardElement> elements;
         private KeyCollection<PadElement, String> pads;
@@ -247,6 +247,17 @@
                 throw new ArgumentNullException("element");
 
             return ParentChildCollection<Block, BoardElement>.GetParent(element);
+        }
+
+        /// <summary>
+        /// Obte la clau.
+        /// </summary>
+        /// <returns>La clau.</returns>
+        /// <remarks>Implementa IKey.GetKey()</remarks>
+        /// 
+        public string GetKey() {
+
+            return name;
         }
 
         /// <summary>

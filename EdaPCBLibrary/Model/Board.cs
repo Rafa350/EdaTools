@@ -34,8 +34,7 @@
         private readonly Dictionary<Tuple<IConectable, Part>, Signal> signalOfItem = new Dictionary<Tuple<IConectable, Part>, Signal>();
 
         // Blocs
-        private static Dictionary<Block, Board> blockBoard = new Dictionary<Block, Board>();
-        private readonly Dictionary<string, Block> blocks = new Dictionary<string, Block>();
+        private ParentChildKeyCollection<Board, Block, String> blocks;
 
         // Elements
         private ParentChildCollection<Board, BoardElement> elements;
@@ -189,12 +188,13 @@
             if (block == null)
                 throw new ArgumentNullException("block");
 
-            if (blocks.ContainsKey(block.Name))
+            if ((blocks != null) && blocks.Contains(block))
                 throw new InvalidOperationException(
                     String.Format("El bloque '{0}', ya esta asignado a esta placa.", block.Name));
 
-            blocks.Add(block.Name, block);
-            blockBoard.Add(block, this);
+            if (blocks == null)
+                blocks = new ParentChildKeyCollection<Board, Block, String>(this);
+            blocks.Add(block);
         }
 
         /// <summary>
@@ -207,12 +207,13 @@
             if (block == null)
                 throw new ArgumentNullException("block");
 
-            if (!blocks.ContainsKey(block.Name))
+            if ((blocks == null) || !blocks.Contains(block))
                 throw new InvalidOperationException(
                     String.Format("No se encontro el bloque '{0}'.", block.Name));
 
-            blocks.Remove(block.Name);
-            blockBoard.Remove(block);
+            blocks.Remove(block);
+            if (blocks.IsEmpty)
+                blocks = null;
         }
 
         /// <summary>
@@ -227,7 +228,8 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            if (blocks.TryGetValue(name, out Block block))
+            Block block = blocks?.Get(name);
+            if (block != null)
                 return block;
 
             else if (throwOnError)
@@ -249,11 +251,7 @@
             if (block == null)
                 throw new ArgumentNullException("block");
 
-            if (blockBoard.TryGetValue(block, out Board board))
-                return board;
-
-            else
-                return null;
+            return ParentChildKeyCollection<Board, Block, String>.GetParent(block);
         }
 
         #endregion
@@ -358,7 +356,7 @@
                     list.Add(element);
 
             if (includeBlocks)
-                foreach (var block in blocks.Values)
+                foreach (var block in blocks)
                     foreach (var element in block.Elements)
                         if (element.IsOnLayer(layer))
                             list.Add(element);
@@ -769,7 +767,17 @@
         /// 
         public bool HasBlocks {
             get {
-                return (blocks != null) && (blocks.Count > 0);
+                return blocks != null;
+            }
+        }
+
+        /// <summary>
+        /// Enumera els noms dels blocks
+        /// </summary>
+        /// 
+        public IEnumerable<string> BlockNames {
+            get {
+                return blocks?.Keys;
             }
         }
 
@@ -779,7 +787,7 @@
         /// 
         public IEnumerable<Block> Blocks {
             get {
-                return blocks.Values;
+                return blocks;
             }
         }
 
@@ -789,7 +797,7 @@
         /// 
         public bool HasParts {
             get {
-                return (parts != null) && (parts.Count > 0);
+                return parts != null;
             }
         }
 
