@@ -6,7 +6,7 @@
     /// <summary>
     /// Clase que representa una senyal.
     /// </summary>
-    public sealed class Signal: IName, IVisitable, IKey<String> {
+    public sealed class Signal: IName, IVisitable, ICollectionKey<String> {
 
         private string name;
         private int clearance;

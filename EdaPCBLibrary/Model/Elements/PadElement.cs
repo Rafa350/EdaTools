@@ -9,7 +9,7 @@
     /// Clase que representa un pad.
     /// </summary>
     /// 
-    public abstract class PadElement : Element, IPosition, IRotation, IName, IConectable, IKey<String> {
+    public abstract class PadElement : Element, IPosition, IRotation, IName, IConectable, ICollectionKey<String> {
 
         private string name;
         private Point position;

@@ -19,7 +19,7 @@
     /// Clare quie representa una capa de la placa.
     /// </summary>
     /// 
-    public sealed class Layer: IVisitable, IKey<LayerId> {
+    public sealed class Layer: IVisitable, ICollectionKey<LayerId> {
 
         public static readonly LayerId TopId = new LayerId("Top", BoardSide.Top);
         public static readonly LayerId Inner1Id = new LayerId("Inner1", BoardSide.Inner);

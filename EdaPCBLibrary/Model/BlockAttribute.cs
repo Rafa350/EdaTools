@@ -6,7 +6,7 @@
     /// <summary>
     /// Clase que representa un atribut d'un bloc.
     /// </summary>
-    public sealed class BlockAttribute: IVisitable, IKey<String> {
+    public sealed class BlockAttribute: IVisitable, ICollectionKey<String> {
 
         private readonly string name;
         private string value;

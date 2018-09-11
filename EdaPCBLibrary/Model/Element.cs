@@ -3,12 +3,13 @@
     using System;
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
 
     /// <summary>
     /// Clase base per tots els elements de la placa.
     /// </summary>
     /// 
-    public abstract class Element : IVisitable {
+    public abstract class Element : IVisitable, ICollectionChild<Board>, ICollectionChild<Block> {
 
         private LayerSet layerSet;
 

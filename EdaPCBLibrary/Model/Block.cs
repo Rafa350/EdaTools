@@ -8,7 +8,7 @@
     /// Clase que representa un bloc predefinit.
     /// </summary>
     /// 
-    public sealed partial class Block : IVisitable, IName, IKey<String>, IDisposable {
+    public sealed partial class Block : IVisitable, IName, ICollectionKey<String>, ICollectionChild<Board>, IDisposable {
 
         private string name;
 

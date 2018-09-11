@@ -67,11 +67,12 @@
     <Compile Include="Model\Board_Parts.cs" />
     <Compile Include="Model\Board_Layers.cs" />
     <Compile Include="Model\Board_Blocks.cs" />
+    <Compile Include="Model\Collections\ICollectionChild.cs" />
     <Compile Include="Model\Collections\KeyCollection.cs" />
     <Compile Include="Model\Collections\Collection.cs" />
-    <Compile Include="Model\Collections\IKey.cs" />
-    <Compile Include="Model\Collections\ParentChildKeyCollection.cs" />
+    <Compile Include="Model\Collections\ICollectionKey.cs" />
     <Compile Include="Model\Collections\ParentChildCollection.cs" />
+    <Compile Include="Model\Collections\ParentChildKeyCollection.cs" />
     <Compile Include="Model\LayerId.cs" />
     <Compile Include="Model\LayerSet.cs" />
     <Compile Include="Model\BlockAttribute.cs" />

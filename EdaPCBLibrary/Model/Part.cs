@@ -6,7 +6,7 @@
     using System;
     using System.Collections.Generic;
 
-    public sealed class Part: IPosition, IRotation, IName, IVisitable, IKey<String> {
+    public sealed class Part: IPosition, IRotation, IName, IVisitable, ICollectionKey<String>, ICollectionChild<Board> {
 
         private string name;
         private Point position;
