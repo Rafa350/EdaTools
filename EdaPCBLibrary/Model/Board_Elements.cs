@@ -25,7 +25,10 @@
                 throw new ArgumentNullException("element");
 
             if (element.Board != null)
-                throw new InvalidOperationException("El elemento pertenece a una placa.");
+                throw new InvalidOperationException("El elemento ya pertenece a una placa.");
+
+            if (element.Block != null)
+                throw new InvalidOperationException("El elemento ya pertenece a un bloque.");
 
             if (elements == null)
                 elements = new ParentChildCollection<Board, Element>(this);

@@ -64,6 +64,7 @@
                 foreach (var part in board.Parts) {
                     Block block = panelBoard.GetBlock(part.Block.Name);
                     Part panelPart = part.Clone(block);
+                    panelPart.Name = String.Format("B{0}{1}", index, panelPart.Name);
                     transformableParts.Add(panelPart);
                     panelBoard.AddPart(panelPart);
 

@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="Setup" Language="1033" Version="1.0.0.0" Manufacturer="" UpgradeCode="e28a93b5-e628-4745-b04f-aeeb9df4414e">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+	<Product 
+        Id="*" 
+        Name="Setup" 
+        Language="1033" 
+        Version="1.0.0.0" 
+        Manufacturer="MikroPic" 
+        UpgradeCode="e28a93b5-e628-4745-b04f-aeeb9df4414e">
+		
+        <Package 
+            InstallerVersion="200" 
+            Compressed="yes" 
+            InstallScope="perMachine" />
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
+		<MajorUpgrade 
+            DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		
+        <MediaTemplate />
 
 		<Feature Id="ProductFeature" Title="Setup" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />

@@ -42,6 +42,15 @@
         }
 
         /// <summary>
+        /// Elimina tots els elements de la coleccio
+        /// </summary>
+        /// 
+        public void Clear() {
+
+            items.Clear();
+        }
+
+        /// <summary>
         /// Comprova si un item pertany a la coleccio.
         /// </summary>
         /// <param name="child">El item a comprovar.</param>

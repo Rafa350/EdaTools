@@ -27,7 +27,7 @@
 
             if (block.Board != null)
                 throw new InvalidOperationException(
-                    String.Format("El bloque '{0}', ya esta asignado a una placa.", block.Name));
+                    String.Format("El bloque '{0}', ya pertenece a una placa.", block.Name));
 
             if (blocks == null)
                 blocks = new ParentChildKeyCollection<Board, Block, String>(this);

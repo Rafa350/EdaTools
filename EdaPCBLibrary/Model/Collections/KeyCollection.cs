@@ -42,6 +42,15 @@
         }
 
         /// <summary>
+        /// Elimina tots els elements de la coleccio
+        /// </summary>
+        /// 
+        public void Clear() {
+
+            items.Clear();
+        }
+
+        /// <summary>
         /// Obte un item.
         /// </summary>
         /// <param name="key">La clau del item.</param>
