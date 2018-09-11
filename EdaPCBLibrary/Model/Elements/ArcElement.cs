@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
@@ -27,7 +27,7 @@
             this.angle = angle;
         }
 
-        public override BoardElement Clone() {
+        public override Element Clone() {
 
             return new ArcElement(LayerSet, StartPosition, EndPosition, Thickness, angle, LineCap);
         }

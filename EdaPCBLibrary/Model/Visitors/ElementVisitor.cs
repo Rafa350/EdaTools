@@ -40,7 +40,7 @@
             foreach (Part part in board.Parts)
                 part.AcceptVisitor(this);
 
-            foreach (BoardElement element in board.Elements)
+            foreach (Element element in board.Elements)
                 if ((layer == null) || element.IsOnLayer(layer))
                     element.AcceptVisitor(this);
         }
@@ -54,7 +54,7 @@
 
             this.part = part;
 
-            foreach (BoardElement element in part.Elements)
+            foreach (Element element in part.Elements)
                 if ((layer == null) || element.IsOnLayer(layer))
                     element.AcceptVisitor(this);
 

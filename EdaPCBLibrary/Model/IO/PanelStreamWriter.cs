@@ -2,7 +2,7 @@
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Fonts;
-    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using MikroPic.EdaTools.v1.Xml;
     using System;
@@ -440,7 +440,7 @@
                 wr.WriteAttribute("name", block.Name);
 
                 wr.WriteStartElement("elements");
-                foreach (BoardElement element in block.Elements)
+                foreach (Element element in block.Elements)
                     element.AcceptVisitor(this);
                 wr.WriteEndElement();
 
@@ -490,7 +490,7 @@
 
                 if (board.Elements != null) {
                     wr.WriteStartElement("elements");
-                    foreach (BoardElement element in board.Elements)
+                    foreach (Element element in board.Elements)
                         element.AcceptVisitor(this);
                     wr.WriteEndElement();
                 }
@@ -498,7 +498,7 @@
                 wr.WriteEndElement();
             }
 
-            private string[] GetLayerNames(BoardElement element) {
+            private string[] GetLayerNames(Element element) {
 
                 IEnumerable<Layer> layers = board.GetLayers(element);
                 if (layers != null) {

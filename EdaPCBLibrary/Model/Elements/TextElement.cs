@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
@@ -9,7 +9,7 @@
     /// Clase que representa un text.
     /// </summary>
     /// 
-    public sealed class TextElement: BoardElement, IPosition, IRotation {
+    public sealed class TextElement: Element, IPosition, IRotation {
 
         private Point position;
         private Angle rotation;
@@ -51,7 +51,7 @@
             this.value = value;
         }
 
-        public override BoardElement Clone() {
+        public override Element Clone() {
 
             return new TextElement(LayerSet, position, rotation, height, thickness, 
                 horizontalAlign, verticalAlign, value);

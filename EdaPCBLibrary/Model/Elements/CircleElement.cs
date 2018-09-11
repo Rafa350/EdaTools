@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
@@ -8,7 +8,7 @@
     /// <summary>
     /// Clase que representa un cercle.
     /// </summary>
-    public sealed class CircleElement: BoardElement, IPosition {
+    public sealed class CircleElement: Element, IPosition {
 
         private Point position;
         private int radius;
@@ -33,7 +33,7 @@
             this.filled = filled;
         }
 
-        public override BoardElement Clone() {
+        public override Element Clone() {
 
             return new CircleElement(LayerSet, position, radius, thickness, filled);
         }

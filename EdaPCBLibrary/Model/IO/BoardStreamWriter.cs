@@ -2,7 +2,7 @@
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Fonts;
-    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using MikroPic.EdaTools.v1.Xml;
     using System;
@@ -440,7 +440,7 @@
 
                 if (block.HasElements) {
                     wr.WriteStartElement("elements");
-                    foreach (BoardElement element in block.Elements)
+                    foreach (Element element in block.Elements)
                         element.AcceptVisitor(this);
                     wr.WriteEndElement();
                 }
@@ -494,7 +494,7 @@
 
                 if (board.HasElements) {
                     wr.WriteStartElement("elements");
-                    foreach (BoardElement element in board.Elements)
+                    foreach (Element element in board.Elements)
                         element.AcceptVisitor(this);
                     wr.WriteEndElement();
                 }

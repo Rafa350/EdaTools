@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
@@ -9,7 +9,7 @@
     /// <summary>
     /// Clase que representa una regio poligonal.
     /// </summary>
-    public sealed class RegionElement: BoardElement, IConectable {
+    public sealed class RegionElement: Element, IConectable {
 
         public class Segment {
 
@@ -98,7 +98,7 @@
                 Add(segment);
         }
 
-        public override BoardElement Clone() {
+        public override Element Clone() {
 
             RegionElement region = new RegionElement(LayerSet, thickness, filled, clearance);
             foreach (var segment in segments)

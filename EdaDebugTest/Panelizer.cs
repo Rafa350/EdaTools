@@ -2,7 +2,7 @@
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.PanelElements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
@@ -84,10 +84,10 @@
             // Afegeix els elements de la placa
             //
             if (board.HasElements) {
-                List<BoardElement> transformableElements = new List<BoardElement>();
+                List<Element> transformableElements = new List<Element>();
                 foreach (var element in board.Elements) {
 
-                    BoardElement panelElement = element.Clone();
+                    Element panelElement = element.Clone();
                     transformableElements.Add(panelElement);
                     panelBoard.AddElement(panelElement);
 

@@ -8,7 +8,7 @@
     /// Clase base per tots els elements de la placa.
     /// </summary>
     /// 
-    public abstract class BoardElement : IVisitable {
+    public abstract class Element : IVisitable {
 
         private LayerSet layerSet;
 
@@ -17,7 +17,7 @@
         /// </summary>
         /// <param name="layerSet">El conjunt de capes.</param>
         /// 
-        public BoardElement(LayerSet layerSet) {
+        public Element(LayerSet layerSet) {
 
             this.layerSet = layerSet;
         }
@@ -27,7 +27,7 @@
         /// </summary>
         /// <returns>La copia de l'objecte.</returns>
         /// 
-        public abstract BoardElement Clone();
+        public abstract Element Clone();
 
         /// <summary>
         /// Comprova si l'element pertany a una capa.
@@ -41,16 +41,6 @@
                 throw new ArgumentNullException("layer");
 
             return layerSet.Contains(layer.Id);
-        }
-
-        /// <summary>
-        /// Obte la placa a la que pertany l'element.
-        /// </summary>
-        /// <returns>La placa a la que pertany o nul si no pertany a cap.</returns>
-        /// 
-        Board GetBoard() {
-
-            return null;
         }
 
         /// <summary>
@@ -114,8 +104,7 @@
         /// 
         public Board Board {
             get {
-                Block block = Block.GetBlock(this);
-                return block == null ? Board.GetBoard(this) : block.Board;
+                return Board.GetBoard(this);
             }
         }
     }

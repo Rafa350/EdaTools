@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using System;
     using MikroPic.EdaTools.v1.Geometry;
@@ -9,7 +9,7 @@
     /// Clase que representa un pad.
     /// </summary>
     /// 
-    public abstract class PadElement : BoardElement, IPosition, IRotation, IName, IConectable, IKey<String> {
+    public abstract class PadElement : Element, IPosition, IRotation, IName, IConectable, IKey<String> {
 
         private string name;
         private Point position;

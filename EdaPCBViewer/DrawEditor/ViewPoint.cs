@@ -61,10 +61,16 @@
 
             else if (vAspect > wAspect) 
                 wWidth = wHeight * vAspect;
-           
+
+            double offsetX = (wWidth - wRect.Width) / 2;
+            double offsetY = (wHeight - wRect.Height) / 2;
+
+            double scaleX = vWidth / wWidth;
+            double scaleY = vHeight / wHeight;
+
             m = new Matrix();
-            m.Translate((wWidth - wRect.Width) / 2, (wHeight - wRect.Height) / 2);
-            m.Scale(vWidth / wWidth, vHeight / wHeight);
+            m.Translate(offsetX, offsetY);
+            m.Scale(scaleX, scaleY);
 
             NotifyChange();
         }

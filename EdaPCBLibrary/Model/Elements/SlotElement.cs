@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using System;
     using MikroPic.EdaTools.v1.Geometry;
@@ -35,7 +35,7 @@
             this.length = length;
         }
 
-        public override BoardElement Clone() {
+        public override Element Clone() {
 
             return new SlotElement(Name, LayerSet, Position, Rotation, topSize, innerSize, bottomSize, drill, length);
         }

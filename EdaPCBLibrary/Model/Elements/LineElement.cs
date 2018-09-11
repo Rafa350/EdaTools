@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
@@ -8,7 +8,7 @@
     /// <summary>
     /// Clase que representa una linia.
     /// </summary>
-    public class LineElement : BoardElement, IConectable {
+    public class LineElement : Element, IConectable {
 
         public enum LineCapStyle {
             Round,
@@ -41,7 +41,7 @@
             this.lineCap = lineCap;
         }
 
-        public override BoardElement Clone() {
+        public override Element Clone() {
 
             return new LineElement(LayerSet, startPosition, endPosition, thickness, lineCap);
         }

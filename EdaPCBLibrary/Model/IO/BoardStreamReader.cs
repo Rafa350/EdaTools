@@ -3,7 +3,7 @@
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Xml;
     using System;
     using System.Collections.Generic;
@@ -277,7 +277,7 @@
 
             // Obte els elements
             //
-            List<BoardElement> elementList = new List<BoardElement>();
+            List<Element> elementList = new List<Element>();
             while (rd.NextTag() && rd.IsStart) {
                 switch (rd.TagName) {
                     case "line":
@@ -340,7 +340,7 @@
 
             // Obte els elements
             //
-            List<BoardElement> elementList = new List<BoardElement>();
+            List<Element> elementList = new List<Element>();
             while (rd.NextTag() && rd.IsStart) {
                 switch (rd.TagName) {
                     case "line":
@@ -551,7 +551,7 @@
         /// </summary>
         /// <param name="elementList">La llista d'elements.</param>
         /// 
-        private void ParseLineNode(IList<BoardElement> elementList) {
+        private void ParseLineNode(IList<Element> elementList) {
 
             // Comprova que el node sigui el correcte
             //
@@ -591,7 +591,7 @@
         /// </summary>
         /// <param name="elementList">La llista d'elements.</param>
         /// 
-        private void ParseArcNode(IList<BoardElement> elementList) {
+        private void ParseArcNode(IList<Element> elementList) {
 
             // Comprova que el node sigui el correcte
             //
@@ -630,7 +630,7 @@
         /// </summary>
         /// <param name="elementList">La llista d'elements.</param>
         /// 
-        private void ParseRectangleNode(IList<BoardElement> elementList) {
+        private void ParseRectangleNode(IList<Element> elementList) {
 
             // Comprova que el node sigui el correcte
             //
@@ -660,7 +660,7 @@
         /// </summary>
         /// <param name="elementList">La llista d'elements.</param>
         /// 
-        private void ParseCircleNode(IList<BoardElement> elementList) {
+        private void ParseCircleNode(IList<Element> elementList) {
 
             // Comprova que el node sigui el correcte
             //
@@ -688,7 +688,7 @@
         /// </summary>
         /// <param name="elementList">La llista d'elements.</param>
         /// 
-        private void ParseRegionNode(IList<BoardElement> elementList) {
+        private void ParseRegionNode(IList<Element> elementList) {
 
             // Comprova que el node sigui el correcte
             //
@@ -751,7 +751,7 @@
         /// </summary>
         /// <param name="elementList">La llista d'elements.</param>
         /// 
-        private void ParseTPadNode(IList<BoardElement> elementList) {
+        private void ParseTPadNode(IList<Element> elementList) {
 
             // Comprova que el node sigui el correcte
             //
@@ -793,7 +793,7 @@
         /// </summary>
         /// <param name="elementList">La llista d'elements.</param>
         /// 
-        private void ParseSPadNode(IList<BoardElement> elementList) {
+        private void ParseSPadNode(IList<Element> elementList) {
 
             // Comprova que el node sigui el correcte
             //
@@ -832,7 +832,7 @@
         /// </summary>
         /// <param name="elementList">La llista d'elements.</param>
         /// 
-        private void ParseViaNode(IList<BoardElement> elementList) {
+        private void ParseViaNode(IList<Element> elementList) {
 
             // Comprova que el node sigui el correcte
             //
@@ -870,7 +870,7 @@
         /// </summary>
         /// <param name="elementList">La llista d'elements.</param>
         /// 
-        private void ParseHoleNode(IList<BoardElement> elementList) {
+        private void ParseHoleNode(IList<Element> elementList) {
 
             // Comprova que el node sigui el correcte
             //
@@ -896,7 +896,7 @@
         /// </summary>
         /// <param name="elementList">La llista d'elements.</param>
         /// 
-        private void ParseTextNode(IList<BoardElement> elementList) {
+        private void ParseTextNode(IList<Element> elementList) {
 
             // Comprova que el node sigui el correcte
             //

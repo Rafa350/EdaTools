@@ -5,7 +5,7 @@
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
-    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
 
     using Color = MikroPic.EdaTools.v1.Geometry.Color;
     using SysPoint = System.Windows.Point;

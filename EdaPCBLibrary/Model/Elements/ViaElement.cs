@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
@@ -9,7 +9,7 @@
     /// Clase que representa una via
     /// </summary>
     /// 
-    public sealed class ViaElement : BoardElement, IPosition, IConectable {
+    public sealed class ViaElement : Element, IPosition, IConectable {
 
         public enum ViaShape {
             Square,
@@ -79,7 +79,7 @@
             this.shape = shape;
         }
 
-        public override BoardElement Clone() {
+        public override Element Clone() {
 
             return new ViaElement(LayerSet, position, outerSize, innerSize, drill, shape);
         }

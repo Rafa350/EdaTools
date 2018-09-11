@@ -1,6 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
-    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Collections;
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@
     /// 
     public sealed class Block : IVisitable, IName, IKey<String> {
 
-        private ParentChildCollection<Block, BoardElement> elements;
+        private ParentChildCollection<Block, Element> elements;
         private KeyCollection<PadElement, String> pads;
         private KeyCollection<BlockAttribute, String> attributes;
         private string name;
@@ -23,7 +23,7 @@
         /// <param name="elements">Llista d'elements.</param>
         /// <param name="attributes">Llista d'atributs.</param>
         /// 
-        public Block(string name, IEnumerable<BoardElement> elements = null, IEnumerable<BlockAttribute> attributes = null) {
+        public Block(string name, IEnumerable<Element> elements = null, IEnumerable<BlockAttribute> attributes = null) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -72,20 +72,20 @@
         /// </summary>
         /// <param name="element">El element a afeigir.</param>
         /// 
-        public void AddElement(BoardElement element) {
+        public void AddElement(Element element) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
 
             // Comprova que l'element no estigui afeigit amb anterioritat
             //
-            if ((elements != null) && elements.Contains(element))
-                throw new InvalidOperationException("El elemento ya pertenece al bloque.");
+            if (element.Block != null)
+                throw new InvalidOperationException("El elemento ya pertenece a un bloque.");
 
             // Afegeix l'element a la llista d'elements
             //
             if (elements == null)
-                elements = new ParentChildCollection<Block, BoardElement>(this);
+                elements = new ParentChildCollection<Block, Element>(this);
             elements.Add(element);
 
             // Si l'element es un Pad, l'afegeix la la llista de pads.
@@ -103,7 +103,7 @@
         /// </summary>
         /// <param name="element">El elements a afeigir.</param>
         /// 
-        public void AddElements(IEnumerable<BoardElement> elements) {
+        public void AddElements(IEnumerable<Element> elements) {
 
             if (elements == null)
                 throw new ArgumentNullException("elements");
@@ -117,15 +117,15 @@
         /// </summary>
         /// <param name="element">El element a eliminar.</param>
         /// 
-        public void RemoveElement(BoardElement element) {
+        public void RemoveElement(Element element) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
 
             // Comprova que l'element estigui en la llista
             //
-            if ((elements == null) || !elements.Contains(element))
-                throw new InvalidOperationException("El elemento no pertenece al bloque.");
+            if (element.Block != this)
+                throw new InvalidOperationException("El elemento no pertenece a esta bloque.");
 
             // Elimina l'element de la llista d'elements
             //
@@ -241,12 +241,12 @@
         /// <param name="element">L'element.</param>
         /// <returns>El bloc al que pertany, null si no pertany a cap.</returns>
         /// 
-        internal static Block GetBlock(BoardElement element) {
+        internal static Block GetBlock(Element element) {
 
             if (element == null)
                 throw new ArgumentNullException("element");
 
-            return ParentChildCollection<Block, BoardElement>.GetParent(element);
+            return ParentChildCollection<Block, Element>.GetParent(element);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@
         /// 
         public Board Board {
             get {
-                return Board.GetBoard(this);
+                return Board.GetBoard(this); 
             }
         }
 
@@ -300,7 +300,7 @@
         /// Obte la llista d'elements.
         /// </summary>
         /// 
-        public IEnumerable<BoardElement> Elements {
+        public IEnumerable<Element> Elements {
             get {
                 if (elements == null)
                     throw new InvalidOperationException("El bloque no contiene elementos.");

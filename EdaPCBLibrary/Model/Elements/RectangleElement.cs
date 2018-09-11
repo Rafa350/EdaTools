@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
@@ -9,7 +9,7 @@
     /// Clase que representa un rectangle.
     /// </summary>
     /// 
-    public sealed class RectangleElement: BoardElement, IPosition, ISize, IRotation {
+    public sealed class RectangleElement: Element, IPosition, ISize, IRotation {
 
         private Point position;
         private Size size;
@@ -40,7 +40,7 @@
             this.filled = filled;
         }
 
-        public override BoardElement Clone() {
+        public override Element Clone() {
 
             return new RectangleElement(LayerSet, position, size, roundness, rotation, thickness, filled);
         }

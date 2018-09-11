@@ -3,7 +3,7 @@
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -22,7 +22,7 @@
 
         private readonly Dictionary<string, Block> componentDict = new Dictionary<string, Block>();
         private readonly Dictionary<string, Signal> signalDict = new Dictionary<string, Signal>();
-        private readonly Dictionary<BoardElement, string> mapElementSignal = new Dictionary<BoardElement, string>();
+        private readonly Dictionary<Element, string> mapElementSignal = new Dictionary<Element, string>();
 
         private Board board;
         private XmlDocument doc;
@@ -126,9 +126,9 @@
 
                     string packageName = GetAttributeAsString(packageNode, "name");
 
-                    List<BoardElement> elements = new List<BoardElement>();
+                    List<Element> elements = new List<Element>();
                     foreach (XmlNode childNode in packageNode.ChildNodes) {
-                        BoardElement element = null;
+                        Element element = null;
                         switch (childNode.Name) {
                             case "smd":
                                 element = ParseSmdNode(childNode);
@@ -196,7 +196,7 @@
             //
             foreach (XmlNode node in doc.SelectSingleNode("eagle/drawing/board/plain")) {
 
-                BoardElement element = null;
+                Element element = null;
                 switch (node.Name) {
                     case "wire":
                         element = ParseWireNode(node);
@@ -251,7 +251,7 @@
                 }
 
                 foreach (XmlNode childNode in node.ChildNodes) {
-                    BoardElement element = null;
+                    Element element = null;
                     switch (childNode.Name) {
                         case "wire":
                             element = ParseWireNode(childNode);
@@ -341,7 +341,7 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'ThPadElement' creat.</returns>
         /// 
-        private BoardElement ParsePadNode(XmlNode node) {
+        private Element ParsePadNode(XmlNode node) {
 
             string name = GetAttributeAsString(node, "name");
 
@@ -392,7 +392,7 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'SmdPadElement' creat.</returns>
         /// 
-        private BoardElement ParseSmdNode(XmlNode node) {
+        private Element ParseSmdNode(XmlNode node) {
 
             string name = GetAttributeAsString(node, "name");
 
@@ -440,7 +440,7 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'ViaElement' creat.</returns>
         /// 
-        private BoardElement ParseViaNode(XmlNode node) {
+        private Element ParseViaNode(XmlNode node) {
 
             int x = ParseNumber(GetAttributeAsString(node, "x"));
             int y = ParseNumber(GetAttributeAsString(node, "y"));
@@ -476,7 +476,7 @@
                 layerSet = layerSet + layerId;
             }
 
-            BoardElement element = new ViaElement(layerSet, position, size, drill, shape);
+            Element element = new ViaElement(layerSet, position, size, drill, shape);
 
             return element;
         }
@@ -487,7 +487,7 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'TextElement' creat.</returns>
         /// 
-        private BoardElement ParseTextNode(XmlNode node) {
+        private Element ParseTextNode(XmlNode node) {
 
             string value = node.InnerText;
 
@@ -526,7 +526,7 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'LineElement' o ArcElement' creat.</returns>
         /// 
-        private BoardElement ParseWireNode(XmlNode node) {
+        private Element ParseWireNode(XmlNode node) {
 
             int x1 = ParseNumber(GetAttributeAsString(node, "x1"));
             int y1 = ParseNumber(GetAttributeAsString(node, "y1"));
@@ -548,7 +548,7 @@
             LayerId layerId = GetLayerId(layerNum);
             LayerSet layerSet = new LayerSet(layerId);
 
-            BoardElement element;
+            Element element;
             if (angle.IsZero)
                 element = new LineElement(layerSet, p1, p2, thickness, lineCap);
             else
@@ -563,7 +563,7 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'RectangleElement' creat.</returns>
         /// 
-        private BoardElement ParseRectangleNode(XmlNode node) {
+        private Element ParseRectangleNode(XmlNode node) {
 
             // Obte la posicio i el tamany
             //
@@ -590,7 +590,7 @@
             LayerId layerId = GetLayerId(layerNum);
             LayerSet layerSet = new LayerSet(layerId);
 
-            BoardElement element = new RectangleElement(layerSet, position, size, Ratio.Zero, rotation, thickness, thickness == 0);
+            Element element = new RectangleElement(layerSet, position, size, Ratio.Zero, rotation, thickness, thickness == 0);
 
             return element;
         }
@@ -601,7 +601,7 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'CircleElement' creat.</returns>
         /// 
-        private BoardElement ParseCircleNode(XmlNode node) {
+        private Element ParseCircleNode(XmlNode node) {
 
             // obte la posicio
             //
@@ -623,7 +623,7 @@
             LayerId layerId = GetLayerId(layerNum);
             LayerSet layerSet = new LayerSet(layerId);
 
-            BoardElement element = new CircleElement(layerSet, position, radius, thickness, thickness == 0);
+            Element element = new CircleElement(layerSet, position, radius, thickness, thickness == 0);
 
             return element;
         }
@@ -634,7 +634,7 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'RegionElement' creat.</returns>
         /// 
-        private BoardElement ParsePolygonNode(XmlNode node) {
+        private Element ParsePolygonNode(XmlNode node) {
 
             // Obte l'amplada de linia
             //
@@ -668,7 +668,7 @@
                 segments.Add(new RegionElement.Segment(vertex, angle));
             }
 
-            BoardElement element = new RegionElement(layerSet, thickness, true, clearance, segments);
+            Element element = new RegionElement(layerSet, thickness, true, clearance, segments);
 
             return element;
         }
@@ -679,7 +679,7 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'HoleElement' creat.</returns>
         /// 
-        private BoardElement ParseHoleNode(XmlNode node) {
+        private Element ParseHoleNode(XmlNode node) {
 
             // obte la posicio
             //

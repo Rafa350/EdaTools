@@ -1,11 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Pcb.Model.BoardElements;
+    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
+    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
     using System.Collections.Generic;
 
-    public sealed class Part: IPosition, IRotation, IName, IVisitable {
+    public sealed class Part: IPosition, IRotation, IName, IVisitable, IKey<String> {
 
         private string name;
         private Point position;
@@ -148,6 +149,11 @@
             return new Transformation(position, rotation);
         }
 
+        public string GetKey() {
+
+            return name;
+        }
+
         /// <summary>
         /// Obte o asigna el nom.
         /// </summary>
@@ -216,7 +222,7 @@
         /// Enumera els elements.
         /// </summary>
         /// 
-        public IEnumerable<BoardElement> Elements {
+        public IEnumerable<Element> Elements {
             get {
                 return block.Elements;
             }
@@ -261,6 +267,16 @@
                 if (attributes == null)
                     throw new InvalidOperationException("No contiene atributos.");
                 return attributes.Values;
+            }
+        }
+
+        /// <summary>
+        /// Obte la placa a la que pertany.
+        /// </summary>
+        /// 
+        public Board Board {
+            get {
+                return Board.GetBoard(this);
             }
         }
     }

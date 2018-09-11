@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.BoardElements {
+﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
@@ -8,7 +8,7 @@
     /// <summary>
     /// Clase que representa un forat no conductor.
     /// </summary>
-    public sealed class HoleElement : BoardElement, IPosition {
+    public sealed class HoleElement : Element, IPosition {
 
         private Point position;
         private int drill;
@@ -30,7 +30,7 @@
             this.drill = drill;
         }
 
-        public override BoardElement Clone() {
+        public override Element Clone() {
 
             return new HoleElement(LayerSet, position, drill);
         }
