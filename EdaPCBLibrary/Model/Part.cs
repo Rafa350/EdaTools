@@ -8,6 +8,7 @@
 
     public sealed class Part: IPosition, IRotation, IName, IVisitable, ICollectionKey<String>, ICollectionChild<Board> {
 
+        private Board board;
         private string name;
         private Point position;
         private Angle rotation;
@@ -67,6 +68,22 @@
             visitor.Visit(this);
         }
 
+        /// <summary>
+        /// Asigna l'objecte pare.
+        /// </summary>
+        /// <param name="board">L'objecte pare.</param>
+        /// <remarks>Implementa ICollectionChild.AssignParent(Board)</remarks>
+        /// 
+        public void AssignParent(Board board) {
+
+            this.board = board;
+        }
+
+        /// <summary>
+        /// Converteix a string
+        /// </summary>
+        /// <returns>El resultat de l'operacio.</returns>
+        /// 
         public override string ToString() {
 
             return String.Format("Part: '{0}'", name);
@@ -149,6 +166,12 @@
             return new Transformation(position, rotation);
         }
 
+        /// <summary>
+        /// Obte el valor de la clau
+        /// </summary>
+        /// <returns>El valor de la clau.</returns>
+        /// <remarks>Implementa ICollectionKey.GetKey()</remarks>
+        /// 
         public string GetKey() {
 
             return name;
@@ -206,6 +229,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte la cara en la que es monta el component.
+        /// </summary>
+        /// 
         public BoardSide Side {
             get {
                 return side;
@@ -276,7 +303,7 @@
         /// 
         public Board Board {
             get {
-                return Board.GetBoard(this);
+                return board;
             }
         }
     }

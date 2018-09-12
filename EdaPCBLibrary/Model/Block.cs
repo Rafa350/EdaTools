@@ -8,8 +8,9 @@
     /// Clase que representa un bloc predefinit.
     /// </summary>
     /// 
-    public sealed partial class Block : IVisitable, IName, ICollectionKey<String>, ICollectionChild<Board>, IDisposable {
+    public sealed partial class Block : IVisitable, IName, ICollectionKey<String>, ICollectionChild<Board> {
 
+        private Board board;
         private string name;
 
         /// <summary>
@@ -67,11 +68,22 @@
         /// Obte la clau.
         /// </summary>
         /// <returns>La clau.</returns>
-        /// <remarks>Implementa IKey.GetKey()</remarks>
+        /// <remarks>Implementa ICollectionKey.GetKey()</remarks>
         /// 
         public string GetKey() {
 
             return name;
+        }
+
+        /// <summary>
+        /// Asigna l'objecte pare.
+        /// </summary>
+        /// <param name="board">L'objete pare a asignar.</param>
+        /// <remarks>Implementa ICollectionChild.AssignParent(Board)</remarks>
+        /// 
+        public void AssignParent(Board board) {
+
+            this.board = board;
         }
 
         /// <summary>
@@ -96,41 +108,8 @@
         /// 
         public Board Board {
             get {
-                return Board.GetBoard(this); 
+                return board; 
             }
         }
-
-        #region IDisposable Support
-        private bool disposedValue = false; // Para detectar llamadas redundantes
-
-        void Dispose(bool disposing) {
-            if (!disposedValue) {
-                if (disposing) {
-                    // TODO: elimine el estado administrado (objetos administrados).
-                    RemoveAllAttributes();
-                    RemoveAllElements();
-                }
-
-                // TODO: libere los recursos no administrados (objetos no administrados) y reemplace el siguiente finalizador.
-                // TODO: configure los campos grandes en nulos.
-
-                disposedValue = true;
-            }
-        }
-
-        // TODO: reemplace un finalizador solo si el anterior Dispose(bool disposing) tiene código para liberar los recursos no administrados.
-        // ~Block() {
-        //   // No cambie este código. Coloque el código de limpieza en el anterior Dispose(colocación de bool).
-        //   Dispose(false);
-        // }
-
-        // Este código se agrega para implementar correctamente el patrón descartable.
-        public void Dispose() {
-            // No cambie este código. Coloque el código de limpieza en el anterior Dispose(colocación de bool).
-            Dispose(true);
-            // TODO: quite la marca de comentario de la siguiente línea si el finalizador se ha reemplazado antes.
-            // GC.SuppressFinalize(this);
-        }
-        #endregion
     }
 }

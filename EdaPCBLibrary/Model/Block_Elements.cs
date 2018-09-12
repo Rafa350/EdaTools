@@ -129,20 +129,6 @@
         }
 
         /// <summary>
-        /// Obte el bloc al que pertany l'element
-        /// </summary>
-        /// <param name="element">L'element.</param>
-        /// <returns>El bloc al que pertany, null si no pertany a cap.</returns>
-        /// 
-        internal static Block GetBlock(Element element) {
-
-            if (element == null)
-                throw new ArgumentNullException("element");
-
-            return ParentChildCollection<Block, Element>.GetParent(element);
-        }
-
-        /// <summary>
         /// Indica si conte elements.
         /// </summary>
         /// 

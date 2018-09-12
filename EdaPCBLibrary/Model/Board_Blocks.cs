@@ -78,20 +78,6 @@
         }
 
         /// <summary>
-        /// Obte la placa al que pertany el bloc
-        /// </summary>
-        /// <param name="block">L'element.</param>
-        /// <returns>El bloc al que pertany, null si no pertany a cap.</returns>
-        /// 
-        internal static Board GetBoard(Block block) {
-
-            if (block == null)
-                throw new ArgumentNullException("block");
-
-            return ParentChildKeyCollection<Board, Block, String>.GetParent(block);
-        }
-
-        /// <summary>
         /// Indica si conte blocs
         /// </summary>
         /// 

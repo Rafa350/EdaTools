@@ -11,10 +11,8 @@
     /// 
     public sealed class ParentChildCollection<TParent, TChild> : Collection<TChild>
         where TParent: class
-        where TChild: class, ICollectionChild<TParent>
-        {
+        where TChild: class, ICollectionChild<TParent> {
 
-        private static readonly Dictionary<TChild, TParent> parents = new Dictionary<TChild, TParent>();
         private readonly TParent parent;
 
         /// <summary>
@@ -23,6 +21,9 @@
         /// <param name="parent">Pare dels items de la coleccio.</param>
         /// 
         public ParentChildCollection(TParent parent) {
+
+            if (parent == null)
+                throw new ArgumentNullException("parent");
 
             this.parent = parent;
         }
@@ -38,7 +39,7 @@
                 throw new ArgumentNullException("child");
 
             base.Add(child);
-            parents.Add(child, parent);
+            child.AssignParent(parent);
         }
 
         /// <summary>
@@ -52,25 +53,7 @@
                 throw new ArgumentNullException("child");
 
             base.Remove(child);
-            parents.Remove(child);
-        }
-
-        /// <summary>
-        /// Obte el pare d'un item.
-        /// </summary>
-        /// <param name="child">El item.</param>
-        /// <returns>El pare del item.</returns>
-        /// 
-        public static TParent GetParent(TChild child) {
-
-            if (child == null)
-                throw new ArgumentNullException("child");
-
-            if (parents.TryGetValue(child, out TParent parent))
-                return parent;
-
-            else
-                return null;
+            child.AssignParent(null);
         }
     }
 }

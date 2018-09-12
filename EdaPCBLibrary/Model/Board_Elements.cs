@@ -50,17 +50,6 @@
         }
 
         /// <summary>
-        /// Obte la placa a la que pertany un element
-        /// </summary>
-        /// <param name="element">L'element.</param>
-        /// <returns>La placa. Null si no pertany a cap.</returns>
-        /// 
-        internal static Board GetBoard(Element element) {
-
-            return ParentChildCollection<Board, Element>.GetParent(element);
-        }
-
-        /// <summary>
         /// Indica si conte elements.
         /// </summary>
         /// 

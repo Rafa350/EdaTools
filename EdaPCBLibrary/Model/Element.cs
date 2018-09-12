@@ -12,6 +12,8 @@
     public abstract class Element : IVisitable, ICollectionChild<Board>, ICollectionChild<Block> {
 
         private LayerSet layerSet;
+        private Board board;
+        private Block block;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -50,6 +52,26 @@
         /// <param name="visitor">El visitador.</param>
         /// 
         public abstract void AcceptVisitor(IVisitor visitor);
+
+        /// <summary>
+        /// Asigna l'objecte pare.
+        /// </summary>
+        /// <param name="block">L'objecte pare.</param>
+        /// 
+        public void AssignParent(Block block) {
+
+            this.block = block;
+        }
+
+        /// <summary>
+        /// Asigna l'objecte pare.
+        /// </summary>
+        /// <param name="board">L'objecte pare.</param>
+        /// 
+        public void AssignParent(Board board) {
+
+            this.board = board;
+        }
 
         /// <summary>
         /// Obte el poligon del element.
@@ -95,7 +117,7 @@
         /// 
         public Block Block {
             get {
-                return Block.GetBlock(this);
+                return block;
             }
         }
 
@@ -105,7 +127,7 @@
         /// 
         public Board Board {
             get {
-                return Board.GetBoard(this);
+                return board;
             }
         }
     }
