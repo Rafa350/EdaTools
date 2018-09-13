@@ -41,6 +41,11 @@
             this.lineCap = lineCap;
         }
 
+        /// <summary>
+        /// Clone l'alement.
+        /// </summary>
+        /// <returns>El clon de l'element.</returns>
+        /// 
         public override Element Clone() {
 
             return new LineElement(LayerSet, startPosition, endPosition, thickness, lineCap);
@@ -64,7 +69,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = PolygonBuilder.BuildTrace(startPosition, endPosition, thickness, LineCap == LineCapStyle.Round);
+            Point[] points = PolygonBuilder.MakeLineTrace(startPosition, endPosition, thickness, LineCap == LineCapStyle.Round);
             return new Polygon(points);
         }
 
@@ -77,7 +82,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = PolygonBuilder.BuildTrace(startPosition, endPosition, thickness + (spacing * 2), lineCap == LineCapStyle.Round);
+            Point[] points = PolygonBuilder.MakeLineTrace(startPosition, endPosition, thickness + (spacing * 2), lineCap == LineCapStyle.Round);
             return new Polygon(points);
         }
 

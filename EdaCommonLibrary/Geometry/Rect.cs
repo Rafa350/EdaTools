@@ -1,55 +1,140 @@
 ﻿namespace MikroPic.EdaTools.v1.Geometry {
 
+    using System;
+
+    /// <summary>
+    /// Objecte que representa un rectangle aliniat amb els eixos X i Y.
+    /// </summary>
     public struct Rect {
 
-        private readonly Point position;
-        private readonly Size size;
+        private readonly int x;
+        private readonly int y;
+        private readonly int width;
+        private readonly int height;
 
-        public Rect(int x, int y, int width, int height) {
+        /// <summary>
+        /// Constructor de l'objecte.
+        /// </summary>
+        /// <param name="x">Coordinada X</param>
+        /// <param name="y">Coordinada Y</param>
+        /// <param name="width">Amplada</param>
+        /// <param name="height">Alçada</param>
+        /// 
+        public Rect(int x = 0, int y = 0, int width = 0, int height = 0) {
 
-            position = new Point(x, y);
-            size = new Size(width, height);
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
         }
 
+        /// <summary>
+        /// Constructor de l'objecte.
+        /// </summary>
+        /// <param name="position">Posicio.</param>
+        /// <param name="size">Tamany</param>
+        /// 
         public Rect(Point position, Size size) {
 
-            this.position = position;
-            this.size = size;
+            x = position.X;
+            y = position.Y;
+            width = size.Width;
+            height = size.Height;
         }
 
+        /// <summary>
+        /// Obte un rectangle desplaçat.
+        /// </summary>
+        /// <param name="dx">Desplaçament X</param>
+        /// <param name="dy">Desplaçament Y</param>
+        /// <returns>El resultat de l'operacio.</returns>
+        /// 
+        public Rect Offset(int dx, int dy) {
+
+            return new Rect(x + dx, y + dy, width, height);
+        }
+
+        /// <summary>
+        /// Obte un rectangle inflat.
+        /// </summary>
+        /// <param name="dx">Increment X</param>
+        /// <param name="dy">Increment Y</param>
+        /// <returns>El resultat de l'operacio.</returns>
+        /// 
+        public Rect Inflated(int dx, int dy) {
+
+            return new Rect(x - dx, y - dy, width + dx + dx, height + dy + dy);
+        }
+
+        /// <summary>
+        /// Obte la unio amb un altre rectangle
+        /// </summary>
+        /// <param name="rect">Rectangle a unir.</param>
+        /// <returns>El resultat de la unio.</returns>
+        /// 
+        public Rect Union(Rect rect) {
+
+            int l = Math.Min(Left, rect.Left);
+            int r = Math.Max(Right, rect.Right);
+            int t = Math.Min(Top, rect.Top);
+            int b = Math.Max(Bottom, rect.Bottom);
+
+            return new Rect(l, t, r - l, b - t);
+        }
+
+        /// <summary>
+        /// Comprova si intersecta amb un rectangle
+        /// </summary>
+        /// <param name="r">El rectangle a verificar.</param>
+        /// <returns>True si intersecten, false en cas contrari.</returns>
+        /// 
+        public bool IntersectsWith(Rect r) {
+
+            return (r.Left <= Right) && (r.Right >= Left) &&
+                   (r.Bottom <= Top) && (r.Top >= Bottom);
+        }
+
+        /// <summary>
+        /// Obte la posicio del rectangle
+        /// </summary>
+        /// 
         public Point Position {
             get {
-                return position;
+                return new Point(x, y);
             }
         }
 
+        /// <summary>
+        /// Obte el tamany del rectangle
+        /// </summary>
+        /// 
         public Size Size {
             get {
-                return size;
+                return new Size(width, height);
             }
         }
 
-        public int MinX {
+        public int Left {
             get {
-                return position.X;
+                return x;
             }
         }
 
-        public int MinY {
+        public int Bottom {
             get {
-                return position.Y;
+                return y;
             }
         }
 
-        public int MaxX {
+        public int Right {
             get {
-                return position.X + size.Width;
+                return x + width;
             }
         }
 
-        public int MaxY {
+        public int Top {
             get {
-                return position.Y + size.Height;
+                return y + height;
             }
         }
     }

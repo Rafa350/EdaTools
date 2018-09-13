@@ -30,6 +30,11 @@
             this.drill = drill;
         }
 
+        /// <summary>
+        /// Obte un clon de l'element.
+        /// </summary>
+        /// <returns>El clon de l'element.</returns>
+        /// 
         public override Element Clone() {
 
             return new HoleElement(LayerSet, position, drill);
@@ -53,7 +58,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = PolygonBuilder.BuildCircle(position, drill / 2);
+            Point[] points = PolygonBuilder.MakeCircle(position, drill / 2);
             return new Polygon(points);
         }
 
@@ -66,7 +71,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = PolygonBuilder.BuildCircle(position, (drill / 2) + spacing);
+            Point[] points = PolygonBuilder.MakeCircle(position, (drill / 2) + spacing);
             return new Polygon(points);
         }
 

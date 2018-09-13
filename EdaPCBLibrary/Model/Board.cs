@@ -3,6 +3,7 @@
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Pcb.Infrastructure.Polygons;
     using System;
     using System.Collections.Generic;
 
@@ -25,6 +26,9 @@
 
         private Point position;
         private Angle rotation;
+
+        private int drcObjectDistance = 250000;
+        private int drcDrillDistance = 350000;
 
         /// <summary>
         /// Constructor del objecte amb els parametres per defecte.
@@ -61,7 +65,9 @@
                 }
                 else if (element is ArcElement) {
                     ArcElement arc = (ArcElement)element;
-                    segments.Add(new Segment(arc.StartPosition, arc.EndPosition));
+                    Point[] points = PolygonBuilder.MakeArc(arc.Center, arc.Radius, arc.StartAngle, arc.Angle, true);
+                    for (int i = 1; i < points.Length; i++) 
+                        segments.Add(new Segment(points[i - 1], points[i]));
                 }
             }
             return PolygonProcessor.CreateFromSegments(segments);
@@ -96,9 +102,12 @@
                 //
                 if (layer.Function == LayerFunction.Signal) {
 
+                    Rect regionBBox = regionPolygon.BoundingBox.Inflated(region.Clearance, region.Clearance);
+
                     Signal regionSignal = GetSignal(region, null, false);
 
                     int thicknessCompensation = 150000 + region.Thickness / 2;
+
                     List<Polygon> holePolygons = new List<Polygon>();
 
                     Layer restrictLayer = GetLayer(layer.Id.Side == BoardSide.Top ? Layer.TopRestrictId : Layer.BottomRestrictId);
@@ -107,34 +116,40 @@
                     // la regio, o en les capes restrict o profile.
                     //
                     foreach (var element in elements) {
-                        if (element != region) {
+                        if (element != region && !(element is TextElement)) {
 
-                            // El element es en la mateixa capa que la regio
+                            // Comprova que interseccionen
                             //
-                            if (element.IsOnLayer(layer)) {
+                            Rect elementBBox = element.GetBoundingBox(layer.Id.Side);
+                            if (regionBBox.IntersectsWith(elementBBox)) {
 
-                                // Si no esta en la mateixa senyal que la regio, genera un forat.
+                                // El element es en la mateixa capa que la regio
                                 //
-                                if (GetSignal(element, null, false) != regionSignal) {
-                                    int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
-                                    int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
-                                    Polygon elementPolygon = element.GetOutlinePolygon(layer.Id.Side, clearance);
+                                if (element.IsOnLayer(layer)) {
+
+                                    // Si no esta en la mateixa senyal que la regio, genera un forat.
+                                    //
+                                    if (GetSignal(element, null, false) != regionSignal) {
+                                        int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
+                                        int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
+                                        Polygon elementPolygon = element.GetOutlinePolygon(layer.Id.Side, clearance);
+                                        holePolygons.Add(elementPolygon);
+                                    }
+                                }
+
+                                // El element esta el la capa restrict
+                                //
+                                else if (element.IsOnLayer(restrictLayer)) {
+                                    Polygon elementPolygon = element.GetPolygon(restrictLayer.Id.Side);
                                     holePolygons.Add(elementPolygon);
                                 }
-                            }
 
-                            // El element esta el la capa restrict
-                            //
-                            else if (element.IsOnLayer(restrictLayer)) {
-                                Polygon elementPolygon = element.GetPolygon(restrictLayer.Id.Side);
-                                holePolygons.Add(elementPolygon);
-                            }
-
-                            // El element esta el la capa profile
-                            //
-                            else if (element.IsOnLayer(outlineLayer)) {
-                                Polygon elementPolygon = element.GetOutlinePolygon(BoardSide.None, 250000);
-                                holePolygons.Add(elementPolygon);
+                                // El element esta el la capa profile
+                                //
+                                else if (element.IsOnLayer(outlineLayer)) {
+                                    Polygon elementPolygon = element.GetOutlinePolygon(BoardSide.None, drcObjectDistance);
+                                    holePolygons.Add(elementPolygon);
+                                }
                             }
                         }
                     }
@@ -158,7 +173,9 @@
                                     int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
                                     Polygon outlinePolygon = element.GetOutlinePolygon(layer.Id.Side, clearance);
                                     outlinePolygon = outlinePolygon.Transformed(localTransformation);
-                                    holePolygons.Add(outlinePolygon);
+                                    Rect elementBBox = outlinePolygon.BoundingBox;
+                                    if (regionBBox.IntersectsWith(elementBBox))
+                                        holePolygons.Add(outlinePolygon);
                                 }
 
                                 // En es un pad i esta conectat per tant, genera un thermal
@@ -203,14 +220,14 @@
                 int maxY = Int32.MinValue;
                 foreach (Element element in GetElements(outlineLayer)) {
                     Rect r = element.GetBoundingBox(BoardSide.None);
-                    if (minX > r.MinX)
-                        minX = r.MinX;
-                    if (minY > r.MinY)
-                        minY = r.MinY;
-                    if (maxX < r.MaxX)
-                        maxX = r.MaxX;
-                    if (maxY < r.MaxY)
-                        maxY = r.MaxY;
+                    if (minX > r.Left)
+                        minX = r.Left;
+                    if (minY > r.Bottom)
+                        minY = r.Bottom;
+                    if (maxX < r.Right)
+                        maxX = r.Right;
+                    if (maxY < r.Top)
+                        maxY = r.Top;
                 }
 
                 return new Rect(minX, minY, maxX - minX, maxY - minY);

@@ -19,7 +19,7 @@
         public Polygon(params Point[] points) {
 
             if ((points != null) && (points.Length < 3))
-                throw new InvalidOperationException("Lista de puntos invalida.");
+                throw new InvalidOperationException("La lista ha de contener un minimo de 3 puntos.");
 
             this.points = points;
         }
@@ -33,7 +33,7 @@
         public Polygon(Point[] points, params Polygon[] childs) {
 
             if ((points != null) && (points.Length < 3))
-                throw new InvalidOperationException("Lista de puntos invalida.");
+                throw new InvalidOperationException("La lista ha de contener un minimo de 3 puntos.");
 
             this.points = points;
             this.childs = childs;
@@ -46,14 +46,14 @@
         /// 
         public Polygon Clone() {
 
-            Polygon[] clonedChilds;
+            // Clona els fills
+            //
+            Polygon[] clonedChilds = null;
             if (childs != null) {
                 clonedChilds = new Polygon[childs.Length];
                 for (int i = 0; i < childs.Length; i++)
                     clonedChilds[i] = childs[i].Clone();
             }
-            else
-                clonedChilds = null;
 
             return new Polygon(ClonePoints(), clonedChilds);
         }
@@ -65,13 +65,12 @@
         /// 
         public Point[] ClonePoints() {
 
-            if (points == null)
-                return null;
-            else {
-                Point[] clonedPoints = new Point[points.Length];
+            Point[] clonedPoints = null;
+            if (points != null) {
+                clonedPoints = new Point[points.Length];
                 points.CopyTo(clonedPoints, 0);
-                return clonedPoints;
             }
+            return clonedPoints;
         }
 
         /// <summary>

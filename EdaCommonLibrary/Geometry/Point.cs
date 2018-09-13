@@ -6,7 +6,7 @@
     using System.Xml;
 
     /// <summary>
-    /// Estructura que representa un punt. Aquesta estructura es inmutable.
+    /// Estructura que representa un punt
     /// </summary>
     /// 
     public struct Point {
@@ -17,10 +17,10 @@
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="x">Copordinada X</param>
+        /// <param name="x">Coordinada X</param>
         /// <param name="y">Coordinada Y</param>
         /// 
-        public Point(int x, int y) {
+        public Point(int x = 0, int y = 0) {
 
             this.x = x;
             this.y = y;
@@ -62,20 +62,31 @@
         /// <summary>
         /// Obte un punt desplaçat.
         /// </summary>
-        /// <param name="offsetX">Desplaçament X</param>
-        /// <param name="offsetY">Desplaçament Y</param>
+        /// <param name="dx">Desplaçament X</param>
+        /// <param name="dy">Desplaçament Y</param>
         /// <returns>El nou punt resultant.</returns>
         /// 
-        public Point Offset(int offsetX, int offsetY) {
+        public Point Offset(int dx, int dy) {
 
-            return new Point(x + offsetX, y + offsetY);
+            return new Point(x + dx, y + dy);
         }
 
+        /// <summary>
+        /// Converteix a string
+        /// </summary>
+        /// <returns>El resultat de la converssio.</returns>
+        /// 
         public override string ToString() {
 
             return ToString(CultureInfo.CurrentCulture);
         }
 
+        /// <summary>
+        /// Converteix a string.
+        /// </summary>
+        /// <param name="provider">L'objecte proveidor de format.</param>
+        /// <returns>El resultat de la converssio.</returns>
+        /// 
         public string ToString(IFormatProvider provider) {
 
             return String.Format(provider, "{0}, {1}", x, y);
@@ -103,14 +114,14 @@
     }
 
     /// <summary>
-    /// Clase que implementa metodes d'ectensio
+    /// Clase que implementa metodes d'extenssio
     /// </summary>
     public static class PointHelper {
 
         /// <summary>
         /// Escriu un atribut de tipus 'Point'
         /// </summary>
-        /// <param name="wr">El objecte XmlWriterAdapter.</param>
+        /// <param name="wr">L'objecte XmlWriterAdapter.</param>
         /// <param name="name">El nom de l'atribut.</param>
         /// <param name="point">El valor a escriure.</param>
         /// 
@@ -123,6 +134,13 @@
             wr.WriteAttribute(name, s);
         }
 
+        /// <summary>
+        /// Llegeix un atribut i el converteix a 'Point'
+        /// </summary>
+        /// <param name="rd">L'objecte XmlReaderAdapter.</param>
+        /// <param name="name">El nom de l'atribut.</param>
+        /// <returns>El valor lleigit.</returns>
+        /// 
         public static Point AttributeAsPoint(this XmlReaderAdapter rd, string name) {
 
             string s = rd.AttributeAsString(name);

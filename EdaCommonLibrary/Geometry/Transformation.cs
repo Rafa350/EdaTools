@@ -68,13 +68,9 @@
             if (rotation.IsZero) {
                 if ((offset.X != 0) || (offset.Y != 0))
                     for (int i = 0; i < points.Length; i++)
-                        points[i] = new Point(
-                            points[i].X + offset.X, 
-                            points[i].Y + offset.Y);
+                        points[i] = points[i].Offset(offset.X, offset.Y);
             }
             /*else if (rotation.IsOrthogonal) {
-                int sin = 0;
-                int cos = 0;
             }*/
             else { 
                 Matrix m = new Matrix();

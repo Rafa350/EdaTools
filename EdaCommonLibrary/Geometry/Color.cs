@@ -5,7 +5,7 @@
     using MikroPic.EdaTools.v1.Xml;
 
     /// <summary>
-    /// Clase que representa un color RGB
+    /// Clase que representa un color ARGB
     /// </summary>
     /// 
     public struct Color {

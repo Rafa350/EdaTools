@@ -18,14 +18,14 @@
         /// <param name="capRounded">True si els extrems son arrodinits.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static Point[] BuildTrace(Point start, Point end, int thickness, bool capRounded) {
+        public static Point[] MakeLineTrace(Point start, Point end, int thickness, bool capRounded) {
 
             int dx = end.X - start.X;
             int dy = end.Y - start.Y;
             Angle angle = Angle.FromRadiants(Math.Atan2(dy, dx));
 
-            Point[] a1 = BuildArc(end, thickness / 2, angle + Angle.Deg270, Angle.Deg180);
-            Point[] a2 = BuildArc(start, thickness / 2, angle + Angle.Deg90, Angle.Deg180);
+            Point[] a1 = MakeArc(end, thickness / 2, angle + Angle.Deg270, Angle.Deg180);
+            Point[] a2 = MakeArc(start, thickness / 2, angle + Angle.Deg90, Angle.Deg180);
 
             Point[] points = new Point[a1.Length + a2.Length];
             a1.CopyTo(points, 0);
@@ -45,13 +45,13 @@
         /// <param name="capRounded">True si els extrems son arrodonits.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static Point[] BuildTrace(Point center, int radius, Angle startAngle, Angle angle, int thickness, bool capRounded) {
+        public static Point[] MakeArcTrace(Point center, int radius, Angle startAngle, Angle angle, int thickness, bool capRounded) {
 
             int innerRadius = radius - (thickness / 2);
             int outerRadius = radius + (thickness / 2);
 
-            Point[] a1 = BuildArc(center, outerRadius, startAngle, angle);
-            Point[] a2 = BuildArc(center, innerRadius, startAngle + angle, -angle);
+            Point[] a1 = MakeArc(center, outerRadius, startAngle, angle);
+            Point[] a2 = MakeArc(center, innerRadius, startAngle + angle, -angle);
 
             Point[] points = new Point[a1.Length + a2.Length];
             a1.CopyTo(points, 0);
@@ -67,9 +67,9 @@
         /// <param name="radius">Radi.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static Point[] BuildCircle(Point center, int radius) {
+        public static Point[] MakeCircle(Point center, int radius) {
 
-            return BuildPolygon(32, center, radius, Angle.Zero);
+            return MakePolygon(32, center, radius, Angle.Zero);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static Point[] BuildRectangle(Point position, Size size, int radius, Angle rotation) {
+        public static Point[] MakeRectangle(Point position, Size size, int radius, Angle rotation) {
 
             int x = position.X;
             int y = position.Y;
@@ -113,10 +113,10 @@
             //
             else {
 
-                Point[] a1 = BuildArc(new Point(x + dx, y + dy), radius, Angle.Zero, Angle.Deg90);
-                Point[] a2 = BuildArc(new Point(x - dx, y + dy), radius, Angle.Deg90, Angle.Deg90);
-                Point[] a3 = BuildArc(new Point(x - dx, y - dy), radius, Angle.Deg180, Angle.Deg90);
-                Point[] a4 = BuildArc(new Point(x + dx, y - dy), radius, Angle.Deg270, Angle.Deg90);
+                Point[] a1 = MakeArc(new Point(x + dx, y + dy), radius, Angle.Zero, Angle.Deg90);
+                Point[] a2 = MakeArc(new Point(x - dx, y + dy), radius, Angle.Deg90, Angle.Deg90);
+                Point[] a3 = MakeArc(new Point(x - dx, y - dy), radius, Angle.Deg180, Angle.Deg90);
+                Point[] a4 = MakeArc(new Point(x + dx, y - dy), radius, Angle.Deg270, Angle.Deg90);
 
                 points = new Point[a1.Length + a2.Length + a3.Length + a4.Length];
                 a1.CopyTo(points, 0);
@@ -144,7 +144,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static Point[] BuildCross(Point position, Size size, int thickness, Angle rotation) {
+        public static Point[] MakeCross(Point position, Size size, int thickness, Angle rotation) {
 
             int dx = size.Width / 2;
             int dy = size.Height / 2;
@@ -208,7 +208,7 @@
         /// coincideix amb en numero de segments.
         /// </returns>
         /// 
-        public static Point[] BuildPolygon(int sides, Point position, int radius, Angle rotation) {
+        public static Point[] MakePolygon(int sides, Point position, int radius, Angle rotation) {
 
             // Calcula el punt inicial
             //
@@ -253,7 +253,7 @@
         /// el numero de segments mes un.
         /// </returns>
         /// 
-        public static Point[] BuildArc(Point center, int radius, Angle startAngle, Angle angle, bool discardLast = false) {
+        public static Point[] MakeArc(Point center, int radius, Angle startAngle, Angle angle, bool discardLast = false) {
 
             // Calcula el numero de segments
             //

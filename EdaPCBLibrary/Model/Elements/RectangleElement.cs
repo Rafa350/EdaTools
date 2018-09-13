@@ -40,6 +40,11 @@
             this.filled = filled;
         }
 
+        /// <summary>
+        /// Obte un clon de l'element.
+        /// </summary>
+        /// <returns>El clon de l'element.</returns>
+        /// 
         public override Element Clone() {
 
             return new RectangleElement(LayerSet, position, size, roundness, rotation, thickness, filled);
@@ -63,16 +68,16 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            if (thickness == 0) {
-                Point[] points = PolygonBuilder.BuildRectangle(position, size, Radius, rotation);
+            if (Filled) {
+                Point[] points = PolygonBuilder.MakeRectangle(position, size, Radius, rotation);
                 return new Polygon(points);
             }
             else {
                 Size outerSize = new Size(size.Width + thickness, size.Height + thickness);
-                Point[] outerPoints = PolygonBuilder.BuildRectangle(position, outerSize, Radius, rotation);
+                Point[] outerPoints = PolygonBuilder.MakeRectangle(position, outerSize, Radius, rotation);
 
                 Size innerSize = new Size(size.Width - thickness, size.Height - thickness);
-                Point[] innerPoints = PolygonBuilder.BuildRectangle(position, innerSize, Math.Max(0, Radius - thickness), rotation);
+                Point[] innerPoints = PolygonBuilder.MakeRectangle(position, innerSize, Math.Max(0, Radius - thickness), rotation);
 
                 return new Polygon(outerPoints, new Polygon(innerPoints));
             }
@@ -88,7 +93,7 @@
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
             Size outerSize = new Size(size.Width + thickness + spacing * 2, size.Height + thickness + spacing * 2);
-            Point[] points = PolygonBuilder.BuildRectangle(position, outerSize, Radius, rotation);
+            Point[] points = PolygonBuilder.MakeRectangle(position, outerSize, Radius, rotation);
             return new Polygon(points);
         }
 

@@ -11,14 +11,10 @@
     /// </summary>
     public sealed class RegionElement: Element, IConectable {
 
-        public class Segment {
+        public sealed class Segment {
 
             private Point position;
             private Angle angle;
-
-            public Segment() {
-
-            }
 
             public Segment(Point position, Angle angle) {
 
@@ -57,8 +53,9 @@
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="filled">True si es ple.</param>
         /// <param name="clearance">Distancia d'aillament.</param>
+        /// <param name="segments">Llista de segments.</param>
         /// 
-        public RegionElement(LayerSet layerSet, int thickness, bool filled, int clearance):
+        public RegionElement(LayerSet layerSet, int thickness, bool filled, int clearance, IEnumerable<Segment> segments = null) :
             base(layerSet) {
 
             if (thickness < 0)
@@ -70,34 +67,17 @@
             this.thickness = thickness;
             this.filled = filled;
             this.clearance = clearance;
+
+            if (segments != null)
+                foreach (Segment segment in segments)
+                    Add(segment);
         }
 
         /// <summary>
-        /// Constructor del objecte.
+        ///  Obte un clon de l'objecte.
         /// </summary>
-        /// <param name="layerSet">El conjunt de capes.</param>
-        /// <param name="thickness">Amplada de linia.</param>
-        /// <param name="filled">True si es ple.</param>
-        /// <param name="clearance">Distancia d'aillament.</param>
-        /// <param name="segments">Llista de segments.</param>
+        /// <returns>El clon de l'objecte.</returns>
         /// 
-        public RegionElement(LayerSet layerSet, int thickness, bool filled, int clearance, IEnumerable<Segment> segments) :
-            base(layerSet) {
-
-            if (thickness < 0)
-                throw new ArgumentOutOfRangeException("thickness");
-
-            if (clearance < 0)
-                throw new ArgumentOutOfRangeException("clearance");
-
-            this.thickness = thickness;
-            this.filled = filled;
-            this.clearance = clearance;
-
-            foreach (Segment segment in segments)
-                Add(segment);
-        }
-
         public override Element Clone() {
 
             RegionElement region = new RegionElement(LayerSet, thickness, filled, clearance);
@@ -151,7 +131,7 @@
                     Point center = ArcUtils.Center(prevPoint, segment.Position, angle);
                     int radius = ArcUtils.Radius(prevPoint, segment.Position, angle);
                     Angle startAngle = ArcUtils.StartAngle(prevPoint, center);
-                    points.AddRange(PolygonBuilder.BuildArc(center, radius, startAngle, angle));
+                    points.AddRange(PolygonBuilder.MakeArc(center, radius, startAngle, angle));
                 }
 
                 prevPoint = segment.Position;
@@ -165,7 +145,7 @@
                 Point center = ArcUtils.Center(prevPoint, firstPoint, angle);
                 int radius = ArcUtils.Radius(prevPoint, firstPoint, angle);
                 Angle startAngle = ArcUtils.StartAngle(prevPoint, center);
-                points.AddRange(PolygonBuilder.BuildArc(center, radius, startAngle, angle, false));
+                points.AddRange(PolygonBuilder.MakeArc(center, radius, startAngle, angle, false));
             }
 
             return new Polygon(points.ToArray());
@@ -191,7 +171,8 @@
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
-            throw new NotImplementedException();
+            Polygon polygon = GetPolygon(side);
+            return polygon.BoundingBox;
         }
 
         /// <summary>

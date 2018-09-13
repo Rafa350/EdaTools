@@ -45,9 +45,14 @@
 
             // Afegeix els senyals
             //
-            foreach (var signal in board.Signals)
-                if (panelBoard.GetSignal(signal.Name, false) == null)
-                    panelBoard.AddSignal(signal.Clone());
+            foreach (var signal in board.Signals) {
+                string panelSignalName = String.Format("B{0}${1}", index, signal.Name);
+                if (panelBoard.GetSignal(panelSignalName, false) == null) {
+                    Signal panelSignal = signal.Clone();
+                    panelSignal.Name = panelSignalName;
+                    panelBoard.AddSignal(panelSignal);
+                }
+            }
 
             // Afegeix els blocs que no existeixin en la placa de destinacio.
             //
@@ -64,7 +69,7 @@
                 foreach (var part in board.Parts) {
                     Block block = panelBoard.GetBlock(part.Block.Name);
                     Part panelPart = part.Clone(block);
-                    panelPart.Name = String.Format("B{0}{1}", index, panelPart.Name);
+                    panelPart.Name = String.Format("B{0}${1}", index, panelPart.Name);
                     transformableParts.Add(panelPart);
                     panelBoard.AddPart(panelPart);
 
@@ -72,8 +77,10 @@
                         PadElement panelPad = panelElement as PadElement;
                         if (panelPad != null) {
                             Signal signal = board.GetSignal(part.GetPad(panelPad.Name), part, false);
-                            if (signal != null)
-                                panelBoard.Connect(panelBoard.GetSignal(signal.Name), panelPad, panelPart);
+                            if (signal != null) {
+                                string panelSignalName = String.Format("B{0}${1}", index, signal.Name);
+                                panelBoard.Connect(panelBoard.GetSignal(panelSignalName), panelPad, panelPart);
+                            }
                         }
                     }
                 }
@@ -94,8 +101,10 @@
 
                     if (element is IConectable) {
                         Signal signal = board.GetSignal(element, null, false);
-                        if (signal != null)
-                            panelBoard.Connect(panelBoard.GetSignal(signal.Name), panelElement as IConectable);
+                        if (signal != null) {
+                            string panelSignalName = String.Format("B{0}${1}", index, signal.Name);
+                            panelBoard.Connect(panelBoard.GetSignal(panelSignalName), panelElement as IConectable);
+                        }
                     }
                 }
 

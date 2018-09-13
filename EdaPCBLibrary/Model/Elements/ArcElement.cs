@@ -27,6 +27,11 @@
             this.angle = angle;
         }
 
+        /// <summary>
+        /// Clone l'element
+        /// </summary>
+        /// <returns>El clon de l'element.</returns>
+        /// 
         public override Element Clone() {
 
             return new ArcElement(LayerSet, StartPosition, EndPosition, Thickness, angle, LineCap);
@@ -50,7 +55,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = PolygonBuilder.BuildTrace(Center, Radius, StartAngle, angle, Thickness, LineCap == LineCapStyle.Round);
+            Point[] points = PolygonBuilder.MakeArcTrace(Center, Radius, StartAngle, angle, Thickness, LineCap == LineCapStyle.Round);
             return new Polygon(points);
         }
 
@@ -63,8 +68,14 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points =  PolygonBuilder.BuildTrace(Center, Radius, StartAngle, angle, Thickness + (spacing * 2), LineCap == LineCapStyle.Round);
+            Point[] points =  PolygonBuilder.MakeArcTrace(Center, Radius, StartAngle, angle, Thickness + (spacing * 2), LineCap == LineCapStyle.Round);
             return new Polygon(points);
+        }
+
+        public override Rect GetBoundingBox(BoardSide side) {
+
+            Polygon polygon = GetPolygon(side);
+            return polygon.BoundingBox;
         }
 
         /// <summary>

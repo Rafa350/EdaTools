@@ -56,13 +56,13 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            if (thickness == 0) {
-                Point[] points = PolygonBuilder.BuildCircle(position, radius);
+            if (Filled) {
+                Point[] points = PolygonBuilder.MakeCircle(position, radius);
                 return new Polygon(points);
             }
             else {
-                Point[] outerPoints = PolygonBuilder.BuildCircle(position, radius + (thickness / 2));
-                Point[] innerPoints = PolygonBuilder.BuildCircle(position, radius - (thickness / 2));
+                Point[] outerPoints = PolygonBuilder.MakeCircle(position, radius + (thickness / 2));
+                Point[] innerPoints = PolygonBuilder.MakeCircle(position, radius - (thickness / 2));
                 return new Polygon(outerPoints, new Polygon(innerPoints));
             }
         }
@@ -76,7 +76,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = PolygonBuilder.BuildCircle(position, radius + (thickness / 2) + spacing);
+            Point[] points = PolygonBuilder.MakeCircle(position, radius + (thickness / 2) + spacing);
             return new Polygon(points);
         }
 

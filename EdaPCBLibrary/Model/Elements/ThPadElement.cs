@@ -83,6 +83,11 @@
             this.shape = shape;
         }
 
+        /// <summary>
+        /// Obte un clon de l'element.
+        /// </summary>
+        /// <returns>El clon de l'element.</returns>
+        /// 
         public override Element Clone() {
 
             return new ThPadElement(Name, LayerSet, Position, Rotation, topSize, innerSize, bottomSize, shape, drill);
@@ -119,7 +124,7 @@
 
             switch (shape) {
                 case ThPadShape.Square:
-                    return PolygonBuilder.BuildRectangle(
+                    return PolygonBuilder.MakeRectangle(
                         Position,
                         new Size(size + spacingM2, size + spacingM2),
                         spacing,
@@ -127,7 +132,7 @@
 
                 case ThPadShape.Octagon: {
                     int s = (int)((double)sizeD2 / Math.Cos(22.5 * Math.PI / 180.0));
-                    return PolygonBuilder.BuildPolygon(
+                    return PolygonBuilder.MakePolygon(
                         8,
                         Position,
                         s + spacing,
@@ -135,14 +140,14 @@
                 }
 
                 case ThPadShape.Oval:
-                    return PolygonBuilder.BuildRectangle(
+                    return PolygonBuilder.MakeRectangle(
                         Position,
                         new Size(sizeM2 + spacingM2, size + spacingM2),
                         sizeD2 + spacing,
                         Rotation);
 
                 default:
-                    return PolygonBuilder.BuildCircle(
+                    return PolygonBuilder.MakeCircle(
                         Position,
                         sizeD2 + spacing);
             }
@@ -157,7 +162,7 @@
         public override Polygon GetPolygon(BoardSide side) {
 
             Point[] points = MakePoints(side, 0);
-            Point[] holePoints = PolygonBuilder.BuildCircle(Position, drill / 2);
+            Point[] holePoints = PolygonBuilder.MakeCircle(Position, drill / 2);
             return new Polygon(points, new Polygon(holePoints));
         }
 
@@ -188,7 +193,7 @@
             int h = topSize + spacing + spacing;
 
             Polygon pour = GetOutlinePolygon(side, spacing);
-            Polygon thermal = new Polygon(PolygonBuilder.BuildCross(Position, new Size(w, h), width, Rotation));
+            Polygon thermal = new Polygon(PolygonBuilder.MakeCross(Position, new Size(w, h), width, Rotation));
 
             List<Polygon> childs = new List<Polygon>();
             childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));

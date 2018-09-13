@@ -31,6 +31,11 @@
             this.roundness = roundness;
         }
 
+        /// <summary>
+        /// Obte un clon de l'element.
+        /// </summary>
+        /// <returns>El clon de l'element.</returns>
+        /// 
         public override Element Clone() {
 
             return new SmdPadElement(Name, LayerSet, Position, size, Rotation, roundness);
@@ -54,7 +59,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = PolygonBuilder.BuildRectangle(Position, Size, Radius, Rotation);
+            Point[] points = PolygonBuilder.MakeRectangle(Position, Size, Radius, Rotation);
             return new Polygon(points);
         }
 
@@ -67,7 +72,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = PolygonBuilder.BuildRectangle(
+            Point[] points = PolygonBuilder.MakeRectangle(
                 Position,
                 new Size(
                     size.Width + spacing + spacing, 
@@ -89,7 +94,7 @@
 
             Polygon pour = GetOutlinePolygon(side, spacing);
             Polygon thermal = new Polygon(
-                PolygonBuilder.BuildCross(
+                PolygonBuilder.MakeCross(
                     Position,
                     new Size(
                         size.Width + spacing + spacing,

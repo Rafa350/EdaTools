@@ -10,7 +10,7 @@
         private readonly int width;
         private readonly int height;
 
-        public Size(int width, int height) {
+        public Size(int width = 0, int height = 0) {
 
             this.width = width;
             this.height = height;

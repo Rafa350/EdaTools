@@ -79,6 +79,11 @@
             this.shape = shape;
         }
 
+        /// <summary>
+        /// Obte un clon de l'element.
+        /// </summary>
+        /// <returns>El clon de l'element.</returns>
+        /// 
         public override Element Clone() {
 
             return new ViaElement(LayerSet, position, outerSize, innerSize, drill, shape);
@@ -114,21 +119,21 @@
 
             switch (shape) {
                 case ViaShape.Square:
-                    return PolygonBuilder.BuildRectangle(
+                    return PolygonBuilder.MakeRectangle(
                         position, 
                         new Size(size + spacingM2, size + spacingM2), 
                         0, 
                         Angle.FromDegrees(0));
 
                 case ViaShape.Octagon:
-                    return PolygonBuilder.BuildPolygon(
+                    return PolygonBuilder.MakePolygon(
                         8, 
                         position, 
                         (int)((double)sizeD2 / Math.Cos(22.5 * Math.PI / 180.0)) + spacing, 
                         Angle.FromDegrees(2250));
 
                 default:
-                    return PolygonBuilder.BuildCircle(
+                    return PolygonBuilder.MakeCircle(
                         position, 
                         sizeD2 + spacing);
             }
@@ -143,7 +148,7 @@
         public override Polygon GetPolygon(BoardSide side) {
 
             Point[] points = MakePoints(side, 0);
-            Point[] holePoints = PolygonBuilder.BuildCircle(position, drill / 2);
+            Point[] holePoints = PolygonBuilder.MakeCircle(position, drill / 2);
             return new Polygon(points, new Polygon(holePoints));
         }
 

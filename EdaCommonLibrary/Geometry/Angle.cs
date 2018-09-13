@@ -7,7 +7,7 @@
 
     /// <summary>
     /// Clase per representar angles. Els angles son en centesimes 
-    /// de grau
+    /// de grau i el gir es considera contrari al rellotge.
     /// </summary>
     /// 
     public struct Angle {
