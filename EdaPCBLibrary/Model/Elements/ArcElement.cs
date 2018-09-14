@@ -72,6 +72,12 @@
             return new Polygon(points);
         }
 
+        /// <summary>
+        /// Obte l'envolvent de l'element
+        /// </summary>
+        /// <param name="side">Cara de la placa.</param>
+        /// <returns>El rectangle envolvent.</returns>
+        /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
             Polygon polygon = GetPolygon(side);

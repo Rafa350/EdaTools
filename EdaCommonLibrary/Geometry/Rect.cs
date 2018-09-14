@@ -79,7 +79,7 @@
             int t = Math.Min(Top, rect.Top);
             int b = Math.Max(Bottom, rect.Bottom);
 
-            return new Rect(l, t, r - l, b - t);
+            return new Rect(l, t, r - l + 1, b - t + 1);
         }
 
         /// <summary>
@@ -114,6 +114,30 @@
             }
         }
 
+        public int X {
+            get {
+                return x;
+            }
+        }
+
+        public int Y {
+            get {
+                return y;
+            }
+        }
+
+        public int Width {
+            get {
+                return width;
+            }
+        }
+
+        public int Height {
+            get {
+                return height;
+            }
+        }
+
         public int Left {
             get {
                 return x;
@@ -128,13 +152,13 @@
 
         public int Right {
             get {
-                return x + width;
+                return x + width - 1;
             }
         }
 
         public int Top {
             get {
-                return y + height;
+                return y + height - 1;
             }
         }
     }

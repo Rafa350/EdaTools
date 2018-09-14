@@ -27,8 +27,7 @@
         private Point position;
         private Angle rotation;
 
-        private int drcObjectDistance = 250000;
-        private int drcDrillDistance = 350000;
+        private int outlineClearance = 250000;
 
         /// <summary>
         /// Constructor del objecte amb els parametres per defecte.
@@ -118,38 +117,35 @@
                     foreach (var element in elements) {
                         if (element != region && !(element is TextElement)) {
 
-                            // Comprova que interseccionen
+                            // El element es en la mateixa capa que la regio
                             //
-                            Rect elementBBox = element.GetBoundingBox(layer.Id.Side);
-                            if (regionBBox.IntersectsWith(elementBBox)) {
+                            if (element.IsOnLayer(layer)) {
 
-                                // El element es en la mateixa capa que la regio
+                                // Si no esta en la mateixa senyal que la regio, genera un forat.
                                 //
-                                if (element.IsOnLayer(layer)) {
-
-                                    // Si no esta en la mateixa senyal que la regio, genera un forat.
-                                    //
-                                    if (GetSignal(element, null, false) != regionSignal) {
-                                        int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
-                                        int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
-                                        Polygon elementPolygon = element.GetOutlinePolygon(layer.Id.Side, clearance);
+                                if (GetSignal(element, null, false) != regionSignal) {
+                                    int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
+                                    int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
+                                    Polygon elementPolygon = element.GetOutlinePolygon(layer.Id.Side, clearance);
+                                    if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                         holePolygons.Add(elementPolygon);
-                                    }
                                 }
+                            }
 
-                                // El element esta el la capa restrict
-                                //
-                                else if (element.IsOnLayer(restrictLayer)) {
-                                    Polygon elementPolygon = element.GetPolygon(restrictLayer.Id.Side);
+                            // El element esta el la capa restrict
+                            //
+                            else if (element.IsOnLayer(restrictLayer)) {
+                                Polygon elementPolygon = element.GetPolygon(restrictLayer.Id.Side);
+                                if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                     holePolygons.Add(elementPolygon);
-                                }
+                            }
 
-                                // El element esta el la capa profile
-                                //
-                                else if (element.IsOnLayer(outlineLayer)) {
-                                    Polygon elementPolygon = element.GetOutlinePolygon(BoardSide.None, drcObjectDistance);
+                            // El element esta el la capa profile
+                            //
+                            else if (element.IsOnLayer(outlineLayer)) {
+                                Polygon elementPolygon = element.GetOutlinePolygon(BoardSide.None, outlineClearance);
+                                if (regionBBox.IntersectsWith(elementPolygon.BoundingBox)) 
                                     holePolygons.Add(elementPolygon);
-                                }
                             }
                         }
                     }
@@ -173,8 +169,7 @@
                                     int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
                                     Polygon outlinePolygon = element.GetOutlinePolygon(layer.Id.Side, clearance);
                                     outlinePolygon = outlinePolygon.Transformed(localTransformation);
-                                    Rect elementBBox = outlinePolygon.BoundingBox;
-                                    if (regionBBox.IntersectsWith(elementBBox))
+                                    if (regionBBox.IntersectsWith(outlinePolygon.BoundingBox))
                                         holePolygons.Add(outlinePolygon);
                                 }
 
@@ -185,8 +180,10 @@
                                     int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
                                     Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Id.Side, clearance, 200000);
                                     thermalPolygon = thermalPolygon.Transformed(localTransformation);
-                                    for (int i = 0; i < thermalPolygon.Childs.Length; i++)
+                                    for (int i = 0; i < thermalPolygon.Childs.Length; i++) {
+                                        if (regionBBox.IntersectsWith(thermalPolygon.BoundingBox))
                                         holePolygons.Add(thermalPolygon.Childs[i]);
+                                    }
                                 }
                             }
                         }

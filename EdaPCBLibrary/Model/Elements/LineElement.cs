@@ -97,8 +97,8 @@
             return new Rect(
                 Math.Min(startPosition.X, endPosition.X) - thickness / 2,
                 Math.Min(startPosition.Y, endPosition.Y) - thickness / 2,
-                Math.Abs(endPosition.X - startPosition.X) + thickness,
-                Math.Abs(endPosition.Y - startPosition.Y) + thickness);
+                Math.Abs(endPosition.X - startPosition.X + 1) + thickness,
+                Math.Abs(endPosition.Y - startPosition.Y + 1) + thickness);
         }
 
         /// <summary>

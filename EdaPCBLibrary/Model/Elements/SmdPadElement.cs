@@ -118,10 +118,11 @@
         public override Rect GetBoundingBox(BoardSide side) {
 
             double a = Rotation.Radiants;
+
             int w = (int) (size.Width * Math.Cos(a) + size.Height * Math.Sin(a));
             int h = (int) (size.Width * Math.Sin(a) + size.Height * Math.Cos(a));
 
-            return new Rect(Position.X - (w >> 1), Position.Y - (h >> 1), w, h);
+            return new Rect(Position.X - (w / 2), Position.Y - (h / 2), w, h);
         }
 
         /// <summary>
