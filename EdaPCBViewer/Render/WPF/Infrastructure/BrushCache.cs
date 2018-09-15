@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Designer.DrawEditor.Infrastructure {
+﻿namespace MikroPic.EdaTools.v1.Designer.Render.WPF.Infrastructure {
 
     using System.Collections.Generic;
     using System.Windows.Media;

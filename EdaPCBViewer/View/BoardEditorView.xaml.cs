@@ -1,7 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Designer.View {
 
     using MikroPic.EdaTools.v1.Designer.DrawEditor;
-    using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Designer.Render;
+    using MikroPic.EdaTools.v1.Designer.Render.WPF;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using System;
     using System.Windows;
@@ -198,9 +199,12 @@
                     new System.Windows.Size(contentBox.ActualWidth, contentBox.ActualHeight),
                     new System.Windows.Rect(0, 0, Board.Size.Width, Board.Size.Height));
 
-                VisualGenerator vg = new VisualGenerator(Board);
-                DrawingVisual visual = vg.CreateVisual();
+                IRenderContext renderContext = new RenderContext();
+                SceneGraph sceneGraph = renderContext.Render(Board) as SceneGraph;
+                DrawingVisual visual = sceneGraph.Visual;
+
                 visual.Transform = new MatrixTransform(viewPoint.Matrix);
+
                 contentBox.Visual = visual;
             }
         }

@@ -181,8 +181,8 @@
                                     Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Id.Side, clearance, 200000);
                                     thermalPolygon = thermalPolygon.Transformed(localTransformation);
                                     for (int i = 0; i < thermalPolygon.Childs.Length; i++) {
-                                        if (regionBBox.IntersectsWith(thermalPolygon.BoundingBox))
-                                        holePolygons.Add(thermalPolygon.Childs[i]);
+                                        if (regionBBox.IntersectsWith(thermalPolygon.Childs[i].BoundingBox))
+                                            holePolygons.Add(thermalPolygon.Childs[i]);
                                     }
                                 }
                             }

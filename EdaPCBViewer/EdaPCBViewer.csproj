@@ -43,7 +43,19 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SharpGL, Version=2.4.0.0, Culture=neutral, PublicKeyToken=27fc851303210b27, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpGL.2.4.0.0\lib\net40\SharpGL.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpGL.SceneGraph, Version=2.4.0.0, Culture=neutral, PublicKeyToken=27fc851303210b27, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpGL.2.4.0.0\lib\net40\SharpGL.SceneGraph.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpGL.WPF, Version=2.4.0.0, Culture=neutral, PublicKeyToken=27fc851303210b27, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpGL.WPF.2.4.0.0\lib\net40\SharpGL.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -67,9 +79,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DrawEditor\DesignTool.cs" />
-    <Compile Include="DrawEditor\Infrastructure\BrushCache.cs" />
-    <Compile Include="DrawEditor\Infrastructure\PenCache.cs" />
-    <Compile Include="DrawEditor\Infrastructure\VisualDrawer.cs" />
+    <Compile Include="Render\WPF\Infrastructure\BrushCache.cs" />
+    <Compile Include="Render\WPF\Infrastructure\PenCache.cs" />
+    <Compile Include="Render\WPF\Infrastructure\VisualDrawer.cs" />
+    <Compile Include="Render\IRenderContext.cs" />
+    <Compile Include="Render\ISceneGraph.cs" />
+    <Compile Include="Render\WPF\RenderContext.cs" />
+    <Compile Include="Render\WPF\RenderVisitor.cs" />
+    <Compile Include="Render\WPF\SceneGraph.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\IAppService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -87,7 +104,6 @@
     </Compile>
     <Compile Include="DrawEditor\ViewPoint.cs" />
     <Compile Include="DrawEditor\VisualFrameworkElement.cs" />
-    <Compile Include="DrawEditor\VisualGenerator.cs" />
     <Compile Include="View\BoardEditorView.xaml.cs">
       <DependentUpon>BoardEditorView.xaml</DependentUpon>
     </Compile>
@@ -136,7 +152,9 @@
       <Name>NetMVVMToolkit</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Render\OpenGL\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
