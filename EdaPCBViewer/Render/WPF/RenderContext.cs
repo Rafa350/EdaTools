@@ -32,20 +32,33 @@
 
             layerIds.Add(Layer.ProfileId);
 
+            VisualLayerStack visualLayerStack = VisualLayerStack.CreateDefault();
+
             VisualDrawer drawer = new VisualDrawer();
             DrawingVisual rootVisual = new DrawingVisual();
 
-            foreach (LayerId layerId in layerIds) {
+            // Procesa les capes visuals
+            //
+            foreach (var visualLayer in visualLayerStack.VisualLayers) {
+                if (visualLayer.Visible) {
 
-                Layer layer = board.GetLayer(layerId, false);
-                if ((layer != null) && layer.IsVisible) {
+                    double opacity = visualLayer.Color.A / 255.0;
 
-                    DrawingVisual layerVisual = new DrawingVisual();
-                    rootVisual.Children.Add(layerVisual);
-                    layerVisual.Opacity = layer.Color.A / 255.0;
+                    // Procesa les capes de la placa que corresponen a la capa visual
+                    //
+                    foreach (var layerId in visualLayer.Layers) {
 
-                    RenderVisitor visitor = new RenderVisitor(board, layer, layerVisual, drawer);
-                    visitor.Run();
+                        Layer layer = board.GetLayer(layerId, false);
+                        if (layer != null) {
+
+                            DrawingVisual layerVisual = new DrawingVisual();
+                            rootVisual.Children.Add(layerVisual);
+                            layerVisual.Opacity = opacity;
+
+                            RenderVisitor visitor = new RenderVisitor(board, layer, layerVisual, drawer);
+                            visitor.Run();
+                        }
+                    }
                 }
             }
 

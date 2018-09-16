@@ -156,6 +156,14 @@
             // Si es el boto primari, es una accio amb l'eina seleccionada
             //
             if (e.ChangedButton == MouseButton.Left) {
+
+                HitTestResult result = VisualTreeHelper.HitTest(contentBox.Visual, currentPos);
+                if (result != null) {
+                    DrawingVisual visual = result.VisualHit as DrawingVisual;
+                    if (visual != null) {
+                        (visual.Parent as DrawingVisual).Children.Remove(visual);
+                    }
+                }
             }
 
             else if (e.ChangedButton == MouseButton.Right)

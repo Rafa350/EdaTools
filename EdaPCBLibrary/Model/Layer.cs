@@ -8,11 +8,11 @@
     /// </summary>
     /// 
     public enum LayerFunction {
-        Unknown,
-        Signal,
-        Design,
-        Mechanical,
-        Outline
+        Unknown,     // Desconeguda
+        Signal,      // Pistes, vias, pads, th, etc
+        Design,      // Silk, names, etc
+        Mechanical,  // Forats, fressat, etc
+        Outline      // Perfil extern
     }
 
     /// <summary>

@@ -35,8 +35,8 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
         bool ServiceStatus();
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2117.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -47,7 +47,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
         
         private System.Xml.XmlAttribute[] anyAttrField;
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public AccountInfo AccountInfo {
             get {
@@ -59,7 +59,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlAnyAttributeAttribute()]
         public System.Xml.XmlAttribute[] AnyAttr {
             get {
@@ -81,8 +81,8 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2117.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -91,7 +91,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
         
         private string partnerIDField;
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public string PartnerID {
             get {
@@ -113,8 +113,8 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2117.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -133,7 +133,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
         
         private string inductanceField;
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public MCalculatorMethod CalculatorMethodName {
             get {
@@ -145,7 +145,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
         public string Resistance {
             get {
@@ -157,7 +157,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=2)]
         public string Tolerance {
             get {
@@ -169,7 +169,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=3)]
         public string TemperatureCoefficient {
             get {
@@ -181,7 +181,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=4)]
         public string Capacitance {
             get {
@@ -193,7 +193,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=5)]
         public string Inductance {
             get {
@@ -215,33 +215,33 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2117.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://api.mouser.com/service")]
     public enum MCalculatorMethod {
         
-        /// <comentarios/>
+        /// <remarks/>
         None,
         
-        /// <comentarios/>
+        /// <remarks/>
         ResistanceCode,
         
-        /// <comentarios/>
+        /// <remarks/>
         ResistanceColorCode1,
         
-        /// <comentarios/>
+        /// <remarks/>
         ResistanceColorCode2,
         
-        /// <comentarios/>
+        /// <remarks/>
         CapacitorCode,
         
-        /// <comentarios/>
+        /// <remarks/>
         Inductance,
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2117.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -250,7 +250,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
         
         private System.Nullable<decimal> unitWeightField;
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
         public System.Nullable<decimal> UnitWeight {
             get {
@@ -272,9 +272,9 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
         }
     }
     
-    /// <comentarios/>
+    /// <remarks/>
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Pricebreaks2))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2117.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -287,7 +287,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
         
         private string currencyField;
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public int Quantity {
             get {
@@ -299,7 +299,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
         public string Price {
             get {
@@ -311,7 +311,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=2)]
         public string Currency {
             get {
@@ -333,8 +333,8 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2117.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -342,8 +342,8 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
     public partial class Pricebreaks2 : Pricebreaks {
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2117.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -354,7 +354,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
         
         private string attributeValueField;
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public string AttributeName {
             get {
@@ -366,7 +366,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
         public string AttributeValue {
             get {
@@ -388,8 +388,8 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2117.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -436,7 +436,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
         
         private UnitWeightKg unitWeightKgField;
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public string Availability {
             get {
@@ -448,7 +448,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
         public string DataSheetUrl {
             get {
@@ -460,7 +460,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=2)]
         public string Description {
             get {
@@ -472,7 +472,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=3)]
         public string ImagePath {
             get {
@@ -484,7 +484,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=4)]
         public string Category {
             get {
@@ -496,7 +496,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=5)]
         public string LeadTime {
             get {
@@ -508,7 +508,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=6)]
         public string LifecycleStatus {
             get {
@@ -520,7 +520,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=7)]
         public string Manufacturer {
             get {
@@ -532,7 +532,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=8)]
         public string ManufacturerPartNumber {
             get {
@@ -544,7 +544,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=9)]
         public string Min {
             get {
@@ -556,7 +556,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=10)]
         public string Mult {
             get {
@@ -568,7 +568,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=11)]
         public string MouserPartNumber {
             get {
@@ -580,7 +580,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order=12)]
         public ProductAttribute[] ProductAttributes {
             get {
@@ -592,7 +592,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order=13)]
         public Pricebreaks[] PriceBreaks {
             get {
@@ -604,7 +604,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=14)]
         public string ProductDetailUrl {
             get {
@@ -616,7 +616,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=15)]
         public bool Reeling {
             get {
@@ -628,7 +628,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=16)]
         public string ROHSStatus {
             get {
@@ -640,7 +640,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=17)]
         public string SuggestedReplacement {
             get {
@@ -652,7 +652,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=18)]
         public int MultiSimBlue {
             get {
@@ -664,7 +664,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=19)]
         public UnitWeightKg UnitWeightKg {
             get {
@@ -686,8 +686,8 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2117.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2558.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -698,7 +698,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
         
         private MouserPart[] partsField;
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public int NumberOfResult {
             get {
@@ -710,7 +710,7 @@ namespace MikroPic.EdaTools.v1.MouserSearchApi {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
         public MouserPart[] Parts {
             get {
