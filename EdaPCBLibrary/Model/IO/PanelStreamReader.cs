@@ -166,8 +166,8 @@
             // Obte els atributs del element
             //
             string fileName = rd.AttributeAsString("fileName");
-            Point position = rd.AttributeAsPoint("position");
-            Angle rotation = rd.AttributeAsAngle("rotation");
+            Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
+            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation"));
 
             // Crea l'element i l'afegeix a la llista
             //
@@ -193,8 +193,8 @@
 
             // Obte els atributs de l'element
             //
-            Point position = rd.AttributeAsPoint("position");
-            Angle rotation = rd.AttributeAsAngle("rotation");
+            Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
+            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation"));
 
             // Crea l'element i l'afegeix a la llista
             //

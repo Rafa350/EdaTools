@@ -34,6 +34,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>..\bin\Release\</OutputPath>
@@ -74,7 +75,6 @@
     <Compile Include="Model\Collections\ParentChildCollection.cs" />
     <Compile Include="Model\Collections\ParentChildKeyCollection.cs" />
     <Compile Include="Model\LayerId.cs" />
-    <Compile Include="Model\LayerSet.cs" />
     <Compile Include="Model\BlockAttribute.cs" />
     <Compile Include="Model\Elements\PadElement.cs" />
     <Compile Include="Model\Elements\SlotElement.cs" />
@@ -86,6 +86,7 @@
     <Compile Include="Model\IPosition.cs" />
     <Compile Include="Model\IRotation.cs" />
     <Compile Include="Model\ISize.cs" />
+    <Compile Include="Model\LayerSet.cs" />
     <Compile Include="Model\Panel.cs" />
     <Compile Include="Model\PanelElement.cs" />
     <Compile Include="Model\PanelElements\PlaceElement.cs" />

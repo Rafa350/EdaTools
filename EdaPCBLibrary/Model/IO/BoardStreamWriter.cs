@@ -1,12 +1,10 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
 
-    using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using MikroPic.EdaTools.v1.Xml;
     using System;
-    using System.Globalization;
     using System.IO;
     using System.Xml;
 
@@ -21,7 +19,6 @@
         private class Visitor : DefaultVisitor {
 
             private readonly XmlWriterAdapter wr;
-            private readonly CultureInfo ci = CultureInfo.InvariantCulture;
             private readonly Board board;
             private Part currentPart = null;
 
@@ -56,11 +53,11 @@
 
                 wr.WriteStartElement("line");
 
-                wr.WriteAttribute("layers", line.LayerSet);
-                wr.WriteAttribute("startPosition", line.StartPosition);
-                wr.WriteAttribute("endPosition", line.EndPosition);
+                wr.WriteAttribute("layers", line.LayerSet.ToString());
+                wr.WriteAttribute("startPosition", XmlTypeFormater.FormatPoint(line.StartPosition));
+                wr.WriteAttribute("endPosition", XmlTypeFormater.FormatPoint(line.EndPosition));
                 if (line.Thickness > 0)
-                    wr.WriteAttribute("thickness", FormatNumber(line.Thickness));
+                    wr.WriteAttribute("thickness", XmlTypeFormater.FormatNumber(line.Thickness));
                 if (line.LineCap != LineElement.LineCapStyle.Round)
                     wr.WriteAttribute("lineCap", line.LineCap);
 
@@ -80,12 +77,12 @@
 
                 wr.WriteStartElement("arc");
 
-                wr.WriteAttribute("layers", arc.LayerSet);
-                wr.WriteAttribute("startPosition", arc.StartPosition);
-                wr.WriteAttribute("endPosition", arc.EndPosition);
-                wr.WriteAttribute("angle", arc.Angle);
+                wr.WriteAttribute("layers", arc.LayerSet.ToString());
+                wr.WriteAttribute("startPosition", XmlTypeFormater.FormatPoint(arc.StartPosition));
+                wr.WriteAttribute("endPosition", XmlTypeFormater.FormatPoint(arc.EndPosition));
+                wr.WriteAttribute("angle", XmlTypeFormater.FormatAngle(arc.Angle));
                 if (arc.Thickness > 0)
-                    wr.WriteAttribute("thickness", FormatNumber(arc.Thickness));
+                    wr.WriteAttribute("thickness", XmlTypeFormater.FormatNumber(arc.Thickness));
                 if (arc.LineCap != LineElement.LineCapStyle.Round)
                     wr.WriteAttribute("lineCap", arc.LineCap);
 
@@ -105,13 +102,13 @@
 
                 wr.WriteStartElement("rectangle");
 
-                wr.WriteAttribute("layers", rectangle.LayerSet);
-                wr.WriteAttribute("position", rectangle.Position);
-                wr.WriteAttribute("size", rectangle.Size);
+                wr.WriteAttribute("layers", rectangle.LayerSet.ToString());
+                wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(rectangle.Position));
+                wr.WriteAttribute("size", XmlTypeFormater.FormatSize(rectangle.Size));
                 if (!rectangle.Rotation.IsZero)
-                    wr.WriteAttribute("rotation", rectangle.Rotation);
+                    wr.WriteAttribute("rotation", XmlTypeFormater.FormatAngle(rectangle.Rotation));
                 if (rectangle.Thickness > 0) {
-                    wr.WriteAttribute("thickness", FormatNumber(rectangle.Thickness));
+                    wr.WriteAttribute("thickness", XmlTypeFormater.FormatNumber(rectangle.Thickness));
                     if (rectangle.Filled)
                         wr.WriteAttribute("filled", "true");
                 }
@@ -128,11 +125,11 @@
 
                 wr.WriteStartElement("circle");
 
-                wr.WriteAttribute("layers", circle.LayerSet);
-                wr.WriteAttribute("position", circle.Position);
-                wr.WriteAttribute("radius", FormatNumber(circle.Radius));
+                wr.WriteAttribute("layers", circle.LayerSet.ToString());
+                wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(circle.Position));
+                wr.WriteAttribute("radius", XmlTypeFormater.FormatNumber(circle.Radius));
                 if (circle.Thickness > 0) {
-                    wr.WriteAttribute("thickness", FormatNumber(circle.Thickness));
+                    wr.WriteAttribute("thickness", XmlTypeFormater.FormatNumber(circle.Thickness));
                     if (circle.Filled)
                         wr.WriteAttribute("filled", "true");
                 }
@@ -149,12 +146,12 @@
 
                 wr.WriteStartElement("text");
 
-                wr.WriteAttribute("layers", text.LayerSet);
-                wr.WriteAttribute("position", text.Position);
+                wr.WriteAttribute("layers", text.LayerSet.ToString());
+                wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(text.Position));
                 if (!text.Rotation.IsZero)
-                    wr.WriteAttribute("rotation", text.Rotation);
-                wr.WriteAttribute("height", FormatNumber(text.Height));
-                wr.WriteAttribute("thickness", FormatNumber(text.Thickness));
+                    wr.WriteAttribute("rotation", XmlTypeFormater.FormatAngle(text.Rotation));
+                wr.WriteAttribute("height", XmlTypeFormater.FormatNumber(text.Height));
+                wr.WriteAttribute("thickness", XmlTypeFormater.FormatNumber(text.Thickness));
                 if (text.HorizontalAlign != HorizontalTextAlign.Left)
                     wr.WriteAttribute("horizontalAlign", text.HorizontalAlign);
                 if (text.VerticalAlign != VerticalTextAlign.Bottom)
@@ -174,9 +171,9 @@
 
                 wr.WriteStartElement("hole");
 
-                wr.WriteAttribute("layers", hole.LayerSet);
-                wr.WriteAttribute("position", hole.Position);
-                wr.WriteAttribute("drill", FormatNumber(hole.Drill));
+                wr.WriteAttribute("layers", hole.LayerSet.ToString());
+                wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(hole.Position));
+                wr.WriteAttribute("drill", XmlTypeFormater.FormatNumber(hole.Drill));
 
                 wr.WriteEndElement();
             }
@@ -191,13 +188,13 @@
                 wr.WriteStartElement("spad");
 
                 wr.WriteAttribute("name", pad.Name);
-                wr.WriteAttribute("layers", pad.LayerSet);
-                wr.WriteAttribute("position", pad.Position);
+                wr.WriteAttribute("layers", pad.LayerSet.ToString());
+                wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(pad.Position));
                 if (!pad.Rotation.IsZero)
-                    wr.WriteAttribute("rotation", pad.Rotation);
-                wr.WriteAttribute("size", pad.Size);
+                    wr.WriteAttribute("rotation", XmlTypeFormater.FormatAngle(pad.Rotation));
+                wr.WriteAttribute("size", XmlTypeFormater.FormatSize(pad.Size));
                 if (!pad.Roundness.IsZero)
-                    wr.WriteAttribute("roundness", pad.Roundness);
+                    wr.WriteAttribute("roundness", XmlTypeFormater.FormatRatio(pad.Roundness));
 
                 Signal signal = board.GetSignal(pad, currentPart, false);
                 if (signal != null)
@@ -216,12 +213,12 @@
                 wr.WriteStartElement("tpad");
 
                 wr.WriteAttribute("name", pad.Name);
-                wr.WriteAttribute("layers", pad.LayerSet);
-                wr.WriteAttribute("position", pad.Position);
+                wr.WriteAttribute("layers", pad.LayerSet.ToString());
+                wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(pad.Position));
                 if (!pad.Rotation.IsZero)
-                    wr.WriteAttribute("rotation", pad.Rotation);
-                wr.WriteAttribute("size", FormatNumber(pad.TopSize));
-                wr.WriteAttribute("drill", FormatNumber(pad.Drill));
+                    wr.WriteAttribute("rotation", XmlTypeFormater.FormatAngle(pad.Rotation));
+                wr.WriteAttribute("size", XmlTypeFormater.FormatNumber(pad.TopSize));
+                wr.WriteAttribute("drill", XmlTypeFormater.FormatNumber(pad.Drill));
                 if (pad.Shape != ThPadElement.ThPadShape.Circle)
                     wr.WriteAttribute("shape", pad.Shape);
 
@@ -246,11 +243,11 @@
                 if (!attr.IsVisible)
                     wr.WriteAttribute("visible", attr.IsVisible);
                 if (attr.UsePosition)
-                    wr.WriteAttribute("position", attr.Position);
+                    wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(attr.Position));
                 if (attr.UseRotation)
-                    wr.WriteAttribute("rotation", attr.Rotation);
+                    wr.WriteAttribute("rotation", XmlTypeFormater.FormatAngle(attr.Rotation));
                 if (attr.UseHeight)
-                    wr.WriteAttribute("height", FormatNumber(attr.Height));
+                    wr.WriteAttribute("height", XmlTypeFormater.FormatNumber(attr.Height));
                 if (attr.UseAlign) {
                     if (attr.HorizontalAlign != HorizontalTextAlign.Left)
                         wr.WriteAttribute("horizontalAlign", attr.HorizontalAlign);
@@ -285,23 +282,23 @@
 
                 wr.WriteStartElement("region");
 
-                wr.WriteAttribute("layers", region.LayerSet);
+                wr.WriteAttribute("layers", region.LayerSet.ToString());
                 if (region.Thickness > 0) {
-                    wr.WriteAttribute("thickness", FormatNumber(region.Thickness));
+                    wr.WriteAttribute("thickness", XmlTypeFormater.FormatNumber(region.Thickness));
                     if (region.Filled)
                         wr.WriteAttribute("filled", "true");
                 }
                 if (region.Clearance > 0)
-                    wr.WriteAttribute("clearance", FormatNumber(region.Clearance));
+                    wr.WriteAttribute("clearance", XmlTypeFormater.FormatNumber(region.Clearance));
                 Signal signal = board.GetSignal(region, currentPart, false);
                 if (signal != null)
                     wr.WriteAttribute("signal", signal.Name);
 
                 foreach (RegionElement.Segment segment in region.Segments) {
                     wr.WriteStartElement("segment");
-                    wr.WriteAttribute("position", segment.Position);
+                    wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(segment.Position));
                     if (!segment.Angle.IsZero)
-                        wr.WriteAttribute("angle", segment.Angle);
+                        wr.WriteAttribute("angle", XmlTypeFormater.FormatAngle(segment.Angle));
                     wr.WriteEndElement();
                 }
 
@@ -323,9 +320,9 @@
                     //
                     wr.WriteAttribute("name", part.Name);
                     wr.WriteAttribute("block", part.Block.Name);
-                    wr.WriteAttribute("position", part.Position);
+                    wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(part.Position));
                     if (!part.Rotation.IsZero)
-                        wr.WriteAttribute("rotation", part.Rotation);
+                        wr.WriteAttribute("rotation", XmlTypeFormater.FormatAngle(part.Rotation));
                     if (part.Side != BoardSide.Top)
                         wr.WriteAttribute("side", part.Side);
 
@@ -375,12 +372,12 @@
 
                 wr.WriteStartElement("via");
 
-                wr.WriteAttribute("position", via.Position);
-                wr.WriteAttribute("layers", via.LayerSet);
-                wr.WriteAttribute("drill", FormatNumber(via.Drill));
-                wr.WriteAttribute("outerSize", FormatNumber(via.OuterSize));
+                wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(via.Position));
+                wr.WriteAttribute("layers", via.LayerSet.ToString());
+                wr.WriteAttribute("drill", XmlTypeFormater.FormatNumber(via.Drill));
+                wr.WriteAttribute("outerSize", XmlTypeFormater.FormatNumber(via.OuterSize));
                 if (via.InnerSize != via.OuterSize)
-                    wr.WriteAttribute("innerSize", FormatNumber(via.InnerSize));
+                    wr.WriteAttribute("innerSize", XmlTypeFormater.FormatNumber(via.InnerSize));
                 if (via.Shape != ViaElement.ViaShape.Circle)
                     wr.WriteAttribute("shape", via.Shape);
                 if (via.Type != ViaElement.ViaType.Through)
@@ -402,9 +399,9 @@
 
                 wr.WriteStartElement("layer");
 
-                wr.WriteAttribute("id", layer.Id);
+                wr.WriteAttribute("id", layer.Id.FullName);
                 wr.WriteAttribute("function", layer.Function);
-                wr.WriteAttribute("color", layer.Color);
+                wr.WriteAttribute("color", XmlTypeFormater.FormatColor(layer.Color));
                 if (!layer.IsVisible)
                     wr.WriteAttribute("visible", "false");
 
@@ -422,7 +419,7 @@
 
                 wr.WriteAttribute("name", signal.Name);
                 if (signal.Clearance > 0)
-                    wr.WriteAttribute("clearance", FormatNumber(signal.Clearance));
+                    wr.WriteAttribute("clearance", XmlTypeFormater.FormatNumber(signal.Clearance));
 
                 wr.WriteEndElement();
             }
@@ -463,8 +460,8 @@
             public override void Visit(Board board) {
 
                 wr.WriteStartElement("board");
-                wr.WriteAttribute("position", board.Position);
-                wr.WriteAttribute("rotation", board.Rotation);
+                wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(board.Position));
+                wr.WriteAttribute("rotation", XmlTypeFormater.FormatAngle(board.Rotation));
 
                 wr.WriteStartElement("layers");
                 foreach (Layer layer in board.Layers)
@@ -500,17 +497,6 @@
                 }
 
                 wr.WriteEndElement();
-            }
-
-            /// <summary>
-            /// Formateja una dimensio en mm
-            /// </summary>
-            /// <param name="value">Valor de la dimensio.</param>
-            /// <returns>El valor formatejat.</returns>
-            /// 
-            private static string FormatNumber(int value) {
-
-                return XmlConvert.ToString(value / 1000000.0);
             }
         }
 

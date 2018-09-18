@@ -2,10 +2,8 @@
 
     using System;
     using System.Globalization;
-    using System.Xml;
-    using MikroPic.EdaTools.v1.Xml;
 
-    public struct Ratio {
+    public readonly struct Ratio {
 
         public static readonly Ratio Zero = new Ratio(0);
         public static readonly Ratio P25 = new Ratio(250);
@@ -78,22 +76,6 @@
             get {
                 return value;
             }
-        }
-    }
-
-
-    public static class RatioHelper {
-
-        public static void WriteAttribute(this XmlWriterAdapter wr, string name, Ratio ratio) {
-
-            string s = XmlConvert.ToString(ratio.Percent / 1000.0);
-            wr.WriteAttribute(name, s);
-        }
-
-        public static Ratio AttributeAsRatio(this XmlReaderAdapter rd, string name) {
-
-            double v = rd.AttributeAsDouble(name);
-            return Ratio.FromPercent((int)(v * 1000.0));
         }
     }
 }

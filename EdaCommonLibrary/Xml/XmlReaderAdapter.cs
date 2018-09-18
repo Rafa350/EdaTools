@@ -129,7 +129,7 @@
         /// <param name="defValue">Valor per defecte.</param>
         /// <returns>El valor de l'atribut.</returns>
         /// 
-        public string[] AttributeAsStrings(string name, string[] defValue = null) {
+        public IEnumerable<string> AttributeAsStrings(string name, string[] defValue = null) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");

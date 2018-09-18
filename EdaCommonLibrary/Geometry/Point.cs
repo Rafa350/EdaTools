@@ -1,15 +1,13 @@
 ﻿namespace MikroPic.EdaTools.v1.Geometry {
 
-    using MikroPic.EdaTools.v1.Xml;
     using System;
     using System.Globalization;
-    using System.Xml;
 
     /// <summary>
     /// Estructura que representa un punt
     /// </summary>
     /// 
-    public struct Point {
+    public readonly struct Point {
 
         private readonly int x;
         private readonly int y;
@@ -93,6 +91,33 @@
         }
 
         /// <summary>
+        /// Retorna el valor hash del objecte.
+        /// </summary>
+        /// <returns>El valor hash.</returns>
+        /// 
+        public override int GetHashCode() {
+
+            return (x << 7) ^ y;
+        }
+
+        /// <summary>
+        /// Operacio de comparacio entrer objectes
+        /// </summary>
+        /// <param name="obj">L'altre objecte a comparar.</param>
+        /// <returns>True si son iguals.</returns>
+        /// 
+        public override bool Equals(object obj) {
+
+            if ((obj == null) || !GetType().Equals(obj.GetType())) {
+                return false;
+            }
+            else {
+                Point p = (Point)obj;
+                return (x == p.x) && (y == p.y);
+            }
+        }
+
+        /// <summary>
         /// Obte el valor de la coordinada X
         /// </summary>
         /// 
@@ -110,46 +135,6 @@
             get {
                 return y;
             }
-        }
-    }
-
-    /// <summary>
-    /// Clase que implementa metodes d'extenssio
-    /// </summary>
-    public static class PointHelper {
-
-        /// <summary>
-        /// Escriu un atribut de tipus 'Point'
-        /// </summary>
-        /// <param name="wr">L'objecte XmlWriterAdapter.</param>
-        /// <param name="name">El nom de l'atribut.</param>
-        /// <param name="point">El valor a escriure.</param>
-        /// 
-        public static void WriteAttribute(this XmlWriterAdapter wr, string name, Point point) {
-
-            string s = String.Format(
-                "{0}, {1}",
-                XmlConvert.ToString(point.X / 1000000.0),
-                XmlConvert.ToString(point.Y / 1000000.0));
-            wr.WriteAttribute(name, s);
-        }
-
-        /// <summary>
-        /// Llegeix un atribut i el converteix a 'Point'
-        /// </summary>
-        /// <param name="rd">L'objecte XmlReaderAdapter.</param>
-        /// <param name="name">El nom de l'atribut.</param>
-        /// <returns>El valor lleigit.</returns>
-        /// 
-        public static Point AttributeAsPoint(this XmlReaderAdapter rd, string name) {
-
-            string s = rd.AttributeAsString(name);
-
-            string[] ss = s.Split(',');
-            double x = XmlConvert.ToDouble(ss[0]);
-            double y = XmlConvert.ToDouble(ss[1]);
-
-            return new Point((int)(x * 1000000.0), (int)(y * 1000000.0));
         }
     }
 }

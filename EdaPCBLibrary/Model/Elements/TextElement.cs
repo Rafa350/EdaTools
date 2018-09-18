@@ -1,8 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
     using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Geometry.Fonts;
+    using MikroPic.EdaTools.v1.Geometry.Polygons;
     using System;
 
     /// <summary>
@@ -197,5 +197,16 @@
                 this.value = value;
             }
         }
+
+        /// <summary>
+        /// Obte el tipus d'element.
+        /// </summary>
+        /// 
+        public override ElementType ElementType {
+            get {
+                return ElementType.Text;
+            }
+        }
+
     }
 }

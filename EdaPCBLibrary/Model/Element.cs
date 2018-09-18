@@ -1,9 +1,27 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
-    using System;
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Model.Collections;
+    using System;
+
+    /// <summary>
+    /// Identifica el tipus d'element
+    /// </summary>
+    /// 
+    public enum ElementType {
+        Line,
+        Arc,
+        Rectangle,
+        Circle,
+        Text,
+        SmdPad,
+        ThPad,
+        SlotPad,
+        Region,
+        Via,
+        Hole
+    }
 
     /// <summary>
     /// Clase base per tots els elements de la placa.
@@ -130,5 +148,11 @@
                 return board;
             }
         }
+
+        /// <summary>
+        /// Obte el tipus d'element
+        /// </summary>
+        /// 
+        public abstract ElementType ElementType { get; }
     }
 }

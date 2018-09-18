@@ -2,15 +2,13 @@
 
     using System;
     using System.Globalization;
-    using System.Xml;
-    using MikroPic.EdaTools.v1.Xml;
 
     /// <summary>
     /// Clase per representar angles. Els angles son en centesimes 
     /// de grau i el gir es considera contrari al rellotge.
     /// </summary>
     /// 
-    public struct Angle {
+    public readonly struct Angle {
 
         public static readonly Angle Zero = new Angle(0);
         public static readonly Angle Deg45 = new Angle(4500);
@@ -229,33 +227,6 @@
             get {
                 return value * Math.PI / 18000.0;
             }
-        }
-    }
-
-
-    /// <summary>
-    /// Clase que implementa metodes d'extensio.
-    /// </summary>
-    /// 
-    public static class AngleHelper {
-
-        /// <summary>
-        /// Escriu un atribut de tipus 'Angle'.
-        /// </summary>
-        /// <param name="wr">L'objecte 'XmlWriterAdapter'</param>
-        /// <param name="name">El nom de l'atribut.</param>
-        /// <param name="angle">El valor a escriure.</param>
-        /// 
-        public static void WriteAttribute(this XmlWriterAdapter wr, string name, Angle angle) {
-
-            string s = XmlConvert.ToString(angle.Degrees / 100.0);
-            wr.WriteAttribute(name, s);
-        }
-
-        public static Angle AttributeAsAngle(this XmlReaderAdapter rd, string name) {
-
-            double v = rd.AttributeAsDouble(name);
-            return Angle.FromDegrees((int)(v * 100.0));
         }
     }
 }

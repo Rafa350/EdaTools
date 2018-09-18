@@ -1,22 +1,24 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
+﻿namespace MikroPic.EdaTools.v1.Collections {
 
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Text;
 
-    public struct LayerSet : IEnumerable<LayerId> {
+    /// <summary>
+    /// Objecte que representa un conjunt de capes. Es un objecte invariant.
+    /// </summary>
+    public struct SetOf<T>: IEnumerable<T> {
 
-        private readonly LayerId[] storage;
+        private readonly T[] storage;
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="name">El element a afeigir.</param>
         /// 
-        public LayerSet(LayerId element) {
+        public SetOf(T element) {
 
-            storage = new LayerId[1] { element };
+            storage = new T[1] { element };
         }
 
         /// <summary>
@@ -25,9 +27,9 @@
         /// <param name="element1">Primer element.</param>
         /// <param name="element2">Segon element.</param>
         /// 
-        public LayerSet(LayerId element1, LayerId element2) {
+        public SetOf(T element1, T element2) {
 
-            storage = new LayerId[2] { element1, element2 };
+            storage = new T[2] { element1, element2 };
         }
 
         /// <summary>
@@ -37,9 +39,9 @@
         /// <param name="element2">Segon element.</param>
         /// <param name="element3">Tercer element.</param>
         /// 
-        public LayerSet(LayerId element1, LayerId element2, LayerId element3) {
+        public SetOf(T element1, T element2, T element3) {
 
-            storage = new LayerId[3] { element1, element2, element3 };
+            storage = new T[3] { element1, element2, element3 };
         }
 
         /// <summary>
@@ -47,9 +49,9 @@
         /// </summary>
         /// <param name="elements">Elements.</param>
         /// 
-        public LayerSet(params LayerId[] elements) {
+        public SetOf(params T[] elements) {
 
-            storage = new LayerId[elements.Length];
+            storage = new T[elements.Length];
             elements.CopyTo(storage, 0);
         }
 
@@ -58,15 +60,15 @@
         /// </summary>
         /// <param name="elements">Elements.</param>
         /// 
-        public LayerSet(IEnumerable<LayerId> elements) {
+        public SetOf(IEnumerable<T> elements) {
 
-            ICollection<LayerId> collection = elements as ICollection<LayerId>;
+            ICollection<T> collection = elements as ICollection<T>;
             if (collection == null) {
-                List<LayerId> e = new List<LayerId>(elements);
+                List<T> e = new List<T>(elements);
                 storage = e.ToArray();
             }
             else {
-                storage = new LayerId[collection.Count];
+                storage = new T[collection.Count];
                 collection.CopyTo(storage, 0);
             }
         }
@@ -76,9 +78,9 @@
         /// </summary>
         /// <param name="other">El conjunt a copiar.</param>
         /// 
-        public LayerSet(LayerSet other) {
+        public SetOf(SetOf<T> other) {
 
-            storage = new LayerId[other.storage.Length];
+            storage = new T[other.storage.Length];
             other.storage.CopyTo(storage, 0);
         }
 
@@ -88,7 +90,7 @@
         /// <param name="element">Element.</param>
         /// <returns>True si pertany, false en cas contrari.</returns>
         /// 
-        public bool Contains(LayerId element) {
+        public bool Contains(T element) {
 
             for (int i = 0; i < storage.Length; i++)
                 if (element.Equals(storage[i]))
@@ -104,12 +106,12 @@
         /// <param name="b">Segon conjunt.</param>
         /// <returns>El resultat de l'operacio.</returns>
         /// 
-        public static LayerSet operator +(LayerSet a, LayerSet b) {
+        public static SetOf<T> operator +(SetOf<T> a, SetOf<T> b) {
 
-            LayerId[] s = new LayerId[a.storage.Length + b.storage.Length];
+            T[] s = new T[a.storage.Length + b.storage.Length];
             a.storage.CopyTo(s, 0);
             b.storage.CopyTo(s, a.storage.Length);
-            return new LayerSet(s);
+            return new SetOf<T>(s);
         }
 
         /// <summary>
@@ -119,12 +121,12 @@
         /// <param name="b">Element.</param>
         /// <returns>El resultat de l'operacio.</returns>
         /// 
-        public static LayerSet operator +(LayerSet a, LayerId b) {
+        public static SetOf<T> operator +(SetOf<T> a, T b) {
 
-            LayerId[] s = new LayerId[a.storage.Length + 1];
+            T[] s = new T[a.storage.Length + 1];
             a.storage.CopyTo(s, 0);
             s[a.storage.Length] = b;
-            return new LayerSet(s);
+            return new SetOf<T>(s);
         }
 
         /// <summary>
@@ -134,36 +136,17 @@
         /// 
         public override string ToString() {
 
-            StringBuilder sb = new StringBuilder();
-            bool first = true;
-            foreach (var element in storage) {
-                if (first)
-                    first = false;
-                else
-                    sb.Append(", ");
-                sb.Append(element.ToString());
-            }
-            return sb.ToString();
+            return String.Format("SetOf<{0}>: {1}", typeof(T),  storage.Length);
         }
 
+        public IEnumerator<T> GetEnumerator() {
 
-        public static LayerSet Parse(string s) {
-
-            string[] ss = s.Split(',');
-            LayerId[] elements = new LayerId[ss.Length];
-            for (int i = 0; i < ss.Length; i++)
-                elements[i] = LayerId.Parse(ss[i]);
-            return new LayerSet(elements);
-        }
-
-        public IEnumerator<LayerId> GetEnumerator() {
-
-            return ((IEnumerable<LayerId>)storage).GetEnumerator();
+            return ((IEnumerable<T>)storage).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() {
 
-            return ((IEnumerable<LayerId>)storage).GetEnumerator();
+            return ((IEnumerable<T>)storage).GetEnumerator();
         }
 
         /// <summary>

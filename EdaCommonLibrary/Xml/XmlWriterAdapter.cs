@@ -1,8 +1,10 @@
 ﻿namespace MikroPic.EdaTools.v1.Xml {
 
+    using MikroPic.EdaTools.v1.Geometry;
     using System;
-    using System.Xml;
+    using System.Collections.Generic;
     using System.Text;
+    using System.Xml;
 
     public sealed class XmlWriterAdapter {
 
@@ -68,7 +70,7 @@
         /// <param name="name">El nom del atribut.</param>
         /// <param name="values">El valor.</param>
         /// 
-        public void WriteAttribute(string name, string[] values) {
+        public void WriteAttribute(string name, IEnumerable<string> values) {
 
             if (values == null)
                 writer.WriteAttributeString(name, "");

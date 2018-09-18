@@ -136,5 +136,15 @@
                 return ArcUtils.Radius(StartPosition, EndPosition, angle);
             }
         }
+
+        /// <summary>
+        /// Obte el tipus d'element.
+        /// </summary>
+        /// 
+        public override ElementType ElementType {
+            get {
+                return ElementType.Arc;
+            }
+        }
     }
 }

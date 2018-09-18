@@ -2,18 +2,17 @@
 
     using System;
     using System.Globalization;
-    using MikroPic.EdaTools.v1.Xml;
 
     /// <summary>
     /// Clase que representa un color ARGB
     /// </summary>
     /// 
-    public struct Color {
+    public readonly struct Color {
 
-        private byte a;
-        private byte r;
-        private byte g;
-        private byte b;
+        private readonly byte a;
+        private readonly byte r;
+        private readonly byte g;
+        private readonly byte b;
 
         public Color(byte r, byte g, byte b) {
 
@@ -103,40 +102,6 @@
             get {
                 return b;
             }
-        }
-    }
-
-
-    /// <summary>
-    /// Clase que implementa metodes d'extensio.
-    /// </summary>
-    /// 
-    public static class ColorHelper {
-
-        /// <summary>
-        /// Escriu un atribut de tipus 'Color'
-        /// </summary>
-        /// <param name="wr">L'objecte 'XmlWriterAdapter'</param>
-        /// <param name="name">Nom de l'atribut.</param>
-        /// <param name="color">El valor a escriure.</param>
-        /// 
-        public static void WriteAttribute(this XmlWriterAdapter wr, string name, Color color) {
-
-            string s = color.ToString(CultureInfo.InvariantCulture);
-            wr.WriteAttribute(name, s);
-        }
-
-        /// <summary>
-        /// Llegeix un atribut de tipus 'Color'
-        /// </summary>
-        /// <param name="rd">L'objecte 'XmlReaderAdapter'.</param>
-        /// <param name="name">El nom de l'atribut.</param>
-        /// <returns>El valor lleigit.</returns>
-        /// 
-        public static Color AttributeAsColor(this XmlReaderAdapter rd, string name) {
-
-            string s = rd.AttributeAsString(name);
-            return Color.Parse(s);
         }
     }
 }

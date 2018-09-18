@@ -1,6 +1,5 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
-    using MikroPic.EdaTools.v1.Xml;
     using System;
     using System.Text;
 
@@ -8,7 +7,7 @@
     /// Objecte que representa el identificador unic d'una capa.
     /// </summary>
     /// 
-    public struct LayerId {
+    public readonly struct LayerId {
 
         private readonly string name;
         private readonly BoardSide side;
@@ -121,7 +120,7 @@
         /// 
         public static bool operator !=(LayerId a, LayerId b) {
 
-            return (a.name != b.name) || (a.side != b.side);
+            return !(a == b);
         }
 
         /// <summary>
@@ -160,20 +159,6 @@
             get {
                 return side;
             }
-        }
-    }
-
-    public static class LayerIdHelper {
-
-        public static void WriteAttribute(this XmlWriterAdapter wr, string name, LayerId layerId) {
-
-            wr.WriteAttribute(name, layerId.FullName);
-        }
-
-        public static LayerId AttributeAsLayerId(this XmlReaderAdapter rd, string name) {
-
-            string s = rd.AttributeAsString(name);
-            return LayerId.Parse(s);
         }
     }
 }

@@ -29,7 +29,7 @@
                 <xs:element ref="elements" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
             <xs:attribute name="position" use="optional" type="pointType"/>
-            <xs:attribute name="rotation" use="optional" type="angleType"/>
+            <xs:attribute name="rotation" use="optional" type="angleType" default="0"/>
         </xs:complexType>
     </xs:element>
     
@@ -106,7 +106,7 @@
             <xs:attribute name="name" use="required" type="nameType"/>
             <xs:attribute name="block" use="required" type="nameType"/>
             <xs:attribute name="position" use="required" type="pointType"/>
-            <xs:attribute name="rotation" use="optional" type="angleType"/>
+            <xs:attribute name="rotation" use="optional" type="angleType" default="0"/>
         </xs:complexType>        
     </xs:element>
 
@@ -126,7 +126,7 @@
             <xs:attribute name="value" use="required" type="xs:string"/>
             <xs:attribute name="visible" use="optional" type="xs:boolean" default="false"/>
             <xs:attribute name="position" use="optional" type="pointType"/>
-            <xs:attribute name="rotation" use="optional" type="angleType"/>
+            <xs:attribute name="rotation" use="optional" type="angleType" default="0"/>
             <xs:attribute name="height" use="optional" type="xs:double"/>
             <xs:attribute name="horizontalAlign" use="optional" type="horizontalTextAlignType"/>
             <xs:attribute name="verticalAlign" use="optional" type="verticalTextAlignType"/>
@@ -201,8 +201,10 @@
             <xs:attribute name="layers" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="size" use="required" type="sizeType"/>
-            <xs:attribute name="rotation" use="optional" type="angleType"/>
-            <xs:attribute name="thickness" use="optional" type="xs:double"/>
+            <xs:attribute name="rotation" use="optional" type="angleType" default="0"/>
+            <xs:attribute name="thickness" use="optional" type="xs:double" default="0"/>
+            <xs:attribute name="filled" use="optional" type="xs:boolean" default="true"/>
+            <xs:attribute name="roundness" use="optional" type="xs:double" default="0"/>
         </xs:complexType>
     </xs:element>
     
@@ -211,8 +213,9 @@
         <xs:complexType>
             <xs:attribute name="layers" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
-            <xs:attribute name="thickness" use="optional" type="xs:double"/>
+            <xs:attribute name="thickness" use="optional" type="xs:double" default="0"/>
             <xs:attribute name="radius" use="required" type="xs:double"/>
+            <xs:attribute name="filled" use="optional" type="xs:boolean" default="true"/>
         </xs:complexType>
     </xs:element>
 

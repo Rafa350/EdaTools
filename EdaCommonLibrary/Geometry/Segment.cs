@@ -1,6 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Geometry {
 
-    public struct Segment {
+    public readonly struct Segment {
 
         private readonly Point start;
         private readonly Point end;

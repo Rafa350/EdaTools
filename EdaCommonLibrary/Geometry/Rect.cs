@@ -5,7 +5,7 @@
     /// <summary>
     /// Objecte que representa un rectangle aliniat amb els eixos X i Y.
     /// </summary>
-    public struct Rect {
+    public readonly struct Rect {
 
         private readonly int x;
         private readonly int y;

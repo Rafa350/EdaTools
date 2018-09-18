@@ -160,5 +160,15 @@
                 return (Math.Min(size.Width, size.Height) * roundness) / 2;
             }
         }
+
+        /// <summary>
+        /// Obte el tipus d'element.
+        /// </summary>
+        /// 
+        public override ElementType ElementType {
+            get {
+                return ElementType.SmdPad;
+            }
+        }
     }
 }

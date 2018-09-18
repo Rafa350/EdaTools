@@ -165,5 +165,15 @@
                 filled = value;
             }
         }
+
+        /// <summary>
+        /// Obte el tipus d'element.
+        /// </summary>
+        /// 
+        public override ElementType ElementType {
+            get {
+                return ElementType.Circle;
+            }
+        }
     }
 }

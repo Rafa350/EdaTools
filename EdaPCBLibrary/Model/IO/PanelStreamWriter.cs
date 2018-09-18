@@ -18,7 +18,7 @@
     public sealed class PanelStreamWriter {
 
         private Stream stream;
-
+/*
         private class Visitor : DefaultVisitor {
 
             private readonly XmlWriterAdapter wr;
@@ -82,9 +82,9 @@
                 wr.WriteStartElement("arc");
 
                 wr.WriteAttribute("layers", GetLayerNames(arc));
-                wr.WriteAttribute("startPosition", arc.StartPosition);
-                wr.WriteAttribute("endPosition", arc.EndPosition);
-                wr.WriteAttribute("angle", arc.Angle);
+                wr.WriteAttribute("startPosition", XmlTypeFormater.FormatPoint(arc.StartPosition));
+                wr.WriteAttribute("endPosition", XmlTypeFormater.FormatPoint(arc.EndPosition));
+                wr.WriteAttribute("angle", XmlTypeFormater.FormatAngle(arc.Angle));
                 if (arc.Thickness > 0)
                     wr.WriteAttribute("thickness", FormatNumber(arc.Thickness));
                 if (arc.LineCap != LineElement.LineCapStyle.Round)
@@ -403,7 +403,7 @@
 
                 wr.WriteStartElement("layer");
 
-                wr.WriteAttribute("id", layer.Id);
+                wr.WriteAttribute("id", layer.Id.FullName);
                 wr.WriteAttribute("function", layer.Function);
                 wr.WriteAttribute("color", layer.Color);
                 if (!layer.IsVisible)
@@ -522,7 +522,7 @@
                 return XmlConvert.ToString(value / 1000000.0);
             }
         }
-
+        */
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
@@ -557,8 +557,8 @@
             using (XmlWriter writer = XmlWriter.Create(stream, settings)) {
                 writer.WriteStartDocument();
 
-                IVisitor visitor = new Visitor(board, writer);
-                visitor.Run();
+                //IVisitor visitor = new Visitor(board, writer);
+                //visitor.Run();
 
                 writer.WriteEndDocument();
             }

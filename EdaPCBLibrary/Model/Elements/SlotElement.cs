@@ -1,8 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Elements {
 
-    using System;
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
+    using System;
 
     public sealed class SlotElement: PadElement {
 
@@ -97,6 +97,16 @@
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("SlotElement.Drill");
                 drill = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte el tipus d'element.
+        /// </summary>
+        /// 
+        public override ElementType ElementType {
+            get {
+                return ElementType.SlotPad;
             }
         }
     }

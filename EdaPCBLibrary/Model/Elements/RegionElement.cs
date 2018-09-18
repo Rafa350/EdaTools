@@ -260,5 +260,16 @@
                 return segments;
             }
         }
+
+        /// <summary>
+        /// Obte el tipus d'element.
+        /// </summary>
+        /// 
+        public override ElementType ElementType {
+            get {
+                return ElementType.Region;
+            }
+        }
+
     }
 }
