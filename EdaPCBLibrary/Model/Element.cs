@@ -145,7 +145,12 @@
         /// 
         public Board Board {
             get {
-                return board;
+                if (board != null)
+                    return board;
+                else if (block != null)
+                    return block.Board;
+                else
+                    return null;
             }
         }
 

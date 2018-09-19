@@ -168,7 +168,7 @@
             LayerId layerId = LayerId.Parse(rd.AttributeAsString("id"));
             LayerFunction function = rd.AttributeAsEnum<LayerFunction>("function", LayerFunction.Unknown);
             Color color = Color.Parse(rd.AttributeAsString("color"));
-            bool visible = rd.AttributeAsBoolean("visible");
+            bool visible = rd.AttributeAsBoolean("visible", true);
 
             // Crea la capa i l'afeigeig a la placa.
             //
@@ -425,7 +425,7 @@
             //
             string name = rd.AttributeAsString("name");
             Point position =  XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
-            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation"));
+            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
             BoardSide side = rd.AttributeAsEnum("side", BoardSide.Top);
             string blockName = rd.AttributeAsString("block");
 
@@ -642,10 +642,10 @@
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             Size size = XmlTypeParser.ParseSize(rd.AttributeAsString("size"));
-            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation"));
-            int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness"));
+            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
+            int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness", "0"));
+            Ratio roundness = XmlTypeParser.ParseRatio(rd.AttributeAsString("roundness", "0"));
             bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
-            Ratio roundness = XmlTypeParser.ParseRatio(rd.AttributeAsString("roundness"));
 
             // Crea l'element i l'afegeix a la llista
             //
@@ -672,7 +672,7 @@
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             int radius = XmlTypeParser.ParseNumber(rd.AttributeAsString("radius"));
-            int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness"));
+            int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness", "0"));
             bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
  
             // Crea l'element i l'afegeix a la llista
@@ -700,7 +700,7 @@
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness"));
             bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
-            int clearance = XmlTypeParser.ParseNumber(rd.AttributeAsString("clearance"));
+            int clearance = XmlTypeParser.ParseNumber(rd.AttributeAsString("clearance", "0"));
 
             // Crea l'element i l'afegeix a la llista
             //
@@ -736,7 +736,7 @@
             // Obte els atributs del segment
             //
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
-            Angle angle = XmlTypeParser.ParseAngle(rd.AttributeAsString("angle"));
+            Angle angle = XmlTypeParser.ParseAngle(rd.AttributeAsString("angle", "0"));
 
             // Crea el segment i l'afegeix a la regio.
             //
@@ -764,7 +764,7 @@
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             int size = XmlTypeParser.ParseNumber(rd.AttributeAsString("size"));
-            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation"));
+            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
             int drill = XmlTypeParser.ParseNumber(rd.AttributeAsString("drill"));
             ThPadElement.ThPadShape shape = rd.AttributeAsEnum<ThPadElement.ThPadShape>("shape", ThPadElement.ThPadShape.Circle);
 
@@ -806,8 +806,8 @@
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             Size size = XmlTypeParser.ParseSize(rd.AttributeAsString("size"));
-            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation"));
-            Ratio roundness = XmlTypeParser.ParseRatio(rd.AttributeAsString("roundness"));
+            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
+            Ratio roundness = XmlTypeParser.ParseRatio(rd.AttributeAsString("roundness", "0"));
 
             // Crea l'element i l'afegeix a la llista
             //
@@ -843,13 +843,16 @@
             //
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
-            int size = XmlTypeParser.ParseNumber(rd.AttributeAsString("size"));
+            int outerSize = XmlTypeParser.ParseNumber(rd.AttributeAsString("outerSize"));
+            int innerSize = rd.AttributeExists("innerSize") ?
+                XmlTypeParser.ParseNumber(rd.AttributeAsString("innerSize")) :
+                outerSize;
             int drill = XmlTypeParser.ParseNumber(rd.AttributeAsString("drill"));
             ViaElement.ViaShape shape = rd.AttributeAsEnum<ViaElement.ViaShape>("shape", ViaElement.ViaShape.Circle);
 
             // Crtea l'element i l'afegeix a la llista
             //
-            ViaElement via = new ViaElement(layerSet, position, size, drill, shape);
+            ViaElement via = new ViaElement(layerSet, position, outerSize, innerSize, drill, shape);
             elementList.Add(via);
 
             // Assigna la senyal 
@@ -907,7 +910,7 @@
             //
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
-            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation"));
+            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
             int height = XmlTypeParser.ParseNumber(rd.AttributeAsString("height"));
             HorizontalTextAlign horizontalAlign = rd.AttributeAsEnum("horizontalAlign", HorizontalTextAlign.Left);
             VerticalTextAlign verticalAlign = rd.AttributeAsEnum("verticalAlign", VerticalTextAlign.Bottom);

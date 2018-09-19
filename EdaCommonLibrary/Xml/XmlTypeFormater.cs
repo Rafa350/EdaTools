@@ -27,7 +27,7 @@
         /// <param name="point">El valor a formatejar.</param>
         /// <returns>El text formatejar.</returns>
         /// 
-        public static string FormatPoint(Point point) {
+        public static string FormatPoint(in Point point) {
 
             return String.Format(
                 "{0}, {1}",
@@ -41,7 +41,7 @@
         /// <param name="point">El valor a formatejar.</param>
         /// <returns>El text formatejar.</returns>
         /// 
-        public static string FormatSize(Size size) {
+        public static string FormatSize(in Size size) {
 
             return String.Format(
                 "{0}, {1}",

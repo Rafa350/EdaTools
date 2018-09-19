@@ -70,7 +70,7 @@
         }
 
         /// <summary>
-        /// Converteix a string
+        /// Converteix l'objecte a text.
         /// </summary>
         /// <returns>El resultat de la converssio.</returns>
         /// 
@@ -80,14 +80,14 @@
         }
 
         /// <summary>
-        /// Converteix a string.
+        /// Converteix l'objecte a text.
         /// </summary>
-        /// <param name="provider">L'objecte proveidor de format.</param>
+        /// <param name="provider">Objecte proveidor de format.</param>
         /// <returns>El resultat de la converssio.</returns>
         /// 
         public string ToString(IFormatProvider provider) {
 
-            return String.Format(provider, "{0}, {1}", x, y);
+            return String.Format(provider, "{0}; {1}", x, y);
         }
 
         /// <summary>

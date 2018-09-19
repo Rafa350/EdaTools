@@ -294,7 +294,7 @@
                 if (signal != null)
                     wr.WriteAttribute("signal", signal.Name);
 
-                foreach (RegionElement.Segment segment in region.Segments) {
+                foreach (var segment in region.Segments) {
                     wr.WriteStartElement("segment");
                     wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(segment.Position));
                     if (!segment.Angle.IsZero)
@@ -351,7 +351,7 @@
                     //
                     if (part.HasAttributes) {
                         wr.WriteStartElement("attributes");
-                        foreach (PartAttribute attribute in part.Attributes) 
+                        foreach (var attribute in part.Attributes) 
                             attribute.AcceptVisitor(this);
                         wr.WriteEndElement();
                     }
@@ -464,34 +464,34 @@
                 wr.WriteAttribute("rotation", XmlTypeFormater.FormatAngle(board.Rotation));
 
                 wr.WriteStartElement("layers");
-                foreach (Layer layer in board.Layers)
+                foreach (var layer in board.Layers)
                     layer.AcceptVisitor(this);
                 wr.WriteEndElement();
 
                 if (board.HasSignals) {
                     wr.WriteStartElement("signals");
-                    foreach (Signal signal in board.Signals)
+                    foreach (var signal in board.Signals)
                         signal.AcceptVisitor(this);
                     wr.WriteEndElement();
                 }
 
                 if (board.HasBlocks) {
                     wr.WriteStartElement("blocks");
-                    foreach (Block block in board.Blocks)
+                    foreach (var block in board.Blocks)
                         block.AcceptVisitor(this);
                     wr.WriteEndElement();
                 }
 
                 if (board.HasParts) {
                     wr.WriteStartElement("parts");
-                    foreach (Part part in board.Parts)
+                    foreach (var part in board.Parts)
                         part.AcceptVisitor(this);
                     wr.WriteEndElement();
                 }
 
                 if (board.HasElements) {
                     wr.WriteStartElement("elements");
-                    foreach (Element element in board.Elements)
+                    foreach (var element in board.Elements)
                         element.AcceptVisitor(this);
                     wr.WriteEndElement();
                 }
