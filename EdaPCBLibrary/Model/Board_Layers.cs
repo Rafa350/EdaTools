@@ -98,25 +98,22 @@
         /// <summary>
         /// Obte la coleccio d'elements d'una capa.
         /// </summary>
-        /// <param name="layer">La capa.</param>
+        /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="includeBlocks">Indica si cal incluir els elements dels blocs.</param>
         /// <returns>La coleccio d'elements.</returns>
         /// 
-        public IEnumerable<Element> GetElements(Layer layer, bool includeBlocks = true) {
-
-            if (layer == null)
-                throw new ArgumentNullException("layer");
+        public IEnumerable<Element> GetElements(LayerId layerId, bool includeBlocks = true) {
 
             List<Element> list = new List<Element>();
 
             foreach (var element in elements)
-                if (element.IsOnLayer(layer))
+                if (element.IsOnLayer(layerId))
                     list.Add(element);
 
             if (includeBlocks)
                 foreach (var block in blocks)
                     foreach (var element in block.Elements)
-                        if (element.IsOnLayer(layer))
+                        if (element.IsOnLayer(layerId))
                             list.Add(element);
 
             return list;

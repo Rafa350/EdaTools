@@ -18,7 +18,7 @@
 
         private class Visitor : DefaultVisitor {
 
-            private readonly XmlWriterAdapter wr;
+            private readonly XmlWriter writer;
             private readonly Board board;
             private Part currentPart = null;
 
@@ -29,10 +29,10 @@
             /// <param name="board">La placa a visitar.</param>
             /// <param name="wr">Objecte per escriure el stream de sortida.</param>
             /// 
-            public Visitor(Board board, XmlWriterAdapter wr) {
+            public Visitor(Board board, XmlWriter writer) {
 
                 this.board = board;
-                this.wr = wr;
+                this.writer = writer;
             }
 
             /// <summary>
@@ -51,21 +51,21 @@
             /// 
             public override void Visit(LineElement line) {
 
-                wr.WriteStartElement("line");
+                writer.WriteStartElement("line");
 
-                wr.WriteAttribute("layers", line.LayerSet.ToString());
-                wr.WriteAttribute("startPosition", XmlTypeFormater.FormatPoint(line.StartPosition));
-                wr.WriteAttribute("endPosition", XmlTypeFormater.FormatPoint(line.EndPosition));
+                writer.WriteAttributeString("layers", line.LayerSet.ToString());
+                writer.WriteAttributeString("startPosition", XmlTypeFormater.FormatPoint(line.StartPosition));
+                writer.WriteAttributeString("endPosition", XmlTypeFormater.FormatPoint(line.EndPosition));
                 if (line.Thickness > 0)
-                    wr.WriteAttribute("thickness", XmlTypeFormater.FormatNumber(line.Thickness));
+                    writer.WriteAttributeString("thickness", XmlTypeFormater.FormatNumber(line.Thickness));
                 if (line.LineCap != LineElement.LineCapStyle.Round)
-                    wr.WriteAttribute("lineCap", line.LineCap);
+                    writer.WriteAttributeEnum("lineCap", line.LineCap);
 
                 Signal signal = board.GetSignal(line, currentPart, false);
                 if (signal != null)
-                    wr.WriteAttribute("signal", signal.Name);
+                    writer.WriteAttributeString("signal", signal.Name);
 
-                wr.WriteEndElement();
+                writer.WriteEndElement();
             }
 
             /// <summary>
@@ -75,22 +75,22 @@
             /// 
             public override void Visit(ArcElement arc) {
 
-                wr.WriteStartElement("arc");
+                writer.WriteStartElement("arc");
 
-                wr.WriteAttribute("layers", arc.LayerSet.ToString());
-                wr.WriteAttribute("startPosition", XmlTypeFormater.FormatPoint(arc.StartPosition));
-                wr.WriteAttribute("endPosition", XmlTypeFormater.FormatPoint(arc.EndPosition));
-                wr.WriteAttribute("angle", XmlTypeFormater.FormatAngle(arc.Angle));
+                writer.WriteAttributeString("layers", arc.LayerSet.ToString());
+                writer.WriteAttributeString("startPosition", XmlTypeFormater.FormatPoint(arc.StartPosition));
+                writer.WriteAttributeString("endPosition", XmlTypeFormater.FormatPoint(arc.EndPosition));
+                writer.WriteAttributeString("angle", XmlTypeFormater.FormatAngle(arc.Angle));
                 if (arc.Thickness > 0)
-                    wr.WriteAttribute("thickness", XmlTypeFormater.FormatNumber(arc.Thickness));
+                    writer.WriteAttributeString("thickness", XmlTypeFormater.FormatNumber(arc.Thickness));
                 if (arc.LineCap != LineElement.LineCapStyle.Round)
-                    wr.WriteAttribute("lineCap", arc.LineCap);
+                    writer.WriteAttributeEnum("lineCap", arc.LineCap);
 
                 Signal signal = board.GetSignal(arc, currentPart, false);
                 if (signal != null)
-                    wr.WriteAttribute("signal", signal.Name);
+                    writer.WriteAttributeString("signal", signal.Name);
 
-                wr.WriteEndElement();
+                writer.WriteEndElement();
             }
 
             /// <summary>
@@ -100,20 +100,20 @@
             /// 
             public override void Visit(RectangleElement rectangle) {
 
-                wr.WriteStartElement("rectangle");
+                writer.WriteStartElement("rectangle");
 
-                wr.WriteAttribute("layers", rectangle.LayerSet.ToString());
-                wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(rectangle.Position));
-                wr.WriteAttribute("size", XmlTypeFormater.FormatSize(rectangle.Size));
+                writer.WriteAttributeString("layers", rectangle.LayerSet.ToString());
+                writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(rectangle.Position));
+                writer.WriteAttributeString("size", XmlTypeFormater.FormatSize(rectangle.Size));
                 if (!rectangle.Rotation.IsZero)
-                    wr.WriteAttribute("rotation", XmlTypeFormater.FormatAngle(rectangle.Rotation));
+                    writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(rectangle.Rotation));
                 if (rectangle.Thickness > 0) {
-                    wr.WriteAttribute("thickness", XmlTypeFormater.FormatNumber(rectangle.Thickness));
+                    writer.WriteAttributeString("thickness", XmlTypeFormater.FormatNumber(rectangle.Thickness));
                     if (rectangle.Filled)
-                        wr.WriteAttribute("filled", "true");
+                        writer.WriteAttributeBool("filled", true);
                 }
 
-                wr.WriteEndElement();
+                writer.WriteEndElement();
             }
 
             /// <summary>
@@ -123,18 +123,18 @@
             /// 
             public override void Visit(CircleElement circle) {
 
-                wr.WriteStartElement("circle");
+                writer.WriteStartElement("circle");
 
-                wr.WriteAttribute("layers", circle.LayerSet.ToString());
-                wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(circle.Position));
-                wr.WriteAttribute("radius", XmlTypeFormater.FormatNumber(circle.Radius));
+                writer.WriteAttributeString("layers", circle.LayerSet.ToString());
+                writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(circle.Position));
+                writer.WriteAttributeString("radius", XmlTypeFormater.FormatNumber(circle.Radius));
                 if (circle.Thickness > 0) {
-                    wr.WriteAttribute("thickness", XmlTypeFormater.FormatNumber(circle.Thickness));
+                    writer.WriteAttributeString("thickness", XmlTypeFormater.FormatNumber(circle.Thickness));
                     if (circle.Filled)
-                        wr.WriteAttribute("filled", "true");
+                        writer.WriteAttributeBool("filled", true);
                 }
 
-                wr.WriteEndElement();
+                writer.WriteEndElement();
             }
 
             /// <summary>
@@ -144,22 +144,22 @@
             /// 
             public override void Visit(TextElement text) {
 
-                wr.WriteStartElement("text");
+                writer.WriteStartElement("text");
 
-                wr.WriteAttribute("layers", text.LayerSet.ToString());
-                wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(text.Position));
+                writer.WriteAttributeString("layers", text.LayerSet.ToString());
+                writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(text.Position));
                 if (!text.Rotation.IsZero)
-                    wr.WriteAttribute("rotation", XmlTypeFormater.FormatAngle(text.Rotation));
-                wr.WriteAttribute("height", XmlTypeFormater.FormatNumber(text.Height));
-                wr.WriteAttribute("thickness", XmlTypeFormater.FormatNumber(text.Thickness));
+                    writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(text.Rotation));
+                writer.WriteAttributeString("height", XmlTypeFormater.FormatNumber(text.Height));
+                writer.WriteAttributeString("thickness", XmlTypeFormater.FormatNumber(text.Thickness));
                 if (text.HorizontalAlign != HorizontalTextAlign.Left)
-                    wr.WriteAttribute("horizontalAlign", text.HorizontalAlign);
+                    writer.WriteAttributeEnum("horizontalAlign", text.HorizontalAlign);
                 if (text.VerticalAlign != VerticalTextAlign.Bottom)
-                    wr.WriteAttribute("verticalAlign", text.VerticalAlign);
+                    writer.WriteAttributeEnum("verticalAlign", text.VerticalAlign);
                 if (!String.IsNullOrEmpty(text.Value))
-                    wr.WriteAttribute("value", text.Value);
+                    writer.WriteAttributeString("value", text.Value);
 
-                wr.WriteEndElement();
+                writer.WriteEndElement();
             }
 
             /// <summary>
@@ -169,13 +169,13 @@
             /// 
             public override void Visit(HoleElement hole) {
 
-                wr.WriteStartElement("hole");
+                writer.WriteStartElement("hole");
 
-                wr.WriteAttribute("layers", hole.LayerSet.ToString());
-                wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(hole.Position));
-                wr.WriteAttribute("drill", XmlTypeFormater.FormatNumber(hole.Drill));
+                writer.WriteAttributeString("layers", hole.LayerSet.ToString());
+                writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(hole.Position));
+                writer.WriteAttributeString("drill", XmlTypeFormater.FormatNumber(hole.Drill));
 
-                wr.WriteEndElement();
+                writer.WriteEndElement();
             }
 
             /// <summary>
@@ -185,22 +185,22 @@
             /// 
             public override void Visit(SmdPadElement pad) {
 
-                wr.WriteStartElement("spad");
+                writer.WriteStartElement("spad");
 
-                wr.WriteAttribute("name", pad.Name);
-                wr.WriteAttribute("layers", pad.LayerSet.ToString());
-                wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(pad.Position));
+                writer.WriteAttributeString("name", pad.Name);
+                writer.WriteAttributeString("layers", pad.LayerSet.ToString());
+                writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(pad.Position));
                 if (!pad.Rotation.IsZero)
-                    wr.WriteAttribute("rotation", XmlTypeFormater.FormatAngle(pad.Rotation));
-                wr.WriteAttribute("size", XmlTypeFormater.FormatSize(pad.Size));
+                    writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(pad.Rotation));
+                writer.WriteAttributeString("size", XmlTypeFormater.FormatSize(pad.Size));
                 if (!pad.Roundness.IsZero)
-                    wr.WriteAttribute("roundness", XmlTypeFormater.FormatRatio(pad.Roundness));
+                    writer.WriteAttributeString("roundness", XmlTypeFormater.FormatRatio(pad.Roundness));
 
                 Signal signal = board.GetSignal(pad, currentPart, false);
                 if (signal != null)
-                    wr.WriteAttribute("signal", signal.Name);
+                    writer.WriteAttributeString("signal", signal.Name);
 
-                wr.WriteEndElement();
+                writer.WriteEndElement();
             }
 
             /// <summary>
@@ -210,23 +210,23 @@
             /// 
             public override void Visit(ThPadElement pad) {
 
-                wr.WriteStartElement("tpad");
+                writer.WriteStartElement("tpad");
 
-                wr.WriteAttribute("name", pad.Name);
-                wr.WriteAttribute("layers", pad.LayerSet.ToString());
-                wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(pad.Position));
+                writer.WriteAttributeString("name", pad.Name);
+                writer.WriteAttributeString("layers", pad.LayerSet.ToString());
+                writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(pad.Position));
                 if (!pad.Rotation.IsZero)
-                    wr.WriteAttribute("rotation", XmlTypeFormater.FormatAngle(pad.Rotation));
-                wr.WriteAttribute("size", XmlTypeFormater.FormatNumber(pad.TopSize));
-                wr.WriteAttribute("drill", XmlTypeFormater.FormatNumber(pad.Drill));
+                    writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(pad.Rotation));
+                writer.WriteAttributeString("size", XmlTypeFormater.FormatNumber(pad.TopSize));
+                writer.WriteAttributeString("drill", XmlTypeFormater.FormatNumber(pad.Drill));
                 if (pad.Shape != ThPadElement.ThPadShape.Circle)
-                    wr.WriteAttribute("shape", pad.Shape);
+                    writer.WriteAttributeEnum("shape", pad.Shape);
 
                 Signal signal = board.GetSignal(pad, currentPart, false);
                 if (signal != null)
-                    wr.WriteAttribute("signal", signal.Name);
+                    writer.WriteAttributeString("signal", signal.Name);
 
-                wr.WriteEndElement();
+                writer.WriteEndElement();
             }
 
             /// <summary>
@@ -236,26 +236,26 @@
             /// 
             public override void Visit(PartAttribute attr) {
 
-                wr.WriteStartElement("attribute");
+                writer.WriteStartElement("attribute");
 
-                wr.WriteAttribute("name", attr.Name);
-                wr.WriteAttribute("value", attr.Value);
+                writer.WriteAttributeString("name", attr.Name);
+                writer.WriteAttributeString("value", attr.Value);
                 if (!attr.IsVisible)
-                    wr.WriteAttribute("visible", attr.IsVisible);
+                    writer.WriteAttributeBool("visible", attr.IsVisible);
                 if (attr.UsePosition)
-                    wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(attr.Position));
+                    writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(attr.Position));
                 if (attr.UseRotation)
-                    wr.WriteAttribute("rotation", XmlTypeFormater.FormatAngle(attr.Rotation));
+                    writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(attr.Rotation));
                 if (attr.UseHeight)
-                    wr.WriteAttribute("height", XmlTypeFormater.FormatNumber(attr.Height));
+                    writer.WriteAttributeString("height", XmlTypeFormater.FormatNumber(attr.Height));
                 if (attr.UseAlign) {
                     if (attr.HorizontalAlign != HorizontalTextAlign.Left)
-                        wr.WriteAttribute("horizontalAlign", attr.HorizontalAlign);
+                        writer.WriteAttributeEnum("horizontalAlign", attr.HorizontalAlign);
                     if (attr.VerticalAlign != VerticalTextAlign.Bottom)
-                        wr.WriteAttribute("verticalAlign", attr.VerticalAlign);
+                        writer.WriteAttributeEnum("verticalAlign", attr.VerticalAlign);
                 }
 
-                wr.WriteEndElement();
+                writer.WriteEndElement();
             }
 
             /// <summary>
@@ -265,12 +265,12 @@
             /// 
             public override void Visit(BlockAttribute attr) {
 
-                wr.WriteStartElement("attribute");
+                writer.WriteStartElement("attribute");
 
-                wr.WriteAttribute("name", attr.Name);
-                wr.WriteAttribute("value", attr.Value);
+                writer.WriteAttributeString("name", attr.Name);
+                writer.WriteAttributeString("value", attr.Value);
 
-                wr.WriteEndElement();
+                writer.WriteEndElement();
             }
 
             /// <summary>
@@ -280,29 +280,29 @@
             /// 
             public override void Visit(RegionElement region) {
 
-                wr.WriteStartElement("region");
+                writer.WriteStartElement("region");
 
-                wr.WriteAttribute("layers", region.LayerSet.ToString());
+                writer.WriteAttributeString("layers", region.LayerSet.ToString());
                 if (region.Thickness > 0) {
-                    wr.WriteAttribute("thickness", XmlTypeFormater.FormatNumber(region.Thickness));
+                    writer.WriteAttributeString("thickness", XmlTypeFormater.FormatNumber(region.Thickness));
                     if (region.Filled)
-                        wr.WriteAttribute("filled", "true");
+                        writer.WriteAttributeString("filled", "true");
                 }
                 if (region.Clearance > 0)
-                    wr.WriteAttribute("clearance", XmlTypeFormater.FormatNumber(region.Clearance));
+                    writer.WriteAttributeString("clearance", XmlTypeFormater.FormatNumber(region.Clearance));
                 Signal signal = board.GetSignal(region, currentPart, false);
                 if (signal != null)
-                    wr.WriteAttribute("signal", signal.Name);
+                    writer.WriteAttributeString("signal", signal.Name);
 
                 foreach (var segment in region.Segments) {
-                    wr.WriteStartElement("segment");
-                    wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(segment.Position));
+                    writer.WriteStartElement("segment");
+                    writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(segment.Position));
                     if (!segment.Angle.IsZero)
-                        wr.WriteAttribute("angle", XmlTypeFormater.FormatAngle(segment.Angle));
-                    wr.WriteEndElement();
+                        writer.WriteAttributeString("angle", XmlTypeFormater.FormatAngle(segment.Angle));
+                    writer.WriteEndElement();
                 }
 
-                wr.WriteEndElement();
+                writer.WriteEndElement();
             }
 
             /// <summary>
@@ -314,17 +314,17 @@
 
                 currentPart = part;
                 try {
-                    wr.WriteStartElement("part");
+                    writer.WriteStartElement("part");
 
                     // Escriu els parametres
                     //
-                    wr.WriteAttribute("name", part.Name);
-                    wr.WriteAttribute("block", part.Block.Name);
-                    wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(part.Position));
+                    writer.WriteAttributeString("name", part.Name);
+                    writer.WriteAttributeString("block", part.Block.Name);
+                    writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(part.Position));
                     if (!part.Rotation.IsZero)
-                        wr.WriteAttribute("rotation", XmlTypeFormater.FormatAngle(part.Rotation));
+                        writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(part.Rotation));
                     if (part.Side != BoardSide.Top)
-                        wr.WriteAttribute("side", part.Side);
+                        writer.WriteAttributeEnum("side", part.Side);
 
                     // Escriu la llista de pads que tenen conexio.
                     //
@@ -335,28 +335,28 @@
                             if (signal != null) {
                                 if (empty) {
                                     empty = false;
-                                    wr.WriteStartElement("pads");
+                                    writer.WriteStartElement("pads");
                                 }
-                                wr.WriteStartElement("pad");
-                                wr.WriteAttribute("name", pad.Name);
-                                wr.WriteAttribute("signal", signal.Name);
-                                wr.WriteEndElement();
+                                writer.WriteStartElement("pad");
+                                writer.WriteAttributeString("name", pad.Name);
+                                writer.WriteAttributeString("signal", signal.Name);
+                                writer.WriteEndElement();
                             }
                         }
                         if (!empty)
-                            wr.WriteEndElement();
+                            writer.WriteEndElement();
                     }
 
                     // Escriu la llista d'atributs.
                     //
                     if (part.HasAttributes) {
-                        wr.WriteStartElement("attributes");
+                        writer.WriteStartElement("attributes");
                         foreach (var attribute in part.Attributes) 
                             attribute.AcceptVisitor(this);
-                        wr.WriteEndElement();
+                        writer.WriteEndElement();
                     }
 
-                    wr.WriteEndElement();
+                    writer.WriteEndElement();
                 }
                 finally {
                     currentPart = null;
@@ -370,24 +370,24 @@
             /// 
             public override void Visit(ViaElement via) {
 
-                wr.WriteStartElement("via");
+                writer.WriteStartElement("via");
 
-                wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(via.Position));
-                wr.WriteAttribute("layers", via.LayerSet.ToString());
-                wr.WriteAttribute("drill", XmlTypeFormater.FormatNumber(via.Drill));
-                wr.WriteAttribute("outerSize", XmlTypeFormater.FormatNumber(via.OuterSize));
+                writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(via.Position));
+                writer.WriteAttributeString("layers", via.LayerSet.ToString());
+                writer.WriteAttributeString("drill", XmlTypeFormater.FormatNumber(via.Drill));
+                writer.WriteAttributeString("outerSize", XmlTypeFormater.FormatNumber(via.OuterSize));
                 if (via.InnerSize != via.OuterSize)
-                    wr.WriteAttribute("innerSize", XmlTypeFormater.FormatNumber(via.InnerSize));
+                    writer.WriteAttributeString("innerSize", XmlTypeFormater.FormatNumber(via.InnerSize));
                 if (via.Shape != ViaElement.ViaShape.Circle)
-                    wr.WriteAttribute("shape", via.Shape);
+                    writer.WriteAttributeEnum("shape", via.Shape);
                 if (via.Type != ViaElement.ViaType.Through)
-                    wr.WriteAttribute("type", via.Type);
+                    writer.WriteAttributeEnum("type", via.Type);
 
                 Signal signal = board.GetSignal(via, null, false);
                 if (signal != null)
-                    wr.WriteAttribute("signal", signal.Name);
+                    writer.WriteAttributeString("signal", signal.Name);
 
-                wr.WriteEndElement();
+                writer.WriteEndElement();
             }
 
             /// <summary>
@@ -397,15 +397,15 @@
             /// 
             public override void Visit(Layer layer) {
 
-                wr.WriteStartElement("layer");
+                writer.WriteStartElement("layer");
 
-                wr.WriteAttribute("id", layer.Id.FullName);
-                wr.WriteAttribute("function", layer.Function);
-                wr.WriteAttribute("color", XmlTypeFormater.FormatColor(layer.Color));
+                writer.WriteAttributeString("id", layer.Id.FullName);
+                writer.WriteAttributeEnum("function", layer.Function);
+                writer.WriteAttributeString("color", XmlTypeFormater.FormatColor(layer.Color));
                 if (!layer.IsVisible)
-                    wr.WriteAttribute("visible", "false");
+                    writer.WriteAttributeBool("visible", false);
 
-                wr.WriteEndElement();
+                writer.WriteEndElement();
             }
 
             /// <summary>
@@ -415,13 +415,13 @@
             /// 
             public override void Visit(Signal signal) {
 
-                wr.WriteStartElement("signal");
+                writer.WriteStartElement("signal");
 
-                wr.WriteAttribute("name", signal.Name);
+                writer.WriteAttributeString("name", signal.Name);
                 if (signal.Clearance > 0)
-                    wr.WriteAttribute("clearance", XmlTypeFormater.FormatNumber(signal.Clearance));
+                    writer.WriteAttributeString("clearance", XmlTypeFormater.FormatNumber(signal.Clearance));
 
-                wr.WriteEndElement();
+                writer.WriteEndElement();
             }
 
             /// <summary>
@@ -431,25 +431,25 @@
             /// 
             public override void Visit(Block block) {
 
-                wr.WriteStartElement("block");
+                writer.WriteStartElement("block");
 
-                wr.WriteAttribute("name", block.Name);
+                writer.WriteAttributeString("name", block.Name);
 
                 if (block.HasElements) {
-                    wr.WriteStartElement("elements");
+                    writer.WriteStartElement("elements");
                     foreach (Element element in block.Elements)
                         element.AcceptVisitor(this);
-                    wr.WriteEndElement();
+                    writer.WriteEndElement();
                 }
 
                 if (block.HasAttributes) {
-                    wr.WriteStartElement("attributes");
+                    writer.WriteStartElement("attributes");
                     foreach (BlockAttribute attribute in block.Attributes)
                         attribute.AcceptVisitor(this);
-                    wr.WriteEndElement();
+                    writer.WriteEndElement();
                 }
 
-                wr.WriteEndElement();
+                writer.WriteEndElement();
             }
 
             /// <summary>
@@ -459,44 +459,44 @@
             /// 
             public override void Visit(Board board) {
 
-                wr.WriteStartElement("board");
-                wr.WriteAttribute("position", XmlTypeFormater.FormatPoint(board.Position));
-                wr.WriteAttribute("rotation", XmlTypeFormater.FormatAngle(board.Rotation));
+                writer.WriteStartElement("board");
+                writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(board.Position));
+                writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(board.Rotation));
 
-                wr.WriteStartElement("layers");
+                writer.WriteStartElement("layers");
                 foreach (var layer in board.Layers)
                     layer.AcceptVisitor(this);
-                wr.WriteEndElement();
+                writer.WriteEndElement();
 
                 if (board.HasSignals) {
-                    wr.WriteStartElement("signals");
+                    writer.WriteStartElement("signals");
                     foreach (var signal in board.Signals)
                         signal.AcceptVisitor(this);
-                    wr.WriteEndElement();
+                    writer.WriteEndElement();
                 }
 
                 if (board.HasBlocks) {
-                    wr.WriteStartElement("blocks");
+                    writer.WriteStartElement("blocks");
                     foreach (var block in board.Blocks)
                         block.AcceptVisitor(this);
-                    wr.WriteEndElement();
+                    writer.WriteEndElement();
                 }
 
                 if (board.HasParts) {
-                    wr.WriteStartElement("parts");
+                    writer.WriteStartElement("parts");
                     foreach (var part in board.Parts)
                         part.AcceptVisitor(this);
-                    wr.WriteEndElement();
+                    writer.WriteEndElement();
                 }
 
                 if (board.HasElements) {
-                    wr.WriteStartElement("elements");
+                    writer.WriteStartElement("elements");
                     foreach (var element in board.Elements)
                         element.AcceptVisitor(this);
-                    wr.WriteEndElement();
+                    writer.WriteEndElement();
                 }
 
-                wr.WriteEndElement();
+                writer.WriteEndElement();
             }
         }
 
@@ -532,20 +532,19 @@
             settings.CloseOutput = true;
 
             using (XmlWriter writer = XmlWriter.Create(stream, settings)) {
+
                 writer.WriteStartDocument();
 
-                XmlWriterAdapter wr = new XmlWriterAdapter(writer);
+                writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/XBRD.xsd");
+                writer.WriteAttributeString("version", "212");
+                writer.WriteAttributeString("documentType", "board");
+                writer.WriteAttributeString("distanceUnits", "mm");
+                writer.WriteAttributeString("angleUnits", "deg");
 
-                wr.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/XBRD.xsd");
-                wr.WriteAttribute("version", "212");
-                wr.WriteAttribute("documentType", "board");
-                wr.WriteAttribute("distanceUnits", "mm");
-                wr.WriteAttribute("angleUnits", "deg");
-
-                IVisitor visitor = new Visitor(board, wr);
+                IVisitor visitor = new Visitor(board, writer);
                 visitor.Run();
 
-                wr.WriteEndElement();
+                writer.WriteEndElement();
 
                 writer.WriteEndDocument();
             }

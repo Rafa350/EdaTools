@@ -83,7 +83,7 @@
         /// 
         public override string ToString() {
 
-            return String.Format(CultureInfo.CurrentCulture, "{0}", value);
+            return value.ToString();
         }
 
         public static bool operator == (Angle a1, Angle a2) {

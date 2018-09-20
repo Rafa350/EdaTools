@@ -48,12 +48,7 @@
         /// 
         public override string ToString() {
 
-            return ToString(CultureInfo.CurrentCulture);
-        }
-
-        public string ToString(IFormatProvider provider) {
-
-            return String.Format(provider, "{0}", value);
+            return value.ToString();
         }
 
         /// <summary>

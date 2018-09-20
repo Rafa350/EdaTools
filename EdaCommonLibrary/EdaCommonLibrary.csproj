@@ -74,7 +74,7 @@
     <Compile Include="Xml\XmlReaderAdapter.cs" />
     <Compile Include="Xml\XmlTypeFormater.cs" />
     <Compile Include="Xml\XmlTypeParser.cs" />
-    <Compile Include="Xml\XmlWriterAdapter.cs" />
+    <Compile Include="Xml\XmlWriterHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="signature.pfx" />

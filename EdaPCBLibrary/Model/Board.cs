@@ -55,7 +55,7 @@
         /// 
         public Polygon GetOutlinePolygon() {
 
-            IEnumerable<Element> elements = GetElements(outlineLayer);
+            IEnumerable<Element> elements = GetElements(outlineLayer.Id);
             List<Segment> segments = new List<Segment>();
             foreach (var element in elements) {
                 if (element is LineElement) {
@@ -90,7 +90,7 @@
 
             // Si el poligon no es troba en la capa d'interes, no cal fer res
             //
-            if (region.IsOnLayer(layer)) {
+            if (region.IsOnLayer(layer.Id)) {
 
                 // Obte el poligon de la regio i el transforma si s'escau
                 //
@@ -119,7 +119,7 @@
 
                             // El element es en la mateixa capa que la regio
                             //
-                            if (element.IsOnLayer(layer)) {
+                            if (element.IsOnLayer(layer.Id)) {
 
                                 // Si no esta en la mateixa senyal que la regio, genera un forat.
                                 //
@@ -134,7 +134,7 @@
 
                             // El element esta el la capa restrict
                             //
-                            else if (element.IsOnLayer(restrictLayer)) {
+                            else if (element.IsOnLayer(restrictLayer.Id)) {
                                 Polygon elementPolygon = element.GetPolygon(restrictLayer.Id.Side);
                                 if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                     holePolygons.Add(elementPolygon);
@@ -142,7 +142,7 @@
 
                             // El element esta el la capa profile
                             //
-                            else if (element.IsOnLayer(outlineLayer)) {
+                            else if (element.IsOnLayer(outlineLayer.Id)) {
                                 Polygon elementPolygon = element.GetOutlinePolygon(BoardSide.None, outlineClearance);
                                 if (regionBBox.IntersectsWith(elementPolygon.BoundingBox)) 
                                     holePolygons.Add(elementPolygon);
@@ -161,7 +161,7 @@
                         foreach (var element in part.Elements) {
 
                             if ((element != region) &&
-                                (element.IsOnLayer(layer) || element.IsOnLayer(restrictLayer))) {
+                                (element.IsOnLayer(layer.Id) || element.IsOnLayer(restrictLayer.Id))) {
 
                                 // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
                                 //
@@ -215,7 +215,7 @@
                 int minY = Int32.MaxValue;
                 int maxX = Int32.MinValue;
                 int maxY = Int32.MinValue;
-                foreach (Element element in GetElements(outlineLayer)) {
+                foreach (Element element in GetElements(outlineLayer.Id)) {
                     Rect r = element.GetBoundingBox(BoardSide.None);
                     if (minX > r.Left)
                         minX = r.Left;

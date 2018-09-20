@@ -3,7 +3,6 @@
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Pcb.Model.Collections;
-    using System;
 
     /// <summary>
     /// Identifica el tipus d'element
@@ -49,20 +48,6 @@
         /// <returns>La copia de l'objecte.</returns>
         /// 
         public abstract Element Clone();
-
-        /// <summary>
-        /// Comprova si l'element pertany a una capa.
-        /// </summary>
-        /// <param name="layer">La capa.</param>
-        /// <returns>True si pertany, false en cas contrari.</returns>
-        /// 
-        public bool IsOnLayer(Layer layer) {
-
-            if (layer == null)
-                throw new ArgumentNullException("layer");
-
-            return layerSet.Contains(layer.Id);
-        }
 
         /// <summary>
         /// Accepta un visitador.
@@ -115,6 +100,17 @@
         /// <returns>El bounding box.</returns>
         /// 
         public abstract Rect GetBoundingBox(BoardSide side);
+
+        /// <summary>
+        /// Comprova so l'element es en una capa conpreta
+        /// </summary>
+        /// <param name="layerId">El identificador de la capa.</param>
+        /// <returns>True si es en la capa especificada.</returns>
+        /// 
+        public bool IsOnLayer(LayerId layerId) {
+
+            return layerSet.Contains(layerId);
+        }
 
         /// <summary>
         /// Obte o asigna el conjunt de capes.

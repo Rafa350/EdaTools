@@ -167,7 +167,7 @@
             //
             LayerId layerId = LayerId.Parse(rd.AttributeAsString("id"));
             LayerFunction function = rd.AttributeAsEnum<LayerFunction>("function", LayerFunction.Unknown);
-            Color color = Color.Parse(rd.AttributeAsString("color"));
+            Color color = XmlTypeParser.ParseColor(rd.AttributeAsString("color"));
             bool visible = rd.AttributeAsBoolean("visible", true);
 
             // Crea la capa i l'afeigeig a la placa.

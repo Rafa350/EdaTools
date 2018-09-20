@@ -46,7 +46,7 @@
             // Afegeix els senyals
             //
             foreach (var signal in board.Signals) {
-                string panelSignalName = String.Format("B{0}${1}", index, signal.Name);
+                string panelSignalName = String.Format("B{0}.{1}", index, signal.Name);
                 if (panelBoard.GetSignal(panelSignalName, false) == null) {
                     Signal panelSignal = signal.Clone();
                     panelSignal.Name = panelSignalName;
@@ -69,7 +69,7 @@
                 foreach (var part in board.Parts) {
                     Block block = panelBoard.GetBlock(part.Block.Name);
                     Part panelPart = part.Clone(block);
-                    panelPart.Name = String.Format("B{0}${1}", index, panelPart.Name);
+                    panelPart.Name = String.Format("B{0}.{1}", index, panelPart.Name);
                     transformableParts.Add(panelPart);
                     panelBoard.AddPart(panelPart);
 
@@ -78,7 +78,7 @@
                         if (panelPad != null) {
                             Signal signal = board.GetSignal(part.GetPad(panelPad.Name), part, false);
                             if (signal != null) {
-                                string panelSignalName = String.Format("B{0}${1}", index, signal.Name);
+                                string panelSignalName = String.Format("B{0}.{1}", index, signal.Name);
                                 panelBoard.Connect(panelBoard.GetSignal(panelSignalName), panelPad, panelPart);
                             }
                         }
@@ -102,7 +102,7 @@
                     if (element is IConectable) {
                         Signal signal = board.GetSignal(element, null, false);
                         if (signal != null) {
-                            string panelSignalName = String.Format("B{0}${1}", index, signal.Name);
+                            string panelSignalName = String.Format("B{0}.{1}", index, signal.Name);
                             panelBoard.Connect(panelBoard.GetSignal(panelSignalName), panelElement as IConectable);
                         }
                     }

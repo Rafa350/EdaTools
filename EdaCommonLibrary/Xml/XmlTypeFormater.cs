@@ -74,17 +74,12 @@
         /// <summary>
         /// Formateja un valor 'Color'
         /// </summary>
-        /// <param name="color">El valor a formatejar.</param>
+        /// <param name="value">El valor a formatejar.</param>
         /// <returns>El text formatejar.</returns>
         /// 
-        public static string FormatColor(Color color) {
+        public static string FormatColor(Color value) {
 
-            return String.Format(
-                "{0}, {1}, {2}, {3}",
-                color.A,
-                color.R,
-                color.G,
-                color.B);
+            return value.ToString();
         }
     }
 }

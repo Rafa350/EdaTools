@@ -30,18 +30,7 @@
         /// 
         public override string ToString() {
 
-            return ToString(CultureInfo.CurrentCulture);
-        }
-
-        /// <summary>
-        /// Converteix l'objecte a text.
-        /// </summary>
-        /// <param name="provider">Objecte proveidor de format.</param>
-        /// <returns>El resultat de la conversio.</returns>
-        /// 
-        public string ToString(IFormatProvider provider) {
-
-            return String.Format(provider, "{0}; {1}", width, height);
+            return String.Format("{0}, {1}", width, height);
         }
 
         /// <summary>

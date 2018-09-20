@@ -38,30 +38,9 @@
             b = other.b;
         }
 
-        public static Color Parse(string s) {
-
-            return Parse(s, CultureInfo.CurrentCulture);
-        }
-
-        public static Color Parse(string s, IFormatProvider provider) {
-
-            string[] ss = s.Split(',');
-            byte a = Byte.Parse(ss[0], provider);
-            byte r = Byte.Parse(ss[1], provider);
-            byte g = Byte.Parse(ss[2], provider);
-            byte b = Byte.Parse(ss[3], provider);
-
-            return new Color(a, r, g, b);
-        }
-
         public override string ToString() {
 
-            return ToString(CultureInfo.CurrentCulture);
-        }
-
-        public string ToString(IFormatProvider provider) {
-
-            return String.Format(provider, "{0}, {1}, {2}, {3}", a, r, g, b);
+            return String.Format("{0}, {1}, {2}, {3}", a, r, g, b);
         }
 
         /// <summary>

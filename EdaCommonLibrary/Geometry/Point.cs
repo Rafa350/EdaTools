@@ -25,39 +25,6 @@
         }
 
         /// <summary>
-        /// Procesa una cadena per crear un objecte 'Point'
-        /// </summary>
-        /// <param name="s">La cadena a procesar.</param>
-        /// <returns>L'objecte 'Point'</returns>
-        /// 
-        public static Point Parse(string s) {
-
-            return Parse(s, CultureInfo.CurrentCulture);
-        }
-
-        /// <summary>
-        /// Procesa un text per crear un objecte 'Point'
-        /// </summary>
-        /// <param name="s">El text a procesar.</param>
-        /// <param name="provider">Objecte proveidor de format.</param>
-        /// <returns>L'objecte 'Point'</returns>
-        /// 
-        public static Point Parse(string s, IFormatProvider provider) {
-
-            try {
-                string[] ss = s.Split(',');
-                int x = Int32.Parse(ss[0], provider);
-                int y = Int32.Parse(ss[1], provider);
-
-                return new Point(x, y);
-            }
-            catch (Exception ex) {
-                throw new InvalidOperationException(
-                    String.Format("No se pudo convertir el texto '{0}' a 'Point'.", s), ex);
-            }
-        }
-
-        /// <summary>
         /// Obte un punt desplaçat.
         /// </summary>
         /// <param name="dx">Desplaçament X</param>
@@ -76,18 +43,7 @@
         /// 
         public override string ToString() {
 
-            return ToString(CultureInfo.CurrentCulture);
-        }
-
-        /// <summary>
-        /// Converteix l'objecte a text.
-        /// </summary>
-        /// <param name="provider">Objecte proveidor de format.</param>
-        /// <returns>El resultat de la converssio.</returns>
-        /// 
-        public string ToString(IFormatProvider provider) {
-
-            return String.Format(provider, "{0}; {1}", x, y);
+            return String.Format("{0}, {1}", x, y);
         }
 
         /// <summary>

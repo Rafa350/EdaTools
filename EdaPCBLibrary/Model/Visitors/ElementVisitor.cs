@@ -41,7 +41,7 @@
                 part.AcceptVisitor(this);
 
             foreach (Element element in board.Elements)
-                if ((layer == null) || element.IsOnLayer(layer))
+                if ((layer == null) || element.LayerSet.Contains(layer.Id))
                     element.AcceptVisitor(this);
         }
 
@@ -55,7 +55,7 @@
             this.part = part;
 
             foreach (Element element in part.Elements)
-                if ((layer == null) || element.IsOnLayer(layer))
+                if ((layer == null) || element.LayerSet.Contains(layer.Id))
                     element.AcceptVisitor(this);
 
             this.part = null;
