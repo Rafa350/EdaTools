@@ -84,25 +84,5 @@
 
             return Ratio.FromPercent((int)(XmlConvert.ToDouble(source) * ratioMultiplier));
         }
-
-        /// <summary>
-        /// Converteix un text a 'Color'
-        /// </summary>
-        /// <param name="source">El text a convertir.</param>
-        /// <returns>El resultat de la conversio.</returns>
-        /// 
-        public static Color ParseColor(string source) {
-
-            if (string.IsNullOrEmpty(source))
-                throw new ArgumentNullException("source");
-
-            string[] ss = source.Split(',');
-            byte a = Byte.Parse(ss[0]);
-            byte r = Byte.Parse(ss[1]);
-            byte g = Byte.Parse(ss[2]);
-            byte b = Byte.Parse(ss[3]);
-
-            return new Color(a, r, g, b);
-        }
     }
 }

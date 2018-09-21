@@ -25,7 +25,7 @@
         /// Genera el fitxer de contingut.
         /// </summary>
         /// 
-        public abstract void Generate(Panel panel);
+        public abstract void Generate(Board board);
 
         /// <summary>
         /// Obte el target.

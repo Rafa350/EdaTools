@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Geometry {
 
+    using MikroPic.EdaTools.v1.Geometry;
     using System.Windows.Media;
 
     public struct Transformation {

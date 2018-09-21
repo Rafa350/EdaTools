@@ -1,14 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.Geometry.Fonts {
 
-    using MikroPic.EdaTools.v1.Geometry;
-
     /// <summary>
     /// Representa els traços que formen la figura del caracter. Aquesta clase
     /// es inmutable.
     /// </summary>
     public struct GlyphTrace {
 
-        private readonly Geometry.Point position;
+        private readonly Point position;
         private readonly bool stroke;
 
         /// <summary>

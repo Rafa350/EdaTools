@@ -1,6 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
-    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
+    using MikroPic.EdaTools.v1.Collections;
     using System;
 
     /// <summary>

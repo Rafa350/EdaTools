@@ -43,7 +43,28 @@
         /// 
         public override string ToString() {
 
-            return String.Format("{0}, {1}", x, y);
+            return String.Format(CultureInfo.InvariantCulture, "{0}, {1}", x, y);
+        }
+
+        /// <summary>
+        /// Converteix un text a 'Point'
+        /// </summary>
+        /// <param name="source">El text a convertir.</param>
+        /// <returns>El resultat de la converssio.</returns>
+        /// 
+        public static Point Parse(string source) {
+
+            try {
+                string[] s = source.Split(',');
+                int x = Int32.Parse(s[0]);
+                int y = Int32.Parse(s[1]);
+
+                return new Point(x, y);
+            }
+            catch (Exception ex) {
+                throw new InvalidOperationException(
+                    String.Format("No es posible convertir el texto '{0}' a 'Point'.", source), ex);
+            }
         }
 
         /// <summary>
@@ -53,7 +74,7 @@
         /// 
         public override int GetHashCode() {
 
-            return (x << 7) ^ y;
+            return 11 + (x * 7) + y;
         }
 
         /// <summary>
@@ -64,13 +85,10 @@
         /// 
         public override bool Equals(object obj) {
 
-            if ((obj == null) || !GetType().Equals(obj.GetType())) {
-                return false;
-            }
-            else {
-                Point p = (Point)obj;
+            if (obj is Point p) 
                 return (x == p.x) && (y == p.y);
-            }
+            else
+                return false;
         }
 
         /// <summary>

@@ -1,13 +1,13 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Collections {
+﻿namespace MikroPic.EdaTools.v1.Collections {
 
     using System;
     using System.Collections;
     using System.Collections.Generic;
 
-    public class KeyCollection<TItem, TKey> : IEnumerable<TItem>
-        where TItem: class, ICollectionKey<TKey> {
+    public class Collection<TItem> : IEnumerable<TItem>
+        where TItem: class {
 
-        private readonly Dictionary<TKey, TItem> items = new Dictionary<TKey, TItem>();
+        private readonly HashSet<TItem> items = new HashSet<TItem>();
 
         /// <summary>
         /// Afegeig un item a la col·leccio.
@@ -19,10 +19,10 @@
             if (items == null)
                 throw new ArgumentNullException("item");
 
-            if (items.ContainsKey(item.GetKey()))
+            if (items.Contains(item))
                 throw new InvalidOperationException("El item ya pertenece a la coleccion.");
 
-            items.Add(item.GetKey(), item);
+            items.Add(item);
         }
 
         /// <summary>
@@ -35,10 +35,10 @@
             if (item == null)
                 throw new ArgumentNullException("item");
 
-            if (!items.ContainsKey(item.GetKey()))
+            if (!items.Contains(item))
                 throw new InvalidOperationException("El item no pertenece a la coleccion.");
 
-            items.Remove(item.GetKey());
+            items.Remove(item);
         }
 
         /// <summary>
@@ -48,21 +48,6 @@
         public void Clear() {
 
             items.Clear();
-        }
-
-        /// <summary>
-        /// Obte un item.
-        /// </summary>
-        /// <param name="key">La clau del item.</param>
-        /// <returns>El item, o null si no el troba.</returns>
-        /// 
-        public TItem Get(TKey key) {
-
-            if (items.TryGetValue(key, out TItem item))
-                return item;
-
-            else
-                return null;
         }
 
         /// <summary>
@@ -76,7 +61,7 @@
             if (item == null)
                 throw new ArgumentNullException("item");
 
-            return items.ContainsKey(item.GetKey());
+            return items.Contains(item);
         }
 
         /// <summary>
@@ -86,7 +71,7 @@
         /// 
         public IEnumerator<TItem> GetEnumerator() {
 
-            return ((IEnumerable<TItem>)items.Values).GetEnumerator();
+            return ((IEnumerable<TItem>)items).GetEnumerator();
         }
 
         /// <summary>
@@ -96,17 +81,7 @@
         /// 
         IEnumerator IEnumerable.GetEnumerator() {
 
-            return ((IEnumerable<TItem>)items.Values).GetEnumerator();
-        }
-
-        /// <summary>
-        /// Enumera les claus de la coleccio
-        /// </summary>
-        /// 
-        public IEnumerable<TKey> Keys {
-            get {
-                return items.Keys;
-            }
+            return ((IEnumerable<TItem>)items).GetEnumerator();
         }
 
         /// <summary>

@@ -1,8 +1,8 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
+﻿namespace MikroPic.EdaTools.v1.Panel.Model {
 
     using MikroPic.EdaTools.v1.Geometry;
 
-    public abstract class PanelElement {
+    public abstract class PanelElement: IVisitable {
 
         private Point position;
         private Angle rotation;
@@ -26,6 +26,8 @@
             this.position = position;
             this.rotation = rotation;
         }
+
+        public abstract void AcceptVisitor(IVisitor visitor);
 
         /// <summary>
         /// Obte o asigna la posicio.

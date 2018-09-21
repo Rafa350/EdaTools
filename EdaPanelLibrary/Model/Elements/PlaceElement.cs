@@ -1,11 +1,12 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.PanelElements {
+﻿namespace MikroPic.EdaTools.v1.Panel.Model.Elements {
 
     using System;
     using System.Collections.Generic;
     using System.IO;
     using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.IO;
+
+    using Board = MikroPic.EdaTools.v1.Pcb.Model.Board;
 
     public sealed class PlaceElement: PanelElement {
 
@@ -42,6 +43,9 @@
                 throw new ArgumentNullException("fileName");
 
             this.fileName = fileName;
+        }
+
+        public override void AcceptVisitor(IVisitor visitor) {
         }
 
         /// <summary>

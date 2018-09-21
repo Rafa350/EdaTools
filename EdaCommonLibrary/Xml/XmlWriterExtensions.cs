@@ -3,7 +3,7 @@
     using System;
     using System.Xml;
 
-    public static class XmlWriterHelper {
+    public static class XmlWriterExtensions {
 
         public static void WriteAttributeBool(this XmlWriter writer, string name, bool value) {
 

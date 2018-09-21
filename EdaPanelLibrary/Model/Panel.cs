@@ -1,11 +1,11 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
+﻿namespace MikroPic.EdaTools.v1.Panel.Model {
 
     using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
+    using MikroPic.EdaTools.v1.Collections;
     using System;
     using System.Collections.Generic;
 
-    public sealed class Panel: ISize {
+    public sealed class Panel: IVisitable {
 
         private Size size;
         private Collection<PanelElement> elements;
@@ -24,6 +24,11 @@
                 elements = new Collection<PanelElement>();
 
             elements.Add(element);
+        }
+
+        public void  AcceptVisitor(IVisitor visitor) {
+
+            visitor.Visit(this);
         }
 
         /// <summary>

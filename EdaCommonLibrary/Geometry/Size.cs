@@ -30,7 +30,50 @@
         /// 
         public override string ToString() {
 
-            return String.Format("{0}, {1}", width, height);
+            return String.Format(CultureInfo.InvariantCulture, "{0}, {1}", width, height);
+        }
+
+        /// <summary>
+        /// Converteix un texte a 'Size'
+        /// </summary>
+        /// <param name="source">El texte.</param>
+        /// <returns>El resultat de la converssio.</returns>
+        /// 
+        public static Size Parse(string source) {
+
+            try {
+                string[] s = source.Split(',');
+                int width = Int32.Parse(s[0]);
+                int height = Int32.Parse(s[1]);
+                return new Size(width, height);
+            }
+            catch (Exception ex) {
+                throw new InvalidOperationException(String.Format("No es posible convertir el texto '{0}' a 'Size'.", source), ex);
+            }
+        }
+
+        /// <summary>
+        /// Obte el codi hash del objecte.
+        /// </summary>
+        /// <returns>El codi hash</returns>
+        /// 
+        public override int GetHashCode() {
+
+            return 13 + (width * 7) + (height * 3);
+        }
+
+        /// <summary>
+        /// Comprovacio d'igualtat.
+        /// </summary>
+        /// <param name="obj">L'antre objecte.</param>
+        /// <returns>True si son iguals.</returns>
+        /// 
+        public override bool Equals(object obj) {
+
+            if (obj is Size s)
+                return (s.width == width) && (s.height == height);
+            else
+                return false;
         }
 
         /// <summary>

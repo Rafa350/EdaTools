@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.Collections {
+﻿namespace MikroPic.EdaTools.v1.Collections {
 
     /// <summary>
     /// Interficie que han de implementar els elements de les coleccions 'KeyCollection'

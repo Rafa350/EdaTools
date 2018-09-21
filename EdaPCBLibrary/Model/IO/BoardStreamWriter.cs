@@ -401,7 +401,7 @@
 
                 writer.WriteAttributeString("id", layer.Id.FullName);
                 writer.WriteAttributeEnum("function", layer.Function);
-                writer.WriteAttributeString("color", XmlTypeFormater.FormatColor(layer.Color));
+                writer.WriteAttributeString("color", layer.Color.ToString());
                 if (!layer.IsVisible)
                     writer.WriteAttributeBool("visible", false);
 

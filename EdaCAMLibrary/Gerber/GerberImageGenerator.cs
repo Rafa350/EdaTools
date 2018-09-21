@@ -8,10 +8,8 @@
     using MikroPic.EdaTools.v1.Pcb.Infrastructure;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-    using MikroPic.EdaTools.v1.Pcb.Model.PanelElements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
-    using System.Collections.Generic;
     using System.IO;
 
     /// <summary>
@@ -41,13 +39,13 @@
         }
 
         /// <summary>
-        /// Genera el fitxer corresponent al panell.
+        /// Genera el fitxer corresponent a una placa.
         /// </summary>
-        /// <param name="panel">El panell.</param>
+        /// <param name="board">La placa.</param>
         /// 
-        public override void Generate(Panel panel) {
+        public override void Generate(Board board) {
 
-            if (panel == null)
+            if (board == null)
                 throw new ArgumentNullException("panel");
 
             // Crea el fitxer de sortida
@@ -58,12 +56,7 @@
                 // Prepara el diccionari d'apertures
                 //
                 ApertureDictionary apertures = new ApertureDictionary();
-                foreach (var element in panel.Elements) {
-                    if (element is PlaceElement) {
-                        PlaceElement place = (PlaceElement)element;
-                        PrepareApertures(apertures, place.Board);
-                    }
-                }
+                PrepareApertures(apertures, board);
 
                 // Prepara el generador de gerbers
                 //
@@ -80,20 +73,10 @@
 
                 // Genera la imatge de les plaques
                 //
-                int boardId = 1;
-                foreach (var element in panel.Elements) {
-                    if (element is PlaceElement) {
-                        PlaceElement place = (PlaceElement)element;
-
-                        gb.Comment(String.Format("BEGIN BOARD {0}", boardId));
-                        gb.SetTransformation(place.Position, place.Rotation);
-                        GenerateRegions(gb, place.Board, apertures);
-                        GenerateImage(gb, place.Board, apertures);
-                        gb.Comment(String.Format("END BOARD {0}", boardId));
-
-                        boardId++;
-                    }
-                }
+                gb.Comment("BEGIN BOARD");
+                GenerateRegions(gb, board, apertures);
+                GenerateImage(gb, board, apertures);
+                gb.Comment("END BOARD");
 
                 // Genera el final del fitxer
                 //

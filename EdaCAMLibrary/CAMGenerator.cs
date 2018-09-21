@@ -13,13 +13,13 @@
         /// <summary>
         /// Genera els fitxers per defecte.
         /// </summary>
-        /// <param name="panel">El panell.</param>
+        /// <param name="board">La placa.</param>
         /// <param name="folder">La carpeta on deixar els fitxers.</param>
         /// <param name="name">Prefix del nom dels fitxers de sortida.</param>
         /// 
-        public void Generate(Panel panel, string folder, string name) {
+        public void Generate(Board board, string folder, string name) {
 
-            if (panel == null)
+            if (board == null)
                 throw new ArgumentNullException("panel");
 
             List<Target> targets = new List<Target>();
@@ -76,26 +76,26 @@
             targets.Add(target4);
             targets.Add(target4);
 
-            Generate(panel, targets);
+            Generate(board, targets);
         }
 
         /// <summary>
         /// Genera els fitxers especificats el la llista de targets.
         /// </summary>
-        /// <param name="panel">El panell a processar.</param>
+        /// <param name="board">La placa a processar.</param>
         /// <param name="targets">La llista de targets.</param>
         /// 
-        public void Generate(Panel panel, IEnumerable<Target> targets) {
+        public void Generate(Board board, IEnumerable<Target> targets) {
 
-            if (panel == null)
-                throw new ArgumentNullException("panel");
+            if (board == null)
+                throw new ArgumentNullException("board");
 
             if (targets == null)
                 throw new ArgumentNullException("targets");
 
             foreach (Target target in targets) {
                 Generator generator = LoadGenerator(target);
-                generator.Generate(panel);
+                generator.Generate(board);
             }
         }
 

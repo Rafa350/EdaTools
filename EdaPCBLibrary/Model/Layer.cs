@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Pcb.Model {
 
     using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
+    using MikroPic.EdaTools.v1.Collections;
 
     /// <summary>
     /// Funcio de la capa.

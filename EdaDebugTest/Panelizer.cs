@@ -1,9 +1,10 @@
 ﻿namespace EdaDebugTest {
 
     using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Panel.Model;
+    using MikroPic.EdaTools.v1.Panel.Model.Elements;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-    using MikroPic.EdaTools.v1.Pcb.Model.PanelElements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
     using System.Collections.Generic;
@@ -115,10 +116,10 @@
 
         private sealed class TransformVisitor: DefaultVisitor {
 
-            private readonly IEnumerable<IVisitable> visitables;
+            private readonly IEnumerable<MikroPic.EdaTools.v1.Pcb.Model.IVisitable> visitables;
             private readonly Transformation transformation;
 
-            public TransformVisitor(IEnumerable<IVisitable> visitables, Point offset, Angle rotation) {
+            public TransformVisitor(IEnumerable<MikroPic.EdaTools.v1.Pcb.Model.IVisitable> visitables, Point offset, Angle rotation) {
 
                 this.visitables = visitables;
                 transformation = new Transformation(offset, rotation);

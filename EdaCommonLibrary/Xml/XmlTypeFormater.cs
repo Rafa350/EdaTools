@@ -70,16 +70,5 @@
 
             return XmlConvert.ToString(value.Percent / ratioDivider);
         }
-
-        /// <summary>
-        /// Formateja un valor 'Color'
-        /// </summary>
-        /// <param name="value">El valor a formatejar.</param>
-        /// <returns>El text formatejar.</returns>
-        /// 
-        public static string FormatColor(Color value) {
-
-            return value.ToString();
-        }
     }
 }

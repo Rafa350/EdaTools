@@ -6,7 +6,6 @@
 
     public sealed class Project {
 
-        private Panel panel;
         private List<Target> targets;
 
         public Project() {
@@ -33,15 +32,6 @@
         public IEnumerable<Target> Targets {
             get {
                 return targets;
-            }
-        }
-
-        public Panel Panel {
-            get {
-                return panel;
-            }
-            set {
-                panel = value;
             }
         }
     }

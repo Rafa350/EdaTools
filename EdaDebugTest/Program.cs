@@ -2,7 +2,9 @@
 
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.IO;
-    using MikroPic.EdaTools.v1.Pcb.Model.PanelElements;
+    using MikroPic.EdaTools.v1.Panel.Model;
+    using MikroPic.EdaTools.v1.Panel.Model.Elements;
+    using MikroPic.EdaTools.v1.Panel.Model.IO;
     using System.IO;
 
     class Program {

@@ -3,7 +3,6 @@
     using MikroPic.EdaTools.v1.Cam;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.IO;
-    using MikroPic.EdaTools.v1.Pcb.Model.PanelElements;
     using System;
     using System.IO;
 
@@ -44,22 +43,11 @@
                     }
                 }
 
-                string extension = Path.GetExtension(inputFileName);
-                if (!String.IsNullOrEmpty(extension))
-                    switch (extension.ToUpper()) {
-                        case ".XBRD":
-                            ProcessBoard(inputFileName, folder, name);
-                            break;
-
-                        case ".XPNL":
-                            ProcessPanel(inputFileName, folder, name);
-                            break;
-                    }
+                ProcessBoard(inputFileName, folder, name);
 
                 if (pause)
                     WaitKey();
             }
-
         }
 
         /// <summary>
@@ -107,36 +95,15 @@
         /// 
         private static void ProcessBoard(string fileName, string folder, string name) {
 
-            Panel panel = new Panel();
-            panel.AddElement(new PlaceElement(fileName));
-
-            CAMGenerator cg = new CAMGenerator();
-            cg.Generate(panel, folder, name);
-        }
-
-        /// <summary>
-        /// Procesa un panell
-        /// </summary>
-        /// <param name="fileName">Nom del fitxer de la placa.</param>
-        /// 
-        private static void ProcessPanel(string fileName, string folder, string name) {
-
-            Panel panel;
+            Board board;
 
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                PanelStreamReader reader = new PanelStreamReader(stream);
-                panel = reader.Read();
-            }
-
-            foreach (var element in panel.Elements) {
-                if (element is PlaceElement) {
-                    PlaceElement place = (PlaceElement) element;
-                    place.FileName = Path.Combine(folder, place.FileName);
-                }
+                BoardStreamReader reader = new BoardStreamReader(stream);
+                board = reader.Read();
             }
 
             CAMGenerator cg = new CAMGenerator();
-            cg.Generate(panel, folder, name);
+            cg.Generate(board, folder, name);
         }
     }
 }

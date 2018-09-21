@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.9.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.9.0\build\Microsoft.Net.Compilers.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -17,6 +18,8 @@
     <SccAuxPath>Svn</SccAuxPath>
     <SccProvider>SubversionScc</SccProvider>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -34,7 +37,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>..\bin\Release\</OutputPath>
@@ -44,6 +47,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -68,29 +72,18 @@
     <Compile Include="Model\Board_Parts.cs" />
     <Compile Include="Model\Board_Layers.cs" />
     <Compile Include="Model\Board_Blocks.cs" />
-    <Compile Include="Model\Collections\ICollectionChild.cs" />
-    <Compile Include="Model\Collections\KeyCollection.cs" />
-    <Compile Include="Model\Collections\Collection.cs" />
-    <Compile Include="Model\Collections\ICollectionKey.cs" />
-    <Compile Include="Model\Collections\ParentChildCollection.cs" />
-    <Compile Include="Model\Collections\ParentChildKeyCollection.cs" />
+    <Compile Include="Model\ElementExtensions.cs" />
     <Compile Include="Model\LayerId.cs" />
     <Compile Include="Model\BlockAttribute.cs" />
     <Compile Include="Model\Elements\PadElement.cs" />
     <Compile Include="Model\Elements\SlotElement.cs" />
     <Compile Include="Model\IConectable.cs" />
     <Compile Include="Model\IName.cs" />
-    <Compile Include="Model\IO\PanelStreamReader.cs" />
     <Compile Include="Model\IO\BoardStreamReader.cs" />
-    <Compile Include="Model\IO\PanelStreamWriter.cs" />
     <Compile Include="Model\IPosition.cs" />
     <Compile Include="Model\IRotation.cs" />
     <Compile Include="Model\ISize.cs" />
     <Compile Include="Model\LayerSet.cs" />
-    <Compile Include="Model\Panel.cs" />
-    <Compile Include="Model\PanelElement.cs" />
-    <Compile Include="Model\PanelElements\PlaceElement.cs" />
-    <Compile Include="Model\PanelElements\JoinElement.cs" />
     <Compile Include="Model\Visitors\BlockVisitor.cs" />
     <Compile Include="Model\Visitors\DefaultVisitor.cs" />
     <Compile Include="Model\Elements\ArcElement.cs" />
@@ -120,14 +113,13 @@
   <ItemGroup>
     <Folder Include="Export\KiCad\" />
     <Folder Include="Import\KiCad\" />
+    <Folder Include="Model\Collections\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Model\IO\Schemas\XBRD.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Model\IO\Schemas\XPNL.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="signature.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +129,12 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.9.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.9.0\build\Microsoft.Net.Compilers.props'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

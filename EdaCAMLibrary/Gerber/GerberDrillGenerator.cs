@@ -5,10 +5,8 @@
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-    using MikroPic.EdaTools.v1.Pcb.Model.PanelElements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
-    using System.Collections.Generic;
     using System.IO;
 
     /// <summary>
@@ -33,13 +31,13 @@
         }
 
         /// <summary>
-        /// Genera el fitxer corresponent al panell.
+        /// Genera el fitxer corresponent a la place.
         /// </summary>
-        /// <param name="panel">El panell.</param>
+        /// <param name="board">La place.</param>
         /// 
-        public override void Generate(Panel panel) {
+        public override void Generate(Board board) {
 
-            if (panel == null)
+            if (board == null)
                 throw new ArgumentNullException("panel");
 
             // Crea el fitxer de sortida
@@ -50,13 +48,8 @@
                 // Prepara el diccionari d'apertures
                 //
                 ApertureDictionary apertures = new ApertureDictionary();
-                foreach (PanelElement element in panel.Elements) {
-                    if (element is PanelElement) {
-                        PlaceElement panelBoard = (PlaceElement)element;
-                        PrepareApertures(apertures, panelBoard.Board);
-                    }
-                }
-
+                PrepareApertures(apertures, board);
+        
                 // Prepara el generador de gerbers
                 //
                 GerberBuilder gb = new GerberBuilder(writer);
@@ -69,15 +62,9 @@
                 //
                 GenerateApertures(gb, apertures);
 
-                // Genera les imatges de les plaques
+                // Genera les imatges de la placa
                 //
-                foreach (PanelElement element in panel.Elements) {
-                    if (element is PanelElement) {
-                        PlaceElement place = (PlaceElement)element;
-                        gb.SetTransformation(place.Position, place.Rotation);
-                        GenerateImage(gb, place.Board, place.Position, apertures);
-                    }
-                }
+                GenerateImage(gb, board, apertures);
 
                 // Genera el final del fitxer
                 //
@@ -176,15 +163,14 @@
         /// </summary>
         /// <param name="gb">El generador de gerbers.</param>
         /// <param name="board">La placa a procesar.</param>
-        /// <param name="position">Posicio de la placa.</param>
         /// <param name="apertures">El diccionari d'apoertures.</param>
         /// 
-        private void GenerateImage(GerberBuilder gb, Board board, Point position, ApertureDictionary apertures) {
+        private void GenerateImage(GerberBuilder gb, Board board, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
             foreach (var layerName in Target.LayerIds) {
                 Layer layer = board.GetLayer(layerName);
-                IVisitor visitor = new ImageGeneratorVisitor(gb, board, layer, position, apertures);
+                IVisitor visitor = new ImageGeneratorVisitor(gb, board, layer, apertures);
                 visitor.Run();
             }
             gb.Comment("END IMAGE");
@@ -248,7 +234,6 @@
 
             private readonly GerberBuilder gb;
             private readonly ApertureDictionary apertures;
-            private readonly Point boardPosition;
 
             /// <summary>
             /// Constructor de la clase.
@@ -256,15 +241,13 @@
             /// <param name="gb">El generador de gerbers.</param>
             /// <param name="board">La placa.</param>
             /// <param name="layer">La capa a procesar.</param>
-            /// <param name="position">Posicio de la imatge.</param>
             /// <param name="apertures">El diccionari d'apertures.</param>
             /// 
-            public ImageGeneratorVisitor(GerberBuilder gb, Board board, Layer layer, Point position, ApertureDictionary apertures) :
+            public ImageGeneratorVisitor(GerberBuilder gb, Board board, Layer layer, ApertureDictionary apertures) :
                 base(board, layer) {
 
                 this.gb = gb;
                 this.apertures = apertures;
-                this.boardPosition = position;
             }
 
             /// <summary>

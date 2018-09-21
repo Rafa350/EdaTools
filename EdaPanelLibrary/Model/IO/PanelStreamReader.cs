@@ -1,8 +1,8 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Model.IO {
+﻿namespace MikroPic.EdaTools.v1.Panel.Model.IO {
 
     using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.PanelElements;
+    using MikroPic.EdaTools.v1.Panel.Model;
+    using MikroPic.EdaTools.v1.Panel.Model.Elements;
     using MikroPic.EdaTools.v1.Xml;
     using System;
     using System.Collections.Generic;
@@ -31,7 +31,7 @@
 
             schemas = new XmlSchemaSet();
 
-            string schemaResourceName = "MikroPic.EdaTools.v1.Pcb.Model.IO.Schemas.XPNL.xsd";
+            string schemaResourceName = "MikroPic.EdaTools.v1.Panel.Model.IO.Schemas.XPNL.xsd";
             Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(schemaResourceName);
             if (resourceStream == null)
                 throw new Exception(String.Format("No se encontro el recurso '{0}'", schemaResourceName));

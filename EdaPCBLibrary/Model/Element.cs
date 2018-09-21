@@ -2,7 +2,7 @@
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Pcb.Model.Collections;
+    using MikroPic.EdaTools.v1.Collections;
 
     /// <summary>
     /// Identifica el tipus d'element
@@ -100,17 +100,6 @@
         /// <returns>El bounding box.</returns>
         /// 
         public abstract Rect GetBoundingBox(BoardSide side);
-
-        /// <summary>
-        /// Comprova so l'element es en una capa conpreta
-        /// </summary>
-        /// <param name="layerId">El identificador de la capa.</param>
-        /// <returns>True si es en la capa especificada.</returns>
-        /// 
-        public bool IsOnLayer(LayerId layerId) {
-
-            return layerSet.Contains(layerId);
-        }
 
         /// <summary>
         /// Obte o asigna el conjunt de capes.

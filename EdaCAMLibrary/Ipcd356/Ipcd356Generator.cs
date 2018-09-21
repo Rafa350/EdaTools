@@ -5,7 +5,6 @@
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-    using MikroPic.EdaTools.v1.Pcb.Model.PanelElements;
     using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
     using System;
     using System.IO;
@@ -21,14 +20,14 @@
         }
 
         /// <summary>
-        /// Genera el fitxer corresponent al panell.
+        /// Genera el fitxer corresponent a una placa.
         /// </summary>
-        /// <param name="panel">El panell.</param>
+        /// <param name="board">La placa.</param>
         /// 
-        public override void Generate(Panel panel) {
+        public override void Generate(Board board) {
 
-            if (panel == null)
-                throw new ArgumentNullException("panel");
+            if (board == null)
+                throw new ArgumentNullException("board");
 
             // Crea el fitxer de sortida
             //
@@ -38,20 +37,11 @@
                 Ipcd356Builder builder = new Ipcd356Builder(writer);
 
                 GenerateFileHeader(builder);
-                int boardId = 1;
-                foreach (PanelElement element in panel.Elements) {
-                    if (element is PanelElement) {
-                        PlaceElement place = (PlaceElement)element;
-                        builder.SetTransformation(place.Position, place.Rotation);
-                        builder.Comment(String.Format("BEGIN BOARD {0}", boardId));
-                        GenerateVias(builder, place.Board);
-                        GeneratePads(builder, place.Board);
-                        GenerateNets(builder, place.Board);
-                        builder.Comment(String.Format("END BOARD {0}", boardId));
-
-                        boardId++;
-                    }
-                }
+                builder.Comment("BEGIN BOARD");
+                GenerateVias(builder, board);
+                GeneratePads(builder, board);
+                GenerateNets(builder, board);
+                builder.Comment("END BOARD");
                 GenerateFileTail(builder);
             }
         }
