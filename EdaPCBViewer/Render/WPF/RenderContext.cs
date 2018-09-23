@@ -9,7 +9,7 @@
 
         public ISceneGraph Render(Board board) {
 
-            List<LayerId> layerIds = new List<LayerId>();
+            /*List<LayerId> layerIds = new List<LayerId>();
             layerIds.Add(Layer.BottomNamesId);
             layerIds.Add(Layer.BottomDocumentId);
             layerIds.Add(Layer.BottomGlueId);
@@ -30,7 +30,7 @@
             layerIds.Add(Layer.HolesId);
             layerIds.Add(Layer.TopDocumentId);
 
-            layerIds.Add(Layer.ProfileId);
+            layerIds.Add(Layer.ProfileId);*/
 
             VisualLayerStack visualLayerStack = VisualLayerStack.CreateDefault();
 
@@ -42,8 +42,6 @@
             foreach (var visualLayer in visualLayerStack.VisualLayers) {
                 if (visualLayer.Visible) {
 
-                    double opacity = visualLayer.Color.A / 255.0;
-
                     // Procesa les capes de la placa que corresponen a la capa visual
                     //
                     foreach (var layerId in visualLayer.Layers) {
@@ -53,7 +51,7 @@
 
                             DrawingVisual layerVisual = new DrawingVisual();
                             rootVisual.Children.Add(layerVisual);
-                            layerVisual.Opacity = opacity;
+                            layerVisual.Opacity = visualLayer.Opacity;
 
                             RenderVisitor visitor = new RenderVisitor(board, layer, layerVisual, drawer);
                             visitor.Run();

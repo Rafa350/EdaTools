@@ -161,11 +161,6 @@
             return null;
         }
 
-        public Transformation GetLocalTransformation() {
-
-            return new Transformation(position, rotation);
-        }
-
         /// <summary>
         /// Obte el valor de la clau
         /// </summary>
