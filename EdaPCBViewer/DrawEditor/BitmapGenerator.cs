@@ -31,8 +31,7 @@
                 this.bitmap = bitmap;
                 this.matrix = matrix;
 
-                Color layerColor = layer.Color;
-                color = SysColor.FromRgb(color.R, color.G, color.B);
+                color = Colors.Aquamarine;
             }
 
             public override void Visit(LineElement line) {

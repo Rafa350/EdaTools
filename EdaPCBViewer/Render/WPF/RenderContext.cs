@@ -53,7 +53,7 @@
                             rootVisual.Children.Add(layerVisual);
                             layerVisual.Opacity = visualLayer.Opacity;
 
-                            RenderVisitor visitor = new RenderVisitor(board, layer, layerVisual, drawer);
+                            RenderVisitor visitor = new RenderVisitor(board, layer, layerVisual, visualLayer.Color, drawer);
                             visitor.Run();
                         }
                     }

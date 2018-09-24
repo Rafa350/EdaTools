@@ -401,9 +401,6 @@
 
                 writer.WriteAttributeString("id", layer.Id.FullName);
                 writer.WriteAttributeEnum("function", layer.Function);
-                writer.WriteAttributeString("color", layer.Color.ToString());
-                if (!layer.IsVisible)
-                    writer.WriteAttributeBool("visible", false);
 
                 writer.WriteEndElement();
             }

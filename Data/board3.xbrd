@@ -2,34 +2,34 @@
 <document version="212" documentType="board" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/XBRD.xsd">
     <board position="0, 0" rotation="0">
         <layers>
-            <layer id="Top.Top" function="signal" color="153, 255, 0, 0" />
-            <layer id="Bottom.Bottom" function="signal" color="204, 0, 0, 255" />
-            <layer id="Pads" function="unknown" color="255, 234, 161, 64" />
-            <layer id="Vias" function="unknown" color="255, 0, 128, 0" />
-            <layer id="Unrouted" function="unknown" color="255, 255, 255, 0" />
-            <layer id="Profile" function="outline" color="255, 255, 255, 255" />
-            <layer id="Top.Place" function="unknown" color="204, 211, 211, 211" />
-            <layer id="Bottom.Place" function="unknown" color="204, 211, 211, 211" />
-            <layer id="Unknown" function="unknown" color="255, 255, 255, 255" />
-            <layer id="Top.Names" function="unknown" color="255, 211, 211, 211" />
-            <layer id="Bottom.Names" function="unknown" color="255, 211, 211, 211" />
-            <layer id="Top.Values" function="unknown" color="255, 255, 255, 255" />
-            <layer id="Bottom.Values" function="unknown" color="255, 255, 255, 255" />
-            <layer id="Top.Stop" function="unknown" color="255, 255, 255, 255" />
-            <layer id="Bottom.Stop" function="unknown" color="255, 255, 255, 255" />
-            <layer id="Top.Cream" function="unknown" color="255, 32, 178, 170" />
-            <layer id="Bottom.Cream" function="unknown" color="255, 32, 178, 170" />
-            <layer id="Top.Glue" function="unknown" color="255, 135, 206, 250" />
-            <layer id="Bottom.Glue" function="unknown" color="255, 135, 206, 250" />
-            <layer id="Top.Keepout" function="unknown" color="102, 0, 255, 255" />
-            <layer id="Bottom.Keepout" function="unknown" color="102, 0, 255, 255" />
-            <layer id="Top.Restrict" function="unknown" color="102, 148, 0, 211" />
-            <layer id="Bottom.Restrict" function="unknown" color="102, 148, 0, 211" />
-            <layer id="ViaRestrict" function="unknown" color="102, 148, 0, 211" />
-            <layer id="Drills" function="unknown" color="255, 255, 255, 255" />
-            <layer id="Holes" function="unknown" color="255, 240, 128, 128" />
-            <layer id="Top.Document" function="unknown" color="204, 160, 160, 160" />
-            <layer id="Bottom.Document" function="unknown" color="204, 160, 160, 160" />
+            <layer id="Top.Top" function="signal" />
+            <layer id="Bottom.Bottom" function="signal" />
+            <layer id="Pads" function="unknown" />
+            <layer id="Vias" function="unknown" />
+            <layer id="Unrouted" function="unknown" />
+            <layer id="Profile" function="outline" />
+            <layer id="Top.Place" function="unknown" />
+            <layer id="Bottom.Place" function="unknown" />
+            <layer id="Unknown" function="unknown" />
+            <layer id="Top.Names" function="unknown" />
+            <layer id="Bottom.Names" function="unknown" />
+            <layer id="Top.Values" function="unknown" />
+            <layer id="Bottom.Values" function="unknown" />
+            <layer id="Top.Stop" function="unknown" />
+            <layer id="Bottom.Stop" function="unknown" />
+            <layer id="Top.Cream" function="unknown" />
+            <layer id="Bottom.Cream" function="unknown" />
+            <layer id="Top.Glue" function="unknown" />
+            <layer id="Bottom.Glue" function="unknown" />
+            <layer id="Top.Keepout" function="unknown" />
+            <layer id="Bottom.Keepout" function="unknown" />
+            <layer id="Top.Restrict" function="unknown" />
+            <layer id="Bottom.Restrict" function="unknown" />
+            <layer id="ViaRestrict" function="unknown" />
+            <layer id="Drills" function="unknown" />
+            <layer id="Holes" function="unknown" />
+            <layer id="Top.Document" function="unknown" />
+            <layer id="Bottom.Document" function="unknown" />
         </layers>
         <signals>
             <signal name="GND" />

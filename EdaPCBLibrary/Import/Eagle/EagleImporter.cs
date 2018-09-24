@@ -329,9 +329,7 @@
             else if (layerNum == 20)
                 function = LayerFunction.Outline;
 
-            Color color = GetLayerColor(layerNum);
-
-            return new Layer(layerId, function, color);
+            return new Layer(layerId, function);
         }
 
 
@@ -913,87 +911,6 @@
                 default:
                     return Layer.UnknownId;
             }
-        }
-
-        /// <summary>
-        /// Obte el color de la capa a partir del seu numero.
-        /// </summary>
-        /// <param name="layerNum">El numero de la capa.</param>
-        /// <returns>El color.</returns>
-        /// 
-        private Color GetLayerColor(int layerNum) {
-
-            SysColor color = Colors.White;
-
-            switch (layerNum) {
-                case 1: // Top signal
-                    color = Colors.Red;
-                    color.ScA = 0.60f;
-                    break;
-
-                case 16: // Bottom signal
-                    color = Colors.Blue;
-                    color.ScA = 0.80f;
-                    break;
-
-                case 17: // Pads
-                    color = SysColor.FromRgb(234, 161, 64);
-                    break;
-
-                case 18: // Vias
-                    color = Colors.Green;
-                    break;
-
-                case 19: // Unrouted
-                    color = Colors.Yellow;
-                    break;
-
-                case 21: // Top placement
-                case 22: // Bottom placement
-                    color =  Colors.LightGray;
-                    color.ScA = 0.8f;
-                    break;
-
-                case 25:
-                case 26:
-                    color = Colors.LightGray;
-                    break;
-
-                case 31:
-                case 32:
-                    color = Colors.LightSeaGreen;
-                    break;
-
-                case 35: // Top glue
-                case 36: // Bottom glue
-                    color = Colors.LightSkyBlue;
-                    break;
-
-                case 39: // Top keepout
-                case 40: // Bottom keepout
-                    color = Colors.Cyan;
-                    color.ScA = 0.40f;
-                    break;
-
-                case 41: // Top restrict
-                case 42: // Bottom restrict
-                case 43: // Via restrict
-                    color = Colors.DarkViolet;
-                    color.ScA = 0.40f;
-                    break;
-
-                case 45: // Holes
-                    color = Colors.LightCoral;
-                    break;
-
-                case 51: // Top document
-                case 52: // Bottom document
-                    color = SysColor.FromRgb(160, 160, 160);
-                    color.ScA = 0.80f;
-                    break;
-            }
-
-            return new Color(color.A, color.R, color.G, color.B);
         }
 
         /// <summary>

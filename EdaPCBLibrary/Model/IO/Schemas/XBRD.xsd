@@ -74,8 +74,6 @@
         <xs:complexType>
             <xs:attribute name="id" use="required" type="nameType"/>
             <xs:attribute name="function" use="required" type="layerFunctionType"/>
-            <xs:attribute name="color" use="required" type="xs:string"/>
-            <xs:attribute name="visible" use="optional" type="xs:boolean"/>        
         </xs:complexType>
     </xs:element>
 

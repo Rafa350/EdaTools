@@ -7,12 +7,16 @@
     using System.Windows;
     using System.Windows.Media;
 
+    using Color = MikroPic.EdaTools.v1.Geometry.Color;
+    using WinColor = System.Windows.Media.Color;
+
     /// <summary>
     /// Clase per visitar la placa i generar les visuals.
     /// </summary>
     /// 
     internal sealed class RenderVisitor : ElementVisitor {
 
+        private readonly Color color;
         private readonly VisualDrawer drawer;
         private DrawingVisual parentVisual;
 
@@ -23,10 +27,11 @@
         /// <param name="layer">La capa on aplicar el proces.</param>
         /// <param name="rootVisual">El visual arrel.</param>
         /// 
-        public RenderVisitor(Board board, Layer layer, DrawingVisual rootVisual, VisualDrawer drawer) :
+        public RenderVisitor(Board board, Layer layer, DrawingVisual rootVisual, Color color, VisualDrawer drawer) :
             base(board, layer) {
 
             this.drawer = drawer;
+            this.color = color;
             parentVisual = rootVisual;
         }
 
@@ -39,7 +44,7 @@
 
             DrawingVisual visual = new DrawingVisual();
             AddVisual(visual);
-            drawer.DrawLineElement(visual, Layer, line);
+            drawer.DrawLineElement(visual, Layer, line, color);
         }
 
         /// <summary>
@@ -51,7 +56,7 @@
 
             DrawingVisual visual = new DrawingVisual();
             AddVisual(visual);
-            drawer.DrawArcElement(visual, Layer, arc);
+            drawer.DrawArcElement(visual, Layer, arc, color);
         }
 
         /// <summary>
@@ -63,7 +68,7 @@
 
             DrawingVisual visual = new DrawingVisual();
             AddVisual(visual);
-            drawer.DrawRectangleElement(visual, Layer, rectangle);
+            drawer.DrawRectangleElement(visual, Layer, rectangle, color);
         }
 
         /// <summary>
@@ -75,7 +80,7 @@
 
             DrawingVisual visual = new DrawingVisual();
             AddVisual(visual);
-            drawer.DrawCircleElement(visual, Layer, circle);
+            drawer.DrawCircleElement(visual, Layer, circle, color);
         }
 
         /// <summary>
@@ -87,7 +92,7 @@
 
             DrawingVisual visual = new DrawingVisual();
             AddVisual(visual);
-            drawer.DrawRegionElement(visual, Layer, Board, region);
+            drawer.DrawRegionElement(visual, Layer, Board, region, color);
         }
 
         /// <summary>
@@ -99,7 +104,7 @@
 
             DrawingVisual visual = new DrawingVisual();
             AddVisual(visual);
-            drawer.DrawViaElement(visual, Layer, via);
+            drawer.DrawViaElement(visual, Layer, via, color);
         }
 
         /// <summary>
@@ -111,7 +116,7 @@
 
             DrawingVisual visual = new DrawingVisual();
             AddVisual(visual);
-            drawer.DrawSmdPadElement(visual, Layer, pad);
+            drawer.DrawSmdPadElement(visual, Layer, pad, color);
         }
 
         /// <summary>
@@ -123,7 +128,7 @@
 
             DrawingVisual visual = new DrawingVisual();
             AddVisual(visual);
-            drawer.DrawThPadElement(visual, Layer, pad);
+            drawer.DrawThPadElement(visual, Layer, pad, color);
         }
 
         /// <summary>
@@ -135,7 +140,7 @@
 
             DrawingVisual visual = new DrawingVisual();
             AddVisual(visual);
-            drawer.DrawHoleElement(visual, Layer, hole);
+            drawer.DrawHoleElement(visual, Layer, hole, color);
         }
 
         /// <summary>
@@ -147,7 +152,7 @@
 
             DrawingVisual visual = new DrawingVisual();
             AddVisual(visual);
-            drawer.DrawTextElement(visual, Layer, Part, text);
+            drawer.DrawTextElement(visual, Layer, Part, text, color);
         }
 
         /// <summary>

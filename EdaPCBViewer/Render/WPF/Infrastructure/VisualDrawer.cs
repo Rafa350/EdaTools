@@ -51,12 +51,12 @@
         /// <param name="layer">La capa a dibuixar element.</param>
         /// <param name="line">El element linia.</param>
         /// 
-        public void DrawLineElement(DrawingVisual visual, Layer layer, LineElement line) {
+        public void DrawLineElement(DrawingVisual visual, Layer layer, LineElement line, Color color) {
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor color = GetLayerColor(layer);
-                Pen pen = GetPen(color, line.Thickness, line.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
+                WinColor c = GetLayerColor(color);
+                Pen pen = GetPen(c, line.Thickness, line.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
                 DrawLine(dc, pen, line.StartPosition, line.EndPosition);
             }
         }
@@ -68,12 +68,12 @@
         /// <param name="layer">La capa a dibuixar element.</param>
         /// <param name="line">El element arc.</param>
         /// 
-        public void DrawArcElement(DrawingVisual visual, Layer layer, ArcElement arc) {
+        public void DrawArcElement(DrawingVisual visual, Layer layer, ArcElement arc, Color color) {
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor color = GetLayerColor(layer);
-                Pen pen = GetPen(color, arc.Thickness, arc.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
+                WinColor c = GetLayerColor(color);
+                Pen pen = GetPen(c, arc.Thickness, arc.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
                 DrawArc(dc, pen, arc.StartPosition, arc.EndPosition, arc.Radius, arc.Angle);
             }
         }
@@ -85,13 +85,13 @@
         /// <param name="layer">La capa a dibuixar element.</param>
         /// <param name="line">El element rectangle.</param>
         /// 
-        public void DrawRectangleElement(DrawingVisual visual, Layer layer, RectangleElement rectangle) {
+        public void DrawRectangleElement(DrawingVisual visual, Layer layer, RectangleElement rectangle, Color color) {
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor color = GetLayerColor(layer);
-                Pen pen = rectangle.Thickness == 0 ? null : GetPen(color, rectangle.Thickness, PenLineCap.Round);
-                Brush brush = rectangle.Filled ? GetBrush(color) : null;
+                WinColor c = GetLayerColor(color);
+                Pen pen = rectangle.Thickness == 0 ? null : GetPen(c, rectangle.Thickness, PenLineCap.Round);
+                Brush brush = rectangle.Filled ? GetBrush(c) : null;
                 DrawRectangle(dc, pen, brush, rectangle.Position, rectangle.Size, rectangle.Radius);
             }
         }
@@ -103,13 +103,13 @@
         /// <param name="layer">La capa a dibuixar element.</param>
         /// <param name="circle">El element cercle.</param>
         /// 
-        public void DrawCircleElement(DrawingVisual visual, Layer layer, CircleElement circle) {
+        public void DrawCircleElement(DrawingVisual visual, Layer layer, CircleElement circle, Color color) {
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor color = GetLayerColor(layer);
-                Pen pen = circle.Thickness == 0 ? null : GetPen(color, circle.Thickness, PenLineCap.Flat);
-                Brush brush = circle.Filled ? GetBrush(color) : null;
+                WinColor c = GetLayerColor(color);
+                Pen pen = circle.Thickness == 0 ? null : GetPen(c, circle.Thickness, PenLineCap.Flat);
+                Brush brush = circle.Filled ? GetBrush(c) : null;
                 DrawCircle(dc, pen, brush, circle.Position, circle.Radius);
             }
         }
@@ -121,18 +121,18 @@
         /// <param name="layer">La capa a dibuixar element.</param>
         /// <param name="via">El element via.</param>
         /// 
-        public void DrawViaElement(DrawingVisual visual, Layer layer, ViaElement via) {
+        public void DrawViaElement(DrawingVisual visual, Layer layer, ViaElement via, Color color) {
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor color = GetLayerColor(layer);
+                WinColor c = GetLayerColor(color);
 
                 if (via.Shape == ViaElement.ViaShape.Circle) {
 
                     int size = layer.Id.Side == BoardSide.Inner ? via.InnerSize : via.OuterSize;
                     int radius = (size + via.Drill) / 4;
 
-                    Pen pen = GetPen(color, (size - via.Drill) / 2, PenLineCap.Flat);
+                    Pen pen = GetPen(c, (size - via.Drill) / 2, PenLineCap.Flat);
                     DrawCircle(dc, pen, Brushes.Black, via.Position, radius);
                 }
 
@@ -142,7 +142,7 @@
 
                     WinPoint center = new WinPoint(via.Position.X, via.Position.Y);
 
-                    Brush brush = GetBrush(color);
+                    Brush brush = GetBrush(c);
                     DrawPolygon(dc, null, brush, polygon);
                     DrawCircle(dc, null, Brushes.Black, via.Position, via.Drill / 2);
                 }
@@ -156,12 +156,12 @@
         /// <param name="layer">La capa.</param>
         /// <param name="pad">L'element pad.</param>
         /// 
-        public void DrawSmdPadElement(DrawingVisual visual, Layer layer, SmdPadElement pad) {
+        public void DrawSmdPadElement(DrawingVisual visual, Layer layer, SmdPadElement pad, Color color) {
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor color = GetLayerColor(layer);
-                Brush brush = GetBrush(color);
+                WinColor c = GetLayerColor(color);
+                Brush brush = GetBrush(c);
                 DrawRectangle(dc, null, brush, pad.Position, pad.Size, pad.Radius);
             }
         }
@@ -173,11 +173,11 @@
         /// <param name="layer">La capa.</param>
         /// <param name="pad">L'element pad.</param>
         /// 
-        public void DrawThPadElement(DrawingVisual visual, Layer layer, ThPadElement pad) {
+        public void DrawThPadElement(DrawingVisual visual, Layer layer, ThPadElement pad, Color color) {
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor color = GetLayerColor(layer);
+                WinColor c = GetLayerColor(color);
 
                 if (pad.Shape == ThPadElement.ThPadShape.Circle) {
 
@@ -187,7 +187,7 @@
                         pad.InnerSize;
                     int radius = size / 2;
 
-                    Pen pen = GetPen(color, (size - pad.Drill) / 2, PenLineCap.Flat);
+                    Pen pen = GetPen(c, (size - pad.Drill) / 2, PenLineCap.Flat);
                     DrawCircle(dc, pen, Brushes.Black, pad.Position, radius);
                 }
 
@@ -195,7 +195,7 @@
 
                     Polygon polygon = pad.GetPolygon(layer.Id.Side);
 
-                    Brush brush = GetBrush(color);
+                    Brush brush = GetBrush(c);
                     DrawPolygon(dc, null, brush, polygon);
                     DrawCircle(dc, null, Brushes.Black, pad.Position, pad.Drill / 2);
                 }
@@ -224,12 +224,12 @@
         /// <param name="layer">La capa.</param>
         /// <param name="pad">L'element hole.</param>
         /// 
-        public void DrawHoleElement(DrawingVisual visual, Layer layer, HoleElement hole) {
+        public void DrawHoleElement(DrawingVisual visual, Layer layer, HoleElement hole, Color color) {
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor color = GetLayerColor(layer);
-                Pen pen = GetPen(color, 0.05 * 1000000.0, PenLineCap.Flat);
+                WinColor c = GetLayerColor(color);
+                Pen pen = GetPen(c, 0.05 * 1000000.0, PenLineCap.Flat);
                 DrawCircle(dc, pen, Brushes.Black, hole.Position, hole.Drill / 2);
             }
         }
@@ -241,7 +241,7 @@
         /// <param name="layer">La capa.</param>
         /// <param name="pad">L'element text.</param>
         /// 
-        public void DrawTextElement(DrawingVisual visual, Layer layer, Part part, TextElement text) {
+        public void DrawTextElement(DrawingVisual visual, Layer layer, Part part, TextElement text, Color color) {
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
@@ -255,8 +255,8 @@
                 m.RotateAt(rotation.Degrees / 100.0, position.X, position.Y);
                 dc.PushTransform(new MatrixTransform(m));
 
-                WinColor color = GetLayerColor(layer);
-                Pen pen = GetPen(color, text.Thickness, PenLineCap.Round);
+                WinColor c = GetLayerColor(color);
+                Pen pen = GetPen(c, text.Thickness, PenLineCap.Round);
                 DrawGlyphs(dc, pen, null, glyphTraces);
                 dc.DrawEllipse(Brushes.YellowGreen, null, new WinPoint(0, 0), 0.15 * 1000000.0, 0.15 * 1000000.0);
 
@@ -271,7 +271,7 @@
         /// <param name="layer">La capa.</param>
         /// <param name="pad">L'element region.</param>
         /// 
-        public void DrawRegionElement(DrawingVisual visual, Layer layer, Board board, RegionElement region) {
+        public void DrawRegionElement(DrawingVisual visual, Layer layer, Board board, RegionElement region, Color color) {
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
@@ -279,9 +279,9 @@
                     board.GetRegionPolygon(region, layer, new Transformation()) :
                     region.GetPolygon(layer.Id.Side);
 
-                WinColor color = GetLayerColor(layer);
-                Pen pen = region.Thickness > 0 ? GetPen(color, region.Thickness, PenLineCap.Round) : null;
-                Brush brush = region.Filled ? GetBrush(color) : null;
+                WinColor c = GetLayerColor(color);
+                Pen pen = region.Thickness > 0 ? GetPen(c, region.Thickness, PenLineCap.Round) : null;
+                Brush brush = region.Filled ? GetBrush(c) : null;
                 DrawPolygon(dc, pen, brush, polygon);
             }
         }
@@ -292,9 +292,8 @@
         /// <param name="layer">La capa.</param>
         /// <returns>El color.</returns>
         /// 
-        private static WinColor GetLayerColor(Layer layer) {
+        private static WinColor GetLayerColor(Color color) {
 
-            Color color = layer.Color;
             return WinColor.FromRgb(color.R, color.G, color.B);
         }
 

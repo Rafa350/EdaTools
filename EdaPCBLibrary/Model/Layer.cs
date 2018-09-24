@@ -66,23 +66,17 @@
 
         private readonly LayerFunction function = LayerFunction.Unknown;
         private readonly LayerId id;
-        private Color color;
-        private bool isVisible = true;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="id">Identificador de la capa.</param>
         /// <param name="function">Functio de la capa.</param>
-        /// <param name="color">Color dels elements.</param>
-        /// <param name="isVisible">Indica si la capa es visible.</param>
         /// 
-        public Layer(LayerId id, LayerFunction function, Color color, bool isVisible = true) {
+        public Layer(LayerId id, LayerFunction function) {
 
             this.id = id;
             this.function = function;
-            this.color = color;
-            this.isVisible = isVisible;
         }
 
         /// <summary>
@@ -92,7 +86,7 @@
         /// 
         public Layer Clone() {
 
-            return new Layer(id, function, color, isVisible);
+            return new Layer(id, function);
         }
 
         /// <summary>
@@ -152,32 +146,6 @@
         public LayerFunction Function {
             get {
                 return function;
-            }
-        }
-
-        /// <summary>
-        /// Obte o asigna el color de la capa.
-        /// </summary>
-        /// 
-        public Color Color {
-            get {
-                return color;
-            }
-            set {
-                color = value;
-            }
-        }
-
-        /// <summary>
-        /// Obte o asigna la visibilitat de la capa.
-        /// </summary>
-        /// 
-        public bool IsVisible {
-            get {
-                return isVisible;
-            }
-            set {
-                isVisible = value;
             }
         }
     }

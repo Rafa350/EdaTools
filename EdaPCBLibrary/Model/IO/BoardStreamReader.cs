@@ -167,12 +167,10 @@
             //
             LayerId layerId = LayerId.Parse(rd.AttributeAsString("id"));
             LayerFunction function = rd.AttributeAsEnum<LayerFunction>("function", LayerFunction.Unknown);
-            Color color = Color.Parse(rd.AttributeAsString("color"));
-            bool visible = rd.AttributeAsBoolean("visible", true);
 
             // Crea la capa i l'afeigeig a la placa.
             //
-            Layer layer = new Layer(layerId, function, color, visible);
+            Layer layer = new Layer(layerId, function);
             board.AddLayer(layer);
 
             // Llegeix el tag final
