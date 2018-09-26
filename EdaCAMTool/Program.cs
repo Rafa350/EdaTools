@@ -68,7 +68,7 @@
                 "EdaCAMTool V1.1\r\n" +
                 "---------------\r\n" +
                 "edacamtool <board> [options]\r\n" +
-                "   <input>               : Board/Panel input file name.\r\n" +
+                "   <input>               : Board file name.\r\n" +
                 "   [options]             : Optional parameters.\r\n" +
                 "     /f:<folder>         :   Output folder.\r\n" +
                 "     /n:<name>           :   Output file name prefix.\r\n" +

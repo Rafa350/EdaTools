@@ -55,9 +55,13 @@
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor c = GetLayerColor(color);
+                WinPoint p1 = new WinPoint(line.StartPosition.X, line.StartPosition.Y);
+                WinPoint p2 = new WinPoint(line.EndPosition.X, line.EndPosition.Y);
+
+                WinColor c = WinColor.FromRgb(color.R, color.G, color.B);
                 Pen pen = GetPen(c, line.Thickness, line.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
-                DrawLine(dc, pen, line.StartPosition, line.EndPosition);
+
+                dc.DrawLine(pen, p1, p2);
             }
         }
 
@@ -72,9 +76,22 @@
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor c = GetLayerColor(color);
+                WinPoint p1 = new WinPoint(arc.StartPosition.X, arc.StartPosition.Y);
+                WinPoint p2 = new WinPoint(arc.EndPosition.X, arc.EndPosition.Y);
+                WinSize size = new WinSize(arc.Radius, arc.Radius);
+                double a = arc.Angle.Degrees;
+
+                StreamGeometry g = new StreamGeometry();
+                using (StreamGeometryContext gc = g.Open()) {
+                    gc.BeginFigure(p1, false, false);
+                    gc.ArcTo(p2, size, a / 100.0, Math.Abs(a) > 18000.0,
+                        a < 0 ? SweepDirection.Counterclockwise : SweepDirection.Clockwise, true, false);
+                }
+                g.Freeze();
+
+                WinColor c = WinColor.FromRgb(color.R, color.G, color.B);
                 Pen pen = GetPen(c, arc.Thickness, arc.LineCap == LineElement.LineCapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round);
-                DrawArc(dc, pen, arc.StartPosition, arc.EndPosition, arc.Radius, arc.Angle);
+                dc.DrawGeometry(null, pen, g);
             }
         }
 
@@ -89,10 +106,17 @@
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor c = GetLayerColor(color);
+                WinRect rect = new WinRect(
+                    rectangle.Position.X - (rectangle.Size.Width / 2),
+                    rectangle.Position.Y - (rectangle.Size.Height / 2),
+                    rectangle.Size.Width,
+                    rectangle.Size.Height);
+
+                WinColor c = WinColor.FromRgb(color.R, color.G, color.B);
                 Pen pen = rectangle.Thickness == 0 ? null : GetPen(c, rectangle.Thickness, PenLineCap.Round);
                 Brush brush = rectangle.Filled ? GetBrush(c) : null;
-                DrawRectangle(dc, pen, brush, rectangle.Position, rectangle.Size, rectangle.Radius);
+
+                dc.DrawRoundedRectangle(brush, pen, rect, rectangle.Radius, rectangle.Radius);
             }
         }
 
@@ -107,10 +131,13 @@
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor c = GetLayerColor(color);
+                WinPoint center = new WinPoint(circle.Position.X, circle.Position.Y);
+
+                WinColor c = WinColor.FromRgb(color.R, color.G, color.B);
                 Pen pen = circle.Thickness == 0 ? null : GetPen(c, circle.Thickness, PenLineCap.Flat);
                 Brush brush = circle.Filled ? GetBrush(c) : null;
-                DrawCircle(dc, pen, brush, circle.Position, circle.Radius);
+
+                dc.DrawEllipse(brush, pen, center, circle.Radius, circle.Radius);
             }
         }
 
@@ -125,7 +152,9 @@
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor c = GetLayerColor(color);
+                WinColor c = WinColor.FromRgb(color.R, color.G, color.B);
+
+                WinPoint center = new WinPoint(via.Position.X, via.Position.Y);
 
                 if (via.Shape == ViaElement.ViaShape.Circle) {
 
@@ -133,18 +162,16 @@
                     int radius = (size + via.Drill) / 4;
 
                     Pen pen = GetPen(c, (size - via.Drill) / 2, PenLineCap.Flat);
-                    DrawCircle(dc, pen, Brushes.Black, via.Position, radius);
+                    dc.DrawEllipse(Brushes.Black, pen, center, radius, radius);
                 }
 
                 else {
 
                     Polygon polygon = via.GetPolygon(layer.Id.Side);
 
-                    WinPoint center = new WinPoint(via.Position.X, via.Position.Y);
-
                     Brush brush = GetBrush(c);
                     DrawPolygon(dc, null, brush, polygon);
-                    DrawCircle(dc, null, Brushes.Black, via.Position, via.Drill / 2);
+                    dc.DrawEllipse(Brushes.Black, null, center, via.Drill / 2, via.Drill / 2);
                 }
             }
         }
@@ -160,9 +187,15 @@
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor c = GetLayerColor(color);
+                WinRect rect = new WinRect(
+                    pad.Position.X - (pad.Size.Width / 2),
+                    pad.Position.Y - (pad.Size.Height / 2),
+                    pad.Size.Width,
+                    pad.Size.Height);
+
+                WinColor c = WinColor.FromRgb(color.R, color.G, color.B);
                 Brush brush = GetBrush(c);
-                DrawRectangle(dc, null, brush, pad.Position, pad.Size, pad.Radius);
+                dc.DrawRoundedRectangle(brush, null, rect, pad.Radius, pad.Radius);
             }
         }
 
@@ -177,7 +210,9 @@
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor c = GetLayerColor(color);
+                WinColor c = WinColor.FromRgb(color.R, color.G, color.B);
+
+                WinPoint center = new WinPoint(pad.Position.X, pad.Position.Y);
 
                 if (pad.Shape == ThPadElement.ThPadShape.Circle) {
 
@@ -188,7 +223,7 @@
                     int radius = size / 2;
 
                     Pen pen = GetPen(c, (size - pad.Drill) / 2, PenLineCap.Flat);
-                    DrawCircle(dc, pen, Brushes.Black, pad.Position, radius);
+                    dc.DrawEllipse(Brushes.Black, pen, center, radius, radius);
                 }
 
                 else {
@@ -197,7 +232,7 @@
 
                     Brush brush = GetBrush(c);
                     DrawPolygon(dc, null, brush, polygon);
-                    DrawCircle(dc, null, Brushes.Black, pad.Position, pad.Drill / 2);
+                    dc.DrawEllipse(Brushes.Black, null, center, pad.Drill / 2, pad.Drill / 2);
                 }
                 
                 /*dc.PushTransform(new ScaleTransform(1, -1, pad.Position.X, pad.Position.Y));
@@ -228,9 +263,11 @@
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor c = GetLayerColor(color);
+                WinPoint center = new WinPoint(hole.Position.X, hole.Position.Y);
+
+                WinColor c = WinColor.FromRgb(color.R, color.G, color.B);
                 Pen pen = GetPen(c, 0.05 * 1000000.0, PenLineCap.Flat);
-                DrawCircle(dc, pen, Brushes.Black, hole.Position, hole.Drill / 2);
+                dc.DrawEllipse(Brushes.Black, pen, center, hole.Drill / 2, hole.Drill / 2);
             }
         }
 
@@ -255,7 +292,7 @@
                 m.RotateAt(rotation.Degrees / 100.0, position.X, position.Y);
                 dc.PushTransform(new MatrixTransform(m));
 
-                WinColor c = GetLayerColor(color);
+                WinColor c = WinColor.FromRgb(color.R, color.G, color.B);
                 Pen pen = GetPen(c, text.Thickness, PenLineCap.Round);
                 DrawGlyphs(dc, pen, null, glyphTraces);
                 dc.DrawEllipse(Brushes.YellowGreen, null, new WinPoint(0, 0), 0.15 * 1000000.0, 0.15 * 1000000.0);
@@ -279,22 +316,11 @@
                     board.GetRegionPolygon(region, layer, new Transformation()) :
                     region.GetPolygon(layer.Id.Side);
 
-                WinColor c = GetLayerColor(color);
+                WinColor c = WinColor.FromRgb(color.R, color.G, color.B);
                 Pen pen = region.Thickness > 0 ? GetPen(c, region.Thickness, PenLineCap.Round) : null;
                 Brush brush = region.Filled ? GetBrush(c) : null;
                 DrawPolygon(dc, pen, brush, polygon);
             }
-        }
-
-        /// <summary>
-        /// Obte el color d'una capa.
-        /// </summary>
-        /// <param name="layer">La capa.</param>
-        /// <returns>El color.</returns>
-        /// 
-        private static WinColor GetLayerColor(Color color) {
-
-            return WinColor.FromRgb(color.R, color.G, color.B);
         }
 
         /// <summary>
@@ -322,82 +348,6 @@
             return brushCache.GetBrush(color);
         }
 
-        /// <summary>
-        /// Primitiva de dibuix de linies
-        /// </summary>
-        /// <param name="dc">Context de dibuix.</param>
-        /// <param name="pen">El per per dibuixar.</param>
-        /// <param name="start">Punt d'inici.</param>
-        /// <param name="end">Put final.</param>
-        /// 
-        private static void DrawLine(DrawingContext dc, Pen pen, Point start, Point end) {
-
-            WinPoint p1 = new WinPoint(start.X, start.Y);
-            WinPoint p2 = new WinPoint(end.X, end.Y);
-            dc.DrawLine(pen, p1, p2);
-        }
-
-        /// <summary>
-        /// Primitiva de dibuix d'arcs
-        /// </summary>
-        /// <param name="dc">Context de dibuix.</param>
-        /// <param name="pen">El per per dibuixar.</param>
-        /// <param name="start">Punt d'inici.</param>
-        /// <param name="end">Put final.</param>
-        /// <param name="radius">Radi del arc.</param>
-        /// <param name="angle">Angle de l'arc.</param>
-        /// 
-        private static void DrawArc(DrawingContext dc, Pen pen, Point start, Point end, int radius, Angle angle) {
-
-            WinPoint p1 = new WinPoint(start.X, start.Y);
-            WinPoint p2 = new WinPoint(end.X, end.Y);
-            WinSize size = new WinSize(radius, radius);
-            double a = angle.Degrees;
-
-            StreamGeometry g = new StreamGeometry();
-            using (StreamGeometryContext gc = g.Open()) {
-                gc.BeginFigure(p1, false, false);
-                gc.ArcTo(p2, size, a / 100, Math.Abs(a) > 18000.0,
-                    a < 0 ? SweepDirection.Counterclockwise : SweepDirection.Clockwise, true, false);
-            }
-            g.Freeze();
-
-            dc.DrawGeometry(null, pen, g);
-        }
-
-        /// <summary>
-        /// Primitiva de dibuix de rectangles.
-        /// </summary>
-        /// <param name="dc">El contexte de dibuix.</param>
-        /// <param name="pen">El pen per dibuixar.</param>
-        /// <param name="brush">El brush per dibuixar</param>
-        /// <param name="position">El centroid del rectangle.</param>
-        /// <param name="size">El tamany.</param>
-        /// <param name="radius">El radi de corvatura de les cantonades.</param>
-        /// 
-        private static void DrawRectangle(DrawingContext dc, Pen pen, Brush brush, Point position, Size size, int radius) {
-
-            WinRect rect = new WinRect(
-                position.X - (size.Width / 2),
-                position.Y - (size.Height / 2),
-                size.Width,
-                size.Height);
-            dc.DrawRoundedRectangle(brush, pen, rect, radius, radius);
-        }
-
-        /// <summary>
-        /// Primitiva de dibuix de cercles
-        /// </summary>
-        /// <param name="dc">El contexte de dibuix.</param>
-        /// <param name="pen">El pen per dibuixar.</param>
-        /// <param name="brush">El brush per dibuixar.</param>
-        /// <param name="position">Posicio</param>
-        /// <param name="radius">Radi</param>
-        /// 
-        private static void DrawCircle(DrawingContext dc, Pen pen, Brush brush, Point position, int radius) {
-
-            dc.DrawEllipse(brush, pen, new WinPoint(position.X, position.Y), radius, radius);
-        }
 
         /// <summary>
         /// Primitiva de dibuix de poligonns.
