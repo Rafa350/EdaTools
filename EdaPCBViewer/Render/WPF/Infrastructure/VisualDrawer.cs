@@ -8,18 +8,14 @@
     using MikroPic.EdaTools.v1.Pcb.Model.Elements;
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
-    using System.Windows;
     using System.Windows.Media;
 
     using Color = MikroPic.EdaTools.v1.Geometry.Color;
-    using Size = MikroPic.EdaTools.v1.Geometry.Size;
     using Point = MikroPic.EdaTools.v1.Geometry.Point;
-    using Rect = MikroPic.EdaTools.v1.Geometry.Rect;
     using WinColor = System.Windows.Media.Color;
-    using WinSize = System.Windows.Size;
     using WinPoint = System.Windows.Point;
     using WinRect = System.Windows.Rect;
+    using WinSize = System.Windows.Size;
 
     internal sealed class VisualDrawer {
 
@@ -116,7 +112,10 @@
                 Pen pen = rectangle.Thickness == 0 ? null : GetPen(c, rectangle.Thickness, PenLineCap.Round);
                 Brush brush = rectangle.Filled ? GetBrush(c) : null;
 
-                dc.DrawRoundedRectangle(brush, pen, rect, rectangle.Radius, rectangle.Radius);
+                if (rectangle.Radius == 0)
+                    dc.DrawRectangle(brush, pen, rect);
+                else
+                    dc.DrawRoundedRectangle(brush, pen, rect, rectangle.Radius, rectangle.Radius);
             }
         }
 
@@ -195,7 +194,10 @@
 
                 WinColor c = WinColor.FromRgb(color.R, color.G, color.B);
                 Brush brush = GetBrush(c);
-                dc.DrawRoundedRectangle(brush, null, rect, pad.Radius, pad.Radius);
+                if (pad.Radius == 0)
+                    dc.DrawRectangle(brush, null, rect);
+                else
+                    dc.DrawRoundedRectangle(brush, null, rect, pad.Radius, pad.Radius);
             }
         }
 
@@ -409,16 +411,15 @@
             //
             if (polygon.Points != null) {
 
-                WinPoint p;
-                v1.Geometry.Point[] points = polygon.Points;
+                WinPoint point = new WinPoint(polygon.Points[0].X, polygon.Points[0].Y);
+                ctx.BeginFigure(point, true, true);
 
-                p = new WinPoint(points[0].X, points[0].Y);
-                ctx.BeginFigure(p, true, true);
-
-                for (int i = 1; i < points.Length; i++) {
-                    p = new WinPoint(points[i].X, points[i].Y);
-                    ctx.LineTo(p, true, true);
+                WinPoint[] points = new WinPoint[polygon.Points.Length - 1];
+                for (int i = 1; i < polygon.Points.Length; i++) {
+                    points[i - 1].X = polygon.Points[i].X;
+                    points[i - 1].Y = polygon.Points[i].Y;
                 }
+                ctx.PolyLineTo(points, true, true);
             }
 
             // Procesa els poligons fills
