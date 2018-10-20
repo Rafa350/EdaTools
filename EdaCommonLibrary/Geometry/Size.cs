@@ -30,7 +30,7 @@
         /// 
         public override string ToString() {
 
-            return String.Format(CultureInfo.InvariantCulture, "{0}, {1}", width, height);
+            return String.Format("{0}, {1}", width, height);
         }
 
         /// <summary>

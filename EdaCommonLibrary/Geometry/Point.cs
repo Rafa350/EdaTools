@@ -43,7 +43,7 @@
         /// 
         public override string ToString() {
 
-            return String.Format(CultureInfo.InvariantCulture, "{0}, {1}", x, y);
+            return String.Format("{0}, {1}", x, y);
         }
 
         /// <summary>

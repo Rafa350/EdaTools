@@ -275,8 +275,7 @@
                     if (element != null) {
                         board.AddElement(element);
 
-                        IConectable conectable = element as IConectable;
-                        if (conectable != null)
+                        if (element is IConectable conectable)
                             board.Connect(signal, conectable);
                     }
                 }

@@ -10,7 +10,7 @@
             writer.WriteAttributeString(name, XmlConvert.ToString(value));
         }
 
-        public static void WriteAttributeInt(this XmlWriter writer, string name, int value) {
+        public static void WriteAttributeInteger(this XmlWriter writer, string name, int value) {
 
             writer.WriteAttributeString(name, XmlConvert.ToString(value));
         }
