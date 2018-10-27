@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Export\FreeCad\FreeCadExporter.cs" />
+    <Compile Include="Export\KiCad\KiCadExporter.cs" />
     <Compile Include="Export\OpenScad\OpenScadExporter.cs" />
     <Compile Include="Infrastructure\Polygons\PolygonBuilder.cs" />
     <Compile Include="Import\Eagle\EagleImporter.cs" />
@@ -112,7 +113,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Export\KiCad\" />
     <Folder Include="Import\KiCad\" />
     <Folder Include="Model\Collections\" />
   </ItemGroup>
