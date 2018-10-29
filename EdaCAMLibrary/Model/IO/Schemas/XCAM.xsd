@@ -39,11 +39,30 @@
     <xs:element
         name="target">
         <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="layers" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
             <xs:attribute name="fileName" use="required" type="xs:string"/>
             <xs:attribute name="generatorName" use="required" type="xs:string"/>
-            <xs:attribute name="position" use="required" type="pointType"/>
+            <xs:attribute name="position" use="optional" type="pointType"/>
             <xs:attribute name="rotation" use="optional" type="angleType"/>
         </xs:complexType>        
+    </xs:element>
+
+    <xs:element
+        name="layers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="layer" maxOccurs="unbounded" minOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element
+        name="layer">
+        <xs:complexType>
+            <xs:attribute name="name" use="required" type="xs:string"/>
+        </xs:complexType>
     </xs:element>
 
     <xs:simpleType

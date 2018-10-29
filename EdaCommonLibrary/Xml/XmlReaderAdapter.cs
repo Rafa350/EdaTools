@@ -221,6 +221,14 @@
             return (this.tagName == tagName) && isStart;
         }
 
+        public bool IsEndTag(string tagName) {
+
+            if (String.IsNullOrEmpty(tagName))
+                throw new ArgumentNullException("tagName");
+
+            return (this.tagName == tagName) && !isStart;
+        }
+
         public bool IsStart {
             get {
                 return isStart;

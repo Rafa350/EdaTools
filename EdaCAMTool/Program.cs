@@ -1,6 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.CamTool {
 
     using MikroPic.EdaTools.v1.Cam;
+    using MikroPic.EdaTools.v1.Cam.Model;
+    using MikroPic.EdaTools.v1.Cam.Model.IO;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.IO;
     using System;
@@ -95,15 +97,15 @@
         /// 
         private static void ProcessBoard(string fileName, string folder, string name) {
 
-            Board board;
+            Project project;
 
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                BoardStreamReader reader = new BoardStreamReader(stream);
-                board = reader.Read();
+                ProjectStreamReader reader = new ProjectStreamReader(stream);
+                project = reader.Read();
             }
 
-            CAMGenerator cg = new CAMGenerator();
-            cg.Generate(board, folder, name);
+            //CAMGenerator cg = new CAMGenerator();
+            //cg.Generate(board, folder, name);
         }
     }
 }

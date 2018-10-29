@@ -12,7 +12,7 @@
 
         }
 
-        public void Addtarget(Target target) {
+        public void AddTarget(Target target) {
 
             if (target == null)
                 throw new ArgumentNullException("target");

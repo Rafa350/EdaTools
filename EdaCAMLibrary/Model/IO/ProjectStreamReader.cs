@@ -81,5 +81,79 @@
             //
             rd.NextTag();
         }
+
+        private void ParseProjectNode(Project project) {
+
+            if (!rd.IsStartTag("project"))
+                throw new InvalidDataException("Se esperaba <project>");
+
+            rd.NextTag();
+            ParseTargetsNode(project);
+
+            // Llegeix el tag final
+            //
+            rd.NextTag();
+        }
+
+        private void ParseTargetsNode(Project project) {
+
+            if (!rd.IsStartTag("targets"))
+                throw new InvalidDataException("Se esperaba <targets>");
+
+            while (rd.NextTag() && rd.IsStartTag("target"))
+                ParseTargetNode(project);
+        }
+
+        private void ParseTargetNode(Project project) {
+
+            // Comprova que el node sigui correcte
+            //
+            if (!rd.IsStartTag("target"))
+                throw new InvalidDataException("Se esperaba <target>");
+
+            // Obte els atributs de la capa
+            //
+            string fileName = rd.AttributeAsString("fileName");
+            string generatorName = rd.AttributeAsString("generatorName");
+
+            // Crea el target i l'afeigeix al projecte
+            //
+            Target target = new Target(fileName, generatorName);
+            project.AddTarget(target);
+
+            rd.NextTag();
+            ParseLayersNode(target);
+
+            // Llegeix el tag final
+            //
+            rd.NextTag();
+        }
+
+        private void ParseLayersNode(Target target) {
+
+            if (!rd.IsStartTag("layers"))
+                throw new InvalidDataException("Se esperaba <layers>");
+
+            while (rd.NextTag() && rd.IsStartTag("layer"))
+                ParseLayerNode(target);
+
+            if (!rd.IsEndTag("layers"))
+                throw new InvalidDataException("Se esperaba </layers>");
+        }
+
+        private void ParseLayerNode(Target target) {
+
+            if (!rd.IsStartTag("layer"))
+                throw new InvalidDataException("Se esperaba <layer>");
+
+            // Obte els atributs de la capa
+            //
+            string name = rd.AttributeAsString("name");
+
+
+            rd.NextTag();
+            if (!rd.IsEndTag("layer"))
+                throw new InvalidDataException("Se esperaba </layer>");
+        }
     }
 }
