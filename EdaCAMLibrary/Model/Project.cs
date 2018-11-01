@@ -2,14 +2,22 @@
 
     using System;
     using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Pcb.Model;
 
     public sealed class Project {
 
+        private readonly string boardFileName;
         private List<Target> targets;
 
-        public Project() {
+        public Project(string boardFileName, IEnumerable<Target> targets = null) {
 
+            if (String.IsNullOrEmpty(boardFileName))
+                throw new ArgumentNullException("boardFileName");
+
+            this.boardFileName = boardFileName;
+
+            if (targets != null)
+                foreach (var target in targets)
+                    AddTarget(target);
         }
 
         public void AddTarget(Target target) {
@@ -21,6 +29,12 @@
                 targets = new List<Target>();
 
             targets.Add(target);
+        }
+
+        public string BoardFileName {
+            get {
+                return boardFileName;
+            }
         }
 
         public bool HasTargets {

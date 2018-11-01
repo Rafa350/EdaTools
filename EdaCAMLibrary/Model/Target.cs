@@ -2,13 +2,12 @@
 
     using System;
     using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Pcb.Model;
 
     public sealed class Target {
 
         private readonly string fileName;
         private readonly string generatorName;
-        private readonly IEnumerable<LayerId> layerIds;
+        private readonly IEnumerable<string> layerNames;
         private Dictionary<string, TargetOption> options;
 
         /// <summary>
@@ -16,9 +15,9 @@
         /// </summary>
         /// <param name="fileName">Nom del fitxer.</param>
         /// <param name="generatorName">Nom del generador.</param>
-        /// <param name="layerIds">Llista de noms de capes a procesar.</param>
+        /// <param name="layerNames">Llista de noms de capes a procesar.</param>
         /// 
-        public Target(string fileName, string generatorName, IEnumerable<LayerId> layerIds = null) {
+        public Target(string fileName, string generatorName, IEnumerable<string> layerNames = null, IEnumerable<TargetOption> options = null) {
 
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException("fileName");
@@ -28,7 +27,11 @@
 
             this.fileName = fileName;
             this.generatorName = generatorName;
-            this.layerIds = layerIds;
+            this.layerNames = layerNames;
+
+            if (options != null)
+                foreach (var option in options)
+                    AddOption(option);
         }
 
         /// <summary>
@@ -105,12 +108,22 @@
         }
 
         /// <summary>
-        /// Obte lels noms de les capes a procesar.
+        /// Indica si conte capes
         /// </summary>
         /// 
-        public IEnumerable<LayerId> LayerIds {
+        public bool HasLayers {
             get {
-                return layerIds;
+                return layerNames != null;
+            }
+        }
+
+        /// <summary>
+        /// Obte els noms de les capes a procesar.
+        /// </summary>
+        /// 
+        public IEnumerable<string> LayerNames {
+            get {
+                return layerNames;
             }
         }
 

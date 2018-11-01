@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <document version="100" documentType="camProject" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/XCAM.xsd">
-    <project>
+    <project board="board3.xbrd">
         <targets>
 
-        <!-- Capa coure L1 top -->
-            <target fileName="$(targetFolder)$(fName)_Copper$L1.gbr" generatorName="gerber-image">
+            <!-- Capa coure L1 top -->
+            <target output="$(targetFolder)$(fName)_Copper$L1.gbr" generator="gerber-image">
                 <layers>
                     <layer name="Top"/>
                 </layers>
             </target>
 
             <!-- Capa coure L2 bottom -->
-            <target fileName="$(targetFolder)$(fName)_Copper$L2.gbr" generatorName="gerber-image">
+            <target output="$(targetFolder)$(fName)_Copper$L2.gbr" generator="gerber-image">
                 <layers>
                     <layer name="Bottom"/>
                 </layers>
             </target>
 
             <!-- Capa silk top -->
-            <target fileName="$(targetFolder)$(fName)_Legend$Top.gbr" generatorName="gerber-image">
+            <target output="$(targetFolder)$(fName)_Legend$Top.gbr" generator="gerber-image">
                 <layers>
                     <layer name="TopPlace"/>
                     <layer name="TopNames"/>
@@ -26,7 +26,7 @@
             </target>
 
             <!-- Capa silk bottom -->
-            <target fileName="$(targetFolder)$(fName)_Legend$Bottom.gbr" generatorName="gerber-image">
+            <target output="$(targetFolder)$(fName)_Legend$Bottom.gbr" generator="gerber-image">
                 <layers>
                     <layer name="BottomPlace"/>
                     <layer name="BottomNames"/>
@@ -34,14 +34,14 @@
             </target>
 
             <!-- Perfil -->
-            <target fileName="$(targetFolder)$(fName)_Profile$NP.gbr" generatorName="gerber-image">
+            <target output="$(targetFolder)$(fName)_Profile$NP.gbr" generator="gerber-image">
                 <layers>
                     <layer name="Profile"/>
                 </layers>
             </target>
 
             <!-- Forats no platejats capes 1-2 -->
-            <target fileName="$(targetFolder)$(fname)_NonPlated$1$2$NPTH$Drill.gbr" generatorName="gerber-drill">
+            <target output="$(targetFolder)$(fname)_NonPlated$1$2$NPTH$Drill.gbr" generator="gerber-drill">
                 <layers>
                     <layer name="Holes"/>
                 </layers>
@@ -53,7 +53,7 @@
             </target>
 
             <!-- Forats platejats capes 1-2 -->
-            <target fileName="$(targetFolder)$(fName)_Plated$1$2$PTH$Drill.gbr" generatorName="gerber-drill">
+            <target output="$(targetFolder)$(fName)_Plated$1$2$PTH$Drill.gbr" generator="gerber-drill">
                 <layers>
                     <layer name="Drills"/>
                 </layers>
