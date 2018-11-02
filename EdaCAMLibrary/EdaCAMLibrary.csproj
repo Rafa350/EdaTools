@@ -50,7 +50,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CAMGenerator.cs" />
+    <Compile Include="ProjectProcessor.cs" />
     <Compile Include="Gerber\ApertureDictionary.cs" />
     <Compile Include="Gerber\Builder\Aperture.cs" />
     <Compile Include="Gerber\Builder\Apertures\ObroundAperture.cs" />

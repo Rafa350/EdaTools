@@ -95,7 +95,7 @@
         /// </summary>
         /// <param name="fileName">Nom del fitxer de la placa.</param>
         /// 
-        private static void ProcessBoard(string fileName, string folder, string name) {
+        private static void ProcessBoard(string fileName, string outFolder, string outPrefix) {
 
             Project project;
 
@@ -104,8 +104,9 @@
                 project = reader.Read();
             }
 
-            //CAMGenerator cg = new CAMGenerator();
-            //cg.Generate(board, folder, name);
+            ProjectProcessor cg = new ProjectProcessor();
+            string inpFolder = Path.GetDirectoryName(fileName);
+            cg.Process(project, inpFolder, outFolder, outPrefix);
         }
     }
 }

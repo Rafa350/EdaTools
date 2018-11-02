@@ -35,7 +35,7 @@
         /// </summary>
         /// <param name="board">La place.</param>
         /// 
-        public override void Generate(Board board) {
+        protected override void Generate(Board board, string fileName) {
 
             if (board == null)
                 throw new ArgumentNullException("panel");
@@ -43,7 +43,7 @@
             // Crea el fitxer de sortida
             //
             using (TextWriter writer = new StreamWriter(
-                new FileStream(Target.FileName, FileMode.Create, FileAccess.Write, FileShare.None))) {
+                new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None))) {
 
                 // Prepara el diccionari d'apertures
                 //
@@ -100,7 +100,7 @@
             gb.Comment(String.Format("Start timestamp: {0:HH:mm:ss.fff}", DateTime.Now));
             gb.Comment("BEGIN HEADER");
 
-            DrillType drillType = (DrillType)Enum.Parse(typeof(DrillType), Target.GetOptionValue("drillType"));
+            DrillType drillType = (DrillType)Enum.Parse(typeof(DrillType), Target.GetOptionValue("drillType"), true);
             int topLevel = Int32.Parse(Target.GetOptionValue("topLevel"));
             int bottomLevel = Int32.Parse(Target.GetOptionValue("bottomLevel"));
 

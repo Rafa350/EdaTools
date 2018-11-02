@@ -43,7 +43,7 @@
         /// </summary>
         /// <param name="board">La placa.</param>
         /// 
-        public override void Generate(Board board) {
+        protected override void Generate(Board board, string fileName) {
 
             if (board == null)
                 throw new ArgumentNullException("panel");
@@ -51,7 +51,7 @@
             // Crea el fitxer de sortida
             //
             using (TextWriter writer = new StreamWriter(
-                new FileStream(Target.FileName, FileMode.Create, FileAccess.Write, FileShare.None))) {
+                new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None))) {
 
                 // Prepara el diccionari d'apertures
                 //
@@ -112,7 +112,7 @@
             gb.Comment(String.Format("Start timestamp: {0:HH:mm:ss.fff}", DateTime.Now));
             gb.Comment("BEGIN HEADER");
 
-            ImageType imageType = (ImageType)Enum.Parse(typeof(ImageType), Target.GetOptionValue("imageType"));
+            ImageType imageType = (ImageType)Enum.Parse(typeof(ImageType), Target.GetOptionValue("imageType"), true);
             switch (imageType) {
                 case ImageType.Copper: {
                     int layerLevel = Int32.Parse(Target.GetOptionValue("layerLevel"));

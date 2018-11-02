@@ -41,7 +41,7 @@
         name="target">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="layers" maxOccurs="unbounded" minOccurs="1"/>
+                <xs:element ref="layers" maxOccurs="unbounded" minOccurs="0"/>
                 <xs:element ref="options" maxOccurs="unbounded" minOccurs="0"/>
             </xs:sequence>
             <xs:attribute name="output" use="required" type="xs:string"/>

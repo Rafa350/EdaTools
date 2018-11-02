@@ -8,25 +8,26 @@
     using System;
     using System.IO;
 
-    public sealed class CAMGenerator {
+    public sealed class ProjectProcessor {
 
         /// <summary>
         /// Genera els fitxers per defecte.
         /// </summary>
         /// <param name="project">El projecte CAM a procesar.</param>
-        /// <param name="folder">La carpeta on deixar els fitxers.</param>
-        /// <param name="name">Prefix del nom dels fitxers de sortida.</param>
+        /// <param name="inpFolder">La carpeta dels fitxers d'entrada.</param>
+        /// <param name="outFolder">La carpeta on deixar els fitxers de sortida.</param>
+        /// <param name="outPrefix">Prefix del nom dels fitxers de sortida.</param>
         /// 
-        public void Generate(Project project, string folder, string name) {
+        public void Process(Project project, string inpFolder, string outFolder, string outPrefix) {
 
             if (project == null)
                 throw new ArgumentNullException("project");
 
-            Board board = LoadBoard(project);
+            Board board = LoadBoard(project, inpFolder);
 
             foreach (var target in project.Targets) {
                 Generator generator = LoadGenerator(target);
-                generator.Generate(board);
+                generator.Generate(board, outFolder, outPrefix);
             }
         }
 
@@ -54,16 +55,19 @@
         }
 
         /// <summary>
-        /// Carrega la placa.
+        /// Carrega una placa.
         /// </summary>
         /// <param name="project">El projecte.</param>
+        /// <param name="inpFolder">La carpeta dles fitxers d'entrada.</param>
         /// <returns>La placa.</returns>
         /// 
-        private Board LoadBoard(Project project) {
+        private Board LoadBoard(Project project, string inpFolder) {
 
             Board board;
 
-            using (Stream stream = new FileStream(project.BoardFileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
+            string fileName = Path.Combine(inpFolder, project.BoardFileName);
+
+            using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
                 BoardStreamReader reader = new BoardStreamReader(stream);
                 board = reader.Read();
             }

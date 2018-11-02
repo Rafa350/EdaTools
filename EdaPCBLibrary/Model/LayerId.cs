@@ -22,8 +22,21 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            this.name = name;
-            this.side = BoardSide.None;
+            if (name.IndexOf('.') >= 0) {
+                string[] s = name.Split('.');
+                if (s.Length == 1) {
+                    this.name = s[0];
+                    this.side = BoardSide.None;
+                }
+                else {
+                    this.name = s[1];
+                    this.side = (BoardSide)Enum.Parse(typeof(BoardSide), s[0]);
+                }
+            }
+            else {
+                this.name = name;
+                this.side = BoardSide.None;
+            }
         }
 
         /// <summary>

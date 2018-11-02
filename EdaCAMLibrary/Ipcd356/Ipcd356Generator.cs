@@ -24,7 +24,7 @@
         /// </summary>
         /// <param name="board">La placa.</param>
         /// 
-        public override void Generate(Board board) {
+        protected override void Generate(Board board, string fileName) {
 
             if (board == null)
                 throw new ArgumentNullException("board");
@@ -32,7 +32,7 @@
             // Crea el fitxer de sortida
             //
             using (TextWriter writer = new StreamWriter(
-                new FileStream(Target.FileName, FileMode.Create, FileAccess.Write, FileShare.None))) {
+                new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None))) {
 
                 Ipcd356Builder builder = new Ipcd356Builder(writer);
 
