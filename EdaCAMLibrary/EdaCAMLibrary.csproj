@@ -70,6 +70,7 @@
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\Target.cs" />
     <Compile Include="Model\TargetOption.cs" />
+    <Compile Include="GeneratorOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

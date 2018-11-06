@@ -42,11 +42,18 @@
         /// Genera el fitxer corresponent a una placa.
         /// </summary>
         /// <param name="board">La placa.</param>
+        /// <param name="outputFolder">Carpeta de sortida.</param>
+        /// <param name="options">Options.</param>
         /// 
-        protected override void Generate(Board board, string fileName) {
+        public override void Generate(Board board, string outputFolder, GeneratorOptions options) {
 
             if (board == null)
                 throw new ArgumentNullException("panel");
+
+            if (String.IsNullOrEmpty(outputFolder))
+                throw new ArgumentNullException("outputFolder");
+
+            string fileName = Path.Combine(outputFolder, Target.FileName);
 
             // Crea el fitxer de sortida
             //

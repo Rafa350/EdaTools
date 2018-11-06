@@ -1,10 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.CamTool {
 
     using MikroPic.EdaTools.v1.Cam;
-    using MikroPic.EdaTools.v1.Cam.Model;
-    using MikroPic.EdaTools.v1.Cam.Model.IO;
-    using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.IO;
     using System;
     using System.IO;
 
@@ -24,9 +20,7 @@
 
             else {
 
-                string inputFileName = Path.GetFullPath(args[0]);
-                string folder = Path.GetDirectoryName(inputFileName);
-                string name = Path.GetFileNameWithoutExtension(inputFileName);
+                string projectFileName = Path.GetFullPath(args[0]);
                 bool pause = false;
 
                 if (args.Length > 1) {
@@ -34,18 +28,12 @@
                     for (int i = 1; i < args.Length; i++) {
                         string arg = args[i];
 
-                        if (arg.StartsWith("/n:"))
-                            name = arg.Substring(3);
-
-                        else if (arg.StartsWith("/f:"))
-                            folder = arg.Substring(3);
-
-                        else if (arg == "/p")
+                        if (arg == "/p")
                             pause = true;
                     }
                 }
 
-                ProcessBoard(inputFileName, folder, name);
+                ProcessProject(projectFileName);
 
                 if (pause)
                     WaitKey();
@@ -69,11 +57,9 @@
             string help =
                 "EdaCAMTool V1.1\r\n" +
                 "---------------\r\n" +
-                "edacamtool <board> [options]\r\n" +
-                "   <input>               : Board file name.\r\n" +
+                "edacamtool <project> [options]\r\n" +
+                "   <project>             : Project file name.\r\n" +
                 "   [options]             : Optional parameters.\r\n" +
-                "     /f:<folder>         :   Output folder.\r\n" +
-                "     /n:<name>           :   Output file name prefix.\r\n" +
                 "     /z:<zip>            :   Output ZIP file name.\r\n" +
                 "     /p                  :   Pause at end.\r\n";
 
@@ -93,20 +79,12 @@
         /// <summary>
         /// Procesa una placa
         /// </summary>
-        /// <param name="fileName">Nom del fitxer de la placa.</param>
+        /// <param name="fileName">Nom del fitxer del projecte.</param>
         /// 
-        private static void ProcessBoard(string fileName, string outFolder, string outPrefix) {
-
-            Project project;
-
-            using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                ProjectStreamReader reader = new ProjectStreamReader(stream);
-                project = reader.Read();
-            }
+        private static void ProcessProject(string fileName) {
 
             ProjectProcessor cg = new ProjectProcessor();
-            string inpFolder = Path.GetDirectoryName(fileName);
-            cg.Process(project, inpFolder, outFolder, outPrefix);
+            cg.Process(fileName);
         }
     }
 }

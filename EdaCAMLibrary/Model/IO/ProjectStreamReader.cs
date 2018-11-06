@@ -31,7 +31,7 @@
             schemas.Add(XmlSchema.Read(resourceStream, null));
             schemas.Compile();
 
-            XmlReaderSettings settings = new XmlReaderSettings();
+            settings = new XmlReaderSettings();
             settings.IgnoreProcessingInstructions = true;
             settings.IgnoreWhitespace = true;
             settings.IgnoreComments = true;

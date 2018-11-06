@@ -3,6 +3,7 @@
     using MikroPic.EdaTools.v1.Cam.Gerber;
     using MikroPic.EdaTools.v1.Cam.Ipcd356;
     using MikroPic.EdaTools.v1.Cam.Model;
+    using MikroPic.EdaTools.v1.Cam.Model.IO;
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.IO;
     using System;
@@ -11,23 +12,36 @@
     public sealed class ProjectProcessor {
 
         /// <summary>
-        /// Genera els fitxers per defecte.
+        /// Procesa un projecte.
         /// </summary>
-        /// <param name="project">El projecte CAM a procesar.</param>
-        /// <param name="inpFolder">La carpeta dels fitxers d'entrada.</param>
-        /// <param name="outFolder">La carpeta on deixar els fitxers de sortida.</param>
-        /// <param name="outPrefix">Prefix del nom dels fitxers de sortida.</param>
+        /// <param name="projectFileName">Nom del fitxer del projecte.</param>
         /// 
-        public void Process(Project project, string inpFolder, string outFolder, string outPrefix) {
+        public void Process(string projectFileName) {
+
+            if (String.IsNullOrEmpty(projectFileName))
+                throw new ArgumentNullException("projectFileName");
+
+            string projectFolder = Path.GetDirectoryName(projectFileName);
+            Project project = LoadProject(projectFileName);
+            Process(project, projectFolder);
+        }
+
+        /// <summary>
+        /// Procesa un projecte.
+        /// </summary>
+        /// <param name="project">El projecte.</param>
+        /// <param name="projectFolder">Carpeta del projecte.</param>
+        /// 
+        public void Process(Project project, string projectFolder) {
 
             if (project == null)
                 throw new ArgumentNullException("project");
 
-            Board board = LoadBoard(project, inpFolder);
+            Board board = LoadBoard(project, projectFolder);
 
             foreach (var target in project.Targets) {
                 Generator generator = LoadGenerator(target);
-                generator.Generate(board, outFolder, outPrefix);
+                generator.Generate(board, projectFolder);
             }
         }
 
@@ -55,23 +69,37 @@
         }
 
         /// <summary>
+        /// Carrega un projecte.
+        /// </summary>
+        /// <param name="projectFileName">Nom del fitxer del projecte.</param>
+        /// <returns>El projecte.</returns>
+        /// 
+        private Project LoadProject(string projectFileName) {
+
+            Project project;
+            using (Stream stream = new FileStream(projectFileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
+                ProjectStreamReader reader = new ProjectStreamReader(stream);
+                project = reader.Read();
+            }
+            return project;
+        }
+
+        /// <summary>
         /// Carrega una placa.
         /// </summary>
         /// <param name="project">El projecte.</param>
-        /// <param name="inpFolder">La carpeta dles fitxers d'entrada.</param>
+        /// <param name="projectFolder">La carpeta.</param>
         /// <returns>La placa.</returns>
         /// 
-        private Board LoadBoard(Project project, string inpFolder) {
+        private Board LoadBoard(Project project, string projectFolder) {
+
+            string boardFileName = Path.Combine(projectFolder, project.BoardFileName);
 
             Board board;
-
-            string fileName = Path.Combine(inpFolder, project.BoardFileName);
-
-            using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
+            using (Stream stream = new FileStream(boardFileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
                 BoardStreamReader reader = new BoardStreamReader(stream);
                 board = reader.Read();
             }
-
             return board;
         }
     }
