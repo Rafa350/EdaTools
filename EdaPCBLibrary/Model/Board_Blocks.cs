@@ -34,6 +34,15 @@
             blocks.Add(block);
         }
 
+        public void AddBlocks(IEnumerable<Block> blocks) {
+
+            if (blocks == null)
+                throw new ArgumentNullException("blocks");
+
+            foreach (var block in blocks)
+                AddBlock(block);
+        }
+
         /// <summary>
         /// Elimina un block.
         /// </summary>

@@ -40,6 +40,15 @@
             }
         }
 
+        public void AddLayers(IEnumerable<Layer> layers) {
+
+            if (layers == null)
+                throw new ArgumentNullException("layers");
+
+            foreach (var layer in layers)
+                AddLayer(layer);
+        }
+
         /// <summary>
         /// Elimina una capa de la placa.
         /// </summary>

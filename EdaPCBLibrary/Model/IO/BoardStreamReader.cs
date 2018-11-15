@@ -115,67 +115,67 @@
 
             rd.NextTag();
 
-            ParseLayersNode(board);
-            rd.NextTag();
+            if (rd.TagName == "layers")
+                board.AddLayers(ParseLayersNode());
 
-            if (rd.TagName == "signals") {
-                ParseSignalsNode(board);
-                rd.NextTag();
-            }
+            if (rd.TagName == "signals") 
+                board.AddSignals(ParseSignalsNode());
 
-            if (rd.TagName == "blocks") {
-                ParseBlocksNode(board);
-                rd.NextTag();
-            }
+            if (rd.TagName == "blocks") 
+                board.AddBlocks(ParseBlocksNode());
 
-            if (rd.TagName == "parts") {
-                ParsePartsNode(board);
-                rd.NextTag();
-            }
+            if (rd.TagName == "parts")
+                board.AddParts(ParsePartsNode());
 
-            ParseBoardElementsNode(board);
+            if (rd.TagName == "elements")
+                ParseBoardElementsNode(board);
+
             rd.NextTag();
         }
 
         /// <summary>
         /// Procesa el node 'layers'.
         /// </summary>
-        /// <param name="board">La placa.</param>
         /// 
-        private void ParseLayersNode(Board board) {
+        private IEnumerable<Layer> ParseLayersNode() {
 
             if (!rd.IsStartTag("layers"))
                 throw new InvalidDataException("Se esperaba <layers>");
 
-            while (rd.NextTag() && rd.IsStartTag("layer"))
-                ParseLayerNode(board);
+            List<Layer> layers = new List<Layer>();
+
+            rd.NextTag();
+            while (rd.IsStartTag("layer"))
+                layers.Add(ParseLayerNode());
+
+            if (!rd.IsEndTag("layers"))
+                throw new InvalidDataException("Se esperaba </layers>");
+            rd.NextTag();
+
+            return layers;
         }
 
         /// <summary>
         /// Procesa el node 'layer'.
         /// </summary>
-        /// <param name="board">La placa.</param>
+        /// <returns>L'objecte 'Layer' obtingut.</returns>
         /// 
-        private void ParseLayerNode(Board board) {
+        private Layer ParseLayerNode() {
 
-            // Comprova que el node sigui correcte
-            //
             if (!rd.IsStartTag("layer"))
                 throw new InvalidDataException("Se esperaba <layer>");
 
-            // Obte els atributs de la capa
-            //
             LayerId layerId = LayerId.Parse(rd.AttributeAsString("id"));
             LayerFunction function = rd.AttributeAsEnum<LayerFunction>("function", LayerFunction.Unknown);
 
-            // Crea la capa i l'afeigeig a la placa.
-            //
             Layer layer = new Layer(layerId, function);
-            board.AddLayer(layer);
 
-            // Llegeix el tag final
-            //
             rd.NextTag();
+            if (!rd.IsEndTag("layer"))
+                throw new InvalidDataException("Se esperaba </layer>");
+            rd.NextTag();
+
+            return layer;
         }
 
         /// <summary>
@@ -183,135 +183,142 @@
         /// </summary>
         /// <param name="board">La placa.</param>
         /// 
-        private void ParseSignalsNode(Board board) {
+        private IEnumerable<Signal> ParseSignalsNode() {
 
-            // Comprova que el node sigui correcte
-            //
             if (!rd.IsStartTag("signals"))
                 throw new InvalidDataException("Se esperaba <signals>");
 
-            while (rd.NextTag() && rd.IsStartTag("signal"))
-                ParseSignalNode(board);
+            List<Signal> signals = new List<Signal>();
+
+            rd.NextTag();
+            while (rd.IsStartTag("signal"))
+                signals.Add(ParseSignalNode());
+
+            if (!rd.IsEndTag("signals"))
+                throw new InvalidDataException("Se esperaba </signals>");
+            rd.NextTag();
+
+            return signals;
         }
 
         /// <summary>
         /// Procesa el node 'signal'
         /// </summary>
-        /// <param name="board">La placa.</param>
+        /// <returns>L'objecte 'Signal' obtingut.</returns>
         /// 
-        private void ParseSignalNode(Board board) {
+        private Signal ParseSignalNode() {
 
-            // Comprova que el node sigui correcte
-            //
             if (!rd.IsStartTag("signal"))
                 throw new InvalidDataException("Se esperaba <signal>");
 
-            // Obte els atributs de la senyal
-            //
             string name = rd.AttributeAsString("name");
 
-            // Crea la senyal i l'afegeix a la placa
-            //
             Signal signal = new Signal(name);
-            board.AddSignal(signal);
 
             rd.NextTag();
+            if (!rd.IsEndTag("signal"))
+                throw new InvalidDataException("Se esperaba </signal>");
+            rd.NextTag();
+
+            return signal;
         }
 
         /// <summary>
         /// Procesa el node 'blocks'
         /// </summary>
-        /// <param name="board">La placa.</param>
+        /// <returns>La llista d'objectes 'Block' obtinguda.</returns>
         /// 
-        private void ParseBlocksNode(Board board) {
+        private IEnumerable<Block> ParseBlocksNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("blocks"))
                 throw new InvalidDataException("Se esperaba <blocks>");
 
-            while (rd.NextTag() && rd.IsStartTag("block"))
-               ParseBlockNode(board);
+            List<Block> blocks = new List<Block>();
+
+            rd.NextTag();
+            while (rd.IsStartTag("block"))
+               blocks.Add(ParseBlockNode());
+
+            if (!rd.IsEndTag("blocks"))
+                throw new InvalidDataException("Se esperaba </blocks>");
+            rd.NextTag();
+
+            return blocks;
         }
 
         /// <summary>
         /// Procesa el node 'block'.
         /// </summary>
-        /// <param name="board">La placa.</param>
+        /// <returns>L'objecte 'Block' obtingut.</returns>
         /// 
-        private void ParseBlockNode(Board board) {
+        private Block ParseBlockNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("block"))
                 throw new InvalidDataException("Se esperaba <block>");
 
-            // Obte els atriburs del bloc
-            //
             string name = rd.AttributeAsString("name");
 
-            // Crea el bloc i l'afegeix a la placa
-            //
             Block block = new Block(name);
-            board.AddBlock(block);
 
             rd.NextTag();
-            ParseBlockElementsNode(block);
+            block.AddElements(ParseBlockElementsNode());
 
+            if (!rd.IsEndTag("block"))
+                throw new InvalidDataException("Se esperaba </block>");
             rd.NextTag();
+
+            return block;
         }
 
         /// <summary>
         /// Procesa el node 'elements'
         /// </summary>
-        /// <param name="block">El bloc</param>
+        /// <returns>La llista d'objectres 'Element' obtinguda.</returns>
         /// 
-        private void ParseBlockElementsNode(Block block) {
+        private IEnumerable<Element> ParseBlockElementsNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("elements"))
                 throw new InvalidDataException("Se esperaba <elements>");
 
-            // Obte els elements
-            //
-            List<Element> elementList = new List<Element>();
-            while (rd.NextTag() && rd.IsStart) {
+            List<Element> elements = new List<Element>();
+
+            rd.NextTag();
+            while (rd.IsStart) {
                 switch (rd.TagName) {
                     case "line":
-                        ParseLineNode(elementList);
+                        elements.Add(ParseLineNode());
                         break;
 
                     case "arc":
-                        ParseArcNode(elementList);
+                        elements.Add(ParseArcNode());
                         break;
 
                     case "rectangle":
-                        ParseRectangleNode(elementList);
+                        elements.Add(ParseRectangleNode());
                         break;
 
                     case "circle":
-                        ParseCircleNode(elementList);
+                        elements.Add(ParseCircleNode());
                         break;
 
                     case "region":
-                        ParseRegionNode(elementList);
+                        elements.Add(ParseRegionNode());
                         break;
 
                     case "tpad":
-                        ParseTPadNode(elementList);
+                        elements.Add(ParseTPadNode());
                         break;
 
                     case "spad":
-                        ParseSPadNode(elementList);
+                        elements.Add(ParseSPadNode());
                         break;
 
                     case "hole":
-                        ParseHoleNode(elementList);
+                        elements.Add(ParseHoleNode());
                         break;
 
                     case "text":
-                        ParseTextNode(elementList);
+                        elements.Add(ParseTextNode());
                         break;
 
                     default:
@@ -319,9 +326,11 @@
                 }
             }
 
-            // Afegeix els elements al bloc
-            //
-            block.AddElements(elementList);
+            if (!rd.IsEndTag("elements"))
+                throw new InvalidDataException("Se esperaba </elements>");
+            rd.NextTag();
+
+            return elements;
         }
 
         /// <summary>
@@ -331,42 +340,40 @@
         /// 
         private void ParseBoardElementsNode(Board board) {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("elements"))
                 throw new InvalidDataException("Se esperaba <elements>");
 
-            // Obte els elements
-            //
             List<Element> elementList = new List<Element>();
-            while (rd.NextTag() && rd.IsStart) {
+
+            rd.NextTag();
+            while (rd.IsStart) {
                 switch (rd.TagName) {
                     case "line":
-                        ParseLineNode(elementList);
+                        elementList.Add(ParseLineNode());
                         break;
 
                     case "arc":
-                        ParseArcNode(elementList);
+                        elementList.Add(ParseArcNode());
                         break;
 
                     case "rectangle":
-                        ParseRectangleNode(elementList);
+                        elementList.Add(ParseRectangleNode());
                         break;
 
                     case "circle":
-                        ParseCircleNode(elementList);
+                        elementList.Add(ParseCircleNode());
                         break;
 
                     case "region":
-                        ParseRegionNode(elementList);
+                        elementList.Add(ParseRegionNode());
                         break;
 
                     case "tpad":
-                        ParseTPadNode(elementList);
+                        elementList.Add(ParseTPadNode());
                         break;
 
                     case "spad":
-                        ParseSPadNode(elementList);
+                        elementList.Add(ParseSPadNode());
                         break;
 
                     case "via":
@@ -374,11 +381,11 @@
                         break;
 
                     case "hole":
-                        ParseHoleNode(elementList);
+                        elementList.Add(ParseHoleNode());
                         break;
 
                     case "text":
-                        ParseTextNode(elementList);
+                        elementList.Add(ParseTextNode());
                         break;
 
                     default:
@@ -386,57 +393,56 @@
                 }
             }
 
-            // Afegeix els elements al bloc
-            //
             board.AddElements(elementList);
         }
 
         /// <summary>
         /// Procesa un node 'parts'.
         /// </summary>
-        /// <param name="board">La placa.</param>
+        /// <returns>La llista d'objectes 'Part' obtinguts.</returns>
         /// 
-        private void ParsePartsNode(Board board) {
+        private IEnumerable<Part> ParsePartsNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("parts"))
                 throw new InvalidDataException("Se esperaba <parts>");
 
-            while (rd.NextTag() && rd.IsStartTag("part"))
-                ParsePartNode(board);
+            List<Part> parts = new List<Part>();
+
+            rd.NextTag();
+            while (rd.IsStartTag("part"))
+                parts.Add(ParsePartNode());
+
+            if (!rd.IsEndTag("parts"))
+                throw new InvalidDataException("Se esperaba </parts>");
+            rd.NextTag();
+
+            return parts;
         }
 
         /// <summary>
         /// Procesa un node 'part'.
         /// </summary>
-        /// <param name="board">La placa.</param>
+        /// <returns>L'objecte 'Part' obtingut.</returns>
         /// 
-        private void ParsePartNode(Board board) {
+        private Part ParsePartNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("part"))
                 throw new InvalidDataException("Se esperaba <part>");
 
-            // Obte els atributs de l'objecte
-            //
             string name = rd.AttributeAsString("name");
             Point position =  XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
             BoardSide side = rd.AttributeAsEnum("side", BoardSide.Top);
             string blockName = rd.AttributeAsString("block");
 
-            // Crea l'objecte i l'afegeix a la placa
-            //
             Block block = board.GetBlock(blockName);
             Part part = new Part(block, name, position, rotation, side);
-            board.AddPart(part);
 
-            while (rd.NextTag() && rd.IsStart) {
+            rd.NextTag();
+            while (rd.IsStart) {
                 switch (rd.TagName) {
                     case "attributes":
-                        ParsePartAttributesNode(part);
+                        part.AddAttributes(ParsePartAttributesNode());
                         break;
 
                     case "pads":
@@ -447,46 +453,51 @@
                         throw new InvalidDataException("Se esperaba <pads> o <attributes>");
                 }
             }
+
+            if (!rd.IsEndTag("part"))
+                throw new InvalidDataException("Se esperaba </part>");
+            rd.NextTag();
+
+            return part;
         }
 
         /// <summary>
         /// Procesa el node 'attributes'
         /// </summary>
-        /// <param name="part">El part</param>
         /// 
-        private void ParsePartAttributesNode(Part part) {
+        private IEnumerable<PartAttribute> ParsePartAttributesNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("attributes"))
                 throw new InvalidDataException("Se esperaba <attributes>");
 
-            while (rd.NextTag() && rd.IsStartTag("attribute"))
-                ParsePartAttributeNode(part);
+            List<PartAttribute> attributes = new List<PartAttribute>();
+
+            rd.NextTag();
+            while (rd.IsStartTag("attribute"))
+                attributes.Add(ParsePartAttributeNode());
+
+            if (!rd.IsEndTag("attributes"))
+                throw new InvalidDataException("Se esperaba </attributes>");
+            rd.NextTag();
+
+            return attributes;
         }
 
         /// <summary>
         /// Procesa un node 'attribute'
         /// </summary>
-        /// <param name="part">El part.</param>
+        /// <returns>L'objecte 'partAttribute' obtingut.</returns>
         /// 
-        private void ParsePartAttributeNode(Part part) {
+        private PartAttribute ParsePartAttributeNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("attribute"))
                throw new InvalidDataException("Se esperaba <attribute>");
 
-            // Obte els atributs de l'objecte
-            //
             string name = rd.AttributeAsString("name");
             string value = rd.AttributeAsString("value");
             bool visible = rd.AttributeAsBoolean("visible", false);
 
-            // Crea l'objecte i l'afegeix a la llista
-            //
             PartAttribute attribute = new PartAttribute(name, value, visible);
-            part.AddAttribute(attribute);
 
             if (rd.AttributeExists("position"))
                 attribute.Position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
@@ -504,6 +515,11 @@
                 attribute.VerticalAlign = rd.AttributeAsEnum("verticalAlign", VerticalTextAlign.Bottom);
 
             rd.NextTag();
+            if (!rd.IsEndTag("attribute"))
+                throw new InvalidDataException("Se esperaba </attribute>");
+            rd.NextTag();
+
+            return attribute;
         }
 
         /// <summary>
@@ -513,8 +529,6 @@
         /// 
         private void ParsePartPadsNode(Part part) {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("pads"))
                 throw new InvalidDataException("Se esperaba <attributes>");
 
@@ -529,8 +543,6 @@
         /// 
         private void ParsePartPadNode(Part part) {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("pad"))
                 throw new InvalidDataException("Se esperaba <pad>");
 
@@ -542,35 +554,28 @@
             board.Connect(signal, pad, part);
 
             rd.NextTag();
+            if (!rd.IsEndTag("part"))
+                throw new InvalidDataException("Se esperaba </pad>");
+            rd.NextTag();
         }
 
         /// <summary>
         /// Procesa el node 'line'
         /// </summary>
-        /// <param name="elementList">La llista d'elements.</param>
         /// 
-        private void ParseLineNode(IList<Element> elementList) {
+        private LineElement ParseLineNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("line"))
                 throw new InvalidDataException("Se esperaba <line>");
 
-            // Obte els atributs del element
-            //
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             Point startPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("startPosition"));
             Point endPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("endPosition"));
             int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness"));
             LineElement.LineCapStyle lineCap = rd.AttributeAsEnum<LineElement.LineCapStyle>("lineCap", LineElement.LineCapStyle.Round);
 
-            // Crea l'element i l'afegeix a la llista
-            //
             LineElement line = new LineElement(layerSet, startPosition, endPosition, thickness, lineCap);
-            elementList.Add(line);
 
-            // Assigna la senyal 
-            //
             if (rd.AttributeExists("signal")) {
                 string signalName = rd.AttributeAsString("signal");
                 if (signalName != null) {
@@ -579,25 +584,24 @@
                 }
             }
 
-            // Llegeix el final del node
-            //
             rd.NextTag();
+            if (!rd.IsEndTag("line"))
+                throw new InvalidDataException("Se esperaba </line>");
+            rd.NextTag();
+
+            return line;
         }
 
         /// <summary>
         /// Procesa un node 'arc'.
         /// </summary>
-        /// <param name="elementList">La llista d'elements.</param>
+        /// <returns>L'objecte 'ArcElement' obtingut.</returns>
         /// 
-        private void ParseArcNode(IList<Element> elementList) {
+        private ArcElement ParseArcNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("arc"))
                 throw new InvalidDataException("Se esperaba <arc>");
 
-            // Obte els atributs de l'element
-            //
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             Point startPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("startPosition"));
             Point endPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("endPosition"));
@@ -605,13 +609,8 @@
             Angle angle = XmlTypeParser.ParseAngle(rd.AttributeAsString("angle"));
             LineElement.LineCapStyle lineCap = rd.AttributeAsEnum<LineElement.LineCapStyle>("lineCap", LineElement.LineCapStyle.Round);
 
-            // Crea l'element i l'afegeix a la llista
-            //
             ArcElement arc = new ArcElement(layerSet, startPosition, endPosition, thickness, angle, lineCap);
-            elementList.Add(arc);
 
-            // Assigna la senyal 
-            //
             if (rd.AttributeExists("signal")) {
                 string signalName = rd.AttributeAsString("signal");
                 if (signalName != null) {
@@ -621,22 +620,23 @@
             }
 
             rd.NextTag();
+            if (!rd.IsEndTag("arc"))
+                throw new InvalidDataException("Se esperaba </arc>");
+            rd.NextTag();
+
+            return arc;
         }
 
         /// <summary>
         /// Procesa un node 'rectangle'
         /// </summary>
-        /// <param name="elementList">La llista d'elements.</param>
+        /// <returns>L'objecte 'RectangleElement' obtingut.</returns>
         /// 
-        private void ParseRectangleNode(IList<Element> elementList) {
+        private RectangleElement ParseRectangleNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("rectangle"))
                 throw new InvalidDataException("Se esperaba <rectangle>");
 
-            // Obte els atributs de l'element.
-            //
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             Size size = XmlTypeParser.ParseSize(rd.AttributeAsString("size"));
@@ -645,68 +645,59 @@
             Ratio roundness = XmlTypeParser.ParseRatio(rd.AttributeAsString("roundness", "0"));
             bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
 
-            // Crea l'element i l'afegeix a la llista
-            //
             RectangleElement rectangle = new RectangleElement(layerSet, position, size, roundness, rotation, thickness, filled);
-            elementList.Add(rectangle);
 
             rd.NextTag();
+            if (!rd.IsEndTag("rectangle"))
+                throw new InvalidDataException("Se esperaba </rectangle>");
+            rd.NextTag();
+
+            return rectangle;
         }
 
         /// <summary>
         /// Procesa un node 'circle'
         /// </summary>
-        /// <param name="elementList">La llista d'elements.</param>
+        /// <returns>L'objecte 'CircleElement' obtingut.</returns>
         /// 
-        private void ParseCircleNode(IList<Element> elementList) {
+        private CircleElement ParseCircleNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("circle"))
                 throw new InvalidDataException("Se esperaba <circle>");
 
-            // Obte els atributs de l'element.
-            //
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             int radius = XmlTypeParser.ParseNumber(rd.AttributeAsString("radius"));
             int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness", "0"));
             bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
  
-            // Crea l'element i l'afegeix a la llista
-            //
             CircleElement circle = new CircleElement(layerSet, position, radius, thickness, filled);
-            elementList.Add(circle);
 
             rd.NextTag();
+            if (!rd.IsEndTag("circle"))
+                throw new InvalidDataException("Se esperaba </circle>");
+            rd.NextTag();
+
+            return circle;
         }
 
         /// <summary>
         /// Procesa un node 'region'
         /// </summary>
-        /// <param name="elementList">La llista d'elements.</param>
+        /// <returns>L'objecte 'RegionElement' obtingut.</returns>
         /// 
-        private void ParseRegionNode(IList<Element> elementList) {
+        private RegionElement ParseRegionNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("region"))
                 throw new InvalidDataException("Se esperaba <region>");
 
-            // Obte els atributs de l'element
-            //
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness"));
             bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
             int clearance = XmlTypeParser.ParseNumber(rd.AttributeAsString("clearance", "0"));
 
-            // Crea l'element i l'afegeix a la llista
-            //
             RegionElement region = new RegionElement(layerSet, thickness, filled, clearance);
-            elementList.Add(region);
 
-            // Assigna la senyal 
-            //
             if (rd.AttributeExists("signal")) {
                 string signalName = rd.AttributeAsString("signal");
                 if (signalName != null) {
@@ -715,49 +706,50 @@
                 }
             }
 
-            while (rd.NextTag() && rd.IsStart)
-                ParseRegionSegmentNode(region);
+            rd.NextTag();
+            while (rd.IsStartTag("segment"))
+                region.Add(ParseRegionSegmentNode());
+
+            if (!rd.IsEndTag("region"))
+                throw new InvalidDataException("Se esperaba </region>");
+            rd.NextTag();
+
+            return region;
         }
 
         /// <summary>
         /// Procesa un node 'segment'
         /// </summary>
-        /// <param name="region">La regio.</param>
+        /// <returns>L'objecte 'RegionElement.Segment' obtingut.</returns>
         /// 
-        private void ParseRegionSegmentNode(RegionElement region) {
+        private RegionElement.Segment ParseRegionSegmentNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("segment"))
                 throw new InvalidDataException("Se esperaba <segment>");
 
-            // Obte els atributs del segment
-            //
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             Angle angle = XmlTypeParser.ParseAngle(rd.AttributeAsString("angle", "0"));
 
-            // Crea el segment i l'afegeix a la regio.
-            //
             RegionElement.Segment segment = new RegionElement.Segment(position, angle);
-            region.Add(segment);
 
             rd.NextTag();
+            if (!rd.IsEndTag("segment"))
+                throw new InvalidDataException("Se esperaba </segment>");
+            rd.NextTag();
+
+            return segment;
         }
 
         /// <summary>
         /// Procesa un node tpad
         /// </summary>
-        /// <param name="elementList">La llista d'elements.</param>
+        /// <returns>L'objecte 'TPadElement' obtingut</returns>
         /// 
-        private void ParseTPadNode(IList<Element> elementList) {
+        private ThPadElement ParseTPadNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("tpad"))
                 throw new InvalidDataException("Se esperaba <tpad>");
 
-            // Obte els atributs de l'element
-            //
             string name = rd.AttributeAsString("name");
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
@@ -766,13 +758,8 @@
             int drill = XmlTypeParser.ParseNumber(rd.AttributeAsString("drill"));
             ThPadElement.ThPadShape shape = rd.AttributeAsEnum<ThPadElement.ThPadShape>("shape", ThPadElement.ThPadShape.Circle);
 
-            // Crea l'element i l'afegeix a la llista
-            //
             ThPadElement pad = new ThPadElement(name, layerSet, position, rotation, size, shape, drill);
-            elementList.Add(pad);
 
-            // Assigna la senyal 
-            //
             if (rd.AttributeExists("signal")) {
                 string signalName = rd.AttributeAsString("signal");
                 if (signalName != null) {
@@ -781,25 +768,24 @@
                 }
             }
 
-            // Llegeix el final del node
-            //
             rd.NextTag();
+            if (!rd.IsEndTag("tpad"))
+                throw new InvalidDataException("Se esperaba </tpad>");
+            rd.NextTag();
+
+            return pad;
         }
 
         /// <summary>
         /// Procesa un node tpad
         /// </summary>
-        /// <param name="elementList">La llista d'elements.</param>
+        /// <returns>L'objecte 'SPadElement' obtingut.</returns>
         /// 
-        private void ParseSPadNode(IList<Element> elementList) {
+        private SmdPadElement ParseSPadNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("spad"))
                 throw new InvalidDataException("Se esperaba <spad>");
 
-            // Obte els atributs de l'element.
-            //
             string name = rd.AttributeAsString("name");
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
@@ -807,13 +793,8 @@
             Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
             Ratio roundness = XmlTypeParser.ParseRatio(rd.AttributeAsString("roundness", "0"));
 
-            // Crea l'element i l'afegeix a la llista
-            //
             SmdPadElement pad = new SmdPadElement(name, layerSet, position, size, rotation, roundness);
-            elementList.Add(pad);
 
-            // Assigna la senyal 
-            //
             if (rd.AttributeExists("signal")) {
                 string signalName = rd.AttributeAsString("signal");
                 if (signalName != null) {
@@ -823,6 +804,11 @@
             }
 
             rd.NextTag();
+            if (!rd.IsEndTag("spad"))
+                throw new InvalidDataException("Se esperaba </spad>");
+            rd.NextTag();
+
+            return pad;
         }
 
         /// <summary>
@@ -832,13 +818,9 @@
         /// 
         private void ParseViaNode(IList<Element> elementList) {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("via"))
                 throw new InvalidDataException("Se esperaba <via>");
 
-            // Obte els atributs de l'element
-            //
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             int outerSize = XmlTypeParser.ParseNumber(rd.AttributeAsString("outerSize"));
@@ -848,8 +830,6 @@
             int drill = XmlTypeParser.ParseNumber(rd.AttributeAsString("drill"));
             ViaElement.ViaShape shape = rd.AttributeAsEnum<ViaElement.ViaShape>("shape", ViaElement.ViaShape.Circle);
 
-            // Crtea l'element i l'afegeix a la llista
-            //
             ViaElement via = new ViaElement(layerSet, position, outerSize, innerSize, drill, shape);
             elementList.Add(via);
 
@@ -869,43 +849,37 @@
         /// <summary>
         /// Procesa un node 'hole'
         /// </summary>
-        /// <param name="elementList">La llista d'elements.</param>
+        /// <returns>L'objecte 'HoleElement' obtigut.</returns>
         /// 
-        private void ParseHoleNode(IList<Element> elementList) {
+        private HoleElement ParseHoleNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("hole"))
                 throw new InvalidDataException("Se esperaba <hole>");
 
-            // Obte els atributs de l'element
-            //
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             int drill = XmlTypeParser.ParseNumber(rd.AttributeAsString("drill"));
 
-            // Crea l'element i l'afegeix a la llista
-            //
             HoleElement hole = new HoleElement(layerSet, position, drill);
-            elementList.Add(hole);
 
             rd.NextTag();
+            if (!rd.IsEndTag("hole"))
+                throw new InvalidDataException("Se esperaba </hole>");
+            rd.NextTag();
+
+            return hole;
         }
 
         /// <summary>
         /// Procesa un node 'text'
         /// </summary>
-        /// <param name="elementList">La llista d'elements.</param>
+        /// <returns>L'objecte 'TextElement' obtingut.</returns>
         /// 
-        private void ParseTextNode(IList<Element> elementList) {
+        private TextElement ParseTextNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("text"))
                 throw new InvalidDataException("Se esperaba <text>");
 
-            // Obte els parametres de l'objecte
-            //
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
@@ -915,15 +889,14 @@
             int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness"));
             string value = rd.AttributeAsString("value");
 
-            // Crea l'objecte i l'afegeix al la llista
-            //
-            TextElement text = new TextElement(layerSet, position, rotation, height, thickness, horizontalAlign, verticalAlign);
-            elementList.Add(text);
-            text.Value = value;
+            TextElement text = new TextElement(layerSet, position, rotation, height, thickness, horizontalAlign, verticalAlign, value);
 
-            // Llegeix el final del node
-            //
             rd.NextTag();
+            if (!rd.IsEndTag("text"))
+                throw new InvalidDataException("Se esperaba </text>");
+            rd.NextTag();
+
+            return text;
         }
     }
 }

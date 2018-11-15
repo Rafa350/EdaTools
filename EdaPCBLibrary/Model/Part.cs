@@ -105,6 +105,15 @@
             attributes.Add(attribute.Name, attribute);
         }
 
+        public void AddAttributes(IEnumerable<PartAttribute> attributes) {
+
+            if (attributes == null)
+                throw new ArgumentNullException("attributes");
+
+            foreach (var attribute in attributes)
+                AddAttribute(attribute);
+        }
+
         /// <summary>
         /// Elimina un atribut.
         /// </summary>

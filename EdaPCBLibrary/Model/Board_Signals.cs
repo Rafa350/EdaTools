@@ -32,6 +32,15 @@
             signals.Add(signal);
         }
 
+        public void AddSignals(IEnumerable<Signal> signals) {
+
+            if (signals == null)
+                throw new ArgumentNullException("signals");
+
+            foreach (var signal in signals)
+                AddSignal(signal);
+        }
+
         /// <summary>
         /// Retira una senyal de la placa.
         /// </summary>
