@@ -18,6 +18,11 @@
     /// 
     public sealed class BoardStreamReader {
 
+        private struct PadInfo {
+            public string Name;
+            public string SignalName;
+        }
+
         private static readonly XmlSchemaSet schemas;
 
         private readonly XmlReaderAdapter rd;
@@ -96,9 +101,9 @@
             rd.NextTag();
             ParseBoardNode(board);
 
-            // Llegeix el tag final
-            //
             rd.NextTag();
+            if (!rd.IsEndTag("document"))
+                throw new InvalidDataException("Se esperaba </document>");
         }
 
         /// <summary>
@@ -114,21 +119,19 @@
             version = rd.AttributeAsInteger("version");
 
             rd.NextTag();
-
             if (rd.TagName == "layers")
                 board.AddLayers(ParseLayersNode());
-
             if (rd.TagName == "signals") 
                 board.AddSignals(ParseSignalsNode());
-
             if (rd.TagName == "blocks") 
                 board.AddBlocks(ParseBlocksNode());
-
             if (rd.TagName == "parts")
                 board.AddParts(ParsePartsNode());
-
             if (rd.TagName == "elements")
-                ParseBoardElementsNode(board);
+                board.AddElements(ParseBoardElementsNode());
+
+            if (!rd.IsEndTag("board"))
+                throw new InvalidDataException("Se esperaba </board>");
 
             rd.NextTag();
         }
@@ -336,56 +339,56 @@
         /// <summary>
         /// Procesa el node 'elements'
         /// </summary>
-        /// <param name="board">La placa.</param>
+        /// <returns>La llista d'objectes 'Element' obtinguda.</returns>
         /// 
-        private void ParseBoardElementsNode(Board board) {
+        private IEnumerable<Element> ParseBoardElementsNode() {
 
             if (!rd.IsStartTag("elements"))
                 throw new InvalidDataException("Se esperaba <elements>");
 
-            List<Element> elementList = new List<Element>();
+            List<Element> elements = new List<Element>();
 
             rd.NextTag();
             while (rd.IsStart) {
                 switch (rd.TagName) {
                     case "line":
-                        elementList.Add(ParseLineNode());
+                        elements.Add(ParseLineNode());
                         break;
 
                     case "arc":
-                        elementList.Add(ParseArcNode());
+                        elements.Add(ParseArcNode());
                         break;
 
                     case "rectangle":
-                        elementList.Add(ParseRectangleNode());
+                        elements.Add(ParseRectangleNode());
                         break;
 
                     case "circle":
-                        elementList.Add(ParseCircleNode());
+                        elements.Add(ParseCircleNode());
                         break;
 
                     case "region":
-                        elementList.Add(ParseRegionNode());
+                        elements.Add(ParseRegionNode());
                         break;
 
                     case "tpad":
-                        elementList.Add(ParseTPadNode());
+                        elements.Add(ParseTPadNode());
                         break;
 
                     case "spad":
-                        elementList.Add(ParseSPadNode());
+                        elements.Add(ParseSPadNode());
                         break;
 
                     case "via":
-                        ParseViaNode(elementList);
+                        elements.Add(ParseViaNode());
                         break;
 
                     case "hole":
-                        elementList.Add(ParseHoleNode());
+                        elements.Add(ParseHoleNode());
                         break;
 
                     case "text":
-                        elementList.Add(ParseTextNode());
+                        elements.Add(ParseTextNode());
                         break;
 
                     default:
@@ -393,7 +396,11 @@
                 }
             }
 
-            board.AddElements(elementList);
+            if (!rd.IsEndTag("elements"))
+                throw new InvalidDataException("Se esperaba </elements>");
+            rd.NextTag();
+
+            return elements;
         }
 
         /// <summary>
@@ -446,7 +453,11 @@
                         break;
 
                     case "pads":
-                        ParsePartPadsNode(part);
+                        foreach (var padInfo in ParsePartPadsNode()) {
+                            PadElement pad = part.GetPad(padInfo.Name);
+                            Signal signal = board.GetSignal(padInfo.SignalName);
+                            board.Connect(signal, pad, part);
+                        }
                         break;
 
                     default:
@@ -525,23 +536,32 @@
         /// <summary>
         /// Procesa el node 'pads'
         /// </summary>
-        /// <param name="part">El part.</param>
+        /// <returns>La llista d'objectes 'PadInfo' obtinguda.</returns>
         /// 
-        private void ParsePartPadsNode(Part part) {
+        private IEnumerable<PadInfo> ParsePartPadsNode() {
 
             if (!rd.IsStartTag("pads"))
-                throw new InvalidDataException("Se esperaba <attributes>");
+                throw new InvalidDataException("Se esperaba <pads>");
 
-            while (rd.NextTag() && rd.IsStartTag("pad"))
-                ParsePartPadNode(part);
+            List<PadInfo> pads = new List<PadInfo>();
+
+            rd.NextTag();
+            while (rd.IsStartTag("pad"))
+                pads.Add(ParsePartPadNode());
+
+            if (!rd.IsEndTag("pads"))
+                throw new InvalidDataException("Se esperaba </pads>");
+            rd.NextTag();
+
+            return pads;
         }
 
         /// <summary>
         /// Procesa un node 'pad'.
         /// </summary>
-        /// <param name="part">El part.</param>
+        /// <returns>L'objecte 'PadInfo' obtingut.</returns>
         /// 
-        private void ParsePartPadNode(Part part) {
+        private PadInfo ParsePartPadNode() {
 
             if (!rd.IsStartTag("pad"))
                 throw new InvalidDataException("Se esperaba <pad>");
@@ -549,14 +569,17 @@
             string padName = rd.AttributeAsString("name");
             string signalName = rd.AttributeAsString("signal");
 
-            PadElement pad = part.GetPad(padName);
-            Signal signal = board.GetSignal(signalName);
-            board.Connect(signal, pad, part);
+            PadInfo padInfo = new PadInfo {
+                Name = padName,
+                SignalName = signalName
+            };
 
             rd.NextTag();
-            if (!rd.IsEndTag("part"))
+            if (!rd.IsEndTag("pad"))
                 throw new InvalidDataException("Se esperaba </pad>");
             rd.NextTag();
+
+            return padInfo;
         }
 
         /// <summary>
@@ -816,7 +839,7 @@
         /// </summary>
         /// <param name="elementList">La llista d'elements.</param>
         /// 
-        private void ParseViaNode(IList<Element> elementList) {
+        private ViaElement ParseViaNode() {
 
             if (!rd.IsStartTag("via"))
                 throw new InvalidDataException("Se esperaba <via>");
@@ -831,7 +854,6 @@
             ViaElement.ViaShape shape = rd.AttributeAsEnum<ViaElement.ViaShape>("shape", ViaElement.ViaShape.Circle);
 
             ViaElement via = new ViaElement(layerSet, position, outerSize, innerSize, drill, shape);
-            elementList.Add(via);
 
             // Assigna la senyal 
             //
@@ -844,6 +866,11 @@
             }
 
             rd.NextTag();
+            if (!rd.IsEndTag("via"))
+                throw new InvalidDataException("Se esperaba </via>");
+            rd.NextTag();
+
+            return via;
         }
 
         /// <summary>
