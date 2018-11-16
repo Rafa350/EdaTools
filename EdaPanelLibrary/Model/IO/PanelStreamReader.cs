@@ -30,7 +30,6 @@
         static PanelStreamReader() {
 
             schemas = new XmlSchemaSet();
-
             string schemaResourceName = "MikroPic.EdaTools.v1.Panel.Model.IO.Schemas.XPNL.xsd";
             Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(schemaResourceName);
             if (resourceStream == null)

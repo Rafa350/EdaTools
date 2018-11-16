@@ -8,7 +8,7 @@
     <ProjectGuid>{A9F79D69-13B0-45E0-B602-9A330FC22B9F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MikroPic.EdaTools.v1</RootNamespace>
+    <RootNamespace>MikroPic.EdaTools.v1.Panel</RootNamespace>
     <AssemblyName>EdaPanelLibrary</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
