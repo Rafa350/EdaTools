@@ -189,7 +189,7 @@
                     <circle layers="Top.Restrict" position="0, 0" radius="3.048" thickness="2.032" />
                     <circle layers="Bottom.Restrict" position="0, 0" radius="3.048" thickness="2.032" />
                     <circle layers="Top.Place" position="0, 0" radius="1.9" thickness="0.2032" />
-                    <hole layers="Holes, Top.Top, Bottom.Bottom" position="0, 0" drill="3.6" />
+                    <hole layers="Holes" position="0, 0" drill="3.6" />
                 </elements>
             </block>
             <block name="SO08@optoacopladores">
@@ -535,8 +535,8 @@
                     <rectangle layers="Top.Document" position="-4.625, -0.125" size="1, 2" />
                     <rectangle layers="Top.Document" position="4.644999, -0.125" size="1.000001, 2" />
                     <rectangle layers="Top.Document" position="2.52, -3.25" size="0.5, 1.5" />
-                    <hole layers="Holes, Top.Top, Bottom.Bottom" position="-3.58, -2.125" drill="0.85" />
-                    <hole layers="Holes, Top.Top, Bottom.Bottom" position="3.6, -2.125" drill="0.85" />
+                    <hole layers="Holes" position="-3.58, -2.125" drill="0.85" />
+                    <hole layers="Holes" position="3.6, -2.125" drill="0.85" />
                 </elements>
             </block>
             <block name="1X4-SMD-90-E@hirose-df13">
@@ -567,8 +567,8 @@
                     <rectangle layers="Top.Document" position="1.875, -3.25" size="0.5, 1.5" />
                     <rectangle layers="Top.Document" position="-4, -0.125" size="1, 2" />
                     <rectangle layers="Top.Document" position="4, -0.125" size="1, 2" />
-                    <hole layers="Holes, Top.Top, Bottom.Bottom" position="-2.955, -2.125" drill="0.85" />
-                    <hole layers="Holes, Top.Top, Bottom.Bottom" position="2.955, -2.125" drill="0.85" />
+                    <hole layers="Holes" position="-2.955, -2.125" drill="0.85" />
+                    <hole layers="Holes" position="2.955, -2.125" drill="0.85" />
                 </elements>
             </block>
             <block name="SOT89@microchip-analog">

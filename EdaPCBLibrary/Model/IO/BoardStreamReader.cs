@@ -103,7 +103,6 @@
             rd.NextTag();
             if (!rd.IsEndTag("document"))
                 throw new InvalidDataException("Se esperaba </document>");
-            rd.NextTag();
 }
 
         /// <summary>
@@ -118,21 +117,29 @@
             version = rd.AttributeAsInteger("version");
 
             rd.NextTag();
-            if (rd.TagName == "layers")
+            if (rd.TagName == "layers") {
                 board.AddLayers(ParseLayersNode());
-            if (rd.TagName == "signals") 
+                rd.NextTag();
+            }
+            if (rd.TagName == "signals") {
                 board.AddSignals(ParseSignalsNode());
-            if (rd.TagName == "blocks") 
+                rd.NextTag();
+            }
+            if (rd.TagName == "blocks") {
                 board.AddBlocks(ParseBlocksNode());
-            if (rd.TagName == "parts")
+                rd.NextTag();
+            }
+            if (rd.TagName == "parts") {
                 board.AddParts(ParsePartsNode());
-            if (rd.TagName == "elements")
+                rd.NextTag();
+            }
+            if (rd.TagName == "elements") {
                 board.AddElements(ParseBoardElementsNode());
+                rd.NextTag();
+            }
 
             if (!rd.IsEndTag("board"))
                 throw new InvalidDataException("Se esperaba </board>");
-
-            rd.NextTag();
         }
 
         /// <summary>
@@ -148,12 +155,13 @@
             List<Layer> layers = new List<Layer>();
 
             rd.NextTag();
-            while (rd.IsStartTag("layer"))
+            while (rd.IsStartTag("layer")) {
                 layers.Add(ParseLayerNode());
+                rd.NextTag();
+            }
 
             if (!rd.IsEndTag("layers"))
                 throw new InvalidDataException("Se esperaba </layers>");
-            rd.NextTag();
 
             return layers;
         }
@@ -174,7 +182,6 @@
             rd.NextTag();
             if (!rd.IsEndTag("layer"))
                 throw new InvalidDataException("Se esperaba </layer>");
-            rd.NextTag();
 
             Layer layer = new Layer(layerId, function);
             return layer;
@@ -192,12 +199,13 @@
             List<Signal> signals = new List<Signal>();
 
             rd.NextTag();
-            while (rd.IsStartTag("signal"))
+            while (rd.IsStartTag("signal")) {
                 signals.Add(ParseSignalNode());
+                rd.NextTag();
+            }
 
             if (!rd.IsEndTag("signals"))
                 throw new InvalidDataException("Se esperaba </signals>");
-            rd.NextTag();
 
             return signals;
         }
@@ -217,7 +225,6 @@
             rd.NextTag();
             if (!rd.IsEndTag("signal"))
                 throw new InvalidDataException("Se esperaba </signal>");
-            rd.NextTag();
 
             Signal signal = new Signal(name);
             return signal;
@@ -236,12 +243,13 @@
             List<Block> blocks = new List<Block>();
 
             rd.NextTag();
-            while (rd.IsStartTag("block"))
-               blocks.Add(ParseBlockNode());
+            while (rd.IsStartTag("block")) {
+                blocks.Add(ParseBlockNode());
+                rd.NextTag();
+            }
 
             if (!rd.IsEndTag("blocks"))
                 throw new InvalidDataException("Se esperaba </blocks>");
-            rd.NextTag();
 
             return blocks;
         }
@@ -262,10 +270,10 @@
 
             rd.NextTag();
             block.AddElements(ParseBlockElementsNode());
+            rd.NextTag();
 
             if (!rd.IsEndTag("block"))
                 throw new InvalidDataException("Se esperaba </block>");
-            rd.NextTag();
 
             return block;
         }
@@ -324,11 +332,11 @@
                     default:
                         throw new InvalidDataException("Se esperaba <line>, <arc>, <rectangle>, <circle>, <tpad>, <spad>, <via>, <text>, <region> o <hole>");
                 }
+                rd.NextTag();
             }
 
             if (!rd.IsEndTag("elements"))
                 throw new InvalidDataException("Se esperaba </elements>");
-            rd.NextTag();
 
             return elements;
         }
@@ -391,11 +399,11 @@
                     default:
                         throw new InvalidDataException("Se esperaba <line>, <arc>, <rectangle>, <circle>, <tpad>, <spad>, <via>, <text>, <region> o <hole>");
                 }
+                rd.NextTag();
             }
 
             if (!rd.IsEndTag("elements"))
                 throw new InvalidDataException("Se esperaba </elements>");
-            rd.NextTag();
 
             return elements;
         }
@@ -413,12 +421,13 @@
             List<Part> parts = new List<Part>();
 
             rd.NextTag();
-            while (rd.IsStartTag("part"))
+            while (rd.IsStartTag("part")) {
                 parts.Add(ParsePartNode());
+                rd.NextTag();
+            }
 
             if (!rd.IsEndTag("parts"))
                 throw new InvalidDataException("Se esperaba </parts>");
-            rd.NextTag();
 
             return parts;
         }
@@ -460,11 +469,11 @@
                     default:
                         throw new InvalidDataException("Se esperaba <pads> o <attributes>");
                 }
+                rd.NextTag();
             }
 
             if (!rd.IsEndTag("part"))
                 throw new InvalidDataException("Se esperaba </part>");
-            rd.NextTag();
 
             return part;
         }
@@ -481,12 +490,13 @@
             List<PartAttribute> attributes = new List<PartAttribute>();
 
             rd.NextTag();
-            while (rd.IsStartTag("attribute"))
+            while (rd.IsStartTag("attribute")) {
                 attributes.Add(ParsePartAttributeNode());
+                rd.NextTag();
+            }
 
             if (!rd.IsEndTag("attributes"))
                 throw new InvalidDataException("Se esperaba </attributes>");
-            rd.NextTag();
 
             return attributes;
         }
@@ -525,7 +535,6 @@
             rd.NextTag();
             if (!rd.IsEndTag("attribute"))
                 throw new InvalidDataException("Se esperaba </attribute>");
-            rd.NextTag();
 
             return attribute;
         }
@@ -543,12 +552,13 @@
             List<PadInfo> pads = new List<PadInfo>();
 
             rd.NextTag();
-            while (rd.IsStartTag("pad"))
+            while (rd.IsStartTag("pad")) {
                 pads.Add(ParsePartPadNode());
+                rd.NextTag();
+            }
 
             if (!rd.IsEndTag("pads"))
                 throw new InvalidDataException("Se esperaba </pads>");
-            rd.NextTag();
 
             return pads;
         }
@@ -569,7 +579,6 @@
             rd.NextTag();
             if (!rd.IsEndTag("pad"))
                 throw new InvalidDataException("Se esperaba </pad>");
-            rd.NextTag();
 
             PadInfo padInfo = new PadInfo {
                 Name = padName,
@@ -597,7 +606,6 @@
             rd.NextTag();
             if (!rd.IsEndTag("line"))
                 throw new InvalidDataException("Se esperaba </line>");
-            rd.NextTag();
 
             LineElement line = new LineElement(layerSet, startPosition, endPosition, thickness, lineCap);
             if (signalName != null) {
@@ -629,7 +637,6 @@
             rd.NextTag();
             if (!rd.IsEndTag("arc"))
                 throw new InvalidDataException("Se esperaba </arc>");
-            rd.NextTag();
 
             ArcElement arc = new ArcElement(layerSet, startPosition, endPosition, thickness, angle, lineCap);
             if (signalName != null) {
@@ -661,7 +668,6 @@
             rd.NextTag();
             if (!rd.IsEndTag("rectangle"))
                 throw new InvalidDataException("Se esperaba </rectangle>");
-            rd.NextTag();
 
             RectangleElement rectangle = new RectangleElement(layerSet, position, size, roundness, rotation, thickness, filled);
 
@@ -687,7 +693,6 @@
             rd.NextTag();
             if (!rd.IsEndTag("circle"))
                 throw new InvalidDataException("Se esperaba </circle>");
-            rd.NextTag();
 
             CircleElement circle = new CircleElement(layerSet, position, radius, thickness, filled);
 
@@ -717,12 +722,13 @@
             }
 
             rd.NextTag();
-            while (rd.IsStartTag("segment"))
+            while (rd.IsStartTag("segment")) {
                 region.Add(ParseRegionSegmentNode());
+                rd.NextTag();
+            }
 
             if (!rd.IsEndTag("region"))
                 throw new InvalidDataException("Se esperaba </region>");
-            rd.NextTag();
 
             return region;
         }
@@ -743,7 +749,6 @@
             rd.NextTag();
             if (!rd.IsEndTag("segment"))
                 throw new InvalidDataException("Se esperaba </segment>");
-            rd.NextTag();
 
             RegionElement.Segment segment = new RegionElement.Segment(position, angle);
 
@@ -772,7 +777,6 @@
             rd.NextTag();
             if (!rd.IsEndTag("tpad"))
                 throw new InvalidDataException("Se esperaba </tpad>");
-            rd.NextTag();
 
             ThPadElement pad = new ThPadElement(name, layerSet, position, rotation, size, shape, drill);
             if (signalName != null) {
@@ -804,7 +808,6 @@
             rd.NextTag();
             if (!rd.IsEndTag("spad"))
                 throw new InvalidDataException("Se esperaba </spad>");
-            rd.NextTag();
 
             SmdPadElement pad = new SmdPadElement(name, layerSet, position, size, rotation, roundness);
             if (signalName != null) {
@@ -838,7 +841,6 @@
             rd.NextTag();
             if (!rd.IsEndTag("via"))
                 throw new InvalidDataException("Se esperaba </via>");
-            rd.NextTag();
 
             ViaElement via = new ViaElement(layerSet, position, outerSize, innerSize, drill, shape);
             if (signalName != null) {
@@ -866,7 +868,6 @@
             rd.NextTag();
             if (!rd.IsEndTag("hole"))
                 throw new InvalidDataException("Se esperaba </hole>");
-            rd.NextTag();
 
             HoleElement hole = new HoleElement(layerSet, position, drill);
 
@@ -895,7 +896,6 @@
             rd.NextTag();
             if (!rd.IsEndTag("text"))
                 throw new InvalidDataException("Se esperaba </text>");
-            rd.NextTag();
 
             TextElement text = new TextElement(layerSet, position, rotation, height, thickness, horizontalAlign, verticalAlign, value);
 

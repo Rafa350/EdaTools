@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Model.IO {
 
     using MikroPic.EdaTools.v1.Xml;
+    using MikroPic.EdaTools.v1.Geometry;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -86,10 +87,9 @@
             rd.NextTag();
             Project project = ParseProjectNode();
 
+            rd.NextTag();
             if (!rd.IsEndTag("document"))
                 throw new InvalidDataException("Se esperaba </document>");
-
-            rd.NextTag();
 
             return project;
         }
@@ -109,13 +109,11 @@
             rd.NextTag();
             IEnumerable<Target> targetList = ParseTargetsNode();
 
-            Project project = new Project(boardFileName, targetList);
-
+            rd.NextTag();
             if (!rd.IsEndTag("project"))
                 throw new InvalidDataException("Se esperaba </project>");
 
-            rd.NextTag();
-
+            Project project = new Project(boardFileName, targetList);
             return project;
         }
 
@@ -129,18 +127,17 @@
             if (!rd.IsStartTag("targets"))
                 throw new InvalidDataException("Se esperaba <targets>");
 
+            List<Target> targets = new List<Target>();
+
             rd.NextTag();
-
-            List<Target> targetList = new List<Target>();
-            while (rd.IsStartTag("target"))
-                targetList.Add(ParseTargetNode());
-
+            while (rd.IsStartTag("target")) {
+                targets.Add(ParseTargetNode());
+                rd.NextTag();
+            }
             if (!rd.IsEndTag("targets"))
                 throw new InvalidDataException("Se esperaba </targets>");
 
-            rd.NextTag();
-
-            return targetList;
+            return targets;
         }
 
         /// <summary>
@@ -150,61 +147,58 @@
         /// 
         private Target ParseTargetNode() {
 
-            // Comprova que el node sigui correcte
-            //
             if (!rd.IsStartTag("target"))
                 throw new InvalidDataException("Se esperaba <target>");
 
-            // Obte els atributs de la capa
-            //
             string fileName = rd.AttributeAsString("output");
             string generatorName = rd.AttributeAsString("generator");
+            Point position = rd.AttributeExists("position") ?
+                XmlTypeParser.ParsePoint(rd.AttributeAsString("position")) :
+                new Point(0, 0);
+            Angle angle = rd.AttributeExists("rotation") ?
+                XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation")) :
+                Angle.Zero;
 
-            IEnumerable<string> layerList = null;
-            IEnumerable<TargetOption> optionList = null;
+            IEnumerable<string> layers = null;
+            IEnumerable<TargetOption> options = null;
 
             rd.NextTag();
-
-            if (rd.IsStartTag("layers"))
-                layerList = ParseLayersNode();
-
-            if (rd.IsStartTag("options")) 
-                optionList = ParseOptionsNode();
-
-            // Crea el target i l'afeigeix al projecte
-            //
-            Target target = new Target(fileName, generatorName, layerList, optionList);
-
+            if (rd.IsStartTag("layers")) {
+                layers = ParseLayersNode();
+                rd.NextTag();
+            }
+            if (rd.IsStartTag("options")) {
+                options = ParseOptionsNode();
+                rd.NextTag();
+            }
             if (!rd.IsEndTag("target"))
                 throw new InvalidDataException("Se esperaba </target>");
 
-            rd.NextTag();
-
+            Target target = new Target(fileName, generatorName, layers, options);
             return target;
         }
 
         /// <summary>
         /// Procesa un node 'layers'.
         /// </summary>
-        /// <returns>La llista d'ojectes 'string' obtinguda.</returns>
+        /// <returns>La llista d'objectes 'string' obtinguda.</returns>
         /// 
         private IEnumerable<string> ParseLayersNode() {
 
             if (!rd.IsStartTag("layers"))
                 throw new InvalidDataException("Se esperaba <layers>");
 
+            List<string> layerNames = new List<string>();
+
             rd.NextTag();
-
-            List<string> layerNameList = new List<string>();
-            while (rd.IsStartTag("layer"))
-                layerNameList.Add(ParseLayerNode());
-
+            while (rd.IsStartTag("layer")) {
+                layerNames.Add(ParseLayerNode());
+                rd.NextTag();
+            }
             if (!rd.IsEndTag("layers"))
                 throw new InvalidDataException("Se esperaba </layers>");
 
-            rd.NextTag();
-
-            return layerNameList;
+            return layerNames;
         }
 
         /// <summary>
@@ -217,15 +211,11 @@
             if (!rd.IsStartTag("layer"))
                 throw new InvalidDataException("Se esperaba <layer>");
 
-            // Obte els atributs de la capa
-            //
             string name = rd.AttributeAsString("name");
 
             rd.NextTag();
             if (!rd.IsEndTag("layer"))
                 throw new InvalidDataException("Se esperaba </layer>");
-
-            rd.NextTag();
 
             return name;
         }
@@ -240,18 +230,17 @@
             if (!rd.IsStartTag("options"))
                 throw new InvalidDataException("Se esperaba <options>");
 
+            List<TargetOption> targetOptions = new List<TargetOption>();
+
             rd.NextTag();
-
-            List<TargetOption> targetOptionList = new List<TargetOption>();
-            while (rd.IsStartTag("option"))
-                targetOptionList.Add(ParseOptionNode());
-
+            while (rd.IsStartTag("option")) {
+                targetOptions.Add(ParseOptionNode());
+                rd.NextTag();
+            }
             if (!rd.IsEndTag("options"))
                 throw new InvalidDataException("Se esperaba </options>");
 
-            rd.NextTag();
-
-            return targetOptionList;
+            return targetOptions;
         }
 
         /// <summary>
@@ -264,19 +253,14 @@
             if (!rd.IsStartTag("option"))
                 throw new InvalidDataException("Se esperaba <option>");
 
-            // Obte els atributs de l'opcio
-            //
             string name = rd.AttributeAsString("name");
             string value = rd.AttributeAsString("value");
-
-            TargetOption targetOption = new TargetOption(name, value);
 
             rd.NextTag();
             if (!rd.IsEndTag("option"))
                 throw new InvalidDataException("Se esperaba </option>");
 
-            rd.NextTag();
-
+            TargetOption targetOption = new TargetOption(name, value);
             return targetOption;
         }
     }

@@ -18,7 +18,7 @@
     /// Clase per importar una placa desde Eagle
     /// </summary>
     /// 
-    public sealed class EagleImporter : Importer {
+    public sealed class EagleImporter: Importer {
 
         private readonly Dictionary<string, Block> componentDict = new Dictionary<string, Block>();
         private readonly Dictionary<string, Signal> signalDict = new Dictionary<string, Signal>();
@@ -688,14 +688,14 @@
             //
             int drill = ParseNumber(GetAttributeAsString(node, "drill"));
 
-            LayerSet layerSet = new LayerSet(Layer.HolesId, Layer.TopId, Layer.BottomId);
+            LayerSet layerSet = new LayerSet(Layer.HolesId);
             HoleElement element = new HoleElement(layerSet, position, drill);
 
             return element;
         }
 
         /// <summary>
-        /// Procesa un node ELEMENT
+        /// Procesa un node 'ELEMENT'
         /// </summary>
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'Part' creat.</returns>

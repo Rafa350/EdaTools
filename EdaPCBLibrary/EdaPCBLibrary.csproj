@@ -85,6 +85,7 @@
     <Compile Include="Model\IRotation.cs" />
     <Compile Include="Model\ISize.cs" />
     <Compile Include="Model\LayerSet.cs" />
+    <Compile Include="Model\Part_Attributes.cs" />
     <Compile Include="Model\PartExtensions.cs" />
     <Compile Include="Model\Visitors\BlockVisitor.cs" />
     <Compile Include="Model\Visitors\DefaultVisitor.cs" />
