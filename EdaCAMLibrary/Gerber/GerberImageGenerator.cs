@@ -68,6 +68,7 @@
                 // Prepara el generador de gerbers
                 //
                 GerberBuilder gb = new GerberBuilder(writer);
+                gb.SetTransformation(Target.Position, Target.Rotation);
 
                 // Genera la capcelera del fitxer
                 //

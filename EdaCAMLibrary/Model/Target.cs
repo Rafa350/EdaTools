@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Model {
 
+    using MikroPic.EdaTools.v1.Geometry;
     using System;
     using System.Collections.Generic;
 
@@ -8,6 +9,8 @@
         private readonly string fileName;
         private readonly string generatorName;
         private readonly IEnumerable<string> layerNames;
+        private Point position;
+        private Angle rotation;
         private Dictionary<string, TargetOption> options;
 
         /// <summary>
@@ -17,7 +20,7 @@
         /// <param name="generatorName">Nom del generador.</param>
         /// <param name="layerNames">Llista de noms de capes a procesar.</param>
         /// 
-        public Target(string fileName, string generatorName, IEnumerable<string> layerNames = null, IEnumerable<TargetOption> options = null) {
+        public Target(string fileName, string generatorName, Point position, Angle rotation, IEnumerable<string> layerNames = null, IEnumerable<TargetOption> options = null) {
 
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException("fileName");
@@ -27,6 +30,8 @@
 
             this.fileName = fileName;
             this.generatorName = generatorName;
+            this.position = position;
+            this.rotation = rotation;
             this.layerNames = layerNames;
 
             if (options != null)
@@ -104,6 +109,18 @@
         public string GeneratorName {
             get {
                 return generatorName;
+            }
+        }
+
+        public Point Position {
+            get {
+                return position;
+            }
+        }
+
+        public Angle Rotation {
+            get {
+                return rotation;
             }
         }
 

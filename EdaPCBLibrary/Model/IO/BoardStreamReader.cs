@@ -65,8 +65,8 @@
             settings.IgnoreWhitespace = true;
             settings.IgnoreComments = true;
             settings.CloseInput = false;
-            settings.ValidationType = ValidationType.Schema;
             settings.Schemas = schemas;
+            settings.ValidationType = schemas == null ? ValidationType.None : ValidationType.Schema;
             settings.ConformanceLevel = ConformanceLevel.Document;
 
             XmlReader reader = XmlReader.Create(stream, settings);

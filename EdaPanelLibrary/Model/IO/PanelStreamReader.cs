@@ -20,7 +20,6 @@
         private static readonly XmlSchemaSet schemas;
 
         private readonly XmlReaderAdapter rd;
-        private Panel panel;
         private int version;
 
         /// <summary>
@@ -58,8 +57,8 @@
             settings.IgnoreWhitespace = true;
             settings.IgnoreComments = true;
             settings.CloseInput = false;
-            settings.ValidationType = ValidationType.Schema;
             settings.Schemas = schemas;
+            settings.ValidationType = schemas == null ? ValidationType.None : ValidationType.Schema;
             settings.ConformanceLevel = ConformanceLevel.Document;
 
             XmlReader reader = XmlReader.Create(stream, settings);
@@ -73,10 +72,8 @@
         /// 
         public Panel Read() {
 
-            panel = new Panel();
-
             rd.NextTag();
-            ParseDocumentNode(panel);
+            Panel panel = ParseDocumentNode();
 
             return panel;
         }
@@ -84,140 +81,127 @@
         /// <summary>
         /// Procesa el node 'document'
         /// </summary>
-        /// <param name="panel">El panell.</param>
+        /// <returns>L'objecte 'Panel' obtingut.</returns>
         /// 
-        private void ParseDocumentNode(Panel panel) {
+        private Panel ParseDocumentNode() {
 
             if (!rd.IsStartTag("document"))
                 throw new InvalidDataException("Se esperaba <document>");
 
-            rd.NextTag();
-            ParsePanelNode(panel);
+            int version = rd.AttributeAsInteger("version");
 
-            // Llegeix el tag final
-            //
             rd.NextTag();
+            Panel panel = ParsePanelNode();
+
+            rd.NextTag();
+            if (!rd.IsEndTag("document"))
+                throw new InvalidDataException("Se esperaba </document>");
+
+            return panel;
         }
 
         /// <summary>
         /// Procesa el node 'panel'
         /// </summary>
-        /// <param name="panel">El panell.</param>
+        /// <returns>L'objecte 'Panel' obtingut.</returns>
         /// 
-        private void ParsePanelNode(Panel panel) {
+        private Panel ParsePanelNode() {
 
             if (!rd.IsStartTag("panel"))
                 throw new InvalidDataException("Se esperaba <panel>");
 
             version = rd.AttributeAsInteger("version");
 
+            Panel panel = new Panel();
+
             rd.NextTag();
-            ParsePanelElementsNode(panel);
+            panel.AddElements(ParsePanelElementsNode());
+
+            rd.NextTag();
+            if (!rd.IsEndTag("panel"))
+                throw new InvalidDataException("Se esperaba </panel>");
+
+            return panel;
         }
 
         /// <summary>
         /// Procesa el node 'elements'
         /// </summary>
-        /// <param name="board">La placa.</param>
+        /// <returns>La coleccio d'objectes 'PanelElement' obtinguda.</returns>
         /// 
-        private void ParsePanelElementsNode(Panel panel) {
+        private IEnumerable<PanelElement> ParsePanelElementsNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("elements"))
                 throw new InvalidDataException("Se esperaba <elements>");
 
-            // Obte els elements
-            //
-            List<PanelElement> elementList = new List<PanelElement>();
-            while (rd.NextTag() && rd.IsStart) {
+            List<PanelElement> elements = new List<PanelElement>();
+
+            rd.NextTag();
+            while (rd.IsStart) {
                 switch (rd.TagName) {
                     case "place":
-                        ParsePlaceNode(elementList);
+                        elements.Add(ParsePlaceNode());
                         break;
 
                     case "join":
-                        ParseJoinNode(elementList);
+                        elements.Add(ParseJoinNode());
                         break;
 
                     default:
                         throw new InvalidDataException("Se esperaba <place> o <join>");
                 }
+                rd.NextTag();
             }
 
-            // Afegeix els elements al bloc
-            //
-            panel.AddElements(elementList);
+            if (!rd.IsEndTag("elements"))
+                throw new InvalidDataException("Se esperaba </elements>");
+
+            return elements;
         }
 
         /// <summary>
         /// Procesa el node 'place'
         /// </summary>
-        /// <param name="elementList">La llista d'elements.</param>
+        /// <returns>L'objecte 'PlaceElement' obtingut.</returns>
         /// 
-        private void ParsePlaceNode(IList<PanelElement> elementList) {
+        private PlaceElement ParsePlaceNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("place"))
                 throw new InvalidDataException("Se esperaba <place>");
 
-            // Obte els atributs del element
-            //
             string fileName = rd.AttributeAsString("fileName");
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation"));
 
-            // Crea l'element i l'afegeix a la llista
-            //
-            PlaceElement line = new PlaceElement(fileName, position, rotation);
-            elementList.Add(line);
-
-            // Llegeix el final del node
-            //
             rd.NextTag();
+            if (!rd.IsEndTag("place"))
+                throw new InvalidDataException("Se esperaba </place>");
+
+            PlaceElement place = new PlaceElement(fileName, position, rotation);
+
+            return place;
         }
 
         /// <summary>
         /// Procesa un node 'join'.
         /// </summary>
-        /// <param name="elementList">La llista d'elements.</param>
+        /// <returns>L'objecte 'JoinElement' obtingut.</returns>
         /// 
-        private void ParseJoinNode(IList<PanelElement> elementList) {
+        private JoinElement ParseJoinNode() {
 
-            // Comprova que el node sigui el correcte
-            //
             if (!rd.IsStartTag("join"))
                 throw new InvalidDataException("Se esperaba <join>");
 
-            // Obte els atributs de l'element
-            //
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation"));
 
-            // Crea l'element i l'afegeix a la llista
-            //
-            JoinElement join = new JoinElement(position, rotation);
-            elementList.Add(join);
-
             rd.NextTag();
-        }
+            if (!rd.IsEndTag("join"))
+                throw new InvalidDataException("Se esperaba </join>");
 
-        /// <summary>
-        /// Procesa un atribut de tipus 'Number'
-        /// </summary>
-        /// <param name="name">El nom de l'atribut.</param>
-        /// <param name="defValue">El valor per defecte.</param>
-        /// <returns>El valor de l'atribut, o el valor per defecte si no existeix.</returns>
-        /// 
-        private int ParseNumberAttribute(string name, int defValue = 0) {
+            JoinElement join = new JoinElement(position, rotation);
 
-            if (rd.AttributeExists(name)) {
-                double v = rd.AttributeAsDouble(name, defValue);
-                return (int)(v * 1000000.0);
-            }
-            else
-                return defValue;
+            return join;
         }
     }
 }

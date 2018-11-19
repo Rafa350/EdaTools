@@ -109,7 +109,7 @@
 
                     List<Polygon> holePolygons = new List<Polygon>();
 
-                    Layer restrictLayer = GetLayer(layer.Id.Side == BoardSide.Top ? Layer.TopRestrictId : Layer.BottomRestrictId);
+                    LayerId restrictLayerId = layer.Id.Side == BoardSide.Top ? Layer.TopRestrictId : Layer.BottomRestrictId;
 
                     // Procesa els elements de la placa que es troben en la mateixa capa que 
                     // la regio, o en les capes restrict o profile.
@@ -132,10 +132,10 @@
                                 }
                             }
 
-                            // El element esta el la capa restrict
+                            // El element esta el la capa restrict o la capa holes
                             //
-                            else if (element.IsOnLayer(restrictLayer.Id)) {
-                                Polygon elementPolygon = element.GetPolygon(restrictLayer.Id.Side);
+                            else if (element.IsOnLayer(restrictLayerId) || element.IsOnLayer(Layer.HolesId)) {
+                                Polygon elementPolygon = element.GetPolygon(restrictLayerId.Side);
                                 if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                     holePolygons.Add(elementPolygon);
                             }
@@ -161,7 +161,7 @@
                         foreach (var element in part.Elements) {
 
                             if ((element != region) &&
-                                (element.IsOnLayer(layer.Id) || element.IsOnLayer(restrictLayer.Id))) {
+                                (element.IsOnLayer(layer.Id) || element.IsOnLayer(restrictLayerId) || element.IsOnLayer(Layer.HolesId))) {
 
                                 // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
                                 //

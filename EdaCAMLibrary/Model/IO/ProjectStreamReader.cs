@@ -12,7 +12,6 @@
     public sealed class ProjectStreamReader {
 
         private static readonly XmlSchemaSet schemas;
-        private static XmlReaderSettings settings;
 
         private readonly XmlReaderAdapter rd;
         private int version;
@@ -31,15 +30,6 @@
             schemas = new XmlSchemaSet();
             schemas.Add(XmlSchema.Read(resourceStream, null));
             schemas.Compile();
-
-            settings = new XmlReaderSettings();
-            settings.IgnoreProcessingInstructions = true;
-            settings.IgnoreWhitespace = true;
-            settings.IgnoreComments = true;
-            settings.CloseInput = false;
-            settings.ValidationType = ValidationType.Schema;
-            settings.Schemas = schemas;
-            settings.ConformanceLevel = ConformanceLevel.Document;
         }
 
         /// <summary>
@@ -54,6 +44,15 @@
 
             if (!stream.CanRead)
                 throw new InvalidOperationException("El stream no es de lectura.");
+
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.IgnoreProcessingInstructions = true;
+            settings.IgnoreWhitespace = true;
+            settings.IgnoreComments = true;
+            settings.CloseInput = false;
+            settings.Schemas = schemas;
+            settings.ValidationType = schemas == null ? ValidationType.None : ValidationType.Schema;
+            settings.ConformanceLevel = ConformanceLevel.Document;
 
             XmlReader reader = XmlReader.Create(stream, settings);
             rd = new XmlReaderAdapter(reader);
@@ -155,7 +154,7 @@
             Point position = rd.AttributeExists("position") ?
                 XmlTypeParser.ParsePoint(rd.AttributeAsString("position")) :
                 new Point(0, 0);
-            Angle angle = rd.AttributeExists("rotation") ?
+            Angle rotation = rd.AttributeExists("rotation") ?
                 XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation")) :
                 Angle.Zero;
 
@@ -174,7 +173,7 @@
             if (!rd.IsEndTag("target"))
                 throw new InvalidDataException("Se esperaba </target>");
 
-            Target target = new Target(fileName, generatorName, layers, options);
+            Target target = new Target(fileName, generatorName, position, rotation, layers, options);
             return target;
         }
 
