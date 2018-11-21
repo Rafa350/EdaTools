@@ -24,6 +24,7 @@
             <xs:sequence>
                 <xs:element ref="elements" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
+            <xs:attribute name="size" use="required" type="sizeType"/>
         </xs:complexType>
     </xs:element>
     
@@ -59,7 +60,7 @@
     <xs:element
         name="place">
         <xs:complexType>
-            <xs:attribute name="fileName" use="required" type="xs:string"/>
+            <xs:attribute name="board" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="rotation" use="required" type="xs:double"/>
         </xs:complexType>
@@ -80,6 +81,13 @@
     
     <xs:simpleType
         name="pointType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$"/>
+        </xs:restriction>        
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="sizeType">
         <xs:restriction base="xs:string">
             <xs:pattern value="^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$"/>
         </xs:restriction>        
