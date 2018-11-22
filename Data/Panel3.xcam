@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document version="100" documentType="camProject" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/XCAM.xsd">
+    <project board="panel3.xbrd">
+        <targets>
+
+            <!-- Capa coure L1 top -->
+            <target name ="Copper.1" output="panel3_Copper$L1.gbr" generator="gerber-image">
+                <layers>
+                    <layer name="Top.Top"/>
+                </layers>
+                <options>
+                    <option name="imageType" value="copper"/>
+                    <option name="layerLevel" value="1"/>
+                </options>
+            </target>
+
+            <!-- Capa coure L2 bottom -->
+            <target name ="Copper.2" output="panel3_Copper$L2.gbr" generator="gerber-image">
+                <layers>
+                    <layer name="Bottom.Bottom"/>
+                </layers>
+                <options>
+                    <option name="imageType" value="copper"/>
+                    <option name="layerLevel" value="2"/>
+                </options>
+            </target>
+
+            <!-- Capa soldermask top -->
+            <target name="Soldermask.Top" output="panel3_Soldermask$Top.gbr" generator="gerber-image">
+                <layers>
+                    <layer name="Top.Stop"/>
+                </layers>
+                <options>
+                    <option name="imageType" value="topSolderMask"/>
+                </options>
+            </target>
+
+            <!-- Capa soldermask bottom -->
+            <target name="Soldermask.Bottom" output="panel3_Soldermask$Bottom.gbr" generator="gerber-image">
+                <layers>
+                    <layer name="Bottom.Stop"/>
+                </layers>
+                <options>
+                    <option name="imageType" value="bottomSolderMask"/>
+                </options>
+            </target>
+
+            <!-- Capa silk top -->
+            <target name="Legend.Top" output="panel3_Legend$Top.gbr" generator="gerber-image">
+                <layers>
+                    <layer name="Top.Place"/>
+                    <layer name="Top.Names"/>
+                </layers>
+                <options>
+                    <option name="imageType" value="topLegend"/>
+                </options>
+            </target>
+
+            <!-- Capa silk bottom -->
+            <target name="Legent.Bottom" output="panel3_Legend$Bottom.gbr" generator="gerber-image">
+                <layers>
+                    <layer name="Bottom.Place"/>
+                    <layer name="Bottom.Names"/>
+                </layers>
+                <options>
+                    <option name="imageType" value="bottomLegend"/>
+                </options>
+            </target>
+
+            <!-- Perfil -->
+            <target name="Profile" output="panel3_Profile$NP.gbr" generator="gerber-image">
+                <layers>
+                    <layer name="Profile"/>
+                </layers>
+                <options>
+                    <option name="imageType" value="profile"/>
+                </options>
+            </target>
+
+            <!-- Forats no platejats capes 1-2 -->
+            <target name="NonPlated.1.2.Drill" output="panel3_NonPlated$1$2$NPTH$Drill.gbr" generator="gerber-drill">
+                <layers>
+                    <layer name="Holes"/>
+                </layers>
+                <options>
+                    <option name="drillType" value="nonPlatedDrill"/>
+                    <option name="topLevel" value="1"/>
+                    <option name="bottomLevel" value="2"/>
+                </options>
+            </target>
+
+            <!-- Forats platejats capes 1-2 -->
+            <target name="Plated.1.2.Drill" output="panel3_Plated$1$2$PTH$Drill.gbr" generator="gerber-drill">
+                <layers>
+                    <layer name="Drills"/>
+                </layers>
+                <options>
+                    <option name="drillType" value="platedDrill"/>
+                    <option name="topLevel" value="1"/>
+                    <option name="bottomLevel" value="2"/>
+                </options>
+            </target>
+
+            <!-- Netlist IPC-D-356 -->
+            <target name="IPC-D356" output="panel3.ipc" generator="ipc-D356">
+            </target>
+
+        </targets>
+    </project>
+</document>

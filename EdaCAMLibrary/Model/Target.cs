@@ -6,6 +6,7 @@
 
     public sealed class Target {
 
+        private readonly string name;
         private readonly string fileName;
         private readonly string generatorName;
         private readonly IEnumerable<string> layerNames;
@@ -20,7 +21,7 @@
         /// <param name="generatorName">Nom del generador.</param>
         /// <param name="layerNames">Llista de noms de capes a procesar.</param>
         /// 
-        public Target(string fileName, string generatorName, Point position, Angle rotation, IEnumerable<string> layerNames = null, IEnumerable<TargetOption> options = null) {
+        public Target(string name, string fileName, string generatorName, Point position, Angle rotation, IEnumerable<string> layerNames = null, IEnumerable<TargetOption> options = null) {
 
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException("fileName");
@@ -28,6 +29,7 @@
             if (String.IsNullOrEmpty(generatorName))
                 throw new ArgumentNullException("generatorName");
 
+            this.name = name;
             this.fileName = fileName;
             this.generatorName = generatorName;
             this.position = position;
@@ -90,6 +92,12 @@
 
             else
                 return null;
+        }
+
+        public string Name {
+            get {
+                return name;
+            }
         }
 
         /// <summary>

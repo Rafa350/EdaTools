@@ -1,4 +1,4 @@
-﻿namespace EdaDebugTest {
+﻿namespace MikroPic.EdaTools.v1.Panelizer {
 
     using MikroPic.EdaTools.v1.Pcb.Model;
     using MikroPic.EdaTools.v1.Pcb.Model.IO;

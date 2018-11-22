@@ -169,7 +169,7 @@
             if (!rd.IsStartTag("place"))
                 throw new InvalidDataException("Se esperaba <place>");
 
-            string fileName = rd.AttributeAsString("fileName");
+            string fileName = rd.AttributeAsString("board");
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation"));
 

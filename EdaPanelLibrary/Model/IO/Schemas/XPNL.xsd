@@ -25,6 +25,7 @@
                 <xs:element ref="elements" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
             <xs:attribute name="size" use="required" type="sizeType"/>
+            <xs:attribute name="output" use="required" type="xs:string"/>
         </xs:complexType>
     </xs:element>
     

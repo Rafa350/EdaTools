@@ -149,6 +149,7 @@
             if (!rd.IsStartTag("target"))
                 throw new InvalidDataException("Se esperaba <target>");
 
+            string name = rd.AttributeAsString("name");
             string fileName = rd.AttributeAsString("output");
             string generatorName = rd.AttributeAsString("generator");
             Point position = rd.AttributeExists("position") ?
@@ -173,7 +174,7 @@
             if (!rd.IsEndTag("target"))
                 throw new InvalidDataException("Se esperaba </target>");
 
-            Target target = new Target(fileName, generatorName, position, rotation, layers, options);
+            Target target = new Target(name, fileName, generatorName, position, rotation, layers, options);
             return target;
         }
 

@@ -21,6 +21,7 @@
             else {
 
                 string projectFileName = Path.GetFullPath(args[0]);
+                string targetName = null;
                 bool pause = false;
 
                 if (args.Length > 1) {
@@ -28,12 +29,15 @@
                     for (int i = 1; i < args.Length; i++) {
                         string arg = args[i];
 
-                        if (arg == "/p")
+                        if (arg.StartsWith("/t:"))
+                            targetName = arg.Substring(3);
+
+                        else if (arg == "/p")
                             pause = true;
                     }
                 }
 
-                ProcessProject(projectFileName);
+                ProcessProject(projectFileName, targetName);
 
                 if (pause)
                     WaitKey();
@@ -60,8 +64,9 @@
                 "edacamtool <project> [options]\r\n" +
                 "   <project>             : Project file name.\r\n" +
                 "   [options]             : Optional parameters.\r\n" +
-                "     /z:<zip>            :   Output ZIP file name.\r\n" +
-                "     /p                  :   Pause at end.\r\n";
+                "     /p                  :   Pause at end.\r\n" +
+                "     /t                  :   Target to process.\r\n" +
+                "     /z:<zip>            :   Output ZIP file name.\r\n";
 
             Console.WriteLine(help);            
         }
@@ -80,11 +85,12 @@
         /// Procesa una placa
         /// </summary>
         /// <param name="fileName">Nom del fitxer del projecte.</param>
+        /// <param name="targetName">Nom del target a procesar. Si es null, procesa tots.</param>
         /// 
-        private static void ProcessProject(string fileName) {
+        private static void ProcessProject(string fileName, string targetName) {
 
             ProjectProcessor cg = new ProjectProcessor();
-            cg.Process(fileName);
+            cg.Process(fileName, targetName);
         }
     }
 }

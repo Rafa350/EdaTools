@@ -15,24 +15,26 @@
         /// Procesa un projecte.
         /// </summary>
         /// <param name="projectFileName">Nom del fitxer del projecte.</param>
+        /// <param name="targetName">Nom del target a procesar. Si es null, es procesan tots.</param>
         /// 
-        public void Process(string projectFileName) {
+        public void Process(string projectFileName, string targetName) {
 
             if (String.IsNullOrEmpty(projectFileName))
                 throw new ArgumentNullException("projectFileName");
 
             string projectFolder = Path.GetDirectoryName(projectFileName);
             Project project = LoadProject(projectFileName);
-            Process(project, projectFolder);
+            Process(project, targetName, projectFolder);
         }
 
         /// <summary>
         /// Procesa un projecte.
         /// </summary>
         /// <param name="project">El projecte.</param>
+        /// <param name="targetName">Nom del target a procesar. Si es null, els procesa tots.</param>
         /// <param name="projectFolder">Carpeta del projecte.</param>
         /// 
-        public void Process(Project project, string projectFolder) {
+        public void Process(Project project, string targetName, string projectFolder) {
 
             if (project == null)
                 throw new ArgumentNullException("project");
@@ -40,8 +42,10 @@
             Board board = LoadBoard(project, projectFolder);
 
             foreach (var target in project.Targets) {
-                Generator generator = LoadGenerator(target);
-                generator.Generate(board, projectFolder);
+                if ((targetName == null) || (target.Name == targetName)) {
+                    Generator generator = LoadGenerator(target);
+                    generator.Generate(board, projectFolder);
+                }
             }
         }
 
