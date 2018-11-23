@@ -1,0 +1,78 @@
+device resistor {
+    
+    port a {
+        type = pasive;
+        pin = "1";
+    }
+    port b {
+        type = pasive;
+        pin = "2";
+    }
+    
+    attribute name = "r?";
+    attribute resistance = 0;
+}
+
+device capacitor {
+
+    port a {
+        type = pasive;
+        pin = "1";
+    }
+    port b {
+        type = pasive;
+        pin = "2";
+    }
+    
+    attribute name = "c?";
+    attribute capacitance = 0;
+}
+
+device polarized_capacitor {
+
+    port p {
+        type = pasive;
+        pin = "1"
+    }
+    port n {
+        type = pasive;
+        pin = "2";
+    }
+    
+    attribute name = "c?";
+    attribute capacitance = 0;    
+}
+
+module pi_filter {
+
+    port i {
+        type = pasive;
+    }
+    
+    port o {
+        type = pasive;
+    }
+    
+    port gnd {
+        type = power;
+    }
+
+    resistor r1 {
+        name = "R1";
+        value = 100;
+    }
+    
+    capacitor c1 {
+        name = "C1";
+        value = "100E-9";
+    }
+    
+    capacitor c2 {
+        name = "C2";
+        value = "100E-9";
+    }
+    
+    link i, c1.a, r1.a
+    link o, c2.a, r1.b
+    link gnd, c1.b, c2.b;
+}
