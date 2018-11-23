@@ -13,6 +13,7 @@ device resistor {
     attribute resistance = 0;
 }
 
+
 device capacitor {
 
     port a {
@@ -28,6 +29,7 @@ device capacitor {
     attribute capacitance = 0;
 }
 
+
 device polarized_capacitor {
 
     port p {
@@ -42,6 +44,7 @@ device polarized_capacitor {
     attribute name = "c?";
     attribute capacitance = 0;    
 }
+
 
 module pi_filter {
 
