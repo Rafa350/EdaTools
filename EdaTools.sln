@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaPanelizer", "EdaPanelize
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaHDCLibrary", "EdaHDCLibrary\EdaHDCLibrary.csproj", "{540D8519-6CD3-489D-AA1A-8C23E8F51648}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaHDCCompiler", "EdaHDCCompiler\EdaHDCCompiler.csproj", "{54C85083-B3AC-4238-B3B5-732DC5B45B91}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{540D8519-6CD3-489D-AA1A-8C23E8F51648}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{540D8519-6CD3-489D-AA1A-8C23E8F51648}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{540D8519-6CD3-489D-AA1A-8C23E8F51648}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54C85083-B3AC-4238-B3B5-732DC5B45B91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54C85083-B3AC-4238-B3B5-732DC5B45B91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54C85083-B3AC-4238-B3B5-732DC5B45B91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54C85083-B3AC-4238-B3B5-732DC5B45B91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -110,6 +116,7 @@ Global
 		{A9F79D69-13B0-45E0-B602-9A330FC22B9F} = {2AE1055B-66C8-4106-A68A-95A015805086}
 		{EE1F80CC-4777-40A7-89D6-1923BBE52404} = {92F26718-1D57-463C-8AF1-6BE8F0199D09}
 		{540D8519-6CD3-489D-AA1A-8C23E8F51648} = {2AE1055B-66C8-4106-A68A-95A015805086}
+		{54C85083-B3AC-4238-B3B5-732DC5B45B91} = {92F26718-1D57-463C-8AF1-6BE8F0199D09}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE385F67-7CB1-40F1-B714-28A5F985E431}

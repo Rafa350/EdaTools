@@ -6,14 +6,13 @@
         Input,
         Output,
         Bidirectional,
-        Passive
+        Pasive
     }
 
-    public sealed class Port {
+    public abstract class Port {
 
         private string name;
-        private PortType portType = PortType.Passive;
-        private string pinName;
+        private PortType portType = PortType.Pasive;
 
         public Port(string name) {
 
@@ -23,31 +22,40 @@
             this.name = name;
         }
 
-        public Port(string name, PortType portType, string pinName) {
+        public Port(string name, PortType portType) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
             this.name = name;
             this.portType = portType;
-            this.pinName = pinName;
         }
 
+        /// <summary>
+        /// Obte o asigna el nom del port.
+        /// </summary>
+        /// 
         public string Name {
             get {
                 return name;
             }
+            set {
+                if (String.IsNullOrEmpty(value))
+                    throw new ArgumentNullException("Name");
+                name = value;
+            }
         }
 
+        /// <summary>
+        /// Obte o asigna el tipus de port.
+        /// </summary>
+        /// 
         public PortType PortType {
             get {
                 return portType;
             }
-        }
-
-        public string PinName {
-            get {
-                return pinName;
+            set {
+                portType = value;
             }
         }
     }

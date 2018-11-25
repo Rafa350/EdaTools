@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{540D8519-6CD3-489D-AA1A-8C23E8F51648}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MikroPic.EdaTools.v1.Hdc</RootNamespace>
-    <AssemblyName>EdaHDCLibrary</AssemblyName>
+    <ProjectGuid>{54C85083-B3AC-4238-B3B5-732DC5B45B91}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MikroPic.EdaTools.v1.HDCCompiler</RootNamespace>
+    <AssemblyName>EdaHDCCompiler</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -21,9 +22,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\bin\Release\</OutputPath>
@@ -38,20 +39,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ast\ComplexDeclarationNode.cs" />
-    <Compile Include="Ast\DeclarationNode.cs" />
-    <Compile Include="Ast\IdentifierNode.cs" />
-    <Compile Include="Ast\Node.cs" />
-    <Compile Include="Ast\SimpleDeclarationNode.cs" />
-    <Compile Include="Ast\TypeNode.cs" />
-    <Compile Include="Ast\ValueNode.cs" />
-    <Compile Include="Compiler\Parser.cs" />
-    <Compile Include="Compiler\Tokenizer.cs" />
-    <Compile Include="Model\Device.cs" />
-    <Compile Include="Model\DevicePort.cs" />
-    <Compile Include="Model\Port.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EdaCommonLibrary\EdaCommonLibrary.csproj">
+      <Project>{1bf8a2de-cc88-4617-b0ce-eebb7b76230f}</Project>
+      <Name>EdaCommonLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EdaHDCLibrary\EdaHDCLibrary.csproj">
+      <Project>{540d8519-6cd3-489d-aa1a-8c23e8f51648}</Project>
+      <Name>EdaHDCLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EdaPCBLibrary\EdaPCBLibrary.csproj">
+      <Project>{706bc74f-0182-4b56-8d9d-c6b311044076}</Project>
+      <Name>EdaPCBLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
