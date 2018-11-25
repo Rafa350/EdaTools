@@ -9,6 +9,11 @@
             this.value = value;
         }
 
+        public override void AcceptVisitor(IVisitor visitor) {
+
+            visitor.Visit(this);
+        }
+
         public object Value {
             get {
                 return value;

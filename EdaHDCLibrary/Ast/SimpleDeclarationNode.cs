@@ -15,6 +15,11 @@
             this.value = value;
         }
 
+        public override void AcceptVisitor(IVisitor visitor) {
+
+            visitor.Visit(this);
+        }
+
         public ValueNode Value {
             get {
                 return value;

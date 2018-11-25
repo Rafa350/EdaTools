@@ -14,6 +14,11 @@
             this.name = name;
         }
 
+        public override void AcceptVisitor(IVisitor visitor) {
+
+            visitor.Visit(this);
+        }
+
         public string Name {
             get {
                 return name;

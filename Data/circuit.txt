@@ -75,7 +75,7 @@ module pi_filter {
         value = "100E-9";
     }
     
-    link i, c1.a, r1.a
-    link o, c2.a, r1.b
+    link i, c1.a, r1.a;
+    link o, c2.a, r1.b;
     link gnd, c1.b, c2.b;
 }

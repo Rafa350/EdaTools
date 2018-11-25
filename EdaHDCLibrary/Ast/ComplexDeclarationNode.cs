@@ -12,6 +12,11 @@
             this.declarations = declarations;
         }
 
+        public override void AcceptVisitor(IVisitor visitor) {
+
+            visitor.Visit(this);
+        }
+
         public IEnumerable<DeclarationNode> Declarations {
             get {
                 return declarations;

@@ -41,6 +41,8 @@
     <Compile Include="Ast\ComplexDeclarationNode.cs" />
     <Compile Include="Ast\DeclarationNode.cs" />
     <Compile Include="Ast\IdentifierNode.cs" />
+    <Compile Include="Ast\IVisitor.cs" />
+    <Compile Include="Ast\IVisitable.cs" />
     <Compile Include="Ast\Node.cs" />
     <Compile Include="Ast\SimpleDeclarationNode.cs" />
     <Compile Include="Ast\TypeNode.cs" />
