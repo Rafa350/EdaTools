@@ -1,81 +1,103 @@
-device resistor {
+device R {
     
-    port a {
-        type = pasive;
-        pin = "1";
-    }
-    port b {
-        type = pasive;
-        pin = "2";
+    pin a {
+        type = "pasive";
+        name = "1";
     }
     
-    string name = "r?";
-    real resistance = 0;
+    pin b {
+        type = "pasive";
+        name = "2";
+    }
+    
+    string designator;
+    string package;
+    string reference;
+    string manufacturer;
+    real resistance;
+    real tolerance;
 }
 
 
-device capacitor {
+device C {
 
-    port a {
-        type = pasive;
-        pin = "1";
+    pin a {
+        type = "pasive";
+        name = "1";
     }
-    port b {
-        type = pasive;
-        pin = "2";
+    pin b {
+        type = "pasive";
+        name = "2";
     }
     
-    string name = "c?";
-    real capacitance = 0;
+    string designator;
+    string package;
+    string reference;
+    string manufacturer;
+    real capacitance;
+    real tolerance;
 }
 
 
-device polarized_capacitor {
+device CPOL {
 
-    port p {
-        type = pasive;
-        pin = "1";
+    pin p {
+        type = "pasive";
+        name = "1";
     }
-    port n {
-        type = pasive;
-        pin = "2";
+    pin n {
+        type = "pasive";
+        name = "2";
     }
     
-    string name = "c?";
-    real capacitance = 0;    
+    string designator;
+    string package;
+    string reference;
+    string manufacturer;
+    real capacitance;
+    real tolerance;
 }
 
 
-module pi_filter {
+module PI_FILTER {
 
-    port i {
-        type = pasive;
-    }
-    
-    port o {
-        type = pasive;
-    }
-    
-    port gnd {
-        type = power;
-    }
+    port i;
+    port o;
+    port gnd;
 
-    resistor r1 {
-        name = "R1";
-        value = 100;
-    }
+    R r1(
+        designator = "R1",
+        resistance = 100,
+        package = "0805",
+        a = i,
+        b = o
+    );
     
-    capacitor c1 {
-        name = "C1";
-        value = "100E-9";
-    }
+    C c1(
+        designator = "C1",
+        capacitance = "100nF",
+        a = i,
+        b = gnd
+    );
     
-    capacitor c2 {
-        name = "C2";
-        value = "100E-9";
-    }
+    C c2(
+        designator = "C2",
+        capacitance = "100nF",
+        a = o,
+        b = gnd
+    );
+}
+
+module MAIN {
+
+    port input;
+    port output;
     
-    link i, c1.a, r1.a;
-    link o, c2.a, r1.b;
-    link gnd, c1.b, c2.b;
+    net gnd;
+
+    PI_FILTER filter(
+        i = input,
+        o = output,
+        gnd = gnd
+    );
 }

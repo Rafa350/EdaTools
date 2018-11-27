@@ -5,6 +5,7 @@
     using System.Text;
 
     public enum TokenType {
+        Comma,
         Equal,
         Integer,
         LeftBracked,
@@ -48,7 +49,7 @@
 
         private void ThrowUnexpectedChar(char ch) {
 
-            throw new Exception(String.Format("Caracter '{0}' inesperado en {1}:{2}.", ch, line, column));
+            throw new Exception(String.Format("{1}:{2} - Caracter '{0}' inesperado.", ch, line, column));
         }
 
         private void ThrowUnexpectedEOF() {
@@ -131,6 +132,11 @@
                             tokenType = TokenType.SemiColon;
                             state = -1;
                         }
+                        else if (ch == ',') {
+                            token = ",";
+                            tokenType = TokenType.Comma;
+                            state = -1;
+                        }
                         else if (ch == '"')
                             state = 300;
                         else if (!Char.IsWhiteSpace(ch))
@@ -149,7 +155,7 @@
                         break;
 
                     case 200:
-                        if (Char.IsLetterOrDigit(ch) || (ch == '_'))
+                        if (Char.IsLetterOrDigit(ch) || (ch == '_') || (ch == '.'))
                             sb.Append(ch);
                         else {
                             Unget(ch);
@@ -191,6 +197,18 @@
         public TokenType TokenType {
             get {
                 return tokenType;
+            }
+        }
+
+        public int Column {
+            get {
+                return column;
+            }
+        }
+
+        public int Line {
+            get {
+                return line;
             }
         }
     }

@@ -2,11 +2,11 @@
 
     using System;
 
-    public sealed class IdentifierNode: Node {
+    public sealed class ModuleDeclarationNode: Node {
 
         private readonly string name;
 
-        public IdentifierNode(string name) {
+        public ModuleDeclarationNode(string name) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -15,14 +15,6 @@
         }
 
         public override void AcceptVisitor(IVisitor visitor) {
-
-            visitor.Visit(this);
-        }
-
-        public string Name {
-            get {
-                return name;
-            }
         }
     }
 }

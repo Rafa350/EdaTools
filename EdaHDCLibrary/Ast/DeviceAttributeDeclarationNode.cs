@@ -2,21 +2,26 @@
 
     using System;
 
-    public sealed class TypeNode: Node {
+    public sealed class DeviceAttributeDeclarationNode: Node {
 
+        private readonly Type type;
         private readonly string name;
 
-        public TypeNode(string name) {
-
-            if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+        public DeviceAttributeDeclarationNode(string name, Type type) { 
 
             this.name = name;
+            this.type = type;
         }
 
         public override void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
+        }
+
+        public Type Type {
+            get {
+                return type;
+            }
         }
 
         public string Name {

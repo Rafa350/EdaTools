@@ -7,195 +7,224 @@
 
     public sealed class Parser {
 
+        /// <summary>
+        /// \brief Constructor de l'objecte.
+        /// </summary>
         public Parser() {
         }
 
+        /// <summary>
+        /// Genera un arbre AST a partir de les dades d'entrada.
+        /// </summary>
+        /// <param name="reader">Lector de dades d'entrada.</param>
+        /// <returns>El node arrel del arbre AST.</returns>
+        /// 
         public Node Parse(TextReader reader) {
 
             Tokenizer tokenizer = new Tokenizer(reader);
 
-            Node root = null;
+            List<Node> declarations = new List<Node>();
 
             while (tokenizer.NextToken()) {
-                if (tokenizer.Token == "device") {
-                    ParseDevice(tokenizer);
+                switch (tokenizer.Token) {
+                    case "device":
+                        declarations.Add(ParseDeviceDeclaration(tokenizer));
+                        break;
+
+                    case "module":
+                        declarations.Add(ParseModuleDeclaration(tokenizer));
+                        break;
+
+                    default:
+                        ThrowSyntaxError(tokenizer, "Se esperaba 'device' o 'module'.");
+                        break;
                 }
             }
 
-            return root;
+            return null;
         }
 
-        private ComplexDeclarationNode ParseDevice(Tokenizer tokenizer) {
+        private DeviceDeclarationNode ParseDeviceDeclaration(Tokenizer tokenizer) {
 
             if (tokenizer.Token != "device")
-                throw new Exception("Se esperaba 'device'");
+                ThrowSyntaxError(tokenizer, "Se esperaba 'device'.");
 
-            IdentifierNode identifier = ParseIdentifier(tokenizer);
-
-            if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.LeftBracked))
-                throw new Exception("Se esperaba '{'.");
-
-            List<DeclarationNode> declarations = new List<DeclarationNode>();
-
-            while (tokenizer.NextToken()) {
-                if (tokenizer.Token == "port")
-                    declarations.Add(ParseDevicePort(tokenizer));
-                else if (tokenizer.Token == "string" || tokenizer.Token == "real")
-                    declarations.Add(ParseDeviceAttribute(tokenizer));
-                else if (tokenizer.TokenType == TokenType.RightBracked)
-                    break;
-            }
-
-            return new ComplexDeclarationNode(
-                new TypeNode("device"),
-                identifier, 
-                declarations);
-        }
-
-        private ComplexDeclarationNode ParseDevicePort(Tokenizer tokenizer) {
-
-            if (tokenizer.Token != "port")
-                throw new Exception("Se esperaba 'port'.");
-
-            IdentifierNode identifier = ParseIdentifier(tokenizer);
+            tokenizer.NextToken();
+            if (tokenizer.TokenType != TokenType.Identifier)
+                ThrowSyntaxError(tokenizer, "Se esperaba un identificador.");
+            string deviceName = tokenizer.Token;
 
             if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.LeftBracked))
-                throw new Exception("Se esperaba '{'.");
+                ThrowSyntaxError(tokenizer, "Se esperaba '{'.");
 
-            List<DeclarationNode> declarations = new List<DeclarationNode>();
+            List<DevicePinDeclarationNode> pins = new List<DevicePinDeclarationNode>();
+            List<DeviceAttributeDeclarationNode> attributes = new List<DeviceAttributeDeclarationNode>();
 
-            while (tokenizer.NextToken()) {
-                if (tokenizer.Token == "type")
-                    declarations.Add(ParseDevicePortType(tokenizer));
-                else if (tokenizer.Token == "pin")
-                    declarations.Add(ParseDevicePortPin(tokenizer));
-                else if (tokenizer.TokenType == TokenType.RightBracked)
-                    break;
+            while (tokenizer.NextToken() && (tokenizer.TokenType != TokenType.RightBracked)) {
+                if (tokenizer.Token == "pin")
+                    pins.Add(ParsePinDeclaration(tokenizer));
+
+                else if (tokenizer.Token == "string" || tokenizer.Token == "real" || tokenizer.Token == "integer")
+                    attributes.Add(ParseAttributeDeclaration(tokenizer));
+
                 else
-                    throw new Exception("Se esperaba 'type', 'pin' o '}'.");
+                    ThrowSyntaxError(tokenizer, "Se esperaba 'pin', 'string', 'real', 'integer', o '}'.");
             }
 
-            return new ComplexDeclarationNode(
-                new TypeNode("port"),
-                identifier,
-                declarations);
+            return new DeviceDeclarationNode(deviceName, pins, attributes);
         }
 
-        private DeclarationNode ParseDeviceAttribute(Tokenizer tokenizer) {
+        private DevicePinDeclarationNode ParsePinDeclaration(Tokenizer tokenizer) {
 
-            string typeName = tokenizer.Token;
+            if (tokenizer.Token != "pin")
+                ThrowSyntaxError(tokenizer, "Se esperaba 'pin'.");
 
-            TypeNode type = new TypeNode(typeName);
-            IdentifierNode identifier = ParseIdentifier(tokenizer);
+            tokenizer.NextToken();
+            if (tokenizer.TokenType != TokenType.Identifier)
+                ThrowSyntaxError(tokenizer, "Se esperaba un identificador.");
+            string pinName = tokenizer.Token;
 
-            if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.Equal))
-                throw new Exception("Se esperaba un '='.");
+            if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.LeftBracked))
+                ThrowSyntaxError(tokenizer, "Se esperaba '{'.");
 
-            ValueNode value = null;
-            switch (typeName) {
-                case "string":
-                    value = ParseStringValue(tokenizer);
+            while (tokenizer.NextToken() && (tokenizer.TokenType != TokenType.RightBracked)) {
+
+                if (tokenizer.TokenType != TokenType.Identifier)
+                    ThrowSyntaxError(tokenizer, "Se esperaba un identificador.");
+
+                string propName = tokenizer.Token;
+
+                tokenizer.NextToken();
+                if (tokenizer.TokenType != TokenType.Equal)
+                    ThrowSyntaxError(tokenizer, "Se esperaba '='.");
+
+                tokenizer.NextToken();
+                if (tokenizer.TokenType != TokenType.Integer && tokenizer.TokenType != TokenType.Real && tokenizer.TokenType != TokenType.String)
+                    ThrowSyntaxError(tokenizer, "Se esperaba un valor.");
+                string propValue = tokenizer.Token;
+
+                if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.SemiColon))
+                    ThrowSyntaxError(tokenizer, "Se esperaba ';'.");
+            }
+
+            return new DevicePinDeclarationNode(pinName, "");
+        }
+
+        private DeviceAttributeDeclarationNode ParseAttributeDeclaration(Tokenizer tokenizer) {
+
+            if (tokenizer.Token != "string" && tokenizer.Token != "real" && tokenizer.Token != "integer")
+                ThrowSyntaxError(tokenizer, "Se esperaba 'integer', 'real' o 'string'.");
+
+            Type type = null;
+            switch (tokenizer.Token) {
+                case "integer":
+                    type = typeof(int);
                     break;
 
                 case "real":
-                    value = ParseRealValue(tokenizer);
+                    type = typeof(double);
                     break;
 
-                case "integer":
-                    value = ParseIntegerValue(tokenizer);
+                case "string":
+                    type = typeof(string);
                     break;
-
-                default:
-                    throw new Exception(String.Format("Se esperava un valor '{0}'.", typeName));
             }
 
-            if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.SemiColon))
-                throw new Exception("Se esperaba un ';'.");
-
-            return new SimpleDeclarationNode(
-                type,
-                identifier,
-                value);
-        }
-
-        private DeclarationNode ParseDevicePortType(Tokenizer tokenizer) {
-
-            if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.Equal))
-                throw new Exception("Se esperaba un '='.");
-
-            ValueNode value = ParseValue(tokenizer);
+            if (!tokenizer.NextToken() || tokenizer.TokenType != TokenType.Identifier)
+                ThrowSyntaxError(tokenizer, "Se esperaba un identificador.");
+            string name = tokenizer.Token;
 
             if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.SemiColon))
-                throw new Exception("Se esperaba ';'.");
+                ThrowSyntaxError(tokenizer, "Se esperaba un ';'.");
 
-            return new SimpleDeclarationNode(
-                new TypeNode("type"),
-                new IdentifierNode("type"),
-                value);
+            return new DeviceAttributeDeclarationNode(name, type);
         }
 
-        private DeclarationNode ParseDevicePortPin(Tokenizer tokenizer) {
+        private ModuleDeclarationNode ParseModuleDeclaration(Tokenizer tokenizer) {
 
-            if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.Equal))
-                throw new Exception("Se esperaba '='.");
-
-            ValueNode value = ParseStringValue(tokenizer);
-
-            if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.SemiColon))
-                throw new Exception("Se esperaba ';'.");
-
-            return new SimpleDeclarationNode(
-                new TypeNode("pin"),
-                new IdentifierNode("pin"),
-                value);
-        }
-
-        private IdentifierNode ParseIdentifier(Tokenizer tokenizer) {
+            if (tokenizer.Token != "module")
+                ThrowSyntaxError(tokenizer, "Se esperaba 'module'");
 
             if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.Identifier))
-                throw new Exception("Se esperaba un identificador.");
+                ThrowSyntaxError(tokenizer, "Se esperaba un identificador.");
+            string moduleName = tokenizer.Token;
 
-            return new IdentifierNode(tokenizer.Token);
+            if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.LeftBracked))
+                ThrowSyntaxError(tokenizer, "Se esperaba '{'.");
+
+            List<ModulePortDeclarationNode> ports = new List<ModulePortDeclarationNode>();
+            List<ModuleNetDeclarationNode> nodes = new List<ModuleNetDeclarationNode>();
+
+            while (tokenizer.NextToken() && (tokenizer.TokenType != TokenType.RightBracked)) {
+                if (tokenizer.Token == "port")
+                    ports.Add(ParsePort(tokenizer));
+
+                else if (tokenizer.Token == "net")
+                    nodes.Add(ParseNet(tokenizer));
+
+                else if (tokenizer.TokenType == TokenType.Identifier)
+                    ;
+
+                else
+                    ThrowSyntaxError(tokenizer, "Se esperaba un identificador o 'port'.");
+            }
+
+            return new ModuleDeclarationNode(moduleName);
         }
 
-        private TypeNode ParseType(Tokenizer tokenizer) {
+        private ModulePortDeclarationNode ParsePort(Tokenizer tokenizer) {
+
+            if (tokenizer.Token != "port")
+                ThrowSyntaxError(tokenizer, "Se esperaba 'port'.");
 
             if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.Identifier))
-                throw new Exception("Se esperaba un identificador.");
+                ThrowSyntaxError(tokenizer, "Se esperaba un identificador.");
+            string portName = tokenizer.Token;
 
-            return new TypeNode(tokenizer.Token);
+            if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.SemiColon))
+                ThrowSyntaxError(tokenizer, "Se esperaba ';'.");
+
+            return new ModulePortDeclarationNode(portName);
         }
 
-        private ValueNode ParseValue(Tokenizer tokenizer) {
+        private ModuleNetDeclarationNode ParseNet(Tokenizer tokenizer) {
 
-            if (!tokenizer.NextToken())
-                throw new Exception("Final inesperado.");
-
-            return new ValueNode(tokenizer.Token);
+            return null;
         }
 
         private ValueNode ParseIntegerValue(Tokenizer tokenizer) {
 
             if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.Integer))
-                throw new Exception("Se esperaba un valor entero.");
+                ThrowSyntaxError(tokenizer, "Se esperaba un valor entero.");
 
-            return new ValueNode(Convert.ToInt32(tokenizer.Token));
+            return new ValueNode(Convert.ToInt32(tokenizer.Token), typeof(int));
         }
 
         private ValueNode ParseRealValue(Tokenizer tokenizer) {
 
             if (!tokenizer.NextToken() || ((tokenizer.TokenType != TokenType.Real) && (tokenizer.TokenType != TokenType.Integer)))
-                throw new Exception("Se esperaba un valor real.");
+                ThrowSyntaxError(tokenizer, "Se esperaba un valor real.");
 
-            return new ValueNode(Convert.ToDouble(tokenizer.Token));
+            return new ValueNode(Convert.ToDouble(tokenizer.Token), typeof(Double));
         }
 
         private ValueNode ParseStringValue(Tokenizer tokenizer) {
 
             if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.String))
-                throw new Exception("Se esperaba un valor string.");
+                ThrowSyntaxError(tokenizer, "Se esperaba un valor string.");
 
-            return new ValueNode(tokenizer.Token);
+            return new ValueNode(tokenizer.Token, typeof(string));
+        }
+
+        /// <summary>
+        /// Genera una excepcio per error sintactic.
+        /// </summary>
+        /// <param name="tokenizer">El tokenizador.</param>
+        /// <param name="text">El text de l'excepcio.</param>
+        /// 
+        private void ThrowSyntaxError(Tokenizer tokenizer, string text) {
+
+            throw new Exception(String.Format("Error - {0}:{1} - {2}", tokenizer.Line, tokenizer.Column, text));
         }
     }
 }
