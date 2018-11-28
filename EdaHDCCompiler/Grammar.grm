@@ -1,4 +1,4 @@
-"Start symbol" = <start>
+﻿"Start symbol" = <start>
 
 {id_head}      = {letter} + [_]
 {id_tail}      = {id_head} + {digit}
