@@ -1,8 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Hdc.Ast {
 
-    public sealed class ModuleDeclarationNode: DeclarationNode {
+    public sealed class PortDefinitionNode: DeclarationNode {
 
-        public ModuleDeclarationNode(string name):
+        public PortDefinitionNode(string name):
             base(name) {
         }
 

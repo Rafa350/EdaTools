@@ -2,10 +2,10 @@
 
     public interface IVisitor {
 
-        void Visit(DevicePinDeclarationNode node);
-        void Visit(DeviceAttributeDeclarationNode node);
-        void Visit(ModulePortDeclarationNode node);
-        void Visit(ModuleNetDeclarationNode node);
+        void Visit(PinDefinitionNode node);
+        void Visit(AttributeDefinitionNode node);
+        void Visit(PortDefinitionNode node);
+        void Visit(NetDefinitionNode node);
         void Visit(DeviceDeclarationNode node);
         void Visit(ModuleDeclarationNode node);
         void Visit(ValueNode node);

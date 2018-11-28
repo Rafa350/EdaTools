@@ -1,5 +1,12 @@
 device R {
     
+    string designator;
+    string package;
+    string reference;
+    string manufacturer;
+    real resistance;
+    real tolerance;
+
     pin a {
         type = "pasive";
         name = "1";
@@ -9,13 +16,6 @@ device R {
         type = "pasive";
         name = "2";
     }
-    
-    string designator;
-    string package;
-    string reference;
-    string manufacturer;
-    real resistance;
-    real tolerance;
 }
 
 
@@ -63,29 +63,38 @@ module PI_FILTER {
 
     port i;
     port o;
+    port vcc;
     port gnd;
 
-    R r1(
-        designator = "R1",
-        resistance = 100,
-        package = "0805",
-        a = i,
-        b = o
-    );
+    R r1 {
+        designator = "R1";
+        resistance = "100R";
+        package = "R_0805";
+        a = i;
+        b = o;
+    }
     
-    C c1(
-        designator = "C1",
-        capacitance = "100nF",
-        a = i,
-        b = gnd
-    );
+    C c1 {
+        designator = "C1";
+        capacitance = "100nF";
+        package = "C_0805";
+        a = i;
+        b = gnd;
+    }
     
-    C c2(
-        designator = "C2",
-        capacitance = "100nF",
-        a = o,
-        b = gnd
-    );
+    C c2 {      
+        designator = "C2";
+        capacitance = "100nF";
+        package = "C_0805";
+        a = o;
+        b = gnd;
+    }
+    
+    CPOL c3 {
+        designator = "C3";
+        p = vcc;
+        n = gnd;
+    }
 }
 
 module MAIN {
@@ -95,9 +104,10 @@ module MAIN {
     
     net gnd;
 
-    PI_FILTER filter(
-        i = input,
-        o = output,
-        gnd = gnd
-    );
+    PI_FILTER filter {
+        i = input;
+        o = output;
+        gnd = gnd;
+    }
 }
+

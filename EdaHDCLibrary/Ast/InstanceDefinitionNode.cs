@@ -1,8 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Hdc.Ast {
 
-    public sealed class ModuleDeclarationNode: DeclarationNode {
+    public sealed class InstanceDefinitionNode : DeclarationNode {
 
-        public ModuleDeclarationNode(string name):
+        public InstanceDefinitionNode(string name):
             base(name) {
         }
 

@@ -1,0 +1,64 @@
+"Start symbol" = <start>
+
+{id_head}      = {letter} + [_]
+{id_tail}      = {id_head} + {digit}
+{string_ch}    = {printable} - ["]
+                 
+identifier     = {id_head}{id_tail}*
+string         = '"' ({string_ch} | '\'{printable})* '"'
+integer        = [123456789]{digit}*
+real           = {Digit}*'.'{Digit}+
+
+
+<start>               
+    ::= <declaration_list>
+                        
+<declaration_list>    
+    ::= <declaration_list> <declaration>
+      | 
+                        
+<declaration>
+    ::= <declaration_header> '{' <declaration_body> '}'
+     
+<declaration_header>
+    ::= <declaration_prefix> <identifier>
+
+<declaration_prefix>
+    ::= 'device'
+      | 'module'
+      
+<declaration_body>
+    ::= <definition_list>
+     
+<definition_list>
+    ::= <definition_list> <definition>
+      |
+
+<definition>
+    ::= <definition_prefix> <identifier> ';'
+      | <definition_prefix> <identifier> '{' <assignment_list> '}'
+      
+<definition_prefix>
+    ::= 'pin'
+      | 'port'
+      | 'string'
+      | 'integer'
+      | 'real'
+      | 'net'
+      | <identifier>
+      
+<assignment_list>
+    ::= <assignment_list> <assignment>
+      |
+     
+<assignment>
+    ::= <identifier> '=' <value> ';'
+                
+<identifier>
+    ::= identifier
+     
+<value>
+    ::= string
+      | integer
+      | real      
+      | <identifier>      

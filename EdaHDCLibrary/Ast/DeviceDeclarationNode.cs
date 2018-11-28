@@ -2,15 +2,14 @@
 
     using System.Collections.Generic;
 
-    public sealed class DeviceDeclarationNode: Node {
+    public sealed class DeviceDeclarationNode: DeclarationNode {
 
-        private readonly string name;
-        private readonly IEnumerable<DevicePinDeclarationNode> pins;
-        private readonly IEnumerable<DeviceAttributeDeclarationNode> attributes;
+        private readonly IEnumerable<PinDefinitionNode> pins;
+        private readonly IEnumerable<AttributeDefinitionNode> attributes;
 
-        public DeviceDeclarationNode(string name, IEnumerable<DevicePinDeclarationNode> pins, IEnumerable<DeviceAttributeDeclarationNode> attributes) {
+        public DeviceDeclarationNode(string name, IEnumerable<PinDefinitionNode> pins, IEnumerable<AttributeDefinitionNode> attributes):
+            base(name) {
 
-            this.name = name;
             this.pins = pins;
             this.attributes = attributes;
         }
@@ -20,19 +19,13 @@
             visitor.Visit(this);
         }
 
-        public string Name {
-            get {
-                return name;
-            }
-        }
-
-        public IEnumerable<DevicePinDeclarationNode> Pins {
+        public IEnumerable<PinDefinitionNode> Pins {
             get {
                 return pins;
             }
         }
 
-        public IEnumerable<DeviceAttributeDeclarationNode> Attributes {
+        public IEnumerable<AttributeDefinitionNode> Attributes {
             get {
                 return attributes;
             }

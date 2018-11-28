@@ -2,19 +2,16 @@
 
     using System;
 
-    public sealed class ModulePortDeclarationNode: Node {
+    public abstract class DeclarationNode: Node {
 
         private readonly string name;
 
-        public ModulePortDeclarationNode(string name) {
+        public DeclarationNode(string name) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
             this.name = name;
-        }
-
-        public override void AcceptVisitor(IVisitor visitor) {
         }
 
         public string Name {

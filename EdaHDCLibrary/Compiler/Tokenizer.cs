@@ -9,8 +9,10 @@
         Equal,
         Integer,
         LeftBracked,
+        LeftParenthesis,
         Real,
         RightBracked,
+        RightParenthesis,
         SemiColon,
         String,        
         Identifier,
@@ -120,6 +122,16 @@
                         else if (ch == '}') {
                             token = "}";
                             tokenType = TokenType.RightBracked;
+                            state = -1;
+                        }
+                        else if (ch == '(') {
+                            token = "(";
+                            tokenType = TokenType.LeftParenthesis;
+                            state = -1;
+                        }
+                        else if (ch == ')') {
+                            token = ")";
+                            tokenType = TokenType.RightParenthesis;
                             state = -1;
                         }
                         else if (ch == '=') {

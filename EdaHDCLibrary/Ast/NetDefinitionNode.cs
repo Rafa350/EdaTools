@@ -1,8 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Hdc.Ast {
 
-    public sealed class ModuleDeclarationNode: DeclarationNode {
+    public sealed class NetDefinitionNode: DeclarationNode {
 
-        public ModuleDeclarationNode(string name):
+        public NetDefinitionNode(string name):
             base(name) {
         }
 

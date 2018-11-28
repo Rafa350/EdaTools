@@ -57,8 +57,8 @@
             if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.LeftBracked))
                 ThrowSyntaxError(tokenizer, "Se esperaba '{'.");
 
-            List<DevicePinDeclarationNode> pins = new List<DevicePinDeclarationNode>();
-            List<DeviceAttributeDeclarationNode> attributes = new List<DeviceAttributeDeclarationNode>();
+            List<PinDefinitionNode> pins = new List<PinDefinitionNode>();
+            List<AttributeDefinitionNode> attributes = new List<AttributeDefinitionNode>();
 
             while (tokenizer.NextToken() && (tokenizer.TokenType != TokenType.RightBracked)) {
                 if (tokenizer.Token == "pin")
@@ -74,7 +74,7 @@
             return new DeviceDeclarationNode(deviceName, pins, attributes);
         }
 
-        private DevicePinDeclarationNode ParsePinDeclaration(Tokenizer tokenizer) {
+        private PinDefinitionNode ParsePinDeclaration(Tokenizer tokenizer) {
 
             if (tokenizer.Token != "pin")
                 ThrowSyntaxError(tokenizer, "Se esperaba 'pin'.");
@@ -107,10 +107,10 @@
                     ThrowSyntaxError(tokenizer, "Se esperaba ';'.");
             }
 
-            return new DevicePinDeclarationNode(pinName, "");
+            return new PinDefinitionNode(pinName, "");
         }
 
-        private DeviceAttributeDeclarationNode ParseAttributeDeclaration(Tokenizer tokenizer) {
+        private AttributeDefinitionNode ParseAttributeDeclaration(Tokenizer tokenizer) {
 
             if (tokenizer.Token != "string" && tokenizer.Token != "real" && tokenizer.Token != "integer")
                 ThrowSyntaxError(tokenizer, "Se esperaba 'integer', 'real' o 'string'.");
@@ -137,7 +137,7 @@
             if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.SemiColon))
                 ThrowSyntaxError(tokenizer, "Se esperaba un ';'.");
 
-            return new DeviceAttributeDeclarationNode(name, type);
+            return new AttributeDefinitionNode(name, type);
         }
 
         private ModuleDeclarationNode ParseModuleDeclaration(Tokenizer tokenizer) {
@@ -152,27 +152,28 @@
             if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.LeftBracked))
                 ThrowSyntaxError(tokenizer, "Se esperaba '{'.");
 
-            List<ModulePortDeclarationNode> ports = new List<ModulePortDeclarationNode>();
-            List<ModuleNetDeclarationNode> nodes = new List<ModuleNetDeclarationNode>();
+            List<PortDefinitionNode> ports = new List<PortDefinitionNode>();
+            List<NetDefinitionNode> nets = new List<NetDefinitionNode>();
+            List<InstanceDefinitionNode> instances = new List<InstanceDefinitionNode>();
 
             while (tokenizer.NextToken() && (tokenizer.TokenType != TokenType.RightBracked)) {
                 if (tokenizer.Token == "port")
                     ports.Add(ParsePort(tokenizer));
 
                 else if (tokenizer.Token == "net")
-                    nodes.Add(ParseNet(tokenizer));
+                    nets.Add(ParseNet(tokenizer));
 
                 else if (tokenizer.TokenType == TokenType.Identifier)
-                    ;
+                    instances.Add(ParseInstance(tokenizer));
 
                 else
-                    ThrowSyntaxError(tokenizer, "Se esperaba un identificador o 'port'.");
+                    ThrowSyntaxError(tokenizer, "Se esperaba 'port', 'net' o un identificador.");
             }
 
             return new ModuleDeclarationNode(moduleName);
         }
 
-        private ModulePortDeclarationNode ParsePort(Tokenizer tokenizer) {
+        private PortDefinitionNode ParsePort(Tokenizer tokenizer) {
 
             if (tokenizer.Token != "port")
                 ThrowSyntaxError(tokenizer, "Se esperaba 'port'.");
@@ -184,12 +185,55 @@
             if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.SemiColon))
                 ThrowSyntaxError(tokenizer, "Se esperaba ';'.");
 
-            return new ModulePortDeclarationNode(portName);
+            return new PortDefinitionNode(portName);
         }
 
-        private ModuleNetDeclarationNode ParseNet(Tokenizer tokenizer) {
+        private NetDefinitionNode ParseNet(Tokenizer tokenizer) {
 
-            return null;
+            if (tokenizer.Token != "net")
+                ThrowSyntaxError(tokenizer, "Se esperaba 'net';");
+
+            if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.Identifier))
+                ThrowSyntaxError(tokenizer, "Se esperaba un identificador.");
+            string netName = tokenizer.Token;
+
+            if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.SemiColon))
+                ThrowSyntaxError(tokenizer, "Se esperaba ';'.");
+
+            return new NetDefinitionNode(netName);
+        }
+
+        private InstanceDefinitionNode ParseInstance(Tokenizer tokenizer) {
+
+            if (tokenizer.TokenType != TokenType.Identifier)
+                ThrowSyntaxError(tokenizer, "Se esperaba un identificador.");
+
+            string instanceTypeName = tokenizer.Token;
+
+            if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.Identifier))
+                ThrowSyntaxError(tokenizer, "Se esperaba un identificador.");
+
+            string instanceName = tokenizer.Token;
+
+            if (!tokenizer.NextToken() || (tokenizer.TokenType != TokenType.LeftBracked))
+                ThrowSyntaxError(tokenizer, "Se esperaba '{'.");
+
+            while (tokenizer.NextToken() && (tokenizer.TokenType != TokenType.RightBracked)) {
+
+                if (tokenizer.TokenType != TokenType.Identifier)
+                    ThrowSyntaxError(tokenizer, "Se esperaba un identificador.");
+
+                if (!tokenizer.NextToken() || tokenizer.TokenType != TokenType.Equal)
+                    ThrowSyntaxError(tokenizer, "Se esperaba '='.");
+
+                if (!tokenizer.NextToken() || ((tokenizer.TokenType != TokenType.String) && (tokenizer.TokenType != TokenType.Identifier)))
+                    ThrowSyntaxError(tokenizer, "Se esperaba un identificador o un valor integer, real o string.");
+
+                if (!tokenizer.NextToken() || tokenizer.TokenType != TokenType.SemiColon)
+                    ThrowSyntaxError(tokenizer, "Se esperaba ';'.");
+            }
+
+            return new InstanceDefinitionNode(instanceName);
         }
 
         private ValueNode ParseIntegerValue(Tokenizer tokenizer) {

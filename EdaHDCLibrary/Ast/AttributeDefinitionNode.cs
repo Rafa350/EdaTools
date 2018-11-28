@@ -2,14 +2,13 @@
 
     using System;
 
-    public sealed class DeviceAttributeDeclarationNode: Node {
+    public sealed class AttributeDefinitionNode: DeclarationNode {
 
         private readonly Type type;
-        private readonly string name;
 
-        public DeviceAttributeDeclarationNode(string name, Type type) { 
+        public AttributeDefinitionNode(string name, Type type):
+            base(name) { 
 
-            this.name = name;
             this.type = type;
         }
 
@@ -21,12 +20,6 @@
         public Type Type {
             get {
                 return type;
-            }
-        }
-
-        public string Name {
-            get {
-                return name;
             }
         }
     }

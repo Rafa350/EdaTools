@@ -38,15 +38,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ast\DeclarationNode.cs" />
     <Compile Include="Ast\DeviceDeclarationNode.cs" />
+    <Compile Include="Ast\InstanceDefinitionNode.cs" />
     <Compile Include="Ast\ModuleDeclarationNode.cs" />
-    <Compile Include="Ast\DevicePinDeclarationNode.cs" />
+    <Compile Include="Ast\PinDefinitionNode.cs" />
     <Compile Include="Ast\IVisitor.cs" />
     <Compile Include="Ast\IVisitable.cs" />
-    <Compile Include="Ast\ModuleNetDeclarationNode.cs" />
+    <Compile Include="Ast\NetDefinitionNode.cs" />
     <Compile Include="Ast\Node.cs" />
-    <Compile Include="Ast\DeviceAttributeDeclarationNode.cs" />
-    <Compile Include="Ast\ModulePortDeclarationNode.cs" />
+    <Compile Include="Ast\AttributeDefinitionNode.cs" />
+    <Compile Include="Ast\PortDefinitionNode.cs" />
     <Compile Include="Ast\ValueNode.cs" />
     <Compile Include="Compiler\Parser.cs" />
     <Compile Include="Compiler\Tokenizer.cs" />
