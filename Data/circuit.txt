@@ -1,12 +1,5 @@
 device R {
     
-    string designator;
-    string package;
-    string reference;
-    string manufacturer;
-    real resistance;
-    real tolerance;
-
     pin a {
         type = "pasive";
         name = "1";
@@ -16,7 +9,13 @@ device R {
         type = "pasive";
         name = "2";
     }
-}
+    
+    string designator;
+    string package;
+    string reference;
+    string manufacturer;
+    real resistance;
+    real tolerance;}
 
 
 device C {

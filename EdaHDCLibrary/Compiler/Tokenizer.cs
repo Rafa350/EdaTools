@@ -1,20 +1,29 @@
 ﻿namespace MikroPic.EdaTools.v1.Hdc.Compiler {
 
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Text;
 
-    public enum TokenType {
+    public enum TokenId {
         Comma,
+        Device,
         Equal,
         Integer,
+        IntegerLiteral,
         LeftBracked,
         LeftParenthesis,
+        Module,
+        Net,
+        Pin,
+        Port,
         Real,
+        RealLiteral,
         RightBracked,
         RightParenthesis,
         SemiColon,
-        String,        
+        String,
+        StringLiteral,        
         Identifier,
         EOF
     }
@@ -25,13 +34,13 @@
         private const char LF = (char)0x000A;
         private const char CR = (char)0x000D;
 
+        private readonly Dictionary<string, TokenId> words = new Dictionary<string, TokenId>();
         private readonly TextReader reader;
         private readonly StringBuilder sb;
         private char urBuffer = EOF;
         private int line;
         private int column;
-        private string token;
-        private TokenType tokenType;
+        private TokenId tokenId;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -42,6 +51,15 @@
 
             if (reader == null)
                 throw new ArgumentNullException("reader");
+
+            words.Add("device", TokenId.Device);
+            words.Add("integer", TokenId.Integer);
+            words.Add("module", TokenId.Module);
+            words.Add("net", TokenId.Net);
+            words.Add("pin", TokenId.Pin);
+            words.Add("port", TokenId.Port);
+            words.Add("real", TokenId.Integer);
+            words.Add("string", TokenId.String);
 
             this.reader = reader;
             sb = new StringBuilder();
@@ -96,8 +114,7 @@
 
             sb.Clear();
 
-            token = null;
-            tokenType = TokenType.EOF;
+            tokenId = TokenId.EOF;
 
             int state = 0;
             while (state != -1) {
@@ -115,38 +132,38 @@
                             state = 200;
                         }
                         else if (ch == '{') {
-                            token = "{";
-                            tokenType = TokenType.LeftBracked;
+                            sb.Append(ch);
+                            tokenId = TokenId.LeftBracked;
                             state = -1;
                         }
                         else if (ch == '}') {
-                            token = "}";
-                            tokenType = TokenType.RightBracked;
+                            sb.Append(ch);
+                            tokenId = TokenId.RightBracked;
                             state = -1;
                         }
                         else if (ch == '(') {
-                            token = "(";
-                            tokenType = TokenType.LeftParenthesis;
+                            sb.Append(ch);
+                            tokenId = TokenId.LeftParenthesis;
                             state = -1;
                         }
                         else if (ch == ')') {
-                            token = ")";
-                            tokenType = TokenType.RightParenthesis;
+                            sb.Append(ch);
+                            tokenId = TokenId.RightParenthesis;
                             state = -1;
                         }
                         else if (ch == '=') {
-                            token = "=";
-                            tokenType = TokenType.Equal;
+                            sb.Append(ch);
+                            tokenId = TokenId.Equal;
                             state = -1;
                         }
                         else if (ch == ';') {
-                            token = ";";
-                            tokenType = TokenType.SemiColon;
+                            sb.Append(ch);
+                            tokenId = TokenId.SemiColon;
                             state = -1;
                         }
                         else if (ch == ',') {
-                            token = ",";
-                            tokenType = TokenType.Comma;
+                            sb.Append(ch);
+                            tokenId = TokenId.Comma;
                             state = -1;
                         }
                         else if (ch == '"')
@@ -160,8 +177,7 @@
                             sb.Append(ch);
                         else {
                             Unget(ch);
-                            token = sb.ToString();
-                            tokenType = TokenType.Integer;
+                            tokenId = TokenId.IntegerLiteral;
                             state = -1;
                         }
                         break;
@@ -171,16 +187,15 @@
                             sb.Append(ch);
                         else {
                             Unget(ch);
-                            token = sb.ToString();
-                            tokenType = TokenType.Identifier;
+                            if (!words.TryGetValue(sb.ToString(), out tokenId))
+                                tokenId = TokenId.Identifier;
                             state = -1;
                         }
                         break;
 
                     case 300:
                         if (ch == '"') {
-                            token = sb.ToString();
-                            tokenType = TokenType.String;
+                            tokenId = TokenId.StringLiteral;
                             state = -1;
                         }
                         else
@@ -189,7 +204,7 @@
                 }
             }
 
-            return tokenType != TokenType.EOF;
+            return tokenId != TokenId.EOF;
         }
 
         /// <summary>
@@ -198,17 +213,17 @@
         /// 
         public string Token {
             get {
-                return token;
+                return sb.ToString();
             }
         }
 
         /// <summary>
-        /// Obte el tipus de token actual.
+        /// Obte el identificador del token actual.
         /// </summary>
         /// 
-        public TokenType TokenType {
+        public TokenId TokenId {
             get {
-                return tokenType;
+                return tokenId;
             }
         }
 

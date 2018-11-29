@@ -1,4 +1,4 @@
-﻿"Start symbol" = <start>
+"Start symbol" = <start>
 
 {id_head}      = {letter} + [_]
 {id_tail}      = {id_head} + {digit}
@@ -10,35 +10,35 @@ integer        = [123456789]{digit}*
 real           = {Digit}*'.'{Digit}+
 
 
-<start>               
-    ::= <declaration_list>
+<start>  
+    ::= <entities>
                         
-<declaration_list>    
-    ::= <declaration_list> <declaration>
+<entities>    
+    ::= <entities> <entity>
       | 
                         
-<declaration>
-    ::= <declaration_header> '{' <declaration_body> '}'
+<entity>
+    ::= <entity_header> '{' <entity_body> '}'
      
-<declaration_header>
-    ::= <declaration_prefix> <identifier>
+<entity_header>
+    ::= <entity_prefix> <identifier>
 
-<declaration_prefix>
+<entity_prefix>
     ::= 'device'
       | 'module'
       
-<declaration_body>
-    ::= <definition_list>
+<entity_body>
+    ::= <members>
      
-<definition_list>
-    ::= <definition_list> <definition>
+<members>
+    ::= <members> <member>
       |
 
-<definition>
-    ::= <definition_prefix> <identifier> ';'
-      | <definition_prefix> <identifier> '{' <assignment_list> '}'
+<member>
+    ::= <member_prefix> <identifier> ';'
+      | <member_prefix> <identifier> '{' <options> '}'
       
-<definition_prefix>
+<member_prefix>
     ::= 'pin'
       | 'port'
       | 'string'
@@ -47,18 +47,18 @@ real           = {Digit}*'.'{Digit}+
       | 'net'
       | <identifier>
       
-<assignment_list>
-    ::= <assignment_list> <assignment>
+<options>
+    ::= <options> <option>
       |
      
-<assignment>
+<option>
     ::= <identifier> '=' <value> ';'
                 
 <identifier>
     ::= identifier
-     
+ 
 <value>
     ::= string
       | integer
-      | real      
-      | <identifier>      
+      | real
+      | <identifier>

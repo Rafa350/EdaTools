@@ -2,37 +2,15 @@
 
     using System;
 
-    public enum PortType {
-        Input,
-        Output,
-        Bidirectional,
-        Pasive
-    }
-
-    public abstract class Port {
+    public sealed class Port {
 
         private string name;
-        private PortType portType = PortType.Pasive;
 
-        public Port(string name) {
-
-            if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
-
-            this.name = name;
-        }
-
-        public Port(string name, PortType portType) {
-
-            if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
-
-            this.name = name;
-            this.portType = portType;
+        public Port(string name) { 
         }
 
         /// <summary>
-        /// Obte o asigna el nom del port.
+        /// Obte o asigna el nom del pin.
         /// </summary>
         /// 
         public string Name {
@@ -40,22 +18,7 @@
                 return name;
             }
             set {
-                if (String.IsNullOrEmpty(value))
-                    throw new ArgumentNullException("Name");
                 name = value;
-            }
-        }
-
-        /// <summary>
-        /// Obte o asigna el tipus de port.
-        /// </summary>
-        /// 
-        public PortType PortType {
-            get {
-                return portType;
-            }
-            set {
-                portType = value;
             }
         }
     }
