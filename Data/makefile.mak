@@ -1,7 +1,6 @@
 CAM = ..\bin\debug\edacamtool.exe
 PANEL = ..\bin\debug\edacamtool.exe
 
-
 all: panel3
 .PHONY: all
 
@@ -15,7 +14,6 @@ panel3: \
 	panel3_NonPlated$1$2$NPTH$Drill.gbr \
 	panel3_Plated$1$2$PTH$Drill.gbr \
 	panel3.ipc
-
 
 panel3_Copper$L1.gbr: makefile.mak panel3.xcam panel3.xbrd
 	$(CAM) panel3.xcam /t:Copper.1
