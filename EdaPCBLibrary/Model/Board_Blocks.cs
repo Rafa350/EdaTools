@@ -14,7 +14,6 @@
         // Blocs
         private ParentChildKeyCollection<Board, Block, String> blocks;
 
-
         /// <summary>
         /// Afeigeix un bloc.
         /// </summary>

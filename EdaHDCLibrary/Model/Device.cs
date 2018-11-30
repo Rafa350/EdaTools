@@ -5,20 +5,23 @@
 
     public sealed class Device {
 
-        private string name;
+        private string id;
         private List<DevicePin> pins;
+        private Dictionary<string, object> attributes;
 
-        public Device(string name, IEnumerable<DevicePin> pins = null) {
+        public Device(string id) {
 
-            if (String.IsNullOrEmpty(name))
+            if (String.IsNullOrEmpty(id))
                 throw new ArgumentNullException("name");
 
-            this.name = name;
-
-            if (pins != null)
-                AddPins(pins);
+            this.id = id;
         }
 
+        /// <summary>
+        /// Afegeix un pin.
+        /// </summary>
+        /// <param name="pin">El pin a afeigir.</param>
+        /// 
         public void AddPin(DevicePin pin) {
 
             if (pin == null)
@@ -30,6 +33,11 @@
             pins.Add(pin);
         }
 
+        /// <summary>
+        /// Afegeix una col·leccio de pins.
+        /// </summary>
+        /// <param name="pins">Els pins a afeigir.</param>
+        /// 
         public void AddPins(IEnumerable<DevicePin> pins) {
 
             if (pins == null)
@@ -37,6 +45,53 @@
 
             foreach (var pin in pins)
                 AddPin(pin);
+        }
+
+        public void DefineAttribute(string name, object value = null) {
+
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            if (attributes == null)
+                attributes = new Dictionary<string, object>();
+            else {
+                if (attributes.ContainsKey(name))
+                    throw new InvalidOperationException(String.Format("El atributo '{0}' ya esta definido.", name));
+            }
+
+            attributes.Add(name, value);
+        }
+
+        public void SetAttribute(string name, object value) {
+
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            if ((attributes == null) || !attributes.ContainsKey(name))
+                throw new InvalidOperationException(String.Format("No existe el atributo '{0}'.", name));
+
+            attributes[name] = value;
+        }
+
+        public object GetAttribute(string name) {
+
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            if ((attributes == null) || !attributes.ContainsKey(name))
+                throw new InvalidOperationException(String.Format("No existe el atributo '{0}'.", name));
+
+            return attributes[name];
+        }
+
+        /// <summary>
+        /// Obte el identificador.
+        /// </summary>
+        /// 
+        public string Id {
+            get {
+                return id;
+            }
         }
     }
 }

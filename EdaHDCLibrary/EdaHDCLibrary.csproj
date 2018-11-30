@@ -44,6 +44,8 @@
     <Compile Include="Ast\IVisitable.cs" />
     <Compile Include="Ast\Node.cs" />
     <Compile Include="Ast\OptionNode.cs" />
+    <Compile Include="Compiler\Compiler.cs" />
+    <Compile Include="Compiler\ParserBase.cs" />
     <Compile Include="Compiler\Parser.cs" />
     <Compile Include="Compiler\Tokenizer.cs" />
     <Compile Include="Model\Device.cs" />
