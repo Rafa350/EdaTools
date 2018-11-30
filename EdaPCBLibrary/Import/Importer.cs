@@ -1,7 +1,7 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Import {
+﻿namespace MikroPic.EdaTools.v1.Core.Import {
 
     using System.IO;
-    using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
 
     public abstract class Importer {
 

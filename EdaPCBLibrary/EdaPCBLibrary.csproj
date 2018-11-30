@@ -9,7 +9,7 @@
     <ProjectGuid>{706BC74F-0182-4B56-8D9D-C6B311044076}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MikroPic.EdaTools.v1.Pcb</RootNamespace>
+    <RootNamespace>MikroPic.EdaTools.v1.Core</RootNamespace>
     <AssemblyName>EdaPCBLibrary</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -66,59 +66,59 @@
     <Compile Include="Import\Importer.cs" />
     <Compile Include="Import\ImporterFactory.cs" />
     <Compile Include="Infrastructure\PartAttributeAdapter.cs" />
-    <Compile Include="Model\Block_Elements.cs" />
-    <Compile Include="Model\Block_Attributes.cs" />
-    <Compile Include="Model\Board_Signals.cs" />
-    <Compile Include="Model\Board_Elements.cs" />
-    <Compile Include="Model\Board_Parts.cs" />
-    <Compile Include="Model\Board_Layers.cs" />
-    <Compile Include="Model\Board_Blocks.cs" />
-    <Compile Include="Model\ElementExtensions.cs" />
-    <Compile Include="Model\LayerId.cs" />
-    <Compile Include="Model\BlockAttribute.cs" />
-    <Compile Include="Model\Elements\PadElement.cs" />
-    <Compile Include="Model\Elements\SlotElement.cs" />
-    <Compile Include="Model\IConectable.cs" />
-    <Compile Include="Model\IName.cs" />
-    <Compile Include="Model\IO\BoardStreamReader.cs" />
-    <Compile Include="Model\IPosition.cs" />
-    <Compile Include="Model\IRotation.cs" />
-    <Compile Include="Model\ISize.cs" />
-    <Compile Include="Model\LayerSet.cs" />
-    <Compile Include="Model\Part_Attributes.cs" />
-    <Compile Include="Model\PartExtensions.cs" />
-    <Compile Include="Model\Visitors\BlockVisitor.cs" />
-    <Compile Include="Model\Visitors\DefaultVisitor.cs" />
-    <Compile Include="Model\Elements\ArcElement.cs" />
-    <Compile Include="Model\Element.cs" />
-    <Compile Include="Model\Elements\HoleElement.cs" />
-    <Compile Include="Model\Elements\RegionElement.cs" />
-    <Compile Include="Model\Elements\TextElement.cs" />
-    <Compile Include="Model\Elements\ViaElement.cs" />
-    <Compile Include="Model\PartAttribute.cs" />
-    <Compile Include="Model\Board.cs" />
-    <Compile Include="Model\Elements\CircleElement.cs" />
-    <Compile Include="Model\Block.cs" />
-    <Compile Include="Model\IO\BoardStreamWriter.cs" />
-    <Compile Include="Model\IVisitable.cs" />
-    <Compile Include="Model\IVisitor.cs" />
-    <Compile Include="Model\Layer.cs" />
-    <Compile Include="Model\Elements\LineElement.cs" />
-    <Compile Include="Model\Part.cs" />
-    <Compile Include="Model\Elements\RectangleElement.cs" />
-    <Compile Include="Model\Signal.cs" />
-    <Compile Include="Model\Elements\SmdPadElement.cs" />
-    <Compile Include="Model\Elements\ThPadElement.cs" />
-    <Compile Include="Model\Visitors\ElementVisitor.cs" />
-    <Compile Include="Model\Visitors\SignalVisitor.cs" />
+    <Compile Include="Model\Board\Component_Elements.cs" />
+    <Compile Include="Model\Board\Component_Attributes.cs" />
+    <Compile Include="Model\Board\Board_Signals.cs" />
+    <Compile Include="Model\Board\Board_Elements.cs" />
+    <Compile Include="Model\Board\Board_Parts.cs" />
+    <Compile Include="Model\Board\Board_Layers.cs" />
+    <Compile Include="Model\Board\Board_Components.cs" />
+    <Compile Include="Model\Board\ElementExtensions.cs" />
+    <Compile Include="Model\Board\LayerId.cs" />
+    <Compile Include="Model\Board\ComponentAttribute.cs" />
+    <Compile Include="Model\Board\Elements\PadElement.cs" />
+    <Compile Include="Model\Board\Elements\SlotElement.cs" />
+    <Compile Include="Model\Board\IConectable.cs" />
+    <Compile Include="Model\Board\IName.cs" />
+    <Compile Include="Model\Board\IO\BoardStreamReader.cs" />
+    <Compile Include="Model\Board\IPosition.cs" />
+    <Compile Include="Model\Board\IRotation.cs" />
+    <Compile Include="Model\Board\ISize.cs" />
+    <Compile Include="Model\Board\LayerSet.cs" />
+    <Compile Include="Model\Board\Part_Attributes.cs" />
+    <Compile Include="Model\Board\PartExtensions.cs" />
+    <Compile Include="Model\Board\Visitors\BlockVisitor.cs" />
+    <Compile Include="Model\Board\Visitors\DefaultVisitor.cs" />
+    <Compile Include="Model\Board\Elements\ArcElement.cs" />
+    <Compile Include="Model\Board\Element.cs" />
+    <Compile Include="Model\Board\Elements\HoleElement.cs" />
+    <Compile Include="Model\Board\Elements\RegionElement.cs" />
+    <Compile Include="Model\Board\Elements\TextElement.cs" />
+    <Compile Include="Model\Board\Elements\ViaElement.cs" />
+    <Compile Include="Model\Board\PartAttribute.cs" />
+    <Compile Include="Model\Board\Board.cs" />
+    <Compile Include="Model\Board\Elements\CircleElement.cs" />
+    <Compile Include="Model\Board\Component.cs" />
+    <Compile Include="Model\Board\IO\BoardStreamWriter.cs" />
+    <Compile Include="Model\Board\IVisitable.cs" />
+    <Compile Include="Model\Board\IVisitor.cs" />
+    <Compile Include="Model\Board\Layer.cs" />
+    <Compile Include="Model\Board\Elements\LineElement.cs" />
+    <Compile Include="Model\Board\Part.cs" />
+    <Compile Include="Model\Board\Elements\RectangleElement.cs" />
+    <Compile Include="Model\Board\Signal.cs" />
+    <Compile Include="Model\Board\Elements\SmdPadElement.cs" />
+    <Compile Include="Model\Board\Elements\ThPadElement.cs" />
+    <Compile Include="Model\Board\Visitors\ElementVisitor.cs" />
+    <Compile Include="Model\Board\Visitors\SignalVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Import\KiCad\" />
-    <Folder Include="Model\Collections\" />
+    <Folder Include="Model\Net\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Model\IO\Schemas\XBRD.xsd">
+    <EmbeddedResource Include="Model\Board\IO\Schemas\XBRD.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />

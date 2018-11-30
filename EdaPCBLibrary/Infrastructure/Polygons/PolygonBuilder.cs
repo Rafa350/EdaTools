@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Infrastructure.Polygons {
+﻿namespace MikroPic.EdaTools.v1.Core.Infrastructure.Polygons {
 
     using MikroPic.EdaTools.v1.Geometry;
     using System;

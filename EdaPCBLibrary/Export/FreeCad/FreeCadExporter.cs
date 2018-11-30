@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Import.FreeCad {
+﻿namespace MikroPic.EdaTools.v1.Core.Import.FreeCad {
 
     using System;
     using System.Globalization;

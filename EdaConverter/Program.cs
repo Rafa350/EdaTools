@@ -1,9 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Converter {
 
-    using MikroPic.EdaTools.v1.Pcb.Import;
-    using MikroPic.EdaTools.v1.Pcb.Import.Eagle;
-    using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.IO;
+    using MikroPic.EdaTools.v1.Core.Import;
+    using MikroPic.EdaTools.v1.Core.Import.Eagle;
+    using MikroPic.EdaTools.v1.Core.Model;
+    using MikroPic.EdaTools.v1.Core.Model.IO;
     using System.IO;
 
     class Program {

@@ -3,9 +3,9 @@
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Panel.Model;
     using MikroPic.EdaTools.v1.Panel.Model.Elements;
-    using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
-    using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
+    using MikroPic.EdaTools.v1.Core.Model;
+    using MikroPic.EdaTools.v1.Core.Model.Elements;
+    using MikroPic.EdaTools.v1.Core.Model.Visitors;
     using System;
     using System.Collections.Generic;
 
@@ -57,10 +57,10 @@
 
             // Afegeix els blocs que no existeixin en la placa de destinacio.
             //
-            if (board.HasBlocks) {
-                foreach (var block in board.Blocks)
-                    if (panelBoard.GetBlock(block.Name, false) == null)
-                        panelBoard.AddBlock(block.Clone());
+            if (board.HasComponents) {
+                foreach (var block in board.Components)
+                    if (panelBoard.GetComponent(block.Name, false) == null)
+                        panelBoard.AddComponent(block.Clone());
             }
 
             // Afegeix els parts a la placa
@@ -68,7 +68,7 @@
             if (board.HasParts) {
                 List<Part> transformableParts = new List<Part>();
                 foreach (var part in board.Parts) {
-                    Block block = panelBoard.GetBlock(part.Block.Name);
+                    Component block = panelBoard.GetComponent(part.Component.Name);
                     Part panelPart = part.Clone(block);
                     panelPart.Name = String.Format("B{0}.{1}", index, panelPart.Name);
                     transformableParts.Add(panelPart);
@@ -116,10 +116,10 @@
 
         private sealed class TransformVisitor: DefaultVisitor {
 
-            private readonly IEnumerable<MikroPic.EdaTools.v1.Pcb.Model.IVisitable> visitables;
+            private readonly IEnumerable<MikroPic.EdaTools.v1.Core.Model.IVisitable> visitables;
             private readonly Transformation transformation;
 
-            public TransformVisitor(IEnumerable<MikroPic.EdaTools.v1.Pcb.Model.IVisitable> visitables, Point offset, Angle rotation) {
+            public TransformVisitor(IEnumerable<MikroPic.EdaTools.v1.Core.Model.IVisitable> visitables, Point offset, Angle rotation) {
 
                 this.visitables = visitables;
                 transformation = new Transformation(offset, rotation);

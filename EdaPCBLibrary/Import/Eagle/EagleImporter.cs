@@ -1,9 +1,9 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Import.Eagle {
+﻿namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Fonts;
-    using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -20,7 +20,7 @@
     /// 
     public sealed class EagleImporter: Importer {
 
-        private readonly Dictionary<string, Block> componentDict = new Dictionary<string, Block>();
+        private readonly Dictionary<string, Component> componentDict = new Dictionary<string, Component>();
         private readonly Dictionary<string, Signal> signalDict = new Dictionary<string, Signal>();
         private readonly Dictionary<Element, string> mapElementSignal = new Dictionary<Element, string>();
 
@@ -109,7 +109,7 @@
         }
 
         /// <summary>
-        /// Procesa els blocs
+        /// Procesa els components
         /// </summary>
         /// 
         private void ProcessBlocks() {
@@ -174,8 +174,8 @@
                     }
 
                     string name = String.Format("{0}@{1}", packageName, libraryName);
-                    Block component = new Block(name, elements);
-                    board.AddBlock(component);
+                    Component component = new Component(name, elements);
+                    board.AddComponent(component);
                     componentDict.Add(component.Name, component);
                 }
             }
@@ -918,7 +918,7 @@
         /// <param name="name">El nom del component.</param>
         /// <returns>El component.</returns>
         /// 
-        private Block GetComponent(string name) {
+        private Component GetComponent(string name) {
 
             return componentDict[name];
         }

@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam {
 
     using MikroPic.EdaTools.v1.Cam.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Core.Model;
     using System;
 
     public abstract class Generator {

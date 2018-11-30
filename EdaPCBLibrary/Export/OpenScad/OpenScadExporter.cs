@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Pcb.Import.OpenScad {
+﻿namespace MikroPic.EdaTools.v1.Core.Import.OpenScad {
 
     using System;
     using System.Globalization;

@@ -3,9 +3,9 @@
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.Visitors;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
+    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
     using Color = MikroPic.EdaTools.v1.Geometry.Color;
     using SysPoint = System.Windows.Point;

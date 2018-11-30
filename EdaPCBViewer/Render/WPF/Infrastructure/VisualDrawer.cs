@@ -3,9 +3,9 @@
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Pcb.Infrastructure;
-    using MikroPic.EdaTools.v1.Pcb.Model;
-    using MikroPic.EdaTools.v1.Pcb.Model.Elements;
+    using MikroPic.EdaTools.v1.Core.Infrastructure;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using System;
     using System.Collections.Generic;
     using System.Windows.Media;

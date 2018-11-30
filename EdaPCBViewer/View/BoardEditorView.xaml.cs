@@ -3,7 +3,7 @@
     using MikroPic.EdaTools.v1.Designer.DrawEditor;
     using MikroPic.EdaTools.v1.Designer.Render;
     using MikroPic.EdaTools.v1.Designer.Render.WPF;
-    using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
     using System;
     using System.Windows;
     using System.Windows.Controls;

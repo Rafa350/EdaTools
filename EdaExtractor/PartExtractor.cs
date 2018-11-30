@@ -1,6 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Extractor {
 
-    using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Core.Model;
     using MikroPic.EdaTools.v1.Geometry;
     using System;
     using System.IO;

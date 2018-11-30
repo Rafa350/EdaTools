@@ -3,7 +3,7 @@
     using System;
     using System.Windows.Media;
     using System.Windows.Input;
-    using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Designer.Services;
     using MikroPic.EdaTools.v1.Designer.DrawEditor;
     using MikroPic.NetMVVMToolkit.v1.MVVM.Commands;

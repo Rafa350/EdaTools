@@ -4,9 +4,9 @@
     using System.Collections.Generic;
     using System.IO;
     using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Pcb.Model.IO;
+    using MikroPic.EdaTools.v1.Core.Model.IO;
 
-    using Board = MikroPic.EdaTools.v1.Pcb.Model.Board;
+    using Board = MikroPic.EdaTools.v1.Core.Model.Board;
 
     public sealed class PlaceElement: PanelElement {
 

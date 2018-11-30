@@ -1,6 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Designer.Services {
 
-    using MikroPic.EdaTools.v1.Pcb.Model;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
 
     public interface IAppService {
 
