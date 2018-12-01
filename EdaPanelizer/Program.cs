@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Panelizer {
 
-    using MikroPic.EdaTools.v1.Core.Model;
-    using MikroPic.EdaTools.v1.Core.Model.IO;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
     using MikroPic.EdaTools.v1.Panel.Model;
     using MikroPic.EdaTools.v1.Panel.Model.Elements;
     using MikroPic.EdaTools.v1.Panel.Model.IO;

@@ -24,7 +24,7 @@
             <xs:sequence>
                 <xs:element ref="layers" minOccurs="0" maxOccurs="1"/>
                 <xs:element ref="signals" minOccurs="0" maxOccurs="1"/>
-                <xs:element ref="blocks" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="components" minOccurs="0" maxOccurs="1"/>
                 <xs:element ref="parts" minOccurs="0" maxOccurs="1"/>
                 <xs:element ref="elements" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
@@ -52,10 +52,10 @@
     </xs:element>
     
     <xs:element
-        name="blocks">
+        name="components">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="block" maxOccurs="unbounded" minOccurs="1"/>
+                <xs:element ref="component" maxOccurs="unbounded" minOccurs="1"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -85,7 +85,7 @@
     </xs:element>
     
     <xs:element
-        name="block">
+        name="component">
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="elements" minOccurs="0" maxOccurs="1"/>
@@ -102,7 +102,7 @@
                 <xs:element ref="attributes" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
             <xs:attribute name="name" use="required" type="nameType"/>
-            <xs:attribute name="block" use="required" type="nameType"/>
+            <xs:attribute name="component" use="required" type="nameType"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="rotation" use="optional" type="angleType"/>
         </xs:complexType>        

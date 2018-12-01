@@ -1,6 +1,5 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    using MikroPic.EdaTools.v1.Collections;
     using System;
     using System.Collections.Generic;
 
@@ -8,10 +7,9 @@
     /// Clase que representa un bloc predefinit.
     /// </summary>
     /// 
-    public sealed partial class Component : IVisitable, IName, ICollectionKey<String>, ICollectionChild<Board> {
+    public sealed partial class Component : IVisitable, IName {
 
-        private Board board;
-        private string name;
+        private readonly string name;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -41,17 +39,17 @@
         /// 
         public Component Clone() {
 
-            Component block = new Component(name);
+            Component component = new Component(name);
 
             if (elements != null)
-                foreach (var element in elements)
-                    block.AddElement(element.Clone());
+                foreach (var element in Elements)
+                    component.AddElement(element.Clone());
 
             if (attributes != null)
-                foreach (var attribute in attributes)
-                    block.AddAttribute(attribute.Clone());
+                foreach (var attribute in Attributes)
+                    component.AddAttribute(attribute.Clone());
 
-            return block;
+            return component;
         }
 
         /// <summary>
@@ -65,50 +63,12 @@
         }
 
         /// <summary>
-        /// Obte la clau.
-        /// </summary>
-        /// <returns>La clau.</returns>
-        /// <remarks>Implementa ICollectionKey.GetKey()</remarks>
-        /// 
-        public string GetKey() {
-
-            return name;
-        }
-
-        /// <summary>
-        /// Asigna l'objecte pare.
-        /// </summary>
-        /// <param name="board">L'objete pare a asignar.</param>
-        /// <remarks>Implementa ICollectionChild.AssignParent(Board)</remarks>
-        /// 
-        public void AssignParent(Board board) {
-
-            this.board = board;
-        }
-
-        /// <summary>
         /// Obte o asigna el identificador del component.
         /// </summary>
         /// 
         public string Name {
             get {
                 return name;
-            }
-            set {
-                if (String.IsNullOrEmpty(value))
-                    throw new ArgumentNullException("Block.Name");
-
-                name = value;
-            }
-        }
-
-        /// <summary>
-        /// Obte la placa a la que pertany.
-        /// </summary>
-        /// 
-        public Board Board {
-            get {
-                return board; 
             }
         }
     }

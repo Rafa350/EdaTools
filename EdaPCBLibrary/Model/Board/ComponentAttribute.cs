@@ -1,12 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     using System;
-    using MikroPic.EdaTools.v1.Collections;
 
     /// <summary>
     /// Clase que representa un atribut d'un bloc.
     /// </summary>
-    public sealed class ComponentAttribute: IVisitable, ICollectionKey<String> {
+    public sealed class ComponentAttribute: IVisitable {
 
         private readonly string name;
         private string value;
@@ -39,17 +38,6 @@
         public void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
-        }
-
-        /// <summary>
-        /// Obte el valor de la clau;
-        /// </summary>
-        /// <returns>El valor de la clau.</returns>
-        /// <remarks>Implementa el metode IKey.GetKey()</remarks>
-        /// 
-        public string GetKey() {
-
-            return name;
         }
 
         /// <summary>

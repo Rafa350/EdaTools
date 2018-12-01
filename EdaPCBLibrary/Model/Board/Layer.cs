@@ -1,8 +1,5 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Collections;
-
     /// <summary>
     /// Funcio de la capa.
     /// </summary>
@@ -19,7 +16,7 @@
     /// Clare quie representa una capa de la placa.
     /// </summary>
     /// 
-    public sealed class Layer: IVisitable, ICollectionKey<LayerId> {
+    public sealed class Layer: IVisitable {
 
         public static readonly LayerId TopId = new LayerId("Top", BoardSide.Top);
         public static readonly LayerId Inner1Id = new LayerId("Inner1", BoardSide.Inner);
@@ -97,16 +94,6 @@
         public void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
-        }
-
-        /// <summary>
-        /// Implementa el metode IKeyedCollectionItem
-        /// </summary>
-        /// <returns>La clau de l'item.</returns>
-        /// 
-        public LayerId GetKey() {
-
-            return id;
         }
 
         /// <summary>

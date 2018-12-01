@@ -1,15 +1,13 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Collections;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+    using MikroPic.EdaTools.v1.Geometry;
     using System;
     using System.Collections.Generic;
 
-    public sealed partial class Part: IPosition, IRotation, IName, IVisitable, ICollectionKey<String>, ICollectionChild<Board> {
+    public sealed partial class Part: IPosition, IRotation, IName, IVisitable {
 
-        private Board board;
-        private string name;
+        private readonly string name;
         private Point position;
         private Angle rotation;
         private BoardSide side = BoardSide.Top;
@@ -45,10 +43,11 @@
         /// <summary>
         /// Clona l'objecte.
         /// </summary>
-        /// <param name="component">El bloc a asignar.</param>
+        /// <param name="name">El nom del clon.</param>
+        /// <param name="component">El component a asignar.</param>
         /// <returns>El clon de l'objecte obtingut.</returns>
         /// 
-        public Part Clone(Component component) {
+        public Part Clone(string name, Component component) {
 
             Part part = new Part(component, name, position, rotation, side);
             foreach (var attribute in attributes.Values)
@@ -65,17 +64,6 @@
         public void AcceptVisitor(IVisitor visitor) {
 
             visitor.Visit(this);
-        }
-
-        /// <summary>
-        /// Asigna l'objecte pare.
-        /// </summary>
-        /// <param name="board">L'objecte pare.</param>
-        /// <remarks>Implementa ICollectionChild.AssignParent(Board)</remarks>
-        /// 
-        public void AssignParent(Board board) {
-
-            this.board = board;
         }
 
         /// <summary>
@@ -112,17 +100,6 @@
         }
 
         /// <summary>
-        /// Obte el valor de la clau
-        /// </summary>
-        /// <returns>El valor de la clau.</returns>
-        /// <remarks>Implementa ICollectionKey.GetKey()</remarks>
-        /// 
-        public string GetKey() {
-
-            return name;
-        }
-
-        /// <summary>
         /// Obte o asigna el nom.
         /// </summary>
         /// 
@@ -130,16 +107,10 @@
             get {
                 return name;
             }
-            set {
-                if (String.IsNullOrEmpty(value))
-                    throw new ArgumentNullException("Part.Name");
-
-                name = value;
-            }
         }
 
         /// <summary>
-        /// Obte el block.
+        /// Obte el component
         /// </summary>
         /// 
         public Component Component {
@@ -217,16 +188,6 @@
         public IEnumerable<PadElement> Pads {
             get {
                 return component.Pads;
-            }
-        }
-
-        /// <summary>
-        /// Obte la placa a la que pertany.
-        /// </summary>
-        /// 
-        public Board Board {
-            get {
-                return board;
             }
         }
     }

@@ -1,14 +1,13 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    using MikroPic.EdaTools.v1.Collections;
     using System;
 
     /// <summary>
     /// Clase que representa una senyal.
     /// </summary>
-    public sealed class Signal: IName, IVisitable, ICollectionKey<String> {
+    public sealed class Signal: IName, IVisitable {
 
-        private string name;
+        private readonly string name;
         private int clearance;
 
         /// <summary>
@@ -24,7 +23,13 @@
             this.name = name;
         }
 
-        public Signal Clone() {
+        /// <summary>
+        /// Clona l'objecte.
+        /// </summary>
+        /// <param name="name">El nom del clon.</param>
+        /// <returns>El clon de l'objecte.</returns>
+        /// 
+        public Signal Clone(string name) {
 
             return new Signal(name);
         }
@@ -40,29 +45,12 @@
         }
 
         /// <summary>
-        /// Obte la clau.
-        /// </summary>
-        /// <returns>La clau</returns>
-        /// <remarks>Implementa IKey.GetKey()</remarks>
-        /// 
-        public string GetKey() {
-
-            return name;
-        }
-
-        /// <summary>
         /// Obte o asigna el nom de la senyal.
         /// </summary>
         /// 
         public string Name {
             get {
                 return name;
-            }
-            set {
-                if (String.IsNullOrEmpty(value))
-                    throw new ArgumentNullException("Signal.Name");
-
-                name = value;
             }
         }
 

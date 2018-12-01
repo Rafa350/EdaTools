@@ -319,7 +319,7 @@
                     // Escriu els parametres
                     //
                     writer.WriteAttributeString("name", part.Name);
-                    writer.WriteAttributeString("block", part.Component.Name);
+                    writer.WriteAttributeString("component", part.Component.Name);
                     writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(part.Position));
                     if (!part.Rotation.IsZero)
                         writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(part.Rotation));
@@ -428,7 +428,7 @@
             /// 
             public override void Visit(Component block) {
 
-                writer.WriteStartElement("block");
+                writer.WriteStartElement("component");
 
                 writer.WriteAttributeString("name", block.Name);
 
@@ -473,7 +473,7 @@
                 }
 
                 if (board.HasComponents) {
-                    writer.WriteStartElement("blocks");
+                    writer.WriteStartElement("components");
                     foreach (var block in board.Components)
                         block.AcceptVisitor(this);
                     writer.WriteEndElement();
@@ -533,7 +533,7 @@
                 writer.WriteStartDocument();
 
                 writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/XBRD.xsd");
-                writer.WriteAttributeString("version", "212");
+                writer.WriteAttributeString("version", "213");
                 writer.WriteAttributeString("documentType", "board");
                 writer.WriteAttributeString("distanceUnits", "mm");
                 writer.WriteAttributeString("angleUnits", "deg");

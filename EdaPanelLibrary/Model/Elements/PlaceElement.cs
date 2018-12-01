@@ -4,9 +4,9 @@
     using System.Collections.Generic;
     using System.IO;
     using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Core.Model.IO;
-
-    using Board = MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
+    using MikroPic.EdaTools.v1.Panel.Model;
 
     public sealed class PlaceElement: PanelElement {
 
@@ -45,7 +45,7 @@
             this.fileName = fileName;
         }
 
-        public override void AcceptVisitor(IVisitor visitor) {
+        public override void AcceptVisitor(MikroPic.EdaTools.v1.Panel.Model.IVisitor visitor) {
         }
 
         /// <summary>

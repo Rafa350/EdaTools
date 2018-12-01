@@ -66,6 +66,7 @@
     <Compile Include="Import\Importer.cs" />
     <Compile Include="Import\ImporterFactory.cs" />
     <Compile Include="Infrastructure\PartAttributeAdapter.cs" />
+    <Compile Include="Model\Board\Board_Polygons.cs" />
     <Compile Include="Model\Board\Component_Elements.cs" />
     <Compile Include="Model\Board\Component_Attributes.cs" />
     <Compile Include="Model\Board\Board_Signals.cs" />
@@ -87,7 +88,7 @@
     <Compile Include="Model\Board\LayerSet.cs" />
     <Compile Include="Model\Board\Part_Attributes.cs" />
     <Compile Include="Model\Board\PartExtensions.cs" />
-    <Compile Include="Model\Board\Visitors\BlockVisitor.cs" />
+    <Compile Include="Model\Board\Visitors\ComponentVisitor.cs" />
     <Compile Include="Model\Board\Visitors\DefaultVisitor.cs" />
     <Compile Include="Model\Board\Elements\ArcElement.cs" />
     <Compile Include="Model\Board\Element.cs" />
@@ -111,11 +112,18 @@
     <Compile Include="Model\Board\Elements\ThPadElement.cs" />
     <Compile Include="Model\Board\Visitors\ElementVisitor.cs" />
     <Compile Include="Model\Board\Visitors\SignalVisitor.cs" />
+    <Compile Include="Model\Net\Net_Elements.cs" />
+    <Compile Include="Model\Net\Net_Components.cs" />
+    <Compile Include="Model\Net\NetPin.cs" />
+    <Compile Include="Model\Net\Net.cs" />
+    <Compile Include="Model\Net\NetComponent.cs" />
+    <Compile Include="Model\Net\NetElement.cs" />
+    <Compile Include="Model\Net\NetTerminal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Import\KiCad\" />
-    <Folder Include="Model\Net\" />
+    <Folder Include="Model\Net\IO\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Model\Board\IO\Schemas\XBRD.xsd">

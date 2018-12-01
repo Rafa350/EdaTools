@@ -1,6 +1,5 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    using MikroPic.EdaTools.v1.Collections;
     using System;
     using System.Collections.Generic;
 
@@ -10,8 +9,7 @@
     /// 
     public sealed partial class Board {
 
-        // Senyals
-        private readonly KeyCollection<Signal, String> signals = new KeyCollection<Signal, String>();
+        private Dictionary<string, Signal> signals = new Dictionary<string, Signal>();
         private readonly Dictionary<Signal, HashSet<Tuple<IConectable, Part>>> itemsOfSignal = new Dictionary<Signal, HashSet<Tuple<IConectable, Part>>>();
         private readonly Dictionary<Tuple<IConectable, Part>, Signal> signalOfItem = new Dictionary<Tuple<IConectable, Part>, Signal>();
 
@@ -25,13 +23,20 @@
             if (signal == null)
                 throw new ArgumentNullException("signal");
 
-            if (signals.Contains(signal))
+            if ((signals == null) || signals.ContainsKey(signal.Name))
                 throw new InvalidOperationException(
                     String.Format("Ya existe una señal con el nombre '{0}' en la placa.", signal.Name));
 
-            signals.Add(signal);
+            if (signals == null)
+                signals = new Dictionary<string, Signal>();
+            signals.Add(signal.Name, signal);
         }
 
+        /// <summary>
+        /// Afegeix una col·leccio de senays a la placa.
+        /// </summary>
+        /// <param name="signals">La col·leccio de senyals.</param>
+        /// 
         public void AddSignals(IEnumerable<Signal> signals) {
 
             if (signals == null)
@@ -51,7 +56,7 @@
             if (signal == null)
                 throw new ArgumentNullException("signal");
 
-            if (!signals.Contains(signal))
+            if ((signals == null) || !signals.ContainsKey(signal.Name))
                 throw new InvalidOperationException(
                     String.Format("No se encontro ninguna señal con el nombre '{0}', en la placa.", signal.Name));
 
@@ -59,7 +64,9 @@
                 throw new InvalidOperationException(
                     String.Format("La señal '{0}', esta en uso y no puede ser retirada de la placa.", signal.Name));
 
-            signals.Remove(signal);
+            signals.Remove(signal.Name);
+            if (signals.Count == 0)
+                signals = null;
         }
 
         /// <summary>
@@ -77,7 +84,7 @@
             if (element == null)
                 throw new ArgumentNullException("element");
 
-            if (!signals.Contains(signal))
+            if ((signals == null) || !signals.ContainsKey(signal.Name))
                 throw new InvalidOperationException(
                     String.Format("La senyal '{0}', no esta asignada a esta placa.", signal.Name));
 
@@ -151,14 +158,15 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            Signal signal = signals?.Get(name);
+            if ((signals != null) && signals.TryGetValue(name, out var signal))
+                return signal;
 
-            if ((signal == null) && throwOnError)
+            else if (throwOnError)
                 throw new InvalidOperationException(
                     String.Format("No se encontro la señal '{0}'.", name));
 
             else 
-                return signal;
+                return null;
         }
 
         /// <summary>
@@ -172,7 +180,7 @@
             if (signal == null)
                 throw new ArgumentNullException("signal");
 
-            if (!signals.Contains(signal))
+            if ((signals == null) || !signals.ContainsKey(signal.Name))
                 throw new InvalidOperationException(
                     String.Format("La señal '{0}', no esta asignada a esta placa.", signal.Name));
 
@@ -199,7 +207,7 @@
         /// 
         public IEnumerable<Signal> Signals {
             get {
-                return signals;
+                return signals?.Values;
             }
         }
     }

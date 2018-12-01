@@ -6,9 +6,9 @@
     using MikroPic.EdaTools.v1.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Core.Infrastructure;
-    using MikroPic.EdaTools.v1.Core.Model;
-    using MikroPic.EdaTools.v1.Core.Model.Elements;
-    using MikroPic.EdaTools.v1.Core.Model.Visitors;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+    using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
     using System;
     using System.IO;
 

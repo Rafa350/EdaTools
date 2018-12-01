@@ -3,9 +3,9 @@
     using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
     using MikroPic.EdaTools.v1.Cam.Model;
     using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Core.Model;
-    using MikroPic.EdaTools.v1.Core.Model.Elements;
-    using MikroPic.EdaTools.v1.Core.Model.Visitors;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+    using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
     using System;
     using System.IO;
 

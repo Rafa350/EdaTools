@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<document version="212" documentType="board" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/XBRD.xsd">
+<document version="213" documentType="board" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/XBRD.xsd">
     <board position="0, 0" rotation="0">
         <layers>
             <layer id="Top.Top" function="signal" />
@@ -521,8 +521,8 @@
             <signal name="B3.O11A" />
             <signal name="B3.O11B" />
         </signals>
-        <blocks>
-            <block name="1X02/90@pinhead">
+        <components>
+            <component name="1X02/90@pinhead">
                 <elements>
                     <line layers="Top.Place" startPosition="-2.54, -1.905" endPosition="0, -1.905" thickness="0.1524" />
                     <line layers="Top.Place" startPosition="0, -1.905" endPosition="0, 0.635" thickness="0.1524" />
@@ -542,8 +542,8 @@
                     <rectangle layers="Top.Place" position="-1.27, -2.413" size="0.762, 1.016" />
                     <rectangle layers="Top.Place" position="1.27, -2.413" size="0.762, 1.016" />
                 </elements>
-            </block>
-            <block name="3,6@holes">
+            </component>
+            <component name="3,6@holes">
                 <elements>
                     <arc layers="Top.Document" startPosition="-2.159, 0" endPosition="0, -2.159" angle="90" thickness="2.4892" lineCap="flat" />
                     <arc layers="Top.Document" startPosition="0, 2.159" endPosition="2.159, 0" angle="-90" thickness="2.4892" lineCap="flat" />
@@ -557,8 +557,8 @@
                     <circle layers="Top.Place" position="0, 0" radius="1.9" thickness="0.2032" />
                     <hole layers="Holes" position="0, 0" drill="3.6" />
                 </elements>
-            </block>
-            <block name="SO08@optoacopladores">
+            </component>
+            <component name="SO08@optoacopladores">
                 <elements>
                     <line layers="Top.Keepout" startPosition="-2.65, 4.2175" endPosition="2.65, 4.2175" thickness="0.1998" />
                     <line layers="Top.Keepout" startPosition="2.65, 4.2175" endPosition="2.65, -4.2175" thickness="0.1998" />
@@ -588,8 +588,8 @@
                     <rectangle layers="Top.Document" position="-1.905, 2.23255" size="0.4902, 1.1001" />
                     <circle layers="Top.Place" position="-1.75, -1" radius="0.2" />
                 </elements>
-            </block>
-            <block name="SOP04@optoacopladores">
+            </component>
+            <component name="SOP04@optoacopladores">
                 <elements>
                     <line layers="Top.Keepout" startPosition="-2.28875, 3.9" endPosition="2.28875, 3.9" thickness="0.1998" />
                     <line layers="Top.Keepout" startPosition="2.28875, 3.9" endPosition="2.28875, -3.9" thickness="0.1998" />
@@ -611,8 +611,8 @@
                     <rectangle layers="Top.Document" position="-1.27, 2.60745" size="0.4998, 1.1301" />
                     <circle layers="Top.Place" position="-1.27, -1.27" radius="0.2" />
                 </elements>
-            </block>
-            <block name="DIL8-SMD@optoacopladores">
+            </component>
+            <component name="DIL8-SMD@optoacopladores">
                 <elements>
                     <line layers="Top.Place" startPosition="4.855, 3.18" endPosition="4.855, -2.164" thickness="0.1524" />
                     <line layers="Top.Place" startPosition="4.855, -2.164" endPosition="4.855, -3.18" thickness="0.1524" />
@@ -639,8 +639,8 @@
                     <rectangle layers="Top.Document" position="-1.2775, 4.175" size="1.225, 1.95" rotation="180" />
                     <rectangle layers="Top.Document" position="-3.8175, 4.175" size="1.225, 1.95" rotation="180" />
                 </elements>
-            </block>
-            <block name="1X05-2MM@pinhead200">
+            </component>
+            <component name="1X05-2MM@pinhead200">
                 <elements>
                     <line layers="Top.Place" startPosition="5, -1" endPosition="-3, -1" thickness="0.127" />
                     <line layers="Top.Place" startPosition="-3, -1" endPosition="-5, -1" thickness="0.127" />
@@ -662,8 +662,8 @@
                     <rectangle layers="Top.Document" position="-2, 0" size="0.508, 0.508" />
                     <rectangle layers="Top.Document" position="-4, 0" size="0.508, 0.508" rotation="90" />
                 </elements>
-            </block>
-            <block name="SO16@maxim">
+            </component>
+            <component name="SO16@maxim">
                 <elements>
                     <line layers="Top.Place" startPosition="4.699, 1.9558" endPosition="-4.699, 1.9558" thickness="0.1524" />
                     <arc layers="Top.Place" startPosition="4.699, -1.9558" endPosition="5.08, -1.5748" angle="90" thickness="0.1524" />
@@ -712,8 +712,8 @@
                     <rectangle layers="Top.Document" position="3.175, 2.5273" size="0.508, 1.143" />
                     <rectangle layers="Top.Document" position="4.445, 2.5273" size="0.508, 1.143" />
                 </elements>
-            </block>
-            <block name="SM49@crystal">
+            </component>
+            <component name="SM49@crystal">
                 <elements>
                     <arc layers="Top.Place" startPosition="3.429, -2.032" endPosition="5.109, -1.1429" angle="55.77" thickness="0.0508" />
                     <line layers="Top.Place" startPosition="5.715, -1.143" endPosition="5.715, -2.159" thickness="0.1524" />
@@ -767,8 +767,8 @@
                     <text layers="Top.Values" position="-5.715, -4.064" height="1.27" thickness="0.1" value="&gt;VALUE" />
                     <rectangle layers="ViaRestrict" position="0, 0.127" size="13.208, 5.334" />
                 </elements>
-            </block>
-            <block name="TQFP44@microchip-pic">
+            </component>
+            <component name="TQFP44@microchip-pic">
                 <elements>
                     <line layers="Top.Place" startPosition="-4.8, 4.4" endPosition="-4.4, 4.8" thickness="0.2032" />
                     <line layers="Top.Place" startPosition="-4.4, 4.8" endPosition="4.4, 4.8" thickness="0.2032" />
@@ -870,8 +870,8 @@
                     <rectangle layers="Top.Document" position="-3.2, 5.52505" size="0.4, 1.1501" />
                     <rectangle layers="Top.Document" position="-4, 5.52505" size="0.3998, 1.1501" />
                 </elements>
-            </block>
-            <block name="1X5-SMD-90-E@hirose-df13">
+            </component>
+            <component name="1X5-SMD-90-E@hirose-df13">
                 <elements>
                     <line layers="Top.Place" startPosition="-3.875, 2.4662" endPosition="-3.875, -2.5" thickness="0.127" />
                     <line layers="Top.Place" startPosition="-3.875, -2.5" endPosition="3.895, -2.5" thickness="0.127" />
@@ -904,8 +904,8 @@
                     <hole layers="Holes" position="-3.58, -2.125" drill="0.85" />
                     <hole layers="Holes" position="3.6, -2.125" drill="0.85" />
                 </elements>
-            </block>
-            <block name="1X4-SMD-90-E@hirose-df13">
+            </component>
+            <component name="1X4-SMD-90-E@hirose-df13">
                 <elements>
                     <line layers="Top.Place" startPosition="-3.25, 2.4662" endPosition="-3.25, -2.5" thickness="0.127" />
                     <line layers="Top.Place" startPosition="-3.25, -2.5" endPosition="3.25, -2.5" thickness="0.127" />
@@ -936,8 +936,8 @@
                     <hole layers="Holes" position="-2.955, -2.125" drill="0.85" />
                     <hole layers="Holes" position="2.955, -2.125" drill="0.85" />
                 </elements>
-            </block>
-            <block name="SOT89@microchip-analog">
+            </component>
+            <component name="SOT89@microchip-analog">
                 <elements>
                     <line layers="Top.Document" startPosition="2.235, -1.245" endPosition="-2.235, -1.245" thickness="0.127" />
                     <line layers="Top.Document" startPosition="2.235, 1.219" endPosition="2.235, -1.245" thickness="0.127" />
@@ -975,8 +975,8 @@
                         <segment position="-0.7874, 1.2954" />
                     </region>
                 </elements>
-            </block>
-            <block name="SOD123FL@diode">
+            </component>
+            <component name="SOD123FL@diode">
                 <elements>
                     <line layers="Top.Document" startPosition="-1.35, 0.8" endPosition="1.35, 0.8" thickness="0.2032" />
                     <line layers="Top.Document" startPosition="1.35, 0.8" endPosition="1.35, -0.8" thickness="0.2032" />
@@ -992,8 +992,8 @@
                     <rectangle layers="Top.Document" position="1.6125, 0" size="0.375, 1.1" rotation="180" />
                     <rectangle layers="Top.Place" position="-0.8, 0.0125" size="0.3, 1.575" />
                 </elements>
-            </block>
-            <block name="DF11-16DP-2DSA@hirose-df11">
+            </component>
+            <component name="DF11-16DP-2DSA@hirose-df11">
                 <elements>
                     <tpad name="2" layers="Pads,  Drills, Top.Top, Top.Stop, Bottom.Bottom, Bottom.Stop" position="-7.02, -1" size="1.28" drill="0.8" shape="octagon" />
                     <tpad name="1" layers="Pads,  Drills, Top.Top, Top.Stop, Bottom.Bottom, Bottom.Stop" position="-7.02, 1" size="1.28" drill="0.8" shape="square" />
@@ -1019,8 +1019,8 @@
                     <tpad name="16" layers="Pads,  Drills, Top.Top, Top.Stop, Bottom.Bottom, Bottom.Stop" position="6.98, -1" size="1.28" drill="0.8" shape="octagon" />
                     <tpad name="15" layers="Pads,  Drills, Top.Top, Top.Stop, Bottom.Bottom, Bottom.Stop" position="6.98, 1" size="1.28" drill="0.8" shape="octagon" />
                 </elements>
-            </block>
-            <block name="DF11-18DP-2DSA@hirose-df11">
+            </component>
+            <component name="DF11-18DP-2DSA@hirose-df11">
                 <elements>
                     <tpad name="2" layers="Pads,  Drills, Top.Top, Top.Stop, Bottom.Bottom, Bottom.Stop" position="-8.02, -1" size="1.28" drill="0.8" shape="octagon" />
                     <tpad name="1" layers="Pads,  Drills, Top.Top, Top.Stop, Bottom.Bottom, Bottom.Stop" position="-8.02, 1" size="1.28" drill="0.8" shape="square" />
@@ -1048,8 +1048,8 @@
                     <tpad name="17" layers="Pads,  Drills, Top.Top, Top.Stop, Bottom.Bottom, Bottom.Stop" position="7.98, 1" size="1.28" drill="0.8" shape="octagon" />
                     <tpad name="18" layers="Pads,  Drills, Top.Top, Top.Stop, Bottom.Bottom, Bottom.Stop" position="7.98, -1" size="1.28" drill="0.8" shape="octagon" />
                 </elements>
-            </block>
-            <block name="CE_7.3MM@logo">
+            </component>
+            <component name="CE_7.3MM@logo">
                 <elements>
                     <rectangle layers="Top.Place" position="8.21095, 3.63535" size="2.2385, 1.0745" />
                     <region layers="Top.Place" thickness="0.1432" filled="true">
@@ -1065,8 +1065,8 @@
                         <segment position="9.957, 6.1963" angle="192.86" />
                     </region>
                 </elements>
-            </block>
-            <block name="ESD_10.00@logo">
+            </component>
+            <component name="ESD_10.00@logo">
                 <elements>
                     <region layers="Top.Place" thickness="0.047" filled="true">
                         <segment position="0.0943, 0.0943" />
@@ -1129,8 +1129,8 @@
                         <segment position="7.9669, 3.5356" />
                     </region>
                 </elements>
-            </block>
-            <block name="R-0805@smd-parts">
+            </component>
+            <component name="R-0805@smd-parts">
                 <elements>
                     <line layers="Top.Place" startPosition="-0.4725, 0.875" endPosition="0.4725, 0.875" thickness="0.1" />
                     <line layers="Top.Place" startPosition="-0.4725, -0.875" endPosition="0.4725, -0.875" thickness="0.1" />
@@ -1148,8 +1148,8 @@
                     <line layers="Top.Keepout" startPosition="-1.875, -1" endPosition="1.875, -1" thickness="0.1" />
                     <line layers="Top.Keepout" startPosition="-1.875, -1" endPosition="-1.875, 1" thickness="0.1" />
                 </elements>
-            </block>
-            <block name="C-0805@smd-parts">
+            </component>
+            <component name="C-0805@smd-parts">
                 <elements>
                     <spad name="1" layers="Top.Top, Top.Cream, Top.Stop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
                     <spad name="2" layers="Top.Top, Top.Cream, Top.Stop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
@@ -1167,8 +1167,8 @@
                     <line layers="Top.Document" startPosition="-0.75, 0.5" endPosition="0.75, 0.5" thickness="0.2" />
                     <line layers="Top.Document" startPosition="-0.75, -0.5" endPosition="0.75, -0.5" thickness="0.2" />
                 </elements>
-            </block>
-            <block name="C-SMC-A@smd-parts">
+            </component>
+            <component name="C-SMC-A@smd-parts">
                 <elements>
                     <line layers="Top.Document" startPosition="-1.45, 0.75" endPosition="1.45, 0.75" thickness="0.1016" />
                     <line layers="Top.Document" startPosition="1.45, 0.75" endPosition="1.45, -0.75" thickness="0.1016" />
@@ -1189,8 +1189,8 @@
                     <line layers="Top.Place" startPosition="-2.5, -0.875" endPosition="0.5, -0.875" thickness="0.1" />
                     <line layers="Top.Place" startPosition="-2.5, -0.875" endPosition="-2.5, 0.875" thickness="0.1" />
                 </elements>
-            </block>
-            <block name="D-LED-0805@smd-parts">
+            </component>
+            <component name="D-LED-0805@smd-parts">
                 <elements>
                     <line layers="Top.Place" startPosition="-1.75, 0.875" endPosition="0.4725, 0.875" thickness="0.1" />
                     <line layers="Top.Place" startPosition="-1.75, -0.875" endPosition="0.4725, -0.875" thickness="0.1" />
@@ -1234,8 +1234,8 @@
                     <line layers="Top.Document" startPosition="0.25, 0.25" endPosition="0.25, -0.25" thickness="0.1" />
                     <line layers="Top.Document" startPosition="0.25, -0.25" endPosition="-0.25, 0" thickness="0.1" />
                 </elements>
-            </block>
-            <block name="L-0805@smd-parts">
+            </component>
+            <component name="L-0805@smd-parts">
                 <elements>
                     <spad name="1" layers="Top.Top, Top.Cream, Top.Stop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
                     <spad name="2" layers="Top.Top, Top.Cream, Top.Stop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
@@ -1252,17 +1252,17 @@
                     <line layers="Top.Keepout" startPosition="-1.875, -1" endPosition="1.875, -1" thickness="0.1" />
                     <line layers="Top.Keepout" startPosition="-1.875, -1" endPosition="-1.875, 1" thickness="0.1" />
                 </elements>
-            </block>
-        </blocks>
+            </component>
+        </components>
         <parts>
-            <part name="B0.U$3" block="3,6@holes" position="65.5, 4.5">
+            <part name="B0.U$3" component="3,6@holes" position="65.5, 4.5">
                 <attributes>
                     <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="NAME" value="U$3" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B0.JP5" block="1X05-2MM@pinhead200" position="39.25, 8.5">
+            <part name="B0.JP5" component="1X05-2MM@pinhead200" position="39.25, 8.5">
                 <pads>
                     <pad name="1" signal="B0.VPP" />
                     <pad name="2" signal="B0.VCC" />
@@ -1275,7 +1275,7 @@
                     <attribute name="VALUE" value="ICSP" visible="false" position="-5, -2.5" rotation="0" height="1.27" />
                 </attributes>
             </part>
-            <part name="B0.R9" block="R-0805@smd-parts" position="41.75, 52.75" rotation="90">
+            <part name="B0.R9" component="R-0805@smd-parts" position="41.75, 52.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.OUT0" />
                     <pad name="2" signal="B0.N$17" />
@@ -1291,7 +1291,7 @@
                     <attribute name="REFERENCE" value="CRCW0805270RFKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R10" block="R-0805@smd-parts" position="41.75, 47.875" rotation="90">
+            <part name="B0.R10" component="R-0805@smd-parts" position="41.75, 47.875" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.OUT1" />
                     <pad name="2" signal="B0.N$18" />
@@ -1307,7 +1307,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R11" block="R-0805@smd-parts" position="41.75, 43" rotation="90">
+            <part name="B0.R11" component="R-0805@smd-parts" position="41.75, 43" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.OUT2" />
                     <pad name="2" signal="B0.N$25" />
@@ -1323,7 +1323,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R12" block="R-0805@smd-parts" position="41.75, 38.25" rotation="90">
+            <part name="B0.R12" component="R-0805@smd-parts" position="41.75, 38.25" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.OUT3" />
                     <pad name="2" signal="B0.N$26" />
@@ -1339,7 +1339,7 @@
                     <attribute name="REFERENCE" value="CRCW0805270RFKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U20" block="SO16@maxim" position="13.75, 16.75">
+            <part name="B0.U20" component="SO16@maxim" position="13.75, 16.75">
                 <pads>
                     <pad name="1" signal="B0.N$16" />
                     <pad name="16" signal="B0.VCC" />
@@ -1370,7 +1370,7 @@
                     <attribute name="REFERENCE" value="MAX3232ECDR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.C1" block="C-0805@smd-parts" position="10.25, 9.75" rotation="270">
+            <part name="B0.C1" component="C-0805@smd-parts" position="10.25, 9.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.N$34" />
                     <pad name="2" signal="B0.GND" />
@@ -1387,7 +1387,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.C2" block="C-0805@smd-parts" position="17.25, 9.75" rotation="270">
+            <part name="B0.C2" component="C-0805@smd-parts" position="17.25, 9.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.N$35" />
                     <pad name="2" signal="B0.GND" />
@@ -1404,7 +1404,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.C3" block="C-0805@smd-parts" position="12.25, 9.75" rotation="270">
+            <part name="B0.C3" component="C-0805@smd-parts" position="12.25, 9.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.N$29" />
                     <pad name="2" signal="B0.N$16" />
@@ -1421,7 +1421,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.C4" block="C-0805@smd-parts" position="15.25, 9.75" rotation="270">
+            <part name="B0.C4" component="C-0805@smd-parts" position="15.25, 9.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.N$33" />
                     <pad name="2" signal="B0.N$30" />
@@ -1438,7 +1438,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.JP6" block="1X4-SMD-90-E@hirose-df13" position="3, 29.25" rotation="90">
+            <part name="B0.JP6" component="1X4-SMD-90-E@hirose-df13" position="3, 29.25" rotation="90">
                 <pads>
                     <pad name="2" signal="B0.SCL2" />
                     <pad name="1" signal="B0.VCC" />
@@ -1452,7 +1452,7 @@
                     <attribute name="VALUE" value="DF13-1X4-SMD-90-E" visible="false" />
                 </attributes>
             </part>
-            <part name="B0.JP7" block="1X4-SMD-90-E@hirose-df13" position="3, 40.75" rotation="90">
+            <part name="B0.JP7" component="1X4-SMD-90-E@hirose-df13" position="3, 40.75" rotation="90">
                 <pads>
                     <pad name="2" signal="B0.SCL2" />
                     <pad name="1" signal="B0.VCC" />
@@ -1466,14 +1466,14 @@
                     <attribute name="VALUE" value="DF13-1X4-SMD-90-E" visible="false" />
                 </attributes>
             </part>
-            <part name="B0.U$6" block="3,6@holes" position="65.5, 63">
+            <part name="B0.U$6" component="3,6@holes" position="65.5, 63">
                 <attributes>
                     <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="NAME" value="U$6" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B0.C7" block="C-0805@smd-parts" position="38, 27.75" rotation="270">
+            <part name="B0.C7" component="C-0805@smd-parts" position="38, 27.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.GND" />
                     <pad name="2" signal="B0.VCC" />
@@ -1490,7 +1490,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.C6" block="C-0805@smd-parts" position="35.75, 27.75" rotation="270">
+            <part name="B0.C6" component="C-0805@smd-parts" position="35.75, 27.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.GND" />
                     <pad name="2" signal="B0.VCC" />
@@ -1507,7 +1507,7 @@
                     <attribute name="REFERENCE" value="C0805C103K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.C5" block="C-0805@smd-parts" position="8.25, 22.25">
+            <part name="B0.C5" component="C-0805@smd-parts" position="8.25, 22.25">
                 <pads>
                     <pad name="1" signal="B0.GND" />
                     <pad name="2" signal="B0.VCC" />
@@ -1524,7 +1524,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.Q1" block="SM49@crystal" position="27.5, 31" rotation="180">
+            <part name="B0.Q1" component="SM49@crystal" position="27.5, 31" rotation="180">
                 <pads>
                     <pad name="1" signal="B0.N$8" />
                     <pad name="2" signal="B0.N$36" />
@@ -1543,7 +1543,7 @@
                     <attribute name="XTAL_FREQUENCY" value="16MHz" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.C10" block="C-0805@smd-parts" position="31.25, 34.5" rotation="180">
+            <part name="B0.C10" component="C-0805@smd-parts" position="31.25, 34.5" rotation="180">
                 <pads>
                     <pad name="1" signal="B0.GND" />
                     <pad name="2" signal="B0.N$8" />
@@ -1560,7 +1560,7 @@
                     <attribute name="REFERENCE" value="08051C220JAT2A" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.C11" block="C-0805@smd-parts" position="23.75, 34.5">
+            <part name="B0.C11" component="C-0805@smd-parts" position="23.75, 34.5">
                 <pads>
                     <pad name="1" signal="B0.GND" />
                     <pad name="2" signal="B0.N$36" />
@@ -1577,7 +1577,7 @@
                     <attribute name="REFERENCE" value="08051C220JAT2A" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R17" block="R-0805@smd-parts" position="14.5, 24.5" rotation="90">
+            <part name="B0.R17" component="R-0805@smd-parts" position="14.5, 24.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.SCL2" />
                     <pad name="2" signal="B0.VCC" />
@@ -1593,7 +1593,7 @@
                     <attribute name="REFERENCE" value="CRCW08051K50FKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R18" block="R-0805@smd-parts" position="12.25, 24.5" rotation="90">
+            <part name="B0.R18" component="R-0805@smd-parts" position="12.25, 24.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.SDA2" />
                     <pad name="2" signal="B0.VCC" />
@@ -1609,7 +1609,7 @@
                     <attribute name="REFERENCE" value="CRCW08051K50FKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R13" block="R-0805@smd-parts" position="41.75, 33.5" rotation="90">
+            <part name="B0.R13" component="R-0805@smd-parts" position="41.75, 33.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.OUT4" />
                     <pad name="2" signal="B0.N$52" />
@@ -1625,7 +1625,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R14" block="R-0805@smd-parts" position="41.75, 28.75" rotation="90">
+            <part name="B0.R14" component="R-0805@smd-parts" position="41.75, 28.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.OUT5" />
                     <pad name="2" signal="B0.N$53" />
@@ -1641,7 +1641,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U21" block="TQFP44@microchip-pic" position="29.5, 18.5" rotation="90">
+            <part name="B0.U21" component="TQFP44@microchip-pic" position="29.5, 18.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.RX1" />
                     <pad name="2" signal="B0.IN11" />
@@ -1692,7 +1692,7 @@
                     <attribute name="REFERENCE" value="PIC18F46K22T-I/PT" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.C9" block="C-0805@smd-parts" position="30.375, 9.75" rotation="90">
+            <part name="B0.C9" component="C-0805@smd-parts" position="30.375, 9.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.GND" />
                     <pad name="2" signal="B0.VCC" />
@@ -1709,7 +1709,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.C8" block="C-0805@smd-parts" position="32.5, 9.75" rotation="90">
+            <part name="B0.C8" component="C-0805@smd-parts" position="32.5, 9.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.GND" />
                     <pad name="2" signal="B0.VCC" />
@@ -1726,7 +1726,7 @@
                     <attribute name="REFERENCE" value="C0805C103K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R15" block="R-0805@smd-parts" position="65.625, 28.75" rotation="270">
+            <part name="B0.R15" component="R-0805@smd-parts" position="65.625, 28.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.OUT6" />
                     <pad name="2" signal="B0.N$51" />
@@ -1742,7 +1742,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R16" block="R-0805@smd-parts" position="65.625, 33.5" rotation="270">
+            <part name="B0.R16" component="R-0805@smd-parts" position="65.625, 33.5" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.OUT7" />
                     <pad name="2" signal="B0.N$54" />
@@ -1758,7 +1758,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.C12" block="C-0805@smd-parts" position="40.5, 14.5" rotation="270">
+            <part name="B0.C12" component="C-0805@smd-parts" position="40.5, 14.5" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.VCC" />
                     <pad name="2" signal="B0.GND" />
@@ -1775,7 +1775,7 @@
                     <attribute name="REFERENCE" value="TMK212AB7475KG-T" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.C13" block="C-0805@smd-parts" position="47.5, 14.5" rotation="90">
+            <part name="B0.C13" component="C-0805@smd-parts" position="47.5, 14.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.N$5" />
                     <pad name="2" signal="B0.GND" />
@@ -1792,7 +1792,7 @@
                     <attribute name="REFERENCE" value="TMK212AB7475KG-T" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.C14" block="C-SMC-A@smd-parts" position="11.5, 45.75" rotation="90">
+            <part name="B0.C14" component="C-SMC-A@smd-parts" position="11.5, 45.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.VCC" />
                     <pad name="2" signal="B0.GND" />
@@ -1809,7 +1809,7 @@
                     <attribute name="REFERENCE" value="TPSA106K006R1500" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.JP4" block="1X02/90@pinhead" position="63.25, 14.25" rotation="270">
+            <part name="B0.JP4" component="1X02/90@pinhead" position="63.25, 14.25" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.N$2" />
                     <pad name="2" signal="B0.GND" />
@@ -1821,7 +1821,7 @@
                     <attribute name="REFERENCE" value="22-27-2021" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.C15" block="C-0805@smd-parts" position="13.75, 45" rotation="270">
+            <part name="B0.C15" component="C-0805@smd-parts" position="13.75, 45" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.GND" />
                     <pad name="2" signal="B0.VCC" />
@@ -1838,7 +1838,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.C16" block="C-SMC-A@smd-parts" position="40.25, 20.75">
+            <part name="B0.C16" component="C-SMC-A@smd-parts" position="40.25, 20.75">
                 <pads>
                     <pad name="1" signal="B0.VCC" />
                     <pad name="2" signal="B0.GND" />
@@ -1855,7 +1855,7 @@
                     <attribute name="REFERENCE" value="TPSA106K006R1500" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.C17" block="C-0805@smd-parts" position="39.625, 18.75" rotation="180">
+            <part name="B0.C17" component="C-0805@smd-parts" position="39.625, 18.75" rotation="180">
                 <pads>
                     <pad name="1" signal="B0.GND" />
                     <pad name="2" signal="B0.VCC" />
@@ -1872,7 +1872,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R19" block="R-0805@smd-parts" position="25.75, 9.75" rotation="90">
+            <part name="B0.R19" component="R-0805@smd-parts" position="25.75, 9.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.N$22" />
                     <pad name="2" signal="B0.LED" />
@@ -1888,7 +1888,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.LED1" block="D-LED-0805@smd-parts" position="23.75, 9.75" rotation="270">
+            <part name="B0.LED1" component="D-LED-0805@smd-parts" position="23.75, 9.75" rotation="270">
                 <pads>
                     <pad name="C" signal="B0.GND" />
                     <pad name="A" signal="B0.N$22" />
@@ -1902,7 +1902,7 @@
                     <attribute name="TYPE" value="LED" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R3" block="R-0805@smd-parts" position="65.625, 38.25" rotation="270">
+            <part name="B0.R3" component="R-0805@smd-parts" position="65.625, 38.25" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.OUT8" />
                     <pad name="2" signal="B0.N$1" />
@@ -1918,7 +1918,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R4" block="R-0805@smd-parts" position="65.625, 43" rotation="270">
+            <part name="B0.R4" component="R-0805@smd-parts" position="65.625, 43" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.OUT9" />
                     <pad name="2" signal="B0.N$6" />
@@ -1934,21 +1934,21 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U$9" block="3,6@holes" position="4.5, 63">
+            <part name="B0.U$9" component="3,6@holes" position="4.5, 63">
                 <attributes>
                     <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="NAME" value="U$9" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B0.U$10" block="3,6@holes" position="4.5, 4.5">
+            <part name="B0.U$10" component="3,6@holes" position="4.5, 4.5">
                 <attributes>
                     <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="NAME" value="U$10" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B0.JP3" block="1X5-SMD-90-E@hirose-df13" position="3, 14.875" rotation="90">
+            <part name="B0.JP3" component="1X5-SMD-90-E@hirose-df13" position="3, 14.875" rotation="90">
                 <pads>
                     <pad name="2" signal="B0.N$13" />
                     <pad name="1" signal="B0.N$4" />
@@ -1963,7 +1963,7 @@
                     <attribute name="VALUE" value="DF13-1X5-SMD-90-E" visible="false" />
                 </attributes>
             </part>
-            <part name="B0.U19" block="SOT89@microchip-analog" position="44, 13.5" rotation="180">
+            <part name="B0.U19" component="SOT89@microchip-analog" position="44, 13.5" rotation="180">
                 <pads>
                     <pad name="1" signal="B0.GND" />
                     <pad name="3" signal="B0.VCC" />
@@ -1979,7 +1979,7 @@
                     <attribute name="REFERENCE" value="MCP1703T-3302E/MB" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.L1" block="L-0805@smd-parts" position="49.75, 14.5" rotation="90">
+            <part name="B0.L1" component="L-0805@smd-parts" position="49.75, 14.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.N$3" />
                     <pad name="2" signal="B0.N$2" />
@@ -1994,7 +1994,7 @@
                     <attribute name="REFERENCE" value="ILBB0805ER601V" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R1" block="R-0805@smd-parts" position="49.75, 10.25" rotation="270">
+            <part name="B0.R1" component="R-0805@smd-parts" position="49.75, 10.25" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.N$3" />
                     <pad name="2" signal="B0.N$7" />
@@ -2010,7 +2010,7 @@
                     <attribute name="REFERENCE" value="CRCW08055R10FNEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R2" block="R-0805@smd-parts" position="26.875, 46.75" rotation="270">
+            <part name="B0.R2" component="R-0805@smd-parts" position="26.875, 46.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.IN8" />
                     <pad name="2" signal="B0.VCC" />
@@ -2026,7 +2026,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R5" block="R-0805@smd-parts" position="24.375, 46.75" rotation="270">
+            <part name="B0.R5" component="R-0805@smd-parts" position="24.375, 46.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.IN9" />
                     <pad name="2" signal="B0.VCC" />
@@ -2042,7 +2042,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R6" block="R-0805@smd-parts" position="36.125, 10.75">
+            <part name="B0.R6" component="R-0805@smd-parts" position="36.125, 10.75">
                 <pads>
                     <pad name="1" signal="B0.VPP" />
                     <pad name="2" signal="B0.VCC" />
@@ -2058,7 +2058,7 @@
                     <attribute name="REFERENCE" value="CRCW080510K0FKEB" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U1" block="SO08@optoacopladores" position="3, 54" rotation="180">
+            <part name="B0.U1" component="SO08@optoacopladores" position="3, 54" rotation="180">
                 <pads>
                     <pad name="2" signal="B0.I0" />
                     <pad name="7" signal="B0.GND" />
@@ -2077,7 +2077,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U2" block="SO08@optoacopladores" position="8.5, 54" rotation="180">
+            <part name="B0.U2" component="SO08@optoacopladores" position="8.5, 54" rotation="180">
                 <pads>
                     <pad name="2" signal="B0.I2" />
                     <pad name="7" signal="B0.GND" />
@@ -2096,7 +2096,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U3" block="SO08@optoacopladores" position="14, 54" rotation="180">
+            <part name="B0.U3" component="SO08@optoacopladores" position="14, 54" rotation="180">
                 <pads>
                     <pad name="2" signal="B0.I4" />
                     <pad name="7" signal="B0.GND" />
@@ -2115,7 +2115,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U4" block="SO08@optoacopladores" position="19.5, 54" rotation="180">
+            <part name="B0.U4" component="SO08@optoacopladores" position="19.5, 54" rotation="180">
                 <pads>
                     <pad name="2" signal="B0.I6" />
                     <pad name="7" signal="B0.GND" />
@@ -2134,7 +2134,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U5" block="SO08@optoacopladores" position="25, 54" rotation="180">
+            <part name="B0.U5" component="SO08@optoacopladores" position="25, 54" rotation="180">
                 <pads>
                     <pad name="2" signal="B0.I8" />
                     <pad name="7" signal="B0.GND" />
@@ -2153,7 +2153,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.D2" block="SOD123FL@diode" position="47.5, 10.25" rotation="270">
+            <part name="B0.D2" component="SOD123FL@diode" position="47.5, 10.25" rotation="270">
                 <pads>
                     <pad name="A" signal="B0.N$7" />
                     <pad name="C" signal="B0.N$5" />
@@ -2167,7 +2167,7 @@
                     <attribute name="REFERENCE" value="MBR0540" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U8" block="SOP04@optoacopladores" position="47, 52.5" rotation="270">
+            <part name="B0.U8" component="SOP04@optoacopladores" position="47, 52.5" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.N$17" />
                     <pad name="2" signal="B0.GND" />
@@ -2181,7 +2181,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U9" block="SOP04@optoacopladores" position="47, 47.75" rotation="270">
+            <part name="B0.U9" component="SOP04@optoacopladores" position="47, 47.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.N$18" />
                     <pad name="2" signal="B0.GND" />
@@ -2195,7 +2195,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U10" block="SOP04@optoacopladores" position="47, 43" rotation="270">
+            <part name="B0.U10" component="SOP04@optoacopladores" position="47, 43" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.N$25" />
                     <pad name="2" signal="B0.GND" />
@@ -2209,7 +2209,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U11" block="SOP04@optoacopladores" position="47, 38.25" rotation="270">
+            <part name="B0.U11" component="SOP04@optoacopladores" position="47, 38.25" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.N$26" />
                     <pad name="2" signal="B0.GND" />
@@ -2223,7 +2223,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U12" block="SOP04@optoacopladores" position="47, 33.5" rotation="270">
+            <part name="B0.U12" component="SOP04@optoacopladores" position="47, 33.5" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.N$52" />
                     <pad name="2" signal="B0.GND" />
@@ -2237,7 +2237,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U13" block="SOP04@optoacopladores" position="47, 28.75" rotation="270">
+            <part name="B0.U13" component="SOP04@optoacopladores" position="47, 28.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.N$53" />
                     <pad name="2" signal="B0.GND" />
@@ -2251,7 +2251,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U14" block="SOP04@optoacopladores" position="60.5, 28.75" rotation="90">
+            <part name="B0.U14" component="SOP04@optoacopladores" position="60.5, 28.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.N$51" />
                     <pad name="2" signal="B0.GND" />
@@ -2265,7 +2265,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U15" block="SOP04@optoacopladores" position="60.5, 33.5" rotation="90">
+            <part name="B0.U15" component="SOP04@optoacopladores" position="60.5, 33.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.N$54" />
                     <pad name="2" signal="B0.GND" />
@@ -2279,7 +2279,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U16" block="SOP04@optoacopladores" position="60.5, 38.25" rotation="90">
+            <part name="B0.U16" component="SOP04@optoacopladores" position="60.5, 38.25" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.N$1" />
                     <pad name="2" signal="B0.GND" />
@@ -2293,7 +2293,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U17" block="SOP04@optoacopladores" position="60.5, 43" rotation="90">
+            <part name="B0.U17" component="SOP04@optoacopladores" position="60.5, 43" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.N$6" />
                     <pad name="2" signal="B0.GND" />
@@ -2307,7 +2307,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R7" block="R-0805@smd-parts" position="32.375, 46.75" rotation="270">
+            <part name="B0.R7" component="R-0805@smd-parts" position="32.375, 46.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.IN10" />
                     <pad name="2" signal="B0.VCC" />
@@ -2323,7 +2323,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R8" block="R-0805@smd-parts" position="29.875, 46.75" rotation="270">
+            <part name="B0.R8" component="R-0805@smd-parts" position="29.875, 46.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.IN11" />
                     <pad name="2" signal="B0.VCC" />
@@ -2339,7 +2339,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U6" block="SO08@optoacopladores" position="30.5, 54" rotation="180">
+            <part name="B0.U6" component="SO08@optoacopladores" position="30.5, 54" rotation="180">
                 <pads>
                     <pad name="2" signal="B0.I10" />
                     <pad name="7" signal="B0.GND" />
@@ -2357,7 +2357,7 @@
                     <attribute name="REFERENCE" value="ACPL-224-500E" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.JP1" block="DF11-18DP-2DSA@hirose-df11" position="20.75, 62.875">
+            <part name="B0.JP1" component="DF11-18DP-2DSA@hirose-df11" position="20.75, 62.875">
                 <pads>
                     <pad name="2" signal="B0.I1" />
                     <pad name="1" signal="B0.I0" />
@@ -2385,7 +2385,7 @@
                     <attribute name="VALUE" value="DF11-18DP-2DSA" visible="false" />
                 </attributes>
             </part>
-            <part name="B0.JP2" block="DF11-16DP-2DSA@hirose-df11" position="49.875, 62.875">
+            <part name="B0.JP2" component="DF11-16DP-2DSA@hirose-df11" position="49.875, 62.875">
                 <pads>
                     <pad name="2" signal="B0.O1" />
                     <pad name="1" signal="B0.O0" />
@@ -2411,19 +2411,19 @@
                     <attribute name="VALUE" value="DF11-16DP-2DSA" visible="false" />
                 </attributes>
             </part>
-            <part name="B0.U$1" block="CE_7.3MM@logo" position="10, 35">
+            <part name="B0.U$1" component="CE_7.3MM@logo" position="10, 35">
                 <attributes>
                     <attribute name="NAME" value="U$1" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B0.U$2" block="ESD_10.00@logo" position="48.5, 20.5">
+            <part name="B0.U$2" component="ESD_10.00@logo" position="48.5, 20.5">
                 <attributes>
                     <attribute name="NAME" value="U$2" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B0.R20" block="R-0805@smd-parts" position="68.125, 46" rotation="90">
+            <part name="B0.R20" component="R-0805@smd-parts" position="68.125, 46" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.OUT10" />
                     <pad name="2" signal="B0.N$9" />
@@ -2439,7 +2439,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R21" block="R-0805@smd-parts" position="68.125, 51" rotation="90">
+            <part name="B0.R21" component="R-0805@smd-parts" position="68.125, 51" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.OUT11" />
                     <pad name="2" signal="B0.N$48" />
@@ -2455,7 +2455,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U18" block="DIL8-SMD@optoacopladores" position="61, 50.5" rotation="90">
+            <part name="B0.U18" component="DIL8-SMD@optoacopladores" position="61, 50.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B0.N$9" />
                     <pad name="2" signal="B0.GND" />
@@ -2473,7 +2473,7 @@
                     <attribute name="REFERENCE" value="LH1522AAC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.U7" block="SO08@optoacopladores" position="36, 54" rotation="180">
+            <part name="B0.U7" component="SO08@optoacopladores" position="36, 54" rotation="180">
                 <pads>
                     <pad name="2" signal="B0.I12" />
                     <pad name="7" signal="B0.GND" />
@@ -2491,7 +2491,7 @@
                     <attribute name="REFERENCE" value="ACPL-224-500E" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R22" block="R-0805@smd-parts" position="37.875, 46.75" rotation="270">
+            <part name="B0.R22" component="R-0805@smd-parts" position="37.875, 46.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.IN12" />
                     <pad name="2" signal="B0.VCC" />
@@ -2507,7 +2507,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B0.R23" block="R-0805@smd-parts" position="35.375, 46.75" rotation="270">
+            <part name="B0.R23" component="R-0805@smd-parts" position="35.375, 46.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B0.IN13" />
                     <pad name="2" signal="B0.VCC" />
@@ -2523,14 +2523,14 @@
                     <attribute name="REFERENCE" value="CRCW080510K0FKEB" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U$3" block="3,6@holes" position="145.5, 4.5">
+            <part name="B1.U$3" component="3,6@holes" position="145.5, 4.5">
                 <attributes>
                     <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="NAME" value="U$3" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B1.JP5" block="1X05-2MM@pinhead200" position="119.25, 8.5">
+            <part name="B1.JP5" component="1X05-2MM@pinhead200" position="119.25, 8.5">
                 <pads>
                     <pad name="1" signal="B1.VPP" />
                     <pad name="2" signal="B1.VCC" />
@@ -2543,7 +2543,7 @@
                     <attribute name="VALUE" value="ICSP" visible="false" position="-5, -2.5" rotation="0" height="1.27" />
                 </attributes>
             </part>
-            <part name="B1.R9" block="R-0805@smd-parts" position="121.75, 52.75" rotation="90">
+            <part name="B1.R9" component="R-0805@smd-parts" position="121.75, 52.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.OUT0" />
                     <pad name="2" signal="B1.N$17" />
@@ -2559,7 +2559,7 @@
                     <attribute name="REFERENCE" value="CRCW0805270RFKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R10" block="R-0805@smd-parts" position="121.75, 47.875" rotation="90">
+            <part name="B1.R10" component="R-0805@smd-parts" position="121.75, 47.875" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.OUT1" />
                     <pad name="2" signal="B1.N$18" />
@@ -2575,7 +2575,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R11" block="R-0805@smd-parts" position="121.75, 43" rotation="90">
+            <part name="B1.R11" component="R-0805@smd-parts" position="121.75, 43" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.OUT2" />
                     <pad name="2" signal="B1.N$25" />
@@ -2591,7 +2591,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R12" block="R-0805@smd-parts" position="121.75, 38.25" rotation="90">
+            <part name="B1.R12" component="R-0805@smd-parts" position="121.75, 38.25" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.OUT3" />
                     <pad name="2" signal="B1.N$26" />
@@ -2607,7 +2607,7 @@
                     <attribute name="REFERENCE" value="CRCW0805270RFKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U20" block="SO16@maxim" position="93.75, 16.75">
+            <part name="B1.U20" component="SO16@maxim" position="93.75, 16.75">
                 <pads>
                     <pad name="1" signal="B1.N$16" />
                     <pad name="16" signal="B1.VCC" />
@@ -2638,7 +2638,7 @@
                     <attribute name="REFERENCE" value="MAX3232ECDR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.C1" block="C-0805@smd-parts" position="90.25, 9.75" rotation="270">
+            <part name="B1.C1" component="C-0805@smd-parts" position="90.25, 9.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.N$34" />
                     <pad name="2" signal="B1.GND" />
@@ -2655,7 +2655,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.C2" block="C-0805@smd-parts" position="97.25, 9.75" rotation="270">
+            <part name="B1.C2" component="C-0805@smd-parts" position="97.25, 9.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.N$35" />
                     <pad name="2" signal="B1.GND" />
@@ -2672,7 +2672,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.C3" block="C-0805@smd-parts" position="92.25, 9.75" rotation="270">
+            <part name="B1.C3" component="C-0805@smd-parts" position="92.25, 9.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.N$29" />
                     <pad name="2" signal="B1.N$16" />
@@ -2689,7 +2689,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.C4" block="C-0805@smd-parts" position="95.25, 9.75" rotation="270">
+            <part name="B1.C4" component="C-0805@smd-parts" position="95.25, 9.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.N$33" />
                     <pad name="2" signal="B1.N$30" />
@@ -2706,7 +2706,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.JP6" block="1X4-SMD-90-E@hirose-df13" position="83, 29.25" rotation="90">
+            <part name="B1.JP6" component="1X4-SMD-90-E@hirose-df13" position="83, 29.25" rotation="90">
                 <pads>
                     <pad name="2" signal="B1.SCL2" />
                     <pad name="1" signal="B1.VCC" />
@@ -2720,7 +2720,7 @@
                     <attribute name="VALUE" value="DF13-1X4-SMD-90-E" visible="false" />
                 </attributes>
             </part>
-            <part name="B1.JP7" block="1X4-SMD-90-E@hirose-df13" position="83, 40.75" rotation="90">
+            <part name="B1.JP7" component="1X4-SMD-90-E@hirose-df13" position="83, 40.75" rotation="90">
                 <pads>
                     <pad name="2" signal="B1.SCL2" />
                     <pad name="1" signal="B1.VCC" />
@@ -2734,14 +2734,14 @@
                     <attribute name="VALUE" value="DF13-1X4-SMD-90-E" visible="false" />
                 </attributes>
             </part>
-            <part name="B1.U$6" block="3,6@holes" position="145.5, 63">
+            <part name="B1.U$6" component="3,6@holes" position="145.5, 63">
                 <attributes>
                     <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="NAME" value="U$6" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B1.C7" block="C-0805@smd-parts" position="118, 27.75" rotation="270">
+            <part name="B1.C7" component="C-0805@smd-parts" position="118, 27.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.GND" />
                     <pad name="2" signal="B1.VCC" />
@@ -2758,7 +2758,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.C6" block="C-0805@smd-parts" position="115.75, 27.75" rotation="270">
+            <part name="B1.C6" component="C-0805@smd-parts" position="115.75, 27.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.GND" />
                     <pad name="2" signal="B1.VCC" />
@@ -2775,7 +2775,7 @@
                     <attribute name="REFERENCE" value="C0805C103K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.C5" block="C-0805@smd-parts" position="88.25, 22.25">
+            <part name="B1.C5" component="C-0805@smd-parts" position="88.25, 22.25">
                 <pads>
                     <pad name="1" signal="B1.GND" />
                     <pad name="2" signal="B1.VCC" />
@@ -2792,7 +2792,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.Q1" block="SM49@crystal" position="107.5, 31" rotation="180">
+            <part name="B1.Q1" component="SM49@crystal" position="107.5, 31" rotation="180">
                 <pads>
                     <pad name="1" signal="B1.N$8" />
                     <pad name="2" signal="B1.N$36" />
@@ -2811,7 +2811,7 @@
                     <attribute name="XTAL_FREQUENCY" value="16MHz" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.C10" block="C-0805@smd-parts" position="111.25, 34.5" rotation="180">
+            <part name="B1.C10" component="C-0805@smd-parts" position="111.25, 34.5" rotation="180">
                 <pads>
                     <pad name="1" signal="B1.GND" />
                     <pad name="2" signal="B1.N$8" />
@@ -2828,7 +2828,7 @@
                     <attribute name="REFERENCE" value="08051C220JAT2A" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.C11" block="C-0805@smd-parts" position="103.75, 34.5">
+            <part name="B1.C11" component="C-0805@smd-parts" position="103.75, 34.5">
                 <pads>
                     <pad name="1" signal="B1.GND" />
                     <pad name="2" signal="B1.N$36" />
@@ -2845,7 +2845,7 @@
                     <attribute name="REFERENCE" value="08051C220JAT2A" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R17" block="R-0805@smd-parts" position="94.5, 24.5" rotation="90">
+            <part name="B1.R17" component="R-0805@smd-parts" position="94.5, 24.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.SCL2" />
                     <pad name="2" signal="B1.VCC" />
@@ -2861,7 +2861,7 @@
                     <attribute name="REFERENCE" value="CRCW08051K50FKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R18" block="R-0805@smd-parts" position="92.25, 24.5" rotation="90">
+            <part name="B1.R18" component="R-0805@smd-parts" position="92.25, 24.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.SDA2" />
                     <pad name="2" signal="B1.VCC" />
@@ -2877,7 +2877,7 @@
                     <attribute name="REFERENCE" value="CRCW08051K50FKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R13" block="R-0805@smd-parts" position="121.75, 33.5" rotation="90">
+            <part name="B1.R13" component="R-0805@smd-parts" position="121.75, 33.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.OUT4" />
                     <pad name="2" signal="B1.N$52" />
@@ -2893,7 +2893,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R14" block="R-0805@smd-parts" position="121.75, 28.75" rotation="90">
+            <part name="B1.R14" component="R-0805@smd-parts" position="121.75, 28.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.OUT5" />
                     <pad name="2" signal="B1.N$53" />
@@ -2909,7 +2909,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U21" block="TQFP44@microchip-pic" position="109.5, 18.5" rotation="90">
+            <part name="B1.U21" component="TQFP44@microchip-pic" position="109.5, 18.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.RX1" />
                     <pad name="2" signal="B1.IN11" />
@@ -2960,7 +2960,7 @@
                     <attribute name="REFERENCE" value="PIC18F46K22T-I/PT" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.C9" block="C-0805@smd-parts" position="110.375, 9.75" rotation="90">
+            <part name="B1.C9" component="C-0805@smd-parts" position="110.375, 9.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.GND" />
                     <pad name="2" signal="B1.VCC" />
@@ -2977,7 +2977,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.C8" block="C-0805@smd-parts" position="112.5, 9.75" rotation="90">
+            <part name="B1.C8" component="C-0805@smd-parts" position="112.5, 9.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.GND" />
                     <pad name="2" signal="B1.VCC" />
@@ -2994,7 +2994,7 @@
                     <attribute name="REFERENCE" value="C0805C103K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R15" block="R-0805@smd-parts" position="145.625, 28.75" rotation="270">
+            <part name="B1.R15" component="R-0805@smd-parts" position="145.625, 28.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.OUT6" />
                     <pad name="2" signal="B1.N$51" />
@@ -3010,7 +3010,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R16" block="R-0805@smd-parts" position="145.625, 33.5" rotation="270">
+            <part name="B1.R16" component="R-0805@smd-parts" position="145.625, 33.5" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.OUT7" />
                     <pad name="2" signal="B1.N$54" />
@@ -3026,7 +3026,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.C12" block="C-0805@smd-parts" position="120.5, 14.5" rotation="270">
+            <part name="B1.C12" component="C-0805@smd-parts" position="120.5, 14.5" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.VCC" />
                     <pad name="2" signal="B1.GND" />
@@ -3043,7 +3043,7 @@
                     <attribute name="REFERENCE" value="TMK212AB7475KG-T" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.C13" block="C-0805@smd-parts" position="127.5, 14.5" rotation="90">
+            <part name="B1.C13" component="C-0805@smd-parts" position="127.5, 14.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.N$5" />
                     <pad name="2" signal="B1.GND" />
@@ -3060,7 +3060,7 @@
                     <attribute name="REFERENCE" value="TMK212AB7475KG-T" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.C14" block="C-SMC-A@smd-parts" position="91.5, 45.75" rotation="90">
+            <part name="B1.C14" component="C-SMC-A@smd-parts" position="91.5, 45.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.VCC" />
                     <pad name="2" signal="B1.GND" />
@@ -3077,7 +3077,7 @@
                     <attribute name="REFERENCE" value="TPSA106K006R1500" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.JP4" block="1X02/90@pinhead" position="143.25, 14.25" rotation="270">
+            <part name="B1.JP4" component="1X02/90@pinhead" position="143.25, 14.25" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.N$2" />
                     <pad name="2" signal="B1.GND" />
@@ -3089,7 +3089,7 @@
                     <attribute name="REFERENCE" value="22-27-2021" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.C15" block="C-0805@smd-parts" position="93.75, 45" rotation="270">
+            <part name="B1.C15" component="C-0805@smd-parts" position="93.75, 45" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.GND" />
                     <pad name="2" signal="B1.VCC" />
@@ -3106,7 +3106,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.C16" block="C-SMC-A@smd-parts" position="120.25, 20.75">
+            <part name="B1.C16" component="C-SMC-A@smd-parts" position="120.25, 20.75">
                 <pads>
                     <pad name="1" signal="B1.VCC" />
                     <pad name="2" signal="B1.GND" />
@@ -3123,7 +3123,7 @@
                     <attribute name="REFERENCE" value="TPSA106K006R1500" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.C17" block="C-0805@smd-parts" position="119.625, 18.75" rotation="180">
+            <part name="B1.C17" component="C-0805@smd-parts" position="119.625, 18.75" rotation="180">
                 <pads>
                     <pad name="1" signal="B1.GND" />
                     <pad name="2" signal="B1.VCC" />
@@ -3140,7 +3140,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R19" block="R-0805@smd-parts" position="105.75, 9.75" rotation="90">
+            <part name="B1.R19" component="R-0805@smd-parts" position="105.75, 9.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.N$22" />
                     <pad name="2" signal="B1.LED" />
@@ -3156,7 +3156,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.LED1" block="D-LED-0805@smd-parts" position="103.75, 9.75" rotation="270">
+            <part name="B1.LED1" component="D-LED-0805@smd-parts" position="103.75, 9.75" rotation="270">
                 <pads>
                     <pad name="C" signal="B1.GND" />
                     <pad name="A" signal="B1.N$22" />
@@ -3170,7 +3170,7 @@
                     <attribute name="TYPE" value="LED" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R3" block="R-0805@smd-parts" position="145.625, 38.25" rotation="270">
+            <part name="B1.R3" component="R-0805@smd-parts" position="145.625, 38.25" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.OUT8" />
                     <pad name="2" signal="B1.N$1" />
@@ -3186,7 +3186,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R4" block="R-0805@smd-parts" position="145.625, 43" rotation="270">
+            <part name="B1.R4" component="R-0805@smd-parts" position="145.625, 43" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.OUT9" />
                     <pad name="2" signal="B1.N$6" />
@@ -3202,21 +3202,21 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U$9" block="3,6@holes" position="84.5, 63">
+            <part name="B1.U$9" component="3,6@holes" position="84.5, 63">
                 <attributes>
                     <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="NAME" value="U$9" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B1.U$10" block="3,6@holes" position="84.5, 4.5">
+            <part name="B1.U$10" component="3,6@holes" position="84.5, 4.5">
                 <attributes>
                     <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="NAME" value="U$10" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B1.JP3" block="1X5-SMD-90-E@hirose-df13" position="83, 14.875" rotation="90">
+            <part name="B1.JP3" component="1X5-SMD-90-E@hirose-df13" position="83, 14.875" rotation="90">
                 <pads>
                     <pad name="2" signal="B1.N$13" />
                     <pad name="1" signal="B1.N$4" />
@@ -3231,7 +3231,7 @@
                     <attribute name="VALUE" value="DF13-1X5-SMD-90-E" visible="false" />
                 </attributes>
             </part>
-            <part name="B1.U19" block="SOT89@microchip-analog" position="124, 13.5" rotation="180">
+            <part name="B1.U19" component="SOT89@microchip-analog" position="124, 13.5" rotation="180">
                 <pads>
                     <pad name="1" signal="B1.GND" />
                     <pad name="3" signal="B1.VCC" />
@@ -3247,7 +3247,7 @@
                     <attribute name="REFERENCE" value="MCP1703T-3302E/MB" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.L1" block="L-0805@smd-parts" position="129.75, 14.5" rotation="90">
+            <part name="B1.L1" component="L-0805@smd-parts" position="129.75, 14.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.N$3" />
                     <pad name="2" signal="B1.N$2" />
@@ -3262,7 +3262,7 @@
                     <attribute name="REFERENCE" value="ILBB0805ER601V" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R1" block="R-0805@smd-parts" position="129.75, 10.25" rotation="270">
+            <part name="B1.R1" component="R-0805@smd-parts" position="129.75, 10.25" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.N$3" />
                     <pad name="2" signal="B1.N$7" />
@@ -3278,7 +3278,7 @@
                     <attribute name="REFERENCE" value="CRCW08055R10FNEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R2" block="R-0805@smd-parts" position="106.875, 46.75" rotation="270">
+            <part name="B1.R2" component="R-0805@smd-parts" position="106.875, 46.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.IN8" />
                     <pad name="2" signal="B1.VCC" />
@@ -3294,7 +3294,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R5" block="R-0805@smd-parts" position="104.375, 46.75" rotation="270">
+            <part name="B1.R5" component="R-0805@smd-parts" position="104.375, 46.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.IN9" />
                     <pad name="2" signal="B1.VCC" />
@@ -3310,7 +3310,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R6" block="R-0805@smd-parts" position="116.125, 10.75">
+            <part name="B1.R6" component="R-0805@smd-parts" position="116.125, 10.75">
                 <pads>
                     <pad name="1" signal="B1.VPP" />
                     <pad name="2" signal="B1.VCC" />
@@ -3326,7 +3326,7 @@
                     <attribute name="REFERENCE" value="CRCW080510K0FKEB" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U1" block="SO08@optoacopladores" position="83, 54" rotation="180">
+            <part name="B1.U1" component="SO08@optoacopladores" position="83, 54" rotation="180">
                 <pads>
                     <pad name="2" signal="B1.I0" />
                     <pad name="7" signal="B1.GND" />
@@ -3345,7 +3345,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U2" block="SO08@optoacopladores" position="88.5, 54" rotation="180">
+            <part name="B1.U2" component="SO08@optoacopladores" position="88.5, 54" rotation="180">
                 <pads>
                     <pad name="2" signal="B1.I2" />
                     <pad name="7" signal="B1.GND" />
@@ -3364,7 +3364,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U3" block="SO08@optoacopladores" position="94, 54" rotation="180">
+            <part name="B1.U3" component="SO08@optoacopladores" position="94, 54" rotation="180">
                 <pads>
                     <pad name="2" signal="B1.I4" />
                     <pad name="7" signal="B1.GND" />
@@ -3383,7 +3383,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U4" block="SO08@optoacopladores" position="99.5, 54" rotation="180">
+            <part name="B1.U4" component="SO08@optoacopladores" position="99.5, 54" rotation="180">
                 <pads>
                     <pad name="2" signal="B1.I6" />
                     <pad name="7" signal="B1.GND" />
@@ -3402,7 +3402,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U5" block="SO08@optoacopladores" position="105, 54" rotation="180">
+            <part name="B1.U5" component="SO08@optoacopladores" position="105, 54" rotation="180">
                 <pads>
                     <pad name="2" signal="B1.I8" />
                     <pad name="7" signal="B1.GND" />
@@ -3421,7 +3421,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.D2" block="SOD123FL@diode" position="127.5, 10.25" rotation="270">
+            <part name="B1.D2" component="SOD123FL@diode" position="127.5, 10.25" rotation="270">
                 <pads>
                     <pad name="A" signal="B1.N$7" />
                     <pad name="C" signal="B1.N$5" />
@@ -3435,7 +3435,7 @@
                     <attribute name="REFERENCE" value="MBR0540" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U8" block="SOP04@optoacopladores" position="127, 52.5" rotation="270">
+            <part name="B1.U8" component="SOP04@optoacopladores" position="127, 52.5" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.N$17" />
                     <pad name="2" signal="B1.GND" />
@@ -3449,7 +3449,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U9" block="SOP04@optoacopladores" position="127, 47.75" rotation="270">
+            <part name="B1.U9" component="SOP04@optoacopladores" position="127, 47.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.N$18" />
                     <pad name="2" signal="B1.GND" />
@@ -3463,7 +3463,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U10" block="SOP04@optoacopladores" position="127, 43" rotation="270">
+            <part name="B1.U10" component="SOP04@optoacopladores" position="127, 43" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.N$25" />
                     <pad name="2" signal="B1.GND" />
@@ -3477,7 +3477,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U11" block="SOP04@optoacopladores" position="127, 38.25" rotation="270">
+            <part name="B1.U11" component="SOP04@optoacopladores" position="127, 38.25" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.N$26" />
                     <pad name="2" signal="B1.GND" />
@@ -3491,7 +3491,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U12" block="SOP04@optoacopladores" position="127, 33.5" rotation="270">
+            <part name="B1.U12" component="SOP04@optoacopladores" position="127, 33.5" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.N$52" />
                     <pad name="2" signal="B1.GND" />
@@ -3505,7 +3505,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U13" block="SOP04@optoacopladores" position="127, 28.75" rotation="270">
+            <part name="B1.U13" component="SOP04@optoacopladores" position="127, 28.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.N$53" />
                     <pad name="2" signal="B1.GND" />
@@ -3519,7 +3519,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U14" block="SOP04@optoacopladores" position="140.5, 28.75" rotation="90">
+            <part name="B1.U14" component="SOP04@optoacopladores" position="140.5, 28.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.N$51" />
                     <pad name="2" signal="B1.GND" />
@@ -3533,7 +3533,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U15" block="SOP04@optoacopladores" position="140.5, 33.5" rotation="90">
+            <part name="B1.U15" component="SOP04@optoacopladores" position="140.5, 33.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.N$54" />
                     <pad name="2" signal="B1.GND" />
@@ -3547,7 +3547,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U16" block="SOP04@optoacopladores" position="140.5, 38.25" rotation="90">
+            <part name="B1.U16" component="SOP04@optoacopladores" position="140.5, 38.25" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.N$1" />
                     <pad name="2" signal="B1.GND" />
@@ -3561,7 +3561,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U17" block="SOP04@optoacopladores" position="140.5, 43" rotation="90">
+            <part name="B1.U17" component="SOP04@optoacopladores" position="140.5, 43" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.N$6" />
                     <pad name="2" signal="B1.GND" />
@@ -3575,7 +3575,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R7" block="R-0805@smd-parts" position="112.375, 46.75" rotation="270">
+            <part name="B1.R7" component="R-0805@smd-parts" position="112.375, 46.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.IN10" />
                     <pad name="2" signal="B1.VCC" />
@@ -3591,7 +3591,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R8" block="R-0805@smd-parts" position="109.875, 46.75" rotation="270">
+            <part name="B1.R8" component="R-0805@smd-parts" position="109.875, 46.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.IN11" />
                     <pad name="2" signal="B1.VCC" />
@@ -3607,7 +3607,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U6" block="SO08@optoacopladores" position="110.5, 54" rotation="180">
+            <part name="B1.U6" component="SO08@optoacopladores" position="110.5, 54" rotation="180">
                 <pads>
                     <pad name="2" signal="B1.I10" />
                     <pad name="7" signal="B1.GND" />
@@ -3625,7 +3625,7 @@
                     <attribute name="REFERENCE" value="ACPL-224-500E" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.JP1" block="DF11-18DP-2DSA@hirose-df11" position="100.75, 62.875">
+            <part name="B1.JP1" component="DF11-18DP-2DSA@hirose-df11" position="100.75, 62.875">
                 <pads>
                     <pad name="2" signal="B1.I1" />
                     <pad name="1" signal="B1.I0" />
@@ -3653,7 +3653,7 @@
                     <attribute name="VALUE" value="DF11-18DP-2DSA" visible="false" />
                 </attributes>
             </part>
-            <part name="B1.JP2" block="DF11-16DP-2DSA@hirose-df11" position="129.875, 62.875">
+            <part name="B1.JP2" component="DF11-16DP-2DSA@hirose-df11" position="129.875, 62.875">
                 <pads>
                     <pad name="2" signal="B1.O1" />
                     <pad name="1" signal="B1.O0" />
@@ -3679,19 +3679,19 @@
                     <attribute name="VALUE" value="DF11-16DP-2DSA" visible="false" />
                 </attributes>
             </part>
-            <part name="B1.U$1" block="CE_7.3MM@logo" position="90, 35">
+            <part name="B1.U$1" component="CE_7.3MM@logo" position="90, 35">
                 <attributes>
                     <attribute name="NAME" value="U$1" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B1.U$2" block="ESD_10.00@logo" position="128.5, 20.5">
+            <part name="B1.U$2" component="ESD_10.00@logo" position="128.5, 20.5">
                 <attributes>
                     <attribute name="NAME" value="U$2" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B1.R20" block="R-0805@smd-parts" position="148.125, 46" rotation="90">
+            <part name="B1.R20" component="R-0805@smd-parts" position="148.125, 46" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.OUT10" />
                     <pad name="2" signal="B1.N$9" />
@@ -3707,7 +3707,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R21" block="R-0805@smd-parts" position="148.125, 51" rotation="90">
+            <part name="B1.R21" component="R-0805@smd-parts" position="148.125, 51" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.OUT11" />
                     <pad name="2" signal="B1.N$48" />
@@ -3723,7 +3723,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U18" block="DIL8-SMD@optoacopladores" position="141, 50.5" rotation="90">
+            <part name="B1.U18" component="DIL8-SMD@optoacopladores" position="141, 50.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B1.N$9" />
                     <pad name="2" signal="B1.GND" />
@@ -3741,7 +3741,7 @@
                     <attribute name="REFERENCE" value="LH1522AAC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.U7" block="SO08@optoacopladores" position="116, 54" rotation="180">
+            <part name="B1.U7" component="SO08@optoacopladores" position="116, 54" rotation="180">
                 <pads>
                     <pad name="2" signal="B1.I12" />
                     <pad name="7" signal="B1.GND" />
@@ -3759,7 +3759,7 @@
                     <attribute name="REFERENCE" value="ACPL-224-500E" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R22" block="R-0805@smd-parts" position="117.875, 46.75" rotation="270">
+            <part name="B1.R22" component="R-0805@smd-parts" position="117.875, 46.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.IN12" />
                     <pad name="2" signal="B1.VCC" />
@@ -3775,7 +3775,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B1.R23" block="R-0805@smd-parts" position="115.375, 46.75" rotation="270">
+            <part name="B1.R23" component="R-0805@smd-parts" position="115.375, 46.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B1.IN13" />
                     <pad name="2" signal="B1.VCC" />
@@ -3791,14 +3791,14 @@
                     <attribute name="REFERENCE" value="CRCW080510K0FKEB" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U$3" block="3,6@holes" position="65.5, 84.5">
+            <part name="B2.U$3" component="3,6@holes" position="65.5, 84.5">
                 <attributes>
                     <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="NAME" value="U$3" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B2.JP5" block="1X05-2MM@pinhead200" position="39.25, 88.5">
+            <part name="B2.JP5" component="1X05-2MM@pinhead200" position="39.25, 88.5">
                 <pads>
                     <pad name="1" signal="B2.VPP" />
                     <pad name="2" signal="B2.VCC" />
@@ -3811,7 +3811,7 @@
                     <attribute name="VALUE" value="ICSP" visible="false" position="-5, -2.5" rotation="0" height="1.27" />
                 </attributes>
             </part>
-            <part name="B2.R9" block="R-0805@smd-parts" position="41.75, 132.75" rotation="90">
+            <part name="B2.R9" component="R-0805@smd-parts" position="41.75, 132.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.OUT0" />
                     <pad name="2" signal="B2.N$17" />
@@ -3827,7 +3827,7 @@
                     <attribute name="REFERENCE" value="CRCW0805270RFKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R10" block="R-0805@smd-parts" position="41.75, 127.875" rotation="90">
+            <part name="B2.R10" component="R-0805@smd-parts" position="41.75, 127.875" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.OUT1" />
                     <pad name="2" signal="B2.N$18" />
@@ -3843,7 +3843,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R11" block="R-0805@smd-parts" position="41.75, 123" rotation="90">
+            <part name="B2.R11" component="R-0805@smd-parts" position="41.75, 123" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.OUT2" />
                     <pad name="2" signal="B2.N$25" />
@@ -3859,7 +3859,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R12" block="R-0805@smd-parts" position="41.75, 118.25" rotation="90">
+            <part name="B2.R12" component="R-0805@smd-parts" position="41.75, 118.25" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.OUT3" />
                     <pad name="2" signal="B2.N$26" />
@@ -3875,7 +3875,7 @@
                     <attribute name="REFERENCE" value="CRCW0805270RFKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U20" block="SO16@maxim" position="13.75, 96.75">
+            <part name="B2.U20" component="SO16@maxim" position="13.75, 96.75">
                 <pads>
                     <pad name="1" signal="B2.N$16" />
                     <pad name="16" signal="B2.VCC" />
@@ -3906,7 +3906,7 @@
                     <attribute name="REFERENCE" value="MAX3232ECDR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.C1" block="C-0805@smd-parts" position="10.25, 89.75" rotation="270">
+            <part name="B2.C1" component="C-0805@smd-parts" position="10.25, 89.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.N$34" />
                     <pad name="2" signal="B2.GND" />
@@ -3923,7 +3923,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.C2" block="C-0805@smd-parts" position="17.25, 89.75" rotation="270">
+            <part name="B2.C2" component="C-0805@smd-parts" position="17.25, 89.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.N$35" />
                     <pad name="2" signal="B2.GND" />
@@ -3940,7 +3940,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.C3" block="C-0805@smd-parts" position="12.25, 89.75" rotation="270">
+            <part name="B2.C3" component="C-0805@smd-parts" position="12.25, 89.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.N$29" />
                     <pad name="2" signal="B2.N$16" />
@@ -3957,7 +3957,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.C4" block="C-0805@smd-parts" position="15.25, 89.75" rotation="270">
+            <part name="B2.C4" component="C-0805@smd-parts" position="15.25, 89.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.N$33" />
                     <pad name="2" signal="B2.N$30" />
@@ -3974,7 +3974,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.JP6" block="1X4-SMD-90-E@hirose-df13" position="3, 109.25" rotation="90">
+            <part name="B2.JP6" component="1X4-SMD-90-E@hirose-df13" position="3, 109.25" rotation="90">
                 <pads>
                     <pad name="2" signal="B2.SCL2" />
                     <pad name="1" signal="B2.VCC" />
@@ -3988,7 +3988,7 @@
                     <attribute name="VALUE" value="DF13-1X4-SMD-90-E" visible="false" />
                 </attributes>
             </part>
-            <part name="B2.JP7" block="1X4-SMD-90-E@hirose-df13" position="3, 120.75" rotation="90">
+            <part name="B2.JP7" component="1X4-SMD-90-E@hirose-df13" position="3, 120.75" rotation="90">
                 <pads>
                     <pad name="2" signal="B2.SCL2" />
                     <pad name="1" signal="B2.VCC" />
@@ -4002,14 +4002,14 @@
                     <attribute name="VALUE" value="DF13-1X4-SMD-90-E" visible="false" />
                 </attributes>
             </part>
-            <part name="B2.U$6" block="3,6@holes" position="65.5, 143">
+            <part name="B2.U$6" component="3,6@holes" position="65.5, 143">
                 <attributes>
                     <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="NAME" value="U$6" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B2.C7" block="C-0805@smd-parts" position="38, 107.75" rotation="270">
+            <part name="B2.C7" component="C-0805@smd-parts" position="38, 107.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.GND" />
                     <pad name="2" signal="B2.VCC" />
@@ -4026,7 +4026,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.C6" block="C-0805@smd-parts" position="35.75, 107.75" rotation="270">
+            <part name="B2.C6" component="C-0805@smd-parts" position="35.75, 107.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.GND" />
                     <pad name="2" signal="B2.VCC" />
@@ -4043,7 +4043,7 @@
                     <attribute name="REFERENCE" value="C0805C103K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.C5" block="C-0805@smd-parts" position="8.25, 102.25">
+            <part name="B2.C5" component="C-0805@smd-parts" position="8.25, 102.25">
                 <pads>
                     <pad name="1" signal="B2.GND" />
                     <pad name="2" signal="B2.VCC" />
@@ -4060,7 +4060,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.Q1" block="SM49@crystal" position="27.5, 111" rotation="180">
+            <part name="B2.Q1" component="SM49@crystal" position="27.5, 111" rotation="180">
                 <pads>
                     <pad name="1" signal="B2.N$8" />
                     <pad name="2" signal="B2.N$36" />
@@ -4079,7 +4079,7 @@
                     <attribute name="XTAL_FREQUENCY" value="16MHz" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.C10" block="C-0805@smd-parts" position="31.25, 114.5" rotation="180">
+            <part name="B2.C10" component="C-0805@smd-parts" position="31.25, 114.5" rotation="180">
                 <pads>
                     <pad name="1" signal="B2.GND" />
                     <pad name="2" signal="B2.N$8" />
@@ -4096,7 +4096,7 @@
                     <attribute name="REFERENCE" value="08051C220JAT2A" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.C11" block="C-0805@smd-parts" position="23.75, 114.5">
+            <part name="B2.C11" component="C-0805@smd-parts" position="23.75, 114.5">
                 <pads>
                     <pad name="1" signal="B2.GND" />
                     <pad name="2" signal="B2.N$36" />
@@ -4113,7 +4113,7 @@
                     <attribute name="REFERENCE" value="08051C220JAT2A" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R17" block="R-0805@smd-parts" position="14.5, 104.5" rotation="90">
+            <part name="B2.R17" component="R-0805@smd-parts" position="14.5, 104.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.SCL2" />
                     <pad name="2" signal="B2.VCC" />
@@ -4129,7 +4129,7 @@
                     <attribute name="REFERENCE" value="CRCW08051K50FKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R18" block="R-0805@smd-parts" position="12.25, 104.5" rotation="90">
+            <part name="B2.R18" component="R-0805@smd-parts" position="12.25, 104.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.SDA2" />
                     <pad name="2" signal="B2.VCC" />
@@ -4145,7 +4145,7 @@
                     <attribute name="REFERENCE" value="CRCW08051K50FKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R13" block="R-0805@smd-parts" position="41.75, 113.5" rotation="90">
+            <part name="B2.R13" component="R-0805@smd-parts" position="41.75, 113.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.OUT4" />
                     <pad name="2" signal="B2.N$52" />
@@ -4161,7 +4161,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R14" block="R-0805@smd-parts" position="41.75, 108.75" rotation="90">
+            <part name="B2.R14" component="R-0805@smd-parts" position="41.75, 108.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.OUT5" />
                     <pad name="2" signal="B2.N$53" />
@@ -4177,7 +4177,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U21" block="TQFP44@microchip-pic" position="29.5, 98.5" rotation="90">
+            <part name="B2.U21" component="TQFP44@microchip-pic" position="29.5, 98.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.RX1" />
                     <pad name="2" signal="B2.IN11" />
@@ -4228,7 +4228,7 @@
                     <attribute name="REFERENCE" value="PIC18F46K22T-I/PT" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.C9" block="C-0805@smd-parts" position="30.375, 89.75" rotation="90">
+            <part name="B2.C9" component="C-0805@smd-parts" position="30.375, 89.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.GND" />
                     <pad name="2" signal="B2.VCC" />
@@ -4245,7 +4245,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.C8" block="C-0805@smd-parts" position="32.5, 89.75" rotation="90">
+            <part name="B2.C8" component="C-0805@smd-parts" position="32.5, 89.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.GND" />
                     <pad name="2" signal="B2.VCC" />
@@ -4262,7 +4262,7 @@
                     <attribute name="REFERENCE" value="C0805C103K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R15" block="R-0805@smd-parts" position="65.625, 108.75" rotation="270">
+            <part name="B2.R15" component="R-0805@smd-parts" position="65.625, 108.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.OUT6" />
                     <pad name="2" signal="B2.N$51" />
@@ -4278,7 +4278,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R16" block="R-0805@smd-parts" position="65.625, 113.5" rotation="270">
+            <part name="B2.R16" component="R-0805@smd-parts" position="65.625, 113.5" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.OUT7" />
                     <pad name="2" signal="B2.N$54" />
@@ -4294,7 +4294,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.C12" block="C-0805@smd-parts" position="40.5, 94.5" rotation="270">
+            <part name="B2.C12" component="C-0805@smd-parts" position="40.5, 94.5" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.VCC" />
                     <pad name="2" signal="B2.GND" />
@@ -4311,7 +4311,7 @@
                     <attribute name="REFERENCE" value="TMK212AB7475KG-T" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.C13" block="C-0805@smd-parts" position="47.5, 94.5" rotation="90">
+            <part name="B2.C13" component="C-0805@smd-parts" position="47.5, 94.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.N$5" />
                     <pad name="2" signal="B2.GND" />
@@ -4328,7 +4328,7 @@
                     <attribute name="REFERENCE" value="TMK212AB7475KG-T" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.C14" block="C-SMC-A@smd-parts" position="11.5, 125.75" rotation="90">
+            <part name="B2.C14" component="C-SMC-A@smd-parts" position="11.5, 125.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.VCC" />
                     <pad name="2" signal="B2.GND" />
@@ -4345,7 +4345,7 @@
                     <attribute name="REFERENCE" value="TPSA106K006R1500" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.JP4" block="1X02/90@pinhead" position="63.25, 94.25" rotation="270">
+            <part name="B2.JP4" component="1X02/90@pinhead" position="63.25, 94.25" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.N$2" />
                     <pad name="2" signal="B2.GND" />
@@ -4357,7 +4357,7 @@
                     <attribute name="REFERENCE" value="22-27-2021" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.C15" block="C-0805@smd-parts" position="13.75, 125" rotation="270">
+            <part name="B2.C15" component="C-0805@smd-parts" position="13.75, 125" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.GND" />
                     <pad name="2" signal="B2.VCC" />
@@ -4374,7 +4374,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.C16" block="C-SMC-A@smd-parts" position="40.25, 100.75">
+            <part name="B2.C16" component="C-SMC-A@smd-parts" position="40.25, 100.75">
                 <pads>
                     <pad name="1" signal="B2.VCC" />
                     <pad name="2" signal="B2.GND" />
@@ -4391,7 +4391,7 @@
                     <attribute name="REFERENCE" value="TPSA106K006R1500" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.C17" block="C-0805@smd-parts" position="39.625, 98.75" rotation="180">
+            <part name="B2.C17" component="C-0805@smd-parts" position="39.625, 98.75" rotation="180">
                 <pads>
                     <pad name="1" signal="B2.GND" />
                     <pad name="2" signal="B2.VCC" />
@@ -4408,7 +4408,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R19" block="R-0805@smd-parts" position="25.75, 89.75" rotation="90">
+            <part name="B2.R19" component="R-0805@smd-parts" position="25.75, 89.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.N$22" />
                     <pad name="2" signal="B2.LED" />
@@ -4424,7 +4424,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.LED1" block="D-LED-0805@smd-parts" position="23.75, 89.75" rotation="270">
+            <part name="B2.LED1" component="D-LED-0805@smd-parts" position="23.75, 89.75" rotation="270">
                 <pads>
                     <pad name="C" signal="B2.GND" />
                     <pad name="A" signal="B2.N$22" />
@@ -4438,7 +4438,7 @@
                     <attribute name="TYPE" value="LED" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R3" block="R-0805@smd-parts" position="65.625, 118.25" rotation="270">
+            <part name="B2.R3" component="R-0805@smd-parts" position="65.625, 118.25" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.OUT8" />
                     <pad name="2" signal="B2.N$1" />
@@ -4454,7 +4454,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R4" block="R-0805@smd-parts" position="65.625, 123" rotation="270">
+            <part name="B2.R4" component="R-0805@smd-parts" position="65.625, 123" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.OUT9" />
                     <pad name="2" signal="B2.N$6" />
@@ -4470,21 +4470,21 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U$9" block="3,6@holes" position="4.5, 143">
+            <part name="B2.U$9" component="3,6@holes" position="4.5, 143">
                 <attributes>
                     <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="NAME" value="U$9" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B2.U$10" block="3,6@holes" position="4.5, 84.5">
+            <part name="B2.U$10" component="3,6@holes" position="4.5, 84.5">
                 <attributes>
                     <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="NAME" value="U$10" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B2.JP3" block="1X5-SMD-90-E@hirose-df13" position="3, 94.875" rotation="90">
+            <part name="B2.JP3" component="1X5-SMD-90-E@hirose-df13" position="3, 94.875" rotation="90">
                 <pads>
                     <pad name="2" signal="B2.N$13" />
                     <pad name="1" signal="B2.N$4" />
@@ -4499,7 +4499,7 @@
                     <attribute name="VALUE" value="DF13-1X5-SMD-90-E" visible="false" />
                 </attributes>
             </part>
-            <part name="B2.U19" block="SOT89@microchip-analog" position="44, 93.5" rotation="180">
+            <part name="B2.U19" component="SOT89@microchip-analog" position="44, 93.5" rotation="180">
                 <pads>
                     <pad name="1" signal="B2.GND" />
                     <pad name="3" signal="B2.VCC" />
@@ -4515,7 +4515,7 @@
                     <attribute name="REFERENCE" value="MCP1703T-3302E/MB" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.L1" block="L-0805@smd-parts" position="49.75, 94.5" rotation="90">
+            <part name="B2.L1" component="L-0805@smd-parts" position="49.75, 94.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.N$3" />
                     <pad name="2" signal="B2.N$2" />
@@ -4530,7 +4530,7 @@
                     <attribute name="REFERENCE" value="ILBB0805ER601V" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R1" block="R-0805@smd-parts" position="49.75, 90.25" rotation="270">
+            <part name="B2.R1" component="R-0805@smd-parts" position="49.75, 90.25" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.N$3" />
                     <pad name="2" signal="B2.N$7" />
@@ -4546,7 +4546,7 @@
                     <attribute name="REFERENCE" value="CRCW08055R10FNEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R2" block="R-0805@smd-parts" position="26.875, 126.75" rotation="270">
+            <part name="B2.R2" component="R-0805@smd-parts" position="26.875, 126.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.IN8" />
                     <pad name="2" signal="B2.VCC" />
@@ -4562,7 +4562,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R5" block="R-0805@smd-parts" position="24.375, 126.75" rotation="270">
+            <part name="B2.R5" component="R-0805@smd-parts" position="24.375, 126.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.IN9" />
                     <pad name="2" signal="B2.VCC" />
@@ -4578,7 +4578,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R6" block="R-0805@smd-parts" position="36.125, 90.75">
+            <part name="B2.R6" component="R-0805@smd-parts" position="36.125, 90.75">
                 <pads>
                     <pad name="1" signal="B2.VPP" />
                     <pad name="2" signal="B2.VCC" />
@@ -4594,7 +4594,7 @@
                     <attribute name="REFERENCE" value="CRCW080510K0FKEB" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U1" block="SO08@optoacopladores" position="3, 134" rotation="180">
+            <part name="B2.U1" component="SO08@optoacopladores" position="3, 134" rotation="180">
                 <pads>
                     <pad name="2" signal="B2.I0" />
                     <pad name="7" signal="B2.GND" />
@@ -4613,7 +4613,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U2" block="SO08@optoacopladores" position="8.5, 134" rotation="180">
+            <part name="B2.U2" component="SO08@optoacopladores" position="8.5, 134" rotation="180">
                 <pads>
                     <pad name="2" signal="B2.I2" />
                     <pad name="7" signal="B2.GND" />
@@ -4632,7 +4632,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U3" block="SO08@optoacopladores" position="14, 134" rotation="180">
+            <part name="B2.U3" component="SO08@optoacopladores" position="14, 134" rotation="180">
                 <pads>
                     <pad name="2" signal="B2.I4" />
                     <pad name="7" signal="B2.GND" />
@@ -4651,7 +4651,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U4" block="SO08@optoacopladores" position="19.5, 134" rotation="180">
+            <part name="B2.U4" component="SO08@optoacopladores" position="19.5, 134" rotation="180">
                 <pads>
                     <pad name="2" signal="B2.I6" />
                     <pad name="7" signal="B2.GND" />
@@ -4670,7 +4670,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U5" block="SO08@optoacopladores" position="25, 134" rotation="180">
+            <part name="B2.U5" component="SO08@optoacopladores" position="25, 134" rotation="180">
                 <pads>
                     <pad name="2" signal="B2.I8" />
                     <pad name="7" signal="B2.GND" />
@@ -4689,7 +4689,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.D2" block="SOD123FL@diode" position="47.5, 90.25" rotation="270">
+            <part name="B2.D2" component="SOD123FL@diode" position="47.5, 90.25" rotation="270">
                 <pads>
                     <pad name="A" signal="B2.N$7" />
                     <pad name="C" signal="B2.N$5" />
@@ -4703,7 +4703,7 @@
                     <attribute name="REFERENCE" value="MBR0540" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U8" block="SOP04@optoacopladores" position="47, 132.5" rotation="270">
+            <part name="B2.U8" component="SOP04@optoacopladores" position="47, 132.5" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.N$17" />
                     <pad name="2" signal="B2.GND" />
@@ -4717,7 +4717,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U9" block="SOP04@optoacopladores" position="47, 127.75" rotation="270">
+            <part name="B2.U9" component="SOP04@optoacopladores" position="47, 127.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.N$18" />
                     <pad name="2" signal="B2.GND" />
@@ -4731,7 +4731,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U10" block="SOP04@optoacopladores" position="47, 123" rotation="270">
+            <part name="B2.U10" component="SOP04@optoacopladores" position="47, 123" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.N$25" />
                     <pad name="2" signal="B2.GND" />
@@ -4745,7 +4745,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U11" block="SOP04@optoacopladores" position="47, 118.25" rotation="270">
+            <part name="B2.U11" component="SOP04@optoacopladores" position="47, 118.25" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.N$26" />
                     <pad name="2" signal="B2.GND" />
@@ -4759,7 +4759,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U12" block="SOP04@optoacopladores" position="47, 113.5" rotation="270">
+            <part name="B2.U12" component="SOP04@optoacopladores" position="47, 113.5" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.N$52" />
                     <pad name="2" signal="B2.GND" />
@@ -4773,7 +4773,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U13" block="SOP04@optoacopladores" position="47, 108.75" rotation="270">
+            <part name="B2.U13" component="SOP04@optoacopladores" position="47, 108.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.N$53" />
                     <pad name="2" signal="B2.GND" />
@@ -4787,7 +4787,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U14" block="SOP04@optoacopladores" position="60.5, 108.75" rotation="90">
+            <part name="B2.U14" component="SOP04@optoacopladores" position="60.5, 108.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.N$51" />
                     <pad name="2" signal="B2.GND" />
@@ -4801,7 +4801,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U15" block="SOP04@optoacopladores" position="60.5, 113.5" rotation="90">
+            <part name="B2.U15" component="SOP04@optoacopladores" position="60.5, 113.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.N$54" />
                     <pad name="2" signal="B2.GND" />
@@ -4815,7 +4815,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U16" block="SOP04@optoacopladores" position="60.5, 118.25" rotation="90">
+            <part name="B2.U16" component="SOP04@optoacopladores" position="60.5, 118.25" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.N$1" />
                     <pad name="2" signal="B2.GND" />
@@ -4829,7 +4829,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U17" block="SOP04@optoacopladores" position="60.5, 123" rotation="90">
+            <part name="B2.U17" component="SOP04@optoacopladores" position="60.5, 123" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.N$6" />
                     <pad name="2" signal="B2.GND" />
@@ -4843,7 +4843,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R7" block="R-0805@smd-parts" position="32.375, 126.75" rotation="270">
+            <part name="B2.R7" component="R-0805@smd-parts" position="32.375, 126.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.IN10" />
                     <pad name="2" signal="B2.VCC" />
@@ -4859,7 +4859,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R8" block="R-0805@smd-parts" position="29.875, 126.75" rotation="270">
+            <part name="B2.R8" component="R-0805@smd-parts" position="29.875, 126.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.IN11" />
                     <pad name="2" signal="B2.VCC" />
@@ -4875,7 +4875,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U6" block="SO08@optoacopladores" position="30.5, 134" rotation="180">
+            <part name="B2.U6" component="SO08@optoacopladores" position="30.5, 134" rotation="180">
                 <pads>
                     <pad name="2" signal="B2.I10" />
                     <pad name="7" signal="B2.GND" />
@@ -4893,7 +4893,7 @@
                     <attribute name="REFERENCE" value="ACPL-224-500E" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.JP1" block="DF11-18DP-2DSA@hirose-df11" position="20.75, 142.875">
+            <part name="B2.JP1" component="DF11-18DP-2DSA@hirose-df11" position="20.75, 142.875">
                 <pads>
                     <pad name="2" signal="B2.I1" />
                     <pad name="1" signal="B2.I0" />
@@ -4921,7 +4921,7 @@
                     <attribute name="VALUE" value="DF11-18DP-2DSA" visible="false" />
                 </attributes>
             </part>
-            <part name="B2.JP2" block="DF11-16DP-2DSA@hirose-df11" position="49.875, 142.875">
+            <part name="B2.JP2" component="DF11-16DP-2DSA@hirose-df11" position="49.875, 142.875">
                 <pads>
                     <pad name="2" signal="B2.O1" />
                     <pad name="1" signal="B2.O0" />
@@ -4947,19 +4947,19 @@
                     <attribute name="VALUE" value="DF11-16DP-2DSA" visible="false" />
                 </attributes>
             </part>
-            <part name="B2.U$1" block="CE_7.3MM@logo" position="10, 115">
+            <part name="B2.U$1" component="CE_7.3MM@logo" position="10, 115">
                 <attributes>
                     <attribute name="NAME" value="U$1" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B2.U$2" block="ESD_10.00@logo" position="48.5, 100.5">
+            <part name="B2.U$2" component="ESD_10.00@logo" position="48.5, 100.5">
                 <attributes>
                     <attribute name="NAME" value="U$2" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B2.R20" block="R-0805@smd-parts" position="68.125, 126" rotation="90">
+            <part name="B2.R20" component="R-0805@smd-parts" position="68.125, 126" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.OUT10" />
                     <pad name="2" signal="B2.N$9" />
@@ -4975,7 +4975,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R21" block="R-0805@smd-parts" position="68.125, 131" rotation="90">
+            <part name="B2.R21" component="R-0805@smd-parts" position="68.125, 131" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.OUT11" />
                     <pad name="2" signal="B2.N$48" />
@@ -4991,7 +4991,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U18" block="DIL8-SMD@optoacopladores" position="61, 130.5" rotation="90">
+            <part name="B2.U18" component="DIL8-SMD@optoacopladores" position="61, 130.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B2.N$9" />
                     <pad name="2" signal="B2.GND" />
@@ -5009,7 +5009,7 @@
                     <attribute name="REFERENCE" value="LH1522AAC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.U7" block="SO08@optoacopladores" position="36, 134" rotation="180">
+            <part name="B2.U7" component="SO08@optoacopladores" position="36, 134" rotation="180">
                 <pads>
                     <pad name="2" signal="B2.I12" />
                     <pad name="7" signal="B2.GND" />
@@ -5027,7 +5027,7 @@
                     <attribute name="REFERENCE" value="ACPL-224-500E" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R22" block="R-0805@smd-parts" position="37.875, 126.75" rotation="270">
+            <part name="B2.R22" component="R-0805@smd-parts" position="37.875, 126.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.IN12" />
                     <pad name="2" signal="B2.VCC" />
@@ -5043,7 +5043,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B2.R23" block="R-0805@smd-parts" position="35.375, 126.75" rotation="270">
+            <part name="B2.R23" component="R-0805@smd-parts" position="35.375, 126.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B2.IN13" />
                     <pad name="2" signal="B2.VCC" />
@@ -5059,14 +5059,14 @@
                     <attribute name="REFERENCE" value="CRCW080510K0FKEB" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U$3" block="3,6@holes" position="145.5, 84.5">
+            <part name="B3.U$3" component="3,6@holes" position="145.5, 84.5">
                 <attributes>
                     <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="NAME" value="U$3" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B3.JP5" block="1X05-2MM@pinhead200" position="119.25, 88.5">
+            <part name="B3.JP5" component="1X05-2MM@pinhead200" position="119.25, 88.5">
                 <pads>
                     <pad name="1" signal="B3.VPP" />
                     <pad name="2" signal="B3.VCC" />
@@ -5079,7 +5079,7 @@
                     <attribute name="VALUE" value="ICSP" visible="false" position="-5, -2.5" rotation="0" height="1.27" />
                 </attributes>
             </part>
-            <part name="B3.R9" block="R-0805@smd-parts" position="121.75, 132.75" rotation="90">
+            <part name="B3.R9" component="R-0805@smd-parts" position="121.75, 132.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.OUT0" />
                     <pad name="2" signal="B3.N$17" />
@@ -5095,7 +5095,7 @@
                     <attribute name="REFERENCE" value="CRCW0805270RFKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R10" block="R-0805@smd-parts" position="121.75, 127.875" rotation="90">
+            <part name="B3.R10" component="R-0805@smd-parts" position="121.75, 127.875" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.OUT1" />
                     <pad name="2" signal="B3.N$18" />
@@ -5111,7 +5111,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R11" block="R-0805@smd-parts" position="121.75, 123" rotation="90">
+            <part name="B3.R11" component="R-0805@smd-parts" position="121.75, 123" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.OUT2" />
                     <pad name="2" signal="B3.N$25" />
@@ -5127,7 +5127,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R12" block="R-0805@smd-parts" position="121.75, 118.25" rotation="90">
+            <part name="B3.R12" component="R-0805@smd-parts" position="121.75, 118.25" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.OUT3" />
                     <pad name="2" signal="B3.N$26" />
@@ -5143,7 +5143,7 @@
                     <attribute name="REFERENCE" value="CRCW0805270RFKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U20" block="SO16@maxim" position="93.75, 96.75">
+            <part name="B3.U20" component="SO16@maxim" position="93.75, 96.75">
                 <pads>
                     <pad name="1" signal="B3.N$16" />
                     <pad name="16" signal="B3.VCC" />
@@ -5174,7 +5174,7 @@
                     <attribute name="REFERENCE" value="MAX3232ECDR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.C1" block="C-0805@smd-parts" position="90.25, 89.75" rotation="270">
+            <part name="B3.C1" component="C-0805@smd-parts" position="90.25, 89.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.N$34" />
                     <pad name="2" signal="B3.GND" />
@@ -5191,7 +5191,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.C2" block="C-0805@smd-parts" position="97.25, 89.75" rotation="270">
+            <part name="B3.C2" component="C-0805@smd-parts" position="97.25, 89.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.N$35" />
                     <pad name="2" signal="B3.GND" />
@@ -5208,7 +5208,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.C3" block="C-0805@smd-parts" position="92.25, 89.75" rotation="270">
+            <part name="B3.C3" component="C-0805@smd-parts" position="92.25, 89.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.N$29" />
                     <pad name="2" signal="B3.N$16" />
@@ -5225,7 +5225,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.C4" block="C-0805@smd-parts" position="95.25, 89.75" rotation="270">
+            <part name="B3.C4" component="C-0805@smd-parts" position="95.25, 89.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.N$33" />
                     <pad name="2" signal="B3.N$30" />
@@ -5242,7 +5242,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.JP6" block="1X4-SMD-90-E@hirose-df13" position="83, 109.25" rotation="90">
+            <part name="B3.JP6" component="1X4-SMD-90-E@hirose-df13" position="83, 109.25" rotation="90">
                 <pads>
                     <pad name="2" signal="B3.SCL2" />
                     <pad name="1" signal="B3.VCC" />
@@ -5256,7 +5256,7 @@
                     <attribute name="VALUE" value="DF13-1X4-SMD-90-E" visible="false" />
                 </attributes>
             </part>
-            <part name="B3.JP7" block="1X4-SMD-90-E@hirose-df13" position="83, 120.75" rotation="90">
+            <part name="B3.JP7" component="1X4-SMD-90-E@hirose-df13" position="83, 120.75" rotation="90">
                 <pads>
                     <pad name="2" signal="B3.SCL2" />
                     <pad name="1" signal="B3.VCC" />
@@ -5270,14 +5270,14 @@
                     <attribute name="VALUE" value="DF13-1X4-SMD-90-E" visible="false" />
                 </attributes>
             </part>
-            <part name="B3.U$6" block="3,6@holes" position="145.5, 143">
+            <part name="B3.U$6" component="3,6@holes" position="145.5, 143">
                 <attributes>
                     <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="NAME" value="U$6" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B3.C7" block="C-0805@smd-parts" position="118, 107.75" rotation="270">
+            <part name="B3.C7" component="C-0805@smd-parts" position="118, 107.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.GND" />
                     <pad name="2" signal="B3.VCC" />
@@ -5294,7 +5294,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.C6" block="C-0805@smd-parts" position="115.75, 107.75" rotation="270">
+            <part name="B3.C6" component="C-0805@smd-parts" position="115.75, 107.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.GND" />
                     <pad name="2" signal="B3.VCC" />
@@ -5311,7 +5311,7 @@
                     <attribute name="REFERENCE" value="C0805C103K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.C5" block="C-0805@smd-parts" position="88.25, 102.25">
+            <part name="B3.C5" component="C-0805@smd-parts" position="88.25, 102.25">
                 <pads>
                     <pad name="1" signal="B3.GND" />
                     <pad name="2" signal="B3.VCC" />
@@ -5328,7 +5328,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.Q1" block="SM49@crystal" position="107.5, 111" rotation="180">
+            <part name="B3.Q1" component="SM49@crystal" position="107.5, 111" rotation="180">
                 <pads>
                     <pad name="1" signal="B3.N$8" />
                     <pad name="2" signal="B3.N$36" />
@@ -5347,7 +5347,7 @@
                     <attribute name="XTAL_FREQUENCY" value="16MHz" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.C10" block="C-0805@smd-parts" position="111.25, 114.5" rotation="180">
+            <part name="B3.C10" component="C-0805@smd-parts" position="111.25, 114.5" rotation="180">
                 <pads>
                     <pad name="1" signal="B3.GND" />
                     <pad name="2" signal="B3.N$8" />
@@ -5364,7 +5364,7 @@
                     <attribute name="REFERENCE" value="08051C220JAT2A" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.C11" block="C-0805@smd-parts" position="103.75, 114.5">
+            <part name="B3.C11" component="C-0805@smd-parts" position="103.75, 114.5">
                 <pads>
                     <pad name="1" signal="B3.GND" />
                     <pad name="2" signal="B3.N$36" />
@@ -5381,7 +5381,7 @@
                     <attribute name="REFERENCE" value="08051C220JAT2A" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R17" block="R-0805@smd-parts" position="94.5, 104.5" rotation="90">
+            <part name="B3.R17" component="R-0805@smd-parts" position="94.5, 104.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.SCL2" />
                     <pad name="2" signal="B3.VCC" />
@@ -5397,7 +5397,7 @@
                     <attribute name="REFERENCE" value="CRCW08051K50FKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R18" block="R-0805@smd-parts" position="92.25, 104.5" rotation="90">
+            <part name="B3.R18" component="R-0805@smd-parts" position="92.25, 104.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.SDA2" />
                     <pad name="2" signal="B3.VCC" />
@@ -5413,7 +5413,7 @@
                     <attribute name="REFERENCE" value="CRCW08051K50FKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R13" block="R-0805@smd-parts" position="121.75, 113.5" rotation="90">
+            <part name="B3.R13" component="R-0805@smd-parts" position="121.75, 113.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.OUT4" />
                     <pad name="2" signal="B3.N$52" />
@@ -5429,7 +5429,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R14" block="R-0805@smd-parts" position="121.75, 108.75" rotation="90">
+            <part name="B3.R14" component="R-0805@smd-parts" position="121.75, 108.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.OUT5" />
                     <pad name="2" signal="B3.N$53" />
@@ -5445,7 +5445,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U21" block="TQFP44@microchip-pic" position="109.5, 98.5" rotation="90">
+            <part name="B3.U21" component="TQFP44@microchip-pic" position="109.5, 98.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.RX1" />
                     <pad name="2" signal="B3.IN11" />
@@ -5496,7 +5496,7 @@
                     <attribute name="REFERENCE" value="PIC18F46K22T-I/PT" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.C9" block="C-0805@smd-parts" position="110.375, 89.75" rotation="90">
+            <part name="B3.C9" component="C-0805@smd-parts" position="110.375, 89.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.GND" />
                     <pad name="2" signal="B3.VCC" />
@@ -5513,7 +5513,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.C8" block="C-0805@smd-parts" position="112.5, 89.75" rotation="90">
+            <part name="B3.C8" component="C-0805@smd-parts" position="112.5, 89.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.GND" />
                     <pad name="2" signal="B3.VCC" />
@@ -5530,7 +5530,7 @@
                     <attribute name="REFERENCE" value="C0805C103K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R15" block="R-0805@smd-parts" position="145.625, 108.75" rotation="270">
+            <part name="B3.R15" component="R-0805@smd-parts" position="145.625, 108.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.OUT6" />
                     <pad name="2" signal="B3.N$51" />
@@ -5546,7 +5546,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R16" block="R-0805@smd-parts" position="145.625, 113.5" rotation="270">
+            <part name="B3.R16" component="R-0805@smd-parts" position="145.625, 113.5" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.OUT7" />
                     <pad name="2" signal="B3.N$54" />
@@ -5562,7 +5562,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.C12" block="C-0805@smd-parts" position="120.5, 94.5" rotation="270">
+            <part name="B3.C12" component="C-0805@smd-parts" position="120.5, 94.5" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.VCC" />
                     <pad name="2" signal="B3.GND" />
@@ -5579,7 +5579,7 @@
                     <attribute name="REFERENCE" value="TMK212AB7475KG-T" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.C13" block="C-0805@smd-parts" position="127.5, 94.5" rotation="90">
+            <part name="B3.C13" component="C-0805@smd-parts" position="127.5, 94.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.N$5" />
                     <pad name="2" signal="B3.GND" />
@@ -5596,7 +5596,7 @@
                     <attribute name="REFERENCE" value="TMK212AB7475KG-T" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.C14" block="C-SMC-A@smd-parts" position="91.5, 125.75" rotation="90">
+            <part name="B3.C14" component="C-SMC-A@smd-parts" position="91.5, 125.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.VCC" />
                     <pad name="2" signal="B3.GND" />
@@ -5613,7 +5613,7 @@
                     <attribute name="REFERENCE" value="TPSA106K006R1500" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.JP4" block="1X02/90@pinhead" position="143.25, 94.25" rotation="270">
+            <part name="B3.JP4" component="1X02/90@pinhead" position="143.25, 94.25" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.N$2" />
                     <pad name="2" signal="B3.GND" />
@@ -5625,7 +5625,7 @@
                     <attribute name="REFERENCE" value="22-27-2021" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.C15" block="C-0805@smd-parts" position="93.75, 125" rotation="270">
+            <part name="B3.C15" component="C-0805@smd-parts" position="93.75, 125" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.GND" />
                     <pad name="2" signal="B3.VCC" />
@@ -5642,7 +5642,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.C16" block="C-SMC-A@smd-parts" position="120.25, 100.75">
+            <part name="B3.C16" component="C-SMC-A@smd-parts" position="120.25, 100.75">
                 <pads>
                     <pad name="1" signal="B3.VCC" />
                     <pad name="2" signal="B3.GND" />
@@ -5659,7 +5659,7 @@
                     <attribute name="REFERENCE" value="TPSA106K006R1500" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.C17" block="C-0805@smd-parts" position="119.625, 98.75" rotation="180">
+            <part name="B3.C17" component="C-0805@smd-parts" position="119.625, 98.75" rotation="180">
                 <pads>
                     <pad name="1" signal="B3.GND" />
                     <pad name="2" signal="B3.VCC" />
@@ -5676,7 +5676,7 @@
                     <attribute name="REFERENCE" value="C0805C104K5RACTU" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R19" block="R-0805@smd-parts" position="105.75, 89.75" rotation="90">
+            <part name="B3.R19" component="R-0805@smd-parts" position="105.75, 89.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.N$22" />
                     <pad name="2" signal="B3.LED" />
@@ -5692,7 +5692,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.LED1" block="D-LED-0805@smd-parts" position="103.75, 89.75" rotation="270">
+            <part name="B3.LED1" component="D-LED-0805@smd-parts" position="103.75, 89.75" rotation="270">
                 <pads>
                     <pad name="C" signal="B3.GND" />
                     <pad name="A" signal="B3.N$22" />
@@ -5706,7 +5706,7 @@
                     <attribute name="TYPE" value="LED" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R3" block="R-0805@smd-parts" position="145.625, 118.25" rotation="270">
+            <part name="B3.R3" component="R-0805@smd-parts" position="145.625, 118.25" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.OUT8" />
                     <pad name="2" signal="B3.N$1" />
@@ -5722,7 +5722,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R4" block="R-0805@smd-parts" position="145.625, 123" rotation="270">
+            <part name="B3.R4" component="R-0805@smd-parts" position="145.625, 123" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.OUT9" />
                     <pad name="2" signal="B3.N$6" />
@@ -5738,21 +5738,21 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U$9" block="3,6@holes" position="84.5, 143">
+            <part name="B3.U$9" component="3,6@holes" position="84.5, 143">
                 <attributes>
                     <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="NAME" value="U$9" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B3.U$10" block="3,6@holes" position="84.5, 84.5">
+            <part name="B3.U$10" component="3,6@holes" position="84.5, 84.5">
                 <attributes>
                     <attribute name="PARTLIST-IGNORE" value="" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="NAME" value="U$10" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B3.JP3" block="1X5-SMD-90-E@hirose-df13" position="83, 94.875" rotation="90">
+            <part name="B3.JP3" component="1X5-SMD-90-E@hirose-df13" position="83, 94.875" rotation="90">
                 <pads>
                     <pad name="2" signal="B3.N$13" />
                     <pad name="1" signal="B3.N$4" />
@@ -5767,7 +5767,7 @@
                     <attribute name="VALUE" value="DF13-1X5-SMD-90-E" visible="false" />
                 </attributes>
             </part>
-            <part name="B3.U19" block="SOT89@microchip-analog" position="124, 93.5" rotation="180">
+            <part name="B3.U19" component="SOT89@microchip-analog" position="124, 93.5" rotation="180">
                 <pads>
                     <pad name="1" signal="B3.GND" />
                     <pad name="3" signal="B3.VCC" />
@@ -5783,7 +5783,7 @@
                     <attribute name="REFERENCE" value="MCP1703T-3302E/MB" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.L1" block="L-0805@smd-parts" position="129.75, 94.5" rotation="90">
+            <part name="B3.L1" component="L-0805@smd-parts" position="129.75, 94.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.N$3" />
                     <pad name="2" signal="B3.N$2" />
@@ -5798,7 +5798,7 @@
                     <attribute name="REFERENCE" value="ILBB0805ER601V" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R1" block="R-0805@smd-parts" position="129.75, 90.25" rotation="270">
+            <part name="B3.R1" component="R-0805@smd-parts" position="129.75, 90.25" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.N$3" />
                     <pad name="2" signal="B3.N$7" />
@@ -5814,7 +5814,7 @@
                     <attribute name="REFERENCE" value="CRCW08055R10FNEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R2" block="R-0805@smd-parts" position="106.875, 126.75" rotation="270">
+            <part name="B3.R2" component="R-0805@smd-parts" position="106.875, 126.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.IN8" />
                     <pad name="2" signal="B3.VCC" />
@@ -5830,7 +5830,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R5" block="R-0805@smd-parts" position="104.375, 126.75" rotation="270">
+            <part name="B3.R5" component="R-0805@smd-parts" position="104.375, 126.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.IN9" />
                     <pad name="2" signal="B3.VCC" />
@@ -5846,7 +5846,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R6" block="R-0805@smd-parts" position="116.125, 90.75">
+            <part name="B3.R6" component="R-0805@smd-parts" position="116.125, 90.75">
                 <pads>
                     <pad name="1" signal="B3.VPP" />
                     <pad name="2" signal="B3.VCC" />
@@ -5862,7 +5862,7 @@
                     <attribute name="REFERENCE" value="CRCW080510K0FKEB" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U1" block="SO08@optoacopladores" position="83, 134" rotation="180">
+            <part name="B3.U1" component="SO08@optoacopladores" position="83, 134" rotation="180">
                 <pads>
                     <pad name="2" signal="B3.I0" />
                     <pad name="7" signal="B3.GND" />
@@ -5881,7 +5881,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U2" block="SO08@optoacopladores" position="88.5, 134" rotation="180">
+            <part name="B3.U2" component="SO08@optoacopladores" position="88.5, 134" rotation="180">
                 <pads>
                     <pad name="2" signal="B3.I2" />
                     <pad name="7" signal="B3.GND" />
@@ -5900,7 +5900,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U3" block="SO08@optoacopladores" position="94, 134" rotation="180">
+            <part name="B3.U3" component="SO08@optoacopladores" position="94, 134" rotation="180">
                 <pads>
                     <pad name="2" signal="B3.I4" />
                     <pad name="7" signal="B3.GND" />
@@ -5919,7 +5919,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U4" block="SO08@optoacopladores" position="99.5, 134" rotation="180">
+            <part name="B3.U4" component="SO08@optoacopladores" position="99.5, 134" rotation="180">
                 <pads>
                     <pad name="2" signal="B3.I6" />
                     <pad name="7" signal="B3.GND" />
@@ -5938,7 +5938,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U5" block="SO08@optoacopladores" position="105, 134" rotation="180">
+            <part name="B3.U5" component="SO08@optoacopladores" position="105, 134" rotation="180">
                 <pads>
                     <pad name="2" signal="B3.I8" />
                     <pad name="7" signal="B3.GND" />
@@ -5957,7 +5957,7 @@
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.D2" block="SOD123FL@diode" position="127.5, 90.25" rotation="270">
+            <part name="B3.D2" component="SOD123FL@diode" position="127.5, 90.25" rotation="270">
                 <pads>
                     <pad name="A" signal="B3.N$7" />
                     <pad name="C" signal="B3.N$5" />
@@ -5971,7 +5971,7 @@
                     <attribute name="REFERENCE" value="MBR0540" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U8" block="SOP04@optoacopladores" position="127, 132.5" rotation="270">
+            <part name="B3.U8" component="SOP04@optoacopladores" position="127, 132.5" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.N$17" />
                     <pad name="2" signal="B3.GND" />
@@ -5985,7 +5985,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U9" block="SOP04@optoacopladores" position="127, 127.75" rotation="270">
+            <part name="B3.U9" component="SOP04@optoacopladores" position="127, 127.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.N$18" />
                     <pad name="2" signal="B3.GND" />
@@ -5999,7 +5999,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U10" block="SOP04@optoacopladores" position="127, 123" rotation="270">
+            <part name="B3.U10" component="SOP04@optoacopladores" position="127, 123" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.N$25" />
                     <pad name="2" signal="B3.GND" />
@@ -6013,7 +6013,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U11" block="SOP04@optoacopladores" position="127, 118.25" rotation="270">
+            <part name="B3.U11" component="SOP04@optoacopladores" position="127, 118.25" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.N$26" />
                     <pad name="2" signal="B3.GND" />
@@ -6027,7 +6027,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U12" block="SOP04@optoacopladores" position="127, 113.5" rotation="270">
+            <part name="B3.U12" component="SOP04@optoacopladores" position="127, 113.5" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.N$52" />
                     <pad name="2" signal="B3.GND" />
@@ -6041,7 +6041,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U13" block="SOP04@optoacopladores" position="127, 108.75" rotation="270">
+            <part name="B3.U13" component="SOP04@optoacopladores" position="127, 108.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.N$53" />
                     <pad name="2" signal="B3.GND" />
@@ -6055,7 +6055,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U14" block="SOP04@optoacopladores" position="140.5, 108.75" rotation="90">
+            <part name="B3.U14" component="SOP04@optoacopladores" position="140.5, 108.75" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.N$51" />
                     <pad name="2" signal="B3.GND" />
@@ -6069,7 +6069,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U15" block="SOP04@optoacopladores" position="140.5, 113.5" rotation="90">
+            <part name="B3.U15" component="SOP04@optoacopladores" position="140.5, 113.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.N$54" />
                     <pad name="2" signal="B3.GND" />
@@ -6083,7 +6083,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U16" block="SOP04@optoacopladores" position="140.5, 118.25" rotation="90">
+            <part name="B3.U16" component="SOP04@optoacopladores" position="140.5, 118.25" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.N$1" />
                     <pad name="2" signal="B3.GND" />
@@ -6097,7 +6097,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U17" block="SOP04@optoacopladores" position="140.5, 123" rotation="90">
+            <part name="B3.U17" component="SOP04@optoacopladores" position="140.5, 123" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.N$6" />
                     <pad name="2" signal="B3.GND" />
@@ -6111,7 +6111,7 @@
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R7" block="R-0805@smd-parts" position="112.375, 126.75" rotation="270">
+            <part name="B3.R7" component="R-0805@smd-parts" position="112.375, 126.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.IN10" />
                     <pad name="2" signal="B3.VCC" />
@@ -6127,7 +6127,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R8" block="R-0805@smd-parts" position="109.875, 126.75" rotation="270">
+            <part name="B3.R8" component="R-0805@smd-parts" position="109.875, 126.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.IN11" />
                     <pad name="2" signal="B3.VCC" />
@@ -6143,7 +6143,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U6" block="SO08@optoacopladores" position="110.5, 134" rotation="180">
+            <part name="B3.U6" component="SO08@optoacopladores" position="110.5, 134" rotation="180">
                 <pads>
                     <pad name="2" signal="B3.I10" />
                     <pad name="7" signal="B3.GND" />
@@ -6161,7 +6161,7 @@
                     <attribute name="REFERENCE" value="ACPL-224-500E" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.JP1" block="DF11-18DP-2DSA@hirose-df11" position="100.75, 142.875">
+            <part name="B3.JP1" component="DF11-18DP-2DSA@hirose-df11" position="100.75, 142.875">
                 <pads>
                     <pad name="2" signal="B3.I1" />
                     <pad name="1" signal="B3.I0" />
@@ -6189,7 +6189,7 @@
                     <attribute name="VALUE" value="DF11-18DP-2DSA" visible="false" />
                 </attributes>
             </part>
-            <part name="B3.JP2" block="DF11-16DP-2DSA@hirose-df11" position="129.875, 142.875">
+            <part name="B3.JP2" component="DF11-16DP-2DSA@hirose-df11" position="129.875, 142.875">
                 <pads>
                     <pad name="2" signal="B3.O1" />
                     <pad name="1" signal="B3.O0" />
@@ -6215,19 +6215,19 @@
                     <attribute name="VALUE" value="DF11-16DP-2DSA" visible="false" />
                 </attributes>
             </part>
-            <part name="B3.U$1" block="CE_7.3MM@logo" position="90, 115">
+            <part name="B3.U$1" component="CE_7.3MM@logo" position="90, 115">
                 <attributes>
                     <attribute name="NAME" value="U$1" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B3.U$2" block="ESD_10.00@logo" position="128.5, 100.5">
+            <part name="B3.U$2" component="ESD_10.00@logo" position="128.5, 100.5">
                 <attributes>
                     <attribute name="NAME" value="U$2" visible="false" />
                     <attribute name="VALUE" value="" visible="false" />
                 </attributes>
             </part>
-            <part name="B3.R20" block="R-0805@smd-parts" position="148.125, 126" rotation="90">
+            <part name="B3.R20" component="R-0805@smd-parts" position="148.125, 126" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.OUT10" />
                     <pad name="2" signal="B3.N$9" />
@@ -6243,7 +6243,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R21" block="R-0805@smd-parts" position="148.125, 131" rotation="90">
+            <part name="B3.R21" component="R-0805@smd-parts" position="148.125, 131" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.OUT11" />
                     <pad name="2" signal="B3.N$48" />
@@ -6259,7 +6259,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U18" block="DIL8-SMD@optoacopladores" position="141, 130.5" rotation="90">
+            <part name="B3.U18" component="DIL8-SMD@optoacopladores" position="141, 130.5" rotation="90">
                 <pads>
                     <pad name="1" signal="B3.N$9" />
                     <pad name="2" signal="B3.GND" />
@@ -6277,7 +6277,7 @@
                     <attribute name="REFERENCE" value="LH1522AAC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.U7" block="SO08@optoacopladores" position="116, 134" rotation="180">
+            <part name="B3.U7" component="SO08@optoacopladores" position="116, 134" rotation="180">
                 <pads>
                     <pad name="2" signal="B3.I12" />
                     <pad name="7" signal="B3.GND" />
@@ -6295,7 +6295,7 @@
                     <attribute name="REFERENCE" value="ACPL-224-500E" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R22" block="R-0805@smd-parts" position="117.875, 126.75" rotation="270">
+            <part name="B3.R22" component="R-0805@smd-parts" position="117.875, 126.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.IN12" />
                     <pad name="2" signal="B3.VCC" />
@@ -6311,7 +6311,7 @@
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
             </part>
-            <part name="B3.R23" block="R-0805@smd-parts" position="115.375, 126.75" rotation="270">
+            <part name="B3.R23" component="R-0805@smd-parts" position="115.375, 126.75" rotation="270">
                 <pads>
                     <pad name="1" signal="B3.IN13" />
                     <pad name="2" signal="B3.VCC" />

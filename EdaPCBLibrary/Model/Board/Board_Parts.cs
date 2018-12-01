@@ -1,9 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    using MikroPic.EdaTools.v1.Collections;
     using System;
     using System.Collections.Generic;
-
 
     /// <summary>
     /// Clase que representa una placa de circuit impres.
@@ -11,9 +9,7 @@
     /// 
     public sealed partial class Board {
 
-        // Parts
-        private ParentChildKeyCollection<Board, Part, String> parts;
-
+        private Dictionary<string, Part> parts;
 
         /// <summary>
         /// Afegeix un component.
@@ -25,13 +21,13 @@
             if (part == null)
                 throw new ArgumentNullException("part");
 
-            if (part.Board != null)
+            if ((parts != null) && parts.ContainsKey(part.Name))
                 throw new InvalidOperationException(
-                    String.Format("El componente '{0}' ya pertenece a una placa.", part.Name));
+                    String.Format("El componente '{0}' ya pertenece a la placa.", part.Name));
 
             if (parts == null)
-                parts = new ParentChildKeyCollection<Board, Part, String>(this);
-            parts.Add(part);
+                parts = new Dictionary<string, Part>();
+            parts.Add(part.Name, part);
         }
 
         /// <summary>
@@ -58,11 +54,11 @@
             if (part == null)
                 throw new ArgumentNullException("part");
 
-            if ((parts == null) || !parts.Contains(part))
+            if ((parts == null) || !parts.ContainsKey(part.Name))
                 throw new InvalidOperationException("El componente no pertenece a la placa.");
 
-            parts.Remove(part);
-            if (parts.IsEmpty)
+            parts.Remove(part.Name);
+            if (parts.Count == 0)
                 parts = null;
         }
 
@@ -78,15 +74,15 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            foreach (var part in parts)
-                if (part.Name == name)
-                    return part;
+            if ((parts != null) && parts.TryGetValue(name, out var part))
+                return part;
 
-            if (throwOnError)
+            else if (throwOnError)
                 throw new InvalidOperationException(
                     String.Format("El componente '{0}', no se encontro en esta placa.", name));
 
-            return null;
+            else
+                return null;
         }
 
         /// <summary>
@@ -105,7 +101,7 @@
         /// 
         public IEnumerable<Part> Parts {
             get {
-                return parts;
+                return parts?.Values;
             }
         }
     }

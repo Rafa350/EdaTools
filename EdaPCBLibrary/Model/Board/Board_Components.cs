@@ -1,9 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    using MikroPic.EdaTools.v1.Collections;
     using System;
     using System.Collections.Generic;
-
 
     /// <summary>
     /// Clase que representa una placa de circuit impres.
@@ -11,8 +9,7 @@
     /// 
     public sealed partial class Board {
 
-        // Components
-        private ParentChildKeyCollection<Board, Component, String> components;
+        private Dictionary<string, Component> components;
 
         /// <summary>
         /// Afeigeix un component.
@@ -24,13 +21,13 @@
             if (component == null)
                 throw new ArgumentNullException("component");
 
-            if (component.Board != null)
+            if ((components != null) && components.ContainsKey(component.Name))
                 throw new InvalidOperationException(
-                    String.Format("El bloque '{0}', ya pertenece a una placa.", component.Name));
+                    String.Format("El componente '{0}', ya pertenece a la placa.", component.Name));
 
             if (components == null)
-                components = new ParentChildKeyCollection<Board, Component, String>(this);
-            components.Add(component);
+                components = new Dictionary<string, Component>();
+            components.Add(component.Name, component);
         }
 
         public void AddComponents(IEnumerable<Component> components) {
@@ -52,12 +49,12 @@
             if (component == null)
                 throw new ArgumentNullException("component");
 
-            if (component.Board != this)
+            if ((components == null) || components.ContainsKey(component.Name))
                 throw new InvalidOperationException(
                     String.Format("El componente '{0}' no esta asignado a esta placa.", component.Name));
 
-            components.Remove(component);
-            if (components.IsEmpty)
+            components.Remove(component.Name);
+            if (components.Count == 0)
                 components = null;
         }
 
@@ -73,14 +70,12 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            Component component = components?.Get(name);
-            if (component != null)
+            if ((components != null) && components.TryGetValue(name, out var component))
                 return component;
 
             else if (throwOnError)
                 throw new InvalidOperationException(
                     String.Format("El componente '{0}', no esta asignado a esta placa.", name));
-
             else
                 return null;
         }
@@ -111,7 +106,7 @@
         /// 
         public IEnumerable<Component> Components {
             get {
-                return components;
+                return components?.Values;
             }
         }
     }

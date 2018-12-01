@@ -125,8 +125,8 @@
                 board.AddSignals(ParseSignalsNode());
                 rd.NextTag();
             }
-            if (rd.TagName == "blocks") {
-                board.AddComponents(ParseBlocksNode());
+            if (rd.TagName == "components") {
+                board.AddComponents(ParseComponentsNode());
                 rd.NextTag();
             }
             if (rd.TagName == "parts") {
@@ -231,49 +231,49 @@
         }
 
         /// <summary>
-        /// Procesa el node 'blocks'
+        /// Procesa el node 'components'
         /// </summary>
-        /// <returns>La llista d'objectes 'Block' obtinguda.</returns>
+        /// <returns>La llista d'objectes 'Component' obtinguda.</returns>
         /// 
-        private IEnumerable<Component> ParseBlocksNode() {
+        private IEnumerable<Component> ParseComponentsNode() {
 
-            if (!rd.IsStartTag("blocks"))
-                throw new InvalidDataException("Se esperaba <blocks>");
+            if (!rd.IsStartTag("components"))
+                throw new InvalidDataException("Se esperaba <components>");
 
             List<Component> blocks = new List<Component>();
 
             rd.NextTag();
-            while (rd.IsStartTag("block")) {
-                blocks.Add(ParseBlockNode());
+            while (rd.IsStartTag("component")) {
+                blocks.Add(ParseComponentNode());
                 rd.NextTag();
             }
 
-            if (!rd.IsEndTag("blocks"))
-                throw new InvalidDataException("Se esperaba </blocks>");
+            if (!rd.IsEndTag("components"))
+                throw new InvalidDataException("Se esperaba </components>");
 
             return blocks;
         }
 
         /// <summary>
-        /// Procesa el node 'block'.
+        /// Procesa el node 'component'.
         /// </summary>
-        /// <returns>L'objecte 'Block' obtingut.</returns>
+        /// <returns>L'objecte 'Component' obtingut.</returns>
         /// 
-        private Component ParseBlockNode() {
+        private Component ParseComponentNode() {
 
-            if (!rd.IsStartTag("block"))
-                throw new InvalidDataException("Se esperaba <block>");
+            if (!rd.IsStartTag("component"))
+                throw new InvalidDataException("Se esperaba <component>");
 
             string name = rd.AttributeAsString("name");
 
             Component block = new Component(name);
 
             rd.NextTag();
-            block.AddElements(ParseBlockElementsNode());
+            block.AddElements(ParseComponentElementsNode());
             rd.NextTag();
 
-            if (!rd.IsEndTag("block"))
-                throw new InvalidDataException("Se esperaba </block>");
+            if (!rd.IsEndTag("component"))
+                throw new InvalidDataException("Se esperaba </component>");
 
             return block;
         }
@@ -283,7 +283,7 @@
         /// </summary>
         /// <returns>La llista d'objectres 'Element' obtinguda.</returns>
         /// 
-        private IEnumerable<Element> ParseBlockElementsNode() {
+        private IEnumerable<Element> ParseComponentElementsNode() {
 
             if (!rd.IsStartTag("elements"))
                 throw new InvalidDataException("Se esperaba <elements>");
@@ -446,7 +446,7 @@
             Point position =  XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
             BoardSide side = rd.AttributeAsEnum("side", BoardSide.Top);
-            string blockName = rd.AttributeAsString("block");
+            string blockName = rd.AttributeAsString("component");
 
             Component block = board.GetComponent(blockName);
             Part part = new Part(block, name, position, rotation, side);

@@ -3,7 +3,7 @@
     using System;
     using System.IO;
     using System.Xml;
-    using MikroPic.EdaTools.v1.Core.Model;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
 
     public sealed class NetExtractor {
 

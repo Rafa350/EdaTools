@@ -2,8 +2,8 @@
 
     using MikroPic.EdaTools.v1.Core.Import;
     using MikroPic.EdaTools.v1.Core.Import.Eagle;
-    using MikroPic.EdaTools.v1.Core.Model;
-    using MikroPic.EdaTools.v1.Core.Model.IO;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
     using System.IO;
 
     class Program {

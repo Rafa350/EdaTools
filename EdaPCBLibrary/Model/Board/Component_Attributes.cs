@@ -1,6 +1,5 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    using MikroPic.EdaTools.v1.Collections;
     using System;
     using System.Collections.Generic;
 
@@ -10,7 +9,7 @@
     /// 
     public sealed partial class Component {
 
-        private KeyCollection<ComponentAttribute, String> attributes;
+        private Dictionary<string, ComponentAttribute> attributes;
 
         /// <summary>
         /// Afegeix in atribut.
@@ -24,15 +23,15 @@
 
             // Comprova que l'atribut no estigui afeigit amb anterioritat
             //
-            if ((attributes != null) && attributes.Contains(attribute))
+            if ((attributes != null) && attributes.ContainsKey(attribute.Name))
                 throw new InvalidOperationException(
                     String.Format("Ya existe un atributo con el nombre '{0}'.", attribute.Name));
 
             // Afegeix l'atribut a la llista d'atributs
             //
             if (attributes == null)
-                attributes = new KeyCollection<ComponentAttribute, string>();
-            attributes.Add(attribute);
+                attributes = new Dictionary<string, ComponentAttribute>();
+            attributes.Add(attribute.Name, attribute);
         }
 
         /// <summary>
@@ -61,14 +60,14 @@
 
             // Comprova que l'atribut estigui a la llista
             //
-            if ((attributes == null) || !attributes.Contains(attribute))
+            if ((attributes == null) || !attributes.ContainsKey(attribute.Name))
                 throw new InvalidOperationException(
                     String.Format("No se encontro el atributo '{0}'.", attribute.Name));
 
             // Elimina l'aqtribut de la llista d'atributs
             //
-            attributes.Remove(attribute);
-            if (attributes.IsEmpty)
+            attributes.Remove(attribute.Name);
+            if (attributes.Count == 0)
                 attributes = null;
         }
 
@@ -95,7 +94,7 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            return attributes?.Get(name);
+            return attributes?[name];
         }
 
         /// <summary>
@@ -114,10 +113,7 @@
         /// 
         public IEnumerable<String> AttributeNames {
             get {
-                if (attributes == null)
-                    throw new InvalidOperationException("El bloque no contiene atributos.");
-
-                return attributes.Keys;
+                return attributes?.Keys;
             }
         }
 
@@ -127,10 +123,7 @@
         /// 
         public IEnumerable<ComponentAttribute> Attributes {
             get {
-                if (attributes == null)
-                    throw new InvalidOperationException("El bloque no contiene atributos.");
-
-                return attributes;
+                return attributes?.Values;
             }
         }
     }

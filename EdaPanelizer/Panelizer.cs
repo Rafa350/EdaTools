@@ -3,9 +3,9 @@
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Panel.Model;
     using MikroPic.EdaTools.v1.Panel.Model.Elements;
-    using MikroPic.EdaTools.v1.Core.Model;
-    using MikroPic.EdaTools.v1.Core.Model.Elements;
-    using MikroPic.EdaTools.v1.Core.Model.Visitors;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+    using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
     using System;
     using System.Collections.Generic;
 
@@ -49,8 +49,7 @@
             foreach (var signal in board.Signals) {
                 string panelSignalName = String.Format("B{0}.{1}", index, signal.Name);
                 if (panelBoard.GetSignal(panelSignalName, false) == null) {
-                    Signal panelSignal = signal.Clone();
-                    panelSignal.Name = panelSignalName;
+                    Signal panelSignal = signal.Clone(panelSignalName);
                     panelBoard.AddSignal(panelSignal);
                 }
             }
@@ -58,9 +57,9 @@
             // Afegeix els blocs que no existeixin en la placa de destinacio.
             //
             if (board.HasComponents) {
-                foreach (var block in board.Components)
-                    if (panelBoard.GetComponent(block.Name, false) == null)
-                        panelBoard.AddComponent(block.Clone());
+                foreach (var component in board.Components)
+                    if (panelBoard.GetComponent(component.Name, false) == null)
+                        panelBoard.AddComponent(component.Clone());
             }
 
             // Afegeix els parts a la placa
@@ -68,9 +67,8 @@
             if (board.HasParts) {
                 List<Part> transformableParts = new List<Part>();
                 foreach (var part in board.Parts) {
-                    Component block = panelBoard.GetComponent(part.Component.Name);
-                    Part panelPart = part.Clone(block);
-                    panelPart.Name = String.Format("B{0}.{1}", index, panelPart.Name);
+                    Component component = panelBoard.GetComponent(part.Component.Name);
+                    Part panelPart = part.Clone(String.Format("B{0}.{1}", index, part.Name), component);
                     transformableParts.Add(panelPart);
                     panelBoard.AddPart(panelPart);
 
@@ -116,10 +114,10 @@
 
         private sealed class TransformVisitor: DefaultVisitor {
 
-            private readonly IEnumerable<MikroPic.EdaTools.v1.Core.Model.IVisitable> visitables;
+            private readonly IEnumerable<MikroPic.EdaTools.v1.Core.Model.Board.IVisitable> visitables;
             private readonly Transformation transformation;
 
-            public TransformVisitor(IEnumerable<MikroPic.EdaTools.v1.Core.Model.IVisitable> visitables, Point offset, Angle rotation) {
+            public TransformVisitor(IEnumerable<MikroPic.EdaTools.v1.Core.Model.Board.IVisitable> visitables, Point offset, Angle rotation) {
 
                 this.visitables = visitables;
                 transformation = new Transformation(offset, rotation);

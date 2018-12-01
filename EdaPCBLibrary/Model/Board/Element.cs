@@ -2,7 +2,6 @@
 
     using MikroPic.EdaTools.v1.Geometry;
     using MikroPic.EdaTools.v1.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Collections;
 
     /// <summary>
     /// Identifica el tipus d'element
@@ -26,11 +25,9 @@
     /// Clase base per tots els elements de la placa.
     /// </summary>
     /// 
-    public abstract class Element : IVisitable, ICollectionChild<Board>, ICollectionChild<Component> {
+    public abstract class Element : IVisitable {
 
         private LayerSet layerSet;
-        private Board board;
-        private Component block;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -55,26 +52,6 @@
         /// <param name="visitor">El visitador.</param>
         /// 
         public abstract void AcceptVisitor(IVisitor visitor);
-
-        /// <summary>
-        /// Asigna l'objecte pare.
-        /// </summary>
-        /// <param name="block">L'objecte pare.</param>
-        /// 
-        public void AssignParent(Component block) {
-
-            this.block = block;
-        }
-
-        /// <summary>
-        /// Asigna l'objecte pare.
-        /// </summary>
-        /// <param name="board">L'objecte pare.</param>
-        /// 
-        public void AssignParent(Board board) {
-
-            this.board = board;
-        }
 
         /// <summary>
         /// Obte el poligon del element.
@@ -111,31 +88,6 @@
             }
             set {
                 layerSet = value;
-            }
-        }
-
-        /// <summary>
-        /// Obte el bloc al que pertany
-        /// </summary>
-        /// 
-        public Component Block {
-            get {
-                return block;
-            }
-        }
-
-        /// <summary>
-        /// Obte l'etiqueta a la que pertany
-        /// </summary>
-        /// 
-        public Board Board {
-            get {
-                if (board != null)
-                    return board;
-                else if (block != null)
-                    return block.Board;
-                else
-                    return null;
             }
         }
 

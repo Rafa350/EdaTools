@@ -19,7 +19,6 @@
 
             if (attributes == null)
                 attributes = new Dictionary<string, PartAttribute>();
-
             attributes.Add(attribute.Name, attribute);
         }
 
@@ -48,7 +47,6 @@
                 throw new ArgumentNullException("attribute");
 
             attributes.Remove(attribute.Name);
-
             if (attributes.Count == 0)
                 attributes = null;
         }
@@ -86,9 +84,7 @@
         /// 
         public IEnumerable<PartAttribute> Attributes {
             get {
-                if (attributes == null)
-                    throw new InvalidOperationException("No contiene atributos.");
-                return attributes.Values;
+                return attributes?.Values;
             }
         }
     }
