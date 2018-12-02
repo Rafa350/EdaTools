@@ -1,6 +1,6 @@
-namespace MikroPic.EdaTools.v1.Geometry.Polygons.Infrastructure {
+namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
-    using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
     using System.Collections.Generic;
     

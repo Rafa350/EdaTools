@@ -7,7 +7,7 @@
     using System.Windows;
     using System.Windows.Media;
 
-    using Color = MikroPic.EdaTools.v1.Geometry.Color;
+    using Color = MikroPic.EdaTools.v1.Base.Geometry.Color;
     using WinColor = System.Windows.Media.Color;
 
     /// <summary>

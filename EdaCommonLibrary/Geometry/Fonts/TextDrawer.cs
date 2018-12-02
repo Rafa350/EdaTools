@@ -1,6 +1,6 @@
-﻿namespace MikroPic.EdaTools.v1.Geometry.Fonts {
+﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Fonts {
 
-    using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
     using System.Collections.Generic;
 

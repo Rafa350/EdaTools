@@ -1,8 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Ipcd356.Builder {
 
+    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
     using System.IO;
-    using MikroPic.EdaTools.v1.Geometry;
 
     public enum TestAccess {
         None,

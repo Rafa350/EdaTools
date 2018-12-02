@@ -1,6 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Panel.Model {
 
-    using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Base.Geometry;
 
     public abstract class PanelElement: IVisitable {
 

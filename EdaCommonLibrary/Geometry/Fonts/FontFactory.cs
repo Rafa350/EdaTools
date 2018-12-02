@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Geometry.Fonts {
+﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Fonts {
 
     using System.IO;
     using System.Reflection;

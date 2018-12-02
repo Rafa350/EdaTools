@@ -82,7 +82,7 @@
 
             if (Board != null) {
 
-                v1.Geometry.Size boardSize = Board.Size;
+                v1.Base.Geometry.Size boardSize = Board.Size;
                 viewPoint.Reset(
                     new System.Windows.Size(contentBox.ActualWidth, contentBox.ActualHeight),
                     new System.Windows.Rect(0, 0, boardSize.Width, boardSize.Height));

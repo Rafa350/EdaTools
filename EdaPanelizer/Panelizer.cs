@@ -1,11 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Panelizer {
 
-    using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Panel.Model;
-    using MikroPic.EdaTools.v1.Panel.Model.Elements;
+    using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
+    using MikroPic.EdaTools.v1.Panel.Model;
+    using MikroPic.EdaTools.v1.Panel.Model.Elements;
     using System;
     using System.Collections.Generic;
 
@@ -38,13 +38,14 @@
 
         public void Panelize(Board board, int index, Point position, Angle rotation) {
 
-            // Afegeix les capes que no existeixin en la placa de destinacio
+            // Afegeix les capes que no existeixin en la placa de destinacio. Les 
+            // capes son comuns a totes les plaques que formen el panel.
             //
             foreach (var layer in board.Layers)
                 if (panelBoard.GetLayer(layer.Id, false) == null)
                     panelBoard.AddLayer(layer.Clone());
 
-            // Afegeix els senyals
+            // Afegeix els senyals. Cada placa te les seves propies
             //
             foreach (var signal in board.Signals) {
                 string panelSignalName = String.Format("B{0}.{1}", index, signal.Name);
@@ -54,7 +55,8 @@
                 }
             }
 
-            // Afegeix els blocs que no existeixin en la placa de destinacio.
+            // Afegeix els components que no existeixin en la placa de destinacio. Els
+            // components son comuns a totes les plaques.
             //
             if (board.HasComponents) {
                 foreach (var component in board.Components)

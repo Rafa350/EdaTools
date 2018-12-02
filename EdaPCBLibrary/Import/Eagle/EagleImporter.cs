@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
-    using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Geometry.Fonts;
+    using MikroPic.EdaTools.v1.Base.Geometry;
+    using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using System;
@@ -10,7 +10,7 @@
     using System.Windows.Media;
     using System.Xml;
 
-    using Color = MikroPic.EdaTools.v1.Geometry.Color;
+    using Color = MikroPic.EdaTools.v1.Base.Geometry.Color;
     using SysColor = System.Windows.Media.Color;
     using SysPoint = System.Windows.Point;
 

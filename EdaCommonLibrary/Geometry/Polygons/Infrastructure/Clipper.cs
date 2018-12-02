@@ -55,7 +55,7 @@ using System.Collections.Generic;
 //using System.IO;            //debugging with streamReader & StreamWriter
 //using System.Windows.Forms; //debugging to clipboard
 
-namespace MikroPic.EdaTools.v1.Geometry.Polygons.Infrastructure {
+namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
 #if use_int32
   using cInt = Int32;

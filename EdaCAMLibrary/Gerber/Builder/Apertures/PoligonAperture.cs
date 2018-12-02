@@ -1,6 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Builder.Apertures {
 
-    using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
     using System.Text;
     using System.Globalization;

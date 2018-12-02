@@ -30,6 +30,11 @@
             components.Add(component.Name, component);
         }
 
+        /// <summary>
+        /// Afegeix diversos components.
+        /// </summary>
+        /// <param name="components">Els components a afeigir.</param>
+        /// 
         public void AddComponents(IEnumerable<Component> components) {
 
             if (components == null)
@@ -40,9 +45,9 @@
         }
 
         /// <summary>
-        /// Elimina un block.
+        /// Elimina un component.
         /// </summary>
-        /// <param name="component">El bloc a eliminar.</param>
+        /// <param name="component">El component a eliminar.</param>
         /// 
         public void RemoveComponent(Component component) {
 
@@ -59,11 +64,11 @@
         }
 
         /// <summary>
-        /// Obte un bloc pel seu nom.
+        /// Obte un component pel seu nom.
         /// </summary>
-        /// <param name="name">El nom del bloc.</param>
+        /// <param name="name">El nom del component.</param>
         /// <param name="throwOnError">True si cal generar una excepcio si no el troba.</param>
-        /// <returns>El bloc, o null si no el troba.</returns>
+        /// <returns>El component, o null si no el troba.</returns>
         /// 
         public Component GetComponent(string name, bool throwOnError = true) {
 

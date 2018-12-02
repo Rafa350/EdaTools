@@ -31,7 +31,7 @@
         }
 
         /// <summary>
-        /// Afegeig una col·leccio d'elements.
+        /// Afegeig diversos elements.
         /// </summary>
         /// <param name="elements">Els elements a afeigir.</param>
         /// 

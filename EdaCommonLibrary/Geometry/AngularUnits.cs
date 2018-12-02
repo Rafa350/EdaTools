@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Geometry {
+﻿namespace MikroPic.EdaTools.v1.Base.Geometry {
 
     public enum AngularUnits {
         Degrees,

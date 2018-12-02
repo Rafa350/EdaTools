@@ -1,12 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.Panel.Model.Elements {
 
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.IO;
     using MikroPic.EdaTools.v1.Panel.Model;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
 
     public sealed class PlaceElement: PanelElement {
 

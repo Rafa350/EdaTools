@@ -1,6 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Base.Geometry;
 
     /// <summary>
     /// Identifica la cara de la placa.

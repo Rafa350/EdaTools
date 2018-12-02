@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Model.IO {
 
-    using MikroPic.EdaTools.v1.Xml;
-    using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Base.Geometry;
+    using MikroPic.EdaTools.v1.Base.Xml;
     using System;
     using System.Collections.Generic;
     using System.IO;

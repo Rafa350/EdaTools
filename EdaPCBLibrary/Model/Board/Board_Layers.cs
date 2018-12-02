@@ -10,7 +10,7 @@
     public sealed partial class Board {
 
         private Dictionary<LayerId, Layer> layers = new Dictionary<LayerId, Layer>();
-        private Layer outlineLayer = null;
+        private Layer outlineLayer;
 
         /// <summary>
         /// Afegeix una capa a la placa. L'ordre en que s'afegeixen corresponen a l'apilament fisic de la placa.
@@ -39,9 +39,9 @@
         }
 
         /// <summary>
-        /// Afegeix una col·leccio ade capes a la placa.
+        /// Afegeix diverses capes.
         /// </summary>
-        /// <param name="layers">La col·leccio de capes.</param>
+        /// <param name="layers">Les capes a afeigir.</param>
         /// 
         public void AddLayers(IEnumerable<Layer> layers) {
 
@@ -53,7 +53,7 @@
         }
 
         /// <summary>
-        /// Elimina una capa de la placa.
+        /// Elimina una capa.
         /// </summary>
         /// <param name="layer">La capa a eliminar.</param>
         /// 
@@ -108,17 +108,17 @@
         }
 
         /// <summary>
-        /// Obte la coleccio d'elements d'una capa.
+        /// Obte els elements d'una capa.
         /// </summary>
         /// <param name="layerId">Identificador de la capa.</param>
-        /// <param name="includeComponents">Indica si cal incluir els elements dels blocs.</param>
-        /// <returns>La coleccio d'elements.</returns>
+        /// <param name="includeComponents">Indica si cal incluir els elements dels components.</param>
+        /// <returns>Els elements.</returns>
         /// 
         public IEnumerable<Element> GetElements(LayerId layerId, bool includeComponents = true) {
 
             List<Element> list = new List<Element>();
 
-            foreach (var element in elements)
+            foreach (var element in Elements)
                 if (element.IsOnLayer(layerId))
                     list.Add(element);
 
@@ -132,10 +132,10 @@
         }
 
         /// <summary>
-        /// Obte la coleccio de capes d'un element.
+        /// Obte les capes d'un element.
         /// </summary>
-        /// <param name="element">El element.</param>
-        /// <returns>La coleccio de capes.</returns>
+        /// <param name="element">L'element.</param>
+        /// <returns>Les capes.</returns>
         /// 
         public IEnumerable<Layer> GetLayers(Element element) {
 
@@ -152,6 +152,10 @@
             return list;
         }
 
+        /// <summary>
+        /// Obte la capa de perfil.
+        /// </summary>
+        /// 
         public Layer OutlineLayer {
             get {
                 return outlineLayer;
@@ -159,7 +163,7 @@
         }
 
         /// <summary>
-        /// Obte un enumerador per les capes
+        /// Enumera les capes.
         /// </summary>
         /// 
         public IEnumerable<Layer> Layers {

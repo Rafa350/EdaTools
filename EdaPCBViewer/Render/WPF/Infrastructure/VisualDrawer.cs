@@ -1,8 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Designer.Render.WPF.Infrastructure {
 
-    using MikroPic.EdaTools.v1.Geometry;
-    using MikroPic.EdaTools.v1.Geometry.Fonts;
-    using MikroPic.EdaTools.v1.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Base.Geometry;
+    using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
+    using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Core.Infrastructure;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
@@ -10,8 +10,8 @@
     using System.Collections.Generic;
     using System.Windows.Media;
 
-    using Color = MikroPic.EdaTools.v1.Geometry.Color;
-    using Point = MikroPic.EdaTools.v1.Geometry.Point;
+    using Color = MikroPic.EdaTools.v1.Base.Geometry.Color;
+    using Point = MikroPic.EdaTools.v1.Base.Geometry.Point;
     using WinColor = System.Windows.Media.Color;
     using WinPoint = System.Windows.Point;
     using WinRect = System.Windows.Rect;

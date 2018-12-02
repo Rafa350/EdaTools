@@ -1,9 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Panel.Model.IO {
 
-    using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Base.Geometry;
+    using MikroPic.EdaTools.v1.Base.Xml;
     using MikroPic.EdaTools.v1.Panel.Model;
     using MikroPic.EdaTools.v1.Panel.Model.Elements;
-    using MikroPic.EdaTools.v1.Xml;
     using System;
     using System.Collections.Generic;
     using System.IO;

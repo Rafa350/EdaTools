@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Builder {
 
+    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
-    using MikroPic.EdaTools.v1.Geometry;
 
     /// <summary>
     /// Clase que gestiona l'estat intern del generador gerber.

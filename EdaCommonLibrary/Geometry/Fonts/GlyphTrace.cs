@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Geometry.Fonts {
+﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Fonts {
 
     /// <summary>
     /// Representa els traços que formen la figura del caracter. Aquesta clase

@@ -1,6 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Panel.Model.Elements {
 
-    using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Panel.Model;
 
     public sealed class JoinElement: PanelElement {

@@ -1,6 +1,6 @@
-﻿namespace MikroPic.EdaTools.v1.Xml {
+﻿namespace MikroPic.EdaTools.v1.Base.Xml {
 
-    using MikroPic.EdaTools.v1.Geometry;
+    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
     using System.Xml;
 

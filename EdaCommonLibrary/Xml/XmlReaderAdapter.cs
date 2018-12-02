@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Xml {
+﻿namespace MikroPic.EdaTools.v1.Base.Xml {
 
     using System;
     using System.Collections.Generic;
