@@ -9,7 +9,7 @@
                 </glyph>
             </char>
           
-            <!--  '-' -->
+            <!-- '-' -->
             <char code="0x2D" advance="6">
                 <glyph>
                     <moveTo position="0, 3"/>
@@ -261,6 +261,22 @@
                     <lineTo position="4, 6"/>                    
                     <moveTo position="0, 3"/>                    
                     <lineTo position="3, 3"/>                    
+                </glyph>
+            </char>
+
+            <!-- 'G' -->
+            <char code="0x47" advance="6">
+                <glyph>
+                    <moveTo position="4, 5"/>
+                    <lineTo position="3, 6"/>                    
+                    <lineTo position="1, 6"/>                    
+                    <lineTo position="0, 5"/>                    
+                    <lineTo position="0, 1"/>                    
+                    <lineTo position="1, 0"/>                    
+                    <lineTo position="3, 0"/>                    
+                    <lineTo position="4, 1"/>                    
+                    <lineTo position="4, 2"/>                    
+                    <lineTo position="2, 2"/>                    
                 </glyph>
             </char>
 
