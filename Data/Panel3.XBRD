@@ -2,6 +2,7 @@
 <document version="213" documentType="board" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/XBRD.xsd">
     <board position="0, 0" rotation="0">
         <layers>
+            <layer id="Milling" function="mechanical" />
             <layer id="Top.Top" function="signal" />
             <layer id="Bottom.Bottom" function="signal" />
             <layer id="Pads" function="unknown" />
@@ -7520,14 +7521,14 @@
             <line layers="Top.Top" startPosition="66.5, 61.5" endPosition="66.23, 61.77" thickness="0.4" signal="B0.O11A" />
             <line layers="Top.Top" startPosition="66.855, 71.875" endPosition="66.855, 64.935" thickness="0.4" signal="B0.O11B" />
             <line layers="Top.Top" startPosition="66.855, 64.935" endPosition="66.23, 64.31" thickness="0.4" signal="B0.O11B" />
-            <line layers="Top.Document" startPosition="25.25, 15.25" endPosition="64.75, 15.25" thickness="2.5" />
-            <line layers="Top.Document" startPosition="64.75, 15.25" endPosition="64.75, 8.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="64.75, 8.75" endPosition="81.25, 8.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="81.25, 8.75" endPosition="81.25, 78.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="81.25, 78.75" endPosition="8.75, 78.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="8.75, 78.75" endPosition="8.75, 8.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="8.75, 8.75" endPosition="25.25, 8.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="25.25, 8.75" endPosition="25.25, 15.25" thickness="2.5" />
+            <line layers="Milling" startPosition="25, 15.5" endPosition="65, 15.5" thickness="2" />
+            <line layers="Milling" startPosition="65, 15.5" endPosition="65, 9" thickness="2" />
+            <line layers="Milling" startPosition="65, 9" endPosition="81, 9" thickness="2" />
+            <line layers="Milling" startPosition="81, 9" endPosition="81, 78.5" thickness="2" />
+            <line layers="Milling" startPosition="81, 78.5" endPosition="9, 78.5" thickness="2" />
+            <line layers="Milling" startPosition="9, 78.5" endPosition="9, 9" thickness="2" />
+            <line layers="Milling" startPosition="9, 9" endPosition="25, 9" thickness="2" />
+            <line layers="Milling" startPosition="25, 9" endPosition="25, 15.5" thickness="2" />
             <text layers="Top.Place" position="42.25, 56.5" height="1.778" thickness="0.1" value="MD-CPU04D-v1.1" />
             <line layers="Top.Restrict" startPosition="110, 43" endPosition="125, 43" thickness="0.2" />
             <line layers="Top.Restrict" startPosition="125, 43" endPosition="125, 39.875" thickness="0.2" />
@@ -8719,14 +8720,14 @@
             <line layers="Top.Top" startPosition="146.5, 61.5" endPosition="146.23, 61.77" thickness="0.4" signal="B1.O11A" />
             <line layers="Top.Top" startPosition="146.855, 71.875" endPosition="146.855, 64.935" thickness="0.4" signal="B1.O11B" />
             <line layers="Top.Top" startPosition="146.855, 64.935" endPosition="146.23, 64.31" thickness="0.4" signal="B1.O11B" />
-            <line layers="Top.Document" startPosition="105.25, 15.25" endPosition="144.75, 15.25" thickness="2.5" />
-            <line layers="Top.Document" startPosition="144.75, 15.25" endPosition="144.75, 8.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="144.75, 8.75" endPosition="161.25, 8.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="161.25, 8.75" endPosition="161.25, 78.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="161.25, 78.75" endPosition="88.75, 78.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="88.75, 78.75" endPosition="88.75, 8.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="88.75, 8.75" endPosition="105.25, 8.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="105.25, 8.75" endPosition="105.25, 15.25" thickness="2.5" />
+            <line layers="Milling" startPosition="105, 15.5" endPosition="145, 15.5" thickness="2" />
+            <line layers="Milling" startPosition="145, 15.5" endPosition="145, 9" thickness="2" />
+            <line layers="Milling" startPosition="145, 9" endPosition="161, 9" thickness="2" />
+            <line layers="Milling" startPosition="161, 9" endPosition="161, 78.5" thickness="2" />
+            <line layers="Milling" startPosition="161, 78.5" endPosition="89, 78.5" thickness="2" />
+            <line layers="Milling" startPosition="89, 78.5" endPosition="89, 9" thickness="2" />
+            <line layers="Milling" startPosition="89, 9" endPosition="105, 9" thickness="2" />
+            <line layers="Milling" startPosition="105, 9" endPosition="105, 15.5" thickness="2" />
             <text layers="Top.Place" position="42.25, 56.5" height="1.778" thickness="0.1" value="MD-CPU04D-v1.1" />
             <line layers="Top.Restrict" startPosition="30, 123" endPosition="45, 123" thickness="0.2" />
             <line layers="Top.Restrict" startPosition="45, 123" endPosition="45, 119.875" thickness="0.2" />
@@ -9918,14 +9919,14 @@
             <line layers="Top.Top" startPosition="66.5, 141.5" endPosition="66.23, 141.77" thickness="0.4" signal="B2.O11A" />
             <line layers="Top.Top" startPosition="66.855, 151.875" endPosition="66.855, 144.935" thickness="0.4" signal="B2.O11B" />
             <line layers="Top.Top" startPosition="66.855, 144.935" endPosition="66.23, 144.31" thickness="0.4" signal="B2.O11B" />
-            <line layers="Top.Document" startPosition="25.25, 95.25" endPosition="64.75, 95.25" thickness="2.5" />
-            <line layers="Top.Document" startPosition="64.75, 95.25" endPosition="64.75, 88.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="64.75, 88.75" endPosition="81.25, 88.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="81.25, 88.75" endPosition="81.25, 158.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="81.25, 158.75" endPosition="8.75, 158.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="8.75, 158.75" endPosition="8.75, 88.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="8.75, 88.75" endPosition="25.25, 88.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="25.25, 88.75" endPosition="25.25, 95.25" thickness="2.5" />
+            <line layers="Milling" startPosition="25, 95.5" endPosition="65, 95.5" thickness="2" />
+            <line layers="Milling" startPosition="65, 95.5" endPosition="65, 89" thickness="2" />
+            <line layers="Milling" startPosition="65, 89" endPosition="81, 89" thickness="2" />
+            <line layers="Milling" startPosition="81, 89" endPosition="81, 158.5" thickness="2" />
+            <line layers="Milling" startPosition="81, 158.5" endPosition="9, 158.5" thickness="2" />
+            <line layers="Milling" startPosition="9, 158.5" endPosition="9, 89" thickness="2" />
+            <line layers="Milling" startPosition="9, 89" endPosition="25, 89" thickness="2" />
+            <line layers="Milling" startPosition="25, 89" endPosition="25, 95.5" thickness="2" />
             <text layers="Top.Place" position="42.25, 56.5" height="1.778" thickness="0.1" value="MD-CPU04D-v1.1" />
             <line layers="Top.Restrict" startPosition="110, 123" endPosition="125, 123" thickness="0.2" />
             <line layers="Top.Restrict" startPosition="125, 123" endPosition="125, 119.875" thickness="0.2" />
@@ -11117,14 +11118,14 @@
             <line layers="Top.Top" startPosition="146.5, 141.5" endPosition="146.23, 141.77" thickness="0.4" signal="B3.O11A" />
             <line layers="Top.Top" startPosition="146.855, 151.875" endPosition="146.855, 144.935" thickness="0.4" signal="B3.O11B" />
             <line layers="Top.Top" startPosition="146.855, 144.935" endPosition="146.23, 144.31" thickness="0.4" signal="B3.O11B" />
-            <line layers="Top.Document" startPosition="105.25, 95.25" endPosition="144.75, 95.25" thickness="2.5" />
-            <line layers="Top.Document" startPosition="144.75, 95.25" endPosition="144.75, 88.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="144.75, 88.75" endPosition="161.25, 88.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="161.25, 88.75" endPosition="161.25, 158.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="161.25, 158.75" endPosition="88.75, 158.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="88.75, 158.75" endPosition="88.75, 88.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="88.75, 88.75" endPosition="105.25, 88.75" thickness="2.5" />
-            <line layers="Top.Document" startPosition="105.25, 88.75" endPosition="105.25, 95.25" thickness="2.5" />
+            <line layers="Milling" startPosition="105, 95.5" endPosition="145, 95.5" thickness="2" />
+            <line layers="Milling" startPosition="145, 95.5" endPosition="145, 89" thickness="2" />
+            <line layers="Milling" startPosition="145, 89" endPosition="161, 89" thickness="2" />
+            <line layers="Milling" startPosition="161, 89" endPosition="161, 158.5" thickness="2" />
+            <line layers="Milling" startPosition="161, 158.5" endPosition="89, 158.5" thickness="2" />
+            <line layers="Milling" startPosition="89, 158.5" endPosition="89, 89" thickness="2" />
+            <line layers="Milling" startPosition="89, 89" endPosition="105, 89" thickness="2" />
+            <line layers="Milling" startPosition="105, 89" endPosition="105, 95.5" thickness="2" />
             <line layers="Profile" startPosition="0, 169.999999" endPosition="169.999999, 169.999999" thickness="0.1" />
             <line layers="Profile" startPosition="0, 0" endPosition="169.999999, 0" thickness="0.1" />
             <line layers="Profile" startPosition="0, 169.999999" endPosition="0, 0" thickness="0.1" />

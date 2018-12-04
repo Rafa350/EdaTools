@@ -42,6 +42,7 @@
 
             vls.Add(new VisualLayer("Drills", new LayerSet(Layer.DrillsId), true, new Color(255, 255, 255, 255)));
             vls.Add(new VisualLayer("Holes", new LayerSet(Layer.HolesId), true, new Color(255, 240, 128, 128)));
+            vls.Add(new VisualLayer("Milling", new LayerSet(Layer.MillingId), true, new Color(255, 32, 216, 200)));
 
             vls.Add(new VisualLayer("Profiles", new LayerSet(Layer.ProfileId), true, new Color(255, 255, 255, 255)));
 

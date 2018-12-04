@@ -55,6 +55,7 @@
         public static readonly LayerId BottomKeepoutId = new LayerId("Keepout", BoardSide.Bottom);
         public static readonly LayerId DrillsId = new LayerId("Drills");
         public static readonly LayerId HolesId = new LayerId("Holes");
+        public static readonly LayerId MillingId = new LayerId("Milling");
         public static readonly LayerId PadsId = new LayerId("Pads");
         public static readonly LayerId ViasId = new LayerId("Vias");
         public static readonly LayerId UnroutedId = new LayerId("Unrouted");
