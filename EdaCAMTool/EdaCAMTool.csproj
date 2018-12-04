@@ -61,13 +61,17 @@
     <None Include="signature.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EdaBase\EdaBase.csproj">
+      <Project>{1bf8a2de-cc88-4617-b0ce-eebb7b76230f}</Project>
+      <Name>EdaBase</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EdaCAMLibrary\EdaCAMLibrary.csproj">
       <Project>{9786f647-bca2-45f5-814c-e41eba6a4480}</Project>
       <Name>EdaCAMLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EdaPCBLibrary\EdaPCBLibrary.csproj">
+    <ProjectReference Include="..\EdaCore\EdaCore.csproj">
       <Project>{706bc74f-0182-4b56-8d9d-c6b311044076}</Project>
-      <Name>EdaPCBLibrary</Name>
+      <Name>EdaCore</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

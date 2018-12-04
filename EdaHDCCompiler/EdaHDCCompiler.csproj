@@ -46,17 +46,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EdaCommonLibrary\EdaCommonLibrary.csproj">
-      <Project>{1bf8a2de-cc88-4617-b0ce-eebb7b76230f}</Project>
-      <Name>EdaCommonLibrary</Name>
-    </ProjectReference>
     <ProjectReference Include="..\EdaHDCLibrary\EdaHDCLibrary.csproj">
       <Project>{540d8519-6cd3-489d-aa1a-8c23e8f51648}</Project>
       <Name>EdaHDCLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EdaPCBLibrary\EdaPCBLibrary.csproj">
-      <Project>{706bc74f-0182-4b56-8d9d-c6b311044076}</Project>
-      <Name>EdaPCBLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

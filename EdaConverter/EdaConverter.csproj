@@ -54,16 +54,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EdaPCBLibrary\EdaPCBLibrary.csproj">
-      <Project>{706bc74f-0182-4b56-8d9d-c6b311044076}</Project>
-      <Name>EdaPCBLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\EdaBase\EdaBase.csproj">
+      <Project>{1bf8a2de-cc88-4617-b0ce-eebb7b76230f}</Project>
+      <Name>EdaBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EdaCore\EdaCore.csproj">
+      <Project>{706bc74f-0182-4b56-8d9d-c6b311044076}</Project>
+      <Name>EdaCore</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

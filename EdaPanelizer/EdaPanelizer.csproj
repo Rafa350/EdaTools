@@ -55,17 +55,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EdaCommonLibrary\EdaCommonLibrary.csproj">
+    <ProjectReference Include="..\EdaBase\EdaBase.csproj">
       <Project>{1bf8a2de-cc88-4617-b0ce-eebb7b76230f}</Project>
-      <Name>EdaCommonLibrary</Name>
+      <Name>EdaBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EdaCore\EdaCore.csproj">
+      <Project>{706bc74f-0182-4b56-8d9d-c6b311044076}</Project>
+      <Name>EdaCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\EdaPanelLibrary\EdaPanelLibrary.csproj">
       <Project>{a9f79d69-13b0-45e0-b602-9a330fc22b9f}</Project>
       <Name>EdaPanelLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EdaPCBLibrary\EdaPCBLibrary.csproj">
-      <Project>{706bc74f-0182-4b56-8d9d-c6b311044076}</Project>
-      <Name>EdaPCBLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
