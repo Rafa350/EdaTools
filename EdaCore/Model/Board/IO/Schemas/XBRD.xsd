@@ -174,7 +174,7 @@
             <xs:attribute name="layers" use="required" type="xs:string"/>
             <xs:attribute name="startPosition" use="required" type="pointType"/>
             <xs:attribute name="endPosition" use="required" type="pointType"/>
-            <xs:attribute name="thickness" use="required" type="xs:double"/>
+            <xs:attribute name="thickness" use="optional" type="xs:double"/>
             <xs:attribute name="lineCap" use="optional" type="lineCapType"/>
             <xs:attribute name="signal" use="optional" type="nameType"/>
         </xs:complexType>
@@ -187,7 +187,7 @@
             <xs:attribute name="startPosition" use="required" type="pointType"/>
             <xs:attribute name="endPosition" use="required" type="pointType"/>
             <xs:attribute name="angle" use="required" type="angleType"/>
-            <xs:attribute name="thickness" use="required" type="xs:double"/>
+            <xs:attribute name="thickness" use="optional" type="xs:double"/>
             <xs:attribute name="lineCap" use="optional" type="lineCapType"/>
             <xs:attribute name="signal" use="optional" type="nameType"/>
         </xs:complexType>

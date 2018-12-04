@@ -110,16 +110,18 @@
             if (!rd.IsStartTag("panel"))
                 throw new InvalidDataException("Se esperaba <panel>");
 
-            version = rd.AttributeAsInteger("version");
-
-            Panel panel = new Panel();
+            Size size = XmlTypeParser.ParseSize(rd.AttributeAsString("size"));
 
             rd.NextTag();
-            panel.AddElements(ParsePanelElementsNode());
+            IEnumerable<PanelElement> elements = ParsePanelElementsNode();
 
             rd.NextTag();
             if (!rd.IsEndTag("panel"))
                 throw new InvalidDataException("Se esperaba </panel>");
+
+            Panel panel = new Panel();
+            panel.Size = size;
+            panel.AddElements(elements);
 
             return panel;
         }

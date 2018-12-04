@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Panelizer {
 
     using MikroPic.EdaTools.v1.Base.Geometry;
+    using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
@@ -28,15 +29,23 @@
 
         public void Panelize(Panel panel) {
 
+            // Afegeix les plaques a panelitzar.
+            //
             int index = 0;
             foreach (var element in panel.Elements) {
                 PlaceElement place = element as PlaceElement;
-                if (place != null)
-                    Panelize(place.Board, index++, place.Position, place.Rotation);
+                if (place != null) {
+                    AddBoard(place.Board, place.Position, place.Rotation, index++);
+                    AddBoardRoute(place.Board, place.Position, place.Rotation, 2500000);
+                }
             }
+
+            // Afegeix el perfil del panel
+            //
+            AddProfile(panel);
         }
 
-        public void Panelize(Board board, int index, Point position, Angle rotation) {
+        private void AddBoard(Board board, Point position, Angle rotation, int index) {
 
             // Afegeix les capes que no existeixin en la placa de destinacio. Les 
             // capes son comuns a totes les plaques que formen el panel.
@@ -96,6 +105,9 @@
                 List<Element> transformableElements = new List<Element>();
                 foreach (var element in board.Elements) {
 
+                    if (element.LayerSet.Contains(Layer.ProfileId))
+                        continue;
+
                     Element panelElement = element.Clone();
                     transformableElements.Add(panelElement);
                     panelBoard.AddElement(panelElement);
@@ -114,7 +126,41 @@
             }
         }
 
-        private sealed class TransformVisitor: DefaultVisitor {
+        private void AddBoardRoute(Board board, Point position, Angle rotation, int thickness) {
+
+            Polygon outline = board.GetOutlinePolygon();
+            Polygon route = PolygonProcessor.Offset(outline, thickness / 2);
+
+            Transformation transformation = new Transformation(position, rotation);
+            LayerSet layerSet = new LayerSet(Layer.TopDocumentId);
+            for (int i = 0; i < route.Points.Length - 1; i++) {
+                panelBoard.AddElement(
+                        new LineElement(layerSet,
+                        transformation.ApplyTo(route.Points[i]),
+                        transformation.ApplyTo(route.Points[i + 1]),
+                        thickness,
+                        LineElement.LineCapStyle.Round));
+            }
+            panelBoard.AddElement(
+                new LineElement(layerSet,
+                transformation.ApplyTo(route.Points[route.Points.Length - 1]),
+                transformation.ApplyTo(route.Points[0]),
+                thickness,
+                LineElement.LineCapStyle.Round));
+        }
+
+        private void AddProfile(Panel panel) {
+
+            Rect rect = new Rect(new Point(0, 0), panel.Size);
+            LayerSet profileLayer = new LayerSet(Layer.ProfileId);
+            panelBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Right, rect.Top), 100000, LineElement.LineCapStyle.Round));
+            panelBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Bottom), new Point(rect.Right, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
+            panelBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Left, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
+            panelBoard.AddElement(new LineElement(profileLayer, new Point(rect.Right, rect.Top), new Point(rect.Right, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
+        }
+
+
+        private sealed class TransformVisitor: DefaultVisitor { 
 
             private readonly IEnumerable<MikroPic.EdaTools.v1.Core.Model.Board.IVisitable> visitables;
             private readonly Transformation transformation;

@@ -599,7 +599,7 @@
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             Point startPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("startPosition"));
             Point endPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("endPosition"));
-            int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness"));
+            int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness", "0"));
             LineElement.LineCapStyle lineCap = rd.AttributeAsEnum<LineElement.LineCapStyle>("lineCap", LineElement.LineCapStyle.Round);
             string signalName = rd.AttributeAsString("signal");
 
