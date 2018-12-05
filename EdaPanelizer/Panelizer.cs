@@ -38,18 +38,20 @@
             //
             AddLayers();
 
-            // Afegeix les plaques a panelitzar.
+            // Afegeix els elements del panell.
             //
             int index = 0;
             foreach (var element in panel.Elements) {
-                PlaceElement place = element as PlaceElement;
-                if (place != null) {
+                if (element is PlaceElement place) {
                     AddBoard(place.Board, place.Position, place.Rotation, index++);
                     AddBoardRoute(place.Board, place.Position, place.Rotation, 2000000);
                 }
+                else if (element is MillingElement milling)
+                    AddMilling(milling.StartPosition, milling.EndPosition, milling.Tickness, milling.Margin, milling.Cuts);
             }
 
-            // Afegeix el perfil del panel
+
+            // Afegeix el perfil exterior del panell.
             //
             AddProfile(panel.Size);
         }
@@ -111,8 +113,7 @@
                     panelBoard.AddPart(panelPart);
 
                     foreach (var panelElement in panelPart.Elements) {
-                        PadElement panelPad = panelElement as PadElement;
-                        if (panelPad != null) {
+                        if (panelElement is PadElement panelPad) {
                             Signal signal = board.GetSignal(part.GetPad(panelPad.Name), part, false);
                             if (signal != null) {
                                 string panelSignalName = String.Format("B{0}.{1}", index, signal.Name);
@@ -151,6 +152,10 @@
                 TransformVisitor visitor = new TransformVisitor(transformableElements, position, rotation);
                 visitor.Run();
             }
+        }
+
+        private void AddMilling(Point startPosition, Point endPosition, int thickness, int margin, int cuts) {
+
         }
 
         /// <summary>

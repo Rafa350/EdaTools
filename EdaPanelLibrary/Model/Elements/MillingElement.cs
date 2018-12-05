@@ -8,12 +8,16 @@
         private Point startPosition;
         private Point endPosition;
         private int thickness;
+        private int margin;
+        private int cuts;
 
-        public MillingElement(Point startPosition, Point endPosition, int thickness) {
+        public MillingElement(Point startPosition, Point endPosition, int thickness, int margin, int cuts) {
 
             this.startPosition = startPosition;
             this.endPosition = endPosition;
             this.thickness = thickness;
+            this.margin = margin;
+            this.cuts = cuts;
         }
 
         public override void AcceptVisitor(IVisitor visitor) {
@@ -45,6 +49,24 @@
             }
             set {
                 thickness = value;
+            }
+        }
+
+        public int Margin {
+            get {
+                return margin;
+            }
+            set {
+                margin = value;
+            }
+        }
+
+        public int Cuts {
+            get {
+                return cuts;
+            }
+            set {
+                cuts = value;
             }
         }
     }
