@@ -7524,9 +7524,15 @@
             <line layers="Milling" startPosition="25, 15.5" endPosition="65, 15.5" thickness="2" />
             <line layers="Milling" startPosition="65, 15.5" endPosition="65, 9" thickness="2" />
             <line layers="Milling" startPosition="65, 9" endPosition="81, 9" thickness="2" />
-            <line layers="Milling" startPosition="81, 9" endPosition="81, 78.5" thickness="2" />
-            <line layers="Milling" startPosition="81, 78.5" endPosition="9, 78.5" thickness="2" />
-            <line layers="Milling" startPosition="9, 78.5" endPosition="9, 9" thickness="2" />
+            <line layers="Milling" startPosition="80.999999, 9" endPosition="80.999999, 30.166666" thickness="2" />
+            <line layers="Milling" startPosition="80.999999, 34.166666" endPosition="80.999999, 53.333332" thickness="2" />
+            <line layers="Milling" startPosition="80.999999, 57.333332" endPosition="80.999999, 78.5" thickness="2" />
+            <line layers="Milling" startPosition="80.999999, 78.5" endPosition="58.999999, 78.5" thickness="2" />
+            <line layers="Milling" startPosition="54.999999, 78.5" endPosition="34.999999, 78.5" thickness="2" />
+            <line layers="Milling" startPosition="30.999999, 78.5" endPosition="9, 78.5" thickness="2" />
+            <line layers="Milling" startPosition="9, 78.499999" endPosition="9.000001, 57.333333" thickness="2" />
+            <line layers="Milling" startPosition="9.000001, 53.333333" endPosition="9.000001, 34.166667" thickness="2" />
+            <line layers="Milling" startPosition="9.000001, 30.166667" endPosition="9.000001, 9" thickness="2" />
             <line layers="Milling" startPosition="9, 9" endPosition="25, 9" thickness="2" />
             <line layers="Milling" startPosition="25, 9" endPosition="25, 15.5" thickness="2" />
             <text layers="Top.Place" position="42.25, 56.5" height="1.778" thickness="0.1" value="MD-CPU04D-v1.1" />
@@ -8723,9 +8729,15 @@
             <line layers="Milling" startPosition="105, 15.5" endPosition="145, 15.5" thickness="2" />
             <line layers="Milling" startPosition="145, 15.5" endPosition="145, 9" thickness="2" />
             <line layers="Milling" startPosition="145, 9" endPosition="161, 9" thickness="2" />
-            <line layers="Milling" startPosition="161, 9" endPosition="161, 78.5" thickness="2" />
-            <line layers="Milling" startPosition="161, 78.5" endPosition="89, 78.5" thickness="2" />
-            <line layers="Milling" startPosition="89, 78.5" endPosition="89, 9" thickness="2" />
+            <line layers="Milling" startPosition="160.999999, 9" endPosition="160.999999, 30.166666" thickness="2" />
+            <line layers="Milling" startPosition="160.999999, 34.166666" endPosition="160.999999, 53.333332" thickness="2" />
+            <line layers="Milling" startPosition="160.999999, 57.333332" endPosition="160.999999, 78.5" thickness="2" />
+            <line layers="Milling" startPosition="160.999999, 78.5" endPosition="138.999999, 78.5" thickness="2" />
+            <line layers="Milling" startPosition="134.999999, 78.5" endPosition="114.999999, 78.5" thickness="2" />
+            <line layers="Milling" startPosition="110.999999, 78.5" endPosition="89, 78.5" thickness="2" />
+            <line layers="Milling" startPosition="89, 78.499999" endPosition="89.000001, 57.333333" thickness="2" />
+            <line layers="Milling" startPosition="89.000001, 53.333333" endPosition="89.000001, 34.166667" thickness="2" />
+            <line layers="Milling" startPosition="89.000001, 30.166667" endPosition="89.000001, 9" thickness="2" />
             <line layers="Milling" startPosition="89, 9" endPosition="105, 9" thickness="2" />
             <line layers="Milling" startPosition="105, 9" endPosition="105, 15.5" thickness="2" />
             <text layers="Top.Place" position="42.25, 56.5" height="1.778" thickness="0.1" value="MD-CPU04D-v1.1" />
@@ -9922,9 +9934,15 @@
             <line layers="Milling" startPosition="25, 95.5" endPosition="65, 95.5" thickness="2" />
             <line layers="Milling" startPosition="65, 95.5" endPosition="65, 89" thickness="2" />
             <line layers="Milling" startPosition="65, 89" endPosition="81, 89" thickness="2" />
-            <line layers="Milling" startPosition="81, 89" endPosition="81, 158.5" thickness="2" />
-            <line layers="Milling" startPosition="81, 158.5" endPosition="9, 158.5" thickness="2" />
-            <line layers="Milling" startPosition="9, 158.5" endPosition="9, 89" thickness="2" />
+            <line layers="Milling" startPosition="80.999999, 89" endPosition="80.999999, 110.166666" thickness="2" />
+            <line layers="Milling" startPosition="80.999999, 114.166666" endPosition="80.999999, 133.333332" thickness="2" />
+            <line layers="Milling" startPosition="80.999999, 137.333332" endPosition="80.999999, 158.5" thickness="2" />
+            <line layers="Milling" startPosition="80.999999, 158.5" endPosition="58.999999, 158.5" thickness="2" />
+            <line layers="Milling" startPosition="54.999999, 158.5" endPosition="34.999999, 158.5" thickness="2" />
+            <line layers="Milling" startPosition="30.999999, 158.5" endPosition="9, 158.5" thickness="2" />
+            <line layers="Milling" startPosition="9, 158.499999" endPosition="9.000001, 137.333333" thickness="2" />
+            <line layers="Milling" startPosition="9.000001, 133.333333" endPosition="9.000001, 114.166667" thickness="2" />
+            <line layers="Milling" startPosition="9.000001, 110.166667" endPosition="9.000001, 89" thickness="2" />
             <line layers="Milling" startPosition="9, 89" endPosition="25, 89" thickness="2" />
             <line layers="Milling" startPosition="25, 89" endPosition="25, 95.5" thickness="2" />
             <text layers="Top.Place" position="42.25, 56.5" height="1.778" thickness="0.1" value="MD-CPU04D-v1.1" />
@@ -11121,9 +11139,15 @@
             <line layers="Milling" startPosition="105, 95.5" endPosition="145, 95.5" thickness="2" />
             <line layers="Milling" startPosition="145, 95.5" endPosition="145, 89" thickness="2" />
             <line layers="Milling" startPosition="145, 89" endPosition="161, 89" thickness="2" />
-            <line layers="Milling" startPosition="161, 89" endPosition="161, 158.5" thickness="2" />
-            <line layers="Milling" startPosition="161, 158.5" endPosition="89, 158.5" thickness="2" />
-            <line layers="Milling" startPosition="89, 158.5" endPosition="89, 89" thickness="2" />
+            <line layers="Milling" startPosition="160.999999, 89" endPosition="160.999999, 110.166666" thickness="2" />
+            <line layers="Milling" startPosition="160.999999, 114.166666" endPosition="160.999999, 133.333332" thickness="2" />
+            <line layers="Milling" startPosition="160.999999, 137.333332" endPosition="160.999999, 158.5" thickness="2" />
+            <line layers="Milling" startPosition="160.999999, 158.5" endPosition="138.999999, 158.5" thickness="2" />
+            <line layers="Milling" startPosition="134.999999, 158.5" endPosition="114.999999, 158.5" thickness="2" />
+            <line layers="Milling" startPosition="110.999999, 158.5" endPosition="89, 158.5" thickness="2" />
+            <line layers="Milling" startPosition="89, 158.499999" endPosition="89.000001, 137.333333" thickness="2" />
+            <line layers="Milling" startPosition="89.000001, 133.333333" endPosition="89.000001, 114.166667" thickness="2" />
+            <line layers="Milling" startPosition="89.000001, 110.166667" endPosition="89.000001, 89" thickness="2" />
             <line layers="Milling" startPosition="89, 89" endPosition="105, 89" thickness="2" />
             <line layers="Milling" startPosition="105, 89" endPosition="105, 95.5" thickness="2" />
             <line layers="Profile" startPosition="0, 169.999999" endPosition="169.999999, 169.999999" thickness="0.1" />

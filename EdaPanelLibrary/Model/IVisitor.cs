@@ -7,7 +7,7 @@
         void Run();
 
         void Visit(Panel panel);
-        void Visit(JoinElement join);
+        void Visit(MillingElement join);
         void Visit(PlaceElement place);
     }
 }

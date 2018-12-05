@@ -12,6 +12,8 @@
 
         private static Dictionary<string, Board> boardCache = new Dictionary<string, Board>();
 
+        private Point position;
+        private Angle rotation;
         private string fileName;
         private Board board;
 
@@ -36,12 +38,13 @@
         /// <param name="position">Posicio de la placa d'ins del panell.</param>
         /// <param name="rotation">Angle de rotacio de la placa centrat en la posicio.</param>
         /// 
-        public PlaceElement(string fileName, Point position, Angle rotation):
-            base(position, rotation) {
+        public PlaceElement(string fileName, Point position, Angle rotation) { 
 
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException("fileName");
 
+            this.position = position;
+            this.rotation = rotation;
             this.fileName = fileName;
         }
 
@@ -87,6 +90,32 @@
         public Board Board {
             get {
                 return GetBoard();
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna la posicio.
+        /// </summary>
+        /// 
+        public Point Position {
+            set {
+                position = value;
+            }
+            get {
+                return position;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna la rotacio.
+        /// </summary>
+        /// 
+        public Angle Rotation {
+            set {
+                rotation = value;
+            }
+            get {
+                return rotation;
             }
         }
     }

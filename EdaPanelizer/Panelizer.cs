@@ -169,8 +169,33 @@
             Transformation transformation = new Transformation(position, rotation);
             LayerSet layerSet = new LayerSet(Layer.MillingId);
             for (int i = 0; i < route.Points.Length - 1; i++) {
-                panelBoard.AddElement(new LineElement(layerSet, transformation.ApplyTo(route.Points[i]),
-                    transformation.ApplyTo(route.Points[i + 1]), thickness, LineElement.LineCapStyle.Round));
+
+                // Calcula els punts de tall d'una recta de longitut equivalent
+                //
+                Point p1 = route.Points[i];
+                Point p2 = route.Points[i + 1];
+                double dx = p2.X - p1.X;
+                double dy = p2.Y - p1.Y;
+                int length = (int)Math.Sqrt((dx * dx) + (dy * dy));
+                int[] line = CutLine(length, 2, 4000000);
+
+                // Calcula la pendent del segment
+                //
+                double rad = Math.Atan2(dy, dx);
+
+                for (int j = 0; j < line.Length; j += 2) {
+
+                    Transformation t = new Transformation(p1, Angle.FromRadiants(rad));
+                    Point q1 = t.ApplyTo(new Point(line[j], 0));
+                    Point q2 = t.ApplyTo(new Point(line[j + 1], 0));
+
+                    panelBoard.AddElement(new LineElement(
+                        layerSet, 
+                        transformation.ApplyTo(q1),
+                        transformation.ApplyTo(q2), 
+                        thickness, 
+                        LineElement.LineCapStyle.Round));
+                }
             }
             panelBoard.AddElement(new LineElement(layerSet, transformation.ApplyTo(route.Points[route.Points.Length - 1]),
                 transformation.ApplyTo(route.Points[0]), thickness, LineElement.LineCapStyle.Round));
@@ -189,6 +214,29 @@
             panelBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Bottom), new Point(rect.Right, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
             panelBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Left, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
             panelBoard.AddElement(new LineElement(profileLayer, new Point(rect.Right, rect.Top), new Point(rect.Right, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
+        }
+
+        private int[] CutLine(int length, int numCuts, int spacing) {
+
+            int cutLength = length / (numCuts + 1);
+            if (cutLength > (spacing * 4)) {
+
+                int numPoints = (2 * numCuts) + 2;
+
+                int[] points = new int[numPoints];
+
+                int ptIdx = 0;
+                points[ptIdx++] = 0;
+                for (int cutIdx = 1; cutIdx <= numCuts; cutIdx++) {
+                    points[ptIdx++] = (cutLength * cutIdx) - (spacing / 2);
+                    points[ptIdx++] = (cutLength * cutIdx) + (spacing / 2);
+                }
+                points[ptIdx++] = length;
+
+                return points;
+            }
+            else
+                return new int[] { 0, length };
         }
 
 

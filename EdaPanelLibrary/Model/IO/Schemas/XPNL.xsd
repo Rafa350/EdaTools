@@ -52,7 +52,7 @@
             <xs:sequence>
                 <xs:choice minOccurs="0" maxOccurs="unbounded">
                     <xs:element ref="place"/>
-                    <xs:element ref="join"/>
+                    <xs:element ref="milling"/>
                 </xs:choice>
             </xs:sequence>
         </xs:complexType>
@@ -68,10 +68,13 @@
     </xs:element>
     
     <xs:element
-        name="join">
+        name="milling">
         <xs:complexType>
-            <xs:attribute name="position" use="required" type="pointType"/>
-            <xs:attribute name="rotation" use="required" type="xs:double"/>
+            <xs:attribute name="startPosition" use="required" type="pointType"/>
+            <xs:attribute name="endPosition" use="required" type="pointType"/>
+            <xs:attribute name="thickness" use="required" type="xs:double"/>
+            <xs:attribute name="margin" use="optional" type="xs:double"/>
+            <xs:attribute name="cuts" use="optional" type="xs:integer"/>
         </xs:complexType>
     </xs:element>
     

@@ -85,6 +85,11 @@
             return value.ToString();
         }
 
+        public static Angle Parse(string s) {
+
+            return Angle.FromDegrees(Int32.Parse(s));
+        }
+
         public static bool operator == (Angle a1, Angle a2) {
 
             return a1.value == a2.value;

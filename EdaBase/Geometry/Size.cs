@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Geometry {
 
     using System;
-    using System.Globalization;
 
     /// <summary>
     /// Estruxctura que representa un tamany d'una superficie rectangular.

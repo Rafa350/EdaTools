@@ -11,6 +11,12 @@
             this.end = end;
         }
 
+        public Segment(Point start, int length, Angle angle) {
+
+            this.start = start;
+            this.end = start;
+        }
+
         public Point Start {
             get {
                 return start;

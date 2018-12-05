@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Geometry {
 
     using System;
-    using System.Globalization;
 
     public readonly struct Ratio {
 
@@ -49,6 +48,11 @@
         public override string ToString() {
 
             return value.ToString();
+        }
+
+        public static Ratio Parse(string s) {
+
+            return new Ratio(Int32.Parse(s));
         }
 
         /// <summary>

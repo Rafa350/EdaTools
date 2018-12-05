@@ -1,10 +1,10 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Geometry {
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
     using System.Windows.Media;
 
     public struct Transformation {
 
+        //private Matrix m;
         private readonly Point offset;
         private readonly Angle rotation;
 
@@ -15,6 +15,10 @@
         /// <param name="rotation">Rotacio</param>
         /// 
         public Transformation(Point offset, Angle rotation) {
+
+            /*m = new Matrix();
+            m.Translate(offset.X, offset.Y);
+            m.RotateAt(rotation.Degrees / 100, offset.X, offset.Y);*/
 
             this.offset = offset;
             this.rotation = rotation;
@@ -27,6 +31,9 @@
         /// 
         public Transformation(Point offset) {
 
+            /*m = new Matrix();
+            m.Translate(offset.X, offset.Y);*/
+
             this.offset = offset;
             this.rotation = Angle.Zero;
         }
@@ -37,6 +44,9 @@
         /// <param name="rotation">Rotacio.</param>
         /// 
         public Transformation(Angle rotation) {
+
+            /*m = new Matrix();
+            m.Rotate(rotation.Degrees / 100);*/
 
             this.offset = new Point();
             this.rotation = rotation;
@@ -92,7 +102,7 @@
             }
         }
 
-        public Point Offset {
+/*        public Point Offset {
             get {
                 return offset;
             }
@@ -108,6 +118,6 @@
             get {
                 return (offset.X == 0) && (offset.Y == 0) && (rotation.IsZero);
             }
-        }
+        }*/
     }
 }

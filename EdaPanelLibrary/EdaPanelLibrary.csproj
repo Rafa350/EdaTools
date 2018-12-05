@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Elements\JoinElement.cs" />
+    <Compile Include="Model\Elements\MillingElement.cs" />
     <Compile Include="Model\Elements\PlaceElement.cs" />
     <Compile Include="Model\IO\PanelStreamReader.cs" />
     <Compile Include="Model\IO\PanelStreamWriter.cs" />

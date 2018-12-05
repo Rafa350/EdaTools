@@ -88,7 +88,7 @@
             if (!rd.IsStartTag("document"))
                 throw new InvalidDataException("Se esperaba <document>");
 
-            int version = rd.AttributeAsInteger("version");
+            version = rd.AttributeAsInteger("version");
 
             rd.NextTag();
             Panel panel = ParsePanelNode();
@@ -145,12 +145,12 @@
                         elements.Add(ParsePlaceNode());
                         break;
 
-                    case "join":
-                        elements.Add(ParseJoinNode());
+                    case "milling":
+                        elements.Add(ParseMilling());
                         break;
 
                     default:
-                        throw new InvalidDataException("Se esperaba <place> o <join>");
+                        throw new InvalidDataException("Se esperaba <place> o <milling>");
                 }
                 rd.NextTag();
             }
@@ -185,23 +185,24 @@
         }
 
         /// <summary>
-        /// Procesa un node 'join'.
+        /// Procesa un node 'milling'.
         /// </summary>
-        /// <returns>L'objecte 'JoinElement' obtingut.</returns>
+        /// <returns>L'objecte 'MillingElement' obtingut.</returns>
         /// 
-        private JoinElement ParseJoinNode() {
+        private MillingElement ParseMilling() {
 
-            if (!rd.IsStartTag("join"))
-                throw new InvalidDataException("Se esperaba <join>");
+            if (!rd.IsStartTag("milling"))
+                throw new InvalidDataException("Se esperaba <milling>");
 
-            Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
-            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation"));
+            Point startPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("startPosition"));
+            Point endPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("endPosition"));
+            int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness"));
 
             rd.NextTag();
-            if (!rd.IsEndTag("join"))
-                throw new InvalidDataException("Se esperaba </join>");
+            if (!rd.IsEndTag("milling"))
+                throw new InvalidDataException("Se esperaba </milling>");
 
-            JoinElement join = new JoinElement(position, rotation);
+            MillingElement join = new MillingElement(startPosition, endPosition, thickness);
 
             return join;
         }
