@@ -44,10 +44,10 @@
             foreach (var element in panel.Elements) {
                 if (element is PlaceElement place) {
                     AddBoard(place.Board, place.Position, place.Rotation, index++);
-                    AddBoardRoute(place.Board, place.Position, place.Rotation, 2000000);
+                    //AddBoardRoute(place.Board, place.Position, place.Rotation, 2000000);
                 }
                 else if (element is MillingElement milling)
-                    AddMilling(milling.StartPosition, milling.EndPosition, milling.Tickness, milling.Margin, milling.Cuts);
+                    AddMilling(milling.StartPosition, milling.EndPosition, milling.Tickness, milling.Spacing, milling.Margin, milling.Cuts);
             }
 
 
@@ -154,8 +154,43 @@
             }
         }
 
-        private void AddMilling(Point startPosition, Point endPosition, int thickness, int margin, int cuts) {
+        private void AddMilling(Point startPosition, Point endPosition, int thickness, int spacing, int margin, int cuts) {
 
+            // Obte el conjunt de capes
+            //
+            LayerSet layerSet = new LayerSet(Layer.MillingId);
+
+            // Obte els punts de tall d'una linia 
+            //
+            double dx = endPosition.X - startPosition.X;
+            double dy = endPosition.Y - startPosition.Y;
+            int length = (int)Math.Sqrt((dx * dx) + (dy * dy));
+            int[] points = CutLine(length, cuts, spacing, margin);
+
+            // Obte la pendent 
+            //
+            double rad = Math.Atan2(dy, dx);
+
+            // Repeteix per tots els punbt de la linia
+            //
+            for (int j = 0; j < points.Length; j += 2) {
+
+                // Transforma els punts a la posicio real
+                //
+                Transformation t = new Transformation(startPosition, Angle.FromRadiants(rad));
+                Point q1 = t.ApplyTo(new Point(points[j], 0));
+                Point q2 = t.ApplyTo(new Point(points[j + 1], 0));
+
+                // Afegeix la linia a la placa
+                //
+                panelBoard.AddElement(
+                    new LineElement(
+                        layerSet,
+                        q1,
+                        q2,
+                        thickness,
+                        LineElement.LineCapStyle.Round));
+            }
         }
 
         /// <summary>
@@ -182,7 +217,7 @@
                 double dx = p2.X - p1.X;
                 double dy = p2.Y - p1.Y;
                 int length = (int)Math.Sqrt((dx * dx) + (dy * dy));
-                int[] line = CutLine(length, 2, 4000000);
+                int[] line = CutLine(length, 2, 4000000, 0);
 
                 // Calcula la pendent del segment
                 //
@@ -221,27 +256,53 @@
             panelBoard.AddElement(new LineElement(profileLayer, new Point(rect.Right, rect.Top), new Point(rect.Right, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
         }
 
-        private int[] CutLine(int length, int numCuts, int spacing) {
+        private int[] CutLine(int length, int numCuts, int spacing, int margin) {
 
-            int cutLength = length / (numCuts + 1);
-            if (cutLength > (spacing * 4)) {
+            int s = spacing / 2;
 
-                int numPoints = (2 * numCuts) + 2;
+            if (numCuts == 1)
+                return new int[] {
+                    0,
+                    length };
 
-                int[] points = new int[numPoints];
+            else if (numCuts == 2)
+                return new int[] {
+                    0,
+                    (length / 2) - s,
+                    (length / 2) + s,
+                    length };
 
-                int ptIdx = 0;
-                points[ptIdx++] = 0;
-                for (int cutIdx = 1; cutIdx <= numCuts; cutIdx++) {
-                    points[ptIdx++] = (cutLength * cutIdx) - (spacing / 2);
-                    points[ptIdx++] = (cutLength * cutIdx) + (spacing / 2);
-                }
-                points[ptIdx++] = length;
-
-                return points;
+            else if (numCuts == 3) {
+                return new int[] {
+                    0,
+                    margin - s,
+                    margin + s,
+                    length - margin - s,
+                    length - margin + s,
+                    length
+                };
             }
-            else
-                return new int[] { 0, length };
+            else {
+                int cutLength = length / (numCuts + 1);
+                if (cutLength > (spacing * 4)) {
+
+                    int numPoints = (2 * numCuts) + 2;
+
+                    int[] points = new int[numPoints];
+
+                    int ptIdx = 0;
+                    points[ptIdx++] = 0;
+                    for (int cutIdx = 1; cutIdx <= numCuts; cutIdx++) {
+                        points[ptIdx++] = (cutLength * cutIdx) - s;
+                        points[ptIdx++] = (cutLength * cutIdx) + s;
+                    }
+                    points[ptIdx++] = length;
+
+                    return points;
+                }
+                else
+                    return new int[] { 0, length };
+            }
         }
 
 

@@ -37,12 +37,14 @@
         /// 
         public override void Visit(Board board) {
 
-            foreach (var part in board.Parts)
-                part.AcceptVisitor(this);
+            if (board.HasParts)
+                foreach (var part in board.Parts)
+                    part.AcceptVisitor(this);
 
-            foreach (var element in board.Elements)
-                if ((layer == null) || element.LayerSet.Contains(layer.Id))
-                    element.AcceptVisitor(this);
+            if (board.HasElements)
+                foreach (var element in board.Elements)
+                    if ((layer == null) || element.LayerSet.Contains(layer.Id))
+                        element.AcceptVisitor(this);
         }
 
         /// <summary>

@@ -2,11 +2,15 @@
 <document version="100" documentType="panelizerProject" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/XPNL.xsd">
     <panel output="panel3.xbrd" size="170, 170">
         <elements>
-            <place board="board3.xbrd" position="10, 10" rotation="0"/>
+            <!--<place board="board3.xbrd" position="10, 10" rotation="0"/>
             <place board="board3.xbrd" position="90, 10" rotation="0"/>
             <place board="board3.xbrd" position="10, 90" rotation="0"/>
-            <place board="board3.xbrd" position="90, 90" rotation="0"/>
-            <milling startPosition="0, 5" endPosition="150, 0" tickness="2" margin="15"/>
+            <place board="board3.xbrd" position="90, 90" rotation="0"/>-->
+            <milling startPosition="0, 20" endPosition="170, 20" thickness="2" spacing="7" margin="15" cuts="1"/>
+            <milling startPosition="0, 40" endPosition="170, 40" thickness="2" spacing="7" margin="15" cuts="2"/>
+            <milling startPosition="0, 60" endPosition="170, 60" thickness="2" spacing="7" margin="15" cuts="3"/>
+            <milling startPosition="0, 80" endPosition="170, 80" thickness="2" spacing="7" margin="15" cuts="4"/>
+            <milling startPosition="0, 100" endPosition="170, 100" thickness="2" spacing="7" margin="15" cuts="5"/>
         </elements>
     </panel>
 </document>
