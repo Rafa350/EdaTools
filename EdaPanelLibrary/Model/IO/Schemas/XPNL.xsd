@@ -73,9 +73,12 @@
             <xs:attribute name="startPosition" use="required" type="pointType"/>
             <xs:attribute name="endPosition" use="required" type="pointType"/>
             <xs:attribute name="thickness" use="required" type="xs:double"/>
-            <xs:attribute name="spacing" use="required" type="xs:double"/>
+            <xs:attribute name="cutSpacing" use="required" type="xs:double"/>
+            <xs:attribute name="holeSpacing" use="required" type="xs:double"/>
+            <xs:attribute name="holeDiameter" use="required" type="xs:double"/>
             <xs:attribute name="margin" use="optional" type="xs:double"/>
             <xs:attribute name="cuts" use="optional" type="xs:integer"/>
+            <xs:attribute name="holes" use="optional" type="xs:integer"/>
         </xs:complexType>
     </xs:element>
     

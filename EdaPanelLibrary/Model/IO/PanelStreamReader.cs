@@ -197,19 +197,25 @@
             Point startPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("startPosition"));
             Point endPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("endPosition"));
             int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness"));
-            int spacing = XmlTypeParser.ParseNumber(rd.AttributeAsString("spacing"));
+            int cutSpacing = XmlTypeParser.ParseNumber(rd.AttributeAsString("cutSpacing"));
+            int holeSpacing = XmlTypeParser.ParseNumber(rd.AttributeAsString("holeSpacing"));
+            int holeDiameter = XmlTypeParser.ParseNumber(rd.AttributeAsString("holeDiameter"));
             int margin = rd.AttributeExists("margin") ?
                 XmlTypeParser.ParseNumber(rd.AttributeAsString("margin")) :
                 0;
             int cuts = rd.AttributeExists("cuts") ?
                 rd.AttributeAsInteger("cuts") :
                 1;
+            int holes = rd.AttributeExists("holes") ?
+                rd.AttributeAsInteger("holes") :
+                5;
 
             rd.NextTag();
             if (!rd.IsEndTag("milling"))
                 throw new InvalidDataException("Se esperaba </milling>");
 
-            return new MillingElement(startPosition, endPosition, thickness, spacing, margin, cuts);
+            return new MillingElement(startPosition, endPosition, thickness, margin, cuts, cutSpacing, 
+                holes, holeDiameter, holeSpacing);
         }
     }
 }
