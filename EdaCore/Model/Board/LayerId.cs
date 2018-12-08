@@ -96,6 +96,9 @@
         /// 
         public static LayerId Parse(string s) {
 
+            if (String.IsNullOrEmpty(s))
+                throw new ArgumentNullException("s");
+
             try {
                 if (s.Contains(".")) {
                     string[] ss = s.Split('.');

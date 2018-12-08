@@ -49,6 +49,9 @@
         /// 
         public LayerSet(params LayerId[] elements) {
 
+            if (elements == null)
+                throw new ArgumentNullException("elements");
+
             storage = new LayerId[elements.Length];
             elements.CopyTo(storage, 0);
         }
@@ -60,8 +63,10 @@
         /// 
         public LayerSet(IEnumerable<LayerId> elements) {
 
-            ICollection<LayerId> collection = elements as ICollection<LayerId>;
-            if (collection == null) {
+            if (elements == null)
+                throw new ArgumentNullException("elements");
+
+            if (!(elements is ICollection<LayerId> collection)) {
                 List<LayerId> e = new List<LayerId>(elements);
                 storage = e.ToArray();
             }
@@ -149,10 +154,13 @@
 
         public static LayerSet Parse(string s) {
 
+            if (String.IsNullOrEmpty(s))
+                throw new ArgumentNullException("s");
+
             string[] ss = s.Split(',');
             LayerId[] elements = new LayerId[ss.Length];
             for (int i = 0; i < ss.Length; i++)
-                elements[i] = LayerId.Parse(ss[i]);
+                elements[i] = LayerId.Parse(ss[i].Trim());
             return new LayerSet(elements);
         }
 

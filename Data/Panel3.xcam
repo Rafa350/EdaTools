@@ -104,10 +104,10 @@
             <!-- Fresat no platejat capes 1-2 -->
             <target name="NonPlated.1.2.Route" output="panel3_NonPlated$1$2$NPTH$Route.gbr" generator="gerber-drill">
                 <layers>
-                    <layer name="Holes"/>
+                    <layer name="Milling"/>
                 </layers>
                 <options>
-                    <option name="drillType" value="nonPlatedDrill"/>
+                    <option name="drillType" value="nonPlatedRoute"/>
                     <option name="topLevel" value="1"/>
                     <option name="bottomLevel" value="2"/>
                 </options>

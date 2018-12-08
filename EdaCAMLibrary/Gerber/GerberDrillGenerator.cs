@@ -60,6 +60,7 @@
                 // Prepara el generador de gerbers
                 //
                 GerberBuilder gb = new GerberBuilder(writer);
+                gb.SetTransformation(Target.Position, Target.Rotation);
 
                 // Genera la capcelera del fitxer
                 //
@@ -204,6 +205,26 @@
             }
 
             /// <summary>
+            /// Visita un element de tipus 'LineElement'.
+            /// </summary>
+            /// <param name="line">L'element a visitar.</param>
+            /// 
+            public override void Visit(LineElement line) {
+
+                apertures.DefineCircleAperture(line.Thickness);
+            }
+
+            /// <summary>
+            /// Visuita un element de tipus 'ArcElement'
+            /// </summary>
+            /// <param name="arc">L'element a visitar.</param>
+            /// 
+            public override void Visit(ArcElement arc) {
+
+                apertures.DefineCircleAperture(arc.Thickness);
+            }
+
+            /// <summary>
             /// Visita un element de tipus 'HoleElement'
             /// </summary>
             /// <param name="hole">L'element a visitar.</param>
@@ -255,6 +276,54 @@
 
                 this.gb = gb;
                 this.apertures = apertures;
+            }
+
+            /// <summary>
+            /// Visita un object 'ArcElement'
+            /// </summary>
+            /// <param name="arc">L'element a visitar.</param>
+            /// 
+            public override void Visit(ArcElement arc) {
+
+                Point startPosition = arc.StartPosition;
+                Point endPosition = arc.EndPosition;
+                Point center = arc.Center;
+                if (Part != null) {
+                    Transformation t = Part.GetLocalTransformation();
+                    startPosition = t.ApplyTo(startPosition);
+                    endPosition = t.ApplyTo(endPosition);
+                    center = t.ApplyTo(center);
+                }
+
+                Aperture ap = apertures.GetCircleAperture(arc.Thickness);
+
+                gb.SelectAperture(ap);
+                gb.MoveTo(startPosition);
+                gb.ArcTo(endPosition.X, endPosition.Y,
+                    center.X - startPosition.X, center.Y - startPosition.Y,
+                    arc.Angle.Degrees < 0 ? ArcDirection.CW : ArcDirection.CCW);
+            }
+
+            /// <summary>
+            /// Visita un object 'LineElement'
+            /// </summary>
+            /// <param name="line">L'element a visitar.</param>
+            /// 
+            public override void Visit(LineElement line) {
+
+                Point startPosition = line.StartPosition;
+                Point endPosition = line.EndPosition;
+                if (Part != null) {
+                    Transformation t = Part.GetLocalTransformation();
+                    startPosition = t.ApplyTo(startPosition);
+                    endPosition = t.ApplyTo(endPosition);
+                }
+
+                Aperture ap = apertures.GetCircleAperture(line.Thickness);
+
+                gb.SelectAperture(ap);
+                gb.MoveTo(startPosition);
+                gb.LineTo(endPosition);
             }
 
             /// <summary>
