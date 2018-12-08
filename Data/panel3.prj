@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <ItemGroup>
+        <ZipSource Include="$(MSBuildProjectName)_Copper$L1.gbr"/>
+        <ZipSource Include="$(MSBuildProjectName)_Copper$L2.gbr"/>
+        <ZipSource Include="$(MSBuildProjectName)_Legend$Top.gbr"/>
+        <ZipSource Include="$(MSBuildProjectName)_Legend$Bottom.gbr"/>
+        <ZipSource Include="$(MSBuildProjectName)_Soldermask$Top.gbr"/>
+        <ZipSource Include="$(MSBuildProjectName)_Soldermask$Bottom.gbr"/>
+        <ZipSource Include="$(MSBuildProjectName)_NonPlated$1$2$NPTH$Drill.gbr"/>
+        <ZipSource Include="$(MSBuildProjectName)_NonPlated$1$2$NPTH$Route.gbr"/>
+        <ZipSource Include="$(MSBuildProjectName)_Plated$1$2$PTH$Drill.gbr"/>
+        <ZipSource Include="$(MSBuildProjectName).ipc"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <CamSource Include="$(MSBuildProjectName).xbrd">
+            <CamTarget>Copper.1</CamTarget>
+        </CamSource>
+        <CamSource Include="$(MSBuildProjectName).xbrd">
+            <CamTarget>Copper.2</CamTarget>
+        </CamSource>
+        <CamSource Include="$(MSBuildProjectName).xbrd">
+            <CamTarget>Legend.Top</CamTarget>
+        </CamSource>
+        <CamSource Include="$(MSBuildProjectName).xbrd">
+            <CamTarget>Legend.Bottom</CamTarget>
+        </CamSource>
+        <CamSource Include="$(MSBuildProjectName).xbrd">
+            <CamTarget>Soldermask.Top</CamTarget>
+        </CamSource>
+        <CamSource Include="$(MSBuildProjectName).xbrd">
+            <CamTarget>Soldermask.Bottom</CamTarget>
+        </CamSource>
+        <CamSource Include="$(MSBuildProjectName).xbrd">
+            <CamTarget>NonPlated.1.2.Drill</CamTarget>
+        </CamSource>
+        <CamSource Include="$(MSBuildProjectName).xbrd">
+            <CamTarget>NonPlated.1.2.Route</CamTarget>
+        </CamSource>
+        <CamSource Include="$(MSBuildProjectName).xbrd">
+            <CamTarget>Plated.1.2.Drill</CamTarget>
+        </CamSource>
+        <CamSource Include="$(MSBuildProjectName).xbrd">
+            <CamTarget>IPC-D356</CamTarget>
+        </CamSource>
+    </ItemGroup>
+
+    <Target 
+        Name="MakeZip" 
+        Inputs="@(ZipSource)" 
+        Outputs="$(MSBuildProjectName).zip"
+        DependsOnTargets="Cam">
+        <Exec Command="&quot;c:\program files\winrar\rar.exe&quot; a $(MSBuildProjectName).zip @(ZipSource, ' ')"/>
+    </Target>
+    
+    <Target 
+        Name="Cam" 
+        Inputs="$(MSBuildProjectName).xcam;$(MSBuildProjectName).xbrd" 
+        Outputs="@(ZipSource)">
+        <Exec Command="..\bin\Debug\EdaCamTool.exe $(MSBuildProjectName).xcam /t:%(CamSource.CamTarget)"/>
+    </Target>
+
+</Project>

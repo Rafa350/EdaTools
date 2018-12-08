@@ -57,7 +57,7 @@
             </target>
 
             <!-- Capa silk bottom -->
-            <target name="Legent.Bottom" output="panel3_Legend$Bottom.gbr" generator="gerber-image">
+            <target name="Legend.Bottom" output="panel3_Legend$Bottom.gbr" generator="gerber-image">
                 <layers>
                     <layer name="Bottom.Place"/>
                     <layer name="Bottom.Names"/>
