@@ -7,21 +7,36 @@
     public sealed class Target {
 
         private readonly string name;
-        private readonly string fileName;
-        private readonly string generatorName;
-        private readonly IEnumerable<string> layerNames;
+        private string fileName;
+        private string generatorName;
+        private IEnumerable<string> layerNames;
         private Point position;
         private Angle rotation;
         private Dictionary<string, TargetOption> options;
 
+        public Target(string name) {
+
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            this.name = name;
+        }
+
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
+        /// <param name="name">Nom del desti.</param>
         /// <param name="fileName">Nom del fitxer.</param>
         /// <param name="generatorName">Nom del generador.</param>
+        /// <param name="position">Posicio de la placa.</param>
+        /// <param name="rotation">Rotacio de la placa.</param>
         /// <param name="layerNames">Llista de noms de capes a procesar.</param>
+        /// <param name="options">Llista d'opcions</param>
         /// 
         public Target(string name, string fileName, string generatorName, Point position, Angle rotation, IEnumerable<string> layerNames = null, IEnumerable<TargetOption> options = null) {
+
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
 
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException("fileName");
@@ -94,6 +109,10 @@
                 return null;
         }
 
+        /// <summary>
+        /// Obte el nom del target.
+        /// </summary>
+        /// 
         public string Name {
             get {
                 return name;
@@ -101,22 +120,28 @@
         }
 
         /// <summary>
-        /// Obte el nom del fitxer de sortida.
+        /// Obte o asigna el nom del fitxer de sortida.
         /// </summary>
         /// 
         public string FileName {
             get {
                 return fileName;
             }
+            set {
+                fileName = value;
+            }
         }
 
         /// <summary>
-        /// Obte el nom del generador.
+        /// Obte o asigna el nom del generador.
         /// </summary>
         /// 
         public string GeneratorName {
             get {
                 return generatorName;
+            }
+            set {
+                generatorName = value;
             }
         }
 
@@ -124,11 +149,17 @@
             get {
                 return position;
             }
+            set {
+                position = value;
+            }
         }
 
         public Angle Rotation {
             get {
                 return rotation;
+            }
+            set {
+                rotation = value;
             }
         }
 

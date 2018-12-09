@@ -55,7 +55,8 @@
                 throw new ArgumentNullException("part");
 
             if ((parts == null) || !parts.ContainsKey(part.Name))
-                throw new InvalidOperationException("El componente no pertenece a la placa.");
+                throw new InvalidOperationException(
+                    String.Format("El componente '{0}', no se encontro en la placa.", part.Name));
 
             parts.Remove(part.Name);
             if (parts.Count == 0)
@@ -92,6 +93,16 @@
         public bool HasParts {
             get {
                 return parts != null;
+            }
+        }
+
+        /// <summary>
+        /// Obte un enumerador pels noms dels components.
+        /// </summary>
+        /// 
+        public IEnumerable<string> PartNames {
+            get {
+                return parts?.Keys;
             }
         }
 

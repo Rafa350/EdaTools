@@ -2,6 +2,7 @@
 
     using System;
     using System.Text;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Objecte que representa el identificador unic d'una capa.
@@ -9,8 +10,16 @@
     /// 
     public readonly struct LayerId {
 
+        private static readonly Regex rs;
+        private static readonly Regex rc;
         private readonly string name;
         private readonly BoardSide side;
+
+        static LayerId() {
+
+            rs = new Regex(@"^[a-z0-9]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            rc = new Regex(@"^[a-z0-9]+(\.[a-z0-9]+)?$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        }
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -22,20 +31,18 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
-            if (name.IndexOf('.') >= 0) {
+            if (!rc.IsMatch(name))
+                throw new InvalidOperationException(
+                    String.Format("El formato del nombre '{0}', es incorrecto", name));
+
+            if (name.Contains(".")) {
                 string[] s = name.Split('.');
-                if (s.Length == 1) {
-                    this.name = s[0];
-                    this.side = BoardSide.None;
-                }
-                else {
-                    this.name = s[1];
-                    this.side = (BoardSide)Enum.Parse(typeof(BoardSide), s[0]);
-                }
+                this.name = s[1];
+                side = (BoardSide)Enum.Parse(typeof(BoardSide), s[0], true);
             }
             else {
                 this.name = name;
-                this.side = BoardSide.None;
+                side = BoardSide.None;
             }
         }
 
@@ -49,6 +56,10 @@
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
+
+            if (!rs.IsMatch(name))
+                throw new InvalidOperationException(
+                    String.Format("El formato del nombre '{0}', es incorrecto", name));
 
             this.name = name;
             this.side = side;
@@ -99,20 +110,17 @@
             if (String.IsNullOrEmpty(s))
                 throw new ArgumentNullException("s");
 
-            try {
-                if (s.Contains(".")) {
-                    string[] ss = s.Split('.');
-                    BoardSide side = (BoardSide)Enum.Parse(typeof(BoardSide), ss[0]);
-                    return new LayerId(ss[1], side);
-                }
-                else
-                    return new LayerId(s, BoardSide.None);
-            }
-            catch (Exception ex) {
+            if (!rc.IsMatch(s))
                 throw new InvalidOperationException(
-                    String.Format("No se pudo convertir el texto '{0}' a 'LayerId'.", s), 
-                    ex);
+                    String.Format("El formato de entrada '{0}', es incorrecto", s));
+
+            if (s.Contains(".")) {
+                string[] ss = s.Split('.');
+                BoardSide side = (BoardSide)Enum.Parse(typeof(BoardSide), ss[0], true);
+                return new LayerId(ss[1], side);
             }
+            else
+                return new LayerId(s, BoardSide.None);
         }
 
         /// <summary>
