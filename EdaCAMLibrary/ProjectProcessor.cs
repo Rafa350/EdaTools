@@ -1,7 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam {
 
-    using MikroPic.EdaTools.v1.Cam.Gerber;
-    using MikroPic.EdaTools.v1.Cam.Ipcd356;
+    using MikroPic.EdaTools.v1.Cam.Generators;
+    using MikroPic.EdaTools.v1.Cam.Generators.Gerber;
+    using MikroPic.EdaTools.v1.Cam.Generators.Ipcd356;
     using MikroPic.EdaTools.v1.Cam.Model;
     using MikroPic.EdaTools.v1.Cam.Model.IO;
     using MikroPic.EdaTools.v1.Core.Model.Board;

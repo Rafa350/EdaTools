@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Ipcd356.Builder {
+﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356.Builder {
 
     using MikroPic.EdaTools.v1.Base.Geometry;
     using System;

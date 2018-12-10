@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Panel.Model.Elements {
+﻿namespace MikroPic.EdaTools.v1.Panel.Model.Items {
 
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Core.Model.Board;
@@ -8,7 +8,7 @@
     using System.Collections.Generic;
     using System.IO;
 
-    public sealed class PlaceElement: PanelElement {
+    public sealed class PcbItem: Model.ProjectItem {
 
         private static Dictionary<string, Board> boardCache = new Dictionary<string, Board>();
 
@@ -22,7 +22,7 @@
         /// </summary>
         /// <param name="fileName">Nom del fitxer de la placa.</param>
         /// 
-        public PlaceElement(string fileName):
+        public PcbItem(string fileName):
             base() { 
             
             if (String.IsNullOrEmpty(fileName))
@@ -38,7 +38,7 @@
         /// <param name="position">Posicio de la placa d'ins del panell.</param>
         /// <param name="rotation">Angle de rotacio de la placa centrat en la posicio.</param>
         /// 
-        public PlaceElement(string fileName, Point position, Angle rotation) { 
+        public PcbItem(string fileName, Point position, Angle rotation) { 
 
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException("fileName");

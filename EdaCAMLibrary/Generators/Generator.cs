@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Cam {
+﻿namespace MikroPic.EdaTools.v1.Cam.Generators {
 
     using MikroPic.EdaTools.v1.Cam.Model;
     using MikroPic.EdaTools.v1.Core.Model.Board;

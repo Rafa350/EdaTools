@@ -1,9 +1,9 @@
-﻿namespace MikroPic.EdaTools.v1.Panel.Model.Elements {
+﻿namespace MikroPic.EdaTools.v1.Panel.Model.Items {
 
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Panel.Model;
 
-    public sealed class MillingElement: PanelElement {
+    public sealed class CutItem: ProjectItem {
 
         private Point startPosition;
         private Point endPosition;
@@ -28,7 +28,7 @@
         /// <param name="holeDiameter">Diametre dels forats.</param>
         /// <param name="holeSpacing">Espai entre forats.</param>
         /// 
-        public MillingElement(Point startPosition, Point endPosition, int thickness, int margin, int cuts, int cutSpacing, int holes, int holeDiameter, int holeSpacing) {
+        public CutItem(Point startPosition, Point endPosition, int thickness, int margin, int cuts, int cutSpacing, int holes, int holeDiameter, int holeSpacing) {
 
             this.startPosition = startPosition;
             this.endPosition = endPosition;

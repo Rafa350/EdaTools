@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Builder {
+﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
 
     /// <summary>
     /// Clase que representa una aperture gerber

@@ -16,7 +16,7 @@
         private class Visitor: DefaultVisitor {
 
             private readonly XmlWriter writer;
-            private readonly Panel panel;
+            private readonly Project panel;
 
             /// <summary>
             /// Constructor del objecte. Visita els objectes d'un panel,
@@ -25,7 +25,7 @@
             /// <param name="panel">El panel a visitar.</param>
             /// <param name="writer">Objecte per escriure el stream de sortida.</param>
             /// 
-            public Visitor(Panel panel, XmlWriter writer) {
+            public Visitor(Project panel, XmlWriter writer) {
 
                 this.panel = panel;
                 this.writer = writer;
@@ -45,13 +45,13 @@
             /// </summary>
             /// <param name="board">La placa a visitar.</param>
             /// 
-            public override void Visit(Panel panel) {
+            public override void Visit(Project panel) {
 
                 writer.WriteStartElement("panel");
 
-                if (panel.HasElements) {
+                if (panel.HasItems) {
                     writer.WriteStartElement("elements");
-                    foreach (var element in panel.Elements)
+                    foreach (var element in panel.Items)
                         element.AcceptVisitor(this);
                     writer.WriteEndElement();
                 }
@@ -81,7 +81,7 @@
         /// </summary>
         /// <param name="board">La placa.</param>
         /// 
-        public void Write(Panel panel) {
+        public void Write(Project panel) {
 
             if (panel == null)
                 throw new ArgumentNullException("panel");

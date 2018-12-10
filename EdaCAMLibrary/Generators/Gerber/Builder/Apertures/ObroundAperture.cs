@@ -1,13 +1,13 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Gerber.Builder.Apertures {
+﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
 
     using System;
     using System.Globalization;
     using System.Text;
 
     /// <summary>
-    /// Clase que representa una aperture rectangular.
+    /// Clase que representa una aperture eliptica.
     /// </summary>
-    public sealed class RectangleAperture : Aperture {
+    public sealed class ObroundAperture : Aperture {
 
         private readonly int width;
         private readonly int height;
@@ -22,7 +22,7 @@
         /// <param name="height">Alçada.</param>
         /// <param name="drill">Diametre del forat.</param>
         /// 
-        public RectangleAperture(int id, object tag, int width, int height, int drill = 0) :
+        public ObroundAperture(int id, object tag, int width, int height, int drill = 0) :
             base(id, tag) {
 
             if (width <= 0)
@@ -49,8 +49,9 @@
             StringBuilder sb = new StringBuilder();
             sb.Append("%ADD");
             sb.AppendFormat("{0}", Id);
-            sb.Append("R,");
-            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}X{1}", width / 1000000.0, height / 1000000.0);
+            sb.Append("O,");
+            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", width / 1000000.0);
+            sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", height / 1000000.0);
             if (drill > 0)
                 sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", drill / 1000000.0);
             sb.Append("*%");
@@ -59,7 +60,7 @@
         }
 
         /// <summary>
-        /// Obte l'asmplada.
+        /// Obte l'amplada.
         /// </summary>
         /// 
         public int Width {
@@ -71,7 +72,7 @@
         /// <summary>
         /// Obte l'alçada.
         /// </summary>
-        /// 
+        ///
         public int Height {
             get {
                 return height;

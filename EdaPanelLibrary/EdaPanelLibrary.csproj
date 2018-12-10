@@ -42,14 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Elements\MillingElement.cs" />
-    <Compile Include="Model\Elements\PlaceElement.cs" />
+    <Compile Include="Model\Items\CutItem.cs" />
+    <Compile Include="Model\Items\PcbItem.cs" />
     <Compile Include="Model\IO\PanelStreamReader.cs" />
     <Compile Include="Model\IO\PanelStreamWriter.cs" />
     <Compile Include="Model\IVisitable.cs" />
     <Compile Include="Model\IVisitor.cs" />
-    <Compile Include="Model\Panel.cs" />
-    <Compile Include="Model\PanelElement.cs" />
+    <Compile Include="Model\Project.cs" />
+    <Compile Include="Model\ProjectItem.cs" />
     <Compile Include="Model\Visitors\DefaultVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

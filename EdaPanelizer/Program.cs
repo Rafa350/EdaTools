@@ -3,7 +3,7 @@
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.IO;
     using MikroPic.EdaTools.v1.Panel.Model;
-    using MikroPic.EdaTools.v1.Panel.Model.Elements;
+    using MikroPic.EdaTools.v1.Panel.Model.Items;
     using MikroPic.EdaTools.v1.Panel.Model.IO;
     using System.IO;
 
@@ -11,23 +11,23 @@
 
         static void Main(string[] args) {
 
-            Panel panel = LoadPanel(@"..\..\Data\Panel3.xpnl");
+            Project panel = LoadPanel(@"..\..\Data\Panel3.xpnl");
             Board board = GenerateBoard(panel);
             SaveBoard(board, @"..\..\Data\panel3.xbrd");
         }
 
-        private static Panel LoadPanel(string fileName) {
+        private static Project LoadPanel(string fileName) {
 
             string folder = Path.GetDirectoryName(fileName);
 
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
                 PanelStreamReader reader = new PanelStreamReader(stream);
 
-                Panel panel = reader.Read();
+                Project panel = reader.Read();
 
-                foreach (var element in panel.Elements) {
-                    if (element is PlaceElement) {
-                        PlaceElement place = (PlaceElement)element;
+                foreach (var element in panel.Items) {
+                    if (element is PcbItem) {
+                        PcbItem place = (PcbItem)element;
                         place.FileName = Path.Combine(folder, place.FileName);
                     }
                 }
@@ -44,7 +44,7 @@
             }
         }
 
-        private static Board GenerateBoard(Panel panel) {
+        private static Board GenerateBoard(Project panel) {
 
             Board board = new Board();
 

@@ -200,7 +200,7 @@
         public IEnumerable<string> OptionNames {
             get {
                 if (options == null)
-                    throw new InvalidOperationException("No contiene optiones.");
+                    throw new InvalidOperationException("No contiene opciones.");
 
                 return options.Keys;
             }
@@ -213,7 +213,7 @@
         public IEnumerable<TargetOption> Options {
             get {
                 if (options == null)
-                    throw new InvalidOperationException("No contiene optiones.");
+                    throw new InvalidOperationException("No contiene opciones.");
 
                 return options.Values;
             }

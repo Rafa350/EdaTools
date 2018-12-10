@@ -1,7 +1,7 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Gerber {
+﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
     using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Cam.Gerber.Builder;
+    using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
     using MikroPic.EdaTools.v1.Cam.Model;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;

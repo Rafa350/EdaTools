@@ -3,7 +3,7 @@
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Xml;
     using MikroPic.EdaTools.v1.Panel.Model;
-    using MikroPic.EdaTools.v1.Panel.Model.Elements;
+    using MikroPic.EdaTools.v1.Panel.Model.Items;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -70,20 +70,20 @@
         /// </summary>
         /// <returns>El panell.</returns>
         /// 
-        public Panel Read() {
+        public Project Read() {
 
             rd.NextTag();
-            Panel panel = ParseDocumentNode();
+            Project project = ParseDocumentNode();
 
-            return panel;
+            return project;
         }
 
         /// <summary>
         /// Procesa el node 'document'
         /// </summary>
-        /// <returns>L'objecte 'Panel' obtingut.</returns>
+        /// <returns>L'objecte 'Project' obtingut.</returns>
         /// 
-        private Panel ParseDocumentNode() {
+        private Project ParseDocumentNode() {
 
             if (!rd.IsStartTag("document"))
                 throw new InvalidDataException("Se esperaba <document>");
@@ -91,21 +91,21 @@
             version = rd.AttributeAsInteger("version");
 
             rd.NextTag();
-            Panel panel = ParsePanelNode();
+            Project project = ParsePanelNode();
 
             rd.NextTag();
             if (!rd.IsEndTag("document"))
                 throw new InvalidDataException("Se esperaba </document>");
 
-            return panel;
+            return project;
         }
 
         /// <summary>
         /// Procesa el node 'panel'
         /// </summary>
-        /// <returns>L'objecte 'Panel' obtingut.</returns>
+        /// <returns>L'objecte 'Project' obtingut.</returns>
         /// 
-        private Panel ParsePanelNode() {
+        private Project ParsePanelNode() {
 
             if (!rd.IsStartTag("panel"))
                 throw new InvalidDataException("Se esperaba <panel>");
@@ -113,40 +113,40 @@
             Size size = XmlTypeParser.ParseSize(rd.AttributeAsString("size"));
 
             rd.NextTag();
-            IEnumerable<PanelElement> elements = ParsePanelElementsNode();
+            IEnumerable<ProjectItem> elements = ParsePanelElementsNode();
 
             rd.NextTag();
             if (!rd.IsEndTag("panel"))
                 throw new InvalidDataException("Se esperaba </panel>");
 
-            Panel panel = new Panel();
-            panel.Size = size;
-            panel.AddElements(elements);
+            Project project = new Project();
+            project.Size = size;
+            project.AddElements(elements);
 
-            return panel;
+            return project;
         }
 
         /// <summary>
         /// Procesa el node 'elements'
         /// </summary>
-        /// <returns>La coleccio d'objectes 'PanelElement' obtinguda.</returns>
+        /// <returns>La coleccio d'objectes 'ProjectItem' obtinguda.</returns>
         /// 
-        private IEnumerable<PanelElement> ParsePanelElementsNode() {
+        private IEnumerable<ProjectItem> ParsePanelElementsNode() {
 
             if (!rd.IsStartTag("elements"))
                 throw new InvalidDataException("Se esperaba <elements>");
 
-            List<PanelElement> elements = new List<PanelElement>();
+            List<ProjectItem> items = new List<ProjectItem>();
 
             rd.NextTag();
             while (rd.IsStart) {
                 switch (rd.TagName) {
                     case "place":
-                        elements.Add(ParsePlaceNode());
+                        items.Add(ParsePlaceNode());
                         break;
 
                     case "milling":
-                        elements.Add(ParseMilling());
+                        items.Add(ParseMilling());
                         break;
 
                     default:
@@ -158,15 +158,15 @@
             if (!rd.IsEndTag("elements"))
                 throw new InvalidDataException("Se esperaba </elements>");
 
-            return elements;
+            return items;
         }
 
         /// <summary>
         /// Procesa el node 'place'
         /// </summary>
-        /// <returns>L'objecte 'PlaceElement' obtingut.</returns>
+        /// <returns>L'objecte 'PcbItem' obtingut.</returns>
         /// 
-        private PlaceElement ParsePlaceNode() {
+        private PcbItem ParsePlaceNode() {
 
             if (!rd.IsStartTag("place"))
                 throw new InvalidDataException("Se esperaba <place>");
@@ -179,17 +179,15 @@
             if (!rd.IsEndTag("place"))
                 throw new InvalidDataException("Se esperaba </place>");
 
-            PlaceElement place = new PlaceElement(fileName, position, rotation);
-
-            return place;
+            return new PcbItem(fileName, position, rotation);
         }
 
         /// <summary>
         /// Procesa un node 'milling'.
         /// </summary>
-        /// <returns>L'objecte 'MillingElement' obtingut.</returns>
+        /// <returns>L'objecte 'CutItem' obtingut.</returns>
         /// 
-        private MillingElement ParseMilling() {
+        private CutItem ParseMilling() {
 
             if (!rd.IsStartTag("milling"))
                 throw new InvalidDataException("Se esperaba <milling>");
@@ -214,7 +212,7 @@
             if (!rd.IsEndTag("milling"))
                 throw new InvalidDataException("Se esperaba </milling>");
 
-            return new MillingElement(startPosition, endPosition, thickness, margin, cuts, cutSpacing, 
+            return new CutItem(startPosition, endPosition, thickness, margin, cuts, cutSpacing, 
                 holes, holeDiameter, holeSpacing);
         }
     }

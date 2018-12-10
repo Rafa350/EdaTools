@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Cam {
+﻿namespace MikroPic.EdaTools.v1.Cam.Generators {
 
     using System;
     using System.Collections.Generic;

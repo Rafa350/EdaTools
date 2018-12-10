@@ -74,7 +74,7 @@
         /// <summary>
         /// Procesa el node 'document'
         /// </summary>
-        /// <returns>L'objectr 'Project' obtingut.</returns>
+        /// <returns>L'objecte 'Project' obtingut.</returns>
         /// 
         private Project ParseDocumentNode() {
 
