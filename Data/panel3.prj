@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+    <PropertyGroup>
+        <EdaCAMTool>..\bin\Debug\EdaCamTool.exe</EdaCAMTool>
+        <ZipTool>c:\program files\winrar\rar.exe</ZipTool>
+    </PropertyGroup>
+
     <ItemGroup>
         <ZipSource Include="$(MSBuildProjectName)_Copper$L1.gbr"/>
         <ZipSource Include="$(MSBuildProjectName)_Copper$L2.gbr"/>
@@ -48,7 +53,7 @@
     </ItemGroup>
 
     <Target 
-        Name="MakeZip" 
+        Name="Zip" 
         Inputs="@(ZipSource)" 
         Outputs="$(MSBuildProjectName).zip"
         DependsOnTargets="Cam">
@@ -59,7 +64,51 @@
         Name="Cam" 
         Inputs="$(MSBuildProjectName).xcam;$(MSBuildProjectName).xbrd" 
         Outputs="@(ZipSource)">
-        <Exec Command="..\bin\Debug\EdaCamTool.exe $(MSBuildProjectName).xcam /t:%(CamSource.CamTarget)"/>
+        <Exec Command="$(EdaCAMTool) $(MSBuildProjectName).xcam /t:%(CamSource.CamTarget)"/>
     </Target>
 
-</Project>
+    <!--
+    <Target 
+        Name="Copper.1" 
+        Inputs="$(MSBuildProjectName).xcam;$(MSBuildProjectName).xbrd" 
+        Outputs="$(MSBuildProjectName)_Copper$L1.gbr">
+        <Exec Command="$(EdaCAMTool) $(MSBuildProjectName).xcam /t:Copper.1"/>
+    </Target>
+    
+    <Target 
+        Name="Copper.2" 
+        Inputs="$(MSBuildProjectName).xcam;$(MSBuildProjectName).xbrd" 
+        Outputs="$(MSBuildProjectName)_Copper$L2.gbr">
+        <Exec Command="$(EdaCAMTool) $(MSBuildProjectName).xcam /t:Copper.2"/>
+    </Target>
+
+    <Target 
+        Name="Legend.Top" 
+        Inputs="$(MSBuildProjectName).xcam;$(MSBuildProjectName).xbrd" 
+        Outputs="$(MSBuildProjectName)_Legend$Top.gbr">
+        <Exec Command="$(EdaCAMTool) $(MSBuildProjectName).xcam /t:Legend.Top"/>
+    </Target>
+    
+    <Target 
+        Name="Legend.Bottom" 
+        Inputs="$(MSBuildProjectName).xcam;$(MSBuildProjectName).xbrd" 
+        Outputs="$(MSBuildProjectName)_Legend$Bottom.gbr">
+        <Exec Command="$(EdaCAMTool) $(MSBuildProjectName).xcam /t:Legend.Bottom"/>
+    </Target>
+
+    <Target 
+        Name="Soldermask.Top" 
+        Inputs="$(MSBuildProjectName).xcam;$(MSBuildProjectName).xbrd" 
+        Outputs="$(MSBuildProjectName)_Soldermask$Top.gbr">
+        <Exec Command="$(EdaCAMTool) $(MSBuildProjectName).xcam /t:Soldermask.Top"/>
+    </Target>
+    
+    <Target 
+        Name="Soldermask.Bottom" 
+        Inputs="$(MSBuildProjectName).xcam;$(MSBuildProjectName).xbrd" 
+        Outputs="$(MSBuildProjectName)_Soldermask$Bottom.gbr">
+        <Exec Command="$(EdaCAMTool) $(MSBuildProjectName).xcam /t:Soldermask.Bottom"/>
+    </Target>
+    -->
+
+ </Project>
