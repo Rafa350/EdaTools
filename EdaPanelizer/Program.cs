@@ -11,9 +11,20 @@
 
         static void Main(string[] args) {
 
-            Project panel = LoadPanel(@"..\..\Data\Panel3.xpnl");
-            Board board = GenerateBoard(panel);
-            SaveBoard(board, @"..\..\Data\panel3.xbrd");
+            ShowCredits();
+
+            if (args.Length == 0)
+                ShowHelp();
+
+            else {
+
+                string projectFileName = Path.GetFullPath(args[0]);
+                string boardFileName = Path.ChangeExtension(projectFileName, ".xbrd");
+
+                Project panel = LoadPanel(projectFileName);
+                Board board = GenerateBoard(panel);
+                SaveBoard(board, boardFileName);
+            }
         }
 
         private static Project LoadPanel(string fileName) {
@@ -52,6 +63,14 @@
             panelizer.Panelize(panel);
 
             return board;
+        }
+
+        private static void ShowCredits() {
+
+        }
+
+        private static void  ShowHelp() {
+
         }
     }
 }
