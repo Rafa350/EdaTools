@@ -32,6 +32,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>signature.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,11 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="signature.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EdaHDCLibrary\EdaHDCLibrary.csproj">
+    <ProjectReference Include="..\EdaHdc\EdaHdc.csproj">
       <Project>{540d8519-6cd3-489d-aa1a-8c23e8f51648}</Project>
-      <Name>EdaHDCLibrary</Name>
+      <Name>EdaHdc</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

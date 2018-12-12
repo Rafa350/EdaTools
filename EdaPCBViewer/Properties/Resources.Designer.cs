@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MikroPic.EdaTools.v1.Designer.Properties {
+namespace MikroPic.EdaTools.v1.PanelEditor.Properties {
     using System;
     
     

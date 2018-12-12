@@ -39,6 +39,12 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>signature.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,6 +59,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="signature.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EdaBase\EdaBase.csproj">
@@ -63,9 +70,9 @@
       <Project>{706bc74f-0182-4b56-8d9d-c6b311044076}</Project>
       <Name>EdaCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EdaPanelLibrary\EdaPanelLibrary.csproj">
+    <ProjectReference Include="..\EdaPanel\EdaPanel.csproj">
       <Project>{a9f79d69-13b0-45e0-b602-9a330fc22b9f}</Project>
-      <Name>EdaPanelLibrary</Name>
+      <Name>EdaPanel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

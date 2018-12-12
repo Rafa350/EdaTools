@@ -1,7 +1,7 @@
 ﻿namespace Eda.PCBViewer {
 
     using System.Windows;
-    using MikroPic.EdaTools.v1.Designer.Services;
+    using MikroPic.EdaTools.v1.PanelEditor.Services;
     using MikroPic.NetMVVMToolkit.v1.MVVM.Services;
     using MikroPic.NetMVVMToolkit.v1.WindowState;
 

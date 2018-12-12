@@ -5,16 +5,35 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9786F647-BCA2-45F5-814C-E41EBA6A4480}</ProjectGuid>
+    <ProjectGuid>{A9F79D69-13B0-45E0-B602-9A330FC22B9F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MikroPic.EdaTools.v1.Cam</RootNamespace>
-    <AssemblyName>EdaCAMLibrary</AssemblyName>
+    <RootNamespace>MikroPic.EdaTools.v1.Panel</RootNamespace>
+    <AssemblyName>EdaPanel</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -22,67 +41,32 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>signature.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <LangVersion>7.2</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>..\bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <LangVersion>7.2</LangVersion>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProjectProcessor.cs" />
-    <Compile Include="Generators\Gerber\ApertureDictionary.cs" />
-    <Compile Include="Generators\Gerber\Builder\Aperture.cs" />
-    <Compile Include="Generators\Gerber\Builder\Apertures\ObroundAperture.cs" />
-    <Compile Include="Generators\Gerber\Builder\GerberBuilder.cs" />
-    <Compile Include="Generators\Gerber\Builder\Apertures\CircleAperture.cs" />
-    <Compile Include="Generators\Gerber\Builder\State.cs" />
-    <Compile Include="Generators\Gerber\GerberDrillGenerator.cs" />
-    <Compile Include="Generators\Gerber\GerberImageGenerator.cs" />
-    <Compile Include="Generators\Gerber\Builder\Macro.cs" />
-    <Compile Include="Generators\Gerber\Builder\Apertures\MacroAperture.cs" />
-    <Compile Include="Generators\Gerber\Builder\Apertures\PoligonAperture.cs" />
-    <Compile Include="Generators\Gerber\Builder\Apertures\RectangleAperture.cs" />
-    <Compile Include="Generators\Generator.cs" />
-    <Compile Include="Generators\Ipcd356\Builder\Ipcd356Builder.cs" />
-    <Compile Include="Generators\Ipcd356\Ipcd356Generator.cs" />
-    <Compile Include="Model\IO\ProjectStreamReader.cs" />
+    <Compile Include="Model\Items\CutItem.cs" />
+    <Compile Include="Model\Items\PcbItem.cs" />
+    <Compile Include="Model\IO\PanelStreamReader.cs" />
+    <Compile Include="Model\IO\PanelStreamWriter.cs" />
+    <Compile Include="Model\IVisitable.cs" />
+    <Compile Include="Model\IVisitor.cs" />
     <Compile Include="Model\Project.cs" />
-    <Compile Include="Model\Target.cs" />
-    <Compile Include="Model\TargetOption.cs" />
-    <Compile Include="Generators\GeneratorOptions.cs" />
+    <Compile Include="Model\ProjectItem.cs" />
+    <Compile Include="Model\Visitors\DefaultVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Model\IO\Schemas\XCAM.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="signature.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Configuration\" />
-    <Folder Include="Generators\Gerber\Builder\Macros\" />
+    <EmbeddedResource Include="Model\IO\Schemas\XPNL.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EdaBase\EdaBase.csproj">

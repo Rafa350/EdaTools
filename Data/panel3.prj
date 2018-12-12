@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+    <!-- Localitzacio de les eines -->
     <PropertyGroup>
         <EdaCAMTool>..\bin\Debug\EdaCamTool.exe</EdaCAMTool>
         <EdaConvertTool>..\bin\Debug\EdaCamTool.exe</EdaConvertTool>
         <EdaPanelizerTool>..\bin\Debug\EdaPanelizer.exe</EdaPanelizerTool>
         <ZipTool>&quot;c:\program files\winrar\rar.exe&quot;</ZipTool>
     </PropertyGroup>
+    
+    <PropertyGroup>
+        <BoardRootFolder>c:\projectes\eagle\projects\</BoardRootFolder>
+        <BuildFolder>Build\</BuildFolder>
+    </PropertyGroup>
 
     <ItemGroup>
-        <ZipSource Include="$(MSBuildProjectName)_Copper$L1.gbr"/>
-        <ZipSource Include="$(MSBuildProjectName)_Copper$L2.gbr"/>
-        <ZipSource Include="$(MSBuildProjectName)_Legend$Top.gbr"/>
-        <ZipSource Include="$(MSBuildProjectName)_Legend$Bottom.gbr"/>
-        <ZipSource Include="$(MSBuildProjectName)_Soldermask$Top.gbr"/>
-        <ZipSource Include="$(MSBuildProjectName)_Soldermask$Bottom.gbr"/>
-        <ZipSource Include="$(MSBuildProjectName)_NonPlated$1$2$NPTH$Drill.gbr"/>
-        <ZipSource Include="$(MSBuildProjectName)_NonPlated$1$2$NPTH$Route.gbr"/>
-        <ZipSource Include="$(MSBuildProjectName)_Plated$1$2$PTH$Drill.gbr"/>
-        <ZipSource Include="$(MSBuildProjectName).ipc"/>
+        <ProductionFiles Include="$(MSBuildProjectName)_Copper$L1.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName)_Copper$L2.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName)_Legend$Top.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName)_Legend$Bottom.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName)_Soldermask$Top.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName)_Soldermask$Bottom.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName)_NonPlated$1$2$NPTH$Drill.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName)_NonPlated$1$2$NPTH$Route.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName)_Plated$1$2$PTH$Drill.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName).ipc"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -26,25 +32,43 @@
         <CamSource Include="$(MSBuildProjectName).xbrd"/>
     </ItemGroup>
 
-    <!-- Genera tot -->
+    <!-- Generacio incremental -->
+    <Target
+        Name="Make"
+        DependsOnTargets="Prepare;Pack"/>
+
+    <!-- Generacio complerta -->
     <Target
         Name="Build"
-        DependsOnTargets="Zip"/>
+        DependsOnTargets="Clean;Prepare;Pack"/>
+        
+    <!-- Preparacio -->
+    <Target
+        Name="Prepare">
+        <MakeDir Directories="$(BuildFolder)" Condition="!Exists('$(BuildFolder)')"/>
+    </Target>
 
     <!-- Neteja -->
     <Target
         Name="Clean">
-        <Delete Files="@(ZipSource)"/>
-        <Delete Files="$(MSBuildProjectName).zip"/>
+        <Delete Files="@(ProductionFiles)"/>
+        <Delete Files="$(BuildFolder)$(MSBuildProjectName).zip"/>
+        <RemoveDir Directories="$(BuildFolder)"/>
     </Target>
 
     <!-- Genera el fitxer ZIP -->
     <Target
-        Name="Zip"
-        Inputs="@(ZipSource)"
+        Name="Pack"
+        Inputs="@(ProductionFiles)"
         Outputs="$(MSBuildProjectName).zip"
-        DependsOnTargets="Copper-1;Copper-2;Legend-Top;Legend-Bottom;Soldermask-Top;Soldermask-Bottom;NonPlated-1-2-Drill;NonPlated-1-2-Route;Plated-1-2-Drill;IPC-D356">
+        DependsOnTargets="Production">
         <Exec Command="$(ZipTool) a $(MSBuildProjectName).zip @(ZipSource, ' ')"/>
+    </Target>
+    
+    <!-- Genera els fitxers de produccio -->
+    <Target
+        Name="Production"
+        DependsOnTargets="Copper-1;Copper-2;Legend-Top;Legend-Bottom;Soldermask-Top;Soldermask-Bottom;NonPlated-1-2-Drill;NonPlated-1-2-Route;Plated-1-2-Drill;IPC-D356">
     </Target>
 
     <!-- Genera el fitxer Gerber -->

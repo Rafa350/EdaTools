@@ -65,9 +65,9 @@
       <Project>{1bf8a2de-cc88-4617-b0ce-eebb7b76230f}</Project>
       <Name>EdaBase</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EdaCAMLibrary\EdaCAMLibrary.csproj">
+    <ProjectReference Include="..\EdaCam\EdaCam.csproj">
       <Project>{9786f647-bca2-45f5-814c-e41eba6a4480}</Project>
-      <Name>EdaCAMLibrary</Name>
+      <Name>EdaCam</Name>
     </ProjectReference>
     <ProjectReference Include="..\EdaCore\EdaCore.csproj">
       <Project>{706bc74f-0182-4b56-8d9d-c6b311044076}</Project>
