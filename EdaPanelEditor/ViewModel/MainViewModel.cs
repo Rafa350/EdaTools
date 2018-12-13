@@ -1,14 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.ViewModel {
 
-    using System;
-    using System.Windows.Media;
-    using System.Windows.Input;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Panel.Model;
     using MikroPic.EdaTools.v1.PanelEditor.Services;
-    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
     using MikroPic.NetMVVMToolkit.v1.MVVM.Commands;
     using MikroPic.NetMVVMToolkit.v1.MVVM.Services;
     using MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel;
+    using System;
+    using System.Windows.Input;
 
     public sealed class MainViewModel: ViewModelBase {
 
@@ -42,9 +40,9 @@
         /// 
         private void NewExecute(object param) {
 
-            appService.NewBoard();
+            appService.NewProject();
 
-            NotifyPropertyChanges("Title", "Board");
+            NotifyPropertyChanges("Title", "Project");
         }
 
         /// <summary>
@@ -55,18 +53,18 @@
         private void OpenExecute(object parameter) {
 
             OpenFileDialogViewModel data = new OpenFileDialogViewModel(null);
-            data.Title = "Open PCB file";
+            data.Title = "Open panel project file";
             data.MultiSelect = false;
             data.CheckFileExist = true;
-            data.Filter = "PCB board (*.xbrd)|*.xbrd|PCB Panel (*.xpnl)|*.xpnl";
+            data.Filter = "Panel project (*.xpnl)|*.xpnl";
             data.FilterIndex = 0;
             data.DefaultExt = ".xbrd";
             data.AddExtension = true;
 
             if (dlgService.ShowOpenFileDialog(data)) {
 
-                appService.OpenBoard(data.FileName);
-                NotifyPropertyChanges("Title", "Board");
+                appService.OpenProject(data.FileName);
+                NotifyPropertyChanges("Title", "Project");
             }
         }
 
@@ -77,7 +75,7 @@
         /// 
         private void SaveExecute(object param) {
 
-            appService.SaveBoard();
+            appService.SaveProject();
         }
 
 
@@ -96,7 +94,7 @@
 
             SaveFileDialogViewModel data = new SaveFileDialogViewModel(null);
             if (dlgService.ShowSaveFileDialog(data)) {
-                appService.SaveAsBoard(data.FileName);
+                appService.SaveAsProject(data.FileName);
 
                 NotifyPropertyChange("Title");
             }
@@ -127,9 +125,9 @@
             }
         }
 
-        public Board Board {
+        public Project Project {
             get {
-                return appService.Board;
+                return appService.Project;
             }
         }
 

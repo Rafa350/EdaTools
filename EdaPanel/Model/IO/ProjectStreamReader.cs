@@ -15,7 +15,7 @@
     /// Clase per la lectura de panells des d'un stream
     /// </summary>
     /// 
-    public sealed class PanelStreamReader {
+    public sealed class ProjectStreamReader {
 
         private static readonly XmlSchemaSet schemas;
 
@@ -26,7 +26,7 @@
         /// Constructor estatic de l'objecte.
         /// </summary>
         /// 
-        static PanelStreamReader() {
+        static ProjectStreamReader() {
 
             schemas = new XmlSchemaSet();
             string schemaResourceName = "MikroPic.EdaTools.v1.Panel.Model.IO.Schemas.XPNL.xsd";
@@ -44,7 +44,7 @@
         /// </summary>
         /// <param name="stream">Stream de lectura.</param>
         /// 
-        public PanelStreamReader(Stream stream) {
+        public ProjectStreamReader(Stream stream) {
 
             if (stream == null)
                 throw new ArgumentNullException("stream");

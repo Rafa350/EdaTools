@@ -1,14 +1,14 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.Services {
 
-    using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
+    using MikroPic.EdaTools.v1.Panel.Model;
+    using MikroPic.EdaTools.v1.Panel.Model.IO;
     using System.IO;
     using System.Windows;
 
     public sealed class AppService : IAppService {
 
         private readonly Application application;
-        private Board board;
+        private Project project;
         private string fileName;
         private bool isDirty;
 
@@ -20,44 +20,45 @@
         /// <summary>
         /// Abandona l'aplicacio.
         /// </summary>
+        /// 
         public void Exit() {
 
             application.MainWindow.Close();
         }
 
         /// <summary>
-        /// Crea una nova placa.
+        /// Crea una nou projecte.
         /// </summary>
         /// 
-        public void NewBoard() {
+        public void NewProject() {
 
-            fileName = "unnamed.xbrd";
+            fileName = "unnamed.xpnl";
             isDirty = true;
 
-            board = new Board();
+            project = new Project();
         }
 
         /// <summary>
-        /// Obra una placa existent.
+        /// Obra una projecte existent.
         /// </summary>
-        /// <param name="fileName">Nom del fitxer de la placa.</param>
+        /// <param name="fileName">Nom del fitxer del projecte.</param>
         /// 
-        public void OpenBoard(string fileName) {
+        public void OpenProject(string fileName) {
 
             this.fileName = fileName;
             isDirty = false;
 
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                BoardStreamReader reader = new BoardStreamReader(stream);
-                board = reader.Read();
+                ProjectStreamReader reader = new ProjectStreamReader(stream);
+                project = reader.Read();
             }
         }
 
         /// <summary>
-        /// Guarda la placa actual.
+        /// Guarda el projecte.
         /// </summary>
         /// 
-        public void SaveBoard() {
+        public void SaveProject() {
 
             isDirty = false;
 
@@ -67,14 +68,19 @@
             }*/
         }
 
-        public void SaveAsBoard(string fileName) {
+        /// <summary>
+        /// Guarda el projecte amb un altre nom.
+        /// </summary>
+        /// <param name="fileName">El nom del fitxer del projecte.</param>
+        /// 
+        public void SaveAsProject(string fileName) {
 
             this.fileName = fileName;
             isDirty = false;
         }
 
         /// <summary>
-        /// Obte el nom del fitxer actual.
+        /// Obte el nom del fitxer de l'ultim projecte obert.
         /// </summary>
         /// 
         public string FileName {
@@ -84,7 +90,7 @@
         }
 
         /// <summary>
-        /// Obte l'indicador de plada modificada.
+        /// Indica si el projecte ha estat modificat.
         /// </summary>
         /// 
         public bool IsDirty {
@@ -94,12 +100,12 @@
         }
 
         /// <summary>
-        /// Obte la placa actual.
+        /// Obte el projecte.
         /// </summary>
         /// 
-        public Board Board {
+        public Project Project {
             get {
-                return board;
+                return project;
             }
         }
     }

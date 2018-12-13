@@ -9,7 +9,7 @@
     /// Clase per la escriptura de plaques en un stream.
     /// </summary>
     /// 
-    public sealed class PanelStreamWriter {
+    public sealed class ProjectStreamWriter {
 
         private Stream stream;
 
@@ -65,7 +65,7 @@
         /// </summary>
         /// <param name="stream">Stream de sortida.</param>
         /// 
-        public PanelStreamWriter(Stream stream) {
+        public ProjectStreamWriter(Stream stream) {
 
             if (stream == null)
                 throw new ArgumentNullException("stream");

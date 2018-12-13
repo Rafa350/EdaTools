@@ -1,17 +1,17 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.Services {
 
-    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Panel.Model;
 
     public interface IAppService {
 
-        void NewBoard();
-        void OpenBoard(string fileName);
-        void SaveBoard();
-        void SaveAsBoard(string filename);
+        void NewProject();
+        void OpenProject(string fileName);
+        void SaveProject();
+        void SaveAsProject(string filename);
         void Exit();
 
         string FileName { get; }
         bool IsDirty { get; }
-        Board Board { get; }
+        Project Project { get; }
     }
 }

@@ -88,16 +88,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DrawEditor\DesignTool.cs" />
-    <Compile Include="Render\VisualLayer.cs" />
-    <Compile Include="Render\VisualLayerStack.cs" />
-    <Compile Include="Render\WPF\Infrastructure\BrushCache.cs" />
-    <Compile Include="Render\WPF\Infrastructure\PenCache.cs" />
-    <Compile Include="Render\WPF\Infrastructure\VisualDrawer.cs" />
-    <Compile Include="Render\IRenderContext.cs" />
-    <Compile Include="Render\ISceneGraph.cs" />
-    <Compile Include="Render\WPF\RenderContext.cs" />
-    <Compile Include="Render\WPF\RenderVisitor.cs" />
-    <Compile Include="Render\WPF\SceneGraph.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\IAppService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -159,14 +149,16 @@
       <Project>{706bc74f-0182-4b56-8d9d-c6b311044076}</Project>
       <Name>EdaCore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EdaPanel\EdaPanel.csproj">
+      <Project>{a9f79d69-13b0-45e0-b602-9a330fc22b9f}</Project>
+      <Name>EdaPanel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NetMVVMToolKit\NetMVVMToolkit.csproj">
       <Project>{99ece676-903b-4562-af42-70809661f2c1}</Project>
       <Name>NetMVVMToolkit</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Render\OpenGL\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>

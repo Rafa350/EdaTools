@@ -6,9 +6,6 @@
 
     public partial class MainWindow: Window {
 
-        private const string path = @"..\..\..\Data";
-        private const string inImportFileName = @"board3.brd";
-        private const string fileName = @"board3.xml";
         private readonly WindowStateAgent sa;
 
         public MainWindow() {

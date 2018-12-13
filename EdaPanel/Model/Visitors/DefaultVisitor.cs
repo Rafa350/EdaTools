@@ -2,12 +2,14 @@
 
     using MikroPic.EdaTools.v1.Panel.Model.Items;
 
-    public class DefaultVisitor: IVisitor {
+    public abstract class DefaultVisitor: IVisitor {
 
-        public virtual void Run() {
-        }
+        public abstract void Run();
 
         public virtual void Visit(Project project) {
+
+            foreach (var item in project.Items)
+                item.AcceptVisitor(this);
         }
 
         public virtual void Visit(CutItem join) {

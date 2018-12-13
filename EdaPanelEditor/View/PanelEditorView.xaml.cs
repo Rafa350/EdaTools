@@ -1,39 +1,37 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.View {
 
-    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Panel.Model;
+    using MikroPic.EdaTools.v1.Panel.Model.Items;
     using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
-    using MikroPic.EdaTools.v1.PanelEditor.Render;
-    using MikroPic.EdaTools.v1.PanelEditor.Render.WPF;
     using System;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Media;
-    using System.Windows.Threading;
-    using Point = System.Windows.Point;
+    using WinPoint = System.Windows.Point;
+    using WinRect = System.Windows.Rect;
+    using WinSize = System.Windows.Size;
 
     public partial class PanelEditorView : UserControl {
 
-        public static readonly DependencyProperty BoardProperty;
+        public static readonly DependencyProperty ProjectProperty;
 
         private readonly ViewPoint viewPoint;
-        private readonly DispatcherTimer wheelTimer;
         private const double wheelInterval = 150;
-        private int wheelCount = 0;
-        private Point startPos;
-        private Point currentPos;
+        private WinPoint startPos;
+        private WinPoint currentPos;
 
         static PanelEditorView() {
 
-            // Crea la propietat de dependencia 'Board'
+            // Crea la propietat de dependencia 'Project'
             //
-            BoardProperty = DependencyProperty.Register(
-                "Board",
-                typeof(Board),
+            ProjectProperty = DependencyProperty.Register(
+                "Project",
+                typeof(Project),
                 typeof(PanelEditorView),
                 new FrameworkPropertyMetadata(
                     null,
-                    Board_PropertyChanged));
+                    Project_PropertyChanged));
         }
 
         /// <summary>
@@ -44,31 +42,15 @@
 
             InitializeComponent();
 
-            wheelTimer = new DispatcherTimer();
-            wheelTimer.Interval = TimeSpan.FromMilliseconds(wheelInterval);
-            wheelTimer.Tick += OnWheelTimerTick;
-
             viewPoint = new ViewPoint();
             viewPoint.Changed += OnViewPointChanged;
 
             SizeChanged += OnSizeChanged;
         }
 
-        private static void Board_PropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e) {
+        private static void Project_PropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e) {
 
-            (o as PanelEditorView).UpdateBoard();
-        }
-
-        private void OnWheelTimerTick(object sender, EventArgs e) {
-
-            if (wheelCount > 0) 
-                viewPoint.ZoomIn(0.25 * wheelCount, currentPos);
-
-            else if (wheelCount < 0) 
-                viewPoint.ZoomOut(0.25 * (-wheelCount), currentPos);
-
-            wheelCount = 0;
-            wheelTimer.Stop();
+            (o as PanelEditorView).OnProjectChanged(o, new EventArgs());
         }
 
         private void OnViewPointChanged(object sender, EventArgs e) {
@@ -79,13 +61,18 @@
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e) {
 
-            if (Board != null) {
+            if (Project != null) {
 
-                v1.Base.Geometry.Size boardSize = Board.Size;
+                v1.Base.Geometry.Size boardSize = Project.Size;
                 viewPoint.Reset(
-                    new System.Windows.Size(contentBox.ActualWidth, contentBox.ActualHeight),
-                    new System.Windows.Rect(0, 0, boardSize.Width, boardSize.Height));
+                    new WinSize(contentBox.ActualWidth, contentBox.ActualHeight),
+                    new WinRect(0, 0, boardSize.Width, boardSize.Height));
             }
+        }
+
+        private void OnProjectChanged(object sender, EventArgs e) {
+
+            UpdateView();
         }
 
         /// <summary>
@@ -98,7 +85,7 @@
 
             // Actualtza la posicio del mouse
             //
-            Point mousePos = e.GetPosition(contentBox);
+            WinPoint mousePos = e.GetPosition(contentBox);
             currentPos = viewPoint.TransformToWorld(mousePos);
 
             // Si es tracta del boto primari, es tracte d'una accio 
@@ -123,7 +110,7 @@
 
             // Actualtza la posicio del mouse
             //
-            Point mousePos = e.GetPosition(contentBox);
+            WinPoint mousePos = e.GetPosition(contentBox);
             currentPos = viewPoint.TransformToWorld(mousePos);
 
             // Si es el boto primari, es una accio amb l'eina seleccionada
@@ -148,7 +135,7 @@
 
             // Actualtza la posicio del mouse
             //
-            Point mousePos = e.GetPosition(contentBox);
+            WinPoint mousePos = e.GetPosition(contentBox);
             currentPos = viewPoint.TransformToWorld(mousePos);
             startPos = currentPos;
 
@@ -177,38 +164,38 @@
 
                 // Si el moviment es positiu, acosta
                 //
-                if (e.Delta > 0) {
-                    wheelCount++;
-                    wheelTimer.Stop();
-                    wheelTimer.Start();
-                    //viewPoint.ZoomIn(0.25, currentPos);
-                }
+                if (e.Delta > 0) 
+                    viewPoint.ZoomIn(0.25, currentPos);
 
                 // En cas contrari allunya
                 //
-                else if (e.Delta < 0) {
-                    wheelCount--;
-                    wheelTimer.Stop();
-                    wheelTimer.Start();
-                    //viewPoint.ZoomOut(0.25, currentPos);
-                }
+                else if (e.Delta < 0) 
+                    viewPoint.ZoomOut(0.25, currentPos);
             }
         }
 
-        private void UpdateBoard() {
+        private void UpdateView() {
 
             if (contentBox.Visual != null)
                 contentBox.Visual = null;
 
-            if (Board != null) {
+            if (Project != null) {
 
                 viewPoint.Reset(
-                    new System.Windows.Size(contentBox.ActualWidth, contentBox.ActualHeight),
-                    new System.Windows.Rect(0, 0, Board.Size.Width, Board.Size.Height));
+                    new WinSize(contentBox.ActualWidth, contentBox.ActualHeight),
+                    new WinRect(0, 0, Project.Size.Width, Project.Size.Height));
 
-                IRenderContext renderContext = new RenderContext();
-                SceneGraph sceneGraph = renderContext.Render(Board) as SceneGraph;
-                DrawingVisual visual = sceneGraph.Visual;
+                DrawingVisual visual = new DrawingVisual();
+                foreach (ProjectItem item in Project.Items) {
+                    if (item is CutItem cutItem) {
+                        DrawingVisual itemVisual = CreateCutItemVisual(cutItem);
+                        visual.Children.Add(itemVisual);
+                    }
+                    else if (item is PcbItem pcbItem) {
+                        DrawingVisual itemVisual = CreatePcbItemVisual(pcbItem);
+                        visual.Children.Add(itemVisual);
+                    }
+                }
 
                 visual.Transform = new MatrixTransform(viewPoint.Matrix);
 
@@ -222,12 +209,36 @@
                 contentBox.Visual.Transform = new MatrixTransform(viewPoint.Matrix);
         }
 
-        public Board Board {
+        private DrawingVisual CreateCutItemVisual(CutItem item) {
+
+            DrawingVisual visual = new DrawingVisual();
+            using (DrawingContext context = visual.RenderOpen()) {
+
+                WinPoint start = new WinPoint(item.StartPosition.X, item.StartPosition.Y);
+                WinPoint end = new WinPoint(item.EndPosition.X, item.EndPosition.Y);
+
+                Pen pen = new Pen(new SolidColorBrush(Colors.Cyan), item.Tickness);
+
+                context.DrawLine(pen, start, end);
+            }
+            return visual;
+        }
+
+        private DrawingVisual CreatePcbItemVisual(PcbItem item) {
+
+            DrawingVisual visual = new DrawingVisual();
+            using (DrawingContext context = visual.RenderOpen()) {
+
+            }
+            return visual;
+        }
+
+        public Project Project {
             get {
-                return (Board) GetValue(BoardProperty);
+                return (Project) GetValue(ProjectProperty);
             }
             set {
-                SetValue(BoardProperty, value);
+                SetValue(ProjectProperty, value);
             }
         }
     }

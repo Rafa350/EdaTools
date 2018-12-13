@@ -43,7 +43,7 @@
                 ClipToBounds="True"
                 SnapsToDevicePixels="True"
                 Background="Transparent"
-                Board="{Binding Board}">
+                Project="{Binding Project}">
             </views:PanelEditorView>
         </Border>
     </DockPanel>

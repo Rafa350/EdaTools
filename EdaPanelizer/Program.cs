@@ -32,7 +32,7 @@
             string folder = Path.GetDirectoryName(fileName);
 
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                PanelStreamReader reader = new PanelStreamReader(stream);
+                ProjectStreamReader reader = new ProjectStreamReader(stream);
 
                 Project panel = reader.Read();
 
