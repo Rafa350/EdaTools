@@ -3,6 +3,7 @@
     using MikroPic.EdaTools.v1.Panel.Model;
     using MikroPic.EdaTools.v1.Panel.Model.Items;
     using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
+    using MikroPic.EdaTools.v1.PanelEditor.Render;
     using System;
     using System.Windows;
     using System.Windows.Controls;
@@ -186,13 +187,16 @@
                     new WinRect(0, 0, Project.Size.Width, Project.Size.Height));
 
                 DrawingVisual visual = new DrawingVisual();
+                VisualDrawer drawer = new VisualDrawer();
                 foreach (ProjectItem item in Project.Items) {
                     if (item is CutItem cutItem) {
-                        DrawingVisual itemVisual = CreateCutItemVisual(cutItem);
+                        VisualItem itemVisual = drawer.Create(cutItem);
+                        drawer.Draw(itemVisual);
                         visual.Children.Add(itemVisual);
                     }
                     else if (item is PcbItem pcbItem) {
-                        DrawingVisual itemVisual = CreatePcbItemVisual(pcbItem);
+                        VisualItem itemVisual = drawer.Create(pcbItem);
+                        drawer.Draw(itemVisual);
                         visual.Children.Add(itemVisual);
                     }
                 }
@@ -207,30 +211,6 @@
 
             if (contentBox.Visual != null)
                 contentBox.Visual.Transform = new MatrixTransform(viewPoint.Matrix);
-        }
-
-        private DrawingVisual CreateCutItemVisual(CutItem item) {
-
-            DrawingVisual visual = new DrawingVisual();
-            using (DrawingContext context = visual.RenderOpen()) {
-
-                WinPoint start = new WinPoint(item.StartPosition.X, item.StartPosition.Y);
-                WinPoint end = new WinPoint(item.EndPosition.X, item.EndPosition.Y);
-
-                Pen pen = new Pen(new SolidColorBrush(Colors.Cyan), item.Tickness);
-
-                context.DrawLine(pen, start, end);
-            }
-            return visual;
-        }
-
-        private DrawingVisual CreatePcbItemVisual(PcbItem item) {
-
-            DrawingVisual visual = new DrawingVisual();
-            using (DrawingContext context = visual.RenderOpen()) {
-
-            }
-            return visual;
         }
 
         public Project Project {

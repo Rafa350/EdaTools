@@ -48,7 +48,7 @@
             this.fileName = fileName;
         }
 
-        public override void AcceptVisitor(MikroPic.EdaTools.v1.Panel.Model.IVisitor visitor) {
+        public override void AcceptVisitor(Model.IVisitor visitor) {
         }
 
         /// <summary>

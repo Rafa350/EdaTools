@@ -88,6 +88,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DrawEditor\DesignTool.cs" />
+    <Compile Include="Render\CutVisualItem.cs" />
+    <Compile Include="Render\PcbVisualItem.cs" />
+    <Compile Include="Render\VisualDrawer.cs" />
+    <Compile Include="Render\VisualItem.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\IAppService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

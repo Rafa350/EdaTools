@@ -10,7 +10,7 @@
 
     public sealed class MainViewModel: ViewModelBase {
 
-        private const string title = "EdaTools Viewer";
+        private const string title = "EdaTools Panel Editor";
 
         private ICommand newCommand;
         private ICommand openCommand;
@@ -53,12 +53,12 @@
         private void OpenExecute(object parameter) {
 
             OpenFileDialogViewModel data = new OpenFileDialogViewModel(null);
-            data.Title = "Open panel project file";
+            data.Title = "Open file";
             data.MultiSelect = false;
             data.CheckFileExist = true;
             data.Filter = "Panel project (*.xpnl)|*.xpnl";
             data.FilterIndex = 0;
-            data.DefaultExt = ".xbrd";
+            data.DefaultExt = ".xpnl";
             data.AddExtension = true;
 
             if (dlgService.ShowOpenFileDialog(data)) {
