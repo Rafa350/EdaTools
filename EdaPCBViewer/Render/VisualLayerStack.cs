@@ -40,7 +40,7 @@
             vls.Add(new VisualLayer("Pads", new LayerSet(Layer.PadsId), true, new Color(255, 234, 161, 64)));
             vls.Add(new VisualLayer("Vias", new LayerSet(Layer.ViasId), true, new Color(255, 0, 128, 0)));
 
-            vls.Add(new VisualLayer("Drills", new LayerSet(Layer.DrillsId), true, new Color(255, 255, 255, 255)));
+            //vls.Add(new VisualLayer("Drills", new LayerSet(Layer.DrillsId), true, new Color(255, 255, 255, 255)));
             vls.Add(new VisualLayer("Holes", new LayerSet(Layer.HolesId), true, new Color(255, 240, 128, 128)));
             vls.Add(new VisualLayer("Milling", new LayerSet(Layer.MillingId), true, new Color(255, 32, 216, 200)));
 

@@ -21,29 +21,28 @@
                 string projectFileName = Path.GetFullPath(args[0]);
                 string boardFileName = Path.ChangeExtension(projectFileName, ".xbrd");
 
-                Project panel = LoadPanel(projectFileName);
+                Project panel = LoadProject(projectFileName);
                 Board board = GenerateBoard(panel);
                 SaveBoard(board, boardFileName);
             }
         }
 
-        private static Project LoadPanel(string fileName) {
+        private static Project LoadProject(string fileName) {
 
             string folder = Path.GetDirectoryName(fileName);
 
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
                 ProjectStreamReader reader = new ProjectStreamReader(stream);
 
-                Project panel = reader.Read();
+                Project project = reader.Read();
 
-                foreach (var element in panel.Items) {
-                    if (element is PcbItem) {
-                        PcbItem place = (PcbItem)element;
-                        place.FileName = Path.Combine(folder, place.FileName);
+                foreach (var item in project.Items) {
+                    if (item is PcbItem pcbItem) {
+                        pcbItem.FileName = Path.Combine(folder, pcbItem.FileName);
                     }
                 }
 
-                return panel;
+                return project;
             }
         }
 

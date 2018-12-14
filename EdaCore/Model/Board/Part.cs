@@ -162,6 +162,16 @@
         }
 
         /// <summary>
+        /// Indica si conte elements
+        /// </summary>
+        /// 
+        public bool HasElements {
+            get {
+                return component.HasElements;
+            }
+        }
+
+        /// <summary>
         /// Enumera els elements.
         /// </summary>
         /// 

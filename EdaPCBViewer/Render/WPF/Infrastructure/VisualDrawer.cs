@@ -151,26 +151,34 @@
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor c = WinColor.FromRgb(color.R, color.G, color.B);
-
                 WinPoint center = new WinPoint(via.Position.X, via.Position.Y);
 
-                if (via.Shape == ViaElement.ViaShape.Circle) {
-
-                    int size = layer.Id.Side == BoardSide.Inner ? via.InnerSize : via.OuterSize;
-                    int radius = (size + via.Drill) / 4;
-
-                    Pen pen = GetPen(c, (size - via.Drill) / 2, PenLineCap.Flat);
-                    dc.DrawEllipse(Brushes.Black, pen, center, radius, radius);
+                if (layer.Function == LayerFunction.Mechanical) {
+                    WinColor c = WinColor.FromRgb(color.R, color.G, color.B);
+                    Pen pen = GetPen(c, 0.05 * 1000000.0, PenLineCap.Flat);
+                    dc.DrawEllipse(Brushes.Black, pen, center, via.Drill / 2, via.Drill / 2);
                 }
 
                 else {
+                    WinColor c = WinColor.FromRgb(color.R, color.G, color.B);
 
-                    Polygon polygon = via.GetPolygon(layer.Id.Side);
+                    if (via.Shape == ViaElement.ViaShape.Circle) {
 
-                    Brush brush = GetBrush(c);
-                    DrawPolygon(dc, null, brush, polygon);
-                    dc.DrawEllipse(Brushes.Black, null, center, via.Drill / 2, via.Drill / 2);
+                        int size = layer.Id.Side == BoardSide.Inner ? via.InnerSize : via.OuterSize;
+                        int radius = (size + via.Drill) / 4;
+
+                        Pen pen = GetPen(c, (size - via.Drill) / 2, PenLineCap.Flat);
+                        dc.DrawEllipse(Brushes.Black, pen, center, radius, radius);
+                    }
+
+                    else {
+
+                        Polygon polygon = via.GetPolygon(layer.Id.Side);
+
+                        Brush brush = GetBrush(c);
+                        DrawPolygon(dc, null, brush, polygon);
+                        dc.DrawEllipse(Brushes.Black, null, center, via.Drill / 2, via.Drill / 2);
+                    }
                 }
             }
         }
@@ -212,9 +220,9 @@
 
             using (DrawingContext dc = visual.RenderOpen()) {
 
-                WinColor c = WinColor.FromRgb(color.R, color.G, color.B);
-
                 WinPoint center = new WinPoint(pad.Position.X, pad.Position.Y);
+
+                WinColor c = WinColor.FromRgb(color.R, color.G, color.B);
 
                 if (pad.Shape == ThPadElement.ThPadShape.Circle) {
 

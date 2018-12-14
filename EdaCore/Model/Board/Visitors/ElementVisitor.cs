@@ -56,9 +56,10 @@
 
             this.part = part;
             try {
-                foreach (var element in part.Elements)
-                    if ((layer == null) || element.LayerSet.Contains(layer.Id))
-                        element.AcceptVisitor(this);
+                if (part.HasElements)
+                    foreach (var element in part.Elements)
+                        if ((layer == null) || element.LayerSet.Contains(layer.Id))
+                            element.AcceptVisitor(this);
             }
             finally {
                 this.part = null;

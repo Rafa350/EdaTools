@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.Services {
 
     using MikroPic.EdaTools.v1.Panel.Model;
+    using MikroPic.EdaTools.v1.Panel.Model.Items;
     using MikroPic.EdaTools.v1.Panel.Model.IO;
     using System.IO;
     using System.Windows;
@@ -51,6 +52,11 @@
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
                 ProjectStreamReader reader = new ProjectStreamReader(stream);
                 project = reader.Read();
+            }
+
+            foreach (var item in project.Items) {
+                if (item is PcbItem pcbItem)
+                    pcbItem.FileName = Path.Combine(Path.GetDirectoryName(fileName), pcbItem.FileName);
             }
         }
 

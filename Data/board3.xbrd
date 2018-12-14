@@ -26,8 +26,8 @@
             <layer id="Top.Restrict" function="unknown" />
             <layer id="Bottom.Restrict" function="unknown" />
             <layer id="ViaRestrict" function="unknown" />
-            <layer id="Drills" function="unknown" />
-            <layer id="Holes" function="unknown" />
+            <layer id="Drills" function="mechanical" />
+            <layer id="Holes" function="mechanical" />
             <layer id="Top.Document" function="unknown" />
             <layer id="Bottom.Document" function="unknown" />
         </layers>

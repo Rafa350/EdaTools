@@ -2,40 +2,29 @@
 
     using MikroPic.EdaTools.v1.PanelEditor.Render.WPF.Infrastructure;
     using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using System.Collections.Generic;
     using System.Windows.Media;
+    using System.Linq;
 
     public sealed class RenderContext : IRenderContext {
 
         public ISceneGraph Render(Board board) {
 
-            /*List<LayerId> layerIds = new List<LayerId>();
-            layerIds.Add(Layer.BottomNamesId);
-            layerIds.Add(Layer.BottomDocumentId);
-            layerIds.Add(Layer.BottomGlueId);
-            layerIds.Add(Layer.BottomKeepoutId);
-            layerIds.Add(Layer.BottomRestrictId);
-            layerIds.Add(Layer.BottomPlaceId);
-            layerIds.Add(Layer.BottomId);
-            layerIds.Add(Layer.ViaRestrictId);
-            layerIds.Add(Layer.TopId);
-            layerIds.Add(Layer.TopPlaceId);
-            layerIds.Add(Layer.TopRestrictId);
-            layerIds.Add(Layer.TopKeepoutId);
-            layerIds.Add(Layer.TopGlueId);
-            layerIds.Add(Layer.TopNamesId);
-
-            layerIds.Add(Layer.PadsId);
-            layerIds.Add(Layer.ViasId);
-            layerIds.Add(Layer.HolesId);
-            layerIds.Add(Layer.TopDocumentId);
-
-            layerIds.Add(Layer.ProfileId);*/
-
             VisualLayerStack visualLayerStack = VisualLayerStack.CreateDefault();
 
             VisualDrawer drawer = new VisualDrawer();
             DrawingVisual rootVisual = new DrawingVisual();
+
+            /*List<Element> elements = new List<Element>();
+            foreach (var part in board.Parts)
+                foreach (var element in part.Elements)
+                    elements.Add(element);
+            foreach (var element in board.Elements)
+                elements.Add(element);
+
+            List<Element> holes = new List<Element>(elements.OfType<HoleElement>());
+            */
 
             // Procesa les capes visuals
             //

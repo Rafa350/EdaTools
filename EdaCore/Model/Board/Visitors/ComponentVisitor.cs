@@ -22,16 +22,18 @@
 
         public override void Visit(Board board) {
 
-            foreach (var component in board.Components)
-                component.AcceptVisitor(this);
+            if (board.HasComponents)
+                foreach (var component in board.Components)
+                    component.AcceptVisitor(this);
         }
 
         public override void Visit(Component component) {
 
             this.component = component;
             try {
-                foreach (var element in component.Elements)
-                    element.AcceptVisitor(this);
+                if (component.HasElements)
+                    foreach (var element in component.Elements)
+                        element.AcceptVisitor(this);
 
                 if (component.HasAttributes)
                     foreach (var attribute in component.Attributes)
