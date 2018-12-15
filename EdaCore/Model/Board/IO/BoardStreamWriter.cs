@@ -19,29 +19,18 @@
         private class Visitor : DefaultVisitor {
 
             private readonly XmlWriter writer;
-            private readonly Board board;
-            private Part currentPart = null;
+            private Board currentBoard;
+            private Part currentPart;
 
             /// <summary>
             /// Constructor del objecte. Visita els objectes d'una placa,
             /// per generar el stream de sortida.
             /// </summary>
-            /// <param name="board">La placa a visitar.</param>
             /// <param name="wr">Objecte per escriure el stream de sortida.</param>
             /// 
-            public Visitor(Board board, XmlWriter writer) {
+            public Visitor(XmlWriter writer) {
 
-                this.board = board;
                 this.writer = writer;
-            }
-
-            /// <summary>
-            /// Executa el visitador.
-            /// </summary>
-            /// 
-            public override void Run() {
-
-                board.AcceptVisitor(this);
             }
 
             /// <summary>
@@ -61,7 +50,7 @@
                 if (line.LineCap != LineElement.LineCapStyle.Round)
                     writer.WriteAttributeEnum("lineCap", line.LineCap);
 
-                Signal signal = board.GetSignal(line, currentPart, false);
+                Signal signal = currentBoard.GetSignal(line, currentPart, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
 
@@ -86,7 +75,7 @@
                 if (arc.LineCap != LineElement.LineCapStyle.Round)
                     writer.WriteAttributeEnum("lineCap", arc.LineCap);
 
-                Signal signal = board.GetSignal(arc, currentPart, false);
+                Signal signal = currentBoard.GetSignal(arc, currentPart, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
 
@@ -196,7 +185,7 @@
                 if (!pad.Roundness.IsZero)
                     writer.WriteAttributeString("roundness", XmlTypeFormater.FormatRatio(pad.Roundness));
 
-                Signal signal = board.GetSignal(pad, currentPart, false);
+                Signal signal = currentBoard.GetSignal(pad, currentPart, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
 
@@ -222,7 +211,7 @@
                 if (pad.Shape != ThPadElement.ThPadShape.Circle)
                     writer.WriteAttributeEnum("shape", pad.Shape);
 
-                Signal signal = board.GetSignal(pad, currentPart, false);
+                Signal signal = currentBoard.GetSignal(pad, currentPart, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
 
@@ -290,7 +279,7 @@
                 }
                 if (region.Clearance > 0)
                     writer.WriteAttributeString("clearance", XmlTypeFormater.FormatNumber(region.Clearance));
-                Signal signal = board.GetSignal(region, currentPart, false);
+                Signal signal = currentBoard.GetSignal(region, currentPart, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
 
@@ -331,7 +320,7 @@
                     if (part.HasPads) {
                         bool empty = true;
                         foreach (PadElement pad in part.Pads) {
-                            Signal signal = board.GetSignal(pad, part, false);
+                            Signal signal = currentBoard.GetSignal(pad, part, false);
                             if (signal != null) {
                                 if (empty) {
                                     empty = false;
@@ -383,7 +372,7 @@
                 if (via.Type != ViaElement.ViaType.Through)
                     writer.WriteAttributeEnum("type", via.Type);
 
-                Signal signal = board.GetSignal(via, null, false);
+                Signal signal = currentBoard.GetSignal(via, null, false);
                 if (signal != null)
                     writer.WriteAttributeString("signal", signal.Name);
 
@@ -424,24 +413,24 @@
             /// <summary>
             /// Visita un objecte de tipus 'Block'
             /// </summary>
-            /// <param name="block">E'objecte a visitar.</param>
+            /// <param name="component">E'objecte a visitar.</param>
             /// 
-            public override void Visit(Component block) {
+            public override void Visit(Component component) {
 
                 writer.WriteStartElement("component");
 
-                writer.WriteAttributeString("name", block.Name);
+                writer.WriteAttributeString("name", component.Name);
 
-                if (block.HasElements) {
+                if (component.HasElements) {
                     writer.WriteStartElement("elements");
-                    foreach (Element element in block.Elements)
+                    foreach (Element element in component.Elements)
                         element.AcceptVisitor(this);
                     writer.WriteEndElement();
                 }
 
-                if (block.HasAttributes) {
+                if (component.HasAttributes) {
                     writer.WriteStartElement("attributes");
-                    foreach (ComponentAttribute attribute in block.Attributes)
+                    foreach (ComponentAttribute attribute in component.Attributes)
                         attribute.AcceptVisitor(this);
                     writer.WriteEndElement();
                 }
@@ -455,6 +444,8 @@
             /// <param name="board">La placa a visitar.</param>
             /// 
             public override void Visit(Board board) {
+
+                currentBoard = board;
 
                 writer.WriteStartElement("board");
                 writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(board.Position));
@@ -538,8 +529,8 @@
                 writer.WriteAttributeString("distanceUnits", "mm");
                 writer.WriteAttributeString("angleUnits", "deg");
 
-                IVisitor visitor = new Visitor(board, writer);
-                visitor.Run();
+                IVisitor visitor = new Visitor(writer);
+                board.AcceptVisitor(visitor);
 
                 writer.WriteEndElement();
 

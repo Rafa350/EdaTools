@@ -4,8 +4,6 @@
 
     public interface IVisitor {
 
-        void Run();
-
         void Visit(Board board);
         void Visit(Layer layer);
         void Visit(Part part);

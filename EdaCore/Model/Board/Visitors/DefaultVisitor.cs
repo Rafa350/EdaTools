@@ -10,8 +10,6 @@
     /// 
     public abstract class DefaultVisitor: IVisitor {
 
-        public abstract void Run();
-
         public virtual void Visit(Board board) {
         }
 

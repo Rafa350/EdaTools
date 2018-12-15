@@ -16,28 +16,16 @@
         private class Visitor: DefaultVisitor {
 
             private readonly XmlWriter writer;
-            private readonly Project panel;
 
             /// <summary>
             /// Constructor del objecte. Visita els objectes d'un panel,
             /// per generar el stream de sortida.
             /// </summary>
-            /// <param name="panel">El panel a visitar.</param>
             /// <param name="writer">Objecte per escriure el stream de sortida.</param>
             /// 
-            public Visitor(Project panel, XmlWriter writer) {
+            public Visitor(XmlWriter writer) {
 
-                this.panel = panel;
                 this.writer = writer;
-            }
-
-            /// <summary>
-            /// Executa el visitador.
-            /// </summary>
-            /// 
-            public override void Run() {
-
-                panel.AcceptVisitor(this);
             }
 
             /// <summary>
@@ -101,8 +89,8 @@
                 writer.WriteAttributeString("distanceUnits", "mm");
                 writer.WriteAttributeString("angleUnits", "deg");
 
-                IVisitor visitor = new Visitor(panel, writer);
-                visitor.Run();
+                IVisitor visitor = new Visitor(writer);
+                panel.AcceptVisitor(visitor);
 
                 writer.WriteEndElement();
 

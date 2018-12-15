@@ -9,7 +9,6 @@
         public VisualItem Create(CutItem item) {
 
             VisualItem visual = new CutVisualItem(item);
-
             return visual;
         }
 
@@ -18,6 +17,15 @@
             VisualItem visual = new PcbVisualItem(item);
 
             return visual;
+        }
+
+        public void Remove(VisualItem visual) {
+
+            if (visual == null)
+                throw new ArgumentNullException("visual");
+
+            if (visual.Parent is DrawingVisual parent)
+                parent.Children.Remove(visual);
         }
 
         public void Draw(VisualItem visual) {

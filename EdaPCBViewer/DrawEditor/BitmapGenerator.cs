@@ -25,8 +25,7 @@
             private readonly SysColor color;
             private readonly Matrix matrix;
 
-            public RenderVisitor(Board board, Layer layer, WriteableBitmap bitmap, Matrix matrix):
-                base(board, layer) {
+            public RenderVisitor(Board board, Layer layer, WriteableBitmap bitmap, Matrix matrix) { 
 
                 this.bitmap = bitmap;
                 this.matrix = matrix;

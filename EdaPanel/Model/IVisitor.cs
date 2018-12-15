@@ -4,8 +4,6 @@
 
     public interface IVisitor {
 
-        void Run();
-
         void Visit(Project project);
         void Visit(CutItem cut);
         void Visit(PcbItem pcb);

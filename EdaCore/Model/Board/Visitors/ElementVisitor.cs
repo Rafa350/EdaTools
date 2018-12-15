@@ -1,34 +1,14 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
 
+    using System;
+
     /// <summary>
-    /// Clase per visitar els elements de una serie de capes en particular.
+    /// Clase per visitar els elements.
     /// </summary>
     public abstract class ElementVisitor : DefaultVisitor {
 
-        private readonly Board board;
-        private readonly Layer layer;
-        private Part part;
-
-        /// <summary>
-        /// Constructor del objecte.
-        /// </summary>
-        /// <param name="board">La placa.</param>
-        /// <param name="layer">La capa a procesar.</param>
-        /// 
-        protected ElementVisitor(Board board, Layer layer) {
-
-            this.board = board;
-            this.layer = layer;
-        }
-
-        /// <summary>
-        /// Executa el visitador.
-        /// </summary>
-        /// 
-        public override void Run() {
-
-            board.AcceptVisitor(this);
-        }
+        private Board currentBoard;
+        private Part currentPart;
 
         /// <summary>
         /// Visita un objecte 'Board'
@@ -37,14 +17,23 @@
         /// 
         public override void Visit(Board board) {
 
-            if (board.HasParts)
-                foreach (var part in board.Parts)
-                    part.AcceptVisitor(this);
+            if (board == null)
+                throw new ArgumentNullException("board");
 
-            if (board.HasElements)
-                foreach (var element in board.Elements)
-                    if ((layer == null) || element.LayerSet.Contains(layer.Id))
+            Board savedBoard = currentBoard;
+            currentBoard = board;
+            try {
+                if (board.HasParts)
+                    foreach (var part in board.Parts)
+                        part.AcceptVisitor(this);
+
+                if (board.HasElements)
+                    foreach (var element in board.Elements)
                         element.AcceptVisitor(this);
+            }
+            finally {
+                currentBoard = savedBoard;
+            }
         }
 
         /// <summary>
@@ -54,15 +43,18 @@
         /// 
         public override void Visit(Part part) {
 
-            this.part = part;
+            if (part == null)
+                throw new ArgumentNullException("part");
+
+            Part savedPart = currentPart;
+            currentPart = part;
             try {
                 if (part.HasElements)
                     foreach (var element in part.Elements)
-                        if ((layer == null) || element.LayerSet.Contains(layer.Id))
-                            element.AcceptVisitor(this);
+                        element.AcceptVisitor(this);
             }
             finally {
-                this.part = null;
+                currentPart = savedPart;
             }
         }
 
@@ -72,7 +64,7 @@
         /// 
         protected Board Board {
             get {
-                return board;
+                return currentBoard;
             }
         }
 
@@ -82,17 +74,7 @@
         /// 
         protected Part Part {
             get {
-                return part;
-            }
-        }
-
-        /// <summary>
-        /// Obte la capa que s'estat visitant.
-        /// </summary>
-        /// 
-        protected Layer Layer {
-            get {
-                return layer;
+                return currentPart;
             }
         }
     }

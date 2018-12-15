@@ -90,9 +90,9 @@
         private void PrepareApertures(ApertureDictionary apertures, Board board) {
 
             foreach (var layerName in Target.LayerNames) {
-                Layer layer = board.GetLayer(new LayerId(layerName));
-                IVisitor visitor = new PrepareAperturesVisitor(board, layer, apertures);
-                visitor.Run();
+                LayerId layerId = new LayerId(layerName);
+                IVisitor visitor = new PrepareAperturesVisitor(layerId, apertures);
+                board.AcceptVisitor(visitor);
             }
         }
 
@@ -177,9 +177,9 @@
 
             gb.Comment("BEGIN IMAGE");
             foreach (var layerName in Target.LayerNames) {
-                Layer layer = board.GetLayer(new LayerId(layerName));
-                IVisitor visitor = new ImageGeneratorVisitor(gb, board, layer, apertures);
-                visitor.Run();
+                LayerId layerId = new LayerId(layerName);
+                IVisitor visitor = new ImageGeneratorVisitor(gb, layerId, apertures);
+                board.AcceptVisitor(visitor);
             }
             gb.Comment("END IMAGE");
         }
@@ -189,18 +189,18 @@
         /// </summary>
         private sealed class PrepareAperturesVisitor : ElementVisitor {
 
+            private readonly LayerId layerId;
             private readonly ApertureDictionary apertures;
 
             /// <summary>
             /// Constructor de l'objecte.
             /// </summary>
-            /// <param name="board">La placa a procesar.</param>
-            /// <param name="layer">Les capes a procesar.</param>
+            /// <param name="layerId">El identificador de la capa a procesar.</param>
             /// <param name="apertures">El diccionari d'apertures a preparar.</param>
             /// 
-            public PrepareAperturesVisitor(Board board, Layer layer, ApertureDictionary apertures) :
-                base(board, layer) {
+            public PrepareAperturesVisitor(LayerId layerId, ApertureDictionary apertures) {
 
+                this.layerId = layerId;
                 this.apertures = apertures;
             }
 
@@ -211,7 +211,8 @@
             /// 
             public override void Visit(LineElement line) {
 
-                apertures.DefineCircleAperture(line.Thickness);
+                if (CanVisit(line))
+                    apertures.DefineCircleAperture(line.Thickness);
             }
 
             /// <summary>
@@ -221,7 +222,8 @@
             /// 
             public override void Visit(ArcElement arc) {
 
-                apertures.DefineCircleAperture(arc.Thickness);
+                if (CanVisit(arc))
+                    apertures.DefineCircleAperture(arc.Thickness);
             }
 
             /// <summary>
@@ -231,7 +233,8 @@
             /// 
             public override void Visit(HoleElement hole) {
 
-                apertures.DefineCircleAperture(hole.Drill);
+                if (CanVisit(hole))
+                    apertures.DefineCircleAperture(hole.Drill);
             }
 
             /// <summary>
@@ -241,7 +244,8 @@
             /// 
             public override void Visit(ViaElement via) {
 
-                apertures.DefineCircleAperture(via.Drill);
+                if (CanVisit(via))
+                    apertures.DefineCircleAperture(via.Drill);
             }
 
             /// <summary>
@@ -251,7 +255,13 @@
             /// 
             public override void Visit(ThPadElement pad) {
 
-                apertures.DefineCircleAperture(pad.Drill);
+                if (CanVisit(pad))
+                    apertures.DefineCircleAperture(pad.Drill);
+            }
+
+            private bool CanVisit(Element element) {
+
+                return element.LayerSet.Contains(layerId);
             }
         }
 
@@ -261,20 +271,20 @@
         private sealed class ImageGeneratorVisitor : ElementVisitor {
 
             private readonly GerberBuilder gb;
+            private readonly LayerId layerId;
             private readonly ApertureDictionary apertures;
 
             /// <summary>
             /// Constructor de la clase.
             /// </summary>
             /// <param name="gb">El generador de gerbers.</param>
-            /// <param name="board">La placa.</param>
-            /// <param name="layer">La capa a procesar.</param>
+            /// <param name="layerId">Identificador de la capa a procesar.</param>
             /// <param name="apertures">El diccionari d'apertures.</param>
             /// 
-            public ImageGeneratorVisitor(GerberBuilder gb, Board board, Layer layer, ApertureDictionary apertures) :
-                base(board, layer) {
-
+            public ImageGeneratorVisitor(GerberBuilder gb, LayerId layerId, ApertureDictionary apertures) { 
+                
                 this.gb = gb;
+                this.layerId = layerId;
                 this.apertures = apertures;
             }
 
@@ -285,23 +295,26 @@
             /// 
             public override void Visit(ArcElement arc) {
 
-                Point startPosition = arc.StartPosition;
-                Point endPosition = arc.EndPosition;
-                Point center = arc.Center;
-                if (Part != null) {
-                    Transformation t = Part.GetLocalTransformation();
-                    startPosition = t.ApplyTo(startPosition);
-                    endPosition = t.ApplyTo(endPosition);
-                    center = t.ApplyTo(center);
+                if (CanVisit(arc)) {
+
+                    Point startPosition = arc.StartPosition;
+                    Point endPosition = arc.EndPosition;
+                    Point center = arc.Center;
+                    if (Part != null) {
+                        Transformation t = Part.GetLocalTransformation();
+                        startPosition = t.ApplyTo(startPosition);
+                        endPosition = t.ApplyTo(endPosition);
+                        center = t.ApplyTo(center);
+                    }
+
+                    Aperture ap = apertures.GetCircleAperture(arc.Thickness);
+
+                    gb.SelectAperture(ap);
+                    gb.MoveTo(startPosition);
+                    gb.ArcTo(endPosition.X, endPosition.Y,
+                        center.X - startPosition.X, center.Y - startPosition.Y,
+                        arc.Angle.Degrees < 0 ? ArcDirection.CW : ArcDirection.CCW);
                 }
-
-                Aperture ap = apertures.GetCircleAperture(arc.Thickness);
-
-                gb.SelectAperture(ap);
-                gb.MoveTo(startPosition);
-                gb.ArcTo(endPosition.X, endPosition.Y,
-                    center.X - startPosition.X, center.Y - startPosition.Y,
-                    arc.Angle.Degrees < 0 ? ArcDirection.CW : ArcDirection.CCW);
             }
 
             /// <summary>
@@ -311,19 +324,22 @@
             /// 
             public override void Visit(LineElement line) {
 
-                Point startPosition = line.StartPosition;
-                Point endPosition = line.EndPosition;
-                if (Part != null) {
-                    Transformation t = Part.GetLocalTransformation();
-                    startPosition = t.ApplyTo(startPosition);
-                    endPosition = t.ApplyTo(endPosition);
+                if (CanVisit(line)) {
+
+                    Point startPosition = line.StartPosition;
+                    Point endPosition = line.EndPosition;
+                    if (Part != null) {
+                        Transformation t = Part.GetLocalTransformation();
+                        startPosition = t.ApplyTo(startPosition);
+                        endPosition = t.ApplyTo(endPosition);
+                    }
+
+                    Aperture ap = apertures.GetCircleAperture(line.Thickness);
+
+                    gb.SelectAperture(ap);
+                    gb.MoveTo(startPosition);
+                    gb.LineTo(endPosition);
                 }
-
-                Aperture ap = apertures.GetCircleAperture(line.Thickness);
-
-                gb.SelectAperture(ap);
-                gb.MoveTo(startPosition);
-                gb.LineTo(endPosition);
             }
 
             /// <summary>
@@ -333,16 +349,19 @@
             /// 
             public override void Visit(HoleElement hole) {
 
-                Point position = hole.Position;
-                if (Part != null) {
-                    Transformation t = Part.GetLocalTransformation();
-                    position = t.ApplyTo(position);
+                if (CanVisit(hole)) {
+
+                    Point position = hole.Position;
+                    if (Part != null) {
+                        Transformation t = Part.GetLocalTransformation();
+                        position = t.ApplyTo(position);
+                    }
+
+                    Aperture ap = apertures.GetCircleAperture(hole.Drill);
+
+                    gb.SelectAperture(ap);
+                    gb.FlashAt(position);
                 }
-
-                Aperture ap = apertures.GetCircleAperture(hole.Drill);
-
-                gb.SelectAperture(ap);
-                gb.FlashAt(position);
             }
 
             /// <summary>
@@ -352,16 +371,19 @@
             /// 
             public override void Visit(ViaElement via) {
 
-                Point position = via.Position;
-                if (Part != null) {
-                    Transformation t = Part.GetLocalTransformation();
-                    position = t.ApplyTo(position);
+                if (CanVisit(via)) {
+
+                    Point position = via.Position;
+                    if (Part != null) {
+                        Transformation t = Part.GetLocalTransformation();
+                        position = t.ApplyTo(position);
+                    }
+
+                    Aperture ap = apertures.GetCircleAperture(via.Drill);
+
+                    gb.SelectAperture(ap);
+                    gb.FlashAt(position);
                 }
-
-                Aperture ap = apertures.GetCircleAperture(via.Drill);
-
-                gb.SelectAperture(ap);
-                gb.FlashAt(position);
             }
 
             /// <summary>
@@ -371,16 +393,24 @@
             /// 
             public override void Visit(ThPadElement pad) {
 
-                Point position = pad.Position;
-                if (Part != null) {
-                    Transformation t = Part.GetLocalTransformation();
-                    position = t.ApplyTo(position);
+                if (CanVisit(pad)) {
+
+                    Point position = pad.Position;
+                    if (Part != null) {
+                        Transformation t = Part.GetLocalTransformation();
+                        position = t.ApplyTo(position);
+                    }
+
+                    Aperture ap = apertures.GetCircleAperture(pad.Drill);
+
+                    gb.SelectAperture(ap);
+                    gb.FlashAt(position);
                 }
+            }
 
-                Aperture ap = apertures.GetCircleAperture(pad.Drill);
+            private bool CanVisit(Element element) {
 
-                gb.SelectAperture(ap);
-                gb.FlashAt(position);
+                return element.LayerSet.Contains(layerId);
             }
         }
     }

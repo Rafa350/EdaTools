@@ -2,34 +2,35 @@
 
     using System;
 
-    public abstract class ComponentVisitor: DefaultVisitor {
+    public abstract class ComponentVisitor : DefaultVisitor {
 
-        private readonly Board board;
-        private Component component;
+        private Board currentBoard;
+        private Component currentComponent;
 
-        public ComponentVisitor(Board board) {
+        public override void Visit(Board board) {
 
             if (board == null)
                 throw new ArgumentNullException("board");
 
-            this.board = board;
-        }
-
-        public override void Run() {
-
-            board.AcceptVisitor(this);
-        }
-
-        public override void Visit(Board board) {
-
-            if (board.HasComponents)
-                foreach (var component in board.Components)
-                    component.AcceptVisitor(this);
+            Board savedBoard = currentBoard;
+            currentBoard = board;
+            try {
+                if (board.HasComponents)
+                    foreach (var component in board.Components)
+                        component.AcceptVisitor(this);
+            }
+            finally {
+                currentBoard = savedBoard;
+            }
         }
 
         public override void Visit(Component component) {
 
-            this.component = component;
+            if (component == null)
+                throw new ArgumentNullException("component");
+
+            Component savedComponent = currentComponent;
+            currentComponent = component;
             try {
                 if (component.HasElements)
                     foreach (var element in component.Elements)
@@ -40,7 +41,19 @@
                         attribute.AcceptVisitor(this);
             }
             finally {
-                this.component = null;
+                currentComponent = savedComponent;
+            }
+        }
+
+        protected Board Board {
+            get {
+                return currentBoard;
+            }
+        }
+
+        protected Component Component {
+            get {
+                return currentComponent;
             }
         }
     }

@@ -5,7 +5,8 @@
 
     public sealed class VisualLayer {
 
-        private readonly LayerSet layerSet;
+        private readonly LayerId[] layerIds;
+        private readonly ElementType[] elementTypes;
         private readonly string name;
         private bool visible;
         private Color color;
@@ -15,24 +16,14 @@
         /// </summary>
         /// <param name="name">Nom de la capa.</param>
         /// <param name="layerSet">Conjunt de capes de la placa.</param>
-        /// 
-        public VisualLayer(string name, LayerSet layerSet):
-            this(name, layerSet, true, new Color(255, 128, 128, 128)) {
-
-        }
-
-        /// <summary>
-        /// Constructor de l'objecte.
-        /// </summary>
-        /// <param name="name">Nom de la capa.</param>
-        /// <param name="layerSet">Conjunt de capes de la placa.</param>
         /// <param name="visible">Indica si es visible.</param>
         /// <param name="color">Color</param>
         /// 
-        public VisualLayer(string name, LayerSet layerSet, bool visible, Color color) {
+        public VisualLayer(string name, LayerId[] layerIds, ElementType[] elementTypes, bool visible, Color color) {
 
             this.name = name;
-            this.layerSet = layerSet;
+            this.layerIds = layerIds;
+            this.elementTypes = elementTypes;
             this.visible = visible;
             this.color = color;
         }
@@ -48,12 +39,22 @@
         }
 
         /// <summary>
-        /// Obte el conjunt de capes de la placa que es visualitzen en aquesta capa.
+        /// Obte la llista de capes de la placa.
         /// </summary>
         /// 
-        public LayerSet Layers {
+        public LayerId[] LayerIds {
             get {
-                return layerSet;
+                return layerIds;
+            }
+        }
+
+        /// <summary>
+        /// Obte la llista de tipus d'elements.
+        /// </summary>
+        /// 
+        public ElementType[] ElementTypes {
+            get {
+                return elementTypes;
             }
         }
 

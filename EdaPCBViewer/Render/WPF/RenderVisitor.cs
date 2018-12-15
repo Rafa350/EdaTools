@@ -4,6 +4,7 @@
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
+    using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Media;
 
@@ -16,6 +17,8 @@
     /// 
     internal sealed class RenderVisitor : ElementVisitor {
 
+        private readonly HashSet<Element> visibleElements;
+        private readonly Layer layer;
         private readonly Color color;
         private readonly VisualDrawer drawer;
         private DrawingVisual parentVisual;
@@ -23,13 +26,13 @@
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
-        /// <param name="board">La placa a procesar.</param>
         /// <param name="layer">La capa on aplicar el proces.</param>
         /// <param name="rootVisual">El visual arrel.</param>
         /// 
-        public RenderVisitor(Board board, Layer layer, DrawingVisual rootVisual, Color color, VisualDrawer drawer) :
-            base(board, layer) {
+        public RenderVisitor(HashSet<Element> visibleElements, Layer layer, DrawingVisual rootVisual, Color color, VisualDrawer drawer) { 
 
+            this.visibleElements = visibleElements;
+            this.layer = layer;
             this.drawer = drawer;
             this.color = color;
             parentVisual = rootVisual;
@@ -42,9 +45,11 @@
         /// 
         public override void Visit(LineElement line) {
 
-            DrawingVisual visual = new DrawingVisual();
-            AddVisual(visual);
-            drawer.DrawLineElement(visual, Layer, line, color);
+            if (IsVisible(line)) {
+                DrawingVisual visual = new DrawingVisual();
+                AddVisual(visual);
+                drawer.DrawLineElement(visual, layer, line, color);
+            }
         }
 
         /// <summary>
@@ -54,9 +59,11 @@
         /// 
         public override void Visit(ArcElement arc) {
 
-            DrawingVisual visual = new DrawingVisual();
-            AddVisual(visual);
-            drawer.DrawArcElement(visual, Layer, arc, color);
+            if (IsVisible(arc)) {
+                DrawingVisual visual = new DrawingVisual();
+                AddVisual(visual);
+                drawer.DrawArcElement(visual, layer, arc, color);
+            }
         }
 
         /// <summary>
@@ -66,9 +73,11 @@
         /// 
         public override void Visit(RectangleElement rectangle) {
 
-            DrawingVisual visual = new DrawingVisual();
-            AddVisual(visual);
-            drawer.DrawRectangleElement(visual, Layer, rectangle, color);
+            if (IsVisible(rectangle)) {
+                DrawingVisual visual = new DrawingVisual();
+                AddVisual(visual);
+                drawer.DrawRectangleElement(visual, layer, rectangle, color);
+            }
         }
 
         /// <summary>
@@ -78,9 +87,11 @@
         /// 
         public override void Visit(CircleElement circle) {
 
-            DrawingVisual visual = new DrawingVisual();
-            AddVisual(visual);
-            drawer.DrawCircleElement(visual, Layer, circle, color);
+            if (IsVisible(circle)) {
+                DrawingVisual visual = new DrawingVisual();
+                AddVisual(visual);
+                drawer.DrawCircleElement(visual, layer, circle, color);
+            }
         }
 
         /// <summary>
@@ -90,9 +101,11 @@
         /// 
         public override void Visit(RegionElement region) {
 
-            DrawingVisual visual = new DrawingVisual();
-            AddVisual(visual);
-            drawer.DrawRegionElement(visual, Layer, Board, region, color);
+            if (IsVisible(region)) {
+                DrawingVisual visual = new DrawingVisual();
+                AddVisual(visual);
+                drawer.DrawRegionElement(visual, layer, Board, region, color);
+            }
         }
 
         /// <summary>
@@ -102,9 +115,11 @@
         /// 
         public override void Visit(ViaElement via) {
 
-            DrawingVisual visual = new DrawingVisual();
-            AddVisual(visual);
-            drawer.DrawViaElement(visual, Layer, via, color);
+            if (IsVisible(via)) {
+                DrawingVisual visual = new DrawingVisual();
+                AddVisual(visual);
+                drawer.DrawViaElement(visual, layer, via, color);
+            }
         }
 
         /// <summary>
@@ -114,9 +129,11 @@
         /// 
         public override void Visit(SmdPadElement pad) {
 
-            DrawingVisual visual = new DrawingVisual();
-            AddVisual(visual);
-            drawer.DrawSmdPadElement(visual, Layer, pad, color);
+            if (IsVisible(pad)) {
+                DrawingVisual visual = new DrawingVisual();
+                AddVisual(visual);
+                drawer.DrawSmdPadElement(visual, layer, pad, color);
+            }
         }
 
         /// <summary>
@@ -126,9 +143,11 @@
         /// 
         public override void Visit(ThPadElement pad) {
 
-            DrawingVisual visual = new DrawingVisual();
-            AddVisual(visual);
-            drawer.DrawThPadElement(visual, Layer, pad, color);
+            if (IsVisible(pad)) {
+                DrawingVisual visual = new DrawingVisual();
+                AddVisual(visual);
+                drawer.DrawThPadElement(visual, layer, pad, color);
+            }
         }
 
         /// <summary>
@@ -138,9 +157,11 @@
         /// 
         public override void Visit(HoleElement hole) {
 
-            DrawingVisual visual = new DrawingVisual();
-            AddVisual(visual);
-            drawer.DrawHoleElement(visual, Layer, hole, color);
+            if (IsVisible(hole)) {
+                DrawingVisual visual = new DrawingVisual();
+                AddVisual(visual);
+                drawer.DrawHoleElement(visual, layer, hole, color);
+            }
         }
 
         /// <summary>
@@ -150,9 +171,11 @@
         /// 
         public override void Visit(TextElement text) {
 
-            DrawingVisual visual = new DrawingVisual();
-            AddVisual(visual);
-            drawer.DrawTextElement(visual, Layer, Part, text, color);
+            if (IsVisible(text)) {
+                DrawingVisual visual = new DrawingVisual();
+                AddVisual(visual);
+                drawer.DrawTextElement(visual, layer, Part, text, color);
+            }
         }
 
         /// <summary>
@@ -206,6 +229,11 @@
             transform.Freeze();
 
             return transform;
+        }
+
+        private bool IsVisible(Element element) {
+
+            return visibleElements.Contains(element) && element.LayerSet.Contains(layer.Id);
         }
     }
 }

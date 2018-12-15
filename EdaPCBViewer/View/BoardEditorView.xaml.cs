@@ -157,11 +157,13 @@
             //
             if (e.ChangedButton == MouseButton.Left) {
 
-                HitTestResult result = VisualTreeHelper.HitTest(contentBox.Visual, currentPos);
-                if (result != null) {
-                    DrawingVisual visual = result.VisualHit as DrawingVisual;
-                    if (visual != null) {
-                        (visual.Parent as DrawingVisual).Children.Remove(visual);
+                if (contentBox.Visual != null) {
+                    HitTestResult result = VisualTreeHelper.HitTest(contentBox.Visual, currentPos);
+                    if (result != null) {
+                        DrawingVisual visual = result.VisualHit as DrawingVisual;
+                        if (visual != null) {
+                            (visual.Parent as DrawingVisual).Children.Remove(visual);
+                        }
                     }
                 }
             }

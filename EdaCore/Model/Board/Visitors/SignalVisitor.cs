@@ -1,60 +1,56 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
 
+    using MikroPic.EdaTools.v1.Core.Model.Board;
     using System;
     using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
     public abstract class SignalVisitor : DefaultVisitor {
 
-        private readonly Board board;
-        private Signal signal;
+        private Board currentBoard;
+        private Signal currentSignal;
 
-        public SignalVisitor(Board board) {
+        public override void Visit(Board board) {
 
             if (board == null)
                 throw new ArgumentNullException("board");
 
-            this.board = board;
-        }
-
-        public override void Run() {
-
-            board.AcceptVisitor(this);
-        }
-
-        public override void Visit(Board board) {
-
-            foreach (var signal in board.Signals)
-                signal.AcceptVisitor(this);
+            Board savedBoard = currentBoard;
+            currentBoard = board;
+            try {
+                foreach (var signal in board.Signals)
+                    signal.AcceptVisitor(this);
+            }
+            finally {
+                currentBoard = savedBoard;
+            }
         }
 
         public override void Visit(Signal signal) {
 
-            this.signal = signal;
+            Signal savedSignal = currentSignal;
+            currentSignal = signal;
             try {
-                IEnumerable<Tuple<IConectable, Part>> items = board.GetConnectedItems(signal);
+                IEnumerable<Tuple<IConectable, Part>> items = currentBoard.GetConnectedItems(signal);
                 if (items != null)
                     foreach (var item in items) {
-                        Element element = item.Item1 as Element;
-                        if (element != null)
+                        if (item.Item1 is Element element)
                             element.AcceptVisitor(this);
                     }
             }
             finally {
-                this.signal = null;
+                currentSignal = savedSignal;
             }
         }
 
         protected Board Board {
             get {
-                return board;
+                return currentBoard;
             }
         }
 
         protected Signal Signal {
             get {
-                return signal;
+                return currentSignal;
             }
         }
     }

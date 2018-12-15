@@ -92,8 +92,8 @@
 
             builder.Comment("BEGIN VIAS");
             
-            IVisitor visitor = new ViasVisitor(builder, board);
-            visitor.Run();
+            IVisitor visitor = new ViasVisitor(builder);
+            board.AcceptVisitor(visitor);
 
             builder.Comment("END VIAS");
         }
@@ -108,8 +108,8 @@
 
             builder.Comment("BEGIN PADS");
 
-            IVisitor visitor = new PadsVisitor(builder, board);
-            visitor.Run();
+            IVisitor visitor = new PadsVisitor(builder);
+            board.AcceptVisitor(visitor);
 
             builder.Comment("END PADS");
         }
@@ -124,8 +124,8 @@
 
             builder.Comment("BEGIN NETS");
 
-            IVisitor visitor = new NetsVisitor(builder, board);
-            visitor.Run();
+            IVisitor visitor = new NetsVisitor(builder);
+            board.AcceptVisitor(visitor);
 
             builder.Comment("END NETS");
         }
@@ -137,8 +137,7 @@
 
             private readonly Ipcd356Builder builder;
 
-            public NetsVisitor(Ipcd356Builder builder, Board board)
-                : base(board) {
+            public NetsVisitor(Ipcd356Builder builder) { 
 
                 this.builder = builder;
             }
@@ -183,8 +182,7 @@
 
             private readonly Ipcd356Builder builder;
 
-            public ViasVisitor(Ipcd356Builder builder, Board board) 
-                : base(board, null) {
+            public ViasVisitor(Ipcd356Builder builder) {  
 
                 this.builder = builder;
             }
@@ -203,8 +201,7 @@
 
             private readonly Ipcd356Builder builder;
 
-            public PadsVisitor(Ipcd356Builder builder, Board board)
-                : base(board, null) {
+            public PadsVisitor(Ipcd356Builder builder) { 
 
                 this.builder = builder;
             }

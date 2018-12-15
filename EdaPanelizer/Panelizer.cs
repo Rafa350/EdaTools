@@ -118,8 +118,9 @@
                     }
                 }
 
-                TransformVisitor visitor = new TransformVisitor(transformableParts, position, rotation);
-                visitor.Run();
+                TransformVisitor visitor = new TransformVisitor(position, rotation);
+                foreach(var part in transformableParts)
+                    part.AcceptVisitor(visitor);
             }
 
             // Afegeix els elements de la placa
@@ -144,8 +145,9 @@
                     }
                 }
 
-                TransformVisitor visitor = new TransformVisitor(transformableElements, position, rotation);
-                visitor.Run();
+                TransformVisitor visitor = new TransformVisitor(position, rotation);
+                foreach(var element in transformableElements)
+                    element.AcceptVisitor(visitor);
             }
         }
 
@@ -335,19 +337,11 @@
 
         private sealed class TransformVisitor: DefaultVisitor { 
 
-            private readonly IEnumerable<MikroPic.EdaTools.v1.Core.Model.Board.IVisitable> visitables;
             private readonly Transformation transformation;
 
-            public TransformVisitor(IEnumerable<MikroPic.EdaTools.v1.Core.Model.Board.IVisitable> visitables, Point offset, Angle rotation) {
+            public TransformVisitor(Point offset, Angle rotation) {
 
-                this.visitables = visitables;
                 transformation = new Transformation(offset, rotation);
-            }
-
-            public override void Run() {
-
-                foreach (var visitable in visitables)
-                    visitable.AcceptVisitor(this);
             }
 
             public override void Visit(LineElement line) {
