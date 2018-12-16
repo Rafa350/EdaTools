@@ -62,7 +62,7 @@
         Inputs="@(ProductionFiles)"
         Outputs="$(MSBuildProjectName).zip"
         DependsOnTargets="Production">
-        <Exec Command="$(ZipTool) a $(MSBuildProjectName).zip @(ZipSource, ' ')"/>
+        <Exec Command="$(ZipTool) a $(MSBuildProjectName).zip @(ProductionFiles,' ')"/>
     </Target>
     
     <!-- Genera els fitxers de produccio -->
@@ -164,7 +164,7 @@
     <!-- Genera el fitxer del panell -->
     <Target
         Name="Panelize"
-        Inputs="$(MSBuildProjectName).xpnl"
+        Inputs="$(MSBuildProjectName).xpnl; board3.xbrd"
         Outputs="$(MSBuildProjectName).xbrd">
         <Exec Command="$(EdaPanelizerTool) $(MSBuildProjectName).xpnl" />
     </Target>
