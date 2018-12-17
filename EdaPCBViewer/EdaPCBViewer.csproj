@@ -9,7 +9,7 @@
     <ProjectGuid>{8CEAFC37-67B6-4765-A9C0-6F64EE01C7A9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MikroPic.EdaTools.v1.Designer</RootNamespace>
+    <RootNamespace>MikroPic.EdaTools.v1.BoardEditor</RootNamespace>
     <AssemblyName>EdaPCBViewer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <TargetFrameworkProfile>
@@ -25,7 +25,7 @@
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Eda.PCBViewer.App</StartupObject>
+    <StartupObject>MikroPic.EdaTools.v1.BoardEditor.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -98,6 +98,17 @@
     <Compile Include="Render\WPF\RenderContext.cs" />
     <Compile Include="Render\WPF\RenderVisitor.cs" />
     <Compile Include="Render\WPF\SceneGraph.cs" />
+    <Compile Include="Render\WPF\Visuals\RegionVisual.cs" />
+    <Compile Include="Render\WPF\Visuals\LineVisual.cs" />
+    <Compile Include="Render\WPF\Visuals\ArcVisual.cs" />
+    <Compile Include="Render\WPF\Visuals\SmdPadVisual.cs" />
+    <Compile Include="Render\WPF\Visuals\HoleVisual.cs" />
+    <Compile Include="Render\WPF\Visuals\RectangleVisual.cs" />
+    <Compile Include="Render\WPF\Visuals\CircleVisual.cs" />
+    <Compile Include="Render\WPF\Visuals\DrawVisualContext.cs" />
+    <Compile Include="Render\WPF\Visuals\ElementVisual.cs" />
+    <Compile Include="Render\WPF\Visuals\ThPadVisual.cs" />
+    <Compile Include="Render\WPF\Visuals\ViaVisual.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\IAppService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

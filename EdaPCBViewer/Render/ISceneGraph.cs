@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render {
+﻿namespace MikroPic.EdaTools.v1.BoardEditor.Render {
 
     public interface ISceneGraph {
     }

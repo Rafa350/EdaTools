@@ -1,6 +1,6 @@
-﻿namespace MikroPic.EdaTools.v1.PanelEditor.View {
+﻿namespace MikroPic.EdaTools.v1.BoardEditor.View {
 
-    using MikroPic.EdaTools.v1.PanelEditor.ViewModel;
+    using MikroPic.EdaTools.v1.BoardEditor.ViewModel;
     using MikroPic.NetMVVMToolkit.v1.WindowState;
     using System.Windows;
 

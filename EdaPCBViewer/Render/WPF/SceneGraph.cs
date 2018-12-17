@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render.WPF {
+﻿namespace MikroPic.EdaTools.v1.BoardEditor.Render.WPF {
 
     using System.Windows.Media;
 

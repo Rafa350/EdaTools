@@ -108,34 +108,39 @@
         /// 
         private Point[] MakePoints(BoardSide side, int spacing) {
 
-            int size = side == BoardSide.Inner ? InnerSize : OuterSize;
-            int sizeM2 = size * 2;
-            int sizeD2 = size / 2;
+            if (side == BoardSide.Body)
+                return PolygonBuilder.MakeCircle(position, drill / 2);
 
-            int spacingM2 = spacing * 2;
-            int spacingD2 = spacing / 2;
+            else {
+                int size = side == BoardSide.Inner ? InnerSize : OuterSize;
+                int sizeM2 = size * 2;
+                int sizeD2 = size / 2;
 
-            ViaShape shape = side == BoardSide.Inner ? ViaShape.Circle : this.shape;
+                int spacingM2 = spacing * 2;
+                int spacingD2 = spacing / 2;
 
-            switch (shape) {
-                case ViaShape.Square:
-                    return PolygonBuilder.MakeRectangle(
-                        position, 
-                        new Size(size + spacingM2, size + spacingM2), 
-                        0, 
-                        Angle.FromDegrees(0));
+                ViaShape shape = side == BoardSide.Inner ? ViaShape.Circle : this.shape;
 
-                case ViaShape.Octagon:
-                    return PolygonBuilder.MakePolygon(
-                        8, 
-                        position, 
-                        (int)((double)sizeD2 / Math.Cos(22.5 * Math.PI / 180.0)) + spacing, 
-                        Angle.FromDegrees(2250));
+                switch (shape) {
+                    case ViaShape.Square:
+                        return PolygonBuilder.MakeRectangle(
+                            position,
+                            new Size(size + spacingM2, size + spacingM2),
+                            0,
+                            Angle.FromDegrees(0));
 
-                default:
-                    return PolygonBuilder.MakeCircle(
-                        position, 
-                        sizeD2 + spacing);
+                    case ViaShape.Octagon:
+                        return PolygonBuilder.MakePolygon(
+                            8,
+                            position,
+                            (int)((double)sizeD2 / Math.Cos(22.5 * Math.PI / 180.0)) + spacing,
+                            Angle.FromDegrees(2250));
+
+                    default:
+                        return PolygonBuilder.MakeCircle(
+                            position,
+                            sizeD2 + spacing);
+                }
             }
         }
 
@@ -148,8 +153,12 @@
         public override Polygon GetPolygon(BoardSide side) {
 
             Point[] points = MakePoints(side, 0);
-            Point[] holePoints = PolygonBuilder.MakeCircle(position, drill / 2);
-            return new Polygon(points, new Polygon(holePoints));
+            if (side == BoardSide.Body)
+                return new Polygon(points);
+            else {
+                Point[] holePoints = MakePoints(BoardSide.Body, 0);
+                return new Polygon(points, new Polygon(holePoints));
+            }
         }
 
         /// <summary>

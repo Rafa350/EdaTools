@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render {
+﻿namespace MikroPic.EdaTools.v1.BoardEditor.Render {
 
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Core.Model.Board;
@@ -36,6 +36,43 @@
             get {
                 return name;
             }
+        }
+
+        /// <summary>
+        /// Comprova si un element es visible en aquesta capa.
+        /// </summary>
+        /// <param name="element">L'element a comprobar.</param>
+        /// <returns>True si es visible, false en cas contrari.</returns>
+        /// 
+        public bool IsVisible(Element element) {
+
+            // Seleccio per capa
+            //
+            bool layerOk = false;
+            if (layerIds == null)
+                layerOk = true;
+            else
+                foreach (var layerId in layerIds) {
+                    if (element.LayerSet.Contains(layerId)) {
+                        layerOk = true;
+                        break;
+                    }
+                }
+
+            // Seleccio per tipus
+            //
+            bool typeOk = false;
+            if (elementTypes == null)
+                typeOk = true;
+            else
+                foreach (var elementType in elementTypes) {
+                    if (element.ElementType == elementType) {
+                        typeOk = true;
+                        break;
+                    }
+                }
+
+            return layerOk && typeOk;
         }
 
         /// <summary>

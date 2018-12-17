@@ -1,8 +1,8 @@
-﻿namespace MikroPic.EdaTools.v1.PanelEditor.View {
+﻿namespace MikroPic.EdaTools.v1.BoardEditor.View {
 
-    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
-    using MikroPic.EdaTools.v1.PanelEditor.Render;
-    using MikroPic.EdaTools.v1.PanelEditor.Render.WPF;
+    using MikroPic.EdaTools.v1.BoardEditor.DrawEditor;
+    using MikroPic.EdaTools.v1.BoardEditor.Render;
+    using MikroPic.EdaTools.v1.BoardEditor.Render.WPF;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using System;
     using System.Windows;

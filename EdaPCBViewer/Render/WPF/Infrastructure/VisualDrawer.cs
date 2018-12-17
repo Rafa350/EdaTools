@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render.WPF.Infrastructure {
+﻿namespace MikroPic.EdaTools.v1.BoardEditor.Render.WPF.Infrastructure {
 
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
@@ -17,7 +17,7 @@
     using WinRect = System.Windows.Rect;
     using WinSize = System.Windows.Size;
 
-    internal sealed class VisualDrawer {
+    public sealed class VisualDrawer {
 
         private static readonly TextDrawer td;
         private readonly PenCache penCache;
