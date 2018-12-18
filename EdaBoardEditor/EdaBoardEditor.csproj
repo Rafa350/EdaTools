@@ -10,7 +10,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MikroPic.EdaTools.v1.BoardEditor</RootNamespace>
-    <AssemblyName>EdaPCBViewer</AssemblyName>
+    <AssemblyName>EdaBoardEditor</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -98,6 +98,9 @@
     <Compile Include="Render\WPF\RenderContext.cs" />
     <Compile Include="Render\WPF\RenderVisitor.cs" />
     <Compile Include="Render\WPF\SceneGraph.cs" />
+    <Compile Include="Render\WPF\Visuals\VisualBase.cs" />
+    <Compile Include="Render\WPF\Visuals\PartVisual.cs" />
+    <Compile Include="Render\WPF\Visuals\TextVisual.cs" />
     <Compile Include="Render\WPF\Visuals\RegionVisual.cs" />
     <Compile Include="Render\WPF\Visuals\LineVisual.cs" />
     <Compile Include="Render\WPF\Visuals\ArcVisual.cs" />

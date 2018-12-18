@@ -4,7 +4,7 @@
     using System.Windows.Media;
 
     using Color = MikroPic.EdaTools.v1.Base.Geometry.Color;
-    using Rect = MikroPic.EdaTools.v1.Base.Geometry.Rect;
+    using Point = MikroPic.EdaTools.v1.Base.Geometry.Point;
 
     public sealed class RectangleVisual: ElementVisual {
 
@@ -33,16 +33,10 @@
             Pen pen = Element.Thickness == 0 ? null : dc.GetPen(color, Element.Thickness, PenLineCap.Flat);
             Brush brush = Element.Filled ? dc.GetBrush(color) : null;
 
-            Rect rect = new Rect(
-                Element.Position.X - (Element.Size.Width / 2),
-                Element.Position.Y - (Element.Size.Height / 2),
-                Element.Size.Width,
-                Element.Size.Height);
-
             if (Element.Radius == 0)
-                dc.DrawRectangle(brush, pen, rect);
+                dc.DrawRectangle(brush, pen, Element.Position, Element.Size);
             else
-                dc.DrawRoundedRectangle(brush, pen, rect, Element.Radius, Element.Radius);
+                dc.DrawRoundedRectangle(brush, pen, Element.Position, Element.Size, Element.Radius, Element.Radius);
         }
 
         /// <summary>

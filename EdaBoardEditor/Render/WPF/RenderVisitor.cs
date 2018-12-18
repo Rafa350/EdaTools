@@ -16,7 +16,6 @@
 
         private readonly Layer layer;
         private readonly VisualLayer visualLayer;
-        private readonly VisualDrawer drawer;
         private DrawingVisual parentVisual;
 
         /// <summary>
@@ -25,10 +24,9 @@
         /// <param name="layer">La capa on aplicar el proces.</param>
         /// <param name="rootVisual">El visual arrel.</param>
         /// 
-        public RenderVisitor(Layer layer, DrawingVisual rootVisual, VisualLayer visualLayer, VisualDrawer drawer) { 
+        public RenderVisitor(Layer layer, DrawingVisual rootVisual, VisualLayer visualLayer) { 
 
             this.layer = layer;
-            this.drawer = drawer;
             this.visualLayer = visualLayer;
             parentVisual = rootVisual;
         }
@@ -158,9 +156,8 @@
         public override void Visit(TextElement text) {
 
             if (IsVisible(text)) {
-                DrawingVisual visual = new DrawingVisual();
-                AddVisual(visual);
-                drawer.DrawTextElement(visual, layer, Part, text, visualLayer.Color);
+                ElementVisual visual = new TextVisual(parentVisual, text, Part, visualLayer.Color);
+                visual.Draw();
             }
         }
 
@@ -171,8 +168,8 @@
         /// 
         public override void Visit(Part part) {
 
-            DrawingVisual visual = new DrawingVisual();
-            AddVisual(visual);
+            PartVisual visual = new PartVisual(parentVisual, part);
+            //visual.Draw();
 
             visual.Transform = GetTransform(part);
 

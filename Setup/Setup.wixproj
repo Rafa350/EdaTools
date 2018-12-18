@@ -26,7 +26,131 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Options.wxi" />
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EdaBase\EdaBase.csproj">
+      <Name>EdaBase</Name>
+      <Project>{1bf8a2de-cc88-4617-b0ce-eebb7b76230f}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\EdaBoardEditor\EdaBoardEditor.csproj">
+      <Name>EdaBoardEditor</Name>
+      <Project>{8ceafc37-67b6-4765-a9c0-6f64ee01c7a9}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\EdaCAMTool\EdaCAMTool.csproj">
+      <Name>EdaCamTool</Name>
+      <Project>{eaaac444-ef61-4a87-8f1c-45908e2d11c5}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\EdaCam\EdaCam.csproj">
+      <Name>EdaCam</Name>
+      <Project>{9786f647-bca2-45f5-814c-e41eba6a4480}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\EdaConverter\EdaConverter.csproj">
+      <Name>EdaConverter</Name>
+      <Project>{992becef-69f9-4071-9aca-ab3db04b8b97}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\EdaCore\EdaCore.csproj">
+      <Name>EdaCore</Name>
+      <Project>{706bc74f-0182-4b56-8d9d-c6b311044076}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\EdaExtractor\EdaExtractor.csproj">
+      <Name>EdaExtractor</Name>
+      <Project>{6750c90c-a408-4ac2-a7dd-66e89b68bd14}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\EdaHDCCompiler\EdaHDCCompiler.csproj">
+      <Name>EdaHDCCompiler</Name>
+      <Project>{54c85083-b3ac-4238-b3b5-732dc5b45b91}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\EdaHdc\EdaHdc.csproj">
+      <Name>EdaHdc</Name>
+      <Project>{540d8519-6cd3-489d-aa1a-8c23e8f51648}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\EdaPanelEditor\EdaPanelEditor.csproj">
+      <Name>EdaPanelEditor</Name>
+      <Project>{ff25708f-6c47-4378-81a1-991993398882}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\EdaPanelizer\EdaPanelizer.csproj">
+      <Name>EdaPanelizer</Name>
+      <Project>{ee1f80cc-4777-40a7-89d6-1923bbe52404}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\EdaPanel\EdaPanel.csproj">
+      <Name>EdaPanel</Name>
+      <Project>{a9f79d69-13b0-45e0-b602-9a330fc22b9f}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\NetMVVMToolKit\NetMVVMToolkit.csproj">
+      <Name>NetMVVMToolkit</Name>
+      <Project>{99ece676-903b-4562-af42-70809661f2c1}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Strings_es-ES.wxl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixNetFxExtension">
+      <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
+      <Name>WixNetFxExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />

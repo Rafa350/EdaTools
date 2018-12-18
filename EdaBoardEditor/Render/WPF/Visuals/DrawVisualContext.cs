@@ -2,12 +2,13 @@
 
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
     using System;
+    using System.Collections.Generic;
     using System.Windows.Media;
 
     using Color = MikroPic.EdaTools.v1.Base.Geometry.Color;
     using Point = MikroPic.EdaTools.v1.Base.Geometry.Point;
-    using Rect = MikroPic.EdaTools.v1.Base.Geometry.Rect;
     using WinColor = System.Windows.Media.Color;
     using WinPoint = System.Windows.Point;
     using WinRect = System.Windows.Rect;
@@ -71,11 +72,13 @@
         /// </summary>
         /// <param name="brush">El brush.</param>
         /// <param name="pen">El pen.</param>
-        /// <param name="rect">Les coordinades del rectangle.</param>
+        /// <param name="centroid">Posicio del rectangle.</param>
+        /// <param name="size">Tamany del rectangle.</param>
         /// 
-        public void DrawRectangle(Brush brush, Pen pen, Rect rect) {
+        public void DrawRectangle(Brush brush, Pen pen, Point centroid, Size size) {
 
-            context.DrawRectangle(brush, pen, new WinRect(rect.X, rect.Y, rect.Width, rect.Height));
+            WinRect r = new WinRect(centroid.X - size.Width / 2, centroid.Y - size.Height / 2, size.Width, size.Height);
+            context.DrawRectangle(brush, pen, r);
         }
 
         /// <summary>
@@ -83,13 +86,15 @@
         /// </summary>
         /// <param name="brush">El brush.</param>
         /// <param name="pen">El pen.</param>
-        /// <param name="rect">Les coordinades del rectangle.</param>
+        /// <param name="centroid">Posicio del rectangle.</param>
+        /// <param name="size">Tamany del rectangle.</param>
         /// <param name="radiusX">El radi X dels cantons.</param>
         /// <param name="radiusY">El radi Y dels cantons.</param>
         /// 
-        public void DrawRoundedRectangle(Brush brush, Pen pen, Rect rect, int radiusX, int radiusY) {
+        public void DrawRoundedRectangle(Brush brush, Pen pen, Point centroid, Size size, int radiusX, int radiusY) {
 
-            context.DrawRoundedRectangle(brush, pen, new WinRect(rect.X, rect.Y, rect.Width, rect.Height), radiusX, radiusY);
+            WinRect r = new WinRect(centroid.X - size.Width / 2, centroid.Y - size.Height / 2, size.Width, size.Height);
+            context.DrawRoundedRectangle(brush, pen, r, radiusX, radiusY);
         }
 
         /// <summary>
@@ -118,6 +123,34 @@
             StreamGeometry geometry = new StreamGeometry();
             using (StreamGeometryContext ctx = geometry.Open())
                 StreamPolygon(ctx, polygon, polygon.Childs == null ? 1 : 0);
+            geometry.Freeze();
+
+            context.DrawGeometry(brush, pen, geometry);
+        }
+
+        /// <summary>
+        /// Dibuixa un glif
+        /// </summary>
+        /// <param name="brush">El brush.</param>
+        /// <param name="pen">El pen.</param>
+        /// <param name="glyphTraces">Els gliphs</param>
+        /// 
+        public void DrawGlyphs(Brush brush, Pen pen, IEnumerable<GlyphTrace> glyphTraces) {
+
+            StreamGeometry geometry = new StreamGeometry();
+            using (StreamGeometryContext ctx = geometry.Open()) {
+
+                bool first = true;
+                foreach (var glyphTrace in glyphTraces) {
+                    WinPoint p = new WinPoint(glyphTrace.Position.X, glyphTrace.Position.Y);
+                    if (first) {
+                        ctx.BeginFigure(p, false, false);
+                        first = false;
+                    }
+                    else
+                        ctx.LineTo(p, glyphTrace.Stroke, true);
+                }
+            }
             geometry.Freeze();
 
             context.DrawGeometry(brush, pen, geometry);
@@ -178,6 +211,25 @@
             pen.Freeze();
 
             return pen;
+        }
+
+        /// <summary>
+        /// Empeny una transformacio en la pila.
+        /// </summary>
+        /// <param name="m">La transformacio.</param>
+        /// 
+        public void PushTransform(MatrixTransform m) {
+
+            context.PushTransform(m);
+        }
+
+        /// <summary>
+        /// Estira un objecte de la pila.
+        /// </summary>
+        /// 
+        public void Pop() {
+
+            context.Pop();
         }
 
         /// <summary>

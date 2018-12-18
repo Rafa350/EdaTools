@@ -77,6 +77,39 @@
         }
 
         /// <summary>
+        /// Calcula el bounding box del element.
+        /// </summary>
+        /// <param name="side">Cara de la placa.</param>
+        /// <returns>El bounding box.</returns>
+        /// 
+        public Rect GetBoundingBox(BoardSide side) {
+
+            if (HasElements) {
+
+                int left = int.MaxValue;
+                int top = int.MaxValue;
+                int right = int.MinValue;
+                int bottom = int.MinValue;
+
+                foreach (var element in Elements) {
+                    Rect r = element.GetBoundingBox(side);
+                    if (left > r.Left)
+                        left = r.Left;
+                    if (top > r.Top)
+                        top = r.Top;
+                    if (right < r.Right)
+                        right = r.Right;
+                    if (bottom < r.Bottom)
+                        bottom = r.Bottom;
+                }
+
+                return new Rect(left, top, right - left + 1, top - bottom + 1);
+            }
+            else
+                return new Rect();
+        }
+
+        /// <summary>
         /// Obte un pad pel seu nom.
         /// </summary>
         /// <param name="name">El nom del pad.</param>

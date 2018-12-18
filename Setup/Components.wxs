@@ -1,6 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Fragment>
-		<!-- TODO: Put your code here. -->
-	</Fragment>
+
+    <?include options.wxi ?>
+
+    <!-- Components individuals de la carpeta de l'aplicacio -->
+    <Fragment>
+        <DirectoryRef
+            Id="InstallBin">
+
+            <!-- EdaBase.Dll-->
+            <Component
+                Id="EdaBase.Dll"
+                Guid="{186E5BD1-2233-49CC-9E54-2416DC71FD51}">
+                <File
+                    Source="$(var.EdaBase.TargetDir)\EdaBase.dll"
+                    KeyPath="yes"/>
+            </Component>
+
+            <!-- EdaCore.Dll-->
+            <Component
+                Id="EdaCore.Dll"
+                Guid="{7B920EFE-1816-41F2-994C-C71E6D843C9E}">
+                <File
+                    Source="$(var.EdaCore.TargetDir)\EdaCore.dll"
+                    KeyPath="yes"/>
+            </Component>
+
+            <!-- EdaCam.Dll-->
+            <Component
+                Id="EdaCam.Dll"
+                Guid="{7432B336-20DF-4CFE-BA23-A40C644D9549}">
+                <File
+                    Source="$(var.EdaCam.TargetDir)\EdaCam.dll"
+                    KeyPath="yes"/>
+            </Component>
+
+            <!-- EdaHdc.Dll-->
+            <Component
+                Id="EdaHdc.Dll"
+                Guid="{CC5A2777-7D8A-40AB-A94C-89D9997869CE}">
+                <File
+                    Source="$(var.EdaHdc.TargetDir)\EdaHdc.dll"
+                    KeyPath="yes"/>
+            </Component>
+
+            <!-- EdaPanel.Dll -->
+            <Component
+                Id="EdaPanel.Dll"
+                Guid="{DD9CFEA0-B82D-45E3-886C-578E165E1D3D}">
+                <File
+                    Source="$(var.EdaPanel.TargetDir)\EdaPanel.dll"
+                    KeyPath="yes"/>
+            </Component>
+
+            <!-- NetMVVMToolKit.Dll -->
+            <Component
+                Id="NetMVVMToolKit.Dll"
+                Guid="{3238356E-D5D9-4F4F-9111-E2826A0069CB}">
+                <File
+                    Source="$(var.SolutionDir)\NetMVVMToolKit.dll"
+                    KeyPath="yes"/>
+            </Component>
+
+            <!-- EdaCamTool.Exe -->
+            <Component
+                Id="EdaCamTool.Exe"
+                Guid="{2F552438-3AEA-43C3-BD8B-F18522F14ABB}">
+                <File
+                    Source="$(var.EdaCamTool.TargetDir)\EdaCamTool.exe"
+                    KeyPath="yes"/>
+            </Component>
+
+            <!-- EdaConverter.Exe -->
+            <Component
+                Id="EdaConverter.Exe"
+                Guid="{9A467FA8-F1CB-4FF6-9946-D1B5A3ABBB7E}">
+                <File
+                    Source="$(var.EdaConverter.TargetDir)\EdaConverter.exe"
+                    KeyPath="yes"/>
+            </Component>
+
+            <!-- EdaCamTool.Exe -->
+            <Component
+                Id="EdaPanelizer.Exe"
+                Guid="{241D4697-2017-4AAA-8F4B-C47BECE6299B}">
+                <File
+                    Source="$(var.EdaPanelizer.TargetDir)\EdaPanelizer.exe"
+                    KeyPath="yes"/>
+            </Component>
+
+            <!-- EdaBoardEditor.Exe -->
+            <Component
+                Id="EdaBoardEditor.Exe"
+                Guid="{FBE4D20A-80B5-4ED4-8A4E-B817D397239F}">
+                <File
+                    Source="$(var.EdaBoardEditor.TargetDir)\EdaBoardEditor.exe"
+                    KeyPath="yes"/>
+            </Component>
+            
+            <!-- EdaPanelEditor.Exe -->
+            <Component
+                Id="EdaPanelEditor.Exe"
+                Guid="{87254102-C3C9-4819-BEA3-A16791141C46}">
+                <File
+                    Source="$(var.EdaPanelEditor.TargetDir)\EdaPanelEditor.exe"
+                    KeyPath="yes"/>
+            </Component>
+            
+        </DirectoryRef>        
+    </Fragment>
+
+    <Fragment>
+        <ComponentGroup
+            Id="RequiredComponents">
+            <ComponentRef Id="EdaBase.Dll"/>
+            <ComponentRef Id="EdaCore.Dll"/>
+        </ComponentGroup>
+
+        <ComponentGroup
+            Id="BoardEditor">
+            <ComponentRef Id="EdaBoardEditor.Exe"/>
+            <ComponentRef Id="NetMVVMToolKit.Dll"/>
+        </ComponentGroup>
+
+        <ComponentGroup
+            Id="PanelEditor">
+            <ComponentRef Id="EdaPanelEditor.Exe"/>
+            <ComponentRef Id="EdaPanel.Dll"/>
+            <ComponentRef Id="NetMVVMToolKit.Dll"/>
+        </ComponentGroup>
+
+        <ComponentGroup
+            Id="Cam">
+            <ComponentRef Id="EdaCamTool.Exe"/>
+            <ComponentRef Id="EdaCam.Dll"/>
+        </ComponentGroup>
+
+        <ComponentGroup
+            Id="Panelizer">
+            <ComponentRef Id="EdaPanelizer.Exe"/>
+            <ComponentRef Id="EdaPanel.Dll"/>
+        </ComponentGroup>
+
+        <ComponentGroup
+            Id="Converter">
+            <ComponentRef Id="EdaConverter.Exe"/>
+        </ComponentGroup>
+    </Fragment>
+    
 </Wix>

@@ -55,7 +55,7 @@
                     Polygon polygon = Element.GetPolygon(layer.Id.Side);
 
                     Brush brush = dc.GetBrush(color);
-                    //DrawPolygon(dc, null, brush, polygon);
+                    dc.DrawPolygon(brush, null, polygon);
                     dc.DrawEllipse(Brushes.Black, null, Element.Position, Element.Drill / 2, Element.Drill / 2);
                 }
             }

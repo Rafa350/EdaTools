@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.BoardEditor.Render.WPF {
 
     using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.BoardEditor.Render.WPF.Infrastructure;
     using System.Windows.Media;
 
     public sealed class RenderContext : IRenderContext {
@@ -10,7 +9,6 @@
 
             VisualLayerStack visualLayerStack = VisualLayerStack.CreateDefault();
 
-            VisualDrawer drawer = new VisualDrawer();
             DrawingVisual rootVisual = new DrawingVisual();
 
             // Procesa les capes visuals que son visibles
@@ -25,8 +23,7 @@
                     foreach (var layerId in visualLayer.LayerIds) {
                         Layer layer = board.GetLayer(layerId, false);
                         if (layer != null) {
-
-                            RenderVisitor visitor = new RenderVisitor(layer, layerVisual, visualLayer, drawer);
+                            RenderVisitor visitor = new RenderVisitor(layer, layerVisual, visualLayer);
                             board.AcceptVisitor(visitor);
                         }
                     }

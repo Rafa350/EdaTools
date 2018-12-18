@@ -8,7 +8,7 @@
     <ProjectGuid>{EAAAC444-EF61-4A87-8F1C-45908E2D11C5}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>MikroPic.EdaTools.v1.CamTool</RootNamespace>
-    <AssemblyName>EdaCAMTool</AssemblyName>
+    <AssemblyName>EdaCamTool</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

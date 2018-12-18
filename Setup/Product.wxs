@@ -1,27 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    
+    <?include options.wxi ?>
+    
 	<Product 
-        Id="*" 
-        Name="Setup" 
-        Language="1033" 
-        Version="1.0.0.0" 
-        Manufacturer="MikroPic" 
-        UpgradeCode="e28a93b5-e628-4745-b04f-aeeb9df4414e">
-		
-        <Package 
-            InstallerVersion="200" 
+        Id="{DC0D4A30-3909-42F2-8350-90D79345138C}" 
+        Name="$(var.ProductFullName)"
+        Language="!(loc.LANG)"
+        Version="$(var.ProductVersion)"
+        Manufacturer="$(var.ManufacturerName)"        
+        UpgradeCode="{AC852F13-F986-412C-86ED-76C4D1C8B393}">
+        
+        <!-- Especificacio s del paquet -->
+		<Package 
+            InstallerVersion="300" 
             Compressed="yes" 
             InstallScope="perMachine" />
-
-		<MajorUpgrade 
-            DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+        
+        <!-- Especificacions del mitja -->
+        <Media
+            Id="1"
+            EmbedCab="yes"
+            Cabinet="Setup.cab"/>
 		
-        <MediaTemplate />
+        <MajorUpgrade 
+            DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 
-		<Feature Id="ProductFeature" Title="Setup" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
-		</Feature>
-	</Product>
+        <!-- Icon -->
+        <Icon Id="ICON" SourceFile="icons\lwicon32x32.ico" />
+
+        <!-- Llibreries UI externes -->
+        <UIRef Id="WixUI_Mondo"/>
+        <UIRef Id="WixUI_ErrorProgressText"/>
+
+        <!-- Propietats -->
+        <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+        <Property Id="ARPPRODUCTICON" Value="ICON"/>
+
+        <!-- Variables de configuracio dels quadres de dialeg -->
+        <WixVariable Id="WixUIBannerBmp" Value="bitmaps\topbanner.bmp"/>
+        <WixVariable Id="WixUIDialogBmp" Value="bitmaps\leftbanner.bmp"/>
+        <WixVariable Id="WixUILicenseRtf" Value="eula\eula.rtf" />
+
+        <PropertyRef Id="NETFRAMEWORK40FULL"/>
+        <Condition Message="This application requires .NET Framework 4.0. Please install the .NET Framework then run this installer again.">
+            <![CDATA[Installed OR NETFRAMEWORK40FULL]]>
+        </Condition>
+
+        <Feature
+            Id="FEATURE_1"
+            Title="!(loc.Feature1_Title)"
+            Description="!(loc.Feature1_Description)"
+            Absent="disallow">
+            <ComponentGroupRef Id="RequiredComponents" />
+        </Feature>
+        <Feature
+            Id="FEATURE_2"
+            Title="!(loc.Feature2_Title)"
+            Description="!(loc.Feature2_Description)">
+            <ComponentGroupRef Id="BoardEditor" />
+        </Feature>
+        <Feature
+            Id="FEATURE_3"
+            Title="!(loc.Feature3_Title)"
+            Description="!(loc.Feature3_Description)">
+            <ComponentGroupRef Id="PanelEditor" />
+        </Feature>
+
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="$(var.PlatformProgramFilesFolder)">
+                <Directory Id="CompanyFolder" Name="$(var.ManufacturerName)">
+                    <Directory Id="Install" Name="$(var.ProductFullName)">
+                        <Directory Id="InstallBin" Name="Bin"/>
+                        <Directory Id="InstallHelp" Name="Help"/>
+                        <Directory Id="InstallDocuments" Name="Documents"/>
+                    </Directory>
+                </Directory>
+            </Directory>
+            <Directory Id="ProgramMenuFolder">
+                <Directory Id="CompanyStartMenu" Name="$(var.ManufacturerName)">
+                    <Directory Id="StartMenu" Name="$(var.ProductFullName)"/>
+                </Directory>
+            </Directory>
+            <Directory Id="PersonalFolder">
+                <Directory Id="DocumentsFolder" Name="$(var.ProductName)"/>
+            </Directory>
+        </Directory>
+
+    </Product>
 
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">

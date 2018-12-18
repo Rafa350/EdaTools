@@ -4,7 +4,7 @@
     using System.Windows.Media;
 
     using Color = MikroPic.EdaTools.v1.Base.Geometry.Color;
-    using Rect = MikroPic.EdaTools.v1.Base.Geometry.Rect;
+    using Point = MikroPic.EdaTools.v1.Base.Geometry.Point;
 
     public sealed class SmdPadVisual: ElementVisual {
 
@@ -30,17 +30,12 @@
         /// 
         protected override void Draw(DrawVisualContext dc) {
 
-            Rect rect = new Rect(
-                Element.Position.X - (Element.Size.Width / 2),
-                Element.Position.Y - (Element.Size.Height / 2),
-                Element.Size.Width,
-                Element.Size.Height);
-
             Brush brush = dc.GetBrush(color);
+
             if (Element.Radius == 0)
-                dc.DrawRectangle(brush, null, rect);
+                dc.DrawRectangle(brush, null, Element.Position, Element.Size);
             else
-                dc.DrawRoundedRectangle(brush, null, rect, Element.Radius, Element.Radius);
+                dc.DrawRoundedRectangle(brush, null, Element.Position, Element.Size, Element.Radius, Element.Radius);
         }
 
         /// <summary>
