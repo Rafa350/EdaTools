@@ -15,8 +15,6 @@
 
         private int outlineClearance = 250000;
 
-        #region Metodes per operacions amb poligons
-
         /// <summary>
         /// Obte el poligon del perfil de la placa. Es calcula amb es elements de la capa profile.
         /// </summary>
@@ -199,8 +197,6 @@
             else
                 return new Rect(0, 0, 100000000, 100000000);
         }
-
-        #endregion
 
         /// <summary>
         /// Obte el tamany de la placa, definit pel seu contingut.

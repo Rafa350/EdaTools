@@ -54,12 +54,13 @@
         /// 
         private XmlDocument ReadXmlDocument(Stream stream) {
 
-            XmlReaderSettings settings = new XmlReaderSettings();
-            settings.DtdProcessing = DtdProcessing.Ignore;
-            settings.CloseInput = true;
-            settings.IgnoreComments = true;
-            settings.IgnoreProcessingInstructions = true;
-            settings.IgnoreWhitespace = true;
+            XmlReaderSettings settings = new XmlReaderSettings {
+                DtdProcessing = DtdProcessing.Ignore,
+                CloseInput = true,
+                IgnoreComments = true,
+                IgnoreProcessingInstructions = true,
+                IgnoreWhitespace = true
+            };
 
             XmlReader reader = XmlReader.Create(stream, settings);
             XmlDocument doc = new XmlDocument();
@@ -718,11 +719,11 @@
             // Obte l'angle de rotacio i la cara
             //
             Angle rotation = Angle.Zero;
-            BoardSide side = BoardSide.Top;
+            PartSide side = PartSide.Top;
             if (AttributeExists(node, "rot")) {
                 string rot = GetAttributeAsString(node, "rot");
                 if (rot.Contains("M"))
-                   side = BoardSide.Bottom;
+                   side = PartSide.Bottom;
 
                 rotation = ParseAngle(rot);
             }

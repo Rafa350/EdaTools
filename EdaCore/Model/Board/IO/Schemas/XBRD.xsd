@@ -105,6 +105,7 @@
             <xs:attribute name="component" use="required" type="nameType"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="rotation" use="optional" type="angleType"/>
+            <xs:attribute name="side" use="optional" type="boardSideType"/>
         </xs:complexType>        
     </xs:element>
 

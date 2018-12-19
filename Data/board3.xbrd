@@ -2,7 +2,6 @@
 <document version="213" documentType="board" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/XBRD.xsd">
     <board position="0, 0" rotation="0">
         <layers>
-        
             <layer id="Top.Top" function="signal" />
             <layer id="Bottom.Bottom" function="signal" />
             <layer id="Pads" function="unknown" />

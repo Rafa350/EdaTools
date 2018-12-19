@@ -5,12 +5,18 @@
     using System;
     using System.Collections.Generic;
 
+
+    public enum PartSide {
+        Top,
+        Bottom
+    }
+
     public sealed partial class Part: IPosition, IRotation, IName, IVisitable {
 
         private readonly string name;
         private Point position;
         private Angle rotation;
-        private BoardSide side = BoardSide.Top;
+        private PartSide side = PartSide.Top;
         private readonly Component component;
 
         /// <summary>
@@ -22,16 +28,13 @@
         /// <param name="rotation">Angle de rotacio</param>
         /// <param name="side">Indica la cara de la placa.</param>
         /// 
-        public Part(Component component, string name, Point position, Angle rotation, BoardSide side = BoardSide.Top) {
+        public Part(Component component, string name, Point position, Angle rotation, PartSide side = PartSide.Top) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
 
             if (component == null)
                 throw new ArgumentNullException("component");
-
-            if ((side != BoardSide.Top) && (side != BoardSide.Bottom))
-                throw new ArgumentOutOfRangeException("side");
 
             this.name = name;
             this.position = position;
@@ -182,14 +185,11 @@
         /// Obte la cara en la que es monta el component.
         /// </summary>
         /// 
-        public BoardSide Side {
+        public PartSide Side {
             get {
                 return side;
             }
             set {
-                if ((value != BoardSide.Top) && (value != BoardSide.Bottom))
-                    throw new ArgumentOutOfRangeException("Part.Side");
-
                 side = value;
             }
         }

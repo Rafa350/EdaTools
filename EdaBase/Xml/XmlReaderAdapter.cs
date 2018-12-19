@@ -46,7 +46,13 @@
             }
             else {
                 do {
-                    reader.Read();
+                    try {
+                        reader.Read();
+                    }
+                    catch (Exception e) {
+                        throw new Exception(
+                           String.Format("Error en el tag '<{0}>'.", tagName), e);
+                    }
                 } while ((reader.NodeType != XmlNodeType.Element) &&
                          (reader.NodeType != XmlNodeType.EndElement) &&
                          (reader.NodeType != XmlNodeType.None));

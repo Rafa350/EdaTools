@@ -201,12 +201,13 @@
         /// 
         private static Transform GetTransform(Part part) {
 
-            Point position = new Point(part.Position.X, part.Position.Y);
+            double x = part.Position.X;
+            double y = part.Position.Y;
             double angle = part.Rotation.Degrees / 100.0;
 
             Matrix m = new Matrix();
-            m.Translate(position.X, position.Y);
-            m.RotateAt(angle, position.X, position.Y);
+            m.Translate(x, y);
+            m.RotateAt(angle, x, y);
 
             Transform transform = new MatrixTransform(m);
             transform.Freeze();

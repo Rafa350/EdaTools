@@ -62,8 +62,8 @@
         public static readonly LayerId ProfileId = new LayerId("Profile");
         public static readonly LayerId UnknownId = new LayerId("Unknown");
 
-        private readonly LayerFunction function = LayerFunction.Unknown;
         private readonly LayerId id;
+        private readonly LayerFunction function = LayerFunction.Unknown;
 
         /// <summary>
         /// Constructor.
