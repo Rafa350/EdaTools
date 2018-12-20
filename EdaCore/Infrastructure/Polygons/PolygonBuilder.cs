@@ -128,7 +128,8 @@
             // Si es una rotacio arbitraria, fa servir calcul amb matrius
             //
             if (!rotation.IsOrthogonal) {
-                Transformation t = new Transformation(position, rotation);
+                Transformation t = new Transformation();
+                t.Rotate(position, rotation);
                 t.ApplyTo(points);
             }
 
@@ -189,7 +190,8 @@
             // Si es una rotacio arbitraria, fa servir calcul amb matrius
             //
             if (!rotation.IsOrthogonal) {
-                Transformation t = new Transformation(position, rotation);
+                Transformation t = new Transformation();
+                t.Rotate(position, rotation);
                 t.ApplyTo(points);
             }
 

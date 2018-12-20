@@ -2,122 +2,152 @@
 
     using System.Windows.Media;
 
-    public struct Transformation {
+    public sealed class Transformation {
 
-        //private Matrix m;
-        private readonly Point offset;
-        private readonly Angle rotation;
+        private Matrix m = Matrix.Identity;
 
         /// <summary>
-        /// Contructor de l'objecte
+        /// Afegeix una translacio.
         /// </summary>
-        /// <param name="offset">Translacio.</param>
-        /// <param name="rotation">Rotacio</param>
+        /// <param name="v">Coordinades de translacio.</param>
         /// 
-        public Transformation(Point offset, Angle rotation) {
+        public void Translate(Point v) {
 
-            /*m = new Matrix();
-            m.Translate(offset.X, offset.Y);
-            m.RotateAt(rotation.Degrees / 100, offset.X, offset.Y);*/
-
-            this.offset = offset;
-            this.rotation = rotation;
+            m.Translate(v.X, v.Y);
         }
 
         /// <summary>
-        /// Constructor del objecte.
+        /// Afegeig una translacio.
         /// </summary>
-        /// <param name="offset">Offset.</param>
-        /// 
-        public Transformation(Point offset) {
+        /// <param name="offsetX">Translacio X</param>
+        /// <param name="offsetY">Translacio Y</param>
+        ///
+        public void Translate(int offsetX, int offsetY) {
 
-            /*m = new Matrix();
-            m.Translate(offset.X, offset.Y);*/
-
-            this.offset = offset;
-            this.rotation = Angle.Zero;
+            m.Translate(offsetX, offsetY);
         }
 
         /// <summary>
-        /// Contructor del objecte.
+        /// Afegeix un canvi d'escala.
         /// </summary>
-        /// <param name="rotation">Rotacio.</param>
+        /// <param name="scaleX">Escala X</param>
+        /// <param name="scaleY">Escala Y</param>
         /// 
-        public Transformation(Angle rotation) {
+        public void Scale(int scaleX, int scaleY) {
 
-            /*m = new Matrix();
-            m.Rotate(rotation.Degrees / 100);*/
-
-            this.offset = new Point();
-            this.rotation = rotation;
+            m.Scale(scaleX, scaleY);
         }
 
+        /// <summary>
+        /// Afegeix un canvi d'escala.
+        /// </summary>
+        /// <param name="center">Centre d'escalat.</param>
+        /// <param name="scaleX">Escala X</param>
+        /// <param name="scaleY">Escala Y</param>
+        /// 
+        public void Scale(Point center, int scaleX, int scaleY) {
+
+            m.ScaleAt(scaleX, scaleY, center.X, center.Y);
+        }
+
+        /// <summary>
+        /// Afegeix un canvi d'escala.
+        /// </summary>
+        /// <param name="centerX">Coordinada X del centre d'escalat.</param>
+        /// <param name="centerY">Coordinada Y del centre d'escalat.</param>
+        /// <param name="scaleX">Escala X</param>
+        /// <param name="scaleY">Escala Y</param>
+        /// 
+        public void Scale(int centerX, int centerY, int scaleX, int scaleY) {
+
+            m.ScaleAt(scaleX, scaleY, centerX, centerY);
+        }
+
+        /// <summary>
+        /// Afegeix una rotacio.
+        /// </summary>
+        /// <param name="rotation">Angle de rotacio.</param>
+        /// 
+        public void AppendRotate(Angle rotation) {
+
+            m.Rotate(rotation.Degrees / 1000.0);
+        }
+
+        /// <summary>
+        /// Afegeix una rotacio.
+        /// </summary>
+        /// <param name="center">Coordinades del centre de rotacio.</param>
+        /// <param name="rotation">Angle de rotacio.</param>
+        /// 
+        public void Rotate(Point center, Angle rotation) {
+
+            m.RotateAt(rotation.Degrees / 100.0, center.X, center.Y);
+        }
+
+        /// <summary>
+        /// Afegeix una rotacio.
+        /// </summary>
+        /// <param name="centerX">Coordinada X del centre de rotacio.</param>
+        /// <param name="centerY">Coordinada Y del centre de rotacio.</param>
+        /// <param name="rotation">Angle de rotacio.</param>
+        /// 
+        public void Rotate(int centerX, int centerY, Angle rotation) {
+
+            m.RotateAt(rotation.Degrees / 1000.0, centerX, centerY);
+        }
+
+        /// <summary>
+        /// Aplica la transfornmacio a un punt.
+        /// </summary>
+        /// <param name="point">El punt.</param>
+        /// <returns>El punt transformat.</returns>
+        /// 
         public Point ApplyTo(Point point) {
 
-            if (rotation.IsZero) 
-                return point.Offset(offset.X, offset.Y);
+            double x = point.X;
+            double y = point.Y;
+            double xadd = y * m.M21 + m.OffsetX;
+            double yadd = x * m.M12 + m.OffsetY;
 
-            else {
-                Matrix m = new Matrix();
-                m.Translate(offset.X, offset.Y);
-                m.RotateAt(rotation.Degrees / 100.0, offset.X, offset.Y);
+            x *= m.M11;
+            x += xadd;
+            y *= m.M22;
+            y += yadd;
 
-                double x = point.X;
-                double y = point.Y;
+            return new Point((int)x, (int)y);
+        }
+
+        /// <summary>
+        /// Aplica la transformacio a un array de punts.
+        /// </summary>
+        /// <param name="points">El array de punts.</param>
+        /// 
+        public void ApplyTo(Point[] points) {
+
+            for (int i = 0; i < points.Length; i++) {
+
+                double x = points[i].X;
+                double y = points[i].Y;
                 double xadd = y * m.M21 + m.OffsetX;
                 double yadd = x * m.M12 + m.OffsetY;
+
                 x *= m.M11;
                 x += xadd;
                 y *= m.M22;
                 y += yadd;
-                return new Point((int)x, (int)y);
+
+                points[i] = new Point((int)x, (int)y);
             }
         }
 
-        public void ApplyTo(Point[] points) {
-
-            if (rotation.IsZero) {
-                if ((offset.X != 0) || (offset.Y != 0))
-                    for (int i = 0; i < points.Length; i++)
-                        points[i] = points[i].Offset(offset.X, offset.Y);
-            }
-            /*else if (rotation.IsOrthogonal) {
-            }*/
-            else { 
-                Matrix m = new Matrix();
-                m.Translate(offset.X, offset.Y);
-                m.RotateAt(rotation.Degrees / 100.0, offset.X, offset.Y);
-
-                for (int i = 0; i < points.Length; i++) {
-                    double x = points[i].X;
-                    double y = points[i].Y;
-                    double xadd = y * m.M21 + m.OffsetX;
-                    double yadd = x * m.M12 + m.OffsetY;
-                    x *= m.M11;
-                    x += xadd;
-                    y *= m.M22;
-                    y += yadd;
-                    points[i] = new Point((int)x, (int)y);
-                }
-            }
-        }
-
-/*        public Point Offset {
+        /// <summary>
+        /// Obte la matriu de la transformacio.
+        /// </summary>
+        /// 
+        public Matrix Matrix {
             get {
-                return offset;
+                return m;
             }
         }
-
-        public Angle Rotation {
-            get {
-                return rotation;
-            }
-        }
-
-        public bool IsNull {
-            get {
-                return (offset.X == 0) && (offset.Y == 0) && (rotation.IsZero);
-            }
-        }*/
     }
 }

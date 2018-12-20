@@ -183,7 +183,9 @@
 
             // Calcula la transformacio
             //
-            Transformation t = new Transformation(startPosition, Angle.FromRadiants(rad));
+            Transformation t = new Transformation();
+            t.Translate(startPosition);
+            t.AppendRotate(Angle.FromRadiants(rad));
 
             // Afegeix les linies de tall
             //
@@ -341,7 +343,9 @@
 
             public TransformVisitor(Point offset, Angle rotation) {
 
-                transformation = new Transformation(offset, rotation);
+                transformation = new Transformation();
+                transformation.Translate(offset);
+                transformation.AppendRotate(rotation);
             }
 
             public override void Visit(LineElement line) {

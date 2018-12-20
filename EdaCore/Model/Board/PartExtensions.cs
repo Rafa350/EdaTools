@@ -6,7 +6,10 @@
 
         public static Transformation GetLocalTransformation(this Part part) {
 
-            return new Transformation(part.Position, part.Rotation);
+            Transformation t = new Transformation();
+            t.Translate(part.Position);
+            t.Rotate(part.Position, part.Rotation);
+            return t;
         }
     }
 }

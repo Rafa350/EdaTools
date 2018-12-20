@@ -218,9 +218,9 @@
         /// </summary>
         /// <param name="m">La transformacio.</param>
         /// 
-        public void PushTransform(MatrixTransform m) {
+        public void PushTransform(Transformation t) {
 
-            context.PushTransform(m);
+            context.PushTransform(new MatrixTransform(t.Matrix));
         }
 
         /// <summary>

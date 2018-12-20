@@ -47,10 +47,10 @@
             PartAttributeAdapter paa = new PartAttributeAdapter(part, Element);
             IEnumerable<GlyphTrace> glyphTraces = td.Draw(paa.Value, new Point(0, 0), paa.HorizontalAlign, paa.VerticalAlign, paa.Height);
 
-            Matrix m = new Matrix();
-            m.Translate(Element.Position.X, Element.Position.Y);
-            m.RotateAt(Element.Rotation.Degrees / 100.0, Element.Position.X, Element.Position.Y);
-            dc.PushTransform(new MatrixTransform(m));
+            Transformation t = new Transformation();
+            t.Translate(Element.Position);
+            t.Rotate(Element.Position, Element.Rotation);
+            dc.PushTransform(t);
 
             Pen pen = dc.GetPen(color, Element.Thickness, PenLineCap.Round);
             dc.DrawGlyphs(null, pen, glyphTraces);
