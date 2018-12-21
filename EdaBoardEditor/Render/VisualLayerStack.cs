@@ -59,7 +59,7 @@
             vls.Add(new VisualLayer("Vias",
                 new LayerId[] { Layer.TopId },
                 new ElementType[] { ElementType.Via }, 
-                true, new Color(255, 0, 128, 0)));
+                true, new Color(180, 0, 128, 0)));
             
             //vls.Add(new VisualLayer("Drills", new LayerSet(Layer.DrillsId), true, new Color(255, 255, 255, 255)));
             vls.Add(new VisualLayer("Holes", 

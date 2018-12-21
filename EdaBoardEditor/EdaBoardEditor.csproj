@@ -90,15 +90,11 @@
     <Compile Include="DrawEditor\DesignTool.cs" />
     <Compile Include="Render\VisualLayer.cs" />
     <Compile Include="Render\VisualLayerStack.cs" />
-    <Compile Include="Render\WPF\Infrastructure\BrushCache.cs" />
-    <Compile Include="Render\WPF\Infrastructure\PenCache.cs" />
-    <Compile Include="Render\WPF\Infrastructure\VisualDrawer.cs" />
     <Compile Include="Render\IRenderContext.cs" />
     <Compile Include="Render\ISceneGraph.cs" />
     <Compile Include="Render\WPF\RenderContext.cs" />
     <Compile Include="Render\WPF\RenderVisitor.cs" />
     <Compile Include="Render\WPF\SceneGraph.cs" />
-    <Compile Include="Render\WPF\Visuals\VisualBase.cs" />
     <Compile Include="Render\WPF\Visuals\PartVisual.cs" />
     <Compile Include="Render\WPF\Visuals\TextVisual.cs" />
     <Compile Include="Render\WPF\Visuals\RegionVisual.cs" />
@@ -108,7 +104,6 @@
     <Compile Include="Render\WPF\Visuals\HoleVisual.cs" />
     <Compile Include="Render\WPF\Visuals\RectangleVisual.cs" />
     <Compile Include="Render\WPF\Visuals\CircleVisual.cs" />
-    <Compile Include="Render\WPF\Visuals\DrawVisualContext.cs" />
     <Compile Include="Render\WPF\Visuals\ElementVisual.cs" />
     <Compile Include="Render\WPF\Visuals\ThPadVisual.cs" />
     <Compile Include="Render\WPF\Visuals\ViaVisual.cs" />
@@ -165,6 +160,10 @@
     <None Include="signature.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EdaBaseWpf\EdaBaseWpf.csproj">
+      <Project>{516c6c30-072f-450c-8b9f-c599b13f2dd7}</Project>
+      <Name>EdaBaseWpf</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EdaBase\EdaBase.csproj">
       <Project>{1bf8a2de-cc88-4617-b0ce-eebb7b76230f}</Project>
       <Name>EdaBase</Name>

@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.BoardEditor.Render.WPF.Visuals {
 
+    using MikroPic.EdaTools.v1.Base.WPF;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using System.Windows.Media;
 

@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaPanelEditor", "EdaPanelE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaBoardEditor", "EdaBoardEditor\EdaBoardEditor.csproj", "{8CEAFC37-67B6-4765-A9C0-6F64EE01C7A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaBaseWpf", "EdaBaseWpf\EdaBaseWpf.csproj", "{516C6C30-072F-450C-8B9F-C599B13F2DD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,10 @@ Global
 		{8CEAFC37-67B6-4765-A9C0-6F64EE01C7A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CEAFC37-67B6-4765-A9C0-6F64EE01C7A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CEAFC37-67B6-4765-A9C0-6F64EE01C7A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{516C6C30-072F-450C-8B9F-C599B13F2DD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{516C6C30-072F-450C-8B9F-C599B13F2DD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{516C6C30-072F-450C-8B9F-C599B13F2DD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{516C6C30-072F-450C-8B9F-C599B13F2DD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -124,6 +130,7 @@ Global
 		{540D8519-6CD3-489D-AA1A-8C23E8F51648} = {2AE1055B-66C8-4106-A68A-95A015805086}
 		{FF25708F-6C47-4378-81A1-991993398882} = {92F26718-1D57-463C-8AF1-6BE8F0199D09}
 		{8CEAFC37-67B6-4765-A9C0-6F64EE01C7A9} = {92F26718-1D57-463C-8AF1-6BE8F0199D09}
+		{516C6C30-072F-450C-8B9F-C599B13F2DD7} = {2AE1055B-66C8-4106-A68A-95A015805086}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE385F67-7CB1-40F1-B714-28A5F985E431}

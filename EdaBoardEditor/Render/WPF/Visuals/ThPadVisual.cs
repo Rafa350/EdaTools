@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.BoardEditor.Render.WPF.Visuals {
 
+    using MikroPic.EdaTools.v1.Base.WPF;
     using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
@@ -40,9 +41,11 @@
                     layer.Id.Side == BoardSide.Top ? Element.TopSize :
                     layer.Id.Side == BoardSide.Bottom ? Element.BottomSize :
                     Element.InnerSize;
-                int radius = size / 2;
 
-                Pen pen = dc.GetPen(color, (size - Element.Drill) / 2, PenLineCap.Flat);
+                int thickness = (size - Element.Drill) / 2;
+                int radius = (size - thickness / 2) / 2;
+
+                Pen pen = dc.GetPen(color, thickness, PenLineCap.Flat);
                 dc.DrawEllipse(Brushes.Black, pen, Element.Position, radius, radius);
             }
 

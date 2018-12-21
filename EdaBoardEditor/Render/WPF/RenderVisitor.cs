@@ -1,11 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.BoardEditor.Render.WPF {
 
-    using MikroPic.EdaTools.v1.BoardEditor.Render.WPF.Infrastructure;
     using MikroPic.EdaTools.v1.BoardEditor.Render.WPF.Visuals;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
-    using System.Windows;
     using System.Windows.Media;
 
     /// <summary>
