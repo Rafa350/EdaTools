@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.BoardEditor.Services {
 
     using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Conectivity;
     using MikroPic.EdaTools.v1.Core.Model.Board.IO;
     using System.IO;
     using System.Windows;
@@ -9,6 +10,7 @@
 
         private readonly Application application;
         private Board board;
+        private ConnectivityMap map;
         private string fileName;
         private bool isDirty;
 
@@ -35,6 +37,7 @@
             isDirty = true;
 
             board = new Board();
+            map = new ConnectivityMap();
         }
 
         /// <summary>
@@ -50,6 +53,8 @@
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
                 BoardStreamReader reader = new BoardStreamReader(stream);
                 board = reader.Read();
+                map = new ConnectivityMap();
+                map.Add(board);
             }
         }
 
