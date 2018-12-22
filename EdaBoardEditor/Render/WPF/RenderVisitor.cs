@@ -10,7 +10,7 @@
     /// Clase per visitar la placa i generar les visuals.
     /// </summary>
     /// 
-    internal sealed class RenderVisitor : ElementVisitor {
+    internal sealed class RenderVisitor: ElementVisitor {
 
         private readonly Layer layer;
         private readonly VisualLayer visualLayer;
@@ -179,16 +179,6 @@
             finally {
                 parentVisual = saveVisual;
             }
-        }
-
-        /// <summary>
-        /// Afegeix la visual al seu pare
-        /// </summary>
-        /// <param name="visual">La visual a afeigir</param>
-        /// 
-        private void AddVisual(DrawingVisual visual) {
-
-            parentVisual.Children.Add(visual);
         }
 
         /// <summary>

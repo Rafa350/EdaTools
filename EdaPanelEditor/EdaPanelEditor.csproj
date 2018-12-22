@@ -88,10 +88,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DrawEditor\DesignTool.cs" />
-    <Compile Include="Render\CutVisualItem.cs" />
-    <Compile Include="Render\PcbVisualItem.cs" />
-    <Compile Include="Render\VisualDrawer.cs" />
-    <Compile Include="Render\VisualItem.cs" />
+    <Compile Include="Render\WPF\Visuals\CutVisual.cs" />
+    <Compile Include="Render\WPF\Visuals\PcbVisual.cs" />
+    <Compile Include="Render\RenderVisitor.cs" />
+    <Compile Include="Render\WPF\Visuals\ItemVisual.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\IAppService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -145,6 +145,10 @@
     <None Include="signature.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EdaBaseWpf\EdaBaseWpf.csproj">
+      <Project>{516c6c30-072f-450c-8b9f-c599b13f2dd7}</Project>
+      <Name>EdaBaseWpf</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EdaBase\EdaBase.csproj">
       <Project>{1bf8a2de-cc88-4617-b0ce-eebb7b76230f}</Project>
       <Name>EdaBase</Name>

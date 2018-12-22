@@ -20,6 +20,11 @@
             }
         }
 
+        /// <summary>
+        /// Afegeix un element.
+        /// </summary>
+        /// <param name="element">L'element a afeigir.</param>
+        /// 
         public void Add(Element element) {
 
             if (element == null)
@@ -28,8 +33,11 @@
             if (element is ViaElement via) 
                 AddElement(via.Position, via);
 
-            else if (element is PadElement pad)
-                AddElement(pad.Position, pad);
+            else if (element is SmdPadElement smd)
+                AddElement(smd.Position, smd);
+
+            else if (element is ThPadElement th)
+                AddElement(th.Position, th);
 
             else if (element is LineElement line) {
                 if (line.LayerSet.Contains(Layer.TopId) ||
@@ -38,10 +46,64 @@
                     AddElement(line.EndPosition, line);
                 }
             }
+
+            else if (element is ArcElement arc) {
+                if (arc.LayerSet.Contains(Layer.TopId) ||
+                    arc.LayerSet.Contains(Layer.BottomId)) {
+                    AddElement(arc.StartPosition, arc);
+                    AddElement(arc.EndPosition, arc);
+                }
+            }
         }
 
+        /// <summary>
+        /// Elimina un element.
+        /// </summary>
+        /// <param name="element">L'element a eliminar.</param>
+        /// 
         public void Remove(Element element) {
 
+        }
+
+        /// <summary>
+        /// Obte la pista de la posicio especificada.
+        /// </summary>
+        /// <param name="position">La posicio.</param>
+        /// <returns>La pista com a llista d'elements.</returns>
+        /// 
+        public IEnumerable<Element> GetChainedElements(Point position) {
+
+            HashSet<Element> chain = new HashSet<Element>();
+            GetChainedElements(position, chain);
+            return chain;
+        }
+
+        private void GetChainedElements(Point position, ICollection<Element> chain) {
+
+            if (map.TryGetValue(position, out List<Element> elements)) {
+                foreach (var element in elements) {
+
+                    if (!chain.Contains(element)) {
+
+                        chain.Add(element);
+
+                        // Procesa els elements encadenats (Linies i arcs)
+                        //
+                        if (element is LineElement line) {
+                            if (line.StartPosition == position)
+                                GetChainedElements(line.EndPosition, chain);
+                            else
+                                GetChainedElements(line.StartPosition, chain);
+                        }
+                        else if (element is ArcElement arc) {
+                            if (arc.StartPosition == position)
+                                GetChainedElements(arc.EndPosition, chain);
+                            else
+                                GetChainedElements(arc.StartPosition, chain);
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>

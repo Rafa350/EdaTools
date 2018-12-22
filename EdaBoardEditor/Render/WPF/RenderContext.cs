@@ -3,9 +3,9 @@
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using System.Windows.Media;
 
-    public sealed class RenderContext : IRenderContext {
+    public sealed class RenderContext {
 
-        public ISceneGraph Render(Board board) {
+        public SceneGraph Render(Board board) {
 
             VisualLayerStack visualLayerStack = VisualLayerStack.CreateDefault();
 

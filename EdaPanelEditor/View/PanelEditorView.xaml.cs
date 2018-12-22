@@ -187,19 +187,8 @@
                     new WinRect(0, 0, Project.Size.Width, Project.Size.Height));
 
                 DrawingVisual visual = new DrawingVisual();
-                VisualDrawer drawer = new VisualDrawer();
-                foreach (ProjectItem item in Project.Items) {
-                    if (item is CutItem cutItem) {
-                        VisualItem itemVisual = drawer.Create(cutItem);
-                        drawer.Draw(itemVisual);
-                        visual.Children.Add(itemVisual);
-                    }
-                    else if (item is PcbItem pcbItem) {
-                        VisualItem itemVisual = drawer.Create(pcbItem);
-                        drawer.Draw(itemVisual);
-                        visual.Children.Add(itemVisual);
-                    }
-                }
+                RenderVisitor visitor = new RenderVisitor(visual);
+                Project.AcceptVisitor(visitor);
 
                 visual.Transform = new MatrixTransform(viewPoint.Matrix);
 

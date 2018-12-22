@@ -3,8 +3,13 @@
     using MikroPic.EdaTools.v1.BoardEditor.DrawEditor;
     using MikroPic.EdaTools.v1.BoardEditor.Render;
     using MikroPic.EdaTools.v1.BoardEditor.Render.WPF;
+    using MikroPic.EdaTools.v1.BoardEditor.Render.WPF.Visuals;
     using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+    using MikroPic.EdaTools.v1.Base.WPF;
+    using MikroPic.EdaTools.v1.Core.Conectivity;
     using System;
+    using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -23,6 +28,8 @@
         private int wheelCount = 0;
         private Point startPos;
         private Point currentPos;
+        private SceneGraph sceneGraph;
+        private ConnectivityMap map;
 
         static BoardEditorView() {
 
@@ -157,12 +164,20 @@
             //
             if (e.ChangedButton == MouseButton.Left) {
 
-                if (contentBox.Visual != null) {
-                    HitTestResult result = VisualTreeHelper.HitTest(contentBox.Visual, currentPos);
-                    if (result != null) {
-                        DrawingVisual visual = result.VisualHit as DrawingVisual;
-                        if (visual != null) {
-                            (visual.Parent as DrawingVisual).Children.Remove(visual);
+                if (sceneGraph != null) {
+                    VisualBase visual = sceneGraph.GetVisual((int)currentPos.X, (int)currentPos.Y);
+                    if (visual != null) {
+                        if (visual is ElementVisual elementVisual) {
+                            Element element = elementVisual.Element;
+                            if (element is ViaElement via) {
+                                Base.Geometry.Point position = via.Position;
+                                IEnumerable<Element> elements = map.GetChainedElements(position);
+                                foreach (var eu in elements) {
+                                    ElementVisual ev = sceneGraph.GetVisual(eu);
+                                    if (ev != null)
+                                        (ev.Parent as DrawingVisual).Children.Remove(ev);
+                                }
+                            }
                         }
                     }
                 }
@@ -210,12 +225,15 @@
                     new System.Windows.Rect(0, 0, Board.Size.Width, Board.Size.Height));
 
                 IRenderContext renderContext = new RenderContext();
-                SceneGraph sceneGraph = renderContext.Render(Board) as SceneGraph;
+                sceneGraph = renderContext.Render(Board) as SceneGraph;
                 DrawingVisual visual = sceneGraph.Visual;
 
                 visual.Transform = new MatrixTransform(viewPoint.Matrix);
 
                 contentBox.Visual = visual;
+
+                map = new ConnectivityMap();
+                map.Add(Board);
             }
         }
 

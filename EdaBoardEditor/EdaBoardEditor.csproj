@@ -91,7 +91,6 @@
     <Compile Include="Render\VisualLayer.cs" />
     <Compile Include="Render\VisualLayerStack.cs" />
     <Compile Include="Render\IRenderContext.cs" />
-    <Compile Include="Render\ISceneGraph.cs" />
     <Compile Include="Render\WPF\RenderContext.cs" />
     <Compile Include="Render\WPF\RenderVisitor.cs" />
     <Compile Include="Render\WPF\SceneGraph.cs" />
