@@ -128,11 +128,12 @@
             if (pad != null)
                 return pad;
 
-            if (throwOnError)
+            else if (throwOnError)
                 throw new InvalidOperationException(
                     String.Format("No se encontro el pad '{0}' en el part '{1}'.", name, this.name));
 
-            return null;
+            else
+                return null;
         }
 
         /// <summary>

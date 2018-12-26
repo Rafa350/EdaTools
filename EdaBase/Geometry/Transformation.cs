@@ -70,7 +70,7 @@
         /// 
         public void AppendRotate(Angle rotation) {
 
-            m.Rotate(rotation.Degrees / 1000.0);
+            m.Rotate(rotation.Degrees / 100.0);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@
         /// 
         public void Rotate(int centerX, int centerY, Angle rotation) {
 
-            m.RotateAt(rotation.Degrees / 1000.0, centerX, centerY);
+            m.RotateAt(rotation.Degrees / 100.0, centerX, centerY);
         }
 
         /// <summary>

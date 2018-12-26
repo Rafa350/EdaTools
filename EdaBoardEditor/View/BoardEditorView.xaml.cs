@@ -224,7 +224,7 @@
                     new System.Windows.Size(contentBox.ActualWidth, contentBox.ActualHeight),
                     new System.Windows.Rect(0, 0, Board.Size.Width, Board.Size.Height));
 
-                IRenderContext renderContext = new RenderContext();
+                RenderContext renderContext = new RenderContext();
                 sceneGraph = renderContext.Render(Board) as SceneGraph;
                 DrawingVisual visual = sceneGraph.Visual;
 

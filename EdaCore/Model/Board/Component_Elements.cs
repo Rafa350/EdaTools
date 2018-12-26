@@ -32,8 +32,7 @@
 
             // Si l'element es un Pad, l'afegeix la la llista de pads.
             //
-            PadElement pad = element as PadElement;
-            if (pad != null) {
+            if (element is PadElement pad) {
                 if (pads == null)
                     pads = new Dictionary<string, PadElement>();
                 pads.Add(pad.Name, pad);
@@ -77,8 +76,7 @@
 
             // Si l'element es un pad, tambe l'elimina de la llista de pads.
             //
-            PadElement pad = element as PadElement;
-            if (pads != null) {
+            if (element is PadElement pad) { 
                 pads.Remove(pad.Name);
                 if (pads.Count == 0)
                     pads = null;
@@ -111,12 +109,13 @@
         /// 
         public PadElement GetPad(string name, bool throwOnError = true) {
 
-            if ((pads != null) && pads.TryGetValue(name, out var pad))
+            if ((pads != null) && pads.TryGetValue(name, out PadElement pad))
                 return pad;
 
             else if (throwOnError)
                 throw new InvalidOperationException(
                     String.Format("No se encontro el pad '{0}' en el componente '{1}'.", name, this.name));
+
             else
                 return null;
         }
