@@ -1,13 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.BoardEditor.View {
 
+    using MikroPic.EdaTools.v1.Base.WPF;
     using MikroPic.EdaTools.v1.BoardEditor.DrawEditor;
-    using MikroPic.EdaTools.v1.BoardEditor.Render;
     using MikroPic.EdaTools.v1.BoardEditor.Render.WPF;
     using MikroPic.EdaTools.v1.BoardEditor.Render.WPF.Visuals;
+    using MikroPic.EdaTools.v1.Core.Conectivity;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
-    using MikroPic.EdaTools.v1.Base.WPF;
-    using MikroPic.EdaTools.v1.Core.Conectivity;
     using System;
     using System.Collections.Generic;
     using System.Windows;
@@ -15,7 +14,6 @@
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Threading;
-
     using Point = System.Windows.Point;
 
     public partial class BoardEditorView : UserControl {

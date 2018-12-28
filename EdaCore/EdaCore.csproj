@@ -58,6 +58,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conectivity\ConnectivityAnchor.cs" />
+    <Compile Include="Conectivity\ConnectivityEdge.cs" />
+    <Compile Include="Conectivity\ConnectivityItem.cs" />
     <Compile Include="Conectivity\ConnectivityMap.cs" />
     <Compile Include="Export\FreeCad\FreeCadExporter.cs" />
     <Compile Include="Export\KiCad\KiCadExporter.cs" />

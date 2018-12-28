@@ -8,16 +8,21 @@
 
     public sealed class ConnectivityMap {
 
-        private readonly Dictionary<Point, List<Element>> map = new Dictionary<Point, List<Element>>();
+        private readonly Dictionary<Point, ConnectivityAnchor> anchors = new Dictionary<Point, ConnectivityAnchor>();
+        private readonly Dictionary<Tuple<ConnectivityAnchor, ConnectivityAnchor>, ConnectivityEdge> edges = new Dictionary<Tuple<ConnectivityAnchor, ConnectivityAnchor>, ConnectivityEdge>();
 
+        /// <summary>
+        /// Afegeix una plada al mapa de conectivitat.
+        /// </summary>
+        /// <param name="board">La placa a afeigir.</param>
+        /// 
         public void Add(Board board) {
 
             if (board == null)
                 throw new ArgumentNullException("board");
 
-            foreach (var element in board.Elements) {
+            foreach (var element in board.Elements) 
                 Add(element);
-            }
         }
 
         /// <summary>
@@ -30,30 +35,20 @@
             if (element == null)
                 throw new ArgumentNullException("element");
 
-            if (element is ViaElement via) 
-                AddElement(via.Position, via);
+            if (element is ViaElement via)
+                AddViaElement(via);
 
             else if (element is SmdPadElement smd)
-                AddElement(smd.Position, smd);
+                AddSmdPadElement(smd);
 
             else if (element is ThPadElement th)
-                AddElement(th.Position, th);
+                AddThPadElement(th);
 
-            else if (element is LineElement line) {
-                if (line.LayerSet.Contains(Layer.TopId) ||
-                    line.LayerSet.Contains(Layer.BottomId)) {
-                    AddElement(line.StartPosition, line);
-                    AddElement(line.EndPosition, line);
-                }
-            }
+            else if (element is LineElement line)
+                AddLineElement(line);
 
-            else if (element is ArcElement arc) {
-                if (arc.LayerSet.Contains(Layer.TopId) ||
-                    arc.LayerSet.Contains(Layer.BottomId)) {
-                    AddElement(arc.StartPosition, arc);
-                    AddElement(arc.EndPosition, arc);
-                }
-            }
+            else if (element is ArcElement arc) 
+                AddLineElement(arc);
         }
 
         /// <summary>
@@ -74,11 +69,11 @@
         public IEnumerable<Element> GetChainedElements(Point position) {
 
             HashSet<Element> chain = new HashSet<Element>();
-            GetChainedElements(position, chain);
+//            GetChainedElements(position, chain);
             return chain;
         }
 
-        private void GetChainedElements(Point position, ICollection<Element> chain) {
+/*        private void GetChainedElements(Point position, ICollection<Element> chain) {
 
             if (map.TryGetValue(position, out List<Element> elements)) {
                 foreach (var element in elements) {
@@ -104,6 +99,78 @@
                     }
                 }
             }
+        }*/
+
+        /// <summary>
+        /// Obte un anclatge per la posicio especificada.
+        /// </summary>
+        /// <param name="position">La posicio.</param>
+        /// <returns>L'anclatge d'aquesta posicio.</returns>
+        /// 
+        private ConnectivityAnchor GetAnchor(Point position) {
+
+            if (!anchors.TryGetValue(position, out ConnectivityAnchor anchor)) {
+                anchor = new ConnectivityAnchor(position);
+                anchors.Add(position, anchor);
+            }
+
+            return anchor;
+        }
+
+        /// <summary>
+        /// Obte una unio entre dos anclatges.
+        /// </summary>
+        /// <param name="anchorA">Anclatge A.</param>
+        /// <param name="anchorB">Anclatge B.</param>
+        /// <returns>La unio entre els dos anclatgea.</returns>
+        /// 
+        private ConnectivityEdge GetEdge(ConnectivityAnchor anchorA, ConnectivityAnchor anchorB) {
+
+            if (!edges.TryGetValue(new Tuple<ConnectivityAnchor, ConnectivityAnchor>(anchorA, anchorB), out ConnectivityEdge edge)) {
+                edge = new ConnectivityEdge(anchorA, anchorB);
+                edges.Add(new Tuple<ConnectivityAnchor, ConnectivityAnchor>(anchorA, anchorB), edge);
+            }
+
+            return edge;
+        }
+
+        /// <summary>
+        /// Afegeix un element 'Via'
+        /// </summary>
+        /// <param name="via">L'element a afeigir.</param>
+        /// 
+        private void AddViaElement(ViaElement via) {
+
+            ConnectivityItem item = new ConnectivityItem(via);
+
+            ConnectivityAnchor anchor = GetAnchor(via.Position);
+            anchor.AddItem(item);
+        }
+
+        /// <summary>
+        /// Afegeix un element 'ThPad'
+        /// </summary>
+        /// <param name="pad">L'element a afeigir.</param>
+        /// 
+        private void AddThPadElement(ThPadElement pad) {
+
+            ConnectivityItem item = new ConnectivityItem(pad);
+
+            ConnectivityAnchor anchor = GetAnchor(pad.Position);
+            anchor.AddItem(item);
+        }
+
+        /// <summary>
+        /// Afegeix un element 'SmdPad'
+        /// </summary>
+        /// <param name="pad">L'element a afeigir.</param>
+        /// 
+        private void AddSmdPadElement(SmdPadElement pad) {
+
+            ConnectivityItem item = new ConnectivityItem(pad);
+
+            ConnectivityAnchor anchor = GetAnchor(pad.Position);
+            anchor.AddItem(item);
         }
 
         /// <summary>
@@ -112,14 +179,18 @@
         /// <param name="position">La posicio.</param>
         /// <param name="element">El element.</param>
         /// 
-        private void AddElement(Point position, Element element) {
+        private void AddLineElement(LineElement line) {
 
-            List<Element> elements;
-            if (!map.TryGetValue(position, out elements)) {
-                elements = new List<Element>();
-                map.Add(position, elements);
-            }
-            elements.Add(element);
+            ConnectivityItem item = new ConnectivityItem(line);
+
+            ConnectivityAnchor anchorA = GetAnchor(line.StartPosition);
+            anchorA.AddItem(item);
+
+            ConnectivityAnchor anchorB = GetAnchor(line.StartPosition);
+            anchorB.AddItem(item);
+
+            ConnectivityEdge edge = GetEdge(anchorA, anchorB);
+            edges.Add(new Tuple<ConnectivityAnchor, ConnectivityAnchor>(anchorA, anchorB), edge);
         }
 
         /// <summary>
@@ -129,16 +200,12 @@
         /// <param name="element">El element.</param>
         /// 
         private void RemoveElement(Point position, Element element) {
-
-            List<Element> elements = map[position];
-            elements.Remove(element);
-            if (elements.Count == 0)
-                map.Remove(position);
         }
 
         public void Clear() {
 
-            map.Clear();
+            anchors.Clear();
+            edges.Clear();
         }
     }
 }
