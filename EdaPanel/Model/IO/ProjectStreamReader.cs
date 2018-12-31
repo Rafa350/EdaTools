@@ -91,7 +91,7 @@
             version = rd.AttributeAsInteger("version");
 
             rd.NextTag();
-            Project project = ParsePanelNode();
+            Project project = ParseProjectNode();
 
             rd.NextTag();
             if (!rd.IsEndTag("document"))
@@ -101,23 +101,23 @@
         }
 
         /// <summary>
-        /// Procesa el node 'panel'
+        /// Procesa el node 'project'
         /// </summary>
         /// <returns>L'objecte 'Project' obtingut.</returns>
         /// 
-        private Project ParsePanelNode() {
+        private Project ParseProjectNode() {
 
-            if (!rd.IsStartTag("panel"))
-                throw new InvalidDataException("Se esperaba <panel>");
+            if (!rd.IsStartTag("project"))
+                throw new InvalidDataException("Se esperaba <project>");
 
             Size size = XmlTypeParser.ParseSize(rd.AttributeAsString("size"));
 
             rd.NextTag();
-            IEnumerable<ProjectItem> elements = ParsePanelElementsNode();
+            IEnumerable<ProjectItem> elements = ParseItemsNode();
 
             rd.NextTag();
-            if (!rd.IsEndTag("panel"))
-                throw new InvalidDataException("Se esperaba </panel>");
+            if (!rd.IsEndTag("project"))
+                throw new InvalidDataException("Se esperaba </project>");
 
             Project project = new Project();
             project.Size = size;
@@ -127,70 +127,70 @@
         }
 
         /// <summary>
-        /// Procesa el node 'elements'
+        /// Procesa el node 'items'
         /// </summary>
         /// <returns>La coleccio d'objectes 'ProjectItem' obtinguda.</returns>
         /// 
-        private IEnumerable<ProjectItem> ParsePanelElementsNode() {
+        private IEnumerable<ProjectItem> ParseItemsNode() {
 
-            if (!rd.IsStartTag("elements"))
-                throw new InvalidDataException("Se esperaba <elements>");
+            if (!rd.IsStartTag("items"))
+                throw new InvalidDataException("Se esperaba <items>");
 
             List<ProjectItem> items = new List<ProjectItem>();
 
             rd.NextTag();
             while (rd.IsStart) {
                 switch (rd.TagName) {
-                    case "place":
-                        items.Add(ParsePlaceNode());
+                    case "board":
+                        items.Add(ParseBoardNode());
                         break;
 
-                    case "milling":
-                        items.Add(ParseMilling());
+                    case "cut":
+                        items.Add(ParseCut());
                         break;
 
                     default:
-                        throw new InvalidDataException("Se esperaba <place> o <milling>");
+                        throw new InvalidDataException("Se esperaba <board> o <cut>");
                 }
                 rd.NextTag();
             }
 
-            if (!rd.IsEndTag("elements"))
-                throw new InvalidDataException("Se esperaba </elements>");
+            if (!rd.IsEndTag("items"))
+                throw new InvalidDataException("Se esperaba </items>");
 
             return items;
         }
 
         /// <summary>
-        /// Procesa el node 'place'
+        /// Procesa el node 'board'
         /// </summary>
         /// <returns>L'objecte 'PcbItem' obtingut.</returns>
         /// 
-        private PcbItem ParsePlaceNode() {
+        private PcbItem ParseBoardNode() {
 
-            if (!rd.IsStartTag("place"))
-                throw new InvalidDataException("Se esperaba <place>");
+            if (!rd.IsStartTag("board"))
+                throw new InvalidDataException("Se esperaba <board>");
 
-            string fileName = rd.AttributeAsString("board");
+            string fileName = rd.AttributeAsString("file");
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation"));
 
             rd.NextTag();
-            if (!rd.IsEndTag("place"))
-                throw new InvalidDataException("Se esperaba </place>");
+            if (!rd.IsEndTag("board"))
+                throw new InvalidDataException("Se esperaba </board>");
 
             return new PcbItem(fileName, position, rotation);
         }
 
         /// <summary>
-        /// Procesa un node 'milling'.
+        /// Procesa un node 'cut'.
         /// </summary>
         /// <returns>L'objecte 'CutItem' obtingut.</returns>
         /// 
-        private CutItem ParseMilling() {
+        private CutItem ParseCut() {
 
-            if (!rd.IsStartTag("milling"))
-                throw new InvalidDataException("Se esperaba <milling>");
+            if (!rd.IsStartTag("cut"))
+                throw new InvalidDataException("Se esperaba <cut>");
 
             Point startPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("startPosition"));
             Point endPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("endPosition"));
@@ -209,8 +209,8 @@
                 5;
 
             rd.NextTag();
-            if (!rd.IsEndTag("milling"))
-                throw new InvalidDataException("Se esperaba </milling>");
+            if (!rd.IsEndTag("cut"))
+                throw new InvalidDataException("Se esperaba </cut>");
 
             return new CutItem(startPosition, endPosition, thickness, margin, cuts, cutSpacing, 
                 holes, holeDiameter, holeSpacing);

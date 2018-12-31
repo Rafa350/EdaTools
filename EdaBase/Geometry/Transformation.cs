@@ -68,7 +68,7 @@
         /// </summary>
         /// <param name="rotation">Angle de rotacio.</param>
         /// 
-        public void AppendRotate(Angle rotation) {
+        public void Rotate(Angle rotation) {
 
             m.Rotate(rotation.Degrees / 100.0);
         }

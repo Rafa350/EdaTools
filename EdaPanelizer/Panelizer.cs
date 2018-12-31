@@ -185,7 +185,7 @@
             //
             Transformation t = new Transformation();
             t.Translate(startPosition);
-            t.AppendRotate(Angle.FromRadiants(rad));
+            t.Rotate(startPosition, Angle.FromRadiants(rad));
 
             // Afegeix les linies de tall
             //
@@ -345,7 +345,7 @@
 
                 transformation = new Transformation();
                 transformation.Translate(offset);
-                transformation.AppendRotate(rotation);
+                transformation.Rotate(rotation);
             }
 
             public override void Visit(LineElement line) {

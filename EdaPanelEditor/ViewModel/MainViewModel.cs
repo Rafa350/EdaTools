@@ -53,7 +53,7 @@
         private void OpenExecute(object parameter) {
 
             OpenFileDialogViewModel data = new OpenFileDialogViewModel(null);
-            data.Title = "Open file";
+            data.Title = "Open project";
             data.MultiSelect = false;
             data.CheckFileExist = true;
             data.Filter = "Panel project (*.xpnl)|*.xpnl";

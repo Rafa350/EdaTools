@@ -10,7 +10,7 @@
 
     public sealed class MainViewModel: ViewModelBase {
 
-        private const string title = "EdaTools Viewer";
+        private const string title = "EdaTools Board Editor";
 
         private ICommand newCommand;
         private ICommand openCommand;
@@ -53,10 +53,10 @@
         private void OpenExecute(object parameter) {
 
             OpenFileDialogViewModel data = new OpenFileDialogViewModel(null);
-            data.Title = "Open PCB file";
+            data.Title = "Open board";
             data.MultiSelect = false;
             data.CheckFileExist = true;
-            data.Filter = "PCB board (*.xbrd)|*.xbrd|PCB Panel (*.xpnl)|*.xpnl";
+            data.Filter = "Board (*.xbrd)|*.xbrd";
             data.FilterIndex = 0;
             data.DefaultExt = ".xbrd";
             data.AddExtension = true;

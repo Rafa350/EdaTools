@@ -230,8 +230,8 @@
 
                 contentBox.Visual = visual;
 
-                map = new ConnectivityMap();
-                map.Add(Board);
+                //map = new ConnectivityMap();
+                //map.Add(Board);
             }
         }
 

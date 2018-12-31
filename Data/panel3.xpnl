@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <document version="100" documentType="panelizerProject" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/XPNL.xsd">
-    <panel output="panel3.xbrd" size="142, 137">
-        <elements>
-            <place board="board3.xbrd" position="0, 0" rotation="0"/>
-            <place board="board3.xbrd" position="72, 0" rotation="0"/>
-            <place board="board3.xbrd" position="0, 69.5" rotation="0"/>
-            <place board="board3.xbrd" position="72, 69.5" rotation="0"/>
-            <milling startPosition="0, 68.5" endPosition="70, 68.5" thickness="2" cutSpacing="5" holeSpacing="1" holeDiameter="0.5" margin="8" holes="5" cuts="3"/>
-            <milling startPosition="72, 68.5" endPosition="142, 68.5" thickness="2" cutSpacing="5" holeSpacing="1" holeDiameter="0.5" margin="8" holes="5" cuts="3"/>
-            <milling startPosition="71, 0" endPosition="71, 68.5" thickness="2" cutSpacing="5" holeSpacing="1" holeDiameter="0.5" margin="8" holes="5" cuts="4"/>
-            <milling startPosition="71, 68.5" endPosition="71, 137" thickness="2" cutSpacing="5" holeSpacing="1" holeDiameter="0.5" margin="8" holes="5" cuts="4"/>
-        </elements>
-    </panel>
+    <project output="panel3.xbrd" size="142, 137">
+        <items>
+            <board file="board3.xbrd" position="0, 0" rotation="0"/>
+            <board file="board3.xbrd" position="72, 0" rotation="0"/>
+            <board file="board3.xbrd" position="0, 69.5" rotation="0"/>
+            <board file="board3.xbrd" position="72, 69.5" rotation="0"/>
+            <cut startPosition="0, 68.5" endPosition="70, 68.5" thickness="2" cutSpacing="5" holeSpacing="1" holeDiameter="0.5" margin="8" holes="5" cuts="3"/>
+            <cut startPosition="72, 68.5" endPosition="142, 68.5" thickness="2" cutSpacing="5" holeSpacing="1" holeDiameter="0.5" margin="8" holes="5" cuts="3"/>
+            <cut startPosition="71, 0" endPosition="71, 68.5" thickness="2" cutSpacing="5" holeSpacing="1" holeDiameter="0.5" margin="8" holes="5" cuts="4"/>
+            <cut startPosition="71, 68.5" endPosition="71, 137" thickness="2" cutSpacing="5" holeSpacing="1" holeDiameter="0.5" margin="8" holes="5" cuts="4"/>
+        </items>
+    </project>
 </document>

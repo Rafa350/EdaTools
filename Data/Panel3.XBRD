@@ -11172,74 +11172,74 @@
             <hole layers="Holes" position="135, 69.25" drill="0.5" />
             <hole layers="Holes" position="136, 67.75" drill="0.5" />
             <hole layers="Holes" position="136, 69.25" drill="0.5" />
-            <line layers="Milling" startPosition="0, 71" endPosition="0, 76.5" thickness="2" />
-            <line layers="Milling" startPosition="0, 81.5" endPosition="0, 102.75" thickness="2" />
-            <line layers="Milling" startPosition="0, 107.75" endPosition="0, 129" thickness="2" />
-            <line layers="Milling" startPosition="0, 134" endPosition="0, 139.5" thickness="2" />
-            <hole layers="Holes" position="0.75, 77" drill="0.5" />
-            <hole layers="Holes" position="-0.749999, 77" drill="0.5" />
-            <hole layers="Holes" position="0.75, 78" drill="0.5" />
-            <hole layers="Holes" position="-0.749999, 78" drill="0.5" />
-            <hole layers="Holes" position="0.75, 79" drill="0.5" />
-            <hole layers="Holes" position="-0.749999, 79" drill="0.5" />
-            <hole layers="Holes" position="0.75, 80" drill="0.5" />
-            <hole layers="Holes" position="-0.749999, 80" drill="0.5" />
-            <hole layers="Holes" position="0.75, 81" drill="0.5" />
-            <hole layers="Holes" position="-0.749999, 81" drill="0.5" />
-            <hole layers="Holes" position="0.75, 103.25" drill="0.5" />
-            <hole layers="Holes" position="-0.749999, 103.25" drill="0.5" />
-            <hole layers="Holes" position="0.75, 104.25" drill="0.5" />
-            <hole layers="Holes" position="-0.749999, 104.25" drill="0.5" />
-            <hole layers="Holes" position="0.75, 105.25" drill="0.5" />
-            <hole layers="Holes" position="-0.749999, 105.25" drill="0.5" />
-            <hole layers="Holes" position="0.75, 106.25" drill="0.5" />
-            <hole layers="Holes" position="-0.749999, 106.25" drill="0.5" />
-            <hole layers="Holes" position="0.75, 107.25" drill="0.5" />
-            <hole layers="Holes" position="-0.749999, 107.25" drill="0.5" />
-            <hole layers="Holes" position="0.75, 129.5" drill="0.5" />
-            <hole layers="Holes" position="-0.749999, 129.5" drill="0.5" />
-            <hole layers="Holes" position="0.75, 130.5" drill="0.5" />
-            <hole layers="Holes" position="-0.749999, 130.5" drill="0.5" />
-            <hole layers="Holes" position="0.75, 131.5" drill="0.5" />
-            <hole layers="Holes" position="-0.749999, 131.5" drill="0.5" />
-            <hole layers="Holes" position="0.75, 132.5" drill="0.5" />
-            <hole layers="Holes" position="-0.749999, 132.5" drill="0.5" />
-            <hole layers="Holes" position="0.75, 133.5" drill="0.5" />
-            <hole layers="Holes" position="-0.749999, 133.5" drill="0.5" />
-            <line layers="Milling" startPosition="-68.5, 71" endPosition="-68.5, 76.5" thickness="2" />
-            <line layers="Milling" startPosition="-68.5, 81.5" endPosition="-68.5, 102.75" thickness="2" />
-            <line layers="Milling" startPosition="-68.5, 107.75" endPosition="-68.5, 129" thickness="2" />
-            <line layers="Milling" startPosition="-68.5, 134" endPosition="-68.5, 139.5" thickness="2" />
-            <hole layers="Holes" position="-67.75, 77" drill="0.5" />
-            <hole layers="Holes" position="-69.25, 77" drill="0.5" />
-            <hole layers="Holes" position="-67.75, 78" drill="0.5" />
-            <hole layers="Holes" position="-69.25, 78" drill="0.5" />
-            <hole layers="Holes" position="-67.75, 79" drill="0.5" />
-            <hole layers="Holes" position="-69.25, 79" drill="0.5" />
-            <hole layers="Holes" position="-67.75, 80" drill="0.5" />
-            <hole layers="Holes" position="-69.25, 80" drill="0.5" />
-            <hole layers="Holes" position="-67.75, 81" drill="0.5" />
-            <hole layers="Holes" position="-69.25, 81" drill="0.5" />
-            <hole layers="Holes" position="-67.75, 103.25" drill="0.5" />
-            <hole layers="Holes" position="-69.25, 103.25" drill="0.5" />
-            <hole layers="Holes" position="-67.75, 104.25" drill="0.5" />
-            <hole layers="Holes" position="-69.25, 104.25" drill="0.5" />
-            <hole layers="Holes" position="-67.75, 105.25" drill="0.5" />
-            <hole layers="Holes" position="-69.25, 105.25" drill="0.5" />
-            <hole layers="Holes" position="-67.75, 106.25" drill="0.5" />
-            <hole layers="Holes" position="-69.25, 106.25" drill="0.5" />
-            <hole layers="Holes" position="-67.75, 107.25" drill="0.5" />
-            <hole layers="Holes" position="-69.25, 107.25" drill="0.5" />
-            <hole layers="Holes" position="-67.75, 129.5" drill="0.5" />
-            <hole layers="Holes" position="-69.25, 129.5" drill="0.5" />
-            <hole layers="Holes" position="-67.75, 130.5" drill="0.5" />
-            <hole layers="Holes" position="-69.25, 130.5" drill="0.5" />
-            <hole layers="Holes" position="-67.75, 131.5" drill="0.5" />
-            <hole layers="Holes" position="-69.25, 131.5" drill="0.5" />
-            <hole layers="Holes" position="-67.75, 132.5" drill="0.5" />
-            <hole layers="Holes" position="-69.25, 132.5" drill="0.5" />
-            <hole layers="Holes" position="-67.75, 133.5" drill="0.5" />
-            <hole layers="Holes" position="-69.25, 133.5" drill="0.5" />
+            <line layers="Milling" startPosition="70.999999, 0" endPosition="70.999999, 5.5" thickness="2" />
+            <line layers="Milling" startPosition="70.999999, 10.5" endPosition="70.999999, 31.75" thickness="2" />
+            <line layers="Milling" startPosition="70.999999, 36.75" endPosition="70.999999, 58" thickness="2" />
+            <line layers="Milling" startPosition="70.999999, 63" endPosition="70.999999, 68.5" thickness="2" />
+            <hole layers="Holes" position="71.749999, 6" drill="0.5" />
+            <hole layers="Holes" position="70.249999, 6" drill="0.5" />
+            <hole layers="Holes" position="71.749999, 7" drill="0.5" />
+            <hole layers="Holes" position="70.249999, 7" drill="0.5" />
+            <hole layers="Holes" position="71.749999, 8" drill="0.5" />
+            <hole layers="Holes" position="70.249999, 8" drill="0.5" />
+            <hole layers="Holes" position="71.749999, 9" drill="0.5" />
+            <hole layers="Holes" position="70.249999, 9" drill="0.5" />
+            <hole layers="Holes" position="71.749999, 10" drill="0.5" />
+            <hole layers="Holes" position="70.249999, 10" drill="0.5" />
+            <hole layers="Holes" position="71.749999, 32.25" drill="0.5" />
+            <hole layers="Holes" position="70.249999, 32.25" drill="0.5" />
+            <hole layers="Holes" position="71.749999, 33.25" drill="0.5" />
+            <hole layers="Holes" position="70.249999, 33.25" drill="0.5" />
+            <hole layers="Holes" position="71.749999, 34.25" drill="0.5" />
+            <hole layers="Holes" position="70.249999, 34.25" drill="0.5" />
+            <hole layers="Holes" position="71.749999, 35.25" drill="0.5" />
+            <hole layers="Holes" position="70.249999, 35.25" drill="0.5" />
+            <hole layers="Holes" position="71.749999, 36.25" drill="0.5" />
+            <hole layers="Holes" position="70.249999, 36.25" drill="0.5" />
+            <hole layers="Holes" position="71.749999, 58.5" drill="0.5" />
+            <hole layers="Holes" position="70.249999, 58.5" drill="0.5" />
+            <hole layers="Holes" position="71.749999, 59.5" drill="0.5" />
+            <hole layers="Holes" position="70.249999, 59.5" drill="0.5" />
+            <hole layers="Holes" position="71.749999, 60.5" drill="0.5" />
+            <hole layers="Holes" position="70.249999, 60.5" drill="0.5" />
+            <hole layers="Holes" position="71.749999, 61.5" drill="0.5" />
+            <hole layers="Holes" position="70.249999, 61.5" drill="0.5" />
+            <hole layers="Holes" position="71.749999, 62.5" drill="0.5" />
+            <hole layers="Holes" position="70.249999, 62.5" drill="0.5" />
+            <line layers="Milling" startPosition="71, 68.499999" endPosition="71, 73.999999" thickness="2" />
+            <line layers="Milling" startPosition="71, 78.999999" endPosition="71, 100.249999" thickness="2" />
+            <line layers="Milling" startPosition="71, 105.249999" endPosition="71, 126.499999" thickness="2" />
+            <line layers="Milling" startPosition="71, 131.499999" endPosition="71, 137" thickness="2" />
+            <hole layers="Holes" position="71.75, 74.499999" drill="0.5" />
+            <hole layers="Holes" position="70.25, 74.499999" drill="0.5" />
+            <hole layers="Holes" position="71.75, 75.499999" drill="0.5" />
+            <hole layers="Holes" position="70.25, 75.499999" drill="0.5" />
+            <hole layers="Holes" position="71.75, 76.499999" drill="0.5" />
+            <hole layers="Holes" position="70.25, 76.499999" drill="0.5" />
+            <hole layers="Holes" position="71.75, 77.499999" drill="0.5" />
+            <hole layers="Holes" position="70.25, 77.499999" drill="0.5" />
+            <hole layers="Holes" position="71.75, 78.499999" drill="0.5" />
+            <hole layers="Holes" position="70.25, 78.499999" drill="0.5" />
+            <hole layers="Holes" position="71.75, 100.749999" drill="0.5" />
+            <hole layers="Holes" position="70.25, 100.749999" drill="0.5" />
+            <hole layers="Holes" position="71.75, 101.749999" drill="0.5" />
+            <hole layers="Holes" position="70.25, 101.749999" drill="0.5" />
+            <hole layers="Holes" position="71.75, 102.749999" drill="0.5" />
+            <hole layers="Holes" position="70.25, 102.749999" drill="0.5" />
+            <hole layers="Holes" position="71.75, 103.749999" drill="0.5" />
+            <hole layers="Holes" position="70.25, 103.749999" drill="0.5" />
+            <hole layers="Holes" position="71.75, 104.749999" drill="0.5" />
+            <hole layers="Holes" position="70.25, 104.749999" drill="0.5" />
+            <hole layers="Holes" position="71.75, 126.999999" drill="0.5" />
+            <hole layers="Holes" position="70.25, 126.999999" drill="0.5" />
+            <hole layers="Holes" position="71.75, 127.999999" drill="0.5" />
+            <hole layers="Holes" position="70.25, 127.999999" drill="0.5" />
+            <hole layers="Holes" position="71.75, 128.999999" drill="0.5" />
+            <hole layers="Holes" position="70.25, 128.999999" drill="0.5" />
+            <hole layers="Holes" position="71.75, 129.999999" drill="0.5" />
+            <hole layers="Holes" position="70.25, 129.999999" drill="0.5" />
+            <hole layers="Holes" position="71.75, 130.999999" drill="0.5" />
+            <hole layers="Holes" position="70.25, 130.999999" drill="0.5" />
             <line layers="Profile" startPosition="0, 136.999999" endPosition="141.999999, 136.999999" thickness="0.1" />
             <line layers="Profile" startPosition="0, 0" endPosition="141.999999, 0" thickness="0.1" />
             <line layers="Profile" startPosition="0, 136.999999" endPosition="0, 0" thickness="0.1" />

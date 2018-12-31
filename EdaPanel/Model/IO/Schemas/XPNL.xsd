@@ -9,7 +9,7 @@
         name="document">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="panel" maxOccurs="unbounded" minOccurs="1"/>
+                <xs:element ref="project" maxOccurs="unbounded" minOccurs="1"/>
             </xs:sequence>
             <xs:attribute name="version" use="required" type="xs:string"/>
             <xs:attribute name="documentType" use="required" type="xs:string"/>
@@ -19,10 +19,10 @@
     </xs:element>
     
     <xs:element
-        name="panel">
+        name="project">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="elements" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="items" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
             <xs:attribute name="size" use="required" type="sizeType"/>
             <xs:attribute name="output" use="required" type="xs:string"/>
@@ -30,45 +30,28 @@
     </xs:element>
     
     <xs:element
-        name="attributes">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="attribute" maxOccurs="unbounded" minOccurs="1"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element
-        name="attribute">
-        <xs:complexType>
-            <xs:attribute name="name" use="required" type="nameType"/>
-            <xs:attribute name="value" use="required" type="xs:string"/>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element
-        name="elements">
+        name="items">
         <xs:complexType>
             <xs:sequence>
                 <xs:choice minOccurs="0" maxOccurs="unbounded">
-                    <xs:element ref="place"/>
-                    <xs:element ref="milling"/>
+                    <xs:element ref="board"/>
+                    <xs:element ref="cut"/>
                 </xs:choice>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     
     <xs:element
-        name="place">
+        name="board">
         <xs:complexType>
-            <xs:attribute name="board" use="required" type="xs:string"/>
+            <xs:attribute name="file" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="rotation" use="required" type="xs:double"/>
         </xs:complexType>
     </xs:element>
     
     <xs:element
-        name="milling">
+        name="cut">
         <xs:complexType>
             <xs:attribute name="startPosition" use="required" type="pointType"/>
             <xs:attribute name="endPosition" use="required" type="pointType"/>
