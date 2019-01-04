@@ -18,7 +18,7 @@
     /// 
     public sealed class Layer: IVisitable {
 
-        public static readonly LayerId TopId = new LayerId("Top", BoardSide.Top);
+        public static readonly LayerId TopId = new LayerId("Copper", BoardSide.Top);
         public static readonly LayerId Inner1Id = new LayerId("Inner1", BoardSide.Inner);
         public static readonly LayerId Inner2Id = new LayerId("Inner2", BoardSide.Inner);
         public static readonly LayerId Inner3Id = new LayerId("Inner3", BoardSide.Inner);
@@ -33,7 +33,7 @@
         public static readonly LayerId Inner12Id = new LayerId("Inner12", BoardSide.Inner);
         public static readonly LayerId Inner13Id = new LayerId("Inner13", BoardSide.Inner);
         public static readonly LayerId Inner14Id = new LayerId("Inner14", BoardSide.Inner);
-        public static readonly LayerId BottomId = new LayerId("Bottom", BoardSide.Bottom);
+        public static readonly LayerId BottomId = new LayerId("Copper", BoardSide.Bottom);
         public static readonly LayerId TopStopId = new LayerId("Stop", BoardSide.Top);
         public static readonly LayerId BottomStopId = new LayerId("Stop", BoardSide.Bottom);
         public static readonly LayerId TopCreamId = new LayerId("Cream", BoardSide.Top);

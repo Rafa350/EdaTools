@@ -81,6 +81,7 @@
         name="signal">
         <xs:complexType>
             <xs:attribute name="name" use="required" type="nameType"/>
+            <xs:attribute name="clearance" use="optional" type="xs:double"/>
         </xs:complexType>
     </xs:element>
     

@@ -134,8 +134,7 @@
 
             Signal signal = null;
 
-            IConectable conectableElement = element as IConectable;
-            if (conectableElement != null) {
+            if (element is IConectable conectableElement) {
                 Tuple<IConectable, Part> item = new Tuple<IConectable, Part>(conectableElement, part);
                 signalOfItem.TryGetValue(item, out signal);
             }

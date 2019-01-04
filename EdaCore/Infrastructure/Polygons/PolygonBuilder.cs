@@ -5,7 +5,8 @@
 
     /// <summary>
     /// Clase que permet la construccio llistes de punts que representen diferentes figures,
-    /// utilitzades comunment pel les plaques.
+    /// utilitzades comunment pel les plaques. Important: Tots els poligons cal que tinguin
+    /// l'orientacio CCW.
     /// </summary>
     internal static class PolygonBuilder {
 
@@ -69,7 +70,7 @@
         /// 
         public static Point[] MakeCircle(Point center, int radius) {
 
-            return MakePolygon(32, center, radius, Angle.Zero);
+            return MakeRegularPolygon(32, center, radius, Angle.Zero);
         }
 
         /// <summary>
@@ -103,10 +104,10 @@
             if (radius == 0) {
 
                 points = new Point[4];
-                points[0] = new Point(x - dx, y + dy);
-                points[1] = new Point(x + dx, y + dy);
-                points[2] = new Point(x + dx, y - dy);
-                points[3] = new Point(x - dx, y - dy);
+                points[0] = new Point(x + dx, y + dy);
+                points[1] = new Point(x - dx, y + dy);
+                points[2] = new Point(x - dx, y - dy);
+                points[3] = new Point(x + dx, y - dy);
             }
 
             // Rectangle amb cantonades arrodonides
@@ -171,21 +172,21 @@
 
             Point[] points = new Point[12];
 
-            points[0] = new Point(xMax, y - dt);
-            points[1] = new Point(x + dt,  y - dt);
-            points[2] = new Point(x + dt, yMin);
+            points[0] = new Point(xMax, y + dt);
+            points[1] = new Point(x + dt, y + dt);
+            points[2] = new Point(x + dt, yMax);
 
-            points[3] = new Point(x - dt, yMin);
-            points[4] = new Point(x - dt, y - dt);
-            points[5] = new Point(xMin, y - dt);
+            points[3] = new Point(x - dt, yMax);
+            points[4] = new Point(x - dt, y + dt);
+            points[5] = new Point(xMin, y + dt);
 
-            points[6] = new Point(xMin, y + dt);
-            points[7] = new Point(x - dt, y + dt);
-            points[8] = new Point(x - dt, yMax);
+            points[6] = new Point(xMin, y - dt);
+            points[7] = new Point(x - dt, y - dt);
+            points[8] = new Point(x - dt, yMin);
 
-            points[9] = new Point(x + dt, yMax);
-            points[10] = new Point(x + dt, y + dt);
-            points[11] = new Point(xMax, y + dt);
+            points[9] = new Point(x + dt, yMin);
+            points[10] = new Point(x + dt,  y - dt);
+            points[11] = new Point(xMax, y - dt);
 
             // Si es una rotacio arbitraria, fa servir calcul amb matrius
             //
@@ -210,7 +211,7 @@
         /// coincideix amb en numero de segments.
         /// </returns>
         /// 
-        public static Point[] MakePolygon(int sides, Point position, int radius, Angle rotation) {
+        public static Point[] MakeRegularPolygon(int sides, Point position, int radius, Angle rotation) {
 
             // Calcula el punt inicial
             //

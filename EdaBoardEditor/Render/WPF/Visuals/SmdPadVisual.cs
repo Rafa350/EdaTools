@@ -1,6 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.BoardEditor.Render.WPF.Visuals {
 
     using MikroPic.EdaTools.v1.Base.WPF;
+    using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using System.Windows.Media;
 
@@ -31,12 +33,35 @@
         /// 
         protected override void Draw(DrawVisualContext dc) {
 
+            DrawShape(dc);
+            DrawOutline(dc);
+        }
+
+        /// <summary>
+        /// Dibuixa la representacio de la forma del element.
+        /// </summary>
+        /// <param name="dc">El context de representacio.</param>
+        /// 
+        private void DrawShape(DrawVisualContext dc) { 
+
             Brush brush = dc.GetBrush(color);
 
             if (Element.Radius == 0)
                 dc.DrawRectangle(brush, null, Element.Position, Element.Size);
             else
                 dc.DrawRoundedRectangle(brush, null, Element.Position, Element.Size, Element.Radius, Element.Radius);
+        }
+
+        /// <summary>
+        /// Dibuixa la representacio del perfil exterior del element.
+        /// </summary>
+        /// <param name="dc">El context de dibuix.</param>
+        /// 
+        private void DrawOutline(DrawVisualContext dc) {
+
+            Polygon p = Element.GetOutlinePolygon(BoardSide.None, 150000);
+            Pen pen = dc.GetPen(new Color(0, 255, 255), 10000, PenLineCap.Round);
+            dc.DrawPolygon(null, pen, p);
         }
 
         /// <summary>

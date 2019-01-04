@@ -160,7 +160,11 @@
         ///
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            return PolygonProcessor.Offset(GetPolygon(side), spacing);
+            Polygon polygon = GetPolygon(side);
+            if (spacing != 0)
+                return PolygonProcessor.Offset(polygon, spacing);
+            else
+                return polygon;
         }
 
         /// <summary>

@@ -89,6 +89,11 @@
                     childs[i].Transform(transformation);
         }
 
+        public void Reverse() {
+
+            Array.Reverse(points);
+        }
+
         /// <summary>
         /// Retorna el poligon resultant d'aplicar una transformacio. El
         /// poligon actual no es modifica.
@@ -104,35 +109,90 @@
         }
 
         /// <summary>
+        /// Obte l'area del poligon amb signe.
+        /// </summary>
+        /// <param name="points">Llista de punts.</param>
+        /// <returns>L'area del poligon.</returns>
+        /// 
+        private static int GetSignedArea(Point[] points) {
+
+            if (points == null)
+                return 0;
+
+            else {
+                int area = 0;
+                int i = 0;
+                while (i < points.Length - 1) {
+                    area +=
+                        (points[i + 1].X - points[i].X) *
+                        (points[i + 1].Y + points[i].Y);
+                    i++;
+                }
+                area +=
+                    (points[0].X - points[i].X) *
+                    (points[0].Y + points[i].Y);
+
+                return area / 2;
+            }
+        }
+
+        /// <summary>
+        /// Obte el rectangle envolvent de la llista de punts.
+        /// </summary>
+        /// <param name="points">La llista de punts.</param>
+        /// <returns>El rectangle envolvent.</returns>
+        /// 
+        private static Rect GetBoundingBox(Point[] points) {
+
+            if (points == null)
+                return new Rect(0, 0, 0, 0);
+
+            else {
+                int minX = Int32.MaxValue;
+                int minY = Int32.MaxValue;
+                int maxX = Int32.MinValue;
+                int maxY = Int32.MinValue;
+
+                for (int i = 0; i < points.Length; i++) {
+
+                    if (points[i].X < minX)
+                        minX = points[i].X;
+                    if (points[i].Y < minY)
+                        minY = points[i].Y;
+
+                    if (points[i].X > maxX)
+                        maxX = points[i].X;
+                    if (points[i].Y > maxY)
+                        maxY = points[i].Y;
+                }
+
+                return new Rect(minX, minY, maxX - minX, maxY - minY);
+            }
+        }
+
+        public bool IsClockwise {
+            get {
+                return GetSignedArea(points) < 0;
+            }
+        }
+
+        /// <summary>
+        /// Obte l'area del poligon
+        /// </summary>
+        /// 
+        public int Area {
+            get {
+                return Math.Abs(GetSignedArea(points));
+            }
+        }
+
+        /// <summary>
         /// Obte el bounding-box del poligon.
         /// </summary>
         /// 
         public Rect BoundingBox {
             get {
-                if (points == null)
-                    return new Rect(0, 0, 0, 0);
-
-                else {
-                    int minX = Int32.MaxValue;
-                    int minY = Int32.MaxValue;
-                    int maxX = Int32.MinValue;
-                    int maxY = Int32.MinValue;
-
-                    for (int i = 0; i < points.Length; i++) {
-
-                        if (points[i].X < minX)
-                            minX = points[i].X;
-                        if (points[i].Y < minY)
-                            minY = points[i].Y;
-
-                        if (points[i].X > maxX)
-                            maxX = points[i].X;
-                        if (points[i].Y > maxY)
-                            maxY = points[i].Y;
-                    }
-
-                    return new Rect(minX, minY, maxX - minX, maxY - minY);
-                }
+                return GetBoundingBox(points);
             }
         }
 

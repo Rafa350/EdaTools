@@ -41,40 +41,38 @@
         /// Calcula el poligon d'una regio.
         /// </summary>
         /// <param name="region">L'element de tipus regio.</param>
-        /// <param name="layer">La capa a procesar.</param>
+        /// <param name="layerId">Identificador de la capa a procesar.</param>
         /// <param name="transformation">Transformacio a aplicar al poligon.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public Polygon GetRegionPolygon(RegionElement region, Layer layer, Transformation transformation) {
+        public Polygon GetRegionPolygon(RegionElement region, LayerId layerId, Transformation transformation) {
 
             if (region == null)
                 throw new ArgumentNullException("region");
 
-            if (layer == null)
-                throw new ArgumentNullException("layer");
-
             // Si el poligon no es troba en la capa d'interes, no cal fer res
             //
-            if (region.IsOnLayer(layer.Id)) {
+            if (region.IsOnLayer(layerId)) {
 
                 // Obte el poligon de la regio i el transforma si s'escau
                 //
-                Polygon regionPolygon = region.GetPolygon(layer.Id.Side);
+                Polygon regionPolygon = region.GetPolygon(layerId.Side);
                 regionPolygon = regionPolygon.Transformed(transformation);
 
                 // Si estem en capes de senyal, cal generar els porus i termals
                 //
-                if (layer.Function == LayerFunction.Signal) {
+                Layer l = GetLayer(layerId);
+                if (l.Function == LayerFunction.Signal) {
 
                     Rect regionBBox = regionPolygon.BoundingBox.Inflated(region.Clearance, region.Clearance);
 
                     Signal regionSignal = GetSignal(region, null, false);
 
-                    int thicknessCompensation = 150000 + region.Thickness / 2;
+                    int thicknessCompensation = region.Thickness / 2;
 
                     List<Polygon> holePolygons = new List<Polygon>();
 
-                    LayerId restrictLayerId = layer.Id.Side == BoardSide.Top ? Layer.TopRestrictId : Layer.BottomRestrictId;
+                    LayerId restrictLayerId = layerId.Side == BoardSide.Top ? Layer.TopRestrictId : Layer.BottomRestrictId;
 
                     // Procesa els elements de la placa que es troben en la mateixa capa que 
                     // la regio, o en les capes restrict o profile.
@@ -82,16 +80,16 @@
                     foreach (var element in Elements) {
                         if (element != region && !(element is TextElement)) {
 
-                            // El element es en la mateixa capa que la regio
+                            // El element es en la capa d'interes
                             //
-                            if (element.IsOnLayer(layer.Id)) {
+                            if (element.IsOnLayer(layerId)) {
 
                                 // Si no esta en la mateixa senyal que la regio, genera un forat.
                                 //
                                 if (GetSignal(element, null, false) != regionSignal) {
                                     int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
                                     int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
-                                    Polygon elementPolygon = element.GetOutlinePolygon(layer.Id.Side, clearance);
+                                    Polygon elementPolygon = element.GetOutlinePolygon(layerId.Side, clearance);
                                     if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                         holePolygons.Add(elementPolygon);
                                 }
@@ -123,31 +121,37 @@
                         //
                         Transformation localTransformation = part.GetLocalTransformation();
 
+                        // Procesa tots els elements del part, que no siguin la propia regio
+                        //
                         foreach (var element in part.Elements) {
+                            if (element != region) {
 
-                            if ((element != region) &&
-                                (element.IsOnLayer(layer.Id) || element.IsOnLayer(restrictLayerId) || element.IsOnLayer(Layer.HolesId))) {
+                                LayerSet elementLayers = part.GetLocalLayerSet(element);
+                                if (elementLayers.Contains(layerId) || elementLayers.Contains(restrictLayerId) || elementLayers.Contains(Layer.HolesId)) {
 
-                                // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
-                                //
-                                if (GetSignal(element, part, false) != regionSignal) {
-                                    int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
-                                    Polygon outlinePolygon = element.GetOutlinePolygon(layer.Id.Side, clearance);
-                                    outlinePolygon = outlinePolygon.Transformed(localTransformation);
-                                    if (regionBBox.IntersectsWith(outlinePolygon.BoundingBox))
-                                        holePolygons.Add(outlinePolygon);
-                                }
+                                    // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
+                                    //
+                                    if (GetSignal(element, part, false) != regionSignal) {
+                                        int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
+                                        Polygon outlinePolygon = element.GetOutlinePolygon(layerId.Side, clearance);
+                                        outlinePolygon = outlinePolygon.Transformed(localTransformation);
+                                        if (part.Side == PartSide.Bottom)
+                                            outlinePolygon.Reverse();
+                                        if (regionBBox.IntersectsWith(outlinePolygon.BoundingBox))
+                                            holePolygons.Add(outlinePolygon);
+                                    }
 
-                                // En es un pad i esta conectat per tant, genera un thermal
-                                //
-                                else if (element is PadElement) {
-                                    int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
-                                    int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
-                                    Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Id.Side, clearance, 200000);
-                                    thermalPolygon = thermalPolygon.Transformed(localTransformation);
-                                    for (int i = 0; i < thermalPolygon.Childs.Length; i++) {
-                                        if (regionBBox.IntersectsWith(thermalPolygon.Childs[i].BoundingBox))
-                                            holePolygons.Add(thermalPolygon.Childs[i]);
+                                    // En es un pad i esta conectat per tant, genera un thermal
+                                    //
+                                    else if (element is PadElement) {
+                                        int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
+                                        int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
+                                        Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layerId.Side, clearance, 200000);
+                                        thermalPolygon = thermalPolygon.Transformed(localTransformation);
+                                        for (int i = 0; i < thermalPolygon.Childs.Length; i++) {
+                                            if (regionBBox.IntersectsWith(thermalPolygon.Childs[i].BoundingBox))
+                                                holePolygons.Add(thermalPolygon.Childs[i]);
+                                        }
                                     }
                                 }
                             }
@@ -180,7 +184,7 @@
                 int minY = Int32.MaxValue;
                 int maxX = Int32.MinValue;
                 int maxY = Int32.MinValue;
-                foreach (Element element in GetElements(outlineLayer.Id)) {
+                foreach (var element in GetElements(outlineLayer.Id)) {
                     Rect r = element.GetBoundingBox(BoardSide.None);
                     if (minX > r.Left)
                         minX = r.Left;

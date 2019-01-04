@@ -126,10 +126,14 @@
         /// 
         public static LayerSet operator +(LayerSet a, LayerId b) {
 
-            LayerId[] s = new LayerId[a.storage.Length + 1];
-            a.storage.CopyTo(s, 0);
-            s[a.storage.Length] = b;
-            return new LayerSet(s);
+            if (a.storage == null)
+                return new LayerSet(b);
+            else {
+                LayerId[] s = new LayerId[a.storage.Length + 1];
+                a.storage.CopyTo(s, 0);
+                s[a.storage.Length] = b;
+                return new LayerSet(s);
+            }
         }
 
         /// <summary>

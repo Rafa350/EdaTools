@@ -19,6 +19,8 @@
             Oval
         }
 
+        private const double Cos2250 = 0.92387953251128675612818318939679;
+
         private int drcTopSizeMin = 175000;
         private int drcTopSizeMax = 2500000;
         private Ratio drcTopSizePercent = Ratio.P25;
@@ -112,10 +114,7 @@
         /// 
         private Point[] MakePoints(BoardSide side, int spacing) {
 
-            int size =
-                side == BoardSide.Top ? TopSize :
-                side == BoardSide.Bottom ? BottomSize :
-                InnerSize;
+            int size = GetSize(side);
             int sizeM2 = size * 2;
             int sizeD2 = size / 2;
 
@@ -131,8 +130,8 @@
                         Rotation);
 
                 case ThPadShape.Octagon: {
-                    int s = (int)((double)sizeD2 / Math.Cos(22.5 * Math.PI / 180.0));
-                    return PolygonBuilder.MakePolygon(
+                    int s = (int)((double)sizeD2 / Cos2250);
+                    return PolygonBuilder.MakeRegularPolygon(
                         8,
                         Position,
                         s + spacing,
@@ -189,8 +188,10 @@
         /// 
         public override Polygon GetThermalPolygon(BoardSide side, int spacing, int width) {
 
-            int w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize) + spacing + spacing;
-            int h = topSize + spacing + spacing;
+            int size = GetSize(side);
+
+            int w = ((shape == ThPadShape.Oval ? 2 : 1) * size) + spacing + spacing;
+            int h = size + spacing + spacing;
 
             Polygon pour = GetOutlinePolygon(side, spacing);
             Polygon thermal = new Polygon(PolygonBuilder.MakeCross(Position, new Size(w, h), width, Rotation));
@@ -210,10 +211,26 @@
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
-            int w = ((shape == ThPadShape.Oval ? 2 : 1) * topSize);
+            int size = GetSize(side);
+
+            int w = ((shape == ThPadShape.Oval ? 2 : 1) * size);
             int h = topSize;
 
             return new Rect(Position.X - (w / 2), Position.Y - (h / 2), w, h);
+        }
+
+        /// <summary>
+        /// Obte el tamany en funcio de la cara de la placa.
+        /// </summary>
+        /// <param name="side">La cara.</param>
+        /// <returns>El valor del tamany.</returns>
+        /// 
+        private int GetSize(BoardSide side) {
+
+            return
+                side == BoardSide.Top ? TopSize :
+                side == BoardSide.Inner ? InnerSize :
+                BottomSize;
         }
 
         /// <summary>

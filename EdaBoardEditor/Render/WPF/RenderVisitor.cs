@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.BoardEditor.Render.WPF {
 
     using MikroPic.EdaTools.v1.BoardEditor.Render.WPF.Visuals;
+    using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
@@ -189,15 +190,8 @@
         /// 
         private static Transform GetTransform(Part part) {
 
-            double x = part.Position.X;
-            double y = part.Position.Y;
-            double angle = part.Rotation.Degrees / 100.0;
-
-            Matrix m = new Matrix();
-            m.Translate(x, y);
-            m.RotateAt(angle, x, y);
-
-            Transform transform = new MatrixTransform(m);
+            Transformation t = part.GetLocalTransformation();
+            Transform transform = new MatrixTransform(t.Matrix);
             transform.Freeze();
 
             return transform;

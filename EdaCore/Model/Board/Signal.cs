@@ -8,7 +8,7 @@
     public sealed class Signal: IName, IVisitable {
 
         private readonly string name;
-        private int clearance;
+        private int clearance = 150000;
 
         /// <summary>
         /// Constructor de l'objecte.

@@ -14,7 +14,7 @@
         private readonly Color color;
 
         /// <summary>
-        /// Constructir de l'objecte
+        /// Constructor de l'objecte
         /// </summary>
         /// <param name="parent">La visual pare.</param>
         /// <param name="element">El element</param>
@@ -34,6 +34,17 @@
         /// <param name="dc">El contexte de representacio.</param>
         /// 
         protected override void Draw(DrawVisualContext dc) {
+
+            DrawShape(dc);
+            DrawOutline(dc);
+        }
+
+        /// <summary>
+        /// Dibuixa la representacio de la forma del element.
+        /// </summary>
+        /// <param name="dc">El context de representacio.</param>
+        /// 
+        private void DrawShape(DrawVisualContext dc) {
 
             if (Element.Shape == ThPadElement.ThPadShape.Circle) {
 
@@ -71,6 +82,18 @@
 
             dc.Pop();
             */
+        }
+
+        /// <summary>
+        /// Dibuixa la representacio del perfil exterior del element.
+        /// </summary>
+        /// <param name="dc">El context de representacio.</param>
+        /// 
+        private void DrawOutline(DrawVisualContext dc) {
+
+            Polygon p = Element.GetOutlinePolygon(layer.Side, 150000);
+            Pen pen = dc.GetPen(new Color(0, 255, 255), 10000, PenLineCap.Round);
+            dc.DrawPolygon(null, pen, p);
         }
 
         /// <summary>

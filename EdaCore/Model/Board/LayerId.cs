@@ -184,5 +184,20 @@
                 return side;
             }
         }
+
+        /// <summary>
+        /// Obte la cara oposada.
+        /// </summary>
+        /// 
+        public BoardSide ReverseSide {
+            get {
+                if (side == BoardSide.Top)
+                    return BoardSide.Bottom;
+                else if (side == BoardSide.Bottom)
+                    return BoardSide.Top;
+                else
+                    return side;
+            }
+        }
     }
 }

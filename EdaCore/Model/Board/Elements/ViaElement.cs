@@ -23,6 +23,8 @@
             Buried
         }
 
+        private const double Cos2250 = 0.92387953251128675612818318939679;
+
         private int drcOuterSizeMin = 125000;
         private int drcOuterSizeMax = 2500000;
         private Ratio drcOuterSizePercent = Ratio.P25;
@@ -108,39 +110,34 @@
         /// 
         private Point[] MakePoints(BoardSide side, int spacing) {
 
-            if (side == BoardSide.Body)
-                return PolygonBuilder.MakeCircle(position, drill / 2);
+            int size = side == BoardSide.Inner ? InnerSize : OuterSize;
+            int sizeM2 = size * 2;
+            int sizeD2 = size / 2;
 
-            else {
-                int size = side == BoardSide.Inner ? InnerSize : OuterSize;
-                int sizeM2 = size * 2;
-                int sizeD2 = size / 2;
+            int spacingM2 = spacing * 2;
+            int spacingD2 = spacing / 2;
 
-                int spacingM2 = spacing * 2;
-                int spacingD2 = spacing / 2;
+            ViaShape shape = side == BoardSide.Inner ? ViaShape.Circle : this.shape;
 
-                ViaShape shape = side == BoardSide.Inner ? ViaShape.Circle : this.shape;
+            switch (shape) {
+                case ViaShape.Square:
+                    return PolygonBuilder.MakeRectangle(
+                        position,
+                        new Size(size + spacingM2, size + spacingM2),
+                        0,
+                        Angle.FromDegrees(0));
 
-                switch (shape) {
-                    case ViaShape.Square:
-                        return PolygonBuilder.MakeRectangle(
-                            position,
-                            new Size(size + spacingM2, size + spacingM2),
-                            0,
-                            Angle.FromDegrees(0));
+                case ViaShape.Octagon:
+                    return PolygonBuilder.MakeRegularPolygon(
+                        8,
+                        position,
+                        (int)((double)sizeD2 / Cos2250) + spacing,
+                        Angle.FromDegrees(2250));
 
-                    case ViaShape.Octagon:
-                        return PolygonBuilder.MakePolygon(
-                            8,
-                            position,
-                            (int)((double)sizeD2 / Math.Cos(22.5 * Math.PI / 180.0)) + spacing,
-                            Angle.FromDegrees(2250));
-
-                    default:
-                        return PolygonBuilder.MakeCircle(
-                            position,
-                            sizeD2 + spacing);
-                }
+                default:
+                    return PolygonBuilder.MakeCircle(
+                        position,
+                        sizeD2 + spacing);
             }
         }
 
@@ -153,12 +150,8 @@
         public override Polygon GetPolygon(BoardSide side) {
 
             Point[] points = MakePoints(side, 0);
-            if (side == BoardSide.Body)
-                return new Polygon(points);
-            else {
-                Point[] holePoints = MakePoints(BoardSide.Body, 0);
-                return new Polygon(points, new Polygon(holePoints));
-            }
+            Point[] holePoints = PolygonBuilder.MakeCircle(position, drill / 2);
+            return new Polygon(points, new Polygon(holePoints));
         }
 
         /// <summary>
