@@ -41,10 +41,15 @@
         /// <summary>
         /// Comprova si un element es visible en aquesta capa.
         /// </summary>
+        /// <param name="part">El part al que pertany l'element.</param>
         /// <param name="element">L'element a comprobar.</param>
         /// <returns>True si es visible, false en cas contrari.</returns>
         /// 
-        public bool IsVisible(Element element) {
+        public bool IsVisible(Part part, Element element) {
+
+            LayerSet layerSet = ((part != null) && (part.Side == PartSide.Bottom)) ?
+                part.GetLocalLayerSet(element) :
+                element.LayerSet;
 
             // Seleccio per capa
             //
@@ -53,7 +58,7 @@
                 layerOk = true;
             else
                 foreach (var layerId in layerIds) {
-                    if (element.LayerSet.Contains(layerId)) {
+                    if (layerSet.Contains(layerId)) {
                         layerOk = true;
                         break;
                     }

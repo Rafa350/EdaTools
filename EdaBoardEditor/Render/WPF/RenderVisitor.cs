@@ -199,7 +199,7 @@
 
         private bool IsVisible(Element element) {
 
-            return visualLayer.IsVisible(element);
+            return visualLayer.IsVisible(Part, element);
         }
     }
 }
