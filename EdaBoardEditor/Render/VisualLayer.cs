@@ -3,28 +3,37 @@
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Core.Model.Board;
 
+    public enum VisualMode {
+        Element,
+        Outline
+    }
+
     public sealed class VisualLayer {
 
         private readonly LayerId[] layerIds;
         private readonly ElementType[] elementTypes;
         private readonly string name;
+        private readonly VisualMode visualMode;
+        private readonly Color color;
         private bool visible;
-        private Color color;
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="name">Nom de la capa.</param>
-        /// <param name="layerSet">Conjunt de capes de la placa.</param>
+        /// <param name="layerIds">Identificadors de les capes a mostrar.</param>
+        /// <param name="elementTypes">Tipus d'elements a mostrar.</param>
         /// <param name="visible">Indica si es visible.</param>
-        /// <param name="color">Color</param>
+        /// <param name="visualMode">Modus de visualitzacio.</param>
+        /// <param name="color">Color.</param>
         /// 
-        public VisualLayer(string name, LayerId[] layerIds, ElementType[] elementTypes, bool visible, Color color) {
+        public VisualLayer(string name, LayerId[] layerIds, ElementType[] elementTypes, bool visible, VisualMode visualMode, Color color) {
 
             this.name = name;
             this.layerIds = layerIds;
             this.elementTypes = elementTypes;
             this.visible = visible;
+            this.visualMode = visualMode;
             this.color = color;
         }
 
@@ -101,6 +110,16 @@
         }
 
         /// <summary>
+        /// Obte el modus de visualitzacio.
+        /// </summary>
+        /// 
+        public VisualMode VisualMode {
+            get {
+                return visualMode;
+            }
+        }
+
+        /// <summary>
         /// Obte o asigna el indicador de visibilitat.
         /// </summary>
         /// 
@@ -120,9 +139,6 @@
         public Color Color {
             get {
                 return color;
-            }
-            set {
-                color = value;
             }
         }
 
