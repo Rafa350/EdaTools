@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // La información general de un ensamblado se controla mediante el siguiente 
 // conjunto de atributos. Cambie estos valores de atributo para modificar la información
 // asociada con un ensamblado.
-[assembly: AssemblyTitle("EdaDebugTest")]
+[assembly: AssemblyTitle("EdaPanelizer")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("EdaDebugTest")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyProduct("EdaTools")]
+[assembly: AssemblyCopyright("Copyright ©  2018-2019 Rafael Serrano")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
