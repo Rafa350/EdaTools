@@ -161,9 +161,9 @@
       <Project>{a9f79d69-13b0-45e0-b602-9a330fc22b9f}</Project>
       <Name>EdaPanel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NetMVVMToolKit\NetMVVMToolkit.csproj">
+    <ProjectReference Include="..\NetMVVMToolKit\NetMVVMToolKit.csproj">
       <Project>{99ece676-903b-4562-af42-70809661f2c1}</Project>
-      <Name>NetMVVMToolkit</Name>
+      <Name>NetMVVMToolKit</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

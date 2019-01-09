@@ -1,7 +1,10 @@
 ﻿namespace MikroPic.EdaTools.v1.Panel.Model.IO {
 
     using MikroPic.EdaTools.v1.Base.Geometry;
+    using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Base.Xml;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
     using MikroPic.EdaTools.v1.Panel.Model;
     using MikroPic.EdaTools.v1.Panel.Model.Items;
     using System;
@@ -179,7 +182,10 @@
             if (!rd.IsEndTag("board"))
                 throw new InvalidDataException("Se esperaba </board>");
 
-            return new PcbItem(fileName, position, rotation);
+            Board board = ReadBoard(fileName);
+            Polygon polygon = board.GetOutlinePolygon();
+
+            return new PcbItem(fileName, position, rotation, polygon);
         }
 
         /// <summary>
@@ -214,6 +220,22 @@
 
             return new CutItem(startPosition, endPosition, thickness, margin, cuts, cutSpacing, 
                 holes, holeDiameter, holeSpacing);
+        }
+
+        /// <summary>
+        /// Llegeix una placa.
+        /// </summary>
+        /// <param name="path">La ruta complerta de la plada.</param>
+        /// <returns>La placa.</returns>
+        /// 
+        private Board ReadBoard(string path) {
+
+            using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                BoardStreamReader reader = new BoardStreamReader(stream);
+                Board board = reader.Read();
+
+                return board;
+            }
         }
     }
 }

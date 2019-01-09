@@ -11,7 +11,7 @@
         Manufacturer="$(var.ManufacturerName)"        
         UpgradeCode="{AC852F13-F986-412C-86ED-76C4D1C8B393}">
         
-        <!-- Especificacio s del paquet -->
+        <!-- Especificacios del paquet -->
 		<Package 
             InstallerVersion="300" 
             Compressed="yes" 
@@ -66,6 +66,15 @@
             Description="!(loc.Feature3_Description)">
             <ComponentGroupRef Id="PanelEditor" />
         </Feature>
+        <Feature
+            Id="FEATURE_4"
+            Title="!(loc.Feature4_Title)"
+            Description="!(loc.Feature4_Description)">
+            <ComponentGroupRef Id="Converter" />
+            <ComponentGroupRef Id="Cam" />
+            <ComponentGroupRef Id="Panelizer" />
+            <ComponentGroupRef Id="HdlCompiler" />
+        </Feature>
 
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="$(var.PlatformProgramFilesFolder)">
@@ -89,20 +98,4 @@
 
     </Product>
 
-	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="Setup" />
-			</Directory>
-		</Directory>
-	</Fragment>
-
-	<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			<!-- <Component Id="ProductComponent"> -->
-				<!-- TODO: Insert files, registry keys, and other resources here. -->
-			<!-- </Component> -->
-		</ComponentGroup>
-	</Fragment>
 </Wix>

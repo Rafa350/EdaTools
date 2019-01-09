@@ -9,9 +9,9 @@
 
         private readonly DrawingVisual parentVisual;
 
-        public RenderVisitor(DrawingVisual rootVisual) {
+        public RenderVisitor(DrawingVisual parentVisual) {
 
-            this.parentVisual = rootVisual;
+            this.parentVisual = parentVisual;
         }
 
         public override void Visit(CutItem cut) {

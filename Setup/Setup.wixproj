@@ -127,7 +127,7 @@
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\NetMVVMToolKit\NetMVVMToolkit.csproj">
-      <Name>NetMVVMToolkit</Name>
+      <Name>NetMVVMToolKit</Name>
       <Project>{99ece676-903b-4562-af42-70809661f2c1}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>

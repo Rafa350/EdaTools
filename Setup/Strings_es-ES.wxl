@@ -12,6 +12,9 @@
     <String Id="Feature3_Title">Editor de paneles.</String>
     <String Id="Feature3_Description">Aplicacion para el diseño de paneles de circuito impreso.</String>
 
+    <String Id="Feature4_Title">Herramientas adicionales.</String>
+    <String Id="Feature4_Description">Heramientas CAM, panelizacion, conversores, etc.</String>
+
     <String Id="msierrXmlFileFailedOpen">Error al abrir el archivo XML</String>
     <String Id="msierrXmlFileFailedRead">Error al leer el archivo XML</String>
     <String Id="msierrXmlFileFailedSave">Error al guardar el archivo XML</String>

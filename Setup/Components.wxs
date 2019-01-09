@@ -58,7 +58,7 @@
                 Id="NetMVVMToolKit.Dll"
                 Guid="{3238356E-D5D9-4F4F-9111-E2826A0069CB}">
                 <File
-                    Source="$(var.SolutionDir)\NetMVVMToolKit.dll"
+                    Source="$(var.NetMVVMToolKit.TargetDir)\NetMVVMToolKit.dll"
                     KeyPath="yes"/>
             </Component>
 
@@ -145,6 +145,11 @@
         <ComponentGroup
             Id="Converter">
             <ComponentRef Id="EdaConverter.Exe"/>
+        </ComponentGroup>
+
+        <ComponentGroup
+            Id="HdlCompiler">
+            <ComponentRef Id="EdaHdc.Dll"/>
         </ComponentGroup>
     </Fragment>
     

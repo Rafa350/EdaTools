@@ -33,494 +33,494 @@
             <layer id="Bottom.Document" function="unknown" />
         </layers>
         <signals>
-            <signal name="B0.GND" />
-            <signal name="B0.VCC" />
-            <signal name="B0.VPP" />
-            <signal name="B0.N$17" />
-            <signal name="B0.N$18" />
-            <signal name="B0.N$25" />
-            <signal name="B0.N$26" />
-            <signal name="B0.OUT0" />
-            <signal name="B0.OUT1" />
-            <signal name="B0.OUT4" />
-            <signal name="B0.OUT3" />
-            <signal name="B0.N$4" />
-            <signal name="B0.N$13" />
-            <signal name="B0.N$14" />
-            <signal name="B0.N$15" />
-            <signal name="B0.N$16" />
-            <signal name="B0.N$29" />
-            <signal name="B0.N$30" />
-            <signal name="B0.N$33" />
-            <signal name="B0.N$34" />
-            <signal name="B0.N$35" />
-            <signal name="B0.RX1" />
-            <signal name="B0.RX2" />
-            <signal name="B0.TX1" />
-            <signal name="B0.TX2" />
-            <signal name="B0.N$8" />
-            <signal name="B0.N$36" />
-            <signal name="B0.N$52" />
-            <signal name="B0.N$53" />
-            <signal name="B0.OUT2" />
-            <signal name="B0.OUT5" />
-            <signal name="B0.I0" />
-            <signal name="B0.I1" />
-            <signal name="B0.I2" />
-            <signal name="B0.I3" />
-            <signal name="B0.I4" />
-            <signal name="B0.I5" />
-            <signal name="B0.I6" />
-            <signal name="B0.I7" />
-            <signal name="B0.IN5" />
-            <signal name="B0.IN4" />
-            <signal name="B0.IN3" />
-            <signal name="B0.IN2" />
-            <signal name="B0.IN1" />
-            <signal name="B0.IN0" />
-            <signal name="B0.O0" />
-            <signal name="B0.O1" />
-            <signal name="B0.O2" />
-            <signal name="B0.O3" />
-            <signal name="B0.O4" />
-            <signal name="B0.O5" />
-            <signal name="B0.O6" />
-            <signal name="B0.O7" />
-            <signal name="B0.N$51" />
-            <signal name="B0.N$54" />
-            <signal name="B0.OUT6" />
-            <signal name="B0.OUT7" />
-            <signal name="B0.IN7/PGC" />
-            <signal name="B0.IN6/PGD" />
-            <signal name="B0.N$5" />
-            <signal name="B0.LED" />
-            <signal name="B0.SCL2" />
-            <signal name="B0.SDA2" />
-            <signal name="B0.N$22" />
-            <signal name="B0.I8" />
-            <signal name="B0.O8" />
-            <signal name="B0.IN8" />
-            <signal name="B0.IN9" />
-            <signal name="B0.N$1" />
-            <signal name="B0.OUT8" />
-            <signal name="B0.OUT9" />
-            <signal name="B0.N$6" />
-            <signal name="B0.O9" />
-            <signal name="B0.N$7" />
-            <signal name="B0.IC2" />
-            <signal name="B0.IC0" />
-            <signal name="B0.N$2" />
-            <signal name="B0.N$3" />
-            <signal name="B0.IN10" />
-            <signal name="B0.IN11" />
-            <signal name="B0.I9" />
-            <signal name="B0.I10" />
-            <signal name="B0.I11" />
-            <signal name="B0.OC0" />
-            <signal name="B0.OC1" />
-            <signal name="B0.N$10" />
-            <signal name="B0.N$11" />
-            <signal name="B0.N$12" />
-            <signal name="B0.N$19" />
-            <signal name="B0.N$20" />
-            <signal name="B0.N$21" />
-            <signal name="B0.N$23" />
-            <signal name="B0.N$24" />
-            <signal name="B0.N$27" />
-            <signal name="B0.N$28" />
-            <signal name="B0.N$31" />
-            <signal name="B0.N$32" />
-            <signal name="B0.N$37" />
-            <signal name="B0.N$38" />
-            <signal name="B0.N$39" />
-            <signal name="B0.N$40" />
-            <signal name="B0.N$41" />
-            <signal name="B0.N$42" />
-            <signal name="B0.N$43" />
-            <signal name="B0.N$44" />
-            <signal name="B0.N$45" />
-            <signal name="B0.N$46" />
-            <signal name="B0.N$47" />
-            <signal name="B0.OUT11" />
-            <signal name="B0.OUT10" />
-            <signal name="B0.N$9" />
-            <signal name="B0.N$48" />
-            <signal name="B0.IC1" />
-            <signal name="B0.I12" />
-            <signal name="B0.IN12" />
-            <signal name="B0.IN13" />
-            <signal name="B0.I13A" />
-            <signal name="B0.I13B" />
-            <signal name="B0.O10B" />
-            <signal name="B0.O10A" />
-            <signal name="B0.O11A" />
-            <signal name="B0.O11B" />
-            <signal name="B1.GND" />
-            <signal name="B1.VCC" />
-            <signal name="B1.VPP" />
-            <signal name="B1.N$17" />
-            <signal name="B1.N$18" />
-            <signal name="B1.N$25" />
-            <signal name="B1.N$26" />
-            <signal name="B1.OUT0" />
-            <signal name="B1.OUT1" />
-            <signal name="B1.OUT4" />
-            <signal name="B1.OUT3" />
-            <signal name="B1.N$4" />
-            <signal name="B1.N$13" />
-            <signal name="B1.N$14" />
-            <signal name="B1.N$15" />
-            <signal name="B1.N$16" />
-            <signal name="B1.N$29" />
-            <signal name="B1.N$30" />
-            <signal name="B1.N$33" />
-            <signal name="B1.N$34" />
-            <signal name="B1.N$35" />
-            <signal name="B1.RX1" />
-            <signal name="B1.RX2" />
-            <signal name="B1.TX1" />
-            <signal name="B1.TX2" />
-            <signal name="B1.N$8" />
-            <signal name="B1.N$36" />
-            <signal name="B1.N$52" />
-            <signal name="B1.N$53" />
-            <signal name="B1.OUT2" />
-            <signal name="B1.OUT5" />
-            <signal name="B1.I0" />
-            <signal name="B1.I1" />
-            <signal name="B1.I2" />
-            <signal name="B1.I3" />
-            <signal name="B1.I4" />
-            <signal name="B1.I5" />
-            <signal name="B1.I6" />
-            <signal name="B1.I7" />
-            <signal name="B1.IN5" />
-            <signal name="B1.IN4" />
-            <signal name="B1.IN3" />
-            <signal name="B1.IN2" />
-            <signal name="B1.IN1" />
-            <signal name="B1.IN0" />
-            <signal name="B1.O0" />
-            <signal name="B1.O1" />
-            <signal name="B1.O2" />
-            <signal name="B1.O3" />
-            <signal name="B1.O4" />
-            <signal name="B1.O5" />
-            <signal name="B1.O6" />
-            <signal name="B1.O7" />
-            <signal name="B1.N$51" />
-            <signal name="B1.N$54" />
-            <signal name="B1.OUT6" />
-            <signal name="B1.OUT7" />
-            <signal name="B1.IN7/PGC" />
-            <signal name="B1.IN6/PGD" />
-            <signal name="B1.N$5" />
-            <signal name="B1.LED" />
-            <signal name="B1.SCL2" />
-            <signal name="B1.SDA2" />
-            <signal name="B1.N$22" />
-            <signal name="B1.I8" />
-            <signal name="B1.O8" />
-            <signal name="B1.IN8" />
-            <signal name="B1.IN9" />
-            <signal name="B1.N$1" />
-            <signal name="B1.OUT8" />
-            <signal name="B1.OUT9" />
-            <signal name="B1.N$6" />
-            <signal name="B1.O9" />
-            <signal name="B1.N$7" />
-            <signal name="B1.IC2" />
-            <signal name="B1.IC0" />
-            <signal name="B1.N$2" />
-            <signal name="B1.N$3" />
-            <signal name="B1.IN10" />
-            <signal name="B1.IN11" />
-            <signal name="B1.I9" />
-            <signal name="B1.I10" />
-            <signal name="B1.I11" />
-            <signal name="B1.OC0" />
-            <signal name="B1.OC1" />
-            <signal name="B1.N$10" />
-            <signal name="B1.N$11" />
-            <signal name="B1.N$12" />
-            <signal name="B1.N$19" />
-            <signal name="B1.N$20" />
-            <signal name="B1.N$21" />
-            <signal name="B1.N$23" />
-            <signal name="B1.N$24" />
-            <signal name="B1.N$27" />
-            <signal name="B1.N$28" />
-            <signal name="B1.N$31" />
-            <signal name="B1.N$32" />
-            <signal name="B1.N$37" />
-            <signal name="B1.N$38" />
-            <signal name="B1.N$39" />
-            <signal name="B1.N$40" />
-            <signal name="B1.N$41" />
-            <signal name="B1.N$42" />
-            <signal name="B1.N$43" />
-            <signal name="B1.N$44" />
-            <signal name="B1.N$45" />
-            <signal name="B1.N$46" />
-            <signal name="B1.N$47" />
-            <signal name="B1.OUT11" />
-            <signal name="B1.OUT10" />
-            <signal name="B1.N$9" />
-            <signal name="B1.N$48" />
-            <signal name="B1.IC1" />
-            <signal name="B1.I12" />
-            <signal name="B1.IN12" />
-            <signal name="B1.IN13" />
-            <signal name="B1.I13A" />
-            <signal name="B1.I13B" />
-            <signal name="B1.O10B" />
-            <signal name="B1.O10A" />
-            <signal name="B1.O11A" />
-            <signal name="B1.O11B" />
-            <signal name="B2.GND" />
-            <signal name="B2.VCC" />
-            <signal name="B2.VPP" />
-            <signal name="B2.N$17" />
-            <signal name="B2.N$18" />
-            <signal name="B2.N$25" />
-            <signal name="B2.N$26" />
-            <signal name="B2.OUT0" />
-            <signal name="B2.OUT1" />
-            <signal name="B2.OUT4" />
-            <signal name="B2.OUT3" />
-            <signal name="B2.N$4" />
-            <signal name="B2.N$13" />
-            <signal name="B2.N$14" />
-            <signal name="B2.N$15" />
-            <signal name="B2.N$16" />
-            <signal name="B2.N$29" />
-            <signal name="B2.N$30" />
-            <signal name="B2.N$33" />
-            <signal name="B2.N$34" />
-            <signal name="B2.N$35" />
-            <signal name="B2.RX1" />
-            <signal name="B2.RX2" />
-            <signal name="B2.TX1" />
-            <signal name="B2.TX2" />
-            <signal name="B2.N$8" />
-            <signal name="B2.N$36" />
-            <signal name="B2.N$52" />
-            <signal name="B2.N$53" />
-            <signal name="B2.OUT2" />
-            <signal name="B2.OUT5" />
-            <signal name="B2.I0" />
-            <signal name="B2.I1" />
-            <signal name="B2.I2" />
-            <signal name="B2.I3" />
-            <signal name="B2.I4" />
-            <signal name="B2.I5" />
-            <signal name="B2.I6" />
-            <signal name="B2.I7" />
-            <signal name="B2.IN5" />
-            <signal name="B2.IN4" />
-            <signal name="B2.IN3" />
-            <signal name="B2.IN2" />
-            <signal name="B2.IN1" />
-            <signal name="B2.IN0" />
-            <signal name="B2.O0" />
-            <signal name="B2.O1" />
-            <signal name="B2.O2" />
-            <signal name="B2.O3" />
-            <signal name="B2.O4" />
-            <signal name="B2.O5" />
-            <signal name="B2.O6" />
-            <signal name="B2.O7" />
-            <signal name="B2.N$51" />
-            <signal name="B2.N$54" />
-            <signal name="B2.OUT6" />
-            <signal name="B2.OUT7" />
-            <signal name="B2.IN7/PGC" />
-            <signal name="B2.IN6/PGD" />
-            <signal name="B2.N$5" />
-            <signal name="B2.LED" />
-            <signal name="B2.SCL2" />
-            <signal name="B2.SDA2" />
-            <signal name="B2.N$22" />
-            <signal name="B2.I8" />
-            <signal name="B2.O8" />
-            <signal name="B2.IN8" />
-            <signal name="B2.IN9" />
-            <signal name="B2.N$1" />
-            <signal name="B2.OUT8" />
-            <signal name="B2.OUT9" />
-            <signal name="B2.N$6" />
-            <signal name="B2.O9" />
-            <signal name="B2.N$7" />
-            <signal name="B2.IC2" />
-            <signal name="B2.IC0" />
-            <signal name="B2.N$2" />
-            <signal name="B2.N$3" />
-            <signal name="B2.IN10" />
-            <signal name="B2.IN11" />
-            <signal name="B2.I9" />
-            <signal name="B2.I10" />
-            <signal name="B2.I11" />
-            <signal name="B2.OC0" />
-            <signal name="B2.OC1" />
-            <signal name="B2.N$10" />
-            <signal name="B2.N$11" />
-            <signal name="B2.N$12" />
-            <signal name="B2.N$19" />
-            <signal name="B2.N$20" />
-            <signal name="B2.N$21" />
-            <signal name="B2.N$23" />
-            <signal name="B2.N$24" />
-            <signal name="B2.N$27" />
-            <signal name="B2.N$28" />
-            <signal name="B2.N$31" />
-            <signal name="B2.N$32" />
-            <signal name="B2.N$37" />
-            <signal name="B2.N$38" />
-            <signal name="B2.N$39" />
-            <signal name="B2.N$40" />
-            <signal name="B2.N$41" />
-            <signal name="B2.N$42" />
-            <signal name="B2.N$43" />
-            <signal name="B2.N$44" />
-            <signal name="B2.N$45" />
-            <signal name="B2.N$46" />
-            <signal name="B2.N$47" />
-            <signal name="B2.OUT11" />
-            <signal name="B2.OUT10" />
-            <signal name="B2.N$9" />
-            <signal name="B2.N$48" />
-            <signal name="B2.IC1" />
-            <signal name="B2.I12" />
-            <signal name="B2.IN12" />
-            <signal name="B2.IN13" />
-            <signal name="B2.I13A" />
-            <signal name="B2.I13B" />
-            <signal name="B2.O10B" />
-            <signal name="B2.O10A" />
-            <signal name="B2.O11A" />
-            <signal name="B2.O11B" />
-            <signal name="B3.GND" />
-            <signal name="B3.VCC" />
-            <signal name="B3.VPP" />
-            <signal name="B3.N$17" />
-            <signal name="B3.N$18" />
-            <signal name="B3.N$25" />
-            <signal name="B3.N$26" />
-            <signal name="B3.OUT0" />
-            <signal name="B3.OUT1" />
-            <signal name="B3.OUT4" />
-            <signal name="B3.OUT3" />
-            <signal name="B3.N$4" />
-            <signal name="B3.N$13" />
-            <signal name="B3.N$14" />
-            <signal name="B3.N$15" />
-            <signal name="B3.N$16" />
-            <signal name="B3.N$29" />
-            <signal name="B3.N$30" />
-            <signal name="B3.N$33" />
-            <signal name="B3.N$34" />
-            <signal name="B3.N$35" />
-            <signal name="B3.RX1" />
-            <signal name="B3.RX2" />
-            <signal name="B3.TX1" />
-            <signal name="B3.TX2" />
-            <signal name="B3.N$8" />
-            <signal name="B3.N$36" />
-            <signal name="B3.N$52" />
-            <signal name="B3.N$53" />
-            <signal name="B3.OUT2" />
-            <signal name="B3.OUT5" />
-            <signal name="B3.I0" />
-            <signal name="B3.I1" />
-            <signal name="B3.I2" />
-            <signal name="B3.I3" />
-            <signal name="B3.I4" />
-            <signal name="B3.I5" />
-            <signal name="B3.I6" />
-            <signal name="B3.I7" />
-            <signal name="B3.IN5" />
-            <signal name="B3.IN4" />
-            <signal name="B3.IN3" />
-            <signal name="B3.IN2" />
-            <signal name="B3.IN1" />
-            <signal name="B3.IN0" />
-            <signal name="B3.O0" />
-            <signal name="B3.O1" />
-            <signal name="B3.O2" />
-            <signal name="B3.O3" />
-            <signal name="B3.O4" />
-            <signal name="B3.O5" />
-            <signal name="B3.O6" />
-            <signal name="B3.O7" />
-            <signal name="B3.N$51" />
-            <signal name="B3.N$54" />
-            <signal name="B3.OUT6" />
-            <signal name="B3.OUT7" />
-            <signal name="B3.IN7/PGC" />
-            <signal name="B3.IN6/PGD" />
-            <signal name="B3.N$5" />
-            <signal name="B3.LED" />
-            <signal name="B3.SCL2" />
-            <signal name="B3.SDA2" />
-            <signal name="B3.N$22" />
-            <signal name="B3.I8" />
-            <signal name="B3.O8" />
-            <signal name="B3.IN8" />
-            <signal name="B3.IN9" />
-            <signal name="B3.N$1" />
-            <signal name="B3.OUT8" />
-            <signal name="B3.OUT9" />
-            <signal name="B3.N$6" />
-            <signal name="B3.O9" />
-            <signal name="B3.N$7" />
-            <signal name="B3.IC2" />
-            <signal name="B3.IC0" />
-            <signal name="B3.N$2" />
-            <signal name="B3.N$3" />
-            <signal name="B3.IN10" />
-            <signal name="B3.IN11" />
-            <signal name="B3.I9" />
-            <signal name="B3.I10" />
-            <signal name="B3.I11" />
-            <signal name="B3.OC0" />
-            <signal name="B3.OC1" />
-            <signal name="B3.N$10" />
-            <signal name="B3.N$11" />
-            <signal name="B3.N$12" />
-            <signal name="B3.N$19" />
-            <signal name="B3.N$20" />
-            <signal name="B3.N$21" />
-            <signal name="B3.N$23" />
-            <signal name="B3.N$24" />
-            <signal name="B3.N$27" />
-            <signal name="B3.N$28" />
-            <signal name="B3.N$31" />
-            <signal name="B3.N$32" />
-            <signal name="B3.N$37" />
-            <signal name="B3.N$38" />
-            <signal name="B3.N$39" />
-            <signal name="B3.N$40" />
-            <signal name="B3.N$41" />
-            <signal name="B3.N$42" />
-            <signal name="B3.N$43" />
-            <signal name="B3.N$44" />
-            <signal name="B3.N$45" />
-            <signal name="B3.N$46" />
-            <signal name="B3.N$47" />
-            <signal name="B3.OUT11" />
-            <signal name="B3.OUT10" />
-            <signal name="B3.N$9" />
-            <signal name="B3.N$48" />
-            <signal name="B3.IC1" />
-            <signal name="B3.I12" />
-            <signal name="B3.IN12" />
-            <signal name="B3.IN13" />
-            <signal name="B3.I13A" />
-            <signal name="B3.I13B" />
-            <signal name="B3.O10B" />
-            <signal name="B3.O10A" />
-            <signal name="B3.O11A" />
-            <signal name="B3.O11B" />
+            <signal name="B0.GND" clearance="0.15" />
+            <signal name="B0.VCC" clearance="0.15" />
+            <signal name="B0.VPP" clearance="0.15" />
+            <signal name="B0.N$17" clearance="0.15" />
+            <signal name="B0.N$18" clearance="0.15" />
+            <signal name="B0.N$25" clearance="0.15" />
+            <signal name="B0.N$26" clearance="0.15" />
+            <signal name="B0.OUT0" clearance="0.15" />
+            <signal name="B0.OUT1" clearance="0.15" />
+            <signal name="B0.OUT4" clearance="0.15" />
+            <signal name="B0.OUT3" clearance="0.15" />
+            <signal name="B0.N$4" clearance="0.15" />
+            <signal name="B0.N$13" clearance="0.15" />
+            <signal name="B0.N$14" clearance="0.15" />
+            <signal name="B0.N$15" clearance="0.15" />
+            <signal name="B0.N$16" clearance="0.15" />
+            <signal name="B0.N$29" clearance="0.15" />
+            <signal name="B0.N$30" clearance="0.15" />
+            <signal name="B0.N$33" clearance="0.15" />
+            <signal name="B0.N$34" clearance="0.15" />
+            <signal name="B0.N$35" clearance="0.15" />
+            <signal name="B0.RX1" clearance="0.15" />
+            <signal name="B0.RX2" clearance="0.15" />
+            <signal name="B0.TX1" clearance="0.15" />
+            <signal name="B0.TX2" clearance="0.15" />
+            <signal name="B0.N$8" clearance="0.15" />
+            <signal name="B0.N$36" clearance="0.15" />
+            <signal name="B0.N$52" clearance="0.15" />
+            <signal name="B0.N$53" clearance="0.15" />
+            <signal name="B0.OUT2" clearance="0.15" />
+            <signal name="B0.OUT5" clearance="0.15" />
+            <signal name="B0.I0" clearance="0.15" />
+            <signal name="B0.I1" clearance="0.15" />
+            <signal name="B0.I2" clearance="0.15" />
+            <signal name="B0.I3" clearance="0.15" />
+            <signal name="B0.I4" clearance="0.15" />
+            <signal name="B0.I5" clearance="0.15" />
+            <signal name="B0.I6" clearance="0.15" />
+            <signal name="B0.I7" clearance="0.15" />
+            <signal name="B0.IN5" clearance="0.15" />
+            <signal name="B0.IN4" clearance="0.15" />
+            <signal name="B0.IN3" clearance="0.15" />
+            <signal name="B0.IN2" clearance="0.15" />
+            <signal name="B0.IN1" clearance="0.15" />
+            <signal name="B0.IN0" clearance="0.15" />
+            <signal name="B0.O0" clearance="0.15" />
+            <signal name="B0.O1" clearance="0.15" />
+            <signal name="B0.O2" clearance="0.15" />
+            <signal name="B0.O3" clearance="0.15" />
+            <signal name="B0.O4" clearance="0.15" />
+            <signal name="B0.O5" clearance="0.15" />
+            <signal name="B0.O6" clearance="0.15" />
+            <signal name="B0.O7" clearance="0.15" />
+            <signal name="B0.N$51" clearance="0.15" />
+            <signal name="B0.N$54" clearance="0.15" />
+            <signal name="B0.OUT6" clearance="0.15" />
+            <signal name="B0.OUT7" clearance="0.15" />
+            <signal name="B0.IN7/PGC" clearance="0.15" />
+            <signal name="B0.IN6/PGD" clearance="0.15" />
+            <signal name="B0.N$5" clearance="0.15" />
+            <signal name="B0.LED" clearance="0.15" />
+            <signal name="B0.SCL2" clearance="0.15" />
+            <signal name="B0.SDA2" clearance="0.15" />
+            <signal name="B0.N$22" clearance="0.15" />
+            <signal name="B0.I8" clearance="0.15" />
+            <signal name="B0.O8" clearance="0.15" />
+            <signal name="B0.IN8" clearance="0.15" />
+            <signal name="B0.IN9" clearance="0.15" />
+            <signal name="B0.N$1" clearance="0.15" />
+            <signal name="B0.OUT8" clearance="0.15" />
+            <signal name="B0.OUT9" clearance="0.15" />
+            <signal name="B0.N$6" clearance="0.15" />
+            <signal name="B0.O9" clearance="0.15" />
+            <signal name="B0.N$7" clearance="0.15" />
+            <signal name="B0.IC2" clearance="0.15" />
+            <signal name="B0.IC0" clearance="0.15" />
+            <signal name="B0.N$2" clearance="0.15" />
+            <signal name="B0.N$3" clearance="0.15" />
+            <signal name="B0.IN10" clearance="0.15" />
+            <signal name="B0.IN11" clearance="0.15" />
+            <signal name="B0.I9" clearance="0.15" />
+            <signal name="B0.I10" clearance="0.15" />
+            <signal name="B0.I11" clearance="0.15" />
+            <signal name="B0.OC0" clearance="0.15" />
+            <signal name="B0.OC1" clearance="0.15" />
+            <signal name="B0.N$10" clearance="0.15" />
+            <signal name="B0.N$11" clearance="0.15" />
+            <signal name="B0.N$12" clearance="0.15" />
+            <signal name="B0.N$19" clearance="0.15" />
+            <signal name="B0.N$20" clearance="0.15" />
+            <signal name="B0.N$21" clearance="0.15" />
+            <signal name="B0.N$23" clearance="0.15" />
+            <signal name="B0.N$24" clearance="0.15" />
+            <signal name="B0.N$27" clearance="0.15" />
+            <signal name="B0.N$28" clearance="0.15" />
+            <signal name="B0.N$31" clearance="0.15" />
+            <signal name="B0.N$32" clearance="0.15" />
+            <signal name="B0.N$37" clearance="0.15" />
+            <signal name="B0.N$38" clearance="0.15" />
+            <signal name="B0.N$39" clearance="0.15" />
+            <signal name="B0.N$40" clearance="0.15" />
+            <signal name="B0.N$41" clearance="0.15" />
+            <signal name="B0.N$42" clearance="0.15" />
+            <signal name="B0.N$43" clearance="0.15" />
+            <signal name="B0.N$44" clearance="0.15" />
+            <signal name="B0.N$45" clearance="0.15" />
+            <signal name="B0.N$46" clearance="0.15" />
+            <signal name="B0.N$47" clearance="0.15" />
+            <signal name="B0.OUT11" clearance="0.15" />
+            <signal name="B0.OUT10" clearance="0.15" />
+            <signal name="B0.N$9" clearance="0.15" />
+            <signal name="B0.N$48" clearance="0.15" />
+            <signal name="B0.IC1" clearance="0.15" />
+            <signal name="B0.I12" clearance="0.15" />
+            <signal name="B0.IN12" clearance="0.15" />
+            <signal name="B0.IN13" clearance="0.15" />
+            <signal name="B0.I13A" clearance="0.15" />
+            <signal name="B0.I13B" clearance="0.15" />
+            <signal name="B0.O10B" clearance="0.15" />
+            <signal name="B0.O10A" clearance="0.15" />
+            <signal name="B0.O11A" clearance="0.15" />
+            <signal name="B0.O11B" clearance="0.15" />
+            <signal name="B1.GND" clearance="0.15" />
+            <signal name="B1.VCC" clearance="0.15" />
+            <signal name="B1.VPP" clearance="0.15" />
+            <signal name="B1.N$17" clearance="0.15" />
+            <signal name="B1.N$18" clearance="0.15" />
+            <signal name="B1.N$25" clearance="0.15" />
+            <signal name="B1.N$26" clearance="0.15" />
+            <signal name="B1.OUT0" clearance="0.15" />
+            <signal name="B1.OUT1" clearance="0.15" />
+            <signal name="B1.OUT4" clearance="0.15" />
+            <signal name="B1.OUT3" clearance="0.15" />
+            <signal name="B1.N$4" clearance="0.15" />
+            <signal name="B1.N$13" clearance="0.15" />
+            <signal name="B1.N$14" clearance="0.15" />
+            <signal name="B1.N$15" clearance="0.15" />
+            <signal name="B1.N$16" clearance="0.15" />
+            <signal name="B1.N$29" clearance="0.15" />
+            <signal name="B1.N$30" clearance="0.15" />
+            <signal name="B1.N$33" clearance="0.15" />
+            <signal name="B1.N$34" clearance="0.15" />
+            <signal name="B1.N$35" clearance="0.15" />
+            <signal name="B1.RX1" clearance="0.15" />
+            <signal name="B1.RX2" clearance="0.15" />
+            <signal name="B1.TX1" clearance="0.15" />
+            <signal name="B1.TX2" clearance="0.15" />
+            <signal name="B1.N$8" clearance="0.15" />
+            <signal name="B1.N$36" clearance="0.15" />
+            <signal name="B1.N$52" clearance="0.15" />
+            <signal name="B1.N$53" clearance="0.15" />
+            <signal name="B1.OUT2" clearance="0.15" />
+            <signal name="B1.OUT5" clearance="0.15" />
+            <signal name="B1.I0" clearance="0.15" />
+            <signal name="B1.I1" clearance="0.15" />
+            <signal name="B1.I2" clearance="0.15" />
+            <signal name="B1.I3" clearance="0.15" />
+            <signal name="B1.I4" clearance="0.15" />
+            <signal name="B1.I5" clearance="0.15" />
+            <signal name="B1.I6" clearance="0.15" />
+            <signal name="B1.I7" clearance="0.15" />
+            <signal name="B1.IN5" clearance="0.15" />
+            <signal name="B1.IN4" clearance="0.15" />
+            <signal name="B1.IN3" clearance="0.15" />
+            <signal name="B1.IN2" clearance="0.15" />
+            <signal name="B1.IN1" clearance="0.15" />
+            <signal name="B1.IN0" clearance="0.15" />
+            <signal name="B1.O0" clearance="0.15" />
+            <signal name="B1.O1" clearance="0.15" />
+            <signal name="B1.O2" clearance="0.15" />
+            <signal name="B1.O3" clearance="0.15" />
+            <signal name="B1.O4" clearance="0.15" />
+            <signal name="B1.O5" clearance="0.15" />
+            <signal name="B1.O6" clearance="0.15" />
+            <signal name="B1.O7" clearance="0.15" />
+            <signal name="B1.N$51" clearance="0.15" />
+            <signal name="B1.N$54" clearance="0.15" />
+            <signal name="B1.OUT6" clearance="0.15" />
+            <signal name="B1.OUT7" clearance="0.15" />
+            <signal name="B1.IN7/PGC" clearance="0.15" />
+            <signal name="B1.IN6/PGD" clearance="0.15" />
+            <signal name="B1.N$5" clearance="0.15" />
+            <signal name="B1.LED" clearance="0.15" />
+            <signal name="B1.SCL2" clearance="0.15" />
+            <signal name="B1.SDA2" clearance="0.15" />
+            <signal name="B1.N$22" clearance="0.15" />
+            <signal name="B1.I8" clearance="0.15" />
+            <signal name="B1.O8" clearance="0.15" />
+            <signal name="B1.IN8" clearance="0.15" />
+            <signal name="B1.IN9" clearance="0.15" />
+            <signal name="B1.N$1" clearance="0.15" />
+            <signal name="B1.OUT8" clearance="0.15" />
+            <signal name="B1.OUT9" clearance="0.15" />
+            <signal name="B1.N$6" clearance="0.15" />
+            <signal name="B1.O9" clearance="0.15" />
+            <signal name="B1.N$7" clearance="0.15" />
+            <signal name="B1.IC2" clearance="0.15" />
+            <signal name="B1.IC0" clearance="0.15" />
+            <signal name="B1.N$2" clearance="0.15" />
+            <signal name="B1.N$3" clearance="0.15" />
+            <signal name="B1.IN10" clearance="0.15" />
+            <signal name="B1.IN11" clearance="0.15" />
+            <signal name="B1.I9" clearance="0.15" />
+            <signal name="B1.I10" clearance="0.15" />
+            <signal name="B1.I11" clearance="0.15" />
+            <signal name="B1.OC0" clearance="0.15" />
+            <signal name="B1.OC1" clearance="0.15" />
+            <signal name="B1.N$10" clearance="0.15" />
+            <signal name="B1.N$11" clearance="0.15" />
+            <signal name="B1.N$12" clearance="0.15" />
+            <signal name="B1.N$19" clearance="0.15" />
+            <signal name="B1.N$20" clearance="0.15" />
+            <signal name="B1.N$21" clearance="0.15" />
+            <signal name="B1.N$23" clearance="0.15" />
+            <signal name="B1.N$24" clearance="0.15" />
+            <signal name="B1.N$27" clearance="0.15" />
+            <signal name="B1.N$28" clearance="0.15" />
+            <signal name="B1.N$31" clearance="0.15" />
+            <signal name="B1.N$32" clearance="0.15" />
+            <signal name="B1.N$37" clearance="0.15" />
+            <signal name="B1.N$38" clearance="0.15" />
+            <signal name="B1.N$39" clearance="0.15" />
+            <signal name="B1.N$40" clearance="0.15" />
+            <signal name="B1.N$41" clearance="0.15" />
+            <signal name="B1.N$42" clearance="0.15" />
+            <signal name="B1.N$43" clearance="0.15" />
+            <signal name="B1.N$44" clearance="0.15" />
+            <signal name="B1.N$45" clearance="0.15" />
+            <signal name="B1.N$46" clearance="0.15" />
+            <signal name="B1.N$47" clearance="0.15" />
+            <signal name="B1.OUT11" clearance="0.15" />
+            <signal name="B1.OUT10" clearance="0.15" />
+            <signal name="B1.N$9" clearance="0.15" />
+            <signal name="B1.N$48" clearance="0.15" />
+            <signal name="B1.IC1" clearance="0.15" />
+            <signal name="B1.I12" clearance="0.15" />
+            <signal name="B1.IN12" clearance="0.15" />
+            <signal name="B1.IN13" clearance="0.15" />
+            <signal name="B1.I13A" clearance="0.15" />
+            <signal name="B1.I13B" clearance="0.15" />
+            <signal name="B1.O10B" clearance="0.15" />
+            <signal name="B1.O10A" clearance="0.15" />
+            <signal name="B1.O11A" clearance="0.15" />
+            <signal name="B1.O11B" clearance="0.15" />
+            <signal name="B2.GND" clearance="0.15" />
+            <signal name="B2.VCC" clearance="0.15" />
+            <signal name="B2.VPP" clearance="0.15" />
+            <signal name="B2.N$17" clearance="0.15" />
+            <signal name="B2.N$18" clearance="0.15" />
+            <signal name="B2.N$25" clearance="0.15" />
+            <signal name="B2.N$26" clearance="0.15" />
+            <signal name="B2.OUT0" clearance="0.15" />
+            <signal name="B2.OUT1" clearance="0.15" />
+            <signal name="B2.OUT4" clearance="0.15" />
+            <signal name="B2.OUT3" clearance="0.15" />
+            <signal name="B2.N$4" clearance="0.15" />
+            <signal name="B2.N$13" clearance="0.15" />
+            <signal name="B2.N$14" clearance="0.15" />
+            <signal name="B2.N$15" clearance="0.15" />
+            <signal name="B2.N$16" clearance="0.15" />
+            <signal name="B2.N$29" clearance="0.15" />
+            <signal name="B2.N$30" clearance="0.15" />
+            <signal name="B2.N$33" clearance="0.15" />
+            <signal name="B2.N$34" clearance="0.15" />
+            <signal name="B2.N$35" clearance="0.15" />
+            <signal name="B2.RX1" clearance="0.15" />
+            <signal name="B2.RX2" clearance="0.15" />
+            <signal name="B2.TX1" clearance="0.15" />
+            <signal name="B2.TX2" clearance="0.15" />
+            <signal name="B2.N$8" clearance="0.15" />
+            <signal name="B2.N$36" clearance="0.15" />
+            <signal name="B2.N$52" clearance="0.15" />
+            <signal name="B2.N$53" clearance="0.15" />
+            <signal name="B2.OUT2" clearance="0.15" />
+            <signal name="B2.OUT5" clearance="0.15" />
+            <signal name="B2.I0" clearance="0.15" />
+            <signal name="B2.I1" clearance="0.15" />
+            <signal name="B2.I2" clearance="0.15" />
+            <signal name="B2.I3" clearance="0.15" />
+            <signal name="B2.I4" clearance="0.15" />
+            <signal name="B2.I5" clearance="0.15" />
+            <signal name="B2.I6" clearance="0.15" />
+            <signal name="B2.I7" clearance="0.15" />
+            <signal name="B2.IN5" clearance="0.15" />
+            <signal name="B2.IN4" clearance="0.15" />
+            <signal name="B2.IN3" clearance="0.15" />
+            <signal name="B2.IN2" clearance="0.15" />
+            <signal name="B2.IN1" clearance="0.15" />
+            <signal name="B2.IN0" clearance="0.15" />
+            <signal name="B2.O0" clearance="0.15" />
+            <signal name="B2.O1" clearance="0.15" />
+            <signal name="B2.O2" clearance="0.15" />
+            <signal name="B2.O3" clearance="0.15" />
+            <signal name="B2.O4" clearance="0.15" />
+            <signal name="B2.O5" clearance="0.15" />
+            <signal name="B2.O6" clearance="0.15" />
+            <signal name="B2.O7" clearance="0.15" />
+            <signal name="B2.N$51" clearance="0.15" />
+            <signal name="B2.N$54" clearance="0.15" />
+            <signal name="B2.OUT6" clearance="0.15" />
+            <signal name="B2.OUT7" clearance="0.15" />
+            <signal name="B2.IN7/PGC" clearance="0.15" />
+            <signal name="B2.IN6/PGD" clearance="0.15" />
+            <signal name="B2.N$5" clearance="0.15" />
+            <signal name="B2.LED" clearance="0.15" />
+            <signal name="B2.SCL2" clearance="0.15" />
+            <signal name="B2.SDA2" clearance="0.15" />
+            <signal name="B2.N$22" clearance="0.15" />
+            <signal name="B2.I8" clearance="0.15" />
+            <signal name="B2.O8" clearance="0.15" />
+            <signal name="B2.IN8" clearance="0.15" />
+            <signal name="B2.IN9" clearance="0.15" />
+            <signal name="B2.N$1" clearance="0.15" />
+            <signal name="B2.OUT8" clearance="0.15" />
+            <signal name="B2.OUT9" clearance="0.15" />
+            <signal name="B2.N$6" clearance="0.15" />
+            <signal name="B2.O9" clearance="0.15" />
+            <signal name="B2.N$7" clearance="0.15" />
+            <signal name="B2.IC2" clearance="0.15" />
+            <signal name="B2.IC0" clearance="0.15" />
+            <signal name="B2.N$2" clearance="0.15" />
+            <signal name="B2.N$3" clearance="0.15" />
+            <signal name="B2.IN10" clearance="0.15" />
+            <signal name="B2.IN11" clearance="0.15" />
+            <signal name="B2.I9" clearance="0.15" />
+            <signal name="B2.I10" clearance="0.15" />
+            <signal name="B2.I11" clearance="0.15" />
+            <signal name="B2.OC0" clearance="0.15" />
+            <signal name="B2.OC1" clearance="0.15" />
+            <signal name="B2.N$10" clearance="0.15" />
+            <signal name="B2.N$11" clearance="0.15" />
+            <signal name="B2.N$12" clearance="0.15" />
+            <signal name="B2.N$19" clearance="0.15" />
+            <signal name="B2.N$20" clearance="0.15" />
+            <signal name="B2.N$21" clearance="0.15" />
+            <signal name="B2.N$23" clearance="0.15" />
+            <signal name="B2.N$24" clearance="0.15" />
+            <signal name="B2.N$27" clearance="0.15" />
+            <signal name="B2.N$28" clearance="0.15" />
+            <signal name="B2.N$31" clearance="0.15" />
+            <signal name="B2.N$32" clearance="0.15" />
+            <signal name="B2.N$37" clearance="0.15" />
+            <signal name="B2.N$38" clearance="0.15" />
+            <signal name="B2.N$39" clearance="0.15" />
+            <signal name="B2.N$40" clearance="0.15" />
+            <signal name="B2.N$41" clearance="0.15" />
+            <signal name="B2.N$42" clearance="0.15" />
+            <signal name="B2.N$43" clearance="0.15" />
+            <signal name="B2.N$44" clearance="0.15" />
+            <signal name="B2.N$45" clearance="0.15" />
+            <signal name="B2.N$46" clearance="0.15" />
+            <signal name="B2.N$47" clearance="0.15" />
+            <signal name="B2.OUT11" clearance="0.15" />
+            <signal name="B2.OUT10" clearance="0.15" />
+            <signal name="B2.N$9" clearance="0.15" />
+            <signal name="B2.N$48" clearance="0.15" />
+            <signal name="B2.IC1" clearance="0.15" />
+            <signal name="B2.I12" clearance="0.15" />
+            <signal name="B2.IN12" clearance="0.15" />
+            <signal name="B2.IN13" clearance="0.15" />
+            <signal name="B2.I13A" clearance="0.15" />
+            <signal name="B2.I13B" clearance="0.15" />
+            <signal name="B2.O10B" clearance="0.15" />
+            <signal name="B2.O10A" clearance="0.15" />
+            <signal name="B2.O11A" clearance="0.15" />
+            <signal name="B2.O11B" clearance="0.15" />
+            <signal name="B3.GND" clearance="0.15" />
+            <signal name="B3.VCC" clearance="0.15" />
+            <signal name="B3.VPP" clearance="0.15" />
+            <signal name="B3.N$17" clearance="0.15" />
+            <signal name="B3.N$18" clearance="0.15" />
+            <signal name="B3.N$25" clearance="0.15" />
+            <signal name="B3.N$26" clearance="0.15" />
+            <signal name="B3.OUT0" clearance="0.15" />
+            <signal name="B3.OUT1" clearance="0.15" />
+            <signal name="B3.OUT4" clearance="0.15" />
+            <signal name="B3.OUT3" clearance="0.15" />
+            <signal name="B3.N$4" clearance="0.15" />
+            <signal name="B3.N$13" clearance="0.15" />
+            <signal name="B3.N$14" clearance="0.15" />
+            <signal name="B3.N$15" clearance="0.15" />
+            <signal name="B3.N$16" clearance="0.15" />
+            <signal name="B3.N$29" clearance="0.15" />
+            <signal name="B3.N$30" clearance="0.15" />
+            <signal name="B3.N$33" clearance="0.15" />
+            <signal name="B3.N$34" clearance="0.15" />
+            <signal name="B3.N$35" clearance="0.15" />
+            <signal name="B3.RX1" clearance="0.15" />
+            <signal name="B3.RX2" clearance="0.15" />
+            <signal name="B3.TX1" clearance="0.15" />
+            <signal name="B3.TX2" clearance="0.15" />
+            <signal name="B3.N$8" clearance="0.15" />
+            <signal name="B3.N$36" clearance="0.15" />
+            <signal name="B3.N$52" clearance="0.15" />
+            <signal name="B3.N$53" clearance="0.15" />
+            <signal name="B3.OUT2" clearance="0.15" />
+            <signal name="B3.OUT5" clearance="0.15" />
+            <signal name="B3.I0" clearance="0.15" />
+            <signal name="B3.I1" clearance="0.15" />
+            <signal name="B3.I2" clearance="0.15" />
+            <signal name="B3.I3" clearance="0.15" />
+            <signal name="B3.I4" clearance="0.15" />
+            <signal name="B3.I5" clearance="0.15" />
+            <signal name="B3.I6" clearance="0.15" />
+            <signal name="B3.I7" clearance="0.15" />
+            <signal name="B3.IN5" clearance="0.15" />
+            <signal name="B3.IN4" clearance="0.15" />
+            <signal name="B3.IN3" clearance="0.15" />
+            <signal name="B3.IN2" clearance="0.15" />
+            <signal name="B3.IN1" clearance="0.15" />
+            <signal name="B3.IN0" clearance="0.15" />
+            <signal name="B3.O0" clearance="0.15" />
+            <signal name="B3.O1" clearance="0.15" />
+            <signal name="B3.O2" clearance="0.15" />
+            <signal name="B3.O3" clearance="0.15" />
+            <signal name="B3.O4" clearance="0.15" />
+            <signal name="B3.O5" clearance="0.15" />
+            <signal name="B3.O6" clearance="0.15" />
+            <signal name="B3.O7" clearance="0.15" />
+            <signal name="B3.N$51" clearance="0.15" />
+            <signal name="B3.N$54" clearance="0.15" />
+            <signal name="B3.OUT6" clearance="0.15" />
+            <signal name="B3.OUT7" clearance="0.15" />
+            <signal name="B3.IN7/PGC" clearance="0.15" />
+            <signal name="B3.IN6/PGD" clearance="0.15" />
+            <signal name="B3.N$5" clearance="0.15" />
+            <signal name="B3.LED" clearance="0.15" />
+            <signal name="B3.SCL2" clearance="0.15" />
+            <signal name="B3.SDA2" clearance="0.15" />
+            <signal name="B3.N$22" clearance="0.15" />
+            <signal name="B3.I8" clearance="0.15" />
+            <signal name="B3.O8" clearance="0.15" />
+            <signal name="B3.IN8" clearance="0.15" />
+            <signal name="B3.IN9" clearance="0.15" />
+            <signal name="B3.N$1" clearance="0.15" />
+            <signal name="B3.OUT8" clearance="0.15" />
+            <signal name="B3.OUT9" clearance="0.15" />
+            <signal name="B3.N$6" clearance="0.15" />
+            <signal name="B3.O9" clearance="0.15" />
+            <signal name="B3.N$7" clearance="0.15" />
+            <signal name="B3.IC2" clearance="0.15" />
+            <signal name="B3.IC0" clearance="0.15" />
+            <signal name="B3.N$2" clearance="0.15" />
+            <signal name="B3.N$3" clearance="0.15" />
+            <signal name="B3.IN10" clearance="0.15" />
+            <signal name="B3.IN11" clearance="0.15" />
+            <signal name="B3.I9" clearance="0.15" />
+            <signal name="B3.I10" clearance="0.15" />
+            <signal name="B3.I11" clearance="0.15" />
+            <signal name="B3.OC0" clearance="0.15" />
+            <signal name="B3.OC1" clearance="0.15" />
+            <signal name="B3.N$10" clearance="0.15" />
+            <signal name="B3.N$11" clearance="0.15" />
+            <signal name="B3.N$12" clearance="0.15" />
+            <signal name="B3.N$19" clearance="0.15" />
+            <signal name="B3.N$20" clearance="0.15" />
+            <signal name="B3.N$21" clearance="0.15" />
+            <signal name="B3.N$23" clearance="0.15" />
+            <signal name="B3.N$24" clearance="0.15" />
+            <signal name="B3.N$27" clearance="0.15" />
+            <signal name="B3.N$28" clearance="0.15" />
+            <signal name="B3.N$31" clearance="0.15" />
+            <signal name="B3.N$32" clearance="0.15" />
+            <signal name="B3.N$37" clearance="0.15" />
+            <signal name="B3.N$38" clearance="0.15" />
+            <signal name="B3.N$39" clearance="0.15" />
+            <signal name="B3.N$40" clearance="0.15" />
+            <signal name="B3.N$41" clearance="0.15" />
+            <signal name="B3.N$42" clearance="0.15" />
+            <signal name="B3.N$43" clearance="0.15" />
+            <signal name="B3.N$44" clearance="0.15" />
+            <signal name="B3.N$45" clearance="0.15" />
+            <signal name="B3.N$46" clearance="0.15" />
+            <signal name="B3.N$47" clearance="0.15" />
+            <signal name="B3.OUT11" clearance="0.15" />
+            <signal name="B3.OUT10" clearance="0.15" />
+            <signal name="B3.N$9" clearance="0.15" />
+            <signal name="B3.N$48" clearance="0.15" />
+            <signal name="B3.IC1" clearance="0.15" />
+            <signal name="B3.I12" clearance="0.15" />
+            <signal name="B3.IN12" clearance="0.15" />
+            <signal name="B3.IN13" clearance="0.15" />
+            <signal name="B3.I13A" clearance="0.15" />
+            <signal name="B3.I13B" clearance="0.15" />
+            <signal name="B3.O10B" clearance="0.15" />
+            <signal name="B3.O10A" clearance="0.15" />
+            <signal name="B3.O11A" clearance="0.15" />
+            <signal name="B3.O11B" clearance="0.15" />
         </signals>
         <components>
             <component name="1X02/90@pinhead">
