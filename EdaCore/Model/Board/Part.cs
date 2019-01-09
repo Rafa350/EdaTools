@@ -5,18 +5,12 @@
     using System;
     using System.Collections.Generic;
 
-
-    public enum PartSide {
-        Top,
-        Bottom
-    }
-
     public sealed partial class Part: IPosition, IRotation, IName, IVisitable {
 
         private readonly string name;
         private Point position;
         private Angle rotation;
-        private PartSide side = PartSide.Top;
+        private bool flip;
         private readonly Component component;
 
         /// <summary>
@@ -26,9 +20,9 @@
         /// <param name="name">El nom.</param>
         /// <param name="position">Posicio.</param>
         /// <param name="rotation">Angle de rotacio</param>
-        /// <param name="side">Indica la cara de la placa.</param>
+        /// <param name="flip">Indica la cara de la placa.</param>
         /// 
-        public Part(Component component, string name, Point position, Angle rotation, PartSide side = PartSide.Top) {
+        public Part(Component component, string name, Point position, Angle rotation, bool flip = false) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException("name");
@@ -39,7 +33,7 @@
             this.name = name;
             this.position = position;
             this.rotation = rotation;
-            this.side = side;
+            this.flip = flip;
             this.component = component;
         }
 
@@ -52,7 +46,7 @@
         /// 
         public Part Clone(string name, Component component) {
 
-            Part part = new Part(component, name, position, rotation, side);
+            Part part = new Part(component, name, position, rotation, flip);
             foreach (var attribute in attributes.Values)
                 part.AddAttribute(attribute.Clone());
 
@@ -186,12 +180,12 @@
         /// Obte la cara en la que es monta el component.
         /// </summary>
         /// 
-        public PartSide Side {
+        public bool Flip {
             get {
-                return side;
+                return flip;
             }
             set {
-                side = value;
+                flip = value;
             }
         }
 

@@ -312,8 +312,8 @@
                     writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(part.Position));
                     if (!part.Rotation.IsZero)
                         writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(part.Rotation));
-                    if (part.Side != PartSide.Top)
-                        writer.WriteAttributeEnum("side", part.Side);
+                    if (part.Flip)
+                        writer.WriteAttributeString("flip", "true");
 
                     // Escriu la llista de pads que tenen conexio.
                     //

@@ -23,6 +23,7 @@
         private static readonly XmlSchemaSet schemas;
 
         private readonly XmlReaderAdapter rd;
+        private readonly IStreamLocator locator;
         private int version;
 
         /// <summary>
@@ -46,14 +47,17 @@
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="stream">Stream de lectura.</param>
+        /// <param name="locator">Localitzador de streams.</param>
         /// 
-        public ProjectStreamReader(Stream stream) {
+        public ProjectStreamReader(Stream stream, IStreamLocator locator = null) {
 
             if (stream == null)
                 throw new ArgumentNullException("stream");
 
             if (!stream.CanRead)
                 throw new InvalidOperationException("El stream no es de lectura.");
+
+            this.locator = locator;
 
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.IgnoreProcessingInstructions = true;
@@ -65,7 +69,7 @@
             settings.ConformanceLevel = ConformanceLevel.Document;
 
             XmlReader reader = XmlReader.Create(stream, settings);
-            rd = new XmlReaderAdapter(reader);
+            rd = new XmlReaderAdapter(reader);            
         }
 
         /// <summary>
@@ -230,7 +234,9 @@
         /// 
         private Board ReadBoard(string path) {
 
-            using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+            using (Stream stream = locator != null ?
+                    locator.GetStream(path) :
+                    new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
                 BoardStreamReader reader = new BoardStreamReader(stream);
                 Board board = reader.Read();
 

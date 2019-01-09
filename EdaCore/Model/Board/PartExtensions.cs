@@ -9,14 +9,14 @@
             Transformation t = new Transformation();
             t.Translate(part.Position);
             t.Rotate(part.Position, part.Rotation);
-            if (part.Side == PartSide.Bottom)
+            if (part.Flip)
                 t.Scale(part.Position, -1, 1);
             return t;
         }
 
         public static LayerSet GetLocalLayerSet(this Part part, Element element) {
 
-            if (part.Side == PartSide.Bottom) {
+            if (part.Flip) {
                 LayerSet layerSet = default;
                 foreach (var layerId in element.LayerSet)
                     layerSet += new LayerId(layerId.Name, layerId.ReverseSide);

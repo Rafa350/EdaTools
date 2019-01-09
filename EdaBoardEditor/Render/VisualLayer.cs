@@ -56,7 +56,7 @@
         /// 
         public bool IsVisible(Part part, Element element) {
 
-            LayerSet layerSet = ((part != null) && (part.Side == PartSide.Bottom)) ?
+            LayerSet layerSet = ((part != null) && part.Flip) ?
                 part.GetLocalLayerSet(element) :
                 element.LayerSet;
 

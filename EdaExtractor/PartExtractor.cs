@@ -53,7 +53,7 @@
                         wr.WriteAttributeString("name", part.Name);
                         wr.WriteAttributeString("position", FormatPoint(part.Position));
                         wr.WriteAttributeString("rotation", FormatAngle(part.Rotation));
-                        wr.WriteAttributeString("side", part.Side.ToString());
+                        wr.WriteAttributeString("flip", part.Flip.ToString());
 
                         bool hasAttributes = false;
                         foreach (PartAttribute attribute in part.Attributes) {

@@ -445,11 +445,11 @@
             string name = rd.AttributeAsString("name");
             Point position =  XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
-            PartSide side = rd.AttributeAsEnum("side", PartSide.Top);
+            bool flip = rd.AttributeAsBoolean("flip", false);
             string blockName = rd.AttributeAsString("component");
 
             Component block = board.GetComponent(blockName);
-            Part part = new Part(block, name, position, rotation, side);
+            Part part = new Part(block, name, position, rotation, flip);
 
             rd.NextTag();
             while (rd.IsStart) {

@@ -719,16 +719,16 @@
             // Obte l'angle de rotacio i la cara
             //
             Angle rotation = Angle.Zero;
-            PartSide side = PartSide.Top;
+            bool flip = false;
             if (AttributeExists(node, "rot")) {
                 string rot = GetAttributeAsString(node, "rot");
                 if (rot.Contains("M"))
-                   side = PartSide.Bottom;
+                   flip = true;
 
                 rotation = ParseAngle(rot);
             }
 
-            Part part = new Part(GetComponent(componentKey), name, position, rotation, side);
+            Part part = new Part(GetComponent(componentKey), name, position, rotation, flip);
 
             bool hasNameAttribute = false;
             bool hasValueAttribute = false;

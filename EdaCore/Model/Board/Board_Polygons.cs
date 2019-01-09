@@ -135,7 +135,7 @@
                                         int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
                                         Polygon outlinePolygon = element.GetOutlinePolygon(layerId.Side, clearance);
                                         outlinePolygon = outlinePolygon.Transformed(localTransformation);
-                                        if (part.Side == PartSide.Bottom)
+                                        if (part.Flip)
                                             outlinePolygon.Reverse();
                                         if (regionBBox.IntersectsWith(outlinePolygon.BoundingBox))
                                             holePolygons.Add(outlinePolygon);
