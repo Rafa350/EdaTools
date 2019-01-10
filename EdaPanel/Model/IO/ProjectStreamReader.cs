@@ -2,6 +2,7 @@
 
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Base.IO;
     using MikroPic.EdaTools.v1.Base.Xml;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.IO;
@@ -186,10 +187,12 @@
             if (!rd.IsEndTag("board"))
                 throw new InvalidDataException("Se esperaba </board>");
 
-            Board board = ReadBoard(fileName);
+            string path = locator.GetPath(fileName);
+
+            Board board = ReadBoard(path);
             Polygon polygon = board.GetOutlinePolygon();
 
-            return new PcbItem(fileName, position, rotation, polygon);
+            return new PcbItem(path, position, rotation, polygon);
         }
 
         /// <summary>
@@ -234,13 +237,17 @@
         /// 
         private Board ReadBoard(string path) {
 
-            using (Stream stream = locator != null ?
-                    locator.GetStream(path) :
-                    new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                BoardStreamReader reader = new BoardStreamReader(stream);
-                Board board = reader.Read();
+            try {
+                using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                    BoardStreamReader reader = new BoardStreamReader(stream);
+                    Board board = reader.Read();
 
-                return board;
+                    return board;
+                }
+            }
+            catch (Exception ex){
+                throw new Exception(
+                    String.Format("No se pudo leer la placa '{0}'.", path), ex);
             }
         }
     }

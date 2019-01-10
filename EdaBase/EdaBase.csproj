@@ -80,6 +80,8 @@
     <Compile Include="Geometry\Fonts\TextAlign.cs" />
     <Compile Include="Geometry\Fonts\TextDrawer.cs" />
     <Compile Include="Geometry\Transformation.cs" />
+    <Compile Include="IO\FileStreamLocator.cs" />
+    <Compile Include="IO\IStreamLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Xml\XmlReaderAdapter.cs" />
     <Compile Include="Xml\XmlTypeFormater.cs" />

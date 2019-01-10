@@ -41,9 +41,11 @@
             //
             int index = 0;
             foreach (var item in project.Items) {
-                if (item is PcbItem pcb)
-                    AddBoard(pcb.Board, pcb.Position, pcb.Rotation, index++);
-                
+                if (item is PcbItem pcb) {
+                    Board board = null;
+                    AddBoard(board, pcb.Position, pcb.Rotation, index++);
+                }
+
                 else if (item is CutItem cut)
                     AddCut(cut.StartPosition, cut.EndPosition, cut.Tickness, cut.CutSpacing, cut.Margin, cut.Cuts);
             }

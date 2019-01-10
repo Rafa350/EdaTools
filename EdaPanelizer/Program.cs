@@ -80,14 +80,9 @@
 
             using (Stream stream = new FileStream(projectPath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
 
-                ProjectStreamReader reader = new ProjectStreamReader(stream);
+                BoardLocator locator = new BoardLocator(Path.GetDirectoryName(projectPath));
+                ProjectStreamReader reader = new ProjectStreamReader(stream, locator);
                 Project project = reader.Read();
-
-                foreach (var item in project.Items) {
-                    if (item is PcbItem pcbItem)
-                        if (!String.IsNullOrEmpty(sourceFolder))
-                            pcbItem.FileName = Path.Combine(sourceFolder, pcbItem.FileName);
-                }
 
                 return project;
             }

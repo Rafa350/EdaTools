@@ -2,21 +2,14 @@
 
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
     using System;
-    using System.Collections.Generic;
-    using System.IO;
 
     public sealed class PcbItem: Model.ProjectItem {
-
-        private static Dictionary<string, Board> boardCache = new Dictionary<string, Board>();
 
         private Point position;
         private Angle rotation;
         private Polygon polygon;
         private string fileName;
-        private Board board;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -55,23 +48,6 @@
         }
 
         /// <summary>
-        /// Obte o carrega si cal, la placa.
-        /// </summary>
-        /// <returns>La placa.</returns>
-        /// 
-        private Board GetBoard() {
-
-            if (!boardCache.TryGetValue(fileName, out board)) {
-                using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                    BoardStreamReader reader = new BoardStreamReader(stream);
-                    board = reader.Read();
-                    boardCache.Add(fileName, board);
-                }
-            }
-            return board;
-        }
-
-        /// <summary>
         /// Obte o asigna el nom del fitxer de la placa.
         /// </summary>
         /// 
@@ -84,15 +60,6 @@
             }
             get {
                 return fileName;
-            }
-        }
-
-        /// <summary>
-        /// Obte la placa.
-        /// </summary>
-        public Board Board {
-            get {
-                return GetBoard();
             }
         }
 

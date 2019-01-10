@@ -48,7 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\IO\IStreamLocator.cs" />
     <Compile Include="Model\Items\CutItem.cs" />
     <Compile Include="Model\Items\PcbItem.cs" />
     <Compile Include="Model\IO\ProjectStreamReader.cs" />
