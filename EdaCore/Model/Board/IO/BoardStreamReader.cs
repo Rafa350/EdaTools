@@ -176,14 +176,15 @@
             if (!rd.IsStartTag("layer"))
                 throw new InvalidDataException("Se esperaba <layer>");
 
-            LayerId layerId = LayerId.Parse(rd.AttributeAsString("id"));
+            BoardSide side = rd.AttributeAsEnum<BoardSide>("side", BoardSide.None);
+            string name = rd.AttributeAsString("name");
             LayerFunction function = rd.AttributeAsEnum<LayerFunction>("function", LayerFunction.Unknown);
 
             rd.NextTag();
             if (!rd.IsEndTag("layer"))
                 throw new InvalidDataException("Se esperaba </layer>");
 
-            Layer layer = new Layer(layerId, function);
+            Layer layer = new Layer(side, name, function);
             return layer;
         }
 

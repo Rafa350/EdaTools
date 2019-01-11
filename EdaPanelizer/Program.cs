@@ -1,9 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Panelizer {
 
+    using MikroPic.EdaTools.v1.Base.IO;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.IO;
     using MikroPic.EdaTools.v1.Panel.Model;
-    using MikroPic.EdaTools.v1.Panel.Model.Items;
     using MikroPic.EdaTools.v1.Panel.Model.IO;
     using System;
     using System.IO;
@@ -80,7 +80,8 @@
 
             using (Stream stream = new FileStream(projectPath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
 
-                BoardLocator locator = new BoardLocator(Path.GetDirectoryName(projectPath));
+                FileStreamLocator locator = new FileStreamLocator();
+                locator.AddFolder(Path.GetDirectoryName(projectPath));
                 ProjectStreamReader reader = new ProjectStreamReader(stream, locator);
                 Project project = reader.Read();
 

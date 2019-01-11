@@ -79,7 +79,6 @@
     <Compile Include="Model\Board\Board_Layers.cs" />
     <Compile Include="Model\Board\Board_Components.cs" />
     <Compile Include="Model\Board\ElementExtensions.cs" />
-    <Compile Include="Model\Board\LayerId.cs" />
     <Compile Include="Model\Board\ComponentAttribute.cs" />
     <Compile Include="Model\Board\Elements\PadElement.cs" />
     <Compile Include="Model\Board\Elements\SlotElement.cs" />

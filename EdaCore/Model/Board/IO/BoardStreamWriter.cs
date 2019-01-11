@@ -388,7 +388,8 @@
 
                 writer.WriteStartElement("layer");
 
-                writer.WriteAttributeString("id", layer.Id.FullName);
+                writer.WriteAttributeEnum("side", layer.Side);
+                writer.WriteAttributeString("name", layer.Name);
                 writer.WriteAttributeEnum("function", layer.Function);
 
                 writer.WriteEndElement();

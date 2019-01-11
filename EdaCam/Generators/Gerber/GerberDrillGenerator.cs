@@ -89,8 +89,7 @@
         /// 
         private void PrepareApertures(ApertureDictionary apertures, Board board) {
 
-            foreach (var layerName in Target.LayerNames) {
-                LayerId layerId = new LayerId(layerName);
+            foreach (var layerId in Target.LayerNames) {
                 IVisitor visitor = new PrepareAperturesVisitor(layerId, apertures);
                 board.AcceptVisitor(visitor);
             }
@@ -176,8 +175,7 @@
         private void GenerateImage(GerberBuilder gb, Board board, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
-            foreach (var layerName in Target.LayerNames) {
-                LayerId layerId = new LayerId(layerName);
+            foreach (var layerId in Target.LayerNames) {
                 IVisitor visitor = new ImageGeneratorVisitor(gb, layerId, apertures);
                 board.AcceptVisitor(visitor);
             }
@@ -189,7 +187,7 @@
         /// </summary>
         private sealed class PrepareAperturesVisitor : ElementVisitor {
 
-            private readonly LayerId layerId;
+            private readonly string layerId;
             private readonly ApertureDictionary apertures;
 
             /// <summary>
@@ -198,7 +196,7 @@
             /// <param name="layerId">El identificador de la capa a procesar.</param>
             /// <param name="apertures">El diccionari d'apertures a preparar.</param>
             /// 
-            public PrepareAperturesVisitor(LayerId layerId, ApertureDictionary apertures) {
+            public PrepareAperturesVisitor(string layerId, ApertureDictionary apertures) {
 
                 this.layerId = layerId;
                 this.apertures = apertures;
@@ -271,7 +269,7 @@
         private sealed class ImageGeneratorVisitor : ElementVisitor {
 
             private readonly GerberBuilder gb;
-            private readonly LayerId layerId;
+            private readonly string layerId;
             private readonly ApertureDictionary apertures;
 
             /// <summary>
@@ -281,7 +279,7 @@
             /// <param name="layerId">Identificador de la capa a procesar.</param>
             /// <param name="apertures">El diccionari d'apertures.</param>
             /// 
-            public ImageGeneratorVisitor(GerberBuilder gb, LayerId layerId, ApertureDictionary apertures) { 
+            public ImageGeneratorVisitor(GerberBuilder gb, string layerId, ApertureDictionary apertures) { 
                 
                 this.gb = gb;
                 this.layerId = layerId;

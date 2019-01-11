@@ -61,8 +61,8 @@
         /// 
         private void AddLayers() {
 
-            if (panel.GetLayer(Layer.MillingId, false) == null)
-                panel.AddLayer(new Layer(Layer.MillingId, LayerFunction.Mechanical));
+            if (panel.GetLayer("Milling", false) == null)
+                panel.AddLayer(new Layer(BoardSide.None, "Milling", LayerFunction.Mechanical));
         }
 
         /// <summary>
@@ -167,8 +167,8 @@
 
             // Obte el conjunt de capes
             //
-            LayerSet millingLayerSet = new LayerSet(Layer.MillingId);
-            LayerSet holesLayerSet = new LayerSet(Layer.HolesId);
+            LayerSet millingLayerSet = new LayerSet("Milling");
+            LayerSet holesLayerSet = new LayerSet("Holes");
 
             // Obte els punts de tall d'una linia 
             //
@@ -230,7 +230,7 @@
         private void AddProfile(Size size) {
 
             Rect rect = new Rect(new Point(0, 0), size);
-            LayerSet profileLayer = new LayerSet(Layer.ProfileId);
+            LayerSet profileLayer = new LayerSet("Profile");
             panel.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Right, rect.Top), 100000, LineElement.LineCapStyle.Round));
             panel.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Bottom), new Point(rect.Right, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
             panel.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Left, rect.Bottom), 100000, LineElement.LineCapStyle.Round));

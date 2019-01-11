@@ -100,8 +100,7 @@
         /// 
         private void PrepareApertures(ApertureDictionary apertures, Board board) {
 
-            foreach (var layerName in Target.LayerNames) {
-                LayerId layerId = new LayerId(layerName);
+            foreach (var layerId in Target.LayerNames) {
                 ApertureCreatorVisitor visitor = new ApertureCreatorVisitor(layerId, apertures);
                 board.AcceptVisitor(visitor);
             }
@@ -219,8 +218,7 @@
         private void GenerateRegions(GerberBuilder gb, Board board, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN POLYGONS");
-            foreach (var layerName in Target.LayerNames) {
-                LayerId layerId = new LayerId(layerName);
+            foreach (var layerId in Target.LayerNames) {
                 IVisitor visitor = new RegionGeneratorVisitor(gb, layerId, apertures);
                 visitor.Visit(board);
             }
@@ -237,8 +235,7 @@
         private void GenerateImage(GerberBuilder gb, Board board, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
-            foreach (var layerName in Target.LayerNames) {
-                LayerId layerId = new LayerId(layerName);
+            foreach (var layerId in Target.LayerNames) {
                 IVisitor visitor = new ImageGeneratorVisitor(gb, layerId, apertures);
                 board.AcceptVisitor(visitor);
             }
@@ -251,7 +248,7 @@
         /// 
         private sealed class ApertureCreatorVisitor : ElementVisitor {
 
-            private readonly LayerId layerId;
+            private readonly string layerId;
             private readonly ApertureDictionary apertures;
 
             /// <summary>
@@ -260,7 +257,7 @@
             /// <param name="layerId">El identificador de la capa a procesar.</param>
             /// <param name="apertures">El diccionari d'apertures.</param>
             /// 
-            public ApertureCreatorVisitor(LayerId layerId, ApertureDictionary apertures) {
+            public ApertureCreatorVisitor(string layerId, ApertureDictionary apertures) {
 
                 this.layerId = layerId;
                 this.apertures = apertures;
@@ -442,7 +439,7 @@
         /// 
         private sealed class ImageGeneratorVisitor : ElementVisitor {
 
-            private readonly LayerId layerId;
+            private readonly string layerId;
             private readonly GerberBuilder gb;
             private readonly ApertureDictionary apertures;
 
@@ -453,7 +450,7 @@
             /// <param name="layerId">El identificador de la capa a procesar.</param>
             /// <param name="apertures">Diccionari d'apertures.</param>
             /// 
-            public ImageGeneratorVisitor(GerberBuilder gb, LayerId layerId, ApertureDictionary apertures) {
+            public ImageGeneratorVisitor(GerberBuilder gb, string layerId, ApertureDictionary apertures) {
 
                 this.gb = gb;
                 this.layerId = layerId;
@@ -564,7 +561,8 @@
 
                         // Obte el poligon
                         //
-                        Polygon polygon = rectangle.GetPolygon(layerId.Side);
+                        Layer layer = Board.GetLayer(layerId);
+                        Polygon polygon = rectangle.GetPolygon(layer.Side);
                         Point[] points = polygon.ClonePoints();
 
                         if (Part != null) {
@@ -617,7 +615,8 @@
 
                         // Obte el poligon
                         //
-                        Polygon polygon = circle.GetPolygon(layerId.Side);
+                        Layer layer = Board.GetLayer(layerId);
+                        Polygon polygon = circle.GetPolygon(layer.Side);
                         Point[] points = polygon.ClonePoints();
 
                         if (Part != null) {
@@ -809,7 +808,7 @@
         private sealed class RegionGeneratorVisitor : ElementVisitor {
 
             private readonly GerberBuilder gb;
-            private readonly LayerId layerId;
+            private readonly string layerId;
             private readonly ApertureDictionary apertures;
 
             /// <summary>
@@ -820,7 +819,7 @@
             /// <param name="layer">La capa a procesar.</param>
             /// <param name="apertures">Diccionari d'apertures.</param>
             /// 
-            public RegionGeneratorVisitor(GerberBuilder gb, LayerId layerId, ApertureDictionary apertures) { 
+            public RegionGeneratorVisitor(GerberBuilder gb, string layerId, ApertureDictionary apertures) { 
 
                 this.gb = gb;
                 this.layerId = layerId;

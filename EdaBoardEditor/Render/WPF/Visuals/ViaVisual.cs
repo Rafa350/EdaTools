@@ -44,7 +44,7 @@
             else {
                 if (Element.Shape == ViaElement.ViaShape.Circle) {
 
-                    int size = layer.Id.Side == BoardSide.Inner ? Element.InnerSize : Element.OuterSize;
+                    int size = layer.Side == BoardSide.Inner ? Element.InnerSize : Element.OuterSize;
                     int radius = (size + Element.Drill) / 4;
 
                     Pen pen = dc.GetPen(color, (size - Element.Drill) / 2, PenLineCap.Flat);
@@ -53,7 +53,7 @@
 
                 else {
 
-                    Polygon polygon = Element.GetPolygon(layer.Id.Side);
+                    Polygon polygon = Element.GetPolygon(layer.Side);
 
                     Brush brush = dc.GetBrush(color);
                     dc.DrawPolygon(brush, null, polygon);

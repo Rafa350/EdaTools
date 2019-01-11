@@ -49,8 +49,8 @@
             if (Element.Shape == ThPadElement.ThPadShape.Circle) {
 
                 int size =
-                    layer.Id.Side == BoardSide.Top ? Element.TopSize :
-                    layer.Id.Side == BoardSide.Bottom ? Element.BottomSize :
+                    layer.Side == BoardSide.Top ? Element.TopSize :
+                    layer.Side == BoardSide.Bottom ? Element.BottomSize :
                     Element.InnerSize;
 
                 int thickness = (size - Element.Drill) / 2;
@@ -62,7 +62,7 @@
 
             else {
 
-                Polygon polygon = Element.GetPolygon(layer.Id.Side);
+                Polygon polygon = Element.GetPolygon(layer.Side);
 
                 Brush brush = dc.GetBrush(color);
                 dc.DrawPolygon(brush, null, polygon);

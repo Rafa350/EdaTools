@@ -31,45 +31,45 @@
             VisualLayerStack vls = new VisualLayerStack();
 
             vls.Add(new VisualLayer("Bottom", 
-                new LayerId[] { Layer.BottomId },
+                new string[] { "Bottom.Copper" },
                 new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Region, ElementType.SmdPad },
                 true,
                 VisualMode.Element,
                 new Color(204, 0, 0, 255)));
             vls.Add(new VisualLayer("Top",
-                new LayerId[] { Layer.TopId },
+                new string[] { "Top.Copper" },
                 new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Region, ElementType.SmdPad },
                 true,
                 VisualMode.Element,
                 new Color(153, 255, 0, 0)));
 
             vls.Add(new VisualLayer("TopPlace", 
-                new LayerId[] { Layer.TopPlaceId }, 
+                new string[] { "Top.Place" }, 
                 null,
                 true,
                 VisualMode.Element,
                 new Color(204, 211, 211, 211)));
             vls.Add(new VisualLayer("TopDocument", 
-                new LayerId[] { Layer.TopDocumentId }, 
+                new string[] { "Top.Document" }, 
                 null,
                 true,
                 VisualMode.Element,
                 new Color(204, 160, 160, 160)));
             vls.Add(new VisualLayer("TopNames", 
-                new LayerId[] { Layer.TopNamesId }, 
+                new string[] { "Top.Names" }, 
                 null,
                 true,
                 VisualMode.Element,
                 new Color(255, 211, 211, 211)));
                 
             vls.Add(new VisualLayer("Pads", 
-                new LayerId[] { Layer.TopId }, 
+                new string[] { "Top.Copper" }, 
                 new ElementType[] { ElementType.ThPad },
                 true,
                 VisualMode.Element,
                 new Color(255, 234, 161, 64)));
             vls.Add(new VisualLayer("Vias",
-                new LayerId[] { Layer.TopId },
+                new string[] { "Top.Copper" },
                 new ElementType[] { ElementType.Via },
                 true,
                 VisualMode.Element,
@@ -77,20 +77,20 @@
             
             //vls.Add(new VisualLayer("Drills", new LayerSet(Layer.DrillsId), true, new Color(255, 255, 255, 255)));
             vls.Add(new VisualLayer("Holes", 
-                new LayerId[] { Layer.HolesId }, 
+                new string[] { "Holes" }, 
                 null,
                 true,
                 VisualMode.Element,
                 new Color(255, 240, 128, 128)));
             vls.Add(new VisualLayer("Milling", 
-                new LayerId[] { Layer.MillingId },
+                new string[] { "Milling" },
                 null,
                 true,
                 VisualMode.Element,
                 new Color(255, 32, 216, 200)));
 
             vls.Add(new VisualLayer("Profiles", 
-                new LayerId[] { Layer.ProfileId },
+                new string[] { "Profile" },
                 null,
                 true,
                 VisualMode.Element,

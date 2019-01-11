@@ -16,13 +16,13 @@
 
         public static LayerSet GetLocalLayerSet(this Part part, Element element) {
 
-            if (part.Flip) {
+/*            if (part.Flip) {
                 LayerSet layerSet = default;
                 foreach (var layerId in element.LayerSet)
                     layerSet += new LayerId(layerId.Name, layerId.ReverseSide);
                 return layerSet;
             }
-            else
+            else*/
                 return element.LayerSet;
         }
     }

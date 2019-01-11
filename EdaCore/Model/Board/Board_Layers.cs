@@ -9,7 +9,7 @@
     /// 
     public sealed partial class Board {
 
-        private Dictionary<LayerId, Layer> layers = new Dictionary<LayerId, Layer>();
+        private Dictionary<string, Layer> layers = new Dictionary<string, Layer>();
         private Layer outlineLayer;
 
         /// <summary>
@@ -22,13 +22,15 @@
             if (layer == null)
                 throw new ArgumentNullException("layer");
 
-            if ((layers != null) && layers.ContainsKey(layer.Id))
+            string id = layer.Id;
+
+            if ((layers != null) && layers.ContainsKey(id))
                 throw new InvalidOperationException(
-                    String.Format("La capa '{0}', ya esta asignada a esta placa.", layer.Id.FullName));
+                    String.Format("La capa '{0}', ya esta asignada a esta placa.", id));
 
             if (layers == null)
-                layers = new Dictionary<LayerId, Layer>();
-            layers.Add(layer.Id, layer);
+                layers = new Dictionary<string, Layer>();
+            layers.Add(id, layer);
 
             if (layer.Function == LayerFunction.Outline) {
                 if (outlineLayer == null)
@@ -62,11 +64,13 @@
             if (layer == null)
                 throw new ArgumentNullException("layer");
 
-            if ((layers == null) || !layers.ContainsKey(layer.Id))
-                throw new InvalidOperationException(
-                    String.Format("No se encontro la capa '{0}'.", layer.Id.FullName));
+            string id = layer.Id;
 
-            layers.Remove(layer.Id);
+            if ((layers == null) || !layers.ContainsKey(id))
+                throw new InvalidOperationException(
+                    String.Format("No se encontro la capa '{0}'.", id));
+
+            layers.Remove(id);
             if (layers.Count == 0)
                 layers = null;
 
@@ -75,22 +79,35 @@
         }
 
         /// <summary>
-        /// Obte una capa pel seu nom
+        /// Obte una capa pel seu nom complert.
         /// </summary>
-        /// <param name="layerId">L'identificador de la capa.</param>
+        /// <param name="id">Identificador de la capa.</param>
         /// <param name="throwOnError">True si cal generar una excepcio si no el troba.</param>
         /// <returns>La capa.</returns>
         /// 
-        public Layer GetLayer(LayerId layerId, bool throwOnError = true) {
+        public Layer GetLayer(string id, bool throwOnError = true) {
 
-            if ((layers != null) && layers.TryGetValue(layerId, out var layer)) 
+            if ((layers != null) && layers.TryGetValue(id, out var layer)) 
                 return layer;
 
             else if (throwOnError)
                 throw new InvalidOperationException(
-                    String.Format("No se encontro la capa '{0}'.", layerId.FullName));
+                    String.Format("No se encontro la capa '{0}'.", id));
             else
                 return null;
+        }
+
+        /// <summary>
+        /// Obte una capa per la seva cara i el seu nom.
+        /// </summary>
+        /// <param name="side">La cara de la placa on es troba.</param>
+        /// <param name="name">El nom curt</param>
+        /// <param name="throwOnError">True si cal generar una excepcio en cas d'error.</param>
+        /// <returns>La capa, o null si no la troba.</returns>
+        /// 
+        public Layer GetLayer(BoardSide side, string name, bool throwOnError = true) {
+
+            return GetLayer(Layer.GetId(side, name), throwOnError);
         }
 
         /// <summary>
@@ -110,22 +127,22 @@
         /// <summary>
         /// Obte els elements d'una capa.
         /// </summary>
-        /// <param name="layerId">Identificador de la capa.</param>
+        /// <param name="id">Identificador de la capa.</param>
         /// <param name="includeComponents">Indica si cal incluir els elements dels components.</param>
         /// <returns>Els elements.</returns>
         /// 
-        public IEnumerable<Element> GetElements(LayerId layerId, bool includeComponents = true) {
+        public IEnumerable<Element> GetElements(string id, bool includeComponents = true) {
 
             List<Element> list = new List<Element>();
 
             foreach (var element in Elements)
-                if (element.IsOnLayer(layerId))
+                if (element.IsOnLayer(id))
                     list.Add(element);
 
             if (includeComponents)
                 foreach (var component in Components)
                     foreach (var element in component.Elements)
-                        if (element.IsOnLayer(layerId))
+                        if (element.IsOnLayer(id))
                             list.Add(element);
 
             return list;
@@ -143,8 +160,8 @@
                 throw new ArgumentNullException("element");
 
             List<Layer> list = new List<Layer>();
-            foreach (var layerId in element.LayerSet) {
-                Layer layer = GetLayer(layerId, false);
+            foreach (var id in element.LayerSet) {
+                Layer layer = GetLayer(id, false);
                 if (layer != null)
                     list.Add(layer);
             }

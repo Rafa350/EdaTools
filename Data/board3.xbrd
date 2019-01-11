@@ -2,34 +2,25 @@
 <document version="213" documentType="board" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/XBRD.xsd">
     <board position="0, 0" rotation="0">
         <layers>
-            <layer id="Top.Copper" function="signal" />
-            <layer id="Bottom.Copper" function="signal" />
-            <layer id="Pads" function="unknown" />
-            <layer id="Vias" function="unknown" />
-            <layer id="Unrouted" function="unknown" />
-            <layer id="Profile" function="outline" />
-            <layer id="Top.Place" function="unknown" />
-            <layer id="Bottom.Place" function="unknown" />
-            <layer id="Unknown" function="unknown" />
-            <layer id="Top.Names" function="unknown" />
-            <layer id="Bottom.Names" function="unknown" />
-            <layer id="Top.Values" function="unknown" />
-            <layer id="Bottom.Values" function="unknown" />
-            <layer id="Top.Stop" function="unknown" />
-            <layer id="Bottom.Stop" function="unknown" />
-            <layer id="Top.Cream" function="unknown" />
-            <layer id="Bottom.Cream" function="unknown" />
-            <layer id="Top.Glue" function="unknown" />
-            <layer id="Bottom.Glue" function="unknown" />
-            <layer id="Top.Keepout" function="unknown" />
-            <layer id="Bottom.Keepout" function="unknown" />
-            <layer id="Top.Restrict" function="unknown" />
-            <layer id="Bottom.Restrict" function="unknown" />
-            <layer id="ViaRestrict" function="unknown" />
-            <layer id="Drills" function="unknown" />
-            <layer id="Holes" function="unknown" />
-            <layer id="Top.Document" function="unknown" />
-            <layer id="Bottom.Document" function="unknown" />
+            <layer side="top" name="Place" function="design" />
+            <layer side="none" name="Pads" function="unknown" />
+            <layer side="none" name="Drills" function="unknown" />
+            <layer side="top" name="Names" function="design" />
+            <layer side="top" name="Values" function="design" />
+            <layer side="top" name="Document" function="design" />
+            <layer side="top" name="Keepout" function="design" />
+            <layer side="bottom" name="Keepout" function="design" />
+            <layer side="none" name="ViaRestrict" function="unknown" />
+            <layer side="top" name="Restrict" function="design" />
+            <layer side="bottom" name="Restrict" function="design" />
+            <layer side="top" name="Copper" function="signal" />
+            <layer side="top" name="Cream" function="design" />
+            <layer side="top" name="Stop" function="design" />
+            <layer side="top" name="Glue" function="design" />
+            <layer side="none" name="Profile" function="outline" />
+            <layer side="bottom" name="Copper" function="signal" />
+            <layer side="none" name="Vias" function="unknown" />
+            <layer side="none" name="Unrouted" function="unknown" />
         </layers>
         <signals>
             <signal name="GND" clearance="0.15" />

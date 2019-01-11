@@ -145,9 +145,9 @@
             public override void Visit(LineElement line) {
 
                 int layerNum = 3;
-                if (line.LayerSet.Contains(Layer.TopId))
+                if (line.LayerSet.Contains("Top.Copper"))
                     layerNum = 1;
-                else if (line.LayerSet.Contains(Layer.BottomId))
+                else if (line.LayerSet.Contains("Bottom.Copper"))
                     layerNum = 2;
 
                 if (layerNum > 0) { 
@@ -161,9 +161,9 @@
             public override void Visit(ArcElement arc) {
 
                 int layerNum = 3;
-                if (arc.LayerSet.Contains(Layer.TopId))
+                if (arc.LayerSet.Contains("Top.Copper"))
                     layerNum = 1;
-                else if (arc.LayerSet.Contains(Layer.BottomId))
+                else if (arc.LayerSet.Contains("Bottom.Copper"))
                     layerNum = 2;
 
                 if (layerNum > 0) {

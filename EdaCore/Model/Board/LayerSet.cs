@@ -5,18 +5,18 @@
     using System.Collections.Generic;
     using System.Text;
 
-    public struct LayerSet : IEnumerable<LayerId> {
+    public struct LayerSet : IEnumerable<string> {
 
-        private readonly LayerId[] storage;
+        private readonly string[] storage;
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="name">El element a afeigir.</param>
         /// 
-        public LayerSet(LayerId element) {
+        public LayerSet(string element) {
 
-            storage = new LayerId[1] { element };
+            storage = new string[1] { element };
         }
 
         /// <summary>
@@ -25,9 +25,9 @@
         /// <param name="element1">Primer element.</param>
         /// <param name="element2">Segon element.</param>
         /// 
-        public LayerSet(LayerId element1, LayerId element2) {
+        public LayerSet(string element1, string element2) {
 
-            storage = new LayerId[2] { element1, element2 };
+            storage = new string[2] { element1, element2 };
         }
 
         /// <summary>
@@ -37,9 +37,9 @@
         /// <param name="element2">Segon element.</param>
         /// <param name="element3">Tercer element.</param>
         /// 
-        public LayerSet(LayerId element1, LayerId element2, LayerId element3) {
+        public LayerSet(string element1, string element2, string element3) {
 
-            storage = new LayerId[3] { element1, element2, element3 };
+            storage = new string[3] { element1, element2, element3 };
         }
 
         /// <summary>
@@ -47,12 +47,12 @@
         /// </summary>
         /// <param name="elements">Elements.</param>
         /// 
-        public LayerSet(params LayerId[] elements) {
+        public LayerSet(params string[] elements) {
 
             if (elements == null)
                 throw new ArgumentNullException("elements");
 
-            storage = new LayerId[elements.Length];
+            storage = new string[elements.Length];
             elements.CopyTo(storage, 0);
         }
 
@@ -61,17 +61,17 @@
         /// </summary>
         /// <param name="elements">Elements.</param>
         /// 
-        public LayerSet(IEnumerable<LayerId> elements) {
+        public LayerSet(IEnumerable<string> elements) {
 
             if (elements == null)
                 throw new ArgumentNullException("elements");
 
-            if (!(elements is ICollection<LayerId> collection)) {
-                List<LayerId> e = new List<LayerId>(elements);
+            if (!(elements is ICollection<string> collection)) {
+                List<string> e = new List<string>(elements);
                 storage = e.ToArray();
             }
             else {
-                storage = new LayerId[collection.Count];
+                storage = new string[collection.Count];
                 collection.CopyTo(storage, 0);
             }
         }
@@ -83,7 +83,7 @@
         /// 
         public LayerSet(LayerSet other) {
 
-            storage = new LayerId[other.storage.Length];
+            storage = new string[other.storage.Length];
             other.storage.CopyTo(storage, 0);
         }
 
@@ -93,7 +93,7 @@
         /// <param name="element">Element.</param>
         /// <returns>True si pertany, false en cas contrari.</returns>
         /// 
-        public bool Contains(LayerId element) {
+        public bool Contains(string element) {
 
             for (int i = 0; i < storage.Length; i++)
                 if (element.Equals(storage[i]))
@@ -111,7 +111,7 @@
         /// 
         public static LayerSet operator +(LayerSet a, LayerSet b) {
 
-            LayerId[] s = new LayerId[a.storage.Length + b.storage.Length];
+            string[] s = new string[a.storage.Length + b.storage.Length];
             a.storage.CopyTo(s, 0);
             b.storage.CopyTo(s, a.storage.Length);
             return new LayerSet(s);
@@ -124,12 +124,12 @@
         /// <param name="b">Element.</param>
         /// <returns>El resultat de l'operacio.</returns>
         /// 
-        public static LayerSet operator +(LayerSet a, LayerId b) {
+        public static LayerSet operator +(LayerSet a, string b) {
 
             if (a.storage == null)
                 return new LayerSet(b);
             else {
-                LayerId[] s = new LayerId[a.storage.Length + 1];
+                string[] s = new string[a.storage.Length + 1];
                 a.storage.CopyTo(s, 0);
                 s[a.storage.Length] = b;
                 return new LayerSet(s);
@@ -162,20 +162,20 @@
                 throw new ArgumentNullException("s");
 
             string[] ss = s.Split(',');
-            LayerId[] elements = new LayerId[ss.Length];
+            string[] elements = new string[ss.Length];
             for (int i = 0; i < ss.Length; i++)
-                elements[i] = LayerId.Parse(ss[i].Trim());
+                elements[i] = ss[i].Trim();
             return new LayerSet(elements);
         }
 
-        public IEnumerator<LayerId> GetEnumerator() {
+        public IEnumerator<string> GetEnumerator() {
 
-            return ((IEnumerable<LayerId>)storage).GetEnumerator();
+            return ((IEnumerable<string>)storage).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator() {
 
-            return ((IEnumerable<LayerId>)storage).GetEnumerator();
+            return ((IEnumerable<string>)storage).GetEnumerator();
         }
 
         /// <summary>

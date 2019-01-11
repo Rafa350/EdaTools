@@ -39,7 +39,7 @@
 
             Polygon polygon = layer.Function == LayerFunction.Signal ?
                 board.GetRegionPolygon(Element, layer.Id, new Transformation()) :
-                Element.GetPolygon(layer.Id.Side);
+                Element.GetPolygon(layer.Side);
 
             Pen pen = Element.Thickness > 0 ? dc.GetPen(color, Element.Thickness, PenLineCap.Round) : null;
             Brush brush = Element.Filled ? dc.GetBrush(color) : null;
