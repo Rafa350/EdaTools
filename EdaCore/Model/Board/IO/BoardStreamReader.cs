@@ -177,14 +177,14 @@
                 throw new InvalidDataException("Se esperaba <layer>");
 
             BoardSide side = rd.AttributeAsEnum<BoardSide>("side", BoardSide.None);
-            string name = rd.AttributeAsString("name");
+            string tag = rd.AttributeAsString("tag");
             LayerFunction function = rd.AttributeAsEnum<LayerFunction>("function", LayerFunction.Unknown);
 
             rd.NextTag();
             if (!rd.IsEndTag("layer"))
                 throw new InvalidDataException("Se esperaba </layer>");
 
-            Layer layer = new Layer(side, name, function);
+            Layer layer = new Layer(side, tag, function);
             return layer;
         }
 

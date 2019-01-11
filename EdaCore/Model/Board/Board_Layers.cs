@@ -11,6 +11,8 @@
 
         private Dictionary<string, Layer> layers = new Dictionary<string, Layer>();
         private Layer outlineLayer;
+        private Layer topLayer;
+        private Layer bottomLayer;
 
         /// <summary>
         /// Afegeix una capa a la placa. L'ordre en que s'afegeixen corresponen a l'apilament fisic de la placa.
@@ -22,17 +24,21 @@
             if (layer == null)
                 throw new ArgumentNullException("layer");
 
-            string id = layer.Id;
+            string name = layer.Name;
 
-            if ((layers != null) && layers.ContainsKey(id))
+            if ((layers != null) && layers.ContainsKey(name))
                 throw new InvalidOperationException(
-                    String.Format("La capa '{0}', ya esta asignada a esta placa.", id));
+                    String.Format("La capa '{0}', ya esta asignada a esta placa.", name));
 
             if (layers == null)
                 layers = new Dictionary<string, Layer>();
-            layers.Add(id, layer);
+            layers.Add(name, layer);
 
-            if (layer.Function == LayerFunction.Outline) {
+            if (layer.IsTopCopper)
+                topLayer = layer;
+            else if (layer.IsBottomCopper)
+                bottomLayer = layer;
+            else if (layer.Function == LayerFunction.Outline) {
                 if (outlineLayer == null)
                     outlineLayer = layer;
                 else
@@ -64,50 +70,54 @@
             if (layer == null)
                 throw new ArgumentNullException("layer");
 
-            string id = layer.Id;
+            string name = layer.Name;
 
-            if ((layers == null) || !layers.ContainsKey(id))
+            if ((layers == null) || !layers.ContainsKey(name))
                 throw new InvalidOperationException(
-                    String.Format("No se encontro la capa '{0}'.", id));
+                    String.Format("No se encontro la capa '{0}'.", name));
 
-            layers.Remove(id);
+            layers.Remove(name);
             if (layers.Count == 0)
                 layers = null;
 
-            if (outlineLayer == layer)
+            if (topLayer == layer)
+                topLayer = null;
+            else if (bottomLayer == layer)
+                bottomLayer = null;
+            else if (outlineLayer == layer)
                 outlineLayer = null;
         }
 
         /// <summary>
         /// Obte una capa pel seu nom complert.
         /// </summary>
-        /// <param name="id">Identificador de la capa.</param>
+        /// <param name="name">El nom de la capa.</param>
         /// <param name="throwOnError">True si cal generar una excepcio si no el troba.</param>
         /// <returns>La capa.</returns>
         /// 
-        public Layer GetLayer(string id, bool throwOnError = true) {
+        public Layer GetLayer(string name, bool throwOnError = true) {
 
-            if ((layers != null) && layers.TryGetValue(id, out var layer)) 
+            if ((layers != null) && layers.TryGetValue(name, out var layer)) 
                 return layer;
 
             else if (throwOnError)
                 throw new InvalidOperationException(
-                    String.Format("No se encontro la capa '{0}'.", id));
+                    String.Format("No se encontro la capa '{0}'.", name));
             else
                 return null;
         }
 
         /// <summary>
-        /// Obte una capa per la seva cara i el seu nom.
+        /// Obte una capa per la seva cara i la seva etiqueta.
         /// </summary>
         /// <param name="side">La cara de la placa on es troba.</param>
-        /// <param name="name">El nom curt</param>
+        /// <param name="tag">El nom curt</param>
         /// <param name="throwOnError">True si cal generar una excepcio en cas d'error.</param>
         /// <returns>La capa, o null si no la troba.</returns>
         /// 
-        public Layer GetLayer(BoardSide side, string name, bool throwOnError = true) {
+        public Layer GetLayer(BoardSide side, string tag, bool throwOnError = true) {
 
-            return GetLayer(Layer.GetId(side, name), throwOnError);
+            return GetLayer(Layer.GetName(side, tag), throwOnError);
         }
 
         /// <summary>
@@ -127,22 +137,22 @@
         /// <summary>
         /// Obte els elements d'una capa.
         /// </summary>
-        /// <param name="id">Identificador de la capa.</param>
+        /// <param name="name">Nom de la capa.</param>
         /// <param name="includeComponents">Indica si cal incluir els elements dels components.</param>
         /// <returns>Els elements.</returns>
         /// 
-        public IEnumerable<Element> GetElements(string id, bool includeComponents = true) {
+        public IEnumerable<Element> GetElements(string name, bool includeComponents = true) {
 
             List<Element> list = new List<Element>();
 
             foreach (var element in Elements)
-                if (element.IsOnLayer(id))
+                if (element.IsOnLayer(name))
                     list.Add(element);
 
             if (includeComponents)
                 foreach (var component in Components)
                     foreach (var element in component.Elements)
-                        if (element.IsOnLayer(id))
+                        if (element.IsOnLayer(name))
                             list.Add(element);
 
             return list;
@@ -167,6 +177,18 @@
             }
 
             return list;
+        }
+
+        public Layer TopLayer {
+            get {
+                return topLayer;
+            }
+        }
+
+        public Layer BottomLayer {
+            get {
+                return bottomLayer;
+            }
         }
 
         /// <summary>

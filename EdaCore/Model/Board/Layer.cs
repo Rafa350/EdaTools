@@ -21,20 +21,20 @@
     public sealed class Layer: IVisitable {
 
         private readonly BoardSide side;
-        private readonly string name;
+        private readonly string tag;
         private readonly LayerFunction function = LayerFunction.Unknown;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="side">Cara de la placa.</param>
-        /// <param name="name">Nom de la capa.</param>
+        /// <param name="tag">Etiqueta de la capa.</param>
         /// <param name="function">Functio de la capa.</param>
         /// 
-        public Layer(BoardSide side, string name, LayerFunction function) {
+        public Layer(BoardSide side, string tag, LayerFunction function) {
 
             this.side = side;
-            this.name = name;
+            this.tag = tag;
             this.function = function;
         }
 
@@ -45,7 +45,7 @@
         /// 
         public Layer Clone() {
 
-            return new Layer(side, name, function);
+            return new Layer(side, tag, function);
         }
 
         /// <summary>
@@ -59,13 +59,13 @@
         }
 
         /// <summary>
-        /// Genera un identificador de capa.
+        /// Genera un nom de capa.
         /// </summary>
-        /// <param name="side">Capa</param>
-        /// <param name="name">Nom</param>
-        /// <returns>El identificador</returns>
+        /// <param name="side">Cara.</param>
+        /// <param name="name">Etiqueta.</param>
+        /// <returns>El nom.</returns>
         /// 
-        public static string GetId(BoardSide side, string name) {
+        public static string GetName(BoardSide side, string name) {
 
             StringBuilder sb = new StringBuilder();
             switch (side) {
@@ -82,26 +82,6 @@
         }
 
         /// <summary>
-        /// Obte el nom.
-        /// </summary>
-        /// 
-        public string Name {
-            get {
-                return name;
-            }
-        }
-
-        /// <summary>
-        /// Obte el identificador de la capa
-        /// </summary>
-        /// 
-        public string Id {
-            get {
-                return GetId(side, name);
-            }
-        }
-
-        /// <summary>
         /// Obte la cara
         /// </summary>
         /// 
@@ -112,7 +92,27 @@
         }
 
         /// <summary>
-        /// Obte la funcio de la capa
+        /// Obte l'etiqueta.
+        /// </summary>
+        /// 
+        public string Tag {
+            get {
+                return tag;
+            }
+        }
+
+        /// <summary>
+        /// Obte el nom.
+        /// </summary>
+        /// 
+        public string Name {
+            get {
+                return GetName(side, tag);
+            }
+        }
+
+        /// <summary>
+        /// Obte la funcio.
         /// </summary>
         /// 
         public LayerFunction Function {
@@ -121,18 +121,50 @@
             }
         }
 
+        /// <summary>
+        /// Indica si la capa esta en la cara superior.
+        /// </summary>
+        /// 
         public bool IsTop {
             get {
                 return side == BoardSide.Top;
             }
         }
 
+        /// <summary>
+        /// Indica si es la capa de coure superior.
+        /// </summary>
+        /// 
+        public bool IsTopCopper {
+            get {
+                return (side == BoardSide.Top) && (function == LayerFunction.Signal);
+            }
+        }
+
+        /// <summary>
+        /// Indica si la capa esta en la cara inferior.
+        /// </summary>
+        /// 
         public bool IsBottom {
             get {
                 return side == BoardSide.Bottom;
             }
         }
 
+        /// <summary>
+        /// Indica si es la capa de coure inferior.
+        /// </summary>
+        /// 
+        public bool IsBottomCopper {
+            get {
+                return (side == BoardSide.Bottom) && (function == LayerFunction.Signal);
+            }
+        }
+
+        /// <summary>
+        /// Indica si es una capa interna.
+        /// </summary>
+        /// 
         public bool IsInner {
             get {
                 return side == BoardSide.Inner;

@@ -2,15 +2,18 @@
 
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
     using MikroPic.EdaTools.v1.Panel.Model;
     using MikroPic.EdaTools.v1.Panel.Model.Items;
     using System;
     using System.Collections.Generic;
+    using System.IO;
 
     public sealed class Panelizer {
 
+        private readonly Dictionary<string, Board> boards = new Dictionary<string, Board>();
         private readonly Board panel;
 
         /// <summary>
@@ -42,7 +45,14 @@
             int index = 0;
             foreach (var item in project.Items) {
                 if (item is PcbItem pcb) {
-                    Board board = null;
+
+                    if (!boards.TryGetValue(pcb.FileName, out Board board)) {
+                        using (Stream stream = new FileStream(pcb.FileName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                            BoardStreamReader reader = new BoardStreamReader(stream);
+                            board = reader.Read();
+                        }
+                        boards.Add(pcb.FileName, board);
+                    }
                     AddBoard(board, pcb.Position, pcb.Rotation, index++);
                 }
 
@@ -79,13 +89,13 @@
             // capes son comuns a totes les plaques que formen el panel.
             //
             foreach (var layer in board.Layers)
-                if (panel.GetLayer(layer.Id, false) == null)
+                if (panel.GetLayer(layer.Name, false) == null)
                     panel.AddLayer(layer.Clone());
 
             // Afegeix els senyals. Cada placa te les seves propies.
             //
             foreach (var signal in board.Signals) {
-                string signalName = String.Format("B{0}.{1}", index, signal.Name);
+                string signalName = String.Format("{1}@board{0}", index, signal.Name);
                 if (panel.GetSignal(signalName, false) == null) 
                     panel.AddSignal(signal.Clone(signalName));
             }
@@ -105,7 +115,7 @@
                 List<Part> transformableParts = new List<Part>();
                 foreach (var part in board.Parts) {
                     Component component = panel.GetComponent(part.Component.Name);
-                    Part panelPart = part.Clone(String.Format("B{0}.{1}", index, part.Name), component);
+                    Part panelPart = part.Clone(String.Format("{1}@board{0}", index, part.Name), component);
                     transformableParts.Add(panelPart);
                     panel.AddPart(panelPart);
 
@@ -113,7 +123,7 @@
                         if (panelElement is PadElement panelPad) {
                             Signal signal = board.GetSignal(part.GetPad(panelPad.Name), part, false);
                             if (signal != null) {
-                                string panelSignalName = String.Format("B{0}.{1}", index, signal.Name);
+                                string panelSignalName = String.Format("{1}@board{0}", index, signal.Name);
                                 panel.Connect(panel.GetSignal(panelSignalName), panelPad, panelPart);
                             }
                         }
@@ -141,7 +151,7 @@
                     if (boardElement is IConectable) {
                         Signal signal = board.GetSignal(boardElement, null, false);
                         if (signal != null) {
-                            string panelSignalName = String.Format("B{0}.{1}", index, signal.Name);
+                            string panelSignalName = String.Format("{1}@board{0}", index, signal.Name);
                             panel.Connect(panel.GetSignal(panelSignalName), panelElement as IConectable);
                         }
                     }

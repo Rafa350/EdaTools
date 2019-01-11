@@ -15,16 +15,16 @@
         /// <summary>
         /// Procesa un projecte.
         /// </summary>
-        /// <param name="projectFileName">Nom del fitxer del projecte.</param>
+        /// <param name="projectPath">Ruta complerta del projecte.</param>
         /// <param name="targetName">Nom del target a procesar. Si es null, es procesan tots.</param>
         /// 
-        public void Process(string projectFileName, string targetName) {
+        public void Process(string projectPath, string targetName) {
 
-            if (String.IsNullOrEmpty(projectFileName))
-                throw new ArgumentNullException("projectFileName");
+            if (String.IsNullOrEmpty(projectPath))
+                throw new ArgumentNullException("projectPath");
 
-            string projectFolder = Path.GetDirectoryName(projectFileName);
-            Project project = LoadProject(projectFileName);
+            string projectFolder = Path.GetDirectoryName(projectPath);
+            Project project = LoadProject(projectPath);
             Process(project, targetName, projectFolder);
         }
 

@@ -38,7 +38,7 @@
         protected override void Draw(DrawVisualContext dc) {
 
             Polygon polygon = layer.Function == LayerFunction.Signal ?
-                board.GetRegionPolygon(Element, layer.Id, new Transformation()) :
+                board.GetRegionPolygon(Element, layer.Name, new Transformation()) :
                 Element.GetPolygon(layer.Side);
 
             Pen pen = Element.Thickness > 0 ? dc.GetPen(color, Element.Thickness, PenLineCap.Round) : null;

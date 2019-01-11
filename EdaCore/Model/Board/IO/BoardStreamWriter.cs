@@ -389,7 +389,7 @@
                 writer.WriteStartElement("layer");
 
                 writer.WriteAttributeEnum("side", layer.Side);
-                writer.WriteAttributeString("name", layer.Name);
+                writer.WriteAttributeString("tag", layer.Tag);
                 writer.WriteAttributeEnum("function", layer.Function);
 
                 writer.WriteEndElement();

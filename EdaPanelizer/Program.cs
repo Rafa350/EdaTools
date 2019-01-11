@@ -63,7 +63,7 @@
                 SaveBoard(board, targetPath);
 
                 if (pause) {
-                    Console.WriteLine("Press any key to coninue...");
+                    Console.WriteLine("Press any key to continue...");
                     Console.ReadKey(true);
                 }
             }

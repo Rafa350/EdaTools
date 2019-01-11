@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <document version="100" documentType="panelizerProject" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/XPNL.xsd">
-    <project output="panel3.xbrd" size="142, 137">
+    <project size="142, 137">
         <items>
             <board file="board3.xbrd" position="0, 0" rotation="0"/>
             <board file="board3.xbrd" position="72, 0" rotation="0"/>

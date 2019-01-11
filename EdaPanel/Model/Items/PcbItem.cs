@@ -54,7 +54,7 @@
         public string FileName {
             set {
                 if (String.IsNullOrEmpty(value))
-                    throw new ArgumentNullException("PlaveElement.FileName");
+                    throw new ArgumentNullException("PcbItem.FileName");
 
                 fileName = value;
             }

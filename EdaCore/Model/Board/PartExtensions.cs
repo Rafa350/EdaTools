@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     using MikroPic.EdaTools.v1.Base.Geometry;
+    using System;
 
     public static class PartExtensions {
 
@@ -16,13 +17,23 @@
 
         public static LayerSet GetLocalLayerSet(this Part part, Element element) {
 
-/*            if (part.Flip) {
+            if (part.Flip) {
                 LayerSet layerSet = default;
-                foreach (var layerId in element.LayerSet)
-                    layerSet += new LayerId(layerId.Name, layerId.ReverseSide);
+                foreach (var layerName in element.LayerSet) {
+                    if (layerName.Contains(".")) {
+                        string[] s = layerName.Split('.');
+                        if (s[0] == "Top")
+                            s[0] = "Bottom";
+                        else if (s[0] == "Bottom")
+                            s[0] = "Top";
+                        layerSet += Layer.GetName((BoardSide)Enum.Parse(typeof(BoardSide), s[0]), s[1]);
+                    }
+                    else
+                        layerSet += layerName;
+                }
                 return layerSet;
             }
-            else*/
+            else
                 return element.LayerSet;
         }
     }

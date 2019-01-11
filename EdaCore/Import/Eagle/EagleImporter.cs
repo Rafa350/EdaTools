@@ -20,6 +20,8 @@
     /// 
     public sealed class EagleImporter: Importer {
 
+        private const int topLayerNum = 1;
+        private const int bottomLayerNum = 16;
         private const int viasLayerNum = 18;
         private const int padsLayerNum = 17;
         private const int drillsLayerNum = 44;
@@ -28,7 +30,8 @@
         private readonly Dictionary<string, Component> componentDict = new Dictionary<string, Component>();
         private readonly Dictionary<string, Signal> signalDict = new Dictionary<string, Signal>();
         private readonly Dictionary<Element, string> mapElementSignal = new Dictionary<Element, string>();
-        private Dictionary<int, Layer> layers;
+
+        private Dictionary<int, string> layerNames = new Dictionary<int, string>();
 
         private Board board;
         private XmlDocument doc;
@@ -44,6 +47,7 @@
             doc = ReadXmlDocument(stream);
             board = new Board();
 
+            ProcessLayers();
             ProcessSignals();
             ProcessBlocks();
             ProcessElements();
@@ -72,6 +76,19 @@
             doc.Load(reader);
 
             return doc;
+        }
+
+        private void ProcessLayers() {
+
+            // Recorre el node <layers> per crear les capes necesaries
+            //
+            foreach (XmlNode layerNode in doc.SelectNodes("eagle/drawing/layers/layer")) {
+                int layerNum = Int32.Parse(layerNode.Attributes["number"].Value);
+                Layer layer = CreateLayer(layerNum);
+                board.AddLayer(layer);
+
+                layerNames.Add(layerNum, layer.Name);
+            }
         }
 
         /// <summary>
@@ -341,8 +358,8 @@
                     break;
             }
 
-            string padsLayerId = GetLayerId(padsLayerNum);
-            string drillsLayerId = GetLayerId(drillsLayerNum);
+            string padsLayerId = GetLayerName(padsLayerNum);
+            string drillsLayerId = GetLayerName(drillsLayerNum);
 
             LayerSet layerSet = new LayerSet(padsLayerId, drillsLayerId, "Top.Copper", "Top.Stop", "Bottom.Copper", "Bottom.Stop");
             return new ThPadElement(name, layerSet, position, rotation, size, shape, drill);
@@ -386,7 +403,7 @@
             bool cream = GetAttributeAsBoolean(node, "cream", true);
 
             int layerNum = GetAttributeAsInteger(node, "layer");
-            LayerSet layerSet = new LayerSet(GetLayerId(layerNum));
+            LayerSet layerSet = new LayerSet(GetLayerName(layerNum));
             if (cream) 
                 layerSet = layerSet + "Top.Cream";
             if (stop) 
@@ -431,12 +448,12 @@
                     break;
             }
 
-            string viasLayerId = GetLayerId(viasLayerNum);
-            string drillsLayerId = GetLayerId(drillsLayerNum);
+            string viasLayerId = GetLayerName(viasLayerNum);
+            string drillsLayerId = GetLayerName(drillsLayerNum);
 
             LayerSet layerSet = new LayerSet(viasLayerId, drillsLayerId);
             foreach (int layerNum in layerNums) {
-                layerSet = layerSet + GetLayerId(layerNum);
+                layerSet = layerSet + GetLayerName(layerNum);
             }
 
             Element element = new ViaElement(layerSet, position, size, drill, shape);
@@ -474,7 +491,7 @@
             int thickness = 100000;
 
             int layerNum = GetAttributeAsInteger(node, "layer");
-            LayerSet layerSet = new LayerSet(GetLayerId(layerNum));
+            LayerSet layerSet = new LayerSet(GetLayerName(layerNum));
 
             TextElement element = new TextElement(layerSet, position, rotation, height, thickness, horizontalAlign, verticalAlign);
             element.Value = value;
@@ -507,7 +524,7 @@
                 thickness = 100000;
 
             int layerNum = GetAttributeAsInteger(node, "layer");
-            LayerSet layerSet = new LayerSet(GetLayerId(layerNum));
+            LayerSet layerSet = new LayerSet(GetLayerName(layerNum));
 
             Element element;
             if (angle.IsZero)
@@ -548,7 +565,7 @@
                 thickness = ParseNumber(GetAttributeAsString(node, "width"));
 
             int layerNum = GetAttributeAsInteger(node, "layer");
-            LayerSet layerSet = new LayerSet(GetLayerId(layerNum));
+            LayerSet layerSet = new LayerSet(GetLayerName(layerNum));
 
             Element element = new RectangleElement(layerSet, position, size, Ratio.Zero, rotation, thickness, thickness == 0);
 
@@ -580,7 +597,7 @@
             int radius = ParseNumber(GetAttributeAsString(node, "radius"));
 
             int layerNum = GetAttributeAsInteger(node, "layer");
-            LayerSet layerSet = new LayerSet(GetLayerId(layerNum));
+            LayerSet layerSet = new LayerSet(GetLayerName(layerNum));
 
             Element element = new CircleElement(layerSet, position, radius, thickness, thickness == 0);
 
@@ -606,7 +623,7 @@
                 clearance = ParseNumber(GetAttributeAsString(node, "isolate"));
 
             int layerNum = GetAttributeAsInteger(node, "layer");
-            LayerSet layerSet = new LayerSet(GetLayerId(layerNum));
+            LayerSet layerSet = new LayerSet(GetLayerName(layerNum));
 
             List<RegionElement.Segment> segments = new List<RegionElement.Segment>();
             foreach (XmlNode vertexNode in node.SelectNodes("vertex")) {
@@ -958,136 +975,110 @@
         }
 
         /// <summary>
-        /// Obte el identificador d'una capa a partir del seu nombre. Si la capa
+        /// Obte el nom d'una capa a partir del seu identificador numeric. Si la capa
         /// no existeix, la crea per futures referencies i l'afegeix a la placa.
         /// </summary>
-        /// <param name="layerNum">Nombre de la capa.</param>
-        /// <returns>El identificador de la capa.</returns>
+        /// <param name="layerNum">Identificador de la capa.</param>
+        /// <returns>El nom de la capa.</returns>
         /// 
-        private string GetLayerId(int layerNum) {
+        private string GetLayerName(int layerNum) {
 
-            if ((layers == null) || !layers.TryGetValue(layerNum, out Layer layer)) {
+            return layerNames[layerNum];
+        }
 
-                switch (layerNum) {
-                    case 1:
-                        layer = new Layer(BoardSide.Top, "Copper", LayerFunction.Signal);
-                        break;
+        /// <summary>
+        /// Crea la capa especificada pel seu identificador.
+        /// </summary>
+        /// <param name="layerNum"></param>
+        /// <returns>La capa.</returns>
+        /// 
+        private Layer CreateLayer(int layerNum) {
 
-                    case 16:
-                        layer = new Layer(BoardSide.Bottom, "Copper", LayerFunction.Signal);
-                        break;
+            switch (layerNum) {
+                case topLayerNum:
+                    return new Layer(BoardSide.Top, "Copper", LayerFunction.Signal);
 
-                    case 17:
-                        layer = new Layer(BoardSide.None, "Pads", LayerFunction.Unknown);
-                        break;
+                case bottomLayerNum:
+                    return new Layer(BoardSide.Bottom, "Copper", LayerFunction.Signal);
 
-                    case viasLayerNum:
-                        layer = new Layer(BoardSide.None, "Vias", LayerFunction.Unknown);
-                        break;
+                case 17:
+                    return new Layer(BoardSide.None, "Pads", LayerFunction.Unknown);
 
-                    case 19:
-                        layer = new Layer(BoardSide.None, "Unrouted", LayerFunction.Unknown);
-                        break;
+                case viasLayerNum:
+                    return new Layer(BoardSide.None, "Vias", LayerFunction.Unknown);
 
-                    case 20:
-                        layer = new Layer(BoardSide.None, "Profile", LayerFunction.Outline);
-                        break;
+                case 19:
+                    return new Layer(BoardSide.None, "Unrouted", LayerFunction.Unknown);
 
-                    case 21:
-                        layer = new Layer(BoardSide.Top, "Place", LayerFunction.Design);
-                        break;
+                case 20:
+                    return new Layer(BoardSide.None, "Profile", LayerFunction.Outline);
 
-                    case 22:
-                        layer = new Layer(BoardSide.Bottom, "Place", LayerFunction.Design);
-                        break;
+                case 21:
+                    return new Layer(BoardSide.Top, "Place", LayerFunction.Design);
 
-                    case 25:
-                        layer = new Layer(BoardSide.Top, "Names", LayerFunction.Design);
-                        break;
+                case 22:
+                    return new Layer(BoardSide.Bottom, "Place", LayerFunction.Design);
 
-                    case 26:
-                        layer = new Layer(BoardSide.Bottom, "Names", LayerFunction.Design);
-                        break;
+                case 25:
+                    return new Layer(BoardSide.Top, "Names", LayerFunction.Design);
 
-                    case 27:
-                        layer = new Layer(BoardSide.Top, "Values", LayerFunction.Design);
-                        break;
+                case 26:
+                    return new Layer(BoardSide.Bottom, "Names", LayerFunction.Design);
 
-                    case 28:
-                        layer = new Layer(BoardSide.Bottom, "Values", LayerFunction.Design);
-                        break;
+                case 27:
+                    return new Layer(BoardSide.Top, "Values", LayerFunction.Design);
 
-                    case 29:
-                        layer = new Layer(BoardSide.Top, "Stop", LayerFunction.Design);
-                        break;
+                case 28:
+                    return new Layer(BoardSide.Bottom, "Values", LayerFunction.Design);
 
-                    case 30:
-                        layer = new Layer(BoardSide.Bottom, "Stop", LayerFunction.Design);
-                        break;
+                case 29:
+                    return new Layer(BoardSide.Top, "Stop", LayerFunction.Design);
 
-                    case 31:
-                        layer = new Layer(BoardSide.Top, "Cream", LayerFunction.Design);
-                        break;
+                case 30:
+                    return new Layer(BoardSide.Bottom, "Stop", LayerFunction.Design);
 
-                    case 32:
-                        layer = new Layer(BoardSide.Bottom, "Cream", LayerFunction.Design);
-                        break;
+                case 31:
+                    return new Layer(BoardSide.Top, "Cream", LayerFunction.Design);
 
-                    case 35:
-                        layer = new Layer(BoardSide.Top, "Glue", LayerFunction.Design);
-                        break;
+                case 32:
+                    return new Layer(BoardSide.Bottom, "Cream", LayerFunction.Design);
 
-                    case 36:
-                        layer = new Layer(BoardSide.Bottom, "Glue", LayerFunction.Design);
-                        break;
+                case 35:
+                    return new Layer(BoardSide.Top, "Glue", LayerFunction.Design);
 
-                    case 39:
-                        layer = new Layer(BoardSide.Top, "Keepout", LayerFunction.Design);
-                        break;
+                case 36:
+                    return new Layer(BoardSide.Bottom, "Glue", LayerFunction.Design);
 
-                    case 40:
-                        layer = new Layer(BoardSide.Bottom, "Keepout", LayerFunction.Design);
-                        break;
+                case 39:
+                    return new Layer(BoardSide.Top, "Keepout", LayerFunction.Design);
 
-                    case 41:
-                        layer = new Layer(BoardSide.Top, "Restrict", LayerFunction.Design);
-                        break;
+                case 40:
+                    return new Layer(BoardSide.Bottom, "Keepout", LayerFunction.Design);
 
-                    case 42:
-                        layer = new Layer(BoardSide.Bottom, "Restrict", LayerFunction.Design);
-                        break;
+                case 41:
+                    return new Layer(BoardSide.Top, "Restrict", LayerFunction.Design);
 
-                    case 43:
-                        layer = new Layer(BoardSide.None, "ViaRestrict", LayerFunction.Unknown);
-                        break;
+                case 42:
+                    return new Layer(BoardSide.Bottom, "Restrict", LayerFunction.Design);
 
-                    case drillsLayerNum:
-                        layer = new Layer(BoardSide.None, "Drills", LayerFunction.Unknown);
-                        break;
+                case 43:
+                    return new Layer(BoardSide.None, "ViaRestrict", LayerFunction.Unknown);
 
-                    case holesLayerNum:
-                        layer = new Layer(BoardSide.None, "Holes", LayerFunction.Unknown);
-                        break;
+                case drillsLayerNum:
+                    return new Layer(BoardSide.None, "Drills", LayerFunction.Unknown);
 
-                    case 51:
-                        layer = new Layer(BoardSide.Top, "Document", LayerFunction.Design);
-                        break;
+                case holesLayerNum:
+                    return new Layer(BoardSide.None, "Holes", LayerFunction.Unknown);
 
-                    case 52:
-                        layer = new Layer(BoardSide.Bottom, "Document", LayerFunction.Design);
-                        break;
+                case 51:
+                    return new Layer(BoardSide.Top, "Document", LayerFunction.Design);
 
-                    default:
-                        layer = new Layer(BoardSide.None, "Unknown_" + layerNum.ToString(), LayerFunction.Unknown);
-                        break;
-                }
-                if (layers == null)
-                    layers = new Dictionary<int, Layer>();
-                layers.Add(layerNum, layer);
-                board.AddLayer(layer);
+                case 52:
+                    return new Layer(BoardSide.Bottom, "Document", LayerFunction.Design);
+
+                default:
+                    return new Layer(BoardSide.None, "Unknown" + layerNum.ToString(), LayerFunction.Unknown);
             }
-
-            return layer.Id;
         }
     }
 }
