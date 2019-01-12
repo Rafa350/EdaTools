@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Panelizer {
 
     using MikroPic.EdaTools.v1.Base.Geometry;
+    using MikroPic.EdaTools.v1.Base.IO;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.IO;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
@@ -13,20 +14,20 @@
 
     public sealed class Panelizer {
 
-        private readonly Dictionary<string, Board> boards = new Dictionary<string, Board>();
-        private readonly Board panel;
+        private readonly Dictionary<string, Board> sourceBoardCache = new Dictionary<string, Board>();
+        private readonly Board targetBoard;
 
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
-        /// <param name="panel">La placa de desti.</param>
+        /// <param name="targetBoard">La placa de desti.</param>
         /// 
-        public Panelizer(Board panel) {
+        public Panelizer(Board targetBoard) {
 
-            if (panel == null)
+            if (targetBoard == null)
                 throw new ArgumentNullException("board");
 
-            this.panel = panel;
+            this.targetBoard = targetBoard;
         }
 
         /// <summary>
@@ -34,7 +35,7 @@
         /// </summary>
         /// <param name="project">El projecte del panell.</param>
         /// 
-        public void Panelize(Project project) {
+        public void Panelize(Project project, IStreamLocator locator) {
 
             // Afegeix les capes minimes necesaries pel panell.
             //
@@ -46,14 +47,15 @@
             foreach (var item in project.Items) {
                 if (item is PcbItem pcb) {
 
-                    if (!boards.TryGetValue(pcb.FileName, out Board board)) {
-                        using (Stream stream = new FileStream(pcb.FileName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                    if (!sourceBoardCache.TryGetValue(pcb.FileName, out Board sourceBoard)) {
+                        string path = locator.GetPath(pcb.FileName);
+                        using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
                             BoardStreamReader reader = new BoardStreamReader(stream);
-                            board = reader.Read();
+                            sourceBoard = reader.Read();
                         }
-                        boards.Add(pcb.FileName, board);
+                        sourceBoardCache.Add(pcb.FileName, sourceBoard);
                     }
-                    AddBoard(board, pcb.Position, pcb.Rotation, index++);
+                    AddBoard(sourceBoard, pcb.Position, pcb.Rotation, index++);
                 }
 
                 else if (item is CutItem cut)
@@ -71,8 +73,8 @@
         /// 
         private void AddLayers() {
 
-            if (panel.GetLayer("Milling", false) == null)
-                panel.AddLayer(new Layer(BoardSide.None, "Milling", LayerFunction.Mechanical));
+            if (targetBoard.GetLayer("Milling", false) == null)
+                targetBoard.AddLayer(new Layer(BoardSide.None, "Milling", LayerFunction.Mechanical));
         }
 
         /// <summary>
@@ -89,15 +91,15 @@
             // capes son comuns a totes les plaques que formen el panel.
             //
             foreach (var layer in board.Layers)
-                if (panel.GetLayer(layer.Name, false) == null)
-                    panel.AddLayer(layer.Clone());
+                if (targetBoard.GetLayer(layer.Name, false) == null)
+                    targetBoard.AddLayer(layer.Clone());
 
             // Afegeix els senyals. Cada placa te les seves propies.
             //
             foreach (var signal in board.Signals) {
                 string signalName = String.Format("{1}@board{0}", index, signal.Name);
-                if (panel.GetSignal(signalName, false) == null) 
-                    panel.AddSignal(signal.Clone(signalName));
+                if (targetBoard.GetSignal(signalName, false) == null) 
+                    targetBoard.AddSignal(signal.Clone(signalName));
             }
 
             // Afegeix els components que no existeixin en la placa de destinacio. Els
@@ -105,8 +107,8 @@
             //
             if (board.HasComponents) {
                 foreach (var component in board.Components)
-                    if (panel.GetComponent(component.Name, false) == null)
-                        panel.AddComponent(component.Clone());
+                    if (targetBoard.GetComponent(component.Name, false) == null)
+                        targetBoard.AddComponent(component.Clone());
             }
 
             // Afegeix els parts a la placa
@@ -114,17 +116,17 @@
             if (board.HasParts) {
                 List<Part> transformableParts = new List<Part>();
                 foreach (var part in board.Parts) {
-                    Component component = panel.GetComponent(part.Component.Name);
+                    Component component = targetBoard.GetComponent(part.Component.Name);
                     Part panelPart = part.Clone(String.Format("{1}@board{0}", index, part.Name), component);
                     transformableParts.Add(panelPart);
-                    panel.AddPart(panelPart);
+                    targetBoard.AddPart(panelPart);
 
                     foreach (var panelElement in panelPart.Elements) {
                         if (panelElement is PadElement panelPad) {
                             Signal signal = board.GetSignal(part.GetPad(panelPad.Name), part, false);
                             if (signal != null) {
                                 string panelSignalName = String.Format("{1}@board{0}", index, signal.Name);
-                                panel.Connect(panel.GetSignal(panelSignalName), panelPad, panelPart);
+                                targetBoard.Connect(targetBoard.GetSignal(panelSignalName), panelPad, panelPart);
                             }
                         }
                     }
@@ -146,13 +148,13 @@
 
                     Element panelElement = boardElement.Clone();
                     transformableElements.Add(panelElement);
-                    panel.AddElement(panelElement);
+                    targetBoard.AddElement(panelElement);
 
                     if (boardElement is IConectable) {
                         Signal signal = board.GetSignal(boardElement, null, false);
                         if (signal != null) {
                             string panelSignalName = String.Format("{1}@board{0}", index, signal.Name);
-                            panel.Connect(panel.GetSignal(panelSignalName), panelElement as IConectable);
+                            targetBoard.Connect(targetBoard.GetSignal(panelSignalName), panelElement as IConectable);
                         }
                     }
                 }
@@ -210,7 +212,7 @@
 
                 // Afegeix la linia a la placa
                 //
-                panel.AddElement(new LineElement(millingLayerSet, q1, q2,
+                targetBoard.AddElement(new LineElement(millingLayerSet, q1, q2,
                     thickness, LineElement.LineCapStyle.Round));
             }
 
@@ -227,8 +229,8 @@
 
                 // Afegeix els forats a la placa
                 //
-                panel.AddElement(new HoleElement(holesLayerSet, q1, drill));
-                panel.AddElement(new HoleElement(holesLayerSet, q2, drill));
+                targetBoard.AddElement(new HoleElement(holesLayerSet, q1, drill));
+                targetBoard.AddElement(new HoleElement(holesLayerSet, q2, drill));
             }
         }
 
@@ -241,10 +243,10 @@
 
             Rect rect = new Rect(new Point(0, 0), size);
             LayerSet profileLayer = new LayerSet("Profile");
-            panel.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Right, rect.Top), 100000, LineElement.LineCapStyle.Round));
-            panel.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Bottom), new Point(rect.Right, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
-            panel.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Left, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
-            panel.AddElement(new LineElement(profileLayer, new Point(rect.Right, rect.Top), new Point(rect.Right, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
+            targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Right, rect.Top), 100000, LineElement.LineCapStyle.Round));
+            targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Bottom), new Point(rect.Right, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
+            targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Left, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
+            targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Right, rect.Top), new Point(rect.Right, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
         }
 
         /// <summary>

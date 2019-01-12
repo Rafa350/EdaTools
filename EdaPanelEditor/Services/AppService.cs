@@ -53,11 +53,6 @@
                 ProjectStreamReader reader = new ProjectStreamReader(stream);
                 project = reader.Read();
             }
-
-            foreach (var item in project.Items) {
-                if (item is PcbItem pcbItem)
-                    pcbItem.FileName = Path.Combine(Path.GetDirectoryName(fileName), pcbItem.FileName);
-            }
         }
 
         /// <summary>

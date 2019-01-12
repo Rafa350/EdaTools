@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.View {
 
     using MikroPic.EdaTools.v1.Panel.Model;
-    using MikroPic.EdaTools.v1.Panel.Model.Items;
     using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
     using MikroPic.EdaTools.v1.PanelEditor.Render;
     using System;
@@ -157,6 +156,11 @@
                 viewPoint.Rotate(90, currentPos);
         }
 
+        /// <summary>
+        /// Procesa els events de la roda del mouse.
+        /// </summary>
+        /// <param name="e">Arguments de l'event.</param>
+        /// 
         protected override void OnMouseWheel(MouseWheelEventArgs e) {
 
             // Si el boto central no esta premut, es una accio Zoom
@@ -175,6 +179,10 @@
             }
         }
 
+        /// <summary>
+        /// Actualitza l'escena.
+        /// </summary>
+        /// 
         private void UpdateView() {
 
             if (contentBox.Visual != null)
@@ -196,12 +204,20 @@
             }
         }
 
+        /// <summary>
+        /// Actualitza el punt de vista de l'escena.
+        /// </summary>
+        /// 
         private void UpdateViewPoint() {
 
             if (contentBox.Visual != null)
                 contentBox.Visual.Transform = new MatrixTransform(viewPoint.Matrix);
         }
 
+        /// <summary>
+        /// Obte o asigna el projecte.
+        /// </summary>
+        /// 
         public Project Project {
             get {
                 return (Project) GetValue(ProjectProperty);

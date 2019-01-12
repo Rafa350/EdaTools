@@ -92,6 +92,7 @@
     <Compile Include="Render\WPF\Visuals\PcbVisual.cs" />
     <Compile Include="Render\RenderVisitor.cs" />
     <Compile Include="Render\WPF\Visuals\ItemVisual.cs" />
+    <Compile Include="Render\WPF\Visuals\ProjectVisual.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\IAppService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

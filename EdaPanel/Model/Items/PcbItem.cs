@@ -1,14 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.Panel.Model.Items {
 
     using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
     using System;
 
-    public sealed class PcbItem: Model.ProjectItem {
+    public sealed class PcbItem: ProjectItem {
 
         private Point position;
         private Angle rotation;
-        private Polygon polygon;
         private string fileName;
 
         /// <summary>
@@ -31,16 +29,14 @@
         /// <param name="fileName">Nom del fitxer de la placa.</param>
         /// <param name="position">Posicio de la placa d'ins del panell.</param>
         /// <param name="rotation">Angle de rotacio de la placa centrat en la posicio.</param>
-        /// <param name="polygon">El poligon de la placa.</param>
         /// 
-        public PcbItem(string fileName, Point position, Angle rotation, Polygon polygon) { 
+        public PcbItem(string fileName, Point position, Angle rotation) { 
 
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException("fileName");
 
             this.position = position;
             this.rotation = rotation;
-            this.polygon = polygon;
             this.fileName = fileName;
         }
 
@@ -48,16 +44,10 @@
         }
 
         /// <summary>
-        /// Obte o asigna el nom del fitxer de la placa.
+        /// Obte el nom del fitxer de la placa.
         /// </summary>
         /// 
         public string FileName {
-            set {
-                if (String.IsNullOrEmpty(value))
-                    throw new ArgumentNullException("PcbItem.FileName");
-
-                fileName = value;
-            }
             get {
                 return fileName;
             }
@@ -86,16 +76,6 @@
             }
             get {
                 return rotation;
-            }
-        }
-
-        /// <summary>
-        ///  Obte el poligon.
-        /// </summary>
-        /// 
-        public Polygon Polygon {
-            get {
-                return polygon;
             }
         }
     }

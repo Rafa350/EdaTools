@@ -52,14 +52,14 @@
                     sourceFolder = Path.GetDirectoryName(projectPath);
 
                 if (verbose) {
-                    Console.WriteLine("Project full path: {0}", projectPath);
-                    Console.WriteLine("Target full path : {0}", targetPath);
-                    Console.WriteLine("Source folder    : {0}", sourceFolder);
+                    Console.WriteLine("Project path : {0}", projectPath);
+                    Console.WriteLine("Target path  : {0}", targetPath);
+                    Console.WriteLine("Source folder: {0}", sourceFolder);
                     Console.WriteLine();
                 }
 
-                Project panel = LoadProject(projectPath, sourceFolder);
-                Board board = GenerateBoard(panel);
+                Project project = LoadProject(projectPath);
+                Board board = GenerateBoard(project, sourceFolder);
                 SaveBoard(board, targetPath);
 
                 if (pause) {
@@ -73,16 +73,13 @@
         /// Carrega el projecte.
         /// </summary>
         /// <param name="projectPath">Ruta del projecte projecte.</param>
-        /// <param name="sourceFolder">Carpeta dels fitxers d'entrada.</param>
         /// <returns>El projecte.</returns>
         /// 
-        private static Project LoadProject(string projectPath, string sourceFolder) {
+        private static Project LoadProject(string projectPath) {
 
             using (Stream stream = new FileStream(projectPath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
 
-                FileStreamLocator locator = new FileStreamLocator();
-                locator.AddFolder(Path.GetDirectoryName(projectPath));
-                ProjectStreamReader reader = new ProjectStreamReader(stream, locator);
+                ProjectStreamReader reader = new ProjectStreamReader(stream);
                 Project project = reader.Read();
 
                 return project;
@@ -107,16 +104,20 @@
         /// Genera la placa.
         /// </summary>
         /// <param name="project">El projecte.</param>
+        /// <param name="sourceFolder">Carpeta dels fitxers d'entrada.</param>
         /// <returns>La placa generada.</returns>
         /// 
-        private static Board GenerateBoard(Project project) {
+        private static Board GenerateBoard(Project project, string sourceFolder) {
 
-            Board board = new Board();
+            Board targetBoard = new Board();
 
-            Panelizer panelizer = new Panelizer(board);
-            panelizer.Panelize(project);
+            FileStreamLocator sourceLocator = new FileStreamLocator();
+            sourceLocator.AddFolder(sourceFolder);
 
-            return board;
+            Panelizer panelizer = new Panelizer(targetBoard);
+            panelizer.Panelize(project, sourceLocator);
+
+            return targetBoard;
         }
 
         /// <summary>

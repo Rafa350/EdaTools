@@ -24,7 +24,6 @@
         private static readonly XmlSchemaSet schemas;
 
         private readonly XmlReaderAdapter rd;
-        private readonly IStreamLocator locator;
         private int version;
 
         /// <summary>
@@ -48,17 +47,14 @@
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="stream">Stream de lectura.</param>
-        /// <param name="locator">Localitzador de streams.</param>
         /// 
-        public ProjectStreamReader(Stream stream, IStreamLocator locator = null) {
+        public ProjectStreamReader(Stream stream) {
 
             if (stream == null)
                 throw new ArgumentNullException("stream");
 
             if (!stream.CanRead)
                 throw new InvalidOperationException("El stream no es de lectura.");
-
-            this.locator = locator;
 
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.IgnoreProcessingInstructions = true;
@@ -187,12 +183,7 @@
             if (!rd.IsEndTag("board"))
                 throw new InvalidDataException("Se esperaba </board>");
 
-            string path = locator.GetPath(fileName);
-
-            Board board = ReadBoard(path);
-            Polygon polygon = board.GetOutlinePolygon();
-
-            return new PcbItem(path, position, rotation, polygon);
+            return new PcbItem(fileName, position, rotation);
         }
 
         /// <summary>
@@ -235,7 +226,7 @@
         /// <param name="path">La ruta complerta de la plada.</param>
         /// <returns>La placa.</returns>
         /// 
-        private Board ReadBoard(string path) {
+        private static Board ReadBoard(string path) {
 
             try {
                 using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {

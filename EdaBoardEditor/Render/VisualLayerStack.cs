@@ -36,6 +36,7 @@
                 true,
                 VisualMode.Element,
                 new Color(204, 0, 0, 255)));
+
             vls.Add(new VisualLayer("Top",
                 new string[] { "Top.Copper" },
                 new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Region, ElementType.SmdPad },
@@ -49,12 +50,14 @@
                 true,
                 VisualMode.Element,
                 new Color(204, 211, 211, 211)));
+
             vls.Add(new VisualLayer("TopDocument", 
                 new string[] { "Top.Document" }, 
                 null,
                 true,
                 VisualMode.Element,
                 new Color(204, 160, 160, 160)));
+
             vls.Add(new VisualLayer("TopNames", 
                 new string[] { "Top.Names" }, 
                 null,
@@ -68,6 +71,7 @@
                 true,
                 VisualMode.Element,
                 new Color(255, 234, 161, 64)));
+
             vls.Add(new VisualLayer("Vias",
                 new string[] { "Top.Copper" },
                 new ElementType[] { ElementType.Via },
@@ -82,6 +86,7 @@
                 true,
                 VisualMode.Element,
                 new Color(255, 240, 128, 128)));
+
             vls.Add(new VisualLayer("Milling", 
                 new string[] { "Milling" },
                 null,
