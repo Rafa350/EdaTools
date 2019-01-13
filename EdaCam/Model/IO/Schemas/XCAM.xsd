@@ -24,7 +24,6 @@
             <xs:sequence>
                 <xs:element ref="targets" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
-            <xs:attribute name="board" use="required" type="xs:string"/>
         </xs:complexType>
     </xs:element>
     
@@ -44,7 +43,7 @@
                 <xs:element ref="layers" maxOccurs="unbounded" minOccurs="0"/>
                 <xs:element ref="options" maxOccurs="unbounded" minOccurs="0"/>
             </xs:sequence>
-            <xs:attribute name="name" use="optional" type="xs:string"/>
+            <xs:attribute name="name" use="required" type="xs:string"/>
             <xs:attribute name="output" use="required" type="xs:string"/>
             <xs:attribute name="generator" use="required" type="xs:string"/>
             <xs:attribute name="position" use="optional" type="pointType"/>

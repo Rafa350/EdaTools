@@ -1,11 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Panel.Model.IO {
 
     using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Base.IO;
     using MikroPic.EdaTools.v1.Base.Xml;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
     using MikroPic.EdaTools.v1.Panel.Model;
     using MikroPic.EdaTools.v1.Panel.Model.Items;
     using System;
@@ -24,6 +21,7 @@
         private static readonly XmlSchemaSet schemas;
 
         private readonly XmlReaderAdapter rd;
+        private readonly IStreamLocator locator;
         private int version;
 
         /// <summary>
@@ -218,28 +216,6 @@
 
             return new CutItem(startPosition, endPosition, thickness, margin, cuts, cutSpacing, 
                 holes, holeDiameter, holeSpacing);
-        }
-
-        /// <summary>
-        /// Llegeix una placa.
-        /// </summary>
-        /// <param name="path">La ruta complerta de la plada.</param>
-        /// <returns>La placa.</returns>
-        /// 
-        private static Board ReadBoard(string path) {
-
-            try {
-                using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                    BoardStreamReader reader = new BoardStreamReader(stream);
-                    Board board = reader.Read();
-
-                    return board;
-                }
-            }
-            catch (Exception ex){
-                throw new Exception(
-                    String.Format("No se pudo leer la placa '{0}'.", path), ex);
-            }
         }
     }
 }

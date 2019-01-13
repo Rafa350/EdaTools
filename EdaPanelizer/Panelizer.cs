@@ -34,6 +34,7 @@
         /// Genera un panell.
         /// </summary>
         /// <param name="project">El projecte del panell.</param>
+        /// <param name="locator">Localitzador de recursos.</param>
         /// 
         public void Panelize(Project project, IStreamLocator locator) {
 

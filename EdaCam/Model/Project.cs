@@ -5,7 +5,6 @@
 
     public sealed class Project {
 
-        private string boardFileName;
         private Dictionary<string, Target> targets;
 
         /// <summary>
@@ -19,15 +18,9 @@
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="boardFileName">El fitxer de la placa.</param>
         /// <param name="targets">Llista d'objectius.</param>
         /// 
-        public Project(string boardFileName, IEnumerable<Target> targets = null) {
-
-            if (String.IsNullOrEmpty(boardFileName))
-                throw new ArgumentNullException("boardFileName");
-
-            this.boardFileName = boardFileName;
+        public Project(IEnumerable<Target> targets = null) {
 
             if (targets != null)
                 foreach (var target in targets)
@@ -93,21 +86,6 @@
 
             else
                 return null;
-        }
-
-        /// <summary>
-        /// Obte o asigna el nom de fitxer de la placa.
-        /// </summary>
-        /// 
-        public string BoardFileName {
-            get {
-                return boardFileName;
-            }
-            set {
-                if (String.IsNullOrEmpty(value))
-                    throw new ArgumentNullException("BoardFileName");
-                boardFileName = value;
-            }
         }
 
         /// <summary>

@@ -1,6 +1,10 @@
 ﻿namespace MikroPic.EdaTools.v1.CamTool {
 
     using MikroPic.EdaTools.v1.Cam;
+    using MikroPic.EdaTools.v1.Cam.Model;
+    using MikroPic.EdaTools.v1.Cam.Model.IO;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
     using System;
     using System.IO;
 
@@ -20,8 +24,10 @@
 
             else {
 
-                string projectFileName = Path.GetFullPath(args[0]);
+                string projectPath = Path.GetFullPath(args[0]);
+                string boardPath = Path.ChangeExtension(projectPath, ".xbrd");
                 string targetName = null;
+                string outputFolder = Path.GetDirectoryName(projectPath);
                 bool pause = false;
 
                 if (args.Length > 1) {
@@ -32,12 +38,17 @@
                         if (arg.StartsWith("/t:"))
                             targetName = arg.Substring(3);
 
+                        else if (arg.StartsWith("/b:"))
+                            boardPath = arg.Substring(3);
+
                         else if (arg == "/p")
                             pause = true;
                     }
                 }
 
-                ProcessProject(projectFileName, targetName);
+                Project project = LoadProject(projectPath);
+                Board board = LoadBoard(boardPath);
+                ProcessProject(project, board, targetName, outputFolder);
 
                 if (pause)
                     WaitKey();
@@ -50,6 +61,11 @@
         /// 
         private static void ShowCredits() {
 
+            string credits =
+                "EdaCAMTool V1.1\r\n" +
+                "---------------\r\n";
+
+            Console.WriteLine(credits);
         }
 
         /// <summary>
@@ -61,12 +77,13 @@
             string help =
                 "EdaCAMTool V1.1\r\n" +
                 "---------------\r\n" +
-                "edacamtool <project> [options]\r\n" +
-                "   <project>             : Project file name.\r\n" +
-                "   [options]             : Optional parameters.\r\n" +
-                "     /p                  :   Pause at end.\r\n" +
-                "     /t                  :   Target to process.\r\n" +
-                "     /z:<zip>            :   Output ZIP file name.\r\n";
+                "EdaCamTool <project> [options]\r\n" +
+                "   <project>       : Project file name.\r\n" +
+                "   [options]       : Optional parameters.\r\n" +
+                "     /o            :  Output path\r\n" +
+                "     /p            :  Pause at end.\r\n" +
+                "     /t            :  Target to process.\r\n" +
+                "     /z            :  Output ZIP file name.\r\n";
 
             Console.WriteLine(help);            
         }
@@ -82,15 +99,45 @@
         }
 
         /// <summary>
-        /// Procesa una placa
+        /// Carrega una placa.
         /// </summary>
-        /// <param name="fileName">Nom del fitxer del projecte.</param>
-        /// <param name="targetName">Nom del target a procesar. Si es null, procesa tots.</param>
+        /// <param name="boardPath">La ruta de la placa.</param>
+        /// <returns>La placa.</returns>
         /// 
-        private static void ProcessProject(string fileName, string targetName) {
+        private static Board LoadBoard(string boardPath) {
 
-            ProjectProcessor cg = new ProjectProcessor();
-            cg.Process(fileName, targetName);
+            using (Stream stream = new FileStream(boardPath, FileMode.Open, FileAccess.Read, FileShare.None)) {
+                BoardStreamReader reader = new BoardStreamReader(stream);
+                return reader.Read();
+            }
+        }
+
+        /// <summary>
+        /// Carrega el projecte.
+        /// </summary>
+        /// <param name="projectPath">La ruta del projecte.</param>
+        /// <returns>El projecte.</returns>
+        /// 
+        private static Project LoadProject(string projectPath) {
+
+            using (Stream stream = new FileStream(projectPath, FileMode.Open, FileAccess.Read, FileShare.None)) {
+                ProjectStreamReader reader = new ProjectStreamReader(stream);
+                return reader.Read();
+            }
+        }
+
+        /// <summary>
+        /// Processa el projecte
+        /// </summary>
+        /// <param name="project">Nom del fitxer del projecte.</param>
+        /// <param name="board">Nom del target a procesar. Si es null, procesa tots.</param>
+        /// <param name="targetName">El nom del target.</param>
+        /// <param name="outputFolder">Carpeta de sortida.</param>
+        /// 
+        private static void ProcessProject(Project project, Board board, string targetName, string outputFolder) {
+
+            ProjectProcessor cg = new ProjectProcessor(project);
+            cg.Process(board, targetName, outputFolder);
         }
     }
 }

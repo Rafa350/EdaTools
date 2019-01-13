@@ -4,48 +4,39 @@
     using MikroPic.EdaTools.v1.Cam.Generators.Gerber;
     using MikroPic.EdaTools.v1.Cam.Generators.Ipcd356;
     using MikroPic.EdaTools.v1.Cam.Model;
-    using MikroPic.EdaTools.v1.Cam.Model.IO;
     using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
     using System;
-    using System.IO;
 
     public sealed class ProjectProcessor {
 
-        /// <summary>
-        /// Procesa un projecte.
-        /// </summary>
-        /// <param name="projectPath">Ruta complerta del projecte.</param>
-        /// <param name="targetName">Nom del target a procesar. Si es null, es procesan tots.</param>
-        /// 
-        public void Process(string projectPath, string targetName) {
-
-            if (String.IsNullOrEmpty(projectPath))
-                throw new ArgumentNullException("projectPath");
-
-            string projectFolder = Path.GetDirectoryName(projectPath);
-            Project project = LoadProject(projectPath);
-            Process(project, targetName, projectFolder);
-        }
+        private readonly Project project;
 
         /// <summary>
-        /// Procesa un projecte.
+        /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="project">El projecte.</param>
-        /// <param name="targetName">Nom del target a procesar. Si es null, els procesa tots.</param>
-        /// <param name="projectFolder">Carpeta del projecte.</param>
+        /// <param name="project">El projecte a procesar.</param>
         /// 
-        public void Process(Project project, string targetName, string projectFolder) {
+        public ProjectProcessor(Project project) {
 
             if (project == null)
                 throw new ArgumentNullException("project");
 
-            Board board = LoadBoard(project, projectFolder);
+            this.project = project;
+        }
+
+        /// <summary>
+        /// Procesa una placa.
+        /// </summary>
+        /// <param name="board">La placa.</param>
+        /// <param name="targetName">Nom del target a procesar. Si es null, els procesa tots.</param>
+        /// <param name="outputFolder">Carpeta de sortida.</param>
+        /// 
+        public void Process(Board board, string targetName, string outputFolder) {
 
             foreach (var target in project.Targets) {
                 if ((targetName == null) || (target.Name == targetName)) {
                     Generator generator = LoadGenerator(target);
-                    generator.Generate(board, projectFolder);
+                    generator.Generate(board, outputFolder);
                 }
             }
         }
@@ -71,41 +62,6 @@
                 default:
                     throw new InvalidOperationException("Tipo de generador desconocido.");
             }
-        }
-
-        /// <summary>
-        /// Carrega un projecte.
-        /// </summary>
-        /// <param name="projectFileName">Nom del fitxer del projecte.</param>
-        /// <returns>El projecte.</returns>
-        /// 
-        private Project LoadProject(string projectFileName) {
-
-            Project project;
-            using (Stream stream = new FileStream(projectFileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                ProjectStreamReader reader = new ProjectStreamReader(stream);
-                project = reader.Read();
-            }
-            return project;
-        }
-
-        /// <summary>
-        /// Carrega una placa.
-        /// </summary>
-        /// <param name="project">El projecte.</param>
-        /// <param name="projectFolder">La carpeta.</param>
-        /// <returns>La placa.</returns>
-        /// 
-        private Board LoadBoard(Project project, string projectFolder) {
-
-            string boardFileName = Path.Combine(projectFolder, project.BoardFileName);
-
-            Board board;
-            using (Stream stream = new FileStream(boardFileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                BoardStreamReader reader = new BoardStreamReader(stream);
-                board = reader.Read();
-            }
-            return board;
         }
     }
 }

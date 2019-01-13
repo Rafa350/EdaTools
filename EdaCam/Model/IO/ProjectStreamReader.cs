@@ -103,8 +103,6 @@
             if (!rd.IsStartTag("project"))
                 throw new InvalidDataException("Se esperaba <project>");
 
-            string boardFileName = rd.AttributeAsString("board");
-
             rd.NextTag();
             IEnumerable<Target> targetList = ParseTargetsNode();
 
@@ -112,7 +110,7 @@
             if (!rd.IsEndTag("project"))
                 throw new InvalidDataException("Se esperaba </project>");
 
-            Project project = new Project(boardFileName, targetList);
+            Project project = new Project(targetList);
             return project;
         }
 
