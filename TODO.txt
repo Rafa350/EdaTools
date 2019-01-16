@@ -1,8 +1,4 @@
 Importacio:
     Importar llibreries Eagle
     Inportar netlist de Eagle i generar PHDL
-    
- 
-Panelitzacio:
-    Generar panel amb perfil exterior que englobi totes les plaques
-    Generar perfils interns com a fresat
+
