@@ -4,7 +4,7 @@
         <targets>
 
             <!-- Capa coure L1 top -->
-            <target output="board3_Copper$L1.gbr" generator="gerber-image">
+            <target name="Copper.1" output="board3_Copper$L1.gbr" generator="gerber-image">
                 <layers>
                     <layer name="Top.Top"/>
                 </layers>
@@ -15,7 +15,7 @@
             </target>
 
             <!-- Capa coure L2 bottom -->
-            <target output="board3_Copper$L2.gbr" generator="gerber-image">
+            <target name="Copper.2" output="board3_Copper$L2.gbr" generator="gerber-image">
                 <layers>
                     <layer name="Bottom.Bottom"/>
                 </layers>
@@ -26,7 +26,7 @@
             </target>
 
             <!-- Capa soldermask top -->
-            <target output="board3_Soldermask$Top.gbr" generator="gerber-image">
+            <target name="Solderback.Top" output="board3_Soldermask$Top.gbr" generator="gerber-image">
                 <layers>
                     <layer name="Top.Stop"/>
                 </layers>
@@ -36,7 +36,7 @@
             </target>
 
             <!-- Capa soldermask bottom -->
-            <target output="board3_Soldermask$Bottom.gbr" generator="gerber-image">
+            <target name="Soldermask.Bottom" output="board3_Soldermask$Bottom.gbr" generator="gerber-image">
                 <layers>
                     <layer name="Bottom.Stop"/>
                 </layers>

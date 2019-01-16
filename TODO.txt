@@ -2,3 +2,5 @@ Importacio:
     Importar llibreries Eagle
     Inportar netlist de Eagle i generar PHDL
 
+
+    
