@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generators\Gerber\FontDictionary.cs" />
-    <Compile Include="ProjectProcessor.cs" />
+    <Compile Include="CamProcessor.cs" />
     <Compile Include="Generators\Gerber\ApertureDictionary.cs" />
     <Compile Include="Generators\Gerber\Builder\Aperture.cs" />
     <Compile Include="Generators\Gerber\Builder\Apertures\ObroundAperture.cs" />

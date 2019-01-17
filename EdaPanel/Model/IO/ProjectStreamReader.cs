@@ -21,7 +21,6 @@
         private static readonly XmlSchemaSet schemas;
 
         private readonly XmlReaderAdapter rd;
-        private readonly IStreamLocator locator;
         private int version;
 
         /// <summary>

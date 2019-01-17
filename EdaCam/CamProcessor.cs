@@ -7,7 +7,7 @@
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using System;
 
-    public sealed class ProjectProcessor {
+    public sealed class CamProcessor {
 
         private readonly Project project;
 
@@ -16,7 +16,7 @@
         /// </summary>
         /// <param name="project">El projecte a procesar.</param>
         /// 
-        public ProjectProcessor(Project project) {
+        public CamProcessor(Project project) {
 
             if (project == null)
                 throw new ArgumentNullException("project");

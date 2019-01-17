@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Panelizer {
+﻿namespace MikroPic.EdaTools.v1.Panel {
 
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.IO;
@@ -12,7 +12,7 @@
     using System.Collections.Generic;
     using System.IO;
 
-    public sealed class Panelizer {
+    public sealed class PanelProcessor {
 
         private readonly Dictionary<string, Board> sourceBoardCache = new Dictionary<string, Board>();
         private readonly Board targetBoard;
@@ -22,7 +22,7 @@
         /// </summary>
         /// <param name="targetBoard">La placa de desti.</param>
         /// 
-        public Panelizer(Board targetBoard) {
+        public PanelProcessor(Board targetBoard) {
 
             if (targetBoard == null)
                 throw new ArgumentNullException("board");

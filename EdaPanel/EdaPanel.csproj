@@ -57,6 +57,7 @@
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\ProjectItem.cs" />
     <Compile Include="Model\Visitors\DefaultVisitor.cs" />
+    <Compile Include="PanelProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

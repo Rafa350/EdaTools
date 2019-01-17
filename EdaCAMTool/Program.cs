@@ -25,10 +25,11 @@
             else {
 
                 string projectPath = Path.GetFullPath(args[0]);
-                string boardPath = Path.ChangeExtension(projectPath, ".xbrd");
+                string boardPath = null;;
                 string targetName = null;
-                string outputFolder = Path.GetDirectoryName(projectPath);
+                string outputFolder = null;
                 bool pause = false;
+                bool verbose = false;
 
                 if (args.Length > 1) {
 
@@ -41,9 +42,29 @@
                         else if (arg.StartsWith("/b:"))
                             boardPath = arg.Substring(3);
 
+                        else if (arg.StartsWith("/o:"))
+                            outputFolder = arg.Substring(3);
+
+                        else if (arg == "/v")
+                            verbose = true;
+
                         else if (arg == "/p")
                             pause = true;
                     }
+                }
+
+                if (boardPath == null)
+                    boardPath = Path.ChangeExtension(projectPath, ".xbrd");
+
+                if (outputFolder == null)
+                    outputFolder = Path.GetDirectoryName(projectPath);
+
+                if (verbose) {
+                    Console.WriteLine("Target name  : {0}", targetName);
+                    Console.WriteLine("Project path : {0}", projectPath);
+                    Console.WriteLine("Board path   : {0}", boardPath);
+                    Console.WriteLine("Output folder: {0}", outputFolder);
+                    Console.WriteLine();
                 }
 
                 Project project = LoadProject(projectPath);
@@ -63,7 +84,7 @@
 
             string credits =
                 "EdaCAMTool V1.1\r\n" +
-                "---------------\r\n";
+                "(c) 2019 rsr.openware@gmail.com\r\n";
 
             Console.WriteLine(credits);
         }
@@ -136,8 +157,8 @@
         /// 
         private static void ProcessProject(Project project, Board board, string targetName, string outputFolder) {
 
-            ProjectProcessor cg = new ProjectProcessor(project);
-            cg.Process(board, targetName, outputFolder);
+            CamProcessor camProcessor = new CamProcessor(project);
+            camProcessor.Process(board, targetName, outputFolder);
         }
     }
 }

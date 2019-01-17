@@ -3,6 +3,7 @@
     using MikroPic.EdaTools.v1.Base.IO;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.IO;
+    using MikroPic.EdaTools.v1.Panel;
     using MikroPic.EdaTools.v1.Panel.Model;
     using MikroPic.EdaTools.v1.Panel.Model.IO;
     using System;
@@ -114,7 +115,7 @@
             FileStreamLocator sourceLocator = new FileStreamLocator();
             sourceLocator.AddFolder(sourceFolder);
 
-            Panelizer panelizer = new Panelizer(targetBoard);
+            PanelProcessor panelizer = new PanelProcessor(targetBoard);
             panelizer.Panelize(project, sourceLocator);
 
             return targetBoard;
@@ -128,8 +129,7 @@
 
             string credits =
                 "EdaPanelizer V1.0\r\n" +
-                "(c) rsr.openware@gmail.com\r\n" +
-                "\r\n";
+                "(c) 2019 rsr.openware@gmail.com\r\n";
 
             Console.WriteLine(credits);
         }
