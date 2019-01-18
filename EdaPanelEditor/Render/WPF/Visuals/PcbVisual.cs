@@ -1,8 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render.WPF.Visuals {
 
     using MikroPic.EdaTools.v1.Base.WPF;
+    using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Panel.Model.Items;
     using System.Windows.Media;
+
+    using EdaColor = MikroPic.EdaTools.v1.Base.Geometry.Color;
 
     public sealed class PcbVisual: ItemVisual {
 
@@ -23,8 +26,14 @@
         /// 
         protected override void Draw(DrawVisualContext dc) {
 
+            EdaColor penColor = new EdaColor(0, 255, 0);
+            Pen pen = dc.GetPen(penColor, 500000, PenLineCap.Round);
+
             Brush brush = Brushes.OliveDrab;
-            dc.DrawRectangle(brush, null, Item.Position, new Base.Geometry.Size(100000000, 100000000));
+
+            Size size = new Size(10000000, 10000000);
+            Point position = Item.Position.Offset(size.Width / 2, size.Height / 2);
+            dc.DrawRectangle(brush, pen, position, size);
         }
 
         /// <summary>

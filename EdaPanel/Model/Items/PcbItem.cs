@@ -40,7 +40,9 @@
             this.fileName = fileName;
         }
 
-        public override void AcceptVisitor(Model.IVisitor visitor) {
+        public override void AcceptVisitor(IVisitor visitor) {
+
+            visitor.Visit(this);
         }
 
         /// <summary>

@@ -15,10 +15,10 @@
                     item.AcceptVisitor(this);
         }
 
-        public virtual void Visit(CutItem join) {
+        public virtual void Visit(CutItem cut) {
         }
 
-        public virtual void Visit(PcbItem place) {
+        public virtual void Visit(PcbItem pcb) {
         }
     }
 }

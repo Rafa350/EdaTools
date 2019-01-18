@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Geometry {
 
     using System;
-    using System.Globalization;
 
     /// <summary>
     /// Clase que representa un color ARGB
@@ -40,7 +39,7 @@
 
         public override string ToString() {
 
-            return String.Format(CultureInfo.InvariantCulture, "{0}, {1}, {2}, {3}", a, r, g, b);
+            return String.Format("{0}, {1}, {2}, {3}", a, r, g, b);
         }
 
         public static Color Parse(string source) {

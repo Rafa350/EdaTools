@@ -147,7 +147,7 @@
                         break;
 
                     case "cut":
-                        items.Add(ParseCut());
+                        items.Add(ParseCutNode());
                         break;
 
                     default:
@@ -188,7 +188,7 @@
         /// </summary>
         /// <returns>L'objecte 'CutItem' obtingut.</returns>
         /// 
-        private CutItem ParseCut() {
+        private CutItem ParseCutNode() {
 
             if (!rd.IsStartTag("cut"))
                 throw new InvalidDataException("Se esperaba <cut>");

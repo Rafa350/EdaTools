@@ -3,8 +3,8 @@
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.IO;
     using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
     using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
     using MikroPic.EdaTools.v1.Panel.Model;
     using MikroPic.EdaTools.v1.Panel.Model.Items;
@@ -31,7 +31,7 @@
         }
 
         /// <summary>
-        /// Genera un panell.
+        /// Genera un panell sobre la placa de desti.
         /// </summary>
         /// <param name="project">El projecte del panell.</param>
         /// <param name="locator">Localitzador de recursos.</param>
