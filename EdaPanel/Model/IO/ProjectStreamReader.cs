@@ -174,13 +174,18 @@
 
             string fileName = rd.AttributeAsString("file");
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
-            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation"));
+            Size size = rd.AttributeExists("size") ?
+                XmlTypeParser.ParseSize(rd.AttributeAsString("size")) :
+                new Size(0, 0);
+            Angle rotation = rd.AttributeExists("rotation") ?
+                XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation")) :
+                Angle.Zero;
 
             rd.NextTag();
             if (!rd.IsEndTag("board"))
                 throw new InvalidDataException("Se esperaba </board>");
 
-            return new PcbItem(fileName, position, rotation);
+            return new PcbItem(fileName, position, size, rotation);
         }
 
         /// <summary>

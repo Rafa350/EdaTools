@@ -45,7 +45,8 @@
         <xs:complexType>
             <xs:attribute name="file" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
-            <xs:attribute name="rotation" use="required" type="xs:double"/>
+            <xs:attribute name="rotation" use="optional" type="xs:double"/>
+            <xs:attribute name="size" use="optional" type="sizeType"/>
         </xs:complexType>
     </xs:element>
     

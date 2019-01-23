@@ -6,6 +6,7 @@
     public sealed class PcbItem: ProjectItem {
 
         private Point position;
+        private Size size;
         private Angle rotation;
         private string fileName;
 
@@ -28,14 +29,16 @@
         /// </summary>
         /// <param name="fileName">Nom del fitxer de la placa.</param>
         /// <param name="position">Posicio de la placa d'ins del panell.</param>
+        /// <param name="size">Tamany de la envolvent de la placa.</param>
         /// <param name="rotation">Angle de rotacio de la placa centrat en la posicio.</param>
         /// 
-        public PcbItem(string fileName, Point position, Angle rotation) { 
+        public PcbItem(string fileName, Point position, Size size, Angle rotation) { 
 
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException("fileName");
 
             this.position = position;
+            this.size = size;
             this.rotation = rotation;
             this.fileName = fileName;
         }
@@ -65,6 +68,19 @@
             }
             get {
                 return position;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna el tamany de la envolvent..
+        /// </summary>
+        /// 
+        public Size Size {
+            set {
+                size = value;
+            }
+            get {
+                return size;
             }
         }
 

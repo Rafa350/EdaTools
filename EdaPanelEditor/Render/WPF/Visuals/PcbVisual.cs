@@ -31,7 +31,7 @@
 
             Brush brush = Brushes.OliveDrab;
 
-            Size size = new Size(10000000, 10000000);
+            Size size = Item.Size;
             Point position = Item.Position.Offset(size.Width / 2, size.Height / 2);
             dc.DrawRectangle(brush, pen, position, size);
         }

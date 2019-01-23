@@ -4,6 +4,7 @@ bin
 obj
 *.rar
 *.zip
+*.pfx
 
 
 /Libraries
