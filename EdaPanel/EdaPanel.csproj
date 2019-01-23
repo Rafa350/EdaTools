@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Items\CutItem.cs" />
+    <Compile Include="Model\Items\CutItemExtensions.cs" />
     <Compile Include="Model\Items\PcbItem.cs" />
     <Compile Include="Model\IO\ProjectStreamReader.cs" />
     <Compile Include="Model\IO\ProjectStreamWriter.cs" />

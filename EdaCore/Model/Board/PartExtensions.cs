@@ -17,7 +17,7 @@
 
         public static LayerSet GetLocalLayerSet(this Part part, Element element) {
 
-            if (part.Flip) {
+            if (part.IsFlipped) {
                 LayerSet layerSet = default;
                 foreach (var layerName in element.LayerSet) {
                     if (layerName.Contains(".")) {

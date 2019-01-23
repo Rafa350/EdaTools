@@ -177,7 +177,7 @@
         }
 
         /// <summary>
-        /// Obte la cara en la que es monta el component.
+        /// Obte o asigna si el component esta girat
         /// </summary>
         /// 
         public bool Flip {
@@ -186,6 +186,16 @@
             }
             set {
                 flip = value;
+            }
+        }
+
+        /// <summary>
+        /// Indica si el component esta girat.
+        /// </summary>
+        /// 
+        public bool IsFlipped {
+            get {
+                return flip;
             }
         }
 
