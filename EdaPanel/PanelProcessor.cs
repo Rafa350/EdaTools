@@ -60,7 +60,7 @@
                 }
 
                 else if (item is CutItem cut)
-                    AddCut(cut.StartPosition, cut.EndPosition, cut.Tickness, cut.CutSpacing, cut.Margin, cut.Cuts);
+                    AddCut(cut);
             }
 
             // Afegeix el perfil exterior del panell.
@@ -169,14 +169,9 @@
         /// <summary>
         /// Afegeix les rutes de fresat
         /// </summary>
-        /// <param name="startPosition">Posicio inicial.</param>
-        /// <param name="endPosition">Posicio final.</param>
-        /// <param name="thickness">Amplada del fresat.</param>
-        /// <param name="spacing">Espaiat entre talls</param>
-        /// <param name="margin">Marge dels extrems</param>
-        /// <param name="cuts">Numero de talls.</param>
+        /// <param name="cut">El item.</param>
         /// 
-        private void AddCut(Point startPosition, Point endPosition, int thickness, int spacing, int margin, int cuts) {
+        private void AddCut(CutItem cut) {
 
             // Obte el conjunt de capes
             //
@@ -185,22 +180,21 @@
 
             // Obte els punts de tall d'una linia 
             //
-            double dx = endPosition.X - startPosition.X;
-            double dy = endPosition.Y - startPosition.Y;
-            int length = (int)Math.Sqrt((dx * dx) + (dy * dy));
-            int[] refPoints = GetReferencePoints(cuts, length, margin);
-            int[] cutPoints = GetCutReferencePoints(refPoints, spacing);
-            int[] holePoints = GetHoleReferencePoints(refPoints, 1000000);
+            int[] refPoints = cut.GetReferencePoints();
+            int[] cutPoints = cut.GetCutReferencePoints(refPoints);
+            int[] holePoints = cut.GetHoleReferencePoints(refPoints);
 
             // Obte la pendent 
             //
+            double dx = cut.EndPosition.X - cut.StartPosition.X;
+            double dy = cut.EndPosition.Y - cut.StartPosition.Y;
             double rad = Math.Atan2(dy, dx);
 
             // Calcula la transformacio
             //
             Transformation t = new Transformation();
-            t.Translate(startPosition);
-            t.Rotate(startPosition, Angle.FromRadiants(rad));
+            t.Translate(cut.StartPosition);
+            t.Rotate(cut.StartPosition, Angle.FromRadiants(rad));
 
             // Afegeix les linies de tall
             //
@@ -214,7 +208,7 @@
                 // Afegeix la linia a la placa
                 //
                 targetBoard.AddElement(new LineElement(millingLayerSet, q1, q2,
-                    thickness, LineElement.LineCapStyle.Round));
+                    cut.Thickness, LineElement.LineCapStyle.Round));
             }
 
             // Afegeix els forats
@@ -224,7 +218,7 @@
                 // Transforma els punts a la posicio real
                 //
                 int drill = 500000;
-                int offset = (thickness - drill) / 2;
+                int offset = (cut.Thickness - drill) / 2;
                 Point q1 = t.ApplyTo(new Point(holePoints[i], -offset));
                 Point q2 = t.ApplyTo(new Point(holePoints[i], offset));
 
@@ -248,108 +242,6 @@
             targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Bottom), new Point(rect.Right, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
             targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Left, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
             targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Right, rect.Top), new Point(rect.Right, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
-        }
-
-        /// <summary>
-        /// Calcula els punts de referencia.
-        /// </summary>
-        /// <param name="cuts">Nombre de talls.</param>
-        /// <param name="length">Longitut total.</param>
-        /// <param name="margin">Longitut dels marges laterals.</param>
-        /// <returns>La llista de punts de referencia.</returns>
-        /// 
-        private static int[] GetReferencePoints(int cuts, int length, int margin) {
-
-            if (cuts <= 1)
-                return new int[] {
-                    0,
-                    length };
-
-            else if (cuts == 2)
-                return new int[] {
-                    0,
-                    length / 2,
-                    length };
-
-            else if (cuts == 3) {
-                return new int[] {
-                    0,
-                    margin,
-                    length - margin,
-                    length
-                };
-            }
-            else {
-
-                int numPoints = cuts + 1;
-                int cutLength = (length - (margin * 2)) / (cuts - 2);
-
-                int[] points = new int[numPoints];
-
-                int i = 0;
-                points[i++] = 0;
-                points[i++] = margin;
-                while (i < numPoints - 2) {
-                    points[i] = margin + (cutLength * (i - 1));
-                    i++;
-                }
-                points[i++] = length - margin;
-                points[i] = length;
-
-                return points;
-            }
-        }
-
-        /// <summary>
-        /// Obte els punts de referencia dels tall, a partir dels punts de referencia basics.
-        /// </summary>
-        /// <param name="refPoints">Punts de referencia.</param>
-        /// <param name="spacing">Espaiat dels talls.</param>
-        /// <returns>Punts del talls.</returns>
-        /// 
-        private static int[] GetCutReferencePoints(int[] refPoints, int spacing) {
-
-            int s = spacing / 2;
-            int[] points = new int[(refPoints.Length - 1) * 2];
-
-            int r = 0;
-            int p = 0;
-            points[p++] = refPoints[r++];
-            points[p++] = refPoints[r] - s;
-            while (r < refPoints.Length - 2) {
-                points[p++] = refPoints[r] + s;
-                r++;
-                points[p++] = refPoints[r] - s;
-            }
-            points[p++] = refPoints[r++] + s;
-            points[p] = refPoints[r];
-
-            return points;
-        }
-
-        /// <summary>
-        /// Obte els punts de referencia dels forats, a partir dels punts de referencia basics.
-        /// </summary>
-        /// <param name="refPoints">Punts de referencia.</param>
-        /// <param name="spacing">Espaiat entre forats.</param>
-        /// <returns>Els dels forats.</returns>
-        /// 
-        private static int[] GetHoleReferencePoints(int[] refPoints, int spacing) {
-
-            int[] points = new int[(refPoints.Length - 2) * 5];
-
-            int r = 1;
-            int p = 0;
-            while (r < refPoints.Length - 1) {
-                points[p++] = refPoints[r] - spacing - spacing;
-                points[p++] = refPoints[r] - spacing;
-                points[p++] = refPoints[r];
-                points[p++] = refPoints[r] + spacing;
-                points[p++] = refPoints[r] + spacing + spacing;
-                r++;
-            }
-
-            return points;
         }
 
         private sealed class TransformVisitor: DefaultVisitor { 

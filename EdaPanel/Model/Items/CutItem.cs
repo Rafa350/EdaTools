@@ -76,7 +76,7 @@
         /// Obte o asigna l'amplada del talls.
         /// </summary>
         /// 
-        public int Tickness {
+        public int Thickness {
             get {
                 return thickness;
             }

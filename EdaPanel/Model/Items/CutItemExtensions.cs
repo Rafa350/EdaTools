@@ -82,5 +82,31 @@
 
             return points;
         }
+    
+        /// <summary>
+        /// Obte els punts de referencia dels forats, a partir dels punts de referencia basics.
+        /// </summary>
+        /// <param name="cut">El item.</param>
+        /// <param name="refPoints">Punts de referencia.</param>
+        /// <returns>Punts dels forats.</returns>
+        /// 
+        public static int[] GetHoleReferencePoints(this CutItem cut, int[] refPoints) {
+
+            int[] points = new int[(refPoints.Length - 2) * 5];
+
+            int r = 1;
+            int p = 0;
+            int s = cut.HoleSpacing;
+            while (r < refPoints.Length - 1) {
+                points[p++] = refPoints[r] - s - s;
+                points[p++] = refPoints[r] - s;
+                points[p++] = refPoints[r];
+                points[p++] = refPoints[r] + s;
+                points[p++] = refPoints[r] + s + s;
+                r++;
+            }
+
+            return points;
+        }
     }
 }
