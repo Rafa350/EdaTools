@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.BoardEditor.Render {
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Core.Model.Board;
+    using System.Windows.Media;
 
     public enum VisualMode {
         Element,
@@ -133,15 +133,19 @@
         }
 
         /// <summary>
-        /// Obte o asigna el color.
+        /// Obte color.
         /// </summary>
         /// 
         public Color Color {
             get {
-                return color;
+                return Color.FromRgb(color.R, color.G, color.B);
             }
         }
 
+        /// <summary>
+        /// Obte la opacitat.
+        /// </summary>
+        /// 
         public double Opacity {
             get {
                 return color.A / 255.0;

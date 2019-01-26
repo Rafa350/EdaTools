@@ -62,7 +62,6 @@
     <Compile Include="Geometry\Angle.cs" />
     <Compile Include="Geometry\AngularUnits.cs" />
     <Compile Include="Geometry\ArcUtils.cs" />
-    <Compile Include="Geometry\Color.cs" />
     <Compile Include="Geometry\DistanceUnits.cs" />
     <Compile Include="Geometry\Fonts\Font.cs" />
     <Compile Include="Geometry\Fonts\FontFactory.cs" />

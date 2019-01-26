@@ -4,8 +4,6 @@
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using System.Windows.Media;
 
-    using Color = MikroPic.EdaTools.v1.Base.Geometry.Color;
-
     public sealed class LineVisual: ElementVisual {
 
         private readonly Color color;

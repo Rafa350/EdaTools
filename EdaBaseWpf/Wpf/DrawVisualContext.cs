@@ -7,9 +7,7 @@
     using System.Collections.Generic;
     using System.Windows.Media;
 
-    using Color = MikroPic.EdaTools.v1.Base.Geometry.Color;
     using Point = MikroPic.EdaTools.v1.Base.Geometry.Point;
-    using WinColor = System.Windows.Media.Color;
     using WinPoint = System.Windows.Point;
     using WinRect = System.Windows.Rect;
     using WinSize = System.Windows.Size;
@@ -188,7 +186,7 @@
         /// 
         public Brush GetBrush(Color color) {
 
-            Brush brush = new SolidColorBrush(WinColor.FromRgb(color.R, color.G, color.B));
+            Brush brush = new SolidColorBrush(color);
             brush.Freeze();
 
             return brush;

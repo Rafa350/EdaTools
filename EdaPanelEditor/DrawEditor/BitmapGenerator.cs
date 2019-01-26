@@ -7,11 +7,9 @@
     using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
-    using Color = MikroPic.EdaTools.v1.Base.Geometry.Color;
     using SysPoint = System.Windows.Point;
     using SysRect = System.Windows.Rect;
     using SysSize = System.Windows.Size;
-    using SysColor = System.Windows.Media.Color;
 
     public sealed class BitmapGenerator {
 
@@ -22,7 +20,7 @@
         private sealed class RenderVisitor: ElementVisitor {
 
             private readonly WriteableBitmap bitmap;
-            private readonly SysColor color;
+            private readonly Color color;
             private readonly Matrix matrix;
 
             public RenderVisitor(Board board, Layer layer, WriteableBitmap bitmap, Matrix matrix) { 

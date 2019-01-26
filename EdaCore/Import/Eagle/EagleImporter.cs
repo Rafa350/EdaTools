@@ -10,8 +10,6 @@
     using System.Windows.Media;
     using System.Xml;
 
-    using Color = MikroPic.EdaTools.v1.Base.Geometry.Color;
-    using SysColor = System.Windows.Media.Color;
     using SysPoint = System.Windows.Point;
 
     /// <summary>

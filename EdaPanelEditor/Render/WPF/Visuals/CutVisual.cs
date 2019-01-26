@@ -4,6 +4,7 @@
     using MikroPic.EdaTools.v1.Base.WPF;
     using MikroPic.EdaTools.v1.Panel.Model.Items;
     using System;
+    using System.Windows.Media;
 
     public sealed class CutVisual: ItemVisual {
 
@@ -13,7 +14,7 @@
         /// <param name="parent">El visual pare,</param>
         /// <param name="item">El item CUT.</param>
         /// 
-        public CutVisual(System.Windows.Media.DrawingVisual parent, CutItem item):
+        public CutVisual(DrawingVisual parent, CutItem item):
             base(parent, item) {
         }
 
@@ -41,7 +42,7 @@
             t.Translate(Item.StartPosition);
             t.Rotate(Item.StartPosition, Angle.FromRadiants(rad));
 
-            System.Windows.Media.Pen pen = dc.GetPen(new Color(255, 128, 128, 128), Item.Thickness, System.Windows.Media.PenLineCap.Round);
+            System.Windows.Media.Pen pen = dc.GetPen(Color.FromArgb(255, 128, 128, 128), Item.Thickness, System.Windows.Media.PenLineCap.Round);
 
             // Afegeix les linies de tall
             //

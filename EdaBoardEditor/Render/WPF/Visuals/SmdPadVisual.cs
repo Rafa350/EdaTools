@@ -6,7 +6,6 @@
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using System.Windows.Media;
 
-    using Color = MikroPic.EdaTools.v1.Base.Geometry.Color;
     using Point = MikroPic.EdaTools.v1.Base.Geometry.Point;
 
     public sealed class SmdPadVisual: ElementVisual {
@@ -60,7 +59,7 @@
         private void DrawOutline(DrawVisualContext dc) {
 
             Polygon p = Element.GetOutlinePolygon(BoardSide.None, 150000);
-            Pen pen = dc.GetPen(new Color(0, 255, 255), 10000, PenLineCap.Round);
+            Pen pen = dc.GetPen(Color.FromRgb(0, 255, 255), 10000, PenLineCap.Round);
             dc.DrawPolygon(null, pen, p);
         }
 

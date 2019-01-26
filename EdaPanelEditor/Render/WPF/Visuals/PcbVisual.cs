@@ -5,8 +5,6 @@
     using MikroPic.EdaTools.v1.Panel.Model.Items;
     using System.Windows.Media;
 
-    using EdaColor = MikroPic.EdaTools.v1.Base.Geometry.Color;
-
     public sealed class PcbVisual: ItemVisual {
 
         /// <summary>
@@ -26,7 +24,7 @@
         /// 
         protected override void Draw(DrawVisualContext dc) {
 
-            EdaColor penColor = new EdaColor(0, 255, 0);
+            Color penColor = Color.FromRgb(0, 255, 0);
             Pen pen = dc.GetPen(penColor, 500000, PenLineCap.Round);
 
             Brush brush = Brushes.OliveDrab;

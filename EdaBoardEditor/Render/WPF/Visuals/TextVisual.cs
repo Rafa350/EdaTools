@@ -9,8 +9,6 @@
     using System.Windows.Media;
     using System.Collections.Generic;
 
-    using Color = MikroPic.EdaTools.v1.Base.Geometry.Color;
-
     public sealed class TextVisual: ElementVisual {
 
         private static readonly TextDrawer td;

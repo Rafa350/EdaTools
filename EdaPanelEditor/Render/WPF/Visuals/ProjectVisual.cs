@@ -31,7 +31,7 @@
         /// 
         protected override void Draw(DrawVisualContext dc) {
 
-            Pen pen = dc.GetPen(new Base.Geometry.Color(255, 0, 0), 250000, PenLineCap.Round);
+            Pen pen = dc.GetPen(Color.FromRgb(255, 0, 0), 250000, PenLineCap.Round);
 
             Base.Geometry.Size size = Project.Size;
             Base.Geometry.Point position = new Base.Geometry.Point(size.Width / 2, size.Height / 2);

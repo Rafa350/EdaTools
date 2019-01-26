@@ -4,7 +4,6 @@
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using System.Windows.Media;
 
-    using Color = MikroPic.EdaTools.v1.Base.Geometry.Color;
     using Point = MikroPic.EdaTools.v1.Base.Geometry.Point;
 
     public sealed class RectangleVisual: ElementVisual {

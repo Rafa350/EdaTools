@@ -96,9 +96,8 @@
 
             // Si es el boto central es tracte d'una accio Pan
             //
-            if (e.MiddleButton == MouseButtonState.Pressed) {
-                //  viewPoint.Pan(currentPos.X - startPos.X, currentPos.Y - startPos.Y);
-            }
+            if (e.MiddleButton == MouseButtonState.Pressed) 
+                viewPoint.Pan(currentPos.X - startPos.X, currentPos.Y - startPos.Y);
         }
 
         /// <summary>
