@@ -8,9 +8,7 @@
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Media;
-    using WinPoint = System.Windows.Point;
-    using WinRect = System.Windows.Rect;
-    using WinSize = System.Windows.Size;
+    using Win = System.Windows;
 
     public partial class PanelEditorView : UserControl {
 
@@ -18,8 +16,8 @@
 
         private readonly ViewPoint viewPoint;
         private const double wheelInterval = 150;
-        private WinPoint startPos;
-        private WinPoint currentPos;
+        private Win.Point startPos;
+        private Win.Point currentPos;
 
         static PanelEditorView() {
 
@@ -65,8 +63,8 @@
 
                 v1.Base.Geometry.Size boardSize = Project.Size;
                 viewPoint.Reset(
-                    new WinSize(contentBox.ActualWidth, contentBox.ActualHeight),
-                    new WinRect(0, 0, boardSize.Width, boardSize.Height));
+                    new Win.Size(contentBox.ActualWidth, contentBox.ActualHeight),
+                    new Win.Rect(0, 0, boardSize.Width, boardSize.Height));
             }
         }
 
@@ -85,7 +83,7 @@
 
             // Actualtza la posicio del mouse
             //
-            WinPoint mousePos = e.GetPosition(contentBox);
+            Win.Point mousePos = e.GetPosition(contentBox);
             currentPos = viewPoint.TransformToWorld(mousePos);
 
             // Si es tracta del boto primari, es tracte d'una accio 
@@ -109,7 +107,7 @@
 
             // Actualtza la posicio del mouse
             //
-            WinPoint mousePos = e.GetPosition(contentBox);
+            Win.Point mousePos = e.GetPosition(contentBox);
             currentPos = viewPoint.TransformToWorld(mousePos);
 
             // Si es el boto primari, es una accio amb l'eina seleccionada
@@ -134,7 +132,7 @@
 
             // Actualtza la posicio del mouse
             //
-            WinPoint mousePos = e.GetPosition(contentBox);
+            Win.Point mousePos = e.GetPosition(contentBox);
             currentPos = viewPoint.TransformToWorld(mousePos);
             startPos = currentPos;
 
@@ -190,8 +188,8 @@
             if (Project != null) {
 
                 viewPoint.Reset(
-                    new WinSize(contentBox.ActualWidth, contentBox.ActualHeight),
-                    new WinRect(0, 0, Project.Size.Width, Project.Size.Height));
+                    new Win.Size(contentBox.ActualWidth, contentBox.ActualHeight),
+                    new Win.Rect(0, 0, Project.Size.Width, Project.Size.Height));
 
                 DrawingVisual visual = new DrawingVisual();
                 RenderVisitor visitor = new RenderVisitor(visual);

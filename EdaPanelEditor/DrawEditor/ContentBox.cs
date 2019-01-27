@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.DrawEditor {
 
     using System.ComponentModel;
+    using System;
     using System.Windows;
     using System.Windows.Media;
 
