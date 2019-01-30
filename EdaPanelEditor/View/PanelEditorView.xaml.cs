@@ -1,8 +1,10 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.View {
 
     using MikroPic.EdaTools.v1.Panel.Model;
+    using MikroPic.EdaTools.v1.Panel.Model.Items;
     using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
     using MikroPic.EdaTools.v1.PanelEditor.Render;
+    using MikroPic.EdaTools.v1.PanelEditor.Render.WPF.Visuals;
     using System;
     using System.Windows;
     using System.Windows.Controls;
@@ -60,17 +62,20 @@
         private void OnSizeChanged(object sender, SizeChangedEventArgs e) {
 
             if (Project != null) {
-
-                v1.Base.Geometry.Size boardSize = Project.Size;
                 viewPoint.Reset(
                     new Win.Size(contentBox.ActualWidth, contentBox.ActualHeight),
-                    new Win.Rect(0, 0, boardSize.Width, boardSize.Height));
+                    new Win.Rect(0, 0, Project.Size.Width, Project.Size.Height));
             }
         }
 
         private void OnProjectChanged(object sender, EventArgs e) {
 
-            UpdateView();
+            if (Project != null) {
+                viewPoint.Reset(
+                    new Win.Size(contentBox.ActualWidth, contentBox.ActualHeight),
+                    new Win.Rect(0, 0, Project.Size.Width, Project.Size.Height));
+                UpdateView();
+            }
         }
 
         /// <summary>
@@ -142,8 +147,12 @@
 
                 HitTestResult result = VisualTreeHelper.HitTest(contentBox.Visual, currentPos);
                 if (result != null) {
-                    DrawingVisual visual = result.VisualHit as DrawingVisual;
-                    if (visual != null) {
+                    if (result.VisualHit is DrawingVisual visual) {
+                        if (visual is CutVisual cutVisual) {
+                            CutItem cutItem = cutVisual.Item;
+                            //cutItem.p
+                        }
+                        //UpdateView();
                         (visual.Parent as DrawingVisual).Children.Remove(visual);
                     }
                 }
@@ -186,10 +195,6 @@
                 contentBox.Visual = null;
 
             if (Project != null) {
-
-                viewPoint.Reset(
-                    new Win.Size(contentBox.ActualWidth, contentBox.ActualHeight),
-                    new Win.Rect(0, 0, Project.Size.Width, Project.Size.Height));
 
                 DrawingVisual visual = new DrawingVisual();
                 RenderVisitor visitor = new RenderVisitor(visual);

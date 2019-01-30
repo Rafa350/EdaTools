@@ -40,7 +40,7 @@
         /// Inicialitza el punt de vista.
         /// </summary>
         /// <param name="vSize">Tamany fisic del area de visualitzacio.</param>
-        /// <param name="wRect">Rectangle a representar</param>
+        /// <param name="wRect">Area a representar</param>
         /// 
         public void Reset(Size vSize, Rect wRect) {
 
