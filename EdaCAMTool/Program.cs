@@ -60,10 +60,11 @@
                     outputFolder = Path.GetDirectoryName(projectPath);
 
                 if (verbose) {
-                    Console.WriteLine("Target name  : {0}", targetName);
-                    Console.WriteLine("Project path : {0}", projectPath);
-                    Console.WriteLine("Board path   : {0}", boardPath);
-                    Console.WriteLine("Output folder: {0}", outputFolder);
+                    Console.WriteLine("| Target name  : {0}", targetName);
+                    Console.WriteLine("| Project path : {0}", projectPath);
+                    Console.WriteLine("| Board path   : {0}", boardPath);
+                    Console.WriteLine("| Output folder: {0}", outputFolder);
+                    Console.WriteLine("+--------------------------------------------------------------------");
                     Console.WriteLine();
                 }
 
@@ -83,10 +84,11 @@
         private static void ShowCredits() {
 
             string credits =
-                "EdaCAMTool V1.1\r\n" +
-                "(c) 2019 rsr.openware@gmail.com\r\n";
+                "+--------------------------------------------------------------------\r\n" +
+                "| EdaCAMTool V1.1 - (c) 2019 rsr.openware@gmail.com\r\n" +
+                "+--------------------------------------------------------------------";
 
-            Console.WriteLine(credits);
+        Console.WriteLine(credits);
         }
 
         /// <summary>
@@ -96,15 +98,14 @@
         private static void ShowHelp() {
 
             string help =
-                "EdaCAMTool V1.1\r\n" +
-                "---------------\r\n" +
-                "EdaCamTool <project> [options]\r\n" +
-                "   <project>       : Project file name.\r\n" +
-                "   [options]       : Optional parameters.\r\n" +
-                "     /o            :  Output path\r\n" +
-                "     /p            :  Pause at end.\r\n" +
-                "     /t            :  Target to process.\r\n" +
-                "     /z            :  Output ZIP file name.\r\n";
+                "| EdaCamTool <project> [options]\r\n" +
+                "|     <project>   : Project file name.\r\n" +
+                "|     [options]   : Optional parameters.\r\n" +
+                "|         /o      :   Output path\r\n" +
+                "|         /p      :   Pause at end.\r\n" +
+                "|         /t      :   Target to process.\r\n" +
+                "|         /z      :   Output ZIP file name.\r\n" +
+                "+--------------------------------------------------------------------";
 
             Console.WriteLine(help);            
         }

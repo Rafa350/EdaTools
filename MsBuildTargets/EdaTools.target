@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <!-- Localitzacio de les eines -->
+    <PropertyGroup>
+        <EdaConverterTool>$(ProjectFiles)vs\edatools\bin\release\EdaConverter.exe</EdaConverterTool>
+    </PropertyGroup>
+       
+    <!-- Converteix de EAGLE a EdaTools -->
+    <Target
+        Name="ConvertEagleToEda"
+        Inputs="$(ConvertEagleToEda_InputBoardName)"
+        Outputs="$(ConvertEagleToEda_OutputBoardName)">
+        <Exec Command="$(EdaConverterTool) $(ConvertEagleToEda_InputBoardName) $(ConvertEagleToEda_OutputBoardName)" />
+    </Target>    
+  
+ </Project>

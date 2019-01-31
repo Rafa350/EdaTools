@@ -53,9 +53,10 @@
                     sourceFolder = Path.GetDirectoryName(projectPath);
 
                 if (verbose) {
-                    Console.WriteLine("Project path : {0}", projectPath);
-                    Console.WriteLine("Target path  : {0}", targetPath);
-                    Console.WriteLine("Source folder: {0}", sourceFolder);
+                    Console.WriteLine("| Project path : {0}", projectPath);
+                    Console.WriteLine("| Target path  : {0}", targetPath);
+                    Console.WriteLine("| Source folder: {0}", sourceFolder);
+                    Console.WriteLine("+--------------------------------------------------------------------");
                     Console.WriteLine();
                 }
 
@@ -128,8 +129,9 @@
         private static void ShowCredits() {
 
             string credits =
-                "EdaPanelizer V1.0\r\n" +
-                "(c) 2019 rsr.openware@gmail.com\r\n";
+                "+--------------------------------------------------------------------\r\n" +
+                "| EdaPanelizer V1.0 - (c) 2019 rsr.openware@gmail.com\r\n" +
+                "+--------------------------------------------------------------------";
 
             Console.WriteLine(credits);
         }
@@ -141,15 +143,13 @@
         private static void  ShowHelp() {
 
             string help =
-                "EdaPanelizer V1.0\r\n" +
-                "------------------------------------------------\r\n" +
-                "EdaPanelizer <project> [options]\r\n" +
-                "   <project>             : Project path.\r\n" +
-                "   [options]             : Optional parameters.\r\n" +
-                "     /p                  :   Pause at end.\r\n" +
-                "     /s                  :   Source folder.\r\n" +
-                "     /o                  :   Output path.\r\n" +
-                "\r\n";
+                "| EdaPanelizer <project> [options]\r\n" +
+                "|     <project>   : Project path.\r\n" +
+                "|     [options]   : Optional parameters.\r\n" +
+                "|          /o     :   Output path.\r\n" +
+                "|          /p     :   Pause at end.\r\n" +
+                "|          /s     :   Source folder.\r\n" +
+                "+--------------------------------------------------------------------";
 
             Console.WriteLine(help);
         }
