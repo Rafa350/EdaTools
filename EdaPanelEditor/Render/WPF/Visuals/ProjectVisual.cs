@@ -31,11 +31,11 @@
         /// 
         protected override void Draw(DrawVisualContext dc) {
 
-            Pen pen = dc.GetPen(Color.FromRgb(255, 0, 0), 250000, PenLineCap.Round);
+            Brush brush = dc.GetBrush(Color.FromRgb(44, 115, 13));
 
             Base.Geometry.Size size = Project.Size;
             Base.Geometry.Point position = new Base.Geometry.Point(size.Width / 2, size.Height / 2);
-            dc.DrawRectangle(null, pen, position, size);
+            dc.DrawRectangle(brush, null, position, size);
         }
 
         /// <summary>

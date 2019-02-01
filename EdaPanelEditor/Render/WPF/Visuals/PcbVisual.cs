@@ -24,14 +24,11 @@
         /// 
         protected override void Draw(DrawVisualContext dc) {
 
-            Color penColor = Color.FromRgb(0, 255, 0);
-            Pen pen = dc.GetPen(penColor, 500000, PenLineCap.Round);
-
-            Brush brush = Brushes.OliveDrab;
+            Brush brush = dc.GetBrush(Color.FromRgb(31, 80, 10));
 
             Size size = Item.Size;
             Point position = Item.Position.Offset(size.Width / 2, size.Height / 2);
-            dc.DrawRectangle(brush, pen, position, size);
+            dc.DrawRectangle(brush, null, position, size);
         }
 
         /// <summary>
