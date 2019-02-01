@@ -137,6 +137,27 @@
         }
 
         /// <summary>
+        /// Operador -
+        /// </summary>
+        /// <param name="a">Conjunt.</param>
+        /// <param name="b">Element.</param>
+        /// <returns>El resultat de l'operacio.</returns>
+        /// 
+        public static LayerSet operator -(LayerSet a, string b) {
+
+            if (a.storage == null)
+                return new LayerSet(b);
+            else {
+                string[] s = new string[a.storage.Length - 1];
+                int i = 0;
+                foreach (var aa in a)
+                    if (aa != b)
+                        s[i++] = aa;
+                return new LayerSet(s);
+            }
+        }
+
+        /// <summary>
         /// Converteix a string
         /// </summary>
         /// <returns>El resultat de la conversio.</returns>

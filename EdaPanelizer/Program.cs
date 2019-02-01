@@ -29,7 +29,7 @@
                 bool verbose = false;
                 bool pause = false;
 
-                foreach (string arg in args) {
+                foreach (var arg in args) {
 
                     if (arg.StartsWith("/o:"))
                         targetPath = arg.Substring(3);

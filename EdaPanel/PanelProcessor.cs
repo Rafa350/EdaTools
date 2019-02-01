@@ -76,6 +76,8 @@
 
             if (targetBoard.GetLayer("Milling", false) == null)
                 targetBoard.AddLayer(new Layer(BoardSide.None, "Milling", LayerFunction.Mechanical));
+            if (targetBoard.GetLayer("LocalProfile", false) == null)
+                targetBoard.AddLayer(new Layer(BoardSide.None, "LocalProfile", LayerFunction.Mechanical));
         }
 
         /// <summary>
@@ -98,7 +100,7 @@
             // Afegeix els senyals. Cada placa te les seves propies.
             //
             foreach (var signal in board.Signals) {
-                string signalName = String.Format("{1}@board{0}", index, signal.Name);
+                string signalName = String.Format("{1}@{0}", index, signal.Name);
                 if (targetBoard.GetSignal(signalName, false) == null) 
                     targetBoard.AddSignal(signal.Clone(signalName));
             }
@@ -118,7 +120,7 @@
                 List<Part> transformableParts = new List<Part>();
                 foreach (var part in board.Parts) {
                     Component component = targetBoard.GetComponent(part.Component.Name);
-                    Part panelPart = part.Clone(String.Format("{1}@board{0}", index, part.Name), component);
+                    Part panelPart = part.Clone(String.Format("{1}@{0}", index, part.Name), component);
                     transformableParts.Add(panelPart);
                     targetBoard.AddPart(panelPart);
 
@@ -126,7 +128,7 @@
                         if (panelElement is PadElement panelPad) {
                             Signal signal = board.GetSignal(part.GetPad(panelPad.Name), part, false);
                             if (signal != null) {
-                                string panelSignalName = String.Format("{1}@board{0}", index, signal.Name);
+                                string panelSignalName = String.Format("{1}@{0}", index, signal.Name);
                                 targetBoard.Connect(targetBoard.GetSignal(panelSignalName), panelPad, panelPart);
                             }
                         }
@@ -144,17 +146,18 @@
                 List<Element> transformableElements = new List<Element>();
                 foreach (var boardElement in board.Elements) {
 
-                    //if (element.LayerSet.Contains(Layer.ProfileId))
-                    //    continue;
-
                     Element panelElement = boardElement.Clone();
+                    if (boardElement.LayerSet.Contains(Layer.GetName(BoardSide.None, "Profile"))) {
+                        boardElement.LayerSet += Layer.GetName(BoardSide.None, "LocalProfile");
+                        boardElement.LayerSet -= Layer.GetName(BoardSide.None, "Profile");
+                    }
                     transformableElements.Add(panelElement);
                     targetBoard.AddElement(panelElement);
 
                     if (boardElement is IConectable) {
                         Signal signal = board.GetSignal(boardElement, null, false);
                         if (signal != null) {
-                            string panelSignalName = String.Format("{1}@board{0}", index, signal.Name);
+                            string panelSignalName = String.Format("{1}@{0}", index, signal.Name);
                             targetBoard.Connect(targetBoard.GetSignal(panelSignalName), panelElement as IConectable);
                         }
                     }
@@ -217,7 +220,7 @@
 
                 // Transforma els punts a la posicio real
                 //
-                int drill = 500000;
+                int drill = cut.HoleDiameter;
                 int offset = (cut.Thickness - drill) / 2;
                 Point q1 = t.ApplyTo(new Point(holePoints[i], -offset));
                 Point q2 = t.ApplyTo(new Point(holePoints[i], offset));
