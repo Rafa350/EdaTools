@@ -85,10 +85,13 @@
     <Compile Include="Model\Board\IConectable.cs" />
     <Compile Include="Model\Board\IName.cs" />
     <Compile Include="Model\Board\IO\BoardStreamReader.cs" />
+    <Compile Include="Model\Board\IO\LibraryStreamReader.cs" />
     <Compile Include="Model\Board\IPosition.cs" />
     <Compile Include="Model\Board\IRotation.cs" />
     <Compile Include="Model\Board\ISize.cs" />
     <Compile Include="Model\Board\LayerSet.cs" />
+    <Compile Include="Model\Board\Library.cs" />
+    <Compile Include="Model\Board\Library_Components.cs" />
     <Compile Include="Model\Board\Part_Attributes.cs" />
     <Compile Include="Model\Board\PartExtensions.cs" />
     <Compile Include="Model\Board\Visitors\ComponentVisitor.cs" />

@@ -8,6 +8,8 @@
 
     public sealed class CutVisual: ItemVisual {
 
+        private readonly Color cutColor = Color.FromRgb(128, 128, 128);
+
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
@@ -42,7 +44,7 @@
             t.Translate(Item.StartPosition);
             t.Rotate(Item.StartPosition, Angle.FromRadiants(rad));
 
-            System.Windows.Media.Pen pen = dc.GetPen(Color.FromArgb(255, 128, 128, 128), Item.Thickness, System.Windows.Media.PenLineCap.Round);
+            Pen pen = dc.GetPen(cutColor, Item.Thickness, PenLineCap.Round);
 
             // Afegeix les linies de tall
             //

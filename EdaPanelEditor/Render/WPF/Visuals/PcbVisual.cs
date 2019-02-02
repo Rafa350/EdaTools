@@ -7,6 +7,8 @@
 
     public sealed class PcbVisual: ItemVisual {
 
+        private readonly Color boardColor = Color.FromRgb(31, 80, 10);
+
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
@@ -24,7 +26,7 @@
         /// 
         protected override void Draw(DrawVisualContext dc) {
 
-            Brush brush = dc.GetBrush(Color.FromRgb(31, 80, 10));
+            Brush brush = dc.GetBrush(boardColor);
 
             Size size = Item.Size;
             Point position = Item.Position.Offset(size.Width / 2, size.Height / 2);

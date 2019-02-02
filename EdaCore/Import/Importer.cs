@@ -8,9 +8,9 @@
         public Board Read(string fileName) {
 
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-                return Read(stream);
+                return ReadBoard(stream);
         }
 
-        public abstract Board Read(Stream stream);
+        public abstract Board ReadBoard(Stream stream);
     }
 }

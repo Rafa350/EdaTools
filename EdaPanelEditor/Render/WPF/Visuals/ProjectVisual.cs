@@ -7,6 +7,7 @@
 
     public sealed class ProjectVisual: VisualBase {
 
+        private readonly Color panelColor = Color.FromRgb(44, 115, 13);
         private readonly Project project;
 
         /// <summary>
@@ -31,7 +32,7 @@
         /// 
         protected override void Draw(DrawVisualContext dc) {
 
-            Brush brush = dc.GetBrush(Color.FromRgb(44, 115, 13));
+            Brush brush = dc.GetBrush(panelColor);
 
             Base.Geometry.Size size = Project.Size;
             Base.Geometry.Point position = new Base.Geometry.Point(size.Width / 2, size.Height / 2);

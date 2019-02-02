@@ -40,7 +40,7 @@
         /// <param name="stream">Stream d'entrada.</param>
         /// <returns>La placa.</returns>
         /// 
-        public override Board Read(Stream stream) {
+        public override Board ReadBoard(Stream stream) {
 
             doc = ReadXmlDocument(stream);
             board = new Board();
