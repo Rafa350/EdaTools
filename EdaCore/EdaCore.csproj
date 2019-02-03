@@ -135,6 +135,9 @@
     <EmbeddedResource Include="Model\Board\IO\Schemas\XBRD.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Model\Board\IO\Schemas\XLIB.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="signature.pfx" />
   </ItemGroup>

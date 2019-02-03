@@ -2,7 +2,33 @@
 
     public sealed partial class Library {
 
-        private readonly string name;
-        private readonly string description;
+        private string name;
+        private string description;
+
+        /// <summary>
+        /// Obte o asignma el nom de la biblioteca.
+        /// </summary>
+        /// 
+        public string Name {
+            get {
+                return name;
+            }
+            set {
+                name = value;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna la descripcio de la bibnlioteca.
+        /// </summary>
+        /// 
+        public string Description {
+            get {
+                return description;
+            }
+            set {
+                description = value;
+            }
+        }
     }
 }
