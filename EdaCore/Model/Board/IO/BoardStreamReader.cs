@@ -711,7 +711,9 @@
                 throw new InvalidDataException("Se esperaba <region>");
 
             LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
-            int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness"));
+            int thickness = rd.AttributeExists("thickness") ?
+                XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness")) :
+                0;
             bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
             int clearance = XmlTypeParser.ParseNumber(rd.AttributeAsString("clearance", "0"));
             string signalName = rd.AttributeAsString("signal");

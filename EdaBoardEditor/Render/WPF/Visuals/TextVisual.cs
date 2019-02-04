@@ -47,8 +47,8 @@
             IEnumerable<GlyphTrace> glyphTraces = td.Draw(paa.Value, new Point(0, 0), paa.HorizontalAlign, paa.VerticalAlign, paa.Height);
 
             Transformation t = new Transformation();
-            t.Translate(Element.Position);
-            t.Rotate(Element.Position, Element.Rotation);
+            t.Translate(paa.Position);
+            t.Rotate(paa.Position, paa.Rotation);
             dc.PushTransform(t);
 
             Pen pen = dc.GetPen(color, Element.Thickness, PenLineCap.Round);

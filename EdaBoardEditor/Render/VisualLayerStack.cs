@@ -32,14 +32,14 @@
 
             vls.Add(new VisualLayer("Bottom", 
                 new string[] { "Bottom.Copper" },
-                new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Region, ElementType.SmdPad },
+                new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Rectangle, ElementType.Circle, ElementType.Region, ElementType.SmdPad, ElementType.Text },
                 true,
                 VisualMode.Element,
                 Color.FromArgb(204, 0, 0, 255)));
 
             vls.Add(new VisualLayer("Top",
                 new string[] { "Top.Copper" },
-                new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Region, ElementType.SmdPad },
+                new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Rectangle, ElementType.Circle, ElementType.Region, ElementType.SmdPad, ElementType.Text },
                 true,
                 VisualMode.Element,
                 Color.FromArgb(153, 255, 0, 0)));

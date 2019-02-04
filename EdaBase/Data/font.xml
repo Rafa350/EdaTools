@@ -288,7 +288,7 @@
                     <moveTo position="4, 0"/>
                     <lineTo position="4, 6"/>
                     <moveTo position="0, 3"/>
-                    <lineTo position="5, 4"/>
+                    <lineTo position="4, 3"/>
                 </glyph>
             </char>
             
@@ -299,8 +299,8 @@
                     <lineTo position="4, 0"/>
                     <moveTo position="0, 6"/>
                     <lineTo position="4, 6"/>
-                    <moveTo position="3, 0"/>
-                    <lineTo position="3, 6"/>                
+                    <moveTo position="2, 0"/>
+                    <lineTo position="2, 6"/>                
                 </glyph>
             </char>
                 
@@ -316,7 +316,19 @@
                     <lineTo position="4, 6"/>                    
                 </glyph>
             </char>
-          
+            
+            <!-- K -->
+            <char code="0x4B" advance="6">
+                <glyph>
+                    <moveTo position="0, 0"/>
+                    <lineTo position="0, 6"/>
+                    <moveTo position="0, 2"/>
+                    <lineTo position="4, 6"/>
+                    <moveTo position="1, 3"/>
+                    <lineTo position="4, 0"/>
+                </glyph>
+            </char>
+
             <!-- 'L' -->
             <char code="0x4C" advance="6">
                 <glyph>
@@ -374,6 +386,8 @@
                     <lineTo position="0, 2"/>                    
                 </glyph>
             </char>
+            
+            <!-- Q -->
           
             <!-- 'R' -->
             <char code="0x52" advance="6">
@@ -389,6 +403,9 @@
                     <lineTo position="3, 2"/>                    
                 </glyph>
             </char>
+            
+            <!-- S -->
+            <!-- T -->
           
             <!-- 'U' -->
             <char code="0x55" advance="6">
@@ -401,6 +418,12 @@
                     <lineTo position="4, 6"/>                    
                 </glyph>
             </char>
+            
+            <!-- V -->
+            <!-- W -->
+            <!-- X -->
+            <!-- Y -->
+            <!-- Z -->
         
         </font>
     </fontResource>
