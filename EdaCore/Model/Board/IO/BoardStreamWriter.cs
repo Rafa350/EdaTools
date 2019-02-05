@@ -424,14 +424,14 @@
 
                 if (component.HasElements) {
                     writer.WriteStartElement("elements");
-                    foreach (Element element in component.Elements)
+                    foreach (var element in component.Elements)
                         element.AcceptVisitor(this);
                     writer.WriteEndElement();
                 }
 
                 if (component.HasAttributes) {
                     writer.WriteStartElement("attributes");
-                    foreach (ComponentAttribute attribute in component.Attributes)
+                    foreach (var attribute in component.Attributes)
                         attribute.AcceptVisitor(this);
                     writer.WriteEndElement();
                 }

@@ -6,7 +6,7 @@
     public sealed class NetComponent  {
 
         private readonly string name;
-        private List<NetPin> pins;
+        private List<NetConnection> pins;
 
         public NetComponent(string name) {
 

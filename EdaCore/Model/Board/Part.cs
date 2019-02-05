@@ -110,7 +110,7 @@
         /// Obte un pad pel seu nom.
         /// </summary>
         /// <param name="name">El nom del pad.</param>
-        /// <param name="throwOnError">True si dispara una execpcio si no el troba.</param>
+        /// <param name="throwOnError">True si dispara una execepcio si no el troba.</param>
         /// <returns>El pad. Null si no el troba.</returns>
         /// 
         public PadElement GetPad(string name, bool throwOnError = true) {

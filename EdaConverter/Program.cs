@@ -4,6 +4,7 @@
     using MikroPic.EdaTools.v1.Core.Import.Eagle;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.IO;
+    using MikroPic.EdaTools.v1.Core.Model.Net;
     using System;
     using System.IO;
 
@@ -15,6 +16,7 @@
 
             bool verbose = false;
             string sourcePath = args[0];
+            string targetPath = args[1];
 
             foreach (var arg in args) {
 
@@ -24,16 +26,30 @@
 
             if (verbose) {
                 Console.WriteLine("| Source path : {0}", sourcePath);
+                Console.WriteLine("| Target path : {0}", targetPath);
                 Console.WriteLine("+--------------------------------------------------------------------");
                 Console.WriteLine();
             }
 
             Importer importer = new EagleImporter();
-            Board board = importer.Read(sourcePath);
 
-            BoardStreamWriter boardWriter = new BoardStreamWriter(
-                new FileStream(args[1], FileMode.Create, FileAccess.Write, FileShare.None));
-            boardWriter.Write(board);
+            if (String.Compare(Path.GetExtension(sourcePath), ".brd", true) == 0) {
+
+                Board board = importer.ReadBoard(sourcePath);
+
+                BoardStreamWriter boardWriter = new BoardStreamWriter(
+                    new FileStream(targetPath, FileMode.Create, FileAccess.Write, FileShare.None));
+                boardWriter.Write(board);
+            }
+
+            else if (String.Compare(Path.GetExtension(sourcePath), ".sch", true) == 0) {
+
+                Net net = importer.ReadNet(sourcePath);
+
+                NetStreamWriter netWriter = new NetStreamWriter(
+                    new FileStream(targetPath, FileMode.Create, FileAccess.Write, FileShare.None));
+                netWriter.Write(net);
+            }
         }
 
         /// <summary>

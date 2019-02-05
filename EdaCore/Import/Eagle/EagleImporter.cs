@@ -4,6 +4,7 @@
     using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+    using MikroPic.EdaTools.v1.Core.Model.Net;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -16,7 +17,7 @@
     /// Clase per importar una placa desde Eagle
     /// </summary>
     /// 
-    public sealed class EagleImporter: Importer {
+    public sealed class EagleImporter : Importer {
 
         private const int topLayerNum = 1;
         private const int bottomLayerNum = 16;
@@ -32,10 +33,11 @@
         private Dictionary<int, string> layerNames = new Dictionary<int, string>();
 
         private Board board;
+        private Net net;
         private XmlDocument doc;
 
         /// <summary>
-        /// Importa una placa en format EAGLE.
+        /// Importa una placa.
         /// </summary>
         /// <param name="stream">Stream d'entrada.</param>
         /// <returns>La placa.</returns>
@@ -51,6 +53,22 @@
             ProcessElements();
 
             return board;
+        }
+
+        /// <summary>
+        /// Importa un netlist
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns>El netlist</returns>
+        /// 
+        public override Net ReadNet(Stream stream) {
+
+            doc = ReadXmlDocument(stream);
+            net = new Net();
+
+            ProcessNetlist();
+
+            return net;
         }
 
         /// <summary>
@@ -186,7 +204,7 @@
 
             // Procesa el tag <elements>
             //
-            foreach (Part part in ParseElementsNode(doc.SelectSingleNode("eagle/drawing/board/elements"))) 
+            foreach (Part part in ParseElementsNode(doc.SelectSingleNode("eagle/drawing/board/elements")))
                 board.AddPart(part);
 
             // Procesa el tag <plain>
@@ -277,6 +295,18 @@
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Procesa el netlist
+        /// </summary>
+        /// 
+        private void ProcessNetlist() {
+
+            // Procesa el tag <nets>
+            //
+            foreach (XmlNode node in doc.SelectSingleNode("eagle/drawing/schematic/sheets/sheet/nets"))
+                net.AddSignal(ParseNetNode(node));
         }
 
         /// <summary>
@@ -402,9 +432,9 @@
 
             int layerNum = GetAttributeAsInteger(node, "layer");
             LayerSet layerSet = new LayerSet(GetLayerName(layerNum));
-            if (cream) 
+            if (cream)
                 layerSet = layerSet + "Top.Cream";
-            if (stop) 
+            if (stop)
                 layerSet = layerSet + "Top.Stop";
 
             return new SmdPadElement(name, layerSet, position, size, rotation, roundness);
@@ -698,7 +728,7 @@
             if (AttributeExists(node, "rot")) {
                 string rot = GetAttributeAsString(node, "rot");
                 if (rot.Contains("M"))
-                   flip = true;
+                    flip = true;
 
                 rotation = ParseAngle(rot);
             }
@@ -739,8 +769,8 @@
 
             if (!hasNameAttribute)
                 part.AddAttribute(new PartAttribute("NAME", name, true));
-            
-            if (!hasValueAttribute) 
+
+            if (!hasValueAttribute)
                 part.AddAttribute(new PartAttribute("VALUE", value, true));
 
             return part;
@@ -791,6 +821,37 @@
             }
 
             return attribute;
+        }
+
+        /// <summary>
+        /// Procesa un node NET
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>L'objecte 'NetElement' creat.</returns>
+        /// 
+        public NetSignal ParseNetNode(XmlNode node) {
+
+            string netName = GetAttributeAsString(node, "name");
+            
+            List<NetConnection> netPins = new List<NetConnection>();
+            foreach (XmlNode pinrefNode in node.SelectNodes("segment/pinref")) 
+                netPins.Add(ParsePinrefNode(pinrefNode));
+
+            return new NetSignal(netName, netPins);
+        }
+
+        /// <summary>
+        /// Procesa un node PINREF
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>L'objecte 'NetPin' creat.</returns>
+        /// 
+        public NetConnection ParsePinrefNode(XmlNode node) {
+
+            string partName = GetAttributeAsString(node, "part");
+            string pinName = GetAttributeAsString(node, "pin");
+
+            return new NetConnection(partName, pinName);
         }
 
         /// <summary>
@@ -949,7 +1010,7 @@
             XmlAttribute attribute = node.Attributes[name];
             if (attribute == null)
                 return defValue;
-            else 
+            else
                 return XmlConvert.ToInt32(attribute.Value);
         }
 
