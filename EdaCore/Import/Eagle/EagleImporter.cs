@@ -21,8 +21,8 @@
 
         private const int topLayerNum = 1;
         private const int bottomLayerNum = 16;
-        private const int viasLayerNum = 18;
         private const int padsLayerNum = 17;
+        private const int viasLayerNum = 18;
         private const int drillsLayerNum = 44;
         private const int holesLayerNum = 45;
 
@@ -64,11 +64,11 @@
         public override Net ReadNet(Stream stream) {
 
             doc = ReadXmlDocument(stream);
-            net = new Net();
 
-            ProcessNetlist();
+            XmlNode netsNode = doc.SelectSingleNode("eagle/drawing/schematic/sheets/sheet/nets");
+            IEnumerable<NetSignal> signals = ParseNetsNode(netsNode);
 
-            return net;
+            return new Net(signals);
         }
 
         /// <summary>
@@ -94,6 +94,10 @@
             return doc;
         }
 
+        /// <summary>
+        /// Procesa les capes
+        /// </summary>
+        /// 
         private void ProcessLayers() {
 
             // Recorre el node <layers> per crear les capes necesaries
@@ -295,18 +299,6 @@
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Procesa el netlist
-        /// </summary>
-        /// 
-        private void ProcessNetlist() {
-
-            // Procesa el tag <nets>
-            //
-            foreach (XmlNode node in doc.SelectSingleNode("eagle/drawing/schematic/sheets/sheet/nets"))
-                net.AddSignal(ParseNetNode(node));
         }
 
         /// <summary>
@@ -824,20 +816,42 @@
         }
 
         /// <summary>
+        /// Procesa un node NETS
+        /// </summary>
+        /// <param name="node">El node a procesar.</param>
+        /// <returns>La coleccio d'objectes 'NetSignal' creada.</returns>
+        /// 
+        private IEnumerable<NetSignal> ParseNetsNode(XmlNode node) {
+
+            // Procesa el tag <nets>
+            //
+            List<NetSignal> signals = new List<NetSignal>();
+            foreach (XmlNode netNode in node.SelectNodes("net")) {
+                NetSignal signal = ParseNetNode(netNode);
+                signals.Add(signal);
+            }
+
+            return signals;
+        }
+
+        /// <summary>
         /// Procesa un node NET
         /// </summary>
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'NetElement' creat.</returns>
         /// 
-        public NetSignal ParseNetNode(XmlNode node) {
+        private NetSignal ParseNetNode(XmlNode node) {
 
             string netName = GetAttributeAsString(node, "name");
             
-            List<NetConnection> netPins = new List<NetConnection>();
-            foreach (XmlNode pinrefNode in node.SelectNodes("segment/pinref")) 
-                netPins.Add(ParsePinrefNode(pinrefNode));
+            List<NetConnection> netConnections = new List<NetConnection>();
+            foreach (XmlNode pinrefNode in node.SelectNodes("segment/pinref")) {
+                NetConnection netConnection = ParsePinrefNode(pinrefNode);
+                if (netConnection != null)
+                    netConnections.Add(netConnection);
+            }
 
-            return new NetSignal(netName, netPins);
+            return new NetSignal(netName, netConnections);
         }
 
         /// <summary>
@@ -846,12 +860,17 @@
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'NetPin' creat.</returns>
         /// 
-        public NetConnection ParsePinrefNode(XmlNode node) {
+        private NetConnection ParsePinrefNode(XmlNode node) {
 
             string partName = GetAttributeAsString(node, "part");
+            string gateName = GetAttributeAsString(node, "gate");
             string pinName = GetAttributeAsString(node, "pin");
 
-            return new NetConnection(partName, pinName);
+            string padName = GetPadName(partName, gateName, pinName);
+            if (padName == null)
+                return null;
+            else
+                return new NetConnection(partName, padName);
         }
 
         /// <summary>
@@ -1060,7 +1079,7 @@
                 case bottomLayerNum:
                     return new Layer(BoardSide.Bottom, "Copper", LayerFunction.Signal);
 
-                case 17:
+                case padsLayerNum:
                     return new Layer(BoardSide.None, "Pads", LayerFunction.Unknown);
 
                 case viasLayerNum:
@@ -1138,6 +1157,34 @@
                 default:
                     return new Layer(BoardSide.None, "Unknown" + layerNum.ToString(), LayerFunction.Unknown);
             }
+        }
+
+        private string GetPadName(string partName, string gateName, string pinName) {
+
+            XmlNode partNode = doc.SelectSingleNode(
+                String.Format("eagle/drawing/schematic/parts/part[@name='{0}']", partName));
+
+            string libraryName = GetAttributeAsString(partNode, "library");
+            string deviceSetName = GetAttributeAsString(partNode, "deviceset");
+            string deviceName = GetAttributeAsString(partNode, "device");
+
+            XmlNode libraryNode = doc.SelectSingleNode(
+                String.Format("eagle/drawing/schematic/libraries/library[@name='{0}']", libraryName));
+
+            XmlNode deviceSetNode = libraryNode.SelectSingleNode(
+                String.Format("devicesets/deviceset[@name='{0}']", deviceSetName));
+
+            XmlNode deviceNode = deviceSetNode.SelectSingleNode(
+                String.Format("devices/device[@name='{0}']", deviceName));
+
+            XmlNode connectNode = deviceNode.SelectSingleNode(
+                String.Format("connects/connect[@pin='{0}']", pinName));
+            if (connectNode == null)
+                return null;
+
+            string padName = GetAttributeAsString(connectNode, "pad");
+
+            return padName;
         }
     }
 }

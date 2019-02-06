@@ -1,39 +1,42 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Net {
 
-    using System;
     using System.Collections.Generic;
 
     public sealed partial class Net {
 
         private Dictionary<string, NetSignal> signals;
 
-        /// <summary>
-        /// Afegeix un element
-        /// </summary>
-        /// <param name="signal">L'element a afeigit.</param>
-        /// 
-        public void AddSignal(NetSignal signal) {
+        private void InitializeSignals(IEnumerable<NetSignal> signals) {
 
-            if (signal == null)
-                throw new ArgumentNullException("signal");
-
-            if (signals == null)
-                signals = new Dictionary<string, NetSignal>();
-            signals.Add(signal.Name, signal);
+            this.signals = new Dictionary<string, NetSignal>();
+            foreach (NetSignal signal in signals)
+                this.signals.Add(signal.Name, signal);
         }
 
+        /// <summary>
+        /// Indica si contre senyals.
+        /// </summary>
+        /// 
         public bool HasSignals {
             get {
                 return signals != null;
             }
         }
 
+        /// <summary>
+        /// Enumera els noms de les senyals.
+        /// </summary>
+        /// 
         public IEnumerable<string> SignalNames {
             get {
                 return signals?.Keys;
             }
         }
 
+        /// <summary>
+        /// Enumera les senyals.
+        /// </summary>
+        /// 
         public IEnumerable<NetSignal> Signals {
             get {
                 return signals?.Values;

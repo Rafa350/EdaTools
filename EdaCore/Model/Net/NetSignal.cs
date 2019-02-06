@@ -26,17 +26,6 @@
             visitor.Visit(this);
         }
 
-        public void AddConnection(NetConnection connection) {
-
-            if (connection == null)
-                throw new ArgumentNullException("connection");
-
-            if (connections == null)
-                connections = new List<NetConnection>();
-
-            connections.Add(connection);
-        }
-
         public string Name {
             get {
                 return name;
