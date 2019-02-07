@@ -58,10 +58,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Conectivity\ConnectivityAnchor.cs" />
-    <Compile Include="Model\Conectivity\ConnectivityEdge.cs" />
-    <Compile Include="Model\Conectivity\ConnectivityItem.cs" />
-    <Compile Include="Model\Conectivity\ConnectivityMap.cs" />
+    <Compile Include="Model\Connectivity\ConnectivityAnchor.cs" />
+    <Compile Include="Model\Connectivity\ConnectivityEdge.cs" />
+    <Compile Include="Model\Connectivity\ConnectivityItem.cs" />
+    <Compile Include="Model\Connectivity\ConnectivityMap.cs" />
     <Compile Include="Export\FreeCad\FreeCadExporter.cs" />
     <Compile Include="Export\KiCad\KiCadExporter.cs" />
     <Compile Include="Export\OpenScad\OpenScadExporter.cs" />

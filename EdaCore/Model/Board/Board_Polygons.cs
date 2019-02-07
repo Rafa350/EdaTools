@@ -8,7 +8,7 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// Clase que representa una placa de circuit impres.
+    /// Classe que representa una placa de circuit imprès.
     /// </summary>
     /// 
     public sealed partial class Board {
@@ -16,7 +16,7 @@
         private int outlineClearance = 250000;
 
         /// <summary>
-        /// Obte el poligon del perfil de la placa. Es calcula amb es elements de la capa profile.
+        /// Obte el poligon del perfil de la placa. Es calcula amb els elements de la capa profile.
         /// </summary>
         /// <returns>El poligon.</returns>
         /// 

@@ -4,7 +4,7 @@
     using MikroPic.EdaTools.v1.BoardEditor.DrawEditor;
     using MikroPic.EdaTools.v1.BoardEditor.Render.WPF;
     using MikroPic.EdaTools.v1.BoardEditor.Render.WPF.Visuals;
-    using MikroPic.EdaTools.v1.Core.Conectivity;
+    using MikroPic.EdaTools.v1.Core.Model.Connectivity;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using System;
