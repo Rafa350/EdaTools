@@ -6,10 +6,7 @@
     public sealed class NetSignal: INetVisitable {
 
         private readonly string name;
-        private List<NetConnection> connections;
-
-        public NetSignal() {
-        }
+        private readonly List<NetConnection> connections;
 
         public NetSignal(string name, IEnumerable<NetConnection> connections) {
 

@@ -19,7 +19,7 @@
             private readonly XmlWriter writer;
 
             /// <summary>
-            /// Constructor del objecte. Visita els objectes d'una placa,
+            /// Constructor del objecte. Visita els objectes d'una netlist,
             /// per generar el stream de sortida.
             /// </summary>
             /// <param name="wr">Objecte per escriure el stream de sortida.</param>
@@ -29,9 +29,21 @@
                 this.writer = writer;
             }
 
+            /// <summary>
+            /// Visita un objecte 'Net'
+            /// </summary>
+            /// <param name="net">L'objecte a visitar.</param>
+            /// 
             public override void Visit(Net net) {
 
                 writer.WriteStartElement("netlist");
+
+                if (net.HasParts) {
+                    writer.WriteStartElement("parts");
+                    foreach (var part in net.Parts)
+                        part.AcceptVisitor(this);
+                    writer.WriteEndElement();
+                }
 
                 if (net.HasSignals) {
                     writer.WriteStartElement("signals");
@@ -44,7 +56,7 @@
             }
 
             /// <summary>
-            /// Visita un element de tipus 'NetSignal'
+            /// Visita un objecte 'NetSignal'
             /// </summary>
             /// <param name="signal">L'objecte a visitar.</param>
             /// 
@@ -63,11 +75,28 @@
                 writer.WriteEndElement();
             }
 
-            public override void Visit(NetConnection pin) {
+            /// <summary>
+            /// Visita un objecte 'NetConnection'
+            /// </summary>
+            /// <param name="connection">L'objecte a visitar.</param>
+            /// 
+            public override void Visit(NetConnection connection) {
 
                 writer.WriteStartElement("connection");
-                writer.WriteAttributeString("part", pin.PartName);
-                writer.WriteAttributeString("pad", pin.PadName);
+                writer.WriteAttributeString("part", connection.PartName);
+                writer.WriteAttributeString("pad", connection.PadName);
+                writer.WriteEndElement();
+            }
+
+            /// <summary>
+            /// Visita un objecte 'NetPart'
+            /// </summary>
+            /// <param name="part">L'objecte a visitar.</param>
+            /// 
+            public override void Visit(NetPart part) {
+
+                writer.WriteStartElement("part");
+                writer.WriteAttributeString("name", part.Name);
                 writer.WriteEndElement();
             }
         }
@@ -89,9 +118,9 @@
         }
 
         /// <summary>
-        /// Escriu la placa en el stream de sortida.
+        /// Escriu el netlist en el stream de sortida.
         /// </summary>
-        /// <param name="board">La placa.</param>
+        /// <param name="net">El netlist.</param>
         /// 
         public void Write(Net net) {
 

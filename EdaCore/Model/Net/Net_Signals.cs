@@ -1,17 +1,30 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Net {
 
+    using System;
     using System.Collections.Generic;
 
     public sealed partial class Net {
 
-        private Dictionary<string, NetSignal> signals;
+        private readonly Dictionary<string, NetSignal> signals = new Dictionary<string, NetSignal>();
 
         private void InitializeSignals(IEnumerable<NetSignal> signals) {
 
-            this.signals = new Dictionary<string, NetSignal>();
             foreach (NetSignal signal in signals)
                 this.signals.Add(signal.Name, signal);
         }
+
+        public NetSignal GetSignal(string name, bool throwOnError = true) {
+
+            if (signals.TryGetValue(name, out var signal))
+                return signal;
+
+            else if (throwOnError)
+                throw new InvalidOperationException(
+                    String.Format("No se encontro la señal '{0}'.", name));
+            else
+                return null;
+        }
+
 
         /// <summary>
         /// Indica si contre senyals.
@@ -19,7 +32,7 @@
         /// 
         public bool HasSignals {
             get {
-                return signals != null;
+                return signals.Count > 0;
             }
         }
 
@@ -29,7 +42,7 @@
         /// 
         public IEnumerable<string> SignalNames {
             get {
-                return signals?.Keys;
+                return signals.Keys;
             }
         }
 
@@ -39,7 +52,7 @@
         /// 
         public IEnumerable<NetSignal> Signals {
             get {
-                return signals?.Values;
+                return signals.Values;
             }
         }
     }

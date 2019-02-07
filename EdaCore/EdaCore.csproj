@@ -122,12 +122,11 @@
     <Compile Include="Model\Net\INetVisitor.cs" />
     <Compile Include="Model\Net\IO\NetStreamWriter.cs" />
     <Compile Include="Model\Net\Net_Signals.cs" />
-    <Compile Include="Model\Net\Net_Components.cs" />
+    <Compile Include="Model\Net\Net_Parts.cs" />
     <Compile Include="Model\Net\NetConnection.cs" />
     <Compile Include="Model\Net\Net.cs" />
-    <Compile Include="Model\Net\NetComponent.cs" />
+    <Compile Include="Model\Net\NetPart.cs" />
     <Compile Include="Model\Net\NetSignal.cs" />
-    <Compile Include="Model\Net\NetTerminal.cs" />
     <Compile Include="Model\Net\Visitors\NetDefaultVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

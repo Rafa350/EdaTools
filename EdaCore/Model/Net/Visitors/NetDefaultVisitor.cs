@@ -4,6 +4,10 @@
 
         public virtual void Visit(Net net) {
 
+            if (net.HasParts)
+                foreach (var part in net.Parts)
+                    part.AcceptVisitor(this);
+
             if (net.HasSignals)
                 foreach (var signal in net.Signals)
                     signal.AcceptVisitor(this);
@@ -16,7 +20,10 @@
                     pin.AcceptVisitor(this);
         }
 
-        public virtual void Visit(NetConnection pin) {
+        public virtual void Visit(NetConnection connection) {
+        }
+
+        public virtual void Visit(NetPart part) {
         }
     }
 }

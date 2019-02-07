@@ -3,7 +3,8 @@
     public interface INetVisitor {
 
         void Visit(Net net);
+        void Visit(NetPart part);
+        void Visit(NetConnection connection);
         void Visit(NetSignal signal);
-        void Visit(NetConnection pin);
     }
 }
