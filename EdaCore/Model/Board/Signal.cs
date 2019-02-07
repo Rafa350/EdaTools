@@ -5,7 +5,7 @@
     /// <summary>
     /// Clase que representa una senyal.
     /// </summary>
-    public sealed class Signal: IName, IVisitable {
+    public sealed class Signal: IName, IBoardVisitable {
 
         private readonly string name;
         private int clearance = 150000;
@@ -39,7 +39,7 @@
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public void AcceptVisitor(IVisitor visitor) {
+        public void AcceptVisitor(IBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

@@ -92,7 +92,7 @@
 
             builder.Comment("BEGIN VIAS");
             
-            IVisitor visitor = new ViasVisitor(builder);
+            IBoardVisitor visitor = new ViasVisitor(builder);
             board.AcceptVisitor(visitor);
 
             builder.Comment("END VIAS");
@@ -108,7 +108,7 @@
 
             builder.Comment("BEGIN PADS");
 
-            IVisitor visitor = new PadsVisitor(builder);
+            IBoardVisitor visitor = new PadsVisitor(builder);
             board.AcceptVisitor(visitor);
 
             builder.Comment("END PADS");
@@ -124,7 +124,7 @@
 
             builder.Comment("BEGIN NETS");
 
-            IVisitor visitor = new NetsVisitor(builder);
+            IBoardVisitor visitor = new NetsVisitor(builder);
             board.AcceptVisitor(visitor);
 
             builder.Comment("END NETS");

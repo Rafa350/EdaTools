@@ -7,7 +7,7 @@
     /// <summary>
     /// Clase que representa un atribut d'un component
     /// </summary>
-    public sealed class PartAttribute : IVisitable {
+    public sealed class PartAttribute : IBoardVisitable {
 
         private readonly string name;
         private string value;
@@ -85,7 +85,7 @@
             return attribute;
         }
 
-        public void AcceptVisitor(IVisitor visitor) {
+        public void AcceptVisitor(IBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

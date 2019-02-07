@@ -5,7 +5,7 @@
     using System;
     using System.Collections.Generic;
 
-    public sealed partial class Part: IPosition, IRotation, IName, IVisitable {
+    public sealed partial class Part: IPosition, IRotation, IName, IBoardVisitable {
 
         private readonly string name;
         private Point position;
@@ -58,7 +58,7 @@
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public void AcceptVisitor(IVisitor visitor) {
+        public void AcceptVisitor(IBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

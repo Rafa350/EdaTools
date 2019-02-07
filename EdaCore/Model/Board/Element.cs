@@ -25,7 +25,7 @@
     /// Clase base per tots els elements de la placa.
     /// </summary>
     /// 
-    public abstract class Element : IVisitable {
+    public abstract class Element : IBoardVisitable {
 
         private LayerSet layerSet;
 
@@ -51,7 +51,7 @@
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public abstract void AcceptVisitor(IVisitor visitor);
+        public abstract void AcceptVisitor(IBoardVisitor visitor);
 
         /// <summary>
         /// Obte el poligon del element.

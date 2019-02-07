@@ -2,7 +2,7 @@
 
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
-    public interface IVisitor {
+    public interface IBoardVisitor {
 
         void Visit(Board board);
         void Visit(Layer layer);

@@ -58,10 +58,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Conectivity\ConnectivityAnchor.cs" />
-    <Compile Include="Conectivity\ConnectivityEdge.cs" />
-    <Compile Include="Conectivity\ConnectivityItem.cs" />
-    <Compile Include="Conectivity\ConnectivityMap.cs" />
+    <Compile Include="Model\Conectivity\ConnectivityAnchor.cs" />
+    <Compile Include="Model\Conectivity\ConnectivityEdge.cs" />
+    <Compile Include="Model\Conectivity\ConnectivityItem.cs" />
+    <Compile Include="Model\Conectivity\ConnectivityMap.cs" />
     <Compile Include="Export\FreeCad\FreeCadExporter.cs" />
     <Compile Include="Export\KiCad\KiCadExporter.cs" />
     <Compile Include="Export\OpenScad\OpenScadExporter.cs" />
@@ -107,8 +107,8 @@
     <Compile Include="Model\Board\Elements\CircleElement.cs" />
     <Compile Include="Model\Board\Component.cs" />
     <Compile Include="Model\Board\IO\BoardStreamWriter.cs" />
-    <Compile Include="Model\Board\IVisitable.cs" />
-    <Compile Include="Model\Board\IVisitor.cs" />
+    <Compile Include="Model\Board\IBoardVisitable.cs" />
+    <Compile Include="Model\Board\IBoardVisitor.cs" />
     <Compile Include="Model\Board\Layer.cs" />
     <Compile Include="Model\Board\Elements\LineElement.cs" />
     <Compile Include="Model\Board\Part.cs" />

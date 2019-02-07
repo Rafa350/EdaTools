@@ -18,7 +18,7 @@
     /// Clase que representa una placa de circuit impres.
     /// </summary>
     /// 
-    public sealed partial class Board : IVisitable {
+    public sealed partial class Board : IBoardVisitable {
 
         private Point position;
         private Angle rotation;
@@ -35,7 +35,7 @@
         /// </summary>
         /// <param name="visitor">Visitador.</param>
         /// 
-        public void AcceptVisitor(IVisitor visitor) {
+        public void AcceptVisitor(IBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

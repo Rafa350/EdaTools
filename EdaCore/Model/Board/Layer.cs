@@ -18,7 +18,7 @@
     /// Clare quie representa una capa de la placa.
     /// </summary>
     /// 
-    public sealed class Layer: IVisitable {
+    public sealed class Layer: IBoardVisitable {
 
         private readonly BoardSide side;
         private readonly string tag;
@@ -53,7 +53,7 @@
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public void AcceptVisitor(IVisitor visitor) {
+        public void AcceptVisitor(IBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

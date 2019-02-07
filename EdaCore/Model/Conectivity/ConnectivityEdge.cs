@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Conectivity {
+﻿namespace MikroPic.EdaTools.v1.Core.Model.Conectivity {
 
     using System;
 

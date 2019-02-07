@@ -530,7 +530,7 @@
                 writer.WriteAttributeString("distanceUnits", "mm");
                 writer.WriteAttributeString("angleUnits", "deg");
 
-                IVisitor visitor = new Visitor(writer);
+                IBoardVisitor visitor = new Visitor(writer);
                 board.AcceptVisitor(visitor);
 
                 writer.WriteEndElement();

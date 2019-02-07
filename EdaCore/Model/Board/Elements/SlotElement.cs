@@ -40,7 +40,7 @@
             return new SlotElement(Name, LayerSet, Position, Rotation, topSize, innerSize, bottomSize, drill, length);
         }
 
-        public override void AcceptVisitor(IVisitor visitor) {
+        public override void AcceptVisitor(IBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

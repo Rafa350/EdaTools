@@ -90,7 +90,7 @@
         private void PrepareApertures(ApertureDictionary apertures, Board board) {
 
             foreach (var layerId in Target.LayerNames) {
-                IVisitor visitor = new PrepareAperturesVisitor(layerId, apertures);
+                IBoardVisitor visitor = new PrepareAperturesVisitor(layerId, apertures);
                 board.AcceptVisitor(visitor);
             }
         }
@@ -176,7 +176,7 @@
 
             gb.Comment("BEGIN IMAGE");
             foreach (var layerId in Target.LayerNames) {
-                IVisitor visitor = new ImageGeneratorVisitor(gb, layerId, apertures);
+                IBoardVisitor visitor = new ImageGeneratorVisitor(gb, layerId, apertures);
                 board.AcceptVisitor(visitor);
             }
             gb.Comment("END IMAGE");

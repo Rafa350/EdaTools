@@ -62,7 +62,7 @@
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public override void AcceptVisitor(IVisitor visitor) {
+        public override void AcceptVisitor(IBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

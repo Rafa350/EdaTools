@@ -219,7 +219,7 @@
 
             gb.Comment("BEGIN POLYGONS");
             foreach (var layerId in Target.LayerNames) {
-                IVisitor visitor = new RegionGeneratorVisitor(gb, layerId, apertures);
+                IBoardVisitor visitor = new RegionGeneratorVisitor(gb, layerId, apertures);
                 visitor.Visit(board);
             }
             gb.Comment("END POLYGONS");
@@ -236,7 +236,7 @@
 
             gb.Comment("BEGIN IMAGE");
             foreach (var layerId in Target.LayerNames) {
-                IVisitor visitor = new ImageGeneratorVisitor(gb, layerId, apertures);
+                IBoardVisitor visitor = new ImageGeneratorVisitor(gb, layerId, apertures);
                 board.AcceptVisitor(visitor);
             }
             gb.Comment("END IMAGE");

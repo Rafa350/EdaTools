@@ -7,7 +7,7 @@
     /// Clase que representa un bloc predefinit.
     /// </summary>
     /// 
-    public sealed partial class Component : IVisitable, IName {
+    public sealed partial class Component : IBoardVisitable, IName {
 
         private readonly string name;
 
@@ -57,7 +57,7 @@
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        public void AcceptVisitor(IVisitor visitor) {
+        public void AcceptVisitor(IBoardVisitor visitor) {
 
             visitor.Visit(this);
         }
