@@ -83,7 +83,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DrawEditor\BitmapGenerator.cs" />
     <Compile Include="DrawEditor\ContentBox.cs">
       <SubType>Code</SubType>
     </Compile>

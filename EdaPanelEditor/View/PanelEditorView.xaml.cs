@@ -8,7 +8,6 @@
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Media;
-    using Win = System.Windows;
 
     public partial class PanelEditorView : UserControl {
 
@@ -17,8 +16,8 @@
         private readonly ViewPoint viewPoint;
         private readonly Scene scene;
         private const double wheelInterval = 150;
-        private Win.Point startPos;
-        private Win.Point currentPos;
+        private Point startPos;
+        private Point currentPos;
 
         static PanelEditorView() {
 
@@ -64,8 +63,8 @@
 
             if (Project != null) {
                 viewPoint.Reset(
-                    new Win.Size(contentBox.ActualWidth, contentBox.ActualHeight),
-                    new Win.Rect(0, 0, Project.Size.Width, Project.Size.Height));
+                    new Size(contentBox.ActualWidth, contentBox.ActualHeight),
+                    new Rect(0, 0, Project.Size.Width, Project.Size.Height));
             }
         }
 
@@ -73,8 +72,8 @@
 
             if (Project != null) {
                 viewPoint.Reset(
-                    new Win.Size(contentBox.ActualWidth, contentBox.ActualHeight),
-                    new Win.Rect(0, 0, Project.Size.Width, Project.Size.Height));
+                    new Size(contentBox.ActualWidth, contentBox.ActualHeight),
+                    new Rect(0, 0, Project.Size.Width, Project.Size.Height));
                 UpdateView();
             }
         }
@@ -89,7 +88,7 @@
 
             // Actualtza la posicio del mouse
             //
-            Win.Point mousePos = e.GetPosition(contentBox);
+            Point mousePos = e.GetPosition(contentBox);
             currentPos = viewPoint.TransformToWorld(mousePos);
 
             // Si es tracta del boto primari, es tracte d'una accio 
@@ -113,7 +112,7 @@
 
             // Actualtza la posicio del mouse
             //
-            Win.Point mousePos = e.GetPosition(contentBox);
+            Point mousePos = e.GetPosition(contentBox);
             currentPos = viewPoint.TransformToWorld(mousePos);
 
             // Si es el boto primari, es una accio amb l'eina seleccionada
@@ -138,7 +137,7 @@
 
             // Actualtza la posicio del mouse
             //
-            Win.Point mousePos = e.GetPosition(contentBox);
+            Point mousePos = e.GetPosition(contentBox);
             currentPos = viewPoint.TransformToWorld(mousePos);
             startPos = currentPos;
 
