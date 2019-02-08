@@ -88,11 +88,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DrawEditor\DesignTool.cs" />
-    <Compile Include="Render\WPF\Visuals\CutVisual.cs" />
-    <Compile Include="Render\WPF\Visuals\PcbVisual.cs" />
-    <Compile Include="Render\RenderVisitor.cs" />
-    <Compile Include="Render\WPF\Visuals\ItemVisual.cs" />
-    <Compile Include="Render\WPF\Visuals\ProjectVisual.cs" />
+    <Compile Include="Render\Scene.cs" />
+    <Compile Include="Render\Visuals\CutItemVisual.cs" />
+    <Compile Include="Render\Visuals\PcbItemVisual.cs" />
+    <Compile Include="Render\Visuals\PanelItemVisual.cs" />
+    <Compile Include="Render\Visuals\ProjectVisual.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\IAppService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

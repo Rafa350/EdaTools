@@ -2,7 +2,7 @@
 
     using MikroPic.EdaTools.v1.Panel.Model.Items;
 
-    public interface IVisitor {
+    public interface IPanelVisitor {
 
         void Visit(Project project);
         void Visit(CutItem cut);

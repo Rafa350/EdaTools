@@ -114,7 +114,7 @@
             Size size = XmlTypeParser.ParseSize(rd.AttributeAsString("size"));
 
             rd.NextTag();
-            IEnumerable<ProjectItem> elements = ParseItemsNode();
+            IEnumerable<PanelItem> elements = ParseItemsNode();
 
             rd.NextTag();
             if (!rd.IsEndTag("project"))
@@ -132,12 +132,12 @@
         /// </summary>
         /// <returns>La coleccio d'objectes 'ProjectItem' obtinguda.</returns>
         /// 
-        private IEnumerable<ProjectItem> ParseItemsNode() {
+        private IEnumerable<PanelItem> ParseItemsNode() {
 
             if (!rd.IsStartTag("items"))
                 throw new InvalidDataException("Se esperaba <items>");
 
-            List<ProjectItem> items = new List<ProjectItem>();
+            List<PanelItem> items = new List<PanelItem>();
 
             rd.NextTag();
             while (rd.IsStart) {

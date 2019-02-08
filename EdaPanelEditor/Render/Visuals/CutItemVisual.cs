@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render.WPF.Visuals {
+﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render.Visuals {
 
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.WPF;
@@ -6,7 +6,7 @@
     using System;
     using System.Windows.Media;
 
-    public sealed class CutVisual: ItemVisual {
+    public sealed class CutItemVisual: PanelItemVisual {
 
         private readonly Color cutColor = Color.FromRgb(128, 128, 128);
 
@@ -16,7 +16,7 @@
         /// <param name="parent">El visual pare,</param>
         /// <param name="item">El item CUT.</param>
         /// 
-        public CutVisual(DrawingVisual parent, CutItem item):
+        public CutItemVisual(DrawingVisual parent, CutItem item):
             base(parent, item) {
         }
 

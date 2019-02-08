@@ -1,10 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.View {
 
     using MikroPic.EdaTools.v1.Panel.Model;
-    using MikroPic.EdaTools.v1.Panel.Model.Items;
     using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
     using MikroPic.EdaTools.v1.PanelEditor.Render;
-    using MikroPic.EdaTools.v1.PanelEditor.Render.WPF.Visuals;
     using System;
     using System.Windows;
     using System.Windows.Controls;
@@ -17,6 +15,7 @@
         public static readonly DependencyProperty ProjectProperty;
 
         private readonly ViewPoint viewPoint;
+        private readonly Scene scene;
         private const double wheelInterval = 150;
         private Win.Point startPos;
         private Win.Point currentPos;
@@ -44,6 +43,8 @@
 
             viewPoint = new ViewPoint();
             viewPoint.Changed += OnViewPointChanged;
+
+            scene = new Scene();
 
             SizeChanged += OnSizeChanged;
         }
@@ -145,17 +146,9 @@
             //
             if (e.ChangedButton == MouseButton.Left) {
 
-                HitTestResult result = VisualTreeHelper.HitTest(contentBox.Visual, currentPos);
-                if (result != null) {
-                    if (result.VisualHit is DrawingVisual visual) {
-                        if (visual is CutVisual cutVisual) {
-                            CutItem cutItem = cutVisual.Item;
-                            //cutItem.p
-                        }
-                        //UpdateView();
-                        (visual.Parent as DrawingVisual).Children.Remove(visual);
-                    }
-                }
+                PanelItem item = scene.GetItem(currentPos);
+                if (item != null)
+                    scene.RemoveItem(item);
             }
 
             else if (e.ChangedButton == MouseButton.Right)
@@ -196,10 +189,9 @@
 
             if (Project != null) {
 
-                DrawingVisual visual = new DrawingVisual();
-                RenderVisitor visitor = new RenderVisitor(visual);
-                Project.AcceptVisitor(visitor);
+                scene.Initialize(Project);
 
+                DrawingVisual visual = scene.Visual;
                 visual.Transform = new MatrixTransform(viewPoint.Matrix);
 
                 contentBox.Visual = visual;

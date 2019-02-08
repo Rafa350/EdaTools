@@ -3,7 +3,7 @@
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Panel.Model;
 
-    public sealed class CutItem: ProjectItem {
+    public sealed class CutItem: PanelItem {
 
         private Point startPosition;
         private Point endPosition;
@@ -41,7 +41,7 @@
             this.holeSpacing = holeSpacing;
         }
 
-        public override void AcceptVisitor(IVisitor visitor) {
+        public override void AcceptVisitor(IPanelVisitor visitor) {
 
             visitor.Visit(this);
         }

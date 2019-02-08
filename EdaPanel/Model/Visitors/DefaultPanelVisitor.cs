@@ -3,7 +3,7 @@
     using MikroPic.EdaTools.v1.Panel.Model.Items;
     using System;
 
-    public abstract class DefaultVisitor: IVisitor {
+    public abstract class DefaultPanelVisitor: IPanelVisitor {
 
         public virtual void Visit(Project project) {
 

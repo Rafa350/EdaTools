@@ -1,11 +1,11 @@
-﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render.WPF.Visuals {
+﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render.Visuals {
 
     using MikroPic.EdaTools.v1.Base.WPF;
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Panel.Model.Items;
     using System.Windows.Media;
 
-    public sealed class PcbVisual: ItemVisual {
+    public sealed class PcbItemVisual: PanelItemVisual {
 
         private readonly Color boardColor = Color.FromRgb(31, 80, 10);
 
@@ -15,7 +15,7 @@
         /// <param name="parent">Visual pare.</param>
         /// <param name="item">El item PCB.</param>
         /// 
-        public PcbVisual(DrawingVisual parent, PcbItem item):
+        public PcbItemVisual(DrawingVisual parent, PcbItem item):
             base(parent, item) {
         }
 

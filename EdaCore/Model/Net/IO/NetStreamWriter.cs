@@ -14,7 +14,7 @@
 
         private readonly Stream stream;
 
-        private class Visitor : NetDefaultVisitor {
+        private class Visitor : DefaultNetVisitor {
 
             private readonly XmlWriter writer;
 

@@ -1,15 +1,15 @@
-﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render.WPF.Visuals {
+﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render.Visuals {
 
     using MikroPic.EdaTools.v1.Base.WPF;
     using MikroPic.EdaTools.v1.Panel.Model;
     using System;
     using System.Windows.Media;
 
-    public abstract class ItemVisual: VisualBase {
+    public abstract class PanelItemVisual: VisualBase {
 
-        private readonly ProjectItem item;
+        private readonly PanelItem item;
 
-        public ItemVisual(DrawingVisual parent, ProjectItem item):
+        public PanelItemVisual(DrawingVisual parent, PanelItem item):
             base(parent) {
 
             if (item == null)
@@ -22,7 +22,7 @@
         /// Obte el item asociat.
         /// </summary>
         /// 
-        public ProjectItem Item {
+        public PanelItem Item {
             get {
                 return item;
             }

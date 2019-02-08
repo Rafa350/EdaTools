@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render.WPF.Visuals {
+﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render.Visuals {
 
     using MikroPic.EdaTools.v1.Base.WPF;
     using MikroPic.EdaTools.v1.Panel.Model;

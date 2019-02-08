@@ -13,7 +13,7 @@
 
         private Stream stream;
 
-        private class Visitor: DefaultVisitor {
+        private class Visitor: DefaultPanelVisitor {
 
             private readonly XmlWriter writer;
 
@@ -89,7 +89,7 @@
                 writer.WriteAttributeString("distanceUnits", "mm");
                 writer.WriteAttributeString("angleUnits", "deg");
 
-                IVisitor visitor = new Visitor(writer);
+                IPanelVisitor visitor = new Visitor(writer);
                 panel.AcceptVisitor(visitor);
 
                 writer.WriteEndElement();

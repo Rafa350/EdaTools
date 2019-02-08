@@ -53,11 +53,11 @@
     <Compile Include="Model\Items\PcbItem.cs" />
     <Compile Include="Model\IO\ProjectStreamReader.cs" />
     <Compile Include="Model\IO\ProjectStreamWriter.cs" />
-    <Compile Include="Model\IVisitable.cs" />
-    <Compile Include="Model\IVisitor.cs" />
+    <Compile Include="Model\IPanelVisitable.cs" />
+    <Compile Include="Model\IPanelVisitor.cs" />
     <Compile Include="Model\Project.cs" />
-    <Compile Include="Model\ProjectItem.cs" />
-    <Compile Include="Model\Visitors\DefaultVisitor.cs" />
+    <Compile Include="Model\PanelItem.cs" />
+    <Compile Include="Model\Visitors\DefaultPanelVisitor.cs" />
     <Compile Include="PanelProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

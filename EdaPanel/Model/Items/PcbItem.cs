@@ -3,7 +3,7 @@
     using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
 
-    public sealed class PcbItem: ProjectItem {
+    public sealed class PcbItem: PanelItem {
 
         private Point position;
         private Size size;
@@ -43,7 +43,7 @@
             this.fileName = fileName;
         }
 
-        public override void AcceptVisitor(IVisitor visitor) {
+        public override void AcceptVisitor(IPanelVisitor visitor) {
 
             visitor.Visit(this);
         }

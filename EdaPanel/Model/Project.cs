@@ -5,28 +5,28 @@
     using System;
     using System.Collections.Generic;
 
-    public sealed class Project: IVisitable {
+    public sealed class Project: IPanelVisitable {
 
         private Size size;
-        private Collection<ProjectItem> items;
+        private Collection<PanelItem> items;
 
         /// <summary>
         /// Afegeix un element
         /// </summary>
         /// <param name="item">El item a afeigir.</param>
         /// 
-        public void AddElement(ProjectItem item) {
+        public void AddElement(PanelItem item) {
 
             if (item == null)
                 throw new ArgumentNullException("item");
 
             if (items == null)
-                items = new Collection<ProjectItem>();
+                items = new Collection<PanelItem>();
 
             items.Add(item);
         }
 
-        public void  AcceptVisitor(IVisitor visitor) {
+        public void  AcceptVisitor(IPanelVisitor visitor) {
 
             visitor.Visit(this);
         }
@@ -36,7 +36,7 @@
         /// </summary>
         /// <param name="item">El item a afeigir.</param>
         /// 
-        public void AddElements(IEnumerable<ProjectItem> item) {
+        public void AddElements(IEnumerable<PanelItem> item) {
 
             if (item == null)
                 throw new ArgumentNullException("item");
@@ -59,7 +59,7 @@
         /// Enumera els elements
         /// </summary>
         /// 
-        public IEnumerable<ProjectItem> Items {
+        public IEnumerable<PanelItem> Items {
             get {
                 return items;
             }
