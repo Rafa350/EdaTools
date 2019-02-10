@@ -87,6 +87,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DrawEditor\DesignTool.cs" />
+    <Compile Include="DrawEditor\VisualDesignTool.cs" />
     <Compile Include="Render\Scene.cs" />
     <Compile Include="Render\Visuals\CutItemVisual.cs" />
     <Compile Include="Render\Visuals\PcbItemVisual.cs" />

@@ -3,7 +3,6 @@
     using System;
     using System.Windows;
     using System.Windows.Input;
-    using System.Windows.Media;
 
     public delegate void DesignToolActivationEventHandler(object sender);
     public delegate void DesignToolMouseEventHandler(object sender);
@@ -16,15 +15,12 @@
             Dragging
         }
 
-        private readonly ContentBox surface;
         private State state = State.Idle;
         private bool autoDeactivate = false;
-        private DrawingVisual visual;
         private double xSnap = 1;
         private double ySnap = 1;
         private double aSnap = 0;
-        private Cursor oldCursor = Cursors.Arrow;
-        private Rect limits;
+        private Rect limits = new Rect(0, 0, Double.MaxValue, Double.MaxValue);
         private Point startPosition;
         private Point endPosition;
         private double angle;
@@ -35,20 +31,31 @@
         public event DesignToolMouseEventHandler OnMouseDown;
         public event DesignToolMouseEventHandler OnMouseMove;
 
-        public DesignTool(ContentBox surface) {
+        /// <summary>
+        /// Constructor de l'objecte.
+        /// </summary>
+        /// 
+        public DesignTool() {
 
-            if (surface == null)
-                throw new ArgumentNullException("surface");
-
-            this.surface = surface;
-            this.limits = new Rect(0, 0, Double.MaxValue, Double.MaxValue);
         }
 
+        /// <summary>
+        /// Comprova si el punt esta d'ins dels limita de l'eina.
+        /// </summary>
+        /// <param name="point">El punt a comprovar.</param>
+        /// <returns>True si el punt es dins dels limits.</returns>
+        /// 
         private bool InLimits(Point point) {
 
             return limits.Contains(point);
         }
 
+        /// <summary>
+        /// Ajusta un punt a la cuadricula.
+        /// </summary>
+        /// <param name="point">El punt a ajustar.</param>
+        /// <returns>El punt ajustat a la cuadricula.</returns>
+        /// 
         private Point Snap(Point point) {
 
             return new Point(
@@ -56,64 +63,70 @@
                 Math.Round(point.Y / ySnap) * ySnap);
         }
 
-        private void DoActivate() {
+        /// <summary>
+        /// Executa l'accio d'activacio de l'eina.
+        /// </summary>
+        /// 
+        protected virtual void DoActivate() {
 
-            if (OnActivate != null)
-                OnActivate(this);
+            OnActivate?.Invoke(this);
         }
 
-        private void DoDeactivate() {
+        /// <summary>
+        /// Executa l'accio de desactivacio de l'eina.
+        /// </summary>
+        /// 
+        protected virtual void DoDeactivate() {
 
-            if (OnActivate != null)
-                OnDeactivate(this);
+            OnDeactivate?.Invoke(this);
         }
 
-        private void DoMouseUp() {
+        /// <summary>
+        /// Executa l'accio corresponent al deixar anar el boto del mouse.
+        /// </summary>
+        /// 
+        protected virtual void DoMouseUp() {
 
-            if (OnMouseUp != null)
-                OnMouseUp(this);
+            OnMouseUp?.Invoke(this);
         }
 
-        private void DoMouseDown() {
+        /// <summary>
+        /// Executa l'accio corresponent a prema el boto del mouse.
+        /// </summary>
+        /// 
+        protected virtual void DoMouseDown() {
 
-            if (OnMouseDown != null)
-                OnMouseDown(this);
+            OnMouseDown?.Invoke(this);
         }
 
-        private void DoMouseMove() {
+        /// <summary>
+        /// Executa l'accio corresponent a mouse rl mouse.
+        /// </summary>
+        /// 
+        protected virtual void DoMouseMove() {
 
-            if (OnMouseMove != null)
-                OnMouseMove(this);
+            OnMouseMove?.Invoke(this);
         }
 
+        /// <summary>
+        /// Obte el cursor.
+        /// </summary>
+        /// <param name="position">La posicio del mouse.</param>
+        /// <returns>El cursor corresponent.</returns>
+        /// 
         protected virtual Cursor GetCursor(Point position) {
 
             return Cursors.Cross;
         }
 
-        protected abstract void RenderBox(DrawingContext dc, Point startPosition, Point endPosition);
-
-        private void ShowObject() {
-
-            visual = new DrawingVisual();
-            surface.Add(visual);
-        }
-
-        private void HideObject() {
-
-            surface.Remove(visual);
-        }
-
-        private void RenderObject() {
-
-            using (DrawingContext dc = visual.RenderOpen())
-                RenderBox(dc, startPosition, endPosition);
-        }
-
-        public virtual bool Activate() {
+        /// <summary>
+        /// Activa l'eina.
+        /// </summary>
+        /// <returns>True si l'eina ha estat activada.</returns>
+        /// 
+        public bool Activate() {
 
             if (state == State.Idle) {
-                oldCursor = surface.Cursor;
                 state = State.Active;
                 DoActivate();
                 return true;
@@ -122,43 +135,46 @@
                 return false;
         }
 
-        public virtual void Deactivate() {
+        /// <summary>
+        /// Desactiva l'eina.
+        /// </summary>
+        /// 
+        public void Deactivate() {
 
             if (state == State.Active) {
                 DoDeactivate();
-                surface.Cursor = oldCursor;
                 state = State.Idle;
             }
         }
 
-        public virtual void MouseMove(Point position) {
+        /// <summary>
+        /// Procesa el moviment del mouse
+        /// </summary>
+        /// <param name="position">Posicio del mouse.</param>
+        /// 
+        public void MouseMove(Point position) {
 
             if (state == State.Dragging) {
                if (InLimits(position)) {
                     endPosition = Snap(position);
-                    RenderObject();
                     DoMouseMove();
                 }
             }
-
-            if (state != State.Idle) {
-                if (InLimits(position))
-                    surface.Cursor = GetCursor(position);
-                else
-                    surface.Cursor = Cursors.No;
-            }
         }
 
-        public virtual bool MouseButtonDown(Point position) {
+        /// <summary>
+        /// Procesa accio de prema el boto del mouse.
+        /// </summary>
+        /// <param name="position">Posicio del mouse.</param>
+        /// <returns>True si s'ha realitzat l'operacio.</returns>
+        /// 
+        public bool MouseButtonDown(Point position) {
 
             if (InLimits(position)) {
                 if (state == State.Active) {
                     angle = 0;
                     startPosition = Snap(position);
                     endPosition = startPosition;
-                    ShowObject();
-                    RenderObject();
-                    surface.CaptureMouse();
                     state = State.Dragging;
 
                     DoMouseDown();
@@ -170,14 +186,17 @@
                 return false;
         }
 
-        public virtual void MouseButtonUp(Point position) {
+        /// <summary>
+        /// Procesa l'accio de deixar anar el boto del mouse.
+        /// </summary>
+        /// <param name="position">Posicio del mouse.</param>
+        /// 
+        public void MouseButtonUp(Point position) {
 
             if (state == State.Dragging) {
 
                 DoMouseUp();
 
-                HideObject();
-                surface.ReleaseMouseCapture();
                 state = State.Active;
 
                 if (autoDeactivate)
@@ -185,18 +204,20 @@
             }
         }
 
-        protected ContentBox Surface {
-            get {
-                return surface;
-            }
-        }
-
+        /// <summary>
+        /// Indica si l'eina esta activa.
+        /// </summary>
+        /// 
         protected bool IsActive {
             get {
                 return state != State.Idle;
             }
         }
 
+        /// <summary>
+        /// Obte o asigna els limits de l'eina.
+        /// </summary>
+        /// 
         public Rect Limits {
             get {
                 return limits;
@@ -206,6 +227,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna el tamany de cuadricula en el eix X
+        /// </summary>
+        /// 
         public double XSnap {
             get {
                 return xSnap;
@@ -215,6 +240,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna el tamany de cuadricula en el eix Y
+        /// </summary>
+        /// 
         public double YSnap {
             get {
                 return ySnap;
@@ -224,6 +253,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte o asigna el tamany de cuadricula angular.
+        /// </summary>
+        /// 
         public double ASnap {
             get {
                 return aSnap;
@@ -233,18 +266,30 @@
             }
         }
 
+        /// <summary>
+        /// Obte la posicio inicial.
+        /// </summary>
+        /// 
         public Point StartPosition {
             get {
                 return startPosition;
             }
         }
 
+        /// <summary>
+        /// Obte la posicio final.
+        /// </summary>
+        /// 
         public Point EndPosition {
             get {
                 return endPosition;
             }
         }
 
+        /// <summary>
+        /// Obte l'angle.
+        /// </summary>
+        /// 
         public double Angle {
             get {
                 return angle;
