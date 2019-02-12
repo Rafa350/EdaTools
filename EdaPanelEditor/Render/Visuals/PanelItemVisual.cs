@@ -1,9 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render.Visuals {
 
-    using MikroPic.EdaTools.v1.Base.WPF;
-    using MikroPic.EdaTools.v1.Panel.Model;
     using System;
     using System.Windows.Media;
+    using MikroPic.EdaTools.v1.Base.WPF;
+    using MikroPic.EdaTools.v1.Panel.Model;
 
     public abstract class PanelItemVisual: VisualBase {
 

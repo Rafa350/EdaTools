@@ -19,11 +19,9 @@
         private bool autoDeactivate = false;
         private double xSnap = 1;
         private double ySnap = 1;
-        private double aSnap = 0;
         private Rect limits = new Rect(0, 0, Double.MaxValue, Double.MaxValue);
         private Point startPosition;
         private Point endPosition;
-        private double angle;
 
         public event DesignToolActivationEventHandler OnActivate;
         public event DesignToolActivationEventHandler OnDeactivate;
@@ -254,19 +252,6 @@
         }
 
         /// <summary>
-        /// Obte o asigna el tamany de cuadricula angular.
-        /// </summary>
-        /// 
-        public double ASnap {
-            get {
-                return aSnap;
-            }
-            set {
-                aSnap = value;
-            }
-        }
-
-        /// <summary>
         /// Obte la posicio inicial.
         /// </summary>
         /// 
@@ -283,16 +268,6 @@
         public Point EndPosition {
             get {
                 return endPosition;
-            }
-        }
-
-        /// <summary>
-        /// Obte l'angle.
-        /// </summary>
-        /// 
-        public double Angle {
-            get {
-                return angle;
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.DrawEditor {
 
+    using System;
     using System.Windows;
     using System.Windows.Media;
 
@@ -9,7 +10,15 @@
 
         public event DesignToolDrawVisualEventHandler OnDrawVisual;
 
-        private readonly DrawingVisual visual = new DrawingVisual();
+        private readonly DrawingVisual visual;
+
+        public VisuaslDesignTool(DrawingVisual visual) {
+
+            if (visual == null)
+                throw new ArgumentNullException("visual");
+
+            this.visual = visual;
+        }
 
         /// <summary>
         /// Mostra la visual de l'eina.
@@ -32,7 +41,7 @@
         }
 
         /// <summary>
-        /// Divuixa la visual de l'eina.
+        /// Dibuixa la visual de l'eina.
         /// </summary>
         /// <param name="dc">Contex de dibuix.</param>
         /// <param name="startPosition">Posicio inicial.</param>
@@ -43,6 +52,7 @@
             OnDrawVisual?.Invoke(this, dc, startPosition, endPosition);
         }
 
+        
         protected override void DoMouseMove() {
 
             base.DoMouseMove();
