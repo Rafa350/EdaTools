@@ -4,7 +4,7 @@
     using System.Windows;
     using System.Windows.Media;
 
-    public sealed class ContentBox: VisualFrameworkElement {
+    public sealed class ContentBox: VisualContainer {
 
         public static readonly DependencyProperty VisualProperty;
 
@@ -33,8 +33,8 @@
             if (sThis != null) {
                 DrawingVisual visual = e.NewValue as DrawingVisual;
                 if (visual != null) {
-                    sThis.RemoveAll();
-                    sThis.Add(visual);
+                    sThis.RemoveAllVisualItems();
+                    sThis.AddVisualItem(visual);
                 }
             }
         }

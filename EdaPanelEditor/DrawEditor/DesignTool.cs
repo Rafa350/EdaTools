@@ -170,7 +170,6 @@
 
             if (InLimits(position)) {
                 if (state == State.Active) {
-                    angle = 0;
                     startPosition = Snap(position);
                     endPosition = startPosition;
                     state = State.Dragging;

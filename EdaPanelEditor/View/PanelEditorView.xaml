@@ -8,13 +8,22 @@
              d:DesignHeight="450" 
              d:DesignWidth="800"
              x:Name="control">
-    <Grid>
+    <Grid
+        Background="#FF424242">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="97*"/>
+            <ColumnDefinition Width="35"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <local:ContentBox
-            x:Name="contentBox" Grid.ColumnSpan="2">
+            x:Name="contentBox" 
+            Grid.Column="1"
+            Grid.Row="1">
             <local:ContentBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleX="1" ScaleY="-1"/>
@@ -22,5 +31,33 @@
                 </TransformGroup>
             </local:ContentBox.RenderTransform>
         </local:ContentBox>
+        <local:RulerBox
+            x:Name="hRulerBox"
+            Grid.Column="1"
+            Grid.Row="0"
+            FontSize="14"
+            ScaleFactor="1000000"
+            ShowRegion="True"
+            ShowPointer="True"
+            RulerAlignment="Bottom">
+        </local:RulerBox>
+        <local:RulerBox
+            x:Name="vRulerBox"
+            Grid.Column="0"
+            Grid.Row="1"
+            FlipTags="False"
+            FontSize="14"
+            ScaleFactor="1000000"
+            ShowRegion="True"
+            ShowPointer="True"
+            RulerAlignment="Bottom">
+            <local:RulerBox.LayoutTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </local:RulerBox.LayoutTransform>
+        </local:RulerBox>
     </Grid>
 </UserControl>

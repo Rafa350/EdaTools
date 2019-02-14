@@ -12,7 +12,7 @@
 
         private readonly DrawingVisual visual;
 
-        public VisuaslDesignTool(DrawingVisual visual) {
+        public VisualDesignTool(DrawingVisual visual) {
 
             if (visual == null)
                 throw new ArgumentNullException("visual");

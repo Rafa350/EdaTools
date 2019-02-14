@@ -43,6 +43,16 @@
             viewPoint = new ViewPoint();
             viewPoint.Changed += OnViewPointChanged;
 
+            // Inicialitza la regla horitzontal
+            //
+            hRulerBox.RulerAxis = RulerAxis.XAxis;
+            hRulerBox.ViewArea = new Rect(0, 0, 1000000, 1000000);
+
+            // Inicialitza la regla vertical
+            //
+            vRulerBox.RulerAxis = RulerAxis.YAxis;
+            vRulerBox.ViewArea = new Rect(0, 0, 1000000, 1000000);
+
             scene = new Scene();
 
             SizeChanged += OnSizeChanged;
@@ -75,6 +85,8 @@
                     new Size(contentBox.ActualWidth, contentBox.ActualHeight),
                     new Rect(0, 0, Project.Size.Width, Project.Size.Height));
                 UpdateView();
+                hRulerBox.ViewArea = new Rect(0, 0, Project.Size.Width, Project.Size.Height);
+                vRulerBox.ViewArea = new Rect(0, 0, Project.Size.Width, Project.Size.Height);
             }
         }
 
@@ -203,8 +215,16 @@
         /// 
         private void UpdateViewPoint() {
 
+            Transform t = new MatrixTransform(viewPoint.Matrix);
+
+            hRulerBox.ViewTransform = t;
+            vRulerBox.ViewTransform = t;
+            //guideBox.ViewTransform = t;
+            //contentBox.ViewTransform = t;
+            //pointerTool.Matrix = t.Value;
+
             if (contentBox.Visual != null)
-                contentBox.Visual.Transform = new MatrixTransform(viewPoint.Matrix);
+                contentBox.Visual.Transform = t;
         }
 
         /// <summary>

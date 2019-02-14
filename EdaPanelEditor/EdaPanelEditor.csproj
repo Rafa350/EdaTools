@@ -87,7 +87,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DrawEditor\DesignTool.cs" />
+    <Compile Include="DrawEditor\RulerBox.cs" />
+    <Compile Include="DrawEditor\VisualContainer.cs" />
     <Compile Include="DrawEditor\VisualDesignTool.cs" />
+    <Compile Include="DrawEditor\VisualItem.cs" />
     <Compile Include="Render\Scene.cs" />
     <Compile Include="Render\Visuals\CutItemVisual.cs" />
     <Compile Include="Render\Visuals\PcbItemVisual.cs" />
@@ -109,7 +112,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DrawEditor\ViewPoint.cs" />
-    <Compile Include="DrawEditor\VisualFrameworkElement.cs" />
     <Compile Include="View\PanelEditorView.xaml.cs">
       <DependentUpon>PanelEditorView.xaml</DependentUpon>
     </Compile>
