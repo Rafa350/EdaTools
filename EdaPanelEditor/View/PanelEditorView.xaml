@@ -35,6 +35,7 @@
             x:Name="hRulerBox"
             Grid.Column="1"
             Grid.Row="0"
+            FlipTags="None"
             FontSize="14"
             ScaleFactor="1000000"
             ShowRegion="True"
@@ -45,17 +46,17 @@
             x:Name="vRulerBox"
             Grid.Column="0"
             Grid.Row="1"
-            FlipTags="False"
+            FlipTags="Vertical"
             FontSize="14"
             ScaleFactor="1000000"
             ShowRegion="True"
             ShowPointer="True"
-            RulerAlignment="Bottom">
+            RulerAlignment="Top">
             <local:RulerBox.LayoutTransform>
                 <TransformGroup>
-                    <ScaleTransform ScaleX="1" ScaleY="1"/>
                     <RotateTransform Angle="90"/>
-                    <TranslateTransform/>
+                    <ScaleTransform ScaleX="1" ScaleY="-1"/>
+                    <TranslateTransform Y="{Binding ElementName=control, Path=ActualHeight}"/>
                 </TransformGroup>
             </local:RulerBox.LayoutTransform>
         </local:RulerBox>

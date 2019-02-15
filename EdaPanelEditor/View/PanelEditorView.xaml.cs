@@ -113,6 +113,11 @@
             //
             if (e.MiddleButton == MouseButtonState.Pressed) 
                 viewPoint.Pan(currentPos.X - startPos.X, currentPos.Y - startPos.Y);
+
+            // Actualitza la el cursor dels regles
+            //
+            hRulerBox.PointerPosition = currentPos;
+            vRulerBox.PointerPosition = currentPos;
         }
 
         /// <summary>

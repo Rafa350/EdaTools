@@ -16,6 +16,12 @@
         YAxis
     }
 
+    public enum FlipTagsMode {
+        None,
+        Horizontal,
+        Vertical
+    }
+
     public sealed class RulerBox: VisualContainer {
 
         public static readonly DependencyProperty TagBrushProperty;
@@ -267,10 +273,10 @@
             //
             FlipTagsProperty = DependencyProperty.Register(
                 "FlipTags",
-                typeof(bool),
+                typeof(FlipTagsMode),
                 typeof(RulerBox),
                 new FrameworkPropertyMetadata {
-                    DefaultValue = false,
+                    DefaultValue = FlipTagsMode.None,
                     PropertyChangedCallback = VisualAspectChanged
                 });
 
@@ -428,10 +434,12 @@
 #pragma warning restore CS0618 // El tipo o el miembro están obsoletos
                         ft2.TextAlignment = TextAlignment.Left;
                         double y = RulerAlignment == RulerAlign.Bottom ? 0 : ActualHeight - ft2.Height;
-                        if (FlipTags) 
-                            dc.PushTransform(new RotateTransform(180, x, y + ft.Height / 2));
+                        if (FlipTags == FlipTagsMode.Horizontal) 
+                            dc.PushTransform(new ScaleTransform(-1, 1, x, y + ft.Height / 2));
+                        else if (FlipTags == FlipTagsMode.Vertical)
+                            dc.PushTransform(new ScaleTransform(1, -1, x, y + ft.Height / 2));
                         dc.DrawText(ft2, new Point(x + 2, y));
-                        if (FlipTags)
+                        if (FlipTags != FlipTagsMode.None)
                             dc.Pop();
                     }
                 }
@@ -499,9 +507,16 @@
         /// 
         private static void DrawLine(DrawingContext dc, Pen pen, double x1, double y1, double x2, double y2) {
 
-            // Afeigint 0.5 a cada coordinada, eliminem el antialiasing
-            //
-            dc.DrawLine(pen, new Point(x1 + 0.5, y1 + 0.5), new Point(x2 + 0.5, y2 + 0.5));            
+            GuidelineSet guideLines = new GuidelineSet();
+            guideLines.GuidelinesX.Add(x1);
+            guideLines.GuidelinesX.Add(x2);
+            guideLines.GuidelinesY.Add(y1);
+            guideLines.GuidelinesY.Add(y2);
+            dc.PushGuidelineSet(guideLines);
+
+            dc.DrawLine(pen, new Point(x1, y1), new Point(x2, y2));
+
+            dc.Pop();
         }
 
         /// <summary>
@@ -517,9 +532,16 @@
         /// 
         private static void DrawRectangle(DrawingContext dc, Brush brush, Pen pen, double x, double y, double w, double h) {
 
-            // Afeigint 0.5 a cada coordinada, eliminem el antialiasing
-            //
-            dc.DrawRectangle(brush, pen, new Rect(x + 0.5, y + 0.5, w + 0.5, h + 0.5));
+            GuidelineSet guideLines = new GuidelineSet();
+            guideLines.GuidelinesX.Add(x);
+            guideLines.GuidelinesX.Add(x + w - 1);
+            guideLines.GuidelinesY.Add(y);
+            guideLines.GuidelinesY.Add(y + h - 1);
+            dc.PushGuidelineSet(guideLines);
+
+            dc.DrawRectangle(brush, pen, new Rect(x, y, w, h));
+
+            dc.Pop();
         }
 
         /// <summary>
@@ -819,9 +841,9 @@
         /// 
         [Bindable(true)]
         [Category("Design")]
-        public bool FlipTags {
+        public FlipTagsMode FlipTags {
             get {
-                return (bool)GetValue(FlipTagsProperty);
+                return (FlipTagsMode)GetValue(FlipTagsProperty);
             }
             set {
                 SetValue(FlipTagsProperty, value);
