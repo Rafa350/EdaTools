@@ -26,7 +26,6 @@
 
         public static readonly DependencyProperty TagBrushProperty;
         public static readonly DependencyProperty LineBrushProperty;
-        public static readonly DependencyProperty BorderBrushProperty;
         public static readonly DependencyProperty FontFamilyProperty;
         public static readonly DependencyProperty FontStyleProperty;
         public static readonly DependencyProperty FontSizeProperty;
@@ -49,6 +48,8 @@
         private readonly VisualItem rulerVisual;
         private readonly VisualItem pointerVisual;
         private readonly VisualItem regionVisual;
+
+        private const double pixelsPerDip = 1.25;
 
         /// <summary>
         /// Constructor estatic. Crea les propietats de dependencia i les inicialitza.
@@ -79,17 +80,6 @@
                 typeof(RulerBox),
                 new FrameworkPropertyMetadata {
                     DefaultValue = Brushes.White,
-                    PropertyChangedCallback = VisualAspectChanged
-                });
-
-            // Crea la propietat de dependencia 'BorderBrush'
-            //
-            BorderBrushProperty = DependencyProperty.Register(
-                "BorderBrush",
-                typeof(Brush),
-                typeof(RulerBox),
-                new FrameworkPropertyMetadata {
-                    DefaultValue = Brushes.Black,
                     PropertyChangedCallback = VisualAspectChanged
                 });
 
@@ -170,7 +160,7 @@
                     PropertyChangedCallback = PointerChanged
                 });
 
-            // Crea la propietat de dependencia 'PointerMark'
+            // Crea la propietat de dependencia 'ShowPointer
             //
             ShowPointerProperty = DependencyProperty.Register(
                 "ShowPointer",
@@ -347,8 +337,7 @@
         /// 
         private static void PointerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
 
-            RulerBox sThis = (RulerBox) d;
-            sThis.pointerVisual.Refresh();
+            ((RulerBox)d).OnPointerChanged(d);
         }
 
         /// <summary>
@@ -359,13 +348,28 @@
         /// 
         private static void RegionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
 
-            RulerBox sThis = (RulerBox) d;
-            sThis.regionVisual.Refresh();
+            ((RulerBox)d).OnRegionChanged(d);
         }
 
+        /// <summary>
+        /// Procesa l'event 'OnSizeChanged'
+        /// </summary>
+        /// <param name="sender">L'objecte que genera l'event</param>
+        /// <param name="e">Parametres de l'event.</param>
+        /// 
         private void OnSizeChanged(object sender, RoutedEventArgs e) {
 
             rulerVisual.Refresh();
+        }
+
+        private void OnPointerChanged(object sender) {
+
+            pointerVisual.Refresh();
+        }
+
+        private void OnRegionChanged(object sender) {
+
+            regionVisual.Refresh();
         }
 
         /// <summary>
@@ -384,15 +388,14 @@
                 FontWeight,
                 FontStretch);
 
-#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
             FormattedText ft = new FormattedText(
-                "0123456789.",
+                "0",
                 CultureInfo.CurrentCulture,
                 FlowDirection.LeftToRight,
                 typeface, 
                 FontSize,
-                TagBrush);
-#pragma warning restore CS0618 // El tipo o el miembro están obsoleto
+                TagBrush,
+                pixelsPerDip);
 
             double length1 = ActualHeight - ft.Height / 2;
             double length2 = length1 * 0.66;
@@ -422,26 +425,23 @@
                     double y2 = RulerAlignment == RulerAlign.Top ? length1 : ActualHeight;
                     DrawLine(dc, linePen, x, y1, x, y2);
 
-                    if ((m < ActualWidth) || ((m % 50) == 0)) {
-#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
-                        FormattedText ft2 = new FormattedText(
-                            (m / sf).ToString(),
-                            CultureInfo.CurrentCulture,
-                            FlowDirection.LeftToRight,
-                            typeface,
-                            FontSize,
-                            TagBrush);
-#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
-                        ft2.TextAlignment = TextAlignment.Left;
-                        double y = RulerAlignment == RulerAlign.Bottom ? 0 : ActualHeight - ft2.Height;
-                        if (FlipTags == FlipTagsMode.Horizontal) 
-                            dc.PushTransform(new ScaleTransform(-1, 1, x, y + ft.Height / 2));
-                        else if (FlipTags == FlipTagsMode.Vertical)
-                            dc.PushTransform(new ScaleTransform(1, -1, x, y + ft.Height / 2));
-                        dc.DrawText(ft2, new Point(x + 2, y));
-                        if (FlipTags != FlipTagsMode.None)
-                            dc.Pop();
-                    }
+                    FormattedText ft2 = new FormattedText(
+                        (m / sf).ToString(),
+                        CultureInfo.CurrentCulture,
+                        FlowDirection.LeftToRight,
+                        typeface,
+                        FontSize,
+                        TagBrush,
+                        pixelsPerDip);
+                    ft2.TextAlignment = TextAlignment.Left;
+                    double y = RulerAlignment == RulerAlign.Bottom ? 0 : ActualHeight - ft2.Height;
+                    if (FlipTags == FlipTagsMode.Horizontal)
+                        dc.PushTransform(new ScaleTransform(-1, 1, x, y + ft.Height / 2));
+                    else if (FlipTags == FlipTagsMode.Vertical)
+                        dc.PushTransform(new ScaleTransform(1, -1, x, y + ft.Height / 2));
+                    dc.DrawText(ft2, new Point(x + 2, y));
+                    if (FlipTags != FlipTagsMode.None)
+                        dc.Pop();
                 }
 
                 // Linia de 5 d'unitats
@@ -572,22 +572,6 @@
             }
             set {
                 SetValue(LineBrushProperty, value);
-            }
-        }
-
-        /// <summary>
-        /// Obte o asigna la brotxa del marc del control.
-        /// </summary>
-        /// 
-        [Bindable(true)]
-        [Category("Pinceles")]
-        [Description("Border brush")]
-        public Brush BorderBrush {
-            get {
-                return (Brush) GetValue(BorderBrushProperty);
-            }
-            set {
-                SetValue(BorderBrushProperty, value);
             }
         }
 
