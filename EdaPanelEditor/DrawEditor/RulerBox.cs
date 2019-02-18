@@ -295,24 +295,24 @@
             // Crea la visual del la regla
             //
             rulerVisual = new VisualItem();
-            rulerVisual.Render += OnRenderRuler;
+            rulerVisual.Render += RulerVisual_Render;
             AddVisualItem(rulerVisual);
 
             // Crea la visual del punter
             //
             pointerVisual = new VisualItem();
-            pointerVisual.Render += OnRenderPointer;
+            pointerVisual.Render += PointerVisual_Render;
             AddVisualItem(pointerVisual);
 
             // Crea la visual de la regio
             //
             regionVisual = new VisualItem();
-            regionVisual.Render += OnRenderRegion;
+            regionVisual.Render += RegionVisual_Render;
             AddVisualItem(regionVisual);
 
             // Inicialitza els events
             //
-            SizeChanged += OnSizeChanged;
+            SizeChanged += RulerBox_SizeChanged;
         }
 
         /// <summary>
@@ -323,10 +323,7 @@
         /// 
         private static void VisualAspectChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
 
-            RulerBox sThis = (RulerBox) d;
-            sThis.rulerVisual.Refresh();
-            sThis.pointerVisual.Refresh();
-            sThis.regionVisual.Refresh();
+            ((RulerBox)d).RulerBox_VisualAspectChanged(d, e);
         }
 
         /// <summary>
@@ -337,7 +334,7 @@
         /// 
         private static void PointerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
 
-            ((RulerBox)d).OnPointerChanged(d);
+            ((RulerBox)d).RulerBox_PointerChanged(d, e);
         }
 
         /// <summary>
@@ -348,7 +345,7 @@
         /// 
         private static void RegionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
 
-            ((RulerBox)d).OnRegionChanged(d);
+            ((RulerBox)d).RulerBox_RegionChanged(d, e);
         }
 
         /// <summary>
@@ -357,17 +354,42 @@
         /// <param name="sender">L'objecte que genera l'event</param>
         /// <param name="e">Parametres de l'event.</param>
         /// 
-        private void OnSizeChanged(object sender, RoutedEventArgs e) {
+        private void RulerBox_SizeChanged(object sender, RoutedEventArgs e) {
 
             rulerVisual.Refresh();
         }
 
-        private void OnPointerChanged(object sender) {
+        /// <summary>
+        /// Notifica els canvis en 
+        /// </summary>
+        /// <param name="sender">L'objecte que genera l'event.</param>
+        /// <param name="e">Els parametres de l'event.</param>
+        /// 
+        private void RulerBox_VisualAspectChanged(object sender, DependencyPropertyChangedEventArgs e) {
+
+            rulerVisual.Refresh();
+            pointerVisual.Refresh();
+            regionVisual.Refresh();
+        }
+
+        /// <summary>
+        /// Notifica els canvis en la posicio del punter.
+        /// </summary>
+        /// <param name="sender">L'objecte que genera l'event.</param>
+        /// <param name="e">Els parametres de l'event.</param>
+        /// 
+        private void RulerBox_PointerChanged(object sender, DependencyPropertyChangedEventArgs e) {
 
             pointerVisual.Refresh();
         }
 
-        private void OnRegionChanged(object sender) {
+        /// <summary>
+        /// Notifica els canvis en la posicio i/o el tamsny de la regio.
+        /// </summary>
+        /// <param name="sender">L'objecte que genera l'event.</param>
+        /// <param name="e">Els parametres de l'event.</param>
+        /// 
+        private void RulerBox_RegionChanged(object sender, DependencyPropertyChangedEventArgs e) {
 
             regionVisual.Refresh();
         }
@@ -378,7 +400,7 @@
         /// <param name="sender">El que genera el event.</param>
         /// <param name="e">Els argument del event.</param>
         /// 
-        private void OnRenderRuler(object sender, VisualItemRenderEventArgs e) {
+        private void RulerVisual_Render(object sender, VisualItemRenderEventArgs e) {
 
             DrawingContext dc = e.Dc;
 
@@ -418,7 +440,7 @@
                 Point p = ViewTransform.Transform(new Point(m, m));
                 double x = RulerAxis == RulerAxis.XAxis ? p.X : p.Y;
 
-                // Linia 10 unitats
+                // Linia de 10 unitats
                 //
                 if ((m % u10x) == 0) {
                     double y1 = RulerAlignment == RulerAlign.Top ? 0 : ActualHeight - length1;
@@ -432,8 +454,9 @@
                         typeface,
                         FontSize,
                         TagBrush,
-                        pixelsPerDip);
-                    ft2.TextAlignment = TextAlignment.Left;
+                        pixelsPerDip) {
+                        TextAlignment = TextAlignment.Left
+                    };
                     double y = RulerAlignment == RulerAlign.Bottom ? 0 : ActualHeight - ft2.Height;
                     if (FlipTags == FlipTagsMode.Horizontal)
                         dc.PushTransform(new ScaleTransform(-1, 1, x, y + ft.Height / 2));
@@ -452,7 +475,7 @@
                     DrawLine(dc, linePen, x, y1, x, y2);
                 }
 
-                // Linia d'unitat
+                // Linia d'unitats
                 //
                 else {
                     double y1 = RulerAlignment == RulerAlign.Top ? 0 : ActualHeight - length3;
@@ -468,7 +491,7 @@
         /// <param name="sender">El que genera l'event.</param>
         /// <param name="e">Els arguments del event.</param>
         /// 
-        private void OnRenderPointer(object sender, VisualItemRenderEventArgs e) {
+        private void PointerVisual_Render(object sender, VisualItemRenderEventArgs e) {
 
             if (ShowPointer) {
                 DrawingContext dc = e.Dc;
@@ -484,7 +507,7 @@
         /// <param name="sender">El que genera l'event.</param>
         /// <param name="e">Els arguments del event.</param>
         /// 
-        private void OnRenderRegion(object sender, VisualItemRenderEventArgs e) {
+        private void RegionVisual_Render(object sender, VisualItemRenderEventArgs e) {
 
             if (ShowRegion) {
                 DrawingContext dc = e.Dc;

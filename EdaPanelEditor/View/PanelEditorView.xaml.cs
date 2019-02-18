@@ -41,7 +41,7 @@
             InitializeComponent();
 
             viewPoint = new ViewPoint();
-            viewPoint.Changed += OnViewPointChanged;
+            viewPoint.Changed += ViewPoint_Changed;
 
             // Inicialitza la regla horitzontal
             //
@@ -55,21 +55,21 @@
 
             scene = new Scene();
 
-            SizeChanged += OnSizeChanged;
+            SizeChanged += PanelEditorView_SizeChanged;
         }
 
         private static void Project_PropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e) {
 
-            (o as PanelEditorView).OnProjectChanged(o, new EventArgs());
+            (o as PanelEditorView).ProjectEditorView_ProjectChanged(o, new EventArgs());
         }
 
-        private void OnViewPointChanged(object sender, EventArgs e) {
+        private void ViewPoint_Changed(object sender, EventArgs e) {
 
             if (contentBox.Visual != null)
                 UpdateViewPoint();
         }
 
-        private void OnSizeChanged(object sender, SizeChangedEventArgs e) {
+        private void PanelEditorView_SizeChanged(object sender, SizeChangedEventArgs e) {
 
             if (Project != null) {
                 viewPoint.Reset(
@@ -78,7 +78,7 @@
             }
         }
 
-        private void OnProjectChanged(object sender, EventArgs e) {
+        private void ProjectEditorView_ProjectChanged(object sender, EventArgs e) {
 
             if (Project != null) {
                 viewPoint.Reset(

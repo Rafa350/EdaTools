@@ -52,7 +52,7 @@
         public void Refresh() {
 
             using (DrawingContext dc = RenderOpen())
-                Refresh(dc);
+                OnRefresh(dc);
         }
 
         /// <summary>
@@ -60,10 +60,9 @@
         /// </summary>
         /// <param name="dc">Contexte de dibuix.</param>
         /// 
-        protected virtual void Refresh(DrawingContext dc) {
+        protected virtual void OnRefresh(DrawingContext dc) {
 
-            if (Render != null) 
-                Render(this, new VisualItemRenderEventArgs(dc));
+            Render?.Invoke(this, new VisualItemRenderEventArgs(dc));
         }
     }
 }

@@ -18,7 +18,7 @@
                 typeof(ContentBox),
                 new FrameworkPropertyMetadata {
                     DefaultValue = null,
-                    PropertyChangedCallback = Visual_PropertyChanged
+                    PropertyChangedCallback = VisualPropertyChanged
                 });
         }
 
@@ -27,7 +27,7 @@
             ClipToBounds = true;
         }
 
-        private static void Visual_PropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e) {
+        private static void VisualPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e) {
 
             ContentBox sThis = o as ContentBox;
             if (sThis != null) {

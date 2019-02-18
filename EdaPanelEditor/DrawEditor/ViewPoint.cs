@@ -10,7 +10,7 @@
     /// Clase que controla el punt de vista de l'escena
     /// </summary>
     /// 
-    public sealed class ViewPoint {
+    public class ViewPoint {
 
         private Matrix m = new Matrix();
 
@@ -20,10 +20,9 @@
         /// Notifica els canvis
         /// </summary>
         /// 
-        private void NotifyChange() {
+        protected virtual void OnChange() {
 
-            if (Changed != null)
-                Changed(this, new EventArgs());
+            Changed?.Invoke(this, new EventArgs());
         }
 
         /// <summary>
@@ -72,7 +71,7 @@
             m.Translate(offsetX, offsetY);
             m.Scale(scaleX, scaleY);
 
-            NotifyChange();
+            OnChange();
         }
 
         /// <summary>
@@ -105,7 +104,7 @@
 
             if (deltaX != 0 || deltaY != 0) {
                 m.TranslatePrepend(deltaX, deltaY);
-                NotifyChange();
+                OnChange();
             }
         }
 
@@ -120,7 +119,7 @@
 
             if (factor != 0) {
                 m.ScaleAtPrepend(factor, factor, centerX, centerY);
-                NotifyChange();
+                OnChange();
             }
         }
 
@@ -197,7 +196,7 @@
         public void Rotate(double angle) {
 
             m.RotatePrepend(angle);
-            NotifyChange();
+            OnChange();
         }
 
         /// <summary>
@@ -210,7 +209,7 @@
         public void Rotate(double angle, double centerX, double centerY) {
 
             m.RotateAtPrepend(angle, centerX, centerY);
-            NotifyChange();
+            OnChange();
         }
 
         /// <summary>
