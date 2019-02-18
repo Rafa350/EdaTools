@@ -13,6 +13,12 @@
     public class ViewPoint {
 
         private Matrix m = new Matrix();
+        private double offsetX = 0;
+        private double offsetY = 0;
+        private double initialScaleX = 1;
+        private double initialScaleY = 1;
+        private double scaleX = 1;
+        private double scaleY = 1;
 
         public event ViewPointChangedEventHandler Changed;
 
@@ -61,11 +67,11 @@
             else if (vAspect > wAspect) 
                 wWidth = wHeight * vAspect;
 
-            double offsetX = (wWidth - wRect.Width) / 2;
-            double offsetY = (wHeight - wRect.Height) / 2;
+            offsetX = (wWidth - wRect.Width) / 2;
+            offsetY = (wHeight - wRect.Height) / 2;
 
-            double scaleX = vWidth / wWidth;
-            double scaleY = vHeight / wHeight;
+            initialScaleX = scaleX = vWidth / wWidth;
+            initialScaleY = scaleY = vHeight / wHeight;
 
             m = new Matrix();
             m.Translate(offsetX, offsetY);
@@ -103,6 +109,8 @@
         public void Pan(double deltaX, double deltaY) {
 
             if (deltaX != 0 || deltaY != 0) {
+                offsetX += deltaX;
+                offsetY += deltaY;
                 m.TranslatePrepend(deltaX, deltaY);
                 OnChange();
             }
@@ -118,7 +126,20 @@
         public void Zoom(double factor, double centerX, double centerY) {
 
             if (factor != 0) {
-                m.ScaleAtPrepend(factor, factor, centerX, centerY);
+                scaleX *= factor;
+                scaleY *= factor;
+
+                double tx = offsetX - centerX;
+                double ty = offsetY - centerY;
+                offsetX = (tx * scaleX) + centerX;
+                offsetY = (ty * scaleY) + centerY;
+
+                if ((scaleX < initialScaleX) || (scaleY < initialScaleY)) {
+                    scaleX = initialScaleX;
+                    scaleY = initialScaleY;
+                }
+                else
+                    m.ScaleAtPrepend(factor, factor, centerX, centerY);
                 OnChange();
             }
         }
@@ -277,7 +298,12 @@
         /// 
         public Matrix Matrix {
             get {
-                return m;
+                Matrix matrix = new Matrix();
+                matrix.Translate(offsetX, offsetY);
+                matrix.Scale(scaleX, scaleY);
+                return matrix;
+
+                //return m;
             }
         }
     }

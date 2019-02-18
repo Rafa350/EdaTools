@@ -63,10 +63,15 @@
             (o as PanelEditorView).ProjectEditorView_ProjectChanged(o, new EventArgs());
         }
 
+        /// <summary>
+        /// Procesa l'event 'OnChanged' de l'objecte 'viewPoint'
+        /// </summary>
+        /// <param name="sender">L'objecte que genera el missatge.</param>
+        /// <param name="e">Parametres del missatge.</param>
+        /// 
         private void ViewPoint_Changed(object sender, EventArgs e) {
 
-            if (contentBox.Visual != null)
-                UpdateViewPoint();
+            UpdateViewPoint();
         }
 
         private void PanelEditorView_SizeChanged(object sender, SizeChangedEventArgs e) {
@@ -85,8 +90,6 @@
                     new Size(contentBox.ActualWidth, contentBox.ActualHeight),
                     new Rect(0, 0, Project.Size.Width, Project.Size.Height));
                 UpdateView();
-                hRulerBox.ViewArea = new Rect(0, 0, Project.Size.Width, Project.Size.Height);
-                vRulerBox.ViewArea = new Rect(0, 0, Project.Size.Width, Project.Size.Height);
             }
         }
 
@@ -211,6 +214,9 @@
                 visual.Transform = new MatrixTransform(viewPoint.Matrix);
 
                 contentBox.Visual = visual;
+
+                hRulerBox.ViewArea = new Rect(0, 0, Project.Size.Width, Project.Size.Height);
+                vRulerBox.ViewArea = new Rect(0, 0, Project.Size.Width, Project.Size.Height);
             }
         }
 

@@ -494,10 +494,9 @@
         private void PointerVisual_Render(object sender, VisualItemRenderEventArgs e) {
 
             if (ShowPointer) {
-                DrawingContext dc = e.Dc;
                 Point p = ViewTransform.Transform(PointerPosition);
                 double x = RulerAxis == RulerAxis.XAxis ? p.X : p.Y;
-                DrawLine(dc, new Pen(PointerBrush, 0.5), x, 0, x, ActualHeight);
+                DrawLine(e.Dc, new Pen(PointerBrush, 0.5), x, 0, x, ActualHeight);
             }
         }
 
@@ -510,11 +509,10 @@
         private void RegionVisual_Render(object sender, VisualItemRenderEventArgs e) {
 
             if (ShowRegion) {
-                DrawingContext dc = e.Dc;
                 Rect r = ViewTransform.TransformBounds(new Rect(RegionPosition, RegionSize));
                 double x = RulerAxis == RulerAxis.XAxis ? r.X : r.Y;
                 double w = RulerAxis == RulerAxis.XAxis ? r.Width : r.Height;
-                DrawRectangle(dc, RegionBrush, null, x, 0, w, ActualHeight);
+                DrawRectangle(e.Dc, RegionBrush, null, x, 0, w, ActualHeight);
             }
         }
 
