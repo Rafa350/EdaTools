@@ -37,9 +37,7 @@
             Grid.Row="0"
             FlipTags="None"
             FontSize="14"
-            ScaleFactor="1000000"
-            ShowRegion="True"
-            ShowPointer="True"
+            ValueDivisor="1000000"
             RulerAlignment="Bottom">
         </local:RulerBox>
         <local:RulerBox
@@ -48,9 +46,7 @@
             Grid.Row="1"
             FlipTags="Vertical"
             FontSize="14"
-            ScaleFactor="1000000"
-            ShowRegion="True"
-            ShowPointer="True"
+            ValueDivisor="1000000"
             RulerAlignment="Top">
             <local:RulerBox.LayoutTransform>
                 <TransformGroup>

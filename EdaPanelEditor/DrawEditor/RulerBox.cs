@@ -1,6 +1,5 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.DrawEditor {
 
-    using System;
     using System.ComponentModel;
     using System.Globalization;
     using System.Windows;
@@ -31,19 +30,20 @@
         public static readonly DependencyProperty FontSizeProperty;
         public static readonly DependencyProperty FontWeightProperty;
         public static readonly DependencyProperty FontStretchProperty;
-        public static readonly DependencyProperty RegionPositionProperty;
-        public static readonly DependencyProperty RegionSizeProperty;
+        public static readonly DependencyProperty RegionStartValueProperty;
+        public static readonly DependencyProperty RegionEndValueProperty;
         public static readonly DependencyProperty RegionBrushProperty;
         public static readonly DependencyProperty ShowRegionProperty;
-        public static readonly DependencyProperty PointerPositionProperty;
+        public static readonly DependencyProperty PointerValueProperty;
         public static readonly DependencyProperty PointerBrushProperty;
         public static readonly DependencyProperty ShowPointerProperty;
         public static readonly DependencyProperty ViewTransformProperty;
-        public static readonly DependencyProperty ViewAreaProperty;
         public static readonly DependencyProperty RulerAlignmentProperty;
         public static readonly DependencyProperty RulerAxisProperty;
         public static readonly DependencyProperty FlipTagsProperty;
-        public static readonly DependencyProperty ScaleFactorProperty;
+        public static readonly DependencyProperty ValueDivisorProperty;
+        public static readonly DependencyProperty MinValueProperty;
+        public static readonly DependencyProperty MaxValueProperty;
 
         private readonly VisualItem rulerVisual;
         private readonly VisualItem pointerVisual;
@@ -138,10 +138,10 @@
                     PropertyChangedCallback = VisualAspectChanged
                 });
 
-            // Crea la propietat de dependencia 'PointerPosition'
+            // Crea la propietat de dependencia 'PointerValue'
             //
-            PointerPositionProperty = DependencyProperty.Register(
-                "PointerPosition",
+            PointerValueProperty = DependencyProperty.Register(
+                "PointerValue",
                 typeof(Point),
                 typeof(RulerBox),
                 new FrameworkPropertyMetadata {
@@ -171,10 +171,10 @@
                     PropertyChangedCallback = PointerChanged
                 });
 
-            // Crea la propietat de dependencia 'RegionPosition'
+            // Crea la propietat de dependencia 'RegionStartValue'
             //
-            RegionPositionProperty = DependencyProperty.Register(
-                "RegionPosition",
+            RegionStartValueProperty = DependencyProperty.Register(
+                "RegionStartValue",
                 typeof(Point),
                 typeof(RulerBox),
                 new FrameworkPropertyMetadata {
@@ -182,14 +182,14 @@
                     PropertyChangedCallback = RegionChanged
                 });
 
-            // Crea la propietat de dependencia 'RegionSize'
+            // Crea la propietat de dependencia 'RegionEndValue'
             //
-            RegionSizeProperty = DependencyProperty.Register(
-                "RegionSize",
-                typeof(Size),
+            RegionEndValueProperty = DependencyProperty.Register(
+                "RegionEndValue",
+                typeof(Point),
                 typeof(RulerBox),
                 new FrameworkPropertyMetadata {
-                    DefaultValue = new Size(0, 0),
+                    DefaultValue = new Point(0, 0),
                     PropertyChangedCallback = RegionChanged
                 });
 
@@ -226,17 +226,6 @@
                     PropertyChangedCallback = VisualAspectChanged
                 });
 
-            // Crea la propietat de dependencia 'ViewArea'
-            //
-            ViewAreaProperty = DependencyProperty.Register(
-                "ViewArea",
-                typeof(Rect),
-                typeof(RulerBox),
-                new FrameworkPropertyMetadata {
-                    DefaultValue = new Rect(),
-                    PropertyChangedCallback = VisualAspectChanged
-                });
-
             // Crea la propietat de dependencia 'RulerAlignment'
             //
             RulerAlignmentProperty = DependencyProperty.Register(
@@ -270,14 +259,36 @@
                     PropertyChangedCallback = VisualAspectChanged
                 });
 
-            // Crea la propietat de dependencia 'ScaleFactor'
+            // Crea la propietat de dependencia 'ValueDivisor'
             //
-            ScaleFactorProperty = DependencyProperty.Register(
-                "ScaleFactor",
+            ValueDivisorProperty = DependencyProperty.Register(
+                "ValueDivisor",
                 typeof(double),
                 typeof(RulerBox),
                 new FrameworkPropertyMetadata {
                     DefaultValue = 1.0,
+                    PropertyChangedCallback = VisualAspectChanged
+                });
+
+            // Crea la propietat de dependencia 'MinValue'
+            //
+            MinValueProperty = DependencyProperty.Register(
+                "MinValue",
+                typeof(double),
+                typeof(RulerBox),
+                new FrameworkPropertyMetadata {
+                    DefaultValue = 0.0,
+                    PropertyChangedCallback = VisualAspectChanged
+                });
+
+            // Crea la propietat de dependencia 'MaxValue'
+            //
+            MaxValueProperty = DependencyProperty.Register(
+                "MaxValue",
+                typeof(double),
+                typeof(RulerBox),
+                new FrameworkPropertyMetadata {
+                    DefaultValue = 0.0,
                     PropertyChangedCallback = VisualAspectChanged
                 });
         }
@@ -288,7 +299,7 @@
         /// 
         public RulerBox() {
 
-            // Inicialitza lñes propietats heredades
+            // Inicialitza les propietats heredades
             //
             ClipToBounds = true;
 
@@ -349,7 +360,7 @@
         }
 
         /// <summary>
-        /// Procesa l'event 'OnSizeChanged'
+        /// Procesa l'event 'SizeChanged'
         /// </summary>
         /// <param name="sender">L'objecte que genera l'event</param>
         /// <param name="e">Parametres de l'event.</param>
@@ -360,7 +371,7 @@
         }
 
         /// <summary>
-        /// Notifica els canvis en 
+        /// Notifica els canvis en les propietats visuals.
         /// </summary>
         /// <param name="sender">L'objecte que genera l'event.</param>
         /// <param name="e">Els parametres de l'event.</param>
@@ -373,7 +384,7 @@
         }
 
         /// <summary>
-        /// Notifica els canvis en la posicio del punter.
+        /// Notifica els canvis en les propietats del punter..
         /// </summary>
         /// <param name="sender">L'objecte que genera l'event.</param>
         /// <param name="e">Els parametres de l'event.</param>
@@ -384,7 +395,7 @@
         }
 
         /// <summary>
-        /// Notifica els canvis en la posicio i/o el tamsny de la regio.
+        /// Notifica els canvis en les propietats de la regio.
         /// </summary>
         /// <param name="sender">L'objecte que genera l'event.</param>
         /// <param name="e">Els parametres de l'event.</param>
@@ -395,7 +406,7 @@
         }
 
         /// <summary>
-        /// Procesa el event 'Render' del 'backgroundVisual'.
+        /// Procesa el event 'Render' del objecte 'rulerVisual'.
         /// </summary>
         /// <param name="sender">El que genera el event.</param>
         /// <param name="e">Els argument del event.</param>
@@ -425,17 +436,15 @@
 
             // Dibuixa les linies de la regla
             //
-            Pen linePen = new Pen(LineBrush, 0.5);
-            double vx = RulerAxis == RulerAxis.XAxis ? ViewArea.X : ViewArea.Y;
-            double vw = RulerAxis == RulerAxis.XAxis ? ViewArea.Width : ViewArea.Height;
+            Pen linePen = new Pen(LineBrush, 1);
 
-            double sf = ScaleFactor;
+            double sf = ValueDivisor;
 
             double u = 1 * sf;
             double u5x = u * 5;
-            double u10x = u * 10;
+            double u10x = u * 10; 
 
-            for (double m = vx - (vx % sf); m <= vx + vw; m += u) {
+            for (double m = MinValue - (MinValue % sf); m <= MaxValue; m += u) {
 
                 Point p = ViewTransform.Transform(new Point(m, m));
                 double x = RulerAxis == RulerAxis.XAxis ? p.X : p.Y;
@@ -445,7 +454,7 @@
                 if ((m % u10x) == 0) {
                     double y1 = RulerAlignment == RulerAlign.Top ? 0 : ActualHeight - length1;
                     double y2 = RulerAlignment == RulerAlign.Top ? length1 : ActualHeight;
-                    DrawLine(dc, linePen, x, y1, x, y2);
+                    DrawHLine(dc, linePen, x, y1, y2);
 
                     FormattedText ft2 = new FormattedText(
                         (m / sf).ToString(),
@@ -472,7 +481,7 @@
                 else if ((m % u5x) == 0) {
                     double y1 = RulerAlignment == RulerAlign.Top ? 0 : ActualHeight - length2;
                     double y2 = RulerAlignment == RulerAlign.Top ? length2 : ActualHeight;
-                    DrawLine(dc, linePen, x, y1, x, y2);
+                    DrawHLine(dc, linePen, x, y1, y2);
                 }
 
                 // Linia d'unitats
@@ -480,13 +489,13 @@
                 else {
                     double y1 = RulerAlignment == RulerAlign.Top ? 0 : ActualHeight - length3;
                     double y2 = RulerAlignment == RulerAlign.Top ? length3 : ActualHeight;
-                    DrawLine(dc, linePen, x, y1, x, y2);
+                    DrawHLine(dc, linePen, x, y1, y2);
                 }
             }
         }
 
         /// <summary>
-        /// Procesa l'event 'Render' del 'pointerVisual'.
+        /// Procesa l'event 'Render' del objecte 'pointerVisual'.
         /// </summary>
         /// <param name="sender">El que genera l'event.</param>
         /// <param name="e">Els arguments del event.</param>
@@ -494,14 +503,14 @@
         private void PointerVisual_Render(object sender, VisualItemRenderEventArgs e) {
 
             if (ShowPointer) {
-                Point p = ViewTransform.Transform(PointerPosition);
+                Point p = ViewTransform.Transform(PointerValue);
                 double x = RulerAxis == RulerAxis.XAxis ? p.X : p.Y;
-                DrawLine(e.Dc, new Pen(PointerBrush, 0.5), x, 0, x, ActualHeight);
+                DrawHLine(e.Dc, new Pen(PointerBrush, 0.5), x, 0, ActualHeight);
             }
         }
 
         /// <summary>
-        /// Procesa l'event 'Render' del 'regionVisual'.
+        /// Procesa l'event 'Render' del objecte 'regionVisual'.
         /// </summary>
         /// <param name="sender">El que genera l'event.</param>
         /// <param name="e">Els arguments del event.</param>
@@ -509,10 +518,11 @@
         private void RegionVisual_Render(object sender, VisualItemRenderEventArgs e) {
 
             if (ShowRegion) {
-                Rect r = ViewTransform.TransformBounds(new Rect(RegionPosition, RegionSize));
+                Rect r = ViewTransform.TransformBounds(new Rect(RegionStartValue, RegionEndValue));
                 double x = RulerAxis == RulerAxis.XAxis ? r.X : r.Y;
                 double w = RulerAxis == RulerAxis.XAxis ? r.Width : r.Height;
-                DrawRectangle(e.Dc, RegionBrush, null, x, 0, w, ActualHeight);
+                if (w > 0)
+                    DrawRectangle(e.Dc, RegionBrush, null, x, 0, w, ActualHeight);
             }
         }
 
@@ -526,16 +536,20 @@
         /// <param name="x2">Final X.</param>
         /// <param name="y2">Final Y.</param>
         /// 
-        private static void DrawLine(DrawingContext dc, Pen pen, double x1, double y1, double x2, double y2) {
+        private static void DrawHLine(DrawingContext dc, Pen pen, double x, double y1, double y2) {
 
+            Point p1 = new Point(x, y1);
+            Point p2 = new Point(x, y2);
+
+            double halfPenWidth = pen.Thickness / 2.0;
             GuidelineSet guideLines = new GuidelineSet();
-            guideLines.GuidelinesX.Add(x1);
-            guideLines.GuidelinesX.Add(x2);
-            guideLines.GuidelinesY.Add(y1);
-            guideLines.GuidelinesY.Add(y2);
+            guideLines.GuidelinesX.Add(p1.X + halfPenWidth);
+            guideLines.GuidelinesX.Add(p2.X + halfPenWidth);
+            guideLines.GuidelinesY.Add(p1.Y + halfPenWidth);
+            guideLines.GuidelinesY.Add(p2.Y + halfPenWidth);
             dc.PushGuidelineSet(guideLines);
 
-            dc.DrawLine(pen, new Point(x1, y1), new Point(x2, y2));
+            dc.DrawLine(pen, p1, p2);
 
             dc.Pop();
         }
@@ -553,14 +567,17 @@
         /// 
         private static void DrawRectangle(DrawingContext dc, Brush brush, Pen pen, double x, double y, double w, double h) {
 
+            Rect r = new Rect(x, y, w, h);
+
+            double halfPenWidth = pen == null ? 0.5 : pen.Thickness / 2;
             GuidelineSet guideLines = new GuidelineSet();
-            guideLines.GuidelinesX.Add(x);
-            guideLines.GuidelinesX.Add(x + w - 1);
-            guideLines.GuidelinesY.Add(y);
-            guideLines.GuidelinesY.Add(y + h - 1);
+            guideLines.GuidelinesX.Add(r.Left + halfPenWidth);
+            guideLines.GuidelinesX.Add(r.Right + halfPenWidth);
+            guideLines.GuidelinesY.Add(r.Top + halfPenWidth);
+            guideLines.GuidelinesY.Add(r.Bottom + halfPenWidth);
             dc.PushGuidelineSet(guideLines);
 
-            dc.DrawRectangle(brush, pen, new Rect(x, y, w, h));
+            dc.DrawRectangle(brush, pen, r);
 
             dc.Pop();
         }
@@ -672,34 +689,34 @@
         }
 
         /// <summary>
-        /// Obte o asigna la posicio de la regio.
+        /// Obte o asigna la posicio inicial de la regio.
         /// </summary>
         /// 
         [Bindable(true)]
         [Category("Region")]
-        [Description("Region position")]
-        public Point RegionPosition {
+        [Description("Region start value")]
+        public Point RegionStartValue {
             get {
-                return (Point) GetValue(RegionPositionProperty);
+                return (Point) GetValue(RegionStartValueProperty);
             }
             set {
-                SetValue(RegionPositionProperty, value);
+                SetValue(RegionStartValueProperty, value);
             }
         }
 
         /// <summary>
-        /// Obte o asigna el tamany de la regio.
+        /// Obte o asigna la posicio final de la regio.
         /// </summary>
         /// 
         [Bindable(true)]
         [Category("Region")]
-        [Description("Region size")]
-        public Size RegionSize {
+        [Description("Region end position")]
+        public Point RegionEndValue {
             get {
-                return (Size) GetValue(RegionSizeProperty);
+                return (Point) GetValue(RegionEndValueProperty);
             }
             set {
-                SetValue(RegionSizeProperty, value);
+                SetValue(RegionEndValueProperty, value);
             }
         }
 
@@ -742,12 +759,12 @@
         [Bindable(true)]
         [Category("Pointer")]
         [Description("Pointer position")]
-        public Point PointerPosition {
+        public Point PointerValue {
             get {
-                return (Point) GetValue(PointerPositionProperty);
+                return (Point) GetValue(PointerValueProperty);
             }
             set {
-                SetValue(PointerPositionProperty, value);
+                SetValue(PointerValueProperty, value);
             }
         }
 
@@ -792,21 +809,6 @@
             }
             set {
                 SetValue(ViewTransformProperty, value);
-            }
-        }
-
-        /// <summary>
-        /// Obte o asigna el tamany del viewport.
-        /// </summary>
-        /// 
-        [Bindable(true)]
-        [Category("Viewpoint")]
-        public Rect ViewArea {
-            get {
-                return (Rect) GetValue(ViewAreaProperty);
-            }
-            set {
-                SetValue(ViewAreaProperty, value);
             }
         }
 
@@ -856,17 +858,47 @@
         }
 
         /// <summary>
-        /// Obte o asigna el factor d'escala de les unitats.
+        /// Obte o asigna la escala.
         /// </summary>
         /// 
         [Bindable(true)]
         [Category("Design")]
-        public double ScaleFactor {
+        public double ValueDivisor {
             get {
-                return (double)GetValue(ScaleFactorProperty);
+                return (double)GetValue(ValueDivisorProperty);
             }
             set {
-                SetValue(ScaleFactorProperty, value);
+                SetValue(ValueDivisorProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna el valor minin.
+        /// </summary>
+        /// 
+        [Bindable(true)]
+        [Category("Design")]
+        public double MinValue {
+            get {
+                return (double)GetValue(MinValueProperty);
+            }
+            set {
+                SetValue(MinValueProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna el valor maxim.
+        /// </summary>
+        /// 
+        [Bindable(true)]
+        [Category("Design")]
+        public double MaxValue {
+            get {
+                return (double)GetValue(MaxValueProperty);
+            }
+            set {
+                SetValue(MaxValueProperty, value);
             }
         }
     }

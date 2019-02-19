@@ -13,12 +13,6 @@
     public class ViewPoint {
 
         private Matrix m = new Matrix();
-        private double offsetX = 0;
-        private double offsetY = 0;
-        private double initialScaleX = 1;
-        private double initialScaleY = 1;
-        private double scaleX = 1;
-        private double scaleY = 1;
 
         public event ViewPointChangedEventHandler Changed;
 
@@ -67,11 +61,11 @@
             else if (vAspect > wAspect) 
                 wWidth = wHeight * vAspect;
 
-            offsetX = (wWidth - wRect.Width) / 2;
-            offsetY = (wHeight - wRect.Height) / 2;
+            double offsetX = (wWidth - wRect.Width) / 2;
+            double offsetY = (wHeight - wRect.Height) / 2;
 
-            initialScaleX = scaleX = vWidth / wWidth;
-            initialScaleY = scaleY = vHeight / wHeight;
+            double scaleX = vWidth / wWidth;
+            double scaleY = vHeight / wHeight;
 
             m = new Matrix();
             m.Translate(offsetX, offsetY);
@@ -109,8 +103,6 @@
         public void Pan(double deltaX, double deltaY) {
 
             if (deltaX != 0 || deltaY != 0) {
-                offsetX += deltaX;
-                offsetY += deltaY;
                 m.TranslatePrepend(deltaX, deltaY);
                 OnChange();
             }
@@ -126,20 +118,7 @@
         public void Zoom(double factor, double centerX, double centerY) {
 
             if (factor != 0) {
-                scaleX *= factor;
-                scaleY *= factor;
-
-                double tx = offsetX - centerX;
-                double ty = offsetY - centerY;
-                offsetX = (tx * scaleX) + centerX;
-                offsetY = (ty * scaleY) + centerY;
-
-                if ((scaleX < initialScaleX) || (scaleY < initialScaleY)) {
-                    scaleX = initialScaleX;
-                    scaleY = initialScaleY;
-                }
-                else
-                    m.ScaleAtPrepend(factor, factor, centerX, centerY);
+                m.ScaleAtPrepend(factor, factor, centerX, centerY);
                 OnChange();
             }
         }
@@ -216,8 +195,10 @@
         /// 
         public void Rotate(double angle) {
 
-            m.RotatePrepend(angle);
-            OnChange();
+            if (angle != 0) {
+                m.RotatePrepend(angle);
+                OnChange();
+            }
         }
 
         /// <summary>
@@ -229,8 +210,10 @@
         /// 
         public void Rotate(double angle, double centerX, double centerY) {
 
-            m.RotateAtPrepend(angle, centerX, centerY);
-            OnChange();
+            if (angle != 0) {
+                m.RotateAtPrepend(angle, centerX, centerY);
+                OnChange();
+            }
         }
 
         /// <summary>
@@ -242,6 +225,16 @@
         public void Rotate(double angle, Point center) {
 
             Rotate(angle, center.X, center.Y);
+        }
+
+        public double TransformXToView(double x) {
+
+            return m.Transform(new Point(x, 0)).X;
+        }
+
+        public double TransformYToView(double y) {
+
+            return m.Transform(new Point(0, y)).Y;
         }
 
         /// <summary>
@@ -264,6 +257,20 @@
         public Rect TransformToView(Rect r) {
 
             return new Rect(m.Transform(r.TopLeft), m.Transform(r.BottomRight));
+        }
+
+        public double TransformXToWorld(double x) {
+
+            Matrix im = m;
+            im.Invert();
+            return im.Transform(new Point(x, 0)).X;
+        }
+
+        public double TransformYToWorld(double y) {
+
+            Matrix im = m;
+            im.Invert();
+            return im.Transform(new Point(0, y)).Y;
         }
 
         /// <summary>
@@ -298,12 +305,7 @@
         /// 
         public Matrix Matrix {
             get {
-                Matrix matrix = new Matrix();
-                matrix.Translate(offsetX, offsetY);
-                matrix.Scale(scaleX, scaleY);
-                return matrix;
-
-                //return m;
+                return m;
             }
         }
     }

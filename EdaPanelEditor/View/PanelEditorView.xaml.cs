@@ -46,12 +46,12 @@
             // Inicialitza la regla horitzontal
             //
             hRulerBox.RulerAxis = RulerAxis.XAxis;
-            hRulerBox.ViewArea = new Rect(0, 0, 1000000, 1000000);
+            hRulerBox.MaxValue = 100000000;
 
             // Inicialitza la regla vertical
             //
             vRulerBox.RulerAxis = RulerAxis.YAxis;
-            vRulerBox.ViewArea = new Rect(0, 0, 1000000, 1000000);
+            vRulerBox.MaxValue = 100000000;
 
             scene = new Scene();
 
@@ -71,7 +71,25 @@
         /// 
         private void ViewPoint_Changed(object sender, EventArgs e) {
 
-            UpdateViewPoint();
+            if (Project != null) {
+
+                Transform t = new MatrixTransform(viewPoint.Matrix);
+
+                hRulerBox.ViewTransform = t;
+                hRulerBox.MinValue = 0;
+                hRulerBox.MaxValue = hRulerBox.RulerAxis == RulerAxis.XAxis ? Project.Size.Width : Project.Size.Height;
+
+                vRulerBox.ViewTransform = t;
+                vRulerBox.MinValue = 0;
+                vRulerBox.MaxValue = vRulerBox.RulerAxis == RulerAxis.YAxis ? Project.Size.Height : Project.Size.Width;
+
+                //guideBox.ViewTransform = t;
+                //contentBox.ViewTransform = t;
+                //pointerTool.Matrix = t.Value;
+
+                if (contentBox.Visual != null)
+                    contentBox.Visual.Transform = t;
+            }
         }
 
         private void PanelEditorView_SizeChanged(object sender, SizeChangedEventArgs e) {
@@ -89,6 +107,8 @@
                 viewPoint.Reset(
                     new Size(contentBox.ActualWidth, contentBox.ActualHeight),
                     new Rect(0, 0, Project.Size.Width, Project.Size.Height));
+                hRulerBox.ShowPointer = true;
+                vRulerBox.ShowPointer = true;
                 UpdateView();
             }
         }
@@ -119,8 +139,8 @@
 
             // Actualitza la posicio del cursor
             //
-            hRulerBox.PointerPosition = currentPos;
-            vRulerBox.PointerPosition = currentPos;
+            hRulerBox.PointerValue = currentPos;
+            vRulerBox.PointerValue = currentPos;
         }
 
         /// <summary>
@@ -170,7 +190,7 @@
                     scene.RemoveItem(item);
             }
 
-            else if (e.ChangedButton == MouseButton.Right)
+            else if (e.ChangedButton == MouseButton.Right) 
                 viewPoint.Rotate(90, currentPos);
         }
 
@@ -203,39 +223,15 @@
         /// 
         private void UpdateView() {
 
-            if (contentBox.Visual != null)
+            if (Project == null)
                 contentBox.Visual = null;
 
-            if (Project != null) {
-
+            else {
                 scene.Initialize(Project);
-
                 DrawingVisual visual = scene.Visual;
                 visual.Transform = new MatrixTransform(viewPoint.Matrix);
-
                 contentBox.Visual = visual;
-
-                hRulerBox.ViewArea = new Rect(0, 0, Project.Size.Width, Project.Size.Height);
-                vRulerBox.ViewArea = new Rect(0, 0, Project.Size.Width, Project.Size.Height);
             }
-        }
-
-        /// <summary>
-        /// Actualitza el punt de vista de l'escena.
-        /// </summary>
-        /// 
-        private void UpdateViewPoint() {
-
-            Transform t = new MatrixTransform(viewPoint.Matrix);
-
-            hRulerBox.ViewTransform = t;
-            vRulerBox.ViewTransform = t;
-            //guideBox.ViewTransform = t;
-            //contentBox.ViewTransform = t;
-            //pointerTool.Matrix = t.Value;
-
-            if (contentBox.Visual != null)
-                contentBox.Visual.Transform = t;
         }
 
         /// <summary>
