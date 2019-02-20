@@ -2,6 +2,8 @@
 
     using MikroPic.EdaTools.v1.Panel.Model;
     using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
+    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor.Tools;
+    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor.Controls;
     using MikroPic.EdaTools.v1.PanelEditor.Render;
     using System;
     using System.Windows;
@@ -18,6 +20,8 @@
         private const double wheelInterval = 150;
         private Point startPos;
         private Point currentPos;
+        private DesignTool currentTool;
+        private DesignTool selectTool;
 
         static PanelEditorView() {
 
@@ -40,22 +44,37 @@
 
             InitializeComponent();
 
+            // Inicialitza el punt de vista
+            //
             viewPoint = new ViewPoint();
             viewPoint.Changed += ViewPoint_Changed;
 
             // Inicialitza la regla horitzontal
             //
-            hRulerBox.RulerAxis = RulerAxis.XAxis;
+            hRulerBox.TransformMode = TransformationMode.XAxis;
             hRulerBox.MaxValue = 100000000;
+            hRulerBox.Visibility = Visibility.Hidden;
 
             // Inicialitza la regla vertical
             //
-            vRulerBox.RulerAxis = RulerAxis.YAxis;
+            vRulerBox.TransformMode = TransformationMode.YAxis;
             vRulerBox.MaxValue = 100000000;
+            vRulerBox.Visibility = Visibility.Hidden;
+
+            // Inicialitza les eines
+            //
+            selectTool = new VisualDesignTool(contentBox);
+            selectTool.Deactive += SelectTool_Deactive;
+            selectTool.Activate();
+            currentTool = selectTool;
 
             scene = new Scene();
 
             SizeChanged += PanelEditorView_SizeChanged;
+        }
+
+        private void SelectTool_Deactive(object sender) {
+            throw new NotImplementedException();
         }
 
         private static void Project_PropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e) {
@@ -73,25 +92,35 @@
 
             if (Project != null) {
 
-                Transform t = new MatrixTransform(viewPoint.Matrix);
-
-                hRulerBox.ViewTransform = t;
+                hRulerBox.TransformMatrix = viewPoint.Matrix;
                 hRulerBox.MinValue = 0;
-                hRulerBox.MaxValue = hRulerBox.RulerAxis == RulerAxis.XAxis ? Project.Size.Width : Project.Size.Height;
+                hRulerBox.MaxValue = hRulerBox.TransformMode == TransformationMode.XAxis ? Project.Size.Width : Project.Size.Height;
+                hRulerBox.Visibility = Visibility.Visible;
 
-                vRulerBox.ViewTransform = t;
+                vRulerBox.TransformMatrix = viewPoint.Matrix;
                 vRulerBox.MinValue = 0;
-                vRulerBox.MaxValue = vRulerBox.RulerAxis == RulerAxis.YAxis ? Project.Size.Height : Project.Size.Width;
+                vRulerBox.MaxValue = vRulerBox.TransformMode == TransformationMode.YAxis ? Project.Size.Height : Project.Size.Width;
+                vRulerBox.Visibility = Visibility.Visible;
 
                 //guideBox.ViewTransform = t;
                 //contentBox.ViewTransform = t;
                 //pointerTool.Matrix = t.Value;
 
                 if (contentBox.Visual != null)
-                    contentBox.Visual.Transform = t;
+                    contentBox.Visual.Transform = new MatrixTransform(viewPoint.Matrix);
+            }
+            else {
+                hRulerBox.Visibility = Visibility.Hidden;
+                vRulerBox.Visibility = Visibility.Hidden;
             }
         }
 
+        /// <summary>
+        /// Procesa el event 'SizeChanged' els canvis de tamany del control.
+        /// </summary>
+        /// <param name="sender">Objecte que genera el missatge.</param>
+        /// <param name="e">Parametres del missatge.</param>
+        /// 
         private void PanelEditorView_SizeChanged(object sender, SizeChangedEventArgs e) {
 
             if (Project != null) {
@@ -107,8 +136,6 @@
                 viewPoint.Reset(
                     new Size(contentBox.ActualWidth, contentBox.ActualHeight),
                     new Rect(0, 0, Project.Size.Width, Project.Size.Height));
-                hRulerBox.ShowPointer = true;
-                vRulerBox.ShowPointer = true;
                 UpdateView();
             }
         }
@@ -130,6 +157,8 @@
             // amb l'eina seleccionada
             //
             if (e.LeftButton == MouseButtonState.Pressed) {
+                if (currentTool != null)
+                    currentTool.NotifyMouseMove(mousePos);
             }
 
             // Si es el boto central es tracte d'una accio Pan
@@ -158,6 +187,8 @@
             // Si es el boto primari, es una accio amb l'eina seleccionada
             //
             if (e.ChangedButton == MouseButton.Left) {
+                if (currentTool != null)
+                    currentTool.NotifyMouseUp(mousePos);
             }
 
             // Si es el boto central es tracte d'una accio Pan
@@ -184,10 +215,8 @@
             // Si es el boto primari, es una accio amb l'eina seleccionada
             //
             if (e.ChangedButton == MouseButton.Left) {
-
-                PanelItem item = scene.GetItem(currentPos);
-                if (item != null)
-                    scene.RemoveItem(item);
+                if (currentTool != null) 
+                    currentTool.NotifyMouseDown(mousePos);
             }
 
             else if (e.ChangedButton == MouseButton.Right) 

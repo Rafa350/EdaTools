@@ -9,7 +9,7 @@
     /// FrameworkElement que gestiona una col·leccio d'objectes de tipus DrawingVisual.
     /// </summary>
     /// 
-    public abstract class VisualContainer: FrameworkElement {
+    public abstract class VisualContainer: FrameworkElement, IVisualContainer {
 
         private VisualCollection visuals;
 
@@ -18,7 +18,7 @@
         /// </summary>
         /// <param name="visual">L'objecte a afeigir.</param>
         /// 
-        public void AddVisualItem(DrawingVisual visual) {
+        public void AddVisualItem(VisualItem visual) {
 
             if (visual == null)
                 throw new ArgumentNullException("visual");
@@ -37,13 +37,13 @@
         /// </summary>
         /// <param name="visuals">Els objectes a afeigir.</param>
         /// 
-        public void AddVisualItem(IEnumerable<DrawingVisual> visuals) {
+        public void AddVisualItem(IEnumerable<VisualItem> visuals) {
 
             if (visuals == null)
                 throw new ArgumentNullException("visuals");
 
-            foreach (DrawingVisual item in visuals)
-                AddVisualItem(item);
+            foreach (var visual in visuals)
+                AddVisualItem(visual);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@
         /// </summary>
         /// <param name="visual">El objecte a eliminar.</param>
         /// 
-        public void RemoveVisualItem(DrawingVisual visual) {
+        public void RemoveVisualItem(VisualItem visual) {
 
             if (visual == null)
                 throw new ArgumentNullException("visual");

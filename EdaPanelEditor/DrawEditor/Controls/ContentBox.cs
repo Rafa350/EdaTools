@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.PanelEditor.DrawEditor {
+﻿namespace MikroPic.EdaTools.v1.PanelEditor.DrawEditor.Controls {
 
     using System.ComponentModel;
     using System.Windows;
@@ -31,7 +31,7 @@
 
             ContentBox sThis = o as ContentBox;
             if (sThis != null) {
-                DrawingVisual visual = e.NewValue as DrawingVisual;
+                VisualItem visual = e.NewValue as VisualItem;
                 if (visual != null) {
                     sThis.RemoveAllVisualItems();
                     sThis.AddVisualItem(visual);

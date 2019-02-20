@@ -61,9 +61,13 @@
             else if (vAspect > wAspect) 
                 wWidth = wHeight * vAspect;
 
+            // Calcula el offset
+            //
             double offsetX = (wWidth - wRect.Width) / 2;
             double offsetY = (wHeight - wRect.Height) / 2;
 
+            // Calcula l'escala
+            //
             double scaleX = vWidth / wWidth;
             double scaleY = vHeight / wHeight;
 
@@ -85,7 +89,7 @@
         }
 
         /// <summary>
-        /// Desplaáment panoramic segins el eix Y.
+        /// Desplaçament panoramic segins el eix Y.
         /// </summary>
         /// <param name="delta">Increment de la poisicio Y.</param>
         /// 

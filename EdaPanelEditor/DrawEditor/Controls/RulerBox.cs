@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.PanelEditor.DrawEditor {
+﻿namespace MikroPic.EdaTools.v1.PanelEditor.DrawEditor.Controls {
 
     using System.ComponentModel;
     using System.Globalization;
@@ -10,7 +10,7 @@
         Bottom
     }
 
-    public enum RulerAxis {
+    public enum TransformationMode {
         XAxis,
         YAxis
     }
@@ -37,9 +37,9 @@
         public static readonly DependencyProperty PointerValueProperty;
         public static readonly DependencyProperty PointerBrushProperty;
         public static readonly DependencyProperty ShowPointerProperty;
-        public static readonly DependencyProperty ViewTransformProperty;
+        public static readonly DependencyProperty TransformMatrixProperty;
         public static readonly DependencyProperty RulerAlignmentProperty;
-        public static readonly DependencyProperty RulerAxisProperty;
+        public static readonly DependencyProperty TransformModeProperty;
         public static readonly DependencyProperty FlipTagsProperty;
         public static readonly DependencyProperty ValueDivisorProperty;
         public static readonly DependencyProperty MinValueProperty;
@@ -215,14 +215,25 @@
                     PropertyChangedCallback = RegionChanged
                 });
 
-            // Crea la propietat de dependencia 'ViewTransform'
+            // Crea la propietat de dependencia 'TransformMatrix'
             //
-            ViewTransformProperty = DependencyProperty.Register(
-                "ViewTransform",
-                typeof(Transform),
+            TransformMatrixProperty = DependencyProperty.Register(
+                "TransformMatrix",
+                typeof(Matrix),
                 typeof(RulerBox),
                 new FrameworkPropertyMetadata {
-                    DefaultValue = new MatrixTransform(new Matrix()),
+                    DefaultValue = new Matrix(),
+                    PropertyChangedCallback = VisualAspectChanged
+                });
+
+            // Crea la propietat de dependencia 'TransformMode'
+            //
+            TransformModeProperty = DependencyProperty.Register(
+                "TransformMode",
+                typeof(TransformationMode),
+                typeof(RulerBox),
+                new FrameworkPropertyMetadata {
+                    DefaultValue = TransformationMode.XAxis,
                     PropertyChangedCallback = VisualAspectChanged
                 });
 
@@ -234,17 +245,6 @@
                 typeof(RulerBox),
                 new FrameworkPropertyMetadata {
                     DefaultValue = RulerAlign.Bottom,
-                    PropertyChangedCallback = VisualAspectChanged
-                });
-
-            // Crea la propietat de dependencia 'RulerAxis'
-            //
-            RulerAxisProperty = DependencyProperty.Register(
-                "RulerAxis",
-                typeof(RulerAxis),
-                typeof(RulerBox),
-                new FrameworkPropertyMetadata {
-                    DefaultValue = RulerAxis.XAxis,
                     PropertyChangedCallback = VisualAspectChanged
                 });
 
@@ -446,8 +446,8 @@
 
             for (double m = MinValue - (MinValue % sf); m <= MaxValue; m += u) {
 
-                Point p = ViewTransform.Transform(new Point(m, m));
-                double x = RulerAxis == RulerAxis.XAxis ? p.X : p.Y;
+                Point p = TransformMatrix.Transform(new Point(m, m));
+                double x = TransformMode == TransformationMode.XAxis ? p.X : p.Y;
 
                 // Linia de 10 unitats
                 //
@@ -503,8 +503,8 @@
         private void PointerVisual_Render(object sender, VisualItemRenderEventArgs e) {
 
             if (ShowPointer) {
-                Point p = ViewTransform.Transform(PointerValue);
-                double x = RulerAxis == RulerAxis.XAxis ? p.X : p.Y;
+                Point p = TransformMatrix.Transform(PointerValue);
+                double x = TransformMode == TransformationMode.XAxis ? p.X : p.Y;
                 DrawHLine(e.Dc, new Pen(PointerBrush, 0.5), x, 0, ActualHeight);
             }
         }
@@ -518,11 +518,12 @@
         private void RegionVisual_Render(object sender, VisualItemRenderEventArgs e) {
 
             if (ShowRegion) {
-                Rect r = ViewTransform.TransformBounds(new Rect(RegionStartValue, RegionEndValue));
-                double x = RulerAxis == RulerAxis.XAxis ? r.X : r.Y;
-                double w = RulerAxis == RulerAxis.XAxis ? r.Width : r.Height;
-                if (w > 0)
-                    DrawRectangle(e.Dc, RegionBrush, null, x, 0, w, ActualHeight);
+                Point p1 = TransformMatrix.Transform(RegionStartValue);
+                Point p2 = TransformMatrix.Transform(RegionEndValue);
+                double x1 = TransformMode == TransformationMode.XAxis ? p1.X : p1.Y;
+                double x2 = TransformMode == TransformationMode.XAxis ? p2.X : p2.Y;
+                if (x1 < x2)
+                    DrawRectangle(e.Dc, RegionBrush, null, x1, 0, x2 - x1 + 1, ActualHeight);
             }
         }
 
@@ -800,15 +801,32 @@
             }
         }
 
-
+        /// <summary>
+        /// Obte o asigna la matrix de transformacio.
+        /// </summary>
         [Bindable(true)]
-        [Category("Viewpoint")]
-        public Transform ViewTransform {
+        [Category("Design")]
+        public Matrix TransformMatrix {
             get {
-                return (Transform)GetValue(ViewTransformProperty);
+                return (Matrix)GetValue(TransformMatrixProperty);
             }
             set {
-                SetValue(ViewTransformProperty, value);
+                SetValue(TransformMatrixProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna El modus de la matriu de transformacio.
+        /// </summary>
+        /// 
+        [Bindable(true)]
+        [Category("Design")]
+        public TransformationMode TransformMode {
+            get {
+                return (TransformationMode)GetValue(TransformModeProperty);
+            }
+            set {
+                SetValue(TransformModeProperty, value);
             }
         }
 
@@ -824,21 +842,6 @@
             }
             set {
                 SetValue(RulerAlignmentProperty, value);
-            }
-        }
-
-        /// <summary>
-        /// Obte o asigna l'eix de la regla.
-        /// </summary>
-        /// 
-        [Bindable(true)]
-        [Category("Design")]
-        public RulerAxis RulerAxis {
-            get {
-                return (RulerAxis)GetValue(RulerAxisProperty);
-            }
-            set {
-                SetValue(RulerAxisProperty, value);
             }
         }
 

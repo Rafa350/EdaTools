@@ -83,13 +83,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DrawEditor\ContentBox.cs">
+    <Compile Include="DrawEditor\Controls\ContentBox.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DrawEditor\DesignTool.cs" />
-    <Compile Include="DrawEditor\RulerBox.cs" />
+    <Compile Include="DrawEditor\Tools\DesignTool.cs" />
+    <Compile Include="DrawEditor\IVisualContainer.cs" />
+    <Compile Include="DrawEditor\Controls\RulerBox.cs" />
     <Compile Include="DrawEditor\VisualContainer.cs" />
-    <Compile Include="DrawEditor\VisualDesignTool.cs" />
+    <Compile Include="DrawEditor\Tools\VisualDesignTool.cs" />
     <Compile Include="DrawEditor\VisualItem.cs" />
     <Compile Include="Render\Scene.cs" />
     <Compile Include="Render\Visuals\CutItemVisual.cs" />

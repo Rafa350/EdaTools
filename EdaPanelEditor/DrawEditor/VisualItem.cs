@@ -35,14 +35,12 @@
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
-        /// <param name="render">Accio de renderitzat.</param>
+        /// <param name="parent">Visual pare.</param>
         /// 
-        public VisualItem(VisualItemRenderEventHandler render) {
+        public VisualItem(DrawingVisual parent) {
 
-            if (render == null)
-                throw new ArgumentNullException("render");
-
-            Render = render;
+            if (parent != null)
+                parent.Children.Add(this);
         }
 
         /// <summary>
@@ -52,15 +50,15 @@
         public void Refresh() {
 
             using (DrawingContext dc = RenderOpen())
-                OnRefresh(dc);
+                OnRender(dc);
         }
 
         /// <summary>
-        /// Actualitza el item.
+        /// Renderitza el item.
         /// </summary>
         /// <param name="dc">Contexte de dibuix.</param>
         /// 
-        protected virtual void OnRefresh(DrawingContext dc) {
+        protected virtual void OnRender(DrawingContext dc) {
 
             Render?.Invoke(this, new VisualItemRenderEventArgs(dc));
         }

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MikroPic.EdaTools.v1.PanelEditor.DrawEditor"
+             xmlns:local="clr-namespace:MikroPic.EdaTools.v1.PanelEditor.DrawEditor.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" 
              d:DesignWidth="800"
@@ -37,6 +37,7 @@
             Grid.Row="0"
             FlipTags="None"
             FontSize="14"
+            ShowPointer="True"
             ValueDivisor="1000000"
             RulerAlignment="Bottom">
         </local:RulerBox>
@@ -46,6 +47,7 @@
             Grid.Row="1"
             FlipTags="Vertical"
             FontSize="14"
+            ShowPointer="True"
             ValueDivisor="1000000"
             RulerAlignment="Top">
             <local:RulerBox.LayoutTransform>

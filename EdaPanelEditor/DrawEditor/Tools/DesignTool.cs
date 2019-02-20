@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.PanelEditor.DrawEditor {
+﻿namespace MikroPic.EdaTools.v1.PanelEditor.DrawEditor.Tools {
 
     using System;
     using System.Windows;
@@ -23,11 +23,11 @@
         private Point startPosition;
         private Point endPosition;
 
-        public event DesignToolActivationEventHandler OnActivate;
-        public event DesignToolActivationEventHandler OnDeactivate;
-        public event DesignToolMouseEventHandler OnMouseUp;
-        public event DesignToolMouseEventHandler OnMouseDown;
-        public event DesignToolMouseEventHandler OnMouseMove;
+        public event DesignToolActivationEventHandler Active;
+        public event DesignToolActivationEventHandler Deactive;
+        public event DesignToolMouseEventHandler MouseUp;
+        public event DesignToolMouseEventHandler MouseDown;
+        public event DesignToolMouseEventHandler MouseMove;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -65,45 +65,45 @@
         /// Executa l'accio d'activacio de l'eina.
         /// </summary>
         /// 
-        protected virtual void DoActivate() {
+        protected virtual void OnActivate() {
 
-            OnActivate?.Invoke(this);
+            Active?.Invoke(this);
         }
 
         /// <summary>
         /// Executa l'accio de desactivacio de l'eina.
         /// </summary>
         /// 
-        protected virtual void DoDeactivate() {
+        protected virtual void OnDeactivate() {
 
-            OnDeactivate?.Invoke(this);
+            Deactive?.Invoke(this);
         }
 
         /// <summary>
         /// Executa l'accio corresponent al deixar anar el boto del mouse.
         /// </summary>
         /// 
-        protected virtual void DoMouseUp() {
+        protected virtual void OnMouseUp() {
 
-            OnMouseUp?.Invoke(this);
+            MouseUp?.Invoke(this);
         }
 
         /// <summary>
         /// Executa l'accio corresponent a prema el boto del mouse.
         /// </summary>
         /// 
-        protected virtual void DoMouseDown() {
+        protected virtual void OnMouseDown() {
 
-            OnMouseDown?.Invoke(this);
+            MouseDown?.Invoke(this);
         }
 
         /// <summary>
-        /// Executa l'accio corresponent a mouse rl mouse.
+        /// Executa l'accio corresponent a mouse el mouse.
         /// </summary>
         /// 
-        protected virtual void DoMouseMove() {
+        protected virtual void OnMouseMove() {
 
-            OnMouseMove?.Invoke(this);
+            MouseMove?.Invoke(this);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@
 
             if (state == State.Idle) {
                 state = State.Active;
-                DoActivate();
+                OnActivate();
                 return true;
             }
             else
@@ -140,33 +140,33 @@
         public void Deactivate() {
 
             if (state == State.Active) {
-                DoDeactivate();
+                OnDeactivate();
                 state = State.Idle;
             }
         }
 
         /// <summary>
-        /// Procesa el moviment del mouse
+        /// Notifica a l'eina que s'ha mogut el mouse
         /// </summary>
         /// <param name="position">Posicio del mouse.</param>
         /// 
-        public void MouseMove(Point position) {
+        public void NotifyMouseMove(Point position) {
 
             if (state == State.Dragging) {
                if (InLimits(position)) {
                     endPosition = Snap(position);
-                    DoMouseMove();
+                    OnMouseMove();
                 }
             }
         }
 
         /// <summary>
-        /// Procesa accio de prema el boto del mouse.
+        /// Notifica a l'eina que s'ha premut un boto del mouse.
         /// </summary>
         /// <param name="position">Posicio del mouse.</param>
         /// <returns>True si s'ha realitzat l'operacio.</returns>
         /// 
-        public bool MouseButtonDown(Point position) {
+        public bool NotifyMouseDown(Point position) {
 
             if (InLimits(position)) {
                 if (state == State.Active) {
@@ -174,7 +174,7 @@
                     endPosition = startPosition;
                     state = State.Dragging;
 
-                    DoMouseDown();
+                    OnMouseDown();
                 }
 
                 return state == State.Dragging;
@@ -184,15 +184,15 @@
         }
 
         /// <summary>
-        /// Procesa l'accio de deixar anar el boto del mouse.
+        /// Notifica a l'eina que s'ha deixat anar el boto de l'eina.
         /// </summary>
         /// <param name="position">Posicio del mouse.</param>
         /// 
-        public void MouseButtonUp(Point position) {
+        public void NotifyMouseUp(Point position) {
 
             if (state == State.Dragging) {
 
-                DoMouseUp();
+                OnMouseUp();
 
                 state = State.Active;
 
@@ -208,6 +208,19 @@
         protected bool IsActive {
             get {
                 return state != State.Idle;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna la autodesactivacio de l'eina.
+        /// </summary>
+        /// 
+        public bool AutoDeactivate {
+            get {
+                return autoDeactivate;
+            }
+            set {
+                autoDeactivate = value;
             }
         }
 
