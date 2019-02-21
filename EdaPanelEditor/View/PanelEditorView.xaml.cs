@@ -1,15 +1,15 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.View {
 
-    using MikroPic.EdaTools.v1.Panel.Model;
-    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
-    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor.Tools;
-    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor.Controls;
-    using MikroPic.EdaTools.v1.PanelEditor.Render;
     using System;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Media;
+    using MikroPic.EdaTools.v1.Panel.Model;
+    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
+    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor.Controls;
+    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor.Tools;
+    using MikroPic.EdaTools.v1.PanelEditor.Render;
 
     public partial class PanelEditorView : UserControl {
 

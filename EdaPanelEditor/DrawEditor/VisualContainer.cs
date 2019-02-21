@@ -6,7 +6,7 @@
     using System.Windows.Media;
 
     /// <summary>
-    /// FrameworkElement que gestiona una col·leccio d'objectes de tipus DrawingVisual.
+    /// Contenidor visual que gestiona una col·leccio d'objectes de tipus ItemVisual.
     /// </summary>
     /// 
     public abstract class VisualContainer: FrameworkElement, IVisualContainer {

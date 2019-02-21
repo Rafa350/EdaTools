@@ -7,13 +7,35 @@
 
     public class VisualItemRenderEventArgs: EventArgs {
 
+        private readonly VisualItem visual;
         private readonly DrawingContext dc;
 
-        public VisualItemRenderEventArgs(DrawingContext dc) {
+        /// <summary>
+        /// Constructor de l'objecte.
+        /// </summary>
+        /// <param name="visual">El visual.</param>
+        /// <param name="dc">El context de dibuix.</param>
+        /// 
+        public VisualItemRenderEventArgs(VisualItem visual, DrawingContext dc) {
 
+            this.visual = visual;
             this.dc = dc;
         }
 
+        /// <summary>
+        /// Obte el visual.
+        /// </summary>
+        /// 
+        public VisualItem Visual {
+            get {
+                return visual;
+            }
+        }
+
+        /// <summary>
+        /// Obte el context de dibuix.
+        /// </summary>
+        /// 
         public DrawingContext Dc {
             get {
                 return dc;
@@ -37,17 +59,17 @@
         /// </summary>
         /// <param name="parent">Visual pare.</param>
         /// 
-        public VisualItem(DrawingVisual parent) {
+        public VisualItem(VisualItem parent) {
 
             if (parent != null)
                 parent.Children.Add(this);
         }
 
         /// <summary>
-        /// Actualitza el item
+        /// Renderitza el item
         /// </summary>
         /// 
-        public void Refresh() {
+        public void Renderize() {
 
             using (DrawingContext dc = RenderOpen())
                 OnRender(dc);
@@ -56,11 +78,11 @@
         /// <summary>
         /// Renderitza el item.
         /// </summary>
-        /// <param name="dc">Contexte de dibuix.</param>
+        /// <param name="dc">Context de dibuix.</param>
         /// 
         protected virtual void OnRender(DrawingContext dc) {
 
-            Render?.Invoke(this, new VisualItemRenderEventArgs(dc));
+            Render?.Invoke(this, new VisualItemRenderEventArgs(this, dc));
         }
     }
 }

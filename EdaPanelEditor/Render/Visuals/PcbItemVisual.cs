@@ -1,9 +1,10 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render.Visuals {
 
-    using MikroPic.EdaTools.v1.Base.WPF;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Panel.Model.Items;
     using System.Windows.Media;
+    using MikroPic.EdaTools.v1.Base.Geometry;
+    using MikroPic.EdaTools.v1.Base.WPF;
+    using MikroPic.EdaTools.v1.Panel.Model.Items;
+    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
 
     public sealed class PcbItemVisual: PanelItemVisual {
 
@@ -15,8 +16,14 @@
         /// <param name="parent">Visual pare.</param>
         /// <param name="item">El item PCB.</param>
         /// 
-        public PcbItemVisual(DrawingVisual parent, PcbItem item):
+        public PcbItemVisual(VisualItem parent, PcbItem item):
             base(parent, item) {
+        }
+
+        protected override void OnRender(DrawingContext dc) {
+
+            Draw(new DrawVisualContext(dc));
+            base.OnRender(dc);
         }
 
         /// <summary>
@@ -24,7 +31,7 @@
         /// </summary>
         /// <param name="dc">Context de renderitzat.</param>
         /// 
-        protected override void Draw(DrawVisualContext dc) {
+        private void Draw(DrawVisualContext dc) {
 
             Brush brush = dc.GetBrush(boardColor);
 

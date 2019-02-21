@@ -367,7 +367,7 @@
         /// 
         private void RulerBox_SizeChanged(object sender, RoutedEventArgs e) {
 
-            rulerVisual.Refresh();
+            rulerVisual.Renderize();
         }
 
         /// <summary>
@@ -378,9 +378,9 @@
         /// 
         private void RulerBox_VisualAspectChanged(object sender, DependencyPropertyChangedEventArgs e) {
 
-            rulerVisual.Refresh();
-            pointerVisual.Refresh();
-            regionVisual.Refresh();
+            rulerVisual.Renderize();
+            pointerVisual.Renderize();
+            regionVisual.Renderize();
         }
 
         /// <summary>
@@ -391,7 +391,7 @@
         /// 
         private void RulerBox_PointerChanged(object sender, DependencyPropertyChangedEventArgs e) {
 
-            pointerVisual.Refresh();
+            pointerVisual.Renderize();
         }
 
         /// <summary>
@@ -402,7 +402,7 @@
         /// 
         private void RulerBox_RegionChanged(object sender, DependencyPropertyChangedEventArgs e) {
 
-            regionVisual.Refresh();
+            regionVisual.Renderize();
         }
 
         /// <summary>

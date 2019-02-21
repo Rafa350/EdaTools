@@ -44,7 +44,7 @@
 
             OnTick();
             if (visualItem != null)
-                visualItem.Refresh();
+                visualItem.Renderize();
         }
 
         /// <summary>

@@ -4,6 +4,7 @@
     using MikroPic.EdaTools.v1.Panel.Model.Items;
     using MikroPic.EdaTools.v1.Panel.Model.Visitors;
     using MikroPic.EdaTools.v1.PanelEditor.Render.Visuals;
+    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Media;
@@ -12,10 +13,10 @@
 
         private sealed class Visitor : DefaultPanelVisitor {
 
-            private readonly DrawingVisual parentVisual;
+            private readonly VisualItem parentVisual;
             private readonly IDictionary<PanelItem, PanelItemVisual> itemMap;
 
-            public Visitor(DrawingVisual parentVisual, IDictionary<PanelItem, PanelItemVisual> itemMap) {
+            public Visitor(VisualItem parentVisual, IDictionary<PanelItem, PanelItemVisual> itemMap) {
 
                 this.parentVisual = parentVisual;
                 this.itemMap = itemMap;
@@ -24,7 +25,7 @@
             public override void Visit(Project project) {
 
                 ProjectVisual projectVisual = new ProjectVisual(parentVisual, project);
-                projectVisual.Draw();
+                projectVisual.Renderize();
 
                 base.Visit(project);
             }
@@ -33,19 +34,19 @@
 
                 PanelItemVisual itemVisual = new CutItemVisual(parentVisual, item);
                 itemMap.Add(item, itemVisual);
-                itemVisual.Draw();
+                itemVisual.Renderize();
             }
 
             public override void Visit(PcbItem item) {
 
                 PanelItemVisual itemVisual = new PcbItemVisual(parentVisual, item);
                 itemMap.Add(item, itemVisual);
-                itemVisual.Draw();
+                itemVisual.Renderize();
             }
         }
 
         private readonly Dictionary<PanelItem, PanelItemVisual> itemMap = new Dictionary<PanelItem, PanelItemVisual>();
-        private readonly DrawingVisual visual = new DrawingVisual();
+        private readonly VisualItem visual = new VisualItem();
 
         public void Initialize(Project project) {
 
@@ -72,7 +73,7 @@
         public void UpdateItem(PanelItem item) {
 
             if (itemMap.TryGetValue(item, out PanelItemVisual itemVisual))
-                itemVisual.Draw();
+                itemVisual.Renderize();
         }
 
         /// <summary>
@@ -105,7 +106,7 @@
         /// Obte la visual de l'escena.
         /// </summary>
         /// 
-        public DrawingVisual Visual {
+        public VisualItem Visual {
             get {
                 return visual;
             }

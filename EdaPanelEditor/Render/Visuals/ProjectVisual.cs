@@ -1,11 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render.Visuals {
 
-    using MikroPic.EdaTools.v1.Base.WPF;
-    using MikroPic.EdaTools.v1.Panel.Model;
     using System;
     using System.Windows.Media;
+    using MikroPic.EdaTools.v1.Base.WPF;
+    using MikroPic.EdaTools.v1.Panel.Model;
+    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
 
-    public sealed class ProjectVisual: VisualBase {
+    public sealed class ProjectVisual: VisualItem {
 
         private readonly Color panelColor = Color.FromRgb(44, 115, 13);
         private readonly Project project;
@@ -16,7 +17,7 @@
         /// <param name="parent">Visual pare.</param>
         /// <param name="project">El projecte.</param>
         /// 
-        public ProjectVisual(DrawingVisual parent, Project project):
+        public ProjectVisual(VisualItem parent, Project project):
             base(parent) {
 
             if (project == null)
@@ -25,12 +26,18 @@
             this.project = project;
         }
 
+        protected override void OnRender(DrawingContext dc) {
+
+            Draw(new DrawVisualContext(dc));
+            base.OnRender(dc);
+        }
+
         /// <summary>
         /// Renderitzat.
         /// </summary>
         /// <param name="dc">Context de renderitzat.</param>
         /// 
-        protected override void Draw(DrawVisualContext dc) {
+        private void Draw(DrawVisualContext dc) {
 
             Brush brush = dc.GetBrush(panelColor);
 

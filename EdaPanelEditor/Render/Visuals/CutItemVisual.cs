@@ -1,10 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render.Visuals {
 
+    using System;
+    using System.Windows.Media;
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.WPF;
     using MikroPic.EdaTools.v1.Panel.Model.Items;
-    using System;
-    using System.Windows.Media;
+    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
 
     public sealed class CutItemVisual: PanelItemVisual {
 
@@ -16,8 +17,14 @@
         /// <param name="parent">El visual pare,</param>
         /// <param name="item">El item CUT.</param>
         /// 
-        public CutItemVisual(DrawingVisual parent, CutItem item):
+        public CutItemVisual(VisualItem parent, CutItem item):
             base(parent, item) {
+        }
+
+        protected override void OnRender(DrawingContext dc) {
+
+            Draw(new DrawVisualContext(dc));
+            base.OnRender(dc);
         }
 
         /// <summary>
@@ -25,7 +32,7 @@
         /// </summary>
         /// <param name="dc">El context de renderitzat.</param>
         /// 
-        protected override void Draw(DrawVisualContext dc) {
+        private void Draw(DrawVisualContext dc) {
 
             // Obte els punts de referencia
             //
