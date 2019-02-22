@@ -27,7 +27,7 @@
         private Point startPos;
         private Point currentPos;
         private SceneGraph sceneGraph;
-        //private ConnectivityMap map;
+        private ConnectivityMap map;
 
         static BoardEditorView() {
 

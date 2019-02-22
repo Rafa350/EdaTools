@@ -6,9 +6,23 @@
 
     public sealed class ContentBox: VisualContainer {
 
+        public static readonly DependencyProperty TransformMatrixProperty;
         public static readonly DependencyProperty VisualProperty;
 
+        private readonly VisualItem contentVisual;
+
         static ContentBox() {
+
+            // Crea la propietat de dependencia 'TransformMatrix'
+            //
+            TransformMatrixProperty = DependencyProperty.Register(
+                "TransformMatrix",
+                typeof(Matrix),
+                typeof(ContentBox),
+                new FrameworkPropertyMetadata {
+                    DefaultValue = new Matrix(),
+                    PropertyChangedCallback = (d, e) => { ((ContentBox)d).TransformationMatrixPropertyChanged(e); }
+                });
 
             // Crea la propietat de dependencia 'Visual'
             //
@@ -18,25 +32,45 @@
                 typeof(ContentBox),
                 new FrameworkPropertyMetadata {
                     DefaultValue = null,
-                    PropertyChangedCallback = VisualPropertyChanged
-                });
+                    PropertyChangedCallback = (d, e) => { ((ContentBox)d).VisualPropertyChanged(e); }
+            });
         }
 
+        /// <summary>
+        /// Constructor de l'objecte.
+        /// </summary>
+        /// 
         public ContentBox() {
 
             ClipToBounds = true;
+
+            contentVisual = new VisualItem();
+            AddVisualItem(contentVisual);
         }
 
-        private static void VisualPropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e) {
+        /// <summary>
+        /// Accio al canviar el valor de la propietat 'Visual'.
+        /// </summary>
+        /// <param name="e"></param>
+        /// 
+        private void VisualPropertyChanged(DependencyPropertyChangedEventArgs e) {
 
-            ContentBox sThis = o as ContentBox;
-            if (sThis != null) {
-                VisualItem visual = e.NewValue as VisualItem;
-                if (visual != null) {
-                    sThis.RemoveAllVisualItems();
-                    sThis.AddVisualItem(visual);
-                }
-            }
+            if (e.OldValue is VisualItem oldVisual)
+                contentVisual.Children.Remove(oldVisual);
+
+            if (e.NewValue is VisualItem newVisual)
+                contentVisual.Children.Add(newVisual);
+        }
+
+        /// <summary>
+        /// Acciuo al canviar el valor de la propietat 'TransformMatrix'
+        /// </summary>
+        /// <param name="e"></param>
+        /// 
+        private void TransformationMatrixPropertyChanged(DependencyPropertyChangedEventArgs e) {
+
+            Matrix newMatrix = (Matrix) e.NewValue;
+            contentVisual.Transform = new MatrixTransform(newMatrix);
         }
 
         [BindableAttribute(true)]
@@ -47,6 +81,20 @@
             }
             set {
                 SetValue(VisualProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna la matrix de transformacio.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Design")]
+        public Matrix TransformMatrix {
+            get {
+                return (Matrix)GetValue(TransformMatrixProperty);
+            }
+            set {
+                SetValue(TransformMatrixProperty, value);
             }
         }
     }

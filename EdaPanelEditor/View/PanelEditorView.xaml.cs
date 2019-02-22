@@ -4,7 +4,6 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
-    using System.Windows.Media;
     using MikroPic.EdaTools.v1.Panel.Model;
     using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
     using MikroPic.EdaTools.v1.PanelEditor.DrawEditor.Controls;
@@ -61,6 +60,10 @@
             vRulerBox.MaxValue = 100000000;
             vRulerBox.Visibility = Visibility.Hidden;
 
+            // Inicialitza el contingut
+            //
+            contentBox.Visibility = Visibility.Hidden;
+
             // Inicialitza les eines
             //
             selectTool = new VisualDesignTool(contentBox);
@@ -93,25 +96,12 @@
             if (Project != null) {
 
                 hRulerBox.TransformMatrix = viewPoint.Matrix;
-                hRulerBox.MinValue = 0;
                 hRulerBox.MaxValue = hRulerBox.TransformMode == TransformationMode.XAxis ? Project.Size.Width : Project.Size.Height;
-                hRulerBox.Visibility = Visibility.Visible;
 
                 vRulerBox.TransformMatrix = viewPoint.Matrix;
-                vRulerBox.MinValue = 0;
                 vRulerBox.MaxValue = vRulerBox.TransformMode == TransformationMode.YAxis ? Project.Size.Height : Project.Size.Width;
-                vRulerBox.Visibility = Visibility.Visible;
 
-                //guideBox.ViewTransform = t;
-                //contentBox.ViewTransform = t;
-                //pointerTool.Matrix = t.Value;
-
-                if (contentBox.Visual != null)
-                    contentBox.Visual.Transform = new MatrixTransform(viewPoint.Matrix);
-            }
-            else {
-                hRulerBox.Visibility = Visibility.Hidden;
-                vRulerBox.Visibility = Visibility.Hidden;
+                contentBox.TransformMatrix = viewPoint.Matrix;
             }
         }
 
@@ -136,7 +126,18 @@
                 viewPoint.Reset(
                     new Size(contentBox.ActualWidth, contentBox.ActualHeight),
                     new Rect(0, 0, Project.Size.Width, Project.Size.Height));
-                UpdateView();
+
+                scene.Initialize(Project);
+                contentBox.Visual = scene.Visual;
+
+                hRulerBox.Visibility = Visibility.Visible;
+                vRulerBox.Visibility = Visibility.Visible;
+                contentBox.Visibility = Visibility.Visible;
+            }
+            else {
+                hRulerBox.Visibility = Visibility.Hidden;
+                vRulerBox.Visibility = Visibility.Hidden;
+                contentBox.Visibility = Visibility.Hidden;
             }
         }
 
@@ -246,22 +247,6 @@
             }
         }
 
-        /// <summary>
-        /// Actualitza l'escena.
-        /// </summary>
-        /// 
-        private void UpdateView() {
-
-            if (Project == null)
-                contentBox.Visual = null;
-
-            else {
-                scene.Initialize(Project);
-                DrawingVisual visual = scene.Visual;
-                visual.Transform = new MatrixTransform(viewPoint.Matrix);
-                contentBox.Visual = visual;
-            }
-        }
 
         /// <summary>
         /// Obte o asigna el projecte.
