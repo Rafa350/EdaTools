@@ -53,10 +53,10 @@
         /// 
         private void ShowVisual() {
 
-            if (visualItem == null)
+            if (visualItem == null) {
                 visualItem = new VisualItem();
-
-            visualContainer.AddVisualItem(visualItem);
+                visualContainer.AddVisualItem(visualItem);
+            }
             using (DrawingContext dc = visualItem.RenderOpen())
                 OnDrawVisual(dc, StartPosition, EndPosition);
         }

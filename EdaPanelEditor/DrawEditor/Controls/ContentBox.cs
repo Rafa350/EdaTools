@@ -69,11 +69,14 @@
         /// 
         private void TransformationMatrixPropertyChanged(DependencyPropertyChangedEventArgs e) {
 
-            Matrix newMatrix = (Matrix) e.NewValue;
-            contentVisual.Transform = new MatrixTransform(newMatrix);
+            contentVisual.Transform = new MatrixTransform((Matrix) e.NewValue);
         }
 
-        [BindableAttribute(true)]
+        /// <summary>
+        /// Obte o asigna el visual del contingut.
+        /// </summary>
+        /// 
+        [Bindable(true)]
         [Category("Content")]
         public DrawingVisual Visual {
             get {

@@ -154,7 +154,7 @@
             Point mousePos = e.GetPosition(contentBox);
             currentPos = viewPoint.TransformToWorld(mousePos);
 
-            // Si es tracta del boto primari, es tracte d'una accio 
+            // Si es tracta del boto primari, es tracta d'una accio 
             // amb l'eina seleccionada
             //
             if (e.LeftButton == MouseButtonState.Pressed) {
@@ -162,7 +162,7 @@
                     currentTool.NotifyMouseMove(mousePos);
             }
 
-            // Si es el boto central es tracte d'una accio Pan
+            // Si es el boto central es tracta d'una accio Pan
             //
             if (e.MiddleButton == MouseButtonState.Pressed) 
                 viewPoint.Pan(currentPos.X - startPos.X, currentPos.Y - startPos.Y);
@@ -247,9 +247,8 @@
             }
         }
 
-
         /// <summary>
-        /// Obte o asigna el projecte.
+        /// Obte o asigna la propietat 'Project'.
         /// </summary>
         /// 
         public Project Project {
