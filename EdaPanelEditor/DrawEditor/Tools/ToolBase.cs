@@ -7,7 +7,7 @@
     public delegate void DesignToolActivationEventHandler(object sender);
     public delegate void DesignToolMouseEventHandler(object sender);
 
-    public abstract class DesignTool {
+    public abstract class ToolBase {
 
         private enum State {
             Idle,
@@ -33,7 +33,7 @@
         /// Constructor de l'objecte.
         /// </summary>
         /// 
-        public DesignTool() {
+        public ToolBase() {
 
         }
 
@@ -114,7 +114,7 @@
         /// 
         protected virtual Cursor GetCursor(Point position) {
 
-            return Cursors.Cross;
+            return Cursors.Arrow;
         }
 
         /// <summary>

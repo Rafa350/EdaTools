@@ -19,8 +19,8 @@
         private const double wheelInterval = 150;
         private Point startPos;
         private Point currentPos;
-        private DesignTool currentTool;
-        private DesignTool selectTool;
+        private ToolBase currentTool;
+        private SelectionTool selectionTool;
 
         static PanelEditorView() {
 
@@ -66,23 +66,29 @@
 
             // Inicialitza les eines
             //
-            selectTool = new VisualDesignTool(contentBox);
-            selectTool.Deactive += SelectTool_Deactive;
-            selectTool.Activate();
-            currentTool = selectTool;
+            selectionTool = new SelectionTool(contentBox);
+            selectionTool.Activate();
+            selectionTool.MouseUp += SelectionTool_MouseUp;
+            currentTool = selectionTool;
 
             scene = new Scene();
 
             SizeChanged += PanelEditorView_SizeChanged;
         }
 
-        private void SelectTool_Deactive(object sender) {
-            throw new NotImplementedException();
-        }
-
         private static void Project_PropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e) {
 
             (o as PanelEditorView).ProjectEditorView_ProjectChanged(o, new EventArgs());
+        }
+
+        /// <summary>
+        /// Procesa l'event 'MouseUp' del objecte 'selectionTool'
+        /// </summary>
+        /// <param name="tool">L'objecte que ha regnerat l'event.</param>
+        /// 
+        private void SelectionTool_MouseUp(object sender) {
+
+            Rect selectionRect = selectionTool.Selection;
         }
 
         /// <summary>

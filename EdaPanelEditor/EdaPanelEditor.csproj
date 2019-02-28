@@ -86,11 +86,12 @@
     <Compile Include="DrawEditor\Controls\ContentBox.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DrawEditor\Tools\DesignTool.cs" />
+    <Compile Include="DrawEditor\Tools\SelectionTool.cs" />
+    <Compile Include="DrawEditor\Tools\ToolBase.cs" />
     <Compile Include="DrawEditor\IVisualContainer.cs" />
     <Compile Include="DrawEditor\Controls\RulerBox.cs" />
     <Compile Include="DrawEditor\VisualContainer.cs" />
-    <Compile Include="DrawEditor\Tools\VisualDesignTool.cs" />
+    <Compile Include="DrawEditor\Tools\VisualTool.cs" />
     <Compile Include="DrawEditor\VisualItem.cs" />
     <Compile Include="Render\Scene.cs" />
     <Compile Include="Render\Visuals\CutItemVisual.cs" />

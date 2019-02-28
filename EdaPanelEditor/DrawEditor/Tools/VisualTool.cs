@@ -6,10 +6,12 @@
     using System.Windows.Threading;
 
     public delegate void DesignToolDrawVisualEventHandler(object sender, DrawingContext dc, Point startPosition, Point endPosition);
+    public delegate void DesignToolTickEventHandler(object sender);
 
-    public class VisualDesignTool : DesignTool {
+    public class VisualTool : ToolBase {
 
         public event DesignToolDrawVisualEventHandler DrawVisual;
+        public event DesignToolTickEventHandler Tick;
 
         private const double tickInterval = 100;
 
@@ -22,15 +24,16 @@
         /// </summary>
         /// <param name="visualContainer">El contenidor visual.</param>
         /// 
-        public VisualDesignTool(IVisualContainer visualContainer) {
+        public VisualTool(IVisualContainer visualContainer) {
 
             if (visualContainer == null)
                 throw new ArgumentNullException("visualContainer");
 
             this.visualContainer = visualContainer;
 
-            dispatcher = new DispatcherTimer();
-            dispatcher.Interval = TimeSpan.FromMilliseconds(tickInterval);
+            dispatcher = new DispatcherTimer {
+                Interval = TimeSpan.FromMilliseconds(tickInterval)
+            };
             dispatcher.Tick += Dispatcher_Tick;
         }
 
@@ -43,8 +46,6 @@
         private void Dispatcher_Tick(object sender, EventArgs e) {
 
             OnTick();
-            if (visualItem != null)
-                visualItem.Renderize();
         }
 
         /// <summary>
@@ -56,6 +57,7 @@
             if (visualItem == null) {
                 visualItem = new VisualItem();
                 visualContainer.AddVisualItem(visualItem);
+                dispatcher.Start();
             }
             using (DrawingContext dc = visualItem.RenderOpen())
                 OnDrawVisual(dc, StartPosition, EndPosition);
@@ -67,7 +69,11 @@
         /// 
         private void HideVisual() {
 
-            visualContainer.RemoveVisualItem(visualItem);
+            if (visualItem != null) {
+                dispatcher.Stop();
+                visualContainer.RemoveVisualItem(visualItem);
+                visualItem = null;
+            }
         }
 
         /// <summary>
@@ -87,6 +93,8 @@
         /// </summary>
         /// 
         protected virtual void OnTick() {
+
+            Tick?.Invoke(this);
         }
         
         /// <summary>
@@ -99,12 +107,20 @@
             ShowVisual();
         }
 
+        /// <summary>
+        /// Executa l'accio corresponent a prema el boto del mouse.
+        /// </summary>
+        /// 
         protected override void OnMouseDown() {
 
             base.OnMouseDown();
             ShowVisual();
         }
 
+        /// <summary>
+        /// Executa l'accio corresponent a deixar anar el boto del mouse.
+        /// </summary>
+        /// 
         protected override void OnMouseUp() {
 
             base.OnMouseUp();

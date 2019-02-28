@@ -8,6 +8,9 @@
 
         public static readonly DependencyProperty TransformMatrixProperty;
         public static readonly DependencyProperty VisualProperty;
+        //public static readonly DependencyProperty SelectionModeProperty;
+        //public static readonly DependencyProperty SelectedItemProperty;
+        //public static readonly DependencyProperty SelectedItemsProperty;
 
         private readonly VisualItem contentVisual;
 
