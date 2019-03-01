@@ -4,7 +4,7 @@
 
     public interface IPanelVisitor {
 
-        void Visit(Project project);
+        void Visit(Panel project);
         void Visit(CutItem cut);
         void Visit(PcbItem pcb);
     }

@@ -125,7 +125,7 @@
             }
         }
 
-        public Project Project {
+        public Panel Project {
             get {
                 return appService.Project;
             }

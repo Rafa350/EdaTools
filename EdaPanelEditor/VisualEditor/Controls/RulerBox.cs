@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.PanelEditor.DrawEditor.Controls {
+﻿namespace MikroPic.EdaTools.v1.PanelEditor.VisualEditor.Controls {
 
     using System.ComponentModel;
     using System.Globalization;

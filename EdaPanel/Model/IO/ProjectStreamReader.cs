@@ -71,10 +71,10 @@
         /// </summary>
         /// <returns>El panell.</returns>
         /// 
-        public Project Read() {
+        public Panel Read() {
 
             rd.NextTag();
-            Project project = ParseDocumentNode();
+            Panel project = ParseDocumentNode();
 
             return project;
         }
@@ -84,7 +84,7 @@
         /// </summary>
         /// <returns>L'objecte 'Project' obtingut.</returns>
         /// 
-        private Project ParseDocumentNode() {
+        private Panel ParseDocumentNode() {
 
             if (!rd.IsStartTag("document"))
                 throw new InvalidDataException("Se esperaba <document>");
@@ -92,7 +92,7 @@
             version = rd.AttributeAsInteger("version");
 
             rd.NextTag();
-            Project project = ParseProjectNode();
+            Panel project = ParseProjectNode();
 
             rd.NextTag();
             if (!rd.IsEndTag("document"))
@@ -106,7 +106,7 @@
         /// </summary>
         /// <returns>L'objecte 'Project' obtingut.</returns>
         /// 
-        private Project ParseProjectNode() {
+        private Panel ParseProjectNode() {
 
             if (!rd.IsStartTag("project"))
                 throw new InvalidDataException("Se esperaba <project>");
@@ -120,7 +120,7 @@
             if (!rd.IsEndTag("project"))
                 throw new InvalidDataException("Se esperaba </project>");
 
-            Project project = new Project();
+            Panel project = new Panel();
             project.Size = size;
             project.AddElements(elements);
 

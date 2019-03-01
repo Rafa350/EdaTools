@@ -36,7 +36,7 @@
         /// <param name="project">El projecte del panell.</param>
         /// <param name="locator">Localitzador de recursos.</param>
         /// 
-        public void Panelize(Project project, IStreamLocator locator) {
+        public void Panelize(Panel project, IStreamLocator locator) {
 
             // Afegeix les capes minimes necesaries pel panell.
             //

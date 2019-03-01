@@ -5,7 +5,7 @@
 
     public abstract class DefaultPanelVisitor: IPanelVisitor {
 
-        public virtual void Visit(Project project) {
+        public virtual void Visit(Panel project) {
 
             if (project == null)
                 throw new ArgumentNullException("project");

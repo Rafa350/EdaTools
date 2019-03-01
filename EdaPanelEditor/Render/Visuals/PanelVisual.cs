@@ -4,12 +4,12 @@
     using System.Windows.Media;
     using MikroPic.EdaTools.v1.Base.WPF;
     using MikroPic.EdaTools.v1.Panel.Model;
-    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
+    using MikroPic.EdaTools.v1.PanelEditor.VisualEditor;
 
-    public sealed class ProjectVisual: VisualItem {
+    public sealed class PanelVisual: VisualItem {
 
         private readonly Color panelColor = Color.FromRgb(44, 115, 13);
-        private readonly Project project;
+        private readonly Panel panel;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -17,13 +17,13 @@
         /// <param name="parent">Visual pare.</param>
         /// <param name="project">El projecte.</param>
         /// 
-        public ProjectVisual(VisualItem parent, Project project):
+        public PanelVisual(VisualItem parent, Panel project):
             base(parent) {
 
             if (project == null)
                 throw new ArgumentNullException("project");
 
-            this.project = project;
+            this.panel = project;
         }
 
         protected override void OnRender(DrawingContext dc) {
@@ -41,7 +41,7 @@
 
             Brush brush = dc.GetBrush(panelColor);
 
-            Base.Geometry.Size size = Project.Size;
+            Base.Geometry.Size size = Panel.Size;
             Base.Geometry.Point position = new Base.Geometry.Point(size.Width / 2, size.Height / 2);
             dc.DrawRectangle(brush, null, position, size);
         }
@@ -50,9 +50,9 @@
         /// Obte el projecte associat.
         /// </summary>
         /// 
-        public Project Project {
+        public Panel Panel {
             get {
-                return project;
+                return panel;
             }
         }
     }

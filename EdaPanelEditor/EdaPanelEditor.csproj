@@ -83,21 +83,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DrawEditor\Controls\ContentBox.cs">
+    <Compile Include="VisualEditor\Controls\ContentBox.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DrawEditor\Tools\SelectionTool.cs" />
-    <Compile Include="DrawEditor\Tools\ToolBase.cs" />
-    <Compile Include="DrawEditor\IVisualContainer.cs" />
-    <Compile Include="DrawEditor\Controls\RulerBox.cs" />
-    <Compile Include="DrawEditor\VisualContainer.cs" />
-    <Compile Include="DrawEditor\Tools\VisualTool.cs" />
-    <Compile Include="DrawEditor\VisualItem.cs" />
+    <Compile Include="VisualEditor\Tools\SelectionTool.cs" />
+    <Compile Include="VisualEditor\Tools\ToolBase.cs" />
+    <Compile Include="VisualEditor\IVisualContainer.cs" />
+    <Compile Include="VisualEditor\Controls\RulerBox.cs" />
+    <Compile Include="VisualEditor\VisualContainer.cs" />
+    <Compile Include="VisualEditor\Tools\VisualTool.cs" />
+    <Compile Include="VisualEditor\VisualItem.cs" />
     <Compile Include="Render\Scene.cs" />
     <Compile Include="Render\Visuals\CutItemVisual.cs" />
     <Compile Include="Render\Visuals\PcbItemVisual.cs" />
     <Compile Include="Render\Visuals\PanelItemVisual.cs" />
-    <Compile Include="Render\Visuals\ProjectVisual.cs" />
+    <Compile Include="Render\Visuals\PanelVisual.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\IAppService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
@@ -113,7 +113,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DrawEditor\ViewPoint.cs" />
+    <Compile Include="VisualEditor\ViewPoint.cs" />
     <Compile Include="View\PanelEditorView.xaml.cs">
       <DependentUpon>PanelEditorView.xaml</DependentUpon>
     </Compile>

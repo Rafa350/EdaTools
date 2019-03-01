@@ -58,6 +58,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Board\BoardExtensions.cs" />
     <Compile Include="Model\Connectivity\ConnectivityAnchor.cs" />
     <Compile Include="Model\Connectivity\ConnectivityEdge.cs" />
     <Compile Include="Model\Connectivity\ConnectivityItem.cs" />

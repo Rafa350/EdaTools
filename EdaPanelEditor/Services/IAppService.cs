@@ -12,6 +12,6 @@
 
         string FileName { get; }
         bool IsDirty { get; }
-        Project Project { get; }
+        Panel Project { get; }
     }
 }

@@ -1,5 +1,6 @@
-﻿namespace MikroPic.EdaTools.v1.PanelEditor.DrawEditor.Controls {
+﻿namespace MikroPic.EdaTools.v1.PanelEditor.VisualEditor.Controls {
 
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Windows;
     using System.Windows.Media;
@@ -8,9 +9,6 @@
 
         public static readonly DependencyProperty TransformMatrixProperty;
         public static readonly DependencyProperty VisualProperty;
-        //public static readonly DependencyProperty SelectionModeProperty;
-        //public static readonly DependencyProperty SelectedItemProperty;
-        //public static readonly DependencyProperty SelectedItemsProperty;
 
         private readonly VisualItem contentVisual;
 
@@ -73,6 +71,39 @@
         private void TransformationMatrixPropertyChanged(DependencyPropertyChangedEventArgs e) {
 
             contentVisual.Transform = new MatrixTransform((Matrix) e.NewValue);
+        }
+
+        /// <summary>
+        /// Obte els items en una regio rectangular determinada.
+        /// </summary>
+        /// <param name="r">Rectangle de la zona.</param>
+        /// <returns>Enumerador dels items trobats. Null si no hi ha cap.</returns>
+        /// 
+        public IEnumerable<VisualItem> GetVisuals(Rect r) {
+
+            if (contentVisual.Children.Count == 1) {
+
+                List<VisualItem> visuals = new List<VisualItem>();
+
+                var visual = contentVisual.Children[0];
+
+                var hitTestParameters = new GeometryHitTestParameters(new RectangleGeometry(r));
+
+                var resultCallback = new HitTestResultCallback(
+                    result => HitTestResultBehavior.Continue);
+
+                var filterCallback = new HitTestFilterCallback(
+                    element => {
+                        visuals.Add(element as VisualItem);
+                        return HitTestFilterBehavior.Continue;
+                    });
+
+                VisualTreeHelper.HitTest(visual, filterCallback, resultCallback, hitTestParameters);
+
+                return visuals;
+            }
+            else
+                return null;
         }
 
         /// <summary>

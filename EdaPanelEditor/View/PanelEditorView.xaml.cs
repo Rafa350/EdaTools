@@ -5,9 +5,9 @@
     using System.Windows.Controls;
     using System.Windows.Input;
     using MikroPic.EdaTools.v1.Panel.Model;
-    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
-    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor.Controls;
-    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor.Tools;
+    using MikroPic.EdaTools.v1.PanelEditor.VisualEditor;
+    using MikroPic.EdaTools.v1.PanelEditor.VisualEditor.Controls;
+    using MikroPic.EdaTools.v1.PanelEditor.VisualEditor.Tools;
     using MikroPic.EdaTools.v1.PanelEditor.Render;
 
     public partial class PanelEditorView : UserControl {
@@ -28,7 +28,7 @@
             //
             ProjectProperty = DependencyProperty.Register(
                 "Project",
-                typeof(Project),
+                typeof(v1.Panel.Model.Panel),
                 typeof(PanelEditorView),
                 new FrameworkPropertyMetadata(
                     null,
@@ -88,7 +88,8 @@
         /// 
         private void SelectionTool_MouseUp(object sender) {
 
-            Rect selectionRect = selectionTool.Selection;
+            Rect selectionRect = viewPoint.TransformToWorld(selectionTool.Selection);
+            contentBox.GetVisuals(selectionRect);
         }
 
         /// <summary>
@@ -133,7 +134,7 @@
                     new Size(contentBox.ActualWidth, contentBox.ActualHeight),
                     new Rect(0, 0, Project.Size.Width, Project.Size.Height));
 
-                scene.Initialize(Project);
+                scene.Initialize((v1.Panel.Model.Panel)Project);
                 contentBox.Visual = scene.Visual;
 
                 hRulerBox.Visibility = Visibility.Visible;
@@ -257,9 +258,9 @@
         /// Obte o asigna la propietat 'Project'.
         /// </summary>
         /// 
-        public Project Project {
+        public MikroPic.EdaTools.v1.Panel.Model.Panel Project {
             get {
-                return (Project) GetValue(ProjectProperty);
+                return (v1.Panel.Model.Panel)GetValue(ProjectProperty);
             }
             set {
                 SetValue(ProjectProperty, value);

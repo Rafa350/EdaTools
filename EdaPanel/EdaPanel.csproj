@@ -55,7 +55,8 @@
     <Compile Include="Model\IO\ProjectStreamWriter.cs" />
     <Compile Include="Model\IPanelVisitable.cs" />
     <Compile Include="Model\IPanelVisitor.cs" />
-    <Compile Include="Model\Project.cs" />
+    <Compile Include="Model\Panel.cs" />
+    <Compile Include="Model\PanelExtensions.cs" />
     <Compile Include="Model\PanelItem.cs" />
     <Compile Include="Model\Visitors\DefaultPanelVisitor.cs" />
     <Compile Include="PanelProcessor.cs" />

@@ -5,7 +5,7 @@
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.WPF;
     using MikroPic.EdaTools.v1.Panel.Model.Items;
-    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
+    using MikroPic.EdaTools.v1.PanelEditor.VisualEditor;
 
     public sealed class CutItemVisual: PanelItemVisual {
 

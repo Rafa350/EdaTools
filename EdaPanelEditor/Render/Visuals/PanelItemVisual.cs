@@ -2,7 +2,7 @@
 
     using System;
     using MikroPic.EdaTools.v1.Panel.Model;
-    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
+    using MikroPic.EdaTools.v1.PanelEditor.VisualEditor;
 
     public abstract class PanelItemVisual: VisualItem {
 

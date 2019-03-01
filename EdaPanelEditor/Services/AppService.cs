@@ -9,7 +9,7 @@
     public sealed class AppService : IAppService {
 
         private readonly Application application;
-        private Project project;
+        private Panel project;
         private string fileName;
         private bool isDirty;
 
@@ -36,7 +36,7 @@
             fileName = "unnamed.xpnl";
             isDirty = true;
 
-            project = new Project();
+            project = new Panel();
         }
 
         /// <summary>
@@ -104,7 +104,7 @@
         /// Obte el projecte.
         /// </summary>
         /// 
-        public Project Project {
+        public Panel Project {
             get {
                 return project;
             }

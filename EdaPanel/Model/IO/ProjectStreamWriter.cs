@@ -33,7 +33,7 @@
             /// </summary>
             /// <param name="board">La placa a visitar.</param>
             /// 
-            public override void Visit(Project panel) {
+            public override void Visit(Panel panel) {
 
                 writer.WriteStartElement("panel");
 
@@ -69,7 +69,7 @@
         /// </summary>
         /// <param name="board">La placa.</param>
         /// 
-        public void Write(Project panel) {
+        public void Write(Panel panel) {
 
             if (panel == null)
                 throw new ArgumentNullException("panel");

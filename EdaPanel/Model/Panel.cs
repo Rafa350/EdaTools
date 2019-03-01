@@ -5,7 +5,7 @@
     using System;
     using System.Collections.Generic;
 
-    public sealed class Project: IPanelVisitable {
+    public sealed class Panel: IPanelVisitable {
 
         private Size size;
         private Collection<PanelItem> items;

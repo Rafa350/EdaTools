@@ -60,7 +60,7 @@
                     Console.WriteLine();
                 }
 
-                Project project = LoadProject(projectPath);
+                Panel project = LoadProject(projectPath);
                 Board board = GenerateBoard(project, sourceFolder);
                 SaveBoard(board, targetPath);
 
@@ -77,12 +77,12 @@
         /// <param name="projectPath">Ruta del projecte projecte.</param>
         /// <returns>El projecte.</returns>
         /// 
-        private static Project LoadProject(string projectPath) {
+        private static Panel LoadProject(string projectPath) {
 
             using (Stream stream = new FileStream(projectPath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
 
                 ProjectStreamReader reader = new ProjectStreamReader(stream);
-                Project project = reader.Read();
+                Panel project = reader.Read();
 
                 return project;
             }
@@ -109,7 +109,7 @@
         /// <param name="sourceFolder">Carpeta dels fitxers d'entrada.</param>
         /// <returns>La placa generada.</returns>
         /// 
-        private static Board GenerateBoard(Project project, string sourceFolder) {
+        private static Board GenerateBoard(Panel project, string sourceFolder) {
 
             Board targetBoard = new Board();
 

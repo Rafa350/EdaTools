@@ -4,7 +4,7 @@
     using MikroPic.EdaTools.v1.Panel.Model.Items;
     using MikroPic.EdaTools.v1.Panel.Model.Visitors;
     using MikroPic.EdaTools.v1.PanelEditor.Render.Visuals;
-    using MikroPic.EdaTools.v1.PanelEditor.DrawEditor;
+    using MikroPic.EdaTools.v1.PanelEditor.VisualEditor;
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Media;
@@ -22,9 +22,9 @@
                 this.itemMap = itemMap;
             }
 
-            public override void Visit(Project project) {
+            public override void Visit(Panel project) {
 
-                ProjectVisual projectVisual = new ProjectVisual(parentVisual, project);
+                PanelVisual projectVisual = new PanelVisual(parentVisual, project);
                 projectVisual.Renderize();
 
                 base.Visit(project);
@@ -48,7 +48,7 @@
         private readonly Dictionary<PanelItem, PanelItemVisual> itemMap = new Dictionary<PanelItem, PanelItemVisual>();
         private readonly VisualItem visual = new VisualItem();
 
-        public void Initialize(Project project) {
+        public void Initialize(Panel project) {
 
             IPanelVisitor visitor = new Visitor(visual, itemMap);
             project.AcceptVisitor(visitor);
