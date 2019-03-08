@@ -1,15 +1,22 @@
 ﻿namespace MikroPic.EdaTools.v1.Panel.Model {
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Collections;
     using System;
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
+    using MikroPic.EdaTools.v1.Base.Geometry;
+    using MikroPic.EdaTools.v1.Collections;
 
     public sealed class Panel: IPanelVisitable {
 
         private Size size;
         private Collection<PanelItem> items;
+        private static readonly ConditionalWeakTable<PanelItem, Panel> itemsMap = new ConditionalWeakTable<PanelItem, Panel>();
 
+         public void  AcceptVisitor(IPanelVisitor visitor) {
+
+            visitor.Visit(this);
+        }     
+        
         /// <summary>
         /// Afegeix un element
         /// </summary>
@@ -24,11 +31,7 @@
                 items = new Collection<PanelItem>();
 
             items.Add(item);
-        }
-
-        public void  AcceptVisitor(IPanelVisitor visitor) {
-
-            visitor.Visit(this);
+            itemsMap.Add(item, this);
         }
 
         /// <summary>
@@ -43,6 +46,20 @@
 
             foreach (var element in item)
                 AddElement(element);
+        }
+
+        /// <summary>
+        /// Obte el panell al que pertany un item
+        /// </summary>
+        /// <param name="item">El item.</param>
+        /// <returns>El panell al que pertany. Null si no pertany a cap.</returns>
+        /// 
+        public static Panel GetPanel(PanelItem item) {
+
+            if (itemsMap.TryGetValue(item, out Panel panel))
+                return panel;
+            else
+                return null;
         }
 
         /// <summary>
