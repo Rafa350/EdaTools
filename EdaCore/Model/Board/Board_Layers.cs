@@ -30,10 +30,6 @@
                 throw new InvalidOperationException(
                     String.Format("La capa '{0}', ya esta asignada a esta placa.", name));
 
-            if (layers == null)
-                layers = new Dictionary<string, Layer>();
-            layers.Add(name, layer);
-
             if (layer.IsTopCopper)
                 topLayer = layer;
             else if (layer.IsBottomCopper)
@@ -44,6 +40,10 @@
                 else
                     throw new InvalidOperationException("Solo puede haber una capa con la funcion 'Outline'");
             }
+
+            if (layers == null)
+                layers = new Dictionary<string, Layer>();
+            layers.Add(name, layer);
         }
 
         /// <summary>
@@ -179,12 +179,20 @@
             return list;
         }
 
+        /// <summary>
+        /// Obte la capa superior.
+        /// </summary>
+        /// 
         public Layer TopLayer {
             get {
                 return topLayer;
             }
         }
 
+        /// <summary>
+        /// Obte la capa inferior.
+        /// </summary>
+        /// 
         public Layer BottomLayer {
             get {
                 return bottomLayer;

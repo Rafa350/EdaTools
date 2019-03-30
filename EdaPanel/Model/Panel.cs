@@ -10,7 +10,6 @@
 
         private Size size;
         private Collection<PanelItem> items;
-        private static readonly ConditionalWeakTable<PanelItem, Panel> itemsMap = new ConditionalWeakTable<PanelItem, Panel>();
 
          public void  AcceptVisitor(IPanelVisitor visitor) {
 
@@ -31,7 +30,6 @@
                 items = new Collection<PanelItem>();
 
             items.Add(item);
-            itemsMap.Add(item, this);
         }
 
         /// <summary>
@@ -46,20 +44,6 @@
 
             foreach (var element in item)
                 AddElement(element);
-        }
-
-        /// <summary>
-        /// Obte el panell al que pertany un item
-        /// </summary>
-        /// <param name="item">El item.</param>
-        /// <returns>El panell al que pertany. Null si no pertany a cap.</returns>
-        /// 
-        public static Panel GetPanel(PanelItem item) {
-
-            if (itemsMap.TryGetValue(item, out Panel panel))
-                return panel;
-            else
-                return null;
         }
 
         /// <summary>
