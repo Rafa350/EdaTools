@@ -6,7 +6,7 @@
         private string description;
 
         /// <summary>
-        /// Obte o asignma el nom de la biblioteca.
+        /// Obte o asigna el nom de la biblioteca.
         /// </summary>
         /// 
         public string Name {
@@ -19,7 +19,7 @@
         }
 
         /// <summary>
-        /// Obte o asigna la descripcio de la bibnlioteca.
+        /// Obte o asigna la descripcio de la biblioteca.
         /// </summary>
         /// 
         public string Description {

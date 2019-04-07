@@ -50,6 +50,11 @@
                     new FileStream(targetPath, FileMode.Create, FileAccess.Write, FileShare.None));
                 netWriter.Write(net);
             }
+
+            else if (String.Compare(Path.GetExtension(sourcePath), ".lbr", true) == 0) {
+
+                Library library = importer.ReadLibrary(sourcePath);
+            }
         }
 
         /// <summary>

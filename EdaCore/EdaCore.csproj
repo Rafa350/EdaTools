@@ -58,6 +58,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Import\KiCad\KiCadImporter.cs" />
     <Compile Include="Model\Board\BoardExtensions.cs" />
     <Compile Include="Model\Connectivity\ConnectivityAnchor.cs" />
     <Compile Include="Model\Connectivity\ConnectivityEdge.cs" />
@@ -131,9 +132,7 @@
     <Compile Include="Model\Net\Visitors\DefaultNetVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Import\KiCad\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Model\Board\IO\Schemas\XBRD.xsd">
       <SubType>Designer</SubType>

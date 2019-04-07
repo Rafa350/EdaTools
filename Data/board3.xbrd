@@ -15,7 +15,7 @@
             <layer side="top" tag="Names" function="design" />
             <layer side="bottom" tag="Names" function="design" />
             <layer side="top" tag="Values" function="design" />
-            <layer side="bottom" tag="Values" function="design" />
+            <layer side="bottom" tag="Values" function="unknown" />
             <layer side="top" tag="Stop" function="design" />
             <layer side="bottom" tag="Stop" function="design" />
             <layer side="top" tag="Cream" function="design" />

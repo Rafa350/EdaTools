@@ -12,6 +12,12 @@
                 return ReadBoard(stream);
         }
 
+        public Library ReadLibrary(string fileName) {
+
+            using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+                return ReadLibrary(stream);
+        }
+
         public Net ReadNet(string fileName) {
 
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -19,6 +25,7 @@
         }
 
         public abstract Board ReadBoard(Stream stream);
+        public abstract Library ReadLibrary(Stream stream);
         public abstract Net ReadNet(Stream stream);
 
     }

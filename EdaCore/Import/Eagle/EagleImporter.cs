@@ -1,16 +1,16 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Windows.Media;
+    using System.Xml;
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Base.Xml;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using MikroPic.EdaTools.v1.Core.Model.Net;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Windows.Media;
-    using System.Xml;
 
     /// <summary>
     /// Clase per importar una placa desde Eagle
@@ -29,10 +29,7 @@
         private readonly Dictionary<string, Signal> signalDict = new Dictionary<string, Signal>();
         private readonly Dictionary<Element, string> mapElementSignal = new Dictionary<Element, string>();
 
-        private Dictionary<int, string> layerNames = new Dictionary<int, string>();
-
         private Board board;
-        private Net net;
         private XmlDocument doc;
 
         /// <summary>
@@ -46,12 +43,36 @@
             doc = ReadXmlDocument(stream);
             board = new Board();
 
-            ProcessLayers();
+            XmlNode layersNode = doc.SelectSingleNode("eagle/drawing/layers");
+            IEnumerable<Layer> layers = ParseLayersNode(layersNode);
+            board.AddLayers(layers);
+
             ProcessSignals();
-            ProcessBlocks();
+            ProcessComponents();
             ProcessElements();
 
             return board;
+        }
+
+        /// <summary>
+        /// Importa una llibreria.
+        /// </summary>
+        /// <param name="stream">Stream d'entrada.</param>
+        /// <returns>La llibraria.</returns>
+        /// 
+        public override Library ReadLibrary(Stream stream) {
+
+            doc = ReadXmlDocument(stream);
+
+            XmlNode layersNode = doc.SelectSingleNode("eagle/drawing/layers");
+            IEnumerable<Layer> layers = ParseLayersNode(layersNode);
+
+            XmlNode packagesNode = doc.SelectSingleNode("eagle/drawing/library/packages");
+            IEnumerable<Component> components = ParsePackagesNode(packagesNode);
+
+            Library library = new Library();
+            library.AddComponents(components);
+            return library;
         }
 
         /// <summary>
@@ -94,23 +115,6 @@
         }
 
         /// <summary>
-        /// Procesa les capes
-        /// </summary>
-        /// 
-        private void ProcessLayers() {
-
-            // Recorre el node <layers> per crear les capes necesaries
-            //
-            foreach (XmlNode layerNode in doc.SelectNodes("eagle/drawing/layers/layer")) {
-                int layerNum = Int32.Parse(layerNode.Attributes["number"].Value);
-                Layer layer = CreateLayer(layerNum);
-                board.AddLayer(layer);
-
-                layerNames.Add(layerNum, layer.Name);
-            }
-        }
-
-        /// <summary>
         /// Procesa les senyals
         /// </summary>
         /// 
@@ -130,7 +134,7 @@
         /// Procesa els components
         /// </summary>
         /// 
-        private void ProcessBlocks() {
+        private void ProcessComponents() {
 
             // Procesa el tag <library>
             //
@@ -141,58 +145,7 @@
                 // Procesa el tag <package>
                 //
                 foreach (XmlNode packageNode in libraryNode.SelectNodes("packages/package")) {
-
-                    string packageName = packageNode.AttributeAsString("name");
-
-                    List<Element> elements = new List<Element>();
-                    foreach (XmlNode childNode in packageNode.ChildNodes) {
-                        Element element = null;
-                        switch (childNode.Name) {
-                            case "smd":
-                                element = ParseSmdNode(childNode);
-                                break;
-
-                            case "pad":
-                                element = ParsePadNode(childNode);
-                                break;
-
-                            case "text":
-                                element = ParseTextNode(childNode);
-                                break;
-
-                            case "wire":
-                                element = ParseWireNode(childNode);
-                                break;
-
-                            case "rectangle":
-                                element = ParseRectangleNode(childNode);
-                                break;
-
-                            case "circle":
-                                element = ParseCircleNode(childNode);
-                                break;
-
-                            case "polygon":
-                                element = ParsePolygonNode(childNode);
-                                break;
-
-                            case "hole":
-                                element = ParseHoleNode(childNode);
-                                break;
-
-                            case "description":
-                                break;
-
-                            default:
-                                throw new InvalidOperationException(
-                                    String.Format("No se reconoce el tag '{0}'.", childNode.Name));
-                        }
-                        if (element != null)
-                            elements.Add(element);
-                    }
-
-                    string name = String.Format("{0}@{1}", packageName, libraryName);
-                    Component component = new Component(name, elements);
+                    Component component = ParsePackageNode(packageNode, libraryName);
                     board.AddComponent(component);
                     componentDict.Add(component.Name, component);
                 }
@@ -301,16 +254,128 @@
         }
 
         /// <summary>
-        /// Procesa el node ELEMENTS.
+        /// Procesa un node 'LAYERS'.
         /// </summary>
-        /// <param name="node">El element a procesar.</param>
+        /// <param name="layersNode">El node a procesar.</param>
+        /// <returns>La llista de capes.</returns>
+        /// 
+        private IEnumerable<Layer> ParseLayersNode(XmlNode layersNode) {
+
+            List<Layer> layers = new List<Layer>();
+
+            foreach (XmlNode layerNode in layersNode) {
+                Layer layer = ParseLayerNode(layerNode);
+                layers.Add(layer);
+            }
+
+            return layers;
+        }
+
+        /// <summary>
+        /// Procesa un node 'LAYER'
+        /// </summary>
+        /// <param name="layerNode">El node a procesar.</param>
+        /// <returns>L'objecte 'Layer' creat.</returns>
+        /// 
+        private Layer ParseLayerNode(XmlNode layerNode) {
+
+            int layerNum = Int32.Parse(layerNode.Attributes["number"].Value);
+            Layer layer = new Layer(GetLayerSide(layerNum), GetLayerTag(layerNum), GetLayerFunction(layerNum));
+            //layerNames.Add(layerNum, layer.Name);
+
+            return layer;
+        }
+
+        /// <summary>
+        /// Procesa el node 'PACKAGES'
+        /// </summary>
+        /// <param name="packagesNode">El node a procesar.</param>
+        /// <returns>La llista de components.</returns>
+        /// 
+        private IEnumerable<Component> ParsePackagesNode(XmlNode packagesNode) {
+
+            List<Component> components = new List<Component>();
+            foreach (XmlNode packageNode in packagesNode.ChildNodes) {
+                Component component = ParsePackageNode(packageNode);
+                components.Add(component);
+            }
+
+            return components;
+        }
+
+        /// <summary>
+        /// Procesa un node 'PACKAGE'.
+        /// </summary>
+        /// <param name="packageNode">El node a procesar.</param>
+        /// <returns>El component.</returns>
+        /// 
+        private Component ParsePackageNode(XmlNode packageNode, string libraryName = null) {
+
+            string packageName = packageNode.AttributeAsString("name");
+
+            List<Element> elements = new List<Element>();
+            foreach (XmlNode elementNode in packageNode.ChildNodes) {
+                Element element = null;
+                switch (elementNode.Name) {
+                    case "smd":
+                        element = ParseSmdNode(elementNode);
+                        break;
+
+                    case "pad":
+                        element = ParsePadNode(elementNode);
+                        break;
+
+                    case "text":
+                        element = ParseTextNode(elementNode);
+                        break;
+
+                    case "wire":
+                        element = ParseWireNode(elementNode);
+                        break;
+
+                    case "rectangle":
+                        element = ParseRectangleNode(elementNode);
+                        break;
+
+                    case "circle":
+                        element = ParseCircleNode(elementNode);
+                        break;
+
+                    case "polygon":
+                        element = ParsePolygonNode(elementNode);
+                        break;
+
+                    case "hole":
+                        element = ParseHoleNode(elementNode);
+                        break;
+
+                    case "description":
+                        break;
+
+                    default:
+                        throw new InvalidOperationException(
+                            String.Format("No se reconoce el tag '{0}'.", elementNode.Name));
+                }
+                if (element != null)
+                    elements.Add(element);
+            }
+
+            string name = libraryName == null ? packageName : String.Format("{0}@{1}", packageName, libraryName);
+            Component component = new Component(name, elements);
+            return component;
+        }
+
+        /// <summary>
+        /// Procesa el node 'ELEMENTS'.
+        /// </summary>
+        /// <param name="elementsNode">El node a procesar.</param>
         /// <returns>La llista d'elements.</returns>
         /// 
-        private IEnumerable<Part> ParseElementsNode(XmlNode node) {
+        private IEnumerable<Part> ParseElementsNode(XmlNode elementsNode) {
 
             List<Part> parts = new List<Part>();
-            foreach (XmlNode childNode in node.ChildNodes) {
-                Part part = ParseElementNode(childNode);
+            foreach (XmlNode elementNode in elementsNode.ChildNodes) {
+                Part part = ParseElementNode(elementNode);
                 parts.Add(part);
             }
 
@@ -318,7 +383,7 @@
         }
 
         /// <summary>
-        /// Procesa un node SIGNAL
+        /// Procesa un node 'SIGNAL'
         /// </summary>
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte Signal creat.</returns>
@@ -331,7 +396,7 @@
         }
 
         /// <summary>
-        /// Procesa un node PAD.
+        /// Procesa un node 'PAD'.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'ThPadElement' creat.</returns>
@@ -385,7 +450,7 @@
         }
 
         /// <summary>
-        /// Procesa un node SMD.
+        /// Procesa un node 'SMD'.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'SmdPadElement' creat.</returns>
@@ -432,7 +497,7 @@
         }
 
         /// <summary>
-        /// Procesa un node VIA.
+        /// Procesa un node 'VIA'.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'ViaElement' creat.</returns>
@@ -481,7 +546,7 @@
         }
 
         /// <summary>
-        /// Procesa un node TEXT.
+        /// Procesa un node 'TEXT'.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'TextElement' creat.</returns>
@@ -519,7 +584,7 @@
         }
 
         /// <summary>
-        /// Procesa un node WIRE.
+        /// Procesa un node 'WIRE'.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'LineElement' o ArcElement' creat.</returns>
@@ -555,7 +620,7 @@
         }
 
         /// <summary>
-        /// Procesa un node RECTANGLE.
+        /// Procesa un node 'RECTANGLE'.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'RectangleElement' creat.</returns>
@@ -592,7 +657,7 @@
         }
 
         /// <summary>
-        /// Procesa un node CIRCLE.
+        /// Procesa un node 'CIRCLE'.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'CircleElement' creat.</returns>
@@ -624,7 +689,7 @@
         }
 
         /// <summary>
-        /// Procesa un node POLYGON.
+        /// Procesa un node 'POLYGON'.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'RegionElement' creat.</returns>
@@ -668,7 +733,7 @@
         }
 
         /// <summary>
-        /// Procesa un node HOLE.
+        /// Procesa un node 'HOLE'.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'HoleElement' creat.</returns>
@@ -772,7 +837,7 @@
         }
 
         /// <summary>
-        /// Procesa un node ATTRIBUTE
+        /// Procesa un node 'ATTRIBUTE'
         /// </summary>
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'PartAttribute' creat.</returns>
@@ -819,7 +884,7 @@
         }
 
         /// <summary>
-        /// Procesa un node NETS
+        /// Procesa un node 'NETS'
         /// </summary>
         /// <param name="node">El node a procesar.</param>
         /// <returns>La coleccio d'objectes 'NetSignal' creada.</returns>
@@ -838,7 +903,7 @@
         }
 
         /// <summary>
-        /// Procesa un node NET
+        /// Procesa un node 'NET'
         /// </summary>
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'NetElement' creat.</returns>
@@ -846,7 +911,7 @@
         private NetSignal ParseNetNode(XmlNode node) {
 
             string netName = node.AttributeAsString("name");
-            
+
             List<NetConnection> netConnections = new List<NetConnection>();
             foreach (XmlNode pinrefNode in node.SelectNodes("segment/pinref")) {
                 IEnumerable<NetConnection> result = ParsePinrefNode(pinrefNode);
@@ -858,7 +923,7 @@
         }
 
         /// <summary>
-        /// Procesa un node PINREF
+        /// Procesa un node 'PINREF'
         /// </summary>
         /// <param name="node">El node a procesar.</param>
         /// <returns>La llista d'objectes 'NetConnection' creada.</returns>
@@ -999,101 +1064,160 @@
         /// 
         private string GetLayerName(int layerNum) {
 
-            return layerNames[layerNum];
+            return Layer.GetName(GetLayerSide(layerNum), GetLayerTag(layerNum));
         }
 
         /// <summary>
-        /// Crea la capa especificada pel seu identificador.
+        /// Obte l'etiqueta de la capa.
         /// </summary>
-        /// <param name="layerNum"></param>
-        /// <returns>La capa.</returns>
+        /// <param name="layerNum">Identificador de la capa.</param>
+        /// <returns>L'etiqueta.</returns>
         /// 
-        private Layer CreateLayer(int layerNum) {
+        private static string GetLayerTag(int layerNum) {
 
             switch (layerNum) {
                 case topLayerNum:
-                    return new Layer(BoardSide.Top, "Copper", LayerFunction.Signal);
-
                 case bottomLayerNum:
-                    return new Layer(BoardSide.Bottom, "Copper", LayerFunction.Signal);
+                    return "Copper";
 
                 case padsLayerNum:
-                    return new Layer(BoardSide.None, "Pads", LayerFunction.Unknown);
+                    return "Pads";
 
                 case viasLayerNum:
-                    return new Layer(BoardSide.None, "Vias", LayerFunction.Unknown);
+                    return "Vias";
 
                 case 19:
-                    return new Layer(BoardSide.None, "Unrouted", LayerFunction.Unknown);
+                    return "Unrouted";
 
                 case 20:
-                    return new Layer(BoardSide.None, "Profile", LayerFunction.Outline);
+                    return "Profile";
 
                 case 21:
-                    return new Layer(BoardSide.Top, "Place", LayerFunction.Design);
-
                 case 22:
-                    return new Layer(BoardSide.Bottom, "Place", LayerFunction.Design);
+                    return "Place";
 
                 case 25:
-                    return new Layer(BoardSide.Top, "Names", LayerFunction.Design);
-
                 case 26:
-                    return new Layer(BoardSide.Bottom, "Names", LayerFunction.Design);
+                    return "Names";
 
                 case 27:
-                    return new Layer(BoardSide.Top, "Values", LayerFunction.Design);
-
                 case 28:
-                    return new Layer(BoardSide.Bottom, "Values", LayerFunction.Design);
+                    return "Values";
 
                 case 29:
-                    return new Layer(BoardSide.Top, "Stop", LayerFunction.Design);
-
                 case 30:
-                    return new Layer(BoardSide.Bottom, "Stop", LayerFunction.Design);
+                    return "Stop";
 
                 case 31:
-                    return new Layer(BoardSide.Top, "Cream", LayerFunction.Design);
-
                 case 32:
-                    return new Layer(BoardSide.Bottom, "Cream", LayerFunction.Design);
+                    return "Cream";
 
                 case 35:
-                    return new Layer(BoardSide.Top, "Glue", LayerFunction.Design);
-
                 case 36:
-                    return new Layer(BoardSide.Bottom, "Glue", LayerFunction.Design);
+                    return "Glue";
 
                 case 39:
-                    return new Layer(BoardSide.Top, "Keepout", LayerFunction.Design);
-
                 case 40:
-                    return new Layer(BoardSide.Bottom, "Keepout", LayerFunction.Design);
+                    return "Keepout";
 
                 case 41:
-                    return new Layer(BoardSide.Top, "Restrict", LayerFunction.Design);
-
                 case 42:
-                    return new Layer(BoardSide.Bottom, "Restrict", LayerFunction.Design);
+                    return "Restrict";
 
                 case 43:
-                    return new Layer(BoardSide.None, "ViaRestrict", LayerFunction.Unknown);
+                    return "ViaRestrict";
 
                 case drillsLayerNum:
-                    return new Layer(BoardSide.None, "Drills", LayerFunction.Unknown);
+                    return "Drills";
 
                 case holesLayerNum:
-                    return new Layer(BoardSide.None, "Holes", LayerFunction.Unknown);
+                    return "Holes";
 
                 case 51:
-                    return new Layer(BoardSide.Top, "Document", LayerFunction.Design);
-
                 case 52:
-                    return new Layer(BoardSide.Bottom, "Document", LayerFunction.Design);
+                    return "Document";
 
                 default:
-                    return new Layer(BoardSide.None, "Unknown" + layerNum.ToString(), LayerFunction.Unknown);
+                    return "Unknown" + layerNum.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Obte la cara a la que pertany la capa
+        /// </summary>
+        /// <param name="layerNum">Identificador de la capa.</param>
+        /// <returns>La cara a la que pertany.</returns>
+        /// 
+        private static BoardSide GetLayerSide(int layerNum) {
+
+            switch (layerNum) {
+                case topLayerNum:
+                case 21:
+                case 25:
+                case 27:
+                case 29:
+                case 31:
+                case 35:
+                case 39:
+                case 41:
+                case 51:
+                    return BoardSide.Top;
+
+                case bottomLayerNum:
+                case 22:
+                case 26:
+                case 28:
+                case 30:
+                case 32:
+                case 36:
+                case 40:
+                case 42:
+                case 52:
+                    return BoardSide.Bottom;
+
+                default:
+                    return BoardSide.None;
+            }
+        }
+
+        /// <summary>
+        /// Obte la funcio de la capa.
+        /// </summary>
+        /// <param name="layerNum">El identificador de la capa.</param>
+        /// <returns>La funcio de la capa.</returns>
+        /// 
+        private static LayerFunction GetLayerFunction(int layerNum) {
+
+            switch (layerNum) {
+                case topLayerNum:
+                case bottomLayerNum:
+                    return LayerFunction.Signal;
+
+                case 20:
+                    return LayerFunction.Outline;
+
+                case 21:
+                case 22:
+                case 25:
+                case 26:
+                case 27:
+                case 28:
+                case 29:
+                case 30:
+                case 31:
+                case 32:
+                case 35:
+                case 36:
+                case 39:
+                case 40:
+                case 41:
+                case 42:
+                case 51:
+                case 52:
+                    return LayerFunction.Design;
+
+                default:
+                    return LayerFunction.Unknown;
             }
         }
 
