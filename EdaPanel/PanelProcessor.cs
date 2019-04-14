@@ -247,7 +247,7 @@
             targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Right, rect.Top), new Point(rect.Right, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
         }
 
-        private sealed class TransformVisitor: DefaultVisitor { 
+        private sealed class TransformVisitor: DefaultBoardVisitor { 
 
             private readonly Transformation transformation;
 

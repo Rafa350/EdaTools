@@ -5,6 +5,7 @@
     public interface IBoardVisitor {
 
         void Visit(Board board);
+        void Visit(Library library);
         void Visit(Layer layer);
         void Visit(Part part);
         void Visit(PartAttribute attribute);

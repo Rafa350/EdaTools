@@ -5,7 +5,7 @@
     /// <summary>
     /// Clase per visitar els elements.
     /// </summary>
-    public abstract class ElementVisitor : DefaultVisitor {
+    public abstract class ElementVisitor : DefaultBoardVisitor {
 
         private Board currentBoard;
         private Part currentPart;

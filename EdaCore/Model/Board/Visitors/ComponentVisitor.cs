@@ -2,7 +2,7 @@
 
     using System;
 
-    public abstract class ComponentVisitor : DefaultVisitor {
+    public abstract class ComponentVisitor : DefaultBoardVisitor {
 
         private Board currentBoard;
         private Component currentComponent;

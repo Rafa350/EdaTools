@@ -70,7 +70,7 @@
             XmlNode packagesNode = doc.SelectSingleNode("eagle/drawing/library/packages");
             IEnumerable<Component> components = ParsePackagesNode(packagesNode);
 
-            Library library = new Library();
+            Library library = new Library("unnamed");
             library.AddComponents(components);
             return library;
         }

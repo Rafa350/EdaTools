@@ -97,7 +97,7 @@
     <Compile Include="Model\Board\Part_Attributes.cs" />
     <Compile Include="Model\Board\PartExtensions.cs" />
     <Compile Include="Model\Board\Visitors\ComponentVisitor.cs" />
-    <Compile Include="Model\Board\Visitors\DefaultVisitor.cs" />
+    <Compile Include="Model\Board\Visitors\DefaultBoardVisitor.cs" />
     <Compile Include="Model\Board\Elements\ArcElement.cs" />
     <Compile Include="Model\Board\Element.cs" />
     <Compile Include="Model\Board\Elements\HoleElement.cs" />

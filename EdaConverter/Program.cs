@@ -54,6 +54,10 @@
             else if (String.Compare(Path.GetExtension(sourcePath), ".lbr", true) == 0) {
 
                 Library library = importer.ReadLibrary(sourcePath);
+
+                BoardStreamWriter boardWriter = new BoardStreamWriter(
+                    new FileStream(targetPath, FileMode.Create, FileAccess.Write, FileShare.None));
+                boardWriter.Write(library);
             }
         }
 

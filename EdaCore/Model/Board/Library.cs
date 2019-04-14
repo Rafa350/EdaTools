@@ -1,9 +1,36 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    public sealed partial class Library {
+    using System;
+    using System.Collections.Generic;
+
+    public sealed partial class Library: IBoardVisitable {
 
         private string name;
         private string description;
+
+        public Library(string name) {
+
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            this.name = name;
+        }
+
+        public Library(string name, string description, IEnumerable<Component> components) {
+
+            if (String.IsNullOrEmpty(name))
+                throw new ArgumentNullException("name");
+
+            this.name = name;
+            this.description = description;
+            if (components != null)
+                AddComponents(components);
+        }
+
+        public void AcceptVisitor(IBoardVisitor visitor) {
+
+            visitor.Visit(this);
+        }
 
         /// <summary>
         /// Obte o asigna el nom de la biblioteca.

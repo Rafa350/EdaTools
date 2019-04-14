@@ -1,12 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
+    using System;
+    using System.IO;
+    using System.Xml;
     using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Base.Xml;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
-    using System;
-    using System.IO;
-    using System.Xml;
 
     /// <summary>
     /// Clase per la escriptura de plaques en un stream.
@@ -14,9 +14,13 @@
     /// 
     public sealed class BoardStreamWriter {
 
+        private const int version = 213;
+        private const string distanceUnits = "mm";
+        private const string angleUnits = "deg";
+
         private readonly Stream stream;
 
-        private class Visitor : DefaultVisitor {
+        private class Visitor : DefaultBoardVisitor {
 
             private readonly XmlWriter writer;
             private Board currentBoard;
@@ -50,9 +54,11 @@
                 if (line.LineCap != LineElement.LineCapStyle.Round)
                     writer.WriteAttributeEnum("lineCap", line.LineCap);
 
-                Signal signal = currentBoard.GetSignal(line, currentPart, false);
-                if (signal != null)
-                    writer.WriteAttributeString("signal", signal.Name);
+                if (currentBoard != null) {
+                    Signal signal = currentBoard.GetSignal(line, currentPart, false);
+                    if (signal != null)
+                        writer.WriteAttributeString("signal", signal.Name);
+                }
 
                 writer.WriteEndElement();
             }
@@ -75,9 +81,11 @@
                 if (arc.LineCap != LineElement.LineCapStyle.Round)
                     writer.WriteAttributeEnum("lineCap", arc.LineCap);
 
-                Signal signal = currentBoard.GetSignal(arc, currentPart, false);
-                if (signal != null)
-                    writer.WriteAttributeString("signal", signal.Name);
+                if (currentBoard != null) {
+                    Signal signal = currentBoard.GetSignal(arc, currentPart, false);
+                    if (signal != null)
+                        writer.WriteAttributeString("signal", signal.Name);
+                }
 
                 writer.WriteEndElement();
             }
@@ -185,9 +193,11 @@
                 if (!pad.Roundness.IsZero)
                     writer.WriteAttributeString("roundness", XmlTypeFormater.FormatRatio(pad.Roundness));
 
-                Signal signal = currentBoard.GetSignal(pad, currentPart, false);
-                if (signal != null)
-                    writer.WriteAttributeString("signal", signal.Name);
+                if (currentBoard != null) {
+                    Signal signal = currentBoard.GetSignal(pad, currentPart, false);
+                    if (signal != null)
+                        writer.WriteAttributeString("signal", signal.Name);
+                }
 
                 writer.WriteEndElement();
             }
@@ -211,9 +221,11 @@
                 if (pad.Shape != ThPadElement.ThPadShape.Circle)
                     writer.WriteAttributeEnum("shape", pad.Shape);
 
-                Signal signal = currentBoard.GetSignal(pad, currentPart, false);
-                if (signal != null)
-                    writer.WriteAttributeString("signal", signal.Name);
+                if (currentBoard != null) {
+                    Signal signal = currentBoard.GetSignal(pad, currentPart, false);
+                    if (signal != null)
+                        writer.WriteAttributeString("signal", signal.Name);
+                }
 
                 writer.WriteEndElement();
             }
@@ -279,9 +291,12 @@
                 }
                 if (region.Clearance > 0)
                     writer.WriteAttributeString("clearance", XmlTypeFormater.FormatNumber(region.Clearance));
-                Signal signal = currentBoard.GetSignal(region, currentPart, false);
-                if (signal != null)
-                    writer.WriteAttributeString("signal", signal.Name);
+
+                if (currentBoard != null) {
+                    Signal signal = currentBoard.GetSignal(region, currentPart, false);
+                    if (signal != null)
+                        writer.WriteAttributeString("signal", signal.Name);
+                }
 
                 foreach (var segment in region.Segments) {
                     writer.WriteStartElement("segment");
@@ -372,9 +387,11 @@
                 if (via.Type != ViaElement.ViaType.Through)
                     writer.WriteAttributeEnum("type", via.Type);
 
-                Signal signal = currentBoard.GetSignal(via, null, false);
-                if (signal != null)
-                    writer.WriteAttributeString("signal", signal.Name);
+                if (currentBoard != null) {
+                    Signal signal = currentBoard.GetSignal(via, null, false);
+                    if (signal != null)
+                        writer.WriteAttributeString("signal", signal.Name);
+                }
 
                 writer.WriteEndElement();
             }
@@ -421,6 +438,8 @@
                 writer.WriteStartElement("component");
 
                 writer.WriteAttributeString("name", component.Name);
+                if (!String.IsNullOrEmpty(component.Description))
+                    writer.WriteAttributeString("description", component.Description);
 
                 if (component.HasElements) {
                     writer.WriteStartElement("elements");
@@ -466,8 +485,8 @@
 
                 if (board.HasComponents) {
                     writer.WriteStartElement("components");
-                    foreach (var block in board.Components)
-                        block.AcceptVisitor(this);
+                    foreach (var component in board.Components)
+                        component.AcceptVisitor(this);
                     writer.WriteEndElement();
                 }
 
@@ -482,6 +501,29 @@
                     writer.WriteStartElement("elements");
                     foreach (var element in board.Elements)
                         element.AcceptVisitor(this);
+                    writer.WriteEndElement();
+                }
+
+                writer.WriteEndElement();
+            }
+
+            /// <summary>
+            /// Visita una llibraria
+            /// </summary>
+            /// <param name="library">La llibraria.</param>
+            /// 
+            public override void Visit(Library library) {
+
+                writer.WriteStartElement("library");
+
+                writer.WriteAttributeString("name", library.Name);
+                if (!String.IsNullOrEmpty(library.Description))
+                    writer.WriteAttributeString("description", library.Description);
+
+                if (library.HasComponents) {
+                    writer.WriteStartElement("components");
+                    foreach (var component in library.Components)
+                        component.AcceptVisitor(this);
                     writer.WriteEndElement();
                 }
 
@@ -525,13 +567,47 @@
                 writer.WriteStartDocument();
 
                 writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/XBRD.xsd");
-                writer.WriteAttributeString("version", "213");
+                writer.WriteAttributeInteger("version", version);
                 writer.WriteAttributeString("documentType", "board");
-                writer.WriteAttributeString("distanceUnits", "mm");
-                writer.WriteAttributeString("angleUnits", "deg");
+                writer.WriteAttributeString("distanceUnits", distanceUnits);
+                writer.WriteAttributeString("angleUnits", angleUnits);
 
                 IBoardVisitor visitor = new Visitor(writer);
                 board.AcceptVisitor(visitor);
+
+                writer.WriteEndElement();
+
+                writer.WriteEndDocument();
+            }
+        }
+
+        /// <summary>
+        /// Escriu la placa en el stream de sortida.
+        /// </summary>
+        /// <param name="library">La placa.</param>
+        /// 
+        public void Write(Library library) {
+
+            if (library == null)
+                throw new ArgumentNullException("library");
+
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.IndentChars = "    ";
+            settings.CloseOutput = true;
+
+            using (XmlWriter writer = XmlWriter.Create(stream, settings)) {
+
+                writer.WriteStartDocument();
+
+                writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/XLIB.xsd");
+                writer.WriteAttributeInteger("version", version);
+                writer.WriteAttributeString("documentType", "componentLibrary");
+                writer.WriteAttributeString("distanceUnits", distanceUnits);
+                writer.WriteAttributeString("angleUnits", angleUnits);
+
+                IBoardVisitor visitor = new Visitor(writer);
+                library.AcceptVisitor(visitor);
 
                 writer.WriteEndElement();
 

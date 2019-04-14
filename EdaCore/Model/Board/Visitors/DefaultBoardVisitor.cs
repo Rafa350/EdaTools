@@ -8,9 +8,12 @@
     /// pero no fa cap accio.
     /// </summary>
     /// 
-    public abstract class DefaultVisitor: IBoardVisitor {
+    public abstract class DefaultBoardVisitor: IBoardVisitor {
 
         public virtual void Visit(Board board) {
+        }
+
+        public virtual void Visit(Library library) {
         }
 
         public virtual void Visit(Layer layer) {

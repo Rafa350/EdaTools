@@ -4,7 +4,7 @@
     using System;
     using System.Collections.Generic;
 
-    public abstract class SignalVisitor : DefaultVisitor {
+    public abstract class SignalVisitor : DefaultBoardVisitor {
 
         private Board currentBoard;
         private Signal currentSignal;

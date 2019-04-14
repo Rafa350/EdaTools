@@ -10,6 +10,7 @@
     public sealed partial class Component : IBoardVisitable, IName {
 
         private readonly string name;
+        private string description;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -69,6 +70,19 @@
         public string Name {
             get {
                 return name;
+            }
+        }
+
+        /// <summary>
+        /// Obte o asigna la descripcio.
+        /// </summary>
+        /// 
+        public string Description {
+            get {
+                return description;
+            }
+            set {
+                description = value;
             }
         }
     }

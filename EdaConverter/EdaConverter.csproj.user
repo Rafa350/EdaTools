@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>..\..\data\board3.brd ..\..\data\board3.xbrd /v</StartArguments>
+    <StartArguments>..\..\data\library3.lbr ..\..\data\library3.xlib /v</StartArguments>
   </PropertyGroup>
 </Project>
