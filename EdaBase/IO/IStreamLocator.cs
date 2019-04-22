@@ -5,6 +5,5 @@
     public interface IStreamLocator {
 
         string GetPath(string path);
-        Stream GetStream(string path);
     }
 }

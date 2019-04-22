@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons {
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
+    using MikroPic.EdaTools.v1.Base.Geometry;
 
     /// <summary>
     /// Clase que representa un poligon amb fills. Aquesta clase es inmutable.

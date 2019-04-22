@@ -2,6 +2,9 @@
 
     using System;
 
+    /// <summary>
+    /// Percent value.
+    /// </summary>
     public readonly struct Ratio {
 
         public static readonly Ratio Zero = new Ratio(0);
@@ -20,7 +23,7 @@
             this.value = value;
         }
 
-        public static Ratio FromPercent(int value) {
+        public static Ratio FromValue(int value) {
 
             return new Ratio(value);
         }
@@ -71,7 +74,7 @@
             }
         }
 
-        public int Percent {
+        public int Value {
             get {
                 return value;
             }

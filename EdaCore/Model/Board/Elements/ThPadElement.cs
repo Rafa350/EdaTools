@@ -135,7 +135,7 @@
                         8,
                         Position,
                         s + spacing,
-                        Rotation + Angle.FromDegrees(2250));
+                        Rotation + Angle.FromValue(2250));
                 }
 
                 case ThPadShape.Oval:

@@ -311,7 +311,7 @@
                     gb.MoveTo(startPosition);
                     gb.ArcTo(endPosition.X, endPosition.Y,
                         center.X - startPosition.X, center.Y - startPosition.Y,
-                        arc.Angle.Degrees < 0 ? ArcDirection.CW : ArcDirection.CCW);
+                        arc.Angle.Value < 0 ? ArcDirection.CW : ArcDirection.CCW);
                 }
             }
 

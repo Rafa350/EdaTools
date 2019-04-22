@@ -68,7 +68,7 @@
             if (string.IsNullOrEmpty(source))
                 throw new ArgumentNullException("source");
 
-            return Angle.FromDegrees((int)(XmlConvert.ToDouble(source) * angleMultiplier));
+            return Angle.FromValue((int)(XmlConvert.ToDouble(source) * angleMultiplier));
         }
 
         /// <summary>
@@ -82,7 +82,7 @@
             if (string.IsNullOrEmpty(source))
                 throw new ArgumentNullException("source");
 
-            return Ratio.FromPercent((int)(XmlConvert.ToDouble(source) * ratioMultiplier));
+            return Ratio.FromValue((int)(XmlConvert.ToDouble(source) * ratioMultiplier));
         }
     }
 }

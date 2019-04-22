@@ -52,7 +52,7 @@
             WinPoint wp1 = new WinPoint(p1.X, p1.Y);
             WinPoint wp2 = new WinPoint(p2.X, p2.Y);
             WinSize size = new WinSize(radius, radius);
-            double a = angle.Degrees;
+            double a = angle.Value;
 
             StreamGeometry g = new StreamGeometry();
             using (StreamGeometryContext gc = g.Open()) {

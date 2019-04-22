@@ -57,7 +57,7 @@
         /// 
         public static string FormatAngle(Angle value) {
 
-            return XmlConvert.ToString(value.Degrees / angleDivider);
+            return XmlConvert.ToString(value.Value / angleDivider);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@
         /// 
         public static string FormatRatio(Ratio value) {
 
-            return XmlConvert.ToString(value.Percent / ratioDivider);
+            return XmlConvert.ToString(value.Value / ratioDivider);
         }
     }
 }

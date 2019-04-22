@@ -30,7 +30,7 @@
             double dy = y2 - y1;
             double d = Math.Sqrt((dx * dx) + (dy * dy));
 
-            double a = angle.Radiants / 2.0;
+            double a = angle.ToRadiants / 2.0;
 
             double r = Math.Abs(d / 2.0 / Math.Sin(a));
             double s = Math.Abs(r * Math.Cos(a));
@@ -61,7 +61,7 @@
             double dy = endPosition.Y - startPosition.Y;
             double d = Math.Sqrt((dx * dx) + (dy * dy));
 
-            double a = angle.Radiants / 2.0;
+            double a = angle.ToRadiants / 2.0;
 
             return (int) Math.Abs(d / 2.0 / Math.Sin(a));
         }

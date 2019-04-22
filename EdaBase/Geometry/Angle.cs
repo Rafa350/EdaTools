@@ -22,22 +22,33 @@
         /// <summary>
         /// Constructor privat.
         /// </summary>
-        /// <param name="angle">El valor de l'angle en centesimes de grau.</param>
+        /// <param name="value">El valor de l'angle en centesimes de grau.</param>
         /// 
-        private Angle(int angle) {
+        private Angle(int value) {
 
-            value = angle % 36000;
+            this.value = value % 36000;
         }
 
         /// <summary>
         /// Crea un angle a partir del seu valor en graus.
         /// </summary>
-        /// <param name="deg">Valor de l'angle en centesimes de graus.</param>
+        /// <param name="value">Valor de l'angle en centesimes de graus.</param>
         /// <returns>L'angle creat.</returns>
         /// 
-        public static Angle FromDegrees(int deg) {
+        public static Angle FromValue(int value) {
 
-            return new Angle(deg);
+            return new Angle(value);
+        }
+
+        /// <summary>
+        /// Crea un angle a partir del seu valor en graus
+        /// </summary>
+        /// <param name="deg">El valor de l'angle en graus.</param>
+        /// <returns>L'angle creat.</returns>
+        /// 
+        public static Angle FromDegrees(double deg) {
+
+            return new Angle((int)(deg * 100.0));
         }
 
         /// <summary>
@@ -87,10 +98,10 @@
 
         public static Angle Parse(string s) {
 
-            return Angle.FromDegrees(Int32.Parse(s));
+            return Angle.FromValue(Int32.Parse(s));
         }
 
-        public static bool operator == (Angle a1, Angle a2) {
+        public static bool operator ==(Angle a1, Angle a2) {
 
             return a1.value == a2.value;
         }
@@ -217,9 +228,19 @@
         /// Obte el valor de l'angle en centesimes graus.
         /// </summary>
         /// 
-        public int Degrees {
+        public int Value {
             get {
                 return value;
+            }
+        }
+
+        /// <summary>
+        /// Obte el valor de l'angle en graus
+        /// </summary>
+        /// 
+        public double ToDegrees {
+            get {
+                return value / 100.0;
             }
         }
 
@@ -227,7 +248,7 @@
         /// Obte el valor de l'angle en radiants
         /// </summary>
         /// 
-        public double Radiants {
+        public double ToRadiants {
             get {
                 return value * Math.PI / 18000.0;
             }

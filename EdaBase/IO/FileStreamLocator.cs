@@ -4,6 +4,10 @@
     using System.Collections.Generic;
     using System.IO;
 
+    /// <summary>
+    /// Localitzador de fitxers.
+    /// </summary>
+    /// 
     public class FileStreamLocator : IStreamLocator {
 
         private readonly List<string> folders = new List<string>();
@@ -55,20 +59,6 @@
                 throw new Exception(
                     String.Format("No se encontro la ruta al fichero '{0}'.", fileName));
             }
-        }
-
-        /// <summary>
-        /// Obte el stream del fitxer especificat.
-        /// </summary>
-        /// <param name="fileName">El nom del fitxer.</param>
-        /// <returns>El stream.</returns>
-        /// 
-        public Stream GetStream(string fileName) {
-
-            if (String.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException("fileName");
-
-            return new FileStream(GetPath(fileName), FileMode.Open, FileAccess.Read, FileShare.Read);
         }
     }
 }

@@ -85,7 +85,7 @@
         /// 
         private static int GetRectangleKey(int width, int height, Angle rotation, string tag) {
 
-            string s = String.Format(CultureInfo.InvariantCulture, "rectangle;{0};{1};{2};{3}", width, height, rotation.Degrees, tag);
+            string s = String.Format(CultureInfo.InvariantCulture, "rectangle;{0};{1};{2};{3}", width, height, rotation.Value, tag);
             return s.GetHashCode();
         }
 
@@ -101,7 +101,7 @@
         /// 
         private static int GetRoundRectangleKey(int width, int height, int radius, Angle rotation, string tag) {
 
-            string s = String.Format(CultureInfo.InvariantCulture, "round;{0};{1};{2};{3};{4}", width, height, radius, rotation.Degrees, tag);
+            string s = String.Format(CultureInfo.InvariantCulture, "round;{0};{1};{2};{3};{4}", width, height, radius, rotation.Value, tag);
             return s.GetHashCode();
         }
 
@@ -115,7 +115,7 @@
         /// 
         private static int GetOctagonKey(int size, Angle rotation, string tag) {
 
-            string s = String.Format(CultureInfo.InvariantCulture, "octagon;{0};{1};{2}", size, rotation.Degrees, tag);
+            string s = String.Format(CultureInfo.InvariantCulture, "octagon;{0};{1};{2}", size, rotation.Value, tag);
             return s.GetHashCode();
         }
 
@@ -130,7 +130,7 @@
         /// 
         private static int GetOvalKey(int width, int height, Angle rotation, string tag) {
 
-            string s = String.Format(CultureInfo.InvariantCulture, "oval;{0};{1};{2};{3}", width, height, rotation.Degrees, tag);
+            string s = String.Format(CultureInfo.InvariantCulture, "oval;{0};{1};{2};{3}", width, height, rotation.Value, tag);
             return s.GetHashCode();
         }
 
@@ -176,7 +176,7 @@
                 else if (rotation.IsVertical)
                     ap = new RectangleAperture(apertureId++, tag, height, width);
                 else
-                    ap = new MacroAperture(apertureId++, tag, rectangleMacro, width, height, rotation.Degrees);
+                    ap = new MacroAperture(apertureId++, tag, rectangleMacro, width, height, rotation.Value);
                 items.Add(key, ap);
             }
         }
@@ -209,7 +209,7 @@
 
             int key = GetRoundRectangleKey(width, height, radius, rotation, tag);
             if (!items.ContainsKey(key)) {
-                Aperture ap = new MacroAperture(apertureId++, tag, roundRectangleMacro, width, height, radius, rotation.Degrees * 10000);
+                Aperture ap = new MacroAperture(apertureId++, tag, roundRectangleMacro, width, height, radius, rotation.Value * 10000);
                 items.Add(key, ap);
             }
         }
@@ -228,7 +228,7 @@
 
             int key = GetOctagonKey(size, rotation, tag);
             if (!items.ContainsKey(key)) {
-                Aperture ap = new PoligonAperture(apertureId++, tag, 8, size, rotation + Angle.FromDegrees(2250));
+                Aperture ap = new PoligonAperture(apertureId++, tag, 8, size, rotation + Angle.FromValue(2250));
                 items.Add(key, ap);
             }
         }

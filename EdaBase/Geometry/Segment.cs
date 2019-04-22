@@ -1,5 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Geometry {
 
+    // ********************
+    // TODO: Opcio per que no sigui inmutable
+    // ********************
+
     public readonly struct Segment {
 
         private readonly Point start;

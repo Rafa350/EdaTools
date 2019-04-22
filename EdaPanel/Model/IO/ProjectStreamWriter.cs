@@ -1,9 +1,10 @@
 ﻿namespace MikroPic.EdaTools.v1.Panel.Model.IO {
 
-    using MikroPic.EdaTools.v1.Panel.Model.Visitors;
     using System;
     using System.IO;
     using System.Xml;
+    using MikroPic.EdaTools.v1.Base.Xml;
+    using MikroPic.EdaTools.v1.Panel.Model.Visitors;
 
     /// <summary>
     /// Clase per la escriptura de plaques en un stream.
@@ -11,7 +12,11 @@
     /// 
     public sealed class ProjectStreamWriter {
 
-        private Stream stream;
+        private const int version = 211;
+        private const string distanceUnits = "mm";
+        private const string angleunits = "deg";
+
+        private readonly Stream stream;
 
         private class Visitor: DefaultPanelVisitor {
 
@@ -29,9 +34,9 @@
             }
 
             /// <summary>
-            /// Visita una placa.
+            /// Visita un panell.
             /// </summary>
-            /// <param name="board">La placa a visitar.</param>
+            /// <param name="panel">El panell a visitar.</param>
             /// 
             public override void Visit(Panel panel) {
 
@@ -39,8 +44,8 @@
 
                 if (panel.HasItems) {
                     writer.WriteStartElement("elements");
-                    foreach (var element in panel.Items)
-                        element.AcceptVisitor(this);
+                    foreach (var item in panel.Items)
+                        item.AcceptVisitor(this);
                     writer.WriteEndElement();
                 }
 
@@ -82,12 +87,12 @@
             using (XmlWriter writer = XmlWriter.Create(stream, settings)) {
                 writer.WriteStartDocument();
 
-                writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/XBRD.xsd");
+                writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/XPNL.xsd");
 
-                writer.WriteAttributeString("version", "211");
+                writer.WriteAttributeInteger("version", version);
                 writer.WriteAttributeString("documentType", "panel");
-                writer.WriteAttributeString("distanceUnits", "mm");
-                writer.WriteAttributeString("angleUnits", "deg");
+                writer.WriteAttributeString("distanceUnits", distanceUnits);
+                writer.WriteAttributeString("angleUnits", angleunits);
 
                 IPanelVisitor visitor = new Visitor(writer);
                 panel.AcceptVisitor(visitor);

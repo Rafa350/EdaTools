@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Estruxctura que representa un tamany d'una superficie rectangular.
+    /// Estructura que representa un tamany d'una superficie rectangular.
     /// </summary>
     public readonly struct Size {
 
@@ -86,7 +86,7 @@
         }
 
         /// <summary>
-        /// Obte l'aláda
+        /// Obte l'alçada
         /// </summary>
         /// 
         public int Height {

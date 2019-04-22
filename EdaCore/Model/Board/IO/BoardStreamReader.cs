@@ -1,16 +1,16 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
-    using MikroPic.EdaTools.v1.Base.Xml;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
     using System.Xml;
     using System.Xml.Schema;
+    using MikroPic.EdaTools.v1.Base.Geometry;
+    using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
+    using MikroPic.EdaTools.v1.Base.Xml;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
     /// <summary>
     /// Clase per la lectura de plaques des d'un stream

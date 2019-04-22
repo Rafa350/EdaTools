@@ -2,6 +2,10 @@
 
     using System;
 
+    // ********************
+    // TODO: Opcio per que no sigui inmutable
+    // ********************
+
     /// <summary>
     /// Objecte que representa un rectangle aliniat amb els eixos X i Y.
     /// </summary>

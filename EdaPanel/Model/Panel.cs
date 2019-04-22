@@ -21,7 +21,7 @@
         /// </summary>
         /// <param name="item">El item a afeigir.</param>
         /// 
-        public void AddElement(PanelItem item) {
+        public void AddItem(PanelItem item) {
 
             if (item == null)
                 throw new ArgumentNullException("item");
@@ -37,13 +37,13 @@
         /// </summary>
         /// <param name="item">El item a afeigir.</param>
         /// 
-        public void AddElements(IEnumerable<PanelItem> item) {
+        public void AddItems(IEnumerable<PanelItem> item) {
 
             if (item == null)
                 throw new ArgumentNullException("item");
 
             foreach (var element in item)
-                AddElement(element);
+                AddItem(element);
         }
 
         /// <summary>

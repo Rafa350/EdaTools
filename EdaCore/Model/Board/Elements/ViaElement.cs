@@ -125,14 +125,14 @@
                         position,
                         new Size(size + spacingM2, size + spacingM2),
                         0,
-                        Angle.FromDegrees(0));
+                        Angle.FromValue(0));
 
                 case ViaShape.Octagon:
                     return PolygonBuilder.MakeRegularPolygon(
                         8,
                         position,
                         (int)((double)sizeD2 / Cos2250) + spacing,
-                        Angle.FromDegrees(2250));
+                        Angle.FromValue(2250));
 
                 default:
                     return PolygonBuilder.MakeCircle(

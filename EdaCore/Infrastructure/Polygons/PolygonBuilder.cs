@@ -215,8 +215,8 @@
 
             // Calcula el punt inicial
             //
-            double x = radius * Math.Cos(rotation.Radiants);
-            double y = radius * Math.Sin(rotation.Radiants);
+            double x = radius * Math.Cos(rotation.ToRadiants);
+            double y = radius * Math.Sin(rotation.ToRadiants);
 
             // Calcula els sinus i cosinus del gir a aplicar a cada iteracio
             //
@@ -260,12 +260,12 @@
 
             // Calcula el numero de segments
             //
-            int numSegments = (int) Math.Abs(Math.Floor((angle.Degrees * 32.0) / 36000.0));
+            int numSegments = (int) Math.Abs(Math.Floor((angle.ToDegrees * 32.0) / 360.0));
             int numPoints = numSegments + (discardLast ? 0 : 1);
 
             // Calcula l'angle de cada segment
             //
-            double radSegment = angle.Radiants / numSegments;
+            double radSegment = angle.ToRadiants / numSegments;
 
             // Calcula el centre
             //
@@ -274,8 +274,8 @@
 
             // Calcula el punt inicial
             //
-            double x = radius * Math.Cos(startAngle.Radiants);
-            double y = radius * Math.Sin(startAngle.Radiants);
+            double x = radius * Math.Cos(startAngle.ToRadiants);
+            double y = radius * Math.Sin(startAngle.ToRadiants);
 
             // Calcula el sinus i el cosinus del gir a aplicar a cada iteracio
             //

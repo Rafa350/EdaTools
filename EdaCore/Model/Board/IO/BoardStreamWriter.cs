@@ -429,7 +429,7 @@
             }
 
             /// <summary>
-            /// Visita un objecte de tipus 'Block'
+            /// Visita un objecte de tipus 'Component'
             /// </summary>
             /// <param name="component">E'objecte a visitar.</param>
             /// 
@@ -508,9 +508,9 @@
             }
 
             /// <summary>
-            /// Visita una llibraria
+            /// Visita una llibreria
             /// </summary>
-            /// <param name="library">La llibraria.</param>
+            /// <param name="library">La llibreria.</param>
             /// 
             public override void Visit(Library library) {
 

@@ -1,12 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.ViewModel {
 
+    using System;
+    using System.Windows.Input;
     using MikroPic.EdaTools.v1.Panel.Model;
     using MikroPic.EdaTools.v1.PanelEditor.Services;
     using MikroPic.NetMVVMToolkit.v1.MVVM.Commands;
     using MikroPic.NetMVVMToolkit.v1.MVVM.Services;
     using MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel;
-    using System;
-    using System.Windows.Input;
 
     public sealed class MainViewModel: ViewModelBase {
 
@@ -17,6 +17,9 @@
         private ICommand saveCommand;
         private ICommand saveAsCommand;
         private ICommand exitCommand;
+
+        private PanelEditorViewModel panelEditorViewModel;
+        private PanelStructureViewModel panelStructureViewModel;
 
         private readonly IAppService appService;
         private readonly IDialogService dlgService;
@@ -42,7 +45,10 @@
 
             appService.NewProject();
 
-            NotifyPropertyChanges("Title", "Project");
+            panelEditorViewModel = null;
+            panelStructureViewModel = null;
+
+            NotifyPropertyChanges("Title", "PanelEditorViewModel", "PanelStructureViewModel");
         }
 
         /// <summary>
@@ -64,7 +70,11 @@
             if (dlgService.ShowOpenFileDialog(data)) {
 
                 appService.OpenProject(data.FileName);
-                NotifyPropertyChanges("Title", "Project");
+
+                panelEditorViewModel = null;
+                panelStructureViewModel = null;
+
+                NotifyPropertyChanges("Title", "PanelEditorViewModel", "PanelStructureViewModel");
             }
         }
 
@@ -125,9 +135,19 @@
             }
         }
 
-        public Panel Project {
+        public PanelEditorViewModel PanelEditorViewModel {
             get {
-                return appService.Project;
+                if (panelEditorViewModel == null)
+                    panelEditorViewModel = new PanelEditorViewModel(this);
+                return panelEditorViewModel;
+            }
+        }
+
+        public PanelStructureViewModel PanelStructureViewModel {
+            get {
+                if (panelStructureViewModel == null)
+                    panelStructureViewModel = new PanelStructureViewModel(this);
+                return panelStructureViewModel;
             }
         }
 

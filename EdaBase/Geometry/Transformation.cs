@@ -9,7 +9,7 @@
         /// <summary>
         /// Afegeix una translacio.
         /// </summary>
-        /// <param name="v">Coordinades de translacio.</param>
+        /// <param name="v">Vector de translacio.</param>
         /// 
         public void Translate(Point v) {
 
@@ -70,7 +70,7 @@
         /// 
         public void Rotate(Angle rotation) {
 
-            m.Rotate(rotation.Degrees / 100.0);
+            m.Rotate(rotation.ToDegrees);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@
         /// 
         public void Rotate(Point center, Angle rotation) {
 
-            m.RotateAt(rotation.Degrees / 100.0, center.X, center.Y);
+            m.RotateAt(rotation.ToDegrees, center.X, center.Y);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@
         /// 
         public void Rotate(int centerX, int centerY, Angle rotation) {
 
-            m.RotateAt(rotation.Degrees / 100.0, centerX, centerY);
+            m.RotateAt(rotation.ToDegrees, centerX, centerY);
         }
 
         /// <summary>

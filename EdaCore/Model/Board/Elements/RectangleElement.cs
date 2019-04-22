@@ -108,7 +108,7 @@
             double width = size.Width + thickness;
             double height = size.Height + thickness;
 
-            double a = rotation.Radiants;
+            double a = rotation.ToRadiants;
 
             int w = (int) (width * Math.Cos(a) + height * Math.Sin(a));
             int h = (int) (width * Math.Sin(a) + height * Math.Cos(a));

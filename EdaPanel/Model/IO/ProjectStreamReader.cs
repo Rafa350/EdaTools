@@ -1,16 +1,15 @@
 ﻿namespace MikroPic.EdaTools.v1.Panel.Model.IO {
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.IO;
-    using MikroPic.EdaTools.v1.Base.Xml;
-    using MikroPic.EdaTools.v1.Panel.Model;
-    using MikroPic.EdaTools.v1.Panel.Model.Items;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
     using System.Xml;
     using System.Xml.Schema;
+    using MikroPic.EdaTools.v1.Base.Geometry;
+    using MikroPic.EdaTools.v1.Base.Xml;
+    using MikroPic.EdaTools.v1.Panel.Model;
+    using MikroPic.EdaTools.v1.Panel.Model.Items;
 
     /// <summary>
     /// Clase per la lectura de panells des d'un stream
@@ -122,7 +121,7 @@
 
             Panel project = new Panel();
             project.Size = size;
-            project.AddElements(elements);
+            project.AddItems(elements);
 
             return project;
         }

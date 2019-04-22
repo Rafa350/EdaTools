@@ -113,7 +113,7 @@
         /// 
         private static string FormatAngle(Angle angle) {
 
-            return XmlConvert.ToString(angle.Degrees / 100.0);
+            return XmlConvert.ToString(angle.Value / 100.0);
         }
     }
 }

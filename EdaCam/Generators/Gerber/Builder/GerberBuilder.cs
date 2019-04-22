@@ -477,7 +477,7 @@
         public void LoadRotation(Angle angle) {
 
             if (state.SetApertureAngle(angle))
-                writer.WriteLine(String.Format("%LR{0}*%", (double)angle.Degrees / 100.0));
+                writer.WriteLine(String.Format("%LR{0}*%", (double)angle.Value / 100.0));
         }
 
         public void LoadMirroring() {

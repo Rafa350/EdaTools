@@ -117,7 +117,7 @@
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
-            double a = Rotation.Radiants;
+            double a = Rotation.ToRadiants;
 
             int w = (int) (size.Width * Math.Cos(a) + size.Height * Math.Sin(a));
             int h = (int) (size.Width * Math.Sin(a) + size.Height * Math.Cos(a));

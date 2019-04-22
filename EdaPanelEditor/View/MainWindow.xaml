@@ -7,7 +7,6 @@
     Height="350" 
     Width="525">
     <DockPanel>
-               
         <Menu
             DockPanel.Dock="Top"
             IsMainMenu="True">
@@ -30,8 +29,21 @@
                     Header="Exit"
                     Command="{Binding ExitCommand}"/>
             </MenuItem>
+            <MenuItem
+                Header="Items">
+                <MenuItem 
+                    Header="Board"/>
+                <MenuItem
+                    Header="Cut"/>
+            </MenuItem>
         </Menu>
-       
+
+        <Border
+            DockPanel.Dock="Left">
+            <views:PanelStructureView
+                DataContext="{Binding PanelStructureViewModel}"/>
+        </Border>
+        
         <Border
             x:Name="_this"
             Margin="5"
@@ -42,7 +54,8 @@
                 x:Name="content"
                 ClipToBounds="True"
                 SnapsToDevicePixels="True"
-                Background="Transparent"
+                Background="Transparent"                
+                DataContext="{Binding PanelEditorViewModel}"
                 Project="{Binding Project}">
             </views:PanelEditorView>
         </Border>

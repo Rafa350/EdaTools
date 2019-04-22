@@ -50,6 +50,7 @@
         /// Notifica els canvis en les propietats del ViewModel.
         /// </summary>
         /// <param name="propNames">Llista de propietats que han canviat.</param>
+        /// 
         protected void NotifyPropertyChanges(params string[] propNames) {
 
             NotifyPropertyChanges(false, true, propNames);
@@ -134,6 +135,7 @@
         /// <summary>
         /// Obte el ViewModel pare.
         /// </summary>
+        /// 
         public ViewModelBase Parent {
             get {
                 return parent;

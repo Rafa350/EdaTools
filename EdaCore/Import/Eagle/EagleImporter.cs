@@ -817,7 +817,7 @@
                 t.Translate(position);*/
 
                 Matrix m = new Matrix();
-                m.RotateAt(-rotation.Degrees / 100, position.X, position.Y);
+                m.RotateAt(-rotation.Value / 100, position.X, position.Y);
                 m.Translate(-position.X, -position.Y);
                 p = m.Transform(p);
 
@@ -979,7 +979,7 @@
         private static Ratio ParseRatio(string s) {
 
             double value = XmlConvert.ToDouble(s);
-            return Ratio.FromPercent((int)(value * 10.0));
+            return Ratio.FromValue((int)(value * 10.0));
         }
 
         /// <summary>
@@ -998,7 +998,7 @@
                 index++;
 
             double value = XmlConvert.ToDouble(s.Substring(index));
-            return Angle.FromDegrees((int)(value * 100.0));
+            return Angle.FromValue((int)(value * 100.0));
         }
 
         /// <summary>
