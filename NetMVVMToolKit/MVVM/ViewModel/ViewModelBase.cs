@@ -2,16 +2,20 @@
 
     using System;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Windows;
 
     /// <summary>
     /// Clase base pels objectes ViewModel.
     /// </summary>
+    /// 
     public abstract class ViewModelBase: INotifyPropertyChanged {
 
         private ViewModelBase parent;
         private Window view;
         private static bool notifing = false;
+
+        private readonly bool throwOnInvalidPropertyName = true;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -41,35 +45,35 @@
 
             else {
                 storage = value;
-                NotifyPropertyChange(propName);
+                OnPropertyChange(propName);
                 return true;
             }
         }
 
         /// <summary>
-        /// Notifica els canvis en les propietats del ViewModel.
+        /// Notifica els canvis en diverses propietats del ViewModel.
         /// </summary>
         /// <param name="propNames">Llista de propietats que han canviat.</param>
         /// 
-        protected void NotifyPropertyChanges(params string[] propNames) {
+        protected void OnMultiplePropertyChanged(params string[] propNames) {
 
-            NotifyPropertyChanges(false, true, propNames);
+            OnMultiplePropertyChanged(false, true, propNames);
         }
 
         /// <summary>
-        /// Notifica els canvis en les propietats del ViewModel.
+        /// Notifica els canvis en diverses propietats del ViewModel.
         /// </summary>
-        /// <param name="notifyParentChain">Indica si cal notificar als pares de en cadena.</param>
+        /// <param name="notifyParentChain">Indica si cal notificar als pares en cadena.</param>
         /// <param name="localProperties">Indica si son propietats locals.</param>
         /// <param name="propNames">Llista de propietats que han canviat.</param>
         /// 
-        protected void NotifyPropertyChanges(bool notifyParentChain, bool localProperties, params string[] propNames) {
+        protected void OnMultiplePropertyChanged(bool notifyParentChain, bool localProperties, params string[] propNames) {
 
             if (propNames == null)
                 throw new ArgumentNullException("propNames");
 
             foreach (string propName in propNames)
-                NotifyPropertyChange(notifyParentChain, localProperties, propName);
+                OnPropertyChanged(notifyParentChain, localProperties, propName);
         }
 
         /// <summary>
@@ -77,19 +81,19 @@
         /// </summary>
         /// <param name="propName">La propietat que ha canviat.</param>
         /// 
-        protected void NotifyPropertyChange(string propName) {
+        protected void OnPropertyChange(string propName) {
 
-            NotifyPropertyChange(false, true, propName);
+            OnPropertyChanged(false, true, propName);
         }
 
         /// <summary>
-        /// Notifica canvis en les propietats del ViewModel.
+        /// Notifica canvis en una propietat del ViewModel.
         /// </summary>
-        /// <param name="notifyParentChain">Indica si cal notificar ale paree en cadena.</param>
-        /// <param name="localProperty">Indica si la propietat es local.</param>
+        /// <param name="notifyParentChain">Indica si cal notificar als pares en cadena.</param>
+        /// <param name="localProperty">Indica si les propietat es local.</param>
         /// <param name="propName">La propietat que ha canviat.</param>
         /// 
-        protected void NotifyPropertyChange(bool notifyParentChain, bool localProperty, string propName) {
+        protected void OnPropertyChanged(bool notifyParentChain, bool localProperty, string propName) {
 
             // Comprovas els parametres
             //
@@ -132,6 +136,27 @@
         protected virtual void OnNotifyChange(ViewModelBase viewModel, string propName) {
         }
 
+        [Conditional("DEBUG")]
+        [DebuggerStepThrough]
+        private void VerifyPropertyName(string propertyName) {
+
+            VerifyPropertyName(this, propertyName);
+        }
+
+        [Conditional("DEBUG")]
+        [DebuggerStepThrough]
+        private void VerifyPropertyName(object obj, string propertyName) {
+
+            if (!String.IsNullOrEmpty(propertyName)) {
+                if (obj.GetType().GetProperty(propertyName) == null) {
+                    string msg = String.Format("Nombre de propiedad incorrecto: '{0}'.", propertyName);
+                    if (throwOnInvalidPropertyName)
+                        throw new ArgumentException(msg);
+                    else
+                        Debug.Fail(msg);
+                }
+            }
+        }
         /// <summary>
         /// Obte el ViewModel pare.
         /// </summary>

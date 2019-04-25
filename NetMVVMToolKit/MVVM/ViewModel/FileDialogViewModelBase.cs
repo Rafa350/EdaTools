@@ -24,7 +24,7 @@
             set {
                 if (title != value) {
                     title = value;
-                    NotifyPropertyChange("Title");
+                    OnPropertyChange("Title");
                 }
             }
         }
@@ -36,7 +36,7 @@
             set {
                 if (initialDirectory != value) {
                     initialDirectory = value;
-                    NotifyPropertyChange("InitialDirectory");
+                    OnPropertyChange("InitialDirectory");
                 }
             }
         }
@@ -48,7 +48,7 @@
             set {
                 if (fileName != value) {
                     fileName = value;
-                    NotifyPropertyChange("FileName");
+                    OnPropertyChange("FileName");
                 }
             }
         }
@@ -60,7 +60,7 @@
             set {
                 if (fileNames != value) {
                     fileNames = value;
-                    NotifyPropertyChange("FileName");
+                    OnPropertyChange("FileName");
                 }
             }
         }
@@ -72,7 +72,7 @@
             set {
                 if (filter != value) {
                     filter = value;
-                    NotifyPropertyChange("Filter");
+                    OnPropertyChange("Filter");
                 }
             }
         }
@@ -84,7 +84,7 @@
             set {
                 if (filterIndex != value) {
                     filterIndex = value;
-                    NotifyPropertyChange("FilterIndex");
+                    OnPropertyChange("FilterIndex");
                 }
             }
         }
@@ -96,7 +96,7 @@
             set {
                 if (defaultExt != value) {
                     defaultExt = value;
-                    NotifyPropertyChange("DefaultExt");
+                    OnPropertyChange("DefaultExt");
                 }
             }
         }
@@ -108,7 +108,7 @@
             set {
                 if (checkPathExist != value) {
                     checkPathExist = value;
-                    NotifyPropertyChange("CheckPathExist");
+                    OnPropertyChange("CheckPathExist");
                 }
             }
         }
@@ -120,7 +120,7 @@
             set {
                 if (checkFileExist != value) {
                     checkFileExist = value;
-                    NotifyPropertyChange("CheckFileExist");
+                    OnPropertyChange("CheckFileExist");
                 }
             }
         }
@@ -132,7 +132,7 @@
             set {
                 if (addExtension != value) {
                     addExtension = value;
-                    NotifyPropertyChange("AddExtension2");
+                    OnPropertyChange("AddExtension2");
                 }
             }
         }

@@ -42,7 +42,7 @@
 
             appService.NewBoard();
 
-            NotifyPropertyChanges("Title", "Board");
+            OnMultiplePropertyChanged("Title", "Board");
         }
 
         /// <summary>
@@ -64,7 +64,7 @@
             if (dlgService.ShowOpenFileDialog(data)) {
 
                 appService.OpenBoard(data.FileName);
-                NotifyPropertyChanges("Title", "Board");
+                OnMultiplePropertyChanged("Title", "Board");
             }
         }
 
@@ -96,7 +96,7 @@
             if (dlgService.ShowSaveFileDialog(data)) {
                 appService.SaveAsBoard(data.FileName);
 
-                NotifyPropertyChange("Title");
+                OnPropertyChange("Title");
             }
         }
 

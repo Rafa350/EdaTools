@@ -6,11 +6,11 @@
     using MikroPic.NetMVVMToolkit.v1.MVVM.Services;
     using MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel;
 
-    public sealed class PanelStructureViewModel: ViewModelBase {
+    public sealed class PanelTreeViewModel: ViewModelBase {
 
         private readonly IAppService appService;
 
-        public PanelStructureViewModel(ViewModelBase parent):
+        public PanelTreeViewModel(ViewModelBase parent):
             base(parent) {
 
             ServiceLocator serviceLocator = ServiceLocator.Instance;

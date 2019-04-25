@@ -81,6 +81,7 @@
     <Compile Include="MVVM\ViewModel\IFileDialogViewModel.cs" />
     <Compile Include="MVVM\ViewModel\IOpenFileDialogViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ISaveFileDialogViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\IViewModelLocator.cs" />
     <Compile Include="MVVM\ViewModel\OpenFileDialogViewModel.cs" />
     <Compile Include="MVVM\ViewModel\SaveFileDialogViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ViewModelLocator.cs" />

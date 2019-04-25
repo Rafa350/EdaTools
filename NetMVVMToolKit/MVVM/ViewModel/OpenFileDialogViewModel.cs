@@ -17,7 +17,7 @@
             set {
                 if (multiSelect != value) {
                     multiSelect = value;
-                    NotifyPropertyChange("MultiSelect");
+                    OnPropertyChange("MultiSelect");
                 }
             }
         }
@@ -29,7 +29,7 @@
             set {
                 if (showReadOnly != value) {
                     showReadOnly = value;
-                    NotifyPropertyChange("ShowReadOnly");
+                    OnPropertyChange("ShowReadOnly");
                 }
             }
         }
@@ -41,7 +41,7 @@
             set {
                 if (readOnlyChecked != value) {
                     readOnlyChecked = value;
-                    NotifyPropertyChange("ReadOnlyChecked");
+                    OnPropertyChange("ReadOnlyChecked");
                 }
             }
         }

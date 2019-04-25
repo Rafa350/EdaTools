@@ -84,9 +84,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModel\PanelEditorViewModel.cs" />
-    <Compile Include="ViewModel\PanelStructureViewModel.cs" />
-    <Compile Include="View\PanelStructureView.xaml.cs">
-      <DependentUpon>PanelStructureView.xaml</DependentUpon>
+    <Compile Include="ViewModel\PanelTreeViewModel.cs" />
+    <Compile Include="View\PanelTreeView.xaml.cs">
+      <DependentUpon>PanelTreeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="VisualEditor\Controls\ContentBox.cs">
       <SubType>Code</SubType>
@@ -126,7 +126,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\PanelStructureView.xaml">
+    <Page Include="View\PanelTreeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

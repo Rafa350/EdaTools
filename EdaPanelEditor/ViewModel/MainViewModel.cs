@@ -19,7 +19,7 @@
         private ICommand exitCommand;
 
         private PanelEditorViewModel panelEditorViewModel;
-        private PanelStructureViewModel panelStructureViewModel;
+        private PanelTreeViewModel panelTreeViewModel;
 
         private readonly IAppService appService;
         private readonly IDialogService dlgService;
@@ -46,9 +46,9 @@
             appService.NewProject();
 
             panelEditorViewModel = null;
-            panelStructureViewModel = null;
+            panelTreeViewModel = null;
 
-            NotifyPropertyChanges("Title", "PanelEditorViewModel", "PanelStructureViewModel");
+            OnMultiplePropertyChanged("Title", "PanelEditorViewModel", "PanelTreeViewModel");
         }
 
         /// <summary>
@@ -72,9 +72,9 @@
                 appService.OpenProject(data.FileName);
 
                 panelEditorViewModel = null;
-                panelStructureViewModel = null;
+                panelTreeViewModel = null;
 
-                NotifyPropertyChanges("Title", "PanelEditorViewModel", "PanelStructureViewModel");
+                OnMultiplePropertyChanged("Title", "PanelEditorViewModel", "PanelTreeViewModel");
             }
         }
 
@@ -88,12 +88,16 @@
             appService.SaveProject();
         }
 
-
+        /// <summary>
+        /// Comprova si es pot executar la comanda 'SaveCommand'
+        /// </summary>
+        /// <param name="param">Parametre opcional.</param>
+        /// <returns>True si es pot executar. False en cas contrari.</returns>
+        /// 
         private bool SaveCanExecute(object param) {
 
             return appService.IsDirty;
         }
-
 
         /// <summary>
         /// Executa la comanda 'SaveAsCommand'
@@ -106,7 +110,7 @@
             if (dlgService.ShowSaveFileDialog(data)) {
                 appService.SaveAsProject(data.FileName);
 
-                NotifyPropertyChange("Title");
+                OnPropertyChange("Title");
             }
         }
 
@@ -120,11 +124,21 @@
             appService.Exit();
         }
 
+        /// <summary>
+        /// Comprova si es pot executar la comanda 'ExitCommand'
+        /// </summary>
+        /// <param name="param">Parametre opcional.</param>
+        /// <returns>True si es pot executar. False en cas contrari.</returns>
+        /// 
         private bool ExitCanExecute(object parameter) {
 
             return true;
         }
 
+        /// <summary>
+        /// Obte o asigna el titol de l'aplicacio.
+        /// </summary>
+        /// 
         public string Title {
             get {
                 string fileName = appService.FileName;
@@ -143,14 +157,18 @@
             }
         }
 
-        public PanelStructureViewModel PanelStructureViewModel {
+        public PanelTreeViewModel PanelTreeViewModel {
             get {
-                if (panelStructureViewModel == null)
-                    panelStructureViewModel = new PanelStructureViewModel(this);
-                return panelStructureViewModel;
+                if (panelTreeViewModel == null)
+                    panelTreeViewModel = new PanelTreeViewModel(this);
+                return panelTreeViewModel;
             }
         }
 
+        /// <summary>
+        /// Obte la comanda 'NewCommand'
+        /// </summary>
+        /// 
         public ICommand NewCommand {
             get {
                 if (newCommand == null)
@@ -159,6 +177,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte la comanda 'OpenCommand'
+        /// </summary>
+        /// 
         public ICommand OpenCommand {
             get {
                 if (openCommand == null)
@@ -167,6 +189,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte la comanda 'SaveCommand'
+        /// </summary>
+        /// 
         public ICommand SaveCommand {
             get {
                 if (saveCommand == null)
@@ -175,6 +201,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte la comanda 'SaveAsCommand'
+        /// </summary>
+        /// 
         public ICommand SaveAsCommand {
             get {
                 if (saveAsCommand == null)
@@ -183,6 +213,10 @@
             }
         }
 
+        /// <summary>
+        /// Obte la comanda 'ExitCommand'
+        /// </summary>
+        /// 
         public ICommand ExitCommand {
             get {
                 if (exitCommand == null)

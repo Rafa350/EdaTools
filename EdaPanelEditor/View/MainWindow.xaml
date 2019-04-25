@@ -40,8 +40,8 @@
 
         <Border
             DockPanel.Dock="Left">
-            <views:PanelStructureView
-                DataContext="{Binding PanelStructureViewModel}"/>
+            <views:PanelTreeView
+                DataContext="{Binding PanelTreeViewModel}"/>
         </Border>
         
         <Border
