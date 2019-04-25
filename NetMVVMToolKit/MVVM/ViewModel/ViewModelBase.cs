@@ -13,6 +13,8 @@
 
         private ViewModelBase parent;
         private Window view;
+        private bool initialized = false;
+        private int loadCount = 0;
         private static bool notifing = false;
 
         private readonly bool throwOnInvalidPropertyName = true;
@@ -27,6 +29,42 @@
         public ViewModelBase(ViewModelBase parent) {
 
             this.parent = parent;
+        }
+
+        /// <summary>
+        /// Notifica que s'ha d'inicialitzar.
+        /// </summary>
+        /// 
+        public void Initialize() {
+
+            if (!initialized) {
+                initialized = true;
+                OnInitialize();
+            }
+        }
+
+        /// <summary>
+        /// Notifica que s'ha carregat la vista.
+        /// </summary>
+        /// 
+        public void Load() {
+
+            if (loadCount == 0)
+                OnLoad();
+            loadCount++;
+        }
+
+        /// <summary>
+        /// Notifica que s'ha descarregat la vista.
+        /// </summary>
+        /// 
+        public void Unload() {
+
+            if (loadCount > 0) {
+                if (loadCount == 1)
+                    OnUnload();
+                loadCount--;
+            }
         }
 
         /// <summary>
@@ -48,6 +86,25 @@
                 OnPropertyChange(propName);
                 return true;
             }
+        }
+
+        /// <summary>
+        /// Notifica que s'ha d'inicialitzar.
+        /// </summary>
+        /// 
+        protected virtual void OnInitialize() {
+
+            // Per defecte no fa res
+        }
+
+        protected virtual void OnLoad() {
+
+            // Per defecte no fa res
+        }
+
+        protected virtual void OnUnload() {
+
+            // Per defecte no fa res
         }
 
         /// <summary>
@@ -157,6 +214,27 @@
                 }
             }
         }
+
+        /// <summary>
+        /// Indica si esta inicialitzat.
+        /// </summary>
+        /// 
+        public bool IsInitialized {
+            get {
+                return initialized;
+            }
+        }
+
+        /// <summary>
+        /// Indica si s'ha carregat la.
+        /// </summary>
+        /// 
+        public bool IsLoaded {
+            get {
+                return loadCount > 0;
+            }
+        }
+
         /// <summary>
         /// Obte el ViewModel pare.
         /// </summary>

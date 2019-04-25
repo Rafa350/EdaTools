@@ -11,9 +11,18 @@
         public MainWindow() {
 
             InitializeComponent();
-            DataContext = new MainViewModel();
+
+            Loaded += MainWindow_Loaded;
 
             sa = new WindowStateAgent(this);
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e) {
+
+            MainViewModel vm = (MainViewModel) Resources["ViewModel"];
+            vm.Load();
+            vm.Initialize();
+            DataContext = vm;
         }
     }
 }

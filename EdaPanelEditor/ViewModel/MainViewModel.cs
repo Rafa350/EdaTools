@@ -21,8 +21,8 @@
         private PanelEditorViewModel panelEditorViewModel;
         private PanelTreeViewModel panelTreeViewModel;
 
-        private readonly IAppService appService;
-        private readonly IDialogService dlgService;
+        private IAppService appService;
+        private IDialogService dlgService;
 
         /// <summary>
         /// Constructor del objecte.
@@ -30,6 +30,14 @@
         /// 
         public MainViewModel():
             base(null) {
+
+        }
+
+        /// <summary>
+        /// Initialitza el ViewModel
+        /// </summary>
+        /// 
+        protected override void OnInitialize() {
 
             ServiceLocator serviceLocator = ServiceLocator.Instance;
             appService = serviceLocator.GetService<IAppService>();
@@ -141,11 +149,15 @@
         /// 
         public string Title {
             get {
-                string fileName = appService.FileName;
-                if (String.IsNullOrEmpty(fileName))
+                if (!IsInitialized)
                     return title;
-                else
-                    return string.Format("{0} - {1}", appService.FileName, title);
+                else {
+                    string fileName = appService.FileName;
+                    if (String.IsNullOrEmpty(fileName))
+                        return title;
+                    else
+                        return string.Format("{0} - {1}", appService.FileName, title);
+                }
             }
         }
 
