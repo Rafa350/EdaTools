@@ -1,4 +1,4 @@
-﻿namespace MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel {
+﻿namespace MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel.Dialogs {
 
     public abstract class FileDialogViewModelBase: ViewModelBase, IFileDialogViewModel {
 
@@ -22,10 +22,7 @@
                 return title;
             }
             set {
-                if (title != value) {
-                    title = value;
-                    OnPropertyChange("Title");
-                }
+                SetProperty<string>(ref title, value, "Title");
             }
         }
 
@@ -34,10 +31,7 @@
                 return initialDirectory;
             }
             set {
-                if (initialDirectory != value) {
-                    initialDirectory = value;
-                    OnPropertyChange("InitialDirectory");
-                }
+                SetProperty<string>(ref initialDirectory, value, "InitialDirectory");
             }
         }
 
@@ -46,10 +40,7 @@
                 return fileName;
             }
             set {
-                if (fileName != value) {
-                    fileName = value;
-                    OnPropertyChange("FileName");
-                }
+                SetProperty<string>(ref fileName, value, "FileName");
             }
         }
 
@@ -58,10 +49,7 @@
                 return fileNames;
             }
             set {
-                if (fileNames != value) {
-                    fileNames = value;
-                    OnPropertyChange("FileName");
-                }
+                SetProperty<string[]>(ref fileNames, value, "FileNames");
             }
         }
 
@@ -70,10 +58,7 @@
                 return filter;
             }
             set {
-                if (filter != value) {
-                    filter = value;
-                    OnPropertyChange("Filter");
-                }
+                SetProperty<string>(ref filter, value, "Filter");
             }
         }
 
@@ -82,10 +67,7 @@
                 return filterIndex;
             }
             set {
-                if (filterIndex != value) {
-                    filterIndex = value;
-                    OnPropertyChange("FilterIndex");
-                }
+                SetProperty<int>(ref filterIndex, value, "FilterIndex");
             }
         }
 
@@ -94,10 +76,7 @@
                 return defaultExt;
             }
             set {
-                if (defaultExt != value) {
-                    defaultExt = value;
-                    OnPropertyChange("DefaultExt");
-                }
+                SetProperty<string>(ref defaultExt, value, "DefaultExt");
             }
         }
 
@@ -106,10 +85,7 @@
                 return checkPathExist;
             }
             set {
-                if (checkPathExist != value) {
-                    checkPathExist = value;
-                    OnPropertyChange("CheckPathExist");
-                }
+                SetProperty<bool>(ref checkPathExist, value, "CheckPathExist");
             }
         }
 
@@ -118,10 +94,7 @@
                 return checkFileExist;
             }
             set {
-                if (checkFileExist != value) {
-                    checkFileExist = value;
-                    OnPropertyChange("CheckFileExist");
-                }
+                SetProperty<bool>(ref checkFileExist, value, "CheckFileExist");
             }
         }
 
@@ -130,10 +103,7 @@
                 return addExtension;
             }
             set {
-                if (addExtension != value) {
-                    addExtension = value;
-                    OnPropertyChange("AddExtension2");
-                }
+                SetProperty<bool>(ref addExtension, value, "AddExtension");
             }
         }
     }

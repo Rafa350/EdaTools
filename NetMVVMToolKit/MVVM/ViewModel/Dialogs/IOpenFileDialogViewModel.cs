@@ -1,4 +1,4 @@
-﻿namespace MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel {
+﻿namespace MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel.Dialogs {
 
     public interface IOpenFileDialogViewModel: IFileDialogViewModel {
 

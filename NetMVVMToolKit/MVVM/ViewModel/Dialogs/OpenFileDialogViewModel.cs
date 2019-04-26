@@ -1,4 +1,4 @@
-﻿namespace MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel {
+﻿namespace MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel.Dialogs {
 
     public sealed class OpenFileDialogViewModel: FileDialogViewModelBase, IOpenFileDialogViewModel {
 
@@ -15,10 +15,7 @@
                 return multiSelect;
             }
             set {
-                if (multiSelect != value) {
-                    multiSelect = value;
-                    OnPropertyChange("MultiSelect");
-                }
+                SetProperty<bool>(ref multiSelect, value, "MultiSelect");
             }
         }
 
@@ -27,10 +24,7 @@
                 return showReadOnly;
             }
             set {
-                if (showReadOnly != value) {
-                    showReadOnly = value;
-                    OnPropertyChange("ShowReadOnly");
-                }
+                SetProperty<bool>(ref showReadOnly, value, "ShowReadOnly");
             }
         }
 
@@ -39,10 +33,7 @@
                 return readOnlyChecked;
             }
             set {
-                if (readOnlyChecked != value) {
-                    readOnlyChecked = value;
-                    OnPropertyChange("ReadOnlyChecked");
-                }
+                SetProperty<bool>(ref readOnlyChecked, value, "ReadOnlyChecked");
             }
         }
     }

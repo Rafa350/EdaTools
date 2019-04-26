@@ -7,6 +7,7 @@
     using MikroPic.NetMVVMToolkit.v1.MVVM.Commands;
     using MikroPic.NetMVVMToolkit.v1.MVVM.Services;
     using MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel;
+    using MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel.Dialogs;
 
     public sealed class MainViewModel: ViewModelBase {
 

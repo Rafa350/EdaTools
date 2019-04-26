@@ -2,6 +2,7 @@
 
     using System;
     using MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel;
+    using MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel.Dialogs;
 
     public interface IDialogService {
 

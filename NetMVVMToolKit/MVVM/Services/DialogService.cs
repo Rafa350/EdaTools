@@ -6,6 +6,7 @@
     using System.Windows.Controls;
     using MikroPic.NetMVVMToolkit.v1.MVVM.View;
     using MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel;
+    using MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel.Dialogs;
     using Microsoft.Win32;
 
     /// <summary>

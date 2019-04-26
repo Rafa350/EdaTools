@@ -77,12 +77,12 @@
     <Compile Include="MVVM\Services\DialogService.cs" />
     <Compile Include="MVVM\Services\IDialogService.cs" />
     <Compile Include="MVVM\Services\ServiceLocator.cs" />
-    <Compile Include="MVVM\ViewModel\FileDialogViewModelBase.cs" />
-    <Compile Include="MVVM\ViewModel\IFileDialogViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\IOpenFileDialogViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\ISaveFileDialogViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\OpenFileDialogViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\SaveFileDialogViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Dialogs\FileDialogViewModelBase.cs" />
+    <Compile Include="MVVM\ViewModel\Dialogs\IFileDialogViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Dialogs\IOpenFileDialogViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Dialogs\ISaveFileDialogViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Dialogs\OpenFileDialogViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\Dialogs\SaveFileDialogViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ViewModelLocator.cs" />
     <Compile Include="MVVM\View\DialogView.xaml.cs">
       <DependentUpon>DialogView.xaml</DependentUpon>

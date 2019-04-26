@@ -1,4 +1,4 @@
-﻿namespace MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel {
+﻿namespace MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel.Dialogs {
 
     using MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel;
 
