@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:views="clr-namespace:MikroPic.EdaTools.v1.PanelEditor.View"
     xmlns:viewModels="clr-namespace:MikroPic.EdaTools.v1.PanelEditor.ViewModel"
-    Height="350" 
+    Height="350"
     Width="525">
     <Window.Resources>
         <viewModels:MainViewModel x:Key="ViewModel"/>
@@ -48,7 +48,7 @@
         <Border
             DockPanel.Dock="Left">
             <views:PanelTreeView
-                DataContext="{Binding PanelTreeViewModel}"/>
+                Project="{Binding Project}"/>
         </Border>
         
         <Border
@@ -62,9 +62,7 @@
                 ClipToBounds="True"
                 SnapsToDevicePixels="True"
                 Background="Transparent"                
-                DataContext="{Binding PanelEditorViewModel}"
-                Project="{Binding Project}">
-            </views:PanelEditorView>
+                Project="{Binding Project}"/>
         </Border>
     </DockPanel>
 </Window>

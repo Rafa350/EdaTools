@@ -19,9 +19,6 @@
         private ICommand saveAsCommand;
         private ICommand exitCommand;
 
-        private PanelEditorViewModel panelEditorViewModel;
-        private PanelTreeViewModel panelTreeViewModel;
-
         private IAppService appService;
         private IDialogService dlgService;
 
@@ -43,6 +40,8 @@
             ServiceLocator serviceLocator = ServiceLocator.Instance;
             appService = serviceLocator.GetService<IAppService>();
             dlgService = serviceLocator.GetService<IDialogService>();
+
+            base.OnInitialize();
         }
 
         /// <summary>
@@ -54,10 +53,7 @@
 
             appService.NewProject();
 
-            panelEditorViewModel = null;
-            panelTreeViewModel = null;
-
-            OnMultiplePropertyChanged("Title", "PanelEditorViewModel", "PanelTreeViewModel");
+            OnMultiplePropertyChanged("Title", "Project");
         }
 
         /// <summary>
@@ -80,10 +76,7 @@
 
                 appService.OpenProject(data.FileName);
 
-                panelEditorViewModel = null;
-                panelTreeViewModel = null;
-
-                OnMultiplePropertyChanged("Title", "PanelEditorViewModel", "PanelTreeViewModel");
+                OnMultiplePropertyChanged("Title", "Project");
             }
         }
 
@@ -119,7 +112,7 @@
             if (dlgService.ShowSaveFileDialog(data)) {
                 appService.SaveAsProject(data.FileName);
 
-                OnPropertyChange("Title");
+                OnPropertyChanged("Title");
             }
         }
 
@@ -145,7 +138,7 @@
         }
 
         /// <summary>
-        /// Obte o asigna el titol de l'aplicacio.
+        /// Obte el titol de l'aplicacio.
         /// </summary>
         /// 
         public string Title {
@@ -162,19 +155,13 @@
             }
         }
 
-        public PanelEditorViewModel PanelEditorViewModel {
+        /// <summary>
+        /// Obte el projecte carregat.
+        /// </summary>
+        /// 
+        public Panel Project {
             get {
-                if (panelEditorViewModel == null)
-                    panelEditorViewModel = new PanelEditorViewModel(this);
-                return panelEditorViewModel;
-            }
-        }
-
-        public PanelTreeViewModel PanelTreeViewModel {
-            get {
-                if (panelTreeViewModel == null)
-                    panelTreeViewModel = new PanelTreeViewModel(this);
-                return panelTreeViewModel;
+                return IsInitialized ? appService.Project : null;
             }
         }
 

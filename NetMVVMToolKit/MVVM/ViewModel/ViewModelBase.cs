@@ -49,8 +49,10 @@
         /// 
         public void Load() {
 
-            if (loadCount == 0)
+            if (loadCount == 0) {
                 OnLoad();
+                Initialize();
+            }
             loadCount++;
         }
 
@@ -61,8 +63,10 @@
         public void Unload() {
 
             if (loadCount > 0) {
-                if (loadCount == 1)
+                if (loadCount == 1) {
                     OnUnload();
+                    //Deinitialize();
+                }
                 loadCount--;
             }
         }
@@ -83,7 +87,7 @@
 
             else {
                 storage = value;
-                OnPropertyChange(propName);
+                OnPropertyChanged(propName);
                 return true;
             }
         }
@@ -138,7 +142,7 @@
         /// </summary>
         /// <param name="propName">La propietat que ha canviat.</param>
         /// 
-        protected void OnPropertyChange(string propName) {
+        protected void OnPropertyChanged(string propName) {
 
             OnPropertyChanged(false, true, propName);
         }

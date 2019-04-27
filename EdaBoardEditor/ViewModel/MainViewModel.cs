@@ -1,12 +1,13 @@
 ﻿namespace MikroPic.EdaTools.v1.BoardEditor.ViewModel {
 
-    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using System;
+    using System.Windows.Input;
     using MikroPic.EdaTools.v1.BoardEditor.Services;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.NetMVVMToolkit.v1.MVVM.Commands;
     using MikroPic.NetMVVMToolkit.v1.MVVM.Services;
     using MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel;
-    using System;
-    using System.Windows.Input;
+    using MikroPic.NetMVVMToolkit.v1.MVVM.ViewModel.Dialogs;
 
     public sealed class MainViewModel: ViewModelBase {
 
@@ -96,7 +97,7 @@
             if (dlgService.ShowSaveFileDialog(data)) {
                 appService.SaveAsBoard(data.FileName);
 
-                OnPropertyChange("Title");
+                OnPropertyChanged("Title");
             }
         }
 

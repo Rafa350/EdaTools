@@ -57,7 +57,7 @@
             set {
                 if (title != value) {
                     title = value;
-                    OnPropertyChange("Title");
+                    OnPropertyChanged("Title");
                 }
             }
         }

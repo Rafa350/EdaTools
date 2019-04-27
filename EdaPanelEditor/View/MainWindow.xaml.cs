@@ -19,10 +19,17 @@
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e) {
 
-            MainViewModel vm = (MainViewModel) Resources["ViewModel"];
-            vm.Load();
-            vm.Initialize();
-            DataContext = vm;
+            ViewModel.Load();
+        }
+
+        /// <summary>
+        /// Obte el ViewModel
+        /// </summary>
+        /// 
+        public MainViewModel ViewModel {
+            get {
+                return (MainViewModel)Resources["ViewModel"];
+            }
         }
     }
 }

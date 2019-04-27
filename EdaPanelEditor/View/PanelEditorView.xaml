@@ -1,14 +1,20 @@
-﻿<UserControl x:Class="MikroPic.EdaTools.v1.PanelEditor.View.PanelEditorView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MikroPic.EdaTools.v1.PanelEditor.VisualEditor.Controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" 
-             d:DesignWidth="800"
-             x:Name="control">
+﻿<UserControl
+    x:Class="MikroPic.EdaTools.v1.PanelEditor.View.PanelEditorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:MikroPic.EdaTools.v1.PanelEditor.ViewModel"
+    xmlns:local="clr-namespace:MikroPic.EdaTools.v1.PanelEditor.VisualEditor.Controls"
+    mc:Ignorable="d" 
+    d:DesignHeight="450" 
+    d:DesignWidth="800"
+    x:Name="control">
+    <UserControl.Resources>
+        <viewModels:PanelEditorViewModel x:Key="ViewModel"/>
+    </UserControl.Resources>
     <Grid
+        DataContext="{StaticResource ViewModel}"
         Background="#FF424242">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="35"/>
@@ -23,7 +29,9 @@
         <local:ContentBox
             x:Name="contentBox" 
             Grid.Column="1"
-            Grid.Row="1">
+            Grid.Row="1"
+            Visual="{Binding Visual}"
+            Visibility="{Binding ContentVisibility}">
             <local:ContentBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleX="1" ScaleY="-1"/>
@@ -38,8 +46,11 @@
             FlipTags="None"
             FontSize="14"
             ShowPointer="True"
+            MaxValue="100000000"
             ValueDivisor="1000000"
-            RulerAlignment="Bottom">
+            RulerAlignment="Bottom"
+            TransformMode="XAxis"
+            Visibility="{Binding ContentVisibility}">
         </local:RulerBox>
         <local:RulerBox
             x:Name="vRulerBox"
@@ -48,8 +59,11 @@
             FlipTags="Vertical"
             FontSize="14"
             ShowPointer="True"
+            MaxValue="100000000"
             ValueDivisor="1000000"
-            RulerAlignment="Top">
+            RulerAlignment="Top"
+            TransformMode="YAxis"
+            Visibility="{Binding ContentVisibility}">
             <local:RulerBox.LayoutTransform>
                 <TransformGroup>
                     <RotateTransform Angle="90"/>

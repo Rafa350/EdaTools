@@ -1,13 +1,13 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor.Render {
 
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Media;
     using MikroPic.EdaTools.v1.Panel.Model;
     using MikroPic.EdaTools.v1.Panel.Model.Items;
     using MikroPic.EdaTools.v1.Panel.Model.Visitors;
     using MikroPic.EdaTools.v1.PanelEditor.Render.Visuals;
     using MikroPic.EdaTools.v1.PanelEditor.VisualEditor;
-    using System.Collections.Generic;
-    using System.Windows;
-    using System.Windows.Media;
 
     public sealed class Scene {
 
@@ -49,6 +49,8 @@
         private readonly VisualItem visual = new VisualItem();
 
         public void Initialize(Panel project) {
+
+            itemMap.Clear();
 
             IPanelVisitor visitor = new Visitor(visual, itemMap);
             project.AcceptVisitor(visitor);

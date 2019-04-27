@@ -4,18 +4,16 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
-    using MikroPic.EdaTools.v1.Panel.Model;
+    using MikroPic.EdaTools.v1.PanelEditor.ViewModel;
     using MikroPic.EdaTools.v1.PanelEditor.VisualEditor;
     using MikroPic.EdaTools.v1.PanelEditor.VisualEditor.Controls;
     using MikroPic.EdaTools.v1.PanelEditor.VisualEditor.Tools;
-    using MikroPic.EdaTools.v1.PanelEditor.Render;
 
     public partial class PanelEditorView : UserControl {
 
         public static readonly DependencyProperty ProjectProperty;
 
         private readonly ViewPoint viewPoint;
-        private readonly Scene scene;
         private const double wheelInterval = 150;
         private Point startPos;
         private Point currentPos;
@@ -43,26 +41,12 @@
 
             InitializeComponent();
 
+            Loaded += PanelEditorView_Loaded;
+
             // Inicialitza el punt de vista
             //
             viewPoint = new ViewPoint();
             viewPoint.Changed += ViewPoint_Changed;
-
-            // Inicialitza la regla horitzontal
-            //
-            hRulerBox.TransformMode = TransformationMode.XAxis;
-            hRulerBox.MaxValue = 100000000;
-            hRulerBox.Visibility = Visibility.Hidden;
-
-            // Inicialitza la regla vertical
-            //
-            vRulerBox.TransformMode = TransformationMode.YAxis;
-            vRulerBox.MaxValue = 100000000;
-            vRulerBox.Visibility = Visibility.Hidden;
-
-            // Inicialitza el contingut
-            //
-            contentBox.Visibility = Visibility.Hidden;
 
             // Inicialitza les eines
             //
@@ -71,12 +55,17 @@
             selectionTool.MouseUp += SelectionTool_MouseUp;
             currentTool = selectionTool;
 
-            scene = new Scene();
-
             SizeChanged += PanelEditorView_SizeChanged;
         }
 
+        private void PanelEditorView_Loaded(object sender, RoutedEventArgs e) {
+
+            ViewModel.Load();
+        }
+
         private static void Project_PropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e) {
+
+            (o as PanelEditorView).ViewModel.Project = (v1.Panel.Model.Panel)e.NewValue;
 
             (o as PanelEditorView).ProjectEditorView_ProjectChanged(o, new EventArgs());
         }
@@ -134,16 +123,9 @@
                     new Size(contentBox.ActualWidth, contentBox.ActualHeight),
                     new Rect(0, 0, Project.Size.Width, Project.Size.Height));
 
-                scene.Initialize((v1.Panel.Model.Panel)Project);
-                contentBox.Visual = scene.Visual;
-
-                hRulerBox.Visibility = Visibility.Visible;
-                vRulerBox.Visibility = Visibility.Visible;
                 contentBox.Visibility = Visibility.Visible;
             }
             else {
-                hRulerBox.Visibility = Visibility.Hidden;
-                vRulerBox.Visibility = Visibility.Hidden;
                 contentBox.Visibility = Visibility.Hidden;
             }
         }
@@ -251,6 +233,16 @@
                 //
                 else if (e.Delta < 0) 
                     viewPoint.ZoomOut(0.25, currentPos);
+            }
+        }
+
+        /// <summary>
+        /// Obte el ViewModel associat
+        /// </summary>
+        /// 
+        public PanelEditorViewModel ViewModel {
+            get {
+                return (PanelEditorViewModel)Resources["ViewModel"];
             }
         }
 
