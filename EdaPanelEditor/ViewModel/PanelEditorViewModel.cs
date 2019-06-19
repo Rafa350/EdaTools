@@ -10,20 +10,32 @@
 
         private Panel project;
 
+        /// <summary>
+        /// Constructor de l'objecte.
+        /// </summary>
+        /// 
         public PanelEditorViewModel():
             base(null) {
         }
 
+        /// <summary>
+        /// Obte o asigna la propietat Project.
+        /// </summary>
+        /// 
         public Panel Project {
             get {
                 return project;
             }
             set {
                 if (SetProperty<Panel>(ref project, value, "Project"))
-                    OnMultiplePropertyChanged("Visual", "ContentVisibility");
+                    OnMultiplePropertyChanged("Visual", "Visibility");
             }
         }
 
+        /// <summary>
+        /// Obte o asigna la propietat Visual
+        /// </summary>
+        /// 
         public DrawingVisual Visual {
             get {
                 if (project == null)
@@ -36,7 +48,11 @@
             }
         }
 
-        public Visibility ContentVisibility {
+        /// <summary>
+        /// Obte o asigna la propietat ContentVisubility
+        /// </summary>
+        /// 
+        public Visibility Visibility {
             get {
                 return project == null ? Visibility.Hidden : Visibility.Visible;
             }

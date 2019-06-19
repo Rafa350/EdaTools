@@ -49,7 +49,7 @@
             DockPanel.Dock="Left">
             <views:PanelTreeView
                 Project="{Binding Project}"/>
-        </Border>
+        </Border>  
         
         <Border
             x:Name="_this"

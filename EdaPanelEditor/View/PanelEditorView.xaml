@@ -31,7 +31,7 @@
             Grid.Column="1"
             Grid.Row="1"
             Visual="{Binding Visual}"
-            Visibility="{Binding ContentVisibility}">
+            Visibility="{Binding Visibility}">
             <local:ContentBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleX="1" ScaleY="-1"/>
@@ -50,7 +50,7 @@
             ValueDivisor="1000000"
             RulerAlignment="Bottom"
             TransformMode="XAxis"
-            Visibility="{Binding ContentVisibility}">
+            Visibility="{Binding Visibility}">
         </local:RulerBox>
         <local:RulerBox
             x:Name="vRulerBox"
@@ -63,7 +63,7 @@
             ValueDivisor="1000000"
             RulerAlignment="Top"
             TransformMode="YAxis"
-            Visibility="{Binding ContentVisibility}">
+            Visibility="{Binding Visibility}">
             <local:RulerBox.LayoutTransform>
                 <TransformGroup>
                     <RotateTransform Angle="90"/>

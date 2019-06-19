@@ -8,10 +8,18 @@
 
         private Panel project;
 
+        /// <summary>
+        /// Constructor de l'objecte.
+        /// </summary>
+        /// 
         public PanelTreeViewModel():
             base(null) {
         }
 
+        /// <summary>
+        /// Obte o asigna la propietat Project.
+        /// </summary>
+        /// 
         public Panel Project {
             get {
                 return project;

@@ -50,6 +50,7 @@
         private readonly VisualItem regionVisual;
 
         private const double pixelsPerDip = 1.25;
+        private const int maxLines = 1000;
 
         /// <summary>
         /// Constructor estatic. Crea les propietats de dependencia i les inicialitza.
@@ -288,7 +289,7 @@
                 typeof(double),
                 typeof(RulerBox),
                 new FrameworkPropertyMetadata {
-                    DefaultValue = 0.0,
+                    DefaultValue = 100.0,
                     PropertyChangedCallback = VisualAspectChanged
                 });
         }
@@ -442,9 +443,16 @@
 
             double u = 1 * sf;
             double u5x = u * 5;
-            double u10x = u * 10; 
+            double u10x = u * 10;
+
+            int numLines = 0;
 
             for (double m = MinValue - (MinValue % sf); m <= MaxValue; m += u) {
+
+                // Limita el numero de linies a dibuixar
+                //
+                if (numLines++ >= maxLines)
+                    break;
 
                 Point p = TransformMatrix.Transform(new Point(m, m));
                 double x = TransformMode == TransformationMode.XAxis ? p.X : p.Y;
