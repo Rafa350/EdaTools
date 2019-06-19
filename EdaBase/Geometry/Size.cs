@@ -17,6 +17,11 @@
         /// <param name="height">Açada.</param>
         /// 
         public Size(int width = 0, int height = 0) {
+            
+            if (width < 0)
+                throw new ArgumentOutOfRangeException("width");
+            if (height < 0)
+                throw new ArgumentOutOfRangeException("height");
 
             this.width = width;
             this.height = height;
