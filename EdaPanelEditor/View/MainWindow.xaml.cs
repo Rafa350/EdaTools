@@ -6,15 +6,12 @@
 
     public partial class MainWindow: Window {
 
-        private readonly WindowStateAgent sa;
-
         public MainWindow() {
 
             InitializeComponent();
+            WindowStateManager.RegisterWindow(this);
 
             Loaded += MainWindow_Loaded;
-
-            sa = new WindowStateAgent(this);
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e) {

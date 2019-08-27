@@ -3,7 +3,6 @@
     using System.Windows;
     using MikroPic.EdaTools.v1.BoardEditor.Services;
     using MikroPic.NetMVVMToolkit.v1.MVVM.Services;
-    using MikroPic.NetMVVMToolkit.v1.WindowState;
 
     public partial class App: Application {
 
@@ -21,13 +20,6 @@
             serviceLocator.Register(typeof(IDialogService), dlgService);
 
             base.OnStartup(e);
-        }
-
-        protected override void OnExit(ExitEventArgs e) {
-
-            WindowStateManager.Instance.Close();
-
-            base.OnExit(e);
         }
     }
 }

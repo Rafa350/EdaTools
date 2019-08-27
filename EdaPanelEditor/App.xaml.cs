@@ -1,9 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.PanelEditor {
 
+    using System.Windows;
     using MikroPic.EdaTools.v1.PanelEditor.Services;
     using MikroPic.NetMVVMToolkit.v1.MVVM.Services;
-    using MikroPic.NetMVVMToolkit.v1.WindowState;
-    using System.Windows;
 
     public partial class App: Application {
 
@@ -23,11 +22,5 @@
             base.OnStartup(e);
         }
 
-        protected override void OnExit(ExitEventArgs e) {
-
-            WindowStateManager.Instance.Close();
-
-            base.OnExit(e);
-        }
     }
 }

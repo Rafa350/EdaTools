@@ -106,7 +106,6 @@
     <Compile Include="WindowState\Repository\WindowStateRepository.cs" />
     <Compile Include="WindowState\WindowStateManager.cs" />
     <Compile Include="WindowState\WindowStateInfo.cs" />
-    <Compile Include="WindowState\WindowStateAgent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

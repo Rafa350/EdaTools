@@ -9,14 +9,13 @@
         private const string path = @"..\..\..\Data";
         private const string inImportFileName = @"board3.brd";
         private const string fileName = @"board3.xml";
-        private readonly WindowStateAgent sa;
 
         public MainWindow() {
 
             InitializeComponent();
-            DataContext = new MainViewModel();
+            WindowStateManager.RegisterWindow(this);
 
-            sa = new WindowStateAgent(this);
+            DataContext = new MainViewModel();
         }
     }
 }
