@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.Base.Geometry {
+﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Utils {
 
     using System;
 

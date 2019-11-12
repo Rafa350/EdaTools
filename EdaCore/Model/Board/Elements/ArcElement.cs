@@ -2,6 +2,7 @@
 
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+    using MikroPic.EdaTools.v1.Base.Geometry.Utils;
     using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
     using MikroPic.EdaTools.v1.Core.Model.Board;
 

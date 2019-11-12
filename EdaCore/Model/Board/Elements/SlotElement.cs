@@ -46,7 +46,24 @@
         }
 
         public override Rect GetBoundingBox(BoardSide side) {
-            throw new System.NotImplementedException();
+
+            double a = Rotation.ToRadiants;
+
+            int size = topSize;
+            switch (side) {
+                case BoardSide.Bottom:
+                    size = bottomSize;
+                    break;
+
+                case BoardSide.Inner:
+                    size = innerSize;
+                    break;
+            }
+
+            int w = (int)(length * Math.Cos(a) + size * Math.Sin(a));
+            int h = (int)(length * Math.Sin(a) + size * Math.Cos(a));
+
+            return new Rect(Position.X - (w / 2), Position.Y - (h / 2), w, h);
         }
 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
