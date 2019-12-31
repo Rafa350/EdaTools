@@ -2,9 +2,17 @@
 
     public sealed class Matrix {
 
+        private readonly double[,] m = new double[3,3];
+
         public static readonly Matrix Identity = new Matrix();
 
-        public void Translate(int x, int y) {
+        public Matrix() {
+
+            Initialize();
+        }
+
+
+        public void Translate(double x, double y) {
 
         }
 
@@ -32,6 +40,21 @@
         public Point[] Transform(Point[] points) {
 
             return points;
+        }
+
+        private void Initialize() {
+
+            m[0, 0] = 1;
+            m[0, 1] = 0;
+            m[0, 2] = 0;
+
+            m[1, 0] = 0;
+            m[1, 1] = 1;
+            m[1, 2] = 0;
+            
+            m[2, 0] = 0;
+            m[2, 1] = 0;
+            m[2, 2] = 1;
         }
     }
 }
