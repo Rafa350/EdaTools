@@ -4,7 +4,7 @@
     <!-- Localitzacio de les eines -->
     <PropertyGroup>
         <EdaCAMTool>..\bin\Debug\EdaCamTool.exe</EdaCAMTool>
-        <EdaConvertTool>..\bin\Debug\EdaCamTool.exe</EdaConvertTool>
+        <EdaConvertTool>..\bin\Debug\EdaConverter.exe</EdaConvertTool>
         <EdaPanelizerTool>..\bin\Debug\EdaPanelizer.exe</EdaPanelizerTool>
         <ZipTool>&quot;c:\program files\winrar\rar.exe&quot;</ZipTool>
     </PropertyGroup>

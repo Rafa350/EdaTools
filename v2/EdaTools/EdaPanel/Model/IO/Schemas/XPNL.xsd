@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+    elementFormDefault="qualified"
+    targetNamespace="http://MikroPic.com/schemas/edatools/v1/XPNL.xsd"
+    xmlns="http://MikroPic.com/schemas/edatools/v1/XPNL.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    
+    <xs:element
+        name="document">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="project" maxOccurs="unbounded" minOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="version" use="required" type="xs:string"/>
+            <xs:attribute name="documentType" use="required" type="xs:string"/>
+            <xs:attribute name="distanceUnits" use="required" type="distanceUnitsType"/>
+            <xs:attribute name="angleUnits" use="required" type="angleUnitsType"/>            
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element
+        name="project">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="items" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="size" use="required" type="sizeType"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element
+        name="items">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="board"/>
+                    <xs:element ref="cut"/>
+                </xs:choice>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element
+        name="board">
+        <xs:complexType>
+            <xs:attribute name="file" use="required" type="xs:string"/>
+            <xs:attribute name="position" use="required" type="pointType"/>
+            <xs:attribute name="rotation" use="optional" type="xs:double"/>
+            <xs:attribute name="size" use="optional" type="sizeType"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element
+        name="cut">
+        <xs:complexType>
+            <xs:attribute name="startPosition" use="required" type="pointType"/>
+            <xs:attribute name="endPosition" use="required" type="pointType"/>
+            <xs:attribute name="thickness" use="required" type="xs:double"/>
+            <xs:attribute name="cutSpacing" use="required" type="xs:double"/>
+            <xs:attribute name="holeSpacing" use="required" type="xs:double"/>
+            <xs:attribute name="holeDiameter" use="required" type="xs:double"/>
+            <xs:attribute name="margin" use="optional" type="xs:double"/>
+            <xs:attribute name="cuts" use="optional" type="xs:integer"/>
+            <xs:attribute name="holes" use="optional" type="xs:integer"/>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:simpleType
+        name="nameType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    
+    <xs:simpleType
+        name="pointType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$"/>
+        </xs:restriction>        
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="sizeType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$"/>
+        </xs:restriction>        
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="distanceUnitsType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="mm"/>
+            <xs:enumeration value="um"/>
+            <xs:enumeration value="nm"/>
+            <xs:enumeration value="inches"/>
+            <xs:enumeration value="mills"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="angleUnitsType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="deg"/>
+            <xs:enumeration value="rad"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
