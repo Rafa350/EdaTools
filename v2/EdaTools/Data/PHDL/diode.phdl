@@ -1,0 +1,18 @@
+device diode {
+
+    pin c {
+        name = "1";
+    }
+    pin a {
+        name = "2";
+    }
+    
+    string designator;
+    string package;
+    
+    real capacitance;
+    real tolerance;
+
+    string reference;
+    string manufacturer;
+}

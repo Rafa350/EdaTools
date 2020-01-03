@@ -1,0 +1,603 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<document version="100" documentType="netlist" xmlns="http://MikroPic.com/schemas/edatools/v1/XNET.xsd">
+    <netlist>
+        <signals>
+            <signal name="GND">
+                <connections>
+                    <connection part="JP5" pad="3" />
+                    <connection part="JP3" pad="5" />
+                    <connection part="C1" pad="2" />
+                    <connection part="C2" pad="2" />
+                    <connection part="JP6" pad="4" />
+                    <connection part="JP8" pad="4" />
+                    <connection part="C7" pad="1" />
+                    <connection part="C6" pad="1" />
+                    <connection part="C5" pad="1" />
+                    <connection part="C10" pad="1" />
+                    <connection part="C11" pad="1" />
+                    <connection part="U1" pad="7" />
+                    <connection part="U1" pad="7" />
+                    <connection part="U2" pad="7" />
+                    <connection part="U2" pad="7" />
+                    <connection part="U3" pad="7" />
+                    <connection part="U3" pad="7" />
+                    <connection part="U4" pad="7" />
+                    <connection part="U4" pad="7" />
+                    <connection part="U12" pad="7" />
+                    <connection part="U12" pad="7" />
+                    <connection part="U5" pad="2" />
+                    <connection part="U6" pad="2" />
+                    <connection part="U7" pad="2" />
+                    <connection part="U8" pad="2" />
+                    <connection part="U13" pad="2" />
+                    <connection part="U14" pad="2" />
+                    <connection part="U15" pad="2" />
+                    <connection part="U16" pad="2" />
+                    <connection part="U17" pad="2" />
+                    <connection part="U18" pad="2" />
+                    <connection part="C9" pad="1" />
+                    <connection part="C8" pad="1" />
+                    <connection part="U10" pad="6" />
+                    <connection part="U10" pad="29" />
+                    <connection part="U9" pad="1" />
+                    <connection part="C14" pad="-" />
+                    <connection part="JP4" pad="2" />
+                    <connection part="C15" pad="1" />
+                    <connection part="C16" pad="-" />
+                    <connection part="C17" pad="1" />
+                    <connection part="LED1" pad="C" />
+                    <connection part="C13" pad="2" />
+                    <connection part="C12" pad="2" />
+                </connections>
+            </signal>
+            <signal name="VCC">
+                <connections>
+                    <connection part="JP5" pad="2" />
+                    <connection part="JP6" pad="1" />
+                    <connection part="JP8" pad="1" />
+                    <connection part="C7" pad="2" />
+                    <connection part="C6" pad="2" />
+                    <connection part="U10" pad="7" />
+                    <connection part="U10" pad="28" />
+                    <connection part="C8" pad="2" />
+                    <connection part="C9" pad="2" />
+                    <connection part="C5" pad="2" />
+                    <connection part="R17" pad="2" />
+                    <connection part="R18" pad="2" />
+                    <connection part="R5" pad="2" />
+                    <connection part="R2" pad="2" />
+                    <connection part="C14" pad="+" />
+                    <connection part="C15" pad="2" />
+                    <connection part="U9" pad="3" />
+                    <connection part="C12" pad="1" />
+                    <connection part="C17" pad="2" />
+                    <connection part="C16" pad="+" />
+                    <connection part="R6" pad="2" />
+                </connections>
+            </signal>
+            <signal name="VPP">
+                <connections>
+                    <connection part="JP5" pad="1" />
+                    <connection part="U10" pad="18" />
+                    <connection part="R6" pad="1" />
+                </connections>
+            </signal>
+            <signal name="N$17">
+                <connections>
+                    <connection part="R9" pad="2" />
+                    <connection part="U5" pad="1" />
+                </connections>
+            </signal>
+            <signal name="N$18">
+                <connections>
+                    <connection part="R10" pad="2" />
+                    <connection part="U6" pad="1" />
+                </connections>
+            </signal>
+            <signal name="N$25">
+                <connections>
+                    <connection part="R11" pad="2" />
+                    <connection part="U7" pad="1" />
+                </connections>
+            </signal>
+            <signal name="N$26">
+                <connections>
+                    <connection part="R12" pad="2" />
+                    <connection part="U8" pad="1" />
+                </connections>
+            </signal>
+            <signal name="OUT0">
+                <connections>
+                    <connection part="R9" pad="1" />
+                    <connection part="U10" pad="24" />
+                </connections>
+            </signal>
+            <signal name="OUT1">
+                <connections>
+                    <connection part="R10" pad="1" />
+                    <connection part="U10" pad="23" />
+                </connections>
+            </signal>
+            <signal name="OUT4">
+                <connections>
+                    <connection part="R13" pad="1" />
+                    <connection part="U10" pad="21" />
+                </connections>
+            </signal>
+            <signal name="OUT3">
+                <connections>
+                    <connection part="R12" pad="1" />
+                    <connection part="U10" pad="22" />
+                </connections>
+            </signal>
+            <signal name="IN0">
+                <connections>
+                    <connection part="U1" pad="8" />
+                    <connection part="U10" pad="9" />
+                </connections>
+            </signal>
+            <signal name="IN1">
+                <connections>
+                    <connection part="U1" pad="8" />
+                    <connection part="U10" pad="8" />
+                </connections>
+            </signal>
+            <signal name="IN2">
+                <connections>
+                    <connection part="U2" pad="8" />
+                    <connection part="U10" pad="11" />
+                </connections>
+            </signal>
+            <signal name="IN3">
+                <connections>
+                    <connection part="U2" pad="8" />
+                    <connection part="U10" pad="10" />
+                </connections>
+            </signal>
+            <signal name="N$4">
+                <connections>
+                    <connection part="U11" pad="14" />
+                    <connection part="JP3" pad="1" />
+                </connections>
+            </signal>
+            <signal name="N$13">
+                <connections>
+                    <connection part="U11" pad="7" />
+                    <connection part="JP3" pad="2" />
+                </connections>
+            </signal>
+            <signal name="N$14">
+                <connections>
+                    <connection part="U11" pad="13" />
+                    <connection part="JP3" pad="3" />
+                </connections>
+            </signal>
+            <signal name="N$15">
+                <connections>
+                    <connection part="U11" pad="8" />
+                    <connection part="JP3" pad="4" />
+                </connections>
+            </signal>
+            <signal name="N$16">
+                <connections>
+                    <connection part="U11" pad="1" />
+                    <connection part="C3" pad="2" />
+                </connections>
+            </signal>
+            <signal name="N$29">
+                <connections>
+                    <connection part="C3" pad="1" />
+                    <connection part="U11" pad="3" />
+                </connections>
+            </signal>
+            <signal name="N$30">
+                <connections>
+                    <connection part="U11" pad="4" />
+                    <connection part="C4" pad="2" />
+                </connections>
+            </signal>
+            <signal name="N$33">
+                <connections>
+                    <connection part="C4" pad="1" />
+                    <connection part="U11" pad="5" />
+                </connections>
+            </signal>
+            <signal name="N$34">
+                <connections>
+                    <connection part="U11" pad="2" />
+                    <connection part="C1" pad="1" />
+                </connections>
+            </signal>
+            <signal name="N$35">
+                <connections>
+                    <connection part="U11" pad="6" />
+                    <connection part="C2" pad="1" />
+                </connections>
+            </signal>
+            <signal name="RX1">
+                <connections>
+                    <connection part="U11" pad="12" />
+                    <connection part="U10" pad="1" />
+                </connections>
+            </signal>
+            <signal name="RX2">
+                <connections>
+                    <connection part="U11" pad="9" />
+                    <connection part="U10" pad="5" />
+                </connections>
+            </signal>
+            <signal name="TX1">
+                <connections>
+                    <connection part="U11" pad="11" />
+                    <connection part="U10" pad="44" />
+                </connections>
+            </signal>
+            <signal name="TX2">
+                <connections>
+                    <connection part="U11" pad="10" />
+                    <connection part="U10" pad="4" />
+                </connections>
+            </signal>
+            <signal name="N$8">
+                <connections>
+                    <connection part="C10" pad="2" />
+                    <connection part="Q1" pad="1" />
+                    <connection part="U10" pad="30" />
+                </connections>
+            </signal>
+            <signal name="N$36">
+                <connections>
+                    <connection part="C11" pad="2" />
+                    <connection part="Q1" pad="2" />
+                    <connection part="U10" pad="31" />
+                </connections>
+            </signal>
+            <signal name="N$52">
+                <connections>
+                    <connection part="R13" pad="2" />
+                    <connection part="U13" pad="1" />
+                </connections>
+            </signal>
+            <signal name="N$53">
+                <connections>
+                    <connection part="R14" pad="2" />
+                    <connection part="U14" pad="1" />
+                </connections>
+            </signal>
+            <signal name="IN4">
+                <connections>
+                    <connection part="U3" pad="8" />
+                    <connection part="U10" pad="15" />
+                </connections>
+            </signal>
+            <signal name="IN5">
+                <connections>
+                    <connection part="U3" pad="8" />
+                    <connection part="U10" pad="14" />
+                </connections>
+            </signal>
+            <signal name="OUT2">
+                <connections>
+                    <connection part="R11" pad="1" />
+                    <connection part="U10" pad="20" />
+                </connections>
+            </signal>
+            <signal name="OUT5">
+                <connections>
+                    <connection part="R14" pad="1" />
+                    <connection part="U10" pad="19" />
+                </connections>
+            </signal>
+            <signal name="I0">
+                <connections>
+                    <connection part="U1" pad="2" />
+                    <connection part="X1" pad="1" />
+                </connections>
+            </signal>
+            <signal name="I1">
+                <connections>
+                    <connection part="U1" pad="2" />
+                    <connection part="X1" pad="1" />
+                </connections>
+            </signal>
+            <signal name="I2">
+                <connections>
+                    <connection part="U2" pad="2" />
+                    <connection part="X1" pad="1" />
+                </connections>
+            </signal>
+            <signal name="I3">
+                <connections>
+                    <connection part="U2" pad="2" />
+                    <connection part="X1" pad="1" />
+                </connections>
+            </signal>
+            <signal name="I4">
+                <connections>
+                    <connection part="U3" pad="2" />
+                    <connection part="X1" pad="1" />
+                </connections>
+            </signal>
+            <signal name="I5">
+                <connections>
+                    <connection part="U3" pad="2" />
+                    <connection part="X1" pad="1" />
+                </connections>
+            </signal>
+            <signal name="I6">
+                <connections>
+                    <connection part="U4" pad="2" />
+                    <connection part="X1" pad="1" />
+                </connections>
+            </signal>
+            <signal name="I7">
+                <connections>
+                    <connection part="U4" pad="2" />
+                    <connection part="X1" pad="1" />
+                </connections>
+            </signal>
+            <signal name="O0">
+                <connections>
+                    <connection part="U5" pad="4" />
+                    <connection part="X2" pad="1" />
+                </connections>
+            </signal>
+            <signal name="O1">
+                <connections>
+                    <connection part="U6" pad="4" />
+                    <connection part="X2" pad="1" />
+                </connections>
+            </signal>
+            <signal name="O2">
+                <connections>
+                    <connection part="U7" pad="4" />
+                    <connection part="X2" pad="1" />
+                </connections>
+            </signal>
+            <signal name="O3">
+                <connections>
+                    <connection part="U8" pad="4" />
+                    <connection part="X2" pad="1" />
+                </connections>
+            </signal>
+            <signal name="O4">
+                <connections>
+                    <connection part="U13" pad="4" />
+                    <connection part="X2" pad="1" />
+                </connections>
+            </signal>
+            <signal name="O5">
+                <connections>
+                    <connection part="U14" pad="4" />
+                    <connection part="X2" pad="1" />
+                </connections>
+            </signal>
+            <signal name="O6">
+                <connections>
+                    <connection part="U15" pad="4" />
+                    <connection part="X2" pad="1" />
+                </connections>
+            </signal>
+            <signal name="O7">
+                <connections>
+                    <connection part="U16" pad="4" />
+                    <connection part="X2" pad="1" />
+                </connections>
+            </signal>
+            <signal name="N$51">
+                <connections>
+                    <connection part="R15" pad="2" />
+                    <connection part="U15" pad="1" />
+                </connections>
+            </signal>
+            <signal name="N$54">
+                <connections>
+                    <connection part="R16" pad="2" />
+                    <connection part="U16" pad="1" />
+                </connections>
+            </signal>
+            <signal name="OUT6">
+                <connections>
+                    <connection part="R15" pad="1" />
+                    <connection part="U10" pad="35" />
+                </connections>
+            </signal>
+            <signal name="OUT7">
+                <connections>
+                    <connection part="R16" pad="1" />
+                    <connection part="U10" pad="37" />
+                </connections>
+            </signal>
+            <signal name="IN7/PGC">
+                <connections>
+                    <connection part="U10" pad="16" />
+                    <connection part="JP5" pad="5" />
+                    <connection part="U4" pad="8" />
+                </connections>
+            </signal>
+            <signal name="IN6/PGD">
+                <connections>
+                    <connection part="U10" pad="17" />
+                    <connection part="JP5" pad="4" />
+                    <connection part="U4" pad="8" />
+                </connections>
+            </signal>
+            <signal name="N$5">
+                <connections>
+                    <connection part="U9" pad="2" />
+                    <connection part="U9" pad="2@1" />
+                    <connection part="C13" pad="1" />
+                    <connection part="D2" pad="C" />
+                </connections>
+            </signal>
+            <signal name="LED">
+                <connections>
+                    <connection part="R19" pad="2" />
+                    <connection part="U10" pad="3" />
+                </connections>
+            </signal>
+            <signal name="SCL2">
+                <connections>
+                    <connection part="U10" pad="38" />
+                    <connection part="R17" pad="1" />
+                    <connection part="JP6" pad="2" />
+                    <connection part="JP8" pad="2" />
+                </connections>
+            </signal>
+            <signal name="SDA2">
+                <connections>
+                    <connection part="U10" pad="39" />
+                    <connection part="R18" pad="1" />
+                    <connection part="JP6" pad="3" />
+                    <connection part="JP8" pad="3" />
+                </connections>
+            </signal>
+            <signal name="N$22">
+                <connections>
+                    <connection part="R19" pad="1" />
+                    <connection part="LED1" pad="A" />
+                </connections>
+            </signal>
+            <signal name="I8">
+                <connections>
+                    <connection part="U12" pad="2" />
+                    <connection part="X1" pad="1" />
+                </connections>
+            </signal>
+            <signal name="I9">
+                <connections>
+                    <connection part="U12" pad="2" />
+                    <connection part="X1" pad="1" />
+                </connections>
+            </signal>
+            <signal name="O8">
+                <connections>
+                    <connection part="U17" pad="4" />
+                    <connection part="X2" pad="1" />
+                </connections>
+            </signal>
+            <signal name="IN8">
+                <connections>
+                    <connection part="U12" pad="8" />
+                    <connection part="U10" pad="25" />
+                    <connection part="R5" pad="1" />
+                </connections>
+            </signal>
+            <signal name="IN9">
+                <connections>
+                    <connection part="U12" pad="8" />
+                    <connection part="U10" pad="26" />
+                    <connection part="R2" pad="1" />
+                </connections>
+            </signal>
+            <signal name="N$1">
+                <connections>
+                    <connection part="R3" pad="2" />
+                    <connection part="U17" pad="1" />
+                </connections>
+            </signal>
+            <signal name="OUT8">
+                <connections>
+                    <connection part="R3" pad="1" />
+                    <connection part="U10" pad="36" />
+                </connections>
+            </signal>
+            <signal name="OUT9">
+                <connections>
+                    <connection part="R4" pad="1" />
+                    <connection part="U10" pad="32" />
+                </connections>
+            </signal>
+            <signal name="N$6">
+                <connections>
+                    <connection part="R4" pad="2" />
+                    <connection part="U18" pad="1" />
+                </connections>
+            </signal>
+            <signal name="O9">
+                <connections>
+                    <connection part="U18" pad="4" />
+                    <connection part="X2" pad="1" />
+                </connections>
+            </signal>
+            <signal name="N$7">
+                <connections>
+                    <connection part="R1" pad="2" />
+                    <connection part="D2" pad="A" />
+                </connections>
+            </signal>
+            <signal name="I-COM2">
+                <connections>
+                    <connection part="U4" pad="1" />
+                    <connection part="U4" pad="1" />
+                    <connection part="X1" pad="1" />
+                </connections>
+            </signal>
+            <signal name="I-COM0">
+                <connections>
+                    <connection part="U1" pad="1" />
+                    <connection part="U1" pad="1" />
+                    <connection part="U2" pad="1" />
+                    <connection part="X1" pad="1" />
+                </connections>
+            </signal>
+            <signal name="I-COM1">
+                <connections>
+                    <connection part="U2" pad="1" />
+                    <connection part="U3" pad="1" />
+                    <connection part="U3" pad="1" />
+                    <connection part="X1" pad="1" />
+                </connections>
+            </signal>
+            <signal name="I-COM3">
+                <connections>
+                    <connection part="U12" pad="1" />
+                    <connection part="U12" pad="1" />
+                    <connection part="X1" pad="1" />
+                </connections>
+            </signal>
+            <signal name="O-COM0">
+                <connections>
+                    <connection part="U5" pad="3" />
+                    <connection part="U6" pad="3" />
+                    <connection part="U7" pad="3" />
+                    <connection part="X2" pad="1" />
+                </connections>
+            </signal>
+            <signal name="O-COM1">
+                <connections>
+                    <connection part="U8" pad="3" />
+                    <connection part="U13" pad="3" />
+                    <connection part="U14" pad="3" />
+                    <connection part="X2" pad="1" />
+                </connections>
+            </signal>
+            <signal name="O-COM3">
+                <connections>
+                    <connection part="U17" pad="3" />
+                    <connection part="U18" pad="3" />
+                    <connection part="X2" pad="1" />
+                </connections>
+            </signal>
+            <signal name="O-COM2">
+                <connections>
+                    <connection part="U15" pad="3" />
+                    <connection part="U16" pad="3" />
+                    <connection part="X2" pad="1" />
+                </connections>
+            </signal>
+            <signal name="N$2">
+                <connections>
+                    <connection part="JP4" pad="1" />
+                    <connection part="L1" pad="2" />
+                </connections>
+            </signal>
+            <signal name="N$3">
+                <connections>
+                    <connection part="L1" pad="1" />
+                    <connection part="R1" pad="1" />
+                </connections>
+            </signal>
+        </signals>
+    </netlist>
+</document>

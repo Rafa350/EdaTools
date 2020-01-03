@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <!-- Localitzacio de les eines -->
+    <PropertyGroup>
+        <EdaCAMTool>..\bin\Debug\EdaCamTool.exe</EdaCAMTool>
+        <EdaConvertTool>..\bin\Debug\EdaConverter.exe</EdaConvertTool>
+        <EdaPanelizerTool>..\bin\Debug\EdaPanelizer.exe</EdaPanelizerTool>
+        <ZipTool>&quot;c:\program files\winrar\rar.exe&quot;</ZipTool>
+    </PropertyGroup>
+    
+    <PropertyGroup>
+        <BoardRootFolder>c:\projectes\eagle\projects\</BoardRootFolder>
+        <BuildFolder>Build\</BuildFolder>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProductionFiles Include="$(MSBuildProjectName)_Copper$L1.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName)_Copper$L2.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName)_Legend$Top.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName)_Legend$Bottom.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName)_Soldermask$Top.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName)_Soldermask$Bottom.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName)_NonPlated$1$2$NPTH$Drill.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName)_NonPlated$1$2$NPTH$Route.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName)_Plated$1$2$PTH$Drill.gbr"/>
+        <ProductionFiles Include="$(MSBuildProjectName).ipc"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <CamSource Include="$(MSBuildProjectName).xcam"/>
+        <CamSource Include="$(MSBuildProjectName).xbrd"/>
+    </ItemGroup>
+
+    <!-- Generacio incremental -->
+    <Target
+        Name="Make"
+        DependsOnTargets="Prepare;Pack"/>
+
+    <!-- Generacio complerta -->
+    <Target
+        Name="Build"
+        DependsOnTargets="Clean;Prepare;Pack"/>
+        
+    <!-- Preparacio -->
+    <Target
+        Name="Prepare">
+        <MakeDir Directories="$(BuildFolder)" Condition="!Exists('$(BuildFolder)')"/>
+    </Target>
+
+    <!-- Neteja -->
+    <Target
+        Name="Clean">
+        <Delete Files="@(ProductionFiles)"/>
+        <Delete Files="$(BuildFolder)$(MSBuildProjectName).zip"/>
+        <RemoveDir Directories="$(BuildFolder)"/>
+    </Target>
+
+    <!-- Genera el fitxer ZIP -->
+    <Target
+        Name="Pack"
+        Inputs="@(ProductionFiles)"
+        Outputs="$(MSBuildProjectName).zip"
+        DependsOnTargets="Production">
+        <Exec Command="$(ZipTool) a $(MSBuildProjectName).zip @(ProductionFiles,' ')"/>
+    </Target>
+    
+    <!-- Genera els fitxers de produccio -->
+    <Target
+        Name="Production"
+        DependsOnTargets="Copper-1;Copper-2;Legend-Top;Legend-Bottom;Soldermask-Top;Soldermask-Bottom;NonPlated-1-2-Drill;NonPlated-1-2-Route;Plated-1-2-Drill;IPC-D356">
+    </Target>
+
+    <!-- Genera el fitxer Gerber -->
+    <Target
+        Name="Copper-1"
+        Inputs="@(CamSource)"
+        Outputs="$(MSBuildProjectName)_Copper$L1.gbr"
+        DependsOnTargets="Panelize">
+        <Exec Command="$(EdaCAMTool) $(MSBuildProjectName).xcam /t:Copper.1"/>
+    </Target>
+
+    <!-- Genera el fitxer Gerber -->
+    <Target
+        Name="Copper-2"
+        Inputs="@(CamSource)"
+        Outputs="$(MSBuildProjectName)_Copper$L2.gbr"
+        DependsOnTargets="Panelize">
+        <Exec Command="$(EdaCAMTool) $(MSBuildProjectName).xcam /t:Copper.2"/>
+    </Target>
+
+    <!-- Genera el fitxer Gerber -->
+    <Target
+        Name="Legend-Top"
+        Inputs="@(CamSource)"
+        Outputs="$(MSBuildProjectName)_Legend$Top.gbr"
+        DependsOnTargets="Panelize">
+        <Exec Command="$(EdaCAMTool) $(MSBuildProjectName).xcam /t:Legend.Top"/>
+    </Target>
+
+    <!-- Genera el fitxer Gerber -->
+    <Target
+        Name="Legend-Bottom"
+        Inputs="@(CamSource)"
+        Outputs="$(MSBuildProjectName)_Legend$Bottom.gbr"
+        DependsOnTargets="Panelize">
+        <Exec Command="$(EdaCAMTool) $(MSBuildProjectName).xcam /t:Legend.Bottom"/>
+    </Target>
+
+    <!-- Genera el fitxer Gerber -->
+    <Target
+        Name="Soldermask-Top"
+        Inputs="@(CamSource)"
+        Outputs="$(MSBuildProjectName)_Soldermask$Top.gbr"
+        DependsOnTargets="Panelize">
+        <Exec Command="$(EdaCAMTool) $(MSBuildProjectName).xcam /t:Soldermask.Top"/>
+    </Target>
+
+    <!-- Genera el fitxer Gerber -->
+    <Target
+        Name="Soldermask-Bottom"
+        Inputs="@(CamSource)"
+        Outputs="$(MSBuildProjectName)_Soldermask$Bottom.gbr"
+        DependsOnTargets="Panelize">
+        <Exec Command="$(EdaCAMTool) $(MSBuildProjectName).xcam /t:Soldermask.Bottom"/>
+    </Target>
+
+    <!-- Genera el fitxer Gerber -->
+    <Target
+        Name="NonPlated-1-2-Drill"
+        Inputs="@(CamSource)"
+        Outputs="$(MSBuildProjectName)_NonPlated$1$2$NPTH$Drill.gbr"
+        DependsOnTargets="Panelize">
+        <Exec Command="$(EdaCAMTool) $(MSBuildProjectName).xcam /t:NonPlated.1.2.Drill"/>
+    </Target>
+
+    <!-- Genera el fitxer Gerber -->
+    <Target
+        Name="NonPlated-1-2-Route"
+        Inputs="@(CamSource)"
+        Outputs="$(MSBuildProjectName)_NonPlated$1$2$NPTH$Route.gbr"
+        DependsOnTargets="Panelize">
+        <Exec Command="$(EdaCAMTool) $(MSBuildProjectName).xcam /t:NonPlated.1.2.Route"/>
+    </Target>
+
+    <!-- Genera el fitxer Gerber -->
+    <Target
+        Name="Plated-1-2-Drill"
+        Inputs="@(CamSource)"
+        Outputs="$(MSBuildProjectName)_Plated$1$2$PTH$Drill.gbr"
+        DependsOnTargets="Panelize">
+        <Exec Command="$(EdaCAMTool) $(MSBuildProjectName).xcam /t:Plated.1.2.Drill"/>
+    </Target>
+
+    <!-- Genera el fitxer IPC-D356 -->
+    <Target
+        Name="IPC-D356"
+        Inputs="@(CamSource)"
+        Outputs="$(MSBuildProjectName).ipc"
+        DependsOnTargets="Panelize">
+        <Exec Command="$(EdaCAMTool) $(MSBuildProjectName).xcam /t:IPC-D356"/>
+    </Target>
+    
+    <!-- Genera el fitxer del panell -->
+    <Target
+        Name="Panelize"
+        Inputs="$(MSBuildProjectName).xpnl; board3.xbrd"
+        Outputs="$(MSBuildProjectName).xbrd">
+        <Exec Command="$(EdaPanelizerTool) $(MSBuildProjectName).xpnl" />
+    </Target>
+
+ </Project>

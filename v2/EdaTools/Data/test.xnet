@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<document version="100" documentType="netlist" xmlns="http://MikroPic.com/schemas/edatools/v1/XNET.xsd">
+    <netlist>
+        <signals>
+            <signal name="VCC">
+                <connections>
+                    <connection part="U2" pin="VDD" />
+                    <connection part="C2" pin="1" />
+                    <connection part="SUPPLY2" pin="VCC" />
+                    <connection part="C1" pin="1" />
+                    <connection part="SUPPLY3" pin="VCC" />
+                    <connection part="JP2" pin="2" />
+                    <connection part="C4" pin="+" />
+                    <connection part="SUPPLY1" pin="VCC" />
+                    <connection part="L1" pin="2" />
+                </connections>
+            </signal>
+            <signal name="GND">
+                <connections>
+                    <connection part="C1" pin="2" />
+                    <connection part="GND2" pin="GND" />
+                    <connection part="C2" pin="2" />
+                    <connection part="GND3" pin="GND" />
+                    <connection part="U2" pin="VSS" />
+                    <connection part="GND4" pin="GND" />
+                    <connection part="JP1" pin="4" />
+                    <connection part="GND1" pin="GND" />
+                    <connection part="GND6" pin="GND" />
+                    <connection part="JP2" pin="3" />
+                    <connection part="GND7" pin="GND" />
+                    <connection part="SW1" pin="C" />
+                    <connection part="C4" pin="-" />
+                    <connection part="GND9" pin="GND" />
+                    <connection part="GND5" pin="GND" />
+                    <connection part="SW1" pin="2" />
+                </connections>
+            </signal>
+            <signal name="N$3">
+                <connections>
+                    <connection part="JP1" pin="2" />
+                    <connection part="U2" pin="RA1/AN1/SCL/SCK/PGC" />
+                    <connection part="JP2" pin="5" />
+                </connections>
+            </signal>
+            <signal name="N$4">
+                <connections>
+                    <connection part="U2" pin="RA2/AN2/SDA/SDI" />
+                    <connection part="JP1" pin="3" />
+                </connections>
+            </signal>
+            <signal name="N$5">
+                <connections>
+                    <connection part="U2" pin="RA0/AN0/PGD" />
+                    <connection part="JP2" pin="4" />
+                </connections>
+            </signal>
+            <signal name="N$7">
+                <connections>
+                    <connection part="U2" pin="RA5" />
+                    <connection part="SW1" pin="B" />
+                </connections>
+            </signal>
+            <signal name="N$10">
+                <connections>
+                    <connection part="U2" pin="RA4/AN3" />
+                    <connection part="SW1" pin="A" />
+                </connections>
+            </signal>
+            <signal name="N$12">
+                <connections>
+                    <connection part="U2" pin="RA3/MCLR/VPP" />
+                    <connection part="JP2" pin="1" />
+                    <connection part="SW1" pin="1" />
+                </connections>
+            </signal>
+            <signal name="N$6">
+                <connections>
+                    <connection part="L1" pin="1" />
+                    <connection part="JP1" pin="1" />
+                </connections>
+            </signal>
+        </signals>
+    </netlist>
+</document>
