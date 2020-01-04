@@ -24,7 +24,8 @@
         ///
         public void Translate(int offsetX, int offsetY) {
 
-            m.Translate(offsetX, offsetY);
+            if ((offsetX != 0) || (offsetY != 0))
+                m.Translate(offsetX, offsetY);
         }
 
         /// <summary>
@@ -35,7 +36,8 @@
         /// 
         public void Scale(int scaleX, int scaleY) {
 
-            m.Scale(scaleX, scaleY);
+            if ((scaleX != 1) || (scaleY != 1))
+                m.Scale(scaleX, scaleY);
         }
 
         /// <summary>
@@ -47,7 +49,8 @@
         /// 
         public void Scale(Point center, int scaleX, int scaleY) {
 
-            m.ScaleAt(scaleX, scaleY, center.X, center.Y);
+            if ((scaleX != 1) || (scaleY != 1))
+                m.ScaleAt(scaleX, scaleY, center.X, center.Y);
         }
 
         /// <summary>
@@ -60,7 +63,8 @@
         /// 
         public void Scale(int centerX, int centerY, int scaleX, int scaleY) {
 
-            m.ScaleAt(scaleX, scaleY, centerX, centerY);
+            if ((scaleX != 1) || (scaleY != 1))
+                m.ScaleAt(scaleX, scaleY, centerX, centerY);
         }
 
         /// <summary>
@@ -70,7 +74,8 @@
         /// 
         public void Rotate(Angle rotation) {
 
-            m.Rotate(rotation.ToDegrees);
+            if (!rotation.IsZero)
+                m.Rotate(rotation.ToDegrees);
         }
 
         /// <summary>
@@ -81,7 +86,8 @@
         /// 
         public void Rotate(Point center, Angle rotation) {
 
-            m.RotateAt(rotation.ToDegrees, center.X, center.Y);
+            if (!rotation.IsZero)
+                m.RotateAt(rotation.ToDegrees, center.X, center.Y);
         }
 
         /// <summary>
@@ -93,7 +99,8 @@
         /// 
         public void Rotate(int centerX, int centerY, Angle rotation) {
 
-            m.RotateAt(rotation.ToDegrees, centerX, centerY);
+            if (!rotation.IsZero)
+                m.RotateAt(rotation.ToDegrees, centerX, centerY);
         }
 
         /// <summary>
@@ -106,13 +113,8 @@
 
             double x = point.X;
             double y = point.Y;
-            double xadd = y * m.M21 + m.OffsetX;
-            double yadd = x * m.M12 + m.OffsetY;
 
-            x *= m.M11;
-            x += xadd;
-            y *= m.M22;
-            y += yadd;
+            m.Apply(ref x, ref y);
 
             return new Point((int)x, (int)y);
         }
@@ -128,25 +130,10 @@
 
                 double x = points[i].X;
                 double y = points[i].Y;
-                double xadd = y * m.M21 + m.OffsetX;
-                double yadd = x * m.M12 + m.OffsetY;
 
-                x *= m.M11;
-                x += xadd;
-                y *= m.M22;
-                y += yadd;
+                m.Apply(ref x, ref y);
 
                 points[i] = new Point((int)x, (int)y);
-            }
-        }
-
-        /// <summary>
-        /// Obte la matriu de la transformacio.
-        /// </summary>
-        /// 
-        public Matrix2D Matrix {
-            get {
-                return m;
             }
         }
     }

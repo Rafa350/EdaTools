@@ -151,6 +151,12 @@
             CombineMatrix(matrix.m, matrix.type);
         }
 
+        /// <summary>
+        /// Aplica la transformacio a un parell de valors X, Y
+        /// </summary>
+        /// <param name="x">Coordinada X.</param>
+        /// <param name="y">Coordinada Y.</param>
+        /// 
         public void Apply(ref double x, ref double y) {
 
             switch (type) {
