@@ -1,5 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
+    using System;
+    using System.IO;
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
@@ -9,8 +11,6 @@
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
-    using System;
-    using System.IO;
 
     /// <summary>
     /// Clase per generar el fitxers gerber d'imatge

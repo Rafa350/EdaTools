@@ -4,15 +4,24 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>signature.pfx</AssemblyOriginatorKeyFile>
+    <RootNamespace>MikroPic.EdaTools.v1.Panel</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\bin</OutputPath>
+    <OutputPath>..\bin\debug</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\bin</OutputPath>
+    <OutputPath>..\bin\release</OutputPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Model\IO\Schemas\XPNL.xsd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Model\IO\Schemas\XPNL.xsd" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\EdaBase\EdaBase.csproj" />

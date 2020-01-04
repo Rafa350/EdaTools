@@ -4,7 +4,7 @@
 
     public sealed class Transformation {
 
-        private Matrix m = Matrix.Identity;
+        private Matrix2D m = Matrix2D.Identity;
 
         /// <summary>
         /// Afegeix una translacio.
@@ -104,7 +104,17 @@
         /// 
         public Point ApplyTo(Point point) {
 
-            return m.Transform(point);
+            double x = point.X;
+            double y = point.Y;
+            double xadd = y * m.M21 + m.OffsetX;
+            double yadd = x * m.M12 + m.OffsetY;
+
+            x *= m.M11;
+            x += xadd;
+            y *= m.M22;
+            y += yadd;
+
+            return new Point((int)x, (int)y);
         }
 
         /// <summary>
@@ -114,15 +124,27 @@
         /// 
         public void ApplyTo(Point[] points) {
 
-            for (int i = 0; i < points.Length; i++) 
-                points[i] = m.Transform(points[i]);
+            for (int i = 0; i < points.Length; i++) {
+
+                double x = points[i].X;
+                double y = points[i].Y;
+                double xadd = y * m.M21 + m.OffsetX;
+                double yadd = x * m.M12 + m.OffsetY;
+
+                x *= m.M11;
+                x += xadd;
+                y *= m.M22;
+                y += yadd;
+
+                points[i] = new Point((int)x, (int)y);
+            }
         }
 
         /// <summary>
         /// Obte la matriu de la transformacio.
         /// </summary>
         /// 
-        public Matrix Matrix {
+        public Matrix2D Matrix {
             get {
                 return m;
             }

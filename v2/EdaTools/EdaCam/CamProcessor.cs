@@ -1,11 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam {
 
+    using System;
     using MikroPic.EdaTools.v1.Cam.Generators;
     using MikroPic.EdaTools.v1.Cam.Generators.Gerber;
     using MikroPic.EdaTools.v1.Cam.Generators.Ipcd356;
     using MikroPic.EdaTools.v1.Cam.Model;
     using MikroPic.EdaTools.v1.Core.Model.Board;
-    using System;
 
     public sealed class CamProcessor {
 

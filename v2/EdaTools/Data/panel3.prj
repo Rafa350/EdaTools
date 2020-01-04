@@ -3,14 +3,14 @@
 
     <!-- Localitzacio de les eines -->
     <PropertyGroup>
-        <EdaCAMTool>..\bin\Debug\EdaCamTool.exe</EdaCAMTool>
-        <EdaConvertTool>..\bin\Debug\EdaConverter.exe</EdaConvertTool>
-        <EdaPanelizerTool>..\bin\Debug\EdaPanelizer.exe</EdaPanelizerTool>
-        <ZipTool>&quot;c:\program files\winrar\rar.exe&quot;</ZipTool>
+        <EdaCAMTool>..\bin\Debug\netcoreapp3.1\EdaCamTool.exe</EdaCAMTool>
+        <EdaConvertTool>..\bin\Debug\netcoreapp3.1\EdaConverter.exe</EdaConvertTool>
+        <EdaPanelizerTool>..\bin\Debug\netcoreapp3.1\EdaPanelizer.exe</EdaPanelizerTool>
+        <ZipTool>&quot;C:\Program Files\WinRAR\rar.exe&quot;</ZipTool>
     </PropertyGroup>
     
     <PropertyGroup>
-        <BoardRootFolder>c:\projectes\eagle\projects\</BoardRootFolder>
+        <BoardRootFolder>C:\Users\Rafael\Documents\Projectes\Eagle\Projects\</BoardRootFolder>
         <BuildFolder>Build\</BuildFolder>
     </PropertyGroup>
 

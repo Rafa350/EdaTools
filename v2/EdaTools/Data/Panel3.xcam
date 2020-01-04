@@ -6,7 +6,7 @@
             <!-- Capa coure L1 top -->
             <target name ="Copper.1" output="panel3_Copper$L1.gbr" generator="gerber-image">
                 <layers>
-                    <layer name="Top.Top"/>
+                    <layer name="Top.Copper"/>
                 </layers>
                 <options>
                     <option name="imageType" value="copper"/>
@@ -17,7 +17,7 @@
             <!-- Capa coure L2 bottom -->
             <target name ="Copper.2" output="panel3_Copper$L2.gbr" generator="gerber-image">
                 <layers>
-                    <layer name="Bottom.Bottom"/>
+                    <layer name="Bottom.Copper"/>
                 </layers>
                 <options>
                     <option name="imageType" value="copper"/>

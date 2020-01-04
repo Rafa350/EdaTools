@@ -1,13 +1,13 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
+    using System;
+    using System.IO;
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
     using MikroPic.EdaTools.v1.Cam.Model;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
-    using System;
-    using System.IO;
 
     /// <summary>
     /// Clase per generar fitxers gerber de forats i fresats.

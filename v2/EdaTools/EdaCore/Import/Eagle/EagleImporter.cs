@@ -812,15 +812,20 @@
                 //
                 Point p = new Point(parameter.Position.X, parameter.Position.Y);
 
-                /*Transformation t = new Transformation();
-                t.Rotate(position, rotation);
-                t.Translate(position);*/
-
-                Matrix m = new Matrix();
+                Transformation t = new Transformation();
+                t.Rotate(position, -rotation);
+                t.Translate(new Point(-position.X, -position.Y));
+                p = t.ApplyTo(p);
+                /*
+                Matrix2D m = new Matrix2D();
                 m.RotateAt(-rotation.Value / 100, position.X, position.Y);
                 m.Translate(-position.X, -position.Y);
-                p = m.Transform(p);
 
+                double dx = p.X;
+                double dy = p.Y;
+                m.Apply(ref dx, ref dy);
+                p = new Point((int) dx, (int) dy);
+                */
                 parameter.Position = new Point((int)p.X, (int)p.Y);
                 parameter.Rotation = parameter.Rotation - rotation;
 

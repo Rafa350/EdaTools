@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "EdaCamTool": {
+      "commandName": "Project",
+      "commandLineArgs": "panel3.xcam /t:Copper.1",
+      "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\Net\\EdaTools\\v2\\EdaTools\\Data"
+    }
+  }
+}

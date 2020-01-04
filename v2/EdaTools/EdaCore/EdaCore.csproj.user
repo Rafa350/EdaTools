@@ -2,11 +2,11 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <None Update="Model\Board\IO\Schemas\XBRD.xsd">
+    <EmbeddedResource Update="Model\Board\IO\Schemas\XBRD.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Update="Model\Board\IO\Schemas\XLIB.xsd">
+    </EmbeddedResource>
+    <EmbeddedResource Update="Model\Board\IO\Schemas\XLIB.xsd">
       <SubType>Designer</SubType>
-    </None>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

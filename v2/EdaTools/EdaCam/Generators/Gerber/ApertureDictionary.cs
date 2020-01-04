@@ -1,11 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
-    using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using MikroPic.EdaTools.v1.Base.Geometry;
+    using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
+    using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures;
 
     /// <summary>
     /// Clase que representa el diccionari d'apertures.
