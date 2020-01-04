@@ -1,4 +1,4 @@
-# EdaTools V0.1
+# EdaTools
 
 
 Tools and utilities for PCB design.
