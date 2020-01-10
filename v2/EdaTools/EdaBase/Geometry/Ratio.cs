@@ -5,6 +5,7 @@
     /// <summary>
     /// Percent value.
     /// </summary>
+    /// 
     public readonly struct Ratio {
 
         public static readonly Ratio Zero = new Ratio(0);

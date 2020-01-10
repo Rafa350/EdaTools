@@ -1,9 +1,12 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Utils {
 
-    // Basat el Avalonia.Matrix
-
     using System;
 
+    /// <summary>
+    /// Estructura que representa una matriu per transformacions afins en 2D.
+    /// </summary>
+    /// <remarks>Basat en Matrix de AvaloniaUI.</remarks>
+    /// 
     public readonly struct Matrix2D : IEquatable<Matrix2D> {
 
         private readonly double m11;
@@ -81,6 +84,12 @@
             return new Matrix2D(sx, 0, 0, sy, ox - sx * ox, oy - sy * oy);
         }
 
+        /// <summary>
+        /// Crea una matriu de rotacio.
+        /// </summary>
+        /// <param name="a">Angle de rotacio en graus.</param>
+        /// <returns>La matriu.</returns>
+        /// 
         public static Matrix2D CreateRotation(double a) {
 
             double rad = (a % 360.0) * Math.PI / 180.0;
@@ -90,6 +99,14 @@
             return new Matrix2D(cos, sin, -sin, cos, 0, 0);
         }
 
+        /// <summary>
+        /// Crea una matriu de rotacio.
+        /// </summary>
+        /// <param name="a">Angle de rotacio en graus.</param>
+        /// <param name="ox">Coordinada X del centre de rotacio.</param>
+        /// <param name="oy">Coordinada Y del centre de rotacio.</param>
+        /// <returns>La matriu.</returns>
+        /// 
         public static Matrix2D CreateRotation(double a, double ox, double oy) {
 
             double rad = (a % 360.0) * Math.PI / 180.0;
@@ -188,6 +205,12 @@
             return !value1.Equals(value2);
         }
 
+        /// <summary>
+        /// Operacio de comparacio entre dos objectes.
+        /// </summary>
+        /// <param name="other">L'altre objecte a comparar.</param>
+        /// <returns>True si son iguals.</returns>
+        /// 
         public bool Equals(Matrix2D other) {
 
             return
@@ -204,6 +227,7 @@
         /// </summary>
         /// <param name="obj">The Object to compare against.</param>
         /// <returns>True if the Object is equal to this matrix; False otherwise.</returns>
+        /// 
         public override bool Equals(object obj) {
 
             return obj is Matrix2D other && Equals(other);
@@ -223,19 +247,6 @@
                 m22.GetHashCode() +
                 tx.GetHashCode() + 
                 ty.GetHashCode();
-        }
-
-        /// <summary>
-        /// Aplica la transformacio a un parell de valors X, Y
-        /// </summary>
-        /// <param name="x">Coordinada X.</param>
-        /// <param name="y">Coordinada Y.</param>
-        /// 
-        public void Apply(ref double x, ref double y) {
-
-            double xx = x;
-            x = xx * m11 + y * m21 + tx;
-            y = xx * m12 + y * m22 + ty;
         }
 
         /// <summary>

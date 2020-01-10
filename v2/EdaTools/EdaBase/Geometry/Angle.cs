@@ -7,7 +7,7 @@
     /// de grau i el gir es considera contrari al rellotge.
     /// </summary>
     /// 
-    public readonly struct Angle {
+    public readonly struct Angle: IEquatable<Angle> {
 
         public static readonly Angle Zero = new Angle(0);
         public static readonly Angle Deg45 = new Angle(4500);
@@ -65,13 +65,24 @@
         /// <summary>
         /// Test d'igualtat.
         /// </summary>
+        /// <param name="other">L'altre objecte a comparar.</param>
+        /// <returns>True si son iguals.</returns>
+        /// 
+        public bool Equals(Angle other) {
+
+            return value == other.value;
+        }
+
+        /// <summary>
+        /// Test d'igualtat.
+        /// </summary>
         /// <param name="obj">L'altre objecte.</param>
         /// <returns>True si son iguals, false en cas contrari.</returns>
         /// 
         public override bool Equals(object obj) {
 
-            if (obj is Angle)
-                return value == ((Angle)obj).value;
+            if (obj is Angle other)
+                return Equals(other);
             else
                 return false;
         }

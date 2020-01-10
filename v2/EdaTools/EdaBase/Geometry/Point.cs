@@ -3,10 +3,10 @@
     using System;
 
     /// <summary>
-    /// Estructura que representa un punt
+    /// Estructura que representa un punt.
     /// </summary>
     /// 
-    public readonly struct Point {
+    public readonly struct Point: IEquatable<Point> {
 
         private readonly int x;
         private readonly int y;
@@ -14,8 +14,8 @@
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="x">Coordinada X</param>
-        /// <param name="y">Coordinada Y</param>
+        /// <param name="x">Coordinada X.</param>
+        /// <param name="y">Coordinada Y.</param>
         /// 
         public Point(int x = 0, int y = 0) {
 
@@ -24,10 +24,21 @@
         }
 
         /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="other">El punt a copiar.</param>
+        /// 
+        public Point(Point other) {
+
+            x = other.x;
+            y = other.y;
+        }
+
+        /// <summary>
         /// Obte un punt desplaçat.
         /// </summary>
-        /// <param name="dx">Desplaçament X</param>
-        /// <param name="dy">Desplaçament Y</param>
+        /// <param name="dx">Desplaçament X.</param>
+        /// <param name="dy">Desplaçament Y.</param>
         /// <returns>El nou punt resultant.</returns>
         /// 
         public Point Offset(int dx, int dy) {
@@ -38,7 +49,7 @@
         /// <summary>
         /// Converteix l'objecte a text.
         /// </summary>
-        /// <returns>El resultat de la converssio.</returns>
+        /// <returns>El resultat de la conversio.</returns>
         /// 
         public override string ToString() {
 
@@ -49,7 +60,7 @@
         /// Converteix un text a 'Point'
         /// </summary>
         /// <param name="source">El text a convertir.</param>
-        /// <returns>El resultat de la converssio.</returns>
+        /// <returns>El resultat de la conversio.</returns>
         /// 
         public static Point Parse(string source) {
 
@@ -77,6 +88,17 @@
         }
 
         /// <summary>
+        /// Operacio de comparacio entre dos objectes..
+        /// </summary>
+        /// <param name="other">L'altre objecte a comparar.</param>
+        /// <returns>True si son iguals.</returns>
+        /// 
+        public bool Equals(Point other) {
+
+            return (x == other.x) && (y == other.y);
+        }
+
+        /// <summary>
         /// Operacio de comparacio entrer objectes
         /// </summary>
         /// <param name="obj">L'altre objecte a comparar.</param>
@@ -84,20 +106,20 @@
         /// 
         public override bool Equals(object obj) {
 
-            if (obj is Point p) 
-                return (x == p.x) && (y == p.y);
+            if (obj is Point other)
+                return Equals(other);
             else
                 return false;
         }
 
         public static bool operator == (Point p1, Point p2) {
 
-            return p1.X == p2.X && p1.Y == p2.Y;
+            return p1.Equals(p2);
         }
 
         public static bool operator != (Point p1, Point p2) {
 
-            return p1.X != p2.X || p1.Y != p2.Y;
+            return !p1.Equals(p2);
         }
 
         /// <summary>

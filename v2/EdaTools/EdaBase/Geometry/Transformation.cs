@@ -13,7 +13,7 @@
         /// 
         public void Translate(Point v) {
 
-            m.Translate(v.X, v.Y);
+            Translate(v.X, v.Y);
         }
 
         /// <summary>
@@ -25,7 +25,7 @@
         public void Translate(int offsetX, int offsetY) {
 
             if ((offsetX != 0) || (offsetY != 0))
-                m.Translate(offsetX, offsetY);
+                m *= Matrix2D.CreateTranslation(offsetX, offsetY);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@
         public void Scale(int scaleX, int scaleY) {
 
             if ((scaleX != 1) || (scaleY != 1))
-                m.Scale(scaleX, scaleY);
+                m *= Matrix2D.CreateScale(scaleX, scaleY);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@
         public void Scale(Point center, int scaleX, int scaleY) {
 
             if ((scaleX != 1) || (scaleY != 1))
-                m.ScaleAt(scaleX, scaleY, center.X, center.Y);
+                m *= Matrix2D.CreateScale(scaleX, scaleY, center.X, center.Y);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@
         public void Scale(int centerX, int centerY, int scaleX, int scaleY) {
 
             if ((scaleX != 1) || (scaleY != 1))
-                m.ScaleAt(scaleX, scaleY, centerX, centerY);
+                m *= Matrix2D.CreateScale(scaleX, scaleY, centerX, centerY);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@
         public void Rotate(Angle rotation) {
 
             if (!rotation.IsZero)
-                m.Rotate(rotation.ToDegrees);
+                m *= Matrix2D.CreateRotation(rotation.ToDegrees);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@
         public void Rotate(Point center, Angle rotation) {
 
             if (!rotation.IsZero)
-                m.RotateAt(rotation.ToDegrees, center.X, center.Y);
+                m *= Matrix2D.CreateRotation(rotation.ToDegrees, center.X, center.Y);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@
         public void Rotate(int centerX, int centerY, Angle rotation) {
 
             if (!rotation.IsZero)
-                m.RotateAt(rotation.ToDegrees, centerX, centerY);
+                m *= Matrix2D.CreateRotation(rotation.ToDegrees, centerX, centerY);
         }
 
         /// <summary>
@@ -111,10 +111,8 @@
         /// 
         public Point ApplyTo(Point point) {
 
-            double x = point.X;
-            double y = point.Y;
-
-            m.Apply(ref x, ref y);
+            double x = (point.X * m.M11) + (point.Y * m.M21) + m.OffsetX;
+            double y = (point.X * m.M12) + (point.Y * m.M22) + m.OffsetY;
 
             return new Point((int)x, (int)y);
         }
@@ -128,10 +126,8 @@
 
             for (int i = 0; i < points.Length; i++) {
 
-                double x = points[i].X;
-                double y = points[i].Y;
-
-                m.Apply(ref x, ref y);
+                double x = (points[i].X * m.M11) + (points[i].Y * m.M21) + m.OffsetX;
+                double y = (points[i].X * m.M12) + (points[i].Y * m.M22) + m.OffsetY;
 
                 points[i] = new Point((int)x, (int)y);
             }
