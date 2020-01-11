@@ -63,7 +63,7 @@
 
             double a = angle.ToRadiants / 2.0;
 
-            return (int) Math.Abs(d / 2.0 / Math.Sin(a));
+            return (int)Math.Abs(d / 2.0 / Math.Sin(a));
         }
     }
 }

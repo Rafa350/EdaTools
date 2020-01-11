@@ -10,7 +10,7 @@
     /// </summary>
     public class LineElement : Element, IConectable {
 
-        public enum LineCapStyle {
+        public enum CapStyle {
             Round,
             Flat
         }
@@ -18,7 +18,7 @@
         private Point startPosition;
         private Point endPosition;
         private int thickness;
-        private LineCapStyle lineCap = LineCapStyle.Round;
+        private CapStyle lineCap = CapStyle.Round;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -29,7 +29,7 @@
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="lineCap">Forma dels extrems de linia.</param>
         /// 
-        public LineElement(LayerSet layerSet, Point startPosition, Point endPosition, int thickness, LineCapStyle lineCap) :
+        public LineElement(LayerSet layerSet, Point startPosition, Point endPosition, int thickness, CapStyle lineCap) :
             base(layerSet) {
 
             if (thickness < 0)
@@ -69,7 +69,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = PolygonBuilder.MakeLineTrace(startPosition, endPosition, thickness, LineCap == LineCapStyle.Round);
+            Point[] points = PolygonBuilder.MakeLineTrace(startPosition, endPosition, thickness, LineCap == CapStyle.Round);
             return new Polygon(points);
         }
 
@@ -82,7 +82,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = PolygonBuilder.MakeLineTrace(startPosition, endPosition, thickness + (spacing * 2), lineCap == LineCapStyle.Round);
+            Point[] points = PolygonBuilder.MakeLineTrace(startPosition, endPosition, thickness + (spacing * 2), lineCap == CapStyle.Round);
             return new Polygon(points);
         }
 
@@ -147,7 +147,7 @@
         /// Obte o asigna el tipus d'extrem de linia.
         /// </summary>
         /// 
-        public LineCapStyle LineCap {
+        public CapStyle LineCap {
             get {
                 return lineCap;
             }

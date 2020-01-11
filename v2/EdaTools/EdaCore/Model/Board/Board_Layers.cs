@@ -97,7 +97,7 @@
         /// 
         public Layer GetLayer(string name, bool throwOnError = true) {
 
-            if ((layers != null) && layers.TryGetValue(name, out var layer)) 
+            if ((layers != null) && layers.TryGetValue(name, out var layer))
                 return layer;
 
             else if (throwOnError)

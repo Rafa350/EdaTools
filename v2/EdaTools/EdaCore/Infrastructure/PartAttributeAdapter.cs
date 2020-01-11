@@ -1,10 +1,10 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Infrastructure {
 
+    using System;
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
-    using System;
 
     public sealed class PartAttributeAdapter {
 
@@ -47,7 +47,7 @@
 
         public HorizontalTextAlign HorizontalAlign {
             get {
-                return (attribute != null) && attribute.UseAlign ? attribute.HorizontalAlign: text.HorizontalAlign;
+                return (attribute != null) && attribute.UseAlign ? attribute.HorizontalAlign : text.HorizontalAlign;
             }
         }
         public VerticalTextAlign VerticalAlign {

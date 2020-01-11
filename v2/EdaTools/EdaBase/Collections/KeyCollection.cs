@@ -5,7 +5,7 @@
     using System.Collections.Generic;
 
     public class KeyCollection<TItem, TKey> : IEnumerable<TItem>
-        where TItem: class, ICollectionKey<TKey> {
+        where TItem : class, ICollectionKey<TKey> {
 
         private readonly Dictionary<TKey, TItem> items = new Dictionary<TKey, TItem>();
 

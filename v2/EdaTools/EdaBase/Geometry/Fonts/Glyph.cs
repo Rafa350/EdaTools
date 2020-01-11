@@ -1,7 +1,4 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Fonts {
-
-    using System;
-
     /// <summary>
     /// Representa la figura d'un caracter. Aquesta clase es inmutable.
     /// </summary>
@@ -23,7 +20,7 @@
 
             this.code = code;
             this.advance = advance;
-            this.traces = traces; 
+            this.traces = traces;
         }
 
         /// <summary>

@@ -6,7 +6,6 @@
     using System.Xml;
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
-    using MikroPic.EdaTools.v1.Base.Geometry.Utils;
     using MikroPic.EdaTools.v1.Base.Xml;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
@@ -602,7 +601,7 @@
             Angle angle = Angle.Zero;
             if (node.AttributeExists("curve"))
                 angle = ParseAngle(node.AttributeAsString("curve"));
-            LineElement.LineCapStyle lineCap = node.AttributeAsString("cap") == null ? LineElement.LineCapStyle.Round : LineElement.LineCapStyle.Flat;
+            LineElement.CapStyle lineCap = node.AttributeAsString("cap") == null ? LineElement.CapStyle.Round : LineElement.CapStyle.Flat;
             int thickness = ParseNumber(node.AttributeAsString("width"));
             if (thickness == 0)
                 thickness = 100000;
@@ -816,16 +815,7 @@
                 t.Rotate(position, -rotation);
                 t.Translate(new Point(-position.X, -position.Y));
                 p = t.ApplyTo(p);
-                /*
-                Matrix2D m = new Matrix2D();
-                m.RotateAt(-rotation.Value / 100, position.X, position.Y);
-                m.Translate(-position.X, -position.Y);
 
-                double dx = p.X;
-                double dy = p.Y;
-                m.Apply(ref dx, ref dy);
-                p = new Point((int) dx, (int) dy);
-                */
                 parameter.Position = new Point((int)p.X, (int)p.Y);
                 parameter.Rotation = parameter.Rotation - rotation;
 

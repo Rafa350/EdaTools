@@ -1,8 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Xml {
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
     using System.Xml;
+    using MikroPic.EdaTools.v1.Base.Geometry;
 
     public static class XmlTypeFormater {
 

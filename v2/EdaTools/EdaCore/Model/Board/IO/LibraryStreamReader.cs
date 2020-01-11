@@ -1,11 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
-    using MikroPic.EdaTools.v1.Base.Xml;
     using System;
     using System.IO;
     using System.Reflection;
     using System.Xml;
     using System.Xml.Schema;
+    using MikroPic.EdaTools.v1.Base.Xml;
 
     public sealed class LibraryStreamReader {
 

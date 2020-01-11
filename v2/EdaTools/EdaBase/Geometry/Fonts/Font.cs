@@ -1,11 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Fonts {
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
     using System.Xml;
+    using MikroPic.EdaTools.v1.Base.Geometry;
 
     public sealed class Font {
 

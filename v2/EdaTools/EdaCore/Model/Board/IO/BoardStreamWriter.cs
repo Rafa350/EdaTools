@@ -51,7 +51,7 @@
                 writer.WriteAttributeString("endPosition", XmlTypeFormater.FormatPoint(line.EndPosition));
                 if (line.Thickness > 0)
                     writer.WriteAttributeString("thickness", XmlTypeFormater.FormatNumber(line.Thickness));
-                if (line.LineCap != LineElement.LineCapStyle.Round)
+                if (line.LineCap != LineElement.CapStyle.Round)
                     writer.WriteAttributeEnum("lineCap", line.LineCap);
 
                 if (currentBoard != null) {
@@ -78,7 +78,7 @@
                 writer.WriteAttributeString("angle", XmlTypeFormater.FormatAngle(arc.Angle));
                 if (arc.Thickness > 0)
                     writer.WriteAttributeString("thickness", XmlTypeFormater.FormatNumber(arc.Thickness));
-                if (arc.LineCap != LineElement.LineCapStyle.Round)
+                if (arc.LineCap != LineElement.CapStyle.Round)
                     writer.WriteAttributeEnum("lineCap", arc.LineCap);
 
                 if (currentBoard != null) {
@@ -355,7 +355,7 @@
                     //
                     if (part.HasAttributes) {
                         writer.WriteStartElement("attributes");
-                        foreach (var attribute in part.Attributes) 
+                        foreach (var attribute in part.Attributes)
                             attribute.AcceptVisitor(this);
                         writer.WriteEndElement();
                     }

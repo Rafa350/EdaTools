@@ -1,8 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Fonts {
 
+    using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
-    using System.Collections.Generic;
 
     public sealed class FontFactory {
 

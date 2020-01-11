@@ -9,7 +9,7 @@
     /// <summary>
     /// Clase que representa un cercle.
     /// </summary>
-    public sealed class CircleElement: Element, IPosition {
+    public sealed class CircleElement : Element, IPosition {
 
         private Point position;
         private int radius;
@@ -25,7 +25,7 @@
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="filled">True si cal omplir el cercle.</param>
         /// 
-        public CircleElement(LayerSet layerSet, Point position, int radius, int thickness, bool filled) :           
+        public CircleElement(LayerSet layerSet, Point position, int radius, int thickness, bool filled) :
             base(layerSet) {
 
             this.position = position;
@@ -134,7 +134,7 @@
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Diameter");
 
-                radius = value / 2; 
+                radius = value / 2;
             }
         }
 

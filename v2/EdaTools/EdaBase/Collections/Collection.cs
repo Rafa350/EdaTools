@@ -5,7 +5,7 @@
     using System.Collections.Generic;
 
     public class Collection<TItem> : IEnumerable<TItem>
-        where TItem: class {
+        where TItem : class {
 
         private readonly HashSet<TItem> items = new HashSet<TItem>();
 

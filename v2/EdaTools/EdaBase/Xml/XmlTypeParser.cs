@@ -1,8 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Xml {
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
     using System.Xml;
+    using MikroPic.EdaTools.v1.Base.Geometry;
 
     public static class XmlTypeParser {
 
@@ -30,7 +30,7 @@
         public static Point ParsePoint(string source) {
 
             if (string.IsNullOrEmpty(source))
-                throw new ArgumentNullException("source");              
+                throw new ArgumentNullException("source");
 
             string[] ss = source.Split(',');
             double x = XmlConvert.ToDouble(ss[0]);

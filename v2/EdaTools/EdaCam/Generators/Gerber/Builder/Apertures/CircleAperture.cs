@@ -1,8 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
 
     using System;
-    using System.Text;
     using System.Globalization;
+    using System.Text;
 
     /// <summary>
     /// Clase que representa una apertura circular.

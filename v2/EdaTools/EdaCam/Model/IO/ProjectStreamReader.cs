@@ -1,13 +1,13 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Model.IO {
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Xml;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
     using System.Xml;
     using System.Xml.Schema;
+    using MikroPic.EdaTools.v1.Base.Geometry;
+    using MikroPic.EdaTools.v1.Base.Xml;
 
     public sealed class ProjectStreamReader {
 

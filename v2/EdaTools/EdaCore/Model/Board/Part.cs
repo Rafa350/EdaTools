@@ -1,11 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using System;
     using System.Collections.Generic;
+    using MikroPic.EdaTools.v1.Base.Geometry;
+    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
-    public sealed partial class Part: IPosition, IRotation, IName, IBoardVisitable {
+    public sealed partial class Part : IPosition, IRotation, IName, IBoardVisitable {
 
         private readonly string name;
         private Point position;

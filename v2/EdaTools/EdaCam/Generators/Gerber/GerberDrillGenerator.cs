@@ -12,7 +12,7 @@
     /// <summary>
     /// Clase per generar fitxers gerber de forats i fresats.
     /// </summary>
-    public sealed class GerberDrillGenerator: Generator {
+    public sealed class GerberDrillGenerator : Generator {
 
         public enum DrillType {
             PlatedDrill,
@@ -56,7 +56,7 @@
                 //
                 ApertureDictionary apertures = new ApertureDictionary();
                 PrepareApertures(apertures, board);
-        
+
                 // Prepara el generador de gerbers
                 //
                 GerberBuilder gb = new GerberBuilder(writer);
@@ -279,8 +279,8 @@
             /// <param name="layerId">Identificador de la capa a procesar.</param>
             /// <param name="apertures">El diccionari d'apertures.</param>
             /// 
-            public ImageGeneratorVisitor(GerberBuilder gb, string layerId, ApertureDictionary apertures) { 
-                
+            public ImageGeneratorVisitor(GerberBuilder gb, string layerId, ApertureDictionary apertures) {
+
                 this.gb = gb;
                 this.layerId = layerId;
                 this.apertures = apertures;

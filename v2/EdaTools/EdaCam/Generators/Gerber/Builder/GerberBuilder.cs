@@ -1,10 +1,10 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
+    using MikroPic.EdaTools.v1.Base.Geometry;
 
     // Unitats de mesura del fitxer gerber
     //
@@ -81,7 +81,7 @@
 
             this.writer = writer;
         }
-     
+
         /// <summary>
         /// Marca el final del fitxer.
         /// </summary>
@@ -465,7 +465,7 @@
         /// 
         public void LoadPolarity(Polarity polarity) {
 
-            if (state.SetAperturePolarity(polarity)) 
+            if (state.SetAperturePolarity(polarity))
                 writer.WriteLine(String.Format("%LP{0}*%", polarity == Polarity.Dark ? "D" : "C"));
         }
 
@@ -499,7 +499,7 @@
 
             if (state.SetInterpolationMode(interpolationMode)) {
 
-                switch(interpolationMode) {
+                switch (interpolationMode) {
                     case InterpolationMode.Linear:
                         writer.WriteLine("G01*");
                         break;
@@ -573,7 +573,7 @@
 
             SetTransformation(offset.X, offset.Y, rotation);
         }
-        
+
         /// <summary>
         /// Asigna una transformacio de coordinades.
         /// </summary>
@@ -612,7 +612,7 @@
                 fmtScale = Math.Pow(10, decimals);
             }
 
-            return String.Format(fmtTemplate, Math.Round(((double) number / 1000000.0) * fmtScale));
+            return String.Format(fmtTemplate, Math.Round(((double)number / 1000000.0) * fmtScale));
         }
     }
 }

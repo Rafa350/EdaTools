@@ -47,7 +47,7 @@
         public void Comment(string text) {
 
             writer.Write(
-                "C  {0}", 
+                "C  {0}",
                 text);
             writer.WriteLine();
         }
@@ -94,7 +94,7 @@
             this.offsetY = offsetY;
             this.rotation = rotation;
         }
-        
+
         /// <summary>
         /// Desactiva la transformacio de coordinades.
         /// </summary>

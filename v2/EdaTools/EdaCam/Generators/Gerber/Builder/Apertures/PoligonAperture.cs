@@ -1,9 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
-    using System.Text;
     using System.Globalization;
+    using System.Text;
+    using MikroPic.EdaTools.v1.Base.Geometry;
 
     /// <summary>
     /// Clase que representa una apertura poligonal.

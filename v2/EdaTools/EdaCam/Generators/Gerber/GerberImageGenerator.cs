@@ -33,7 +33,7 @@
         /// </summary>
         /// <param name="target">El target.</param>
         /// 
-        public GerberImageGenerator(Target target):
+        public GerberImageGenerator(Target target) :
             base(target) {
 
         }
@@ -241,7 +241,7 @@
             }
             gb.Comment("END IMAGE");
         }
-        
+
         /// <summary>
         /// Visitador per preparar les apertures.
         /// </summary>
@@ -783,18 +783,18 @@
         /// <summary>
         /// Clase per generar la imatge dels texts
         /// </summary>
-        private class GerberTextDrawer: TextDrawer {
+        private class GerberTextDrawer : TextDrawer {
 
             private readonly GerberBuilder gb;
 
-            public GerberTextDrawer(Font font, GerberBuilder gb):
+            public GerberTextDrawer(Font font, GerberBuilder gb) :
                 base(font) {
 
                 this.gb = gb;
             }
 
             protected override void Trace(Point position, bool stroke, bool first) {
-                
+
                 if (first || !stroke)
                     gb.MoveTo(position);
                 else
@@ -819,13 +819,13 @@
             /// <param name="layer">La capa a procesar.</param>
             /// <param name="apertures">Diccionari d'apertures.</param>
             /// 
-            public RegionGeneratorVisitor(GerberBuilder gb, string layerId, ApertureDictionary apertures) { 
+            public RegionGeneratorVisitor(GerberBuilder gb, string layerId, ApertureDictionary apertures) {
 
                 this.gb = gb;
                 this.layerId = layerId;
                 this.apertures = apertures;
             }
-            
+
             /// <summary>
             /// Visita un objecte RegionElement
             /// </summary>

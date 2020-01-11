@@ -9,7 +9,7 @@
     /// Clase que representa un rectangle.
     /// </summary>
     /// 
-    public sealed class RectangleElement: Element, IPosition, ISize, IRotation {
+    public sealed class RectangleElement : Element, IPosition, ISize, IRotation {
 
         private Point position;
         private Size size;
@@ -110,8 +110,8 @@
 
             double a = rotation.ToRadiants;
 
-            int w = (int) (width * Math.Cos(a) + height * Math.Sin(a));
-            int h = (int) (width * Math.Sin(a) + height * Math.Cos(a));
+            int w = (int)(width * Math.Cos(a) + height * Math.Sin(a));
+            int h = (int)(width * Math.Sin(a) + height * Math.Cos(a));
 
             return new Rect(position.X - (w / 2), position.Y - (h / 2), w, h);
         }

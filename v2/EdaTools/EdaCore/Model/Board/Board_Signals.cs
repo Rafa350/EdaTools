@@ -164,7 +164,7 @@
                 throw new InvalidOperationException(
                     String.Format("No se encontro la señal '{0}'.", name));
 
-            else 
+            else
                 return null;
         }
 

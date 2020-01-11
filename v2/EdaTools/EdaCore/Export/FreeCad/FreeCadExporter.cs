@@ -20,26 +20,26 @@
                 writer.WriteLine("import Part");
                 writer.WriteLine();
 
-/*                writer.WriteLine("err = 0.05;");
-                writer.WriteLine("err2 = 2 * err;");
-                writer.WriteLine();
+                /*                writer.WriteLine("err = 0.05;");
+                                writer.WriteLine("err2 = 2 * err;");
+                                writer.WriteLine();
 
-                writer.WriteLine("module pcb_board() {");
-                GenerateBoard(writer, node);
-                writer.WriteLine("}");
-                writer.WriteLine();
+                                writer.WriteLine("module pcb_board() {");
+                                GenerateBoard(writer, node);
+                                writer.WriteLine("}");
+                                writer.WriteLine();
 
-                writer.WriteLine("module pcb_components() {");
-                GenerateComponents(writer, node);
-                writer.WriteLine("}");
-                writer.WriteLine();
+                                writer.WriteLine("module pcb_components() {");
+                                GenerateComponents(writer, node);
+                                writer.WriteLine("}");
+                                writer.WriteLine();
 
-                writer.WriteLine("module pcb_vias() {");
-                GenerateVias(writer, node);
-                writer.WriteLine("}");
-                writer.WriteLine();
+                                writer.WriteLine("module pcb_vias() {");
+                                GenerateVias(writer, node);
+                                writer.WriteLine("}");
+                                writer.WriteLine();
 
-                writer.WriteLine("pcb_board();");*/
+                                writer.WriteLine("pcb_board();");*/
                 writer.WriteLine("pcb_components();");
                 //writer.WriteLine("pcb_vias();");
 
@@ -112,7 +112,7 @@
             }
 
             writer.WriteLine("    }");
-        }        
+        }
 
         private void GenerateComponents(TextWriter writer, XmlNode node) {
 
@@ -158,7 +158,7 @@
                 x = Double.Parse(viaNode.Attributes["x"].Value, CultureInfo.InvariantCulture);
                 y = Double.Parse(viaNode.Attributes["y"].Value, CultureInfo.InvariantCulture);
                 if (viaNode.Attributes["drill"] != null)
-                    drill  = Double.Parse(viaNode.Attributes["drill"].Value, CultureInfo.InvariantCulture);
+                    drill = Double.Parse(viaNode.Attributes["drill"].Value, CultureInfo.InvariantCulture);
                 if (viaNode.Attributes["diameter"] != null)
                     diameter = Double.Parse(viaNode.Attributes["diameter"].Value, CultureInfo.InvariantCulture);
 

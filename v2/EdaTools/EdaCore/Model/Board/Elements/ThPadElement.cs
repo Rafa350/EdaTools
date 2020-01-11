@@ -46,7 +46,7 @@
         /// <param name="drill">Forma de la corona.</param>
         /// 
         public ThPadElement(string name, LayerSet layerSet, Point position, Angle rotation, int size, ThPadShape shape, int drill) :
-            this(name, layerSet, position, rotation, size, size, size, shape, drill) { 
+            this(name, layerSet, position, rotation, size, size, size, shape, drill) {
         }
 
         /// <summary>
@@ -63,7 +63,7 @@
         /// <param name="drill">Forma de la corona.</param>
         /// 
         public ThPadElement(string name, LayerSet layerSet, Point position, Angle rotation, int topSize, int innerSize,
-            int bottomSize, ThPadShape shape, int drill):
+            int bottomSize, ThPadShape shape, int drill) :
             base(name, layerSet, position, rotation) {
 
             if (topSize < 0)

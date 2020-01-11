@@ -25,7 +25,7 @@
             else {
 
                 string projectPath = Path.GetFullPath(args[0]);
-                string boardPath = null;;
+                string boardPath = null; ;
                 string targetName = null;
                 string outputFolder = null;
                 bool pause = false;
@@ -88,7 +88,7 @@
                 "| EdaCamTool V2.0 - (c) 2019..2020 rsr.openware@gmail.com\r\n" +
                 "+--------------------------------------------------------------------";
 
-        Console.WriteLine(credits);
+            Console.WriteLine(credits);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@
                 "|         /z      :   Output ZIP file name.\r\n" +
                 "+--------------------------------------------------------------------";
 
-            Console.WriteLine(help);            
+            Console.WriteLine(help);
         }
 
         /// <summary>

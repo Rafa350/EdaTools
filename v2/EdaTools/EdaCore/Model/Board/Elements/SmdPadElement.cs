@@ -9,7 +9,7 @@
     /// <summary>
     /// Clase que representa un pad superficial
     /// </summary>
-    public sealed class SmdPadElement: PadElement {
+    public sealed class SmdPadElement : PadElement {
 
         private Size size;
         private Ratio roundness;
@@ -75,9 +75,9 @@
             Point[] points = PolygonBuilder.MakeRectangle(
                 Position,
                 new Size(
-                    size.Width + spacing + spacing, 
-                    size.Height + spacing + spacing), 
-                Radius + spacing, 
+                    size.Width + spacing + spacing,
+                    size.Height + spacing + spacing),
+                Radius + spacing,
                 Rotation);
             return new Polygon(points);
         }
@@ -119,8 +119,8 @@
 
             double a = Rotation.ToRadiants;
 
-            int w = (int) (size.Width * Math.Cos(a) + size.Height * Math.Sin(a));
-            int h = (int) (size.Width * Math.Sin(a) + size.Height * Math.Cos(a));
+            int w = (int)(size.Width * Math.Cos(a) + size.Height * Math.Sin(a));
+            int h = (int)(size.Width * Math.Sin(a) + size.Height * Math.Cos(a));
 
             return new Rect(Position.X - (w / 2), Position.Y - (h / 2), w, h);
         }
@@ -134,7 +134,7 @@
                 return size;
             }
             set {
-                 size = value;
+                size = value;
             }
         }
 
@@ -147,7 +147,7 @@
                 return roundness;
             }
             set {
-                 roundness = value;
+                roundness = value;
             }
         }
 

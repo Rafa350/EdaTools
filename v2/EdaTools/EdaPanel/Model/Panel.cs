@@ -2,20 +2,19 @@
 
     using System;
     using System.Collections.Generic;
-    using System.Runtime.CompilerServices;
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Collections;
 
-    public sealed class Panel: IPanelVisitable {
+    public sealed class Panel : IPanelVisitable {
 
         private Size size;
         private Collection<PanelItem> items;
 
-         public void  AcceptVisitor(IPanelVisitor visitor) {
+        public void AcceptVisitor(IPanelVisitor visitor) {
 
             visitor.Visit(this);
-        }     
-        
+        }
+
         /// <summary>
         /// Afegeix un element
         /// </summary>

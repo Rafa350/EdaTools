@@ -9,7 +9,7 @@
     /// Clase que representa un text.
     /// </summary>
     /// 
-    public sealed class TextElement: Element, IPosition, IRotation {
+    public sealed class TextElement : Element, IPosition, IRotation {
 
         private Point position;
         private Angle rotation;
@@ -31,9 +31,9 @@
         /// <param name="verticalAlign">Aliniacio vertical.</param>
         /// <param name="value">El valor del text.</param>
         /// 
-        public TextElement(LayerSet layerSet, Point position, Angle rotation, int height, int thickness, 
+        public TextElement(LayerSet layerSet, Point position, Angle rotation, int height, int thickness,
             HorizontalTextAlign horizontalAlign = HorizontalTextAlign.Left,
-            VerticalTextAlign verticalAlign = VerticalTextAlign.Bottom, string value = null):
+            VerticalTextAlign verticalAlign = VerticalTextAlign.Bottom, string value = null) :
             base(layerSet) {
 
             if (height <= 0)
@@ -53,7 +53,7 @@
 
         public override Element Clone() {
 
-            return new TextElement(LayerSet, position, rotation, height, thickness, 
+            return new TextElement(LayerSet, position, rotation, height, thickness,
                 horizontalAlign, verticalAlign, value);
         }
 

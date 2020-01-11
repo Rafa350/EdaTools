@@ -87,7 +87,7 @@
                 (reader.NodeType != XmlNodeType.CDATA))
                 throw new InvalidOperationException(
                     String.Format("El elemento '{0}' no tiene nodo de contenido", reader.Name));
-                
+
             return reader.Value;
         }
 

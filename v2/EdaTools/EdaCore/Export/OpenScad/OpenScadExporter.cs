@@ -113,7 +113,7 @@
             }*/
 
             writer.WriteLine("    }");
-        }        
+        }
 
         private void GenerateComponents(TextWriter writer, XmlNode node) {
 
@@ -168,7 +168,7 @@
                 x = Double.Parse(viaNode.Attributes["x"].Value, CultureInfo.InvariantCulture);
                 y = Double.Parse(viaNode.Attributes["y"].Value, CultureInfo.InvariantCulture);
                 if (viaNode.Attributes["drill"] != null)
-                    drill  = Double.Parse(viaNode.Attributes["drill"].Value, CultureInfo.InvariantCulture);
+                    drill = Double.Parse(viaNode.Attributes["drill"].Value, CultureInfo.InvariantCulture);
                 if (viaNode.Attributes["diameter"] != null)
                     diameter = Double.Parse(viaNode.Attributes["diameter"].Value, CultureInfo.InvariantCulture);
 

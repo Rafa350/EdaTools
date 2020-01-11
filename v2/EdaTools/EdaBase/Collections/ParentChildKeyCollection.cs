@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Collections {
 
     using System;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Coleccio que mante una relacio pare-fill amb els seus items.
@@ -11,8 +10,8 @@
     /// <typeparam name="TKey">El tipus de la clau.</typeparam>
     /// 
     public sealed class ParentChildKeyCollection<TParent, TChild, TKey> : KeyCollection<TChild, TKey>
-        where TParent: class
-        where TChild: class, ICollectionKey<TKey>, ICollectionChild<TParent> {
+        where TParent : class
+        where TChild : class, ICollectionKey<TKey>, ICollectionChild<TParent> {
 
         private readonly TParent parent;
 

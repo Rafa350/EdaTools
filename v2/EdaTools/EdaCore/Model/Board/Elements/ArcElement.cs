@@ -9,7 +9,7 @@
     /// <summary>
     /// Clase que representa un arc.
     /// </summary>
-    public sealed class ArcElement: LineElement, IConectable {
+    public sealed class ArcElement : LineElement, IConectable {
 
         private Angle angle;
 
@@ -23,7 +23,7 @@
         /// <param name="angle">Angle del arc.</param>
         /// <param name="lineCap">Extrems de linia.</param>
         /// 
-        public ArcElement(LayerSet layerSet, Point startPosition, Point endPosition, int thickness, Angle angle, LineCapStyle lineCap) :
+        public ArcElement(LayerSet layerSet, Point startPosition, Point endPosition, int thickness, Angle angle, CapStyle lineCap) :
             base(layerSet, startPosition, endPosition, thickness, lineCap) {
 
             this.angle = angle;
@@ -57,7 +57,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = PolygonBuilder.MakeArcTrace(Center, Radius, StartAngle, angle, Thickness, LineCap == LineCapStyle.Round);
+            Point[] points = PolygonBuilder.MakeArcTrace(Center, Radius, StartAngle, angle, Thickness, LineCap == CapStyle.Round);
             return new Polygon(points);
         }
 
@@ -70,7 +70,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points =  PolygonBuilder.MakeArcTrace(Center, Radius, StartAngle, angle, Thickness + (spacing * 2), LineCap == LineCapStyle.Round);
+            Point[] points = PolygonBuilder.MakeArcTrace(Center, Radius, StartAngle, angle, Thickness + (spacing * 2), LineCap == CapStyle.Round);
             return new Polygon(points);
         }
 

@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public sealed class NetSignal: INetVisitable {
+    public sealed class NetSignal : INetVisitable {
 
         private readonly string name;
         private readonly List<NetConnection> connections;

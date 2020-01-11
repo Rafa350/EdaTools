@@ -82,7 +82,7 @@
 
             return points;
         }
-    
+
         /// <summary>
         /// Obte els punts de referencia dels forats, a partir dels punts de referencia basics.
         /// </summary>

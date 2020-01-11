@@ -25,7 +25,7 @@
             }
         }
 
-        public ConnectivityAnchor AnchorB{
+        public ConnectivityAnchor AnchorB {
             get {
                 return anchorB;
             }

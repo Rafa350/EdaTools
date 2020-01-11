@@ -4313,11 +4313,11 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             else
                 switch (jointype) {
                     case JoinType.jtMiter: {
-                            double r = 1 + (m_normals[j].X * m_normals[k].X +
-                              m_normals[j].Y * m_normals[k].Y);
-                            if (r >= m_miterLim) DoMiter(j, k, r); else DoSquare(j, k);
-                            break;
-                        }
+                        double r = 1 + (m_normals[j].X * m_normals[k].X +
+                          m_normals[j].Y * m_normals[k].Y);
+                        if (r >= m_miterLim) DoMiter(j, k, r); else DoSquare(j, k);
+                        break;
+                    }
                     case JoinType.jtSquare: DoSquare(j, k); break;
                     case JoinType.jtRound: DoRound(j, k); break;
                 }

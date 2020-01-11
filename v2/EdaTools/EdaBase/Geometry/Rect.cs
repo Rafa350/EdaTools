@@ -21,7 +21,7 @@
         /// <param name="height">Alçada</param>
         /// 
         public Rect(int x = 0, int y = 0, int width = 0, int height = 0) {
-            
+
             if (width < 0)
                 throw new ArgumentOutOfRangeException("width");
             if (height < 0)

@@ -7,7 +7,7 @@
     /// de grau i el gir es considera contrari al rellotge.
     /// </summary>
     /// 
-    public readonly struct Angle: IEquatable<Angle> {
+    public readonly struct Angle : IEquatable<Angle> {
 
         public static readonly Angle Zero = new Angle(0);
         public static readonly Angle Deg45 = new Angle(4500);

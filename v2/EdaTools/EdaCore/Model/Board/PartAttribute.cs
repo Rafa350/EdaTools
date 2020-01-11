@@ -1,8 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
+    using System;
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
-    using System;
 
     /// <summary>
     /// Clase que representa un atribut d'un component
@@ -45,7 +45,7 @@
             useAlign = false;
         }
 
-        public PartAttribute(string name, Point position, Angle rotation, int height, 
+        public PartAttribute(string name, Point position, Angle rotation, int height,
             HorizontalTextAlign horizontalAlign, VerticalTextAlign verticalAlign, string value) {
 
             if (String.IsNullOrEmpty(name))

@@ -1,8 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
 
-    using MikroPic.EdaTools.v1.Core.Model.Board;
     using System;
     using System.Collections.Generic;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
 
     public abstract class SignalVisitor : DefaultBoardVisitor {
 

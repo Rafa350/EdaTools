@@ -8,7 +8,7 @@
     /// pero no fa cap accio.
     /// </summary>
     /// 
-    public abstract class DefaultBoardVisitor: IBoardVisitor {
+    public abstract class DefaultBoardVisitor : IBoardVisitor {
 
         public virtual void Visit(Board board) {
         }

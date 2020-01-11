@@ -6,14 +6,14 @@
     public sealed partial class Library {
 
         private Dictionary<string, Component> components;
-        
+
         /// <summary>
         /// Afegeix un component.
         /// </summary>
         /// <param name="component">El component a afeigir.</param>
         /// 
         public void AddComponent(Component component) {
-            
+
             if (component == null)
                 throw new ArgumentNullException("component");
 
@@ -68,13 +68,13 @@
                 return components != null;
             }
         }
-        
+
         /// <summary>
         /// Enumera els noms dels components.
         /// </summary>
         /// 
         public IEnumerable<string> ComponentNames {
-            get{
+            get {
                 return components.Keys;
             }
         }

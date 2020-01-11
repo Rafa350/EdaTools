@@ -1,11 +1,11 @@
 namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
     using System.Collections.Generic;
-    
+    using MikroPic.EdaTools.v1.Base.Geometry;
+
     public static class Polygonizer {
-        
+
         static public Point[] Poligonize(IEnumerable<Segment> segments) {
 
             if (segments == null)

@@ -1,8 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using System;
     using System.Collections.Generic;
+    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
     /// <summary>
     /// Clase que representa un bloc predefinit.
@@ -76,7 +76,7 @@
 
             // Si l'element es un pad, tambe l'elimina de la llista de pads.
             //
-            if (element is PadElement pad) { 
+            if (element is PadElement pad) {
                 pads.Remove(pad.Name);
                 if (pads.Count == 0)
                     pads = null;

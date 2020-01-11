@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Collections {
 
     using System;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Coleccio que mante una relacio pare-fill amb els seus items.
@@ -10,8 +9,8 @@
     /// <typeparam name="TChild">Tipus del fill.</typeparam>
     /// 
     public sealed class ParentChildCollection<TParent, TChild> : Collection<TChild>
-        where TParent: class
-        where TChild: class, ICollectionChild<TParent> {
+        where TParent : class
+        where TChild : class, ICollectionChild<TParent> {
 
         private readonly TParent parent;
 

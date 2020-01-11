@@ -7,7 +7,7 @@
     /// <summary>
     /// Objecte que representa un conjunt de capes. Es un objecte invariant.
     /// </summary>
-    public struct SetOf<T>: IEnumerable<T> {
+    public struct SetOf<T> : IEnumerable<T> {
 
         private readonly T[] storage;
 
@@ -136,7 +136,7 @@
         /// 
         public override string ToString() {
 
-            return String.Format("SetOf<{0}>: {1}", typeof(T),  storage.Length);
+            return String.Format("SetOf<{0}>: {1}", typeof(T), storage.Length);
         }
 
         public IEnumerator<T> GetEnumerator() {

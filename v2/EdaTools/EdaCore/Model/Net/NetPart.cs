@@ -1,9 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Net {
 
     using System;
-    using System.Collections.Generic;
 
-    public sealed class NetPart: INetVisitable  {
+    public sealed class NetPart : INetVisitable {
 
         private readonly string name;
 

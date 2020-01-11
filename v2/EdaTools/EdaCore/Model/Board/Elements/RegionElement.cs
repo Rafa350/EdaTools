@@ -10,7 +10,7 @@
     /// <summary>
     /// Clase que representa una regio poligonal.
     /// </summary>
-    public sealed class RegionElement: Element, IConectable {
+    public sealed class RegionElement : Element, IConectable {
 
         public sealed class Segment {
 

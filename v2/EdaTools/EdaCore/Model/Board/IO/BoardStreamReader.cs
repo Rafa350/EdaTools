@@ -103,7 +103,7 @@
             rd.NextTag();
             if (!rd.IsEndTag("document"))
                 throw new InvalidDataException("Se esperaba </document>");
-}
+        }
 
         /// <summary>
         /// Procesa el node 'board'
@@ -444,7 +444,7 @@
                 throw new InvalidDataException("Se esperaba <part>");
 
             string name = rd.AttributeAsString("name");
-            Point position =  XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
+            Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
             bool flip = rd.AttributeAsBoolean("flip", false);
             string blockName = rd.AttributeAsString("component");
@@ -510,7 +510,7 @@
         private PartAttribute ParsePartAttributeNode() {
 
             if (!rd.IsStartTag("attribute"))
-               throw new InvalidDataException("Se esperaba <attribute>");
+                throw new InvalidDataException("Se esperaba <attribute>");
 
             string name = rd.AttributeAsString("name");
             string value = rd.AttributeAsString("value");
@@ -601,7 +601,7 @@
             Point startPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("startPosition"));
             Point endPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("endPosition"));
             int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness", "0"));
-            LineElement.LineCapStyle lineCap = rd.AttributeAsEnum<LineElement.LineCapStyle>("lineCap", LineElement.LineCapStyle.Round);
+            LineElement.CapStyle lineCap = rd.AttributeAsEnum<LineElement.CapStyle>("lineCap", LineElement.CapStyle.Round);
             string signalName = rd.AttributeAsString("signal");
 
             rd.NextTag();
@@ -632,7 +632,7 @@
             Point endPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("endPosition"));
             int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness"));
             Angle angle = XmlTypeParser.ParseAngle(rd.AttributeAsString("angle"));
-            LineElement.LineCapStyle lineCap = rd.AttributeAsEnum<LineElement.LineCapStyle>("lineCap", LineElement.LineCapStyle.Round);
+            LineElement.CapStyle lineCap = rd.AttributeAsEnum<LineElement.CapStyle>("lineCap", LineElement.CapStyle.Round);
             string signalName = rd.AttributeAsString("signal");
 
             rd.NextTag();
@@ -690,7 +690,7 @@
             int radius = XmlTypeParser.ParseNumber(rd.AttributeAsString("radius"));
             int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness", "0"));
             bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
- 
+
             rd.NextTag();
             if (!rd.IsEndTag("circle"))
                 throw new InvalidDataException("Se esperaba </circle>");

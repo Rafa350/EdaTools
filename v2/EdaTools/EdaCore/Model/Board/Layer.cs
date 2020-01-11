@@ -18,7 +18,7 @@
     /// Clare quie representa una capa de la placa.
     /// </summary>
     /// 
-    public sealed class Layer: IBoardVisitable {
+    public sealed class Layer : IBoardVisitable {
 
         private readonly BoardSide side;
         private readonly string tag;

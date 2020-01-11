@@ -132,5 +132,11 @@
                 points[i] = new Point((int)x, (int)y);
             }
         }
+
+        public Matrix2D Matrix {
+            get {
+                return m;
+            }
+        }
     }
 }

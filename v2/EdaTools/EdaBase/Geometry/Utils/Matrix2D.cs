@@ -128,7 +128,7 @@
         /// </remarks>
         /// 
         public double GetDeterminant() {
-        
+
             return (m11 * m22) - (m12 * m21);
         }
 
@@ -140,7 +140,7 @@
         public Matrix2D Invert() {
 
             double d = GetDeterminant();
-            if (d == 0) 
+            if (d == 0)
                 throw new InvalidOperationException("Transform is not invertible.");
 
             return new Matrix2D(
@@ -160,7 +160,7 @@
         /// <returns>The product matrix.</returns>
         /// 
         public static Matrix2D operator *(Matrix2D value1, Matrix2D value2) {
-            
+
             return new Matrix2D(
                 (value1.m11 * value2.m11) + (value1.m12 * value2.m21),
                 (value1.m11 * value2.m12) + (value1.m12 * value2.m22),
@@ -189,7 +189,7 @@
         /// <returns>True if the matrices are equal; False otherwise.</returns>
         /// 
         public static bool operator ==(Matrix2D value1, Matrix2D value2) {
-            
+
             return value1.Equals(value2);
         }
 
@@ -201,7 +201,7 @@
         /// <returns>True if the matrices are not equal; False if they are equal.</returns>
         /// 
         public static bool operator !=(Matrix2D value1, Matrix2D value2) {
-            
+
             return !value1.Equals(value2);
         }
 
@@ -240,12 +240,12 @@
         /// 
         public override int GetHashCode() {
 
-            return 
-                m11.GetHashCode() + 
+            return
+                m11.GetHashCode() +
                 m12.GetHashCode() +
-                m21.GetHashCode() + 
+                m21.GetHashCode() +
                 m22.GetHashCode() +
-                tx.GetHashCode() + 
+                tx.GetHashCode() +
                 ty.GetHashCode();
         }
 

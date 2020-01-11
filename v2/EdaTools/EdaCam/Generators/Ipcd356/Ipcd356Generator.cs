@@ -12,9 +12,9 @@
     /// <summary>
     /// Generador de codi en format IPCD356
     /// </summary>
-    public sealed class Ipcd356Generator: Generator {
+    public sealed class Ipcd356Generator : Generator {
 
-        public Ipcd356Generator(Target target):
+        public Ipcd356Generator(Target target) :
             base(target) {
 
         }
@@ -91,7 +91,7 @@
         private void GenerateVias(Ipcd356Builder builder, Board board) {
 
             builder.Comment("BEGIN VIAS");
-            
+
             IBoardVisitor visitor = new ViasVisitor(builder);
             board.AcceptVisitor(visitor);
 
@@ -133,11 +133,11 @@
         /// <summary>
         /// Visitador per generar els senyals
         /// </summary>
-        private sealed class NetsVisitor: SignalVisitor {
+        private sealed class NetsVisitor : SignalVisitor {
 
             private readonly Ipcd356Builder builder;
 
-            public NetsVisitor(Ipcd356Builder builder) { 
+            public NetsVisitor(Ipcd356Builder builder) {
 
                 this.builder = builder;
             }
@@ -150,7 +150,7 @@
                 else if (line.LayerSet.Contains("Bottom.Copper"))
                     layerNum = 2;
 
-                if (layerNum > 0) { 
+                if (layerNum > 0) {
                     Point[] points = new Point[2];
                     points[0] = line.StartPosition;
                     points[1] = line.EndPosition;
@@ -178,11 +178,11 @@
         /// <summary>
         /// Visitador per generar les definicions de vias
         /// </summary>
-        private sealed class ViasVisitor: ElementVisitor {
+        private sealed class ViasVisitor : ElementVisitor {
 
             private readonly Ipcd356Builder builder;
 
-            public ViasVisitor(Ipcd356Builder builder) {  
+            public ViasVisitor(Ipcd356Builder builder) {
 
                 this.builder = builder;
             }
@@ -201,7 +201,7 @@
 
             private readonly Ipcd356Builder builder;
 
-            public PadsVisitor(Ipcd356Builder builder) { 
+            public PadsVisitor(Ipcd356Builder builder) {
 
                 this.builder = builder;
             }

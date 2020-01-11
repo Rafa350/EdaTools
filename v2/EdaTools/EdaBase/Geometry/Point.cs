@@ -6,7 +6,7 @@
     /// Estructura que representa un punt.
     /// </summary>
     /// 
-    public readonly struct Point: IEquatable<Point> {
+    public readonly struct Point : IEquatable<Point> {
 
         private readonly int x;
         private readonly int y;
@@ -112,12 +112,12 @@
                 return false;
         }
 
-        public static bool operator == (Point p1, Point p2) {
+        public static bool operator ==(Point p1, Point p2) {
 
             return p1.Equals(p2);
         }
 
-        public static bool operator != (Point p1, Point p2) {
+        public static bool operator !=(Point p1, Point p2) {
 
             return !p1.Equals(p2);
         }

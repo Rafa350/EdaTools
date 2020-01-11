@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public sealed partial class Library: IBoardVisitable {
+    public sealed partial class Library : IBoardVisitable {
 
         private string name;
         private string description;

@@ -4,7 +4,7 @@
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
-    public sealed class SlotElement: PadElement {
+    public sealed class SlotElement : PadElement {
 
         private int drill;
         private int length;
@@ -12,8 +12,8 @@
         private int innerSize;
         private int bottomSize;
 
-        SlotElement(string name, LayerSet layerSet, Point position, Angle rotation, int topSize, 
-            int innerSize, int bottomSize, int drill, int length):
+        SlotElement(string name, LayerSet layerSet, Point position, Angle rotation, int topSize,
+            int innerSize, int bottomSize, int drill, int length) :
             base(name, layerSet, position, rotation) {
 
             if (topSize < 0)

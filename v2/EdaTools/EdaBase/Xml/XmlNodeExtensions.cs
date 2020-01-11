@@ -21,8 +21,8 @@
         public static string AttributeAsString(this XmlNode node, string name, string defValue = null) {
 
             XmlAttribute attribute = node.Attributes[name];
-            return attribute == null ? 
-                defValue : 
+            return attribute == null ?
+                defValue :
                 attribute.Value;
         }
 
@@ -37,8 +37,8 @@
         public static double AttributeDouble(this XmlNode node, string name, int defValue = 0) {
 
             XmlAttribute attribute = node.Attributes[name];
-            return attribute == null ? 
-                defValue : 
+            return attribute == null ?
+                defValue :
                 XmlConvert.ToDouble(attribute.Value);
         }
 
@@ -53,8 +53,8 @@
         public static int AttributeAsInteger(this XmlNode node, string name, int defValue = 0) {
 
             XmlAttribute attribute = node.Attributes[name];
-            return attribute == null ? 
-                defValue : 
+            return attribute == null ?
+                defValue :
                 XmlConvert.ToInt32(attribute.Value);
         }
 
@@ -69,8 +69,8 @@
         public static bool AttributeAsBoolean(this XmlNode node, string name, bool defValue = false) {
 
             XmlAttribute attribute = node.Attributes[name];
-            return attribute == null ? 
-                defValue : 
+            return attribute == null ?
+                defValue :
                 String.Compare(attribute.Value, "yes", true) == 0 || String.Compare(attribute.Value, "true", true) == 0;
         }
     }

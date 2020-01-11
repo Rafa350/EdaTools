@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Infrastructure.Polygons {
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
+    using MikroPic.EdaTools.v1.Base.Geometry;
 
     /// <summary>
     /// Clase que permet la construccio llistes de punts que representen diferentes figures,
@@ -185,7 +185,7 @@
             points[8] = new Point(x - dt, yMin);
 
             points[9] = new Point(x + dt, yMin);
-            points[10] = new Point(x + dt,  y - dt);
+            points[10] = new Point(x + dt, y - dt);
             points[11] = new Point(xMax, y - dt);
 
             // Si es una rotacio arbitraria, fa servir calcul amb matrius
@@ -233,7 +233,7 @@
             for (int i = 0; i < sides; i++) {
 
                 points[i] = new Point(
-                    (int)x + position.X, 
+                    (int)x + position.X,
                     (int)y + position.Y);
 
                 double tx = x;
@@ -260,7 +260,7 @@
 
             // Calcula el numero de segments
             //
-            int numSegments = (int) Math.Abs(Math.Floor((angle.ToDegrees * 32.0) / 360.0));
+            int numSegments = (int)Math.Abs(Math.Floor((angle.ToDegrees * 32.0) / 360.0));
             int numPoints = numSegments + (discardLast ? 0 : 1);
 
             // Calcula l'angle de cada segment

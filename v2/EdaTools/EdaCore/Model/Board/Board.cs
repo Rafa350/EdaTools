@@ -8,10 +8,10 @@
     /// 
     public enum BoardSide {
         None,
-        Top, 
-        Inner,  
+        Top,
+        Inner,
         Bottom,
-        Body    
+        Body
     }
 
     /// <summary>

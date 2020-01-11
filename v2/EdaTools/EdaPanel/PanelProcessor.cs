@@ -1,5 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Panel {
 
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.IO;
     using MikroPic.EdaTools.v1.Core.Model.Board;
@@ -8,9 +11,6 @@
     using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
     using MikroPic.EdaTools.v1.Panel.Model;
     using MikroPic.EdaTools.v1.Panel.Model.Items;
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
 
     public sealed class PanelProcessor {
 
@@ -101,7 +101,7 @@
             //
             foreach (var signal in board.Signals) {
                 string signalName = String.Format("{1}@{0}", index, signal.Name);
-                if (targetBoard.GetSignal(signalName, false) == null) 
+                if (targetBoard.GetSignal(signalName, false) == null)
                     targetBoard.AddSignal(signal.Clone(signalName));
             }
 
@@ -136,7 +136,7 @@
                 }
 
                 TransformVisitor visitor = new TransformVisitor(position, rotation);
-                foreach(var part in transformableParts)
+                foreach (var part in transformableParts)
                     part.AcceptVisitor(visitor);
             }
 
@@ -164,7 +164,7 @@
                 }
 
                 TransformVisitor visitor = new TransformVisitor(position, rotation);
-                foreach(var element in transformableElements)
+                foreach (var element in transformableElements)
                     element.AcceptVisitor(visitor);
             }
         }
@@ -211,7 +211,7 @@
                 // Afegeix la linia a la placa
                 //
                 targetBoard.AddElement(new LineElement(millingLayerSet, q1, q2,
-                    cut.Thickness, LineElement.LineCapStyle.Round));
+                    cut.Thickness, LineElement.CapStyle.Round));
             }
 
             // Afegeix els forats
@@ -241,13 +241,13 @@
 
             Rect rect = new Rect(new Point(0, 0), size);
             LayerSet profileLayer = new LayerSet("Profile");
-            targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Right, rect.Top), 100000, LineElement.LineCapStyle.Round));
-            targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Bottom), new Point(rect.Right, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
-            targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Left, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
-            targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Right, rect.Top), new Point(rect.Right, rect.Bottom), 100000, LineElement.LineCapStyle.Round));
+            targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Right, rect.Top), 100000, LineElement.CapStyle.Round));
+            targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Bottom), new Point(rect.Right, rect.Bottom), 100000, LineElement.CapStyle.Round));
+            targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Left, rect.Bottom), 100000, LineElement.CapStyle.Round));
+            targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Right, rect.Top), new Point(rect.Right, rect.Bottom), 100000, LineElement.CapStyle.Round));
         }
 
-        private sealed class TransformVisitor: DefaultBoardVisitor { 
+        private sealed class TransformVisitor : DefaultBoardVisitor {
 
             private readonly Transformation transformation;
 

@@ -62,7 +62,7 @@
             settings.ConformanceLevel = ConformanceLevel.Document;
 
             XmlReader reader = XmlReader.Create(stream, settings);
-            rd = new XmlReaderAdapter(reader);            
+            rd = new XmlReaderAdapter(reader);
         }
 
         /// <summary>
@@ -217,7 +217,7 @@
             if (!rd.IsEndTag("cut"))
                 throw new InvalidDataException("Se esperaba </cut>");
 
-            return new CutItem(startPosition, endPosition, thickness, margin, cuts, cutSpacing, 
+            return new CutItem(startPosition, endPosition, thickness, margin, cuts, cutSpacing,
                 holes, holeDiameter, holeSpacing);
         }
     }

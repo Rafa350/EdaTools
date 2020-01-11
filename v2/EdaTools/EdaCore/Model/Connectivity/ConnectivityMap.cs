@@ -1,15 +1,15 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Connectivity {
 
+    using System;
+    using System.Collections.Generic;
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
-    using System;
-    using System.Collections.Generic;
 
     public sealed class ConnectivityMap {
 
-        private sealed class AddElementVisitor: ElementVisitor {
+        private sealed class AddElementVisitor : ElementVisitor {
 
             private readonly ConnectivityMap map;
 
@@ -80,7 +80,7 @@
             else if (element is LineElement line)
                 AddLineElement(line);
 
-            else if (element is ArcElement arc) 
+            else if (element is ArcElement arc)
                 AddLineElement(arc);
         }
 
@@ -102,37 +102,37 @@
         public IEnumerable<Element> GetChainedElements(Point position) {
 
             HashSet<Element> chain = new HashSet<Element>();
-//            GetChainedElements(position, chain);
+            //            GetChainedElements(position, chain);
             return chain;
         }
 
-/*        private void GetChainedElements(Point position, ICollection<Element> chain) {
+        /*        private void GetChainedElements(Point position, ICollection<Element> chain) {
 
-            if (map.TryGetValue(position, out List<Element> elements)) {
-                foreach (var element in elements) {
+                    if (map.TryGetValue(position, out List<Element> elements)) {
+                        foreach (var element in elements) {
 
-                    if (!chain.Contains(element)) {
+                            if (!chain.Contains(element)) {
 
-                        chain.Add(element);
+                                chain.Add(element);
 
-                        // Procesa els elements encadenats (Linies i arcs)
-                        //
-                        if (element is LineElement line) {
-                            if (line.StartPosition == position)
-                                GetChainedElements(line.EndPosition, chain);
-                            else
-                                GetChainedElements(line.StartPosition, chain);
-                        }
-                        else if (element is ArcElement arc) {
-                            if (arc.StartPosition == position)
-                                GetChainedElements(arc.EndPosition, chain);
-                            else
-                                GetChainedElements(arc.StartPosition, chain);
+                                // Procesa els elements encadenats (Linies i arcs)
+                                //
+                                if (element is LineElement line) {
+                                    if (line.StartPosition == position)
+                                        GetChainedElements(line.EndPosition, chain);
+                                    else
+                                        GetChainedElements(line.StartPosition, chain);
+                                }
+                                else if (element is ArcElement arc) {
+                                    if (arc.StartPosition == position)
+                                        GetChainedElements(arc.EndPosition, chain);
+                                    else
+                                        GetChainedElements(arc.StartPosition, chain);
+                                }
+                            }
                         }
                     }
-                }
-            }
-        }*/
+                }*/
 
         /// <summary>
         /// Obte un anclatge per la posicio especificada.
@@ -175,7 +175,7 @@
             if (edges.ContainsKey(key))
                 throw new InvalidOperationException("Ya existe el anclaje");
 
-            ConnectivityEdge  edge = new ConnectivityEdge(anchorA, anchorB);
+            ConnectivityEdge edge = new ConnectivityEdge(anchorA, anchorB);
             edges.Add(key, edge);
         }
 

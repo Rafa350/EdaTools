@@ -5,7 +5,7 @@
     /// <summary>
     /// Clase que representa una senyal.
     /// </summary>
-    public sealed class Signal: IName, IBoardVisitable {
+    public sealed class Signal : IName, IBoardVisitable {
 
         private readonly string name;
         private int clearance = 150000;

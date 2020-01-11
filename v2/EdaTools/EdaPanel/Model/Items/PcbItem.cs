@@ -1,9 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Panel.Model.Items {
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
+    using MikroPic.EdaTools.v1.Base.Geometry;
 
-    public sealed class PcbItem: PanelItem {
+    public sealed class PcbItem : PanelItem {
 
         private Point position;
         private Size size;
@@ -15,9 +15,9 @@
         /// </summary>
         /// <param name="fileName">Nom del fitxer de la placa.</param>
         /// 
-        public PcbItem(string fileName):
-            base() { 
-            
+        public PcbItem(string fileName) :
+            base() {
+
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException("fileName");
 
@@ -32,7 +32,7 @@
         /// <param name="size">Tamany de la envolvent de la placa.</param>
         /// <param name="rotation">Angle de rotacio de la placa centrat en la posicio.</param>
         /// 
-        public PcbItem(string fileName, Point position, Size size, Angle rotation) { 
+        public PcbItem(string fileName, Point position, Size size, Angle rotation) {
 
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException("fileName");

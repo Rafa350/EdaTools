@@ -1,11 +1,11 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
+    using System;
+    using System.Collections.Generic;
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
-    using System;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Classe que representa una placa de circuit imprès.
@@ -25,9 +25,9 @@
             IEnumerable<Element> elements = GetElements(outlineLayer.Name);
             List<Segment> segments = new List<Segment>();
             foreach (var element in elements) {
-                if (element is LineElement line) 
+                if (element is LineElement line)
                     segments.Add(new Segment(line.StartPosition, line.EndPosition));
-               
+
                 else if (element is ArcElement arc) {
                     Point[] points = PolygonBuilder.MakeArc(arc.Center, arc.Radius, arc.StartAngle, arc.Angle, true);
                     for (int i = 1; i < points.Length; i++)
@@ -108,7 +108,7 @@
                             //
                             else if (element.IsOnLayer(outlineLayer.Name)) {
                                 Polygon elementPolygon = element.GetOutlinePolygon(BoardSide.None, outlineClearance);
-                                if (regionBBox.IntersectsWith(elementPolygon.BoundingBox)) 
+                                if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                     holePolygons.Add(elementPolygon);
                             }
                         }

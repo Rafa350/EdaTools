@@ -48,7 +48,7 @@
         /// <param name="drill">Diametre del forat.</param>
         /// <param name="shape">Forma de la corona.</param>
         /// 
-        public ViaElement(LayerSet layerSet, Point position, int size, int drill, ViaShape shape):
+        public ViaElement(LayerSet layerSet, Point position, int size, int drill, ViaShape shape) :
             this(layerSet, position, size, size, drill, shape) {
         }
 

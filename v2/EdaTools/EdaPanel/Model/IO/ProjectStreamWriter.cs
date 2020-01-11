@@ -18,7 +18,7 @@
 
         private readonly Stream stream;
 
-        private class Visitor: DefaultPanelVisitor {
+        private class Visitor : DefaultPanelVisitor {
 
             private readonly XmlWriter writer;
 
