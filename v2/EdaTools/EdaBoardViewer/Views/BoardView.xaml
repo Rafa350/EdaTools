@@ -8,17 +8,40 @@
              Background="#FF303030">
 
     <Grid
-        ColumnDefinitions="30,*"
-        RowDefinitions="30,*">
+        ColumnDefinitions="30,5,*"
+        RowDefinitions="30,5,*">
         <controls:RulerBox
-            Grid.Column="1"
-            Grid.Row="0"/>
+            Name="HorizontalRuler"
+            Grid.Column="2"
+            Grid.Row="0"
+            Orientation="Horizontal"
+            Alignment="LeftOrBottom"
+            ShowPointer="True"
+            ShowRegion="True"
+            PointerValue="50"
+            RegionStartValue="30"
+            RegionEndValue="130"
+            ValueDivisor="10"
+            MinValue="0"
+            MaxValue="1500"/>
         <controls:RulerBox
+            Name="VerticalRuler"
             Grid.Column="0"
-            Grid.Row="1"/>
+            Grid.Row="2"
+            Orientation="Vertical"
+            Alignment="RightOrTop"
+            ShowPointer="True"
+            ShowRegion="True"
+            PointerValue="50"
+            RegionStartValue="30"
+            RegionEndValue="130"
+            ValueDivisor="10"
+            MinValue="0"
+            MaxValue="1500"/>
         <controls:BoardViewControl
-            Grid.Column="1"
-            Grid.Row="1"/>
+            Name="BoardView"
+            Grid.Column="2"
+            Grid.Row="2"/>
     </Grid>
 
 </UserControl>
