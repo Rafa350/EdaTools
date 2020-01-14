@@ -28,9 +28,13 @@
         public static readonly StyledProperty<RulerOrientation> OrientationProperty = AvaloniaProperty.Register<RulerBox, RulerOrientation>(nameof(Orientation), RulerOrientation.Horizontal);
         public static readonly StyledProperty<RulerAlignment> AlignmentProperty = AvaloniaProperty.Register<RulerBox, RulerAlignment>(nameof(Alignment), RulerAlignment.LeftOrBottom);
         public static readonly StyledProperty<bool> FlipTagsProperty;
+
         public static readonly StyledProperty<double> ValueDivisorProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(ValueDivisor), 1);
         public static readonly StyledProperty<double> MinValueProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(MinValue), 0);
         public static readonly StyledProperty<double> MaxValueProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(MaxValue), 100);
+
+        public static readonly StyledProperty<double> OriginProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(Origin), 0);
+        public static readonly StyledProperty<double> ScaleProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(Scale), 1);
 
         /// <summary>
         /// Obte o asigna la brotza del fons del control.
@@ -139,34 +143,68 @@
             set { SetValue(ShowRegionProperty, value); }
         }
 
+        /// <summary>
+        /// Obte o asigna el valor del punter.
+        /// </summary>
+        /// 
         public double PointerValue {
             get { return GetValue(PointerValueProperty); }
             set { SetValue(PointerValueProperty, value); }
         }
 
+        /// <summary>
+        /// Obte o asigna la britza per dibuixar el punter.
+        /// </summary>
+        /// 
         public IBrush PointerBrush {
             get { return GetValue(PointerBrushProperty); }
             set { SetValue(PointerBrushProperty, value); }
         }
 
+        /// <summary>
+        /// Obte o asigna el indicador de visibilitat del punter.
+        /// </summary>
+        /// 
         public bool ShowPointer {
             get { return GetValue(ShowPointerProperty); }
             set { SetValue(ShowPointerProperty, value); }
         }
 
+        /// <summary>
+        /// Obte o asigna el valor minim.
+        /// </summary>
+        /// 
         public double MinValue {
             get { return GetValue(MinValueProperty); }
             set { SetValue(MinValueProperty, value); }
         }
 
+        /// <summary>
+        /// Obte o asigna el valor maxim.
+        /// </summary>
+        /// 
         public double MaxValue {
             get { return GetValue(MaxValueProperty); }
             set { SetValue(MaxValueProperty, value); }
         }
 
+        /// <summary>
+        /// Obte o asigna el factor de divisio del valor.
+        /// </summary>
+        /// 
         public double ValueDivisor {
             get { return GetValue(ValueDivisorProperty); }
             set { SetValue(ValueDivisorProperty, value); }
+        }
+
+        public double Origin {
+            get { return GetValue(OriginProperty); }
+            set { SetValue(OriginProperty, value); }
+        }
+
+        public double Scale {
+            get { return GetValue(ScaleProperty); }
+            set { SetValue(ScaleProperty, value); }
         }
     }
 }

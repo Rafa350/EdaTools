@@ -19,11 +19,13 @@
             ShowPointer="True"
             ShowRegion="True"
             PointerValue="50"
-            RegionStartValue="30"
-            RegionEndValue="130"
-            ValueDivisor="10"
+            RegionStartValue="7"
+            RegionEndValue="15"
+            ValueDivisor="1"
             MinValue="0"
-            MaxValue="1500"/>
+            MaxValue="80"
+            Origin="5"
+            Scale="10"/>
         <controls:RulerBox
             Name="VerticalRuler"
             Grid.Column="0"
@@ -33,11 +35,13 @@
             ShowPointer="True"
             ShowRegion="True"
             PointerValue="50"
-            RegionStartValue="30"
-            RegionEndValue="130"
-            ValueDivisor="10"
+            RegionStartValue="3"
+            RegionEndValue="27"
+            ValueDivisor="1"
             MinValue="0"
-            MaxValue="1500"/>
+            MaxValue="80"
+            Origin="5"
+            Scale="10"/>
         <controls:BoardViewControl
             Name="BoardView"
             Grid.Column="2"
