@@ -1,6 +1,5 @@
 ﻿namespace EdaBoardViewer.Views.Controls {
 
-    using System;
     using Avalonia;
     using Avalonia.Controls;
 
@@ -13,41 +12,49 @@
         RightOrTop,
         LeftOrBottom
     }
-    
-    public sealed partial class RulerBox: Control {
 
+    public sealed partial class RulerBox : Control {
+
+        /// <summary>
+        /// Constructor estatic.
+        /// </summary>
+        /// 
         static RulerBox() {
 
             AffectsRender<RulerBox>(
-                PointerValueProperty,
-                RegionStartValueProperty,
-                RegionEndValueProperty,
+                PointerPositionProperty,
+                RegionPositionProperty,
+                RegionSizeProperty,
                 MaxValueProperty,
                 MinValueProperty,
-                ValueDivisorProperty);
+                ValueDivisorProperty,
+                OriginProperty,
+                ScaleProperty);
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// 
+        public RulerBox() {
+
+            ClipToBounds = true;
+        }
+
+        /// <summary>
+        /// Notifica que una propietat ha canviat el seu valor.
+        /// </summary>
+        /// <param name="e">Arguments de la notificacio.</param>
+        /// 
         protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e) {
 
             if ((e.Property == ScaleProperty) ||
                 (e.Property == OriginProperty) ||
-                (e.Property == RegionStartValueProperty) ||
-                (e.Property == RegionEndValueProperty) ||
                 (e.Property == ValueDivisorProperty) ||
                 (e.Property == OrientationProperty) ||
                 (e.Property == BoundsProperty)) {
 
-                regionGeometryCache = null;
-            }
-
-            if ((e.Property == ScaleProperty) ||
-                (e.Property == OriginProperty) ||
-                (e.Property == PointerValueProperty) ||
-                (e.Property == ValueDivisorProperty) ||
-                (e.Property == OrientationProperty) ||
-                (e.Property == BoundsProperty)) {
-
-                pointerGeometryCache = null;
+                rulerGeometryCache = null;
             }
 
             base.OnPropertyChanged(e);

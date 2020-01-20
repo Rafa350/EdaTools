@@ -3,7 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:EdaBoardViewer.Views.Controls"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" 
+             d:DesignWidth="800" 
+             d:DesignHeight="450"
              x:Class="EdaBoardViewer.Views.BoardView"
              Background="#FF303030">
 
@@ -18,13 +20,12 @@
             Alignment="LeftOrBottom"
             ShowPointer="True"
             ShowRegion="True"
-            PointerValue="50"
-            RegionStartValue="7"
-            RegionEndValue="15"
+            RegionPosition="7"
+            RegionSize="15"
             ValueDivisor="1"
             MinValue="0"
             MaxValue="80"
-            Origin="5"
+            Origin="0"
             Scale="10"/>
         <controls:RulerBox
             Name="VerticalRuler"
@@ -34,18 +35,28 @@
             Alignment="RightOrTop"
             ShowPointer="True"
             ShowRegion="True"
-            PointerValue="50"
-            RegionStartValue="3"
-            RegionEndValue="27"
+            RegionPosition="3"
+            RegionSize="27"
             ValueDivisor="1"
             MinValue="0"
             MaxValue="80"
-            Origin="5"
+            Origin="0"
             Scale="10"/>
+        <controls:DesignBox
+            Name="Designer"
+            Grid.Column="2"
+            Grid.Row="2"
+            ShowRegion="True"
+            RegionPosition="10, 20"
+            RegionSize="50, 30"
+            ValueDivisor="1"
+            Origin="0, 0"
+            Scale="10"/>
+        <!--
         <controls:BoardViewControl
             Name="BoardView"
             Grid.Column="2"
-            Grid.Row="2"/>
+            Grid.Row="2"/>-->
     </Grid>
 
 </UserControl>

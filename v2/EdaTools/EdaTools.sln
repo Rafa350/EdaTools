@@ -30,7 +30,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdaPanelizer", "EdaPanelize
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdaPanel", "EdaPanel\EdaPanel.csproj", "{3DD7C03A-DDCA-497B-B7CB-DE36A3F8B317}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaBoardViewer", "EdaBoardViewer\EdaBoardViewer.csproj", "{7CEA97F3-5BD5-484A-8E77-440A99A17AAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdaBoardViewer", "EdaBoardViewer\EdaBoardViewer.csproj", "{7CEA97F3-5BD5-484A-8E77-440A99A17AAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,33 +5,31 @@
     using Avalonia.Controls;
     using Avalonia.Media;
 
-    public sealed partial class RulerBox: Control {
+    public sealed partial class RulerBox : Control {
 
         private const double maxLines = 1000;
 
-        private Geometry regionGeometryCache;
-        private Geometry pointerGeometryCache;
-
-        public RulerBox() {
-
-            ClipToBounds = true;
-        }
+        private Geometry rulerGeometryCache;
 
         public override void Render(DrawingContext context) {
 
-            RenderRuler(context);
-            if (ShowRegion)
-                RenderRegion(context);
-            if (ShowPointer)
-                RenderPointer(context);
+            using (context.PushPreTransform(GetTransformationMatrix())) {
+
+                DrawBackground(context);
+                DrawRuler(context);
+                if (IsRegionVisible())
+                    DrawRegion(context);
+                if (IsPointerVisible())
+                    DrawPointer(context);
+            }
         }
 
         /// <summary>
-        /// Renderitza el regla.
+        /// Dibuixa el regla.
         /// </summary>
         /// <param name="context">Context de renderitzat.</param>
         /// 
-        private void RenderRuler(DrawingContext context) {
+        private void DrawRuler(DrawingContext context) {
 
             double valueDivisor = ValueDivisor;
 
@@ -43,67 +41,66 @@
                 TextAlignment = TextAlignment.Left
             };
 
-            double y3 = Orientation == RulerOrientation.Horizontal ? height : width;
-            double y2 = y3 * 0.66;
-            double y1 = y3 * 0.33;
-            double y0 = 0;
-
             double u1X = valueDivisor;
-            double u5X = u1X * 5;
             double u10X = u1X * 10;
 
             var pen = new Pen(LineBrush, 1);
 
-            context.FillRectangle(Background, new Rect(0, 0, width, height));
+            int numLines = 0;
+            for (double m = MinValue - (MinValue % valueDivisor); m <= MaxValue; m += valueDivisor) {
 
-            using (context.PushPreTransform(GetTransformationMatrix())) {
+                var p = (m + Origin) * Scale;
 
-                int numLines = 0;
-                for (double m = MinValue - (MinValue % valueDivisor); m <= MaxValue; m += valueDivisor) {
+                // Limita el numero de linies a dibuixar
+                //
+                if (numLines++ >= maxLines)
+                    break;
 
-                    var p = (m + Origin) * Scale;
-
-                    // Limita el numero de linies a dibuixar
-                    //
-                    if (numLines++ >= maxLines)
-                        break;
-
-                    // Linia de 10 unitats
-                    //
-                    if ((m % u10X) == 0) {
-                        context.DrawLine(pen, new Point(p, y0), new Point(p, y3));
-
-                        ft.Text = (m / valueDivisor).ToString();
-                        Matrix t = Matrix.Identity;
-                        if (Orientation == RulerOrientation.Vertical) {
-                            t *= Matrix.CreateScale(1, -1);
-                            t *= Matrix.CreateTranslation(0, ft.Bounds.Height);
-                        }
-                        using (context.PushPreTransform(t))
-                            context.DrawText(TagBrush, new Point(p + 2, y0), ft);
+                // Linia de 10 unitats
+                //
+                if ((m % u10X) == 0) {
+                    ft.Text = (m / valueDivisor).ToString();
+                    Matrix t = Matrix.Identity;
+                    if (Orientation == RulerOrientation.Vertical) {
+                        t *= Matrix.CreateScale(1, -1);
+                        t *= Matrix.CreateTranslation(0, ft.Bounds.Height);
                     }
-                    // Linia de 5 d'unitats
-                    //
-                    else if ((m % u5X) == 0) 
-                        context.DrawLine(pen, new Point(p, y1), new Point(p, y3));
-
-                    // Linia d'unitats
-                    //
-                    else
-                        context.DrawLine(pen, new Point(p, y2), new Point(p, y3));
+                    using (context.PushPreTransform(t))
+                        context.DrawText(TagBrush, new Point(p + 2, 0), ft);
                 }
             }
+
+            context.DrawGeometry(null, pen, RulerGeometry());
         }
 
+
         /// <summary>
-        /// Renderitza el indicador de regio.
+        /// Dibuixa el fons.
         /// </summary>
         /// <param name="context">Context de renderitzat.</param>
         /// 
-        private void RenderRegion(DrawingContext context) {
+        private void DrawBackground(DrawingContext context) {
 
-            using (context.PushPreTransform(GetTransformationMatrix()))
-                context.DrawGeometry(RegionBrush, null, GetRegionGeometry());
+            var brush = Background;
+            var r = new Rect(0, 0, Bounds.Width, Bounds.Height);
+            context.FillRectangle(brush, r);
+        }
+
+        /// <summary>
+        /// Dibuixa la regio.
+        /// </summary>
+        /// <param name="context">Context de renderitzat.</param>
+        /// 
+        private void DrawRegion(DrawingContext context) {
+
+            double x = (RegionPosition + Origin) * Scale;
+            double y = 0;
+            double w = RegionSize * Scale;
+            double h = Orientation == RulerOrientation.Horizontal ? Bounds.Height : Bounds.Width;
+
+            var brush = RegionBrush;
+            var r = new Rect(x, y, w, h);
+            context.FillRectangle(brush, r);
         }
 
         /// <summary>
@@ -111,59 +108,98 @@
         /// </summary>
         /// <param name="context">El context de renderitzat.</param>
         /// 
-        private void RenderPointer(DrawingContext context) {
+        private void DrawPointer(DrawingContext context) {
 
-            var size = Orientation == RulerOrientation.Horizontal ? Bounds.Height : Bounds.Width;
-            var p1 = new Point(PointerValue, 0);
-            var p2 = new Point(PointerValue, size);
+            double x = (PointerPosition + Origin) * Scale;
+            double y1 = 0;
+            double y2 = Orientation == RulerOrientation.Horizontal ? Bounds.Height : Bounds.Width;
 
             var pen = new Pen(PointerBrush, 1);
-
-            using (context.PushPreTransform(GetTransformationMatrix()))
-                context.DrawLine(pen, p1, p2);
+            var p1 = new Point(x, y1);
+            var p2 = new Point(x, y2);
+            context.DrawLine(pen, p1, p2);
         }
 
+
         /// <summary>
-        /// Obte la geometria de la regio. La recalcula o la obte de la cache.
+        /// Obte la geometria del regla. La recalcula o la obte de la cache.
         /// </summary>
         /// <returns>La geometria.</returns>
         /// 
-        private Geometry GetRegionGeometry() {
+        private Geometry RulerGeometry() {
 
-            if (regionGeometryCache == null) {
-
-                double x1 = ((Math.Min(RegionStartValue, RegionEndValue) / ValueDivisor) + Origin) * Scale;
-                double y1 = 0;
-                double x2 = ((Math.Max(RegionStartValue, RegionEndValue) / ValueDivisor) + Origin) * Scale;
-                double y2 = Orientation == RulerOrientation.Horizontal ? Bounds.Height : Bounds.Width;
+            if (rulerGeometryCache == null) {
 
                 StreamGeometry g = new StreamGeometry();
                 using (StreamGeometryContext gc = g.Open()) {
-                    gc.BeginFigure(new Point(x1, y1), true);
-                    gc.LineTo(new Point(x2, y1));
-                    gc.LineTo(new Point(x2, y2));
-                    gc.LineTo(new Point(x1, y2));
-                    gc.LineTo(new Point(x1, y1));
+
+                    double valueDivisor = ValueDivisor;
+
+                    double width = Bounds.Width;
+                    double height = Bounds.Height;
+
+                    double y3 = Orientation == RulerOrientation.Horizontal ? height : width;
+                    double y2 = y3 * 0.66;
+                    double y1 = y3 * 0.33;
+                    double y0 = 0;
+
+                    double u1X = valueDivisor;
+                    double u5X = u1X * 5;
+                    double u10X = u1X * 10;
+
+                    int numLines = 0;
+                    for (double m = MinValue - (MinValue % valueDivisor); m <= MaxValue; m += valueDivisor) {
+
+                        var p = (m + Origin) * Scale;
+
+                        // Limita el numero de linies a dibuixar
+                        //
+                        if (numLines++ >= maxLines)
+                            break;
+
+                        // Linia de 10 unitats
+                        //
+                        if ((m % u10X) == 0)
+                            gc.BeginFigure(new Point(p, y0), false);
+
+                        // Linia de 5 d'unitats
+                        //
+                        else if ((m % u5X) == 0)
+                            gc.BeginFigure(new Point(p, y1), false);
+
+                        // Linia d'unitats
+                        //
+                        else
+                            gc.BeginFigure(new Point(p, y2), false);
+
+                        gc.LineTo(new Point(p, y3));
+                    }
                 }
 
-                regionGeometryCache = g;
+                rulerGeometryCache = g;
             }
 
-            return regionGeometryCache;
+            return rulerGeometryCache;
         }
 
         /// <summary>
-        /// Obte la geometria del punter. La recalcula o la obte del cache.
+        /// Comprova si el punter es visible.
         /// </summary>
-        /// <returns>La geometria.</returns>
+        /// <returns>True si es visible.</returns>
         /// 
-        private Geometry GetPointerGeometry() {
+        private bool IsPointerVisible() {
 
-            if (pointerGeometryCache == null) {
+            return ShowPointer && (PointerPosition >= MinValue) && (PointerPosition <= MaxValue);
+        }
 
-            }
+        /// <summary>
+        /// Comprova si la regio es visinle.
+        /// </summary>
+        /// <returns>True si es visible.</returns>
+        /// 
+        private bool IsRegionVisible() {
 
-            return pointerGeometryCache;
+            return ShowRegion;
         }
 
         /// <summary>

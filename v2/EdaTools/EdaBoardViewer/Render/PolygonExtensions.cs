@@ -24,7 +24,7 @@
                 Avalonia.Point point = polygon.Points[0].ToPoint();
                 ctx.BeginFigure(point, true);
 
-                for (int i = 1; i < polygon.Points.Length; i++) 
+                for (int i = 1; i < polygon.Points.Length; i++)
                     ctx.LineTo(polygon.Points[i].ToPoint());
             }
 

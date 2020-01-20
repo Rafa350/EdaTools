@@ -4,7 +4,7 @@
     using Avalonia.Controls;
     using Avalonia.Media;
 
-    public sealed partial class RulerBox: Control {
+    public sealed partial class RulerBox : Control {
 
         public static readonly StyledProperty<IBrush> BackgroundProperty = AvaloniaProperty.Register<RulerBox, IBrush>(nameof(BackgroundProperty), Brushes.Transparent);
         public static readonly StyledProperty<IBrush> TagBrushProperty = AvaloniaProperty.Register<RulerBox, IBrush>(nameof(TagBrush), Brushes.White);
@@ -12,19 +12,17 @@
 
         public static readonly StyledProperty<FontFamily> FontFamilyProperty = AvaloniaProperty.Register<RulerBox, FontFamily>(nameof(FontFamily), new FontFamily("Seqoe UI"));
         public static readonly StyledProperty<FontStyle> FontStyleProperty = AvaloniaProperty.Register<RulerBox, FontStyle>(nameof(FontStyle), FontStyle.Normal);
-        public static readonly StyledProperty<double> FontSizeProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(FontSize), 12);
-        public static readonly StyledProperty<FontWeight> FontWeightProperty;
-        //public static readonly StyledProperty FontStretchProperty;
+        public static readonly StyledProperty<double> FontSizeProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(FontSize), 10);
 
-        public static readonly StyledProperty<double> RegionStartValueProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(RegionStartValue), 0);
-        public static readonly StyledProperty<double> RegionEndValueProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(RegionEndValue), 0);
+        public static readonly StyledProperty<double> RegionPositionProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(RegionPosition), 0);
+        public static readonly StyledProperty<double> RegionSizeProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(RegionSize), 0);
         public static readonly StyledProperty<IBrush> RegionBrushProperty = AvaloniaProperty.Register<RulerBox, IBrush>(nameof(RegionBrush), new SolidColorBrush(Color.FromArgb(0x3F, 0x9A, 0xFB, 0xE1)));
         public static readonly StyledProperty<bool> ShowRegionProperty = AvaloniaProperty.Register<RulerBox, bool>(nameof(ShowRegion), false);
-        
-        public static readonly StyledProperty<double> PointerValueProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(PointerValue), 0);
+
+        public static readonly StyledProperty<double> PointerPositionProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(PointerPosition), 0);
         public static readonly StyledProperty<IBrush> PointerBrushProperty = AvaloniaProperty.Register<RulerBox, IBrush>(nameof(PointerBrush), new SolidColorBrush(Color.FromArgb(255, 255, 0, 0)));
         public static readonly StyledProperty<bool> ShowPointerProperty = AvaloniaProperty.Register<RulerBox, bool>(nameof(ShowPointer), false);
-        
+
         public static readonly StyledProperty<RulerOrientation> OrientationProperty = AvaloniaProperty.Register<RulerBox, RulerOrientation>(nameof(Orientation), RulerOrientation.Horizontal);
         public static readonly StyledProperty<RulerAlignment> AlignmentProperty = AvaloniaProperty.Register<RulerBox, RulerAlignment>(nameof(Alignment), RulerAlignment.LeftOrBottom);
         public static readonly StyledProperty<bool> FlipTagsProperty;
@@ -109,21 +107,21 @@
         }
 
         /// <summary>
-        /// Obte o asigna la coordinada inicial de la regio.
+        /// Obte o asigna la posicio de la regio.
         /// </summary>
         /// 
-        public double RegionStartValue {
-            get { return GetValue(RegionStartValueProperty); }
-            set { SetValue(RegionStartValueProperty, value); }
+        public double RegionPosition {
+            get { return GetValue(RegionPositionProperty); }
+            set { SetValue(RegionPositionProperty, value); }
         }
 
         /// <summary>
-        /// Obte o asigna la coordinada final de la regio.
+        /// Obte o asigna el tamany de la regio.
         /// </summary>
         /// 
-        public double RegionEndValue {
-            get { return GetValue(RegionEndValueProperty); }
-            set { SetValue(RegionEndValueProperty, value); }
+        public double RegionSize {
+            get { return GetValue(RegionSizeProperty); }
+            set { SetValue(RegionSizeProperty, value); }
         }
 
         /// <summary>
@@ -144,12 +142,12 @@
         }
 
         /// <summary>
-        /// Obte o asigna el valor del punter.
+        /// Obte o asigna la posicio del punter.
         /// </summary>
         /// 
-        public double PointerValue {
-            get { return GetValue(PointerValueProperty); }
-            set { SetValue(PointerValueProperty, value); }
+        public double PointerPosition {
+            get { return GetValue(PointerPositionProperty); }
+            set { SetValue(PointerPositionProperty, value); }
         }
 
         /// <summary>

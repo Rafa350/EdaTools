@@ -7,7 +7,7 @@
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 
-    public sealed class BoardRenderVisitor: ElementVisitor {
+    public sealed class BoardRenderVisitor : ElementVisitor {
 
         private readonly Layer layer;
         private readonly VisualLayer visualLayer;
@@ -21,7 +21,7 @@
         }
 
         public override void Visit(Board board) {
-            
+
             base.Visit(board);
         }
 
@@ -127,7 +127,7 @@
         public override void Visit(RegionElement region) {
 
             if (visualLayer.IsVisible(Part, region)) {
-             
+
                 var polygon = layer.Function == LayerFunction.Signal ?
                     Board.GetRegionPolygon(region, layer.Name, new Transformation()) :
                     region.GetPolygon(layer.Side);
@@ -144,7 +144,7 @@
 
             Transformation transformation = part.GetLocalTransformation();
             Matrix2D matrix = transformation.Matrix;
-            
+
             var m = new Avalonia.Matrix(matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.OffsetX, matrix.OffsetY);
             using (context.PushPreTransform(m)) {
 

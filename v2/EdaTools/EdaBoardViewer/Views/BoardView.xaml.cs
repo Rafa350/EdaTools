@@ -2,7 +2,6 @@
 
     using Avalonia;
     using Avalonia.Controls;
-    using Avalonia.Controls.Primitives;
     using Avalonia.Input;
     using Avalonia.Markup.Xaml;
     using EdaBoardViewer.Views.Controls;
@@ -11,6 +10,7 @@
 
         private RulerBox horizontalRuler;
         private RulerBox verticalRuler;
+        private DesignBox designer;
         private BoardViewControl boardView;
 
         public BoardView() {
@@ -24,18 +24,24 @@
 
             horizontalRuler = this.Get<RulerBox>("HorizontalRuler");
             verticalRuler = this.Get<RulerBox>("VerticalRuler");
-            boardView = this.Get<BoardViewControl>("BoardView");
+            designer = this.Get<DesignBox>("Designer");
+            //boardView = this.Get<BoardViewControl>("BoardView");
         }
 
         protected override void OnPointerMoved(PointerEventArgs e) {
-            
-            Point p = e.GetPosition(boardView);
-            
+
+            Point p = e.GetPosition(designer);
+
+            var x = (p.X / 10) - 0;
+            var y = (p.Y / 10) - 0;
+
             if (horizontalRuler != null)
-                horizontalRuler.PointerValue = p.X;
+                horizontalRuler.PointerPosition = x;
             if (verticalRuler != null)
-                verticalRuler.PointerValue = p.Y;
-            
+                verticalRuler.PointerPosition = y;
+            if (designer != null)
+                designer.PointerPosition = new Point(x, y);
+
             base.OnPointerMoved(e);
         }
     }

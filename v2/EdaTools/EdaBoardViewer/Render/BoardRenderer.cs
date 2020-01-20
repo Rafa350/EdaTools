@@ -2,10 +2,7 @@
 
     using Avalonia;
     using Avalonia.Media;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
     using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
     using Rect = MikroPic.EdaTools.v1.Base.Geometry.Rect;
 
