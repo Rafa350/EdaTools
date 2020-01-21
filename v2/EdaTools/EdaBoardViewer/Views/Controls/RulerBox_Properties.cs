@@ -6,9 +6,20 @@
 
     public sealed partial class RulerBox : Control {
 
-        public static readonly StyledProperty<IBrush> BackgroundProperty = AvaloniaProperty.Register<RulerBox, IBrush>(nameof(BackgroundProperty), Brushes.Transparent);
+        public static readonly StyledProperty<IBrush> BackgroundProperty = AvaloniaProperty.Register<RulerBox, IBrush>(nameof(BackgroundProperty), Brushes.DarkCyan);
         public static readonly StyledProperty<IBrush> TagBrushProperty = AvaloniaProperty.Register<RulerBox, IBrush>(nameof(TagBrush), Brushes.White);
-        public static readonly StyledProperty<IBrush> LineBrushProperty = AvaloniaProperty.Register<RulerBox, IBrush>(nameof(LineBrush), Brushes.White);
+
+        public static readonly StyledProperty<double> SmallTickLengthProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(SmallTickLength), 0);
+        public static readonly StyledProperty<Color> SmallTickColorProperty = AvaloniaProperty.Register<RulerBox, Color>(nameof(SmallTickColor), Colors.White);
+        public static readonly StyledProperty<double> SmallTickIntervalProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(SmallTickInterval), 1);
+
+        public static readonly StyledProperty<double> MediumTickLengthProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(MediumTickLength), 0);
+        public static readonly StyledProperty<Color> MediumTickColorProperty = AvaloniaProperty.Register<RulerBox, Color>(nameof(MediumTickColor), Colors.White);
+        public static readonly StyledProperty<double> MediumTickIntervalProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(MediumTickInterval), 5);
+
+        public static readonly StyledProperty<double> LargeTickLengthProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(LargeTickLength), 0);
+        public static readonly StyledProperty<Color> LargeTickColorProperty = AvaloniaProperty.Register<RulerBox, Color>(nameof(LargeTickColor), Colors.White);
+        public static readonly StyledProperty<double> LargeTickIntervalProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(LargeTickLength), 10);
 
         public static readonly StyledProperty<FontFamily> FontFamilyProperty = AvaloniaProperty.Register<RulerBox, FontFamily>(nameof(FontFamily), new FontFamily("Seqoe UI"));
         public static readonly StyledProperty<FontStyle> FontStyleProperty = AvaloniaProperty.Register<RulerBox, FontStyle>(nameof(FontStyle), FontStyle.Normal);
@@ -16,15 +27,16 @@
 
         public static readonly StyledProperty<double> RegionPositionProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(RegionPosition), 0);
         public static readonly StyledProperty<double> RegionSizeProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(RegionSize), 0);
-        public static readonly StyledProperty<IBrush> RegionBrushProperty = AvaloniaProperty.Register<RulerBox, IBrush>(nameof(RegionBrush), new SolidColorBrush(Color.FromArgb(0x3F, 0x9A, 0xFB, 0xE1)));
+        public static readonly StyledProperty<Color> RegionColorProperty = AvaloniaProperty.Register<RulerBox, Color>(nameof(RegionColor), Color.FromArgb(0x3F, 0x9A, 0xFB, 0xE1));
         public static readonly StyledProperty<bool> ShowRegionProperty = AvaloniaProperty.Register<RulerBox, bool>(nameof(ShowRegion), false);
 
         public static readonly StyledProperty<double> PointerPositionProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(PointerPosition), 0);
-        public static readonly StyledProperty<IBrush> PointerBrushProperty = AvaloniaProperty.Register<RulerBox, IBrush>(nameof(PointerBrush), new SolidColorBrush(Color.FromArgb(255, 255, 0, 0)));
+        public static readonly StyledProperty<Color> PointerColorProperty = AvaloniaProperty.Register<RulerBox, Color>(nameof(PointerColor), Color.FromArgb(255, 255, 0, 0));
         public static readonly StyledProperty<bool> ShowPointerProperty = AvaloniaProperty.Register<RulerBox, bool>(nameof(ShowPointer), false);
 
         public static readonly StyledProperty<RulerOrientation> OrientationProperty = AvaloniaProperty.Register<RulerBox, RulerOrientation>(nameof(Orientation), RulerOrientation.Horizontal);
-        public static readonly StyledProperty<RulerAlignment> AlignmentProperty = AvaloniaProperty.Register<RulerBox, RulerAlignment>(nameof(Alignment), RulerAlignment.LeftOrBottom);
+        public static readonly StyledProperty<RulerAlignment> AlignmentProperty = AvaloniaProperty.Register<RulerBox, RulerAlignment>(nameof(Alignment), RulerAlignment.Bottom);
+        public static readonly StyledProperty<RulerDirection> DirectionProperty = AvaloniaProperty.Register<RulerBox, RulerDirection>(nameof(Direction), RulerDirection.LeftToRight);
         public static readonly StyledProperty<bool> FlipTagsProperty;
 
         public static readonly StyledProperty<double> ValueDivisorProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(ValueDivisor), 1);
@@ -52,13 +64,49 @@
             set { SetValue(TagBrushProperty, value); }
         }
 
-        /// <summary>
-        /// Obte o asigna la brotxa per dibuixar les linies de mesura.
-        /// </summary>
-        /// 
-        public IBrush LineBrush {
-            get { return GetValue(LineBrushProperty); }
-            set { SetValue(LineBrushProperty, value); }
+        public double SmallTickLength {
+            get { return GetValue(SmallTickLengthProperty); }
+            set { SetValue(SmallTickLengthProperty, value); }
+        }
+
+        public Color SmallTickColor {
+            get { return GetValue(SmallTickColorProperty); }
+            set { SetValue(SmallTickColorProperty, value); }
+        }
+
+        public double SmallTickInterval {
+            get { return GetValue(SmallTickIntervalProperty); }
+            set { SetValue(SmallTickIntervalProperty, value); }
+        }
+
+        public double MediumTickLength {
+            get { return GetValue(MediumTickLengthProperty); }
+            set { SetValue(MediumTickLengthProperty, value); }
+        }
+
+        public Color MediumTickColor {
+            get { return GetValue(MediumTickColorProperty); }
+            set { SetValue(MediumTickColorProperty, value); }
+        }
+
+        public double MediumTickInterval {
+            get { return GetValue(MediumTickIntervalProperty); }
+            set { SetValue(MediumTickIntervalProperty, value); }
+        }
+
+        public double LargeTickLength {
+            get { return GetValue(LargeTickLengthProperty); }
+            set { SetValue(LargeTickLengthProperty, value); }
+        }
+
+        public Color LargeTickColor {
+            get { return GetValue(LargeTickColorProperty); }
+            set { SetValue(LargeTickColorProperty, value); }
+        }
+
+        public double LargeTickInterval {
+            get { return GetValue(LargeTickIntervalProperty); }
+            set { SetValue(LargeTickIntervalProperty, value); }
         }
 
         /// <summary>
@@ -107,6 +155,15 @@
         }
 
         /// <summary>
+        /// Obte o asigna la direccio de la regla.
+        /// </summary>
+        /// 
+        public RulerDirection Direction {
+            get { return GetValue(DirectionProperty); }
+            set { SetValue(DirectionProperty, value); }
+        }
+
+        /// <summary>
         /// Obte o asigna la posicio de la regio.
         /// </summary>
         /// 
@@ -127,9 +184,9 @@
         /// <summary>
         /// Obte o saigna la brotxa per dibuixar la regio.
         /// </summary>
-        public IBrush RegionBrush {
-            get { return GetValue(RegionBrushProperty); }
-            set { SetValue(RegionBrushProperty, value); }
+        public Color RegionColor {
+            get { return GetValue(RegionColorProperty); }
+            set { SetValue(RegionColorProperty, value); }
         }
 
         /// <summary>
@@ -154,9 +211,9 @@
         /// Obte o asigna la britza per dibuixar el punter.
         /// </summary>
         /// 
-        public IBrush PointerBrush {
-            get { return GetValue(PointerBrushProperty); }
-            set { SetValue(PointerBrushProperty, value); }
+        public Color PointerColor {
+            get { return GetValue(PointerColorProperty); }
+            set { SetValue(PointerColorProperty, value); }
         }
 
         /// <summary>

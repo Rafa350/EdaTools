@@ -31,8 +31,8 @@
             ft.TextAlignment = TextAlignment.Left;
             ft.Typeface = new Typeface(FontFamily, FontSize, FontStyle);
 
-            string strPositionX = (PointerPosition.X / ValueDivisor).ToString("0.00");
-            string strPositionY = (PointerPosition.Y / ValueDivisor).ToString("0.00");
+            string strPositionX = String.Format("X: {0}", PointerPosition.X / ValueDivisor);
+            string strPositionY = String.Format("Y: {0}", PointerPosition.Y / ValueDivisor);
 
             ft.Text = strPositionX;
             double tagHWidth = ft.Bounds.Width;
@@ -84,8 +84,8 @@
             double regionWidth = RegionSize.Width * Scale;
             double regionHeight = RegionSize.Height * Scale;
 
-            string strWidth = (RegionSize.Width / ValueDivisor).ToString("0.00");
-            string strHeight = (RegionSize.Height / ValueDivisor).ToString("0.00");
+            string strWidth = String.Format("W: {0}", RegionSize.Width / ValueDivisor);
+            string strHeight = String.Format("H: {0}", RegionSize.Height / ValueDivisor);
 
             // Tamany de l'etiqueta horizontal.
             //

@@ -9,14 +9,13 @@
 
         private const double maxLines = 1000;
 
-        private Geometry rulerGeometryCache;
-
         public override void Render(DrawingContext context) {
 
             using (context.PushPreTransform(GetTransformationMatrix())) {
 
                 DrawBackground(context);
                 DrawRuler(context);
+                DrawTags(context);
                 if (IsRegionVisible())
                     DrawRegion(context);
                 if (IsPointerVisible())
@@ -29,36 +28,25 @@
         /// </summary>
         /// <param name="context">Context de renderitzat.</param>
         /// 
-        private void DrawRuler(DrawingContext context) {
-
-            double valueDivisor = ValueDivisor;
-
-            double width = Bounds.Width;
-            double height = Bounds.Height;
+        private void DrawTags(DrawingContext context) {
 
             FormattedText ft = new FormattedText {
                 Typeface = new Typeface(FontFamily, FontSize, FontStyle),
                 TextAlignment = TextAlignment.Left
             };
 
-            double u1X = valueDivisor;
-            double u10X = u1X * 10;
-
-            var pen = new Pen(LineBrush, 1);
+            double valueDivisor = ValueDivisor;
+            double tickInterval = LargeTickInterval;
 
             int numLines = 0;
             for (double m = MinValue - (MinValue % valueDivisor); m <= MaxValue; m += valueDivisor) {
 
                 var p = (m + Origin) * Scale;
 
-                // Limita el numero de linies a dibuixar
-                //
                 if (numLines++ >= maxLines)
                     break;
 
-                // Linia de 10 unitats
-                //
-                if ((m % u10X) == 0) {
+                if ((m % tickInterval) == 0) {
                     ft.Text = (m / valueDivisor).ToString();
                     Matrix t = Matrix.Identity;
                     if (Orientation == RulerOrientation.Vertical) {
@@ -69,8 +57,6 @@
                         context.DrawText(TagBrush, new Point(p + 2, 0), ft);
                 }
             }
-
-            context.DrawGeometry(null, pen, RulerGeometry());
         }
 
 
@@ -81,8 +67,11 @@
         /// 
         private void DrawBackground(DrawingContext context) {
 
+            double w = Orientation == RulerOrientation.Horizontal ? Bounds.Width : Bounds.Height;
+            double h = Orientation == RulerOrientation.Horizontal ? Bounds.Height : Bounds.Width;
+
             var brush = Background;
-            var r = new Rect(0, 0, Bounds.Width, Bounds.Height);
+            var r = new Rect(0, 0, w, h);
             context.FillRectangle(brush, r);
         }
 
@@ -98,13 +87,13 @@
             double w = RegionSize * Scale;
             double h = Orientation == RulerOrientation.Horizontal ? Bounds.Height : Bounds.Width;
 
-            var brush = RegionBrush;
-            var r = new Rect(x, y, w, h);
+            var brush = new SolidColorBrush(RegionColor);
+            var r = new Rect(x + 0.5, y + 0.5, w, h);
             context.FillRectangle(brush, r);
         }
 
         /// <summary>
-        /// Renderitza el indicador de posicio.
+        /// Dibuixa el indicador de posicio.
         /// </summary>
         /// <param name="context">El context de renderitzat.</param>
         /// 
@@ -114,72 +103,60 @@
             double y1 = 0;
             double y2 = Orientation == RulerOrientation.Horizontal ? Bounds.Height : Bounds.Width;
 
-            var pen = new Pen(PointerBrush, 1);
-            var p1 = new Point(x, y1);
-            var p2 = new Point(x, y2);
+            var pen = new Pen(new SolidColorBrush(PointerColor), 0.5);
+            var p1 = new Point(x + 0.5, y1 + 0.5);
+            var p2 = new Point(x + 0.5, y2 + 0.5);
             context.DrawLine(pen, p1, p2);
         }
 
 
         /// <summary>
-        /// Obte la geometria del regla. La recalcula o la obte de la cache.
+        /// Dibuixa el regla.
         /// </summary>
         /// <returns>La geometria.</returns>
         /// 
-        private Geometry RulerGeometry() {
+        private void DrawRuler(DrawingContext context) {
 
-            if (rulerGeometryCache == null) {
+            double valueDivisor = ValueDivisor;
 
-                StreamGeometry g = new StreamGeometry();
-                using (StreamGeometryContext gc = g.Open()) {
+            double length = Orientation == RulerOrientation.Horizontal ? Bounds.Height : Bounds.Width;
+            double smallLength = SmallTickLength == 0 ? length * 0.33 : SmallTickLength;
+            double mediumLength = MediumTickLength == 0 ? length * 0.66 : MediumTickLength;
+            double largeLength = LargeTickLength == 0? length * 1.0 : LargeTickLength;
 
-                    double valueDivisor = ValueDivisor;
+            double smallInterval = SmallTickInterval;
+            double mediumInterval = MediumTickInterval;
+            double largeInterval = LargeTickInterval;
 
-                    double width = Bounds.Width;
-                    double height = Bounds.Height;
+            Pen smallPen = new Pen(new SolidColorBrush(SmallTickColor), 0.5);
+            Pen mediumPen = new Pen(new SolidColorBrush(SmallTickColor), 0.5);
+            Pen largePen = new Pen(new SolidColorBrush(SmallTickColor), 0.5);
 
-                    double y3 = Orientation == RulerOrientation.Horizontal ? height : width;
-                    double y2 = y3 * 0.66;
-                    double y1 = y3 * 0.33;
-                    double y0 = 0;
+            int numLines = 0;
+            for (double m = MinValue - (MinValue % valueDivisor); m <= MaxValue; m += valueDivisor) {
 
-                    double u1X = valueDivisor;
-                    double u5X = u1X * 5;
-                    double u10X = u1X * 10;
+                var p = (m + Origin) * Scale;
 
-                    int numLines = 0;
-                    for (double m = MinValue - (MinValue % valueDivisor); m <= MaxValue; m += valueDivisor) {
+                // Limita el numero de linies a dibuixar
+                //
+                if (numLines++ >= maxLines)
+                    break;
 
-                        var p = (m + Origin) * Scale;
+                // Linia d'interval llarg
+                //
+                if ((m % largeInterval) == 0)
+                    context.DrawLine(largePen, new Point(p + 0.5, length - largeLength + 0.5), new Point(p + 0.5, length + 0.5));
 
-                        // Limita el numero de linies a dibuixar
-                        //
-                        if (numLines++ >= maxLines)
-                            break;
+                // Linia d'interval mitja
+                //
+                else if ((m % mediumInterval) == 0)
+                    context.DrawLine(mediumPen, new Point(p + 0.5, length - mediumLength + 0.5), new Point(p + 0.5, length + 0.5));
 
-                        // Linia de 10 unitats
-                        //
-                        if ((m % u10X) == 0)
-                            gc.BeginFigure(new Point(p, y0), false);
-
-                        // Linia de 5 d'unitats
-                        //
-                        else if ((m % u5X) == 0)
-                            gc.BeginFigure(new Point(p, y1), false);
-
-                        // Linia d'unitats
-                        //
-                        else
-                            gc.BeginFigure(new Point(p, y2), false);
-
-                        gc.LineTo(new Point(p, y3));
-                    }
-                }
-
-                rulerGeometryCache = g;
+                // Linia d'interval curt
+                //
+                else if ((m % smallInterval) == 0)
+                    context.DrawLine(smallPen, new Point(p + 0.5, length - smallLength + 0.5), new Point(p + 0.5, length + 0.5));
             }
-
-            return rulerGeometryCache;
         }
 
         /// <summary>
@@ -216,7 +193,7 @@
                 m *= Matrix.CreateTranslation(Bounds.Width, 0);
             }
 
-            if (Alignment == RulerAlignment.RightOrTop) {
+            if (Alignment == RulerAlignment.Top) {
                 if (Orientation == RulerOrientation.Horizontal) {
                     m *= Matrix.CreateScale(1, -1);
                     m *= Matrix.CreateTranslation(0, Bounds.Height);

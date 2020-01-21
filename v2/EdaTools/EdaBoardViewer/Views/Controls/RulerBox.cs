@@ -1,6 +1,5 @@
 ﻿namespace EdaBoardViewer.Views.Controls {
 
-    using Avalonia;
     using Avalonia.Controls;
 
     public enum RulerOrientation {
@@ -9,8 +8,13 @@
     }
 
     public enum RulerAlignment {
-        RightOrTop,
-        LeftOrBottom
+        Top,
+        Bottom
+    }
+
+    public enum RulerDirection {
+        LeftToRight,
+        RightToLeft
     }
 
     public sealed partial class RulerBox : Control {
@@ -40,25 +44,5 @@
 
             ClipToBounds = true;
         }
-
-        /// <summary>
-        /// Notifica que una propietat ha canviat el seu valor.
-        /// </summary>
-        /// <param name="e">Arguments de la notificacio.</param>
-        /// 
-        protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e) {
-
-            if ((e.Property == ScaleProperty) ||
-                (e.Property == OriginProperty) ||
-                (e.Property == ValueDivisorProperty) ||
-                (e.Property == OrientationProperty) ||
-                (e.Property == BoundsProperty)) {
-
-                rulerGeometryCache = null;
-            }
-
-            base.OnPropertyChanged(e);
-        }
-
     }
 }
