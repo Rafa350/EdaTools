@@ -12,19 +12,26 @@
 
         public static readonly StyledProperty<FontFamily> FontFamilyProperty = AvaloniaProperty.Register<DesignBox, FontFamily>(nameof(FontFamily), new FontFamily("Seqoe UI"));
         public static readonly StyledProperty<FontStyle> FontStyleProperty = AvaloniaProperty.Register<DesignBox, FontStyle>(nameof(FontStyle), FontStyle.Normal);
-        public static readonly StyledProperty<double> FontSizeProperty = AvaloniaProperty.Register<DesignBox, double>(nameof(FontSize), 10);
+        public static readonly StyledProperty<double> FontSizeProperty = AvaloniaProperty.Register<DesignBox, double>(nameof(FontSize), 11);
 
         public static readonly StyledProperty<Point> RegionPositionProperty = AvaloniaProperty.Register<DesignBox, Point>(nameof(RegionPosition), new Point(0, 0));
         public static readonly StyledProperty<Size> RegionSizeProperty = AvaloniaProperty.Register<DesignBox, Size>(nameof(RegionSize), new Size(0, 0));
         public static readonly StyledProperty<IBrush> RegionBackgroundProperty = AvaloniaProperty.Register<DesignBox, IBrush>(nameof(RegionBackground), Brushes.Transparent);
-        public static readonly StyledProperty<IBrush> RegionBorderBrushProperty = AvaloniaProperty.Register<DesignBox, IBrush>(nameof(RegionBorderBrush), new SolidColorBrush(Color.FromArgb(0x3F, 0x9A, 0xFB, 0xE1)));
+        public static readonly StyledProperty<Color> RegionBorderColorProperty = AvaloniaProperty.Register<DesignBox, Color>(nameof(RegionBorderColor), Color.FromArgb(0x3F, 0x9A, 0xFB, 0xE1));
+        public static readonly StyledProperty<Color> RegionTagTextColorProperty = AvaloniaProperty.Register<DesignBox, Color>(nameof(RegionTagTextColor), Colors.WhiteSmoke);
+        public static readonly StyledProperty<Color> RegionTagBorderColorProperty = AvaloniaProperty.Register<DesignBox, Color>(nameof(RegionTagBorderColor), Colors.WhiteSmoke);
         public static readonly StyledProperty<IBrush> RegionTagBackgroundProperty = AvaloniaProperty.Register<DesignBox, IBrush>(nameof(RegionTagBackground), new SolidColorBrush(Color.FromRgb(0x30, 0x30, 0x30)));
-        public static readonly StyledProperty<IBrush> RegionTagBorderBrushProperty = AvaloniaProperty.Register<DesignBox, IBrush>(nameof(RegionTagBorderBrush), Brushes.White);
         public static readonly StyledProperty<bool> ShowRegionProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowRegion), true);
+        public static readonly StyledProperty<bool> ShowRegionTagsProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowRegionTags), true);
 
-        public static readonly StyledProperty<IBrush> PointerBrushProperty = AvaloniaProperty.Register<DesignBox, IBrush>(nameof(PointerBrush), new SolidColorBrush(Color.FromArgb(255, 255, 0, 0)));
         public static readonly StyledProperty<Point> PointerPositionProperty = AvaloniaProperty.Register<DesignBox, Point>(nameof(PointerPosition), new Point(0, 0));
-       
+        public static readonly StyledProperty<Color> PointerColorProperty = AvaloniaProperty.Register<DesignBox, Color>(nameof(PointerColor), Color.FromArgb(255, 255, 0, 0));
+        public static readonly StyledProperty<Color> PointerTagTextColorProperty = AvaloniaProperty.Register<DesignBox, Color>(nameof(PointerTagTextColor), Colors.WhiteSmoke);
+        public static readonly StyledProperty<Color> PointerTagBorderColorProperty = AvaloniaProperty.Register<DesignBox, Color>(nameof(PointerTagBorderColor), Colors.WhiteSmoke);
+        public static readonly StyledProperty<IBrush> PointerTagBackgroundProperty = AvaloniaProperty.Register<DesignBox, IBrush>(nameof(PointerTagBackground), new SolidColorBrush(Color.FromRgb(0x30, 0x30, 0x30)));
+        public static readonly StyledProperty<bool> ShowPointerProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowPointer), true);
+        public static readonly StyledProperty<bool> ShowPointerTagsProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowPointerTags), true);
+
         public static readonly StyledProperty<double> ValueDivisorProperty = AvaloniaProperty.Register<DesignBox, double>(nameof(ValueDivisor), 1);
 
         public static readonly StyledProperty<Point> OriginProperty = AvaloniaProperty.Register<DesignBox, Point>(nameof(Origin), new Point(0, 0));
@@ -85,14 +92,55 @@
         }
 
         /// <summary>
-        /// Obte o asigna la britza per dibuixar el punter.
+        /// Obte o asigna el color per dibuixar el punter.
         /// </summary>
         /// 
-        public IBrush PointerBrush {
-            get { return GetValue(PointerBrushProperty); }
-            set { SetValue(PointerBrushProperty, value); }
+        public Color PointerColor {
+            get { return GetValue(PointerColorProperty); }
+            set { SetValue(PointerColorProperty, value); }
         }
 
+        /// <summary>
+        /// Obte o asigna el color per dibuixar el text de l'etiqueta.
+        /// </summary>
+        /// 
+        public Color PointerTagTextColor {
+            get { return GetValue(PointerTagTextColorProperty); }
+            set { SetValue(PointerTagTextColorProperty, value); }
+        }
+
+        /// <summary>
+        /// Obte o asigna el color per dibuixar marc de l'etiqueta.
+        /// </summary>
+        /// 
+        public Color PointerTagBorderColor {
+            get { return GetValue(PointerTagBorderColorProperty); }
+            set { SetValue(PointerTagBorderColorProperty, value); }
+        }
+
+        /// <summary>
+        /// Obte o asigna la brotxa pel fons de l'etiqueta.
+        /// </summary>
+        /// 
+        public IBrush PointerTagBackground {
+            get { return GetValue(PointerTagBackgroundProperty); }
+            set { SetValue(PointerTagBackgroundProperty, value); }
+        }
+
+        public bool ShowPointer {
+            get { return GetValue(ShowPointerProperty); }
+            set { SetValue(ShowPointerProperty, value); }
+        }
+
+        public bool ShowPointerTags {
+            get { return GetValue(ShowPointerTagsProperty); }
+            set { SetValue(ShowPointerTagsProperty, value); }
+        }
+
+        /// <summary>
+        /// Obte o asigna la posicio del punter.
+        /// </summary>
+        /// 
         public Point PointerPosition {
             get { return GetValue(PointerPositionProperty); }
             set { SetValue(PointerPositionProperty, value); }
@@ -108,12 +156,12 @@
         }
 
         /// <summary>
-        /// Obte o asigna la brotxa per dibuixar el perfil de la regio.
+        /// Obte o asigna el color del perfil de la regio.
         /// </summary>
         /// 
-        public IBrush RegionBorderBrush {
-            get { return GetValue(RegionBorderBrushProperty); }
-            set { SetValue(RegionBorderBrushProperty, value); }
+        public Color RegionBorderColor {
+            get { return GetValue(RegionBorderColorProperty); }
+            set { SetValue(RegionBorderColorProperty, value); }
         }
 
         /// <summary>
@@ -126,12 +174,21 @@
         }
 
         /// <summary>
-        /// Obte o asigna la brotxa per dibuixar el perfil de la etiqueta de la regio.
+        /// Obte o asigna el color per dibuixar el perfil de la etiqueta de la regio.
         /// </summary>
         /// 
-        public IBrush RegionTagBorderBrush {
-            get { return GetValue(RegionTagBorderBrushProperty); }
-            set { SetValue(RegionTagBorderBrushProperty, value); }
+        public Color RegionTagTextColor {
+            get { return GetValue(RegionTagTextColorProperty); }
+            set { SetValue(RegionTagTextColorProperty, value); }
+        }
+
+        /// <summary>
+        /// Obte o asigna el color per dibuixar el text de la etiqueta de la regio.
+        /// </summary>
+        /// 
+        public Color RegionTagBorderColor {
+            get { return GetValue(RegionTagBorderColorProperty); }
+            set { SetValue(RegionTagBorderColorProperty, value); }
         }
 
         public Point RegionPosition {
@@ -147,6 +204,11 @@
         public bool ShowRegion {
             get { return GetValue(ShowRegionProperty); }
             set { SetValue(ShowRegionProperty, value); }
+        }
+
+        public bool ShowRegionTags {
+            get { return GetValue(ShowRegionTagsProperty); }
+            set { SetValue(ShowRegionTagsProperty, value); }
         }
 
         /// <summary>

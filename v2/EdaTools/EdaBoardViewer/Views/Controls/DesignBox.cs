@@ -17,9 +17,9 @@
                 RegionPositionProperty,
                 RegionSizeProperty,
                 RegionBackgroundProperty,
-                RegionBorderBrushProperty,
+                RegionBorderColorProperty,
                 RegionTagBackgroundProperty,
-                RegionTagBorderBrushProperty);
+                RegionTagBorderColorProperty);
         }
 
         /// <summary>
