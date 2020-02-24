@@ -122,7 +122,7 @@
             double length = Orientation == RulerOrientation.Horizontal ? Bounds.Height : Bounds.Width;
             double smallLength = SmallTickLength == 0 ? length * 0.33 : SmallTickLength;
             double mediumLength = MediumTickLength == 0 ? length * 0.66 : MediumTickLength;
-            double largeLength = LargeTickLength == 0? length * 1.0 : LargeTickLength;
+            double largeLength = LargeTickLength == 0 ? length * 1.0 : LargeTickLength;
 
             double smallInterval = SmallTickInterval;
             double mediumInterval = MediumTickInterval;

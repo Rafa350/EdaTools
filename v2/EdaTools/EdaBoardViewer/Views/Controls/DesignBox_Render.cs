@@ -6,16 +6,13 @@
     using Avalonia.Controls;
     using Avalonia.Media;
 
-    public sealed partial class DesignBox: Control {
-
-        private Geometry regionTagsGeometryCache;
-        //private Geometry handlesGeometryCache;
+    public sealed partial class DesignBox : Control {
 
         public override void Render(DrawingContext context) {
 
             if (IsPointerVisible())
                 DrawPointer(context);
-            if (IsRegionVisible()) 
+            if (IsRegionVisible())
                 DrawRegion(context);
 
             if (IsPointerTagsVisible())

@@ -4,7 +4,7 @@
     using Avalonia.Controls;
     using Avalonia.Media;
 
-    public sealed partial class DesignBox: Control {
+    public sealed partial class DesignBox : Control {
 
         public static readonly StyledProperty<IBrush> BackgroundProperty = AvaloniaProperty.Register<DesignBox, IBrush>(nameof(BackgroundProperty), Brushes.Transparent);
         public static readonly StyledProperty<IBrush> TagBrushProperty = AvaloniaProperty.Register<DesignBox, IBrush>(nameof(TagBrush), Brushes.White);
@@ -21,7 +21,7 @@
         public static readonly StyledProperty<Color> RegionTagTextColorProperty = AvaloniaProperty.Register<DesignBox, Color>(nameof(RegionTagTextColor), Colors.WhiteSmoke);
         public static readonly StyledProperty<Color> RegionTagBorderColorProperty = AvaloniaProperty.Register<DesignBox, Color>(nameof(RegionTagBorderColor), Colors.WhiteSmoke);
         public static readonly StyledProperty<IBrush> RegionTagBackgroundProperty = AvaloniaProperty.Register<DesignBox, IBrush>(nameof(RegionTagBackground), new SolidColorBrush(Color.FromRgb(0x30, 0x30, 0x30)));
-        public static readonly StyledProperty<bool> ShowRegionProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowRegion), true);
+        public static readonly StyledProperty<bool> ShowRegionProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowRegion), false);
         public static readonly StyledProperty<bool> ShowRegionTagsProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowRegionTags), true);
 
         public static readonly StyledProperty<Point> PointerPositionProperty = AvaloniaProperty.Register<DesignBox, Point>(nameof(PointerPosition), new Point(0, 0));
@@ -29,14 +29,14 @@
         public static readonly StyledProperty<Color> PointerTagTextColorProperty = AvaloniaProperty.Register<DesignBox, Color>(nameof(PointerTagTextColor), Colors.WhiteSmoke);
         public static readonly StyledProperty<Color> PointerTagBorderColorProperty = AvaloniaProperty.Register<DesignBox, Color>(nameof(PointerTagBorderColor), Colors.WhiteSmoke);
         public static readonly StyledProperty<IBrush> PointerTagBackgroundProperty = AvaloniaProperty.Register<DesignBox, IBrush>(nameof(PointerTagBackground), new SolidColorBrush(Color.FromRgb(0x30, 0x30, 0x30)));
-        public static readonly StyledProperty<bool> ShowPointerProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowPointer), true);
+        public static readonly StyledProperty<bool> ShowPointerProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowPointer), false);
         public static readonly StyledProperty<bool> ShowPointerTagsProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowPointerTags), true);
 
         public static readonly StyledProperty<double> ValueDivisorProperty = AvaloniaProperty.Register<DesignBox, double>(nameof(ValueDivisor), 1);
 
         public static readonly StyledProperty<Point> OriginProperty = AvaloniaProperty.Register<DesignBox, Point>(nameof(Origin), new Point(0, 0));
         public static readonly StyledProperty<double> ScaleProperty = AvaloniaProperty.Register<DesignBox, double>(nameof(Scale), 1);
-    
+
         /// <summary>
         /// Obte o asigna la brotza del fons del control.
         /// </summary>
