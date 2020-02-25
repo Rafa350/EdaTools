@@ -35,14 +35,14 @@
                 new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Rectangle, ElementType.Circle, ElementType.Region, ElementType.SmdPad, ElementType.Text },
                 true,
                 VisualMode.Element,
-                Color.FromArgb(204, 0, 0, 255)));
+                Color.FromArgb(100, 0, 0, 150)));
 
             vls.Add(new VisualLayer("Top",
                 new string[] { "Top.Copper" },
                 new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Rectangle, ElementType.Circle, ElementType.Region, ElementType.SmdPad, ElementType.Text },
                 true,
                 VisualMode.Element,
-                Color.FromArgb(153, 255, 0, 0)));
+                Color.FromArgb(100, 150, 0, 0)));
 
             vls.Add(new VisualLayer("TopPlace",
                 new string[] { "Top.Place" },

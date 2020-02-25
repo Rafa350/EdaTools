@@ -67,9 +67,9 @@
             double scaleX = vWidth / wWidth;
             double scaleY = vHeight / wHeight;
 
-            m = new Matrix();
-            m.Translate(offsetX, offsetY);
-            m.Scale(scaleX, scaleY);
+            Matrix tm = Matrix.CreateTranslation(offsetX, offsetY);
+            Matrix sm = Matrix.CreateScale(scaleX, scaleY);
+            m = tm * sm;
 
             NotifyChange();
         }

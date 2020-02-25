@@ -40,6 +40,11 @@
             MaxValue="80"
             Origin="0"
             Scale="10"/>
+
+        <controls:BoardViewControl
+            Name="BoardView"
+            Grid.Column="2"
+            Grid.Row="2"/>
         <controls:DesignBox
             Name="Designer"
             Grid.Column="2"
@@ -49,12 +54,7 @@
             ShowPointer="True"
             ValueDivisor="1"
             Origin="0, 0"
-            Scale="10"/>
-        <!--
-        <controls:BoardViewControl
-            Name="BoardView"
-            Grid.Column="2"
-            Grid.Row="2"/>-->
+            Scale="10"/>       
     </Grid>
 
 </UserControl>

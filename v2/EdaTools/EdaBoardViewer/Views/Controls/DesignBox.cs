@@ -12,8 +12,10 @@
         static DesignBox() {
 
             AffectsRender<DesignBox>(
+                ShowPointerProperty,
                 PointerPositionProperty,
 
+                ShowRegionProperty,
                 RegionPositionProperty,
                 RegionSizeProperty,
                 RegionBackgroundProperty,
@@ -29,16 +31,6 @@
         public DesignBox() {
 
             ClipToBounds = true;
-        }
-
-        /// <summary>
-        /// Notoifica que ha canviat una propietat.
-        /// </summary>
-        /// <param name="e">Arguments de la notificacio.</param>
-        /// 
-        protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e) {
-
-            base.OnPropertyChanged(e);
         }
     }
 }

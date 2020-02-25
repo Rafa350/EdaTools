@@ -23,6 +23,7 @@
         public static readonly StyledProperty<IBrush> RegionTagBackgroundProperty = AvaloniaProperty.Register<DesignBox, IBrush>(nameof(RegionTagBackground), new SolidColorBrush(Color.FromRgb(0x30, 0x30, 0x30)));
         public static readonly StyledProperty<bool> ShowRegionProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowRegion), false);
         public static readonly StyledProperty<bool> ShowRegionTagsProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowRegionTags), true);
+        public static readonly StyledProperty<bool> ShowRegionHandlesProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowRegionHandles), false);
 
         public static readonly StyledProperty<Point> PointerPositionProperty = AvaloniaProperty.Register<DesignBox, Point>(nameof(PointerPosition), new Point(0, 0));
         public static readonly StyledProperty<Color> PointerColorProperty = AvaloniaProperty.Register<DesignBox, Color>(nameof(PointerColor), Color.FromArgb(255, 255, 0, 0));
@@ -209,6 +210,11 @@
         public bool ShowRegionTags {
             get { return GetValue(ShowRegionTagsProperty); }
             set { SetValue(ShowRegionTagsProperty, value); }
+        }
+
+        public bool ShowRegionHandles {
+            get { return GetValue(ShowRegionHandlesProperty); }
+            set { SetValue(ShowRegionHandlesProperty, value); }
         }
 
         /// <summary>

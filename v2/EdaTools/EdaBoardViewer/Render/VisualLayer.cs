@@ -41,11 +41,7 @@
         /// Obte el nom de la capa
         /// </summary>
         /// 
-        public string Name {
-            get {
-                return name;
-            }
-        }
+        public string Name => name;
 
         /// <summary>
         /// Comprova si un element es visible en aquesta capa.
