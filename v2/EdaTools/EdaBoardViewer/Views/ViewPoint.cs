@@ -67,9 +67,7 @@
             double scaleX = vWidth / wWidth;
             double scaleY = vHeight / wHeight;
 
-            Matrix tm = Matrix.CreateTranslation(offsetX, offsetY);
-            Matrix sm = Matrix.CreateScale(scaleX, scaleY);
-            m = tm * sm;
+            m *= Matrix.CreateTranslation(offsetX, offsetY) * Matrix.CreateScale(scaleX, scaleY);
 
             NotifyChange();
         }
@@ -103,7 +101,7 @@
         public void Pan(double deltaX, double deltaY) {
 
             if (deltaX != 0 || deltaY != 0) {
-                m.TranslatePrepend(deltaX, deltaY);
+                 m*= Matrix.CreateTranslation(deltaX, deltaY);
                 NotifyChange();
             }
         }
@@ -118,7 +116,9 @@
         public void Zoom(double factor, double centerX, double centerY) {
 
             if (factor != 0) {
-                m.ScaleAtPrepend(factor, factor, centerX, centerY);
+                m *= Matrix.CreateTranslation(-centerX, -centerY) *
+                     Matrix.CreateScale(factor, factor) *
+                     Matrix.CreateTranslation(centerX, centerY); 
                 NotifyChange();
             }
         }
@@ -195,7 +195,7 @@
         /// 
         public void Rotate(double angle) {
 
-            m.RotatePrepend(angle);
+            m *= Matrix.CreateRotation(angle);
             NotifyChange();
         }
 
@@ -208,7 +208,9 @@
         /// 
         public void Rotate(double angle, double centerX, double centerY) {
 
-            m.RotateAtPrepend(angle, centerX, centerY);
+            m *= Matrix.CreateTranslation(-centerX, -centerY) *
+                 Matrix.CreateRotation(angle) *
+                 Matrix.CreateTranslation(centerX, centerY);
             NotifyChange();
         }
 
@@ -231,7 +233,10 @@
         /// 
         public Point TransformToView(Point p) {
 
-            return m.Transform(p);
+            double x = (p.X * m.M11) + (p.Y * m.M21) + m.M31;
+            double y = (p.X * m.M12) + (p.Y * m.M22) + m.M32;
+
+            return new Point(x, y);
         }
 
         /// <summary>
@@ -242,7 +247,7 @@
         /// 
         public Rect TransformToView(Rect r) {
 
-            return new Rect(m.Transform(r.TopLeft), m.Transform(r.BottomRight));
+            return new Rect(TransformToView(r.TopLeft), TransformToView(r.BottomRight));
         }
 
         /// <summary>
@@ -251,12 +256,12 @@
         /// <param name="p">El punt a convertir.</param>
         /// <returns>El resultat.</returns>
         /// 
-        public Point TransformToWorld(Point p) {
+        /*public Point TransformToWorld(Point p) {
 
             Matrix im = m;
             im.Invert();
             return im.Transform(p);
-        }
+        }*/
 
         /// <summary>
         /// Transforma un rectangle a coordinades mundials.
@@ -264,12 +269,12 @@
         /// <param name="r">El rectangle a convertir.</param>
         /// <returns>El resultat.</returns>
         /// 
-        public Rect TransformToWorld(Rect r) {
+        /*public Rect TransformToWorld(Rect r) {
 
             Matrix im = m;
             im.Invert();
             return new Rect(im.Transform(r.TopLeft), im.Transform(r.BottomRight));
-        }
+        }*/
 
         /// <summary>
         /// Obte la matriu de transformacio.
