@@ -18,28 +18,14 @@
             Grid.Row="0"
             Orientation="Horizontal"
             Alignment="Bottom"
-            ShowPointer="True"
-            RegionPosition="7"
-            RegionSize="15"
-            ValueDivisor="1"
-            MinValue="0"
-            MaxValue="80"
-            Origin="0"
-            Scale="10"/>
+            ShowPointer="True"/>
         <controls:RulerBox
             Name="VerticalRuler"
             Grid.Column="0"
             Grid.Row="2"
             Orientation="Vertical"
             Alignment="Top"
-            ShowPointer="True"
-            RegionPosition="3"
-            RegionSize="27"
-            ValueDivisor="1"
-            MinValue="0"
-            MaxValue="80"
-            Origin="0"
-            Scale="10"/>
+            ShowPointer="True"/>
 
         <controls:BoardViewControl
             Name="BoardView"

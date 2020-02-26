@@ -41,7 +41,7 @@
             int numLines = 0;
             for (double m = MinValue - (MinValue % valueDivisor); m <= MaxValue; m += valueDivisor) {
 
-                var p = (m + Origin) * Scale;
+                var p = Origin + (m * Scale);
 
                 if (numLines++ >= maxLines)
                     break;
@@ -82,7 +82,7 @@
         /// 
         private void DrawRegion(DrawingContext context) {
 
-            double x = (RegionPosition + Origin) * Scale;
+            double x = Origin + (RegionPosition * Scale);
             double y = 0;
             double w = RegionSize * Scale;
             double h = Orientation == RulerOrientation.Horizontal ? Bounds.Height : Bounds.Width;
@@ -99,7 +99,7 @@
         /// 
         private void DrawPointer(DrawingContext context) {
 
-            double x = (PointerPosition + Origin) * Scale;
+            double x = Origin + (PointerPosition * Scale);
             double y1 = 0;
             double y2 = Orientation == RulerOrientation.Horizontal ? Bounds.Height : Bounds.Width;
 
@@ -135,7 +135,7 @@
             int numLines = 0;
             for (double m = MinValue - (MinValue % valueDivisor); m <= MaxValue; m += valueDivisor) {
 
-                var p = (m + Origin) * Scale;
+                var p = Origin + (m * Scale);
 
                 // Limita el numero de linies a dibuixar
                 //

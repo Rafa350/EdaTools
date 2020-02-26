@@ -4,6 +4,7 @@
     using Avalonia;
     using Avalonia.Controls;
     using Avalonia.Input;
+    using Avalonia.Media;
     using Avalonia.Markup.Xaml;
     using EdaBoardViewer.Views.Controls;
 
@@ -12,25 +13,87 @@
         private RulerBox horizontalRuler;
         private RulerBox verticalRuler;
         private DesignBox designer;
-        //private BoardViewControl boardView;
+        private BoardViewControl boardView;
+        private readonly ViewPoint viewPoint;
 
         private bool buttonPressed = false;
         private Point startPos;
         private Point endPos;
 
+        /// <summary>
+        ///  Constructor.
+        /// </summary>
+        /// 
         public BoardView() {
 
             this.InitializeComponent();
+
+            viewPoint = new ViewPoint();
+            viewPoint.Changed += ViewPoint_Changed;
         }
 
+        /// <summary>
+        /// Inicialitza el component.
+        /// </summary>
+        /// 
         private void InitializeComponent() {
 
             AvaloniaXamlLoader.Load(this);
 
             horizontalRuler = this.Get<RulerBox>("HorizontalRuler");
+            horizontalRuler.MaxValue = 70;
+
             verticalRuler = this.Get<RulerBox>("VerticalRuler");
+            verticalRuler.MaxValue = 67.5;
+            
             designer = this.Get<DesignBox>("Designer");
-            //boardView = this.Get<BoardViewControl>("BoardView");
+            
+            boardView = this.Get<BoardViewControl>("BoardView");
+        }
+
+        private void ViewPoint_Changed(object sender, EventArgs e) {
+
+            // Ajusta la vista de la placa
+            //
+            Matrix m = Matrix.Identity;
+            m *= viewPoint.Matrix;
+            m *= Matrix.CreateScale(1, -1);
+            m *= Matrix.CreateTranslation(0, boardView.Bounds.Height);
+
+            boardView.RenderTransformOrigin = RelativePoint.TopLeft;
+            boardView.RenderTransform = new MatrixTransform(m);
+            boardView.InvalidateVisual();
+
+            // Ajusta els controls de diseny
+            //
+            Point offset = viewPoint.Offset;
+            Point scale = viewPoint.Scale;
+
+            horizontalRuler.Origin = offset.X;
+            horizontalRuler.Scale = scale.X * 1000000;
+            verticalRuler.Origin = offset.Y;
+            verticalRuler.Scale = scale.Y * 1000000;
+        }
+
+        /// <summary>
+        /// Event generat quant canvia alguna propietat.
+        /// </summary>
+        /// <param name="e">Parametres del event.</param>
+        /// 
+        protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e) {
+
+            // Detecta el canvi en el tamany del control
+            //
+            if (e.Property == BoundsProperty) {
+
+                // Inicialitza el punt de vista.
+                //
+                Size vSize = boardView.Bounds.Size;
+                Rect wRect = new Rect(0, 0, 70000000, 67500000);
+                viewPoint.Reset(vSize, wRect);
+            }
+            
+            base.OnPropertyChanged(e);
         }
 
         protected override void OnPointerMoved(PointerEventArgs e) {

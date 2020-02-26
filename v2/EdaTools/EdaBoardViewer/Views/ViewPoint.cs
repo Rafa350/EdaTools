@@ -1,4 +1,4 @@
-﻿namespace MikroPic.EdaTools.v1.BoardEditor.DrawEditor {
+﻿namespace EdaBoardViewer.Views.Controls {
 
     using System;
     using Avalonia;
@@ -11,7 +11,7 @@
     /// 
     public sealed class ViewPoint {
 
-        private Matrix m = new Matrix();
+        private Matrix m = Matrix.Identity;
 
         public event ViewPointChangedEventHandler Changed;
 
@@ -67,7 +67,9 @@
             double scaleX = vWidth / wWidth;
             double scaleY = vHeight / wHeight;
 
-            m *= Matrix.CreateTranslation(offsetX, offsetY) * Matrix.CreateScale(scaleX, scaleY);
+            m = Matrix.Identity;
+            m *= Matrix.CreateTranslation(offsetX, offsetY);
+            m *= Matrix.CreateScale(scaleX, scaleY);
 
             NotifyChange();
         }
@@ -116,9 +118,9 @@
         public void Zoom(double factor, double centerX, double centerY) {
 
             if (factor != 0) {
-                m *= Matrix.CreateTranslation(-centerX, -centerY) *
-                     Matrix.CreateScale(factor, factor) *
-                     Matrix.CreateTranslation(centerX, centerY); 
+                m *= Matrix.CreateTranslation(-centerX, -centerY);
+                m *= Matrix.CreateScale(factor, factor);
+                m *= Matrix.CreateTranslation(centerX, centerY);
                 NotifyChange();
             }
         }
@@ -208,10 +210,12 @@
         /// 
         public void Rotate(double angle, double centerX, double centerY) {
 
-            m *= Matrix.CreateTranslation(-centerX, -centerY) *
-                 Matrix.CreateRotation(angle) *
-                 Matrix.CreateTranslation(centerX, centerY);
-            NotifyChange();
+            if (angle != 0) {
+                m *= Matrix.CreateTranslation(-centerX, -centerY);
+                m *= Matrix.CreateRotation(angle);
+                m *= Matrix.CreateTranslation(centerX, centerY);
+                NotifyChange();
+            }
         }
 
         /// <summary>
@@ -283,6 +287,26 @@
         public Matrix Matrix {
             get {
                 return m;
+            }
+        }
+
+        public Point Offset {
+            get {
+                return new Point(m.M31, m.M32);
+            }
+        }
+
+        public Point Scale {
+            get {
+                return new Point(
+                    Math.Sqrt(m.M11 * m.M11 + m.M21 * m.M21), 
+                    Math.Sqrt(m.M12 * m.M12 + m.M22 * m.M22));
+            }
+        }
+
+        public double Angle {
+            get {
+                return Math.Atan2(m.M21, m.M22);
             }
         }
     }

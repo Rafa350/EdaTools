@@ -252,11 +252,19 @@
             set { SetValue(ValueDivisorProperty, value); }
         }
 
+        /// <summary>
+        /// Obte o asigna la posicio del regla.
+        /// </summary>
+        /// 
         public double Origin {
             get { return GetValue(OriginProperty); }
             set { SetValue(OriginProperty, value); }
         }
 
+        /// <summary>
+        /// Obte o asigna l'escala del regla.
+        /// </summary>
+        /// 
         public double Scale {
             get { return GetValue(ScaleProperty); }
             set { SetValue(ScaleProperty, value); }
