@@ -111,8 +111,8 @@
         /// 
         public Point ApplyTo(Point point) {
 
-            double x = (point.X * m.M11) + (point.Y * m.M21) + m.OffsetX;
-            double y = (point.X * m.M12) + (point.Y * m.M22) + m.OffsetY;
+            double x = (point.X * m.M11) + (point.Y * m.M21) + m.Tx;
+            double y = (point.X * m.M12) + (point.Y * m.M22) + m.Ty;
 
             return new Point((int)x, (int)y);
         }
@@ -126,8 +126,8 @@
 
             for (int i = 0; i < points.Length; i++) {
 
-                double x = (points[i].X * m.M11) + (points[i].Y * m.M21) + m.OffsetX;
-                double y = (points[i].X * m.M12) + (points[i].Y * m.M22) + m.OffsetY;
+                double x = (points[i].X * m.M11) + (points[i].Y * m.M21) + m.Tx;
+                double y = (points[i].X * m.M12) + (points[i].Y * m.M22) + m.Ty;
 
                 points[i] = new Point((int)x, (int)y);
             }

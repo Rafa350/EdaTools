@@ -81,7 +81,7 @@
         /// 
         public static Matrix2D CreateScale(double sx, double sy, double ox, double oy) {
 
-            return new Matrix2D(sx, 0, 0, sy, ox - sx * ox, oy - sy * oy);
+            return new Matrix2D(sx, 0, 0, sy, ox - (sx * ox), oy - (sy * oy));
         }
 
         /// <summary>
@@ -283,13 +283,13 @@
             }
         }
 
-        public double OffsetX {
+        public double Tx {
             get {
                 return tx;
             }
         }
 
-        public double OffsetY {
+        public double Ty {
             get {
                 return ty;
             }

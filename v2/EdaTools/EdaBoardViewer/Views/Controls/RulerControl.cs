@@ -17,30 +17,29 @@
         RightToLeft
     }
 
-    public sealed partial class RulerBox : Control {
+    public sealed partial class RulerControl: Control {
 
         /// <summary>
         /// Constructor estatic.
         /// </summary>
         /// 
-        static RulerBox() {
+        static RulerControl() {
 
-            AffectsRender<RulerBox>(
+            AffectsRender<RulerControl>(
                 PointerPositionProperty,
                 RegionPositionProperty,
                 RegionSizeProperty,
                 MaxValueProperty,
                 MinValueProperty,
-                ValueDivisorProperty,
-                OriginProperty,
-                ScaleProperty);
+                ValueMatrixProperty,
+                ValueDivisorProperty);
         }
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// 
-        public RulerBox() {
+        public RulerControl() {
 
             ClipToBounds = true;
         }

@@ -47,4 +47,9 @@
     <ProjectReference Include="..\EdaBase\EdaBase.csproj" />
     <ProjectReference Include="..\EdaCore\EdaCore.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="board3.xbrd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

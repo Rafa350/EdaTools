@@ -20,7 +20,6 @@
                     foreach (var layerId in visualLayer.LayerIds) {
                         var layer = board.GetLayer(layerId);
                         if (layer != null) {
-
                             var visitor = new BoardRenderVisitor(layer, visualLayer, context);
                             visitor.Visit(board);
                         }

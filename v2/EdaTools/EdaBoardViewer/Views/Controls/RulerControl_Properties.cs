@@ -4,47 +4,45 @@
     using Avalonia.Controls;
     using Avalonia.Media;
 
-    public sealed partial class RulerBox : Control {
+    public sealed partial class RulerControl : Control {
 
-        public static readonly StyledProperty<IBrush> BackgroundProperty = AvaloniaProperty.Register<RulerBox, IBrush>(nameof(BackgroundProperty), Brushes.DarkCyan);
-        public static readonly StyledProperty<IBrush> TagBrushProperty = AvaloniaProperty.Register<RulerBox, IBrush>(nameof(TagBrush), Brushes.White);
+        public static readonly StyledProperty<IBrush> BackgroundProperty = AvaloniaProperty.Register<RulerControl, IBrush>(nameof(BackgroundProperty), Brushes.DarkCyan);
+        public static readonly StyledProperty<IBrush> TagBrushProperty = AvaloniaProperty.Register<RulerControl, IBrush>(nameof(TagBrush), Brushes.White);
 
-        public static readonly StyledProperty<double> SmallTickLengthProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(SmallTickLength), 0);
-        public static readonly StyledProperty<Color> SmallTickColorProperty = AvaloniaProperty.Register<RulerBox, Color>(nameof(SmallTickColor), Colors.White);
-        public static readonly StyledProperty<double> SmallTickIntervalProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(SmallTickInterval), 1);
+        public static readonly StyledProperty<double> SmallTickLengthProperty = AvaloniaProperty.Register<RulerControl, double>(nameof(SmallTickLength), 0);
+        public static readonly StyledProperty<Color> SmallTickColorProperty = AvaloniaProperty.Register<RulerControl, Color>(nameof(SmallTickColor), Colors.White);
+        public static readonly StyledProperty<double> SmallTickIntervalProperty = AvaloniaProperty.Register<RulerControl, double>(nameof(SmallTickInterval), 1);
 
-        public static readonly StyledProperty<double> MediumTickLengthProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(MediumTickLength), 0);
-        public static readonly StyledProperty<Color> MediumTickColorProperty = AvaloniaProperty.Register<RulerBox, Color>(nameof(MediumTickColor), Colors.White);
-        public static readonly StyledProperty<double> MediumTickIntervalProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(MediumTickInterval), 5);
+        public static readonly StyledProperty<double> MediumTickLengthProperty = AvaloniaProperty.Register<RulerControl, double>(nameof(MediumTickLength), 0);
+        public static readonly StyledProperty<Color> MediumTickColorProperty = AvaloniaProperty.Register<RulerControl, Color>(nameof(MediumTickColor), Colors.White);
+        public static readonly StyledProperty<double> MediumTickIntervalProperty = AvaloniaProperty.Register<RulerControl, double>(nameof(MediumTickInterval), 5);
 
-        public static readonly StyledProperty<double> LargeTickLengthProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(LargeTickLength), 0);
-        public static readonly StyledProperty<Color> LargeTickColorProperty = AvaloniaProperty.Register<RulerBox, Color>(nameof(LargeTickColor), Colors.White);
-        public static readonly StyledProperty<double> LargeTickIntervalProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(LargeTickLength), 10);
+        public static readonly StyledProperty<double> LargeTickLengthProperty = AvaloniaProperty.Register<RulerControl, double>(nameof(LargeTickLength), 0);
+        public static readonly StyledProperty<Color> LargeTickColorProperty = AvaloniaProperty.Register<RulerControl, Color>(nameof(LargeTickColor), Colors.White);
+        public static readonly StyledProperty<double> LargeTickIntervalProperty = AvaloniaProperty.Register<RulerControl, double>(nameof(LargeTickLength), 10);
 
-        public static readonly StyledProperty<FontFamily> FontFamilyProperty = AvaloniaProperty.Register<RulerBox, FontFamily>(nameof(FontFamily), new FontFamily("Seqoe UI"));
-        public static readonly StyledProperty<FontStyle> FontStyleProperty = AvaloniaProperty.Register<RulerBox, FontStyle>(nameof(FontStyle), FontStyle.Normal);
-        public static readonly StyledProperty<double> FontSizeProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(FontSize), 10);
+        public static readonly StyledProperty<FontFamily> FontFamilyProperty = AvaloniaProperty.Register<RulerControl, FontFamily>(nameof(FontFamily), new FontFamily("Seqoe UI"));
+        public static readonly StyledProperty<FontStyle> FontStyleProperty = AvaloniaProperty.Register<RulerControl, FontStyle>(nameof(FontStyle), FontStyle.Normal);
+        public static readonly StyledProperty<double> FontSizeProperty = AvaloniaProperty.Register<RulerControl, double>(nameof(FontSize), 10);
 
-        public static readonly StyledProperty<double> RegionPositionProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(RegionPosition), 0);
-        public static readonly StyledProperty<double> RegionSizeProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(RegionSize), 0);
-        public static readonly StyledProperty<Color> RegionColorProperty = AvaloniaProperty.Register<RulerBox, Color>(nameof(RegionColor), Color.FromArgb(0x3F, 0x9A, 0xFB, 0xE1));
-        public static readonly StyledProperty<bool> ShowRegionProperty = AvaloniaProperty.Register<RulerBox, bool>(nameof(ShowRegion), false);
+        public static readonly StyledProperty<Point> RegionPositionProperty = AvaloniaProperty.Register<RulerControl, Point>(nameof(RegionPosition), new Point(0, 0));
+        public static readonly StyledProperty<Size> RegionSizeProperty = AvaloniaProperty.Register<RulerControl, Size>(nameof(RegionSize), new Size(0, 0));
+        public static readonly StyledProperty<Color> RegionColorProperty = AvaloniaProperty.Register<RulerControl, Color>(nameof(RegionColor), Color.FromArgb(0x3F, 0x9A, 0xFB, 0xE1));
+        public static readonly StyledProperty<bool> ShowRegionProperty = AvaloniaProperty.Register<RulerControl, bool>(nameof(ShowRegion), false);
 
-        public static readonly StyledProperty<double> PointerPositionProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(PointerPosition), 0);
-        public static readonly StyledProperty<Color> PointerColorProperty = AvaloniaProperty.Register<RulerBox, Color>(nameof(PointerColor), Color.FromArgb(255, 255, 0, 0));
-        public static readonly StyledProperty<bool> ShowPointerProperty = AvaloniaProperty.Register<RulerBox, bool>(nameof(ShowPointer), false);
+        public static readonly StyledProperty<Point> PointerPositionProperty = AvaloniaProperty.Register<RulerControl, Point>(nameof(PointerPosition), new Point(0, 0));
+        public static readonly StyledProperty<Color> PointerColorProperty = AvaloniaProperty.Register<RulerControl, Color>(nameof(PointerColor), Color.FromArgb(255, 255, 0, 0));
+        public static readonly StyledProperty<bool> ShowPointerProperty = AvaloniaProperty.Register<RulerControl, bool>(nameof(ShowPointer), false);
 
-        public static readonly StyledProperty<RulerOrientation> OrientationProperty = AvaloniaProperty.Register<RulerBox, RulerOrientation>(nameof(Orientation), RulerOrientation.Horizontal);
-        public static readonly StyledProperty<RulerAlignment> AlignmentProperty = AvaloniaProperty.Register<RulerBox, RulerAlignment>(nameof(Alignment), RulerAlignment.Bottom);
-        public static readonly StyledProperty<RulerDirection> DirectionProperty = AvaloniaProperty.Register<RulerBox, RulerDirection>(nameof(Direction), RulerDirection.LeftToRight);
+        public static readonly StyledProperty<RulerOrientation> OrientationProperty = AvaloniaProperty.Register<RulerControl, RulerOrientation>(nameof(Orientation), RulerOrientation.Horizontal);
+        public static readonly StyledProperty<RulerAlignment> AlignmentProperty = AvaloniaProperty.Register<RulerControl, RulerAlignment>(nameof(Alignment), RulerAlignment.Bottom);
+        public static readonly StyledProperty<RulerDirection> DirectionProperty = AvaloniaProperty.Register<RulerControl, RulerDirection>(nameof(Direction), RulerDirection.LeftToRight);
         public static readonly StyledProperty<bool> FlipTagsProperty;
 
-        public static readonly StyledProperty<double> ValueDivisorProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(ValueDivisor), 1);
-        public static readonly StyledProperty<double> MinValueProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(MinValue), 0);
-        public static readonly StyledProperty<double> MaxValueProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(MaxValue), 100);
-
-        public static readonly StyledProperty<double> OriginProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(Origin), 0);
-        public static readonly StyledProperty<double> ScaleProperty = AvaloniaProperty.Register<RulerBox, double>(nameof(Scale), 1);
+        public static readonly StyledProperty<double> ValueDivisorProperty = AvaloniaProperty.Register<RulerControl, double>(nameof(ValueDivisor), 1);
+        public static readonly StyledProperty<Matrix> ValueMatrixProperty = AvaloniaProperty.Register<RulerControl, Matrix>(nameof(ValueMatrix), Matrix.Identity);
+        public static readonly StyledProperty<double> MinValueProperty = AvaloniaProperty.Register<RulerControl, double>(nameof(MinValue), 0);
+        public static readonly StyledProperty<double> MaxValueProperty = AvaloniaProperty.Register<RulerControl, double>(nameof(MaxValue), 100);
 
         /// <summary>
         /// Obte o asigna la brotza del fons del control.
@@ -167,7 +165,7 @@
         /// Obte o asigna la posicio de la regio.
         /// </summary>
         /// 
-        public double RegionPosition {
+        public Point RegionPosition {
             get { return GetValue(RegionPositionProperty); }
             set { SetValue(RegionPositionProperty, value); }
         }
@@ -176,7 +174,7 @@
         /// Obte o asigna el tamany de la regio.
         /// </summary>
         /// 
-        public double RegionSize {
+        public Size RegionSize {
             get { return GetValue(RegionSizeProperty); }
             set { SetValue(RegionSizeProperty, value); }
         }
@@ -184,6 +182,7 @@
         /// <summary>
         /// Obte o saigna la brotxa per dibuixar la regio.
         /// </summary>
+        /// 
         public Color RegionColor {
             get { return GetValue(RegionColorProperty); }
             set { SetValue(RegionColorProperty, value); }
@@ -202,7 +201,7 @@
         /// Obte o asigna la posicio del punter.
         /// </summary>
         /// 
-        public double PointerPosition {
+        public Point PointerPosition {
             get { return GetValue(PointerPositionProperty); }
             set { SetValue(PointerPositionProperty, value); }
         }
@@ -253,21 +252,12 @@
         }
 
         /// <summary>
-        /// Obte o asigna la posicio del regla.
+        /// Obte o asigna la matriu de transformacio del valor.
         /// </summary>
         /// 
-        public double Origin {
-            get { return GetValue(OriginProperty); }
-            set { SetValue(OriginProperty, value); }
-        }
-
-        /// <summary>
-        /// Obte o asigna l'escala del regla.
-        /// </summary>
-        /// 
-        public double Scale {
-            get { return GetValue(ScaleProperty); }
-            set { SetValue(ScaleProperty, value); }
+        public Matrix ValueMatrix {
+            get { return GetValue(ValueMatrixProperty); }
+            set { SetValue(ValueMatrixProperty, value); }
         }
     }
 }

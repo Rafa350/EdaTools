@@ -145,7 +145,7 @@
             Transformation transformation = part.GetLocalTransformation();
             Matrix2D matrix = transformation.Matrix;
 
-            var m = new Avalonia.Matrix(matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.OffsetX, matrix.OffsetY);
+            var m = new Avalonia.Matrix(matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.Tx, matrix.Ty);
             using (context.PushPreTransform(m)) {
 
                 base.Visit(part);

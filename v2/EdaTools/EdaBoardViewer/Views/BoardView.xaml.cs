@@ -4,21 +4,33 @@
     using Avalonia;
     using Avalonia.Controls;
     using Avalonia.Input;
-    using Avalonia.Media;
     using Avalonia.Markup.Xaml;
+    using Avalonia.Media;
     using EdaBoardViewer.Views.Controls;
 
     public class BoardView : UserControl {
 
-        private RulerBox horizontalRuler;
-        private RulerBox verticalRuler;
-        private DesignBox designer;
-        private BoardViewControl boardView;
+        private enum PointerButton {
+            None,
+            Left,
+            Middle,
+            Right
+        }
+
+        private const double valueDivisor = 1e6;
+
+        private RulerControl horizontalRuler;
+        private RulerControl verticalRuler;
+        private DesignControl designer;
+        private BoardControl boardView;
         private readonly ViewPoint viewPoint;
 
-        private bool buttonPressed = false;
+        private PointerButton pressedButton = PointerButton.None;
+        private Point currentPos;
         private Point startPos;
         private Point endPos;
+
+        private Size boardSize = new Size(70 * valueDivisor, 67.5 * valueDivisor);
 
         /// <summary>
         ///  Constructor.
@@ -40,39 +52,30 @@
 
             AvaloniaXamlLoader.Load(this);
 
-            horizontalRuler = this.Get<RulerBox>("HorizontalRuler");
-            horizontalRuler.MaxValue = 70;
+            horizontalRuler = this.Get<RulerControl>("HorizontalRuler");
+            horizontalRuler.ValueDivisor = valueDivisor;
+            horizontalRuler.MinValue = 0;
+            horizontalRuler.MaxValue = boardSize.Width;
 
-            verticalRuler = this.Get<RulerBox>("VerticalRuler");
-            verticalRuler.MaxValue = 67.5;
-            
-            designer = this.Get<DesignBox>("Designer");
-            
-            boardView = this.Get<BoardViewControl>("BoardView");
+            verticalRuler = this.Get<RulerControl>("VerticalRuler");
+            verticalRuler.ValueDivisor = valueDivisor;
+            verticalRuler.MinValue = 0;
+            verticalRuler.MaxValue = boardSize.Height;
+
+            designer = this.Get<DesignControl>("Designer");
+            designer.ValueDivisor = valueDivisor;
+
+            boardView = this.Get<BoardControl>("BoardView");
         }
 
         private void ViewPoint_Changed(object sender, EventArgs e) {
 
-            // Ajusta la vista de la placa
-            //
-            Matrix m = Matrix.Identity;
-            m *= viewPoint.Matrix;
-            m *= Matrix.CreateScale(1, -1);
-            m *= Matrix.CreateTranslation(0, boardView.Bounds.Height);
+            Matrix m = viewPoint.Matrix;
 
-            boardView.RenderTransformOrigin = RelativePoint.TopLeft;
-            boardView.RenderTransform = new MatrixTransform(m);
-            boardView.InvalidateVisual();
-
-            // Ajusta els controls de diseny
-            //
-            Point offset = viewPoint.Offset;
-            Point scale = viewPoint.Scale;
-
-            horizontalRuler.Origin = offset.X;
-            horizontalRuler.Scale = scale.X * 1000000;
-            verticalRuler.Origin = offset.Y;
-            verticalRuler.Scale = scale.Y * 1000000;
+            horizontalRuler.ValueMatrix = m;
+            verticalRuler.ValueMatrix = m;
+            designer.ValueMatrix = m;
+            boardView.ValueMatrix = m;
         }
 
         /// <summary>
@@ -84,83 +87,98 @@
 
             // Detecta el canvi en el tamany del control
             //
-            if (e.Property == BoundsProperty) {
+            if (e.Property == BoundsProperty)
+                ResetViewPoint();
 
-                // Inicialitza el punt de vista.
-                //
-                Size vSize = boardView.Bounds.Size;
-                Rect wRect = new Rect(0, 0, 70000000, 67500000);
-                viewPoint.Reset(vSize, wRect);
-            }
-            
             base.OnPropertyChanged(e);
         }
 
+        /// <summary>
+        /// Procesa l'event de moviment del punter.
+        /// </summary>
+        /// <param name="e">Parametres de l'event.</param>
+        /// 
         protected override void OnPointerMoved(PointerEventArgs e) {
 
-            // Obte la posicio del punter
+            // Obte l'estat del punter.
             //
-            Point p = e.GetPosition(designer);
-            Point currentPos = new Point((p.X / 10) - 0, (p.Y / 10) - 0);
+            PointerPoint pp = e.GetCurrentPoint(designer);
+
+            // Obte la posicio del punter.
+            //
+            currentPos = viewPoint.TransformToWorld(pp.Position);
+            endPos = currentPos;
 
             // Actualitza els controls de diseny
             //
-            horizontalRuler.PointerPosition = currentPos.X;
-            verticalRuler.PointerPosition = currentPos.Y;
-            
-            if (buttonPressed) {
+            horizontalRuler.PointerPosition = currentPos;
+            verticalRuler.PointerPosition = currentPos;
+            designer.PointerPosition = currentPos;
+
+            // Si es prem el boto dret, mostra la seleccio.
+            //
+            if (pressedButton != PointerButton.None) {
                 
-                endPos = currentPos;
+                Point start = new Point(Math.Min(startPos.X, endPos.X), Math.Min(startPos.Y, endPos.Y));
+                Size size = new Size(Math.Abs(endPos.X - startPos.X), Math.Abs(endPos.Y - startPos.Y));
 
-                horizontalRuler.RegionPosition = Math.Min(startPos.X, endPos.X);
-                horizontalRuler.RegionSize = Math.Abs(endPos.X - startPos.X);
+                horizontalRuler.RegionPosition = start;
+                horizontalRuler.RegionSize = size;
 
-                verticalRuler.RegionSize = Math.Abs(endPos.Y - startPos.Y);
-                verticalRuler.RegionPosition = Math.Min(startPos.Y, endPos.Y);
+                verticalRuler.RegionPosition = start;
+                verticalRuler.RegionSize = size;
 
-                designer.RegionPosition = new Point(Math.Min(startPos.X, endPos.X), Math.Min(startPos.Y, endPos.Y));
-                designer.RegionSize = new Size(Math.Abs(endPos.X - startPos.X), Math.Abs(endPos.Y - startPos.Y));
+                designer.RegionPosition = start;
+                designer.RegionSize = size;
             }
-            else
-                designer.PointerPosition = currentPos;
 
             base.OnPointerMoved(e);
         }
 
         protected override void OnPointerPressed(PointerPressedEventArgs e) {
 
-            // Obte les dades del punter
+            // Obte l'estat del punter.
             //
-            PointerPoint pointer = e.GetCurrentPoint(designer);
+            PointerPoint pp = e.GetCurrentPoint(designer);
 
-            // Comprova si s'ha premut el boto
+            // Obte la posicio del punter.
             //
-            if (pointer.Properties.IsLeftButtonPressed) {
+            currentPos = viewPoint.TransformToWorld(pp.Position);
+            startPos = currentPos;
+            endPos = currentPos;
 
-                buttonPressed = true;
+            // Obte el boto premut.
+            //
+            if (pp.Properties.IsLeftButtonPressed)
+                pressedButton = PointerButton.Left;
+            else if (pp.Properties.IsMiddleButtonPressed)
+                pressedButton = PointerButton.Middle;
+            else if (pp.Properties.IsRightButtonPressed)
+                pressedButton = PointerButton.Right;
+            else
+                pressedButton = PointerButton.None;
 
-                // Actualitza les coordinades
-                //
-                Point currentPos = new Point((pointer.Position.X / 10) - 0, (pointer.Position.Y / 10) - 0);
-                startPos = currentPos;
-                endPos = currentPos;
+            switch (pressedButton) {
+                case PointerButton.Left:
+                    horizontalRuler.PointerPosition = currentPos;
+                    horizontalRuler.RegionPosition = currentPos;
+                    horizontalRuler.RegionSize = new Size(0, 0);
+                    horizontalRuler.ShowRegion = true;
 
-                // Actualitza els controls de diseny
-                //
-                horizontalRuler.PointerPosition = currentPos.X;
-                horizontalRuler.RegionPosition = currentPos.X;
-                horizontalRuler.RegionSize = 0;
-                horizontalRuler.ShowRegion = true;
+                    verticalRuler.PointerPosition = currentPos;
+                    verticalRuler.RegionPosition = currentPos;
+                    verticalRuler.RegionSize = new Size(0, 0);
+                    verticalRuler.ShowRegion = true;
 
-                verticalRuler.PointerPosition = currentPos.Y;
-                verticalRuler.RegionPosition = currentPos.Y;
-                verticalRuler.RegionSize = 0;
-                verticalRuler.ShowRegion = true;
-                
-                designer.RegionPosition = startPos;
-                designer.RegionSize = new Size(0, 0);
-                designer.ShowPointer = false;
-                designer.ShowRegion = true;
+                    designer.RegionPosition = startPos;
+                    designer.RegionSize = new Size(0, 0);
+                    designer.ShowPointer = false;
+                    designer.ShowRegion = true;
+                    designer.ShowRegionHandles = true;
+
+                    break;
+
+
             }
 
             base.OnPointerPressed(e);
@@ -168,30 +186,63 @@
 
         protected override void OnPointerReleased(PointerReleasedEventArgs e) {
 
-            if (buttonPressed) {
+            // Actualitza les coordinades
+            //
+            Point p = e.GetPosition(designer);
+            Point currentPos = viewPoint.TransformToWorld(p);
+            endPos = currentPos;
 
-                buttonPressed = false;
+            switch (pressedButton) {
+                case PointerButton.Middle:
+                    viewPoint.Pan(endPos - startPos);
+                    break;
 
-                // Actualitza les coordinades
-                //
-                Point p = e.GetPosition(designer);
-                Point currentPos = new Point((p.X / 10) - 0, (p.Y / 10) - 0);
-                endPos = currentPos;
-
-                // Actualitza els controls de diseny
-                //
-                horizontalRuler.PointerPosition = currentPos.X;
-                horizontalRuler.ShowRegion = false;
-                
-                verticalRuler.PointerPosition = currentPos.Y;
-                verticalRuler.ShowRegion = false;
-                
-                designer.PointerPosition = currentPos;
-                designer.ShowRegion = false;
-                designer.ShowPointer = true;
+                case PointerButton.Right:
+                    viewPoint.Rotate(90, currentPos);
+                    break;
             }
 
+            pressedButton = PointerButton.None;
+
+            // Actualitza els controls de diseny
+            //
+            horizontalRuler.PointerPosition = currentPos;
+            horizontalRuler.ShowRegion = false;
+
+            verticalRuler.PointerPosition = currentPos;
+            verticalRuler.ShowRegion = false;
+
+            designer.PointerPosition = currentPos;
+            designer.ShowRegion = false;
+            designer.ShowPointer = true;
+
             base.OnPointerReleased(e);
+        }
+
+        protected override void OnPointerWheelChanged(PointerWheelEventArgs e) {
+
+            if (e.Delta.Y > 0)
+                viewPoint.ZoomIn(0.25, currentPos);
+            else if (e.Delta.Y < 0)
+                viewPoint.ZoomOut(0.25, currentPos);
+
+            base.OnPointerWheelChanged(e);
+        }
+
+        /// <summary>
+        /// Inicialitza el punt de vista.
+        /// </summary>
+        /// 
+        private void ResetViewPoint() {
+
+            Matrix matrix =
+                Matrix.CreateTranslation(0, -boardSize.Height) *
+                Matrix.CreateScale(1, -1);
+
+            viewPoint.Reset(
+                boardView.Bounds.Size,
+                new Rect(new Point(0, 0), boardSize),
+                matrix);
         }
     }
 }

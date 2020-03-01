@@ -6,12 +6,15 @@
     public delegate void ViewPointChangedEventHandler(object sender, EventArgs e);
 
     /// <summary>
-    /// Clase que controla el punt de vista de l'escena
+    /// Clase que controla el punt de vista de l'escena.
     /// </summary>
     /// 
     public sealed class ViewPoint {
 
         private Matrix m = Matrix.Identity;
+        private Matrix im = Matrix.Identity;
+        private bool notifyEnabled = true;
+        private bool notifyPending = false;
 
         public event ViewPointChangedEventHandler Changed;
 
@@ -21,56 +24,72 @@
         /// 
         private void NotifyChange() {
 
-            if (Changed != null)
-                Changed(this, new EventArgs());
+            if (notifyEnabled) {
+                Changed?.Invoke(this, new EventArgs());
+                notifyPending = false;
+            }
+            else
+                notifyPending = true;
         }
 
         /// <summary>
         /// Inicialitza el punt de vista.
         /// </summary>
-        /// <param name="vSize">Tamany fisic del area de visualitzacio.</param>
+        /// <param name="viewport">Tamany fisic del area de visualitzacio.</param>
         /// 
-        public void Reset(Size vSize) {
+        public void Reset(Size viewport) {
 
-            Reset(vSize, new Rect(0, 0, vSize.Width, vSize.Height));
+            Reset(viewport, new Rect(0, 0, viewport.Width, viewport.Height));
         }
 
         /// <summary>
         /// Inicialitza el punt de vista.
         /// </summary>
-        /// <param name="vSize">Tamany fisic del area de visualitzacio.</param>
-        /// <param name="wRect">Rectangle a representar</param>
+        /// <param name="viewport">Tamany fisic del area de visualitzacio.</param>
+        /// <param name="window">Rectangle a representar.</param>
         /// 
-        public void Reset(Size vSize, Rect wRect) {
+        public void Reset(Size viewport, Rect window) {
 
-            double vWidth = vSize.Width;
-            double vHeight = vSize.Height;
+            Reset(viewport, window, Matrix.Identity);
+        }
 
-            double wWidth = wRect.Width;
-            double wHeight = wRect.Height;
+        /// <summary>
+        /// Inicialitza el punt de vista.
+        /// </summary>
+        /// <param name="viewport">Tamany fisic del area de visualitzacio.</param>
+        /// <param name="window">Rectangle a representar.</param>
+        /// <param name="matrix">Matriu de transformacio.</param>
+        /// 
+        public void Reset(Size viewport, Rect window, Matrix matrix) {
 
             // Ajusta la relacio d'aspecte del area de representacio
             // perque s'ajusti a l'area a representar.
             //
-            double vAspect = vWidth / vHeight;
-            double wAspect = wWidth / wHeight;
+            double viewportAspect = viewport.Width / viewport.Height;
+            double windowAspect = window.Width / window.Height;
 
-            if (vAspect < wAspect) 
-                wHeight = wWidth / vAspect;
+            double width = window.Width;
+            double height = window.Height;
+            if (viewportAspect < windowAspect)
+                height = window.Width / viewportAspect;
+            else if (viewportAspect > windowAspect)
+                width = window.Height * viewportAspect;
 
-            else if (vAspect > wAspect) 
-                wWidth = wHeight * vAspect;
+            double offsetX = (width - window.Width) / 2;
+            double offsetY = (height - window.Height) / 2;
 
-            double offsetX = (wWidth - wRect.Width) / 2;
-            double offsetY = (wHeight - wRect.Height) / 2;
+            double scaleX = viewport.Width / width;
+            double scaleY = viewport.Height / height;
 
-            double scaleX = vWidth / wWidth;
-            double scaleY = vHeight / wHeight;
+            // Inicialitza la matriu.
+            //
+            m = matrix *
+                Matrix.CreateTranslation(offsetX, offsetY) *
+                Matrix.CreateScale(scaleX, scaleY);
+            im = m.Invert();
 
-            m = Matrix.Identity;
-            m *= Matrix.CreateTranslation(offsetX, offsetY);
-            m *= Matrix.CreateScale(scaleX, scaleY);
-
+            // Notifica els canvis.
+            //
             NotifyChange();
         }
 
@@ -102,10 +121,23 @@
         /// 
         public void Pan(double deltaX, double deltaY) {
 
-            if (deltaX != 0 || deltaY != 0) {
-                 m*= Matrix.CreateTranslation(deltaX, deltaY);
+            if ((deltaX != 0) || (deltaY != 0)) {
+
+                m = Matrix.CreateTranslation(deltaX, deltaY) * m;
+                im = m.Invert();
+
                 NotifyChange();
             }
+        }
+
+        /// <summary>
+        /// Desplaçament panoramic segons un vector.
+        /// </summary>
+        /// <param name="delta">El vector de desplaçament.</param>
+        /// 
+        public void Pan(Vector delta) {
+
+            Pan(delta.X, delta.Y);
         }
 
         /// <summary>
@@ -118,9 +150,12 @@
         public void Zoom(double factor, double centerX, double centerY) {
 
             if (factor != 0) {
-                m *= Matrix.CreateTranslation(-centerX, -centerY);
-                m *= Matrix.CreateScale(factor, factor);
-                m *= Matrix.CreateTranslation(centerX, centerY);
+
+                double tx = centerX - (factor * centerX);
+                double ty = centerY - (factor * centerY);
+                m = new Matrix(factor, 0, 0, factor, tx, ty) * m;
+                im = m.Invert();
+
                 NotifyChange();
             }
         }
@@ -197,23 +232,34 @@
         /// 
         public void Rotate(double angle) {
 
-            m *= Matrix.CreateRotation(angle);
-            NotifyChange();
+            if (angle != 0) {
+
+                m = Matrix.CreateRotation(Matrix.ToRadians(angle)) * m;
+                im = m.Invert();
+
+                NotifyChange();
+            }
         }
 
         /// <summary>
         /// Rotacio
         /// </summary>
-        /// <param name="angle">L'angle de rotacio.</param>
+        /// <param name="angle">L'angle de rotacio en graus.</param>
         /// <param name="centerX">Coordinada X del center de rotacio.</param>
         /// <param name="centerY">Coordinada Y del centre de rotacio.</param>
         /// 
         public void Rotate(double angle, double centerX, double centerY) {
 
             if (angle != 0) {
-                m *= Matrix.CreateTranslation(-centerX, -centerY);
-                m *= Matrix.CreateRotation(angle);
-                m *= Matrix.CreateTranslation(centerX, centerY);
+
+                double r = angle * Math.PI / 180;
+                double sin = Math.Sin(r);
+                double cos = Math.Cos(r);
+                double tx = centerX - (centerX * cos) + (centerY * sin);
+                double ty = centerY - (centerX * sin) - (centerY * cos);
+                m = new Matrix(cos, sin, -sin, cos, tx, ty) * m;
+                im = m.Invert();
+
                 NotifyChange();
             }
         }
@@ -237,21 +283,9 @@
         /// 
         public Point TransformToView(Point p) {
 
-            double x = (p.X * m.M11) + (p.Y * m.M21) + m.M31;
-            double y = (p.X * m.M12) + (p.Y * m.M22) + m.M32;
-
-            return new Point(x, y);
-        }
-
-        /// <summary>
-        /// Transforma un rectangle a coordinades fisiques.
-        /// </summary>
-        /// <param name="r">El rectangle a convertir.</param>
-        /// <returns>El resultat.</returns>
-        /// 
-        public Rect TransformToView(Rect r) {
-
-            return new Rect(TransformToView(r.TopLeft), TransformToView(r.BottomRight));
+            return new Point(
+                (p.X * m.M11) + (p.Y * m.M21) + m.M31,
+                (p.X * m.M12) + (p.Y * m.M22) + m.M32);
         }
 
         /// <summary>
@@ -260,53 +294,32 @@
         /// <param name="p">El punt a convertir.</param>
         /// <returns>El resultat.</returns>
         /// 
-        /*public Point TransformToWorld(Point p) {
+        public Point TransformToWorld(Point p) {
 
-            Matrix im = m;
-            im.Invert();
-            return im.Transform(p);
-        }*/
-
-        /// <summary>
-        /// Transforma un rectangle a coordinades mundials.
-        /// </summary>
-        /// <param name="r">El rectangle a convertir.</param>
-        /// <returns>El resultat.</returns>
-        /// 
-        /*public Rect TransformToWorld(Rect r) {
-
-            Matrix im = m;
-            im.Invert();
-            return new Rect(im.Transform(r.TopLeft), im.Transform(r.BottomRight));
-        }*/
+            return new Point(
+                (p.X * im.M11) + (p.Y * im.M21) + im.M31,
+                (p.X * im.M12) + (p.Y * im.M22) + im.M32);
+        }
 
         /// <summary>
         /// Obte la matriu de transformacio.
         /// </summary>
         /// 
-        public Matrix Matrix {
-            get {
-                return m;
-            }
-        }
+        public Matrix Matrix => m;
 
-        public Point Offset {
+        /// <summary>
+        /// Autoritza o desautoritza la notificacio de canvis.
+        /// </summary>
+        /// <remarks>Un cop autoritzat, si hi han canvis pendents, es notifiquen.</remarks>
+        /// 
+        public bool NotifyEnabled {
             get {
-                return new Point(m.M31, m.M32);
+                return notifyEnabled;
             }
-        }
-
-        public Point Scale {
-            get {
-                return new Point(
-                    Math.Sqrt(m.M11 * m.M11 + m.M21 * m.M21), 
-                    Math.Sqrt(m.M12 * m.M12 + m.M22 * m.M22));
-            }
-        }
-
-        public double Angle {
-            get {
-                return Math.Atan2(m.M21, m.M22);
+            set {
+                notifyEnabled = value;
+                if (notifyEnabled && notifyPending)
+                    NotifyChange();
             }
         }
     }

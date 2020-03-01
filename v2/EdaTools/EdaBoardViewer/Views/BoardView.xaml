@@ -12,14 +12,14 @@
     <Grid
         ColumnDefinitions="30,5,*"
         RowDefinitions="30,5,*">
-        <controls:RulerBox
+        <controls:RulerControl
             Name="HorizontalRuler"
             Grid.Column="2"
             Grid.Row="0"
             Orientation="Horizontal"
             Alignment="Bottom"
             ShowPointer="True"/>
-        <controls:RulerBox
+        <controls:RulerControl
             Name="VerticalRuler"
             Grid.Column="0"
             Grid.Row="2"
@@ -27,20 +27,15 @@
             Alignment="Top"
             ShowPointer="True"/>
 
-        <controls:BoardViewControl
+        <controls:BoardControl
             Name="BoardView"
             Grid.Column="2"
             Grid.Row="2"/>
-        <controls:DesignBox
+        <controls:DesignControl
             Name="Designer"
             Grid.Column="2"
             Grid.Row="2"
-            RegionPosition="10, 20"
-            RegionSize="50, 30"
-            ShowPointer="True"
-            ValueDivisor="1"
-            Origin="0, 0"
-            Scale="10"/>       
+            ShowPointer="True"/>
     </Grid>
 
 </UserControl>

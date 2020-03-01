@@ -1,42 +1,41 @@
 ﻿namespace EdaBoardViewer.Views.Controls {
-
     using Avalonia;
     using Avalonia.Controls;
     using Avalonia.Media;
 
-    public sealed partial class DesignBox : Control {
+    public sealed partial class DesignControl : Control {
 
-        public static readonly StyledProperty<IBrush> BackgroundProperty = AvaloniaProperty.Register<DesignBox, IBrush>(nameof(BackgroundProperty), Brushes.Transparent);
-        public static readonly StyledProperty<IBrush> TagBrushProperty = AvaloniaProperty.Register<DesignBox, IBrush>(nameof(TagBrush), Brushes.White);
-        public static readonly StyledProperty<IBrush> LineBrushProperty = AvaloniaProperty.Register<DesignBox, IBrush>(nameof(LineBrush), Brushes.White);
+        public static readonly StyledProperty<IBrush> BackgroundProperty = AvaloniaProperty.Register<DesignControl, IBrush>(nameof(BackgroundProperty), Brushes.Transparent);
+        public static readonly StyledProperty<IBrush> TagBrushProperty = AvaloniaProperty.Register<DesignControl, IBrush>(nameof(TagBrush), Brushes.White);
+        public static readonly StyledProperty<IBrush> LineBrushProperty = AvaloniaProperty.Register<DesignControl, IBrush>(nameof(LineBrush), Brushes.White);
 
-        public static readonly StyledProperty<FontFamily> FontFamilyProperty = AvaloniaProperty.Register<DesignBox, FontFamily>(nameof(FontFamily), new FontFamily("Seqoe UI"));
-        public static readonly StyledProperty<FontStyle> FontStyleProperty = AvaloniaProperty.Register<DesignBox, FontStyle>(nameof(FontStyle), FontStyle.Normal);
-        public static readonly StyledProperty<double> FontSizeProperty = AvaloniaProperty.Register<DesignBox, double>(nameof(FontSize), 11);
+        public static readonly StyledProperty<FontFamily> FontFamilyProperty = AvaloniaProperty.Register<DesignControl, FontFamily>(nameof(FontFamily), new FontFamily("Seqoe UI"));
+        public static readonly StyledProperty<FontStyle> FontStyleProperty = AvaloniaProperty.Register<DesignControl, FontStyle>(nameof(FontStyle), FontStyle.Normal);
+        public static readonly StyledProperty<double> FontSizeProperty = AvaloniaProperty.Register<DesignControl, double>(nameof(FontSize), 11);
 
-        public static readonly StyledProperty<Point> RegionPositionProperty = AvaloniaProperty.Register<DesignBox, Point>(nameof(RegionPosition), new Point(0, 0));
-        public static readonly StyledProperty<Size> RegionSizeProperty = AvaloniaProperty.Register<DesignBox, Size>(nameof(RegionSize), new Size(0, 0));
-        public static readonly StyledProperty<IBrush> RegionBackgroundProperty = AvaloniaProperty.Register<DesignBox, IBrush>(nameof(RegionBackground), Brushes.Transparent);
-        public static readonly StyledProperty<Color> RegionBorderColorProperty = AvaloniaProperty.Register<DesignBox, Color>(nameof(RegionBorderColor), Color.FromArgb(0x3F, 0x9A, 0xFB, 0xE1));
-        public static readonly StyledProperty<Color> RegionTagTextColorProperty = AvaloniaProperty.Register<DesignBox, Color>(nameof(RegionTagTextColor), Colors.WhiteSmoke);
-        public static readonly StyledProperty<Color> RegionTagBorderColorProperty = AvaloniaProperty.Register<DesignBox, Color>(nameof(RegionTagBorderColor), Colors.WhiteSmoke);
-        public static readonly StyledProperty<IBrush> RegionTagBackgroundProperty = AvaloniaProperty.Register<DesignBox, IBrush>(nameof(RegionTagBackground), new SolidColorBrush(Color.FromRgb(0x30, 0x30, 0x30)));
-        public static readonly StyledProperty<bool> ShowRegionProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowRegion), false);
-        public static readonly StyledProperty<bool> ShowRegionTagsProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowRegionTags), true);
-        public static readonly StyledProperty<bool> ShowRegionHandlesProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowRegionHandles), false);
+        public static readonly StyledProperty<Point> RegionPositionProperty = AvaloniaProperty.Register<DesignControl, Point>(nameof(RegionPosition), new Point(0, 0));
+        public static readonly StyledProperty<Size> RegionSizeProperty = AvaloniaProperty.Register<DesignControl, Size>(nameof(RegionSize), new Size(0, 0));
+        public static readonly StyledProperty<IBrush> RegionBackgroundProperty = AvaloniaProperty.Register<DesignControl, IBrush>(nameof(RegionBackground), new SolidColorBrush(Color.FromArgb(0x1F, 0x9A, 0xFB, 0xE1)));
+        public static readonly StyledProperty<Color> RegionBorderColorProperty = AvaloniaProperty.Register<DesignControl, Color>(nameof(RegionBorderColor), Color.FromArgb(0x7F, 0x9A, 0xFB, 0xE1));
+        public static readonly StyledProperty<Color> RegionTagTextColorProperty = AvaloniaProperty.Register<DesignControl, Color>(nameof(RegionTagTextColor), Colors.WhiteSmoke);
+        public static readonly StyledProperty<Color> RegionTagBorderColorProperty = AvaloniaProperty.Register<DesignControl, Color>(nameof(RegionTagBorderColor), Colors.WhiteSmoke);
+        public static readonly StyledProperty<IBrush> RegionTagBackgroundProperty = AvaloniaProperty.Register<DesignControl, IBrush>(nameof(RegionTagBackground), new SolidColorBrush(Color.FromRgb(0x30, 0x30, 0x30)));
+        public static readonly StyledProperty<bool> ShowRegionProperty = AvaloniaProperty.Register<DesignControl, bool>(nameof(ShowRegion), false);
+        public static readonly StyledProperty<bool> ShowRegionTagsProperty = AvaloniaProperty.Register<DesignControl, bool>(nameof(ShowRegionTags), true);
+        public static readonly StyledProperty<bool> ShowRegionHandlesProperty = AvaloniaProperty.Register<DesignControl, bool>(nameof(ShowRegionHandles), false);
 
-        public static readonly StyledProperty<Point> PointerPositionProperty = AvaloniaProperty.Register<DesignBox, Point>(nameof(PointerPosition), new Point(0, 0));
-        public static readonly StyledProperty<Color> PointerColorProperty = AvaloniaProperty.Register<DesignBox, Color>(nameof(PointerColor), Color.FromArgb(255, 255, 0, 0));
-        public static readonly StyledProperty<Color> PointerTagTextColorProperty = AvaloniaProperty.Register<DesignBox, Color>(nameof(PointerTagTextColor), Colors.WhiteSmoke);
-        public static readonly StyledProperty<Color> PointerTagBorderColorProperty = AvaloniaProperty.Register<DesignBox, Color>(nameof(PointerTagBorderColor), Colors.WhiteSmoke);
-        public static readonly StyledProperty<IBrush> PointerTagBackgroundProperty = AvaloniaProperty.Register<DesignBox, IBrush>(nameof(PointerTagBackground), new SolidColorBrush(Color.FromRgb(0x30, 0x30, 0x30)));
-        public static readonly StyledProperty<bool> ShowPointerProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowPointer), false);
-        public static readonly StyledProperty<bool> ShowPointerTagsProperty = AvaloniaProperty.Register<DesignBox, bool>(nameof(ShowPointerTags), true);
+        public static readonly StyledProperty<Point> PointerPositionProperty = AvaloniaProperty.Register<DesignControl, Point>(nameof(PointerPosition), new Point(0, 0));
+        public static readonly StyledProperty<Color> PointerColorProperty = AvaloniaProperty.Register<DesignControl, Color>(nameof(PointerColor), Color.FromArgb(255, 255, 0, 0));
+        public static readonly StyledProperty<Color> PointerTagTextColorProperty = AvaloniaProperty.Register<DesignControl, Color>(nameof(PointerTagTextColor), Colors.WhiteSmoke);
+        public static readonly StyledProperty<Color> PointerTagBorderColorProperty = AvaloniaProperty.Register<DesignControl, Color>(nameof(PointerTagBorderColor), Colors.WhiteSmoke);
+        public static readonly StyledProperty<IBrush> PointerTagBackgroundProperty = AvaloniaProperty.Register<DesignControl, IBrush>(nameof(PointerTagBackground), new SolidColorBrush(Color.FromRgb(0x30, 0x30, 0x30)));
+        public static readonly StyledProperty<bool> ShowPointerProperty = AvaloniaProperty.Register<DesignControl, bool>(nameof(ShowPointer), false);
+        public static readonly StyledProperty<bool> ShowPointerTagsProperty = AvaloniaProperty.Register<DesignControl, bool>(nameof(ShowPointerTags), true);
 
-        public static readonly StyledProperty<double> ValueDivisorProperty = AvaloniaProperty.Register<DesignBox, double>(nameof(ValueDivisor), 1);
-
-        public static readonly StyledProperty<Point> OriginProperty = AvaloniaProperty.Register<DesignBox, Point>(nameof(Origin), new Point(0, 0));
-        public static readonly StyledProperty<double> ScaleProperty = AvaloniaProperty.Register<DesignBox, double>(nameof(Scale), 1);
+        // MinValueProperty
+        // MaxValueProperty
+        public static readonly StyledProperty<double> ValueDivisorProperty = AvaloniaProperty.Register<DesignControl, double>(nameof(ValueDivisor), 1);
+        public static readonly StyledProperty<Matrix> ValueMatrixProperty = AvaloniaProperty.Register<DesignControl, Matrix>(nameof(ValueMatrix), Matrix.Identity);
 
         /// <summary>
         /// Obte o asigna la brotza del fons del control.
@@ -226,14 +225,13 @@
             set { SetValue(ValueDivisorProperty, value); }
         }
 
-        public Point Origin {
-            get { return GetValue(OriginProperty); }
-            set { SetValue(OriginProperty, value); }
-        }
-
-        public double Scale {
-            get { return GetValue(ScaleProperty); }
-            set { SetValue(ScaleProperty, value); }
+        /// <summary>
+        /// Obte o asigna la matriu de transformacio del valor.
+        /// </summary>
+        /// 
+        public Matrix ValueMatrix {
+            get { return GetValue(ValueMatrixProperty); }
+            set { SetValue(ValueMatrixProperty, value); }
         }
     }
 }
