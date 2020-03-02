@@ -22,7 +22,7 @@
 
         public BoardControl() {
 
-            //ClipToBounds = true;
+            ClipToBounds = true;
         }
 
         protected override void OnInitialized() {

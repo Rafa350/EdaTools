@@ -5,7 +5,6 @@
     using Avalonia.Controls;
     using Avalonia.Input;
     using Avalonia.Markup.Xaml;
-    using Avalonia.Media;
     using EdaBoardViewer.Views.Controls;
 
     public class BoardView : UserControl {
@@ -177,7 +176,6 @@
                     designer.ShowRegionHandles = true;
 
                     break;
-
 
             }
 

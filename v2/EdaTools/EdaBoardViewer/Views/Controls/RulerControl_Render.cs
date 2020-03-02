@@ -8,9 +8,6 @@
     public sealed partial class RulerControl : Control {
 
         private const double maxLines = 1000;
-        private Point ptPointer;
-        private Point ptRegionStart;
-        private Point ptRegionEnd;
 
         /// <summary>
         /// Dibuixa el control.
@@ -21,12 +18,12 @@
 
             // Precalcula els punts d'interes en coordinades fisiques.
             //
-            ptPointer = Transform(PointerPosition);
+            Point ptPointer = Transform(PointerPosition);
 
             Point p1 = Transform(RegionPosition);
             Point p2 = Transform(new Point(RegionPosition.X + RegionSize.Width, RegionPosition.Y + RegionSize.Height));
-            ptRegionStart = new Point(Math.Min(p1.X, p2.X), Math.Min(p1.Y, p2.Y));
-            ptRegionEnd = new Point(ptRegionStart.X + Math.Abs(p2.X - p1.X), ptRegionStart.Y + Math.Abs(p2.Y - p1.Y));
+            Point ptRegionStart = new Point(Math.Min(p1.X, p2.X), Math.Min(p1.Y, p2.Y));
+            Point ptRegionEnd = new Point(ptRegionStart.X + Math.Abs(p2.X - p1.X), ptRegionStart.Y + Math.Abs(p2.Y - p1.Y));
 
             // Renderitza la imatge
             //
@@ -37,10 +34,10 @@
                 DrawTags(context);
 
                 if (ShowRegion)
-                    DrawRegion(context);
+                    DrawRegion(context, ptRegionStart, ptRegionEnd);
 
                 if (ShowPointer)
-                    DrawPointer(context);
+                    DrawPointer(context, ptPointer);
             }
         }
 
@@ -63,10 +60,11 @@
         /// Dibuixa el indicador de posicio.
         /// </summary>
         /// <param name="context">El context de renderitzat.</param>
+        /// <param name="position">Posicio del punter.</param>
         /// 
-        private void DrawPointer(DrawingContext context) {
+        private void DrawPointer(DrawingContext context, Point position) {
 
-            double x = Orientation == RulerOrientation.Horizontal ? ptPointer.X : ptPointer.Y;
+            double x = Orientation == RulerOrientation.Horizontal ? position.X : position.Y;
             double y1 = 0;
             double y2 = Orientation == RulerOrientation.Horizontal ? Bounds.Height : Bounds.Width;
 
@@ -80,12 +78,14 @@
         /// Dibuixa la regio.
         /// </summary>
         /// <param name="context">Context de renderitzat.</param>
+        /// <param name="startPosition">Posicio inicial de la regio.</param>
+        /// <param name="endPosition">Posicio final de la regio.</param>
         /// 
-        private void DrawRegion(DrawingContext context) {
+        private void DrawRegion(DrawingContext context, Point startPosition, Point endPosition) {
 
-            double x1 = Orientation == RulerOrientation.Horizontal ? ptRegionStart.X : ptRegionStart.Y;
+            double x1 = Orientation == RulerOrientation.Horizontal ? startPosition.X : startPosition.Y;
             double y1 = 0;
-            double x2 = Orientation == RulerOrientation.Horizontal ? ptRegionEnd.X : ptRegionEnd.Y;
+            double x2 = Orientation == RulerOrientation.Horizontal ? endPosition.X : endPosition.Y;
             double y2 = Orientation == RulerOrientation.Horizontal ? Bounds.Height : Bounds.Width;
 
             context.FillRectangle(

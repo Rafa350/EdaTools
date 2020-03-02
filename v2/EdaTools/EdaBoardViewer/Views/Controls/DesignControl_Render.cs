@@ -14,10 +14,6 @@ namespace EdaBoardViewer.Views.Controls {
         private const string wTagFormat = " W: {0:0.00} ";
         private const string hTagFormat = " H: {0:0.00} ";
 
-        private Point ptPointer;
-        private Point ptRegionStart;
-        private Point ptRegionEnd;
-
         /// <summary>
         /// Renderitza el control.
         /// </summary>
@@ -33,25 +29,25 @@ namespace EdaBoardViewer.Views.Controls {
                     (p.X * matrix.M12) + (p.Y * matrix.M22) + matrix.M32);
             }
 
-            ptPointer = Transform(PointerPosition);
+            Point ptPointer = Transform(PointerPosition);
 
             Point p1 = Transform(RegionPosition);
             Point p2 = Transform(new Point(RegionPosition.X + RegionSize.Width, RegionPosition.Y + RegionSize.Height));
-            ptRegionStart = new Point(Math.Min(p1.X, p2.X), Math.Min(p1.Y, p2.Y));
-            ptRegionEnd = new Point(ptRegionStart.X + Math.Abs(p2.X - p1.X), ptRegionStart.Y + Math.Abs(p2.Y - p1.Y));
+            Point ptRegionStart = new Point(Math.Min(p1.X, p2.X), Math.Min(p1.Y, p2.Y));
+            Point ptRegionEnd = new Point(ptRegionStart.X + Math.Abs(p2.X - p1.X), ptRegionStart.Y + Math.Abs(p2.Y - p1.Y));
 
             if (ShowPointer) {
-                DrawPointer(context);
+                DrawPointer(context, ptPointer);
                 if (ShowPointerTags)
-                    DrawPointerTags(context);
+                    DrawPointerTags(context, ptPointer);
             }
 
             if (ShowRegion) {
-                DrawRegion(context);
+                DrawRegion(context, ptRegionStart, ptRegionEnd);
                 if (ShowRegionTags)
-                    DrawRegionTags(context);
+                    DrawRegionTags(context, ptRegionStart, ptRegionEnd);
                 if (ShowRegionHandles)
-                    DrawRegionHandles(context);
+                    DrawRegionHandles(context, ptRegionStart, ptRegionEnd);
             }
         }
 
@@ -59,20 +55,22 @@ namespace EdaBoardViewer.Views.Controls {
         /// Dibuixa el indicador de posicio.
         /// </summary>
         /// <param name="context">El context de renderitzat.</param>
+        /// <param name="position">Posicio del punter.</param>
         /// 
-        private void DrawPointer(DrawingContext context) {
+        private void DrawPointer(DrawingContext context, Point position) {
 
             var pen = new Pen(new SolidColorBrush(PointerColor), 0.5);
-            context.DrawPixLine(pen, new Point(0, ptPointer.Y), new Point(Bounds.Width, ptPointer.Y));
-            context.DrawPixLine(pen, new Point(ptPointer.X, 0), new Point(ptPointer.X, Bounds.Height));
+            context.DrawPixLine(pen, new Point(0, position.Y), new Point(Bounds.Width, position.Y));
+            context.DrawPixLine(pen, new Point(position.X, 0), new Point(position.X, Bounds.Height));
         }
 
         /// <summary>
         /// Dibuixa les etiquetes del indicador de posicio.
         /// </summary>
         /// <param name="context">El context de renderitzat.</param>
+        /// <param name="position">Posicio del punter.</param>
         /// 
-        private void DrawPointerTags(DrawingContext context) {
+        private void DrawPointerTags(DrawingContext context, Point position) {
 
             FormattedText ft = new FormattedText();
             ft.TextAlignment = TextAlignment.Left;
@@ -86,8 +84,8 @@ namespace EdaBoardViewer.Views.Controls {
 
             ft.Text = String.Format(CultureInfo.InvariantCulture, xTagFormat, PointerPosition.X / ValueDivisor);
             var r1 = new Rect(
-                ptPointer.X - ft.Bounds.Width - ft.Bounds.Height,
-                ptPointer.Y - (ft.Bounds.Height / 2.0),
+                position.X - ft.Bounds.Width - ft.Bounds.Height,
+                position.Y - (ft.Bounds.Height / 2.0),
                 ft.Bounds.Size.Width,
                 ft.Bounds.Size.Height);
 
@@ -96,15 +94,15 @@ namespace EdaBoardViewer.Views.Controls {
 
             ft.Text = String.Format(CultureInfo.InvariantCulture, yTagFormat, PointerPosition.Y / ValueDivisor);
             var r2 = new Rect(
-                ptPointer.X - ft.Bounds.Width - ft.Bounds.Height,
-                ptPointer.Y - (ft.Bounds.Height / 2.0),
+                position.X - ft.Bounds.Width - ft.Bounds.Height,
+                position.Y - (ft.Bounds.Height / 2.0),
                 ft.Bounds.Size.Width,
                 ft.Bounds.Size.Height);
 
             Matrix m = Matrix.Identity;
-            m *= Matrix.CreateTranslation(-ptPointer.X, -ptPointer.Y);
+            m *= Matrix.CreateTranslation(-position.X, -position.Y);
             m *= Matrix.CreateRotation(Matrix.ToRadians(90));
-            m *= Matrix.CreateTranslation(ptPointer.X, ptPointer.Y);
+            m *= Matrix.CreateTranslation(position.X, position.Y);
             using (context.PushPreTransform(m)) {
                 context.DrawPixBox(backgroundBrush, borderPen, r2);
                 context.DrawText(textBrush, r2.TopLeft, ft);
@@ -115,21 +113,25 @@ namespace EdaBoardViewer.Views.Controls {
         /// Renderitza la regio.
         /// </summary>
         /// <param name="context">El context de renderitzat.</param>
+        /// <param name="startPosition">Posicio inicial de la regio.</param>
+        /// <param name="endPosition">Posicio final de la regio.</param>
         /// 
-        private void DrawRegion(DrawingContext context) {
+        private void DrawRegion(DrawingContext context, Point startPosition, Point endPosition) {
 
             context.DrawPixBox(
                 RegionBackground,
                 new Pen(new SolidColorBrush(RegionBorderColor), 0.5),
-                new Rect(ptRegionStart, ptRegionEnd));
+                new Rect(startPosition, endPosition));
         }
 
         /// <summary>
         /// Renderitza les marques de la regio.
         /// </summary>
         /// <param name="context">El context de renderitzat.</param>
+        /// <param name="startPosition">Posicio inicial de la regio.</param>
+        /// <param name="endPosition">Posicio final de la regio.</param>
         /// 
-        private void DrawRegionTags(DrawingContext context) {
+        private void DrawRegionTags(DrawingContext context, Point startPosition, Point endPosition) {
 
             FormattedText ft = new FormattedText();
             ft.TextAlignment = TextAlignment.Left;
@@ -141,7 +143,7 @@ namespace EdaBoardViewer.Views.Controls {
 
             ft.Text = String.Format(CultureInfo.InvariantCulture, wTagFormat, RegionSize.Width / ValueDivisor);
             var r1 = new Rect(
-                new Point(ptRegionEnd.X - ft.Bounds.Width - ft.Bounds.Height, ptRegionEnd.Y - (ft.Bounds.Height / 2)),
+                new Point(endPosition.X - ft.Bounds.Width - ft.Bounds.Height, endPosition.Y - (ft.Bounds.Height / 2)),
                 ft.Bounds.Size);
 
             context.DrawPixBox(backgroundBrush, borderPen, r1);
@@ -149,13 +151,13 @@ namespace EdaBoardViewer.Views.Controls {
 
             ft.Text = String.Format(CultureInfo.InvariantCulture, hTagFormat, RegionSize.Height / ValueDivisor);
             var r2 = new Rect(
-                new Point(ptRegionEnd.X - ft.Bounds.Width - ft.Bounds.Height, ptRegionEnd.Y - (ft.Bounds.Height / 2)),
+                new Point(endPosition.X - ft.Bounds.Width - ft.Bounds.Height, endPosition.Y - (ft.Bounds.Height / 2)),
                 ft.Bounds.Size);
 
             Matrix m = Matrix.Identity;
-            m *= Matrix.CreateTranslation(-ptRegionEnd.X, -ptRegionEnd.Y);
+            m *= Matrix.CreateTranslation(-endPosition.X, -endPosition.Y);
             m *= Matrix.CreateRotation(Matrix.ToRadians(90));
-            m *= Matrix.CreateTranslation(ptRegionEnd.X, ptRegionEnd.Y);
+            m *= Matrix.CreateTranslation(endPosition.X, endPosition.Y);
             using (context.PushPreTransform(m)) {
                 context.DrawPixBox(backgroundBrush, borderPen, r2);
                 context.DrawText(textBrush, r2.TopLeft, ft);
@@ -166,8 +168,10 @@ namespace EdaBoardViewer.Views.Controls {
         /// Dibuixa els manipuladors de la regio.
         /// </summary>
         /// <param name="context">Context de renderitzat.</param>
+        /// <param name="startPosition">Posicio inicial de la regio.</param>
+        /// <param name="endPosition">Posicio final de la regio.</param>
         /// 
-        private void DrawRegionHandles(DrawingContext context) {
+        private void DrawRegionHandles(DrawingContext context, Point startPosition, Point endPosition) {
 
             static Rect GetRect(double x, double y, double s) {
 
@@ -177,13 +181,13 @@ namespace EdaBoardViewer.Views.Controls {
             double margin = 10;
             double size = 8;
 
-            double x1 = ptRegionStart.X - margin;
-            double x2 = (ptRegionStart.X + ptRegionEnd.X) / 2;
-            double x3 = ptRegionEnd.X + margin;
+            double x1 = startPosition.X - margin;
+            double x2 = (startPosition.X + endPosition.X) / 2;
+            double x3 = endPosition.X + margin;
 
-            double y1 = ptRegionStart.Y - margin;
-            double y2 = (ptRegionStart.Y + ptRegionEnd.Y) / 2;
-            double y3 = ptRegionEnd.Y + margin;
+            double y1 = startPosition.Y - margin;
+            double y2 = (startPosition.Y + endPosition.Y) / 2;
+            double y3 = endPosition.Y + margin;
 
             var borderPen = new Pen(new SolidColorBrush(RegionTagBorderColor), 0.5);
             var backgroundBrush = RegionTagBackground;
