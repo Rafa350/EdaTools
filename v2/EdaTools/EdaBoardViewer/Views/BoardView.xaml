@@ -27,7 +27,7 @@
             Alignment="Top"
             ShowPointer="True"/>
 
-        <controls:BoardControl
+        <controls:SceneControl
             Name="BoardView"
             Grid.Column="2"
             Grid.Row="2"/>

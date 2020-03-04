@@ -1,11 +1,16 @@
 ﻿namespace EdaBoardViewer.Views {
 
     using System;
+    using System.IO;
     using Avalonia;
     using Avalonia.Controls;
     using Avalonia.Input;
     using Avalonia.Markup.Xaml;
+    using Avalonia.Media;
     using EdaBoardViewer.Views.Controls;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
+    using EdaBoardViewer.Render;
 
     public class BoardView : UserControl {
 
@@ -16,18 +21,37 @@
             Right
         }
 
+        private class BoardScene: ISceneRenderer {
+
+            private Board board;
+
+            public BoardScene() {
+
+                using (Stream stream = new FileStream("board3.xbrd", FileMode.Open, FileAccess.Read, FileShare.None)) {
+                    BoardStreamReader reader = new BoardStreamReader(stream);
+                    board = reader.Read();
+                }
+            }
+
+            public void Render(DrawingContext context) {
+
+                var boardRenderer = new BoardRenderer(context);
+                boardRenderer.Render(board);
+            }
+        }
+
         private const double valueDivisor = 1e6;
 
         private RulerControl horizontalRuler;
         private RulerControl verticalRuler;
         private DesignControl designer;
-        private BoardControl boardView;
+        private SceneControl sceneView;
         private readonly ViewPoint viewPoint;
+        private readonly BoardScene boardScene;
 
         private PointerButton pressedButton = PointerButton.None;
         private Point currentPos;
-        private Point startPos;
-        private Point endPos;
+        private Point pressedPos;
 
         private Size boardSize = new Size(70 * valueDivisor, 67.5 * valueDivisor);
 
@@ -40,7 +64,9 @@
             this.InitializeComponent();
 
             viewPoint = new ViewPoint();
-            viewPoint.Changed += ViewPoint_Changed;
+            viewPoint.Changed += (sender, e) => OnViewPointChanged(e);
+
+            boardScene = new BoardScene();
         }
 
         /// <summary>
@@ -64,17 +90,25 @@
             designer = this.Get<DesignControl>("Designer");
             designer.ValueDivisor = valueDivisor;
 
-            boardView = this.Get<BoardControl>("BoardView");
+            sceneView = this.Get<SceneControl>("BoardView");
         }
 
-        private void ViewPoint_Changed(object sender, EventArgs e) {
+        /// <summary>
+        /// Es crida quant hi ha un canvi en el punt de vista de l'escena.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// 
+        protected virtual void OnViewPointChanged(EventArgs e) {
 
             Matrix m = viewPoint.Matrix;
 
             horizontalRuler.ValueMatrix = m;
             verticalRuler.ValueMatrix = m;
             designer.ValueMatrix = m;
-            boardView.ValueMatrix = m;
+
+            sceneView.ValueMatrix = m;
+            sceneView.SceneRenderer = boardScene;
         }
 
         /// <summary>
@@ -99,14 +133,10 @@
         /// 
         protected override void OnPointerMoved(PointerEventArgs e) {
 
-            // Obte l'estat del punter.
+            // Actualitza les coordinades.
             //
-            PointerPoint pp = e.GetCurrentPoint(designer);
-
-            // Obte la posicio del punter.
-            //
-            currentPos = viewPoint.TransformToWorld(pp.Position);
-            endPos = currentPos;
+            Point p = e.GetPosition(designer);
+            currentPos = viewPoint.TransformToWorld(p);
 
             // Actualitza els controls de diseny
             //
@@ -118,8 +148,8 @@
             //
             if (pressedButton != PointerButton.None) {
                 
-                Point start = new Point(Math.Min(startPos.X, endPos.X), Math.Min(startPos.Y, endPos.Y));
-                Size size = new Size(Math.Abs(endPos.X - startPos.X), Math.Abs(endPos.Y - startPos.Y));
+                Point start = new Point(Math.Min(pressedPos.X, currentPos.X), Math.Min(pressedPos.Y, currentPos.Y));
+                Size size = new Size(Math.Abs(currentPos.X - pressedPos.X), Math.Abs(currentPos.Y - pressedPos.Y));
 
                 horizontalRuler.RegionPosition = start;
                 horizontalRuler.RegionSize = size;
@@ -143,8 +173,7 @@
             // Obte la posicio del punter.
             //
             currentPos = viewPoint.TransformToWorld(pp.Position);
-            startPos = currentPos;
-            endPos = currentPos;
+            pressedPos = currentPos;
 
             // Obte el boto premut.
             //
@@ -152,10 +181,8 @@
                 pressedButton = PointerButton.Left;
             else if (pp.Properties.IsMiddleButtonPressed)
                 pressedButton = PointerButton.Middle;
-            else if (pp.Properties.IsRightButtonPressed)
+            else 
                 pressedButton = PointerButton.Right;
-            else
-                pressedButton = PointerButton.None;
 
             switch (pressedButton) {
                 case PointerButton.Left:
@@ -169,11 +196,11 @@
                     verticalRuler.RegionSize = new Size(0, 0);
                     verticalRuler.ShowRegion = true;
 
-                    designer.RegionPosition = startPos;
+                    designer.RegionPosition = pressedPos;
                     designer.RegionSize = new Size(0, 0);
                     designer.ShowPointer = false;
                     designer.ShowRegion = true;
-                    designer.ShowRegionHandles = true;
+                    designer.ShowRegionHandles = false;
 
                     break;
 
@@ -188,11 +215,10 @@
             //
             Point p = e.GetPosition(designer);
             Point currentPos = viewPoint.TransformToWorld(p);
-            endPos = currentPos;
 
             switch (pressedButton) {
                 case PointerButton.Middle:
-                    viewPoint.Pan(endPos - startPos);
+                    viewPoint.Pan(currentPos - pressedPos);
                     break;
 
                 case PointerButton.Right:
@@ -238,7 +264,7 @@
                 Matrix.CreateScale(1, -1);
 
             viewPoint.Reset(
-                boardView.Bounds.Size,
+                sceneView.Bounds.Size,
                 new Rect(new Point(0, 0), boardSize),
                 matrix);
         }
