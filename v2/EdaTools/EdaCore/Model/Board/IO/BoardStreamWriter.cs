@@ -539,7 +539,7 @@
         public BoardStreamWriter(Stream stream) {
 
             if (stream == null)
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
 
             if (!stream.CanWrite)
                 throw new InvalidOperationException("El stream no es de escritura.");
@@ -555,7 +555,7 @@
         public void Write(Board board) {
 
             if (board == null)
-                throw new ArgumentNullException("board");
+                throw new ArgumentNullException(nameof(board));
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
@@ -589,7 +589,7 @@
         public void Write(Library library) {
 
             if (library == null)
-                throw new ArgumentNullException("library");
+                throw new ArgumentNullException(nameof(library));
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;

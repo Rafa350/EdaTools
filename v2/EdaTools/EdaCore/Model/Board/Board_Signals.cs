@@ -21,7 +21,7 @@
         public void AddSignal(Signal signal) {
 
             if (signal == null)
-                throw new ArgumentNullException("signal");
+                throw new ArgumentNullException(nameof(signal));
 
             if ((signals == null) || signals.ContainsKey(signal.Name))
                 throw new InvalidOperationException(
@@ -40,7 +40,7 @@
         public void AddSignals(IEnumerable<Signal> signals) {
 
             if (signals == null)
-                throw new ArgumentNullException("signals");
+                throw new ArgumentNullException(nameof(signals));
 
             foreach (var signal in signals)
                 AddSignal(signal);
@@ -54,7 +54,7 @@
         public void RemoveSignal(Signal signal) {
 
             if (signal == null)
-                throw new ArgumentNullException("signal");
+                throw new ArgumentNullException(nameof(signal));
 
             if ((signals == null) || !signals.ContainsKey(signal.Name))
                 throw new InvalidOperationException(
@@ -79,10 +79,10 @@
         public void Connect(Signal signal, IConectable element, Part part = null) {
 
             if (signal == null)
-                throw new ArgumentNullException("signal");
+                throw new ArgumentNullException(nameof(signal));
 
             if (element == null)
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
 
             if ((signals == null) || !signals.ContainsKey(signal.Name))
                 throw new InvalidOperationException(
@@ -111,7 +111,7 @@
         public void Disconnect(IConectable element, Part part = null) {
 
             if (element == null)
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
 
             Tuple<IConectable, Part> item = new Tuple<IConectable, Part>(element, part);
 
@@ -130,7 +130,7 @@
         public Signal GetSignal(Element element, Part part = null, bool throwOnError = true) {
 
             if (element == null)
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
 
             Signal signal = null;
 
@@ -155,7 +155,7 @@
         public Signal GetSignal(string name, bool throwOnError = true) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if ((signals != null) && signals.TryGetValue(name, out var signal))
                 return signal;
@@ -177,7 +177,7 @@
         public IEnumerable<Tuple<IConectable, Part>> GetConnectedItems(Signal signal) {
 
             if (signal == null)
-                throw new ArgumentNullException("signal");
+                throw new ArgumentNullException(nameof(signal));
 
             if ((signals == null) || !signals.ContainsKey(signal.Name))
                 throw new InvalidOperationException(

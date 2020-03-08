@@ -35,7 +35,7 @@
         public void AddTarget(Target target) {
 
             if (target == null)
-                throw new ArgumentNullException("target");
+                throw new ArgumentNullException(nameof(target));
 
             if ((targets != null) && targets.ContainsKey(target.Name))
                 throw new InvalidOperationException(
@@ -54,7 +54,7 @@
         public void RemoveTarget(Target target) {
 
             if (target == null)
-                throw new ArgumentNullException("target");
+                throw new ArgumentNullException(nameof(target));
 
             if ((targets == null) || !targets.ContainsKey(target.Name))
                 throw new InvalidOperationException(
@@ -75,7 +75,7 @@
         public Target GetTarget(string name, bool throwOnError = true) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if ((targets != null) && targets.TryGetValue(name, out Target target))
                 return target;

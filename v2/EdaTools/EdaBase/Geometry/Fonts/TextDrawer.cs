@@ -19,7 +19,7 @@
         public TextDrawer(Font font) {
 
             if (font == null)
-                throw new ArgumentNullException("font");
+                throw new ArgumentNullException(nameof(font));
 
             this.font = font;
         }

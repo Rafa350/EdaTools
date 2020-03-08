@@ -19,7 +19,7 @@
         public void AddElement(Element element) {
 
             if (element == null)
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
 
             if ((elements != null) && elements.Contains(element))
                 throw new InvalidOperationException(
@@ -38,7 +38,7 @@
         public void AddElements(IEnumerable<Element> elements) {
 
             if (elements == null)
-                throw new ArgumentNullException("elements");
+                throw new ArgumentNullException(nameof(elements));
 
             foreach (var element in elements)
                 AddElement(element);
@@ -48,20 +48,14 @@
         /// Indica si conte elements.
         /// </summary>
         /// 
-        public bool HasElements {
-            get {
-                return elements != null;
-            }
-        }
+        public bool HasElements => 
+            elements != null;
 
         /// <summary>
         /// Obte un enunerador pels elements.
         /// </summary>
         /// 
-        public IEnumerable<Element> Elements {
-            get {
-                return elements;
-            }
-        }
+        public IEnumerable<Element> Elements =>
+            elements;            
     }
 }

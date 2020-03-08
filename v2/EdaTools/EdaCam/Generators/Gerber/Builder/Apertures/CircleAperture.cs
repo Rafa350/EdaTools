@@ -24,10 +24,10 @@
             base(id, tag) {
 
             if (diameter < 0) // C es l'unica que permet tamany zero
-                throw new ArgumentOutOfRangeException("diameter");
+                throw new ArgumentOutOfRangeException(nameof(diameter));
 
             if (drill >= diameter)
-                throw new ArgumentOutOfRangeException("drill");
+                throw new ArgumentOutOfRangeException(nameof(drill));
 
             this.diameter = diameter;
             this.drill = drill;
@@ -56,20 +56,14 @@
         /// Obte el diametre extern.
         /// </summary>
         /// 
-        public int Diameter {
-            get {
-                return diameter;
-            }
-        }
+        public int Diameter => 
+            diameter;
 
         /// <summary>
         /// Obte el diametre del forat.
         /// </summary>
         /// 
-        public int Drill {
-            get {
-                return drill;
-            }
-        }
+        public int Drill =>
+            drill;
     }
 }

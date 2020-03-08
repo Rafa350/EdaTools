@@ -50,7 +50,7 @@
         public LayerSet(params string[] elements) {
 
             if (elements == null)
-                throw new ArgumentNullException("elements");
+                throw new ArgumentNullException(nameof(elements));
 
             storage = new string[elements.Length];
             elements.CopyTo(storage, 0);
@@ -64,7 +64,7 @@
         public LayerSet(IEnumerable<string> elements) {
 
             if (elements == null)
-                throw new ArgumentNullException("elements");
+                throw new ArgumentNullException(nameof(elements));
 
             if (!(elements is ICollection<string> collection)) {
                 List<string> e = new List<string>(elements);
@@ -180,7 +180,7 @@
         public static LayerSet Parse(string s) {
 
             if (String.IsNullOrEmpty(s))
-                throw new ArgumentNullException("s");
+                throw new ArgumentNullException(nameof(s));
 
             string[] ss = s.Split(',');
             string[] elements = new string[ss.Length];

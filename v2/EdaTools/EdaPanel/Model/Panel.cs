@@ -23,7 +23,7 @@
         public void AddItem(PanelItem item) {
 
             if (item == null)
-                throw new ArgumentNullException("item");
+                throw new ArgumentNullException(nameof(item));
 
             if (items == null)
                 items = new Collection<PanelItem>();
@@ -39,7 +39,7 @@
         public void AddItems(IEnumerable<PanelItem> item) {
 
             if (item == null)
-                throw new ArgumentNullException("item");
+                throw new ArgumentNullException(nameof(item));
 
             foreach (var element in item)
                 AddItem(element);

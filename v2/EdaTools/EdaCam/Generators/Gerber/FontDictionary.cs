@@ -34,20 +34,14 @@
         /// Enumera tots els macros definits.
         /// </summary>
         /// 
-        public IEnumerable<Macro> Macros {
-            get {
-                return macros;
-            }
-        }
+        public IEnumerable<Macro> Macros =>
+            macros;
 
         /// <summary>
         /// Enumera totes les apertures definides.
         /// </summary>
         /// 
-        public IEnumerable<Aperture> Apertures {
-            get {
-                return items.Values;
-            }
-        }
+        public IEnumerable<Aperture> Apertures =>
+            items.Values;
     }
 }

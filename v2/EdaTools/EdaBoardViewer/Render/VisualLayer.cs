@@ -41,7 +41,8 @@
         /// Obte el nom de la capa
         /// </summary>
         /// 
-        public string Name => name;
+        public string Name => 
+            name;
 
         /// <summary>
         /// Comprova si un element es visible en aquesta capa.
@@ -109,11 +110,8 @@
         /// Obte el modus de visualitzacio.
         /// </summary>
         /// 
-        public VisualMode VisualMode {
-            get {
-                return visualMode;
-            }
-        }
+        public VisualMode VisualMode => 
+            visualMode;
 
         /// <summary>
         /// Obte o asigna el indicador de visibilitat.
@@ -132,20 +130,14 @@
         /// Obte color.
         /// </summary>
         /// 
-        public Color Color {
-            get {
-                return Color.FromRgb(color.R, color.G, color.B);
-            }
-        }
+        public Color Color =>
+            Color.FromRgb(color.R, color.G, color.B);
 
         /// <summary>
         /// Obte la opacitat.
         /// </summary>
         /// 
-        public double Opacity {
-            get {
-                return color.A / 255.0;
-            }
-        }
+        public double Opacity =>
+            color.A / 255.0;
     }
 }

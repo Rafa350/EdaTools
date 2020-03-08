@@ -51,6 +51,12 @@
             visitor.Visit(this);
         }
 
+        public override int GetHashCode() =>
+            Position.GetHashCode() +
+            Size.GetHashCode() +
+            (Rotation.GetHashCode() * 73429) +
+            roundness.GetHashCode();
+
         /// <summary>
         /// Crea el poligon del element.
         /// </summary>
@@ -59,8 +65,16 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = PolygonBuilder.MakeRectangle(Position, Size, Radius, Rotation);
-            return new Polygon(points);
+            int hash = GetHashCode() + side.GetHashCode() * 981;
+            Polygon polygon = PolygonCache.Get(hash);
+            if (polygon == null) {
+                
+                Point[] points = PolygonBuilder.MakeRectangle(Position, Size, Radius, Rotation);
+                polygon = new Polygon(points);
+
+                PolygonCache.Save(hash, polygon);
+            }
+            return polygon;
         }
 
         /// <summary>
@@ -72,14 +86,23 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = PolygonBuilder.MakeRectangle(
-                Position,
-                new Size(
-                    size.Width + spacing + spacing,
-                    size.Height + spacing + spacing),
-                Radius + spacing,
-                Rotation);
-            return new Polygon(points);
+            int hash = GetHashCode() + (side.GetHashCode() * 71) + (spacing * 27009);
+            Polygon polygon = PolygonCache.Get(hash);
+            if (polygon == null) {
+
+                Point[] points = PolygonBuilder.MakeRectangle(
+                    Position,
+                    new Size(
+                        size.Width + spacing + spacing,
+                        size.Height + spacing + spacing),
+                    Radius + spacing,
+                    Rotation);
+                polygon = new Polygon(points);
+
+                PolygonCache.Save(hash, polygon);
+            }
+
+            return polygon;
         }
 
         /// <summary>

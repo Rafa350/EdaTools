@@ -146,10 +146,8 @@
             Matrix2D matrix = transformation.Matrix;
 
             var m = new Avalonia.Matrix(matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.Tx, matrix.Ty);
-            using (context.PushPreTransform(m)) {
-
+            using (context.PushPreTransform(m))
                 base.Visit(part);
-            }
         }
     }
 }

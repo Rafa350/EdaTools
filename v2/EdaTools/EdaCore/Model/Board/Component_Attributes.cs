@@ -19,7 +19,7 @@
         public void AddAttribute(ComponentAttribute attribute) {
 
             if (attribute == null)
-                throw new ArgumentNullException("attribute");
+                throw new ArgumentNullException(nameof(attribute));
 
             // Comprova que l'atribut no estigui afeigit amb anterioritat
             //
@@ -42,7 +42,7 @@
         public void AddAttributes(IEnumerable<ComponentAttribute> attributes) {
 
             if (Attributes == null)
-                throw new ArgumentNullException("attributes");
+                throw new ArgumentNullException(nameof(attributes));
 
             foreach (ComponentAttribute attribute in attributes)
                 AddAttribute(attribute);
@@ -56,7 +56,7 @@
         public void RemoveAttribute(ComponentAttribute attribute) {
 
             if (attribute == null)
-                throw new ArgumentNullException("attribute");
+                throw new ArgumentNullException(nameof(attribute));
 
             // Comprova que l'atribut estigui a la llista
             //
@@ -92,7 +92,7 @@
         public ComponentAttribute GetAttribute(string name) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             return attributes?[name];
         }

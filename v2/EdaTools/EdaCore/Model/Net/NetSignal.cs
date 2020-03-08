@@ -11,7 +11,7 @@
         public NetSignal(string name, IEnumerable<NetConnection> connections) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             this.name = name;
             if (connections != null)

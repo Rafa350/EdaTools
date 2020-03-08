@@ -19,7 +19,7 @@
         public void AddPart(Part part) {
 
             if (part == null)
-                throw new ArgumentNullException("part");
+                throw new ArgumentNullException(nameof(part));
 
             if ((parts != null) && parts.ContainsKey(part.Name))
                 throw new InvalidOperationException(
@@ -38,7 +38,7 @@
         public void AddParts(IEnumerable<Part> parts) {
 
             if (parts == null)
-                throw new ArgumentException("parts");
+                throw new ArgumentException(nameof(parts));
 
             foreach (var part in parts)
                 AddPart(part);
@@ -52,7 +52,7 @@
         public void RemovePart(Part part) {
 
             if (part == null)
-                throw new ArgumentNullException("part");
+                throw new ArgumentNullException(nameof(part));
 
             if ((parts == null) || !parts.ContainsKey(part.Name))
                 throw new InvalidOperationException(
@@ -73,7 +73,7 @@
         public Part GetPart(string name, bool throwOnError = false) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if ((parts != null) && parts.TryGetValue(name, out var part))
                 return part;
@@ -90,30 +90,21 @@
         /// Indica si conte parts.
         /// </summary>
         /// 
-        public bool HasParts {
-            get {
-                return parts != null;
-            }
-        }
+        public bool HasParts =>
+            parts != null;
 
         /// <summary>
         /// Obte un enumerador pels noms dels components.
         /// </summary>
         /// 
-        public IEnumerable<string> PartNames {
-            get {
-                return parts?.Keys;
-            }
-        }
+        public IEnumerable<string> PartNames =>
+            parts?.Keys;
 
         /// <summary>
         /// Obte un enumerador pels components.
         /// </summary>
         /// 
-        public IEnumerable<Part> Parts {
-            get {
-                return parts?.Values;
-            }
-        }
+        public IEnumerable<Part> Parts =>
+            parts?.Values;
     }
 }

@@ -30,7 +30,7 @@
         public bool SetInterpolationMode(InterpolationMode interpolationMode) {
 
             if (interpolationMode == InterpolationMode.Unknown)
-                throw new ArgumentOutOfRangeException("interpolationMode");
+                throw new ArgumentOutOfRangeException(nameof(interpolationMode));
 
             if (this.interpolationMode != interpolationMode) {
                 this.interpolationMode = interpolationMode;
@@ -81,7 +81,7 @@
         public bool SetAperture(Aperture aperture) {
 
             if (aperture == null)
-                throw new ArgumentNullException("aperture");
+                throw new ArgumentNullException(nameof(aperture));
 
             if (this.aperture != aperture) {
                 this.aperture = aperture;

@@ -24,7 +24,7 @@
             base(id, tag) {
 
             if (macro == null)
-                throw new ArgumentNullException("macro");
+                throw new ArgumentNullException(nameof(macro));
 
             this.macro = macro;
             this.args = args;
@@ -61,20 +61,14 @@
         /// Obte el macro associat a l'apertura.
         /// </summary>
         /// 
-        public Macro Macro {
-            get {
-                return macro;
-            }
-        }
+        public Macro Macro =>
+            macro;
 
         /// <summary>
         /// Obte els arguments del macro.
         /// </summary>
         /// 
-        public int[] Args {
-            get {
-                return args;
-            }
-        }
+        public int[] Args =>
+            args;
     }
 }

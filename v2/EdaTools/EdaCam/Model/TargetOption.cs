@@ -10,7 +10,7 @@
         public TargetOption(string name, string value) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             this.name = name;
             this.value = value;

@@ -17,7 +17,7 @@
         public void Add(TItem item) {
 
             if (items == null)
-                throw new ArgumentNullException("item");
+                throw new ArgumentNullException(nameof(item));
 
             if (items.ContainsKey(item.GetKey()))
                 throw new InvalidOperationException("El item ya pertenece a la coleccion.");
@@ -33,7 +33,7 @@
         public void Remove(TItem item) {
 
             if (item == null)
-                throw new ArgumentNullException("item");
+                throw new ArgumentNullException(nameof(item));
 
             if (!items.ContainsKey(item.GetKey()))
                 throw new InvalidOperationException("El item no pertenece a la coleccion.");
@@ -74,7 +74,7 @@
         public bool Contains(TItem item) {
 
             if (item == null)
-                throw new ArgumentNullException("item");
+                throw new ArgumentNullException(nameof(item));
 
             return items.ContainsKey(item.GetKey());
         }

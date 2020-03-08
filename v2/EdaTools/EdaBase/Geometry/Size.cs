@@ -5,7 +5,7 @@
     /// <summary>
     /// Estructura que representa un tamany d'una superficie rectangular.
     /// </summary>
-    public readonly struct Size {
+    public readonly struct Size: IEquatable<Size> {
 
         private readonly int width;
         private readonly int height;
@@ -19,9 +19,9 @@
         public Size(int width = 0, int height = 0) {
 
             if (width < 0)
-                throw new ArgumentOutOfRangeException("width");
+                throw new ArgumentOutOfRangeException(nameof(width));
             if (height < 0)
-                throw new ArgumentOutOfRangeException("height");
+                throw new ArgumentOutOfRangeException(nameof(height));
 
             this.width = width;
             this.height = height;
@@ -32,10 +32,8 @@
         /// </summary>
         /// <returns>El resultat de la conversio.</returns>
         /// 
-        public override string ToString() {
-
-            return String.Format("{0}, {1}", width, height);
-        }
+        public override string ToString() =>
+            String.Format("{0}, {1}", width, height);
 
         /// <summary>
         /// Converteix un texte a 'Size'
@@ -61,43 +59,48 @@
         /// </summary>
         /// <returns>El codi hash</returns>
         /// 
-        public override int GetHashCode() {
-
-            return 13 + (width * 7) + (height * 3);
-        }
+        public override int GetHashCode() =>
+            (width * 7) * (height * 531);
 
         /// <summary>
-        /// Comprovacio d'igualtat.
+        /// Operacio d'igualtat entre dos objectes.
         /// </summary>
-        /// <param name="obj">L'antre objecte.</param>
+        /// <param name="other"></param>
+        /// <returns>True si son iguals.</returns>
+        /// 
+        public bool Equals(Size other) =>
+            (width, height) == (other.width, other.height);
+
+        /// <summary>
+        /// Comprovacio d'igualtat entre dos objectes.
+        /// </summary>
+        /// <param name="obj">L'altre objecte.</param>
         /// <returns>True si son iguals.</returns>
         /// 
         public override bool Equals(object obj) {
 
-            if (obj is Size s)
-                return (s.width == width) && (s.height == height);
+            if (obj is Size other)
+                return Equals(other);
             else
                 return false;
         }
+
+        public static bool operator ==(Size s1, Size s2) =>
+            s1.Equals(s2);
+
+        public static bool operator !=(Size s1, Size s2) =>
+            !s1.Equals(s2);
 
         /// <summary>
         /// Obte l'amplada.
         /// </summary>
         /// 
-        public int Width {
-            get {
-                return width;
-            }
-        }
+        public int Width => width;
 
         /// <summary>
         /// Obte l'alçada
         /// </summary>
         /// 
-        public int Height {
-            get {
-                return height;
-            }
-        }
+        public int Height => height;
     }
 }

@@ -14,7 +14,7 @@
         public PartAttributeAdapter(Part part, TextElement text) {
 
             if (text == null)
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
 
             this.text = text;
             if (part != null && !String.IsNullOrEmpty(text.Value) && text.Value.StartsWith(">"))

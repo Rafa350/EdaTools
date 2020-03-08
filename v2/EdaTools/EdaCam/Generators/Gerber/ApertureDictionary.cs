@@ -143,7 +143,7 @@
         public void DefineCircleAperture(int diameter, string tag = null) {
 
             if (diameter <= 0)
-                throw new ArgumentOutOfRangeException("diameter");
+                throw new ArgumentOutOfRangeException(nameof(diameter));
 
             int key = GetCircleKey(diameter, tag);
             if (!items.ContainsKey(key)) {
@@ -163,10 +163,10 @@
         public void DefineRectangleAperture(int width, int height, Angle rotation, string tag = null) {
 
             if (width <= 0)
-                throw new ArgumentOutOfRangeException("width");
+                throw new ArgumentOutOfRangeException(nameof(width));
 
             if (height <= 0)
-                throw new ArgumentOutOfRangeException("height");
+                throw new ArgumentOutOfRangeException(nameof(height));
 
             int key = GetRectangleKey(width, height, rotation, tag);
             if (!items.ContainsKey(key)) {
@@ -193,19 +193,19 @@
         public void DefineRoundRectangleAperture(int width, int height, int radius, Angle rotation, string tag = null) {
 
             if (width <= 0)
-                throw new ArgumentOutOfRangeException("width");
+                throw new ArgumentOutOfRangeException(nameof(width));
 
             if (height <= 0)
-                throw new ArgumentOutOfRangeException("height");
+                throw new ArgumentOutOfRangeException(nameof(height));
 
             if (radius <= 0)
-                throw new ArgumentOutOfRangeException("radius");
+                throw new ArgumentOutOfRangeException(nameof(radius));
 
             if (width - (2 * radius) <= 0)
-                throw new ArgumentOutOfRangeException("radius");
+                throw new ArgumentOutOfRangeException(nameof(radius));
 
             if (height - (2 * radius) <= 0)
-                throw new ArgumentOutOfRangeException("radius");
+                throw new ArgumentOutOfRangeException(nameof(radius));
 
             int key = GetRoundRectangleKey(width, height, radius, rotation, tag);
             if (!items.ContainsKey(key)) {
@@ -224,7 +224,7 @@
         public void DefineOctagonAperture(int size, Angle rotation, string tag = null) {
 
             if (size <= 0)
-                throw new ArgumentOutOfRangeException("size");
+                throw new ArgumentOutOfRangeException(nameof(size));
 
             int key = GetOctagonKey(size, rotation, tag);
             if (!items.ContainsKey(key)) {
@@ -244,10 +244,10 @@
         public void DefineOvalAperture(int width, int height, Angle rotation, string tag = null) {
 
             if (width <= 0)
-                throw new ArgumentOutOfRangeException("width");
+                throw new ArgumentOutOfRangeException(nameof(width));
 
             if (height <= 0)
-                throw new ArgumentOutOfRangeException("height");
+                throw new ArgumentOutOfRangeException(nameof(height));
 
             int key = GetOvalKey(width, height, rotation, tag);
             if (!items.ContainsKey(key)) {
@@ -341,20 +341,14 @@
         /// Enumera tots els macros definits.
         /// </summary>
         /// 
-        public IEnumerable<Macro> Macros {
-            get {
-                return macros;
-            }
-        }
+        public IEnumerable<Macro> Macros =>
+            macros;
 
         /// <summary>
         /// Enumera totes les apertures definides.
         /// </summary>
         /// 
-        public IEnumerable<Aperture> Apertures {
-            get {
-                return items.Values;
-            }
-        }
+        public IEnumerable<Aperture> Apertures =>
+            items.Values;
     }
 }

@@ -24,7 +24,7 @@
         public XmlReaderAdapter(XmlReader reader) {
 
             if (reader == null)
-                throw new ArgumentNullException("reader");
+                throw new ArgumentNullException(nameof(reader));
 
             this.reader = reader;
             isEmpty = false;
@@ -105,7 +105,7 @@
         public bool AttributeExists(string name) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             return attributes.ContainsKey(name);
         }
@@ -120,7 +120,7 @@
         public string AttributeAsString(string name, string defValue = null) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (attributes.ContainsKey(name))
                 return attributes[name];
@@ -138,7 +138,7 @@
         public IEnumerable<string> AttributeAsStrings(string name, string[] defValue = null) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (attributes.ContainsKey(name))
                 return attributes[name].Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -156,7 +156,7 @@
         public bool AttributeAsBoolean(string name, bool defValue = false) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (attributes.ContainsKey(name))
                 return XmlConvert.ToBoolean(attributes[name]);
@@ -174,7 +174,7 @@
         public int AttributeAsInteger(string name, int defValue = 0) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (attributes.ContainsKey(name))
                 return XmlConvert.ToInt32(attributes[name]);
@@ -192,7 +192,7 @@
         public double AttributeAsDouble(string name, double defValue = 0.0) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (attributes.ContainsKey(name))
                 return XmlConvert.ToDouble(attributes[name]);
@@ -211,7 +211,7 @@
         public T AttributeAsEnum<T>(string name, T defValue) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (attributes.ContainsKey(name))
                 return (T)Enum.Parse(typeof(T), attributes[name], true);
@@ -222,7 +222,7 @@
         public bool IsStartTag(string tagName) {
 
             if (String.IsNullOrEmpty(tagName))
-                throw new ArgumentNullException("tagName");
+                throw new ArgumentNullException(nameof(tagName));
 
             return (this.tagName == tagName) && isStart;
         }
@@ -230,7 +230,7 @@
         public bool IsEndTag(string tagName) {
 
             if (String.IsNullOrEmpty(tagName))
-                throw new ArgumentNullException("tagName");
+                throw new ArgumentNullException(nameof(tagName));
 
             return (this.tagName == tagName) && !isStart;
         }

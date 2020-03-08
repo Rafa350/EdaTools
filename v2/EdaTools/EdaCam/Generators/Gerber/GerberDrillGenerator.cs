@@ -43,7 +43,7 @@
                 throw new ArgumentNullException("panel");
 
             if (String.IsNullOrEmpty(outputFolder))
-                throw new ArgumentNullException("outputFolder");
+                throw new ArgumentNullException(nameof(outputFolder));
 
             string fileName = Path.Combine(outputFolder, Target.FileName);
 

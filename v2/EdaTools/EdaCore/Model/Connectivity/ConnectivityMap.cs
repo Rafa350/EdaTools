@@ -52,7 +52,7 @@
         public void Add(Board board) {
 
             if (board == null)
-                throw new ArgumentNullException("board");
+                throw new ArgumentNullException(nameof(board));
 
             var visitor = new AddElementVisitor(this);
             board.AcceptVisitor(visitor);
@@ -66,7 +66,7 @@
         public void Add(Element element) {
 
             if (element == null)
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
 
             if (element is ViaElement via)
                 AddViaElement(via);

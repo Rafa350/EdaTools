@@ -26,13 +26,13 @@
             base(id, tag) {
 
             if (width <= 0)
-                throw new ArgumentOutOfRangeException("width");
+                throw new ArgumentOutOfRangeException(nameof(width));
 
             if (height <= 0)
-                throw new ArgumentOutOfRangeException("height");
+                throw new ArgumentOutOfRangeException(nameof(height));
 
             if (drill >= width || drill >= height)
-                throw new ArgumentOutOfRangeException("drill");
+                throw new ArgumentOutOfRangeException(nameof(drill));
 
             this.width = width;
             this.height = height;
@@ -63,30 +63,21 @@
         /// Obte l'amplada.
         /// </summary>
         /// 
-        public int Width {
-            get {
-                return width;
-            }
-        }
+        public int Width =>
+            width;
 
         /// <summary>
         /// Obte l'alçada.
         /// </summary>
         ///
-        public int Height {
-            get {
-                return height;
-            }
-        }
+        public int Height =>
+            height;
 
         /// <summary>
         /// Obte el diametre del forat.
         /// </summary>
         /// 
-        public int Drill {
-            get {
-                return drill;
-            }
-        }
+        public int Drill =>
+            drill;
     }
 }

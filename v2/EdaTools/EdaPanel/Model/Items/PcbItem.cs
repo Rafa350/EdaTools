@@ -19,7 +19,7 @@
             base() {
 
             if (String.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
 
             this.fileName = fileName;
         }
@@ -35,7 +35,7 @@
         public PcbItem(string fileName, Point position, Size size, Angle rotation) {
 
             if (String.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
 
             this.position = position;
             this.size = size;

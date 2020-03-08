@@ -17,7 +17,7 @@
         public ConnectivityAnchor(Point position, IEnumerable<ConnectivityItem> items) {
 
             if (items == null)
-                throw new ArgumentNullException("items");
+                throw new ArgumentNullException(nameof(items));
 
             this.position = position;
             this.items = new List<ConnectivityItem>(items);
@@ -26,7 +26,7 @@
         public void AddItem(ConnectivityItem item) {
 
             if (item == null)
-                throw new ArgumentNullException("item");
+                throw new ArgumentNullException(nameof(item));
 
             if (items == null)
                 items = new List<ConnectivityItem>();
@@ -37,7 +37,7 @@
         public void RemoveItem(ConnectivityItem item) {
 
             if (item == null)
-                throw new ArgumentNullException("item");
+                throw new ArgumentNullException(nameof(item));
 
             items.Remove(item);
 

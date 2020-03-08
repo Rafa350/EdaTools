@@ -38,7 +38,7 @@
         public LibraryStreamReader(Stream stream) {
 
             if (stream == null)
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
 
             if (!stream.CanRead)
                 throw new InvalidOperationException("El stream no es de lectura.");

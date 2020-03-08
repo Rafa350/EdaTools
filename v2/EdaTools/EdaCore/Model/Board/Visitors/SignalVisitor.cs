@@ -12,7 +12,7 @@
         public override void Visit(Board board) {
 
             if (board == null)
-                throw new ArgumentNullException("board");
+                throw new ArgumentNullException(nameof(board));
 
             Board savedBoard = currentBoard;
             currentBoard = board;

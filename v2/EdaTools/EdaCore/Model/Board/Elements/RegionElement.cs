@@ -60,10 +60,10 @@
             base(layerSet) {
 
             if (thickness < 0)
-                throw new ArgumentOutOfRangeException("thickness");
+                throw new ArgumentOutOfRangeException(nameof(thickness));
 
             if (clearance < 0)
-                throw new ArgumentOutOfRangeException("clearance");
+                throw new ArgumentOutOfRangeException(nameof(clearance));
 
             this.thickness = thickness;
             this.filled = filled;
@@ -98,7 +98,7 @@
         }
 
         /// <summary>
-        /// Creas el poligon del element.
+        /// Crea el poligon del element.
         /// </summary>
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El poligon.</returns>

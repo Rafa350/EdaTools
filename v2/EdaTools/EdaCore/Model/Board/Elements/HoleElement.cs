@@ -24,7 +24,7 @@
             base(layerSet) {
 
             if (drill <= 0)
-                throw new ArgumentOutOfRangeException("drill");
+                throw new ArgumentOutOfRangeException(nameof(drill));
 
             this.position = position;
             this.drill = drill;

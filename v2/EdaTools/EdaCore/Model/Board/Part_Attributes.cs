@@ -15,7 +15,7 @@
         public void AddAttribute(PartAttribute attribute) {
 
             if (attribute == null)
-                throw new ArgumentNullException("attribute");
+                throw new ArgumentNullException(nameof(attribute));
 
             if (attributes == null)
                 attributes = new Dictionary<string, PartAttribute>();
@@ -30,7 +30,7 @@
         public void AddAttributes(IEnumerable<PartAttribute> attributes) {
 
             if (attributes == null)
-                throw new ArgumentNullException("attributes");
+                throw new ArgumentNullException(nameof(attributes));
 
             foreach (var attribute in attributes)
                 AddAttribute(attribute);
@@ -44,7 +44,7 @@
         public void RemoveAttribute(PartAttribute attribute) {
 
             if (attribute == null)
-                throw new ArgumentNullException("attribute");
+                throw new ArgumentNullException(nameof(attribute));
 
             attributes.Remove(attribute.Name);
             if (attributes.Count == 0)
@@ -60,7 +60,7 @@
         public PartAttribute GetAttribute(string name) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if ((attributes != null) && attributes.TryGetValue(name, out PartAttribute attribute))
                 return attribute;

@@ -21,7 +21,7 @@
         public void AddElement(Element element) {
 
             if (element == null)
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
 
             if ((elements != null) && elements.Contains(element))
                 throw new InvalidOperationException("El elemento ya pertenece a un componente.");
@@ -47,7 +47,7 @@
         public void AddElements(IEnumerable<Element> elements) {
 
             if (elements == null)
-                throw new ArgumentNullException("elements");
+                throw new ArgumentNullException(nameof(elements));
 
             foreach (var element in elements)
                 AddElement(element);
@@ -61,7 +61,7 @@
         public void RemoveElement(Element element) {
 
             if (element == null)
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
 
             // Comprova que l'element estigui en la llista
             //

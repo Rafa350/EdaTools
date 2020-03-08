@@ -29,10 +29,10 @@
         public override void Generate(Board board, string outputFolder, GeneratorOptions options = null) {
 
             if (board == null)
-                throw new ArgumentNullException("board");
+                throw new ArgumentNullException(nameof(board));
 
             if (String.IsNullOrEmpty(outputFolder))
-                throw new ArgumentNullException("outputFolder");
+                throw new ArgumentNullException(nameof(outputFolder));
 
             string fileName = Path.Combine(outputFolder, Target.FileName);
 

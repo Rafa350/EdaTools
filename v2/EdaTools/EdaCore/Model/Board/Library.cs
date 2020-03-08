@@ -11,7 +11,7 @@
         public Library(string name) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             this.name = name;
         }
@@ -19,7 +19,7 @@
         public Library(string name, string description, IEnumerable<Component> components) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             this.name = name;
             this.description = description;

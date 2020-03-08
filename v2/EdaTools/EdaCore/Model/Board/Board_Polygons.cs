@@ -48,7 +48,7 @@
         public Polygon GetRegionPolygon(RegionElement region, string layerName, Transformation transformation) {
 
             if (region == null)
-                throw new ArgumentNullException("region");
+                throw new ArgumentNullException(nameof(region));
 
             // Si el poligon no es troba en la capa d'interes, no cal fer res
             //

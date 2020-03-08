@@ -23,7 +23,7 @@
         public ParentChildKeyCollection(TParent parent) {
 
             if (parent == null)
-                throw new ArgumentNullException("parent");
+                throw new ArgumentNullException(nameof(parent));
 
             this.parent = parent;
         }
@@ -36,7 +36,7 @@
         public new void Add(TChild child) {
 
             if (child == null)
-                throw new ArgumentNullException("child");
+                throw new ArgumentNullException(nameof(child));
 
             base.Add(child);
             child.AssignParent(parent);
@@ -50,7 +50,7 @@
         public new void Remove(TChild child) {
 
             if (child == null)
-                throw new ArgumentNullException("child");
+                throw new ArgumentNullException(nameof(child));
 
             base.Remove(child);
             child.AssignParent(null);

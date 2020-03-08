@@ -67,16 +67,16 @@
             base(name, layerSet, position, rotation) {
 
             if (topSize < 0)
-                throw new ArgumentOutOfRangeException("topSize");
+                throw new ArgumentOutOfRangeException(nameof(topSize));
 
             if (innerSize < 0)
-                throw new ArgumentOutOfRangeException("innerSize");
+                throw new ArgumentOutOfRangeException(nameof(innerSize));
 
             if (bottomSize < 0)
-                throw new ArgumentOutOfRangeException("bottomSize");
+                throw new ArgumentOutOfRangeException(nameof(bottomSize));
 
             if (drill <= 0)
-                throw new ArgumentOutOfRangeException("drill");
+                throw new ArgumentOutOfRangeException(nameof(drill));
 
             this.topSize = topSize;
             this.innerSize = innerSize;
@@ -104,6 +104,15 @@
 
             visitor.Visit(this);
         }
+
+        public override int GetHashCode() =>
+            Position.GetHashCode() +
+            (innerSize * 21032) +
+            (topSize * 78931) +
+            (bottomSize * 974) +
+            (shape.GetHashCode() * 721) +
+            Rotation.GetHashCode() +
+            drill * 37000;
 
         /// <summary>
         /// Crea la llista de punts d'un poligon
@@ -160,9 +169,18 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = MakePoints(side, 0);
-            Point[] holePoints = PolygonBuilder.MakeCircle(Position, drill / 2);
-            return new Polygon(points, new Polygon(holePoints));
+            int hash = GetHashCode() + (side.GetHashCode() * 2798761);
+            Polygon polygon = PolygonCache.Get(hash);
+            if (polygon == null) {
+
+                Point[] points = MakePoints(side, 0);
+                Point[] holePoints = PolygonBuilder.MakeCircle(Position, drill / 2);
+                polygon = new Polygon(points, new Polygon(holePoints));
+
+                PolygonCache.Save(hash, polygon);
+            }
+
+            return polygon;
         }
 
         /// <summary>
@@ -174,8 +192,17 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = MakePoints(side, spacing);
-            return new Polygon(points);
+            int hash = GetHashCode() + (side.GetHashCode() * 47211) + spacing * 99997;
+            Polygon polygon = PolygonCache.Get(hash);
+            if (polygon == null) {
+                
+                Point[] points = MakePoints(side, spacing);
+                polygon = new Polygon(points);
+
+                PolygonCache.Save(hash, polygon);
+            }
+
+            return polygon;
         }
 
         /// <summary>

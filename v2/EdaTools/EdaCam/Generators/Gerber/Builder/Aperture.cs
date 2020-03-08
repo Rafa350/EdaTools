@@ -30,30 +30,21 @@
         /// Obte el ID de l'apertura.
         /// </summary>
         /// 
-        public int Id {
-            get {
-                return id;
-            }
-        }
+        public int Id =>
+            id;
 
         /// <summary>
         /// Obte la comanda Gerber per definir l'apertura.
         /// </summary>
         /// 
-        public string Command {
-            get {
-                return GetCommand();
-            }
-        }
+        public string Command =>
+            GetCommand();
 
         /// <summary>
         /// Obte les dades opcionals
         /// </summary>
         /// 
-        public object Tag {
-            get {
-                return tag;
-            }
-        }
+        public object Tag =>
+            tag;
     }
 }

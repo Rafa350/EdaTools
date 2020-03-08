@@ -19,7 +19,7 @@
         public Macro(int id, string text) {
 
             if (String.IsNullOrEmpty(text))
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
 
             this.id = id;
             this.text = text;
@@ -45,20 +45,14 @@
         /// Obte el ID del macro.
         /// </summary>
         /// 
-        public int Id {
-            get {
-                return id;
-            }
-        }
+        public int Id =>
+            id;
 
         /// <summary>
         /// Obte la comanda Gerber per la definicio del macro.
         /// </summary>
         /// 
-        public string Command {
-            get {
-                return GetCommand();
-            }
-        }
+        public string Command =>
+            GetCommand();
     }
 }

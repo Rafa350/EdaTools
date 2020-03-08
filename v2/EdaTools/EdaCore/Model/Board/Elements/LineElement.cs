@@ -33,7 +33,7 @@
             base(layerSet) {
 
             if (thickness < 0)
-                throw new ArgumentOutOfRangeException("thickness");
+                throw new ArgumentOutOfRangeException(nameof(thickness));
 
             this.startPosition = startPosition;
             this.endPosition = endPosition;

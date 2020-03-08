@@ -11,8 +11,9 @@
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.IO;
     using EdaBoardViewer.Render;
+    using EdaBoardViewer.Tools;
 
-    public class BoardView : UserControl {
+    public class SceneView : UserControl {
 
         private enum PointerButton {
             None,
@@ -49,6 +50,9 @@
         private readonly ViewPoint viewPoint;
         private readonly BoardScene boardScene;
 
+        private DesignTool currentTool = null;
+        private DesignTool selectorTool = new DesignTool();
+
         private PointerButton pressedButton = PointerButton.None;
         private Point currentPos;
         private Point pressedPos;
@@ -59,7 +63,7 @@
         ///  Constructor.
         /// </summary>
         /// 
-        public BoardView() {
+        public SceneView() {
 
             this.InitializeComponent();
 
@@ -67,6 +71,10 @@
             viewPoint.Changed += (sender, e) => OnViewPointChanged(e);
 
             boardScene = new BoardScene();
+
+            selectorTool.PointerReleased += (s, e) => SelectorToolReleased(e);
+            currentTool = selectorTool;
+            currentTool.Activate();
         }
 
         /// <summary>
@@ -126,6 +134,10 @@
             base.OnPropertyChanged(e);
         }
 
+        private void SelectorToolReleased(DesignTool.PointerEventArgs e) {
+
+        }
+
         /// <summary>
         /// Procesa l'event de moviment del punter.
         /// </summary>
@@ -137,6 +149,9 @@
             //
             Point p = e.GetPosition(designer);
             currentPos = viewPoint.TransformToWorld(p);
+
+            if (currentTool != null)
+                currentTool.Move(currentPos);
 
             // Actualitza els controls de diseny
             //
@@ -174,6 +189,9 @@
             //
             currentPos = viewPoint.TransformToWorld(pp.Position);
             pressedPos = currentPos;
+
+            if (currentTool != null)
+                currentTool.Press(currentPos);
 
             // Obte el boto premut.
             //
@@ -215,6 +233,9 @@
             //
             Point p = e.GetPosition(designer);
             Point currentPos = viewPoint.TransformToWorld(p);
+
+            if (currentTool != null)
+                currentTool.Release(currentPos);
 
             switch (pressedButton) {
                 case PointerButton.Middle:

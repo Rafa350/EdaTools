@@ -9,7 +9,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         static public Point[] Poligonize(IEnumerable<Segment> segments) {
 
             if (segments == null)
-                throw new ArgumentNullException("segments");
+                throw new ArgumentNullException(nameof(segments));
 
             Point p = default(Point);
             bool first = true;

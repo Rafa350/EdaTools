@@ -12,7 +12,7 @@
         public void Add(VisualLayer layer) {
 
             if (layer == null)
-                throw new ArgumentNullException("layer");
+                throw new ArgumentNullException(nameof(layer));
 
             if (layers.Contains(layer))
                 throw new InvalidOperationException("Ya existe esta capa en la lista.");

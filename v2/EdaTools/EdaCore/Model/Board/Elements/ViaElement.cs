@@ -23,7 +23,7 @@
             Buried
         }
 
-        private const double Cos2250 = 0.92387953251128675612818318939679;
+        private const double cos2250 = 0.92387953251128675612818318939679;
 
         private int drcOuterSizeMin = 125000;
         private int drcOuterSizeMax = 2500000;
@@ -66,13 +66,13 @@
             base(layerSet) {
 
             if (innerSize < 0)
-                throw new ArgumentOutOfRangeException("innerSize");
+                throw new ArgumentOutOfRangeException(nameof(innerSize));
 
             if (outerSize < 0)
-                throw new ArgumentOutOfRangeException("outerSize");
+                throw new ArgumentOutOfRangeException(nameof(outerSize));
 
             if (drill <= 0)
-                throw new ArgumentOutOfRangeException("drill");
+                throw new ArgumentOutOfRangeException(nameof(drill));
 
             this.position = position;
             this.outerSize = outerSize;
@@ -100,6 +100,19 @@
 
             visitor.Visit(this);
         }
+
+        /// <summary>
+        /// Obte el hash del objecte.
+        /// </summary>
+        /// <returns>El hash.</returns>
+        /// 
+        public override int GetHashCode() =>
+            position.GetHashCode() + 
+            (outerSize * 31) + 
+            (innerSize * 111) + 
+            (drill * 13) +
+            (shape.GetHashCode() * 23) + 
+            (type.GetHashCode() * 73);
 
         /// <summary>
         /// Calcula la llista de puns pels poligons
@@ -131,7 +144,7 @@
                     return PolygonBuilder.MakeRegularPolygon(
                         8,
                         position,
-                        (int)((double)sizeD2 / Cos2250) + spacing,
+                        (int)((double)sizeD2 / cos2250) + spacing,
                         Angle.FromValue(2250));
 
                 default:
@@ -149,9 +162,18 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = MakePoints(side, 0);
-            Point[] holePoints = PolygonBuilder.MakeCircle(position, drill / 2);
-            return new Polygon(points, new Polygon(holePoints));
+            int hash = GetHashCode() * side.GetHashCode() * 273;
+            Polygon polygon = PolygonCache.Get(hash);
+            if (polygon == null) {
+
+                Point[] points = MakePoints(side, 0);
+                Point[] holePoints = PolygonBuilder.MakeCircle(position, drill / 2);
+                polygon = new Polygon(points, new Polygon(holePoints));
+
+                PolygonCache.Save(hash, polygon); 
+            }
+
+            return polygon;
         }
 
         /// <summary>
@@ -163,8 +185,17 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = MakePoints(side, spacing);
-            return new Polygon(points);
+            int hash = GetHashCode() + (side.GetHashCode() * 11327) + (spacing * 131);
+            Polygon polygon = PolygonCache.Get(hash);
+            if (polygon == null) {
+
+                Point[] points = MakePoints(side, spacing);
+                polygon = new Polygon(points);
+
+                PolygonCache.Save(hash, polygon);
+            }
+
+            return polygon;
         }
 
         /// <summary>
@@ -266,11 +297,7 @@
         /// Obte el tipus d'element.
         /// </summary>
         /// 
-        public override ElementType ElementType {
-            get {
-                return ElementType.Via;
-            }
-        }
-
+        public override ElementType ElementType =>
+            ElementType.Via;
     }
 }

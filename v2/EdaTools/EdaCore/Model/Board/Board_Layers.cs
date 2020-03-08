@@ -22,7 +22,7 @@
         public void AddLayer(Layer layer) {
 
             if (layer == null)
-                throw new ArgumentNullException("layer");
+                throw new ArgumentNullException(nameof(layer));
 
             string name = layer.Name;
 
@@ -54,7 +54,7 @@
         public void AddLayers(IEnumerable<Layer> layers) {
 
             if (layers == null)
-                throw new ArgumentNullException("layers");
+                throw new ArgumentNullException(nameof(layers));
 
             foreach (var layer in layers)
                 AddLayer(layer);
@@ -68,7 +68,7 @@
         public void RemoveLayer(Layer layer) {
 
             if (layer == null)
-                throw new ArgumentNullException("layer");
+                throw new ArgumentNullException(nameof(layer));
 
             string name = layer.Name;
 
@@ -127,10 +127,10 @@
         public IReadOnlyList<Layer> GetSignalLayers() {
 
             List<Layer> signalLayers = new List<Layer>();
-            foreach (var layer in layers.Values) {
+            foreach (var layer in layers.Values) 
                 if (layer.Function == LayerFunction.Signal)
                     signalLayers.Add(layer);
-            }
+
             return signalLayers;
         }
 
@@ -167,7 +167,7 @@
         public IEnumerable<Layer> GetLayers(Element element) {
 
             if (element == null)
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(element));
 
             List<Layer> list = new List<Layer>();
             foreach (var id in element.LayerSet) {
@@ -183,40 +183,28 @@
         /// Obte la capa superior.
         /// </summary>
         /// 
-        public Layer TopLayer {
-            get {
-                return topLayer;
-            }
-        }
+        public Layer TopLayer =>
+            topLayer;
 
         /// <summary>
         /// Obte la capa inferior.
         /// </summary>
         /// 
-        public Layer BottomLayer {
-            get {
-                return bottomLayer;
-            }
-        }
+        public Layer BottomLayer =>
+           bottomLayer;
 
         /// <summary>
         /// Obte la capa de perfil.
         /// </summary>
         /// 
-        public Layer OutlineLayer {
-            get {
-                return outlineLayer;
-            }
-        }
+        public Layer OutlineLayer =>
+            outlineLayer;
 
         /// <summary>
         /// Enumera les capes.
         /// </summary>
         /// 
-        public IEnumerable<Layer> Layers {
-            get {
-                return layers?.Values;
-            }
-        }
+        public IEnumerable<Layer> Layers =>
+            layers?.Values;
     }
 }

@@ -29,13 +29,13 @@
             base(id, tag) {
 
             if ((vertex < 3) || (vertex > 12))
-                throw new ArgumentOutOfRangeException("vertex");
+                throw new ArgumentOutOfRangeException(nameof(vertex));
 
             if (diameter == 0)
-                throw new ArgumentOutOfRangeException("diameter");
+                throw new ArgumentOutOfRangeException(nameof(diameter));
 
             if (drill >= diameter)
-                throw new ArgumentOutOfRangeException("drill");
+                throw new ArgumentOutOfRangeException(nameof(drill));
 
             this.vertex = vertex;
             this.diameter = diameter;
@@ -69,41 +69,29 @@
         /// Obte el numero de vertex
         /// </summary>
         /// 
-        public int Vertex {
-            get {
-                return vertex;
-            }
-        }
+        public int Vertex =>
+            vertex;
 
         /// <summary>
         /// Obte el diametre exterior del poligon.
         /// </summary>
         /// 
-        public int Diameter {
-            get {
-                return diameter;
-            }
-        }
+        public int Diameter =>
+            diameter;
 
         /// <summary>
         /// Obte el diametre del forat.
         /// </summary>
         /// 
-        public int Drill {
-            get {
-                return drill;
-            }
-        }
+        public int Drill =>
+            drill;
 
         /// <summary>
         /// Obte l'angle de rotacio.
         /// </summary>
         /// 
-        public Angle Rotation {
-            get {
-                return rotation;
-            }
-        }
+        public Angle Rotation =>
+            rotation;
     }
 }
 

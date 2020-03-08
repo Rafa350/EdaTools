@@ -30,7 +30,7 @@
         public static Point ParsePoint(string source) {
 
             if (string.IsNullOrEmpty(source))
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
 
             string[] ss = source.Split(',');
             double x = XmlConvert.ToDouble(ss[0]);
@@ -48,7 +48,7 @@
         public static Size ParseSize(string source) {
 
             if (string.IsNullOrEmpty(source))
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
 
             string[] ss = source.Split(',');
             double w = XmlConvert.ToDouble(ss[0]);
@@ -66,7 +66,7 @@
         public static Angle ParseAngle(string source) {
 
             if (string.IsNullOrEmpty(source))
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
 
             return Angle.FromValue((int)(XmlConvert.ToDouble(source) * angleMultiplier));
         }
@@ -80,7 +80,7 @@
         public static Ratio ParseRatio(string source) {
 
             if (string.IsNullOrEmpty(source))
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
 
             return Ratio.FromValue((int)(XmlConvert.ToDouble(source) * ratioMultiplier));
         }

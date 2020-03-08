@@ -77,7 +77,7 @@
         public GerberBuilder(TextWriter writer) {
 
             if (writer == null)
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
 
             this.writer = writer;
         }
@@ -350,7 +350,7 @@
         public void DefineAperture(Aperture aperture) {
 
             if (aperture == null)
-                throw new ArgumentNullException("aperture");
+                throw new ArgumentNullException(nameof(aperture));
 
             writer.WriteLine(aperture.Command);
         }
@@ -363,7 +363,7 @@
         public void DefineApertures(IEnumerable<Aperture> apertures) {
 
             if (apertures == null)
-                throw new ArgumentNullException("apertures");
+                throw new ArgumentNullException(nameof(apertures));
 
             foreach (Aperture aperture in apertures)
                 DefineAperture(aperture);
@@ -377,7 +377,7 @@
         public void DefineMacro(Macro macro) {
 
             if (macro == null)
-                throw new ArgumentNullException("macro");
+                throw new ArgumentNullException(nameof(macro));
 
             writer.WriteLine(macro.Command);
         }
@@ -390,7 +390,7 @@
         public void DefineMacros(IEnumerable<Macro> macros) {
 
             if (macros == null)
-                throw new ArgumentNullException("macros");
+                throw new ArgumentNullException(nameof(macros));
 
             foreach (Macro macro in macros)
                 DefineMacro(macro);
@@ -404,7 +404,7 @@
         public void SelectAperture(Aperture aperture) {
 
             if (aperture == null)
-                throw new ArgumentNullException("aperture");
+                throw new ArgumentNullException(nameof(aperture));
 
             if (state.SetAperture(aperture))
                 writer.WriteLine(String.Format("D{0:00}*", aperture.Id));
@@ -538,10 +538,10 @@
         public void SetCoordinateFormat(int precision, int decimals) {
 
             if ((precision < 4) || (precision > 9))
-                throw new ArgumentOutOfRangeException("precision");
+                throw new ArgumentOutOfRangeException(nameof(precision));
 
             if ((decimals < 1) || (decimals > precision - 2))
-                throw new ArgumentOutOfRangeException("decimals");
+                throw new ArgumentOutOfRangeException(nameof(decimals));
 
             this.precision = precision;
             this.decimals = decimals;
@@ -558,7 +558,7 @@
         public void SetUnits(Units units) {
 
             if (units == Units.Unknown)
-                throw new ArgumentOutOfRangeException("units");
+                throw new ArgumentOutOfRangeException(nameof(units));
 
             writer.WriteLine(String.Format("%MO{0}*%", units == Units.Inches ? "IN" : "MM"));
         }

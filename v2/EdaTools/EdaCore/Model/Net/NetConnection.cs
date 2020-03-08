@@ -10,10 +10,10 @@
         public NetConnection(string partName, string padName) {
 
             if (String.IsNullOrEmpty(partName))
-                throw new ArgumentNullException("partName");
+                throw new ArgumentNullException(nameof(partName));
 
             if (String.IsNullOrEmpty(padName))
-                throw new ArgumentNullException("padName");
+                throw new ArgumentNullException(nameof(padName));
 
             this.partName = partName;
             this.padName = padName;

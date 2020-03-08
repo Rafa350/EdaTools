@@ -109,7 +109,7 @@
         public NetStreamWriter(Stream stream) {
 
             if (stream == null)
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
 
             if (!stream.CanWrite)
                 throw new InvalidOperationException("El stream no es de escritura.");
@@ -125,7 +125,7 @@
         public void Write(Net net) {
 
             if (net == null)
-                throw new ArgumentNullException("net");
+                throw new ArgumentNullException(nameof(net));
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;

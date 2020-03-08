@@ -29,7 +29,7 @@
         public void AddFolder(string folder) {
 
             if (String.IsNullOrEmpty(folder))
-                throw new ArgumentNullException("folder");
+                throw new ArgumentNullException(nameof(folder));
 
             if (!folders.Contains(folder))
                 folders.Add(folder);
@@ -44,7 +44,7 @@
         public string GetPath(string fileName) {
 
             if (String.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
 
             if (File.Exists(fileName))
                 return fileName;

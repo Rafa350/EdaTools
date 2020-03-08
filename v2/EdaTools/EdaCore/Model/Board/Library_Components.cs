@@ -15,7 +15,7 @@
         public void AddComponent(Component component) {
 
             if (component == null)
-                throw new ArgumentNullException("component");
+                throw new ArgumentNullException(nameof(component));
 
             if ((components != null) && components.ContainsKey(component.Name))
                 throw new InvalidOperationException(
@@ -34,7 +34,7 @@
         public void AddComponents(IEnumerable<Component> components) {
 
             if (components == null)
-                throw new ArgumentNullException("components");
+                throw new ArgumentNullException(nameof(components));
 
             foreach (var component in components)
                 AddComponent(component);
@@ -48,7 +48,7 @@
         public void RemoveComponent(Component component) {
 
             if (component == null)
-                throw new ArgumentNullException("component");
+                throw new ArgumentNullException(nameof(component));
 
             if ((components == null) || components.ContainsKey(component.Name))
                 throw new InvalidOperationException(

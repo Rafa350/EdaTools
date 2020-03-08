@@ -25,10 +25,10 @@
         public Part(Component component, string name, Point position, Angle rotation, bool flip = false) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (component == null)
-                throw new ArgumentNullException("component");
+                throw new ArgumentNullException(nameof(component));
 
             this.name = name;
             this.position = position;
@@ -116,7 +116,7 @@
         public PadElement GetPad(string name, bool throwOnError = true) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             PadElement pad = component.GetPad(name, false);
             if (pad != null)

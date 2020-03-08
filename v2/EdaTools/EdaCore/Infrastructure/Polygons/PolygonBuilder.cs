@@ -8,7 +8,10 @@
     /// utilitzades comunment pel les plaques. Important: Tots els poligons cal que tinguin
     /// l'orientacio CCW.
     /// </summary>
+    /// 
     internal static class PolygonBuilder {
+
+        private const int circleFacets = 32;
 
         /// <summary>
         /// Crea una llista de punts en forma de segment de linia amb finals arrodonits
@@ -16,7 +19,7 @@
         /// <param name="start">Posicio inicial.</param>
         /// <param name="end">Posicio final.</param>
         /// <param name="thickness">Amplada de linia.</param>
-        /// <param name="capRounded">True si els extrems son arrodinits.</param>
+        /// <param name="capRounded">True si els extrems son arrodonits.</param>
         /// <returns>La llista de punts.</returns>
         /// 
         public static Point[] MakeLineTrace(Point start, Point end, int thickness, bool capRounded) {
@@ -70,7 +73,7 @@
         /// 
         public static Point[] MakeCircle(Point center, int radius) {
 
-            return MakeRegularPolygon(32, center, radius, Angle.Zero);
+            return MakeRegularPolygon(circleFacets, center, radius, Angle.Zero);
         }
 
         /// <summary>

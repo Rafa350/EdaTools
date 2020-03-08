@@ -8,7 +8,7 @@
         public Net(IEnumerable<NetSignal> signals) {
 
             if (signals == null)
-                throw new ArgumentNullException("signals");
+                throw new ArgumentNullException(nameof(signals));
 
             InitializeSignals(signals);
         }

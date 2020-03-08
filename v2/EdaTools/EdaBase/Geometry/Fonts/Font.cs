@@ -25,7 +25,7 @@
         private Font(string name, int height, int ascendent, IEnumerable<Glyph> glyphs) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             this.name = name;
             this.height = height;

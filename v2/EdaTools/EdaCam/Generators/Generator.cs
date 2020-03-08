@@ -16,7 +16,7 @@
         public Generator(Target target) {
 
             if (target == null)
-                throw new ArgumentNullException("target");
+                throw new ArgumentNullException(nameof(target));
 
             this.target = target;
         }

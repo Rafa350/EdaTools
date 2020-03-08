@@ -19,7 +19,7 @@
         public CamProcessor(Project project) {
 
             if (project == null)
-                throw new ArgumentNullException("project");
+                throw new ArgumentNullException(nameof(project));
 
             this.project = project;
         }

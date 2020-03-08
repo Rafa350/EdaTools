@@ -127,10 +127,8 @@
         /// values are (0,0,1).
         /// </remarks>
         /// 
-        public double GetDeterminant() {
-
-            return (m11 * m22) - (m12 * m21);
-        }
+        public double GetDeterminant() =>
+            (m11 * m22) - (m12 * m21);
 
         /// <summary>
         /// Inverts the Matrix.
@@ -159,16 +157,14 @@
         /// <param name="value2">The second source matrix.</param>
         /// <returns>The product matrix.</returns>
         /// 
-        public static Matrix2D operator *(Matrix2D value1, Matrix2D value2) {
-
-            return new Matrix2D(
+        public static Matrix2D operator *(Matrix2D value1, Matrix2D value2) =>
+            new Matrix2D(
                 (value1.m11 * value2.m11) + (value1.m12 * value2.m21),
                 (value1.m11 * value2.m12) + (value1.m12 * value2.m22),
                 (value1.m21 * value2.m11) + (value1.m22 * value2.m21),
                 (value1.m21 * value2.m12) + (value1.m22 * value2.m22),
                 (value1.tx * value2.m11) + (value1.ty * value2.m21) + value2.tx,
                 (value1.tx * value2.m12) + (value1.ty * value2.m22) + value2.ty);
-        }
 
         /// <summary>
         /// Negates the given matrix by multiplying all values by -1.
@@ -176,10 +172,8 @@
         /// <param name="value">The source matrix.</param>
         /// <returns>The negated matrix.</returns>
         /// 
-        public static Matrix2D operator -(Matrix2D value) {
-
-            return value.Invert();
-        }
+        public static Matrix2D operator -(Matrix2D value) =>
+            value.Invert();
 
         /// <summary>
         /// Returns a boolean indicating whether the given matrices are equal.
@@ -188,10 +182,8 @@
         /// <param name="value2">The second source matrix.</param>
         /// <returns>True if the matrices are equal; False otherwise.</returns>
         /// 
-        public static bool operator ==(Matrix2D value1, Matrix2D value2) {
-
-            return value1.Equals(value2);
-        }
+        public static bool operator ==(Matrix2D value1, Matrix2D value2) =>
+            value1.Equals(value2);
 
         /// <summary>
         /// Returns a boolean indicating whether the given matrices are not equal.
@@ -200,10 +192,8 @@
         /// <param name="value2">The second source matrix.</param>
         /// <returns>True if the matrices are not equal; False if they are equal.</returns>
         /// 
-        public static bool operator !=(Matrix2D value1, Matrix2D value2) {
-
-            return !value1.Equals(value2);
-        }
+        public static bool operator !=(Matrix2D value1, Matrix2D value2) =>
+            !value1.Equals(value2);
 
         /// <summary>
         /// Operacio de comparacio entre dos objectes.
@@ -211,16 +201,8 @@
         /// <param name="other">L'altre objecte a comparar.</param>
         /// <returns>True si son iguals.</returns>
         /// 
-        public bool Equals(Matrix2D other) {
-
-            return
-                m11 == other.m11 &&
-                m12 == other.m12 &&
-                m21 == other.m21 &&
-                m22 == other.m22 &&
-                tx == other.tx &&
-                ty == other.ty;
-        }
+        public bool Equals(Matrix2D other) =>
+            (m11, m12, m21, m22, tx, ty) == (other.m11, other.m12, other.m21, other.m22, other.tx, other.ty);
 
         /// <summary>
         /// Returns a boolean indicating whether the given Object is equal to this matrix instance.
@@ -228,71 +210,35 @@
         /// <param name="obj">The Object to compare against.</param>
         /// <returns>True if the Object is equal to this matrix; False otherwise.</returns>
         /// 
-        public override bool Equals(object obj) {
-
-            return obj is Matrix2D other && Equals(other);
-        }
+        public override bool Equals(object obj) =>
+            obj is Matrix2D other && Equals(other);
 
         /// <summary>
         /// Returns the hash code for this instance.
         /// </summary>
         /// <returns>The hash code.</returns>
         /// 
-        public override int GetHashCode() {
-
-            return
-                m11.GetHashCode() +
-                m12.GetHashCode() +
-                m21.GetHashCode() +
-                m22.GetHashCode() +
-                tx.GetHashCode() +
-                ty.GetHashCode();
-        }
+        public override int GetHashCode() =>
+            m11.GetHashCode() + m12.GetHashCode() + m21.GetHashCode() + m22.GetHashCode() +
+            tx.GetHashCode() + ty.GetHashCode();
 
         /// <summary>
         /// Obte una matriu identitat.
         /// </summary>
         /// 
-        public static Matrix2D Identity {
-            get {
-                return CreateIdentity();
-            }
-        }
+        public static Matrix2D Identity =>
+            CreateIdentity();
 
-        public double M11 {
-            get {
-                return m11;
-            }
-        }
+        public double M11 => m11;
 
-        public double M12 {
-            get {
-                return m12;
-            }
-        }
+        public double M12 => m12;
 
-        public double M21 {
-            get {
-                return m21;
-            }
-        }
+        public double M21 => m21;
 
-        public double M22 {
-            get {
-                return m22;
-            }
-        }
+        public double M22 => m22;
 
-        public double Tx {
-            get {
-                return tx;
-            }
-        }
+        public double Tx => tx;
 
-        public double Ty {
-            get {
-                return ty;
-            }
-        }
+        public double Ty => ty;
     }
 }

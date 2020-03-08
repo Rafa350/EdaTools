@@ -10,10 +10,10 @@
         public ConnectivityEdge(ConnectivityAnchor anchorA, ConnectivityAnchor anchorB) {
 
             if (anchorA == null)
-                throw new ArgumentNullException("anchorA");
+                throw new ArgumentNullException(nameof(anchorA));
 
             if (anchorB == null)
-                throw new ArgumentNullException("anchorB");
+                throw new ArgumentNullException(nameof(anchorB));
 
             this.anchorA = anchorA;
             this.anchorB = anchorB;

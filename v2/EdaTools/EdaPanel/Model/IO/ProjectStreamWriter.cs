@@ -61,7 +61,7 @@
         public ProjectStreamWriter(Stream stream) {
 
             if (stream == null)
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
 
             if (!stream.CanWrite)
                 throw new InvalidOperationException("El stream no es de escritura.");
@@ -77,7 +77,7 @@
         public void Write(Panel panel) {
 
             if (panel == null)
-                throw new ArgumentNullException("panel");
+                throw new ArgumentNullException(nameof(panel));
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;

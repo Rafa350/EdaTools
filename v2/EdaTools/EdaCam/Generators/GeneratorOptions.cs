@@ -16,7 +16,7 @@
         public void Add(string name, string value) {
 
             if (String.IsNullOrEmpty("name"))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             options.Add(name, value);
         }
@@ -30,7 +30,7 @@
         public bool HasOption(string name) {
 
             if (String.IsNullOrEmpty("name"))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             return options.ContainsKey(name);
         }
@@ -38,7 +38,7 @@
         public string GetOption(string name) {
 
             if (String.IsNullOrEmpty("name"))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (options.TryGetValue(name, out string value))
                 return value;

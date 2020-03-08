@@ -18,7 +18,7 @@
         public override void Visit(Board board) {
 
             if (board == null)
-                throw new ArgumentNullException("board");
+                throw new ArgumentNullException(nameof(board));
 
             Board savedBoard = currentBoard;
             currentBoard = board;
@@ -44,7 +44,7 @@
         public override void Visit(Part part) {
 
             if (part == null)
-                throw new ArgumentNullException("part");
+                throw new ArgumentNullException(nameof(part));
 
             Part savedPart = currentPart;
             currentPart = part;

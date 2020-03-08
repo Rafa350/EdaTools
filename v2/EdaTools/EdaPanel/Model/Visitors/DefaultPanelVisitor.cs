@@ -8,7 +8,7 @@
         public virtual void Visit(Panel project) {
 
             if (project == null)
-                throw new ArgumentNullException("project");
+                throw new ArgumentNullException(nameof(project));
 
             if (project.HasItems)
                 foreach (var item in project.Items)

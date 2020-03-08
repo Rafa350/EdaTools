@@ -32,7 +32,7 @@
         public PartAttribute(string name, string value, bool isVisible = false) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             this.name = name;
             this.value = value;
@@ -49,7 +49,7 @@
             HorizontalTextAlign horizontalAlign, VerticalTextAlign verticalAlign, string value) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             this.name = name;
             this.value = value;

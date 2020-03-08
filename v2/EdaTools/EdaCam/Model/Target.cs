@@ -17,7 +17,7 @@
         public Target(string name) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             this.name = name;
         }
@@ -36,13 +36,13 @@
         public Target(string name, string fileName, string generatorName, Point position, Angle rotation, IEnumerable<string> layerNames = null, IEnumerable<TargetOption> options = null) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if (String.IsNullOrEmpty(fileName))
-                throw new ArgumentNullException("fileName");
+                throw new ArgumentNullException(nameof(fileName));
 
             if (String.IsNullOrEmpty(generatorName))
-                throw new ArgumentNullException("generatorName");
+                throw new ArgumentNullException(nameof(generatorName));
 
             this.name = name;
             this.fileName = fileName;
@@ -65,7 +65,7 @@
         public void AddOption(string name, string value) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             AddOption(new TargetOption(name, value));
         }
@@ -78,7 +78,7 @@
         public void AddOption(TargetOption option) {
 
             if (option == null)
-                throw new ArgumentNullException("option");
+                throw new ArgumentNullException(nameof(option));
 
             if (options == null)
                 options = new Dictionary<string, TargetOption>();
@@ -96,7 +96,7 @@
         public string GetOptionValue(string name, bool throwOnError = true) {
 
             if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
 
             if ((options != null) && options.ContainsKey(name))
                 return options[name].Value;

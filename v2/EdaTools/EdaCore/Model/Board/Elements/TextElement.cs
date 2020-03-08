@@ -37,10 +37,10 @@
             base(layerSet) {
 
             if (height <= 0)
-                throw new ArgumentOutOfRangeException("height");
+                throw new ArgumentOutOfRangeException(nameof(height));
 
             if (thickness <= 0)
-                throw new ArgumentOutOfRangeException("thickness");
+                throw new ArgumentOutOfRangeException(nameof(thickness));
 
             this.position = position;
             this.rotation = rotation;

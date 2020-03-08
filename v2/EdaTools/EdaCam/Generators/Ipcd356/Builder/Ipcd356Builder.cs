@@ -34,7 +34,7 @@
         public Ipcd356Builder(TextWriter writer) {
 
             if (writer == null)
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
 
             this.writer = writer;
         }
@@ -135,19 +135,19 @@
         public void Conductor(Point[] points, int layerNum, int thickness, string netName) {
 
             if (points == null)
-                throw new ArgumentNullException("points");
+                throw new ArgumentNullException(nameof(points));
 
             if (points.Length < 2)
-                throw new ArgumentOutOfRangeException("points");
+                throw new ArgumentOutOfRangeException(nameof(points));
 
             if (layerNum <= 0)
                 throw new ArgumentOutOfRangeException("lauerNum");
 
             if (thickness <= 0)
-                throw new ArgumentOutOfRangeException("thickness");
+                throw new ArgumentOutOfRangeException(nameof(thickness));
 
             if (String.IsNullOrEmpty(netName))
-                throw new ArgumentNullException("netName");
+                throw new ArgumentNullException(nameof(netName));
 
             writer.Write(
                 "378{0,-14} L{1} X{2}Y0000 X{3}Y{4} X{5}Y{6}{7}",
@@ -187,16 +187,16 @@
         public void ThPad(Point position, int drill, string partId, string padId, string netName) {
 
             if (drill <= 0)
-                throw new ArgumentOutOfRangeException("drill");
+                throw new ArgumentOutOfRangeException(nameof(drill));
 
             if (String.IsNullOrEmpty(partId))
-                throw new ArgumentNullException("partId");
+                throw new ArgumentNullException(nameof(partId));
 
             if (String.IsNullOrEmpty(padId))
-                throw new ArgumentNullException("padId");
+                throw new ArgumentNullException(nameof(padId));
 
             if (String.IsNullOrEmpty(netName))
-                throw new ArgumentNullException("netName");
+                throw new ArgumentNullException(nameof(netName));
 
             writer.Write(
                 "317{0,-14}   {3,-6}-{4,-4} D{5}PA00X{1}Y{2}",
@@ -221,13 +221,13 @@
         public void SmdPad(Point position, TestAccess access, string partId, string padId, string netName) {
 
             if (String.IsNullOrEmpty(partId))
-                throw new ArgumentNullException("partId");
+                throw new ArgumentNullException(nameof(partId));
 
             if (String.IsNullOrEmpty(padId))
-                throw new ArgumentNullException("padId");
+                throw new ArgumentNullException(nameof(padId));
 
             if (String.IsNullOrEmpty(netName))
-                throw new ArgumentNullException("netName");
+                throw new ArgumentNullException(nameof(netName));
 
             writer.Write(
                 "327{0,-14}   {3,-6}-{4,-4}       A{5}X{1}Y{2}",
@@ -250,10 +250,10 @@
         public void Via(Point position, int drill, string netName) {
 
             if (drill <= 0)
-                throw new ArgumentOutOfRangeException("drill");
+                throw new ArgumentOutOfRangeException(nameof(drill));
 
             if (String.IsNullOrEmpty(netName))
-                throw new ArgumentNullException("netName");
+                throw new ArgumentNullException(nameof(netName));
 
             writer.Write(
                 "317{0,-14}   VIA   -     D{3}PA00X{1}Y{2}",

@@ -10,7 +10,7 @@
         public override void Visit(Board board) {
 
             if (board == null)
-                throw new ArgumentNullException("board");
+                throw new ArgumentNullException(nameof(board));
 
             Board savedBoard = currentBoard;
             currentBoard = board;
@@ -27,7 +27,7 @@
         public override void Visit(Component component) {
 
             if (component == null)
-                throw new ArgumentNullException("component");
+                throw new ArgumentNullException(nameof(component));
 
             Component savedComponent = currentComponent;
             currentComponent = component;

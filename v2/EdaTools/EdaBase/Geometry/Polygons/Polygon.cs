@@ -11,6 +11,7 @@
 
         private readonly Point[] points;
         private readonly Polygon[] childs;
+        private Rect? bbox = null;
 
         /// <summary>
         /// Constructor del poligon.
@@ -28,7 +29,7 @@
         /// <summary>
         /// Constructor del poligon.
         /// </summary>
-        /// <param name="points">Plista de punts.</param>
+        /// <param name="points">Lista de punts.</param>
         /// <param name="childs">Llista de fills.</param>
         /// 
         public Polygon(Point[] points, params Polygon[] childs) {
@@ -170,21 +171,15 @@
             }
         }
 
-        public bool IsClockwise {
-            get {
-                return GetSignedArea(points) < 0;
-            }
-        }
+        public bool IsClockwise =>
+            GetSignedArea(points) < 0;
 
         /// <summary>
         /// Obte l'area del poligon
         /// </summary>
         /// 
-        public int Area {
-            get {
-                return Math.Abs(GetSignedArea(points));
-            }
-        }
+        public int Area =>
+            Math.Abs(GetSignedArea(points));
 
         /// <summary>
         /// Obte el bounding-box del poligon.
@@ -192,28 +187,22 @@
         /// 
         public Rect BoundingBox {
             get {
-                return GetBoundingBox(points);
+                if (!bbox.HasValue)
+                    bbox = GetBoundingBox(points);
+                return bbox.Value;
             }
         }
-
+            
         /// <summary>
         /// Obte els punts del poligon.
         /// </summary>
         /// 
-        public Point[] Points {
-            get {
-                return points;
-            }
-        }
+        public Point[] Points => points;
 
         /// <summary>
         /// Obte els fills del poligon.
         /// </summary>
         /// 
-        public Polygon[] Childs {
-            get {
-                return childs;
-            }
-        }
+        public Polygon[] Childs => childs;
     }
 }

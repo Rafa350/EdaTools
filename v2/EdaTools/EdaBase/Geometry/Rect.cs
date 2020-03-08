@@ -5,7 +5,8 @@
     /// <summary>
     /// Objecte que representa un rectangle aliniat amb els eixos X i Y.
     /// </summary>
-    public readonly struct Rect {
+    /// 
+    public readonly struct Rect: IEquatable<Rect> {
 
         private readonly int x;
         private readonly int y;
@@ -23,9 +24,9 @@
         public Rect(int x = 0, int y = 0, int width = 0, int height = 0) {
 
             if (width < 0)
-                throw new ArgumentOutOfRangeException("width");
+                throw new ArgumentOutOfRangeException(nameof(width));
             if (height < 0)
-                throw new ArgumentOutOfRangeException("height");
+                throw new ArgumentOutOfRangeException(nameof(height));
 
             this.x = x;
             this.y = y;
@@ -100,71 +101,95 @@
         }
 
         /// <summary>
+        /// Operacio de comparacio amb un altre rectangle.
+        /// </summary>
+        /// <param name="other">L'altre rectangle.</param>
+        /// <returns>True si son iguals.</returns>
+        /// 
+        public bool Equals(Rect other) => 
+            (x, y, width, height) == (other.x, other.y, other.width, other.height);
+
+        /// <summary>
+        /// Operacio de comparacio amb un altre objecte.
+        /// </summary>
+        /// <param name="obj">L'altre objecte.</param>
+        /// <returns>True si son iguals.</returns>
+        /// 
+        public override bool Equals(object obj) {
+
+            if (obj is Rect other)
+                return Equals(other);
+            else
+                return false;
+        }
+
+        public static bool operator ==(Rect r1, Rect r2) =>
+            r1.Equals(r2);
+
+        public static bool operator !=(Rect r1, Rect r2) =>
+            !r1.Equals(r2);
+
+        /// <summary>
+        /// Obte el codi hask de l'objecte.
+        /// </summary>
+        /// <returns>El codi hash</returns>
+        /// 
+        public override int GetHashCode() =>
+            x + (y * 1327) + (width * 59) + (height * 1293);
+
+        /// <summary>
         /// Obte la posicio del rectangle
         /// </summary>
         /// 
-        public Point Position {
-            get {
-                return new Point(x, y);
-            }
-        }
+        public Point Position => 
+            new Point(x, y);
 
         /// <summary>
         /// Obte el tamany del rectangle
         /// </summary>
         /// 
-        public Size Size {
-            get {
-                return new Size(width, height);
-            }
-        }
+        public Size Size => 
+            new Size(width, height);
 
-        public int X {
-            get {
-                return x;
-            }
-        }
+        /// <summary>
+        /// Obte la coordinada X
+        /// </summary>
+        /// 
+        public int X => x;
 
-        public int Y {
-            get {
-                return y;
-            }
-        }
+        /// <summary>
+        /// Obte la coordinada Y.
+        /// </summary>
+        /// 
+        public int Y => y;
 
-        public int Width {
-            get {
-                return width;
-            }
-        }
+        /// <summary>
+        /// Obte l'amplada.
+        /// </summary>
+        /// 
+        public int Width => width;
 
-        public int Height {
-            get {
-                return height;
-            }
-        }
+        /// <summary>
+        /// Obte l'alçada.
+        /// </summary>
+        /// 
+        public int Height => height;
 
-        public int Left {
-            get {
-                return x;
-            }
-        }
+        public int Left => x;
 
-        public int Bottom {
-            get {
-                return y;
-            }
-        }
+        public int Bottom => y;
 
-        public int Right {
-            get {
-                return x + width - 1;
-            }
-        }
+        public int Right => 
+            x + width - 1;
 
-        public int Top {
-            get {
-                return y + height - 1;
-            }
-        }
+        public int Top => 
+            y + height - 1;
+
+        /// <summary>
+        /// Comprova si el rectangle es buit.
+        /// </summary>
+        /// 
+        public bool IsEmpty =>
+            (width == 0) && (height == 0);
     }
 }

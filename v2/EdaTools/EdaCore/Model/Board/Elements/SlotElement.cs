@@ -17,16 +17,16 @@
             base(name, layerSet, position, rotation) {
 
             if (topSize < 0)
-                throw new ArgumentOutOfRangeException("topSize");
+                throw new ArgumentOutOfRangeException(nameof(topSize));
 
             if (innerSize < 0)
-                throw new ArgumentOutOfRangeException("innerSize");
+                throw new ArgumentOutOfRangeException(nameof(innerSize));
 
             if (bottomSize < 0)
-                throw new ArgumentOutOfRangeException("bottomSize");
+                throw new ArgumentOutOfRangeException(nameof(bottomSize));
 
             if (drill <= 0)
-                throw new ArgumentOutOfRangeException("drill");
+                throw new ArgumentOutOfRangeException(nameof(drill));
 
             this.topSize = topSize;
             this.innerSize = innerSize;
