@@ -75,6 +75,8 @@
             selectorTool.PointerReleased += (s, e) => SelectorToolReleased(e);
             currentTool = selectorTool;
             currentTool.Activate();
+
+            this.PointerPressed += SceneView_PointerPressed;
         }
 
         /// <summary>
