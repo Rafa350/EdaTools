@@ -76,7 +76,7 @@
             currentTool = selectorTool;
             currentTool.Activate();
 
-            this.PointerPressed += SceneView_PointerPressed;
+            //this.PointerPressed += SceneView_PointerPressed;
         }
 
         /// <summary>
