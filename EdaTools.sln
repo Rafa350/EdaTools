@@ -32,6 +32,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdaPanel", "EdaPanel\EdaPan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdaBoardViewer", "EdaBoardViewer\EdaBoardViewer.csproj", "{7CEA97F3-5BD5-484A-8E77-440A99A17AAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaExtractor", "EdaExtractor\EdaExtractor.csproj", "{4394D47B-2D94-44D5-8C9F-4EC292FDA3C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{7CEA97F3-5BD5-484A-8E77-440A99A17AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CEA97F3-5BD5-484A-8E77-440A99A17AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CEA97F3-5BD5-484A-8E77-440A99A17AAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4394D47B-2D94-44D5-8C9F-4EC292FDA3C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4394D47B-2D94-44D5-8C9F-4EC292FDA3C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4394D47B-2D94-44D5-8C9F-4EC292FDA3C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4394D47B-2D94-44D5-8C9F-4EC292FDA3C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +89,7 @@ Global
 		{864965F8-F170-4EB4-BA6A-25953ED59E1E} = {E3221687-5D1E-464E-A24E-A8287F028C0D}
 		{3DD7C03A-DDCA-497B-B7CB-DE36A3F8B317} = {0CBCDECB-D253-4477-B1AA-1DBE17687F0B}
 		{7CEA97F3-5BD5-484A-8E77-440A99A17AAD} = {E3221687-5D1E-464E-A24E-A8287F028C0D}
+		{4394D47B-2D94-44D5-8C9F-4EC292FDA3C2} = {E3221687-5D1E-464E-A24E-A8287F028C0D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {98C638C2-4E0C-43A4-9E0E-D0C6F59502FD}
