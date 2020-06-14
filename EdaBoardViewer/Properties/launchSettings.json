@@ -2,7 +2,7 @@
   "profiles": {
     "EdaBoardViewer": {
       "commandName": "Project",
-      "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\Net\\EdaTools\\v2\\EdaTools\\Data"
+      "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\Net\\EdaTools\\Data"
     }
   }
 }
