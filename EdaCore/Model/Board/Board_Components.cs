@@ -9,7 +9,7 @@
     /// 
     public sealed partial class Board {
 
-        private Dictionary<string, Component> components;
+        private Dictionary<string, Component> _components;
 
         /// <summary>
         /// Afeigeix un component.
@@ -21,13 +21,13 @@
             if (component == null)
                 throw new ArgumentNullException(nameof(component));
 
-            if ((components != null) && components.ContainsKey(component.Name))
+            if ((_components != null) && _components.ContainsKey(component.Name))
                 throw new InvalidOperationException(
                     String.Format("El componente '{0}', ya pertenece a la placa.", component.Name));
 
-            if (components == null)
-                components = new Dictionary<string, Component>();
-            components.Add(component.Name, component);
+            if (_components == null)
+                _components = new Dictionary<string, Component>();
+            _components.Add(component.Name, component);
         }
 
         /// <summary>
@@ -54,13 +54,13 @@
             if (component == null)
                 throw new ArgumentNullException(nameof(component));
 
-            if ((components == null) || components.ContainsKey(component.Name))
+            if ((_components == null) || _components.ContainsKey(component.Name))
                 throw new InvalidOperationException(
                     String.Format("El componente '{0}' no esta asignado a esta placa.", component.Name));
 
-            components.Remove(component.Name);
-            if (components.Count == 0)
-                components = null;
+            _components.Remove(component.Name);
+            if (_components.Count == 0)
+                _components = null;
         }
 
         /// <summary>
@@ -75,7 +75,7 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            if ((components != null) && components.TryGetValue(name, out var component))
+            if ((_components != null) && _components.TryGetValue(name, out var component))
                 return component;
 
             else if (throwOnError)
@@ -89,30 +89,18 @@
         /// Indica si conte components
         /// </summary>
         /// 
-        public bool HasComponents {
-            get {
-                return components != null;
-            }
-        }
+        public bool HasComponents =>_components != null;
 
         /// <summary>
         /// Enumera els noms dels components
         /// </summary>
         /// 
-        public IEnumerable<string> ComponentNames {
-            get {
-                return components?.Keys;
-            }
-        }
+        public IEnumerable<string> ComponentNames => _components?.Keys;
 
         /// <summary>
         /// Obte un enumerador pels blocs.
         /// </summary>
         /// 
-        public IEnumerable<Component> Components {
-            get {
-                return components?.Values;
-            }
-        }
+        public IEnumerable<Component> Components => _components?.Values;
     }
 }

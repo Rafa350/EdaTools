@@ -28,7 +28,7 @@
 
             public BoardScene() {
 
-                using (Stream stream = new FileStream("board3.xbrd", FileMode.Open, FileAccess.Read, FileShare.None)) {
+                using (Stream stream = new FileStream("kicad_demo.xbrd", FileMode.Open, FileAccess.Read, FileShare.None)) {
                     BoardStreamReader reader = new BoardStreamReader(stream);
                     board = reader.Read();
                 }

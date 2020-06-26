@@ -18,7 +18,7 @@
             foreach (VisualLayer visualLayer in visualLayers.VisualLayers) {
                 if (visualLayer.Visible) {
                     foreach (var layerId in visualLayer.LayerIds) {
-                        var layer = board.GetLayer(layerId);
+                        var layer = board.GetLayer(layerId, false);
                         if (layer != null) {
                             var visitor = new BoardRenderVisitor(layer, visualLayer, context);
                             visitor.Visit(board);

@@ -20,9 +20,9 @@
     /// 
     public sealed class Layer : IBoardVisitable {
 
-        private readonly BoardSide side;
-        private readonly string tag;
-        private readonly LayerFunction function = LayerFunction.Unknown;
+        private readonly BoardSide _side;
+        private readonly string _tag;
+        private readonly LayerFunction _function = LayerFunction.Unknown;
 
         /// <summary>
         /// Constructor.
@@ -33,9 +33,9 @@
         /// 
         public Layer(BoardSide side, string tag, LayerFunction function) {
 
-            this.side = side;
-            this.tag = tag;
-            this.function = function;
+            _side = side;
+            _tag = tag;
+            _function = function;
         }
 
         /// <summary>
@@ -45,7 +45,7 @@
         /// 
         public Layer Clone() {
 
-            return new Layer(side, tag, function);
+            return new Layer(_side, _tag, _function);
         }
 
         /// <summary>
@@ -85,90 +85,54 @@
         /// Obte la cara
         /// </summary>
         /// 
-        public BoardSide Side {
-            get {
-                return side;
-            }
-        }
+        public BoardSide Side => _side;
 
         /// <summary>
         /// Obte l'etiqueta.
         /// </summary>
         /// 
-        public string Tag {
-            get {
-                return tag;
-            }
-        }
+        public string Tag => _tag;
 
         /// <summary>
         /// Obte el nom.
         /// </summary>
         /// 
-        public string Name {
-            get {
-                return GetName(side, tag);
-            }
-        }
+        public string Name => GetName(_side, _tag);
 
         /// <summary>
         /// Obte la funcio.
         /// </summary>
         /// 
-        public LayerFunction Function {
-            get {
-                return function;
-            }
-        }
+        public LayerFunction Function => _function;
 
         /// <summary>
         /// Indica si la capa esta en la cara superior.
         /// </summary>
         /// 
-        public bool IsTop {
-            get {
-                return side == BoardSide.Top;
-            }
-        }
+        public bool IsTop => _side == BoardSide.Top;
 
         /// <summary>
         /// Indica si es la capa de coure superior.
         /// </summary>
         /// 
-        public bool IsTopCopper {
-            get {
-                return (side == BoardSide.Top) && (function == LayerFunction.Signal);
-            }
-        }
+        public bool IsTopCopper => (_side == BoardSide.Top) && (_function == LayerFunction.Signal);
 
         /// <summary>
         /// Indica si la capa esta en la cara inferior.
         /// </summary>
         /// 
-        public bool IsBottom {
-            get {
-                return side == BoardSide.Bottom;
-            }
-        }
+        public bool IsBottom => _side == BoardSide.Bottom;
 
         /// <summary>
         /// Indica si es la capa de coure inferior.
         /// </summary>
         /// 
-        public bool IsBottomCopper {
-            get {
-                return (side == BoardSide.Bottom) && (function == LayerFunction.Signal);
-            }
-        }
+        public bool IsBottomCopper => (_side == BoardSide.Bottom) && (_function == LayerFunction.Signal);
 
         /// <summary>
         /// Indica si es una capa interna.
         /// </summary>
         /// 
-        public bool IsInner {
-            get {
-                return side == BoardSide.Inner;
-            }
-        }
+        public bool IsInner =>_side == BoardSide.Inner;
     }
 }

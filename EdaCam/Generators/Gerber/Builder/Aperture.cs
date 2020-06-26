@@ -5,8 +5,8 @@
     /// </summary>
     public abstract class Aperture {
 
-        private readonly int id;
-        private readonly object tag;
+        private readonly int _id;
+        private readonly object _tag;
 
         /// <summary>
         /// Constructor del objecte.
@@ -16,8 +16,8 @@
         /// 
         public Aperture(int id, object tag) {
 
-            this.id = id;
-            this.tag = tag;
+            _id = id;
+            _tag = tag;
         }
 
         /// <summary>
@@ -30,21 +30,18 @@
         /// Obte el ID de l'apertura.
         /// </summary>
         /// 
-        public int Id =>
-            id;
+        public int Id => _id;
 
         /// <summary>
         /// Obte la comanda Gerber per definir l'apertura.
         /// </summary>
         /// 
-        public string Command =>
-            GetCommand();
+        public string Command => GetCommand();
 
         /// <summary>
         /// Obte les dades opcionals
         /// </summary>
         /// 
-        public object Tag =>
-            tag;
+        public object Tag => _tag;
     }
 }

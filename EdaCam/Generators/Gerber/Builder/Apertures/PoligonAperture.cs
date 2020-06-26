@@ -10,10 +10,10 @@
     /// </summary>
     public sealed class PoligonAperture : Aperture {
 
-        private readonly int vertex;
-        private readonly int diameter;
-        private readonly int drill;
-        private readonly Angle rotation;
+        private readonly int _vertex;
+        private readonly int _diameter;
+        private readonly int _drill;
+        private readonly Angle _rotation;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -37,10 +37,10 @@
             if (drill >= diameter)
                 throw new ArgumentOutOfRangeException(nameof(drill));
 
-            this.vertex = vertex;
-            this.diameter = diameter;
-            this.drill = drill;
-            this.rotation = rotation;
+            _vertex = vertex;
+            _diameter = diameter;
+            _drill = drill;
+            _rotation = rotation;
         }
 
         /// <summary>
@@ -54,12 +54,12 @@
             sb.Append("%ADD");
             sb.AppendFormat("{0}", Id);
             sb.Append("P,");
-            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", diameter / 1000000.0);
-            sb.AppendFormat("X{0}", vertex);
-            if ((rotation.Value > 0) || (drill > 0))
-                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", rotation.Value / 100.0);
-            if (drill > 0)
-                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", drill / 1000000.0);
+            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", _diameter / 1000000.0);
+            sb.AppendFormat("X{0}", _vertex);
+            if ((_rotation.Value > 0) || (_drill > 0))
+                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", _rotation.Value / 100.0);
+            if (_drill > 0)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", _drill / 1000000.0);
             sb.Append("*%");
 
             return sb.ToString();
@@ -69,29 +69,25 @@
         /// Obte el numero de vertex
         /// </summary>
         /// 
-        public int Vertex =>
-            vertex;
+        public int Vertex => _vertex;
 
         /// <summary>
         /// Obte el diametre exterior del poligon.
         /// </summary>
         /// 
-        public int Diameter =>
-            diameter;
+        public int Diameter => _diameter;
 
         /// <summary>
         /// Obte el diametre del forat.
         /// </summary>
         /// 
-        public int Drill =>
-            drill;
+        public int Drill => _drill;
 
         /// <summary>
         /// Obte l'angle de rotacio.
         /// </summary>
         /// 
-        public Angle Rotation =>
-            rotation;
+        public Angle Rotation => _rotation;
     }
 }
 

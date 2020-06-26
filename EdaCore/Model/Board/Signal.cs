@@ -7,8 +7,8 @@
     /// </summary>
     public sealed class Signal : IName, IBoardVisitable {
 
-        private readonly string name;
-        private int clearance = 150000;
+        private readonly string _name;
+        private int _clearance = 150000;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -20,7 +20,7 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            this.name = name;
+            _name = name;
         }
 
         /// <summary>
@@ -48,11 +48,7 @@
         /// Obte o asigna el nom de la senyal.
         /// </summary>
         /// 
-        public string Name {
-            get {
-                return name;
-            }
-        }
+        public string Name => _name;
 
         /// <summary>
         /// Obte o asigna la distancia d'aillament minima de la senyal.
@@ -60,12 +56,12 @@
         /// 
         public int Clearance {
             get {
-                return clearance;
+                return _clearance;
             }
             set {
-                if (clearance < 0)
+                if (_clearance < 0)
                     throw new ArgumentOutOfRangeException("Clearance");
-                clearance = value;
+                _clearance = value;
             }
         }
     }

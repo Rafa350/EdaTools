@@ -8,8 +8,8 @@
     /// </summary>
     public class Macro {
 
-        private readonly int id;
-        private readonly string text;
+        private readonly int _id;
+        private readonly string _text;
 
         /// <summary>
         /// Constructor del objecte.
@@ -21,8 +21,8 @@
             if (String.IsNullOrEmpty(text))
                 throw new ArgumentNullException(nameof(text));
 
-            this.id = id;
-            this.text = text;
+            _id = id;
+            _text = text;
         }
 
         /// <summary>
@@ -33,9 +33,9 @@
         protected virtual string GetCommand() {
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("%AMM{0}*", id);
-            sb.Append(text);
-            if (!text.EndsWith("%"))
+            sb.AppendFormat("%AMM{0}*", _id);
+            sb.Append(_text);
+            if (!_text.EndsWith("%"))
                 sb.Append('%');
 
             return sb.ToString();
@@ -45,14 +45,12 @@
         /// Obte el ID del macro.
         /// </summary>
         /// 
-        public int Id =>
-            id;
+        public int Id => _id;
 
         /// <summary>
         /// Obte la comanda Gerber per la definicio del macro.
         /// </summary>
         /// 
-        public string Command =>
-            GetCommand();
+        public string Command => GetCommand();
     }
 }

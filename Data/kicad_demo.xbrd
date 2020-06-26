@@ -1,0 +1,1084 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<document version="213" documentType="board" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/XBRD.xsd">
+    <board position="0, 0" rotation="0">
+        <layers>
+            <layer side="top" tag="Top" function="signal" />
+            <layer side="bottom" tag="Bottom" function="signal" />
+            <layer side="bottom" tag="B.Adhes" function="unknown" />
+            <layer side="top" tag="F.Adhes" function="unknown" />
+            <layer side="bottom" tag="B.Paste" function="unknown" />
+            <layer side="top" tag="F.Paste" function="unknown" />
+            <layer side="bottom" tag="B.SilkS" function="unknown" />
+            <layer side="top" tag="F.SilkS" function="unknown" />
+            <layer side="bottom" tag="B.Mask" function="unknown" />
+            <layer side="top" tag="F.Mask" function="unknown" />
+            <layer side="none" tag="Dwgs.User" function="unknown" />
+            <layer side="none" tag="Cmts.User" function="unknown" />
+            <layer side="none" tag="Eco1.User" function="unknown" />
+            <layer side="none" tag="Eco2.User" function="unknown" />
+            <layer side="none" tag="Edge.Cuts" function="outline" />
+            <layer side="none" tag="Margin" function="unknown" />
+            <layer side="bottom" tag="B.CrtYd" function="unknown" />
+            <layer side="top" tag="F.CrtYd" function="unknown" />
+            <layer side="bottom" tag="B.Fab" function="unknown" />
+            <layer side="top" tag="F.Fab" function="unknown" />
+        </layers>
+        <signals>
+            <signal name="GND" clearance="0.15" />
+            <signal name="Net-(BKL1-Pad2)" clearance="0.15" />
+            <signal name="Net-(C39-Pad1)" clearance="0.15" />
+            <signal name="Net-(C38-Pad1)" clearance="0.15" />
+            <signal name="+5V" clearance="0.15" />
+            <signal name="Net-(C1-Pad1)" clearance="0.15" />
+            <signal name="+3V3" clearance="0.15" />
+            <signal name="Net-(C5-Pad1)" clearance="0.15" />
+            <signal name="Net-(C8-Pad1)" clearance="0.15" />
+            <signal name="Net-(C12-Pad2)" clearance="0.15" />
+            <signal name="Net-(C13-Pad2)" clearance="0.15" />
+            <signal name="Net-(C14-Pad2)" clearance="0.15" />
+            <signal name="Net-(C15-Pad2)" clearance="0.15" />
+            <signal name="Net-(C16-Pad2)" clearance="0.15" />
+            <signal name="Net-(C17-Pad2)" clearance="0.15" />
+            <signal name="Net-(C18-Pad2)" clearance="0.15" />
+            <signal name="Net-(C18-Pad1)" clearance="0.15" />
+            <signal name="Net-(C19-Pad2)" clearance="0.15" />
+            <signal name="Net-(C20-Pad2)" clearance="0.15" />
+            <signal name="Net-(C20-Pad1)" clearance="0.15" />
+            <signal name="Net-(C23-Pad2)" clearance="0.15" />
+            <signal name="Net-(C35-Pad1)" clearance="0.15" />
+            <signal name="Net-(C37-Pad1)" clearance="0.15" />
+            <signal name="/CPU/PGEC1" clearance="0.15" />
+            <signal name="/CPU/PGED1" clearance="0.15" />
+            <signal name="/CPU/MCLR" clearance="0.15" />
+            <signal name="/CPU/LED" clearance="0.15" />
+            <signal name="DSP-D7" clearance="0.15" />
+            <signal name="DSP-D6" clearance="0.15" />
+            <signal name="DSP-D5" clearance="0.15" />
+            <signal name="DSP-D4" clearance="0.15" />
+            <signal name="DSP-D3" clearance="0.15" />
+            <signal name="DSP-D1" clearance="0.15" />
+            <signal name="DSP-D0" clearance="0.15" />
+            <signal name="DSP-RD" clearance="0.15" />
+            <signal name="DSP-WR" clearance="0.15" />
+            <signal name="DSP-A0" clearance="0.15" />
+            <signal name="DSP-RST" clearance="0.15" />
+            <signal name="DSP-CS" clearance="0.15" />
+            <signal name="BK-EN" clearance="0.15" />
+            <signal name="BK-PWM" clearance="0.15" />
+            <signal name="DSP-D2" clearance="0.15" />
+            <signal name="Net-(BT1-Pad1)" clearance="0.15" />
+            <signal name="Net-(C6-Pad1)" clearance="0.15" />
+            <signal name="SCL1" clearance="0.15" />
+            <signal name="SDA1" clearance="0.15" />
+            <signal name="Net-(D1-Pad2)" clearance="0.15" />
+            <signal name="Net-(D1-Pad1)" clearance="0.15" />
+            <signal name="ALERT" clearance="0.15" />
+            <signal name="Net-(D2-Pad1)" clearance="0.15" />
+            <signal name="Net-(R5-Pad1)" clearance="0.15" />
+            <signal name="GND1" clearance="0.15" />
+            <signal name="Net-(C40-Pad1)" clearance="0.15" />
+            <signal name="Net-(C42-Pad1)" clearance="0.15" />
+            <signal name="Net-(R13-Pad1)" clearance="0.15" />
+            <signal name="Net-(R14-Pad1)" clearance="0.15" />
+            <signal name="Net-(R15-Pad1)" clearance="0.15" />
+            <signal name="Net-(R16-Pad1)" clearance="0.15" />
+            <signal name="Net-(R17-Pad1)" clearance="0.15" />
+            <signal name="Net-(R18-Pad1)" clearance="0.15" />
+            <signal name="Net-(R19-Pad1)" clearance="0.15" />
+            <signal name="Net-(R20-Pad1)" clearance="0.15" />
+            <signal name="Net-(R21-Pad1)" clearance="0.15" />
+        </signals>
+        <components>
+            <component name="Capacitor_SMD:C_0603_1608Metric">
+                <elements>
+                    <text layers="Top.F.SilkS" position="-0.125, 1.5" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 1.43" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.7875, 0" rotation="90" size="0.875, 0.95" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.7875, 0" rotation="90" size="0.875, 0.95" />
+                </elements>
+            </component>
+            <component name="Diode_SMD:D_SOD-123">
+                <elements>
+                    <text layers="Top.F.SilkS" position="0.0175, 1.875" rotation="270" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 2.1" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="-0.125, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.65, 0" rotation="90" size="0.9, 1.2" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.65, 0" rotation="90" size="0.9, 1.2" />
+                </elements>
+            </component>
+            <component name="Package_SO:TSSOP-28-1EP_4.4x9.7mm_P0.65mm">
+                <elements>
+                    <text layers="Top.F.SilkS" position="0, -5.9" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 5.9" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="291" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.6, -2.31375" rotation="90" size="1.2, 1.5425" />
+                    <spad name="292" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.6, -0.77125" rotation="90" size="1.2, 1.5425" />
+                    <spad name="293" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.6, 0.77125" rotation="90" size="1.2, 1.5425" />
+                    <spad name="294" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.6, 2.31375" rotation="90" size="1.2, 1.5425" />
+                    <spad name="295" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.6, -2.31375" rotation="90" size="1.2, 1.5425" />
+                    <spad name="296" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.6, -0.77125" rotation="90" size="1.2, 1.5425" />
+                    <spad name="297" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.6, 0.77125" rotation="90" size="1.2, 1.5425" />
+                    <spad name="298" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.6, 2.31375" rotation="90" size="1.2, 1.5425" />
+                    <spad name="28" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, -4.225" rotation="90" size="1.1, 0.4" />
+                    <spad name="27" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, -3.575" rotation="90" size="1.1, 0.4" />
+                    <spad name="26" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, -2.925" rotation="90" size="1.1, 0.4" />
+                    <spad name="25" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, -2.275" rotation="90" size="1.1, 0.4" />
+                    <spad name="24" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, -1.625" rotation="90" size="1.1, 0.4" />
+                    <spad name="23" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, -0.975" rotation="90" size="1.1, 0.4" />
+                    <spad name="22" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, -0.325" rotation="90" size="1.1, 0.4" />
+                    <spad name="21" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, 0.325" rotation="90" size="1.1, 0.4" />
+                    <spad name="20" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, 0.975" rotation="90" size="1.1, 0.4" />
+                    <spad name="19" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, 1.625" rotation="90" size="1.1, 0.4" />
+                    <spad name="18" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, 2.275" rotation="90" size="1.1, 0.4" />
+                    <spad name="17" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, 2.925" rotation="90" size="1.1, 0.4" />
+                    <spad name="16" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, 3.575" rotation="90" size="1.1, 0.4" />
+                    <spad name="15" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, 4.225" rotation="90" size="1.1, 0.4" />
+                    <spad name="14" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, 4.225" rotation="90" size="1.1, 0.4" />
+                    <spad name="13" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, 3.575" rotation="90" size="1.1, 0.4" />
+                    <spad name="12" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, 2.925" rotation="90" size="1.1, 0.4" />
+                    <spad name="11" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, 2.275" rotation="90" size="1.1, 0.4" />
+                    <spad name="10" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, 1.625" rotation="90" size="1.1, 0.4" />
+                    <spad name="9" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, 0.975" rotation="90" size="1.1, 0.4" />
+                    <spad name="8" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, 0.325" rotation="90" size="1.1, 0.4" />
+                    <spad name="7" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, -0.325" rotation="90" size="1.1, 0.4" />
+                    <spad name="6" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, -0.975" rotation="90" size="1.1, 0.4" />
+                    <spad name="5" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, -1.625" rotation="90" size="1.1, 0.4" />
+                    <spad name="4" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, -2.275" rotation="90" size="1.1, 0.4" />
+                    <spad name="3" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, -2.925" rotation="90" size="1.1, 0.4" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, -3.575" rotation="90" size="1.1, 0.4" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, -4.225" rotation="90" size="1.1, 0.4" />
+                </elements>
+            </component>
+            <component name="Resistor_SMD:R_0805_2012Metric">
+                <elements>
+                    <text layers="Top.F.SilkS" position="0, 1.5" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 1.65" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.9375, 0" rotation="270" size="0.975, 1.4" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.9375, 0" rotation="270" size="0.975, 1.4" />
+                </elements>
+            </component>
+            <component name="Package_SO:SSOP-24_5.3x8.2mm_P0.65mm">
+                <elements>
+                    <text layers="Top.F.SilkS" position="5.5, -3.75" rotation="180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 5.25" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="24" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, -3.575" rotation="90" size="1.75, 0.45" />
+                    <spad name="23" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, -2.925" rotation="90" size="1.75, 0.45" />
+                    <spad name="22" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, -2.275" rotation="90" size="1.75, 0.45" />
+                    <spad name="21" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, -1.625" rotation="90" size="1.75, 0.45" />
+                    <spad name="20" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, -0.975" rotation="90" size="1.75, 0.45" />
+                    <spad name="19" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, -0.325" rotation="90" size="1.75, 0.45" />
+                    <spad name="18" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, 0.325" rotation="90" size="1.75, 0.45" />
+                    <spad name="17" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, 0.975" rotation="90" size="1.75, 0.45" />
+                    <spad name="16" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, 1.625" rotation="90" size="1.75, 0.45" />
+                    <spad name="15" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, 2.275" rotation="90" size="1.75, 0.45" />
+                    <spad name="14" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, 2.925" rotation="90" size="1.75, 0.45" />
+                    <spad name="13" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, 3.575" rotation="90" size="1.75, 0.45" />
+                    <spad name="12" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, 3.575" rotation="90" size="1.75, 0.45" />
+                    <spad name="11" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, 2.925" rotation="90" size="1.75, 0.45" />
+                    <spad name="10" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, 2.275" rotation="90" size="1.75, 0.45" />
+                    <spad name="9" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, 1.625" rotation="90" size="1.75, 0.45" />
+                    <spad name="8" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, 0.975" rotation="90" size="1.75, 0.45" />
+                    <spad name="7" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, 0.325" rotation="90" size="1.75, 0.45" />
+                    <spad name="6" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, -0.325" rotation="90" size="1.75, 0.45" />
+                    <spad name="5" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, -0.975" rotation="90" size="1.75, 0.45" />
+                    <spad name="4" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, -1.625" rotation="90" size="1.75, 0.45" />
+                    <spad name="3" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, -2.275" rotation="90" size="1.75, 0.45" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, -2.925" rotation="90" size="1.75, 0.45" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, -3.575" rotation="90" size="1.75, 0.45" />
+                </elements>
+            </component>
+            <component name="Resistor_SMD:R_0603_1608Metric">
+                <elements>
+                    <text layers="Top.F.SilkS" position="0, -1.5" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 1.43" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.7875, 0" rotation="270" size="0.875, 0.95" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.7875, 0" rotation="270" size="0.875, 0.95" />
+                </elements>
+            </component>
+            <component name="Capacitor_SMD:C_0805_2012Metric">
+                <elements>
+                    <text layers="Top.F.SilkS" position="-3.125, 0" rotation="270" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 1.65" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.9375, 0" rotation="90" size="0.975, 1.4" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.9375, 0" rotation="90" size="0.975, 1.4" />
+                </elements>
+            </component>
+            <component name="Inductor_SMD:L_0603_1608Metric">
+                <elements>
+                    <text layers="Top.F.SilkS" position="2.5, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 1.43" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.7875, 0" size="0.875, 0.95" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.7875, 0" size="0.875, 0.95" />
+                </elements>
+            </component>
+            <component name="Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical">
+                <elements>
+                    <text layers="Top.F.SilkS" position="0, -2.06" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 10.06" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="0, 4" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="5" layers="*.Cu, *.Mask" position="0, 8" rotation="270" size="1.35, 1.35" />
+                    <spad name="4" layers="*.Cu, *.Mask" position="0, 6" rotation="270" size="1.35, 1.35" />
+                    <spad name="3" layers="*.Cu, *.Mask" position="0, 4" rotation="270" size="1.35, 1.35" />
+                    <spad name="2" layers="*.Cu, *.Mask" position="0, 2" rotation="270" size="1.35, 1.35" />
+                    <spad name="1" layers="*.Cu, *.Mask" position="0, 0" rotation="270" size="1.35, 1.35" />
+                </elements>
+            </component>
+            <component name="Crystal:Crystal_SMD_Abracon_ABM3B-4Pin_5.0x3.2mm">
+                <elements>
+                    <text layers="Top.F.SilkS" position="0, -2.8" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 2.8" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="4" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2, -1.2" rotation="90" size="1.8, 1.2" />
+                    <spad name="3" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2, -1.2" rotation="90" size="1.8, 1.2" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2, 1.2" rotation="90" size="1.8, 1.2" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2, 1.2" rotation="90" size="1.8, 1.2" />
+                </elements>
+            </component>
+            <component name="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm">
+                <elements>
+                    <text layers="Top.F.SilkS" position="1.125, -3.5" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 3.4" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="8" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.475, -1.905" rotation="90" size="1.95, 0.6" />
+                    <spad name="7" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.475, -0.635" rotation="90" size="1.95, 0.6" />
+                    <spad name="6" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.475, 0.635" rotation="90" size="1.95, 0.6" />
+                    <spad name="5" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.475, 1.905" rotation="90" size="1.95, 0.6" />
+                    <spad name="4" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.475, 1.905" rotation="90" size="1.95, 0.6" />
+                    <spad name="3" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.475, 0.635" rotation="90" size="1.95, 0.6" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.475, -0.635" rotation="90" size="1.95, 0.6" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.475, -1.905" rotation="90" size="1.95, 0.6" />
+                </elements>
+            </component>
+            <component name="LED_SMD:LED_0805_2012Metric_Castellated">
+                <elements>
+                    <text layers="Top.F.SilkS" position="-2.9125, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 1.6" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.9625, 0" rotation="180" size="1.325, 1.3" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.9625, 0" rotation="180" size="1.325, 1.3" />
+                </elements>
+            </component>
+            <component name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A">
+                <elements>
+                    <text layers="Top.F.SilkS" position="0, 1.875" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 1.75" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.35, 0" size="1.4, 1.35" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.35, 0" size="1.4, 1.35" />
+                </elements>
+            </component>
+            <component name="Package_SO:MSOP-8_3x3mm_P0.65mm">
+                <elements>
+                    <text layers="Top.F.SilkS" position="3.875, -0.125" rotation="180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 2.45" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="8" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.1125, -0.975" rotation="90" size="1.625, 0.4" />
+                    <spad name="7" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.1125, -0.325" rotation="90" size="1.625, 0.4" />
+                    <spad name="6" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.1125, 0.325" rotation="90" size="1.625, 0.4" />
+                    <spad name="5" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.1125, 0.975" rotation="90" size="1.625, 0.4" />
+                    <spad name="4" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.1125, 0.975" rotation="90" size="1.625, 0.4" />
+                    <spad name="3" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.1125, 0.325" rotation="90" size="1.625, 0.4" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.1125, -0.325" rotation="90" size="1.625, 0.4" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.1125, -0.975" rotation="90" size="1.625, 0.4" />
+                </elements>
+            </component>
+            <component name="Inductor_SMD:L_0805_2012Metric">
+                <elements>
+                    <text layers="Top.F.SilkS" position="-3.3125, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 1.65" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.9375, 0" rotation="180" size="0.975, 1.4" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.9375, 0" rotation="180" size="0.975, 1.4" />
+                </elements>
+            </component>
+            <component name="Package_TO_SOT_SMD:SOT-89-3">
+                <elements>
+                    <text layers="Top.F.SilkS" position="-3.625, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0.3, 3.5" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="0.5, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.5625, 0" size="1.475, 0.9" />
+                    <spad name="3" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.65, 1.5" size="1.3, 0.9" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.65, -1.5" size="1.3, 0.9" />
+                </elements>
+            </component>
+            <component name="Diode_SMD:D_SOD-123F">
+                <elements>
+                    <text layers="Top.F.SilkS" position="-0.127, -1.905" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 2.1" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="-0.127, -1.905" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.4, 0" rotation="270" size="1.1, 1.1" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.4, 0" rotation="270" size="1.1, 1.1" />
+                </elements>
+            </component>
+            <component name="Battery:BatteryHolder_LINX_BAT-HLD-012-SMT">
+                <elements>
+                    <text layers="Top.F.SilkS" position="0, 6" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, -7" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Top, Top.F.Mask" position="0, 0" rotation="90" size="10.2, 10.2" />
+                    <spad name="11" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="7.6, 0" rotation="90" size="2.5, 5.1" />
+                    <spad name="12" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-7.6, 0" rotation="90" size="2.5, 5.1" />
+                </elements>
+            </component>
+            <component name="Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm">
+                <elements>
+                    <text layers="Top.F.SilkS" position="0, 2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="-0.125, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.25, 0" size="1, 1.8" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.25, 0" size="1, 1.8" />
+                </elements>
+            </component>
+            <component name="MountingHole:MountingHole_3.2mm_M3">
+                <elements>
+                    <text layers="Top.F.SilkS" position="0, -4.2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="0, 4.2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.F.Fab" position="0.3, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="1" layers="*.Cu, *.Mask" position="0, 0" size="3.2, 3.2" />
+                </elements>
+            </component>
+            <component name="MD-CPU07:ER-CON26HB-1">
+                <elements>
+                    <text layers="Top.F.SilkS" position="-9, 0.75" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.SilkS" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <spad name="26" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="6.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="25" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="24" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="23" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="4.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="22" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="4.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="21" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="G2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="7.5, -0.25" rotation="90" size="3, 2" />
+                    <spad name="G1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-7.5, -0.25" rotation="90" size="3, 2" />
+                    <spad name="20" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="19" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="18" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="17" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="16" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="15" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="14" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="13" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="12" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="11" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="10" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="9" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="8" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="7" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="6" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="5" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-4.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="4" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-4.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="3" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-6.25, -2.5" rotation="90" size="1.25, 0.3" />
+                </elements>
+            </component>
+            <component name="MD-CPU07:ER-CON2.0-2P-SMD">
+                <elements>
+                    <text layers="Top.F.SilkS" position="3, -2" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.SilkS" position="0, 0" rotation="180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1, 2" size="1, 2.85" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1, 2" rotation="180" size="1, 2.85" />
+                    <spad name="G2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.5, -4.5" rotation="180" size="1.4, 3.8" />
+                    <spad name="G1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.5, -4.5" rotation="180" size="1.4, 3.8" />
+                </elements>
+            </component>
+            <component name="MD-CPU07:TQFP64-10X10">
+                <elements>
+                    <text layers="Top.F.SilkS" position="5.125, -6.25" rotation="180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="-4.000003, 7.499999" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <spad name="64" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, 3.75" rotation="180" size="0.3, 1.2" />
+                    <spad name="63" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, 3.25" rotation="180" size="0.3, 1.2" />
+                    <spad name="62" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, 2.75" rotation="180" size="0.3, 1.2" />
+                    <spad name="61" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, 2.25" rotation="180" size="0.3, 1.2" />
+                    <spad name="60" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, 1.75" rotation="180" size="0.3, 1.2" />
+                    <spad name="59" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, 1.25" rotation="180" size="0.3, 1.2" />
+                    <spad name="58" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, 0.75" rotation="180" size="0.3, 1.2" />
+                    <spad name="57" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, 0.25" rotation="180" size="0.3, 1.2" />
+                    <spad name="56" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, -0.25" rotation="180" size="0.3, 1.2" />
+                    <spad name="55" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, -0.75" rotation="180" size="0.3, 1.2" />
+                    <spad name="54" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, -1.25" rotation="180" size="0.3, 1.2" />
+                    <spad name="53" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, -1.75" rotation="180" size="0.3, 1.2" />
+                    <spad name="52" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, -2.25" rotation="180" size="0.3, 1.2" />
+                    <spad name="51" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, -2.75" rotation="180" size="0.3, 1.2" />
+                    <spad name="50" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, -3.25" rotation="180" size="0.3, 1.2" />
+                    <spad name="49" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, -3.75" rotation="180" size="0.3, 1.2" />
+                    <spad name="48" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.75, -5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="47" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.25, -5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="46" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.75, -5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="45" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.25, -5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="44" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.75, -5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="43" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.25, -5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="42" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.75, -5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="41" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.25, -5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="40" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.25, -5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="39" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.75, -5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="38" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.25, -5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="37" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.75, -5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="36" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.25, -5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="35" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.75, -5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="34" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.25, -5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="33" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.75, -5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="32" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, -3.75" rotation="180" size="0.3, 1.2" />
+                    <spad name="31" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, -3.25" rotation="180" size="0.3, 1.2" />
+                    <spad name="30" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, -2.75" rotation="180" size="0.3, 1.2" />
+                    <spad name="29" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, -2.25" rotation="180" size="0.3, 1.2" />
+                    <spad name="28" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, -1.75" rotation="180" size="0.3, 1.2" />
+                    <spad name="27" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, -1.25" rotation="180" size="0.3, 1.2" />
+                    <spad name="26" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, -0.75" rotation="180" size="0.3, 1.2" />
+                    <spad name="25" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, -0.25" rotation="180" size="0.3, 1.2" />
+                    <spad name="24" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, 0.25" rotation="180" size="0.3, 1.2" />
+                    <spad name="23" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, 0.75" rotation="180" size="0.3, 1.2" />
+                    <spad name="22" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, 1.25" rotation="180" size="0.3, 1.2" />
+                    <spad name="21" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, 1.75" rotation="180" size="0.3, 1.2" />
+                    <spad name="20" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, 2.25" rotation="180" size="0.3, 1.2" />
+                    <spad name="19" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, 2.75" rotation="180" size="0.3, 1.2" />
+                    <spad name="18" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, 3.25" rotation="180" size="0.3, 1.2" />
+                    <spad name="17" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, 3.75" rotation="180" size="0.3, 1.2" />
+                    <spad name="16" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.75, 5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="15" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.25, 5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="14" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.75, 5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="13" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.25, 5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="12" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.75, 5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="11" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.25, 5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="10" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.75, 5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="9" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.25, 5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="8" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.25, 5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="7" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.75, 5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="6" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.25, 5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="5" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.75, 5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="4" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.25, 5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="3" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.75, 5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.25, 5.7" rotation="180" size="1.2, 0.3" />
+                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.75, 5.7" rotation="180" size="1.2, 0.3" />
+                </elements>
+            </component>
+            <component name="MD-CPU07:S02B-XASK-1">
+                <elements>
+                    <text layers="Top.F.SilkS" position="-3.75, -3.5" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.F.Fab" position="-3.75, 4" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <spad name="1" layers="*.Cu, *.Mask" position="1.25, 0" rotation="270" size="1.35, 1.35" />
+                    <spad name="2" layers="*.Cu, *.Mask" position="-1.25, 0" rotation="270" size="1.35, 1.35" />
+                </elements>
+            </component>
+        </components>
+        <parts>
+            <part name="Capacitor_SMD:C_0603_1608Metric:0" component="Capacitor_SMD:C_0603_1608Metric" position="129.125, 87.125" rotation="90">
+                <attributes>
+                    <attribute name="reference" value="C9" visible="false" />
+                    <attribute name="value" value="470n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:1" component="Capacitor_SMD:C_0603_1608Metric" position="150.125, 91.375" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="C20" visible="false" />
+                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:2" component="Capacitor_SMD:C_0603_1608Metric" position="148.5, 91.375" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="C19" visible="false" />
+                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:3" component="Capacitor_SMD:C_0603_1608Metric" position="146.875, 91.375" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="C18" visible="false" />
+                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:4" component="Capacitor_SMD:C_0603_1608Metric" position="158.375, 96.875" rotation="180">
+                <attributes>
+                    <attribute name="reference" value="C17" visible="false" />
+                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:5" component="Capacitor_SMD:C_0603_1608Metric" position="158.375, 94.75" rotation="180">
+                <attributes>
+                    <attribute name="reference" value="C16" visible="false" />
+                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:6" component="Capacitor_SMD:C_0603_1608Metric" position="155, 91.375" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="C15" visible="false" />
+                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:7" component="Capacitor_SMD:C_0603_1608Metric" position="153.375, 91.375" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="C14" visible="false" />
+                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:8" component="Capacitor_SMD:C_0603_1608Metric" position="151.75, 91.375" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="C13" visible="false" />
+                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:9" component="Capacitor_SMD:C_0603_1608Metric" position="145.25, 91.375" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="C12" visible="false" />
+                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Diode_SMD:D_SOD-123:10" component="Diode_SMD:D_SOD-123" position="114, 109.1425" rotation="90">
+                <attributes>
+                    <attribute name="reference" value="D3" visible="false" />
+                    <attribute name="value" value="MMSZ5258BT1G" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Package_SO:TSSOP-28-1EP_4.4x9.7mm_P0.65mm:11" component="Package_SO:TSSOP-28-1EP_4.4x9.7mm_P0.65mm" position="103.375, 107.875" rotation="90">
+                <attributes>
+                    <attribute name="reference" value="U7" visible="false" />
+                    <attribute name="value" value="MAX31911" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0805_2012Metric:12" component="Resistor_SMD:R_0805_2012Metric" position="101.25, 114.5" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="R17" visible="false" />
+                    <attribute name="value" value="2K2" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Package_SO:SSOP-24_5.3x8.2mm_P0.65mm:13" component="Package_SO:SSOP-24_5.3x8.2mm_P0.65mm" position="119.25, 124" rotation="90">
+                <attributes>
+                    <attribute name="reference" value="U8" visible="false" />
+                    <attribute name="value" value="NCV7240" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0603_1608Metric:14" component="Resistor_SMD:R_0603_1608Metric" position="106.75, 114.25" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="R21" visible="false" />
+                    <attribute name="value" value="15K" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0805_2012Metric:15" component="Resistor_SMD:R_0805_2012Metric" position="97.875, 114.5" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="R20" visible="false" />
+                    <attribute name="value" value="2K2" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0805_2012Metric:16" component="Resistor_SMD:R_0805_2012Metric" position="96, 121.625" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="R19" visible="false" />
+                    <attribute name="value" value="2K2" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0805_2012Metric:17" component="Resistor_SMD:R_0805_2012Metric" position="104.625, 114.5" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="R18" visible="false" />
+                    <attribute name="value" value="2K2" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0805_2012Metric:18" component="Resistor_SMD:R_0805_2012Metric" position="96.875, 118" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="R16" visible="false" />
+                    <attribute name="value" value="2K2" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0805_2012Metric:19" component="Resistor_SMD:R_0805_2012Metric" position="107.125, 118" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="R15" visible="false" />
+                    <attribute name="value" value="2K2" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0805_2012Metric:20" component="Resistor_SMD:R_0805_2012Metric" position="103.625, 118" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="R14" visible="false" />
+                    <attribute name="value" value="2K2" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0805_2012Metric:21" component="Resistor_SMD:R_0805_2012Metric" position="100.25, 118" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="R13" visible="false" />
+                    <attribute name="value" value="2K2" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0805_2012Metric:22" component="Resistor_SMD:R_0805_2012Metric" position="114.125, 113.5" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="R12" visible="false" />
+                    <attribute name="value" value="150R" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:23" component="Capacitor_SMD:C_0603_1608Metric" position="109.5, 105.75" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="C43" visible="false" />
+                    <attribute name="value" value="4u7" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:24" component="Capacitor_SMD:C_0603_1608Metric" position="111.125, 105.75" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="C42" visible="false" />
+                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0805_2012Metric:25" component="Capacitor_SMD:C_0805_2012Metric" position="109.75, 109.8125" rotation="90">
+                <attributes>
+                    <attribute name="reference" value="C41" visible="false" />
+                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0805_2012Metric:26" component="Capacitor_SMD:C_0805_2012Metric" position="111.75, 109.8125" rotation="90">
+                <attributes>
+                    <attribute name="reference" value="C40" visible="false" />
+                    <attribute name="value" value="10u" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:27" component="Capacitor_SMD:C_0603_1608Metric" position="142.75, 92.25" rotation="180">
+                <attributes>
+                    <attribute name="reference" value="C11" visible="false" />
+                    <attribute name="value" value="10u" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:28" component="Capacitor_SMD:C_0603_1608Metric" position="142.75, 90.5" rotation="180">
+                <attributes>
+                    <attribute name="reference" value="C10" visible="false" />
+                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:29" component="Capacitor_SMD:C_0603_1608Metric" position="133.125, 112.25">
+                <attributes>
+                    <attribute name="reference" value="C39" visible="false" />
+                    <attribute name="value" value="22p" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:30" component="Capacitor_SMD:C_0603_1608Metric" position="133.125, 120" rotation="180">
+                <attributes>
+                    <attribute name="reference" value="C38" visible="false" />
+                    <attribute name="value" value="22p" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:31" component="Capacitor_SMD:C_0603_1608Metric" position="137.25, 112.125" rotation="180">
+                <attributes>
+                    <attribute name="reference" value="C34" visible="false" />
+                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:32" component="Capacitor_SMD:C_0603_1608Metric" position="137.25, 110.5" rotation="180">
+                <attributes>
+                    <attribute name="reference" value="C33" visible="false" />
+                    <attribute name="value" value="10n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:33" component="Capacitor_SMD:C_0603_1608Metric" position="146, 107.75">
+                <attributes>
+                    <attribute name="reference" value="C32" visible="false" />
+                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:34" component="Capacitor_SMD:C_0603_1608Metric" position="146, 106.125">
+                <attributes>
+                    <attribute name="reference" value="C31" visible="false" />
+                    <attribute name="value" value="10n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:35" component="Capacitor_SMD:C_0603_1608Metric" position="155.5, 115.875">
+                <attributes>
+                    <attribute name="reference" value="C24" visible="false" />
+                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:36" component="Capacitor_SMD:C_0603_1608Metric" position="155.5, 117.5">
+                <attributes>
+                    <attribute name="reference" value="C21" visible="false" />
+                    <attribute name="value" value="10n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:37" component="Capacitor_SMD:C_0603_1608Metric" position="147.625, 125.5" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="C29" visible="false" />
+                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:38" component="Capacitor_SMD:C_0603_1608Metric" position="146, 125.5" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="C27" visible="false" />
+                    <attribute name="value" value="10n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0603_1608Metric:39" component="Resistor_SMD:R_0603_1608Metric" position="151, 125.5" rotation="90">
+                <attributes>
+                    <attribute name="reference" value="R8" visible="false" />
+                    <attribute name="value" value="1K" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0603_1608Metric:40" component="Resistor_SMD:R_0603_1608Metric" position="156.875, 106.875">
+                <attributes>
+                    <attribute name="reference" value="R7" visible="false" />
+                    <attribute name="value" value="270" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0603_1608Metric:41" component="Resistor_SMD:R_0603_1608Metric" position="154.25, 125.5" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="R6" visible="false" />
+                    <attribute name="value" value="10K" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:42" component="Capacitor_SMD:C_0603_1608Metric" position="144.375, 125.5" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="C37" visible="false" />
+                    <attribute name="value" value="10n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:43" component="Capacitor_SMD:C_0603_1608Metric" position="152.625, 125.5" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="C23" visible="false" />
+                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:44" component="Capacitor_SMD:C_0603_1608Metric" position="149.5, 107.75">
+                <attributes>
+                    <attribute name="reference" value="C36" visible="false" />
+                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:45" component="Capacitor_SMD:C_0603_1608Metric" position="149.5, 106.125">
+                <attributes>
+                    <attribute name="reference" value="C35" visible="false" />
+                    <attribute name="value" value="10n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Inductor_SMD:L_0603_1608Metric:46" component="Inductor_SMD:L_0603_1608Metric" position="149.5, 104.625">
+                <attributes>
+                    <attribute name="reference" value="L1" visible="false" />
+                    <attribute name="value" value="600R" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical:47" component="Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical" position="165.875, 100.25" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="JP2" visible="false" />
+                    <attribute name="value" value="PINHD-1X5-2MM" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Crystal:Crystal_SMD_Abracon_ABM3B-4Pin_5.0x3.2mm:48" component="Crystal:Crystal_SMD_Abracon_ABM3B-4Pin_5.0x3.2mm" position="133.125, 116.125" rotation="90">
+                <attributes>
+                    <attribute name="reference" value="Y2" visible="false" />
+                    <attribute name="value" value="ABM3B" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0603_1608Metric:49" component="Resistor_SMD:R_0603_1608Metric" position="129.125, 82.625" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="R5" visible="false" />
+                    <attribute name="value" value="1K66" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0603_1608Metric:50" component="Resistor_SMD:R_0603_1608Metric" position="121.625, 90.875" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="R4" visible="false" />
+                    <attribute name="value" value="100R" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0603_1608Metric:51" component="Resistor_SMD:R_0603_1608Metric" position="124.375, 90.875" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="R3" visible="false" />
+                    <attribute name="value" value="100K" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0603_1608Metric:52" component="Resistor_SMD:R_0603_1608Metric" position="126.375, 90.875" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="R2" visible="false" />
+                    <attribute name="value" value="100K" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm:53" component="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" position="125.375, 84.875" rotation="90">
+                <attributes>
+                    <attribute name="reference" value="U5" visible="false" />
+                    <attribute name="value" value="STCS05" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="LED_SMD:LED_0805_2012Metric_Castellated:54" component="LED_SMD:LED_0805_2012Metric_Castellated" position="156.8375, 104.75" rotation="180">
+                <attributes>
+                    <attribute name="reference" value="D2" visible="false" />
+                    <attribute name="value" value="HSMG-C170" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:55" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A" position="166.125, 104.75">
+                <attributes>
+                    <attribute name="reference" value="C30" visible="false" />
+                    <attribute name="value" value="10u" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:56" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A" position="133.25, 105">
+                <attributes>
+                    <attribute name="reference" value="C28" visible="false" />
+                    <attribute name="value" value="10u" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:57" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A" position="167.625, 126.875" rotation="180">
+                <attributes>
+                    <attribute name="reference" value="C26" visible="false" />
+                    <attribute name="value" value="10u" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:58" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A" position="133.25, 126.625">
+                <attributes>
+                    <attribute name="reference" value="C25" visible="false" />
+                    <attribute name="value" value="10u" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:59" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A" position="137.375, 91.5" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="C22" visible="false" />
+                    <attribute name="value" value="10u" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:60" component="Capacitor_SMD:C_0603_1608Metric" position="121.625, 87.125" rotation="90">
+                <attributes>
+                    <attribute name="reference" value="C8" visible="false" />
+                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0603_1608Metric:61" component="Resistor_SMD:R_0603_1608Metric" position="166.7875, 110.375">
+                <attributes>
+                    <attribute name="reference" value="R11" visible="false" />
+                    <attribute name="value" value="10K" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Package_SO:MSOP-8_3x3mm_P0.65mm:62" component="Package_SO:MSOP-8_3x3mm_P0.65mm" position="161, 122.625" rotation="90">
+                <attributes>
+                    <attribute name="reference" value="U4" visible="false" />
+                    <attribute name="value" value="MCP9804_MSOP" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:63" component="Capacitor_SMD:C_0603_1608Metric" position="158.25, 121.25" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="C7" visible="false" />
+                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Inductor_SMD:L_0805_2012Metric:64" component="Inductor_SMD:L_0805_2012Metric" position="176.6875, 92" rotation="180">
+                <attributes>
+                    <attribute name="reference" value="FB1" visible="false" />
+                    <attribute name="value" value="600R" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Package_TO_SOT_SMD:SOT-89-3:65" component="Package_TO_SOT_SMD:SOT-89-3" position="171.625, 93.625">
+                <attributes>
+                    <attribute name="reference" value="U1" visible="false" />
+                    <attribute name="value" value="MCP1703A-3302_SOT89" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0805_2012Metric:66" component="Resistor_SMD:R_0805_2012Metric" position="176.6875, 89.75">
+                <attributes>
+                    <attribute name="reference" value="R1" visible="false" />
+                    <attribute name="value" value="5R1" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0805_2012Metric:67" component="Capacitor_SMD:C_0805_2012Metric" position="170.75, 97.5">
+                <attributes>
+                    <attribute name="reference" value="C2" visible="false" />
+                    <attribute name="value" value="4u7" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0805_2012Metric:68" component="Capacitor_SMD:C_0805_2012Metric" position="170.75, 89.75" rotation="180">
+                <attributes>
+                    <attribute name="reference" value="C1" visible="false" />
+                    <attribute name="value" value="4u7" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Diode_SMD:D_SOD-123F:69" component="Diode_SMD:D_SOD-123F" position="176.625, 96.225" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="D1" visible="false" />
+                    <attribute name="value" value="MBR0540" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0603_1608Metric:70" component="Resistor_SMD:R_0603_1608Metric" position="166.875, 117.25" rotation="180">
+                <attributes>
+                    <attribute name="reference" value="R10" visible="false" />
+                    <attribute name="value" value="1K5" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Resistor_SMD:R_0603_1608Metric:71" component="Resistor_SMD:R_0603_1608Metric" position="166.875, 114.5" rotation="180">
+                <attributes>
+                    <attribute name="reference" value="R9" visible="false" />
+                    <attribute name="value" value="1K5" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm:72" component="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" position="174.375, 106.25" rotation="90">
+                <attributes>
+                    <attribute name="reference" value="U3" visible="false" />
+                    <attribute name="value" value="MCP7940N-xST" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm:73" component="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" position="174.25, 123.125" rotation="90">
+                <attributes>
+                    <attribute name="reference" value="U2" visible="false" />
+                    <attribute name="value" value="24LC1025" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:74" component="Capacitor_SMD:C_0603_1608Metric" position="170, 112.375" rotation="90">
+                <attributes>
+                    <attribute name="reference" value="C6" visible="false" />
+                    <attribute name="value" value="14p" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:75" component="Capacitor_SMD:C_0603_1608Metric" position="176.25, 112.375" rotation="90">
+                <attributes>
+                    <attribute name="reference" value="C5" visible="false" />
+                    <attribute name="value" value="14p" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:76" component="Capacitor_SMD:C_0603_1608Metric" position="170.5, 104.625" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="C4" visible="false" />
+                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Capacitor_SMD:C_0603_1608Metric:77" component="Capacitor_SMD:C_0603_1608Metric" position="170.375, 121.5" rotation="270">
+                <attributes>
+                    <attribute name="reference" value="C3" visible="false" />
+                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Battery:BatteryHolder_LINX_BAT-HLD-012-SMT:78" component="Battery:BatteryHolder_LINX_BAT-HLD-012-SMT" position="194.25, 96.75" rotation="90">
+                <attributes>
+                    <attribute name="reference" value="BT1" visible="false" />
+                    <attribute name="value" value="Battery_Cell" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm:79" component="Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm" position="173.125, 112.375">
+                <attributes>
+                    <attribute name="reference" value="Y1" visible="false" />
+                    <attribute name="value" value="CM7V-T1A" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="MountingHole:MountingHole_3.2mm_M3:80" component="MountingHole:MountingHole_3.2mm_M3" position="198, 79">
+                <attributes>
+                    <attribute name="reference" value="REF**" visible="false" />
+                    <attribute name="value" value="MountingHole_3.2mm_M3" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="MountingHole:MountingHole_3.2mm_M3:81" component="MountingHole:MountingHole_3.2mm_M3" position="198, 129.5">
+                <attributes>
+                    <attribute name="reference" value="REF**" visible="false" />
+                    <attribute name="value" value="MountingHole_3.2mm_M3" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="MountingHole:MountingHole_3.2mm_M3:82" component="MountingHole:MountingHole_3.2mm_M3" position="98, 129.5">
+                <attributes>
+                    <attribute name="reference" value="REF**" visible="false" />
+                    <attribute name="value" value="MountingHole_3.2mm_M3" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="MountingHole:MountingHole_3.2mm_M3:83" component="MountingHole:MountingHole_3.2mm_M3" position="98, 79.5">
+                <attributes>
+                    <attribute name="reference" value="REF**" visible="false" />
+                    <attribute name="value" value="MountingHole_3.2mm_M3" visible="false" />
+                    <attribute name="user" value="%R" visible="false" />
+                </attributes>
+            </part>
+            <part name="MD-CPU07:ER-CON26HB-1:84" component="MD-CPU07:ER-CON26HB-1" position="147.1261, 98.2536">
+                <attributes>
+                    <attribute name="reference" value="LCD1" visible="false" />
+                    <attribute name="value" value="ERC12864-3" visible="false" />
+                </attributes>
+            </part>
+            <part name="MD-CPU07:ER-CON2.0-2P-SMD:85" component="MD-CPU07:ER-CON2.0-2P-SMD" position="132, 93.875" rotation="180">
+                <attributes>
+                    <attribute name="reference" value="BKL1" visible="false" />
+                    <attribute name="value" value="ERC12864-3-BK" visible="false" />
+                </attributes>
+            </part>
+            <part name="MD-CPU07:TQFP64-10X10:86" component="MD-CPU07:TQFP64-10X10" position="145.875, 116.5" rotation="90">
+                <attributes>
+                    <attribute name="reference" value="U6" visible="false" />
+                    <attribute name="value" value="PIC32MX4H_PT" visible="false" />
+                </attributes>
+            </part>
+            <part name="MD-CPU07:S02B-XASK-1:87" component="MD-CPU07:S02B-XASK-1" position="197.25, 113.625" rotation="180">
+                <attributes>
+                    <attribute name="reference" value="JP1" visible="false" />
+                    <attribute name="value" value="S02B-XASK-1" visible="false" />
+                </attributes>
+            </part>
+        </parts>
+    </board>
+</document>

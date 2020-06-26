@@ -9,8 +9,8 @@
     /// </summary>
     public sealed class MacroAperture : Aperture {
 
-        private readonly int[] args;
-        private readonly Macro macro;
+        private readonly int[] _args;
+        private readonly Macro _macro;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -26,8 +26,8 @@
             if (macro == null)
                 throw new ArgumentNullException(nameof(macro));
 
-            this.macro = macro;
-            this.args = args;
+            _macro = macro;
+            _args = args;
         }
 
         /// <summary>
@@ -40,11 +40,11 @@
             StringBuilder sb = new StringBuilder();
             sb.Append("%ADD");
             sb.AppendFormat("{0}", Id);
-            sb.AppendFormat("M{0},", macro.Id);
+            sb.AppendFormat("M{0},", _macro.Id);
 
-            if (args.Length > 0) {
+            if (_args.Length > 0) {
                 bool first = true;
-                foreach (int arg in args) {
+                foreach (int arg in _args) {
                     if (first)
                         first = false;
                     else
@@ -61,14 +61,12 @@
         /// Obte el macro associat a l'apertura.
         /// </summary>
         /// 
-        public Macro Macro =>
-            macro;
+        public Macro Macro => _macro;
 
         /// <summary>
         /// Obte els arguments del macro.
         /// </summary>
         /// 
-        public int[] Args =>
-            args;
+        public int[] Args => _args;
     }
 }

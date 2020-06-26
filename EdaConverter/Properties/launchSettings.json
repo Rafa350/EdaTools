@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "EdaConverter": {
+      "commandName": "Project",
+      "commandLineArgs": "kicad_demo.kicad_pcb kicad_demo.xbrd /v",
+      "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\Net\\EdaTools\\Data"
+    }
+  }
+}

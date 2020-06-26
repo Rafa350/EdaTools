@@ -8,14 +8,14 @@
     /// </summary>
     internal sealed class State {
 
-        private Aperture aperture = null;
-        private Polarity aperturePolarity = Polarity.Dark;
-        private Angle apertureAngle = Angle.Zero;
-        private double apertureScale = 0;
-        private bool apertureMirror = false;
-        private InterpolationMode interpolationMode = InterpolationMode.Unknown;
-        private int x = 0;
-        private int y = 0;
+        private Aperture _aperture = null;
+        private Polarity _aperturePolarity = Polarity.Dark;
+        private Angle _apertureAngle = Angle.Zero;
+        private double _apertureScale = 0;
+        private bool _apertureMirror = false;
+        private InterpolationMode _interpolationMode = InterpolationMode.Unknown;
+        private int _x = 0;
+        private int _y = 0;
 
         public State() {
 
@@ -32,8 +32,8 @@
             if (interpolationMode == InterpolationMode.Unknown)
                 throw new ArgumentOutOfRangeException(nameof(interpolationMode));
 
-            if (this.interpolationMode != interpolationMode) {
-                this.interpolationMode = interpolationMode;
+            if (_interpolationMode != interpolationMode) {
+                _interpolationMode = interpolationMode;
                 return true;
             }
             else
@@ -48,8 +48,8 @@
         /// 
         public bool SetX(int x) {
 
-            if (this.x != x) {
-                this.x = x;
+            if (_x != x) {
+                _x = x;
                 return true;
             }
             else
@@ -64,8 +64,8 @@
         /// 
         public bool SetY(int y) {
 
-            if (this.y != y) {
-                this.y = y;
+            if (_y != y) {
+                _y = y;
                 return true;
             }
             else
@@ -83,8 +83,8 @@
             if (aperture == null)
                 throw new ArgumentNullException(nameof(aperture));
 
-            if (this.aperture != aperture) {
-                this.aperture = aperture;
+            if (_aperture != aperture) {
+                _aperture = aperture;
                 return true;
             }
             else
@@ -99,8 +99,8 @@
         /// 
         public bool SetApertureAngle(Angle apertureAngle) {
 
-            if (this.apertureAngle != apertureAngle) {
-                this.apertureAngle = apertureAngle;
+            if (_apertureAngle != apertureAngle) {
+                _apertureAngle = apertureAngle;
                 return true;
             }
             else
@@ -115,8 +115,8 @@
         /// 
         public bool SetAperturePolarity(Polarity aperturePolarity) {
 
-            if (this.aperturePolarity != aperturePolarity) {
-                this.aperturePolarity = aperturePolarity;
+            if (_aperturePolarity != aperturePolarity) {
+                _aperturePolarity = aperturePolarity;
                 return true;
             }
             else
@@ -125,8 +125,8 @@
 
         public bool SetApertureMirror(bool apertureMirror) {
 
-            if (this.apertureMirror != apertureMirror) {
-                this.apertureMirror = apertureMirror;
+            if (_apertureMirror != apertureMirror) {
+                _apertureMirror = apertureMirror;
                 return true;
             }
             else
@@ -135,8 +135,8 @@
 
         public bool SetApertureScale(double apertureScale) {
 
-            if (this.apertureScale != apertureScale) {
-                this.apertureScale = apertureScale;
+            if (_apertureScale != apertureScale) {
+                _apertureScale = apertureScale;
                 return true;
             }
             else
@@ -147,80 +147,48 @@
         /// Obte el modus d'interpolacio.
         /// </summary>
         /// 
-        public InterpolationMode InterpolationMode {
-            get {
-                return interpolationMode;
-            }
-        }
+        public InterpolationMode InterpolationMode => InterpolationMode;
 
         /// <summary>
         /// Obte la coordinada X de la posicio actual.
         /// </summary>
         /// 
-        public int X {
-            get {
-                return x;
-            }
-        }
+        public int X => _x;
 
         /// <summary>
         /// Obte la coordinada Y de la posicio actual.
         /// </summary>
         /// 
-        public int Y {
-            get {
-                return y;
-            }
-        }
+        public int Y => _y;
 
         /// <summary>
         /// Obte l'apertura seleccionada.
         /// </summary>
         /// 
-        public Aperture Aperture {
-            get {
-                return aperture;
-            }
-        }
+        public Aperture Aperture => _aperture;
 
         /// <summary>
         /// Obte l'angle de l'apertura.
         /// </summary>
         /// 
-        public Angle ApertureAngle {
-            get {
-                return apertureAngle;
-            }
-        }
+        public Angle ApertureAngle => _apertureAngle;
 
         /// <summary>
         /// Opte la polaritat de l'apertura.
         /// </summary>
         /// 
-        public Polarity AperturePolarity {
-            get {
-                return aperturePolarity;
-            }
-        }
+        public Polarity AperturePolarity => _aperturePolarity;
 
         /// <summary>
         /// Opte la reflexio de l'apertura.
         /// </summary>
         /// 
-        public bool ApertureMirror {
-            get {
-                return apertureMirror;
-            }
-        }
+        public bool ApertureMirror => _apertureMirror;
 
         /// <summary>
         /// Obte l'escala de l'apertura.
         /// </summary>
         /// 
-        public double ApertureScale {
-            get {
-                return apertureScale;
-            }
-        }
+        public double ApertureScale => _apertureScale;
     }
 }

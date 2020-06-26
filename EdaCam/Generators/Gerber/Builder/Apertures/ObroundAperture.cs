@@ -9,9 +9,9 @@
     /// </summary>
     public sealed class ObroundAperture : Aperture {
 
-        private readonly int width;
-        private readonly int height;
-        private readonly int drill;
+        private readonly int _width;
+        private readonly int _height;
+        private readonly int _drill;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -34,9 +34,9 @@
             if (drill >= width || drill >= height)
                 throw new ArgumentOutOfRangeException(nameof(drill));
 
-            this.width = width;
-            this.height = height;
-            this.drill = drill;
+            _width = width;
+            _height = height;
+            _drill = drill;
         }
 
         /// <summary>
@@ -50,10 +50,10 @@
             sb.Append("%ADD");
             sb.AppendFormat("{0}", Id);
             sb.Append("O,");
-            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", width / 1000000.0);
-            sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", height / 1000000.0);
-            if (drill > 0)
-                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", drill / 1000000.0);
+            sb.AppendFormat(CultureInfo.InvariantCulture, "{0}", _width / 1000000.0);
+            sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", _height / 1000000.0);
+            if (_drill > 0)
+                sb.AppendFormat(CultureInfo.InvariantCulture, "X{0}", _drill / 1000000.0);
             sb.Append("*%");
 
             return sb.ToString();
@@ -63,21 +63,18 @@
         /// Obte l'amplada.
         /// </summary>
         /// 
-        public int Width =>
-            width;
+        public int Width => _width;
 
         /// <summary>
         /// Obte l'alçada.
         /// </summary>
         ///
-        public int Height =>
-            height;
+        public int Height => _height;
 
         /// <summary>
         /// Obte el diametre del forat.
         /// </summary>
         /// 
-        public int Drill =>
-            drill;
+        public int Drill => _drill;
     }
 }
