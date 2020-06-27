@@ -9,8 +9,8 @@
     /// 
     public sealed partial class Component : IBoardVisitable, IName {
 
-        private readonly string name;
-        private string description;
+        private readonly string _name;
+        private string _description;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -24,7 +24,7 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            this.name = name;
+            _name = name;
 
             if (elements != null)
                 AddElements(elements);
@@ -40,7 +40,7 @@
         /// 
         public Component Clone() {
 
-            Component component = new Component(name);
+            Component component = new Component(_name);
 
             if (elements != null)
                 foreach (var element in Elements)
@@ -67,11 +67,7 @@
         /// Obte o asigna el identificador del component.
         /// </summary>
         /// 
-        public string Name {
-            get {
-                return name;
-            }
-        }
+        public string Name => _name;
 
         /// <summary>
         /// Obte o asigna la descripcio.
@@ -79,10 +75,10 @@
         /// 
         public string Description {
             get {
-                return description;
+                return _description;
             }
             set {
-                description = value;
+                _description = value;
             }
         }
     }

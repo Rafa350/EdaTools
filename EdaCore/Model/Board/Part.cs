@@ -7,11 +7,11 @@
 
     public sealed partial class Part : IPosition, IRotation, IName, IBoardVisitable {
 
-        private readonly string name;
-        private Point position;
-        private Angle rotation;
-        private bool flip;
-        private readonly Component component;
+        private readonly string _name;
+        private Point _position;
+        private Angle _rotation;
+        private bool _flip;
+        private readonly Component _component;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -30,11 +30,11 @@
             if (component == null)
                 throw new ArgumentNullException(nameof(component));
 
-            this.name = name;
-            this.position = position;
-            this.rotation = rotation;
-            this.flip = flip;
-            this.component = component;
+            _name = name;
+            _position = position;
+            _rotation = rotation;
+            _flip = flip;
+            _component = component;
         }
 
         /// <summary>
@@ -46,7 +46,7 @@
         /// 
         public Part Clone(string name, Component component) {
 
-            Part part = new Part(component, name, position, rotation, flip);
+            Part part = new Part(component, name, _position, _rotation, _flip);
             foreach (var attribute in attributes.Values)
                 part.AddAttribute(attribute.Clone());
 
@@ -70,7 +70,7 @@
         /// 
         public override string ToString() {
 
-            return String.Format("Part: '{0}'", name);
+            return String.Format("Part: '{0}'", _name);
         }
 
         /// <summary>
@@ -118,13 +118,13 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            PadElement pad = component.GetPad(name, false);
+            PadElement pad = _component.GetPad(name, false);
             if (pad != null)
                 return pad;
 
             else if (throwOnError)
                 throw new InvalidOperationException(
-                    String.Format("No se encontro el pad '{0}' en el part '{1}'.", name, this.name));
+                    String.Format("No se encontro el pad '{0}' en el part '{1}'.", name, this._name));
 
             else
                 return null;
@@ -134,21 +134,13 @@
         /// Obte o asigna el nom.
         /// </summary>
         /// 
-        public string Name {
-            get {
-                return name;
-            }
-        }
+        public string Name =>_name;
 
         /// <summary>
         /// Obte el component
         /// </summary>
         /// 
-        public Component Component {
-            get {
-                return component;
-            }
-        }
+        public Component Component => _component;
 
         /// <summary>
         /// Obte o asigna la posicio.
@@ -156,10 +148,10 @@
         /// 
         public Point Position {
             get {
-                return position;
+                return _position;
             }
             set {
-                position = value;
+                _position = value;
             }
         }
 
@@ -169,10 +161,10 @@
         /// 
         public Angle Rotation {
             get {
-                return rotation;
+                return _rotation;
             }
             set {
-                rotation = value;
+                _rotation = value;
             }
         }
 
@@ -182,10 +174,10 @@
         /// 
         public bool Flip {
             get {
-                return flip;
+                return _flip;
             }
             set {
-                flip = value;
+                _flip = value;
             }
         }
 
@@ -193,50 +185,30 @@
         /// Indica si el component esta girat.
         /// </summary>
         /// 
-        public bool IsFlipped {
-            get {
-                return flip;
-            }
-        }
+        public bool IsFlipped => _flip;
 
         /// <summary>
         /// Indica si conte elements
         /// </summary>
         /// 
-        public bool HasElements {
-            get {
-                return component.HasElements;
-            }
-        }
+        public bool HasElements => _component.HasElements;
 
         /// <summary>
         /// Enumera els elements.
         /// </summary>
         /// 
-        public IEnumerable<Element> Elements {
-            get {
-                return component.Elements;
-            }
-        }
+        public IEnumerable<Element> Elements => _component.Elements;
 
         /// <summary>
         /// Indica si conte pads.
         /// </summary>
         /// 
-        public bool HasPads {
-            get {
-                return component.HasPads;
-            }
-        }
+        public bool HasPads => _component.HasPads;
 
         /// <summary>
         /// Enumera els pads
         /// </summary>
         /// 
-        public IEnumerable<PadElement> Pads {
-            get {
-                return component.Pads;
-            }
-        }
+        public IEnumerable<PadElement> Pads => _component.Pads;
     }
 }

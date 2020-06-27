@@ -114,7 +114,7 @@
 
             else if (throwOnError)
                 throw new InvalidOperationException(
-                    String.Format("No se encontro el pad '{0}' en el componente '{1}'.", name, this.name));
+                    String.Format("No se encontro el pad '{0}' en el componente '{1}'.", name, this._name));
 
             else
                 return null;

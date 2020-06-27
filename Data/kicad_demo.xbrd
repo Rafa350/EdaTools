@@ -2,26 +2,30 @@
 <document version="213" documentType="board" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/XBRD.xsd">
     <board position="0, 0" rotation="0">
         <layers>
-            <layer side="top" tag="Top" function="signal" />
-            <layer side="bottom" tag="Bottom" function="signal" />
-            <layer side="bottom" tag="B.Adhes" function="unknown" />
-            <layer side="top" tag="F.Adhes" function="unknown" />
-            <layer side="bottom" tag="B.Paste" function="unknown" />
-            <layer side="top" tag="F.Paste" function="unknown" />
-            <layer side="bottom" tag="B.SilkS" function="unknown" />
-            <layer side="top" tag="F.SilkS" function="unknown" />
-            <layer side="bottom" tag="B.Mask" function="unknown" />
-            <layer side="top" tag="F.Mask" function="unknown" />
-            <layer side="none" tag="Dwgs.User" function="unknown" />
-            <layer side="none" tag="Cmts.User" function="unknown" />
-            <layer side="none" tag="Eco1.User" function="unknown" />
-            <layer side="none" tag="Eco2.User" function="unknown" />
-            <layer side="none" tag="Edge.Cuts" function="outline" />
+            <layer side="none" tag="Pads" function="unknown" />
+            <layer side="none" tag="Vias" function="unknown" />
+            <layer side="none" tag="Drils" function="unknown" />
+            <layer side="none" tag="Holes" function="unknown" />
+            <layer side="top" tag="Copper" function="signal" />
+            <layer side="bottom" tag="Copper" function="signal" />
+            <layer side="bottom" tag="Glue" function="unknown" />
+            <layer side="top" tag="Glue" function="unknown" />
+            <layer side="bottom" tag="Cream" function="unknown" />
+            <layer side="top" tag="Cream" function="unknown" />
+            <layer side="bottom" tag="Place" function="unknown" />
+            <layer side="top" tag="Place" function="unknown" />
+            <layer side="bottom" tag="Stop" function="unknown" />
+            <layer side="top" tag="Stop" function="unknown" />
+            <layer side="none" tag="Dwgs_User" function="unknown" />
+            <layer side="none" tag="Cmts_User" function="unknown" />
+            <layer side="none" tag="Eco1_User" function="unknown" />
+            <layer side="none" tag="Eco2_User" function="unknown" />
+            <layer side="none" tag="Profile" function="unknown" />
             <layer side="none" tag="Margin" function="unknown" />
-            <layer side="bottom" tag="B.CrtYd" function="unknown" />
-            <layer side="top" tag="F.CrtYd" function="unknown" />
-            <layer side="bottom" tag="B.Fab" function="unknown" />
-            <layer side="top" tag="F.Fab" function="unknown" />
+            <layer side="bottom" tag="B_CrtYd" function="unknown" />
+            <layer side="top" tag="F_CrtYd" function="unknown" />
+            <layer side="bottom" tag="Document" function="unknown" />
+            <layer side="top" tag="Document" function="unknown" />
         </layers>
         <signals>
             <signal name="GND" clearance="0.15" />
@@ -91,378 +95,698 @@
         <components>
             <component name="Capacitor_SMD:C_0603_1608Metric">
                 <elements>
-                    <text layers="Top.F.SilkS" position="-0.125, 1.5" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 1.43" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.7875, 0" rotation="90" size="0.875, 0.95" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.7875, 0" rotation="90" size="0.875, 0.95" />
+                    <text layers="Top.Place" position="-0.125, 1.5" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 1.43" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.F_CrtYd" startPosition="1.48, 0.73" endPosition="-1.48, 0.73" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="1.48, -0.73" endPosition="1.48, 0.73" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-1.48, -0.73" endPosition="1.48, -0.73" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-1.48, 0.73" endPosition="-1.48, -0.73" thickness="0.05" />
+                    <line layers="Top.Place" startPosition="-0.162779, 0.51" endPosition="0.162779, 0.51" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-0.162779, -0.51" endPosition="0.162779, -0.51" thickness="0.12" />
+                    <line layers="Top.Document" startPosition="0.8, 0.4" endPosition="-0.8, 0.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="0.8, -0.4" endPosition="0.8, 0.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.8, -0.4" endPosition="0.8, -0.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.8, 0.4" endPosition="-0.8, -0.4" thickness="0.1" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.7875, 0" size="0.875, 0.95" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.7875, 0" size="0.875, 0.95" />
                 </elements>
             </component>
             <component name="Diode_SMD:D_SOD-123">
                 <elements>
-                    <text layers="Top.F.SilkS" position="0.0175, 1.875" rotation="270" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 2.1" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="-0.125, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.65, 0" rotation="90" size="0.9, 1.2" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.65, 0" rotation="90" size="0.9, 1.2" />
+                    <text layers="Top.Place" position="0.0175, 1.875" rotation="180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 2.1" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.Place" startPosition="-2.25, -1" endPosition="1.65, -1" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-2.25, 1" endPosition="1.65, 1" thickness="0.12" />
+                    <line layers="Top.F_CrtYd" startPosition="-2.35, -1.15" endPosition="-2.35, 1.15" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="2.35, 1.15" endPosition="-2.35, 1.15" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="2.35, -1.15" endPosition="2.35, 1.15" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-2.35, -1.15" endPosition="2.35, -1.15" thickness="0.05" />
+                    <line layers="Top.Document" startPosition="-1.4, -0.9" endPosition="1.4, -0.9" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1.4, -0.9" endPosition="1.4, 0.9" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1.4, 0.9" endPosition="-1.4, 0.9" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-1.4, 0.9" endPosition="-1.4, -0.9" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.75, 0" endPosition="-0.35, 0" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.35, 0" endPosition="-0.35, -0.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.35, 0" endPosition="-0.35, 0.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.35, 0" endPosition="0.25, -0.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="0.25, -0.4" endPosition="0.25, 0.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="0.25, 0.4" endPosition="-0.35, 0" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="0.25, 0" endPosition="0.75, 0" thickness="0.1" />
+                    <line layers="Top.Place" startPosition="-2.25, -1" endPosition="-2.25, 1" thickness="0.12" />
+                    <text layers="Top.Document" position="-0.125, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.65, 0" size="0.9, 1.2" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.65, 0" size="0.9, 1.2" />
                 </elements>
             </component>
             <component name="Package_SO:TSSOP-28-1EP_4.4x9.7mm_P0.65mm">
                 <elements>
-                    <text layers="Top.F.SilkS" position="0, -5.9" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 5.9" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="291" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.6, -2.31375" rotation="90" size="1.2, 1.5425" />
-                    <spad name="292" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.6, -0.77125" rotation="90" size="1.2, 1.5425" />
-                    <spad name="293" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.6, 0.77125" rotation="90" size="1.2, 1.5425" />
-                    <spad name="294" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.6, 2.31375" rotation="90" size="1.2, 1.5425" />
-                    <spad name="295" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.6, -2.31375" rotation="90" size="1.2, 1.5425" />
-                    <spad name="296" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.6, -0.77125" rotation="90" size="1.2, 1.5425" />
-                    <spad name="297" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.6, 0.77125" rotation="90" size="1.2, 1.5425" />
-                    <spad name="298" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.6, 2.31375" rotation="90" size="1.2, 1.5425" />
-                    <spad name="28" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, -4.225" rotation="90" size="1.1, 0.4" />
-                    <spad name="27" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, -3.575" rotation="90" size="1.1, 0.4" />
-                    <spad name="26" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, -2.925" rotation="90" size="1.1, 0.4" />
-                    <spad name="25" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, -2.275" rotation="90" size="1.1, 0.4" />
-                    <spad name="24" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, -1.625" rotation="90" size="1.1, 0.4" />
-                    <spad name="23" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, -0.975" rotation="90" size="1.1, 0.4" />
-                    <spad name="22" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, -0.325" rotation="90" size="1.1, 0.4" />
-                    <spad name="21" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, 0.325" rotation="90" size="1.1, 0.4" />
-                    <spad name="20" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, 0.975" rotation="90" size="1.1, 0.4" />
-                    <spad name="19" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, 1.625" rotation="90" size="1.1, 0.4" />
-                    <spad name="18" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, 2.275" rotation="90" size="1.1, 0.4" />
-                    <spad name="17" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, 2.925" rotation="90" size="1.1, 0.4" />
-                    <spad name="16" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, 3.575" rotation="90" size="1.1, 0.4" />
-                    <spad name="15" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.85, 4.225" rotation="90" size="1.1, 0.4" />
-                    <spad name="14" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, 4.225" rotation="90" size="1.1, 0.4" />
-                    <spad name="13" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, 3.575" rotation="90" size="1.1, 0.4" />
-                    <spad name="12" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, 2.925" rotation="90" size="1.1, 0.4" />
-                    <spad name="11" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, 2.275" rotation="90" size="1.1, 0.4" />
-                    <spad name="10" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, 1.625" rotation="90" size="1.1, 0.4" />
-                    <spad name="9" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, 0.975" rotation="90" size="1.1, 0.4" />
-                    <spad name="8" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, 0.325" rotation="90" size="1.1, 0.4" />
-                    <spad name="7" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, -0.325" rotation="90" size="1.1, 0.4" />
-                    <spad name="6" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, -0.975" rotation="90" size="1.1, 0.4" />
-                    <spad name="5" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, -1.625" rotation="90" size="1.1, 0.4" />
-                    <spad name="4" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, -2.275" rotation="90" size="1.1, 0.4" />
-                    <spad name="3" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, -2.925" rotation="90" size="1.1, 0.4" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, -3.575" rotation="90" size="1.1, 0.4" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.85, -4.225" rotation="90" size="1.1, 0.4" />
+                    <text layers="Top.Place" position="0, -5.9" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 5.9" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.Place" startPosition="-2.325, -4.75" endPosition="-3.4, -4.75" thickness="0.15" />
+                    <line layers="Top.Place" startPosition="-2.325, 4.975" endPosition="2.325, 4.975" thickness="0.15" />
+                    <line layers="Top.Place" startPosition="-2.325, -4.975" endPosition="2.325, -4.975" thickness="0.15" />
+                    <line layers="Top.Place" startPosition="-2.325, 4.975" endPosition="-2.325, 4.65" thickness="0.15" />
+                    <line layers="Top.Place" startPosition="2.325, 4.975" endPosition="2.325, 4.65" thickness="0.15" />
+                    <line layers="Top.Place" startPosition="2.325, -4.975" endPosition="2.325, -4.65" thickness="0.15" />
+                    <line layers="Top.Place" startPosition="-2.325, -4.975" endPosition="-2.325, -4.75" thickness="0.15" />
+                    <line layers="Top.F_CrtYd" startPosition="-3.65, 5.15" endPosition="3.65, 5.15" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-3.65, -5.15" endPosition="3.65, -5.15" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="3.65, -5.15" endPosition="3.65, 5.15" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-3.65, -5.15" endPosition="-3.65, 5.15" thickness="0.05" />
+                    <line layers="Top.Document" startPosition="-2.2, -3.85" endPosition="-1.2, -4.85" thickness="0.15" />
+                    <line layers="Top.Document" startPosition="-2.2, 4.85" endPosition="-2.2, -3.85" thickness="0.15" />
+                    <line layers="Top.Document" startPosition="2.2, 4.85" endPosition="-2.2, 4.85" thickness="0.15" />
+                    <line layers="Top.Document" startPosition="2.2, -4.85" endPosition="2.2, 4.85" thickness="0.15" />
+                    <line layers="Top.Document" startPosition="-1.2, -4.85" endPosition="2.2, -4.85" thickness="0.15" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="291" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.6, -2.31375" size="1.2, 1.5425" />
+                    <spad name="292" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.6, -0.77125" size="1.2, 1.5425" />
+                    <spad name="293" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.6, 0.77125" size="1.2, 1.5425" />
+                    <spad name="294" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.6, 2.31375" size="1.2, 1.5425" />
+                    <spad name="295" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.6, -2.31375" size="1.2, 1.5425" />
+                    <spad name="296" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.6, -0.77125" size="1.2, 1.5425" />
+                    <spad name="297" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.6, 0.77125" size="1.2, 1.5425" />
+                    <spad name="298" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.6, 2.31375" size="1.2, 1.5425" />
+                    <spad name="28" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, -4.225" size="1.1, 0.4" />
+                    <spad name="27" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, -3.575" size="1.1, 0.4" />
+                    <spad name="26" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, -2.925" size="1.1, 0.4" />
+                    <spad name="25" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, -2.275" size="1.1, 0.4" />
+                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, -1.625" size="1.1, 0.4" />
+                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, -0.975" size="1.1, 0.4" />
+                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, -0.325" size="1.1, 0.4" />
+                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, 0.325" size="1.1, 0.4" />
+                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, 0.975" size="1.1, 0.4" />
+                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, 1.625" size="1.1, 0.4" />
+                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, 2.275" size="1.1, 0.4" />
+                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, 2.925" size="1.1, 0.4" />
+                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, 3.575" size="1.1, 0.4" />
+                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, 4.225" size="1.1, 0.4" />
+                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, 4.225" size="1.1, 0.4" />
+                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, 3.575" size="1.1, 0.4" />
+                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, 2.925" size="1.1, 0.4" />
+                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, 2.275" size="1.1, 0.4" />
+                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, 1.625" size="1.1, 0.4" />
+                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, 0.975" size="1.1, 0.4" />
+                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, 0.325" size="1.1, 0.4" />
+                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, -0.325" size="1.1, 0.4" />
+                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, -0.975" size="1.1, 0.4" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, -1.625" size="1.1, 0.4" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, -2.275" size="1.1, 0.4" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, -2.925" size="1.1, 0.4" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, -3.575" size="1.1, 0.4" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, -4.225" size="1.1, 0.4" />
                 </elements>
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric">
                 <elements>
-                    <text layers="Top.F.SilkS" position="0, 1.5" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 1.65" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.9375, 0" rotation="270" size="0.975, 1.4" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.9375, 0" rotation="270" size="0.975, 1.4" />
+                    <text layers="Top.Place" position="0, 1.5" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 1.65" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.F_CrtYd" startPosition="1.68, 0.95" endPosition="-1.68, 0.95" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="1.68, -0.95" endPosition="1.68, 0.95" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-1.68, -0.95" endPosition="1.68, -0.95" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-1.68, 0.95" endPosition="-1.68, -0.95" thickness="0.05" />
+                    <line layers="Top.Place" startPosition="-0.258577, 0.71" endPosition="0.258577, 0.71" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-0.258577, -0.71" endPosition="0.258577, -0.71" thickness="0.12" />
+                    <line layers="Top.Document" startPosition="1, 0.6" endPosition="-1, 0.6" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1, -0.6" endPosition="1, 0.6" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-1, -0.6" endPosition="1, -0.6" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-1, 0.6" endPosition="-1, -0.6" thickness="0.1" />
+                    <text layers="Top.Document" position="0, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.9375, 0" size="0.975, 1.4" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.9375, 0" size="0.975, 1.4" />
                 </elements>
             </component>
             <component name="Package_SO:SSOP-24_5.3x8.2mm_P0.65mm">
                 <elements>
-                    <text layers="Top.F.SilkS" position="5.5, -3.75" rotation="180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 5.25" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="24" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, -3.575" rotation="90" size="1.75, 0.45" />
-                    <spad name="23" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, -2.925" rotation="90" size="1.75, 0.45" />
-                    <spad name="22" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, -2.275" rotation="90" size="1.75, 0.45" />
-                    <spad name="21" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, -1.625" rotation="90" size="1.75, 0.45" />
-                    <spad name="20" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, -0.975" rotation="90" size="1.75, 0.45" />
-                    <spad name="19" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, -0.325" rotation="90" size="1.75, 0.45" />
-                    <spad name="18" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, 0.325" rotation="90" size="1.75, 0.45" />
-                    <spad name="17" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, 0.975" rotation="90" size="1.75, 0.45" />
-                    <spad name="16" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, 1.625" rotation="90" size="1.75, 0.45" />
-                    <spad name="15" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, 2.275" rotation="90" size="1.75, 0.45" />
-                    <spad name="14" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, 2.925" rotation="90" size="1.75, 0.45" />
-                    <spad name="13" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.6, 3.575" rotation="90" size="1.75, 0.45" />
-                    <spad name="12" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, 3.575" rotation="90" size="1.75, 0.45" />
-                    <spad name="11" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, 2.925" rotation="90" size="1.75, 0.45" />
-                    <spad name="10" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, 2.275" rotation="90" size="1.75, 0.45" />
-                    <spad name="9" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, 1.625" rotation="90" size="1.75, 0.45" />
-                    <spad name="8" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, 0.975" rotation="90" size="1.75, 0.45" />
-                    <spad name="7" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, 0.325" rotation="90" size="1.75, 0.45" />
-                    <spad name="6" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, -0.325" rotation="90" size="1.75, 0.45" />
-                    <spad name="5" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, -0.975" rotation="90" size="1.75, 0.45" />
-                    <spad name="4" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, -1.625" rotation="90" size="1.75, 0.45" />
-                    <spad name="3" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, -2.275" rotation="90" size="1.75, 0.45" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, -2.925" rotation="90" size="1.75, 0.45" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.6, -3.575" rotation="90" size="1.75, 0.45" />
+                    <text layers="Top.Place" position="5.5, -3.75" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 5.25" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.Place" startPosition="-2.875, -4.099999" endPosition="-4.475, -4.099999" thickness="0.15" />
+                    <line layers="Top.Place" startPosition="-2.875, 4.325" endPosition="2.875, 4.325" thickness="0.15" />
+                    <line layers="Top.Place" startPosition="-2.875, -4.325" endPosition="2.875, -4.325" thickness="0.15" />
+                    <line layers="Top.Place" startPosition="-2.875, 4.325" endPosition="-2.875, 4.025" thickness="0.15" />
+                    <line layers="Top.Place" startPosition="2.875, 4.325" endPosition="2.875, 4.025" thickness="0.15" />
+                    <line layers="Top.Place" startPosition="2.875, -4.325" endPosition="2.875, -4.025" thickness="0.15" />
+                    <line layers="Top.Place" startPosition="-2.875, -4.325" endPosition="-2.875, -4.099999" thickness="0.15" />
+                    <line layers="Top.F_CrtYd" startPosition="-4.75, 4.5" endPosition="4.75, 4.5" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-4.75, -4.5" endPosition="4.75, -4.5" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="4.75, -4.5" endPosition="4.75, 4.5" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-4.75, -4.5" endPosition="-4.75, 4.5" thickness="0.05" />
+                    <line layers="Top.Document" startPosition="-2.65, -3.1" endPosition="-1.65, -4.099999" thickness="0.15" />
+                    <line layers="Top.Document" startPosition="-2.65, 4.099999" endPosition="-2.65, -3.1" thickness="0.15" />
+                    <line layers="Top.Document" startPosition="2.65, 4.099999" endPosition="-2.65, 4.099999" thickness="0.15" />
+                    <line layers="Top.Document" startPosition="2.65, -4.099999" endPosition="2.65, 4.099999" thickness="0.15" />
+                    <line layers="Top.Document" startPosition="-1.65, -4.099999" endPosition="2.65, -4.099999" thickness="0.15" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, -3.575" size="1.75, 0.45" />
+                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, -2.925" size="1.75, 0.45" />
+                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, -2.275" size="1.75, 0.45" />
+                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, -1.625" size="1.75, 0.45" />
+                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, -0.975" size="1.75, 0.45" />
+                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, -0.325" size="1.75, 0.45" />
+                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, 0.325" size="1.75, 0.45" />
+                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, 0.975" size="1.75, 0.45" />
+                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, 1.625" size="1.75, 0.45" />
+                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, 2.275" size="1.75, 0.45" />
+                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, 2.925" size="1.75, 0.45" />
+                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, 3.575" size="1.75, 0.45" />
+                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, 3.575" size="1.75, 0.45" />
+                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, 2.925" size="1.75, 0.45" />
+                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, 2.275" size="1.75, 0.45" />
+                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, 1.625" size="1.75, 0.45" />
+                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, 0.975" size="1.75, 0.45" />
+                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, 0.325" size="1.75, 0.45" />
+                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, -0.325" size="1.75, 0.45" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, -0.975" size="1.75, 0.45" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, -1.625" size="1.75, 0.45" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, -2.275" size="1.75, 0.45" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, -2.925" size="1.75, 0.45" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, -3.575" size="1.75, 0.45" />
                 </elements>
             </component>
             <component name="Resistor_SMD:R_0603_1608Metric">
                 <elements>
-                    <text layers="Top.F.SilkS" position="0, -1.5" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 1.43" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.7875, 0" rotation="270" size="0.875, 0.95" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.7875, 0" rotation="270" size="0.875, 0.95" />
+                    <text layers="Top.Place" position="0, -1.5" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 1.43" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.F_CrtYd" startPosition="1.48, 0.73" endPosition="-1.48, 0.73" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="1.48, -0.73" endPosition="1.48, 0.73" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-1.48, -0.73" endPosition="1.48, -0.73" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-1.48, 0.73" endPosition="-1.48, -0.73" thickness="0.05" />
+                    <line layers="Top.Place" startPosition="-0.162779, 0.51" endPosition="0.162779, 0.51" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-0.162779, -0.51" endPosition="0.162779, -0.51" thickness="0.12" />
+                    <line layers="Top.Document" startPosition="0.8, 0.4" endPosition="-0.8, 0.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="0.8, -0.4" endPosition="0.8, 0.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.8, -0.4" endPosition="0.8, -0.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.8, 0.4" endPosition="-0.8, -0.4" thickness="0.1" />
+                    <text layers="Top.Document" position="0, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.7875, 0" size="0.875, 0.95" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.7875, 0" size="0.875, 0.95" />
                 </elements>
             </component>
             <component name="Capacitor_SMD:C_0805_2012Metric">
                 <elements>
-                    <text layers="Top.F.SilkS" position="-3.125, 0" rotation="270" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 1.65" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.9375, 0" rotation="90" size="0.975, 1.4" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.9375, 0" rotation="90" size="0.975, 1.4" />
+                    <text layers="Top.Place" position="-3.125, 0" rotation="180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 1.65" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.F_CrtYd" startPosition="1.68, 0.95" endPosition="-1.68, 0.95" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="1.68, -0.95" endPosition="1.68, 0.95" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-1.68, -0.95" endPosition="1.68, -0.95" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-1.68, 0.95" endPosition="-1.68, -0.95" thickness="0.05" />
+                    <line layers="Top.Place" startPosition="-0.258577, 0.71" endPosition="0.258577, 0.71" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-0.258577, -0.71" endPosition="0.258577, -0.71" thickness="0.12" />
+                    <line layers="Top.Document" startPosition="1, 0.6" endPosition="-1, 0.6" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1, -0.6" endPosition="1, 0.6" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-1, -0.6" endPosition="1, -0.6" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-1, 0.6" endPosition="-1, -0.6" thickness="0.1" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.9375, 0" size="0.975, 1.4" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.9375, 0" size="0.975, 1.4" />
                 </elements>
             </component>
             <component name="Inductor_SMD:L_0603_1608Metric">
                 <elements>
-                    <text layers="Top.F.SilkS" position="2.5, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 1.43" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.7875, 0" size="0.875, 0.95" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.7875, 0" size="0.875, 0.95" />
+                    <text layers="Top.Place" position="2.5, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 1.43" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.F_CrtYd" startPosition="1.48, 0.73" endPosition="-1.48, 0.73" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="1.48, -0.73" endPosition="1.48, 0.73" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-1.48, -0.73" endPosition="1.48, -0.73" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-1.48, 0.73" endPosition="-1.48, -0.73" thickness="0.05" />
+                    <line layers="Top.Place" startPosition="-0.162779, 0.51" endPosition="0.162779, 0.51" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-0.162779, -0.51" endPosition="0.162779, -0.51" thickness="0.12" />
+                    <line layers="Top.Document" startPosition="0.8, 0.4" endPosition="-0.8, 0.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="0.8, -0.4" endPosition="0.8, 0.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.8, -0.4" endPosition="0.8, -0.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.8, 0.4" endPosition="-0.8, -0.4" thickness="0.1" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.7875, 0" size="0.875, 0.95" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.7875, 0" size="0.875, 0.95" />
                 </elements>
             </component>
             <component name="Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical">
                 <elements>
-                    <text layers="Top.F.SilkS" position="0, -2.06" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 10.06" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="0, 4" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="5" layers="*.Cu, *.Mask" position="0, 8" rotation="270" size="1.35, 1.35" />
-                    <spad name="4" layers="*.Cu, *.Mask" position="0, 6" rotation="270" size="1.35, 1.35" />
-                    <spad name="3" layers="*.Cu, *.Mask" position="0, 4" rotation="270" size="1.35, 1.35" />
-                    <spad name="2" layers="*.Cu, *.Mask" position="0, 2" rotation="270" size="1.35, 1.35" />
-                    <spad name="1" layers="*.Cu, *.Mask" position="0, 0" rotation="270" size="1.35, 1.35" />
+                    <text layers="Top.Place" position="0, -2.06" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 10.06" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.F_CrtYd" startPosition="1.5, -1.5" endPosition="-1.5, -1.5" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="1.5, 9.5" endPosition="1.5, -1.5" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-1.5, 9.5" endPosition="1.5, 9.5" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-1.5, -1.5" endPosition="-1.5, 9.5" thickness="0.05" />
+                    <line layers="Top.Place" startPosition="-1.06, -1.06" endPosition="0, -1.06" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-1.06, 0" endPosition="-1.06, -1.06" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-1.06, 1" endPosition="1.06, 1" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="1.06, 1" endPosition="1.06, 9.06" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-1.06, 1" endPosition="-1.06, 9.06" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-1.06, 9.06" endPosition="1.06, 9.06" thickness="0.12" />
+                    <line layers="Top.Document" startPosition="-1, -0.5" endPosition="-0.5, -1" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-1, 9" endPosition="-1, -0.5" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1, 9" endPosition="-1, 9" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1, -1" endPosition="1, 9" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.5, -1" endPosition="1, -1" thickness="0.1" />
+                    <text layers="Top.Document" position="0, 4" rotation="-270" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="5" layers="*_Cu, *_Mask, Pads" position="0, 8" size="1.35, 1.35" />
+                    <spad name="4" layers="*_Cu, *_Mask, Pads" position="0, 6" size="1.35, 1.35" />
+                    <spad name="3" layers="*_Cu, *_Mask, Pads" position="0, 4" size="1.35, 1.35" />
+                    <spad name="2" layers="*_Cu, *_Mask, Pads" position="0, 2" size="1.35, 1.35" />
+                    <spad name="1" layers="*_Cu, *_Mask, Pads" position="0, 0" size="1.35, 1.35" />
                 </elements>
             </component>
             <component name="Crystal:Crystal_SMD_Abracon_ABM3B-4Pin_5.0x3.2mm">
                 <elements>
-                    <text layers="Top.F.SilkS" position="0, -2.8" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 2.8" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="4" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2, -1.2" rotation="90" size="1.8, 1.2" />
-                    <spad name="3" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2, -1.2" rotation="90" size="1.8, 1.2" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2, 1.2" rotation="90" size="1.8, 1.2" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2, 1.2" rotation="90" size="1.8, 1.2" />
+                    <text layers="Top.Place" position="0, -2.8" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 2.8" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.Document" startPosition="-2.3, -1.6" endPosition="2.3, -1.6" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="2.3, -1.6" endPosition="2.5, -1.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="2.5, -1.4" endPosition="2.5, 1.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="2.5, 1.4" endPosition="2.3, 1.6" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="2.3, 1.6" endPosition="-2.3, 1.6" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-2.3, 1.6" endPosition="-2.5, 1.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-2.5, 1.4" endPosition="-2.5, -1.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-2.5, -1.4" endPosition="-2.3, -1.6" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-2.5, 0.6" endPosition="-1.5, 1.6" thickness="0.1" />
+                    <line layers="Top.Place" startPosition="-3.1, 0.4" endPosition="-2.7, 0.4" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-2.7, 0.4" endPosition="-2.7, -0.4" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="2.7, -0.4" endPosition="2.7, 0.4" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-0.9, -1.8" endPosition="0.9, -1.8" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="0.9, 1.8" endPosition="-0.9, 1.8" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-0.9, 1.8" endPosition="-0.9, 2.04" thickness="0.12" />
+                    <line layers="Top.F_CrtYd" startPosition="-3.2, -2.1" endPosition="-3.2, 2.1" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-3.2, 2.1" endPosition="3.2, 2.1" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="3.2, 2.1" endPosition="3.2, -2.1" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="3.2, -2.1" endPosition="-3.2, -2.1" thickness="0.05" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2, -1.2" size="1.8, 1.2" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2, -1.2" size="1.8, 1.2" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2, 1.2" size="1.8, 1.2" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2, 1.2" size="1.8, 1.2" />
                 </elements>
             </component>
             <component name="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm">
                 <elements>
-                    <text layers="Top.F.SilkS" position="1.125, -3.5" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 3.4" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="8" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.475, -1.905" rotation="90" size="1.95, 0.6" />
-                    <spad name="7" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.475, -0.635" rotation="90" size="1.95, 0.6" />
-                    <spad name="6" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.475, 0.635" rotation="90" size="1.95, 0.6" />
-                    <spad name="5" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.475, 1.905" rotation="90" size="1.95, 0.6" />
-                    <spad name="4" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.475, 1.905" rotation="90" size="1.95, 0.6" />
-                    <spad name="3" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.475, 0.635" rotation="90" size="1.95, 0.6" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.475, -0.635" rotation="90" size="1.95, 0.6" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.475, -1.905" rotation="90" size="1.95, 0.6" />
+                    <text layers="Top.Place" position="1.125, -3.5" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 3.4" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.F_CrtYd" startPosition="3.7, -2.7" endPosition="-3.7, -2.7" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="3.7, 2.7" endPosition="3.7, -2.7" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-3.7, 2.7" endPosition="3.7, 2.7" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-3.7, -2.7" endPosition="-3.7, 2.7" thickness="0.05" />
+                    <line layers="Top.Document" startPosition="-1.95, -1.475" endPosition="-0.975, -2.45" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-1.95, 2.45" endPosition="-1.95, -1.475" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1.95, 2.45" endPosition="-1.95, 2.45" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1.95, -2.45" endPosition="1.95, 2.45" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.975, -2.45" endPosition="1.95, -2.45" thickness="0.1" />
+                    <line layers="Top.Place" startPosition="0, -2.56" endPosition="-3.45, -2.56" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="0, -2.56" endPosition="1.95, -2.56" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="0, 2.56" endPosition="-1.95, 2.56" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="0, 2.56" endPosition="1.95, 2.56" thickness="0.12" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.475, -1.905" size="1.95, 0.6" />
+                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.475, -0.635" size="1.95, 0.6" />
+                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.475, 0.635" size="1.95, 0.6" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.475, 1.905" size="1.95, 0.6" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.475, 1.905" size="1.95, 0.6" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.475, 0.635" size="1.95, 0.6" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.475, -0.635" size="1.95, 0.6" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.475, -1.905" size="1.95, 0.6" />
                 </elements>
             </component>
             <component name="LED_SMD:LED_0805_2012Metric_Castellated">
                 <elements>
-                    <text layers="Top.F.SilkS" position="-2.9125, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 1.6" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.9625, 0" rotation="180" size="1.325, 1.3" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.9625, 0" rotation="180" size="1.325, 1.3" />
+                    <text layers="Top.Place" position="-2.9125, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 1.6" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.F_CrtYd" startPosition="1.88, 0.9" endPosition="-1.88, 0.9" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="1.88, -0.9" endPosition="1.88, 0.9" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-1.88, -0.9" endPosition="1.88, -0.9" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-1.88, 0.9" endPosition="-1.88, -0.9" thickness="0.05" />
+                    <line layers="Top.Place" startPosition="-1.885, 0.91" endPosition="1, 0.91" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-1.885, -0.91" endPosition="-1.885, 0.91" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="1, -0.91" endPosition="-1.885, -0.91" thickness="0.12" />
+                    <line layers="Top.Document" startPosition="1, 0.6" endPosition="1, -0.6" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-1, 0.6" endPosition="1, 0.6" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-1, -0.3" endPosition="-1, 0.6" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.7, -0.6" endPosition="-1, -0.3" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1, -0.6" endPosition="-0.7, -0.6" thickness="0.1" />
+                    <text layers="Top.Document" position="0, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.9625, 0" size="1.325, 1.3" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.9625, 0" size="1.325, 1.3" />
                 </elements>
             </component>
             <component name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A">
                 <elements>
-                    <text layers="Top.F.SilkS" position="0, 1.875" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 1.75" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.35, 0" size="1.4, 1.35" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.35, 0" size="1.4, 1.35" />
+                    <text layers="Top.Place" position="0, 1.875" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 1.75" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.F_CrtYd" startPosition="2.3, 1.05" endPosition="-2.3, 1.05" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="2.3, -1.05" endPosition="2.3, 1.05" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-2.3, -1.05" endPosition="2.3, -1.05" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-2.3, 1.05" endPosition="-2.3, -1.05" thickness="0.05" />
+                    <line layers="Top.Place" startPosition="-2.31, 0.935" endPosition="1.6, 0.935" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-2.31, -0.935" endPosition="-2.31, 0.935" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="1.6, -0.935" endPosition="-2.31, -0.935" thickness="0.12" />
+                    <line layers="Top.Document" startPosition="1.6, 0.8" endPosition="1.6, -0.8" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-1.6, 0.8" endPosition="1.6, 0.8" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-1.6, -0.4" endPosition="-1.6, 0.8" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-1.2, -0.8" endPosition="-1.6, -0.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1.6, -0.8" endPosition="-1.2, -0.8" thickness="0.1" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.35, 0" size="1.4, 1.35" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.35, 0" size="1.4, 1.35" />
                 </elements>
             </component>
             <component name="Package_SO:MSOP-8_3x3mm_P0.65mm">
                 <elements>
-                    <text layers="Top.F.SilkS" position="3.875, -0.125" rotation="180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 2.45" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="8" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.1125, -0.975" rotation="90" size="1.625, 0.4" />
-                    <spad name="7" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.1125, -0.325" rotation="90" size="1.625, 0.4" />
-                    <spad name="6" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.1125, 0.325" rotation="90" size="1.625, 0.4" />
-                    <spad name="5" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.1125, 0.975" rotation="90" size="1.625, 0.4" />
-                    <spad name="4" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.1125, 0.975" rotation="90" size="1.625, 0.4" />
-                    <spad name="3" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.1125, 0.325" rotation="90" size="1.625, 0.4" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.1125, -0.325" rotation="90" size="1.625, 0.4" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.1125, -0.975" rotation="90" size="1.625, 0.4" />
+                    <text layers="Top.Place" position="3.875, -0.125" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 2.45" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.F_CrtYd" startPosition="3.18, -1.75" endPosition="-3.18, -1.75" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="3.18, 1.75" endPosition="3.18, -1.75" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-3.18, 1.75" endPosition="3.18, 1.75" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-3.18, -1.75" endPosition="-3.18, 1.75" thickness="0.05" />
+                    <line layers="Top.Document" startPosition="-1.5, -0.75" endPosition="-0.75, -1.5" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-1.5, 1.5" endPosition="-1.5, -0.75" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1.5, 1.5" endPosition="-1.5, 1.5" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1.5, -1.5" endPosition="1.5, 1.5" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.75, -1.5" endPosition="1.5, -1.5" thickness="0.1" />
+                    <line layers="Top.Place" startPosition="0, -1.61" endPosition="-2.925, -1.61" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="0, -1.61" endPosition="1.5, -1.61" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="0, 1.61" endPosition="-1.5, 1.61" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="0, 1.61" endPosition="1.5, 1.61" thickness="0.12" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.1125, -0.975" size="1.625, 0.4" />
+                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.1125, -0.325" size="1.625, 0.4" />
+                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.1125, 0.325" size="1.625, 0.4" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.1125, 0.975" size="1.625, 0.4" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.1125, 0.975" size="1.625, 0.4" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.1125, 0.325" size="1.625, 0.4" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.1125, -0.325" size="1.625, 0.4" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.1125, -0.975" size="1.625, 0.4" />
                 </elements>
             </component>
             <component name="Inductor_SMD:L_0805_2012Metric">
                 <elements>
-                    <text layers="Top.F.SilkS" position="-3.3125, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 1.65" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.9375, 0" rotation="180" size="0.975, 1.4" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.9375, 0" rotation="180" size="0.975, 1.4" />
+                    <text layers="Top.Place" position="-3.3125, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 1.65" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.F_CrtYd" startPosition="1.68, 0.95" endPosition="-1.68, 0.95" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="1.68, -0.95" endPosition="1.68, 0.95" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-1.68, -0.95" endPosition="1.68, -0.95" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-1.68, 0.95" endPosition="-1.68, -0.95" thickness="0.05" />
+                    <line layers="Top.Place" startPosition="-0.258577, 0.71" endPosition="0.258577, 0.71" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-0.258577, -0.71" endPosition="0.258577, -0.71" thickness="0.12" />
+                    <line layers="Top.Document" startPosition="1, 0.6" endPosition="-1, 0.6" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1, -0.6" endPosition="1, 0.6" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-1, -0.6" endPosition="1, -0.6" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-1, 0.6" endPosition="-1, -0.6" thickness="0.1" />
+                    <text layers="Top.Document" position="0, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.9375, 0" size="0.975, 1.4" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.9375, 0" size="0.975, 1.4" />
                 </elements>
             </component>
             <component name="Package_TO_SOT_SMD:SOT-89-3">
                 <elements>
-                    <text layers="Top.F.SilkS" position="-3.625, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0.3, 3.5" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="0.5, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.5625, 0" size="1.475, 0.9" />
-                    <spad name="3" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.65, 1.5" size="1.3, 0.9" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.65, -1.5" size="1.3, 0.9" />
+                    <text layers="Top.Place" position="-3.625, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0.3, 3.5" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.Place" startPosition="-1.06, 2.36" endPosition="-1.06, 2.13" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-1.06, -2.36" endPosition="-1.06, -2.13" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-1.06, -2.36" endPosition="1.66, -2.36" thickness="0.12" />
+                    <line layers="Top.F_CrtYd" startPosition="-2.55, 2.5" endPosition="-2.55, -2.5" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-2.55, 2.5" endPosition="2.55, 2.5" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="2.55, -2.5" endPosition="-2.55, -2.5" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="2.55, -2.5" endPosition="2.55, 2.5" thickness="0.05" />
+                    <line layers="Top.Document" startPosition="0.05, -2.25" endPosition="1.55, -2.25" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.95, 2.25" endPosition="-0.95, -1.25" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1.55, 2.25" endPosition="-0.95, 2.25" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1.55, -2.25" endPosition="1.55, 2.25" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.95, -1.25" endPosition="0.05, -2.25" thickness="0.1" />
+                    <line layers="Top.Place" startPosition="1.66, -2.36" endPosition="1.66, -1.05" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-2.2, -2.13" endPosition="-1.06, -2.13" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="1.66, 2.36" endPosition="-1.06, 2.36" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="1.66, 1.05" endPosition="1.66, 2.36" thickness="0.12" />
+                    <text layers="Top.Document" position="0.5, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.5625, 0" size="1.475, 0.9" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.65, 1.5" size="1.3, 0.9" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.65, -1.5" size="1.3, 0.9" />
                 </elements>
             </component>
             <component name="Diode_SMD:D_SOD-123F">
                 <elements>
-                    <text layers="Top.F.SilkS" position="-0.127, -1.905" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 2.1" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="-0.127, -1.905" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.4, 0" rotation="270" size="1.1, 1.1" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.4, 0" rotation="270" size="1.1, 1.1" />
+                    <text layers="Top.Place" position="-0.127, -1.905" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 2.1" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.Place" startPosition="-2.2, -1" endPosition="1.65, -1" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-2.2, 1" endPosition="1.65, 1" thickness="0.12" />
+                    <line layers="Top.F_CrtYd" startPosition="-2.2, -1.15" endPosition="-2.2, 1.15" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="2.2, 1.15" endPosition="-2.2, 1.15" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="2.2, -1.15" endPosition="2.2, 1.15" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-2.2, -1.15" endPosition="2.2, -1.15" thickness="0.05" />
+                    <line layers="Top.Document" startPosition="-1.4, -0.9" endPosition="1.4, -0.9" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1.4, -0.9" endPosition="1.4, 0.9" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1.4, 0.9" endPosition="-1.4, 0.9" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-1.4, 0.9" endPosition="-1.4, -0.9" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.75, 0" endPosition="-0.35, 0" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.35, 0" endPosition="-0.35, -0.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.35, 0" endPosition="-0.35, 0.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.35, 0" endPosition="0.25, -0.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="0.25, -0.4" endPosition="0.25, 0.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="0.25, 0.4" endPosition="-0.35, 0" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="0.25, 0" endPosition="0.75, 0" thickness="0.1" />
+                    <line layers="Top.Place" startPosition="-2.2, -1" endPosition="-2.2, 1" thickness="0.12" />
+                    <text layers="Top.Document" position="-0.127, -1.905" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.4, 0" size="1.1, 1.1" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.4, 0" size="1.1, 1.1" />
                 </elements>
             </component>
             <component name="Battery:BatteryHolder_LINX_BAT-HLD-012-SMT">
                 <elements>
-                    <text layers="Top.F.SilkS" position="0, 6" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, -7" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="0, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Top, Top.F.Mask" position="0, 0" rotation="90" size="10.2, 10.2" />
-                    <spad name="11" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="7.6, 0" rotation="90" size="2.5, 5.1" />
-                    <spad name="12" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-7.6, 0" rotation="90" size="2.5, 5.1" />
+                    <text layers="Top.Place" position="0, 6" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, -7" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.Document" startPosition="-7.65, -2.55" endPosition="-7.65, -0.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-7.65, -2.55" endPosition="-6.75, -2.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-7.65, -0.55" endPosition="-6.75, -0.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-6.75, 0.55" endPosition="-7.65, 0.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-7.65, 0.55" endPosition="-7.65, 2.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-7.65, 2.55" endPosition="-6.75, 2.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="6.75, 2.55" endPosition="7.65, 2.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="7.65, 2.55" endPosition="7.65, 0.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="7.65, 0.55" endPosition="6.75, 0.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="6.75, -0.55" endPosition="7.65, -0.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="7.65, -0.55" endPosition="7.65, -2.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="7.65, -2.55" endPosition="6.75, -2.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-6.75, 2.85" endPosition="-6.75, -2.75" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="6.75, 2.85" endPosition="6.75, -2.75" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="4.9, -4.4" endPosition="-4.9, -4.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-6.7, -2.9" endPosition="-5.05, -4.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="6.7, -2.9" endPosition="5.05, -4.55" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="6.55, 2.85" endPosition="6.55, -2.75" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="6.55, -2.75" endPosition="4.9, -4.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-6.55, 2.85" endPosition="-6.55, -2.75" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-6.55, -2.75" endPosition="-4.9, -4.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-6.55, 2.85" endPosition="-5.4, 4.2" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="6.55, 2.85" endPosition="5.4, 4.2" thickness="0.1" />
+                    <line layers="Top.F_CrtYd" startPosition="-9.35, 3.05" endPosition="-9.35, -3.05" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-9.35, -3.05" endPosition="-7.25, -3.05" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-9.35, 3.05" endPosition="-7.25, 3.05" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-7.25, -3.05" endPosition="-3.55, -6.75" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-3.55, -6.75" endPosition="3.55, -6.75" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="3.55, -6.75" endPosition="7.25, -3.05" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="7.25, -3.05" endPosition="9.35, -3.05" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="9.35, -3.05" endPosition="9.35, 3.05" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="9.35, 3.05" endPosition="7.25, 3.05" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-3.55, 6.75" endPosition="3.55, 6.75" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="3.55, 6.75" endPosition="7.25, 3.05" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-3.55, 6.75" endPosition="-7.25, 3.05" thickness="0.05" />
+                    <line layers="Top.Document" startPosition="-6.75, 2.85" endPosition="-6.55, 2.85" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="6.75, 2.85" endPosition="6.55, 2.85" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-6.75, -2.75" endPosition="-6.55, -2.75" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-6.55, -2.75" endPosition="-6.7, -2.9" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-5.05, -4.55" endPosition="-4.9, -4.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="5.05, -4.55" endPosition="4.9, -4.4" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="6.55, -2.75" endPosition="6.7, -2.9" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="6.55, -2.75" endPosition="6.75, -2.75" thickness="0.1" />
+                    <line layers="Top.Place" startPosition="-6.55, -2.75" endPosition="-4.9, -4.4" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="4.9, -4.4" endPosition="6.55, -2.75" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="4.9, -4.4" endPosition="3, -4.4" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-4.9, -4.4" endPosition="-3, -4.4" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-6.55, 2.85" endPosition="-5.4, 4.2" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="6.55, 2.85" endPosition="5.4, 4.2" thickness="0.12" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Copper, Top.Stop, Pads" position="0, 0" size="10.2, 10.2" />
+                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="7.6, 0" size="2.5, 5.1" />
+                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-7.6, 0" size="2.5, 5.1" />
                 </elements>
             </component>
             <component name="Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm">
                 <elements>
-                    <text layers="Top.F.SilkS" position="0, 2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="-0.125, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.25, 0" size="1, 1.8" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.25, 0" size="1, 1.8" />
+                    <text layers="Top.Place" position="0, 2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.F_CrtYd" startPosition="2, -1.15" endPosition="2, 1.15" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-2, -1.15" endPosition="-2, 1.15" thickness="0.05" />
+                    <line layers="Top.F_CrtYd" startPosition="-2, 1.15" endPosition="2, 1.15" thickness="0.05" />
+                    <line layers="Top.Document" startPosition="-1.6, 0.75" endPosition="1.6, 0.75" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-1.6, -0.75" endPosition="1.6, -0.75" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="1.6, -0.75" endPosition="1.6, 0.75" thickness="0.1" />
+                    <line layers="Top.Place" startPosition="-0.675, -0.875" endPosition="0.675, -0.875" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-0.675, 0.875" endPosition="0.675, 0.875" thickness="0.12" />
+                    <line layers="Top.Document" startPosition="-1.6, -0.75" endPosition="-1.6, 0.75" thickness="0.1" />
+                    <line layers="Top.F_CrtYd" startPosition="-2, -1.15" endPosition="2, -1.15" thickness="0.05" />
+                    <text layers="Top.Document" position="-0.125, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.25, 0" size="1, 1.8" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.25, 0" size="1, 1.8" />
                 </elements>
             </component>
             <component name="MountingHole:MountingHole_3.2mm_M3">
                 <elements>
-                    <text layers="Top.F.SilkS" position="0, -4.2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="0, 4.2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.F.Fab" position="0.3, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="1" layers="*.Cu, *.Mask" position="0, 0" size="3.2, 3.2" />
+                    <text layers="Top.Place" position="0, -4.2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="0, 4.2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Document" position="0.3, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
+                    <spad name="1" layers="*_Cu, *_Mask, Pads" position="0, 0" size="3.2, 3.2" />
                 </elements>
             </component>
             <component name="MD-CPU07:ER-CON26HB-1">
                 <elements>
-                    <text layers="Top.F.SilkS" position="-9, 0.75" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.SilkS" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <spad name="26" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="6.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="25" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="24" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="23" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="4.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="22" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="4.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="21" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="G2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="7.5, -0.25" rotation="90" size="3, 2" />
-                    <spad name="G1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-7.5, -0.25" rotation="90" size="3, 2" />
-                    <spad name="20" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="19" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="18" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="17" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="16" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="15" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="14" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="13" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="12" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="11" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="10" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="9" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="8" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="7" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="6" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="5" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-4.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="4" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-4.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="3" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-6.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <text layers="Top.Place" position="-9, 0.75" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Place" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.Document" startPosition="-7, -2" endPosition="-6.625, -2" thickness="0.254" />
+                    <line layers="Top.Document" startPosition="7, -2" endPosition="6.625, -2" thickness="0.254" />
+                    <line layers="Top.Place" startPosition="7, -2" endPosition="7, 1.5" thickness="0.254" />
+                    <line layers="Top.Place" startPosition="-7, -2" endPosition="-7, 1.5" thickness="0.254" />
+                    <line layers="Top.Document" startPosition="-6.5, -2" endPosition="6.5, -2" thickness="0.254" />
+                    <line layers="Top.Place" startPosition="9, 2.5" endPosition="9, 1.5" thickness="0.254" />
+                    <line layers="Top.Place" startPosition="-9, 2.5" endPosition="9, 2.5" thickness="0.254" />
+                    <line layers="Top.Place" startPosition="-9, 1.5" endPosition="-9, 2.5" thickness="0.254" />
+                    <line layers="Top.Place" startPosition="9, 1.5" endPosition="-9, 1.5" thickness="0.254" />
+                    <spad name="26" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="6.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="25" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="4.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="4.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="G2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="7.5, -0.25" rotation="90" size="3, 2" />
+                    <spad name="G1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-7.5, -0.25" rotation="90" size="3, 2" />
+                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-4.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-4.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.75, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-6.25, -2.5" rotation="90" size="1.25, 0.3" />
                 </elements>
             </component>
             <component name="MD-CPU07:ER-CON2.0-2P-SMD">
                 <elements>
-                    <text layers="Top.F.SilkS" position="3, -2" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.SilkS" position="0, 0" rotation="180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1, 2" size="1, 2.85" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1, 2" rotation="180" size="1, 2.85" />
-                    <spad name="G2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.5, -4.5" rotation="180" size="1.4, 3.8" />
-                    <spad name="G1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.5, -4.5" rotation="180" size="1.4, 3.8" />
+                    <text layers="Top.Place" position="3, -2" rotation="-90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Place" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.Place" startPosition="2.5, -6.5" endPosition="-2.5, -6.5" thickness="0.4064" />
+                    <line layers="Top.Place" startPosition="2.5, 0" endPosition="2.5, -6.5" thickness="0.4064" />
+                    <line layers="Top.Place" startPosition="-2.5, 0" endPosition="2.5, 0" thickness="0.4064" />
+                    <line layers="Top.Place" startPosition="-2.5, -6.5" endPosition="-2.5, 0" thickness="0.4064" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1, 2" rotation="-180" size="1, 2.85" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1, 2" size="1, 2.85" />
+                    <spad name="G2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.5, -4.5" size="1.4, 3.8" />
+                    <spad name="G1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.5, -4.5" size="1.4, 3.8" />
                 </elements>
             </component>
             <component name="MD-CPU07:TQFP64-10X10">
                 <elements>
-                    <text layers="Top.F.SilkS" position="5.125, -6.25" rotation="180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="-4.000003, 7.499999" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <spad name="64" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, 3.75" rotation="180" size="0.3, 1.2" />
-                    <spad name="63" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, 3.25" rotation="180" size="0.3, 1.2" />
-                    <spad name="62" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, 2.75" rotation="180" size="0.3, 1.2" />
-                    <spad name="61" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, 2.25" rotation="180" size="0.3, 1.2" />
-                    <spad name="60" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, 1.75" rotation="180" size="0.3, 1.2" />
-                    <spad name="59" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, 1.25" rotation="180" size="0.3, 1.2" />
-                    <spad name="58" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, 0.75" rotation="180" size="0.3, 1.2" />
-                    <spad name="57" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, 0.25" rotation="180" size="0.3, 1.2" />
-                    <spad name="56" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, -0.25" rotation="180" size="0.3, 1.2" />
-                    <spad name="55" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, -0.75" rotation="180" size="0.3, 1.2" />
-                    <spad name="54" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, -1.25" rotation="180" size="0.3, 1.2" />
-                    <spad name="53" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, -1.75" rotation="180" size="0.3, 1.2" />
-                    <spad name="52" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, -2.25" rotation="180" size="0.3, 1.2" />
-                    <spad name="51" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, -2.75" rotation="180" size="0.3, 1.2" />
-                    <spad name="50" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, -3.25" rotation="180" size="0.3, 1.2" />
-                    <spad name="49" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-5.7, -3.75" rotation="180" size="0.3, 1.2" />
-                    <spad name="48" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.75, -5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="47" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.25, -5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="46" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.75, -5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="45" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.25, -5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="44" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.75, -5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="43" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.25, -5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="42" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.75, -5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="41" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.25, -5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="40" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.25, -5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="39" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.75, -5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="38" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.25, -5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="37" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.75, -5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="36" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.25, -5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="35" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.75, -5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="34" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.25, -5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="33" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.75, -5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="32" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, -3.75" rotation="180" size="0.3, 1.2" />
-                    <spad name="31" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, -3.25" rotation="180" size="0.3, 1.2" />
-                    <spad name="30" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, -2.75" rotation="180" size="0.3, 1.2" />
-                    <spad name="29" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, -2.25" rotation="180" size="0.3, 1.2" />
-                    <spad name="28" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, -1.75" rotation="180" size="0.3, 1.2" />
-                    <spad name="27" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, -1.25" rotation="180" size="0.3, 1.2" />
-                    <spad name="26" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, -0.75" rotation="180" size="0.3, 1.2" />
-                    <spad name="25" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, -0.25" rotation="180" size="0.3, 1.2" />
-                    <spad name="24" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, 0.25" rotation="180" size="0.3, 1.2" />
-                    <spad name="23" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, 0.75" rotation="180" size="0.3, 1.2" />
-                    <spad name="22" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, 1.25" rotation="180" size="0.3, 1.2" />
-                    <spad name="21" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, 1.75" rotation="180" size="0.3, 1.2" />
-                    <spad name="20" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, 2.25" rotation="180" size="0.3, 1.2" />
-                    <spad name="19" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, 2.75" rotation="180" size="0.3, 1.2" />
-                    <spad name="18" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, 3.25" rotation="180" size="0.3, 1.2" />
-                    <spad name="17" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="5.7, 3.75" rotation="180" size="0.3, 1.2" />
-                    <spad name="16" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.75, 5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="15" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="3.25, 5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="14" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.75, 5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="13" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="2.25, 5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="12" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.75, 5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="11" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="1.25, 5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="10" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.75, 5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="9" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="0.25, 5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="8" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.25, 5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="7" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-0.75, 5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="6" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.25, 5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="5" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-1.75, 5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="4" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.25, 5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="3" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-2.75, 5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="2" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.25, 5.7" rotation="180" size="1.2, 0.3" />
-                    <spad name="1" layers="Top.Top, Top.F.Paste, Top.F.Mask" position="-3.75, 5.7" rotation="180" size="1.2, 0.3" />
+                    <text layers="Top.Place" position="5.125, -6.25" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="-4.000003, 7.499999" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.Place" startPosition="4.4, 4.8" endPosition="-4.4, 4.8" thickness="0.16" />
+                    <line layers="Top.Place" startPosition="4.8, 4.4" endPosition="4.4, 4.8" thickness="0.16" />
+                    <line layers="Top.Place" startPosition="4.8, -4.4" endPosition="4.8, 4.4" thickness="0.16" />
+                    <line layers="Top.Place" startPosition="4.4, -4.8" endPosition="4.8, -4.4" thickness="0.16" />
+                    <line layers="Top.Place" startPosition="-4.4, -4.8" endPosition="4.4, -4.8" thickness="0.16" />
+                    <line layers="Top.Place" startPosition="-4.8, -4.4" endPosition="-4.4, -4.8" thickness="0.16" />
+                    <line layers="Top.Place" startPosition="-4.8, 4.4" endPosition="-4.8, -4.4" thickness="0.16" />
+                    <line layers="Top.Place" startPosition="-4.4, 4.8" endPosition="-4.8, 4.4" thickness="0.16" />
+                    <spad name="64" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, 3.75" rotation="90" size="0.3, 1.2" />
+                    <spad name="63" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, 3.25" rotation="90" size="0.3, 1.2" />
+                    <spad name="62" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, 2.75" rotation="90" size="0.3, 1.2" />
+                    <spad name="61" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, 2.25" rotation="90" size="0.3, 1.2" />
+                    <spad name="60" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, 1.75" rotation="90" size="0.3, 1.2" />
+                    <spad name="59" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, 1.25" rotation="90" size="0.3, 1.2" />
+                    <spad name="58" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, 0.75" rotation="90" size="0.3, 1.2" />
+                    <spad name="57" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, 0.25" rotation="90" size="0.3, 1.2" />
+                    <spad name="56" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, -0.25" rotation="90" size="0.3, 1.2" />
+                    <spad name="55" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, -0.75" rotation="90" size="0.3, 1.2" />
+                    <spad name="54" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, -1.25" rotation="90" size="0.3, 1.2" />
+                    <spad name="53" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, -1.75" rotation="90" size="0.3, 1.2" />
+                    <spad name="52" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, -2.25" rotation="90" size="0.3, 1.2" />
+                    <spad name="51" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, -2.75" rotation="90" size="0.3, 1.2" />
+                    <spad name="50" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, -3.25" rotation="90" size="0.3, 1.2" />
+                    <spad name="49" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, -3.75" rotation="90" size="0.3, 1.2" />
+                    <spad name="48" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.75, -5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="47" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.25, -5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="46" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.75, -5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="45" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.25, -5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="44" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.75, -5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="43" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.25, -5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="42" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.75, -5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="41" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.25, -5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="40" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.25, -5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="39" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.75, -5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="38" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.25, -5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="37" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.75, -5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="36" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.25, -5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="35" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.75, -5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="34" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.25, -5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="33" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.75, -5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="32" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, -3.75" rotation="90" size="0.3, 1.2" />
+                    <spad name="31" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, -3.25" rotation="90" size="0.3, 1.2" />
+                    <spad name="30" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, -2.75" rotation="90" size="0.3, 1.2" />
+                    <spad name="29" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, -2.25" rotation="90" size="0.3, 1.2" />
+                    <spad name="28" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, -1.75" rotation="90" size="0.3, 1.2" />
+                    <spad name="27" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, -1.25" rotation="90" size="0.3, 1.2" />
+                    <spad name="26" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, -0.75" rotation="90" size="0.3, 1.2" />
+                    <spad name="25" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, -0.25" rotation="90" size="0.3, 1.2" />
+                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, 0.25" rotation="90" size="0.3, 1.2" />
+                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, 0.75" rotation="90" size="0.3, 1.2" />
+                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, 1.25" rotation="90" size="0.3, 1.2" />
+                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, 1.75" rotation="90" size="0.3, 1.2" />
+                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, 2.25" rotation="90" size="0.3, 1.2" />
+                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, 2.75" rotation="90" size="0.3, 1.2" />
+                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, 3.25" rotation="90" size="0.3, 1.2" />
+                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, 3.75" rotation="90" size="0.3, 1.2" />
+                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.75, 5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.25, 5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.75, 5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.25, 5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.75, 5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.25, 5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.75, 5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.25, 5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.25, 5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.75, 5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.25, 5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.75, 5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.25, 5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.75, 5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.25, 5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.75, 5.7" rotation="90" size="1.2, 0.3" />
                 </elements>
             </component>
             <component name="MD-CPU07:S02B-XASK-1">
                 <elements>
-                    <text layers="Top.F.SilkS" position="-3.75, -3.5" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.F.Fab" position="-3.75, 4" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <spad name="1" layers="*.Cu, *.Mask" position="1.25, 0" rotation="270" size="1.35, 1.35" />
-                    <spad name="2" layers="*.Cu, *.Mask" position="-1.25, 0" rotation="270" size="1.35, 1.35" />
+                    <text layers="Top.Place" position="-3.75, -3.5" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
+                    <text layers="Top.Document" position="-3.75, 4" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <line layers="Top.Document" startPosition="1.25, 0" endPosition="1.25, -8.5" thickness="1" />
+                    <line layers="Top.Document" startPosition="-1.25, 0" endPosition="-1.25, -8.5" thickness="1" />
+                    <line layers="Top.Document" startPosition="-3.75, -2.5" endPosition="3.75, -2.5" thickness="0.2" />
+                    <line layers="Top.Document" startPosition="-3.75, -7" endPosition="3.75, -7" thickness="0.2" />
+                    <line layers="Top.Place" startPosition="3, 3" endPosition="3.75, 3" thickness="0.2" />
+                    <line layers="Top.Place" startPosition="3, -0.5" endPosition="3, 3" thickness="0.2" />
+                    <line layers="Top.Place" startPosition="-3, -0.5" endPosition="3, -0.5" thickness="0.2" />
+                    <line layers="Top.Place" startPosition="-3, 3" endPosition="-3, -0.5" thickness="0.2" />
+                    <line layers="Top.Place" startPosition="-3.75, 3" endPosition="-3, 3" thickness="0.2" />
+                    <line layers="Top.Place" startPosition="3.75, -9" endPosition="3.75, 3" thickness="0.2" />
+                    <line layers="Top.Place" startPosition="-3.75, -9" endPosition="3.75, -9" thickness="0.2" />
+                    <line layers="Top.Place" startPosition="-3.75, -9" endPosition="-3.75, 3" thickness="0.2" />
+                    <spad name="1" layers="*_Cu, *_Mask, Pads" position="1.25, 0" rotation="90" size="1.35, 1.35" />
+                    <spad name="2" layers="*_Cu, *_Mask, Pads" position="-1.25, 0" rotation="90" size="1.35, 1.35" />
                 </elements>
             </component>
         </components>

@@ -59,6 +59,10 @@
             ProcessComponents(tree);
 
             Board board = new Board();
+            board.AddLayer(new Layer(BoardSide.None, "Pads", LayerFunction.Unknown));
+            board.AddLayer(new Layer(BoardSide.None, "Vias", LayerFunction.Unknown));
+            board.AddLayer(new Layer(BoardSide.None, "Drils", LayerFunction.Unknown));
+            board.AddLayer(new Layer(BoardSide.None, "Holes", LayerFunction.Unknown));
 
             board.AddSignals(signalDict.Values);
             board.AddComponents(componentDict.Values);
@@ -114,19 +118,14 @@
                 List<Layer> layers = new List<Layer>();
                 foreach (var layerNode in layerListNode.Nodes.OfType<SBranch>()) {
 
-                    int number = tree.ValueAsInteger(layerNode[0]);
-                    string name = tree.ValueAsString(layerNode[1]);
+                    string kcName = tree.ValueAsString(layerNode[1]);
                     string type = tree.ValueAsString(layerNode[2]);
 
-                    BoardSide side = GetLayerSide(name);
+                    BoardSide side = GetLayerSide(kcName);
+                    LayerFunction function = type == "signal" ? LayerFunction.Signal : GetLayerFunction(kcName);
+                    string tag = GetLayerTag(kcName);
 
-                    LayerFunction function = LayerFunction.Unknown;
-                    if (type == "signal")
-                        function = LayerFunction.Signal;
-                    else if ((type == "user") && (name == "Edge.Cuts"))
-                        function = LayerFunction.Outline;
-
-                    Layer layer = new Layer(side, name, function);
+                    Layer layer = new Layer(side, tag, function);
                     layers.Add(layer);
                 }
                 return layers;
@@ -148,6 +147,7 @@
             List<Element> elements = new List<Element>();
 
             string componentName = tree.ValueAsString(node[1]);
+            Location location = ParseLocationDesignator(tree, tree.SelectBranch(node, "at"));
 
             foreach (var childNode in node.Nodes.OfType<SBranch>()) {
                 switch (tree.GetBranchName(childNode)) {
@@ -160,26 +160,42 @@
                     case "tstamp":
                         break;
 
-                    case "fp_text":
-                        elements.Add(ParseComponentText(tree, childNode));
+                    case "fp_text": {
+                        TextElement element = ParseComponentText(tree, childNode);
+                        element.Rotation = element.Rotation - location.Rotation;
+                        elements.Add(element);
                         break;
+                    }
 
-                    case "fp_line":
+                    case "fp_line": {
+                        LineElement element = ParseComponentLine(tree, childNode);
+                        elements.Add(element);
                         break;
+                    }
 
-                    case "pad": 
-                        elements.Add(ParseComponentPad(tree, childNode));
+                    case "pad": {
+                        PadElement element = ParseComponentPad(tree, childNode);
+                        element.Rotation = element.Rotation - location.Rotation;
+                        elements.Add(element);
                         break;
+                    }
 
                     default:
                         break;
                 }
             }
 
-            //string layerName = ProcessLayerDesignator(tree, tree.SelectBranch(node, "layer"));
-            //Location location = ProcessLocationDesignator(tree, tree.SelectBranch(node, "at"));
-
             return new Component(componentName, elements);
+        }
+
+        private LineElement ParseComponentLine(STree tree, SBranch node) {
+
+            Location start = ParseLocationDesignator(tree, tree.SelectBranch(node, "start"));
+            Location end = ParseLocationDesignator(tree, tree.SelectBranch(node, "end"));
+            string layer = ParseLayerDesignator(tree, tree.SelectBranch(node, "layer"));
+            int thickness = ParseThicknessDesignator(tree, tree.SelectBranch(node, "width"));
+
+            return new LineElement(new LayerSet(layer), start.Position, end.Position, thickness, LineElement.CapStyle.Round);
         }
 
         /// <summary>
@@ -194,7 +210,28 @@
             string name = tree.ValueAsString(node[1]);
             string value = String.Format(">{0}", name);
             Location location = ParseLocationDesignator(tree, tree.SelectBranch(node, "at"));
+
             LayerSet layerSet = ParseLayerSetDesignator(tree, tree.SelectBranch(node, "layer"));
+            if (name == "reference") {
+                if (layerSet.Contains("Top.F_SilkS")) {
+                    layerSet -= "Top.F_SilkS";
+                    layerSet += "Top.Names";
+                }
+                else if (layerSet.Contains("Bottom.B_SilkS")) {
+                    layerSet -= "Bottom.B_SilkS";
+                    layerSet += "Bottom.Names";
+                }
+            }
+            else if (name == "value") {
+                if (layerSet.Contains("Top.F_Fab")) {
+                    layerSet -= "Top.F_Fab";
+                    layerSet += "Top.Values";
+                }
+                else if (layerSet.Contains("Bottom.B_Fab")) {
+                    layerSet -= "Bottom.B_Fab";
+                    layerSet += "Bottom.Values";
+                }
+            }
 
             return new TextElement(layerSet, location.Position, location.Rotation, 1000000, 100000, 
                 HorizontalTextAlign.Center, VerticalTextAlign.Middle, value);
@@ -213,6 +250,7 @@
             Location location = ParseLocationDesignator(tree, tree.SelectBranch(node, "at"));
             Size size = ParseSizeDesignator(tree, tree.SelectBranch(node, "size"));
             LayerSet layerSet = ParseLayerSetDesignator(tree, tree.SelectBranch(node, "layers"));
+            layerSet += "Pads";
 
             return new SmdPadElement(name, layerSet, location.Position, size, location.Rotation, Ratio.Zero);
         }
@@ -238,6 +276,7 @@
             string componentName = tree.ValueAsString(node[1]);
 
             Location location = ParseLocationDesignator(tree, tree.SelectBranch(node, "at"));
+            bool flip = ParseSideDesignator(tree, tree.SelectBranch(node, "layer")) == BoardSide.Bottom;
 
             List<PartAttribute> attributes = new List<PartAttribute>();
             foreach (var childNode in node.Nodes.OfType<SBranch>()) {
@@ -249,7 +288,7 @@
             }
 
             string name = String.Format("{0}:{1}", componentName, partCount++);
-            Part part = new Part(GetComponent(componentName), name, location.Position, location.Rotation);
+            Part part = new Part(GetComponent(componentName), name, location.Position, location.Rotation, flip);
             part.AddAttributes(attributes);
             return part;
         }
@@ -260,11 +299,6 @@
             string value = tree.ValueAsString(node[2]);
 
             return new PartAttribute(name, value);
-        }
-
-        private string ParseLayerDesignator(STree tree, SBranch node) {
-
-            return tree.ValueAsString(node[1]);
         }
 
         private Location ParseLocationDesignator(STree tree, SBranch node) {
@@ -278,6 +312,11 @@
             return new Location(position, rotation);
         }
 
+        private BoardSide ParseSideDesignator(STree tree, SBranch node) {
+
+            return tree.ValueAsString(node[1]) == "Top" ? BoardSide.Top : BoardSide.Body;
+        }
+
         private Size ParseSizeDesignator(STree tree, SBranch node) {
 
             double width = tree.ValueAsDouble(node[1]);
@@ -285,22 +324,39 @@
             return new Size((int)(width * 1000000.0), (int)(height * 1000000));
         }
 
+        private int ParseThicknessDesignator(STree tree, SBranch node) {
+
+            double thickness = tree.ValueAsDouble(node[1]);
+            return (int) (thickness * 1000000.0);
+        }
+
+        private string ParseLayerDesignator(STree tree, SBranch node) {
+
+            string kcName = tree.ValueAsString(node[1]);
+
+            string tag = GetLayerTag(kcName);
+            BoardSide side = GetLayerSide(kcName);
+            
+            return Layer.GetName(side, tag);
+        }
+
         private LayerSet ParseLayerSetDesignator(STree tree, SBranch node) {
 
-            StringBuilder layersList = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             for (int i = 1; i < node.Count; i++) {
                 if (i > 1)
-                    layersList.Append(',');
-                string tag = tree.ValueAsString(node[i]);
-                BoardSide side =
-                    tag.Contains("Top") || tag.Contains("F.") ? BoardSide.Top :
-                    tag.Contains("Bottom") ||  tag.Contains("B.") ? BoardSide.Bottom :
-                    BoardSide.None;
+                    sb.Append(',');
+
+                string kcName = tree.ValueAsString(node[i]);
+
+                string tag = GetLayerTag(kcName);
+                BoardSide side = GetLayerSide(kcName);
+                
                 string name = Layer.GetName(side, tag);
-                layersList.Append(name);
+                sb.Append(name);
             }
 
-            return LayerSet.Parse(layersList.ToString());
+            return LayerSet.Parse(sb.ToString());
         }
 
         /// <summary>
@@ -314,18 +370,77 @@
             return componentDict[name];
         }
 
-        private static BoardSide GetLayerSide(string name) {
+        /// <summary>
+        /// Obte la cara de la placa a partir d'un nom de capa.
+        /// </summary>
+        /// <param name="kcName">Nom de la capa.</param>
+        /// <returns>La cara.</returns>
+        /// 
+        private static BoardSide GetLayerSide(string kcName) {
 
             return
-                name.Contains("Top") || name.Contains("F.") ? BoardSide.Top :
-                name.Contains("Bottom") || name.Contains("B.") ? BoardSide.Bottom :
+                kcName.Contains("Top") || kcName.Contains("F.") ? BoardSide.Top :
+                kcName.Contains("Bottom") || kcName.Contains("B.") ? BoardSide.Bottom :
                 BoardSide.None;
         }
 
-        private static string GetLayerName(string name) {
+        /// <summary>
+        /// Obte el tag de la capa a partir del seu nom.
+        /// </summary>
+        /// <param name="kcName">Nom de la capa.</param>
+        /// <returns>El tag.</returns>
+        /// 
+        private static string GetLayerTag(string kcName) {
+
+            switch (kcName) {
+                case "Top":
+                case "Bottom":
+                    return "Copper";
+
+                case "F.Paste":
+                case "B.Paste":
+                    return "Cream";
+
+                case "F.Adhes":
+                case "B.Adhes":
+                    return "Glue";
+
+                case "F.Mask":
+                case "B.Mask":
+                    return "Stop";
+
+                case "F.Fab":
+                case "B.Fab":
+                    return "Document";
+
+                case "F.SilkS":
+                case "B.SilkS":
+                    return "Place";
+
+                case "Edge.Cuts":
+                    return "Profile";
+
+                default:
+                    return kcName.Replace('.', '_');
+            }
         }
 
-        private static LayerFunction GetLayerFunction(string name) {
+        /// <summary>
+        /// Obte la funcio de la capa a partir del seu nom.
+        /// </summary>
+        /// <param name="kcName">El nom.</param>
+        /// <returns>La funcio.</returns>
+        /// 
+        private static LayerFunction GetLayerFunction(string kcName) {
+
+            switch (kcName) {
+                case "Top":
+                case "Bottom":
+                    return LayerFunction.Signal;
+
+                default:
+                    return LayerFunction.Unknown;
+            }
         }
     }
 }

@@ -27,7 +27,7 @@
     /// 
     public abstract class Element : IBoardVisitable {
 
-        private LayerSet layerSet;
+        private LayerSet _layerSet;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -36,7 +36,7 @@
         /// 
         public Element(LayerSet layerSet) {
 
-            this.layerSet = layerSet;
+            _layerSet = layerSet;
         }
 
         /// <summary>
@@ -84,10 +84,10 @@
         /// 
         public LayerSet LayerSet {
             get {
-                return layerSet;
+                return _layerSet;
             }
             set {
-                layerSet = value;
+                _layerSet = value;
             }
         }
 
