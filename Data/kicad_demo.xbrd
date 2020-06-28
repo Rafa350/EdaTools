@@ -95,8 +95,8 @@
         <components>
             <component name="Capacitor_SMD:C_0603_1608Metric">
                 <elements>
-                    <text layers="Top.Place" position="-0.125, 1.5" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 1.43" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="-0.125, 1.5" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 1.43" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.F_CrtYd" startPosition="1.48, 0.73" endPosition="-1.48, 0.73" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="1.48, -0.73" endPosition="1.48, 0.73" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="-1.48, -0.73" endPosition="1.48, -0.73" thickness="0.05" />
@@ -107,15 +107,15 @@
                     <line layers="Top.Document" startPosition="0.8, -0.4" endPosition="0.8, 0.4" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-0.8, -0.4" endPosition="0.8, -0.4" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-0.8, 0.4" endPosition="-0.8, -0.4" thickness="0.1" />
-                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.7875, 0" size="0.875, 0.95" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.7875, 0" size="0.875, 0.95" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.7875, 0" size="0.875, 0.95" roundness="0.5" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.7875, 0" size="0.875, 0.95" roundness="0.5" />
                 </elements>
             </component>
             <component name="Diode_SMD:D_SOD-123">
                 <elements>
-                    <text layers="Top.Place" position="0.0175, 1.875" rotation="180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 2.1" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="0.0175, 1.875" rotation="180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 2.1" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.Place" startPosition="-2.25, -1" endPosition="1.65, -1" thickness="0.12" />
                     <line layers="Top.Place" startPosition="-2.25, 1" endPosition="1.65, 1" thickness="0.12" />
                     <line layers="Top.F_CrtYd" startPosition="-2.35, -1.15" endPosition="-2.35, 1.15" thickness="0.05" />
@@ -134,15 +134,15 @@
                     <line layers="Top.Document" startPosition="0.25, 0.4" endPosition="-0.35, 0" thickness="0.1" />
                     <line layers="Top.Document" startPosition="0.25, 0" endPosition="0.75, 0" thickness="0.1" />
                     <line layers="Top.Place" startPosition="-2.25, -1" endPosition="-2.25, 1" thickness="0.12" />
-                    <text layers="Top.Document" position="-0.125, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.65, 0" size="0.9, 1.2" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.65, 0" size="0.9, 1.2" />
+                    <text layers="Top.Document" position="-0.125, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.65, 0" size="0.9, 1.2" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.65, 0" size="0.9, 1.2" />
                 </elements>
             </component>
             <component name="Package_SO:TSSOP-28-1EP_4.4x9.7mm_P0.65mm">
                 <elements>
-                    <text layers="Top.Place" position="0, -5.9" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 5.9" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="0, -5.9" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 5.9" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.Place" startPosition="-2.325, -4.75" endPosition="-3.4, -4.75" thickness="0.15" />
                     <line layers="Top.Place" startPosition="-2.325, 4.975" endPosition="2.325, 4.975" thickness="0.15" />
                     <line layers="Top.Place" startPosition="-2.325, -4.975" endPosition="2.325, -4.975" thickness="0.15" />
@@ -159,49 +159,49 @@
                     <line layers="Top.Document" startPosition="2.2, 4.85" endPosition="-2.2, 4.85" thickness="0.15" />
                     <line layers="Top.Document" startPosition="2.2, -4.85" endPosition="2.2, 4.85" thickness="0.15" />
                     <line layers="Top.Document" startPosition="-1.2, -4.85" endPosition="2.2, -4.85" thickness="0.15" />
-                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="291" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.6, -2.31375" size="1.2, 1.5425" />
-                    <spad name="292" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.6, -0.77125" size="1.2, 1.5425" />
-                    <spad name="293" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.6, 0.77125" size="1.2, 1.5425" />
-                    <spad name="294" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.6, 2.31375" size="1.2, 1.5425" />
-                    <spad name="295" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.6, -2.31375" size="1.2, 1.5425" />
-                    <spad name="296" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.6, -0.77125" size="1.2, 1.5425" />
-                    <spad name="297" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.6, 0.77125" size="1.2, 1.5425" />
-                    <spad name="298" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.6, 2.31375" size="1.2, 1.5425" />
-                    <spad name="28" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, -4.225" size="1.1, 0.4" />
-                    <spad name="27" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, -3.575" size="1.1, 0.4" />
-                    <spad name="26" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, -2.925" size="1.1, 0.4" />
-                    <spad name="25" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, -2.275" size="1.1, 0.4" />
-                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, -1.625" size="1.1, 0.4" />
-                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, -0.975" size="1.1, 0.4" />
-                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, -0.325" size="1.1, 0.4" />
-                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, 0.325" size="1.1, 0.4" />
-                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, 0.975" size="1.1, 0.4" />
-                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, 1.625" size="1.1, 0.4" />
-                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, 2.275" size="1.1, 0.4" />
-                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, 2.925" size="1.1, 0.4" />
-                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, 3.575" size="1.1, 0.4" />
-                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.85, 4.225" size="1.1, 0.4" />
-                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, 4.225" size="1.1, 0.4" />
-                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, 3.575" size="1.1, 0.4" />
-                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, 2.925" size="1.1, 0.4" />
-                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, 2.275" size="1.1, 0.4" />
-                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, 1.625" size="1.1, 0.4" />
-                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, 0.975" size="1.1, 0.4" />
-                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, 0.325" size="1.1, 0.4" />
-                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, -0.325" size="1.1, 0.4" />
-                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, -0.975" size="1.1, 0.4" />
-                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, -1.625" size="1.1, 0.4" />
-                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, -2.275" size="1.1, 0.4" />
-                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, -2.925" size="1.1, 0.4" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, -3.575" size="1.1, 0.4" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.85, -4.225" size="1.1, 0.4" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="291" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.6, -2.31375" size="1.2, 1.5425" />
+                    <spad name="292" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.6, -0.77125" size="1.2, 1.5425" />
+                    <spad name="293" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.6, 0.77125" size="1.2, 1.5425" />
+                    <spad name="294" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.6, 2.31375" size="1.2, 1.5425" />
+                    <spad name="295" layers="Top.Copper, Top.Cream, Top.Stop" position="0.6, -2.31375" size="1.2, 1.5425" />
+                    <spad name="296" layers="Top.Copper, Top.Cream, Top.Stop" position="0.6, -0.77125" size="1.2, 1.5425" />
+                    <spad name="297" layers="Top.Copper, Top.Cream, Top.Stop" position="0.6, 0.77125" size="1.2, 1.5425" />
+                    <spad name="298" layers="Top.Copper, Top.Cream, Top.Stop" position="0.6, 2.31375" size="1.2, 1.5425" />
+                    <spad name="28" layers="Top.Copper, Top.Cream, Top.Stop" position="2.85, -4.225" size="1.1, 0.4" />
+                    <spad name="27" layers="Top.Copper, Top.Cream, Top.Stop" position="2.85, -3.575" size="1.1, 0.4" />
+                    <spad name="26" layers="Top.Copper, Top.Cream, Top.Stop" position="2.85, -2.925" size="1.1, 0.4" />
+                    <spad name="25" layers="Top.Copper, Top.Cream, Top.Stop" position="2.85, -2.275" size="1.1, 0.4" />
+                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop" position="2.85, -1.625" size="1.1, 0.4" />
+                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop" position="2.85, -0.975" size="1.1, 0.4" />
+                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop" position="2.85, -0.325" size="1.1, 0.4" />
+                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop" position="2.85, 0.325" size="1.1, 0.4" />
+                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop" position="2.85, 0.975" size="1.1, 0.4" />
+                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop" position="2.85, 1.625" size="1.1, 0.4" />
+                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop" position="2.85, 2.275" size="1.1, 0.4" />
+                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop" position="2.85, 2.925" size="1.1, 0.4" />
+                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop" position="2.85, 3.575" size="1.1, 0.4" />
+                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop" position="2.85, 4.225" size="1.1, 0.4" />
+                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.85, 4.225" size="1.1, 0.4" />
+                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.85, 3.575" size="1.1, 0.4" />
+                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.85, 2.925" size="1.1, 0.4" />
+                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.85, 2.275" size="1.1, 0.4" />
+                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.85, 1.625" size="1.1, 0.4" />
+                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.85, 0.975" size="1.1, 0.4" />
+                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.85, 0.325" size="1.1, 0.4" />
+                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.85, -0.325" size="1.1, 0.4" />
+                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.85, -0.975" size="1.1, 0.4" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.85, -1.625" size="1.1, 0.4" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.85, -2.275" size="1.1, 0.4" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.85, -2.925" size="1.1, 0.4" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.85, -3.575" size="1.1, 0.4" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.85, -4.225" size="1.1, 0.4" />
                 </elements>
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric">
                 <elements>
-                    <text layers="Top.Place" position="0, 1.5" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 1.65" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="0, 1.5" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 1.65" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.F_CrtYd" startPosition="1.68, 0.95" endPosition="-1.68, 0.95" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="1.68, -0.95" endPosition="1.68, 0.95" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="-1.68, -0.95" endPosition="1.68, -0.95" thickness="0.05" />
@@ -212,15 +212,15 @@
                     <line layers="Top.Document" startPosition="1, -0.6" endPosition="1, 0.6" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-1, -0.6" endPosition="1, -0.6" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-1, 0.6" endPosition="-1, -0.6" thickness="0.1" />
-                    <text layers="Top.Document" position="0, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.9375, 0" size="0.975, 1.4" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.9375, 0" size="0.975, 1.4" />
+                    <text layers="Top.Document" position="0, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.9375, 0" size="0.975, 1.4" roundness="0.5" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.9375, 0" size="0.975, 1.4" roundness="0.5" />
                 </elements>
             </component>
             <component name="Package_SO:SSOP-24_5.3x8.2mm_P0.65mm">
                 <elements>
-                    <text layers="Top.Place" position="5.5, -3.75" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 5.25" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="5.5, -3.75" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 5.25" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.Place" startPosition="-2.875, -4.099999" endPosition="-4.475, -4.099999" thickness="0.15" />
                     <line layers="Top.Place" startPosition="-2.875, 4.325" endPosition="2.875, 4.325" thickness="0.15" />
                     <line layers="Top.Place" startPosition="-2.875, -4.325" endPosition="2.875, -4.325" thickness="0.15" />
@@ -237,37 +237,37 @@
                     <line layers="Top.Document" startPosition="2.65, 4.099999" endPosition="-2.65, 4.099999" thickness="0.15" />
                     <line layers="Top.Document" startPosition="2.65, -4.099999" endPosition="2.65, 4.099999" thickness="0.15" />
                     <line layers="Top.Document" startPosition="-1.65, -4.099999" endPosition="2.65, -4.099999" thickness="0.15" />
-                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, -3.575" size="1.75, 0.45" />
-                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, -2.925" size="1.75, 0.45" />
-                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, -2.275" size="1.75, 0.45" />
-                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, -1.625" size="1.75, 0.45" />
-                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, -0.975" size="1.75, 0.45" />
-                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, -0.325" size="1.75, 0.45" />
-                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, 0.325" size="1.75, 0.45" />
-                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, 0.975" size="1.75, 0.45" />
-                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, 1.625" size="1.75, 0.45" />
-                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, 2.275" size="1.75, 0.45" />
-                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, 2.925" size="1.75, 0.45" />
-                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.6, 3.575" size="1.75, 0.45" />
-                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, 3.575" size="1.75, 0.45" />
-                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, 2.925" size="1.75, 0.45" />
-                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, 2.275" size="1.75, 0.45" />
-                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, 1.625" size="1.75, 0.45" />
-                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, 0.975" size="1.75, 0.45" />
-                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, 0.325" size="1.75, 0.45" />
-                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, -0.325" size="1.75, 0.45" />
-                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, -0.975" size="1.75, 0.45" />
-                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, -1.625" size="1.75, 0.45" />
-                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, -2.275" size="1.75, 0.45" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, -2.925" size="1.75, 0.45" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.6, -3.575" size="1.75, 0.45" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop" position="3.6, -3.575" size="1.75, 0.45" />
+                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop" position="3.6, -2.925" size="1.75, 0.45" />
+                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop" position="3.6, -2.275" size="1.75, 0.45" />
+                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop" position="3.6, -1.625" size="1.75, 0.45" />
+                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop" position="3.6, -0.975" size="1.75, 0.45" />
+                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop" position="3.6, -0.325" size="1.75, 0.45" />
+                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop" position="3.6, 0.325" size="1.75, 0.45" />
+                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop" position="3.6, 0.975" size="1.75, 0.45" />
+                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop" position="3.6, 1.625" size="1.75, 0.45" />
+                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop" position="3.6, 2.275" size="1.75, 0.45" />
+                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop" position="3.6, 2.925" size="1.75, 0.45" />
+                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop" position="3.6, 3.575" size="1.75, 0.45" />
+                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.6, 3.575" size="1.75, 0.45" />
+                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.6, 2.925" size="1.75, 0.45" />
+                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.6, 2.275" size="1.75, 0.45" />
+                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.6, 1.625" size="1.75, 0.45" />
+                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.6, 0.975" size="1.75, 0.45" />
+                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.6, 0.325" size="1.75, 0.45" />
+                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.6, -0.325" size="1.75, 0.45" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.6, -0.975" size="1.75, 0.45" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.6, -1.625" size="1.75, 0.45" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.6, -2.275" size="1.75, 0.45" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.6, -2.925" size="1.75, 0.45" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.6, -3.575" size="1.75, 0.45" />
                 </elements>
             </component>
             <component name="Resistor_SMD:R_0603_1608Metric">
                 <elements>
-                    <text layers="Top.Place" position="0, -1.5" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 1.43" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="0, -1.5" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 1.43" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.F_CrtYd" startPosition="1.48, 0.73" endPosition="-1.48, 0.73" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="1.48, -0.73" endPosition="1.48, 0.73" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="-1.48, -0.73" endPosition="1.48, -0.73" thickness="0.05" />
@@ -278,15 +278,15 @@
                     <line layers="Top.Document" startPosition="0.8, -0.4" endPosition="0.8, 0.4" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-0.8, -0.4" endPosition="0.8, -0.4" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-0.8, 0.4" endPosition="-0.8, -0.4" thickness="0.1" />
-                    <text layers="Top.Document" position="0, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.7875, 0" size="0.875, 0.95" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.7875, 0" size="0.875, 0.95" />
+                    <text layers="Top.Document" position="0, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.7875, 0" size="0.875, 0.95" roundness="0.5" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.7875, 0" size="0.875, 0.95" roundness="0.5" />
                 </elements>
             </component>
             <component name="Capacitor_SMD:C_0805_2012Metric">
                 <elements>
-                    <text layers="Top.Place" position="-3.125, 0" rotation="180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 1.65" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="-3.125, 0" rotation="180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 1.65" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.F_CrtYd" startPosition="1.68, 0.95" endPosition="-1.68, 0.95" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="1.68, -0.95" endPosition="1.68, 0.95" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="-1.68, -0.95" endPosition="1.68, -0.95" thickness="0.05" />
@@ -297,15 +297,15 @@
                     <line layers="Top.Document" startPosition="1, -0.6" endPosition="1, 0.6" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-1, -0.6" endPosition="1, -0.6" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-1, 0.6" endPosition="-1, -0.6" thickness="0.1" />
-                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.9375, 0" size="0.975, 1.4" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.9375, 0" size="0.975, 1.4" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.9375, 0" size="0.975, 1.4" roundness="0.5" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.9375, 0" size="0.975, 1.4" roundness="0.5" />
                 </elements>
             </component>
             <component name="Inductor_SMD:L_0603_1608Metric">
                 <elements>
-                    <text layers="Top.Place" position="2.5, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 1.43" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="2.5, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 1.43" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.F_CrtYd" startPosition="1.48, 0.73" endPosition="-1.48, 0.73" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="1.48, -0.73" endPosition="1.48, 0.73" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="-1.48, -0.73" endPosition="1.48, -0.73" thickness="0.05" />
@@ -316,15 +316,15 @@
                     <line layers="Top.Document" startPosition="0.8, -0.4" endPosition="0.8, 0.4" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-0.8, -0.4" endPosition="0.8, -0.4" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-0.8, 0.4" endPosition="-0.8, -0.4" thickness="0.1" />
-                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.7875, 0" size="0.875, 0.95" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.7875, 0" size="0.875, 0.95" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.7875, 0" size="0.875, 0.95" roundness="0.5" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.7875, 0" size="0.875, 0.95" roundness="0.5" />
                 </elements>
             </component>
             <component name="Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical">
                 <elements>
-                    <text layers="Top.Place" position="0, -2.06" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 10.06" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="0, -2.06" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 10.06" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.F_CrtYd" startPosition="1.5, -1.5" endPosition="-1.5, -1.5" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="1.5, 9.5" endPosition="1.5, -1.5" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="-1.5, 9.5" endPosition="1.5, 9.5" thickness="0.05" />
@@ -340,18 +340,18 @@
                     <line layers="Top.Document" startPosition="1, 9" endPosition="-1, 9" thickness="0.1" />
                     <line layers="Top.Document" startPosition="1, -1" endPosition="1, 9" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-0.5, -1" endPosition="1, -1" thickness="0.1" />
-                    <text layers="Top.Document" position="0, 4" rotation="-270" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="5" layers="*_Cu, *_Mask, Pads" position="0, 8" size="1.35, 1.35" />
-                    <spad name="4" layers="*_Cu, *_Mask, Pads" position="0, 6" size="1.35, 1.35" />
-                    <spad name="3" layers="*_Cu, *_Mask, Pads" position="0, 4" size="1.35, 1.35" />
-                    <spad name="2" layers="*_Cu, *_Mask, Pads" position="0, 2" size="1.35, 1.35" />
-                    <spad name="1" layers="*_Cu, *_Mask, Pads" position="0, 0" size="1.35, 1.35" />
+                    <text layers="Top.Document" position="0, 4" rotation="-270" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <tpad name="5" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills, Pads" position="0, 8" size="1.35" drill="0.8" />
+                    <tpad name="4" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills, Pads" position="0, 6" size="1.35" drill="0.8" />
+                    <tpad name="3" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills, Pads" position="0, 4" size="1.35" drill="0.8" />
+                    <tpad name="2" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills, Pads" position="0, 2" size="1.35" drill="0.8" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills, Pads" position="0, 0" size="1.35" drill="0.8" shape="square" />
                 </elements>
             </component>
             <component name="Crystal:Crystal_SMD_Abracon_ABM3B-4Pin_5.0x3.2mm">
                 <elements>
-                    <text layers="Top.Place" position="0, -2.8" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 2.8" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="0, -2.8" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 2.8" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.Document" startPosition="-2.3, -1.6" endPosition="2.3, -1.6" thickness="0.1" />
                     <line layers="Top.Document" startPosition="2.3, -1.6" endPosition="2.5, -1.4" thickness="0.1" />
                     <line layers="Top.Document" startPosition="2.5, -1.4" endPosition="2.5, 1.4" thickness="0.1" />
@@ -371,17 +371,21 @@
                     <line layers="Top.F_CrtYd" startPosition="-3.2, 2.1" endPosition="3.2, 2.1" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="3.2, 2.1" endPosition="3.2, -2.1" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="3.2, -2.1" endPosition="-3.2, -2.1" thickness="0.05" />
-                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2, -1.2" size="1.8, 1.2" />
-                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2, -1.2" size="1.8, 1.2" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2, 1.2" size="1.8, 1.2" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2, 1.2" size="1.8, 1.2" />
+                    <circle layers="Top.Glue" position="0, 0" radius="0.5" thickness="0.1" filled="true" />
+                    <circle layers="Top.Glue" position="0, 0" radius="0.416667" thickness="0.166667" filled="true" />
+                    <circle layers="Top.Glue" position="0, 0" radius="0.266667" thickness="0.166667" filled="true" />
+                    <circle layers="Top.Glue" position="0, 0" radius="0.116667" thickness="0.233333" filled="true" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="-2, -1.2" size="1.8, 1.2" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="2, -1.2" size="1.8, 1.2" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="2, 1.2" size="1.8, 1.2" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-2, 1.2" size="1.8, 1.2" />
                 </elements>
             </component>
             <component name="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm">
                 <elements>
-                    <text layers="Top.Place" position="1.125, -3.5" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 3.4" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="1.125, -3.5" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 3.4" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.F_CrtYd" startPosition="3.7, -2.7" endPosition="-3.7, -2.7" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="3.7, 2.7" endPosition="3.7, -2.7" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="-3.7, 2.7" endPosition="3.7, 2.7" thickness="0.05" />
@@ -395,21 +399,21 @@
                     <line layers="Top.Place" startPosition="0, -2.56" endPosition="1.95, -2.56" thickness="0.12" />
                     <line layers="Top.Place" startPosition="0, 2.56" endPosition="-1.95, 2.56" thickness="0.12" />
                     <line layers="Top.Place" startPosition="0, 2.56" endPosition="1.95, 2.56" thickness="0.12" />
-                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.475, -1.905" size="1.95, 0.6" />
-                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.475, -0.635" size="1.95, 0.6" />
-                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.475, 0.635" size="1.95, 0.6" />
-                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.475, 1.905" size="1.95, 0.6" />
-                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.475, 1.905" size="1.95, 0.6" />
-                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.475, 0.635" size="1.95, 0.6" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.475, -0.635" size="1.95, 0.6" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.475, -1.905" size="1.95, 0.6" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="2.475, -1.905" size="1.95, 0.6" roundness="0.5" />
+                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop" position="2.475, -0.635" size="1.95, 0.6" roundness="0.5" />
+                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="2.475, 0.635" size="1.95, 0.6" roundness="0.5" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="2.475, 1.905" size="1.95, 0.6" roundness="0.5" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.475, 1.905" size="1.95, 0.6" roundness="0.5" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.475, 0.635" size="1.95, 0.6" roundness="0.5" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.475, -0.635" size="1.95, 0.6" roundness="0.5" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.475, -1.905" size="1.95, 0.6" roundness="0.5" />
                 </elements>
             </component>
             <component name="LED_SMD:LED_0805_2012Metric_Castellated">
                 <elements>
-                    <text layers="Top.Place" position="-2.9125, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 1.6" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="-2.9125, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 1.6" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.F_CrtYd" startPosition="1.88, 0.9" endPosition="-1.88, 0.9" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="1.88, -0.9" endPosition="1.88, 0.9" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="-1.88, -0.9" endPosition="1.88, -0.9" thickness="0.05" />
@@ -422,15 +426,15 @@
                     <line layers="Top.Document" startPosition="-1, -0.3" endPosition="-1, 0.6" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-0.7, -0.6" endPosition="-1, -0.3" thickness="0.1" />
                     <line layers="Top.Document" startPosition="1, -0.6" endPosition="-0.7, -0.6" thickness="0.1" />
-                    <text layers="Top.Document" position="0, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.9625, 0" size="1.325, 1.3" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.9625, 0" size="1.325, 1.3" />
+                    <text layers="Top.Document" position="0, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.9625, 0" size="1.325, 1.3" roundness="0.384" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.9625, 0" size="1.325, 1.3" roundness="0.384" />
                 </elements>
             </component>
             <component name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A">
                 <elements>
-                    <text layers="Top.Place" position="0, 1.875" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 1.75" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="0, 1.875" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 1.75" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.F_CrtYd" startPosition="2.3, 1.05" endPosition="-2.3, 1.05" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="2.3, -1.05" endPosition="2.3, 1.05" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="-2.3, -1.05" endPosition="2.3, -1.05" thickness="0.05" />
@@ -443,15 +447,15 @@
                     <line layers="Top.Document" startPosition="-1.6, -0.4" endPosition="-1.6, 0.8" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-1.2, -0.8" endPosition="-1.6, -0.4" thickness="0.1" />
                     <line layers="Top.Document" startPosition="1.6, -0.8" endPosition="-1.2, -0.8" thickness="0.1" />
-                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.35, 0" size="1.4, 1.35" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.35, 0" size="1.4, 1.35" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.35, 0" size="1.4, 1.35" roundness="0.37" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.35, 0" size="1.4, 1.35" roundness="0.37" />
                 </elements>
             </component>
             <component name="Package_SO:MSOP-8_3x3mm_P0.65mm">
                 <elements>
-                    <text layers="Top.Place" position="3.875, -0.125" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 2.45" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="3.875, -0.125" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 2.45" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.F_CrtYd" startPosition="3.18, -1.75" endPosition="-3.18, -1.75" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="3.18, 1.75" endPosition="3.18, -1.75" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="-3.18, 1.75" endPosition="3.18, 1.75" thickness="0.05" />
@@ -465,21 +469,21 @@
                     <line layers="Top.Place" startPosition="0, -1.61" endPosition="1.5, -1.61" thickness="0.12" />
                     <line layers="Top.Place" startPosition="0, 1.61" endPosition="-1.5, 1.61" thickness="0.12" />
                     <line layers="Top.Place" startPosition="0, 1.61" endPosition="1.5, 1.61" thickness="0.12" />
-                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.1125, -0.975" size="1.625, 0.4" />
-                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.1125, -0.325" size="1.625, 0.4" />
-                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.1125, 0.325" size="1.625, 0.4" />
-                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.1125, 0.975" size="1.625, 0.4" />
-                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.1125, 0.975" size="1.625, 0.4" />
-                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.1125, 0.325" size="1.625, 0.4" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.1125, -0.325" size="1.625, 0.4" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.1125, -0.975" size="1.625, 0.4" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="2.1125, -0.975" size="1.625, 0.4" roundness="0.5" />
+                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop" position="2.1125, -0.325" size="1.625, 0.4" roundness="0.5" />
+                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="2.1125, 0.325" size="1.625, 0.4" roundness="0.5" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="2.1125, 0.975" size="1.625, 0.4" roundness="0.5" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.1125, 0.975" size="1.625, 0.4" roundness="0.5" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.1125, 0.325" size="1.625, 0.4" roundness="0.5" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.1125, -0.325" size="1.625, 0.4" roundness="0.5" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.1125, -0.975" size="1.625, 0.4" roundness="0.5" />
                 </elements>
             </component>
             <component name="Inductor_SMD:L_0805_2012Metric">
                 <elements>
-                    <text layers="Top.Place" position="-3.3125, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 1.65" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="-3.3125, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 1.65" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.F_CrtYd" startPosition="1.68, 0.95" endPosition="-1.68, 0.95" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="1.68, -0.95" endPosition="1.68, 0.95" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="-1.68, -0.95" endPosition="1.68, -0.95" thickness="0.05" />
@@ -490,15 +494,15 @@
                     <line layers="Top.Document" startPosition="1, -0.6" endPosition="1, 0.6" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-1, -0.6" endPosition="1, -0.6" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-1, 0.6" endPosition="-1, -0.6" thickness="0.1" />
-                    <text layers="Top.Document" position="0, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.9375, 0" size="0.975, 1.4" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.9375, 0" size="0.975, 1.4" />
+                    <text layers="Top.Document" position="0, 0" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.9375, 0" size="0.975, 1.4" roundness="0.5" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.9375, 0" size="0.975, 1.4" roundness="0.5" />
                 </elements>
             </component>
             <component name="Package_TO_SOT_SMD:SOT-89-3">
                 <elements>
-                    <text layers="Top.Place" position="-3.625, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0.3, 3.5" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="-3.625, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0.3, 3.5" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.Place" startPosition="-1.06, 2.36" endPosition="-1.06, 2.13" thickness="0.12" />
                     <line layers="Top.Place" startPosition="-1.06, -2.36" endPosition="-1.06, -2.13" thickness="0.12" />
                     <line layers="Top.Place" startPosition="-1.06, -2.36" endPosition="1.66, -2.36" thickness="0.12" />
@@ -515,16 +519,16 @@
                     <line layers="Top.Place" startPosition="-2.2, -2.13" endPosition="-1.06, -2.13" thickness="0.12" />
                     <line layers="Top.Place" startPosition="1.66, 2.36" endPosition="-1.06, 2.36" thickness="0.12" />
                     <line layers="Top.Place" startPosition="1.66, 1.05" endPosition="1.66, 2.36" thickness="0.12" />
-                    <text layers="Top.Document" position="0.5, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.5625, 0" size="1.475, 0.9" />
-                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.65, 1.5" size="1.3, 0.9" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.65, -1.5" size="1.3, 0.9" />
+                    <text layers="Top.Document" position="0.5, 0" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.5625, 0" size="1.475, 0.9" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.65, 1.5" size="1.3, 0.9" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.65, -1.5" size="1.3, 0.9" />
                 </elements>
             </component>
             <component name="Diode_SMD:D_SOD-123F">
                 <elements>
-                    <text layers="Top.Place" position="-0.127, -1.905" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 2.1" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="-0.127, -1.905" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 2.1" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.Place" startPosition="-2.2, -1" endPosition="1.65, -1" thickness="0.12" />
                     <line layers="Top.Place" startPosition="-2.2, 1" endPosition="1.65, 1" thickness="0.12" />
                     <line layers="Top.F_CrtYd" startPosition="-2.2, -1.15" endPosition="-2.2, 1.15" thickness="0.05" />
@@ -543,15 +547,15 @@
                     <line layers="Top.Document" startPosition="0.25, 0.4" endPosition="-0.35, 0" thickness="0.1" />
                     <line layers="Top.Document" startPosition="0.25, 0" endPosition="0.75, 0" thickness="0.1" />
                     <line layers="Top.Place" startPosition="-2.2, -1" endPosition="-2.2, 1" thickness="0.12" />
-                    <text layers="Top.Document" position="-0.127, -1.905" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.4, 0" size="1.1, 1.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.4, 0" size="1.1, 1.1" />
+                    <text layers="Top.Document" position="-0.127, -1.905" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.4, 0" size="1.1, 1.1" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.4, 0" size="1.1, 1.1" />
                 </elements>
             </component>
             <component name="Battery:BatteryHolder_LINX_BAT-HLD-012-SMT">
                 <elements>
-                    <text layers="Top.Place" position="0, 6" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, -7" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="0, 6" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, -7" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.Document" startPosition="-7.65, -2.55" endPosition="-7.65, -0.55" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-7.65, -2.55" endPosition="-6.75, -2.55" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-7.65, -0.55" endPosition="-6.75, -0.55" thickness="0.1" />
@@ -575,6 +579,7 @@
                     <line layers="Top.Document" startPosition="-6.55, -2.75" endPosition="-4.9, -4.4" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-6.55, 2.85" endPosition="-5.4, 4.2" thickness="0.1" />
                     <line layers="Top.Document" startPosition="6.55, 2.85" endPosition="5.4, 4.2" thickness="0.1" />
+                    <circle layers="Top.Document" position="0, 0" radius="6.25" thickness="0.1" filled="true" />
                     <line layers="Top.F_CrtYd" startPosition="-9.35, 3.05" endPosition="-9.35, -3.05" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="-9.35, -3.05" endPosition="-7.25, -3.05" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="-9.35, 3.05" endPosition="-7.25, 3.05" thickness="0.05" />
@@ -601,16 +606,16 @@
                     <line layers="Top.Place" startPosition="-4.9, -4.4" endPosition="-3, -4.4" thickness="0.12" />
                     <line layers="Top.Place" startPosition="-6.55, 2.85" endPosition="-5.4, 4.2" thickness="0.12" />
                     <line layers="Top.Place" startPosition="6.55, 2.85" endPosition="5.4, 4.2" thickness="0.12" />
-                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Copper, Top.Stop, Pads" position="0, 0" size="10.2, 10.2" />
-                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="7.6, 0" size="2.5, 5.1" />
-                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-7.6, 0" size="2.5, 5.1" />
+                    <text layers="Top.Document" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="2" layers="Top.Copper, Top.Stop" position="0, 0" size="10.2, 10.2" />
+                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop" position="7.6, 0" size="2.5, 5.1" />
+                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop" position="-7.6, 0" size="2.5, 5.1" />
                 </elements>
             </component>
             <component name="Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm">
                 <elements>
-                    <text layers="Top.Place" position="0, 2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="0, 2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.F_CrtYd" startPosition="2, -1.15" endPosition="2, 1.15" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="-2, -1.15" endPosition="-2, 1.15" thickness="0.05" />
                     <line layers="Top.F_CrtYd" startPosition="-2, 1.15" endPosition="2, 1.15" thickness="0.05" />
@@ -621,23 +626,25 @@
                     <line layers="Top.Place" startPosition="-0.675, 0.875" endPosition="0.675, 0.875" thickness="0.12" />
                     <line layers="Top.Document" startPosition="-1.6, -0.75" endPosition="-1.6, 0.75" thickness="0.1" />
                     <line layers="Top.F_CrtYd" startPosition="-2, -1.15" endPosition="2, -1.15" thickness="0.05" />
-                    <text layers="Top.Document" position="-0.125, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.25, 0" size="1, 1.8" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.25, 0" size="1, 1.8" />
+                    <text layers="Top.Document" position="-0.125, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.25, 0" size="1, 1.8" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="1.25, 0" size="1, 1.8" />
                 </elements>
             </component>
             <component name="MountingHole:MountingHole_3.2mm_M3">
                 <elements>
-                    <text layers="Top.Place" position="0, -4.2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="0, 4.2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
-                    <text layers="Top.Document" position="0.3, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;user" />
-                    <spad name="1" layers="*_Cu, *_Mask, Pads" position="0, 0" size="3.2, 3.2" />
+                    <text layers="Top.Names" position="0, -4.2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 4.2" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
+                    <circle layers="Cmts_User" position="0, 0" radius="3.2" thickness="0.15" filled="true" />
+                    <circle layers="Top.F_CrtYd" position="0, 0" radius="3.45" thickness="0.05" filled="true" />
+                    <text layers="Top.Document" position="0.3, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <hole layers="Holes" position="0, 0" drill="3.2" />
                 </elements>
             </component>
             <component name="MD-CPU07:ER-CON26HB-1">
                 <elements>
-                    <text layers="Top.Place" position="-9, 0.75" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Place" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="-9, 0.75" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.Document" startPosition="-7, -2" endPosition="-6.625, -2" thickness="0.254" />
                     <line layers="Top.Document" startPosition="7, -2" endPosition="6.625, -2" thickness="0.254" />
                     <line layers="Top.Place" startPosition="7, -2" endPosition="7, 1.5" thickness="0.254" />
@@ -647,54 +654,55 @@
                     <line layers="Top.Place" startPosition="-9, 2.5" endPosition="9, 2.5" thickness="0.254" />
                     <line layers="Top.Place" startPosition="-9, 1.5" endPosition="-9, 2.5" thickness="0.254" />
                     <line layers="Top.Place" startPosition="9, 1.5" endPosition="-9, 1.5" thickness="0.254" />
-                    <spad name="26" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="6.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="25" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="4.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="4.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="G2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="7.5, -0.25" rotation="90" size="3, 2" />
-                    <spad name="G1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-7.5, -0.25" rotation="90" size="3, 2" />
-                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-4.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-4.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.25, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.75, -2.5" rotation="90" size="1.25, 0.3" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-6.25, -2.5" rotation="90" size="1.25, 0.3" />
+                    <spad name="26" layers="Top.Copper, Top.Cream, Top.Stop" position="6.25, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="25" layers="Top.Copper, Top.Cream, Top.Stop" position="5.75, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop" position="5.25, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop" position="4.75, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop" position="4.25, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop" position="3.75, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="G2" layers="Top.Copper, Top.Cream, Top.Stop" position="7.5, -0.25" rotation="90" size="3, 2" roundness="0.5" />
+                    <spad name="G1" layers="Top.Copper, Top.Cream, Top.Stop" position="-7.5, -0.25" rotation="90" size="3, 2" roundness="0.5" />
+                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop" position="3.25, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop" position="2.75, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop" position="2.25, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop" position="1.75, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop" position="1.25, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop" position="0.75, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop" position="0.25, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.25, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.75, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.25, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.75, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.25, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.75, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.25, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.75, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.25, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.75, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.25, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.75, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-6.25, -2.5" rotation="90" size="1.25, 0.3" roundness="0.25" />
                 </elements>
             </component>
             <component name="MD-CPU07:ER-CON2.0-2P-SMD">
                 <elements>
-                    <text layers="Top.Place" position="3, -2" rotation="-90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Place" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="3, -2" rotation="-90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, 0" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.Place" startPosition="2.5, -6.5" endPosition="-2.5, -6.5" thickness="0.4064" />
                     <line layers="Top.Place" startPosition="2.5, 0" endPosition="2.5, -6.5" thickness="0.4064" />
                     <line layers="Top.Place" startPosition="-2.5, 0" endPosition="2.5, 0" thickness="0.4064" />
                     <line layers="Top.Place" startPosition="-2.5, -6.5" endPosition="-2.5, 0" thickness="0.4064" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1, 2" rotation="-180" size="1, 2.85" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1, 2" size="1, 2.85" />
-                    <spad name="G2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.5, -4.5" size="1.4, 3.8" />
-                    <spad name="G1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.5, -4.5" size="1.4, 3.8" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1, 2" rotation="-180" size="1, 2.85" roundness="0.5" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1, 2" size="1, 2.85" roundness="0.5" />
+                    <spad name="G2" layers="Top.Copper, Top.Cream, Top.Stop" position="3.5, -4.5" size="1.4, 3.8" />
+                    <spad name="G1" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.5, -4.5" size="1.4, 3.8" roundness="0.5" />
                 </elements>
             </component>
             <component name="MD-CPU07:TQFP64-10X10">
                 <elements>
-                    <text layers="Top.Place" position="5.125, -6.25" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="-4.000003, 7.499999" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="5.125, -6.25" rotation="90" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="-4.000003, 7.499999" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
+                    <circle layers="Top.Place" position="-4, 4" radius="0.149999" thickness="0.3" filled="true" />
                     <line layers="Top.Place" startPosition="4.4, 4.8" endPosition="-4.4, 4.8" thickness="0.16" />
                     <line layers="Top.Place" startPosition="4.8, 4.4" endPosition="4.4, 4.8" thickness="0.16" />
                     <line layers="Top.Place" startPosition="4.8, -4.4" endPosition="4.8, 4.4" thickness="0.16" />
@@ -703,76 +711,76 @@
                     <line layers="Top.Place" startPosition="-4.8, -4.4" endPosition="-4.4, -4.8" thickness="0.16" />
                     <line layers="Top.Place" startPosition="-4.8, 4.4" endPosition="-4.8, -4.4" thickness="0.16" />
                     <line layers="Top.Place" startPosition="-4.4, 4.8" endPosition="-4.8, 4.4" thickness="0.16" />
-                    <spad name="64" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, 3.75" rotation="90" size="0.3, 1.2" />
-                    <spad name="63" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, 3.25" rotation="90" size="0.3, 1.2" />
-                    <spad name="62" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, 2.75" rotation="90" size="0.3, 1.2" />
-                    <spad name="61" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, 2.25" rotation="90" size="0.3, 1.2" />
-                    <spad name="60" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, 1.75" rotation="90" size="0.3, 1.2" />
-                    <spad name="59" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, 1.25" rotation="90" size="0.3, 1.2" />
-                    <spad name="58" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, 0.75" rotation="90" size="0.3, 1.2" />
-                    <spad name="57" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, 0.25" rotation="90" size="0.3, 1.2" />
-                    <spad name="56" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, -0.25" rotation="90" size="0.3, 1.2" />
-                    <spad name="55" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, -0.75" rotation="90" size="0.3, 1.2" />
-                    <spad name="54" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, -1.25" rotation="90" size="0.3, 1.2" />
-                    <spad name="53" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, -1.75" rotation="90" size="0.3, 1.2" />
-                    <spad name="52" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, -2.25" rotation="90" size="0.3, 1.2" />
-                    <spad name="51" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, -2.75" rotation="90" size="0.3, 1.2" />
-                    <spad name="50" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, -3.25" rotation="90" size="0.3, 1.2" />
-                    <spad name="49" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-5.7, -3.75" rotation="90" size="0.3, 1.2" />
-                    <spad name="48" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.75, -5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="47" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.25, -5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="46" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.75, -5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="45" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.25, -5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="44" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.75, -5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="43" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.25, -5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="42" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.75, -5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="41" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.25, -5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="40" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.25, -5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="39" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.75, -5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="38" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.25, -5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="37" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.75, -5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="36" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.25, -5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="35" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.75, -5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="34" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.25, -5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="33" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.75, -5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="32" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, -3.75" rotation="90" size="0.3, 1.2" />
-                    <spad name="31" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, -3.25" rotation="90" size="0.3, 1.2" />
-                    <spad name="30" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, -2.75" rotation="90" size="0.3, 1.2" />
-                    <spad name="29" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, -2.25" rotation="90" size="0.3, 1.2" />
-                    <spad name="28" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, -1.75" rotation="90" size="0.3, 1.2" />
-                    <spad name="27" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, -1.25" rotation="90" size="0.3, 1.2" />
-                    <spad name="26" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, -0.75" rotation="90" size="0.3, 1.2" />
-                    <spad name="25" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, -0.25" rotation="90" size="0.3, 1.2" />
-                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, 0.25" rotation="90" size="0.3, 1.2" />
-                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, 0.75" rotation="90" size="0.3, 1.2" />
-                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, 1.25" rotation="90" size="0.3, 1.2" />
-                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, 1.75" rotation="90" size="0.3, 1.2" />
-                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, 2.25" rotation="90" size="0.3, 1.2" />
-                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, 2.75" rotation="90" size="0.3, 1.2" />
-                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, 3.25" rotation="90" size="0.3, 1.2" />
-                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="5.7, 3.75" rotation="90" size="0.3, 1.2" />
-                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.75, 5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="3.25, 5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.75, 5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="2.25, 5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.75, 5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="1.25, 5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.75, 5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="0.25, 5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.25, 5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-0.75, 5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.25, 5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-1.75, 5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.25, 5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-2.75, 5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.25, 5.7" rotation="90" size="1.2, 0.3" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop, Pads" position="-3.75, 5.7" rotation="90" size="1.2, 0.3" />
+                    <spad name="64" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.7, 3.75" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="63" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.7, 3.25" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="62" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.7, 2.75" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="61" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.7, 2.25" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="60" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.7, 1.75" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="59" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.7, 1.25" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="58" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.7, 0.75" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="57" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.7, 0.25" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="56" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.7, -0.25" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="55" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.7, -0.75" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="54" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.7, -1.25" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="53" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.7, -1.75" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="52" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.7, -2.25" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="51" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.7, -2.75" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="50" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.7, -3.25" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="49" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.7, -3.75" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="48" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.75, -5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="47" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.25, -5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="46" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.75, -5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="45" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.25, -5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="44" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.75, -5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="43" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.25, -5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="42" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.75, -5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="41" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.25, -5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="40" layers="Top.Copper, Top.Cream, Top.Stop" position="0.25, -5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="39" layers="Top.Copper, Top.Cream, Top.Stop" position="0.75, -5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="38" layers="Top.Copper, Top.Cream, Top.Stop" position="1.25, -5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="37" layers="Top.Copper, Top.Cream, Top.Stop" position="1.75, -5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="36" layers="Top.Copper, Top.Cream, Top.Stop" position="2.25, -5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="35" layers="Top.Copper, Top.Cream, Top.Stop" position="2.75, -5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="34" layers="Top.Copper, Top.Cream, Top.Stop" position="3.25, -5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="33" layers="Top.Copper, Top.Cream, Top.Stop" position="3.75, -5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="32" layers="Top.Copper, Top.Cream, Top.Stop" position="5.7, -3.75" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="31" layers="Top.Copper, Top.Cream, Top.Stop" position="5.7, -3.25" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="30" layers="Top.Copper, Top.Cream, Top.Stop" position="5.7, -2.75" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="29" layers="Top.Copper, Top.Cream, Top.Stop" position="5.7, -2.25" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="28" layers="Top.Copper, Top.Cream, Top.Stop" position="5.7, -1.75" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="27" layers="Top.Copper, Top.Cream, Top.Stop" position="5.7, -1.25" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="26" layers="Top.Copper, Top.Cream, Top.Stop" position="5.7, -0.75" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="25" layers="Top.Copper, Top.Cream, Top.Stop" position="5.7, -0.25" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop" position="5.7, 0.25" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop" position="5.7, 0.75" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop" position="5.7, 1.25" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop" position="5.7, 1.75" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop" position="5.7, 2.25" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop" position="5.7, 2.75" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop" position="5.7, 3.25" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop" position="5.7, 3.75" rotation="90" size="0.3, 1.2" roundness="0.5" />
+                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop" position="3.75, 5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop" position="3.25, 5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop" position="2.75, 5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop" position="2.25, 5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop" position="1.75, 5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop" position="1.25, 5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop" position="0.75, 5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop" position="0.25, 5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.25, 5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.75, 5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.25, 5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.75, 5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.25, 5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.75, 5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.25, 5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.75, 5.7" rotation="90" size="1.2, 0.3" roundness="0.5" />
                 </elements>
             </component>
             <component name="MD-CPU07:S02B-XASK-1">
                 <elements>
-                    <text layers="Top.Place" position="-3.75, -3.5" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;reference" />
-                    <text layers="Top.Document" position="-3.75, 4" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;value" />
+                    <text layers="Top.Names" position="-3.75, -3.5" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="-3.75, 4" rotation="-180" height="1" thickness="0.1" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
                     <line layers="Top.Document" startPosition="1.25, 0" endPosition="1.25, -8.5" thickness="1" />
                     <line layers="Top.Document" startPosition="-1.25, 0" endPosition="-1.25, -8.5" thickness="1" />
                     <line layers="Top.Document" startPosition="-3.75, -2.5" endPosition="3.75, -2.5" thickness="0.2" />
@@ -785,622 +793,622 @@
                     <line layers="Top.Place" startPosition="3.75, -9" endPosition="3.75, 3" thickness="0.2" />
                     <line layers="Top.Place" startPosition="-3.75, -9" endPosition="3.75, -9" thickness="0.2" />
                     <line layers="Top.Place" startPosition="-3.75, -9" endPosition="-3.75, 3" thickness="0.2" />
-                    <spad name="1" layers="*_Cu, *_Mask, Pads" position="1.25, 0" rotation="90" size="1.35, 1.35" />
-                    <spad name="2" layers="*_Cu, *_Mask, Pads" position="-1.25, 0" rotation="90" size="1.35, 1.35" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills, Pads" position="1.25, 0" rotation="90" size="1.35" drill="0.9" />
+                    <tpad name="2" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills, Pads" position="-1.25, 0" rotation="90" size="1.35" drill="0.9" />
                 </elements>
             </component>
         </components>
         <parts>
             <part name="Capacitor_SMD:C_0603_1608Metric:0" component="Capacitor_SMD:C_0603_1608Metric" position="129.125, 87.125" rotation="90">
                 <attributes>
-                    <attribute name="reference" value="C9" visible="false" />
-                    <attribute name="value" value="470n" visible="false" />
+                    <attribute name="NAME" value="C9" />
+                    <attribute name="VALUE" value="470n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:1" component="Capacitor_SMD:C_0603_1608Metric" position="150.125, 91.375" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="C20" visible="false" />
-                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="NAME" value="C20" />
+                    <attribute name="VALUE" value="1u" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:2" component="Capacitor_SMD:C_0603_1608Metric" position="148.5, 91.375" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="C19" visible="false" />
-                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="NAME" value="C19" />
+                    <attribute name="VALUE" value="1u" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:3" component="Capacitor_SMD:C_0603_1608Metric" position="146.875, 91.375" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="C18" visible="false" />
-                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="NAME" value="C18" />
+                    <attribute name="VALUE" value="1u" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:4" component="Capacitor_SMD:C_0603_1608Metric" position="158.375, 96.875" rotation="180">
                 <attributes>
-                    <attribute name="reference" value="C17" visible="false" />
-                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="NAME" value="C17" />
+                    <attribute name="VALUE" value="1u" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:5" component="Capacitor_SMD:C_0603_1608Metric" position="158.375, 94.75" rotation="180">
                 <attributes>
-                    <attribute name="reference" value="C16" visible="false" />
-                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="NAME" value="C16" />
+                    <attribute name="VALUE" value="1u" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:6" component="Capacitor_SMD:C_0603_1608Metric" position="155, 91.375" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="C15" visible="false" />
-                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="NAME" value="C15" />
+                    <attribute name="VALUE" value="1u" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:7" component="Capacitor_SMD:C_0603_1608Metric" position="153.375, 91.375" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="C14" visible="false" />
-                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="NAME" value="C14" />
+                    <attribute name="VALUE" value="1u" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:8" component="Capacitor_SMD:C_0603_1608Metric" position="151.75, 91.375" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="C13" visible="false" />
-                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="NAME" value="C13" />
+                    <attribute name="VALUE" value="1u" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:9" component="Capacitor_SMD:C_0603_1608Metric" position="145.25, 91.375" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="C12" visible="false" />
-                    <attribute name="value" value="1u" visible="false" />
+                    <attribute name="NAME" value="C12" />
+                    <attribute name="VALUE" value="1u" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Diode_SMD:D_SOD-123:10" component="Diode_SMD:D_SOD-123" position="114, 109.1425" rotation="90">
                 <attributes>
-                    <attribute name="reference" value="D3" visible="false" />
-                    <attribute name="value" value="MMSZ5258BT1G" visible="false" />
+                    <attribute name="NAME" value="D3" />
+                    <attribute name="VALUE" value="MMSZ5258BT1G" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Package_SO:TSSOP-28-1EP_4.4x9.7mm_P0.65mm:11" component="Package_SO:TSSOP-28-1EP_4.4x9.7mm_P0.65mm" position="103.375, 107.875" rotation="90">
                 <attributes>
-                    <attribute name="reference" value="U7" visible="false" />
-                    <attribute name="value" value="MAX31911" visible="false" />
+                    <attribute name="NAME" value="U7" />
+                    <attribute name="VALUE" value="MAX31911" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0805_2012Metric:12" component="Resistor_SMD:R_0805_2012Metric" position="101.25, 114.5" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="R17" visible="false" />
-                    <attribute name="value" value="2K2" visible="false" />
+                    <attribute name="NAME" value="R17" />
+                    <attribute name="VALUE" value="2K2" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Package_SO:SSOP-24_5.3x8.2mm_P0.65mm:13" component="Package_SO:SSOP-24_5.3x8.2mm_P0.65mm" position="119.25, 124" rotation="90">
                 <attributes>
-                    <attribute name="reference" value="U8" visible="false" />
-                    <attribute name="value" value="NCV7240" visible="false" />
+                    <attribute name="NAME" value="U8" />
+                    <attribute name="VALUE" value="NCV7240" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0603_1608Metric:14" component="Resistor_SMD:R_0603_1608Metric" position="106.75, 114.25" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="R21" visible="false" />
-                    <attribute name="value" value="15K" visible="false" />
+                    <attribute name="NAME" value="R21" />
+                    <attribute name="VALUE" value="15K" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0805_2012Metric:15" component="Resistor_SMD:R_0805_2012Metric" position="97.875, 114.5" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="R20" visible="false" />
-                    <attribute name="value" value="2K2" visible="false" />
+                    <attribute name="NAME" value="R20" />
+                    <attribute name="VALUE" value="2K2" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0805_2012Metric:16" component="Resistor_SMD:R_0805_2012Metric" position="96, 121.625" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="R19" visible="false" />
-                    <attribute name="value" value="2K2" visible="false" />
+                    <attribute name="NAME" value="R19" />
+                    <attribute name="VALUE" value="2K2" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0805_2012Metric:17" component="Resistor_SMD:R_0805_2012Metric" position="104.625, 114.5" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="R18" visible="false" />
-                    <attribute name="value" value="2K2" visible="false" />
+                    <attribute name="NAME" value="R18" />
+                    <attribute name="VALUE" value="2K2" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0805_2012Metric:18" component="Resistor_SMD:R_0805_2012Metric" position="96.875, 118" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="R16" visible="false" />
-                    <attribute name="value" value="2K2" visible="false" />
+                    <attribute name="NAME" value="R16" />
+                    <attribute name="VALUE" value="2K2" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0805_2012Metric:19" component="Resistor_SMD:R_0805_2012Metric" position="107.125, 118" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="R15" visible="false" />
-                    <attribute name="value" value="2K2" visible="false" />
+                    <attribute name="NAME" value="R15" />
+                    <attribute name="VALUE" value="2K2" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0805_2012Metric:20" component="Resistor_SMD:R_0805_2012Metric" position="103.625, 118" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="R14" visible="false" />
-                    <attribute name="value" value="2K2" visible="false" />
+                    <attribute name="NAME" value="R14" />
+                    <attribute name="VALUE" value="2K2" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0805_2012Metric:21" component="Resistor_SMD:R_0805_2012Metric" position="100.25, 118" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="R13" visible="false" />
-                    <attribute name="value" value="2K2" visible="false" />
+                    <attribute name="NAME" value="R13" />
+                    <attribute name="VALUE" value="2K2" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0805_2012Metric:22" component="Resistor_SMD:R_0805_2012Metric" position="114.125, 113.5" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="R12" visible="false" />
-                    <attribute name="value" value="150R" visible="false" />
+                    <attribute name="NAME" value="R12" />
+                    <attribute name="VALUE" value="150R" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:23" component="Capacitor_SMD:C_0603_1608Metric" position="109.5, 105.75" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="C43" visible="false" />
-                    <attribute name="value" value="4u7" visible="false" />
+                    <attribute name="NAME" value="C43" />
+                    <attribute name="VALUE" value="4u7" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:24" component="Capacitor_SMD:C_0603_1608Metric" position="111.125, 105.75" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="C42" visible="false" />
-                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="NAME" value="C42" />
+                    <attribute name="VALUE" value="100n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0805_2012Metric:25" component="Capacitor_SMD:C_0805_2012Metric" position="109.75, 109.8125" rotation="90">
                 <attributes>
-                    <attribute name="reference" value="C41" visible="false" />
-                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="NAME" value="C41" />
+                    <attribute name="VALUE" value="100n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0805_2012Metric:26" component="Capacitor_SMD:C_0805_2012Metric" position="111.75, 109.8125" rotation="90">
                 <attributes>
-                    <attribute name="reference" value="C40" visible="false" />
-                    <attribute name="value" value="10u" visible="false" />
+                    <attribute name="NAME" value="C40" />
+                    <attribute name="VALUE" value="10u" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:27" component="Capacitor_SMD:C_0603_1608Metric" position="142.75, 92.25" rotation="180">
                 <attributes>
-                    <attribute name="reference" value="C11" visible="false" />
-                    <attribute name="value" value="10u" visible="false" />
+                    <attribute name="NAME" value="C11" />
+                    <attribute name="VALUE" value="10u" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:28" component="Capacitor_SMD:C_0603_1608Metric" position="142.75, 90.5" rotation="180">
                 <attributes>
-                    <attribute name="reference" value="C10" visible="false" />
-                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="NAME" value="C10" />
+                    <attribute name="VALUE" value="100n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:29" component="Capacitor_SMD:C_0603_1608Metric" position="133.125, 112.25">
                 <attributes>
-                    <attribute name="reference" value="C39" visible="false" />
-                    <attribute name="value" value="22p" visible="false" />
+                    <attribute name="NAME" value="C39" />
+                    <attribute name="VALUE" value="22p" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:30" component="Capacitor_SMD:C_0603_1608Metric" position="133.125, 120" rotation="180">
                 <attributes>
-                    <attribute name="reference" value="C38" visible="false" />
-                    <attribute name="value" value="22p" visible="false" />
+                    <attribute name="NAME" value="C38" />
+                    <attribute name="VALUE" value="22p" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:31" component="Capacitor_SMD:C_0603_1608Metric" position="137.25, 112.125" rotation="180">
                 <attributes>
-                    <attribute name="reference" value="C34" visible="false" />
-                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="NAME" value="C34" />
+                    <attribute name="VALUE" value="100n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:32" component="Capacitor_SMD:C_0603_1608Metric" position="137.25, 110.5" rotation="180">
                 <attributes>
-                    <attribute name="reference" value="C33" visible="false" />
-                    <attribute name="value" value="10n" visible="false" />
+                    <attribute name="NAME" value="C33" />
+                    <attribute name="VALUE" value="10n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:33" component="Capacitor_SMD:C_0603_1608Metric" position="146, 107.75">
                 <attributes>
-                    <attribute name="reference" value="C32" visible="false" />
-                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="NAME" value="C32" />
+                    <attribute name="VALUE" value="100n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:34" component="Capacitor_SMD:C_0603_1608Metric" position="146, 106.125">
                 <attributes>
-                    <attribute name="reference" value="C31" visible="false" />
-                    <attribute name="value" value="10n" visible="false" />
+                    <attribute name="NAME" value="C31" />
+                    <attribute name="VALUE" value="10n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:35" component="Capacitor_SMD:C_0603_1608Metric" position="155.5, 115.875">
                 <attributes>
-                    <attribute name="reference" value="C24" visible="false" />
-                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="NAME" value="C24" />
+                    <attribute name="VALUE" value="100n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:36" component="Capacitor_SMD:C_0603_1608Metric" position="155.5, 117.5">
                 <attributes>
-                    <attribute name="reference" value="C21" visible="false" />
-                    <attribute name="value" value="10n" visible="false" />
+                    <attribute name="NAME" value="C21" />
+                    <attribute name="VALUE" value="10n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:37" component="Capacitor_SMD:C_0603_1608Metric" position="147.625, 125.5" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="C29" visible="false" />
-                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="NAME" value="C29" />
+                    <attribute name="VALUE" value="100n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:38" component="Capacitor_SMD:C_0603_1608Metric" position="146, 125.5" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="C27" visible="false" />
-                    <attribute name="value" value="10n" visible="false" />
+                    <attribute name="NAME" value="C27" />
+                    <attribute name="VALUE" value="10n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0603_1608Metric:39" component="Resistor_SMD:R_0603_1608Metric" position="151, 125.5" rotation="90">
                 <attributes>
-                    <attribute name="reference" value="R8" visible="false" />
-                    <attribute name="value" value="1K" visible="false" />
+                    <attribute name="NAME" value="R8" />
+                    <attribute name="VALUE" value="1K" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0603_1608Metric:40" component="Resistor_SMD:R_0603_1608Metric" position="156.875, 106.875">
                 <attributes>
-                    <attribute name="reference" value="R7" visible="false" />
-                    <attribute name="value" value="270" visible="false" />
+                    <attribute name="NAME" value="R7" />
+                    <attribute name="VALUE" value="270" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0603_1608Metric:41" component="Resistor_SMD:R_0603_1608Metric" position="154.25, 125.5" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="R6" visible="false" />
-                    <attribute name="value" value="10K" visible="false" />
+                    <attribute name="NAME" value="R6" />
+                    <attribute name="VALUE" value="10K" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:42" component="Capacitor_SMD:C_0603_1608Metric" position="144.375, 125.5" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="C37" visible="false" />
-                    <attribute name="value" value="10n" visible="false" />
+                    <attribute name="NAME" value="C37" />
+                    <attribute name="VALUE" value="10n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:43" component="Capacitor_SMD:C_0603_1608Metric" position="152.625, 125.5" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="C23" visible="false" />
-                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="NAME" value="C23" />
+                    <attribute name="VALUE" value="100n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:44" component="Capacitor_SMD:C_0603_1608Metric" position="149.5, 107.75">
                 <attributes>
-                    <attribute name="reference" value="C36" visible="false" />
-                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="NAME" value="C36" />
+                    <attribute name="VALUE" value="100n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:45" component="Capacitor_SMD:C_0603_1608Metric" position="149.5, 106.125">
                 <attributes>
-                    <attribute name="reference" value="C35" visible="false" />
-                    <attribute name="value" value="10n" visible="false" />
+                    <attribute name="NAME" value="C35" />
+                    <attribute name="VALUE" value="10n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Inductor_SMD:L_0603_1608Metric:46" component="Inductor_SMD:L_0603_1608Metric" position="149.5, 104.625">
                 <attributes>
-                    <attribute name="reference" value="L1" visible="false" />
-                    <attribute name="value" value="600R" visible="false" />
+                    <attribute name="NAME" value="L1" />
+                    <attribute name="VALUE" value="600R" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical:47" component="Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical" position="165.875, 100.25" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="JP2" visible="false" />
-                    <attribute name="value" value="PINHD-1X5-2MM" visible="false" />
+                    <attribute name="NAME" value="JP2" />
+                    <attribute name="VALUE" value="PINHD-1X5-2MM" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Crystal:Crystal_SMD_Abracon_ABM3B-4Pin_5.0x3.2mm:48" component="Crystal:Crystal_SMD_Abracon_ABM3B-4Pin_5.0x3.2mm" position="133.125, 116.125" rotation="90">
                 <attributes>
-                    <attribute name="reference" value="Y2" visible="false" />
-                    <attribute name="value" value="ABM3B" visible="false" />
+                    <attribute name="NAME" value="Y2" />
+                    <attribute name="VALUE" value="ABM3B" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0603_1608Metric:49" component="Resistor_SMD:R_0603_1608Metric" position="129.125, 82.625" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="R5" visible="false" />
-                    <attribute name="value" value="1K66" visible="false" />
+                    <attribute name="NAME" value="R5" />
+                    <attribute name="VALUE" value="1K66" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0603_1608Metric:50" component="Resistor_SMD:R_0603_1608Metric" position="121.625, 90.875" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="R4" visible="false" />
-                    <attribute name="value" value="100R" visible="false" />
+                    <attribute name="NAME" value="R4" />
+                    <attribute name="VALUE" value="100R" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0603_1608Metric:51" component="Resistor_SMD:R_0603_1608Metric" position="124.375, 90.875" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="R3" visible="false" />
-                    <attribute name="value" value="100K" visible="false" />
+                    <attribute name="NAME" value="R3" />
+                    <attribute name="VALUE" value="100K" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0603_1608Metric:52" component="Resistor_SMD:R_0603_1608Metric" position="126.375, 90.875" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="R2" visible="false" />
-                    <attribute name="value" value="100K" visible="false" />
+                    <attribute name="NAME" value="R2" />
+                    <attribute name="VALUE" value="100K" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm:53" component="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" position="125.375, 84.875" rotation="90">
                 <attributes>
-                    <attribute name="reference" value="U5" visible="false" />
-                    <attribute name="value" value="STCS05" visible="false" />
+                    <attribute name="NAME" value="U5" />
+                    <attribute name="VALUE" value="STCS05" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="LED_SMD:LED_0805_2012Metric_Castellated:54" component="LED_SMD:LED_0805_2012Metric_Castellated" position="156.8375, 104.75" rotation="180">
                 <attributes>
-                    <attribute name="reference" value="D2" visible="false" />
-                    <attribute name="value" value="HSMG-C170" visible="false" />
+                    <attribute name="NAME" value="D2" />
+                    <attribute name="VALUE" value="HSMG-C170" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:55" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A" position="166.125, 104.75">
                 <attributes>
-                    <attribute name="reference" value="C30" visible="false" />
-                    <attribute name="value" value="10u" visible="false" />
+                    <attribute name="NAME" value="C30" />
+                    <attribute name="VALUE" value="10u" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:56" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A" position="133.25, 105">
                 <attributes>
-                    <attribute name="reference" value="C28" visible="false" />
-                    <attribute name="value" value="10u" visible="false" />
+                    <attribute name="NAME" value="C28" />
+                    <attribute name="VALUE" value="10u" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:57" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A" position="167.625, 126.875" rotation="180">
                 <attributes>
-                    <attribute name="reference" value="C26" visible="false" />
-                    <attribute name="value" value="10u" visible="false" />
+                    <attribute name="NAME" value="C26" />
+                    <attribute name="VALUE" value="10u" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:58" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A" position="133.25, 126.625">
                 <attributes>
-                    <attribute name="reference" value="C25" visible="false" />
-                    <attribute name="value" value="10u" visible="false" />
+                    <attribute name="NAME" value="C25" />
+                    <attribute name="VALUE" value="10u" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:59" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A" position="137.375, 91.5" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="C22" visible="false" />
-                    <attribute name="value" value="10u" visible="false" />
+                    <attribute name="NAME" value="C22" />
+                    <attribute name="VALUE" value="10u" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:60" component="Capacitor_SMD:C_0603_1608Metric" position="121.625, 87.125" rotation="90">
                 <attributes>
-                    <attribute name="reference" value="C8" visible="false" />
-                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="NAME" value="C8" />
+                    <attribute name="VALUE" value="100n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0603_1608Metric:61" component="Resistor_SMD:R_0603_1608Metric" position="166.7875, 110.375">
                 <attributes>
-                    <attribute name="reference" value="R11" visible="false" />
-                    <attribute name="value" value="10K" visible="false" />
+                    <attribute name="NAME" value="R11" />
+                    <attribute name="VALUE" value="10K" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Package_SO:MSOP-8_3x3mm_P0.65mm:62" component="Package_SO:MSOP-8_3x3mm_P0.65mm" position="161, 122.625" rotation="90">
                 <attributes>
-                    <attribute name="reference" value="U4" visible="false" />
-                    <attribute name="value" value="MCP9804_MSOP" visible="false" />
+                    <attribute name="NAME" value="U4" />
+                    <attribute name="VALUE" value="MCP9804_MSOP" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:63" component="Capacitor_SMD:C_0603_1608Metric" position="158.25, 121.25" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="C7" visible="false" />
-                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="NAME" value="C7" />
+                    <attribute name="VALUE" value="100n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Inductor_SMD:L_0805_2012Metric:64" component="Inductor_SMD:L_0805_2012Metric" position="176.6875, 92" rotation="180">
                 <attributes>
-                    <attribute name="reference" value="FB1" visible="false" />
-                    <attribute name="value" value="600R" visible="false" />
+                    <attribute name="NAME" value="FB1" />
+                    <attribute name="VALUE" value="600R" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Package_TO_SOT_SMD:SOT-89-3:65" component="Package_TO_SOT_SMD:SOT-89-3" position="171.625, 93.625">
                 <attributes>
-                    <attribute name="reference" value="U1" visible="false" />
-                    <attribute name="value" value="MCP1703A-3302_SOT89" visible="false" />
+                    <attribute name="NAME" value="U1" />
+                    <attribute name="VALUE" value="MCP1703A-3302_SOT89" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0805_2012Metric:66" component="Resistor_SMD:R_0805_2012Metric" position="176.6875, 89.75">
                 <attributes>
-                    <attribute name="reference" value="R1" visible="false" />
-                    <attribute name="value" value="5R1" visible="false" />
+                    <attribute name="NAME" value="R1" />
+                    <attribute name="VALUE" value="5R1" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0805_2012Metric:67" component="Capacitor_SMD:C_0805_2012Metric" position="170.75, 97.5">
                 <attributes>
-                    <attribute name="reference" value="C2" visible="false" />
-                    <attribute name="value" value="4u7" visible="false" />
+                    <attribute name="NAME" value="C2" />
+                    <attribute name="VALUE" value="4u7" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0805_2012Metric:68" component="Capacitor_SMD:C_0805_2012Metric" position="170.75, 89.75" rotation="180">
                 <attributes>
-                    <attribute name="reference" value="C1" visible="false" />
-                    <attribute name="value" value="4u7" visible="false" />
+                    <attribute name="NAME" value="C1" />
+                    <attribute name="VALUE" value="4u7" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Diode_SMD:D_SOD-123F:69" component="Diode_SMD:D_SOD-123F" position="176.625, 96.225" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="D1" visible="false" />
-                    <attribute name="value" value="MBR0540" visible="false" />
+                    <attribute name="NAME" value="D1" />
+                    <attribute name="VALUE" value="MBR0540" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0603_1608Metric:70" component="Resistor_SMD:R_0603_1608Metric" position="166.875, 117.25" rotation="180">
                 <attributes>
-                    <attribute name="reference" value="R10" visible="false" />
-                    <attribute name="value" value="1K5" visible="false" />
+                    <attribute name="NAME" value="R10" />
+                    <attribute name="VALUE" value="1K5" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Resistor_SMD:R_0603_1608Metric:71" component="Resistor_SMD:R_0603_1608Metric" position="166.875, 114.5" rotation="180">
                 <attributes>
-                    <attribute name="reference" value="R9" visible="false" />
-                    <attribute name="value" value="1K5" visible="false" />
+                    <attribute name="NAME" value="R9" />
+                    <attribute name="VALUE" value="1K5" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm:72" component="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" position="174.375, 106.25" rotation="90">
                 <attributes>
-                    <attribute name="reference" value="U3" visible="false" />
-                    <attribute name="value" value="MCP7940N-xST" visible="false" />
+                    <attribute name="NAME" value="U3" />
+                    <attribute name="VALUE" value="MCP7940N-xST" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm:73" component="Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" position="174.25, 123.125" rotation="90">
                 <attributes>
-                    <attribute name="reference" value="U2" visible="false" />
-                    <attribute name="value" value="24LC1025" visible="false" />
+                    <attribute name="NAME" value="U2" />
+                    <attribute name="VALUE" value="24LC1025" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:74" component="Capacitor_SMD:C_0603_1608Metric" position="170, 112.375" rotation="90">
                 <attributes>
-                    <attribute name="reference" value="C6" visible="false" />
-                    <attribute name="value" value="14p" visible="false" />
+                    <attribute name="NAME" value="C6" />
+                    <attribute name="VALUE" value="14p" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:75" component="Capacitor_SMD:C_0603_1608Metric" position="176.25, 112.375" rotation="90">
                 <attributes>
-                    <attribute name="reference" value="C5" visible="false" />
-                    <attribute name="value" value="14p" visible="false" />
+                    <attribute name="NAME" value="C5" />
+                    <attribute name="VALUE" value="14p" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:76" component="Capacitor_SMD:C_0603_1608Metric" position="170.5, 104.625" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="C4" visible="false" />
-                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="NAME" value="C4" />
+                    <attribute name="VALUE" value="100n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Capacitor_SMD:C_0603_1608Metric:77" component="Capacitor_SMD:C_0603_1608Metric" position="170.375, 121.5" rotation="270">
                 <attributes>
-                    <attribute name="reference" value="C3" visible="false" />
-                    <attribute name="value" value="100n" visible="false" />
+                    <attribute name="NAME" value="C3" />
+                    <attribute name="VALUE" value="100n" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Battery:BatteryHolder_LINX_BAT-HLD-012-SMT:78" component="Battery:BatteryHolder_LINX_BAT-HLD-012-SMT" position="194.25, 96.75" rotation="90">
                 <attributes>
-                    <attribute name="reference" value="BT1" visible="false" />
-                    <attribute name="value" value="Battery_Cell" visible="false" />
+                    <attribute name="NAME" value="BT1" />
+                    <attribute name="VALUE" value="Battery_Cell" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm:79" component="Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm" position="173.125, 112.375">
                 <attributes>
-                    <attribute name="reference" value="Y1" visible="false" />
-                    <attribute name="value" value="CM7V-T1A" visible="false" />
+                    <attribute name="NAME" value="Y1" />
+                    <attribute name="VALUE" value="CM7V-T1A" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="MountingHole:MountingHole_3.2mm_M3:80" component="MountingHole:MountingHole_3.2mm_M3" position="198, 79">
                 <attributes>
-                    <attribute name="reference" value="REF**" visible="false" />
-                    <attribute name="value" value="MountingHole_3.2mm_M3" visible="false" />
+                    <attribute name="NAME" value="REF**" />
+                    <attribute name="VALUE" value="MountingHole_3.2mm_M3" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="MountingHole:MountingHole_3.2mm_M3:81" component="MountingHole:MountingHole_3.2mm_M3" position="198, 129.5">
                 <attributes>
-                    <attribute name="reference" value="REF**" visible="false" />
-                    <attribute name="value" value="MountingHole_3.2mm_M3" visible="false" />
+                    <attribute name="NAME" value="REF**" />
+                    <attribute name="VALUE" value="MountingHole_3.2mm_M3" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="MountingHole:MountingHole_3.2mm_M3:82" component="MountingHole:MountingHole_3.2mm_M3" position="98, 129.5">
                 <attributes>
-                    <attribute name="reference" value="REF**" visible="false" />
-                    <attribute name="value" value="MountingHole_3.2mm_M3" visible="false" />
+                    <attribute name="NAME" value="REF**" />
+                    <attribute name="VALUE" value="MountingHole_3.2mm_M3" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="MountingHole:MountingHole_3.2mm_M3:83" component="MountingHole:MountingHole_3.2mm_M3" position="98, 79.5">
                 <attributes>
-                    <attribute name="reference" value="REF**" visible="false" />
-                    <attribute name="value" value="MountingHole_3.2mm_M3" visible="false" />
+                    <attribute name="NAME" value="REF**" />
+                    <attribute name="VALUE" value="MountingHole_3.2mm_M3" />
                     <attribute name="user" value="%R" visible="false" />
                 </attributes>
             </part>
             <part name="MD-CPU07:ER-CON26HB-1:84" component="MD-CPU07:ER-CON26HB-1" position="147.1261, 98.2536">
                 <attributes>
-                    <attribute name="reference" value="LCD1" visible="false" />
-                    <attribute name="value" value="ERC12864-3" visible="false" />
+                    <attribute name="NAME" value="LCD1" />
+                    <attribute name="VALUE" value="ERC12864-3" />
                 </attributes>
             </part>
             <part name="MD-CPU07:ER-CON2.0-2P-SMD:85" component="MD-CPU07:ER-CON2.0-2P-SMD" position="132, 93.875" rotation="180">
                 <attributes>
-                    <attribute name="reference" value="BKL1" visible="false" />
-                    <attribute name="value" value="ERC12864-3-BK" visible="false" />
+                    <attribute name="NAME" value="BKL1" />
+                    <attribute name="VALUE" value="ERC12864-3-BK" />
                 </attributes>
             </part>
             <part name="MD-CPU07:TQFP64-10X10:86" component="MD-CPU07:TQFP64-10X10" position="145.875, 116.5" rotation="90">
                 <attributes>
-                    <attribute name="reference" value="U6" visible="false" />
-                    <attribute name="value" value="PIC32MX4H_PT" visible="false" />
+                    <attribute name="NAME" value="U6" />
+                    <attribute name="VALUE" value="PIC32MX4H_PT" />
                 </attributes>
             </part>
             <part name="MD-CPU07:S02B-XASK-1:87" component="MD-CPU07:S02B-XASK-1" position="197.25, 113.625" rotation="180">
                 <attributes>
-                    <attribute name="reference" value="JP1" visible="false" />
-                    <attribute name="value" value="S02B-XASK-1" visible="false" />
+                    <attribute name="NAME" value="JP1" />
+                    <attribute name="VALUE" value="S02B-XASK-1" />
                 </attributes>
             </part>
         </parts>

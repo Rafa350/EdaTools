@@ -28,11 +28,11 @@
         private int drcBottomSizeMax = 2500000;
         private Ratio drcBottomSizePercent = Ratio.P25;
 
-        private ThPadShape shape = ThPadShape.Circle;
-        private int topSize;
-        private int innerSize;
-        private int bottomSize;
-        private int drill;
+        private ThPadShape _shape = ThPadShape.Circle;
+        private int _topSize;
+        private int _innerSize;
+        private int _bottomSize;
+        private int _drill;
 
         /// <summary>
         /// Constructor del objecte.
@@ -78,11 +78,11 @@
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException(nameof(drill));
 
-            this.topSize = topSize;
-            this.innerSize = innerSize;
-            this.bottomSize = bottomSize;
-            this.drill = drill;
-            this.shape = shape;
+            _topSize = topSize;
+            _innerSize = innerSize;
+            _bottomSize = bottomSize;
+            _drill = drill;
+            _shape = shape;
         }
 
         /// <summary>
@@ -92,7 +92,7 @@
         /// 
         public override Element Clone() {
 
-            return new ThPadElement(Name, LayerSet, Position, Rotation, topSize, innerSize, bottomSize, shape, drill);
+            return new ThPadElement(Name, LayerSet, Position, Rotation, _topSize, _innerSize, _bottomSize, _shape, _drill);
         }
 
         /// <summary>
@@ -107,12 +107,12 @@
 
         public override int GetHashCode() =>
             Position.GetHashCode() +
-            (innerSize * 21032) +
-            (topSize * 78931) +
-            (bottomSize * 974) +
-            (shape.GetHashCode() * 721) +
+            (_innerSize * 21032) +
+            (_topSize * 78931) +
+            (_bottomSize * 974) +
+            (_shape.GetHashCode() * 721) +
             Rotation.GetHashCode() +
-            drill * 37000;
+            _drill * 37000;
 
         /// <summary>
         /// Crea la llista de punts d'un poligon
@@ -130,7 +130,7 @@
             int spacingM2 = spacing * 2;
             int spacingD2 = spacing / 2;
 
-            switch (shape) {
+            switch (_shape) {
                 case ThPadShape.Square:
                     return PolygonBuilder.MakeRectangle(
                         Position,
@@ -174,7 +174,7 @@
             if (polygon == null) {
 
                 Point[] points = MakePoints(side, 0);
-                Point[] holePoints = PolygonBuilder.MakeCircle(Position, drill / 2);
+                Point[] holePoints = PolygonBuilder.MakeCircle(Position, _drill / 2);
                 polygon = new Polygon(points, new Polygon(holePoints));
 
                 PolygonCache.Save(hash, polygon);
@@ -217,7 +217,7 @@
 
             int size = GetSize(side);
 
-            int w = ((shape == ThPadShape.Oval ? 2 : 1) * size) + spacing + spacing;
+            int w = ((_shape == ThPadShape.Oval ? 2 : 1) * size) + spacing + spacing;
             int h = size + spacing + spacing;
 
             Polygon pour = GetOutlinePolygon(side, spacing);
@@ -240,8 +240,8 @@
 
             int size = GetSize(side);
 
-            int w = ((shape == ThPadShape.Oval ? 2 : 1) * size);
-            int h = topSize;
+            int w = ((_shape == ThPadShape.Oval ? 2 : 1) * size);
+            int h = _topSize;
 
             return new Rect(Position.X - (w / 2), Position.Y - (h / 2), w, h);
         }
@@ -266,10 +266,10 @@
         /// 
         public ThPadShape Shape {
             get {
-                return shape;
+                return _shape;
             }
             set {
-                shape = value;
+                _shape = value;
             }
         }
 
@@ -279,13 +279,13 @@
         /// 
         public int Drill {
             get {
-                return drill;
+                return _drill;
             }
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Drill");
 
-                drill = value;
+                _drill = value;
             }
         }
 
@@ -295,15 +295,15 @@
         /// 
         public int TopSize {
             get {
-                if (topSize == 0) {
-                    int ring = Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, drill * drcTopSizePercent));
-                    return drill + ring * 2;
+                if (_topSize == 0) {
+                    int ring = Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, _drill * drcTopSizePercent));
+                    return _drill + ring * 2;
                 }
                 else
-                    return topSize;
+                    return _topSize;
             }
             set {
-                topSize = value;
+                _topSize = value;
             }
         }
         /// <summary>
@@ -312,15 +312,15 @@
         /// 
         public int BottomSize {
             get {
-                if (bottomSize == 0) {
-                    int ring = Math.Max(drcBottomSizeMin, Math.Min(drcBottomSizeMax, drill * drcBottomSizePercent));
-                    return drill + ring * 2;
+                if (_bottomSize == 0) {
+                    int ring = Math.Max(drcBottomSizeMin, Math.Min(drcBottomSizeMax, _drill * drcBottomSizePercent));
+                    return _drill + ring * 2;
                 }
                 else
-                    return bottomSize;
+                    return _bottomSize;
             }
             set {
-                bottomSize = value;
+                _bottomSize = value;
             }
         }
 
@@ -330,15 +330,15 @@
         /// 
         public int InnerSize {
             get {
-                if (innerSize == 0) {
-                    int ring = Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, drill * drcTopSizePercent));
-                    return drill + ring * 2;
+                if (_innerSize == 0) {
+                    int ring = Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, _drill * drcTopSizePercent));
+                    return _drill + ring * 2;
                 }
                 else
-                    return innerSize;
+                    return _innerSize;
             }
             set {
-                innerSize = value;
+                _innerSize = value;
             }
         }
 
@@ -346,10 +346,6 @@
         /// Obte el tipus d'element.
         /// </summary>
         /// 
-        public override ElementType ElementType {
-            get {
-                return ElementType.ThPad;
-            }
-        }
+        public override ElementType ElementType => ElementType.ThPad;
     }
 }

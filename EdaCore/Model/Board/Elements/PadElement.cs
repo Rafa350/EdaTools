@@ -10,9 +10,9 @@
     /// 
     public abstract class PadElement : Element, IPosition, IRotation, IName, IConectable {
 
-        private string name;
-        private Point position;
-        private Angle rotation;
+        private string _name;
+        private Point _position;
+        private Angle _rotation;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -24,9 +24,9 @@
         public PadElement(string name, LayerSet layerSet, Point position, Angle rotation) :
             base(layerSet) {
 
-            this.name = name;
-            this.position = position;
-            this.rotation = rotation;
+            _name = name;
+            _position = position;
+            _rotation = rotation;
         }
 
         /// <summary>
@@ -45,13 +45,13 @@
         /// 
         public string Name {
             get {
-                return name;
+                return _name;
             }
             set {
                 if (String.IsNullOrEmpty(value))
                     throw new ArgumentNullException("Pad.Name");
 
-                name = value;
+                _name = value;
             }
         }
 
@@ -61,10 +61,10 @@
         /// 
         public Point Position {
             get {
-                return position;
+                return _position;
             }
             set {
-                position = value;
+                _position = value;
             }
         }
 
@@ -74,10 +74,10 @@
         /// 
         public Angle Rotation {
             get {
-                return rotation;
+                return _rotation;
             }
             set {
-                rotation = value;
+                _rotation = value;
             }
         }
     }

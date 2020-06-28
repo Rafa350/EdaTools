@@ -11,8 +11,8 @@
     /// </summary>
     public sealed class SmdPadElement : PadElement {
 
-        private Size size;
-        private Ratio roundness;
+        private Size _size;
+        private Ratio _roundness;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -27,8 +27,8 @@
         public SmdPadElement(string name, LayerSet layerSet, Point position, Size size, Angle rotation, Ratio roundness) :
             base(name, layerSet, position, rotation) {
 
-            this.size = size;
-            this.roundness = roundness;
+            _size = size;
+            _roundness = roundness;
         }
 
         /// <summary>
@@ -38,7 +38,7 @@
         /// 
         public override Element Clone() {
 
-            return new SmdPadElement(Name, LayerSet, Position, size, Rotation, roundness);
+            return new SmdPadElement(Name, LayerSet, Position, _size, Rotation, _roundness);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@
             Position.GetHashCode() +
             Size.GetHashCode() +
             (Rotation.GetHashCode() * 73429) +
-            roundness.GetHashCode();
+            _roundness.GetHashCode();
 
         /// <summary>
         /// Crea el poligon del element.
@@ -93,8 +93,8 @@
                 Point[] points = PolygonBuilder.MakeRectangle(
                     Position,
                     new Size(
-                        size.Width + spacing + spacing,
-                        size.Height + spacing + spacing),
+                        _size.Width + spacing + spacing,
+                        _size.Height + spacing + spacing),
                     Radius + spacing,
                     Rotation);
                 polygon = new Polygon(points);
@@ -120,8 +120,8 @@
                 PolygonBuilder.MakeCross(
                     Position,
                     new Size(
-                        size.Width + spacing + spacing,
-                        size.Height + spacing + spacing),
+                        _size.Width + spacing + spacing,
+                        _size.Height + spacing + spacing),
                     width,
                     Rotation));
 
@@ -142,8 +142,8 @@
 
             double a = Rotation.ToRadiants;
 
-            int w = (int)(size.Width * Math.Cos(a) + size.Height * Math.Sin(a));
-            int h = (int)(size.Width * Math.Sin(a) + size.Height * Math.Cos(a));
+            int w = (int)(_size.Width * Math.Cos(a) + _size.Height * Math.Sin(a));
+            int h = (int)(_size.Width * Math.Sin(a) + _size.Height * Math.Cos(a));
 
             return new Rect(Position.X - (w / 2), Position.Y - (h / 2), w, h);
         }
@@ -154,10 +154,10 @@
         /// 
         public Size Size {
             get {
-                return size;
+                return _size;
             }
             set {
-                size = value;
+                _size = value;
             }
         }
 
@@ -167,10 +167,10 @@
         /// 
         public Ratio Roundness {
             get {
-                return roundness;
+                return _roundness;
             }
             set {
-                roundness = value;
+                _roundness = value;
             }
         }
 
@@ -180,7 +180,7 @@
         /// 
         public int Radius {
             get {
-                return (Math.Min(size.Width, size.Height) * roundness) / 2;
+                return (Math.Min(_size.Width, _size.Height) * _roundness) / 2;
             }
         }
 
@@ -188,10 +188,6 @@
         /// Obte el tipus d'element.
         /// </summary>
         /// 
-        public override ElementType ElementType {
-            get {
-                return ElementType.SmdPad;
-            }
-        }
+        public override ElementType ElementType => ElementType.SmdPad;
     }
 }

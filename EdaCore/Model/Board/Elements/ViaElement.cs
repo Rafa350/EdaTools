@@ -32,12 +32,12 @@
         private int drcInnerSizeMax = 2500000;
         private Ratio drcInnerSizePercent = Ratio.P25;
 
-        private Point position;
-        private int drill;
-        private int outerSize = 0;
-        private int innerSize = 0;
-        private ViaShape shape = ViaShape.Circle;
-        private ViaType type = ViaType.Through;
+        private Point _position;
+        private int _drill;
+        private int _outerSize = 0;
+        private int _innerSize = 0;
+        private ViaShape _shape = ViaShape.Circle;
+        private ViaType _type = ViaType.Through;
 
         /// <summary>
         /// Constructor del objecte.
@@ -74,11 +74,11 @@
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException(nameof(drill));
 
-            this.position = position;
-            this.outerSize = outerSize;
-            this.innerSize = innerSize;
-            this.drill = drill;
-            this.shape = shape;
+            _position = position;
+            _outerSize = outerSize;
+            _innerSize = innerSize;
+            _drill = drill;
+            _shape = shape;
         }
 
         /// <summary>
@@ -88,7 +88,7 @@
         /// 
         public override Element Clone() {
 
-            return new ViaElement(LayerSet, position, outerSize, innerSize, drill, shape);
+            return new ViaElement(LayerSet, _position, _outerSize, _innerSize, _drill, _shape);
         }
 
         /// <summary>
@@ -107,12 +107,12 @@
         /// <returns>El hash.</returns>
         /// 
         public override int GetHashCode() =>
-            position.GetHashCode() + 
-            (outerSize * 31) + 
-            (innerSize * 111) + 
-            (drill * 13) +
-            (shape.GetHashCode() * 23) + 
-            (type.GetHashCode() * 73);
+            _position.GetHashCode() + 
+            (_outerSize * 31) + 
+            (_innerSize * 111) + 
+            (_drill * 13) +
+            (_shape.GetHashCode() * 23) + 
+            (_type.GetHashCode() * 73);
 
         /// <summary>
         /// Calcula la llista de puns pels poligons
@@ -130,12 +130,12 @@
             int spacingM2 = spacing * 2;
             int spacingD2 = spacing / 2;
 
-            ViaShape shape = side == BoardSide.Inner ? ViaShape.Circle : this.shape;
+            ViaShape shape = side == BoardSide.Inner ? ViaShape.Circle : this._shape;
 
             switch (shape) {
                 case ViaShape.Square:
                     return PolygonBuilder.MakeRectangle(
-                        position,
+                        _position,
                         new Size(size + spacingM2, size + spacingM2),
                         0,
                         Angle.FromValue(0));
@@ -143,13 +143,13 @@
                 case ViaShape.Octagon:
                     return PolygonBuilder.MakeRegularPolygon(
                         8,
-                        position,
+                        _position,
                         (int)((double)sizeD2 / cos2250) + spacing,
                         Angle.FromValue(2250));
 
                 default:
                     return PolygonBuilder.MakeCircle(
-                        position,
+                        _position,
                         sizeD2 + spacing);
             }
         }
@@ -167,7 +167,7 @@
             if (polygon == null) {
 
                 Point[] points = MakePoints(side, 0);
-                Point[] holePoints = PolygonBuilder.MakeCircle(position, drill / 2);
+                Point[] holePoints = PolygonBuilder.MakeCircle(_position, _drill / 2);
                 polygon = new Polygon(points, new Polygon(holePoints));
 
                 PolygonCache.Save(hash, polygon); 
@@ -207,7 +207,7 @@
         public override Rect GetBoundingBox(BoardSide side) {
 
             int size = side == BoardSide.Inner ? InnerSize : OuterSize;
-            return new Rect(position.X - (size / 2), position.Y - (size / 2), size, size);
+            return new Rect(_position.X - (size / 2), _position.Y - (size / 2), size, size);
         }
 
         /// <summary>
@@ -216,10 +216,10 @@
         /// 
         public Point Position {
             get {
-                return position;
+                return _position;
             }
             set {
-                position = value;
+                _position = value;
             }
         }
 
@@ -229,13 +229,13 @@
         /// 
         public int Drill {
             get {
-                return drill;
+                return _drill;
             }
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Drill");
 
-                drill = value;
+                _drill = value;
             }
         }
 
@@ -245,11 +245,11 @@
         /// 
         public int OuterSize {
             get {
-                int ring = Math.Max(drcOuterSizeMin, Math.Min(drcOuterSizeMax, drill * drcOuterSizePercent));
-                return drill + ring * 2;
+                int ring = Math.Max(drcOuterSizeMin, Math.Min(drcOuterSizeMax, _drill * drcOuterSizePercent));
+                return _drill + ring * 2;
             }
             set {
-                outerSize = value;
+                _outerSize = value;
             }
         }
 
@@ -259,11 +259,11 @@
         /// 
         public int InnerSize {
             get {
-                int ring = Math.Max(drcInnerSizeMin, Math.Min(drcInnerSizeMax, drill * drcInnerSizePercent));
-                return drill + ring * 2;
+                int ring = Math.Max(drcInnerSizeMin, Math.Min(drcInnerSizeMax, _drill * drcInnerSizePercent));
+                return _drill + ring * 2;
             }
             set {
-                innerSize = value;
+                _innerSize = value;
             }
         }
 
@@ -273,10 +273,10 @@
         /// 
         public ViaShape Shape {
             get {
-                return shape;
+                return _shape;
             }
             set {
-                shape = value;
+                _shape = value;
             }
         }
 
@@ -286,10 +286,10 @@
         /// 
         public ViaType Type {
             get {
-                return type;
+                return _type;
             }
             set {
-                type = value;
+                _type = value;
             }
         }
 
@@ -297,7 +297,6 @@
         /// Obte el tipus d'element.
         /// </summary>
         /// 
-        public override ElementType ElementType =>
-            ElementType.Via;
+        public override ElementType ElementType => ElementType.Via;
     }
 }
