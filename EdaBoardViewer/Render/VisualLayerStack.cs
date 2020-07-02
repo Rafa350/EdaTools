@@ -94,6 +94,13 @@
                 VisualMode.Element,
                 Color.FromArgb(255, 32, 216, 200)));
 
+            vls.Add(new VisualLayer("Keepout",
+                new string[] { "Top.Keepout" },
+                null,
+                true,
+                VisualMode.Element,
+                Color.FromArgb(255, 64, 64, 64)));
+
             vls.Add(new VisualLayer("Profiles",
                 new string[] { "Profile" },
                 null,

@@ -149,9 +149,9 @@
                                         int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
                                         Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Side, clearance, 200000);
                                         thermalPolygon = thermalPolygon.Transformed(localTransformation);
-                                        for (int i = 0; i < thermalPolygon.Childs.Length; i++) {
-                                            if (regionBBox.IntersectsWith(thermalPolygon.Childs[i].BoundingBox))
-                                                holePolygons.Add(thermalPolygon.Childs[i]);
+                                        foreach (var child in thermalPolygon.Childs) {
+                                            if (regionBBox.IntersectsWith(child.BoundingBox))
+                                                holePolygons.Add(child);
                                         }
                                     }
                                 }

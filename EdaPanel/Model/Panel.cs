@@ -7,8 +7,8 @@
 
     public sealed class Panel : IPanelVisitable {
 
-        private Size size;
-        private Collection<PanelItem> items;
+        private Size _size;
+        private Collection<PanelItem> _items;
 
         public void AcceptVisitor(IPanelVisitor visitor) {
 
@@ -25,10 +25,10 @@
             if (item == null)
                 throw new ArgumentNullException(nameof(item));
 
-            if (items == null)
-                items = new Collection<PanelItem>();
+            if (_items == null)
+                _items = new Collection<PanelItem>();
 
-            items.Add(item);
+            _items.Add(item);
         }
 
         /// <summary>
@@ -49,21 +49,14 @@
         /// Indica si te items
         /// </summary>
         /// 
-        public bool HasItems {
-            get {
-                return items != null;
-            }
-        }
+        public bool HasItems => 
+            _items != null;
 
         /// <summary>
         /// Enumera els elements
         /// </summary>
         /// 
-        public IEnumerable<PanelItem> Items {
-            get {
-                return items;
-            }
-        }
+        public IEnumerable<PanelItem> Items => _items;
 
         /// <summary>
         /// Obte o asigna el tamany del panell
@@ -71,10 +64,10 @@
         /// 
         public Size Size {
             get {
-                return size;
+                return _size;
             }
             set {
-                size = value;
+                _size = value;
             }
         }
     }

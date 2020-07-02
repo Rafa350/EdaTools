@@ -8,10 +8,10 @@
     /// 
     public readonly struct Rect: IEquatable<Rect> {
 
-        private readonly int x;
-        private readonly int y;
-        private readonly int width;
-        private readonly int height;
+        private readonly int _x;
+        private readonly int _y;
+        private readonly int _width;
+        private readonly int _height;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -28,10 +28,10 @@
             if (height < 0)
                 throw new ArgumentOutOfRangeException(nameof(height));
 
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
+            _x = x;
+            _y = y;
+            _width = width;
+            _height = height;
         }
 
         /// <summary>
@@ -42,10 +42,10 @@
         /// 
         public Rect(Point position, Size size) {
 
-            x = position.X;
-            y = position.Y;
-            width = size.Width;
-            height = size.Height;
+            _x = position.X;
+            _y = position.Y;
+            _width = size.Width;
+            _height = size.Height;
         }
 
         /// <summary>
@@ -55,10 +55,8 @@
         /// <param name="dy">Desplaçament Y</param>
         /// <returns>El resultat de l'operacio.</returns>
         /// 
-        public Rect Offset(int dx, int dy) {
-
-            return new Rect(x + dx, y + dy, width, height);
-        }
+        public Rect Offset(int dx, int dy) =>
+            new Rect(_x + dx, _y + dy, _width, _height);
 
         /// <summary>
         /// Obte un rectangle inflat.
@@ -67,11 +65,9 @@
         /// <param name="dy">Increment Y</param>
         /// <returns>El resultat de l'operacio.</returns>
         /// 
-        public Rect Inflated(int dx, int dy) {
-
-            return new Rect(x - dx, y - dy, width + dx + dx, height + dy + dy);
-        }
-
+        public Rect Inflated(int dx, int dy) =>
+            new Rect(_x - dx, _y - dy, _width + dx + dx, _height + dy + dy);
+        
         /// <summary>
         /// Obte la unio amb un altre rectangle
         /// </summary>
@@ -107,7 +103,7 @@
         /// <returns>True si son iguals.</returns>
         /// 
         public bool Equals(Rect other) => 
-            (x, y, width, height) == (other.x, other.y, other.width, other.height);
+            (_x, _y, _width, _height) == (other._x, other._y, other._width, other._height);
 
         /// <summary>
         /// Operacio de comparacio amb un altre objecte.
@@ -115,18 +111,13 @@
         /// <param name="obj">L'altre objecte.</param>
         /// <returns>True si son iguals.</returns>
         /// 
-        public override bool Equals(object obj) {
+        public override bool Equals(object obj) =>
+            (obj is Rect other) ? Equals(other) : false;
 
-            if (obj is Rect other)
-                return Equals(other);
-            else
-                return false;
-        }
+        public static bool operator ==(Rect r1, Rect r2) => 
+            r1.Equals(r2); 
 
-        public static bool operator ==(Rect r1, Rect r2) =>
-            r1.Equals(r2);
-
-        public static bool operator !=(Rect r1, Rect r2) =>
+        public static bool operator !=(Rect r1, Rect r2) => 
             !r1.Equals(r2);
 
         /// <summary>
@@ -135,61 +126,61 @@
         /// <returns>El codi hash</returns>
         /// 
         public override int GetHashCode() =>
-            x + (y * 1327) + (width * 59) + (height * 1293);
+            _x + (_y * 1327) + (_width * 59) + (_height * 1293);
 
         /// <summary>
         /// Obte la posicio del rectangle
         /// </summary>
         /// 
         public Point Position => 
-            new Point(x, y);
+            new Point(_x, _y);
 
         /// <summary>
         /// Obte el tamany del rectangle
         /// </summary>
         /// 
         public Size Size => 
-            new Size(width, height);
+            new Size(_width, _height);
 
         /// <summary>
         /// Obte la coordinada X
         /// </summary>
         /// 
-        public int X => x;
+        public int X => _x;
 
         /// <summary>
         /// Obte la coordinada Y.
         /// </summary>
         /// 
-        public int Y => y;
+        public int Y => _y;
 
         /// <summary>
         /// Obte l'amplada.
         /// </summary>
         /// 
-        public int Width => width;
+        public int Width => _width;
 
         /// <summary>
         /// Obte l'alçada.
         /// </summary>
         /// 
-        public int Height => height;
+        public int Height => _height;
 
-        public int Left => x;
+        public int Left => _x;
 
-        public int Bottom => y;
+        public int Bottom => _y;
 
-        public int Right => 
-            x + width - 1;
+        public int Right =>
+            _x + _width - 1;
 
         public int Top => 
-            y + height - 1;
+            _y + _height - 1;
 
         /// <summary>
         /// Comprova si el rectangle es buit.
         /// </summary>
         /// 
         public bool IsEmpty =>
-            (width == 0) && (height == 0);
+            (_width == 0) && (_height == 0);
     }
 }

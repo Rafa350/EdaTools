@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document version="100" documentType="visualLayers">
+    <visualLayers>
+        <visualLayer name="Bottom" visible="true" mode="element" color="100, 0, 0, 150">
+            <layers>
+                <layer name="Bottom.Copper"/>
+            </layers>
+            <elements>
+                <element type="Line"/>
+                <element type="Arc"/>
+                <element type="Rectangle"/>
+                <element type="Circle"/>
+                <element type="Region"/>
+                <element type="SmdPad"/>
+                <element type="Text"/>
+            </elements>
+        </visualLayer>
+    </visualLayers>
+</document>

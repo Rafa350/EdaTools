@@ -1,8 +1,11 @@
 ﻿namespace EdaBoardViewer.Render {
 
+    using System.Collections.Generic;
     using Avalonia.Media;
     using MikroPic.EdaTools.v1.Base.Geometry;
+    using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Base.Geometry.Utils;
+    using MikroPic.EdaTools.v1.Core.Infrastructure;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
@@ -12,6 +15,7 @@
         private readonly Layer layer;
         private readonly VisualLayer visualLayer;
         private readonly DrawingContext context;
+        private Font font;
 
         public BoardRenderVisitor(Layer layer, VisualLayer visualLayer, DrawingContext context) {
 
@@ -121,6 +125,42 @@
         public override void Visit(TextElement text) {
 
             if (visualLayer.IsVisible(Part, text)) {
+
+                PartAttributeAdapter paa = new PartAttributeAdapter(Part, text);
+
+                if (font == null)
+                    font = Font.Load("font.xml");
+
+                TextDrawer td = new TextDrawer(font);
+                IEnumerable<GlyphTrace> glyphTraces = td.Draw(paa.Value, new Point(0, 0), paa.HorizontalAlign, paa.VerticalAlign, paa.Height);
+                
+                Transformation t = new Transformation();
+                //t.Scale(1, -1);
+                t.Translate(paa.Position);
+                t.Rotate(paa.Position, paa.Rotation);
+
+                Matrix2D matrix = t.Matrix;
+                var m = new Avalonia.Matrix(matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.Tx, matrix.Ty);
+                using (context.PushPreTransform(m)) {
+
+                    bool first = true;
+                    StreamGeometry geometry = new StreamGeometry();
+                    using (StreamGeometryContext gc = geometry.Open()) {
+                        foreach (var glyphTrace in glyphTraces) {
+                            Avalonia.Point p = new Avalonia.Point(glyphTrace.Position.X, glyphTrace.Position.Y);
+                            if (first || !glyphTrace.Stroke ) {
+                                gc.BeginFigure(p, false);
+                                first = false;
+                            }
+                            else
+                                gc.LineTo(p);
+                        }
+                    }
+
+                    var pen = new Pen(new SolidColorBrush(visualLayer.Color), text.Thickness, null, PenLineCap.Round, PenLineJoin.Round);
+                    
+                    context.DrawGeometry(null, pen, geometry);
+                }
             }
         }
 

@@ -9,7 +9,7 @@
     /// </summary>
     public class TextDrawer {
 
-        private readonly Font font;
+        private readonly Font _font;
 
         /// <summary>
         /// Constructor del objecte.
@@ -21,7 +21,7 @@
             if (font == null)
                 throw new ArgumentNullException(nameof(font));
 
-            this.font = font;
+            _font = font;
         }
 
         /// <summary>
@@ -46,7 +46,7 @@
                 //
                 int width = 0;
                 for (int i = 0; i < text.Length; i++) {
-                    Glyph glyph = font.GetGlyph(text[i]);
+                    Glyph glyph = _font.GetGlyph(text[i]);
                     if (glyph != null)
                         width += glyph.Advance;
                 }
@@ -70,39 +70,42 @@
                 int offsetY = 0;
                 switch (verticalAlign) {
                     case VerticalTextAlign.Top:
-                        offsetY = -font.Ascendent;
+                        offsetY = -_font.Ascendent;
                         break;
 
                     case VerticalTextAlign.Middle:
-                        offsetY = -font.Ascendent / 2;
+                        offsetY = -_font.Ascendent / 2;
                         break;
 
                     case VerticalTextAlign.Bottom:
                         break;
                 }
 
-                int scale = (int)(height / font.Ascendent);
+                int scale = (int)(height / _font.Ascendent);
 
                 // Dibuixa text
                 //
                 int offset = 0;
                 for (int i = 0; i < text.Length; i++) {
-                    Glyph glyph = font.GetGlyph(text[i]);
+                    Glyph glyph = _font.GetGlyph(text[i]);
                     if (glyph != null) {
 
-                        for (int j = 0; j < glyph.Traces.Length; j++) {
+                        if (glyph.Traces != null) {
 
-                            bool stroke = glyph.Traces[j].Stroke;
-                            Point gp = glyph.Traces[j].Position;
-                            Point p = new Point(
-                                position.X + ((gp.X + offset + offsetX) * scale),
-                                position.Y + ((gp.Y + offsetY) * scale));
+                            bool first = true;
+                            foreach (var trace in glyph.Traces) {
 
-                            Trace(p, stroke, j == 0);
+                                Point p = new Point(
+                                    position.X + ((trace.Position.X + offset + offsetX) * scale),
+                                    position.Y + ((trace.Position.Y + offsetY) * scale));
 
-                            glyphTraces.Add(new GlyphTrace(p, stroke));
+                                Trace(p, trace.Stroke, first);
+                                glyphTraces.Add(new GlyphTrace(p, trace.Stroke));
+
+                                first = false;
+                            }
                         }
-
+                        
                         offset += glyph.Advance;
                     }
                 }

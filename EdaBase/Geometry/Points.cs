@@ -9,7 +9,7 @@
     /// 
     public sealed class Points: IEnumerable<Point> {
 
-        private readonly List<Point> points;
+        private readonly List<Point> _points;
 
         /// <summary>
         /// Constructor.
@@ -18,7 +18,7 @@
         /// 
         public Points(IEnumerable<Point> points) {
 
-            this.points = new List<Point>(points);
+            _points = new List<Point>(points);
         }
 
         /// <summary>
@@ -28,7 +28,7 @@
         /// 
         public Points(params Point[] points) {
 
-            this.points = new List<Point>(points);
+            _points = new List<Point>(points);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@
         /// <returns>L'enumerador.</returns>
         /// 
         public IEnumerator<Point> GetEnumerator() => 
-            points.GetEnumerator();
+            _points.GetEnumerator();
 
         /// <summary>
         /// Obte un enumerador.
@@ -45,14 +45,14 @@
         /// <returns>L'enumerador.</returns>
         /// 
         IEnumerator IEnumerable.GetEnumerator() => 
-            points.GetEnumerator();
+            _points.GetEnumerator();
 
         /// <summary>
         /// Obte el numero d'elements.
         /// </summary>
         /// 
         public int Count =>
-            points.Count;
+            _points.Count;
 
         /// <summary>
         /// Obte un punt pel seu index.
@@ -61,6 +61,6 @@
         /// <returns>El punt en el index especificat.</returns>
         /// 
         public Point this[int index] => 
-            points[index];   
+            _points[index];   
     }
 }

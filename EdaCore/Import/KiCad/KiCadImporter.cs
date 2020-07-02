@@ -1,154 +1,19 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Text;
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
+    using MikroPic.EdaTools.v1.Base.Geometry.Utils;
     using MikroPic.EdaTools.v1.Core.Import.KiCad.Infrastructure;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using MikroPic.EdaTools.v1.Core.Model.Net;
 
     public sealed class KiCadImporter: Importer {
-
-        private readonly struct Location {
-
-            private readonly Point _position;
-            private readonly Angle _rotation;
-
-            public Location(Point position, Angle rotation) {
-
-                _position = position;
-                _rotation = rotation;
-            }
-
-            public Point Position => _position;
-            public Angle Rotation => _rotation;
-        }
-
-        private readonly struct ModuleNodeInfo {
-
-            private readonly string _name;
-            private readonly Point _position;
-            private readonly Angle _rotation;
-            private readonly BoardSide _side;
-
-            public ModuleNodeInfo(string name, Point position, Angle rotation, BoardSide side) {
-
-                _name = name;
-                _position = position;
-                _rotation = rotation;
-                _side = side;
-            }
-
-            public string Name => _name;
-            public Point Position => _position;
-            public Angle Rotation => _rotation;
-            public BoardSide Side => _side;
-        }
-
-        private readonly struct TextNodeInfo {
-
-            private readonly Point _position;
-            private readonly Angle _rotation;
-            private readonly string _layer;
-            private readonly string _type;
-            private readonly string _text;
-
-            public TextNodeInfo(Point position, Angle rotation, string layer, string type, string text) {
-
-                _position = position;
-                _rotation = rotation;
-                _layer = layer;
-                _type = type;
-                _text = text;
-            }
-
-            public Point Position => _position;
-            public Angle Rotation => _rotation;
-            public string Layer => _layer;
-            public string Type => _type;
-            public string Text => _text;
-        }
-
-        private readonly struct LineNodeInfo {
-
-            private readonly Point _start;
-            private readonly Point _end;
-            private readonly int _thickness;
-            private readonly string _layer;
-
-            public LineNodeInfo(Point start, Point end, int thickness, string layer) {
-
-                _start = start;
-                _end = end;
-                _thickness = thickness;
-                _layer = layer;
-            }
-
-            public Point Start => _start;
-            public Point End => _end;
-            public int Thickness => _thickness;
-            public string Layer => _layer;
-        }
-
-        private readonly struct CircleNodeInfo {
-
-            private readonly Point _center;
-            private readonly int _radius;
-            private readonly int _thickness;
-            private readonly string _layer;
-
-            public CircleNodeInfo(Point center, int radius, int thickness, string layer) {
-
-                _center = center;
-                _radius = radius;
-                _thickness = thickness;
-                _layer = layer;
-            }
-
-            public Point Center => _center;
-            public int Radius => _radius;
-            public int Thickness => _thickness;
-            public string Layer => _layer;
-        }
-
-        private readonly struct PadNodeInfo {
-
-            private readonly string _name;
-            private readonly string _type;
-            private readonly Point _position;
-            private readonly Angle _rotation;
-            private readonly Size _size;
-            private readonly Ratio _roundness;
-            private readonly int _drill;
-
-            public PadNodeInfo(string name, string type, Point position, Size size, Angle rotation, int drill, Ratio roundness) {
-
-                _name = name;
-                _type = type;
-                _position = position;
-                _size = size;
-                _rotation = rotation;
-                _drill = drill;
-                _roundness = roundness;
-            }
-
-            public string Name => _name;
-            public string Type => _type;
-            public Point Position => _position;
-            public Size Size => _size;
-            public Angle Rotation => _rotation;
-            public int Drill => _drill;
-            public Ratio Roundness => _roundness;
-        }
-
-        private readonly Dictionary<string, Component> componentDict = new Dictionary<string, Component>();
-        private readonly Dictionary<string, Signal> signalDict = new Dictionary<string, Signal>();
-
+      
         private int partCount = 0;
 
         public override Board ReadBoard(Stream stream) {
@@ -174,67 +39,48 @@
 
         private Board ProcessBoard(STree tree) {
 
-            ProcessSignals(tree);
-            ProcessComponents(tree);
-
             Board board = new Board();
             board.AddLayer(new Layer(BoardSide.None, "Pads", LayerFunction.Unknown));
             board.AddLayer(new Layer(BoardSide.None, "Vias", LayerFunction.Unknown));
             board.AddLayer(new Layer(BoardSide.None, "Drils", LayerFunction.Unknown));
             board.AddLayer(new Layer(BoardSide.None, "Holes", LayerFunction.Unknown));
+            board.AddLayer(new Layer(BoardSide.Top, "Names", LayerFunction.Unknown));
+            board.AddLayer(new Layer(BoardSide.Bottom, "Values", LayerFunction.Unknown));
 
-            board.AddSignals(signalDict.Values);
-            board.AddComponents(componentDict.Values);
-            board.AddLayers(ParseLayers(tree));
-            board.AddParts(ParseParts(tree));
+            ParseLayers(tree, board);
+            ParseNets(tree, board);
+            ParseContent(tree, board);
 
             return board;
         }
 
         /// <summary>
-        /// Crea les senyals i les afegeix al diccionari..
+        /// Procesa els nodes 'net'
         /// </summary>
         /// <param name="tree">El STree</param>
+        /// <param name="board">L aplaca.</param>
         /// 
-        private void ProcessSignals(STree tree) {
+        private void ParseNets(STree tree, Board board) {
 
             foreach (var netNode in tree.SelectBranches(tree.Root, "net")) {
-
                 string name = tree.ValueAsString(netNode[2]);
                 if (!string.IsNullOrEmpty(name)) {
                     Signal signal = new Signal(name);
-                    signalDict.Add(signal.Name, signal);
+                    board.AddSignal(signal);
                 }
             }
         }
         
         /// <summary>
-        /// Crea els components i els afegeix al diccionari.
+        /// Procesa el node 'layers'.
         /// </summary>
         /// <param name="tree">El STree.</param>
+        /// <param name="board">La placa on afeigir les capes.</param>
         /// 
-        private void ProcessComponents(STree tree) {
-
-            foreach (var moduleNode in tree.SelectBranches(tree.Root, "module")) {
-                string name = tree.ValueAsString(moduleNode[1]);
-                if (!componentDict.ContainsKey(name)) {
-                    Component component = ParseComponent(tree, moduleNode);
-                    componentDict.Add(component.Name, component);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Procesa el node 'layers' i genera la llista de capes.
-        /// </summary>
-        /// <param name="tree">El STree.</param>
-        /// <returns>Un enumerador de les capes.</returns>
-        /// 
-        private IEnumerable<Layer> ParseLayers(STree tree) {
+        private void ParseLayers(STree tree, Board board) {
 
             SBranch layerListNode = tree.SelectBranch(tree.Root, "layers");
             if (layerListNode != null) {
-                List<Layer> layers = new List<Layer>();
                 foreach (var layerNode in layerListNode.Nodes.OfType<SBranch>()) {
 
                     string kcName = tree.ValueAsString(layerNode[1]);
@@ -245,311 +91,315 @@
                     string tag = GetLayerTag(kcName);
 
                     Layer layer = new Layer(side, tag, function);
-                    layers.Add(layer);
+                    board.AddLayer(layer);
                 }
-                return layers;
             }
-            else 
-                return null;
         }
 
+        /// <summary>
+        /// Procesa els nodes 'module'
+        /// </summary>
+        /// <param name="tree">El STree.</param>
+        /// 
+        private void ParseContent(STree tree, Board board) {
+
+            foreach (var childNode in (tree.Root as SBranch).Nodes.OfType<SBranch>()) {
+                switch (tree.GetBranchName(childNode)) {
+                    case "module":
+                        ParseModule(tree, childNode, board);
+                        break;
+
+                    case "via":
+                        ParseVia(tree, childNode, board);
+                        break;
+
+                    case "segment":
+                    case "gr_line":
+                        ParseSegment(tree, childNode, board);
+                        break;
+                }
+            }
+        }
 
         /// <summary>
-        /// Procesa un node 'module' per crear un component de la placa.
+        /// Procesa un node 'via'
         /// </summary>
         /// <param name="tree">El STree</param>
-        /// <param name="node">El node a procesar.</param>
-        /// <returns>El component creat.</returns>
-        /// 
-        private Component ParseComponent(STree tree, SBranch node) {
-
-            ModuleNodeInfo moduleInfo = ParseModuleNode(tree, node);
-
-            List<Element> elements = new List<Element>();
-            foreach (var childNode in node.Nodes.OfType<SBranch>()) {
-                switch (tree.GetBranchName(childNode)) {
-                    case "layer":
-                        break;
-
-                    case "tedit":
-                        break;
-
-                    case "tstamp":
-                        break;
-
-                    case "fp_text": 
-                        elements.Add(ParseComponentText(tree, childNode));
-                        break;
-
-                    case "fp_circle":
-                        elements.Add(ParseComponentCircle(tree, childNode));
-                        break;
-
-                    case "fp_line": 
-                        elements.Add( ParseComponentLine(tree, childNode));
-                        break;
-
-                    case "pad": 
-                        elements.Add(ParseComponentPad(tree, childNode));
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-
-            foreach (var element in elements)
-                if (element is IRotation r)
-                    r.Rotation -= moduleInfo.Rotation;
-
-            return new Component(moduleInfo.Name, elements);
-        }
-
-        private Element ParseComponentLine(STree tree, SBranch node) {
-
-            LineNodeInfo lineInfo = ParseLineNode(tree, node);
-
-            return new LineElement(
-                new LayerSet(lineInfo.Layer), 
-                lineInfo.Start, 
-                lineInfo.End, 
-                lineInfo.Thickness, 
-                LineElement.CapStyle.Round);
-        }
-
-        private Element ParseComponentCircle(STree tree, SBranch node) {
-
-            CircleNodeInfo circleIndo = ParseCircleNode(tree, node);
-
-            return new CircleElement(
-                new LayerSet(circleIndo.Layer), 
-                circleIndo.Center, 
-                circleIndo.Radius, 
-                circleIndo.Thickness, 
-                true);
-        }
-
-        /// <summary>
-        /// Procesa un node 'fp_text' per crear un element text.
-        /// </summary>
-        /// <param name="tree">El STree.</param>
-        /// <param name="node">El node a procesar.</param>
-        /// <returns>L'element creat.</returns>
-        /// 
-        private Element ParseComponentText(STree tree, SBranch node) {
-
-            TextNodeInfo textInfo = ParseTextNode(tree, node);
-
-            return new TextElement(
-                new LayerSet(textInfo.Layer), 
-                textInfo.Position, 
-                textInfo.Rotation, 
-                1000000, 
-                100000, 
-                HorizontalTextAlign.Center, 
-                VerticalTextAlign.Middle, 
-                textInfo.Text);
-        }
-
-        /// <summary>
-        /// Procesa un node 'pad' per crear un element pad.
-        /// </summary>
-        /// <param name="tree">El STree</param>
-        /// <param name="node">El node a procesar.</param>
-        /// <returns>L'element pad creat.</returns>
-        /// 
-        private Element ParseComponentPad(STree tree, SBranch node) {
-
-            PadNodeInfo padInfo = ParsePadNode(tree, node);
-
-            switch (padInfo.Type) {
-                
-                case "smd": {
-                    LayerSet layerSet = ParseLayerSetDesignator(tree, tree.SelectBranch(node, "layers"));
-                    return new SmdPadElement(
-                        padInfo.Name, 
-                        layerSet, 
-                        padInfo.Position, 
-                        padInfo.Size, 
-                        padInfo.Rotation, 
-                        padInfo.Roundness);
-                }
-
-                case "thru_hole": {
-                    LayerSet layerSet = ParseLayerSetDesignator(tree, tree.SelectBranch(node, "layers"));
-                    layerSet += "Drills";
-                    layerSet += "Pads";
-
-                    ThPadElement.ThPadShape shape;
-                    switch (tree.ValueAsString(node[3])) {
-                        case "oval":
-                            shape = padInfo.Size.Width == padInfo.Size.Height ? ThPadElement.ThPadShape.Circle : ThPadElement.ThPadShape.Oval;
-                            break;
-
-                        case "rect":
-                            shape = ThPadElement.ThPadShape.Square;
-                            break;
-
-                        default:
-                            shape = ThPadElement.ThPadShape.Circle;
-                            break;
-                    }
-
-                    return new ThPadElement(
-                        padInfo.Name, 
-                        layerSet, 
-                        padInfo.Position, 
-                        padInfo.Rotation, 
-                        padInfo.Size.Width, 
-                        shape, 
-                        padInfo.Drill);
-                }
-
-                case "np_thru_hole":
-                    return new HoleElement(
-                        new LayerSet("Holes"), 
-                        padInfo.Position, 
-                        padInfo.Drill);
-
-                default:
-                    throw new InvalidDataException("Tipo de pad no reconicido.");
-            }
-        }
-
-        /// <summary>
-        /// Procesa els nodes module, per generar la llista de parts.
-        /// </summary>
-        /// <param name="tree">El Stree</param>
-        /// <returns>Un enumerador dels parts creats.</returns>
-        /// 
-        private IEnumerable<Part> ParseParts(STree tree) {
-
-            List<Part> parts = new List<Part>();
-
-            foreach (var moduleNode in tree.SelectBranches(tree.Root, "module"))
-                parts.Add(ParsePart(tree, moduleNode));
-
-            return parts;
-        }
-
-        /// <summary>
-        /// Procesa un modul.
-        /// </summary>
-        /// <param name="tree">El STree.</param>
-        /// <param name="node">El node.</param>
-        /// <returns>El part generat.</returns>
-        /// 
-        private Part ParsePart(STree tree, SBranch node) {
-
-            ModuleNodeInfo moduleInfo = ParseModuleNode(tree, node);
-
-            List<PartAttribute> attributes = new List<PartAttribute>();
-            foreach (var childNode in node.Nodes.OfType<SBranch>()) {
-                switch (tree.GetBranchName(childNode)) {
-                    case "fp_text":
-                        attributes.Add(ParsePartAttribute(tree, childNode));
-                        break;
-                }
-            }
-
-            string name = String.Format("{0}:{1}", moduleInfo.Name, partCount++);
-            bool flip = moduleInfo.Side == BoardSide.Bottom;
-            Part part = new Part(GetComponent(moduleInfo.Name), name, moduleInfo.Position, moduleInfo.Rotation, flip);
-            part.AddAttributes(attributes);
-            return part;
-        }
-
-        private PartAttribute ParsePartAttribute(STree tree, SBranch node) {
-
-            string name = tree.ValueAsString(node[1]);
-            string value = tree.ValueAsString(node[2]);
-
-            bool visible = false;
-            if (name == "value") {
-                name = "VALUE";
-                visible = true;
-            }
-            else if (name == "reference") {
-                name = "NAME";
-                visible = true;
-            }
-
-            return new PartAttribute(name, value, visible);
-        }
-
-        /// <summary>
-        /// Procesa un node 'module'
-        /// </summary>
-        /// <param name="tree">El STree.</param>
         /// <param name="node">El node</param>
-        /// <returns>Els parametres del node.</returns>
+        /// <param name="board">La placa.</param>
         /// 
-        private ModuleNodeInfo ParseModuleNode(STree tree, SBranch node) {
+        private void ParseVia(STree tree, SBranch node, Board board) {
 
+            // Obte la posicio
+            //
+            SBranch atNode = tree.SelectBranch(node, "at");
+            double x = tree.ValueAsDouble(atNode[1]);
+            double y = tree.ValueAsDouble(atNode[2]);
+            Point position = new Point((int)(x * 1000000.0), (int)(y * 1000000.0));
+
+            // Obte el tamany
+            //
+            SBranch sizeNode = tree.SelectBranch(node, "size");
+            int size = (int)(tree.ValueAsDouble(sizeNode[1]) * 1000000.0);
+
+            // Obte el diametre del forat.
+            //
+            SBranch drillNode = tree.SelectBranch(node, "drill");
+            int drill = (int)(tree.ValueAsDouble(drillNode[1]) * 1000000.0);
+
+            // Obte el conjunt de capes.
+            //
+            LayerSet layerSet = ParseLayerSetDesignator(tree, tree.SelectBranch(node, "layers"));
+            layerSet += "Vias";
+            layerSet += "Drills";
+
+            Element via = new ViaElement(
+                layerSet,
+                position,
+                size,
+                drill,
+                ViaElement.ViaShape.Circle);
+            board.AddElement(via);
+        }
+
+        private void ParseSegment(STree tree, SBranch node, Board board) {
+
+            // Obte la posicio inicial
+            //
+            SBranch startNode = tree.SelectBranch(node, "start");
+            double sx = tree.ValueAsDouble(startNode[1]);
+            double sy = tree.ValueAsDouble(startNode[2]);
+            Point start = new Point((int)(sx * 1000000.0), (int)(sy * 1000000.0));
+
+            // Obte la posicio final
+            //
+            SBranch endNode = tree.SelectBranch(node, "end");
+            double ex = tree.ValueAsDouble(endNode[1]);
+            double ey = tree.ValueAsDouble(endNode[2]);
+            Point end = new Point((int)(ex * 1000000.0), (int)(ey * 1000000.0));
+
+            // Obte el gruix de linia
+            //
+            SBranch widthNode = tree.SelectBranch(node, "width");
+            int thickness = (int)(tree.ValueAsDouble(widthNode[1]) * 1000000.0);
+
+            // Obte el conjunt de capes.
+            //
+            SBranch layerNode = tree.SelectBranch(node, "layer");
+            string kcLayer = tree.ValueAsString(layerNode[1]);
+            string layer = Layer.GetName(GetLayerSide(kcLayer), GetLayerTag(kcLayer));
+
+            Element element = new LineElement(new LayerSet(layer), start, end, thickness, LineElement.CapStyle.Round);
+            board.AddElement(element);
+        }
+
+        /// <summary>
+        /// Procesa un node 'module'.
+        /// </summary>
+        /// <param name="tree">El STree</param>
+        /// <param name="node">El node a procesar.</param>
+        /// <param name="board">La placa.</param>
+        /// 
+        private void ParseModule(STree tree, SBranch node, Board board) {
+
+            // Obte el nom 
+            //
             string name = tree.ValueAsString(node[1]);
 
+            // Obte la posicio i la rotacio
+            //
+            SBranch atNode = tree.SelectBranch(node, "at");
+            double x = tree.ValueAsDouble(atNode[1]);
+            double y = tree.ValueAsDouble(atNode[2]);
+            double r = atNode.Count == 4 ? tree.ValueAsDouble(atNode[3]) : 0;
+            Point position = new Point((int)(x * 1000000.0), (int)(y * 1000000.0));
+            Angle rotation = Angle.FromDegrees(-r);
+
+            // Obte la cara de la placa.
+            //
             SBranch layerNode = tree.SelectBranch(node, "layer");
             string layer = tree.ValueAsString(layerNode[1]);
             BoardSide side = layer == "Bottom" ? BoardSide.Bottom : BoardSide.Top;
 
-            SBranch atNode = tree.SelectBranch(node, "at");
-            double x = tree.ValueAsDouble(atNode[1]);
-            double y = tree.ValueAsDouble(atNode[2]);
-            double r = atNode.Count == 4 ? tree.ValueAsDouble(atNode[3]) : 0;
-            Point position = new Point((int)(x * 1000000.0), (int)(y * 1000000.0));
-            Angle rotation = Angle.FromDegrees(r);
+            /// Si no existeix com component, el crea
+            /// 
+            Component component = board.GetComponent(name, false);
+            if (component == null) {
 
-            return new ModuleNodeInfo(
-                name,
-                position,
-                rotation,
-                side);
+                component = new Component(name);
+                board.AddComponent(component);
+
+                foreach (var childNode in node.Nodes.OfType<SBranch>()) {
+                    switch (tree.GetBranchName(childNode)) {
+                        case "fp_text":
+                            ParseModuleText(tree, childNode, component);
+                            break;
+
+                        case "fp_circle":
+                            ParseModuleCircle(tree, childNode, component);
+                            break;
+
+                        case "fp_line":
+                            ParseModuleLine(tree, childNode, component);
+                            break;
+
+                        case "fp_arc":
+                            ParseModuleArc(tree, childNode, component);
+                            break;
+
+                        case "pad":
+                            ParseModulePad(tree, childNode, component);
+                            break;
+                    }
+                }
+
+                // Correccio de coordinades
+                //
+                if (!rotation.IsZero)
+                    foreach (var element in component.Elements)
+                        if (element is IRotation e)
+                            e.Rotation -= rotation;
+            }
+
+            Part part = new Part(component, String.Format("{0}:{1}", name, partCount++), position,
+                rotation, side == BoardSide.Bottom);
+            board.AddPart(part);
+
+            foreach (var childNode in node.Nodes.OfType<SBranch>()) {
+                switch (tree.GetBranchName(childNode)) {
+                    case "fp_text":
+                        ParseModuleText(tree, childNode, part);
+                        break;
+                }
+            }
         }
 
         /// <summary>
-        /// Procesa un node 'pad'
+        /// Procesa un node 'fp_line'
         /// </summary>
-        /// <param name="tree">El STree.</param>
-        /// <param name="node">El node.</param>
-        /// <returns>El parametres del node.</returns>
+        /// <param name="tree">STree.</param>
+        /// <param name="node">El node</param>
+        /// <param name="component">El component.</param>
         /// 
-        private PadNodeInfo ParsePadNode(STree tree, SBranch node) {
+        private void ParseModuleLine(STree tree, SBranch node, Component component) {
 
-            string name = tree.ValueAsString(node[1]);
-            string type = tree.ValueAsString(node[2]);
-            string shape = tree.ValueAsString(node[3]);
+            // Obte el punt inicial
+            //
+            SBranch startNode = tree.SelectBranch(node, "start");
+            double sx = tree.ValueAsDouble(startNode[1]);
+            double sy = tree.ValueAsDouble(startNode[2]);
+            Point start = new Point((int)(sx * 1000000.0), (int)(sy * 1000000.0));
 
-            SBranch atNode = tree.SelectBranch(node, "at");
-            double x = tree.ValueAsDouble(atNode[1]);
-            double y = tree.ValueAsDouble(atNode[2]);
-            double r = atNode.Count == 4 ? tree.ValueAsDouble(atNode[3]) : 0;
-            Point position = new Point((int)(x * 1000000.0), (int)(y * 1000000.0));
-            Angle rotation = Angle.FromDegrees(r);
+            // Obte el punt final.
+            //
+            SBranch endNode = tree.SelectBranch(node, "end");
+            double ex = tree.ValueAsDouble(endNode[1]);
+            double ey = tree.ValueAsDouble(endNode[2]);
+            Point end = new Point((int)(ex * 1000000.0), (int)(ey * 1000000.0));
 
-            SBranch sizeNode = tree.SelectBranch(node, "size");
-            double sx = tree.ValueAsDouble(sizeNode[1]);
-            double sy = tree.ValueAsDouble(sizeNode[2]);
-            Size size = new Size((int)(sx * 1000000.0), (int)(sy * 1000000));
+            // Obte el conjunt de capes.
+            //
+            SBranch layerNode = tree.SelectBranch(node, "layer");
+            string kcLayer = tree.ValueAsString(layerNode[1]);
+            string layer = Layer.GetName(GetLayerSide(kcLayer), GetLayerTag(kcLayer));
 
-            SBranch drillNode = tree.SelectBranch(node, "drill");
-            int drill = drillNode == null ? 0 : (int)(tree.ValueAsDouble(drillNode[1]) * 1000000.0);
+            // Obte el gruix de linia
+            //
+            SBranch widthNode = tree.SelectBranch(node, "width");
+            int thickness = (int)(tree.ValueAsDouble(widthNode[1]) * 1000000.0);
 
-            SBranch roundnestNode = tree.SelectBranch(node, "roundrect_rratio");
-            Ratio roundnest = roundnestNode == null ? 
-                Ratio.Zero : 
-                Ratio.FromValue((int)(tree.ValueAsDouble(roundnestNode[1]) * 2000.0));
-
-            return new PadNodeInfo(name, type, position, size, rotation, drill, roundnest);
+            Element element = new LineElement(
+                new LayerSet(layer), 
+                start, 
+                end, 
+                thickness, 
+                LineElement.CapStyle.Round);
+            component.AddElement(element);
         }
 
         /// <summary>
-        /// Procesa un node 'fp_text'
+        /// Procesa un node 'fp_arc'
+        /// </summary>
+        /// <param name="tree">STree.</param>
+        /// <param name="node">El node</param>
+        /// <param name="component">El component.</param>
+        /// 
+        private void ParseModuleArc(STree tree, SBranch node, Component component) {
+
+            SBranch centerNode = tree.SelectBranch(node, "start");
+            double cx = tree.ValueAsDouble(centerNode[1]);
+            double cy = tree.ValueAsDouble(centerNode[2]);
+            Point center = new Point((int)(cx * 1000000.0), (int)(cy * 1000000.0));
+
+            SBranch startNode = tree.SelectBranch(node, "end");
+            double sx = tree.ValueAsDouble(startNode[1]);
+            double sy = tree.ValueAsDouble(startNode[2]);
+            Point start = new Point((int)(sx * 1000000.0), (int)(sy * 1000000.0));
+
+            SBranch angleNode = tree.SelectBranch(node, "angle");
+            double a = tree.ValueAsDouble(angleNode[1]);
+            Angle angle = Angle.FromDegrees(a);
+
+            SBranch layerNode = tree.SelectBranch(node, "layer");
+            string kcLayer = tree.ValueAsString(layerNode[1]);
+            string layer = Layer.GetName(GetLayerSide(kcLayer), GetLayerTag(kcLayer));
+
+            SBranch widthNode = tree.SelectBranch(node, "width");
+            int thickness = (int)(tree.ValueAsDouble(widthNode[1]) * 1000000.0);
+
+            ArcElement element = new ArcElement(
+                new LayerSet(layer),
+                start,
+                ArcUtils.EndPosition(center, start, angle),
+                thickness,
+                angle,
+                LineElement.CapStyle.Flat);
+            component.AddElement(element);
+        }
+
+        /// <summary>
+        /// Procesa un node 'fp_circle'
+        /// </summary>
+        /// <param name="tree">STree</param>
+        /// <param name="node">El node.</param>
+        /// <param name="component">El component.</param>
+        /// 
+        private void ParseModuleCircle(STree tree, SBranch node, Component component) {
+
+            SBranch centerNode = tree.SelectBranch(node, "center");
+            double cx = tree.ValueAsDouble(centerNode[1]);
+            double cy = tree.ValueAsDouble(centerNode[2]);
+            Point center = new Point((int)(cx * 1000000.0), (int)(cy * 1000000.0));
+
+            SBranch endNode = tree.SelectBranch(node, "end");
+            double ex = tree.ValueAsDouble(endNode[1]);
+            double ey = tree.ValueAsDouble(endNode[2]);
+            int radius = (int)(Math.Sqrt(Math.Pow(ex - cx, 2) + Math.Pow(ey - cy, 2)) * 1000000.0);
+
+            SBranch layerNode = tree.SelectBranch(node, "layer");
+            string kcLayer = tree.ValueAsString(layerNode[1]);
+            string layer = Layer.GetName(GetLayerSide(kcLayer), GetLayerTag(kcLayer));
+
+            SBranch widthNode = tree.SelectBranch(node, "width");
+            int thickness = (int)(tree.ValueAsDouble(widthNode[1]) * 1000000.0);
+
+            Element element = new CircleElement(
+                new LayerSet(layer), 
+                center, 
+                radius, 
+                thickness, 
+                false);
+            component.AddElement(element);
+        }
+
+        /// <summary>
+        /// Procesa un node 'fp_text'.
         /// </summary>
         /// <param name="tree">El STree.</param>
         /// <param name="node">El node.</param>
-        /// <returns>Els parametres del node.</returns>
+        /// <param name="component">El component.</param>
         /// 
-        private TextNodeInfo ParseTextNode(STree tree, SBranch node) {
+        private void ParseModuleText(STree tree, SBranch node, Component component) {
 
             string layer;
             string text;
@@ -561,7 +411,7 @@
             double y = tree.ValueAsDouble(atNode[2]);
             double r = atNode.Count == 4 ? tree.ValueAsDouble(atNode[3]) : 0;
             Point position = new Point((int)(x * 1000000.0), (int)(y * 1000000.0));
-            Angle rotation = Angle.FromDegrees(r);
+            Angle rotation = Angle.FromDegrees(-r);
 
             SBranch layerNode = tree.SelectBranch(node, "layer");
             string kcLayer = tree.ValueAsString(layerNode[1]);
@@ -579,65 +429,135 @@
                 text = tree.ValueAsString(node[2]).Replace('%', '>');
             }
 
-            return new TextNodeInfo(position, rotation, layer, type, text);
+            Element element = new TextElement(
+                new LayerSet(layer), 
+                position, 
+                rotation, 
+                1000000, 
+                100000, 
+                HorizontalTextAlign.Center, 
+                VerticalTextAlign.Middle, 
+                text);
+            component.AddElement(element);
         }
 
         /// <summary>
-        /// Procesa un node 'ft_line'
+        /// Procesa un node 'fp_text'.
         /// </summary>
-        /// <param name="tree">El STree</param>
+        /// <param name="tree">El STree.</param>
         /// <param name="node">El node.</param>
-        /// <returns>Els parametres del node.</returns>
+        /// <param name="part">El part.</param>
         /// 
-        private LineNodeInfo ParseLineNode(STree tree, SBranch node) {
+        private void ParseModuleText(STree tree, SBranch node, Part part) {
 
-            SBranch startNode = tree.SelectBranch(node, "start");
-            double sx = tree.ValueAsDouble(startNode[1]);
-            double sy = tree.ValueAsDouble(startNode[2]);
-            Point start = new Point((int)(sx * 1000000.0), (int)(sy * 1000000.0));
+            string name = tree.ValueAsString(node[1]);
+            string value = tree.ValueAsString(node[2]);
 
-            SBranch endNode = tree.SelectBranch(node, "end");
-            double ex = tree.ValueAsDouble(endNode[1]);
-            double ey = tree.ValueAsDouble(endNode[2]);
-            Point end = new Point((int)(ex * 1000000.0), (int)(ey * 1000000.0));
+            bool visible = false;
+            if (name == "value") {
+                name = "VALUE";
+                visible = true;
+            }
+            else if (name == "reference") {
+                name = "NAME";
+                visible = true;
+            }
 
-            SBranch layerNode = tree.SelectBranch(node, "layer");
-            string kcLayer = tree.ValueAsString(layerNode[1]);
-            string layer = Layer.GetName(GetLayerSide(kcLayer), GetLayerTag(kcLayer));
-
-            SBranch widthNode = tree.SelectBranch(node, "width");
-            int thickness = (int)(tree.ValueAsDouble(widthNode[1]) * 1000000.0);
-
-            return new LineNodeInfo(start, end, thickness, layer);
+            PartAttribute attribute = new PartAttribute(name, value, visible);
+            part.AddAttribute(attribute);
         }
 
         /// <summary>
-        /// Procesa un node 'ft_circle'
+        /// Procesa un node 'pad'.
         /// </summary>
         /// <param name="tree">El STree</param>
-        /// <param name="node">El node.</param>
-        /// <returns>Els parametres del node.</returns>
+        /// <param name="node">El node a procesar.</param>
+        /// <param name="component">El component.</param>
         /// 
-        private CircleNodeInfo ParseCircleNode(STree tree, SBranch node) {
+        private void ParseModulePad(STree tree, SBranch node, Component component) {
 
-            SBranch centerNode = tree.SelectBranch(node, "center"); ;
-            double cx = tree.ValueAsDouble(centerNode[1]);
-            double cy = tree.ValueAsDouble(centerNode[2]);
-            Point center = new Point((int)(cx * 1000000.0), (int)(cy * 1000000.0));
+            string name = tree.ValueAsString(node[1]);
+            string padType = tree.ValueAsString(node[2]);
+            string shapeType = tree.ValueAsString(node[3]);
 
-            SBranch endNode = tree.SelectBranch(node, "end");
-            double ex = tree.ValueAsDouble(endNode[1]);
-            double ey = tree.ValueAsDouble(endNode[2]);
-            int radius = (int)(Math.Sqrt(Math.Pow(ex - cx, 2) + Math.Pow(ey - cy, 2)) * 1000000.0);
+            SBranch atNode = tree.SelectBranch(node, "at");
+            double x = tree.ValueAsDouble(atNode[1]);
+            double y = tree.ValueAsDouble(atNode[2]);
+            double r = atNode.Count == 4 ? tree.ValueAsDouble(atNode[3]) : 0;
+            Point position = new Point((int)(x * 1000000.0), (int)(y * 1000000.0));
+            Angle rotation = Angle.FromDegrees(-r);
 
-            SBranch layerNode = tree.SelectBranch(node, "layer");
-            string kcLayer = tree.ValueAsString(layerNode[1]);
-            string layer = Layer.GetName(GetLayerSide(kcLayer), GetLayerTag(kcLayer));
+            SBranch sizeNode = tree.SelectBranch(node, "size");
+            double sx = tree.ValueAsDouble(sizeNode[1]);
+            double sy = tree.ValueAsDouble(sizeNode[2]);
+            Size size = new Size((int)(sx * 1000000.0), (int)(sy * 1000000));
 
-            SBranch widthNode = tree.SelectBranch(node, "width");
-            int thickness = (int)(tree.ValueAsDouble(widthNode[1]) * 1000000.0);
+            SBranch drillNode = tree.SelectBranch(node, "drill");
+            int drill = drillNode == null ? 0 : (int)(tree.ValueAsDouble(drillNode[1]) * 1000000.0);
 
-            return new CircleNodeInfo(center, radius, thickness, layer);
+            SBranch roundnessNode = tree.SelectBranch(node, "roundrect_rratio");
+            Ratio roundness = roundnessNode == null ?
+                Ratio.Zero :
+                Ratio.FromValue((int)(tree.ValueAsDouble(roundnessNode[1]) * 2000.0));
+
+            Element element;
+            switch (padType) {               
+                case "smd": {
+                    LayerSet layerSet = ParseLayerSetDesignator(tree, tree.SelectBranch(node, "layers"));
+                    element = new SmdPadElement(
+                        name, 
+                        layerSet, 
+                        position, 
+                        size, 
+                        rotation, 
+                        roundness);
+                }
+                break;
+
+                case "thru_hole": {
+                    LayerSet layerSet = ParseLayerSetDesignator(tree, tree.SelectBranch(node, "layers"));
+                    layerSet += "Drills";
+                    layerSet += "Pads";
+
+                    ThPadElement.ThPadShape shape;
+                    switch (shapeType) {
+                        case "oval":
+                            shape = size.Width == size.Height ? ThPadElement.ThPadShape.Circle : ThPadElement.ThPadShape.Oval;
+                            break;
+
+                        case "rect":
+                            shape = ThPadElement.ThPadShape.Square;
+                            break;
+
+                        default:
+                            shape = ThPadElement.ThPadShape.Circle;
+                            break;
+                    }
+
+                    element = new ThPadElement(
+                        name, 
+                        layerSet, 
+                        position, 
+                        rotation, 
+                        size.Width, 
+                        shape, 
+                        drill);
+                }
+                break;
+
+                case "np_thru_hole":
+                    element = new HoleElement(
+                        new LayerSet("Holes"), 
+                        position, 
+                        drill);
+                    break;
+
+                default:
+                    throw new InvalidDataException("Tipo de pad no reconicido.");
+            }
+
+            if (element != null)
+                component.AddElement(element);
         }
 
         private LayerSet ParseLayerSetDesignator(STree tree, SBranch node) {
@@ -661,17 +581,6 @@
             }
 
             return LayerSet.Parse(sb.ToString());
-        }
-
-        /// <summary>
-        /// Obte el component especificat.
-        /// </summary>
-        /// <param name="name">El nom del component.</param>
-        /// <returns>El component.</returns>
-        /// 
-        private Component GetComponent(string name) {
-
-            return componentDict[name];
         }
 
         /// <summary>
@@ -699,6 +608,8 @@
             switch (kcName) {
                 case "Top":
                 case "Bottom":
+                case "F.Cu":
+                case "B.Cu":
                     return "Copper";
 
                 case "F.Paste":
@@ -721,6 +632,10 @@
                 case "B.SilkS":
                     return "Place";
 
+                case "F.CrtYd":
+                case "B.CrtYd":
+                    return "Keepout";
+
                 case "Edge.Cuts":
                     return "Profile";
 
@@ -740,6 +655,8 @@
             switch (kcName) {
                 case "Top":
                 case "Bottom":
+                case "F.Cu":
+                case "B.Cu":
                     return LayerFunction.Signal;
 
                 default:

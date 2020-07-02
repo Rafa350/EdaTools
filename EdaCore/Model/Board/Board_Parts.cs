@@ -9,7 +9,7 @@
     /// 
     public sealed partial class Board {
 
-        private Dictionary<string, Part> parts;
+        private Dictionary<string, Part> _parts;
 
         /// <summary>
         /// Afegeix un component.
@@ -21,13 +21,18 @@
             if (part == null)
                 throw new ArgumentNullException(nameof(part));
 
-            if ((parts != null) && parts.ContainsKey(part.Name))
+            if ((_parts != null) && _parts.ContainsKey(part.Name))
                 throw new InvalidOperationException(
-                    String.Format("El componente '{0}' ya pertenece a la placa.", part.Name));
+                    String.Format("El elemento '{0}' ya pertenece a la placa.", part.Name));
 
-            if (parts == null)
-                parts = new Dictionary<string, Part>();
-            parts.Add(part.Name, part);
+            if (!_components.ContainsValue(part.Component))
+                throw new InvalidOperationException(
+                    String.Format("El el elemento '{0}', hace referencia a un componente '{1}', que no pertenece a la placa.", 
+                    part.Name, part.Component.Name));
+
+            if (_parts == null)
+                _parts = new Dictionary<string, Part>();
+            _parts.Add(part.Name, part);
         }
 
         /// <summary>
@@ -54,13 +59,13 @@
             if (part == null)
                 throw new ArgumentNullException(nameof(part));
 
-            if ((parts == null) || !parts.ContainsKey(part.Name))
+            if ((_parts == null) || !_parts.ContainsKey(part.Name))
                 throw new InvalidOperationException(
-                    String.Format("El componente '{0}', no se encontro en la placa.", part.Name));
+                    String.Format("El elemento '{0}', no se encontro en la placa.", part.Name));
 
-            parts.Remove(part.Name);
-            if (parts.Count == 0)
-                parts = null;
+            _parts.Remove(part.Name);
+            if (_parts.Count == 0)
+                _parts = null;
         }
 
         /// <summary>
@@ -75,7 +80,7 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            if ((parts != null) && parts.TryGetValue(name, out var part))
+            if ((_parts != null) && _parts.TryGetValue(name, out var part))
                 return part;
 
             else if (throwOnError)
@@ -90,21 +95,18 @@
         /// Indica si conte parts.
         /// </summary>
         /// 
-        public bool HasParts =>
-            parts != null;
+        public bool HasParts => _parts != null;
 
         /// <summary>
         /// Obte un enumerador pels noms dels components.
         /// </summary>
         /// 
-        public IEnumerable<string> PartNames =>
-            parts?.Keys;
+        public IEnumerable<string> PartNames => _parts?.Keys;
 
         /// <summary>
         /// Obte un enumerador pels components.
         /// </summary>
         /// 
-        public IEnumerable<Part> Parts =>
-            parts?.Values;
+        public IEnumerable<Part> Parts => _parts?.Values;
     }
 }

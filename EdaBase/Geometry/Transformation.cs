@@ -133,10 +133,6 @@
             }
         }
 
-        public Matrix2D Matrix {
-            get {
-                return m;
-            }
-        }
+        public Matrix2D Matrix => m;
     }
 }

@@ -30,6 +30,7 @@
 
                 //string fileName = "kicad_demo.xbrd";
                 string fileName = "board3.xbrd";
+                //string fileName = "panel3.xbrd";
                 using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
                     BoardStreamReader reader = new BoardStreamReader(stream);
                     board = reader.Read();
@@ -288,6 +289,10 @@
                 Matrix.CreateTranslation(0, -boardSize.Height) *
                 Matrix.CreateScale(1, -1);
 
+            /*Matrix matrix =
+                Matrix.CreateTranslation(0, 0) *
+                Matrix.CreateScale(1, 1);
+            ^*/
             viewPoint.Reset(
                 sceneView.Bounds.Size,
                 new Rect(new Point(0, 0), boardSize),

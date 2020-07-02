@@ -5,10 +5,10 @@
 
     public sealed class PcbItem : PanelItem {
 
-        private Point position;
-        private Size size;
-        private Angle rotation;
-        private string fileName;
+        private Point _position;
+        private Size _size;
+        private Angle _rotation;
+        private string _fileName;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -21,7 +21,7 @@
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException(nameof(fileName));
 
-            this.fileName = fileName;
+            _fileName = fileName;
         }
 
         /// <summary>
@@ -37,10 +37,10 @@
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException(nameof(fileName));
 
-            this.position = position;
-            this.size = size;
-            this.rotation = rotation;
-            this.fileName = fileName;
+            _position = position;
+            _size = size;
+            _rotation = rotation;
+            _fileName = fileName;
         }
 
         public override void AcceptVisitor(IPanelVisitor visitor) {
@@ -52,11 +52,7 @@
         /// Obte el nom del fitxer de la placa.
         /// </summary>
         /// 
-        public string FileName {
-            get {
-                return fileName;
-            }
-        }
+        public string FileName => _fileName;
 
         /// <summary>
         /// Obte o asigna la posicio.
@@ -64,10 +60,10 @@
         /// 
         public Point Position {
             set {
-                position = value;
+                _position = value;
             }
             get {
-                return position;
+                return _position;
             }
         }
 
@@ -77,10 +73,10 @@
         /// 
         public Size Size {
             set {
-                size = value;
+                _size = value;
             }
             get {
-                return size;
+                return _size;
             }
         }
 
@@ -90,10 +86,10 @@
         /// 
         public Angle Rotation {
             set {
-                rotation = value;
+                _rotation = value;
             }
             get {
-                return rotation;
+                return _rotation;
             }
         }
     }

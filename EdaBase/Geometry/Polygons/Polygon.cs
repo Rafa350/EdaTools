@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons {
 
     using System;
+    using System.Collections.Generic;
     using MikroPic.EdaTools.v1.Base.Geometry;
 
     /// <summary>
@@ -9,9 +10,9 @@
     /// 
     public sealed class Polygon {
 
-        private readonly Point[] points;
-        private readonly Polygon[] childs;
-        private Rect? bbox = null;
+        private readonly Point[] _points;
+        private readonly Polygon[] _childs;
+        private Rect? _bbox = null;
 
         /// <summary>
         /// Constructor del poligon.
@@ -23,7 +24,7 @@
             if ((points != null) && (points.Length < 3))
                 throw new InvalidOperationException("La lista ha de contener un minimo de 3 puntos.");
 
-            this.points = points;
+            _points = points;
         }
 
         /// <summary>
@@ -37,8 +38,8 @@
             if ((points != null) && (points.Length < 3))
                 throw new InvalidOperationException("La lista ha de contener un minimo de 3 puntos.");
 
-            this.points = points;
-            this.childs = childs;
+            _points = points;
+            _childs = childs;
         }
 
         /// <summary>
@@ -51,10 +52,10 @@
             // Clona els fills
             //
             Polygon[] clonedChilds = null;
-            if (childs != null) {
-                clonedChilds = new Polygon[childs.Length];
-                for (int i = 0; i < childs.Length; i++)
-                    clonedChilds[i] = childs[i].Clone();
+            if (_childs != null) {
+                clonedChilds = new Polygon[_childs.Length];
+                for (int i = 0; i < _childs.Length; i++)
+                    clonedChilds[i] = _childs[i].Clone();
             }
 
             return new Polygon(ClonePoints(), clonedChilds);
@@ -68,9 +69,9 @@
         public Point[] ClonePoints() {
 
             Point[] clonedPoints = null;
-            if (points != null) {
-                clonedPoints = new Point[points.Length];
-                points.CopyTo(clonedPoints, 0);
+            if (_points != null) {
+                clonedPoints = new Point[_points.Length];
+                _points.CopyTo(clonedPoints, 0);
             }
             return clonedPoints;
         }
@@ -82,17 +83,17 @@
         /// 
         private void Transform(Transformation transformation) {
 
-            if (points != null)
-                transformation.ApplyTo(points);
+            if (_points != null)
+                transformation.ApplyTo(_points);
 
-            if (childs != null)
-                for (int i = 0; i < childs.Length; i++)
-                    childs[i].Transform(transformation);
+            if (_childs != null)
+                for (int i = 0; i < _childs.Length; i++)
+                    _childs[i].Transform(transformation);
         }
 
         public void Reverse() {
 
-            Array.Reverse(points);
+            Array.Reverse(_points);
         }
 
         /// <summary>
@@ -156,30 +157,31 @@
 
                 for (int i = 0; i < points.Length; i++) {
 
-                    if (points[i].X < minX)
-                        minX = points[i].X;
-                    if (points[i].Y < minY)
-                        minY = points[i].Y;
+                    int x = points[i].X;
+                    int y = points[i].Y;
 
-                    if (points[i].X > maxX)
-                        maxX = points[i].X;
-                    if (points[i].Y > maxY)
-                        maxY = points[i].Y;
+                    if (x < minX)
+                        minX = x;
+                    if (y < minY)
+                        minY = y;
+
+                    if (x > maxX)
+                        maxX = x;
+                    if (y > maxY)
+                        maxY = y;
                 }
 
                 return new Rect(minX, minY, maxX - minX, maxY - minY);
             }
         }
 
-        public bool IsClockwise =>
-            GetSignedArea(points) < 0;
+        public bool IsClockwise => GetSignedArea(_points) < 0;
 
         /// <summary>
         /// Obte l'area del poligon
         /// </summary>
         /// 
-        public int Area =>
-            Math.Abs(GetSignedArea(points));
+        public int Area => Math.Abs(GetSignedArea(_points));
 
         /// <summary>
         /// Obte el bounding-box del poligon.
@@ -187,22 +189,34 @@
         /// 
         public Rect BoundingBox {
             get {
-                if (!bbox.HasValue)
-                    bbox = GetBoundingBox(points);
-                return bbox.Value;
+                if (!_bbox.HasValue)
+                    _bbox = GetBoundingBox(_points);
+                return _bbox.Value;
             }
         }
+
+        /// <summary>
+        /// Obte el numero de punts.
+        /// </summary>
+        /// 
+        public int NumPoints => _points == null ? 0 : _points.Length;
+
+        /// <summary>
+        /// Obte el numero de fills.
+        /// </summary>
+        /// 
+        public int NumChilds => _childs == null ? 0 : _childs.Length;
             
         /// <summary>
         /// Obte els punts del poligon.
         /// </summary>
         /// 
-        public Point[] Points => points;
+        public IEnumerable<Point> Points => _points;
 
         /// <summary>
         /// Obte els fills del poligon.
         /// </summary>
         /// 
-        public Polygon[] Childs => childs;
+        public IEnumerable<Polygon> Childs => _childs;
     }
 }

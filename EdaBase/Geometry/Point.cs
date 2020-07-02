@@ -8,8 +8,8 @@
     /// 
     public readonly struct Point : IEquatable<Point> {
 
-        private readonly int x;
-        private readonly int y;
+        private readonly int _x;
+        private readonly int _y;
 
         /// <summary>
         /// Constructor
@@ -18,15 +18,15 @@
         /// <param name="y">Coordinada Y.</param>
         /// 
         public Point(int x = 0, int y = 0) => 
-            (this.x, this.y) = (x, y);
+            (_x, _y) = (x, y);
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="other">El punt a copiar.</param>
         /// 
-        public Point(Point other) => 
-            (x, y) = (other.x, other.y);
+        public Point(Point other) => (_x, _y) = 
+            (other._x, other._y);
 
         /// <summary>
         /// Obte un punt desplaçat.
@@ -35,16 +35,16 @@
         /// <param name="dy">Desplaçament Y.</param>
         /// <returns>El nou punt resultant.</returns>
         /// 
-        public Point Offset(int dx, int dy) =>
-            new Point(x + dx, y + dy);
+        public Point Offset(int dx, int dy) => 
+            new Point(_x + dx, _y + dy);
 
         /// <summary>
         /// Converteix l'objecte a text.
         /// </summary>
         /// <returns>El resultat de la conversio.</returns>
         /// 
-        public override string ToString() =>
-            String.Format("{0}, {1}", x, y);
+        public override string ToString() => 
+            String.Format("{0}, {1}", _x, _y);
 
         /// <summary>
         /// Converteix un text a 'Point'
@@ -72,8 +72,8 @@
         /// </summary>
         /// <returns>El valor hash.</returns>
         /// 
-        public override int GetHashCode() =>
-            (x * 371) + (y * 27);
+        public override int GetHashCode() => 
+            (_x * 371) + (_y * 27);
 
         /// <summary>
         /// Operacio de comparacio entre dos objectes..
@@ -82,7 +82,7 @@
         /// <returns>True si son iguals.</returns>
         /// 
         public bool Equals(Point other) => 
-            (x, y) == (other.x, other.y);
+            (_x, _y) == (other._x, other._y);
 
         /// <summary>
         /// Operacio de comparacio entrer objectes
@@ -90,13 +90,8 @@
         /// <param name="obj">L'altre objecte a comparar.</param>
         /// <returns>True si son iguals.</returns>
         /// 
-        public override bool Equals(object obj) {
-
-            if (obj is Point other)
-                return Equals(other);
-            else
-                return false;
-        }
+        public override bool Equals(object obj) =>
+            (obj is Point other) ? Equals(other) : false;
 
         /// <summary>
         /// Operador ==
@@ -105,10 +100,8 @@
         /// <param name="p2">Segon element a comparar.</param>
         /// <returns>True si son iguals.</returns>
         /// 
-        public static bool operator ==(Point p1, Point p2) {
-
-            return p1.Equals(p2);
-        }
+        public static bool operator ==(Point p1, Point p2) => 
+            p1.Equals(p2);
 
         /// <summary>
         /// Operador !=
@@ -117,21 +110,18 @@
         /// <param name="p2">Segon element a comparar.</param>
         /// <returns>True si son diferenmts.</returns>
         /// 
-        public static bool operator !=(Point p1, Point p2) {
-
-            return !p1.Equals(p2);
-        }
+        public static bool operator !=(Point p1, Point p2) => !p1.Equals(p2);
 
         /// <summary>
         /// Obte el valor de la coordinada X
         /// </summary>
         /// 
-        public int X => x;
+        public int X => _x;
 
         /// <summary>
         /// Obte el valor de la coordinada Y
         /// </summary>
         /// 
-        public int Y => y;
+        public int Y => _y;
     }
 }

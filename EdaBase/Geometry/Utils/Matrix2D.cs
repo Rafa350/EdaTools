@@ -9,12 +9,12 @@
     /// 
     public readonly struct Matrix2D : IEquatable<Matrix2D> {
 
-        private readonly double m11;
-        private readonly double m12;
-        private readonly double m21;
-        private readonly double m22;
-        private readonly double tx;
-        private readonly double ty;
+        private readonly double _m11;
+        private readonly double _m12;
+        private readonly double _m21;
+        private readonly double _m22;
+        private readonly double _tx;
+        private readonly double _ty;
 
         /// <summary>
         /// Constructor.
@@ -28,12 +28,12 @@
         /// 
         public Matrix2D(double m11, double m12, double m21, double m22, double tx, double ty) {
 
-            this.m11 = m11;
-            this.m12 = m12;
-            this.m21 = m21;
-            this.m22 = m22;
-            this.tx = tx;
-            this.ty = ty;
+            _m11 = m11;
+            _m12 = m12;
+            _m21 = m21;
+            _m22 = m22;
+            _tx = tx;
+            _ty = ty;
         }
 
         /// <summary>
@@ -41,10 +41,8 @@
         /// </summary>
         /// <returns>La matriu.</returns>
         /// 
-        public static Matrix2D CreateIdentity() {
-
-            return new Matrix2D(1, 0, 0, 1, 0, 0);
-        }
+        public static Matrix2D CreateIdentity() => 
+            new Matrix2D(1, 0, 0, 1, 0, 0);
 
         /// <summary>
         /// Crea una matriu de translacio.
@@ -53,10 +51,8 @@
         /// <param name="ty">Translacio en l'eix Y.</param>
         /// <returns>La matriu.</returns>
         /// 
-        public static Matrix2D CreateTranslation(double tx, double ty) {
-
-            return new Matrix2D(1, 0, 0, 1, tx, ty);
-        }
+        public static Matrix2D CreateTranslation(double tx, double ty) => 
+            new Matrix2D(1, 0, 0, 1, tx, ty);
 
         /// <summary>
         /// Crea una matriu de escalat.
@@ -65,10 +61,8 @@
         /// <param name="sy">Factor d'escala Y.</param>
         /// <returns>La matriu.</returns>
         /// 
-        public static Matrix2D CreateScale(double sx, double sy) {
-
-            return new Matrix2D(sx, 0, 0, sy, 0, 0);
-        }
+        public static Matrix2D CreateScale(double sx, double sy) => 
+            new Matrix2D(sx, 0, 0, sy, 0, 0);
 
         /// <summary>
         /// Crea una matriu d'escalat.
@@ -79,10 +73,8 @@
         /// <param name="oy">Origen Y del escalat.</param>
         /// <returns>La matriu.</returns>
         /// 
-        public static Matrix2D CreateScale(double sx, double sy, double ox, double oy) {
-
-            return new Matrix2D(sx, 0, 0, sy, ox - (sx * ox), oy - (sy * oy));
-        }
+        public static Matrix2D CreateScale(double sx, double sy, double ox, double oy) => 
+            new Matrix2D(sx, 0, 0, sy, ox - (sx * ox), oy - (sy * oy));
 
         /// <summary>
         /// Crea una matriu de rotacio.
@@ -127,8 +119,8 @@
         /// values are (0,0,1).
         /// </remarks>
         /// 
-        public double GetDeterminant() =>
-            (m11 * m22) - (m12 * m21);
+        public double GetDeterminant() => 
+            (_m11 * _m22) - (_m12 * _m21);
 
         /// <summary>
         /// Inverts the Matrix.
@@ -142,12 +134,12 @@
                 throw new InvalidOperationException("Transform is not invertible.");
 
             return new Matrix2D(
-                m22 / d,
-                -m12 / d,
-                -m21 / d,
-                m11 / d,
-                ((m21 * ty) - (m22 * tx)) / d,
-                ((m12 * tx) - (m11 * ty)) / d);
+                _m22 / d,
+                -_m12 / d,
+                -_m21 / d,
+                _m11 / d,
+                ((_m21 * _ty) - (_m22 * _tx)) / d,
+                ((_m12 * _tx) - (_m11 * _ty)) / d);
         }
 
         /// <summary>
@@ -159,12 +151,12 @@
         /// 
         public static Matrix2D operator *(Matrix2D value1, Matrix2D value2) =>
             new Matrix2D(
-                (value1.m11 * value2.m11) + (value1.m12 * value2.m21),
-                (value1.m11 * value2.m12) + (value1.m12 * value2.m22),
-                (value1.m21 * value2.m11) + (value1.m22 * value2.m21),
-                (value1.m21 * value2.m12) + (value1.m22 * value2.m22),
-                (value1.tx * value2.m11) + (value1.ty * value2.m21) + value2.tx,
-                (value1.tx * value2.m12) + (value1.ty * value2.m22) + value2.ty);
+                (value1._m11 * value2._m11) + (value1._m12 * value2._m21),
+                (value1._m11 * value2._m12) + (value1._m12 * value2._m22),
+                (value1._m21 * value2._m11) + (value1._m22 * value2._m21),
+                (value1._m21 * value2._m12) + (value1._m22 * value2._m22),
+                (value1._tx * value2._m11) + (value1._ty * value2._m21) + value2._tx,
+                (value1._tx * value2._m12) + (value1._ty * value2._m22) + value2._ty);
 
         /// <summary>
         /// Negates the given matrix by multiplying all values by -1.
@@ -172,7 +164,7 @@
         /// <param name="value">The source matrix.</param>
         /// <returns>The negated matrix.</returns>
         /// 
-        public static Matrix2D operator -(Matrix2D value) =>
+        public static Matrix2D operator -(Matrix2D value) => 
             value.Invert();
 
         /// <summary>
@@ -182,7 +174,7 @@
         /// <param name="value2">The second source matrix.</param>
         /// <returns>True if the matrices are equal; False otherwise.</returns>
         /// 
-        public static bool operator ==(Matrix2D value1, Matrix2D value2) =>
+        public static bool operator ==(Matrix2D value1, Matrix2D value2) => 
             value1.Equals(value2);
 
         /// <summary>
@@ -192,7 +184,7 @@
         /// <param name="value2">The second source matrix.</param>
         /// <returns>True if the matrices are not equal; False if they are equal.</returns>
         /// 
-        public static bool operator !=(Matrix2D value1, Matrix2D value2) =>
+        public static bool operator !=(Matrix2D value1, Matrix2D value2) => 
             !value1.Equals(value2);
 
         /// <summary>
@@ -202,7 +194,7 @@
         /// <returns>True si son iguals.</returns>
         /// 
         public bool Equals(Matrix2D other) =>
-            (m11, m12, m21, m22, tx, ty) == (other.m11, other.m12, other.m21, other.m22, other.tx, other.ty);
+            (_m11, _m12, _m21, _m22, _tx, _ty) == (other._m11, other._m12, other._m21, other._m22, other._tx, other._ty);
 
         /// <summary>
         /// Returns a boolean indicating whether the given Object is equal to this matrix instance.
@@ -210,7 +202,7 @@
         /// <param name="obj">The Object to compare against.</param>
         /// <returns>True if the Object is equal to this matrix; False otherwise.</returns>
         /// 
-        public override bool Equals(object obj) =>
+        public override bool Equals(object obj) => 
             obj is Matrix2D other && Equals(other);
 
         /// <summary>
@@ -219,26 +211,26 @@
         /// <returns>The hash code.</returns>
         /// 
         public override int GetHashCode() =>
-            m11.GetHashCode() + m12.GetHashCode() + m21.GetHashCode() + m22.GetHashCode() +
-            tx.GetHashCode() + ty.GetHashCode();
+            _m11.GetHashCode() + _m12.GetHashCode() + _m21.GetHashCode() + _m22.GetHashCode() +
+            _tx.GetHashCode() + _ty.GetHashCode();
 
         /// <summary>
         /// Obte una matriu identitat.
         /// </summary>
         /// 
-        public static Matrix2D Identity =>
+        public static Matrix2D Identity => 
             CreateIdentity();
 
-        public double M11 => m11;
+        public double M11 => _m11;
 
-        public double M12 => m12;
+        public double M12 => _m12;
 
-        public double M21 => m21;
+        public double M21 => _m21;
 
-        public double M22 => m22;
+        public double M22 => _m22;
 
-        public double Tx => tx;
+        public double Tx => _tx;
 
-        public double Ty => ty;
+        public double Ty => _ty;
     }
 }

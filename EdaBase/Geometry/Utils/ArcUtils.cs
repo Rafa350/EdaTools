@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Utils {
 
     using System;
+    using System.ComponentModel;
 
     /// <summary>
     /// Operacions amb arcs.
@@ -45,14 +46,42 @@
             return new Point((int)cx, (int)cy);
         }
 
+        /// <summary>
+        /// Calcula l'angle del punt inicial, repecte l'eix X.
+        /// </summary>
+        /// <param name="startPosition">Punt inicial.</param>
+        /// <param name="center">Centre.</param>
+        /// <returns>L'angle.</returns>
+        /// 
         public static Angle StartAngle(Point startPosition, Point center) {
 
             return Angle.FromRadiants(Math.Atan2(startPosition.Y - center.Y, startPosition.X - center.X));
         }
 
+        /// <summary>
+        /// Calcula l'angle del punt final, repecte l'eix X.
+        /// </summary>
+        /// <param name="startPosition">Punt inicial.</param>
+        /// <param name="center">Centre.</param>
+        /// <returns>L'angle.</returns>
+        /// 
         public static Angle EndAngle(Point endPosition, Point center) {
 
             return Angle.FromRadiants(Math.Atan2(endPosition.Y - center.Y, endPosition.X - center.X));
+        }
+
+        public static Point EndPosition(Point center, Point startPosition, Angle angle) {
+
+            double r = angle.ToRadiants;
+            double sin = Math.Sin(r);
+            double cos = Math.Cos(r);
+            
+            double x = startPosition.X;
+            double y = startPosition.Y;
+
+            return new Point(
+                center.X + (int)((x * cos) - (y * sin)),
+                center.Y + (int)((x * sin) + (y * cos)));
         }
 
         public static int Radius(Point startPosition, Point endPosition, Angle angle) {

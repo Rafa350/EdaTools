@@ -5,15 +5,15 @@
 
     public sealed class CutItem : PanelItem {
 
-        private Point startPosition;
-        private Point endPosition;
-        private int thickness;
-        private int margin;
-        private int cuts;
-        private int cutSpacing;
-        private int holes;
-        private int holeDiameter;
-        private int holeSpacing;
+        private Point _startPosition;
+        private Point _endPosition;
+        private int _thickness;
+        private int _margin;
+        private int _cuts;
+        private int _cutSpacing;
+        private int _holes;
+        private int _holeDiameter;
+        private int _holeSpacing;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -30,15 +30,15 @@
         /// 
         public CutItem(Point startPosition, Point endPosition, int thickness, int margin, int cuts, int cutSpacing, int holes, int holeDiameter, int holeSpacing) {
 
-            this.startPosition = startPosition;
-            this.endPosition = endPosition;
-            this.thickness = thickness;
-            this.margin = margin;
-            this.cuts = cuts;
-            this.cutSpacing = cutSpacing;
-            this.holes = holes;
-            this.holeDiameter = holeDiameter;
-            this.holeSpacing = holeSpacing;
+            _startPosition = startPosition;
+            _endPosition = endPosition;
+            _thickness = thickness;
+            _margin = margin;
+            _cuts = cuts;
+            _cutSpacing = cutSpacing;
+            _holes = holes;
+            _holeDiameter = holeDiameter;
+            _holeSpacing = holeSpacing;
         }
 
         public override void AcceptVisitor(IPanelVisitor visitor) {
@@ -52,10 +52,10 @@
         /// 
         public Point StartPosition {
             get {
-                return startPosition;
+                return _startPosition;
             }
             set {
-                startPosition = value;
+                _startPosition = value;
             }
         }
 
@@ -65,10 +65,10 @@
         /// 
         public Point EndPosition {
             get {
-                return endPosition;
+                return _endPosition;
             }
             set {
-                endPosition = value;
+                _endPosition = value;
             }
         }
 
@@ -78,10 +78,10 @@
         /// 
         public int Thickness {
             get {
-                return thickness;
+                return _thickness;
             }
             set {
-                thickness = value;
+                _thickness = value;
             }
         }
 
@@ -91,10 +91,10 @@
         /// 
         public int Margin {
             get {
-                return margin;
+                return _margin;
             }
             set {
-                margin = value;
+                _margin = value;
             }
         }
 
@@ -104,10 +104,10 @@
         /// 
         public int Holes {
             get {
-                return holes;
+                return _holes;
             }
             set {
-                holes = value;
+                _holes = value;
             }
         }
 
@@ -117,10 +117,10 @@
         /// 
         public int HoleDiameter {
             get {
-                return holeDiameter;
+                return _holeDiameter;
             }
             set {
-                holeDiameter = value;
+                _holeDiameter = value;
             }
         }
 
@@ -130,10 +130,10 @@
         /// 
         public int HoleSpacing {
             get {
-                return holeSpacing;
+                return _holeSpacing;
             }
             set {
-                holeSpacing = value;
+                _holeSpacing = value;
             }
         }
 
@@ -143,10 +143,10 @@
         /// 
         public int Cuts {
             get {
-                return cuts;
+                return _cuts;
             }
             set {
-                cuts = value;
+                _cuts = value;
             }
         }
 
@@ -156,10 +156,10 @@
         /// 
         public int CutSpacing {
             get {
-                return cutSpacing;
+                return _cutSpacing;
             }
             set {
-                cutSpacing = value;
+                _cutSpacing = value;
             }
         }
     }

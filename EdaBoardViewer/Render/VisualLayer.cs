@@ -90,21 +90,15 @@
         /// Obte la llista de capes de la placa.
         /// </summary>
         /// 
-        public string[] LayerIds {
-            get {
-                return layerIds;
-            }
-        }
+        public string[] LayerIds => 
+            layerIds;
 
         /// <summary>
         /// Obte la llista de tipus d'elements.
         /// </summary>
         /// 
-        public ElementType[] ElementTypes {
-            get {
-                return elementTypes;
-            }
-        }
+        public ElementType[] ElementTypes =>
+            elementTypes;
 
         /// <summary>
         /// Obte el modus de visualitzacio.

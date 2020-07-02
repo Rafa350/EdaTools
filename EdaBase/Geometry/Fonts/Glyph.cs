@@ -1,13 +1,16 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Fonts {
+
+    using System.Collections.Generic;
+
     /// <summary>
     /// Representa la figura d'un caracter. Aquesta clase es inmutable.
     /// </summary>
     /// 
     public sealed class Glyph {
 
-        private readonly char code;
-        private readonly int advance;
-        private readonly GlyphTrace[] traces;
+        private readonly char _code;
+        private readonly int _advance;
+        private readonly GlyphTrace[] _traces;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -18,39 +21,33 @@
         /// 
         public Glyph(char code, int advance, GlyphTrace[] traces) {
 
-            this.code = code;
-            this.advance = advance;
-            this.traces = traces;
+            _code = code;
+            _advance = advance;
+            _traces = traces;
         }
 
         /// <summary>
         /// Obte el codi de la figura.
         /// </summary>
         /// 
-        public char Code {
-            get {
-                return code;
-            }
-        }
+        public char Code => _code;
 
         /// <summary>
         /// Obte l'amplada.
         /// </summary>
         /// 
-        public int Advance {
-            get {
-                return advance;
-            }
-        }
+        public int Advance => _advance;
+
+        /// <summary>
+        /// Obte el numero de traços.
+        /// </summary>
+        /// 
+        public int NumTraces => _traces == null ? 0 : _traces.Length;
 
         /// <summary>
         /// Obte els traços de la figura.
         /// </summary>
         /// 
-        public GlyphTrace[] Traces {
-            get {
-                return traces;
-            }
-        }
+        public IEnumerable<GlyphTrace> Traces => _traces;
     }
 }

@@ -120,5 +120,7 @@
 
             return type;
         }
+
+        public int Position => _index;
     }
 }

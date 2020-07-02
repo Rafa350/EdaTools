@@ -161,11 +161,16 @@
         private static List<IntPoint> ToPointList(Polygon polygon) {
 
             if (polygon.Points != null) {
-                IntPoint[] dstArray = new IntPoint[polygon.Points.Length];
-                for (int i = 0; i < polygon.Points.Length; i++) {
-                    dstArray[i].X = polygon.Points[i].X;
-                    dstArray[i].Y = polygon.Points[i].Y;
+
+                int i = 0;
+                IntPoint[] dstArray = new IntPoint[polygon.NumPoints];
+
+                foreach (var point in polygon.Points) {
+                    dstArray[i].X = point.X;
+                    dstArray[i].Y = point.Y;
+                    i++;
                 }
+
                 return new List<IntPoint>(dstArray);
             }
             else

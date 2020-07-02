@@ -6,39 +6,31 @@
     /// </summary>
     public struct GlyphTrace {
 
-        private readonly Point position;
-        private readonly bool stroke;
+        private readonly Point _position;
+        private readonly bool _stroke;
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="position">Posicio final del traç.</param>
-        /// <param name="stroke">Tres si es dibuixa el traç fins a la posicio final.</param>.
+        /// <param name="stroke">True si es dibuixa el traç fins a la posicio final.</param>.
         /// 
         public GlyphTrace(Point position, bool stroke) {
 
-            this.position = position;
-            this.stroke = stroke;
+            _position = position;
+            _stroke = stroke;
         }
 
         /// <summary>
         /// Obte la posicio.
         /// </summary>
         /// 
-        public Point Position {
-            get {
-                return position;
-            }
-        }
+        public Point Position => _position;
 
         /// <summary>
         /// Obte el indicador de dibuix.
         /// </summary>
         /// 
-        public bool Stroke {
-            get {
-                return stroke;
-            }
-        }
+        public bool Stroke => _stroke;
     }
 }
