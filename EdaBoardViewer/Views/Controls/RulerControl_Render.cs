@@ -162,10 +162,10 @@
         /// 
         private void DrawTags(DrawingContext context) {
 
-            FormattedText ft = new FormattedText {
-                Typeface = new Typeface(FontFamily, FontSize, FontStyle),
-                TextAlignment = TextAlignment.Left
-            };
+            FormattedText ft = new FormattedText();
+            ft.Typeface = new Typeface(FontFamily, FontStyle);
+            ft.FontSize = FontSize;
+            ft.TextAlignment = TextAlignment.Left;
 
             double valueDivisor = ValueDivisor;
             double tickInterval = LargeTickInterval;

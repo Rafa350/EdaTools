@@ -1,8 +1,8 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
+﻿namespace EdaBoardViewer.Views {
 
-namespace EdaBoardViewer.Views {
+    using Avalonia;
+    using Avalonia.Controls;
+    using Avalonia.Markup.Xaml;
 
     public class MainWindow : Window {
 
@@ -10,7 +10,7 @@ namespace EdaBoardViewer.Views {
 
             InitializeComponent();
 #if DEBUG
-            this.AttachDevTools();
+         //   this.AttachDevTools();
 #endif
         }
 

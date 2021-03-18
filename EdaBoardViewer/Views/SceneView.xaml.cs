@@ -129,7 +129,7 @@
         /// </summary>
         /// <param name="e">Parametres del event.</param>
         /// 
-        protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e) {
+        protected override void OnPropertyChanged<T>(AvaloniaPropertyChangedEventArgs<T> e) {
 
             // Detecta el canvi en el tamany del control
             //

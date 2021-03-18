@@ -2,7 +2,6 @@
 
     using Avalonia;
     using Avalonia.Dialogs;
-    using Avalonia.Logging.Serilog;
     using Avalonia.ReactiveUI;
 
     class Program {
@@ -18,10 +17,11 @@
         // Avalonia configuration, don't remove; also used by visual designer.
         public static AppBuilder BuildAvaloniaApp() {
 
-            return AppBuilder.Configure<App>()
+            return AppBuilder
+                .Configure<App>()
                 .UsePlatformDetect()
                 .UseManagedSystemDialogs()
-                .LogToDebug()
+                .LogToTrace()
                 .UseReactiveUI();
         }
     }

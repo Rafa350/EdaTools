@@ -74,7 +74,8 @@ namespace EdaBoardViewer.Views.Controls {
 
             FormattedText ft = new FormattedText();
             ft.TextAlignment = TextAlignment.Left;
-            ft.Typeface = new Typeface(FontFamily, FontSize, FontStyle);
+            ft.Typeface = new Typeface(FontFamily, FontStyle);
+            ft.FontSize = FontSize;
 
             double penWidth = 0.5;
 
@@ -135,7 +136,8 @@ namespace EdaBoardViewer.Views.Controls {
 
             FormattedText ft = new FormattedText();
             ft.TextAlignment = TextAlignment.Left;
-            ft.Typeface = new Typeface(FontFamily, FontSize, FontStyle);
+            ft.Typeface = new Typeface(FontFamily, FontStyle);
+            ft.FontSize = FontSize;
 
             var borderPen = new Pen(new SolidColorBrush(RegionTagBorderColor), 0.5);
             var backgroundBrush = RegionTagBackground;
