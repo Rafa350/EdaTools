@@ -1,17 +1,17 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+﻿using System;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
 
-    using System;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
     /// Clase que representa un forat no conductor.
     /// </summary>
     public sealed class HoleElement : Element, IPosition {
 
-        private Point position;
-        private int drill;
+        private Point _position;
+        private int _drill;
 
         /// <summary>
         /// Constructir de l'objecte.
@@ -26,8 +26,8 @@
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException(nameof(drill));
 
-            this.position = position;
-            this.drill = drill;
+            _position = position;
+            _drill = drill;
         }
 
         /// <summary>
@@ -37,7 +37,7 @@
         /// 
         public override Element Clone() {
 
-            return new HoleElement(LayerSet, position, drill);
+            return new HoleElement(LayerSet, _position, _drill);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = PolygonBuilder.MakeCircle(position, drill / 2);
+            Point[] points = PolygonBuilder.MakeCircle(_position, _drill / 2);
             return new Polygon(points);
         }
 
@@ -71,7 +71,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = PolygonBuilder.MakeCircle(position, (drill / 2) + spacing);
+            Point[] points = PolygonBuilder.MakeCircle(_position, (_drill / 2) + spacing);
             return new Polygon(points);
         }
 
@@ -83,7 +83,7 @@
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
-            return new Rect(position.X - drill / 2, position.Y - drill / 2, drill, drill);
+            return new Rect(_position.X - _drill / 2, _position.Y - _drill / 2, _drill, _drill);
         }
 
         /// <summary>
@@ -91,12 +91,8 @@
         /// </summary>
         /// 
         public Point Position {
-            get {
-                return position;
-            }
-            set {
-                position = value;
-            }
+            get => _position;
+            set => _position = value;
         }
 
         /// <summary>
@@ -104,14 +100,12 @@
         /// </summary>
         /// 
         public int Drill {
-            get {
-                return drill;
-            }
+            get => _drill;
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Drill");
 
-                drill = value;
+                _drill = value;
             }
         }
 
@@ -119,11 +113,8 @@
         /// Obte el tipus d'element.
         /// </summary>
         /// 
-        public override ElementType ElementType {
-            get {
-                return ElementType.Hole;
-            }
-        }
+        public override ElementType ElementType =>
+            ElementType.Hole;
     }
 }
 

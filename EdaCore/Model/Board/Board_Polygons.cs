@@ -1,11 +1,11 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System;
+using System.Collections.Generic;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
-    using System;
-    using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Classe que representa una placa de circuit imprès.
@@ -13,7 +13,7 @@
     /// 
     public sealed partial class Board {
 
-        private int outlineClearance = 250000;
+        private int _outlineClearance = 250000;
 
         /// <summary>
         /// Obte el poligon del perfil de la placa. Es calcula amb els elements de la capa profile.
@@ -22,7 +22,7 @@
         /// 
         public Polygon GetOutlinePolygon() {
 
-            IEnumerable<Element> elements = GetElements(outlineLayer.Name);
+            IEnumerable<Element> elements = GetElements(_outlineLayer.Name);
             List<Segment> segments = new List<Segment>();
             foreach (var element in elements) {
                 if (element is LineElement line)
@@ -106,8 +106,8 @@
 
                             // El element esta el la capa profile
                             //
-                            else if (element.IsOnLayer(outlineLayer.Name)) {
-                                Polygon elementPolygon = element.GetOutlinePolygon(BoardSide.None, outlineClearance);
+                            else if (element.IsOnLayer(_outlineLayer.Name)) {
+                                Polygon elementPolygon = element.GetOutlinePolygon(BoardSide.None, _outlineClearance);
                                 if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                     holePolygons.Add(elementPolygon);
                             }
@@ -180,12 +180,12 @@
         /// 
         public Rect GetBoundingBox() {
 
-            if (outlineLayer != null) {
+            if (_outlineLayer != null) {
                 int minX = Int32.MaxValue;
                 int minY = Int32.MaxValue;
                 int maxX = Int32.MinValue;
                 int maxY = Int32.MinValue;
-                foreach (var element in GetElements(outlineLayer.Name)) {
+                foreach (var element in GetElements(_outlineLayer.Name)) {
                     Rect r = element.GetBoundingBox(BoardSide.None);
                     if (minX > r.Left)
                         minX = r.Left;

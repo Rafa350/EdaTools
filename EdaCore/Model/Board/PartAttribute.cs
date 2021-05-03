@@ -1,26 +1,26 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 
-    using System;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Clase que representa un atribut d'un component
     /// </summary>
     public sealed class PartAttribute : IBoardVisitable {
 
-        private readonly string name;
-        private string value;
-        private Point position;
-        private Angle rotation;
-        private int height;
-        private HorizontalTextAlign horizontalAlign;
-        private VerticalTextAlign verticalAlign;
-        private bool usePosition;
-        private bool useRotation;
-        private bool useHeight;
-        private bool useAlign;
-        private bool isVisible;
+        private readonly string _name;
+        private string _value;
+        private Point _position;
+        private Angle _rotation;
+        private int _height;
+        private HorizontalTextAlign _horizontalAlign;
+        private VerticalTextAlign _verticalAlign;
+        private bool _usePosition;
+        private bool _useRotation;
+        private bool _useHeight;
+        private bool _useAlign;
+        private bool _isVisible;
 
         /// <summary>
         /// Constructor del objecte.
@@ -34,15 +34,15 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            this.name = name;
-            this.value = value;
+            _name = name;
+            _value = value;
             IsVisible = isVisible;
-            horizontalAlign = HorizontalTextAlign.Left;
-            verticalAlign = VerticalTextAlign.Bottom;
-            usePosition = false;
-            useRotation = false;
-            useHeight = false;
-            useAlign = false;
+            _horizontalAlign = HorizontalTextAlign.Left;
+            _verticalAlign = VerticalTextAlign.Bottom;
+            _usePosition = false;
+            _useRotation = false;
+            _useHeight = false;
+            _useAlign = false;
         }
 
         public PartAttribute(string name, Point position, Angle rotation, int height,
@@ -51,36 +51,36 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            this.name = name;
-            this.value = value;
-            isVisible = true;
+            _name = name;
+            _value = value;
+            _isVisible = true;
 
-            this.position = position;
-            usePosition = true;
+            _position = position;
+            _usePosition = true;
 
-            this.rotation = rotation;
-            useRotation = true;
+            _rotation = rotation;
+            _useRotation = true;
 
-            this.height = height;
-            useHeight = true;
+            _height = height;
+            _useHeight = true;
 
-            this.horizontalAlign = horizontalAlign;
-            this.verticalAlign = verticalAlign;
-            useAlign = true;
+            _horizontalAlign = horizontalAlign;
+            _verticalAlign = verticalAlign;
+            _useAlign = true;
         }
 
         public PartAttribute Clone() {
 
-            PartAttribute attribute = new PartAttribute(name, value, isVisible);
-            attribute.position = position;
-            attribute.usePosition = usePosition;
-            attribute.rotation = rotation;
-            attribute.useRotation = useRotation;
-            attribute.height = height;
-            attribute.useHeight = useHeight;
-            attribute.horizontalAlign = horizontalAlign;
-            attribute.verticalAlign = verticalAlign;
-            attribute.useAlign = useAlign;
+            var attribute = new PartAttribute(_name, _value, _isVisible);
+            attribute._position = _position;
+            attribute._usePosition = _usePosition;
+            attribute._rotation = _rotation;
+            attribute._useRotation = _useRotation;
+            attribute._height = _height;
+            attribute._useHeight = _useHeight;
+            attribute._horizontalAlign = _horizontalAlign;
+            attribute._verticalAlign = _verticalAlign;
+            attribute._useAlign = _useAlign;
 
             return attribute;
         }
@@ -96,10 +96,10 @@
         /// 
         public bool IsVisible {
             get {
-                return isVisible;
+                return _isVisible;
             }
             set {
-                isVisible = value;
+                _isVisible = value;
             }
         }
 
@@ -109,7 +109,7 @@
         /// 
         public string Name {
             get {
-                return name;
+                return _name;
             }
         }
 
@@ -119,11 +119,11 @@
         /// 
         public Point Position {
             get {
-                return position;
+                return _position;
             }
             set {
-                position = value;
-                usePosition = true;
+                _position = value;
+                _usePosition = true;
             }
         }
 
@@ -133,11 +133,11 @@
         /// 
         public Angle Rotation {
             get {
-                return rotation;
+                return _rotation;
             }
             set {
-                rotation = value;
-                useRotation = true;
+                _rotation = value;
+                _useRotation = true;
             }
         }
 
@@ -147,11 +147,11 @@
         /// 
         public HorizontalTextAlign HorizontalAlign {
             get {
-                return horizontalAlign;
+                return _horizontalAlign;
             }
             set {
-                horizontalAlign = value;
-                useAlign = true;
+                _horizontalAlign = value;
+                _useAlign = true;
             }
         }
 
@@ -161,11 +161,11 @@
         /// 
         public VerticalTextAlign VerticalAlign {
             get {
-                return verticalAlign;
+                return _verticalAlign;
             }
             set {
-                verticalAlign = value;
-                useAlign = true;
+                _verticalAlign = value;
+                _useAlign = true;
             }
         }
 
@@ -175,11 +175,11 @@
         /// 
         public int Height {
             get {
-                return height;
+                return _height;
             }
             set {
-                height = value;
-                useHeight = true;
+                _height = value;
+                _useHeight = true;
             }
         }
 
@@ -189,34 +189,34 @@
         /// 
         public string Value {
             get {
-                return value;
+                return _value;
             }
             set {
-                this.value = value;
+                this._value = value;
             }
         }
 
         public bool UsePosition {
             get {
-                return usePosition;
+                return _usePosition;
             }
         }
 
         public bool UseRotation {
             get {
-                return useRotation;
+                return _useRotation;
             }
         }
 
         public bool UseHeight {
             get {
-                return useHeight;
+                return _useHeight;
             }
         }
 
         public bool UseAlign {
             get {
-                return useAlign;
+                return _useAlign;
             }
         }
     }

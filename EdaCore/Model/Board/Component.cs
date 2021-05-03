@@ -1,12 +1,15 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System;
+using System.Collections.Generic;
+using MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers;
+using NetSerializer.Attributes;
 
-    using System;
-    using System.Collections.Generic;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Clase que representa un bloc predefinit.
     /// </summary>
     /// 
+    [NetSerializer(typeof(ComponentSerializer), AliasName = "Component")]
     public sealed partial class Component : IBoardVisitable, IName {
 
         private readonly string _name;
@@ -42,11 +45,11 @@
 
             Component component = new Component(_name);
 
-            if (elements != null)
+            if (_elements != null)
                 foreach (var element in Elements)
                     component.AddElement(element.Clone());
 
-            if (attributes != null)
+            if (_attributes != null)
                 foreach (var attribute in Attributes)
                     component.AddAttribute(attribute.Clone());
 
@@ -67,19 +70,16 @@
         /// Obte o asigna el identificador del component.
         /// </summary>
         /// 
-        public string Name => _name;
+        public string Name =>
+            _name;
 
         /// <summary>
         /// Obte o asigna la descripcio.
         /// </summary>
         /// 
         public string Description {
-            get {
-                return _description;
-            }
-            set {
-                _description = value;
-            }
+            get => _description;
+            set => _description = value;
         }
     }
 }

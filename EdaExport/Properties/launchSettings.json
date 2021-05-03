@@ -1,8 +1,8 @@
 {
   "profiles": {
-    "EdaConverter": {
+    "EdaExport": {
       "commandName": "Project",
-      "commandLineArgs": "kicad_demo.kicad_pcb kicad_demo.xbrd /v",
+      "commandLineArgs": "jst-xa.xlib jst-xa.pretty /v",
       "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\Net\\EdaTools\\Data"
     }
   }

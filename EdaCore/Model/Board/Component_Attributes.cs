@@ -1,7 +1,7 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System;
+using System.Collections.Generic;
 
-    using System;
-    using System.Collections.Generic;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Clase que representa un bloc predefinit.
@@ -9,7 +9,7 @@
     /// 
     public sealed partial class Component {
 
-        private Dictionary<string, ComponentAttribute> attributes;
+        private Dictionary<string, ComponentAttribute> _attributes;
 
         /// <summary>
         /// Afegeix in atribut.
@@ -23,15 +23,15 @@
 
             // Comprova que l'atribut no estigui afeigit amb anterioritat
             //
-            if ((attributes != null) && attributes.ContainsKey(attribute.Name))
+            if ((_attributes != null) && _attributes.ContainsKey(attribute.Name))
                 throw new InvalidOperationException(
                     String.Format("Ya existe un atributo con el nombre '{0}'.", attribute.Name));
 
             // Afegeix l'atribut a la llista d'atributs
             //
-            if (attributes == null)
-                attributes = new Dictionary<string, ComponentAttribute>();
-            attributes.Add(attribute.Name, attribute);
+            if (_attributes == null)
+                _attributes = new Dictionary<string, ComponentAttribute>();
+            _attributes.Add(attribute.Name, attribute);
         }
 
         /// <summary>
@@ -60,15 +60,15 @@
 
             // Comprova que l'atribut estigui a la llista
             //
-            if ((attributes == null) || !attributes.ContainsKey(attribute.Name))
+            if ((_attributes == null) || !_attributes.ContainsKey(attribute.Name))
                 throw new InvalidOperationException(
                     String.Format("No se encontro el atributo '{0}'.", attribute.Name));
 
             // Elimina l'aqtribut de la llista d'atributs
             //
-            attributes.Remove(attribute.Name);
-            if (attributes.Count == 0)
-                attributes = null;
+            _attributes.Remove(attribute.Name);
+            if (_attributes.Count == 0)
+                _attributes = null;
         }
 
         /// <summary>
@@ -77,9 +77,9 @@
         /// 
         public void RemoveAllAttributes() {
 
-            if (attributes != null) {
-                attributes.Clear();
-                attributes = null;
+            if (_attributes != null) {
+                _attributes.Clear();
+                _attributes = null;
             }
         }
 
@@ -94,37 +94,28 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            return attributes?[name];
+            return _attributes?[name];
         }
 
         /// <summary>
         /// Indica si te atributs.
         /// </summary>
         /// 
-        public bool HasAttributes {
-            get {
-                return attributes != null;
-            }
-        }
+        public bool HasAttributes =>
+            _attributes != null;
 
         /// <summary>
         /// Enumera els noms dels atributs
         /// </summary>
         /// 
-        public IEnumerable<String> AttributeNames {
-            get {
-                return attributes?.Keys;
-            }
-        }
+        public IEnumerable<String> AttributeNames =>
+            _attributes?.Keys;
 
         /// <summary>
         /// Enumera els atributs
         /// </summary>
         /// 
-        public IEnumerable<ComponentAttribute> Attributes {
-            get {
-                return attributes?.Values;
-            }
-        }
+        public IEnumerable<ComponentAttribute> Attributes =>
+            _attributes?.Values;
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers;
+using NetSerializer.Attributes;
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Identifica la cara de la placa.
@@ -18,10 +20,11 @@
     /// Clase que representa una placa de circuit impres.
     /// </summary>
     /// 
+    [NetSerializer(typeof(BoardSerializer), AliasName = "Board")]
     public sealed partial class Board : IBoardVisitable {
 
-        private Point position;
-        private Angle rotation;
+        private Point _position;
+        private Angle _rotation;
 
         /// <summary>
         /// Constructor del objecte amb els parametres per defecte.
@@ -45,12 +48,8 @@
         /// </summary>
         /// 
         public Point Position {
-            get {
-                return position;
-            }
-            set {
-                position = value;
-            }
+            get => _position;
+            set => _position = value;
         }
 
         /// <summary>
@@ -58,12 +57,8 @@
         /// </summary>
         /// 
         public Angle Rotation {
-            get {
-                return rotation;
-            }
-            set {
-                rotation = value;
-            }
+            get => _rotation;
+            set => _rotation = value;
         }
     }
 }

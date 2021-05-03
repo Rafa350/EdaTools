@@ -1,21 +1,21 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
+using MikroPic.EdaTools.v1.Base.Xml;
+using MikroPic.EdaTools.v1.Core.Model.Board;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+using MikroPic.EdaTools.v1.Core.Model.Net;
 
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Xml;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
-    using MikroPic.EdaTools.v1.Base.Xml;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
-    using MikroPic.EdaTools.v1.Core.Model.Net;
+namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
     /// <summary>
     /// Clase per importar una placa desde Eagle
     /// </summary>
     /// 
-    public sealed class EagleImporter : Importer {
+    public sealed class EagleImporter : IImporter {
 
         private const int topLayerNum = 1;
         private const int bottomLayerNum = 16;
@@ -31,63 +31,61 @@
         private Board board;
         private XmlDocument doc;
 
-        /// <summary>
-        /// Importa una placa.
-        /// </summary>
-        /// <param name="stream">Stream d'entrada.</param>
-        /// <returns>La placa.</returns>
+
+        /// <inheritdoc/>
         /// 
-        public override Board ReadBoard(Stream stream) {
+        public Board ReadBoard(string fileName) {
 
-            doc = ReadXmlDocument(stream);
-            board = new Board();
+            using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
 
-            XmlNode layersNode = doc.SelectSingleNode("eagle/drawing/layers");
-            IEnumerable<Layer> layers = ParseLayersNode(layersNode);
-            board.AddLayers(layers);
+                doc = ReadXmlDocument(stream);
+                board = new Board();
 
-            ProcessSignals();
-            ProcessComponents();
-            ProcessElements();
+                XmlNode layersNode = doc.SelectSingleNode("eagle/drawing/layers");
+                IEnumerable<Layer> layers = ParseLayersNode(layersNode);
+                board.AddLayers(layers);
 
-            return board;
+                ProcessSignals();
+                ProcessComponents();
+                ProcessElements();
+
+                return board;
+            }
         }
 
-        /// <summary>
-        /// Importa una llibreria.
-        /// </summary>
-        /// <param name="stream">Stream d'entrada.</param>
-        /// <returns>La llibraria.</returns>
+        /// <inheritdoc/>
         /// 
-        public override Library ReadLibrary(Stream stream) {
+        public Library ReadLibrary(string fileName) {
 
-            doc = ReadXmlDocument(stream);
+            using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
 
-            XmlNode layersNode = doc.SelectSingleNode("eagle/drawing/layers");
-            IEnumerable<Layer> layers = ParseLayersNode(layersNode);
+                doc = ReadXmlDocument(stream);
 
-            XmlNode packagesNode = doc.SelectSingleNode("eagle/drawing/library/packages");
-            IEnumerable<Component> components = ParsePackagesNode(packagesNode);
+                XmlNode layersNode = doc.SelectSingleNode("eagle/drawing/layers");
+                IEnumerable<Layer> layers = ParseLayersNode(layersNode);
 
-            Library library = new Library("unnamed");
-            library.AddComponents(components);
-            return library;
+                XmlNode packagesNode = doc.SelectSingleNode("eagle/drawing/library/packages");
+                IEnumerable<Component> components = ParsePackagesNode(packagesNode);
+
+                Library library = new Library("unnamed");
+                library.AddComponents(components);
+                return library;
+            }
         }
 
-        /// <summary>
-        /// Importa un netlist
-        /// </summary>
-        /// <param name="stream"></param>
-        /// <returns>El netlist</returns>
+        /// <inheritdoc/>
         /// 
-        public override Net ReadNet(Stream stream) {
+        public Net ReadNet(string fileName) {
 
-            doc = ReadXmlDocument(stream);
+            using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
 
-            XmlNode netsNode = doc.SelectSingleNode("eagle/drawing/schematic/sheets/sheet/nets");
-            IEnumerable<NetSignal> signals = ParseNetsNode(netsNode);
+                doc = ReadXmlDocument(stream);
 
-            return new Net(signals);
+                XmlNode netsNode = doc.SelectSingleNode("eagle/drawing/schematic/sheets/sheet/nets");
+                IEnumerable<NetSignal> signals = ParseNetsNode(netsNode);
+
+                return new Net(signals);
+            }
         }
 
         /// <summary>
@@ -311,11 +309,16 @@
         private Component ParsePackageNode(XmlNode packageNode, string libraryName = null) {
 
             string packageName = packageNode.AttributeAsString("name");
+            string packageDescription = null;
 
             List<Element> elements = new List<Element>();
             foreach (XmlNode elementNode in packageNode.ChildNodes) {
                 Element element = null;
                 switch (elementNode.Name) {
+                    case "description":
+                        packageDescription = elementNode.InnerText;
+                        break;
+
                     case "smd":
                         element = ParseSmdNode(elementNode);
                         break;
@@ -348,9 +351,6 @@
                         element = ParseHoleNode(elementNode);
                         break;
 
-                    case "description":
-                        break;
-
                     default:
                         throw new InvalidOperationException(
                             String.Format("No se reconoce el tag '{0}'.", elementNode.Name));
@@ -360,7 +360,8 @@
             }
 
             string name = libraryName == null ? packageName : String.Format("{0}@{1}", packageName, libraryName);
-            Component component = new Component(name, elements);
+            var component = new Component(name, elements);
+            component.Description = packageDescription;
             return component;
         }
 

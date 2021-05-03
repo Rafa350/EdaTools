@@ -1,11 +1,11 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System;
+using System.Collections.Generic;
 
-    using System;
-    using System.Collections.Generic;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     public sealed partial class Library {
 
-        private Dictionary<string, Component> components;
+        private Dictionary<string, Component> _components;
 
         /// <summary>
         /// Afegeix un component.
@@ -17,13 +17,13 @@
             if (component == null)
                 throw new ArgumentNullException(nameof(component));
 
-            if ((components != null) && components.ContainsKey(component.Name))
+            if ((_components != null) && _components.ContainsKey(component.Name))
                 throw new InvalidOperationException(
                     String.Format("El componente '{0}', ya pertenece a la biblioteca.", component.Name));
 
-            if (components == null)
-                components = new Dictionary<string, Component>();
-            components.Add(component.Name, component);
+            if (_components == null)
+                _components = new Dictionary<string, Component>();
+            _components.Add(component.Name, component);
         }
 
         /// <summary>
@@ -50,13 +50,13 @@
             if (component == null)
                 throw new ArgumentNullException(nameof(component));
 
-            if ((components == null) || components.ContainsKey(component.Name))
+            if ((_components == null) || _components.ContainsKey(component.Name))
                 throw new InvalidOperationException(
                     String.Format("El componente '{0}' no esta asignado a esta biblioteca.", component.Name));
 
-            components.Remove(component.Name);
-            if (components.Count == 0)
-                components = null;
+            _components.Remove(component.Name);
+            if (_components.Count == 0)
+                _components = null;
         }
 
         /// <summary>
@@ -65,7 +65,7 @@
         /// 
         public bool HasComponents {
             get {
-                return components != null;
+                return _components != null;
             }
         }
 
@@ -73,20 +73,14 @@
         /// Enumera els noms dels components.
         /// </summary>
         /// 
-        public IEnumerable<string> ComponentNames {
-            get {
-                return components.Keys;
-            }
-        }
+        public IEnumerable<string> ComponentNames =>
+            _components.Keys;
 
         /// <summary>
         /// Enumera els components.
         /// </summary>
         /// 
-        public IEnumerable<Component> Components {
-            get {
-                return components.Values;
-            }
-        }
+        public IEnumerable<Component> Components =>
+            _components.Values;
     }
 }

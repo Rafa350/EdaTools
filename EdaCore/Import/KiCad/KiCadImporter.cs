@@ -12,34 +12,43 @@
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using MikroPic.EdaTools.v1.Core.Model.Net;
 
-    public sealed class KiCadImporter: Importer {
+    public sealed class KiCadImporter: IImporter {
       
         private int partCount = 0;
 
-        public override Board ReadBoard(Stream stream) {
+        /// <inheritdoc/>
+        /// 
+        public Board ReadBoard(string fileName) {
 
-            TextReader reader = new StreamReader(stream);
-            string source = reader.ReadToEnd();
+            using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+             
+                TextReader reader = new StreamReader(stream);
+                string source = reader.ReadToEnd();
 
-            SParser parser = new SParser();
-            STree tree = parser.Parse(source);
+                SParser parser = new SParser();
+                STree tree = parser.Parse(source);
 
-            return ProcessBoard(tree);
+                return ProcessBoard(tree);
+            }
         }
 
-        public override Library ReadLibrary(Stream stream) {
+        /// <inheritdoc/>
+        /// 
+        public Library ReadLibrary(string fileName) {
             
             throw new NotImplementedException();
         }
 
-        public override Net ReadNet(Stream stream) {
+        /// <inheritdoc/>
+        /// 
+        public Net ReadNet(string fileName) {
             
             throw new NotImplementedException();
         }
 
         private Board ProcessBoard(STree tree) {
 
-            Board board = new Board();
+            var board = new Board();
             board.AddLayer(new Layer(BoardSide.None, "Pads", LayerFunction.Unknown));
             board.AddLayer(new Layer(BoardSide.None, "Vias", LayerFunction.Unknown));
             board.AddLayer(new Layer(BoardSide.None, "Drils", LayerFunction.Unknown));

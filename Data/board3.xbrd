@@ -15,7 +15,7 @@
             <layer side="top" tag="Names" function="design" />
             <layer side="bottom" tag="Names" function="design" />
             <layer side="top" tag="Values" function="design" />
-            <layer side="bottom" tag="Values" function="unknown" />
+            <layer side="bottom" tag="Values" function="design" />
             <layer side="top" tag="Stop" function="design" />
             <layer side="bottom" tag="Stop" function="design" />
             <layer side="top" tag="Cream" function="design" />
@@ -936,7 +936,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="R9" position="-0.02, 1.02" rotation="0" height="1.016" horizontalAlign="center" />
-                    <attribute name="VALUE" value="270" position="-1.27, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="VALUE" value="270" position="-1.27, -2.54" rotation="0" height="1.27" />
                     <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="TYPE" value="R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -952,7 +952,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="R10" position="0.024999, 1.05" rotation="0" height="1.016" horizontalAlign="center" />
-                    <attribute name="VALUE" value="270" position="-1.27, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="VALUE" value="270" position="-1.27, -2.54" rotation="0" height="1.27" />
                     <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="TYPE" value="R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -968,7 +968,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="R11" position="-0.02, 1.02" rotation="0" height="1.016" horizontalAlign="center" />
-                    <attribute name="VALUE" value="270" position="-1.27, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="VALUE" value="270" position="-1.27, -2.54" rotation="0" height="1.27" />
                     <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="TYPE" value="R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -984,7 +984,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="R12" position="-0.02, 1.02" rotation="0" height="1.016" horizontalAlign="center" />
-                    <attribute name="VALUE" value="270" position="-1.27, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="VALUE" value="270" position="-1.27, -2.54" rotation="0" height="1.27" />
                     <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="TYPE" value="R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1133,8 +1133,8 @@
                     <pad name="2" signal="VCC" />
                 </pads>
                 <attributes>
-                    <attribute name="NAME" value="C7" position="-1.999999, 0" rotation="-270" height="1.016" horizontalAlign="center" />
-                    <attribute name="VALUE" value="100n" position="-1.269999, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="NAME" value="C7" position="-2, 0" rotation="-270" height="1.016" horizontalAlign="center" />
+                    <attribute name="VALUE" value="100n" position="-1.27, -2.54" rotation="0" height="1.27" />
                     <attribute name="C_CAPACITANCE" value="100nF" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="C_DIELECTRIC" value="X7R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1150,8 +1150,8 @@
                     <pad name="2" signal="VCC" />
                 </pads>
                 <attributes>
-                    <attribute name="NAME" value="C6" position="-1.999999, 0.125" rotation="-270" height="1.016" horizontalAlign="center" />
-                    <attribute name="VALUE" value="10n" position="-1.269999, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="NAME" value="C6" position="-2, 0.125" rotation="-270" height="1.016" horizontalAlign="center" />
+                    <attribute name="VALUE" value="10n" position="-1.27, -2.539999" rotation="0" height="1.27" />
                     <attribute name="C_CAPACITANCE" value="10nF" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="C_DIELECTRIC" value="X7R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1237,8 +1237,8 @@
                     <pad name="2" signal="VCC" />
                 </pads>
                 <attributes>
-                    <attribute name="NAME" value="R17" position="-0.019999, -0.979999" rotation="0" height="1.016" horizontalAlign="center" verticalAlign="top" />
-                    <attribute name="VALUE" value="1K5" position="-1.269999, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="NAME" value="R17" position="-0.02, -0.979999" rotation="0" height="1.016" horizontalAlign="center" verticalAlign="top" />
+                    <attribute name="VALUE" value="1K5" position="-1.27, -2.54" rotation="0" height="1.27" />
                     <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="R_RESISTANCE" value="1K5" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="TYPE" value="R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1253,8 +1253,8 @@
                     <pad name="2" signal="VCC" />
                 </pads>
                 <attributes>
-                    <attribute name="NAME" value="R18" position="-0.019999, 1.02" rotation="0" height="1.016" horizontalAlign="center" />
-                    <attribute name="VALUE" value="1K5" position="-1.269999, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="NAME" value="R18" position="-0.02, 1.02" rotation="0" height="1.016" horizontalAlign="center" />
+                    <attribute name="VALUE" value="1K5" position="-1.27, -2.539999" rotation="0" height="1.27" />
                     <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="R_RESISTANCE" value="1K5" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="TYPE" value="R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1270,7 +1270,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="R13" position="-0.020001, 1.02" rotation="0" height="1.016" horizontalAlign="center" />
-                    <attribute name="VALUE" value="270" position="-1.270001, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="VALUE" value="270" position="-1.270001, -2.54" rotation="0" height="1.27" />
                     <attribute name="TYPE" value="R" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1286,7 +1286,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="R14" position="0, 1" rotation="0" height="1" horizontalAlign="center" />
-                    <attribute name="VALUE" value="270" position="-1.27, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="VALUE" value="270" position="-1.27, -2.54" rotation="0" height="1.27" />
                     <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="TYPE" value="R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1340,7 +1340,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="U21" position="5.357999, 6.564" rotation="-90" height="1.016" />
-                    <attribute name="VALUE" value="PIC18F46K22-I/PT" position="-4.064, -8.120099" rotation="0" height="1.016" />
+                    <attribute name="VALUE" value="PIC18F46K22-I/PT" position="-4.064, -8.1201" rotation="0" height="1.016" />
                     <attribute name="TYPE" value="IC" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="MANUFACTURER" value="Microchip" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="REFERENCE" value="PIC18F46K22T-I/PT" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1353,7 +1353,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="C9" position="-3, 0" rotation="-90" height="1.016" horizontalAlign="center" />
-                    <attribute name="VALUE" value="100n" position="-1.27, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="VALUE" value="100n" position="-1.27, -2.54" rotation="0" height="1.27" />
                     <attribute name="C_CAPACITANCE" value="100nF" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="C_DIELECTRIC" value="X7R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1370,7 +1370,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="C8" position="-3, 0" rotation="-90" height="1" horizontalAlign="center" />
-                    <attribute name="VALUE" value="10n" position="-1.27, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="VALUE" value="10n" position="-1.27, -2.54" rotation="0" height="1.27" />
                     <attribute name="C_CAPACITANCE" value="10nF" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="C_DIELECTRIC" value="X7R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1387,7 +1387,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="R15" position="0, 2" rotation="-180" height="1" horizontalAlign="center" />
-                    <attribute name="VALUE" value="270" position="-1.269999, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="VALUE" value="270" position="-1.269999, -2.54" rotation="0" height="1.27" />
                     <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="TYPE" value="R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1403,7 +1403,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="R16" position="0, 2" rotation="-180" height="1" horizontalAlign="center" />
-                    <attribute name="VALUE" value="270" position="-1.269999, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="VALUE" value="270" position="-1.27, -2.54" rotation="0" height="1.27" />
                     <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="TYPE" value="R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1419,7 +1419,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="C12" position="-2, 0" rotation="-270" height="1" horizontalAlign="center" />
-                    <attribute name="VALUE" value="4u7" position="-1.269999, -2.54" rotation="0" height="1.27" />
+                    <attribute name="VALUE" value="4u7" position="-1.27, -2.54" rotation="0" height="1.27" />
                     <attribute name="C_CAPACITANCE" value="4.7uF" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="C_DIELECTRIC" value="X7R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1436,7 +1436,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="C13" position="1.999999, 0" rotation="-90" height="1" horizontalAlign="center" />
-                    <attribute name="VALUE" value="4u7" position="-1.27, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="VALUE" value="4u7" position="-1.27, -2.54" rotation="0" height="1.27" />
                     <attribute name="C_CAPACITANCE" value="4.7uF" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="C_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="C_DIELECTRIC" value="X7R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1453,7 +1453,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="C14" position="0, 1.124999" rotation="0" height="1.016" horizontalAlign="center" />
-                    <attribute name="VALUE" value="10u" position="-1.904999, -2.54" rotation="0" height="1.016" />
+                    <attribute name="VALUE" value="10u" position="-1.905, -2.54" rotation="0" height="1.016" />
                     <attribute name="C_CAPACITANCE" value="10uF" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="C_CASE" value="A" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="C_DIELECTRIC" value="TANT" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1481,7 +1481,7 @@
                     <pad name="2" signal="VCC" />
                 </pads>
                 <attributes>
-                    <attribute name="NAME" value="C15" position="0, 0.999999" rotation="-180" height="1.016" horizontalAlign="center" verticalAlign="top" />
+                    <attribute name="NAME" value="C15" position="0, 1" rotation="-180" height="1.016" horizontalAlign="center" verticalAlign="top" />
                     <attribute name="VALUE" value="100n" position="-1.27, -2.54" rotation="0" height="1.27" />
                     <attribute name="C_CAPACITANCE" value="100nF" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="C_DIELECTRIC" value="X7R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1533,7 +1533,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="R19" position="-3, 0" rotation="-90" height="1" horizontalAlign="center" />
-                    <attribute name="VALUE" value="270" position="-1.27, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="VALUE" value="270" position="-1.27, -2.54" rotation="0" height="1.27" />
                     <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="TYPE" value="R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1563,7 +1563,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="R3" position="0, 2" rotation="-180" height="1.016" horizontalAlign="center" />
-                    <attribute name="VALUE" value="270" position="-0.634999, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="VALUE" value="270" position="-0.635, -2.54" rotation="0" height="1.27" />
                     <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="TYPE" value="R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1579,7 +1579,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="R4" position="0, 1.999999" rotation="-180" height="1.016" horizontalAlign="center" />
-                    <attribute name="VALUE" value="270" position="-0.634999, -2.54" rotation="0" height="1.27" />
+                    <attribute name="VALUE" value="270" position="-0.635, -2.54" rotation="0" height="1.27" />
                     <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="TYPE" value="R" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1640,7 +1640,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="L1" position="1.999999, 0" rotation="-90" height="1.016" horizontalAlign="center" />
-                    <attribute name="VALUE" value="600R" position="-2.208, -2.307999" rotation="0" height="1.27" />
+                    <attribute name="VALUE" value="600R" position="-2.208, -2.308" rotation="0" height="1.27" />
                     <attribute name="L_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="L_IMPEDANCE" value="600R" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="TYPE" value="L" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1843,7 +1843,7 @@
                     <pad name="4" signal="O1" />
                 </pads>
                 <attributes>
-                    <attribute name="NAME" value="U9" position="0, 3.999999" rotation="-180" height="1" horizontalAlign="center" verticalAlign="top" />
+                    <attribute name="NAME" value="U9" position="0, 4" rotation="-180" height="1" horizontalAlign="center" verticalAlign="top" />
                     <attribute name="VALUE" value="VO1400" position="3.809999, -3.81" rotation="-270" height="1.27" />
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
@@ -1857,8 +1857,8 @@
                     <pad name="4" signal="O2" />
                 </pads>
                 <attributes>
-                    <attribute name="NAME" value="U10" position="0, 3.999999" rotation="-180" height="1" horizontalAlign="center" verticalAlign="top" />
-                    <attribute name="VALUE" value="VO1400" position="3.809999, -3.809999" rotation="-270" height="1.27" />
+                    <attribute name="NAME" value="U10" position="0, 4" rotation="-180" height="1" horizontalAlign="center" verticalAlign="top" />
+                    <attribute name="VALUE" value="VO1400" position="3.809999, -3.81" rotation="-270" height="1.27" />
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
@@ -1872,7 +1872,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="U11" position="0, 4" rotation="-180" height="1" horizontalAlign="center" verticalAlign="top" />
-                    <attribute name="VALUE" value="VO1400" position="3.809999, -3.809999" rotation="-270" height="1.27" />
+                    <attribute name="VALUE" value="VO1400" position="3.809999, -3.81" rotation="-270" height="1.27" />
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
@@ -1886,7 +1886,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="U12" position="0, 4" rotation="-180" height="1" horizontalAlign="center" verticalAlign="top" />
-                    <attribute name="VALUE" value="VO1400" position="3.809999, -3.809999" rotation="-270" height="1.27" />
+                    <attribute name="VALUE" value="VO1400" position="3.809999, -3.81" rotation="-270" height="1.27" />
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
@@ -1900,7 +1900,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="U13" position="0.249999, 4" rotation="-180" height="1" horizontalAlign="center" verticalAlign="top" />
-                    <attribute name="VALUE" value="VO1400" position="3.809999, -3.809999" rotation="-270" height="1.27" />
+                    <attribute name="VALUE" value="VO1400" position="3.809999, -3.81" rotation="-270" height="1.27" />
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
@@ -1914,7 +1914,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="U14" position="0, 4" rotation="0" height="1" horizontalAlign="center" />
-                    <attribute name="VALUE" value="VO1400" position="3.809999, -3.809999" rotation="90" height="1.27" />
+                    <attribute name="VALUE" value="VO1400" position="3.809999, -3.81" rotation="90" height="1.27" />
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
@@ -1928,7 +1928,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="U15" position="0, 4" rotation="0" height="1" horizontalAlign="center" />
-                    <attribute name="VALUE" value="VO1400" position="3.809999, -3.809999" rotation="90" height="1.27" />
+                    <attribute name="VALUE" value="VO1400" position="3.81, -3.81" rotation="90" height="1.27" />
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
@@ -1942,7 +1942,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="U16" position="0, 4" rotation="0" height="1" horizontalAlign="center" />
-                    <attribute name="VALUE" value="VO1400" position="3.809999, -3.809999" rotation="90" height="1.27" />
+                    <attribute name="VALUE" value="VO1400" position="3.81, -3.81" rotation="90" height="1.27" />
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
@@ -1956,7 +1956,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="U17" position="0, 4" rotation="0" height="1" horizontalAlign="center" />
-                    <attribute name="VALUE" value="VO1400" position="3.809999, -3.809999" rotation="90" height="1.27" />
+                    <attribute name="VALUE" value="VO1400" position="3.81, -3.81" rotation="90" height="1.27" />
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="REFERENCE" value="VO1400AEFTR" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
@@ -2088,7 +2088,7 @@
                     <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="R_TOLERANCE" value="1%" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="NAME" value="R20" position="1.999999, 0" rotation="-90" height="1" horizontalAlign="center" />
-                    <attribute name="VALUE" value="270" position="-0.635, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="VALUE" value="270" position="-0.635, -2.54" rotation="0" height="1.27" />
                     <attribute name="REFERENCE" value="CRCW0805270RFKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
@@ -2103,8 +2103,8 @@
                     <attribute name="R_CASE" value="0805" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="R_RESISTANCE" value="270R" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="R_TOLERANCE" value="1%" visible="false" position="0, 0" rotation="0" height="1.778" />
-                    <attribute name="NAME" value="R21" position="2.124999, -0.249999" rotation="-90" height="1" horizontalAlign="center" />
-                    <attribute name="VALUE" value="270" position="-0.635, -2.539999" rotation="0" height="1.27" />
+                    <attribute name="NAME" value="R21" position="2.124999, -0.25" rotation="-90" height="1" horizontalAlign="center" />
+                    <attribute name="VALUE" value="270" position="-0.635, -2.54" rotation="0" height="1.27" />
                     <attribute name="REFERENCE" value="CRCW0805270RFKEA" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>
@@ -2122,7 +2122,7 @@
                 </pads>
                 <attributes>
                     <attribute name="NAME" value="U18" position="0, 6" rotation="0" height="1" horizontalAlign="center" />
-                    <attribute name="VALUE" value="LH1522AAC" position="6.349999, -3.174999" rotation="90" height="1" />
+                    <attribute name="VALUE" value="LH1522AAC" position="6.35, -3.175" rotation="90" height="1" />
                     <attribute name="MANUFACTURER" value="Vishay" visible="false" position="0, 0" rotation="0" height="1.778" />
                     <attribute name="REFERENCE" value="LH1522AAC" visible="false" position="0, 0" rotation="0" height="1.778" />
                 </attributes>

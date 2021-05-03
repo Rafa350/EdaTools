@@ -1,7 +1,7 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Identifica el tipus d'element
@@ -82,13 +82,9 @@
         /// Obte o asigna el conjunt de capes.
         /// </summary>
         /// 
-        public LayerSet LayerSet {
-            get {
-                return _layerSet;
-            }
-            set {
-                _layerSet = value;
-            }
+        public LayerSet LayerSet { 
+            get => _layerSet;
+            set => _layerSet = value;
         }
 
         /// <summary>

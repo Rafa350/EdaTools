@@ -1,11 +1,11 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System;
+using System.Collections.Generic;
 
-    using System;
-    using System.Collections.Generic;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     public partial class Part {
 
-        private Dictionary<string, PartAttribute> attributes;
+        private Dictionary<string, PartAttribute> _attributes;
 
         /// <summary>
         /// Afegeix un atribut.
@@ -17,9 +17,9 @@
             if (attribute == null)
                 throw new ArgumentNullException(nameof(attribute));
 
-            if (attributes == null)
-                attributes = new Dictionary<string, PartAttribute>();
-            attributes.Add(attribute.Name, attribute);
+            if (_attributes == null)
+                _attributes = new Dictionary<string, PartAttribute>();
+            _attributes.Add(attribute.Name, attribute);
         }
 
         /// <summary>
@@ -46,9 +46,9 @@
             if (attribute == null)
                 throw new ArgumentNullException(nameof(attribute));
 
-            attributes.Remove(attribute.Name);
-            if (attributes.Count == 0)
-                attributes = null;
+            _attributes.Remove(attribute.Name);
+            if (_attributes.Count == 0)
+                _attributes = null;
         }
 
         /// <summary>
@@ -62,7 +62,7 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            if ((attributes != null) && attributes.TryGetValue(name, out PartAttribute attribute))
+            if ((_attributes != null) && _attributes.TryGetValue(name, out PartAttribute attribute))
                 return attribute;
 
             return null;
@@ -74,7 +74,7 @@
         /// 
         public bool HasAttributes {
             get {
-                return attributes != null;
+                return _attributes != null;
             }
         }
 
@@ -84,7 +84,7 @@
         /// 
         public IEnumerable<PartAttribute> Attributes {
             get {
-                return attributes?.Values;
+                return _attributes?.Values;
             }
         }
     }

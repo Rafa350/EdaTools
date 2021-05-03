@@ -37,4 +37,10 @@
     <Folder Include="Properties\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="NetSerializer">
+      <HintPath>..\..\LwStudio2021\bin\debug\net5.0\NetSerializer.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

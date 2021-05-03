@@ -8,7 +8,7 @@
 
         }
 
-        public Importer GetImporter(string id) {
+        public IImporter GetImporter(string id) {
 
             return null;
         }

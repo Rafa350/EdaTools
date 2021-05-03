@@ -1,9 +1,9 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System;
+using System.Collections.Generic;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
-    using System;
-    using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     public sealed partial class Part : IPosition, IRotation, IName, IBoardVisitable {
 
@@ -46,8 +46,8 @@
         /// 
         public Part Clone(string name, Component component) {
 
-            Part part = new Part(component, name, _position, _rotation, _flip);
-            foreach (var attribute in attributes.Values)
+            var part = new Part(component, name, _position, _rotation, _flip);
+            foreach (var attribute in _attributes.Values)
                 part.AddAttribute(attribute.Clone());
 
             return part;
@@ -118,13 +118,13 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            PadElement pad = _component.GetPad(name, false);
+            var pad = _component.GetPad(name, false);
             if (pad != null)
                 return pad;
 
             else if (throwOnError)
                 throw new InvalidOperationException(
-                    String.Format("No se encontro el pad '{0}' en el part '{1}'.", name, this._name));
+                    String.Format("No se encontro el pad '{0}' en el part '{1}'.", name, _name));
 
             else
                 return null;
@@ -134,25 +134,23 @@
         /// Obte o asigna el nom.
         /// </summary>
         /// 
-        public string Name =>_name;
+        public string Name =>
+            _name;
 
         /// <summary>
         /// Obte el component
         /// </summary>
         /// 
-        public Component Component => _component;
+        public Component Component => 
+            _component;
 
         /// <summary>
         /// Obte o asigna la posicio.
         /// </summary>
         /// 
         public Point Position {
-            get {
-                return _position;
-            }
-            set {
-                _position = value;
-            }
+            get => _position;
+            set => _position = value;
         }
 
         /// <summary>
@@ -160,12 +158,8 @@
         /// </summary>
         /// 
         public Angle Rotation {
-            get {
-                return _rotation;
-            }
-            set {
-                _rotation = value;
-            }
+            get => _rotation;
+            set => _rotation = value;
         }
 
         /// <summary>
@@ -173,42 +167,43 @@
         /// </summary>
         /// 
         public bool Flip {
-            get {
-                return _flip;
-            }
-            set {
-                _flip = value;
-            }
+            get => _flip;
+            set => _flip = value;
         }
 
         /// <summary>
         /// Indica si el component esta girat.
         /// </summary>
         /// 
-        public bool IsFlipped => _flip;
+        public bool IsFlipped => 
+            _flip;
 
         /// <summary>
         /// Indica si conte elements
         /// </summary>
         /// 
-        public bool HasElements => _component.HasElements;
+        public bool HasElements => 
+            _component.HasElements;
 
         /// <summary>
         /// Enumera els elements.
         /// </summary>
         /// 
-        public IEnumerable<Element> Elements => _component.Elements;
+        public IEnumerable<Element> Elements => 
+            _component.Elements;
 
         /// <summary>
         /// Indica si conte pads.
         /// </summary>
         /// 
-        public bool HasPads => _component.HasPads;
+        public bool HasPads => 
+            _component.HasPads;
 
         /// <summary>
         /// Enumera els pads
         /// </summary>
         /// 
-        public IEnumerable<PadElement> Pads => _component.Pads;
+        public IEnumerable<PadElement> Pads => 
+            _component.Pads;
     }
 }

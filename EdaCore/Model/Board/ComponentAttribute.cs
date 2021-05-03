@@ -1,14 +1,14 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System;
 
-    using System;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Clase que representa un atribut d'un bloc.
     /// </summary>
     public sealed class ComponentAttribute : IBoardVisitable {
 
-        private readonly string name;
-        private string value;
+        private readonly string _name;
+        private string _value;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -21,8 +21,8 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            this.name = name;
-            this.value = value;
+            _name = name;
+            _value = value;
         }
 
         /// <summary>
@@ -32,7 +32,7 @@
         /// 
         public ComponentAttribute Clone() {
 
-            return new ComponentAttribute(name, value);
+            return new ComponentAttribute(_name, _value);
         }
 
         public void AcceptVisitor(IBoardVisitor visitor) {
@@ -44,23 +44,16 @@
         /// Obte el nom del atribut
         /// </summary>
         /// 
-        public string Name {
-            get {
-                return name;
-            }
-        }
+        public string Name =>
+            _name;
 
         /// <summary>
         /// Obte o asigna el valor del atribut
         /// </summary>
         /// 
         public string Value {
-            get {
-                return value;
-            }
-            set {
-                this.value = value;
-            }
+            get => _value;
+            set => _value = value;
         }
     }
 }

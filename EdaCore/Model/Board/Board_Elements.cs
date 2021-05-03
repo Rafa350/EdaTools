@@ -1,7 +1,7 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System;
+using System.Collections.Generic;
 
-    using System;
-    using System.Collections.Generic;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Clase que representa una placa de circuit impres.
@@ -9,7 +9,7 @@
     /// 
     public sealed partial class Board {
 
-        private List<Element> elements;
+        private List<Element> _elements;
 
         /// <summary>
         /// Afeigeix un element.
@@ -21,13 +21,13 @@
             if (element == null)
                 throw new ArgumentNullException(nameof(element));
 
-            if ((elements != null) && elements.Contains(element))
+            if ((_elements != null) && _elements.Contains(element))
                 throw new InvalidOperationException(
                     String.Format("El elemento ya pertenece a la placa."));
 
-            if (elements == null)
-                elements = new List<Element>();
-            elements.Add(element);
+            if (_elements == null)
+                _elements = new List<Element>();
+            _elements.Add(element);
         }
 
         /// <summary>
@@ -49,13 +49,13 @@
         /// </summary>
         /// 
         public bool HasElements => 
-            elements != null;
+            _elements != null;
 
         /// <summary>
         /// Obte un enunerador pels elements.
         /// </summary>
         /// 
         public IEnumerable<Element> Elements =>
-            elements;            
+            _elements;            
     }
 }

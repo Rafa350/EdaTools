@@ -1,7 +1,7 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System;
+using System.Collections.Generic;
 
-    using System;
-    using System.Collections.Generic;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Clase que representa una placa de circuit impres.
@@ -89,18 +89,21 @@
         /// Indica si conte components
         /// </summary>
         /// 
-        public bool HasComponents =>_components != null;
+        public bool HasComponents =>
+            _components != null;
 
         /// <summary>
         /// Enumera els noms dels components
         /// </summary>
         /// 
-        public IEnumerable<string> ComponentNames => _components?.Keys;
+        public IEnumerable<string> ComponentNames => 
+            _components?.Keys;
 
         /// <summary>
         /// Obte un enumerador pels blocs.
         /// </summary>
         /// 
-        public IEnumerable<Component> Components => _components?.Values;
+        public IEnumerable<Component> Components => 
+            _components?.Values;
     }
 }

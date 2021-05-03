@@ -1,7 +1,7 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System;
+using System.Collections.Generic;
 
-    using System;
-    using System.Collections.Generic;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Clase que representa una placa de circuit impres.
@@ -9,10 +9,10 @@
     /// 
     public sealed partial class Board {
 
-        private Dictionary<string, Layer> layers = new Dictionary<string, Layer>();
-        private Layer outlineLayer;
-        private Layer topLayer;
-        private Layer bottomLayer;
+        private Dictionary<string, Layer> _layers = new Dictionary<string, Layer>();
+        private Layer _outlineLayer;
+        private Layer _topLayer;
+        private Layer _bottomLayer;
 
         /// <summary>
         /// Afegeix una capa a la placa. L'ordre en que s'afegeixen corresponen a l'apilament fisic de la placa.
@@ -26,24 +26,24 @@
 
             string name = layer.Name;
 
-            if ((layers != null) && layers.ContainsKey(name))
+            if ((_layers != null) && _layers.ContainsKey(name))
                 throw new InvalidOperationException(
                     String.Format("La capa '{0}', ya esta asignada a esta placa.", name));
 
             if (layer.IsTopCopper)
-                topLayer = layer;
+                _topLayer = layer;
             else if (layer.IsBottomCopper)
-                bottomLayer = layer;
+                _bottomLayer = layer;
             else if (layer.Function == LayerFunction.Outline) {
-                if (outlineLayer == null)
-                    outlineLayer = layer;
+                if (_outlineLayer == null)
+                    _outlineLayer = layer;
                 else
                     throw new InvalidOperationException("Solo puede haber una capa con la funcion 'Outline'");
             }
 
-            if (layers == null)
-                layers = new Dictionary<string, Layer>();
-            layers.Add(name, layer);
+            if (_layers == null)
+                _layers = new Dictionary<string, Layer>();
+            _layers.Add(name, layer);
         }
 
         /// <summary>
@@ -72,20 +72,20 @@
 
             string name = layer.Name;
 
-            if ((layers == null) || !layers.ContainsKey(name))
+            if ((_layers == null) || !_layers.ContainsKey(name))
                 throw new InvalidOperationException(
                     String.Format("No se encontro la capa '{0}'.", name));
 
-            layers.Remove(name);
-            if (layers.Count == 0)
-                layers = null;
+            _layers.Remove(name);
+            if (_layers.Count == 0)
+                _layers = null;
 
-            if (topLayer == layer)
-                topLayer = null;
-            else if (bottomLayer == layer)
-                bottomLayer = null;
-            else if (outlineLayer == layer)
-                outlineLayer = null;
+            if (_topLayer == layer)
+                _topLayer = null;
+            else if (_bottomLayer == layer)
+                _bottomLayer = null;
+            else if (_outlineLayer == layer)
+                _outlineLayer = null;
         }
 
         /// <summary>
@@ -97,7 +97,7 @@
         /// 
         public Layer GetLayer(string name, bool throwOnError = true) {
 
-            if ((layers != null) && layers.TryGetValue(name, out var layer))
+            if ((_layers != null) && _layers.TryGetValue(name, out var layer))
                 return layer;
 
             else if (throwOnError)
@@ -127,7 +127,7 @@
         public IReadOnlyList<Layer> GetSignalLayers() {
 
             List<Layer> signalLayers = new List<Layer>();
-            foreach (var layer in layers.Values) 
+            foreach (var layer in _layers.Values) 
                 if (layer.Function == LayerFunction.Signal)
                     signalLayers.Add(layer);
 
@@ -184,27 +184,34 @@
         /// </summary>
         /// 
         public Layer TopLayer =>
-            topLayer;
+            _topLayer;
 
         /// <summary>
         /// Obte la capa inferior.
         /// </summary>
         /// 
         public Layer BottomLayer =>
-           bottomLayer;
+           _bottomLayer;
 
         /// <summary>
         /// Obte la capa de perfil.
         /// </summary>
         /// 
         public Layer OutlineLayer =>
-            outlineLayer;
+            _outlineLayer;
+
+        /// <summary>
+        /// Indica si te capes
+        /// </summary>
+        /// 
+        public bool HasLayers =>
+            _layers != null;
 
         /// <summary>
         /// Enumera les capes.
         /// </summary>
         /// 
         public IEnumerable<Layer> Layers =>
-            layers?.Values;
+            _layers?.Values;
     }
 }

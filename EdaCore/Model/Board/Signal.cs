@@ -1,6 +1,6 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System;
 
-    using System;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Clase que representa una senyal.

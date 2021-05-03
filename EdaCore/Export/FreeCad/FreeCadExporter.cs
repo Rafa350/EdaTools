@@ -1,11 +1,11 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Import.FreeCad {
+﻿namespace MikroPic.EdaTools.v1.Core.Export.FreeCad {
 
     using System;
     using System.Globalization;
     using System.IO;
     using System.Xml;
 
-    public class FreeCadGenerator {
+    public class FreeCadExporter {
 
         public void Generate(string fileName, XmlNode node) {
 

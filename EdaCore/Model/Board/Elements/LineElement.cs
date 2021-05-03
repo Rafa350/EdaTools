@@ -15,10 +15,10 @@
             Flat
         }
 
-        private Point startPosition;
-        private Point endPosition;
-        private int thickness;
-        private CapStyle lineCap = CapStyle.Round;
+        private Point _startPosition;
+        private Point _endPosition;
+        private int _thickness;
+        private CapStyle _lineCap = CapStyle.Round;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -35,10 +35,10 @@
             if (thickness < 0)
                 throw new ArgumentOutOfRangeException(nameof(thickness));
 
-            this.startPosition = startPosition;
-            this.endPosition = endPosition;
-            this.thickness = thickness;
-            this.lineCap = lineCap;
+            _startPosition = startPosition;
+            _endPosition = endPosition;
+            _thickness = thickness;
+            _lineCap = lineCap;
         }
 
         /// <summary>
@@ -48,7 +48,7 @@
         /// 
         public override Element Clone() {
 
-            return new LineElement(LayerSet, startPosition, endPosition, thickness, lineCap);
+            return new LineElement(LayerSet, _startPosition, _endPosition, _thickness, _lineCap);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = PolygonBuilder.MakeLineTrace(startPosition, endPosition, thickness, LineCap == CapStyle.Round);
+            Point[] points = PolygonBuilder.MakeLineTrace(_startPosition, _endPosition, _thickness, LineCap == CapStyle.Round);
             return new Polygon(points);
         }
 
@@ -82,7 +82,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = PolygonBuilder.MakeLineTrace(startPosition, endPosition, thickness + (spacing * 2), lineCap == CapStyle.Round);
+            Point[] points = PolygonBuilder.MakeLineTrace(_startPosition, _endPosition, _thickness + (spacing * 2), _lineCap == CapStyle.Round);
             return new Polygon(points);
         }
 
@@ -95,23 +95,19 @@
         public override Rect GetBoundingBox(BoardSide side) {
 
             return new Rect(
-                Math.Min(startPosition.X, endPosition.X) - thickness / 2,
-                Math.Min(startPosition.Y, endPosition.Y) - thickness / 2,
-                Math.Abs(endPosition.X - startPosition.X + 1) + thickness,
-                Math.Abs(endPosition.Y - startPosition.Y + 1) + thickness);
+                Math.Min(_startPosition.X, _endPosition.X) - _thickness / 2,
+                Math.Min(_startPosition.Y, _endPosition.Y) - _thickness / 2,
+                Math.Abs(_endPosition.X - _startPosition.X + 1) + _thickness,
+                Math.Abs(_endPosition.Y - _startPosition.Y + 1) + _thickness);
         }
 
         /// <summary>
         /// Obte o asigna la posicio inicial.
         /// </summary>
         /// 
-        public Point StartPosition {
-            get {
-                return startPosition;
-            }
-            set {
-                startPosition = value;
-            }
+        public Point StartPosition { 
+            get => _startPosition;
+            set => _startPosition = value;
         }
 
         /// <summary>
@@ -119,12 +115,8 @@
         /// </summary>
         /// 
         public Point EndPosition {
-            get {
-                return endPosition;
-            }
-            set {
-                endPosition = value;
-            }
+            get => _endPosition;
+            set => _endPosition = value;
         }
 
         /// <summary>
@@ -133,13 +125,13 @@
         /// 
         public int Thickness {
             get {
-                return thickness;
+                return _thickness;
             }
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Thickness");
 
-                thickness = value;
+                _thickness = value;
             }
         }
 
@@ -148,23 +140,16 @@
         /// </summary>
         /// 
         public CapStyle LineCap {
-            get {
-                return lineCap;
-            }
-            set {
-                lineCap = value;
-            }
+            get => _lineCap;
+            set => _lineCap = value;
         }
 
         /// <summary>
         /// Obte el tipus d'element.
         /// </summary>
         /// 
-        public override ElementType ElementType {
-            get {
-                return ElementType.Line;
-            }
-        }
+        public override ElementType ElementType =>
+            ElementType.Line;
     }
 }
 

@@ -93,6 +93,7 @@
                 <xs:element ref="elements" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
             <xs:attribute name="name" use="required" type="nameType"/>
+            <xs:attribute name="description" use="optional" type="xs:string"/>
         </xs:complexType>
     </xs:element>
 

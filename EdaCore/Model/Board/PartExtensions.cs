@@ -1,7 +1,7 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System;
+using MikroPic.EdaTools.v1.Base.Geometry;
 
-    using System;
-    using MikroPic.EdaTools.v1.Base.Geometry;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     public static class PartExtensions {
 

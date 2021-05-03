@@ -272,12 +272,8 @@
         /// </summary>
         /// 
         public ViaShape Shape {
-            get {
-                return _shape;
-            }
-            set {
-                _shape = value;
-            }
+            get => _shape;
+            set => _shape = value;
         }
 
         /// <summary>
@@ -285,18 +281,15 @@
         /// </summary>
         /// 
         public ViaType Type {
-            get {
-                return _type;
-            }
-            set {
-                _type = value;
-            }
+            get => _type;
+            set => _type = value;
         }
 
         /// <summary>
         /// Obte el tipus d'element.
         /// </summary>
         /// 
-        public override ElementType ElementType => ElementType.Via;
+        public override ElementType ElementType => 
+            ElementType.Via;
     }
 }

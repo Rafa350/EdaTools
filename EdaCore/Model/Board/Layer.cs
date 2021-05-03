@@ -1,6 +1,6 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System.Text;
 
-    using System.Text;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Funcio de la capa.

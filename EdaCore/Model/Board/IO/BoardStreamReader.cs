@@ -1,16 +1,15 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Xml;
+using System.Xml.Schema;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
+using MikroPic.EdaTools.v1.Base.Xml;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Reflection;
-    using System.Xml;
-    using System.Xml.Schema;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
-    using MikroPic.EdaTools.v1.Base.Xml;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
     /// <summary>
     /// Clase per la lectura de plaques des d'un stream
@@ -23,11 +22,11 @@
             public string SignalName;
         }
 
-        private static readonly XmlSchemaSet schemas;
+        private static readonly XmlSchemaSet _schemas;
 
-        private readonly XmlReaderAdapter rd;
-        private Board board;
-        private int version;
+        private readonly XmlReaderAdapter _rd;
+        private Board _board;
+        private int _version;
 
         /// <summary>
         /// Constructor estatic de la clase
@@ -35,16 +34,16 @@
         /// 
         static BoardStreamReader() {
 
-            schemas = new XmlSchemaSet();
+            _schemas = new XmlSchemaSet();
 
             string schemaResourceName = "MikroPic.EdaTools.v1.Core.Model.Board.IO.Schemas.XBRD.xsd";
             Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(schemaResourceName);
             if (resourceStream == null)
                 throw new Exception(String.Format("No se encontro el recurso '{0}'", schemaResourceName));
             XmlSchema schema = XmlSchema.Read(resourceStream, null);
-            schemas.Add(schema);
+            _schemas.Add(schema);
 
-            schemas.Compile();
+            _schemas.Compile();
         }
 
         /// <summary>
@@ -65,12 +64,12 @@
             settings.IgnoreWhitespace = true;
             settings.IgnoreComments = true;
             settings.CloseInput = false;
-            settings.Schemas = schemas;
-            settings.ValidationType = schemas == null ? ValidationType.None : ValidationType.Schema;
+            settings.Schemas = _schemas;
+            settings.ValidationType = _schemas == null ? ValidationType.None : ValidationType.Schema;
             settings.ConformanceLevel = ConformanceLevel.Document;
 
             XmlReader reader = XmlReader.Create(stream, settings);
-            rd = new XmlReaderAdapter(reader);
+            _rd = new XmlReaderAdapter(reader);
         }
 
         /// <summary>
@@ -80,12 +79,12 @@
         /// 
         public Board Read() {
 
-            board = new Board();
+            _board = new Board();
 
-            rd.NextTag();
+            _rd.NextTag();
             ParseDocumentNode();
 
-            return board;
+            return _board;
         }
 
         /// <summary>
@@ -94,14 +93,14 @@
         /// 
         private void ParseDocumentNode() {
 
-            if (!rd.IsStartTag("document"))
+            if (!_rd.IsStartTag("document"))
                 throw new InvalidDataException("Se esperaba <document>");
 
-            rd.NextTag();
+            _rd.NextTag();
             ParseBoardNode();
 
-            rd.NextTag();
-            if (!rd.IsEndTag("document"))
+            _rd.NextTag();
+            if (!_rd.IsEndTag("document"))
                 throw new InvalidDataException("Se esperaba </document>");
         }
 
@@ -111,34 +110,34 @@
         /// 
         private void ParseBoardNode() {
 
-            if (!rd.IsStartTag("board"))
+            if (!_rd.IsStartTag("board"))
                 throw new InvalidDataException("Se esperaba <board>");
 
-            version = rd.AttributeAsInteger("version");
+            _version = _rd.AttributeAsInteger("version");
 
-            rd.NextTag();
-            if (rd.TagName == "layers") {
-                board.AddLayers(ParseLayersNode());
-                rd.NextTag();
+            _rd.NextTag();
+            if (_rd.TagName == "layers") {
+                _board.AddLayers(ParseLayersNode());
+                _rd.NextTag();
             }
-            if (rd.TagName == "signals") {
-                board.AddSignals(ParseSignalsNode());
-                rd.NextTag();
+            if (_rd.TagName == "signals") {
+                _board.AddSignals(ParseSignalsNode());
+                _rd.NextTag();
             }
-            if (rd.TagName == "components") {
-                board.AddComponents(ParseComponentsNode());
-                rd.NextTag();
+            if (_rd.TagName == "components") {
+                _board.AddComponents(ParseComponentsNode());
+                _rd.NextTag();
             }
-            if (rd.TagName == "parts") {
-                board.AddParts(ParsePartsNode());
-                rd.NextTag();
+            if (_rd.TagName == "parts") {
+                _board.AddParts(ParsePartsNode());
+                _rd.NextTag();
             }
-            if (rd.TagName == "elements") {
-                board.AddElements(ParseBoardElementsNode());
-                rd.NextTag();
+            if (_rd.TagName == "elements") {
+                _board.AddElements(ParseBoardElementsNode());
+                _rd.NextTag();
             }
 
-            if (!rd.IsEndTag("board"))
+            if (!_rd.IsEndTag("board"))
                 throw new InvalidDataException("Se esperaba </board>");
         }
 
@@ -149,18 +148,18 @@
         /// 
         private IEnumerable<Layer> ParseLayersNode() {
 
-            if (!rd.IsStartTag("layers"))
+            if (!_rd.IsStartTag("layers"))
                 throw new InvalidDataException("Se esperaba <layers>");
 
             List<Layer> layers = new List<Layer>();
 
-            rd.NextTag();
-            while (rd.IsStartTag("layer")) {
+            _rd.NextTag();
+            while (_rd.IsStartTag("layer")) {
                 layers.Add(ParseLayerNode());
-                rd.NextTag();
+                _rd.NextTag();
             }
 
-            if (!rd.IsEndTag("layers"))
+            if (!_rd.IsEndTag("layers"))
                 throw new InvalidDataException("Se esperaba </layers>");
 
             return layers;
@@ -173,15 +172,15 @@
         /// 
         private Layer ParseLayerNode() {
 
-            if (!rd.IsStartTag("layer"))
+            if (!_rd.IsStartTag("layer"))
                 throw new InvalidDataException("Se esperaba <layer>");
 
-            BoardSide side = rd.AttributeAsEnum<BoardSide>("side", BoardSide.None);
-            string tag = rd.AttributeAsString("tag");
-            LayerFunction function = rd.AttributeAsEnum<LayerFunction>("function", LayerFunction.Unknown);
+            BoardSide side = _rd.AttributeAsEnum<BoardSide>("side", BoardSide.None);
+            string tag = _rd.AttributeAsString("tag");
+            LayerFunction function = _rd.AttributeAsEnum<LayerFunction>("function", LayerFunction.Unknown);
 
-            rd.NextTag();
-            if (!rd.IsEndTag("layer"))
+            _rd.NextTag();
+            if (!_rd.IsEndTag("layer"))
                 throw new InvalidDataException("Se esperaba </layer>");
 
             Layer layer = new Layer(side, tag, function);
@@ -194,18 +193,18 @@
         /// 
         private IEnumerable<Signal> ParseSignalsNode() {
 
-            if (!rd.IsStartTag("signals"))
+            if (!_rd.IsStartTag("signals"))
                 throw new InvalidDataException("Se esperaba <signals>");
 
             List<Signal> signals = new List<Signal>();
 
-            rd.NextTag();
-            while (rd.IsStartTag("signal")) {
+            _rd.NextTag();
+            while (_rd.IsStartTag("signal")) {
                 signals.Add(ParseSignalNode());
-                rd.NextTag();
+                _rd.NextTag();
             }
 
-            if (!rd.IsEndTag("signals"))
+            if (!_rd.IsEndTag("signals"))
                 throw new InvalidDataException("Se esperaba </signals>");
 
             return signals;
@@ -218,13 +217,13 @@
         /// 
         private Signal ParseSignalNode() {
 
-            if (!rd.IsStartTag("signal"))
+            if (!_rd.IsStartTag("signal"))
                 throw new InvalidDataException("Se esperaba <signal>");
 
-            string name = rd.AttributeAsString("name");
+            string name = _rd.AttributeAsString("name");
 
-            rd.NextTag();
-            if (!rd.IsEndTag("signal"))
+            _rd.NextTag();
+            if (!_rd.IsEndTag("signal"))
                 throw new InvalidDataException("Se esperaba </signal>");
 
             Signal signal = new Signal(name);
@@ -238,18 +237,18 @@
         /// 
         private IEnumerable<Component> ParseComponentsNode() {
 
-            if (!rd.IsStartTag("components"))
+            if (!_rd.IsStartTag("components"))
                 throw new InvalidDataException("Se esperaba <components>");
 
             List<Component> blocks = new List<Component>();
 
-            rd.NextTag();
-            while (rd.IsStartTag("component")) {
+            _rd.NextTag();
+            while (_rd.IsStartTag("component")) {
                 blocks.Add(ParseComponentNode());
-                rd.NextTag();
+                _rd.NextTag();
             }
 
-            if (!rd.IsEndTag("components"))
+            if (!_rd.IsEndTag("components"))
                 throw new InvalidDataException("Se esperaba </components>");
 
             return blocks;
@@ -262,18 +261,18 @@
         /// 
         private Component ParseComponentNode() {
 
-            if (!rd.IsStartTag("component"))
+            if (!_rd.IsStartTag("component"))
                 throw new InvalidDataException("Se esperaba <component>");
 
-            string name = rd.AttributeAsString("name");
+            string name = _rd.AttributeAsString("name");
 
             Component block = new Component(name);
 
-            rd.NextTag();
+            _rd.NextTag();
             block.AddElements(ParseComponentElementsNode());
-            rd.NextTag();
+            _rd.NextTag();
 
-            if (!rd.IsEndTag("component"))
+            if (!_rd.IsEndTag("component"))
                 throw new InvalidDataException("Se esperaba </component>");
 
             return block;
@@ -286,14 +285,14 @@
         /// 
         private IEnumerable<Element> ParseComponentElementsNode() {
 
-            if (!rd.IsStartTag("elements"))
+            if (!_rd.IsStartTag("elements"))
                 throw new InvalidDataException("Se esperaba <elements>");
 
             List<Element> elements = new List<Element>();
 
-            rd.NextTag();
-            while (rd.IsStart) {
-                switch (rd.TagName) {
+            _rd.NextTag();
+            while (_rd.IsStart) {
+                switch (_rd.TagName) {
                     case "line":
                         elements.Add(ParseLineNode());
                         break;
@@ -333,10 +332,10 @@
                     default:
                         throw new InvalidDataException("Se esperaba <line>, <arc>, <rectangle>, <circle>, <tpad>, <spad>, <via>, <text>, <region> o <hole>");
                 }
-                rd.NextTag();
+                _rd.NextTag();
             }
 
-            if (!rd.IsEndTag("elements"))
+            if (!_rd.IsEndTag("elements"))
                 throw new InvalidDataException("Se esperaba </elements>");
 
             return elements;
@@ -349,14 +348,14 @@
         /// 
         private IEnumerable<Element> ParseBoardElementsNode() {
 
-            if (!rd.IsStartTag("elements"))
+            if (!_rd.IsStartTag("elements"))
                 throw new InvalidDataException("Se esperaba <elements>");
 
             List<Element> elements = new List<Element>();
 
-            rd.NextTag();
-            while (rd.IsStart) {
-                switch (rd.TagName) {
+            _rd.NextTag();
+            while (_rd.IsStart) {
+                switch (_rd.TagName) {
                     case "line":
                         elements.Add(ParseLineNode());
                         break;
@@ -400,10 +399,10 @@
                     default:
                         throw new InvalidDataException("Se esperaba <line>, <arc>, <rectangle>, <circle>, <tpad>, <spad>, <via>, <text>, <region> o <hole>");
                 }
-                rd.NextTag();
+                _rd.NextTag();
             }
 
-            if (!rd.IsEndTag("elements"))
+            if (!_rd.IsEndTag("elements"))
                 throw new InvalidDataException("Se esperaba </elements>");
 
             return elements;
@@ -416,18 +415,18 @@
         /// 
         private IEnumerable<Part> ParsePartsNode() {
 
-            if (!rd.IsStartTag("parts"))
+            if (!_rd.IsStartTag("parts"))
                 throw new InvalidDataException("Se esperaba <parts>");
 
             List<Part> parts = new List<Part>();
 
-            rd.NextTag();
-            while (rd.IsStartTag("part")) {
+            _rd.NextTag();
+            while (_rd.IsStartTag("part")) {
                 parts.Add(ParsePartNode());
-                rd.NextTag();
+                _rd.NextTag();
             }
 
-            if (!rd.IsEndTag("parts"))
+            if (!_rd.IsEndTag("parts"))
                 throw new InvalidDataException("Se esperaba </parts>");
 
             return parts;
@@ -440,21 +439,21 @@
         /// 
         private Part ParsePartNode() {
 
-            if (!rd.IsStartTag("part"))
+            if (!_rd.IsStartTag("part"))
                 throw new InvalidDataException("Se esperaba <part>");
 
-            string name = rd.AttributeAsString("name");
-            Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
-            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
-            bool flip = rd.AttributeAsBoolean("flip", false);
-            string blockName = rd.AttributeAsString("component");
+            string name = _rd.AttributeAsString("name");
+            Point position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
+            Angle rotation = XmlTypeParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
+            bool flip = _rd.AttributeAsBoolean("flip", false);
+            string blockName = _rd.AttributeAsString("component");
 
-            Component block = board.GetComponent(blockName);
+            Component block = _board.GetComponent(blockName);
             Part part = new Part(block, name, position, rotation, flip);
 
-            rd.NextTag();
-            while (rd.IsStart) {
-                switch (rd.TagName) {
+            _rd.NextTag();
+            while (_rd.IsStart) {
+                switch (_rd.TagName) {
                     case "attributes":
                         part.AddAttributes(ParsePartAttributesNode());
                         break;
@@ -462,18 +461,18 @@
                     case "pads":
                         foreach (var padInfo in ParsePartPadsNode()) {
                             PadElement pad = part.GetPad(padInfo.Name);
-                            Signal signal = board.GetSignal(padInfo.SignalName);
-                            board.Connect(signal, pad, part);
+                            Signal signal = _board.GetSignal(padInfo.SignalName);
+                            _board.Connect(signal, pad, part);
                         }
                         break;
 
                     default:
                         throw new InvalidDataException("Se esperaba <pads> o <attributes>");
                 }
-                rd.NextTag();
+                _rd.NextTag();
             }
 
-            if (!rd.IsEndTag("part"))
+            if (!_rd.IsEndTag("part"))
                 throw new InvalidDataException("Se esperaba </part>");
 
             return part;
@@ -485,18 +484,18 @@
         /// 
         private IEnumerable<PartAttribute> ParsePartAttributesNode() {
 
-            if (!rd.IsStartTag("attributes"))
+            if (!_rd.IsStartTag("attributes"))
                 throw new InvalidDataException("Se esperaba <attributes>");
 
             List<PartAttribute> attributes = new List<PartAttribute>();
 
-            rd.NextTag();
-            while (rd.IsStartTag("attribute")) {
+            _rd.NextTag();
+            while (_rd.IsStartTag("attribute")) {
                 attributes.Add(ParsePartAttributeNode());
-                rd.NextTag();
+                _rd.NextTag();
             }
 
-            if (!rd.IsEndTag("attributes"))
+            if (!_rd.IsEndTag("attributes"))
                 throw new InvalidDataException("Se esperaba </attributes>");
 
             return attributes;
@@ -509,32 +508,32 @@
         /// 
         private PartAttribute ParsePartAttributeNode() {
 
-            if (!rd.IsStartTag("attribute"))
+            if (!_rd.IsStartTag("attribute"))
                 throw new InvalidDataException("Se esperaba <attribute>");
 
-            string name = rd.AttributeAsString("name");
-            string value = rd.AttributeAsString("value");
-            bool visible = rd.AttributeAsBoolean("visible", false);
+            string name = _rd.AttributeAsString("name");
+            string value = _rd.AttributeAsString("value");
+            bool visible = _rd.AttributeAsBoolean("visible", false);
 
             PartAttribute attribute = new PartAttribute(name, value, visible);
 
-            if (rd.AttributeExists("position"))
-                attribute.Position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
+            if (_rd.AttributeExists("position"))
+                attribute.Position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
 
-            if (rd.AttributeExists("rotation"))
-                attribute.Rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation"));
+            if (_rd.AttributeExists("rotation"))
+                attribute.Rotation = XmlTypeParser.ParseAngle(_rd.AttributeAsString("rotation"));
 
-            if (rd.AttributeExists("height"))
-                attribute.Height = XmlTypeParser.ParseNumber(rd.AttributeAsString("height"));
+            if (_rd.AttributeExists("height"))
+                attribute.Height = XmlTypeParser.ParseNumber(_rd.AttributeAsString("height"));
 
-            if (rd.AttributeExists("horizontalAlign"))
-                attribute.HorizontalAlign = rd.AttributeAsEnum("horizontalAlign", HorizontalTextAlign.Left);
+            if (_rd.AttributeExists("horizontalAlign"))
+                attribute.HorizontalAlign = _rd.AttributeAsEnum("horizontalAlign", HorizontalTextAlign.Left);
 
-            if (rd.AttributeExists("verticalAlign"))
-                attribute.VerticalAlign = rd.AttributeAsEnum("verticalAlign", VerticalTextAlign.Bottom);
+            if (_rd.AttributeExists("verticalAlign"))
+                attribute.VerticalAlign = _rd.AttributeAsEnum("verticalAlign", VerticalTextAlign.Bottom);
 
-            rd.NextTag();
-            if (!rd.IsEndTag("attribute"))
+            _rd.NextTag();
+            if (!_rd.IsEndTag("attribute"))
                 throw new InvalidDataException("Se esperaba </attribute>");
 
             return attribute;
@@ -547,18 +546,18 @@
         /// 
         private IEnumerable<PadInfo> ParsePartPadsNode() {
 
-            if (!rd.IsStartTag("pads"))
+            if (!_rd.IsStartTag("pads"))
                 throw new InvalidDataException("Se esperaba <pads>");
 
-            List<PadInfo> pads = new List<PadInfo>();
+            var pads = new List<PadInfo>();
 
-            rd.NextTag();
-            while (rd.IsStartTag("pad")) {
+            _rd.NextTag();
+            while (_rd.IsStartTag("pad")) {
                 pads.Add(ParsePartPadNode());
-                rd.NextTag();
+                _rd.NextTag();
             }
 
-            if (!rd.IsEndTag("pads"))
+            if (!_rd.IsEndTag("pads"))
                 throw new InvalidDataException("Se esperaba </pads>");
 
             return pads;
@@ -571,17 +570,17 @@
         /// 
         private PadInfo ParsePartPadNode() {
 
-            if (!rd.IsStartTag("pad"))
+            if (!_rd.IsStartTag("pad"))
                 throw new InvalidDataException("Se esperaba <pad>");
 
-            string padName = rd.AttributeAsString("name");
-            string signalName = rd.AttributeAsString("signal");
+            string padName = _rd.AttributeAsString("name");
+            string signalName = _rd.AttributeAsString("signal");
 
-            rd.NextTag();
-            if (!rd.IsEndTag("pad"))
+            _rd.NextTag();
+            if (!_rd.IsEndTag("pad"))
                 throw new InvalidDataException("Se esperaba </pad>");
 
-            PadInfo padInfo = new PadInfo {
+            var padInfo = new PadInfo {
                 Name = padName,
                 SignalName = signalName
             };
@@ -594,24 +593,12 @@
         /// 
         private LineElement ParseLineNode() {
 
-            if (!rd.IsStartTag("line"))
-                throw new InvalidDataException("Se esperaba <line>");
+            var line = ElementParser.Line(_rd);
 
-            LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
-            Point startPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("startPosition"));
-            Point endPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("endPosition"));
-            int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness", "0"));
-            LineElement.CapStyle lineCap = rd.AttributeAsEnum<LineElement.CapStyle>("lineCap", LineElement.CapStyle.Round);
-            string signalName = rd.AttributeAsString("signal");
-
-            rd.NextTag();
-            if (!rd.IsEndTag("line"))
-                throw new InvalidDataException("Se esperaba </line>");
-
-            LineElement line = new LineElement(layerSet, startPosition, endPosition, thickness, lineCap);
+            string signalName = _rd.AttributeAsString("signal");
             if (signalName != null) {
-                Signal signal = board.GetSignal(signalName);
-                board.Connect(signal, line);
+                Signal signal = _board.GetSignal(signalName);
+                _board.Connect(signal, line);
             }
 
             return line;
@@ -623,26 +610,13 @@
         /// <returns>L'objecte 'ArcElement' obtingut.</returns>
         /// 
         private ArcElement ParseArcNode() {
+           
+            var arc = ElementParser.Arc(_rd);
 
-            if (!rd.IsStartTag("arc"))
-                throw new InvalidDataException("Se esperaba <arc>");
-
-            LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
-            Point startPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("startPosition"));
-            Point endPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("endPosition"));
-            int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness"));
-            Angle angle = XmlTypeParser.ParseAngle(rd.AttributeAsString("angle"));
-            LineElement.CapStyle lineCap = rd.AttributeAsEnum<LineElement.CapStyle>("lineCap", LineElement.CapStyle.Round);
-            string signalName = rd.AttributeAsString("signal");
-
-            rd.NextTag();
-            if (!rd.IsEndTag("arc"))
-                throw new InvalidDataException("Se esperaba </arc>");
-
-            ArcElement arc = new ArcElement(layerSet, startPosition, endPosition, thickness, angle, lineCap);
+            string signalName = _rd.AttributeAsString("signal");
             if (signalName != null) {
-                Signal signal = board.GetSignal(signalName);
-                board.Connect(signal, arc);
+                Signal signal = _board.GetSignal(signalName);
+                _board.Connect(signal, arc);
             }
 
             return arc;
@@ -655,24 +629,7 @@
         /// 
         private RectangleElement ParseRectangleNode() {
 
-            if (!rd.IsStartTag("rectangle"))
-                throw new InvalidDataException("Se esperaba <rectangle>");
-
-            LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
-            Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
-            Size size = XmlTypeParser.ParseSize(rd.AttributeAsString("size"));
-            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
-            int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness", "0"));
-            Ratio roundness = XmlTypeParser.ParseRatio(rd.AttributeAsString("roundness", "0"));
-            bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
-
-            rd.NextTag();
-            if (!rd.IsEndTag("rectangle"))
-                throw new InvalidDataException("Se esperaba </rectangle>");
-
-            RectangleElement rectangle = new RectangleElement(layerSet, position, size, roundness, rotation, thickness, filled);
-
-            return rectangle;
+            return ElementParser.Rectangle(_rd);
         }
 
         /// <summary>
@@ -682,22 +639,7 @@
         /// 
         private CircleElement ParseCircleNode() {
 
-            if (!rd.IsStartTag("circle"))
-                throw new InvalidDataException("Se esperaba <circle>");
-
-            LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
-            Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
-            int radius = XmlTypeParser.ParseNumber(rd.AttributeAsString("radius"));
-            int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness", "0"));
-            bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
-
-            rd.NextTag();
-            if (!rd.IsEndTag("circle"))
-                throw new InvalidDataException("Se esperaba </circle>");
-
-            CircleElement circle = new CircleElement(layerSet, position, radius, thickness, filled);
-
-            return circle;
+            return ElementParser.Circle(_rd);
         }
 
         /// <summary>
@@ -707,30 +649,30 @@
         /// 
         private RegionElement ParseRegionNode() {
 
-            if (!rd.IsStartTag("region"))
+            if (!_rd.IsStartTag("region"))
                 throw new InvalidDataException("Se esperaba <region>");
 
-            LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
-            int thickness = rd.AttributeExists("thickness") ?
-                XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness")) :
+            LayerSet layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
+            int thickness = _rd.AttributeExists("thickness") ?
+                XmlTypeParser.ParseNumber(_rd.AttributeAsString("thickness")) :
                 0;
-            bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
-            int clearance = XmlTypeParser.ParseNumber(rd.AttributeAsString("clearance", "0"));
-            string signalName = rd.AttributeAsString("signal");
+            bool filled = _rd.AttributeAsBoolean("filled", thickness == 0);
+            int clearance = XmlTypeParser.ParseNumber(_rd.AttributeAsString("clearance", "0"));
+            string signalName = _rd.AttributeAsString("signal");
 
-            RegionElement region = new RegionElement(layerSet, thickness, filled, clearance);
+            var region = new RegionElement(layerSet, thickness, filled, clearance);
             if (signalName != null) {
-                Signal signal = board.GetSignal(signalName);
-                board.Connect(signal, region);
+                Signal signal = _board.GetSignal(signalName);
+                _board.Connect(signal, region);
             }
 
-            rd.NextTag();
-            while (rd.IsStartTag("segment")) {
+            _rd.NextTag();
+            while (_rd.IsStartTag("segment")) {
                 region.Add(ParseRegionSegmentNode());
-                rd.NextTag();
+                _rd.NextTag();
             }
 
-            if (!rd.IsEndTag("region"))
+            if (!_rd.IsEndTag("region"))
                 throw new InvalidDataException("Se esperaba </region>");
 
             return region;
@@ -743,14 +685,14 @@
         /// 
         private RegionElement.Segment ParseRegionSegmentNode() {
 
-            if (!rd.IsStartTag("segment"))
+            if (!_rd.IsStartTag("segment"))
                 throw new InvalidDataException("Se esperaba <segment>");
 
-            Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
-            Angle angle = XmlTypeParser.ParseAngle(rd.AttributeAsString("angle", "0"));
+            Point position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
+            Angle angle = XmlTypeParser.ParseAngle(_rd.AttributeAsString("angle", "0"));
 
-            rd.NextTag();
-            if (!rd.IsEndTag("segment"))
+            _rd.NextTag();
+            if (!_rd.IsEndTag("segment"))
                 throw new InvalidDataException("Se esperaba </segment>");
 
             RegionElement.Segment segment = new RegionElement.Segment(position, angle);
@@ -765,57 +707,44 @@
         /// 
         private ThPadElement ParseTPadNode() {
 
-            if (!rd.IsStartTag("tpad"))
+            if (!_rd.IsStartTag("tpad"))
                 throw new InvalidDataException("Se esperaba <tpad>");
 
-            string name = rd.AttributeAsString("name");
-            LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
-            Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
-            int size = XmlTypeParser.ParseNumber(rd.AttributeAsString("size"));
-            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
-            int drill = XmlTypeParser.ParseNumber(rd.AttributeAsString("drill"));
-            ThPadElement.ThPadShape shape = rd.AttributeAsEnum<ThPadElement.ThPadShape>("shape", ThPadElement.ThPadShape.Circle);
-            string signalName = rd.AttributeAsString("signal");
+            string name = _rd.AttributeAsString("name");
+            LayerSet layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
+            Point position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
+            int size = XmlTypeParser.ParseNumber(_rd.AttributeAsString("size"));
+            Angle rotation = XmlTypeParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
+            int drill = XmlTypeParser.ParseNumber(_rd.AttributeAsString("drill"));
+            ThPadElement.ThPadShape shape = _rd.AttributeAsEnum<ThPadElement.ThPadShape>("shape", ThPadElement.ThPadShape.Circle);
+            string signalName = _rd.AttributeAsString("signal");
 
-            rd.NextTag();
-            if (!rd.IsEndTag("tpad"))
+            _rd.NextTag();
+            if (!_rd.IsEndTag("tpad"))
                 throw new InvalidDataException("Se esperaba </tpad>");
 
             ThPadElement pad = new ThPadElement(name, layerSet, position, rotation, size, shape, drill);
             if (signalName != null) {
-                Signal signal = board.GetSignal(signalName);
-                board.Connect(signal, pad);
+                Signal signal = _board.GetSignal(signalName);
+                _board.Connect(signal, pad);
             }
 
             return pad;
         }
 
         /// <summary>
-        /// Procesa un node tpad
+        /// Procesa un node spad
         /// </summary>
         /// <returns>L'objecte 'SPadElement' obtingut.</returns>
         /// 
         private SmdPadElement ParseSPadNode() {
 
-            if (!rd.IsStartTag("spad"))
-                throw new InvalidDataException("Se esperaba <spad>");
+            var pad = ElementParser.SPad(_rd);
 
-            string name = rd.AttributeAsString("name");
-            LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
-            Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
-            Size size = XmlTypeParser.ParseSize(rd.AttributeAsString("size"));
-            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
-            Ratio roundness = XmlTypeParser.ParseRatio(rd.AttributeAsString("roundness", "0"));
-            string signalName = rd.AttributeAsString("signal");
-
-            rd.NextTag();
-            if (!rd.IsEndTag("spad"))
-                throw new InvalidDataException("Se esperaba </spad>");
-
-            SmdPadElement pad = new SmdPadElement(name, layerSet, position, size, rotation, roundness);
+            string signalName = _rd.AttributeAsString("signal");
             if (signalName != null) {
-                Signal signal = board.GetSignal(signalName);
-                board.Connect(signal, pad);
+                Signal signal = _board.GetSignal(signalName);
+                _board.Connect(signal, pad);
             }
 
             return pad;
@@ -828,27 +757,27 @@
         /// 
         private ViaElement ParseViaNode() {
 
-            if (!rd.IsStartTag("via"))
+            if (!_rd.IsStartTag("via"))
                 throw new InvalidDataException("Se esperaba <via>");
 
-            LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
-            Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
-            int outerSize = XmlTypeParser.ParseNumber(rd.AttributeAsString("outerSize"));
-            int innerSize = rd.AttributeExists("innerSize") ?
-                XmlTypeParser.ParseNumber(rd.AttributeAsString("innerSize")) :
+            LayerSet layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
+            Point position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
+            int outerSize = XmlTypeParser.ParseNumber(_rd.AttributeAsString("outerSize"));
+            int innerSize = _rd.AttributeExists("innerSize") ?
+                XmlTypeParser.ParseNumber(_rd.AttributeAsString("innerSize")) :
                 outerSize;
-            int drill = XmlTypeParser.ParseNumber(rd.AttributeAsString("drill"));
-            ViaElement.ViaShape shape = rd.AttributeAsEnum<ViaElement.ViaShape>("shape", ViaElement.ViaShape.Circle);
-            string signalName = rd.AttributeAsString("signal");
+            int drill = XmlTypeParser.ParseNumber(_rd.AttributeAsString("drill"));
+            ViaElement.ViaShape shape = _rd.AttributeAsEnum<ViaElement.ViaShape>("shape", ViaElement.ViaShape.Circle);
+            string signalName = _rd.AttributeAsString("signal");
 
-            rd.NextTag();
-            if (!rd.IsEndTag("via"))
+            _rd.NextTag();
+            if (!_rd.IsEndTag("via"))
                 throw new InvalidDataException("Se esperaba </via>");
 
             ViaElement via = new ViaElement(layerSet, position, outerSize, innerSize, drill, shape);
             if (signalName != null) {
-                Signal signal = board.GetSignal(signalName);
-                board.Connect(signal, via);
+                Signal signal = _board.GetSignal(signalName);
+                _board.Connect(signal, via);
             }
 
             return via;
@@ -861,20 +790,7 @@
         /// 
         private HoleElement ParseHoleNode() {
 
-            if (!rd.IsStartTag("hole"))
-                throw new InvalidDataException("Se esperaba <hole>");
-
-            LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
-            Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
-            int drill = XmlTypeParser.ParseNumber(rd.AttributeAsString("drill"));
-
-            rd.NextTag();
-            if (!rd.IsEndTag("hole"))
-                throw new InvalidDataException("Se esperaba </hole>");
-
-            HoleElement hole = new HoleElement(layerSet, position, drill);
-
-            return hole;
+            return ElementParser.Hole(_rd);
         }
 
         /// <summary>
@@ -884,25 +800,7 @@
         /// 
         private TextElement ParseTextNode() {
 
-            if (!rd.IsStartTag("text"))
-                throw new InvalidDataException("Se esperaba <text>");
-
-            LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
-            Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
-            Angle rotation = XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
-            int height = XmlTypeParser.ParseNumber(rd.AttributeAsString("height"));
-            HorizontalTextAlign horizontalAlign = rd.AttributeAsEnum("horizontalAlign", HorizontalTextAlign.Left);
-            VerticalTextAlign verticalAlign = rd.AttributeAsEnum("verticalAlign", VerticalTextAlign.Bottom);
-            int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness"));
-            string value = rd.AttributeAsString("value");
-
-            rd.NextTag();
-            if (!rd.IsEndTag("text"))
-                throw new InvalidDataException("Se esperaba </text>");
-
-            TextElement text = new TextElement(layerSet, position, rotation, height, thickness, horizontalAlign, verticalAlign, value);
-
-            return text;
+            return ElementParser.Text(_rd);
         }
     }
 }

@@ -1,19 +1,19 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System;
+using System.Collections.Generic;
 
-    using System;
-    using System.Collections.Generic;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     public sealed partial class Library : IBoardVisitable {
 
-        private string name;
-        private string description;
+        private string _name;
+        private string _description;
 
         public Library(string name) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            this.name = name;
+            _name = name;
         }
 
         public Library(string name, string description, IEnumerable<Component> components) {
@@ -21,8 +21,8 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            this.name = name;
-            this.description = description;
+            _name = name;
+            _description = description;
             if (components != null)
                 AddComponents(components);
         }
@@ -37,12 +37,8 @@
         /// </summary>
         /// 
         public string Name {
-            get {
-                return name;
-            }
-            set {
-                name = value;
-            }
+            get => _name;
+            set => _name = value;
         }
 
         /// <summary>
@@ -50,12 +46,8 @@
         /// </summary>
         /// 
         public string Description {
-            get {
-                return description;
-            }
-            set {
-                description = value;
-            }
+            get => _description;
+            set => _description = value;
         }
     }
 }

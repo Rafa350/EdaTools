@@ -1,7 +1,8 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
-    using System;
-    using System.Collections.Generic;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Clase que representa una placa de circuit impres.
@@ -9,9 +10,9 @@
     /// 
     public sealed partial class Board {
 
-        private Dictionary<string, Signal> signals = new Dictionary<string, Signal>();
-        private readonly Dictionary<Signal, HashSet<Tuple<IConectable, Part>>> itemsOfSignal = new Dictionary<Signal, HashSet<Tuple<IConectable, Part>>>();
-        private readonly Dictionary<Tuple<IConectable, Part>, Signal> signalOfItem = new Dictionary<Tuple<IConectable, Part>, Signal>();
+        private Dictionary<string, Signal> _signals = new Dictionary<string, Signal>();
+        private readonly Dictionary<Signal, HashSet<Tuple<IConectable, Part>>> _itemsOfSignal = new Dictionary<Signal, HashSet<Tuple<IConectable, Part>>>();
+        private readonly Dictionary<Tuple<IConectable, Part>, Signal> _signalOfItem = new Dictionary<Tuple<IConectable, Part>, Signal>();
 
         /// <summary>
         /// Afeigeix una senyal a la placa.
@@ -23,13 +24,13 @@
             if (signal == null)
                 throw new ArgumentNullException(nameof(signal));
 
-            if ((signals == null) || signals.ContainsKey(signal.Name))
+            if ((_signals == null) || _signals.ContainsKey(signal.Name))
                 throw new InvalidOperationException(
                     String.Format("Ya existe una señal con el nombre '{0}' en la placa.", signal.Name));
 
-            if (signals == null)
-                signals = new Dictionary<string, Signal>();
-            signals.Add(signal.Name, signal);
+            if (_signals == null)
+                _signals = new Dictionary<string, Signal>();
+            _signals.Add(signal.Name, signal);
         }
 
         /// <summary>
@@ -56,17 +57,17 @@
             if (signal == null)
                 throw new ArgumentNullException(nameof(signal));
 
-            if ((signals == null) || !signals.ContainsKey(signal.Name))
+            if ((_signals == null) || !_signals.ContainsKey(signal.Name))
                 throw new InvalidOperationException(
                     String.Format("No se encontro ninguna señal con el nombre '{0}', en la placa.", signal.Name));
 
-            if (itemsOfSignal.ContainsKey(signal))
+            if (_itemsOfSignal.ContainsKey(signal))
                 throw new InvalidOperationException(
                     String.Format("La señal '{0}', esta en uso y no puede ser retirada de la placa.", signal.Name));
 
-            signals.Remove(signal.Name);
-            if (signals.Count == 0)
-                signals = null;
+            _signals.Remove(signal.Name);
+            if (_signals.Count == 0)
+                _signals = null;
         }
 
         /// <summary>
@@ -84,22 +85,22 @@
             if (element == null)
                 throw new ArgumentNullException(nameof(element));
 
-            if ((signals == null) || !signals.ContainsKey(signal.Name))
+            if ((_signals == null) || !_signals.ContainsKey(signal.Name))
                 throw new InvalidOperationException(
                     String.Format("La senyal '{0}', no esta asignada a esta placa.", signal.Name));
 
             Tuple<IConectable, Part> item = new Tuple<IConectable, Part>(element, part);
 
-            if (signalOfItem.ContainsKey(item))
+            if (_signalOfItem.ContainsKey(item))
                 throw new InvalidOperationException("El objeto ya esta conectado.");
 
             HashSet<Tuple<IConectable, Part>> elementSet;
-            if (!itemsOfSignal.TryGetValue(signal, out elementSet)) {
+            if (!_itemsOfSignal.TryGetValue(signal, out elementSet)) {
                 elementSet = new HashSet<Tuple<IConectable, Part>>();
-                itemsOfSignal.Add(signal, elementSet);
+                _itemsOfSignal.Add(signal, elementSet);
             }
             elementSet.Add(item);
-            signalOfItem.Add(item, signal);
+            _signalOfItem.Add(item, signal);
         }
 
         /// <summary>
@@ -115,7 +116,7 @@
 
             Tuple<IConectable, Part> item = new Tuple<IConectable, Part>(element, part);
 
-            if (!signalOfItem.ContainsKey(item))
+            if (!_signalOfItem.ContainsKey(item))
                 throw new InvalidOperationException("El objeto no esta conectado a ninguna señal.");
         }
 
@@ -136,7 +137,7 @@
 
             if (element is IConectable conectableElement) {
                 Tuple<IConectable, Part> item = new Tuple<IConectable, Part>(conectableElement, part);
-                signalOfItem.TryGetValue(item, out signal);
+                _signalOfItem.TryGetValue(item, out signal);
             }
 
             if ((signal == null) && throwOnError)
@@ -157,7 +158,7 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            if ((signals != null) && signals.TryGetValue(name, out var signal))
+            if ((_signals != null) && _signals.TryGetValue(name, out var signal))
                 return signal;
 
             else if (throwOnError)
@@ -179,12 +180,12 @@
             if (signal == null)
                 throw new ArgumentNullException(nameof(signal));
 
-            if ((signals == null) || !signals.ContainsKey(signal.Name))
+            if ((_signals == null) || !_signals.ContainsKey(signal.Name))
                 throw new InvalidOperationException(
                     String.Format("La señal '{0}', no esta asignada a esta placa.", signal.Name));
 
             HashSet<Tuple<IConectable, Part>> itemSet;
-            if (itemsOfSignal.TryGetValue(signal, out itemSet))
+            if (_itemsOfSignal.TryGetValue(signal, out itemSet))
                 return itemSet;
             else
                 return null;
@@ -194,20 +195,14 @@
         /// Indica si la placa conte senyals
         /// </summary>
         /// 
-        public bool HasSignals {
-            get {
-                return signals != null;
-            }
-        }
+        public bool HasSignals =>
+            _signals != null;
 
         /// <summary>
         /// Obte un enunerador per les senyals.
         /// </summary>
         /// 
-        public IEnumerable<Signal> Signals {
-            get {
-                return signals?.Values;
-            }
-        }
+        public IEnumerable<Signal> Signals =>
+            _signals == null ? Enumerable.Empty<Signal>() : _signals.Values;
     }
 }

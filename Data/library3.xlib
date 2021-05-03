@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<document version="213" documentType="library" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/XLIB.xsd">
-    <library name="unnamed" description="">
+<document version="213" documentType="componentLibrary" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/XLIB.xsd">
+    <library name="unnamed">
         <components>
             <component name="R-0805">
                 <elements>
@@ -433,7 +433,6 @@
                     <line layers="Top.Document" startPosition="0.25, -0.25" endPosition="-0.25, 0" thickness="0.1" />
                 </elements>
             </component>
-            <component name="D-1205" />
         </components>
     </library>
 </document>

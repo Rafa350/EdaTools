@@ -1,8 +1,8 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System;
+using System.Collections.Generic;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
-    using System;
-    using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Clase que representa un bloc predefinit.
@@ -10,8 +10,8 @@
     /// 
     public sealed partial class Component {
 
-        private List<Element> elements;
-        private Dictionary<string, PadElement> pads;
+        private List<Element> _elements;
+        private Dictionary<string, PadElement> _pads;
 
         /// <summary>
         /// Afeigeix un element.
@@ -23,19 +23,19 @@
             if (element == null)
                 throw new ArgumentNullException(nameof(element));
 
-            if ((elements != null) && elements.Contains(element))
+            if ((_elements != null) && _elements.Contains(element))
                 throw new InvalidOperationException("El elemento ya pertenece a un componente.");
 
-            if (elements == null)
-                elements = new List<Element>();
-            elements.Add(element);
+            if (_elements == null)
+                _elements = new List<Element>();
+            _elements.Add(element);
 
             // Si l'element es un Pad, l'afegeix la la llista de pads.
             //
             if (element is PadElement pad) {
-                if (pads == null)
-                    pads = new Dictionary<string, PadElement>();
-                pads.Add(pad.Name, pad);
+                if (_pads == null)
+                    _pads = new Dictionary<string, PadElement>();
+                _pads.Add(pad.Name, pad);
             }
         }
 
@@ -65,21 +65,21 @@
 
             // Comprova que l'element estigui en la llista
             //
-            if ((elements == null) || !elements.Contains(element))
+            if ((_elements == null) || !_elements.Contains(element))
                 throw new InvalidOperationException("El elemento no pertenece a esta bloque.");
 
             // Elimina l'element de la llista d'elements
             //
-            elements.Remove(element);
-            if (elements.Count == 0)
-                elements = null;
+            _elements.Remove(element);
+            if (_elements.Count == 0)
+                _elements = null;
 
             // Si l'element es un pad, tambe l'elimina de la llista de pads.
             //
             if (element is PadElement pad) {
-                pads.Remove(pad.Name);
-                if (pads.Count == 0)
-                    pads = null;
+                _pads.Remove(pad.Name);
+                if (_pads.Count == 0)
+                    _pads = null;
             }
         }
 
@@ -89,13 +89,13 @@
         /// 
         public void RemoveAllElements() {
 
-            if (elements != null) {
-                elements.Clear();
-                elements = null;
+            if (_elements != null) {
+                _elements.Clear();
+                _elements = null;
 
-                if (pads != null) {
-                    pads.Clear();
-                    pads = null;
+                if (_pads != null) {
+                    _pads.Clear();
+                    _pads = null;
                 }
             }
         }
@@ -109,7 +109,7 @@
         /// 
         public PadElement GetPad(string name, bool throwOnError = true) {
 
-            if ((pads != null) && pads.TryGetValue(name, out PadElement pad))
+            if ((_pads != null) && _pads.TryGetValue(name, out PadElement pad))
                 return pad;
 
             else if (throwOnError)
@@ -124,50 +124,35 @@
         /// Indica si conte elements.
         /// </summary>
         /// 
-        public bool HasElements {
-            get {
-                return elements != null;
-            }
-        }
+        public bool HasElements =>
+            _elements != null;
 
         /// <summary>
         /// Obte la llista d'elements.
         /// </summary>
         /// 
-        public IEnumerable<Element> Elements {
-            get {
-                return elements;
-            }
-        }
+        public IEnumerable<Element> Elements =>
+            _elements;
 
         /// <summary>
         /// Indica si conte pads.
         /// </summary>
         /// 
-        public bool HasPads {
-            get {
-                return pads != null;
-            }
-        }
+        public bool HasPads =>
+            _pads != null;
 
         /// <summary>
         /// Enumera el nom dels pads.
         /// </summary>
         /// 
-        public IEnumerable<string> PadNames {
-            get {
-                return pads?.Keys;
-            }
-        }
+        public IEnumerable<string> PadNames =>
+            _pads?.Keys;
 
         /// <summary>
         /// Enumera els pads.
         /// </summary>
         /// 
-        public IEnumerable<PadElement> Pads {
-            get {
-                return pads?.Values;
-            }
-        }
+        public IEnumerable<PadElement> Pads =>
+            _pads?.Values;
     }
 }
