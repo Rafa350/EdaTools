@@ -1,8 +1,8 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+﻿using System;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
-    using System;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
     /// Clase que representa un pad.
@@ -60,12 +60,8 @@
         /// </summary>
         /// 
         public Point Position {
-            get {
-                return _position;
-            }
-            set {
-                _position = value;
-            }
+            get => _position;
+            set => _position = value;
         }
 
         /// <summary>
@@ -73,12 +69,8 @@
         /// </summary>
         /// 
         public Angle Rotation {
-            get {
-                return _rotation;
-            }
-            set {
-                _rotation = value;
-            }
+            get => _rotation;
+            set => _rotation = value;
         }
     }
 }

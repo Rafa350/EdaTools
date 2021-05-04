@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Xml;
-using System.Xml.Schema;
-using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
-using MikroPic.EdaTools.v1.Base.Xml;
-using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Reflection;
+    using System.Xml;
+    using System.Xml.Schema;
+    using MikroPic.EdaTools.v1.Base.Geometry;
+    using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
+    using MikroPic.EdaTools.v1.Base.Xml;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
+    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
     /// <summary>
     /// Clase per la lectura de plaques des d'un stream
@@ -22,7 +23,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             public string SignalName;
         }
 
-        private static readonly XmlSchemaSet _schemas;
+        private static readonly XmlSchemaSet schemas;
 
         private readonly XmlReaderAdapter _rd;
         private Board _board;
@@ -34,16 +35,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// 
         static BoardStreamReader() {
 
-            _schemas = new XmlSchemaSet();
+            schemas = new XmlSchemaSet();
 
             string schemaResourceName = "MikroPic.EdaTools.v1.Core.Model.Board.IO.Schemas.XBRD.xsd";
             Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(schemaResourceName);
             if (resourceStream == null)
                 throw new Exception(String.Format("No se encontro el recurso '{0}'", schemaResourceName));
             XmlSchema schema = XmlSchema.Read(resourceStream, null);
-            _schemas.Add(schema);
+            schemas.Add(schema);
 
-            _schemas.Compile();
+            schemas.Compile();
         }
 
         /// <summary>
@@ -64,8 +65,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             settings.IgnoreWhitespace = true;
             settings.IgnoreComments = true;
             settings.CloseInput = false;
-            settings.Schemas = _schemas;
-            settings.ValidationType = _schemas == null ? ValidationType.None : ValidationType.Schema;
+            settings.Schemas = schemas;
+            settings.ValidationType = schemas == null ? ValidationType.None : ValidationType.Schema;
             settings.ConformanceLevel = ConformanceLevel.Document;
 
             XmlReader reader = XmlReader.Create(stream, settings);
@@ -549,7 +550,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsStartTag("pads"))
                 throw new InvalidDataException("Se esperaba <pads>");
 
-            var pads = new List<PadInfo>();
+            List<PadInfo> pads = new List<PadInfo>();
 
             _rd.NextTag();
             while (_rd.IsStartTag("pad")) {
@@ -580,7 +581,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsEndTag("pad"))
                 throw new InvalidDataException("Se esperaba </pad>");
 
-            var padInfo = new PadInfo {
+            PadInfo padInfo = new PadInfo {
                 Name = padName,
                 SignalName = signalName
             };
@@ -593,9 +594,21 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// 
         private LineElement ParseLineNode() {
 
-            var line = ElementParser.Line(_rd);
+            if (!_rd.IsStartTag("line"))
+                throw new InvalidDataException("Se esperaba <line>");
 
+            LayerSet layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
+            Point startPosition = XmlTypeParser.ParsePoint(_rd.AttributeAsString("startPosition"));
+            Point endPosition = XmlTypeParser.ParsePoint(_rd.AttributeAsString("endPosition"));
+            int thickness = XmlTypeParser.ParseNumber(_rd.AttributeAsString("thickness", "0"));
+            LineElement.CapStyle lineCap = _rd.AttributeAsEnum<LineElement.CapStyle>("lineCap", LineElement.CapStyle.Round);
             string signalName = _rd.AttributeAsString("signal");
+
+            _rd.NextTag();
+            if (!_rd.IsEndTag("line"))
+                throw new InvalidDataException("Se esperaba </line>");
+
+            LineElement line = new LineElement(layerSet, startPosition, endPosition, thickness, lineCap);
             if (signalName != null) {
                 Signal signal = _board.GetSignal(signalName);
                 _board.Connect(signal, line);
@@ -610,10 +623,23 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// <returns>L'objecte 'ArcElement' obtingut.</returns>
         /// 
         private ArcElement ParseArcNode() {
-           
-            var arc = ElementParser.Arc(_rd);
 
+            if (!_rd.IsStartTag("arc"))
+                throw new InvalidDataException("Se esperaba <arc>");
+
+            LayerSet layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
+            Point startPosition = XmlTypeParser.ParsePoint(_rd.AttributeAsString("startPosition"));
+            Point endPosition = XmlTypeParser.ParsePoint(_rd.AttributeAsString("endPosition"));
+            int thickness = XmlTypeParser.ParseNumber(_rd.AttributeAsString("thickness"));
+            Angle angle = XmlTypeParser.ParseAngle(_rd.AttributeAsString("angle"));
+            LineElement.CapStyle lineCap = _rd.AttributeAsEnum<LineElement.CapStyle>("lineCap", LineElement.CapStyle.Round);
             string signalName = _rd.AttributeAsString("signal");
+
+            _rd.NextTag();
+            if (!_rd.IsEndTag("arc"))
+                throw new InvalidDataException("Se esperaba </arc>");
+
+            ArcElement arc = new ArcElement(layerSet, startPosition, endPosition, thickness, angle, lineCap);
             if (signalName != null) {
                 Signal signal = _board.GetSignal(signalName);
                 _board.Connect(signal, arc);
@@ -629,7 +655,24 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// 
         private RectangleElement ParseRectangleNode() {
 
-            return ElementParser.Rectangle(_rd);
+            if (!_rd.IsStartTag("rectangle"))
+                throw new InvalidDataException("Se esperaba <rectangle>");
+
+            LayerSet layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
+            Point position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
+            Size size = XmlTypeParser.ParseSize(_rd.AttributeAsString("size"));
+            Angle rotation = XmlTypeParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
+            int thickness = XmlTypeParser.ParseNumber(_rd.AttributeAsString("thickness", "0"));
+            Ratio roundness = XmlTypeParser.ParseRatio(_rd.AttributeAsString("roundness", "0"));
+            bool filled = _rd.AttributeAsBoolean("filled", thickness == 0);
+
+            _rd.NextTag();
+            if (!_rd.IsEndTag("rectangle"))
+                throw new InvalidDataException("Se esperaba </rectangle>");
+
+            RectangleElement rectangle = new RectangleElement(layerSet, position, size, roundness, rotation, thickness, filled);
+
+            return rectangle;
         }
 
         /// <summary>
@@ -639,7 +682,22 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// 
         private CircleElement ParseCircleNode() {
 
-            return ElementParser.Circle(_rd);
+            if (!_rd.IsStartTag("circle"))
+                throw new InvalidDataException("Se esperaba <circle>");
+
+            LayerSet layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
+            Point position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
+            int radius = XmlTypeParser.ParseNumber(_rd.AttributeAsString("radius"));
+            int thickness = XmlTypeParser.ParseNumber(_rd.AttributeAsString("thickness", "0"));
+            bool filled = _rd.AttributeAsBoolean("filled", thickness == 0);
+
+            _rd.NextTag();
+            if (!_rd.IsEndTag("circle"))
+                throw new InvalidDataException("Se esperaba </circle>");
+
+            CircleElement circle = new CircleElement(layerSet, position, radius, thickness, filled);
+
+            return circle;
         }
 
         /// <summary>
@@ -660,7 +718,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             int clearance = XmlTypeParser.ParseNumber(_rd.AttributeAsString("clearance", "0"));
             string signalName = _rd.AttributeAsString("signal");
 
-            var region = new RegionElement(layerSet, thickness, filled, clearance);
+            RegionElement region = new RegionElement(layerSet, thickness, filled, clearance);
             if (signalName != null) {
                 Signal signal = _board.GetSignal(signalName);
                 _board.Connect(signal, region);
@@ -733,15 +791,28 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         }
 
         /// <summary>
-        /// Procesa un node spad
+        /// Procesa un node tpad
         /// </summary>
         /// <returns>L'objecte 'SPadElement' obtingut.</returns>
         /// 
         private SmdPadElement ParseSPadNode() {
 
-            var pad = ElementParser.SPad(_rd);
+            if (!_rd.IsStartTag("spad"))
+                throw new InvalidDataException("Se esperaba <spad>");
 
+            string name = _rd.AttributeAsString("name");
+            LayerSet layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
+            Point position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
+            Size size = XmlTypeParser.ParseSize(_rd.AttributeAsString("size"));
+            Angle rotation = XmlTypeParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
+            Ratio roundness = XmlTypeParser.ParseRatio(_rd.AttributeAsString("roundness", "0"));
             string signalName = _rd.AttributeAsString("signal");
+
+            _rd.NextTag();
+            if (!_rd.IsEndTag("spad"))
+                throw new InvalidDataException("Se esperaba </spad>");
+
+            SmdPadElement pad = new SmdPadElement(name, layerSet, position, size, rotation, roundness);
             if (signalName != null) {
                 Signal signal = _board.GetSignal(signalName);
                 _board.Connect(signal, pad);
@@ -790,7 +861,20 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// 
         private HoleElement ParseHoleNode() {
 
-            return ElementParser.Hole(_rd);
+            if (!_rd.IsStartTag("hole"))
+                throw new InvalidDataException("Se esperaba <hole>");
+
+            LayerSet layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
+            Point position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
+            int drill = XmlTypeParser.ParseNumber(_rd.AttributeAsString("drill"));
+
+            _rd.NextTag();
+            if (!_rd.IsEndTag("hole"))
+                throw new InvalidDataException("Se esperaba </hole>");
+
+            HoleElement hole = new HoleElement(layerSet, position, drill);
+
+            return hole;
         }
 
         /// <summary>
@@ -800,7 +884,25 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// 
         private TextElement ParseTextNode() {
 
-            return ElementParser.Text(_rd);
+            if (!_rd.IsStartTag("text"))
+                throw new InvalidDataException("Se esperaba <text>");
+
+            LayerSet layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
+            Point position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
+            Angle rotation = XmlTypeParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
+            int height = XmlTypeParser.ParseNumber(_rd.AttributeAsString("height"));
+            HorizontalTextAlign horizontalAlign = _rd.AttributeAsEnum("horizontalAlign", HorizontalTextAlign.Left);
+            VerticalTextAlign verticalAlign = _rd.AttributeAsEnum("verticalAlign", VerticalTextAlign.Bottom);
+            int thickness = XmlTypeParser.ParseNumber(_rd.AttributeAsString("thickness"));
+            string value = _rd.AttributeAsString("value");
+
+            _rd.NextTag();
+            if (!_rd.IsEndTag("text"))
+                throw new InvalidDataException("Se esperaba </text>");
+
+            TextElement text = new TextElement(layerSet, position, rotation, height, thickness, horizontalAlign, verticalAlign, value);
+
+            return text;
         }
     }
 }

@@ -207,10 +207,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// Obte el tamany de la placa, definit pel seu contingut.
         /// </summary>
         /// 
-        public Size Size {
-            get {
-                return GetBoundingBox().Size;
-            }
-        }
+        public Size Size =>
+            GetBoundingBox().Size;
     }
 }

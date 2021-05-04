@@ -6,11 +6,11 @@
 
     public sealed class SlotElement : PadElement {
 
-        private int drill;
-        private int length;
-        private int topSize;
-        private int innerSize;
-        private int bottomSize;
+        private int _drill;
+        private int _length;
+        private int _topSize;
+        private int _innerSize;
+        private int _bottomSize;
 
         SlotElement(string name, LayerSet layerSet, Point position, Angle rotation, int topSize,
             int innerSize, int bottomSize, int drill, int length) :
@@ -28,16 +28,16 @@
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException(nameof(drill));
 
-            this.topSize = topSize;
-            this.innerSize = innerSize;
-            this.bottomSize = bottomSize;
-            this.drill = drill;
-            this.length = length;
+            _topSize = topSize;
+            _innerSize = innerSize;
+            _bottomSize = bottomSize;
+            _drill = drill;
+            _length = length;
         }
 
         public override Element Clone() {
 
-            return new SlotElement(Name, LayerSet, Position, Rotation, topSize, innerSize, bottomSize, drill, length);
+            return new SlotElement(Name, LayerSet, Position, Rotation, _topSize, _innerSize, _bottomSize, _drill, _length);
         }
 
         public override void AcceptVisitor(IBoardVisitor visitor) {
@@ -49,19 +49,19 @@
 
             double a = Rotation.ToRadiants;
 
-            int size = topSize;
+            int size = _topSize;
             switch (side) {
                 case BoardSide.Bottom:
-                    size = bottomSize;
+                    size = _bottomSize;
                     break;
 
                 case BoardSide.Inner:
-                    size = innerSize;
+                    size = _innerSize;
                     break;
             }
 
-            int w = (int)(length * Math.Cos(a) + size * Math.Sin(a));
-            int h = (int)(length * Math.Sin(a) + size * Math.Cos(a));
+            int w = (int)(_length * Math.Cos(a) + size * Math.Sin(a));
+            int h = (int)(_length * Math.Sin(a) + size * Math.Cos(a));
 
             return new Rect(Position.X - (w / 2), Position.Y - (h / 2), w, h);
         }
@@ -80,25 +80,25 @@
 
         public int Length {
             get {
-                return length;
+                return _length;
             }
         }
 
         public int TopSize {
             get {
-                return topSize;
+                return _topSize;
             }
         }
 
         public int InnerSize {
             get {
-                return innerSize;
+                return _innerSize;
             }
         }
 
         public int BottomSize {
             get {
-                return bottomSize;
+                return _bottomSize;
             }
         }
 
@@ -108,12 +108,12 @@
         /// 
         public int Drill {
             get {
-                return drill;
+                return _drill;
             }
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("SlotElement.Drill");
-                drill = value;
+                _drill = value;
             }
         }
 

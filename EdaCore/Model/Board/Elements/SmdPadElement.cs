@@ -1,10 +1,10 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+﻿using System;
+using System.Collections.Generic;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
 
-    using System;
-    using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
     /// Clase que representa un pad superficial

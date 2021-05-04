@@ -1,11 +1,11 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+﻿using System;
+using System.Collections.Generic;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+using MikroPic.EdaTools.v1.Base.Geometry.Utils;
+using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
 
-    using System;
-    using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Base.Geometry.Utils;
-    using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
     /// Clase que representa una regio poligonal.
@@ -14,38 +14,38 @@
 
         public sealed class Segment {
 
-            private Point position;
-            private Angle angle;
+            private Point _position;
+            private Angle _angle;
 
             public Segment(Point position, Angle angle) {
 
-                this.position = position;
-                this.angle = angle;
+                _position = position;
+                _angle = angle;
             }
 
             public Point Position {
                 get {
-                    return position;
+                    return _position;
                 }
                 set {
-                    position = value;
+                    _position = value;
                 }
             }
 
             public Angle Angle {
                 get {
-                    return angle;
+                    return _angle;
                 }
                 set {
-                    angle = value;
+                    _angle = value;
                 }
             }
         }
 
-        private readonly List<Segment> segments = new List<Segment>();
-        private int thickness;
-        private bool filled;
-        private int clearance;
+        private readonly List<Segment> _segments = new List<Segment>();
+        private int _thickness;
+        private bool _filled;
+        private int _clearance;
 
         /// <summary>
         /// Constructor del objecte.
@@ -65,9 +65,9 @@
             if (clearance < 0)
                 throw new ArgumentOutOfRangeException(nameof(clearance));
 
-            this.thickness = thickness;
-            this.filled = filled;
-            this.clearance = clearance;
+            _thickness = thickness;
+            _filled = filled;
+            _clearance = clearance;
 
             if (segments != null)
                 foreach (Segment segment in segments)
@@ -81,8 +81,8 @@
         /// 
         public override Element Clone() {
 
-            RegionElement region = new RegionElement(LayerSet, thickness, filled, clearance);
-            foreach (var segment in segments)
+            RegionElement region = new RegionElement(LayerSet, _thickness, _filled, _clearance);
+            foreach (var segment in _segments)
                 region.Add(new Segment(segment.Position, segment.Angle));
             return region;
         }
@@ -109,10 +109,10 @@
             Point prevPoint = new Point();
             Angle angle = Angle.Zero;
 
-            List<Point> points = new List<Point>();
+            var points = new List<Point>();
 
             bool first = true;
-            foreach (Segment segment in segments) {
+            foreach (var segment in _segments) {
 
                 // Guarda el prinper punt, per tancar el poligon
                 //
@@ -187,7 +187,7 @@
         /// 
         public void Add(Segment segment) {
 
-            segments.Add(segment);
+            _segments.Add(segment);
         }
 
         /// <summary>
@@ -217,13 +217,13 @@
         /// 
         public int Thickness {
             get {
-                return thickness;
+                return _thickness;
             }
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Tickness");
 
-                thickness = value;
+                _thickness = value;
             }
         }
 
@@ -233,13 +233,13 @@
         /// 
         public int Clearance {
             get {
-                return clearance;
+                return _clearance;
             }
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Clearance");
 
-                clearance = value;
+                _clearance = value;
             }
         }
 
@@ -249,10 +249,10 @@
         /// 
         public bool Filled {
             get {
-                return (thickness == 0) || filled;
+                return (_thickness == 0) || _filled;
             }
             set {
-                filled = value;
+                _filled = value;
             }
         }
 
@@ -260,21 +260,14 @@
         /// Obte la llista se segments.
         /// </summary>
         /// 
-        public IEnumerable<Segment> Segments {
-            get {
-                return segments;
-            }
-        }
+        public IEnumerable<Segment> Segments =>
+            _segments;
 
         /// <summary>
         /// Obte el tipus d'element.
         /// </summary>
         /// 
-        public override ElementType ElementType {
-            get {
-                return ElementType.Region;
-            }
-        }
-
+        public override ElementType ElementType =>
+            ElementType.Region;
     }
 }

@@ -30,12 +30,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 _elements = new List<Element>();
             _elements.Add(element);
 
-            // Si l'element es un Pad, l'afegeix la la llista de pads.
+            // Si l'element es un Pad, l'afegeix la llista de pads.
             //
             if (element is PadElement pad) {
                 if (_pads == null)
                     _pads = new Dictionary<string, PadElement>();
-                _pads.Add(pad.Name, pad);
+                ///////////////////////////////////////////////////////////////
+                if (!_pads.ContainsKey(pad.Name)) // PROVISIONAL
+                        _pads.Add(pad.Name, pad);
+                //////////////////////////////////////////////////////////////
             }
         }
 

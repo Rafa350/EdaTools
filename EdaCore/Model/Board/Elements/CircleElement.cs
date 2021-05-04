@@ -1,20 +1,19 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+﻿using System;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
 
-    using System;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
     /// Clase que representa un cercle.
     /// </summary>
     public sealed class CircleElement : Element, IPosition {
 
-        private Point position;
-        private int radius;
-        private int thickness;
-        private bool filled;
+        private Point _position;
+        private int _radius;
+        private int _thickness;
+        private bool _filled;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -28,15 +27,15 @@
         public CircleElement(LayerSet layerSet, Point position, int radius, int thickness, bool filled) :
             base(layerSet) {
 
-            this.position = position;
-            this.radius = radius;
-            this.thickness = thickness;
-            this.filled = filled;
+            _position = position;
+            _radius = radius;
+            _thickness = thickness;
+            _filled = filled;
         }
 
         public override Element Clone() {
 
-            return new CircleElement(LayerSet, position, radius, thickness, filled);
+            return new CircleElement(LayerSet, _position, _radius, _thickness, _filled);
         }
 
         /// <summary>
@@ -58,12 +57,12 @@
         public override Polygon GetPolygon(BoardSide side) {
 
             if (Filled) {
-                Point[] points = PolygonBuilder.MakeCircle(position, radius);
+                Point[] points = PolygonBuilder.MakeCircle(_position, _radius);
                 return new Polygon(points);
             }
             else {
-                Point[] outerPoints = PolygonBuilder.MakeCircle(position, radius + (thickness / 2));
-                Point[] innerPoints = PolygonBuilder.MakeCircle(position, radius - (thickness / 2));
+                Point[] outerPoints = PolygonBuilder.MakeCircle(_position, _radius + (_thickness / 2));
+                Point[] innerPoints = PolygonBuilder.MakeCircle(_position, _radius - (_thickness / 2));
                 return new Polygon(outerPoints, new Polygon(innerPoints));
             }
         }
@@ -77,7 +76,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = PolygonBuilder.MakeCircle(position, radius + (thickness / 2) + spacing);
+            Point[] points = PolygonBuilder.MakeCircle(_position, _radius + (_thickness / 2) + spacing);
             return new Polygon(points);
         }
 
@@ -89,8 +88,8 @@
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
-            int r = radius + (thickness / 2);
-            return new Rect(position.X - r, position.Y - r, r + r, r + r);
+            int r = _radius + (_thickness / 2);
+            return new Rect(_position.X - r, _position.Y - r, r + r, r + r);
         }
 
         /// <summary>
@@ -98,12 +97,8 @@
         /// </summary>
         /// 
         public Point Position {
-            get {
-                return position;
-            }
-            set {
-                position = value;
-            }
+            get => _position;
+            set => _position = value;
         }
 
         /// <summary>
@@ -112,13 +107,13 @@
         /// 
         public int Radius {
             get {
-                return radius;
+                return _radius;
             }
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Radius");
 
-                radius = value;
+                _radius = value;
             }
         }
 
@@ -128,13 +123,13 @@
         /// 
         public int Diameter {
             get {
-                return radius * 2;
+                return _radius * 2;
             }
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Diameter");
 
-                radius = value / 2;
+                _radius = value / 2;
             }
         }
 
@@ -144,13 +139,13 @@
         /// 
         public int Thickness {
             get {
-                return thickness;
+                return _thickness;
             }
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Thickness");
 
-                thickness = value;
+                _thickness = value;
             }
         }
 
@@ -158,23 +153,16 @@
         /// Obte o asigna el indicador de cercle ple.
         /// </summary>
         /// 
-        public bool Filled {
-            get {
-                return (thickness == 0) || filled;
-            }
-            set {
-                filled = value;
-            }
+        public bool Filled { 
+            get => (_thickness == 0) || _filled;
+            set => _filled = value;
         }
 
         /// <summary>
         /// Obte el tipus d'element.
         /// </summary>
         /// 
-        public override ElementType ElementType {
-            get {
-                return ElementType.Circle;
-            }
-        }
+        public override ElementType ElementType =>
+            ElementType.Circle;
     }
 }

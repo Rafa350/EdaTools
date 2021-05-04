@@ -1,17 +1,16 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+using MikroPic.EdaTools.v1.Base.Geometry.Utils;
+using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Base.Geometry.Utils;
-    using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
     /// Clase que representa un arc.
     /// </summary>
     public sealed class ArcElement : LineElement, IConectable {
 
-        private Angle angle;
+        private Angle _angle;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -26,7 +25,7 @@
         public ArcElement(LayerSet layerSet, Point startPosition, Point endPosition, int thickness, Angle angle, CapStyle lineCap) :
             base(layerSet, startPosition, endPosition, thickness, lineCap) {
 
-            this.angle = angle;
+            _angle = angle;
         }
 
         /// <summary>
@@ -36,7 +35,7 @@
         /// 
         public override Element Clone() {
 
-            return new ArcElement(LayerSet, StartPosition, EndPosition, Thickness, angle, LineCap);
+            return new ArcElement(LayerSet, StartPosition, EndPosition, Thickness, _angle, LineCap);
         }
 
         /// <summary>
@@ -57,7 +56,7 @@
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = PolygonBuilder.MakeArcTrace(Center, Radius, StartAngle, angle, Thickness, LineCap == CapStyle.Round);
+            Point[] points = PolygonBuilder.MakeArcTrace(Center, Radius, StartAngle, _angle, Thickness, LineCap == CapStyle.Round);
             return new Polygon(points);
         }
 
@@ -70,7 +69,7 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = PolygonBuilder.MakeArcTrace(Center, Radius, StartAngle, angle, Thickness + (spacing * 2), LineCap == CapStyle.Round);
+            Point[] points = PolygonBuilder.MakeArcTrace(Center, Radius, StartAngle, _angle, Thickness + (spacing * 2), LineCap == CapStyle.Round);
             return new Polygon(points);
         }
 
@@ -91,62 +90,43 @@
         /// </summary>
         /// 
         public Angle Angle {
-            get {
-                return angle;
-            }
-            set {
-                angle = value;
-            }
+            get => _angle;
+            set => _angle = value;
         }
 
         /// <summary>
         /// Obte el centre de l'arc.
         /// </summary>
         /// 
-        public Point Center {
-            get {
-                return ArcUtils.Center(StartPosition, EndPosition, angle);
-            }
-        }
+        public Point Center =>
+            ArcUtils.Center(StartPosition, EndPosition, _angle);
 
         /// <summary>
         /// Obte l'angle inicial del arc.
         /// </summary>
         /// 
-        public Angle StartAngle {
-            get {
-                return ArcUtils.StartAngle(StartPosition, Center);
-            }
-        }
-
+        public Angle StartAngle =>
+            ArcUtils.StartAngle(StartPosition, Center);
+            
         /// <summary>
         /// Obtel'angle final del arc.
         /// </summary>
         /// 
-        public Angle EndAngle {
-            get {
-                return ArcUtils.EndAngle(EndPosition, Center);
-            }
-        }
+        public Angle EndAngle =>
+            ArcUtils.EndAngle(EndPosition, Center);
 
         /// <summary>
         /// Obte el radi de l'arc.
         /// </summary>
         /// 
-        public int Radius {
-            get {
-                return ArcUtils.Radius(StartPosition, EndPosition, angle);
-            }
-        }
+        public int Radius =>
+            ArcUtils.Radius(StartPosition, EndPosition, _angle);
 
         /// <summary>
         /// Obte el tipus d'element.
         /// </summary>
         /// 
-        public override ElementType ElementType {
-            get {
-                return ElementType.Arc;
-            }
-        }
+        public override ElementType ElementType =>
+            ElementType.Arc;
     }
 }

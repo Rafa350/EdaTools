@@ -126,7 +126,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <returns></returns>
         public IReadOnlyList<Layer> GetSignalLayers() {
 
-            List<Layer> signalLayers = new List<Layer>();
+            var signalLayers = new List<Layer>();
+
             foreach (var layer in _layers.Values) 
                 if (layer.Function == LayerFunction.Signal)
                     signalLayers.Add(layer);
@@ -143,7 +144,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// 
         public IEnumerable<Element> GetElements(string name, bool includeComponents = true) {
 
-            List<Element> list = new List<Element>();
+            var list = new List<Element>();
 
             foreach (var element in Elements)
                 if (element.IsOnLayer(name))
@@ -169,7 +170,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             if (element == null)
                 throw new ArgumentNullException(nameof(element));
 
-            List<Layer> list = new List<Layer>();
+            var list = new List<Layer>();
+
             foreach (var id in element.LayerSet) {
                 Layer layer = GetLayer(id, false);
                 if (layer != null)

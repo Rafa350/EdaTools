@@ -74,7 +74,7 @@
             foreach (var netNode in tree.SelectBranches(tree.Root, "net")) {
                 string name = tree.ValueAsString(netNode[2]);
                 if (!string.IsNullOrEmpty(name)) {
-                    Signal signal = new Signal(name);
+                    var signal = new Signal(name);
                     board.AddSignal(signal);
                 }
             }
@@ -270,7 +270,7 @@
                             e.Rotation -= rotation;
             }
 
-            Part part = new Part(component, String.Format("{0}:{1}", name, partCount++), position,
+            var part = new Part(component, String.Format("{0}:{1}", name, partCount++), position,
                 rotation, side == BoardSide.Bottom);
             board.AddPart(part);
 
@@ -471,8 +471,10 @@
                 name = "NAME";
                 visible = true;
             }
+            else if (name == "user")
+                return;
 
-            PartAttribute attribute = new PartAttribute(name, value, visible);
+            var attribute = new PartAttribute(name, value, visible);
             part.AddAttribute(attribute);
         }
 
@@ -577,7 +579,8 @@
                     sb.Append(',');
 
                 string kcName = tree.ValueAsString(node[i]);
-                if (kcName.Contains("*.Cu")) 
+
+                if (kcName.Contains("*.Cu") || kcName.Contains("F&B.Cu")) 
                     sb.Append("Top.Copper, Bottom.Copper");
                 else if (kcName.Contains("*.Mask")) 
                     sb.Append("Top.Stop, Bottom.Stop");                

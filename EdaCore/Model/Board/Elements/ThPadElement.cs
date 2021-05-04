@@ -1,10 +1,10 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+﻿using System;
+using System.Collections.Generic;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
 
-    using System;
-    using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
     /// Clase que representa un pad throug hole
@@ -265,12 +265,8 @@
         /// </summary>
         /// 
         public ThPadShape Shape {
-            get {
-                return _shape;
-            }
-            set {
-                _shape = value;
-            }
+            get => _shape;
+            set => _shape = value;
         }
 
         /// <summary>
@@ -346,6 +342,7 @@
         /// Obte el tipus d'element.
         /// </summary>
         /// 
-        public override ElementType ElementType => ElementType.ThPad;
+        public override ElementType ElementType => 
+            ElementType.ThPad;
     }
 }

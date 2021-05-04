@@ -189,24 +189,17 @@
             return new LayerSet(elements);
         }
 
-        public IEnumerator<string> GetEnumerator() {
+        public IEnumerator<string> GetEnumerator() =>
+            ((IEnumerable<string>)storage).GetEnumerator();
 
-            return ((IEnumerable<string>)storage).GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator() {
-
-            return ((IEnumerable<string>)storage).GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() =>
+            ((IEnumerable<string>)storage).GetEnumerator();
 
         /// <summary>
         /// Obte l'indicador de conjunt buit.
         /// </summary>
         /// 
-        public bool IsEmpty {
-            get {
-                return (storage == null) || (storage.Length == 0);
-            }
-        }
+        public bool IsEmpty =>
+            (storage == null) || (storage.Length == 0);
     }
 }

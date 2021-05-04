@@ -5,8 +5,13 @@ Tools and utilities for PCB design.
 !!!Very very early version. Runs ok for my works.
 
 
-EdaConverter.
+EdaImport
 -Convert EAGLE v7 BRD file to EdaTools board file (.XBRD)
+-Convert EAGLE v7 LBR file to EdaTools library file (.XLIB)
+
+EdaExport
+-Convert EdaTools board file (.XBRD) to EAGLE or KiCAD
+-Convert EdaTools library file (.XLIB) to KiCAD footprint library
 
 EdaExtractor.
 -Extract information from board (BOM, Centroids, etc)

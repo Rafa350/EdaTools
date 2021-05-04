@@ -1,9 +1,9 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+﻿using System;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
 
-    using System;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-    using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
     /// Clase que representa un rectangle.
@@ -11,12 +11,12 @@
     /// 
     public sealed class RectangleElement : Element, IPosition, ISize, IRotation {
 
-        private Point position;
-        private Size size;
-        private Angle rotation;
-        private Ratio roundness;
-        private int thickness;
-        private bool filled;
+        private Point _position;
+        private Size _size;
+        private Angle _rotation;
+        private Ratio _roundness;
+        private int _thickness;
+        private bool _filled;
 
         /// <summary>
         /// Constructor del objecte.
@@ -32,12 +32,12 @@
         public RectangleElement(LayerSet layerSet, Point position, Size size, Ratio roundness, Angle rotation, int thickness, bool filled) :
             base(layerSet) {
 
-            this.position = position;
-            this.size = size;
-            this.roundness = roundness;
-            this.rotation = rotation;
-            this.thickness = thickness;
-            this.filled = filled;
+            _position = position;
+            _size = size;
+            _roundness = roundness;
+            _rotation = rotation;
+            _thickness = thickness;
+            _filled = filled;
         }
 
         /// <summary>
@@ -47,7 +47,7 @@
         /// 
         public override Element Clone() {
 
-            return new RectangleElement(LayerSet, position, size, roundness, rotation, thickness, filled);
+            return new RectangleElement(LayerSet, _position, _size, _roundness, _rotation, _thickness, _filled);
         }
 
         /// <summary>
@@ -69,15 +69,15 @@
         public override Polygon GetPolygon(BoardSide side) {
 
             if (Filled) {
-                Point[] points = PolygonBuilder.MakeRectangle(position, size, Radius, rotation);
+                Point[] points = PolygonBuilder.MakeRectangle(_position, _size, Radius, _rotation);
                 return new Polygon(points);
             }
             else {
-                Size outerSize = new Size(size.Width + thickness, size.Height + thickness);
-                Point[] outerPoints = PolygonBuilder.MakeRectangle(position, outerSize, Radius, rotation);
+                Size outerSize = new Size(_size.Width + _thickness, _size.Height + _thickness);
+                Point[] outerPoints = PolygonBuilder.MakeRectangle(_position, outerSize, Radius, _rotation);
 
-                Size innerSize = new Size(size.Width - thickness, size.Height - thickness);
-                Point[] innerPoints = PolygonBuilder.MakeRectangle(position, innerSize, Math.Max(0, Radius - thickness), rotation);
+                Size innerSize = new Size(_size.Width - _thickness, _size.Height - _thickness);
+                Point[] innerPoints = PolygonBuilder.MakeRectangle(_position, innerSize, Math.Max(0, Radius - _thickness), _rotation);
 
                 return new Polygon(outerPoints, new Polygon(innerPoints));
             }
@@ -92,8 +92,8 @@
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Size outerSize = new Size(size.Width + thickness + spacing * 2, size.Height + thickness + spacing * 2);
-            Point[] points = PolygonBuilder.MakeRectangle(position, outerSize, Radius, rotation);
+            Size outerSize = new Size(_size.Width + _thickness + spacing * 2, _size.Height + _thickness + spacing * 2);
+            Point[] points = PolygonBuilder.MakeRectangle(_position, outerSize, Radius, _rotation);
             return new Polygon(points);
         }
 
@@ -105,15 +105,15 @@
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
-            double width = size.Width + thickness;
-            double height = size.Height + thickness;
+            double width = _size.Width + _thickness;
+            double height = _size.Height + _thickness;
 
-            double a = rotation.ToRadiants;
+            double a = _rotation.ToRadiants;
 
             int w = (int)(width * Math.Cos(a) + height * Math.Sin(a));
             int h = (int)(width * Math.Sin(a) + height * Math.Cos(a));
 
-            return new Rect(position.X - (w / 2), position.Y - (h / 2), w, h);
+            return new Rect(_position.X - (w / 2), _position.Y - (h / 2), w, h);
         }
 
         /// <summary>
@@ -122,10 +122,10 @@
         /// 
         public Point Position {
             get {
-                return position;
+                return _position;
             }
             set {
-                position = value;
+                _position = value;
             }
         }
 
@@ -134,12 +134,8 @@
         /// </summary>
         /// 
         public Size Size {
-            get {
-                return size;
-            }
-            set {
-                size = value;
-            }
+            get => _size;
+            set => _size = value;
         }
 
         /// <summary>
@@ -147,12 +143,8 @@
         /// </summary>
         /// 
         public Angle Rotation {
-            get {
-                return rotation;
-            }
-            set {
-                rotation = value;
-            }
+            get => _rotation;
+            set => _rotation = value;
         }
 
         /// <summary>
@@ -161,10 +153,10 @@
         /// 
         public Ratio Roundness {
             get {
-                return roundness;
+                return _roundness;
             }
             set {
-                roundness = value;
+                _roundness = value;
             }
         }
 
@@ -174,7 +166,7 @@
         /// 
         public int Radius {
             get {
-                return (Math.Min(size.Width, size.Height) * roundness) >> 1;
+                return (Math.Min(_size.Width, _size.Height) * _roundness) >> 1;
             }
         }
 
@@ -184,13 +176,13 @@
         /// 
         public int Thickness {
             get {
-                return thickness;
+                return _thickness;
             }
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Thickness");
 
-                thickness = value;
+                _thickness = value;
             }
         }
 
@@ -200,10 +192,10 @@
         /// 
         public bool Filled {
             get {
-                return (thickness == 0) || filled;
+                return (_thickness == 0) || _filled;
             }
             set {
-                filled = value;
+                _filled = value;
             }
         }
 
@@ -211,10 +203,7 @@
         /// Obte el tipus d'element.
         /// </summary>
         /// 
-        public override ElementType ElementType {
-            get {
-                return ElementType.Rectangle;
-            }
-        }
+        public override ElementType ElementType =>
+            ElementType.Rectangle;
     }
 }

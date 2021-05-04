@@ -81,6 +81,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             else if (throwOnError)
                 throw new InvalidOperationException(
                     String.Format("El componente '{0}', no esta asignado a esta placa.", name));
+
             else
                 return null;
         }
