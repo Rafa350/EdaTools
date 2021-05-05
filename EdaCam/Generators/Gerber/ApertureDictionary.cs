@@ -1,11 +1,11 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
+using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures;
 
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
-    using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures;
+namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
     /// <summary>
     /// Clase que representa el diccionari d'apertures.
@@ -18,7 +18,7 @@
         // $3: Radi de curvatura.
         // $4: Angle de rotacio.
         //
-        private static readonly Macro roundRectangleMacro = new Macro(
+        private static readonly Macro _roundRectangleMacro = new Macro(
             1,
             "21,1,$1,$2-$3-$3,0,0,$4*\n" +
             "21,1,$1-$3-$3,$2,0,0,$4*\n" +
@@ -35,7 +35,7 @@
         // $2: Alçada.
         // $3: Angle de rotacio.
         //
-        private static readonly Macro rectangleMacro = new Macro(
+        private static readonly Macro _rectangleMacro = new Macro(
             2,
             "21,1,$1,$2,0,0,$3*");
 
@@ -46,9 +46,9 @@
         //
         //private static readonly Macro oblongApertureMacro = null;
 
-        private readonly IList<Macro> macros = new List<Macro>();
-        private readonly IDictionary<int, Aperture> items = new Dictionary<int, Aperture>();
-        private int apertureId = 10;
+        private readonly IList<Macro> _macros = new List<Macro>();
+        private readonly IDictionary<int, Aperture> _items = new Dictionary<int, Aperture>();
+        private int _apertureId = 10;
 
         /// <summary>
         /// Contructor del objecte.
@@ -56,8 +56,8 @@
         /// 
         public ApertureDictionary() {
 
-            macros.Add(rectangleMacro);
-            macros.Add(roundRectangleMacro);
+            _macros.Add(_rectangleMacro);
+            _macros.Add(_roundRectangleMacro);
             //macros.Add(oblongApertureMacro);
         }
 
@@ -146,9 +146,9 @@
                 throw new ArgumentOutOfRangeException(nameof(diameter));
 
             int key = GetCircleKey(diameter, tag);
-            if (!items.ContainsKey(key)) {
-                Aperture ap = new CircleAperture(apertureId++, tag, diameter);
-                items.Add(key, ap);
+            if (!_items.ContainsKey(key)) {
+                Aperture ap = new CircleAperture(_apertureId++, tag, diameter);
+                _items.Add(key, ap);
             }
         }
 
@@ -169,15 +169,15 @@
                 throw new ArgumentOutOfRangeException(nameof(height));
 
             int key = GetRectangleKey(width, height, rotation, tag);
-            if (!items.ContainsKey(key)) {
+            if (!_items.ContainsKey(key)) {
                 Aperture ap;
                 if (rotation.IsHorizontal)
-                    ap = new RectangleAperture(apertureId++, tag, width, height);
+                    ap = new RectangleAperture(_apertureId++, tag, width, height);
                 else if (rotation.IsVertical)
-                    ap = new RectangleAperture(apertureId++, tag, height, width);
+                    ap = new RectangleAperture(_apertureId++, tag, height, width);
                 else
-                    ap = new MacroAperture(apertureId++, tag, rectangleMacro, width, height, rotation.Value);
-                items.Add(key, ap);
+                    ap = new MacroAperture(_apertureId++, tag, _rectangleMacro, width, height, rotation.Value);
+                _items.Add(key, ap);
             }
         }
 
@@ -208,9 +208,9 @@
                 throw new ArgumentOutOfRangeException(nameof(radius));
 
             int key = GetRoundRectangleKey(width, height, radius, rotation, tag);
-            if (!items.ContainsKey(key)) {
-                Aperture ap = new MacroAperture(apertureId++, tag, roundRectangleMacro, width, height, radius, rotation.Value * 10000);
-                items.Add(key, ap);
+            if (!_items.ContainsKey(key)) {
+                Aperture ap = new MacroAperture(_apertureId++, tag, _roundRectangleMacro, width, height, radius, rotation.Value * 10000);
+                _items.Add(key, ap);
             }
         }
 
@@ -227,9 +227,9 @@
                 throw new ArgumentOutOfRangeException(nameof(size));
 
             int key = GetOctagonKey(size, rotation, tag);
-            if (!items.ContainsKey(key)) {
-                Aperture ap = new PoligonAperture(apertureId++, tag, 8, size, rotation + Angle.FromValue(2250));
-                items.Add(key, ap);
+            if (!_items.ContainsKey(key)) {
+                Aperture ap = new PoligonAperture(_apertureId++, tag, 8, size, rotation + Angle.FromValue(2250));
+                _items.Add(key, ap);
             }
         }
 
@@ -250,17 +250,17 @@
                 throw new ArgumentOutOfRangeException(nameof(height));
 
             int key = GetOvalKey(width, height, rotation, tag);
-            if (!items.ContainsKey(key)) {
+            if (!_items.ContainsKey(key)) {
 
-                Aperture ap = null;
+                Aperture ap;
                 if (rotation == Angle.Zero || rotation == Angle.Deg180)
-                    ap = new ObroundAperture(apertureId++, tag, width, height);
+                    ap = new ObroundAperture(_apertureId++, tag, width, height);
                 else if (rotation == Angle.Deg90 || rotation == Angle.Deg270)
-                    ap = new ObroundAperture(apertureId++, tag, height, width);
+                    ap = new ObroundAperture(_apertureId++, tag, height, width);
                 else
                     throw new NotImplementedException("Angulo de rotacion no implementado para la apertura oval.");
 
-                items.Add(key, ap);
+                _items.Add(key, ap);
             }
         }
 
@@ -274,7 +274,7 @@
         public Aperture GetCircleAperture(int diameter, string tag = null) {
 
             int key = GetCircleKey(diameter, tag);
-            return items[key];
+            return _items[key];
         }
 
         /// <summary>
@@ -289,7 +289,7 @@
         public Aperture GetRectangleAperture(int width, int height, Angle rotation, string tag = null) {
 
             int key = GetRectangleKey(width, height, rotation, tag);
-            return items[key];
+            return _items[key];
         }
 
         /// <summary>
@@ -305,7 +305,7 @@
         public Aperture GetRoundRectangleAperture(int width, int height, int radius, Angle rotation, string tag = null) {
 
             int key = GetRoundRectangleKey(width, height, radius, rotation, tag);
-            return items[key];
+            return _items[key];
         }
 
         /// <summary>
@@ -319,7 +319,7 @@
         public Aperture GetOctagonAperture(int size, Angle rotation, string tag = null) {
 
             int key = GetOctagonKey(size, rotation, tag);
-            return items[key];
+            return _items[key];
         }
 
         /// <summary>
@@ -334,7 +334,7 @@
         public Aperture GetOvalAperture(int width, int height, Angle rotation, string tag = null) {
 
             int key = GetOvalKey(width, height, rotation, tag);
-            return items[key];
+            return _items[key];
         }
 
         /// <summary>
@@ -342,13 +342,13 @@
         /// </summary>
         /// 
         public IEnumerable<Macro> Macros =>
-            macros;
+            _macros;
 
         /// <summary>
         /// Enumera totes les apertures definides.
         /// </summary>
         /// 
         public IEnumerable<Aperture> Apertures =>
-            items.Values;
+            _items.Values;
     }
 }

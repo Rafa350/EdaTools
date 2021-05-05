@@ -1,7 +1,7 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
+﻿using System;
+using System.Text;
 
-    using System;
-    using System.Text;
+namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
 
     /// <summary>
     /// Clase que representa un macro gerber.
@@ -45,12 +45,14 @@
         /// Obte el ID del macro.
         /// </summary>
         /// 
-        public int Id => _id;
+        public int Id => 
+            _id;
 
         /// <summary>
         /// Obte la comanda Gerber per la definicio del macro.
         /// </summary>
         /// 
-        public string Command => GetCommand();
+        public string Command => 
+            GetCommand();
     }
 }

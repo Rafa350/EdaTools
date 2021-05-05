@@ -5,6 +5,11 @@
     <TargetFramework>net5.0</TargetFramework>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>signature.pfx</AssemblyOriginatorKeyFile>
+    <Version>2.1.0</Version>
+    <Copyright>(c) 2019..2021 rsr.openware@gmail.com</Copyright>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+    <FileVersion>2.1.0.0</FileVersion>
+    <Product>EdaTools v2.1</Product>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

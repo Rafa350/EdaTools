@@ -28,10 +28,10 @@
 
             public BoardScene() {
 
-                //string fileName = "kicad_demo.xbrd";
                 //string fileName = "board3.xbrd";
                 //string fileName = "panel3.xbrd";
-                string fileName = "md-cpu07.xbrd";
+                string fileName = "test.xbrd";
+                //string fileName = "md-cpu07.xbrd";
                 using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
                     BoardStreamReader reader = new BoardStreamReader(stream);
                     board = reader.Read();

@@ -1,12 +1,12 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Generators {
+﻿using System;
+using MikroPic.EdaTools.v1.Cam.Model;
+using MikroPic.EdaTools.v1.Core.Model.Board;
 
-    using System;
-    using MikroPic.EdaTools.v1.Cam.Model;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
+namespace MikroPic.EdaTools.v1.Cam.Generators {
 
     public abstract class Generator {
 
-        private readonly Target target;
+        private readonly Target _target;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -18,7 +18,7 @@
             if (target == null)
                 throw new ArgumentNullException(nameof(target));
 
-            this.target = target;
+            _target = target;
         }
 
         /// <summary>
@@ -34,10 +34,7 @@
         /// Obte el target.
         /// </summary>
         /// 
-        public Target Target {
-            get {
-                return target;
-            }
-        }
+        public Target Target =>
+            _target;
     }
 }

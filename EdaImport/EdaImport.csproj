@@ -6,11 +6,11 @@
     <StartupObject>MikroPic.EdaTools.v1.Import.Program</StartupObject>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>signature.pfx</AssemblyOriginatorKeyFile>
-    <Copyright>(c) 2019..2020 rsr.openware@gmail.com</Copyright>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <FileVersion>2.0.0.0</FileVersion>
-    <Product>EdaTools v2.0</Product>
-    <Version>2.0.0</Version>
+    <Copyright>(c) 2019..2021 rsr.openware@gmail.com</Copyright>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+    <FileVersion>2.1.0.0</FileVersion>
+    <Product>EdaTools v2.1</Product>
+    <Version>2.1.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -1,33 +1,33 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
+﻿using System.Collections.Generic;
+using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
+using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
+using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures;
 
-    using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
-    using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
-    using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures;
+namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
     internal sealed class FontDictionary {
 
-        private readonly IList<Macro> macros = new List<Macro>();
-        private readonly IDictionary<char, Aperture> items = new Dictionary<char, Aperture>();
+        private readonly IList<Macro> _macros = new List<Macro>();
+        private readonly IDictionary<char, Aperture> _items = new Dictionary<char, Aperture>();
 
         public FontDictionary() {
         }
 
         public void DefineCharacterAperture(Glyph glyph) {
 
-            if (!items.ContainsKey(glyph.Code)) {
+            if (!_items.ContainsKey(glyph.Code)) {
 
                 Macro macro = null;
-                macros.Add(macro);
+                _macros.Add(macro);
 
                 Aperture aperture = new MacroAperture(glyph.Code, macro, null);
-                items.Add(glyph.Code, aperture);
+                _items.Add(glyph.Code, aperture);
             }
         }
 
         public Aperture GetCharacterAperture(char ch) {
 
-            return items[ch];
+            return _items[ch];
         }
 
         /// <summary>
@@ -35,13 +35,13 @@
         /// </summary>
         /// 
         public IEnumerable<Macro> Macros =>
-            macros;
+            _macros;
 
         /// <summary>
         /// Enumera totes les apertures definides.
         /// </summary>
         /// 
         public IEnumerable<Aperture> Apertures =>
-            items.Values;
+            _items.Values;
     }
 }

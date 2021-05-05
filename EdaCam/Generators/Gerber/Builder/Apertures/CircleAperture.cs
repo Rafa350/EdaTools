@@ -1,8 +1,8 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
+﻿using System;
+using System.Globalization;
+using System.Text;
 
-    using System;
-    using System.Globalization;
-    using System.Text;
+namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
 
     /// <summary>
     /// Clase que representa una apertura circular.
@@ -56,12 +56,14 @@
         /// Obte el diametre extern.
         /// </summary>
         /// 
-        public int Diameter => _diameter;
+        public int Diameter => 
+            _diameter;
 
         /// <summary>
         /// Obte el diametre del forat.
         /// </summary>
         /// 
-        public int Drill => _drill;
+        public int Drill => 
+            _drill;
     }
 }

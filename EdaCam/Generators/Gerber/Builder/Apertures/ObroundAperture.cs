@@ -1,8 +1,8 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
+﻿using System;
+using System.Globalization;
+using System.Text;
 
-    using System;
-    using System.Globalization;
-    using System.Text;
+namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
 
     /// <summary>
     /// Clase que representa una aperture eliptica.
@@ -63,18 +63,21 @@
         /// Obte l'amplada.
         /// </summary>
         /// 
-        public int Width => _width;
+        public int Width => 
+            _width;
 
         /// <summary>
         /// Obte l'alçada.
         /// </summary>
         ///
-        public int Height => _height;
+        public int Height => 
+            _height;
 
         /// <summary>
         /// Obte el diametre del forat.
         /// </summary>
         /// 
-        public int Drill => _drill;
+        public int Drill => 
+            _drill;
     }
 }

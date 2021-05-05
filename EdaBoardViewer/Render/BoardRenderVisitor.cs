@@ -104,7 +104,7 @@
 
             if (visualLayer.IsVisible(Part, pad)) {
 
-                var brush = new SolidColorBrush(visualLayer.Color);
+                var brush = new SolidColorBrush(pad.Name == "1" ? Colors.AliceBlue : visualLayer.Color);
                 var geometry = pad.GetPolygon(layer.Side).ToGeometry();
 
                 context.DrawGeometry(brush, null, geometry);
@@ -131,10 +131,10 @@
                 if (font == null)
                     font = Font.Load("font.xml");
 
-                TextDrawer td = new TextDrawer(font);
+                var td = new TextDrawer(font);
                 IEnumerable<GlyphTrace> glyphTraces = td.Draw(paa.Value, new Point(0, 0), paa.HorizontalAlign, paa.VerticalAlign, paa.Height);
                 
-                Transformation t = new Transformation();
+                var t = new Transformation();
                 //t.Scale(1, -1);
                 t.Translate(paa.Position);
                 t.Rotate(paa.Position, paa.Rotation);
@@ -144,10 +144,10 @@
                 using (context.PushPreTransform(m)) {
 
                     bool first = true;
-                    StreamGeometry geometry = new StreamGeometry();
-                    using (StreamGeometryContext gc = geometry.Open()) {
+                    var geometry = new StreamGeometry();
+                    using (var gc = geometry.Open()) {
                         foreach (var glyphTrace in glyphTraces) {
-                            Avalonia.Point p = new Avalonia.Point(glyphTrace.Position.X, glyphTrace.Position.Y);
+                            var p = new Avalonia.Point(glyphTrace.Position.X, glyphTrace.Position.Y);
                             if (first || !glyphTrace.Stroke ) {
                                 gc.BeginFigure(p, false);
                                 first = false;

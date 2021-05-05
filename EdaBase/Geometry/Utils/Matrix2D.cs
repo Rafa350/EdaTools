@@ -221,16 +221,22 @@
         public static Matrix2D Identity => 
             CreateIdentity();
 
-        public double M11 => _m11;
+        public double M11 => 
+            _m11;
 
-        public double M12 => _m12;
+        public double M12 => 
+            _m12;
 
-        public double M21 => _m21;
+        public double M21 => 
+            _m21;
 
-        public double M22 => _m22;
+        public double M22 => 
+            _m22;
 
-        public double Tx => _tx;
+        public double Tx => 
+            _tx;
 
-        public double Ty => _ty;
+        public double Ty => 
+            _ty;
     }
 }

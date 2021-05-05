@@ -1,13 +1,13 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
+﻿using System;
+using System.IO;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
+using MikroPic.EdaTools.v1.Cam.Model;
+using MikroPic.EdaTools.v1.Core.Model.Board;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 
-    using System;
-    using System.IO;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
-    using MikroPic.EdaTools.v1.Cam.Model;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
+namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
     /// <summary>
     /// Clase per generar fitxers gerber de forats i fresats.
@@ -54,12 +54,12 @@
 
                 // Prepara el diccionari d'apertures
                 //
-                ApertureDictionary apertures = new ApertureDictionary();
+                var apertures = new ApertureDictionary();
                 PrepareApertures(apertures, board);
 
                 // Prepara el generador de gerbers
                 //
-                GerberBuilder gb = new GerberBuilder(writer);
+                var gb = new GerberBuilder(writer);
                 gb.SetTransformation(Target.Position, Target.Rotation);
 
                 // Genera la capcelera del fitxer
@@ -187,8 +187,8 @@
         /// </summary>
         private sealed class PrepareAperturesVisitor : ElementVisitor {
 
-            private readonly string layerId;
-            private readonly ApertureDictionary apertures;
+            private readonly string _layerId;
+            private readonly ApertureDictionary _apertures;
 
             /// <summary>
             /// Constructor de l'objecte.
@@ -198,8 +198,8 @@
             /// 
             public PrepareAperturesVisitor(string layerId, ApertureDictionary apertures) {
 
-                this.layerId = layerId;
-                this.apertures = apertures;
+                _layerId = layerId;
+                _apertures = apertures;
             }
 
             /// <summary>
@@ -210,7 +210,7 @@
             public override void Visit(LineElement line) {
 
                 if (CanVisit(line))
-                    apertures.DefineCircleAperture(line.Thickness);
+                    _apertures.DefineCircleAperture(line.Thickness);
             }
 
             /// <summary>
@@ -221,7 +221,7 @@
             public override void Visit(ArcElement arc) {
 
                 if (CanVisit(arc))
-                    apertures.DefineCircleAperture(arc.Thickness);
+                    _apertures.DefineCircleAperture(arc.Thickness);
             }
 
             /// <summary>
@@ -232,7 +232,7 @@
             public override void Visit(HoleElement hole) {
 
                 if (CanVisit(hole))
-                    apertures.DefineCircleAperture(hole.Drill);
+                    _apertures.DefineCircleAperture(hole.Drill);
             }
 
             /// <summary>
@@ -243,7 +243,7 @@
             public override void Visit(ViaElement via) {
 
                 if (CanVisit(via))
-                    apertures.DefineCircleAperture(via.Drill);
+                    _apertures.DefineCircleAperture(via.Drill);
             }
 
             /// <summary>
@@ -254,12 +254,12 @@
             public override void Visit(ThPadElement pad) {
 
                 if (CanVisit(pad))
-                    apertures.DefineCircleAperture(pad.Drill);
+                    _apertures.DefineCircleAperture(pad.Drill);
             }
 
             private bool CanVisit(Element element) {
 
-                return element.LayerSet.Contains(layerId);
+                return element.LayerSet.Contains(_layerId);
             }
         }
 
@@ -268,9 +268,9 @@
         /// </summary>
         private sealed class ImageGeneratorVisitor : ElementVisitor {
 
-            private readonly GerberBuilder gb;
-            private readonly string layerId;
-            private readonly ApertureDictionary apertures;
+            private readonly GerberBuilder _gb;
+            private readonly string _layerId;
+            private readonly ApertureDictionary _apertures;
 
             /// <summary>
             /// Constructor de la clase.
@@ -281,9 +281,9 @@
             /// 
             public ImageGeneratorVisitor(GerberBuilder gb, string layerId, ApertureDictionary apertures) {
 
-                this.gb = gb;
-                this.layerId = layerId;
-                this.apertures = apertures;
+                _gb = gb;
+                _layerId = layerId;
+                _apertures = apertures;
             }
 
             /// <summary>
@@ -305,11 +305,11 @@
                         center = t.ApplyTo(center);
                     }
 
-                    Aperture ap = apertures.GetCircleAperture(arc.Thickness);
+                    Aperture ap = _apertures.GetCircleAperture(arc.Thickness);
 
-                    gb.SelectAperture(ap);
-                    gb.MoveTo(startPosition);
-                    gb.ArcTo(endPosition.X, endPosition.Y,
+                    _gb.SelectAperture(ap);
+                    _gb.MoveTo(startPosition);
+                    _gb.ArcTo(endPosition.X, endPosition.Y,
                         center.X - startPosition.X, center.Y - startPosition.Y,
                         arc.Angle.Value < 0 ? ArcDirection.CW : ArcDirection.CCW);
                 }
@@ -332,11 +332,11 @@
                         endPosition = t.ApplyTo(endPosition);
                     }
 
-                    Aperture ap = apertures.GetCircleAperture(line.Thickness);
+                    Aperture ap = _apertures.GetCircleAperture(line.Thickness);
 
-                    gb.SelectAperture(ap);
-                    gb.MoveTo(startPosition);
-                    gb.LineTo(endPosition);
+                    _gb.SelectAperture(ap);
+                    _gb.MoveTo(startPosition);
+                    _gb.LineTo(endPosition);
                 }
             }
 
@@ -355,10 +355,10 @@
                         position = t.ApplyTo(position);
                     }
 
-                    Aperture ap = apertures.GetCircleAperture(hole.Drill);
+                    Aperture ap = _apertures.GetCircleAperture(hole.Drill);
 
-                    gb.SelectAperture(ap);
-                    gb.FlashAt(position);
+                    _gb.SelectAperture(ap);
+                    _gb.FlashAt(position);
                 }
             }
 
@@ -377,10 +377,10 @@
                         position = t.ApplyTo(position);
                     }
 
-                    Aperture ap = apertures.GetCircleAperture(via.Drill);
+                    Aperture ap = _apertures.GetCircleAperture(via.Drill);
 
-                    gb.SelectAperture(ap);
-                    gb.FlashAt(position);
+                    _gb.SelectAperture(ap);
+                    _gb.FlashAt(position);
                 }
             }
 
@@ -399,16 +399,16 @@
                         position = t.ApplyTo(position);
                     }
 
-                    Aperture ap = apertures.GetCircleAperture(pad.Drill);
+                    Aperture ap = _apertures.GetCircleAperture(pad.Drill);
 
-                    gb.SelectAperture(ap);
-                    gb.FlashAt(position);
+                    _gb.SelectAperture(ap);
+                    _gb.FlashAt(position);
                 }
             }
 
             private bool CanVisit(Element element) {
 
-                return element.LayerSet.Contains(layerId);
+                return element.LayerSet.Contains(_layerId);
             }
         }
     }

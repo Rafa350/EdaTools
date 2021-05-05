@@ -1,9 +1,9 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
+﻿using System;
+using System.Globalization;
+using System.Text;
+using MikroPic.EdaTools.v1.Base.Geometry;
 
-    using System;
-    using System.Globalization;
-    using System.Text;
-    using MikroPic.EdaTools.v1.Base.Geometry;
+namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
 
     /// <summary>
     /// Clase que representa una apertura poligonal.
@@ -69,25 +69,29 @@
         /// Obte el numero de vertex
         /// </summary>
         /// 
-        public int Vertex => _vertex;
+        public int Vertex => 
+            _vertex;
 
         /// <summary>
         /// Obte el diametre exterior del poligon.
         /// </summary>
         /// 
-        public int Diameter => _diameter;
+        public int Diameter => 
+            _diameter;
 
         /// <summary>
         /// Obte el diametre del forat.
         /// </summary>
         /// 
-        public int Drill => _drill;
+        public int Drill => 
+            _drill;
 
         /// <summary>
         /// Obte l'angle de rotacio.
         /// </summary>
         /// 
-        public Angle Rotation => _rotation;
+        public Angle Rotation => 
+            _rotation;
     }
 }
 

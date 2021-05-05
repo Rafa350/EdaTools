@@ -81,7 +81,7 @@ namespace MikroPic.EdaTools.v1.Import {
 
             string credits =
                 "+--------------------------------------------------------------------\r\n" +
-                "| EdaImport V1.0 - (c) 2019 rsr.openware@gmail.com\r\n" +
+                "| EdaImport V2.1 - (c) 2019..2021 rsr.openware@gmail.com\r\n" +
                 "+--------------------------------------------------------------------";
 
             Console.WriteLine(credits);

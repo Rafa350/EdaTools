@@ -56,7 +56,7 @@ namespace MikroPic.EdaTools.v1.Export {
 
             string credits =
                 "+--------------------------------------------------------------------\r\n" +
-                "| EdaExport V1.0 - (c) 2019..2021 rsr.openware@gmail.com\r\n" +
+                "| EdaExport V2.1 - (c) 2019..2021 rsr.openware@gmail.com\r\n" +
                 "+--------------------------------------------------------------------";
 
             Console.WriteLine(credits);

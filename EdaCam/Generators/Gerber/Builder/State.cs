@@ -1,7 +1,7 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
+﻿using System;
+using MikroPic.EdaTools.v1.Base.Geometry;
 
-    using System;
-    using MikroPic.EdaTools.v1.Base.Geometry;
+namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
 
     /// <summary>
     /// Clase que gestiona l'estat intern del generador gerber.
@@ -147,48 +147,56 @@
         /// Obte el modus d'interpolacio.
         /// </summary>
         /// 
-        public InterpolationMode InterpolationMode => InterpolationMode;
+        public InterpolationMode InterpolationMode => 
+            InterpolationMode;
 
         /// <summary>
         /// Obte la coordinada X de la posicio actual.
         /// </summary>
         /// 
-        public int X => _x;
+        public int X => 
+            _x;
 
         /// <summary>
         /// Obte la coordinada Y de la posicio actual.
         /// </summary>
         /// 
-        public int Y => _y;
+        public int Y => 
+            _y;
 
         /// <summary>
         /// Obte l'apertura seleccionada.
         /// </summary>
         /// 
-        public Aperture Aperture => _aperture;
+        public Aperture Aperture => 
+            _aperture;
 
         /// <summary>
         /// Obte l'angle de l'apertura.
         /// </summary>
         /// 
-        public Angle ApertureAngle => _apertureAngle;
+        public Angle ApertureAngle => 
+            _apertureAngle;
 
         /// <summary>
         /// Opte la polaritat de l'apertura.
         /// </summary>
         /// 
-        public Polarity AperturePolarity => _aperturePolarity;
+        public Polarity AperturePolarity => 
+            _aperturePolarity;
 
         /// <summary>
         /// Opte la reflexio de l'apertura.
         /// </summary>
         /// 
-        public bool ApertureMirror => _apertureMirror;
+        public bool ApertureMirror => 
+            _apertureMirror;
 
         /// <summary>
         /// Obte l'escala de l'apertura.
         /// </summary>
         /// 
-        public double ApertureScale => _apertureScale;
+        public double ApertureScale => 
+            _apertureScale;
     }
 }

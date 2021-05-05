@@ -1,8 +1,8 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
+﻿using System;
+using System.Globalization;
+using System.Text;
 
-    using System;
-    using System.Globalization;
-    using System.Text;
+namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
 
     /// <summary>
     /// Clae que representa una apertura de macro.
@@ -61,12 +61,14 @@
         /// Obte el macro associat a l'apertura.
         /// </summary>
         /// 
-        public Macro Macro => _macro;
+        public Macro Macro => 
+            _macro;
 
         /// <summary>
         /// Obte els arguments del macro.
         /// </summary>
         /// 
-        public int[] Args => _args;
+        public int[] Args => 
+            _args;
     }
 }

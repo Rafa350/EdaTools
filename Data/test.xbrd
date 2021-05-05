@@ -2,167 +2,86 @@
 <document version="213" documentType="board" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/XBRD.xsd">
     <board position="0, 0" rotation="0">
         <layers>
-            <layer side="top" tag="Copper" function="signal" />
-            <layer side="bottom" tag="Copper" function="signal" />
             <layer side="none" tag="Pads" function="unknown" />
             <layer side="none" tag="Vias" function="unknown" />
-            <layer side="none" tag="Unrouted" function="unknown" />
-            <layer side="none" tag="Profile" function="outline" />
-            <layer side="top" tag="Place" function="design" />
-            <layer side="bottom" tag="Place" function="design" />
-            <layer side="none" tag="Unknown23" function="unknown" />
-            <layer side="none" tag="Unknown24" function="unknown" />
-            <layer side="top" tag="Names" function="design" />
-            <layer side="bottom" tag="Names" function="design" />
-            <layer side="top" tag="Values" function="design" />
-            <layer side="bottom" tag="Values" function="design" />
-            <layer side="top" tag="Stop" function="design" />
-            <layer side="bottom" tag="Stop" function="design" />
-            <layer side="top" tag="Cream" function="design" />
-            <layer side="bottom" tag="Cream" function="design" />
-            <layer side="none" tag="Unknown33" function="unknown" />
-            <layer side="none" tag="Unknown34" function="unknown" />
-            <layer side="top" tag="Glue" function="design" />
-            <layer side="bottom" tag="Glue" function="design" />
-            <layer side="none" tag="Unknown37" function="unknown" />
-            <layer side="none" tag="Unknown38" function="unknown" />
-            <layer side="top" tag="Keepout" function="design" />
-            <layer side="bottom" tag="Keepout" function="design" />
-            <layer side="top" tag="Restrict" function="design" />
-            <layer side="bottom" tag="Restrict" function="design" />
-            <layer side="none" tag="ViaRestrict" function="unknown" />
-            <layer side="none" tag="Drills" function="unknown" />
+            <layer side="none" tag="Drils" function="unknown" />
             <layer side="none" tag="Holes" function="unknown" />
-            <layer side="none" tag="Unknown46" function="unknown" />
-            <layer side="none" tag="Unknown47" function="unknown" />
-            <layer side="none" tag="Unknown48" function="unknown" />
-            <layer side="none" tag="Unknown49" function="unknown" />
-            <layer side="top" tag="Document" function="design" />
-            <layer side="bottom" tag="Document" function="design" />
-            <layer side="none" tag="Unknown90" function="unknown" />
-            <layer side="none" tag="Unknown91" function="unknown" />
-            <layer side="none" tag="Unknown92" function="unknown" />
-            <layer side="none" tag="Unknown93" function="unknown" />
-            <layer side="none" tag="Unknown94" function="unknown" />
-            <layer side="none" tag="Unknown95" function="unknown" />
-            <layer side="none" tag="Unknown96" function="unknown" />
-            <layer side="none" tag="Unknown97" function="unknown" />
-            <layer side="none" tag="Unknown98" function="unknown" />
-            <layer side="none" tag="Unknown99" function="unknown" />
+            <layer side="top" tag="Names" function="unknown" />
+            <layer side="bottom" tag="Values" function="unknown" />
+            <layer side="top" tag="Copper" function="signal" />
+            <layer side="bottom" tag="Copper" function="signal" />
+            <layer side="bottom" tag="Glue" function="unknown" />
+            <layer side="top" tag="Glue" function="unknown" />
+            <layer side="bottom" tag="Cream" function="unknown" />
+            <layer side="top" tag="Cream" function="unknown" />
+            <layer side="bottom" tag="Place" function="unknown" />
+            <layer side="top" tag="Place" function="unknown" />
+            <layer side="bottom" tag="Stop" function="unknown" />
+            <layer side="top" tag="Stop" function="unknown" />
+            <layer side="none" tag="Dwgs_User" function="unknown" />
+            <layer side="none" tag="Cmts_User" function="unknown" />
+            <layer side="none" tag="Eco1_User" function="unknown" />
+            <layer side="none" tag="Eco2_User" function="unknown" />
+            <layer side="none" tag="Profile" function="unknown" />
+            <layer side="none" tag="Margin" function="unknown" />
+            <layer side="bottom" tag="Keepout" function="unknown" />
+            <layer side="top" tag="Keepout" function="unknown" />
+            <layer side="bottom" tag="Document" function="unknown" />
+            <layer side="top" tag="Document" function="unknown" />
         </layers>
-        <signals>
-            <signal name="S$1" clearance="0.15" />
-        </signals>
+        <signals />
         <components>
-            <component name="C-SMC-A@smd-parts">
+            <component name="Resistor_SMD:R_0603_1608Metric">
                 <elements>
-                    <line layers="Top.Document" startPosition="-1.45, 0.75" endPosition="1.45, 0.75" thickness="0.1016" />
-                    <line layers="Top.Document" startPosition="1.45, 0.75" endPosition="1.45, -0.75" thickness="0.1016" />
-                    <line layers="Top.Document" startPosition="1.45, -0.75" endPosition="-1.45, -0.75" thickness="0.1016" />
-                    <line layers="Top.Document" startPosition="-1.45, -0.75" endPosition="-1.45, 0.75" thickness="0.1016" />
-                    <spad name="+" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.375, 0" size="1.5, 1.95" roundness="0.25" />
-                    <spad name="-" layers="Top.Copper, Top.Cream, Top.Stop" position="1.375, 0" size="1.5, 1.95" roundness="0.25" />
-                    <text layers="Top.Names" position="-2.25, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-2.25, -2" height="1" thickness="0.1" value="&gt;VALUE" />
-                    <rectangle layers="Top.Document" position="-1.5, 0" size="0.2, 1.2" />
-                    <rectangle layers="Top.Document" position="1.5, 0" size="0.2, 1.2" rotation="180" />
-                    <rectangle layers="Top.Document" position="-1.125, 0" size="0.65, 1.5" />
-                    <line layers="Top.Keepout" startPosition="-2.3175, 1.125" endPosition="2.3175, 1.125" thickness="0.1" />
-                    <line layers="Top.Keepout" startPosition="2.3175, 1.125" endPosition="2.3175, -1.125" thickness="0.1" />
-                    <line layers="Top.Keepout" startPosition="2.3175, -1.125" endPosition="-2.3175, -1.125" thickness="0.1" />
-                    <line layers="Top.Keepout" startPosition="-2.3175, -1.125" endPosition="-2.3175, 1.125" thickness="0.1" />
-                    <region layers="Top.Place" thickness="0.1" filled="true">
-                        <segment position="-0.5, 0" />
-                        <segment position="0, 0.5" />
-                        <segment position="0, -0.5" />
-                    </region>
-                    <line layers="Top.Place" startPosition="-0.5, 0.75" endPosition="0.5, 0.75" thickness="0.1" />
-                    <line layers="Top.Place" startPosition="-0.5, -0.75" endPosition="0.5, -0.75" thickness="0.1" />
+                    <text layers="Top.Names" position="0, 1.43" rotation="-180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
+                    <text layers="Top.Values" position="0, -1.43" rotation="-180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
+                    <text layers="Top.Document" position="0, 0" rotation="-180" height="0.4" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <line layers="Top.Document" startPosition="-0.8, -0.4125" endPosition="-0.8, 0.4125" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="-0.8, 0.4125" endPosition="0.8, 0.4125" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="0.8, 0.4125" endPosition="0.8, -0.4125" thickness="0.1" />
+                    <line layers="Top.Document" startPosition="0.8, -0.4125" endPosition="-0.8, -0.4125" thickness="0.1" />
+                    <line layers="Top.Place" startPosition="-0.237258, 0.522499" endPosition="0.237258, 0.522499" thickness="0.12" />
+                    <line layers="Top.Place" startPosition="-0.237258, -0.522499" endPosition="0.237258, -0.522499" thickness="0.12" />
+                    <line layers="Top.Keepout" startPosition="-1.48, -0.73" endPosition="-1.48, 0.73" thickness="0.05" />
+                    <line layers="Top.Keepout" startPosition="-1.48, 0.73" endPosition="1.48, 0.73" thickness="0.05" />
+                    <line layers="Top.Keepout" startPosition="1.48, 0.73" endPosition="1.48, -0.73" thickness="0.05" />
+                    <line layers="Top.Keepout" startPosition="1.48, -0.73" endPosition="-1.48, -0.73" thickness="0.05" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.825, 0" size="0.8, 0.95" roundness="0.5" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.825, 0" size="0.8, 0.95" roundness="0.5" />
                 </elements>
             </component>
         </components>
         <parts>
-            <part name="E$1" component="C-SMC-A@smd-parts" position="5, 22">
+            <part name="Resistor_SMD:R_0603_1608Metric:0" component="Resistor_SMD:R_0603_1608Metric" position="111, -93.375" rotation="270">
                 <attributes>
-                    <attribute name="NAME" value="E$1" />
-                    <attribute name="VALUE" value="" />
+                    <attribute name="NAME" value="R270" />
+                    <attribute name="VALUE" value="R_Small" />
                 </attributes>
             </part>
-            <part name="E$2" component="C-SMC-A@smd-parts" position="10, 22" rotation="90">
+            <part name="Resistor_SMD:R_0603_1608Metric:1" component="Resistor_SMD:R_0603_1608Metric" position="101.625, -93.25" rotation="180">
                 <attributes>
-                    <attribute name="NAME" value="E$2" />
-                    <attribute name="VALUE" value="" />
+                    <attribute name="NAME" value="R180" />
+                    <attribute name="VALUE" value="R_Small" />
                 </attributes>
             </part>
-            <part name="E$3" component="C-SMC-A@smd-parts" position="15, 22" rotation="180">
+            <part name="Resistor_SMD:R_0603_1608Metric:2" component="Resistor_SMD:R_0603_1608Metric" position="111.5, -86.875" rotation="90">
                 <attributes>
-                    <attribute name="NAME" value="E$3" />
-                    <attribute name="VALUE" value="" />
+                    <attribute name="NAME" value="R90" />
+                    <attribute name="VALUE" value="R_Small" />
                 </attributes>
             </part>
-            <part name="E$4" component="C-SMC-A@smd-parts" position="20, 22.25" rotation="270">
+            <part name="Resistor_SMD:R_0603_1608Metric:3" component="Resistor_SMD:R_0603_1608Metric" position="101.75, -87">
                 <attributes>
-                    <attribute name="NAME" value="E$4" />
-                    <attribute name="VALUE" value="" />
-                </attributes>
-            </part>
-            <part name="E$5" component="C-SMC-A@smd-parts" position="5, 10">
-                <attributes>
-                    <attribute name="NAME" value="E$5" position="-2.25, 1.25" rotation="0" height="1" />
-                    <attribute name="VALUE" value="" position="-2.25, -2" rotation="0" height="1" />
-                </attributes>
-            </part>
-            <part name="E$6" component="C-SMC-A@smd-parts" position="10, 10" rotation="90">
-                <attributes>
-                    <attribute name="NAME" value="E$6" position="-2.25, 1.25" rotation="0" height="1" />
-                    <attribute name="VALUE" value="" position="-2.25, -1.999999" rotation="0" height="1" />
-                </attributes>
-            </part>
-            <part name="E$7" component="C-SMC-A@smd-parts" position="15, 10" rotation="180">
-                <attributes>
-                    <attribute name="NAME" value="E$7" position="-2.249999, 1.249999" rotation="0" height="1" />
-                    <attribute name="VALUE" value="" position="-2.249999, -2" rotation="0" height="1" />
-                </attributes>
-            </part>
-            <part name="E$8" component="C-SMC-A@smd-parts" position="20, 10" rotation="270">
-                <attributes>
-                    <attribute name="NAME" value="E$8" position="-2.25, 1.249999" rotation="0" height="1" />
-                    <attribute name="VALUE" value="" position="-2.249999, -2" rotation="0" height="1" />
-                </attributes>
-            </part>
-            <part name="E$9" component="C-SMC-A@smd-parts" position="30, 10">
-                <attributes>
-                    <attribute name="NAME" value="E$9" position="0.25, 0.25" rotation="0" height="1" />
-                    <attribute name="VALUE" value="" position="-2.25, -2" rotation="0" height="1" />
+                    <attribute name="NAME" value="R0" />
+                    <attribute name="VALUE" value="R_Small" />
                 </attributes>
             </part>
         </parts>
         <elements>
-            <circle layers="Bottom.Copper" position="44.25, 40" radius="10" thickness="2.5" />
-            <circle layers="Top.Copper" position="44.25, 40" radius="10" />
-            <line layers="Profile" startPosition="0, 0" endPosition="0, 52.75" thickness="0.1" />
-            <line layers="Profile" startPosition="0, 52.75" endPosition="79.5, 52.75" thickness="0.1" />
-            <line layers="Profile" startPosition="79.5, 52.75" endPosition="79.5, 0" thickness="0.1" />
-            <line layers="Profile" startPosition="79.5, 0" endPosition="0, 0" thickness="0.1" />
-            <text layers="Top.Copper" position="5, 30.75" height="1.778" thickness="0.1" value="01234567890&#xA;ABCDEFGHIJK&#xA;LMNOPQRSTU&#xA;VWXYZ&#xA;-_$&amp;()?=&lt;&gt;" />
-            <region layers="Top.Copper" signal="S$1">
-                <segment position="63.25, 48.25" />
-                <segment position="76.5, 48.25" />
-                <segment position="76.5, 35.75" />
-                <segment position="67, 26.25" />
-                <segment position="67, 32.75" />
-                <segment position="59.75, 40.5" />
-                <segment position="59.75, 44.75" />
-            </region>
-            <region layers="Bottom.Copper" thickness="2" filled="true" signal="S$1">
-                <segment position="59.75, 40.5" />
-                <segment position="59.75, 44.75" />
-                <segment position="63.25, 48.25" />
-                <segment position="76.5, 48.25" />
-                <segment position="76.5, 35.75" />
-                <segment position="67, 26.25" />
-                <segment position="67, 32.75" />
-            </region>
+            <line layers="Profile" startPosition="76.25, -78.25" endPosition="76.25, -117.5" thickness="0.05" />
+            <line layers="Profile" startPosition="154.875, -78.25" endPosition="76.25, -78.25" thickness="0.05" />
+            <line layers="Profile" startPosition="154.875, -117.5" endPosition="154.875, -78.25" thickness="0.05" />
+            <line layers="Profile" startPosition="76.25, -117.5" endPosition="154.875, -117.5" thickness="0.05" />
         </elements>
     </board>
 </document>

@@ -1,12 +1,12 @@
-﻿namespace MikroPic.EdaTools.v1.CamTool {
+﻿using System;
+using System.IO;
+using MikroPic.EdaTools.v1.Cam;
+using MikroPic.EdaTools.v1.Cam.Model;
+using MikroPic.EdaTools.v1.Cam.Model.IO;
+using MikroPic.EdaTools.v1.Core.Model.Board;
+using MikroPic.EdaTools.v1.Core.Model.Board.IO;
 
-    using System;
-    using System.IO;
-    using MikroPic.EdaTools.v1.Cam;
-    using MikroPic.EdaTools.v1.Cam.Model;
-    using MikroPic.EdaTools.v1.Cam.Model.IO;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
+namespace MikroPic.EdaTools.v1.CamTool {
 
     class Program {
 
@@ -24,7 +24,7 @@
 
             else {
 
-                string projectPath = Path.GetFullPath(args[0]);
+                string projectPath = args[0];
                 string boardPath = null; ;
                 string targetName = null;
                 string outputFolder = null;
@@ -61,8 +61,8 @@
 
                 if (verbose) {
                     Console.WriteLine("| Target name  : {0}", targetName);
-                    Console.WriteLine("| Project path : {0}", projectPath);
-                    Console.WriteLine("| Board path   : {0}", boardPath);
+                    Console.WriteLine("| Project file : {0}", projectPath);
+                    Console.WriteLine("| Board file   : {0}", boardPath);
                     Console.WriteLine("| Output folder: {0}", outputFolder);
                     Console.WriteLine("+--------------------------------------------------------------------");
                     Console.WriteLine();
@@ -85,7 +85,7 @@
 
             string credits =
                 "+--------------------------------------------------------------------\r\n" +
-                "| EdaCamTool V2.0 - (c) 2019..2020 rsr.openware@gmail.com\r\n" +
+                "| EdaCamTool V2.1 - (c) 2019..2021 rsr.openware@gmail.com\r\n" +
                 "+--------------------------------------------------------------------";
 
             Console.WriteLine(credits);
@@ -104,6 +104,7 @@
                 "|         /o      :   Output path\r\n" +
                 "|         /p      :   Pause at end.\r\n" +
                 "|         /t      :   Target to process.\r\n" +
+                "|         /v      :   Verbose.\r\n" +
                 "|         /z      :   Output ZIP file name.\r\n" +
                 "+--------------------------------------------------------------------";
 

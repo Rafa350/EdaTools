@@ -1,10 +1,10 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using MikroPic.EdaTools.v1.Base.Geometry;
 
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
-    using MikroPic.EdaTools.v1.Base.Geometry;
+namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
 
     // Unitats de mesura del fitxer gerber
     //
@@ -57,17 +57,17 @@
     /// </summary>
     public sealed class GerberBuilder {
 
-        private readonly TextWriter writer;
-        private readonly StringBuilder sb = new StringBuilder();
-        private readonly State state = new State();
-        private bool inRegion = false;
-        private int precision = 7;
-        private int decimals = 4;
-        private int offsetX = 0;
-        private int offsetY = 0;
-        private Angle rotation = Angle.Zero;
-        private string fmtTemplate = null;
-        private double fmtScale = 0;
+        private readonly TextWriter _writer;
+        private readonly StringBuilder _sb = new StringBuilder();
+        private readonly State _state = new State();
+        private bool _inRegion = false;
+        private int _precision = 7;
+        private int _decimals = 4;
+        private int _offsetX = 0;
+        private int _offsetY = 0;
+        private Angle _rotation = Angle.Zero;
+        private string _fmtTemplate = null;
+        private double _fmtScale = 0;
 
         /// <summary>
         /// Constructor del objecte.
@@ -79,7 +79,7 @@
             if (writer == null)
                 throw new ArgumentNullException(nameof(writer));
 
-            this.writer = writer;
+            _writer = writer;
         }
 
         /// <summary>
@@ -88,7 +88,7 @@
         /// 
         public void EndFile() {
 
-            writer.WriteLine("M02*");
+            _writer.WriteLine("M02*");
         }
 
         /// <summary>
@@ -98,7 +98,7 @@
         /// 
         public void Escape(string line) {
 
-            writer.WriteLine(line);
+            _writer.WriteLine(line);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@
         /// 
         public void Comment(string line) {
 
-            writer.WriteLine("G04 {0} *", line);
+            _writer.WriteLine("G04 {0} *", line);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@
                     break;
             }
 
-            writer.WriteLine(String.Format("%T{0}{1}*%", prefix, attr));
+            _writer.WriteLine(String.Format("%T{0}{1}*%", prefix, attr));
         }
 
         /// <summary>
@@ -157,21 +157,21 @@
         /// 
         public void FlashAt(int x, int y) {
 
-            x += offsetX;
-            y += offsetY;
+            x += _offsetX;
+            y += _offsetY;
 
-            sb.Clear();
-            if (state.SetX(x)) {
-                sb.Append('X');
-                sb.Append(FormatNumber(x));
+            _sb.Clear();
+            if (_state.SetX(x)) {
+                _sb.Append('X');
+                _sb.Append(FormatNumber(x));
             }
-            if (state.SetY(y)) {
-                sb.Append('Y');
-                sb.Append(FormatNumber(y));
+            if (_state.SetY(y)) {
+                _sb.Append('Y');
+                _sb.Append(FormatNumber(y));
             }
 
-            sb.Append("D03*");
-            writer.WriteLine(sb.ToString());
+            _sb.Append("D03*");
+            _writer.WriteLine(_sb.ToString());
         }
 
         /// <summary>
@@ -192,25 +192,25 @@
         /// 
         public void MoveTo(int x, int y) {
 
-            x += offsetX;
-            y += offsetY;
+            x += _offsetX;
+            y += _offsetY;
 
             // Si no hi ha moviment real, no cal fa res
             //
-            if ((state.X != x) || (state.Y != y)) {
+            if ((_state.X != x) || (_state.Y != y)) {
 
-                sb.Clear();
-                if (state.SetX(x)) {
-                    sb.Append('X');
-                    sb.Append(FormatNumber(x));
+                _sb.Clear();
+                if (_state.SetX(x)) {
+                    _sb.Append('X');
+                    _sb.Append(FormatNumber(x));
                 }
-                if (state.SetY(y)) {
-                    sb.Append('Y');
-                    sb.Append(FormatNumber(y));
+                if (_state.SetY(y)) {
+                    _sb.Append('Y');
+                    _sb.Append(FormatNumber(y));
                 }
 
-                sb.Append("D02*");
-                writer.WriteLine(sb.ToString());
+                _sb.Append("D02*");
+                _writer.WriteLine(_sb.ToString());
             }
         }
 
@@ -232,30 +232,30 @@
         /// 
         public void LineTo(int x, int y) {
 
-            x += offsetX;
-            y += offsetY;
+            x += _offsetX;
+            y += _offsetY;
 
-            if (state.Aperture == null && !inRegion)
+            if (_state.Aperture == null && !_inRegion)
                 throw new InvalidOperationException("Apertura no seleccionada.");
 
             // Si no hi ha movinent real, no cal fer res
             //
-            if ((state.X != x) || (state.Y != y)) {
+            if ((_state.X != x) || (_state.Y != y)) {
 
                 SetInterpolationMode(InterpolationMode.Linear);
 
-                sb.Clear();
-                if (state.SetX(x)) {
-                    sb.Append('X');
-                    sb.Append(FormatNumber(x));
+                _sb.Clear();
+                if (_state.SetX(x)) {
+                    _sb.Append('X');
+                    _sb.Append(FormatNumber(x));
                 }
-                if (state.SetY(y)) {
-                    sb.Append('Y');
-                    sb.Append(FormatNumber(y));
+                if (_state.SetY(y)) {
+                    _sb.Append('Y');
+                    _sb.Append(FormatNumber(y));
                 }
 
-                sb.Append("D01*");
-                writer.WriteLine(sb.ToString());
+                _sb.Append("D01*");
+                _writer.WriteLine(_sb.ToString());
             }
         }
 
@@ -266,17 +266,17 @@
 
         public void ArcTo(int x, int y, int cx, int cy, ArcDirection direction, ArcQuadrant quadrant = ArcQuadrant.Multiple) {
 
-            x += offsetX;
-            y += offsetY;
-            cx += offsetX;
-            cy += offsetY;
+            x += _offsetX;
+            y += _offsetY;
+            cx += _offsetX;
+            cy += _offsetY;
 
-            if (state.Aperture == null)
+            if (_state.Aperture == null)
                 throw new InvalidOperationException("Apertura no seleccionada.");
 
             // Si no hi ha moviment real, no cal fer res
             //
-            if ((state.X != x) || (state.Y != y)) {
+            if ((_state.X != x) || (_state.Y != y)) {
 
                 if (direction == ArcDirection.CW) {
                     if (quadrant == ArcQuadrant.Single)
@@ -291,22 +291,22 @@
                         SetInterpolationMode(InterpolationMode.CircularMultipleCCW);
                 }
 
-                sb.Clear();
-                if (state.SetX(x)) {
-                    sb.Append('X');
-                    sb.Append(FormatNumber(x));
+                _sb.Clear();
+                if (_state.SetX(x)) {
+                    _sb.Append('X');
+                    _sb.Append(FormatNumber(x));
                 }
-                if (state.SetY(y)) {
-                    sb.Append('Y');
-                    sb.Append(FormatNumber(y));
+                if (_state.SetY(y)) {
+                    _sb.Append('Y');
+                    _sb.Append(FormatNumber(y));
                 }
-                sb.Append('I');
-                sb.Append(FormatNumber(cx));
-                sb.Append('J');
-                sb.Append(FormatNumber(cy));
+                _sb.Append('I');
+                _sb.Append(FormatNumber(cx));
+                _sb.Append('J');
+                _sb.Append(FormatNumber(cy));
 
-                sb.AppendFormat("D01*");
-                writer.WriteLine(sb.ToString());
+                _sb.AppendFormat("D01*");
+                _writer.WriteLine(_sb.ToString());
             }
         }
 
@@ -352,7 +352,7 @@
             if (aperture == null)
                 throw new ArgumentNullException(nameof(aperture));
 
-            writer.WriteLine(aperture.Command);
+            _writer.WriteLine(aperture.Command);
         }
 
         /// <summary>
@@ -379,7 +379,7 @@
             if (macro == null)
                 throw new ArgumentNullException(nameof(macro));
 
-            writer.WriteLine(macro.Command);
+            _writer.WriteLine(macro.Command);
         }
 
         /// <summary>
@@ -406,8 +406,8 @@
             if (aperture == null)
                 throw new ArgumentNullException(nameof(aperture));
 
-            if (state.SetAperture(aperture))
-                writer.WriteLine(String.Format("D{0:00}*", aperture.Id));
+            if (_state.SetAperture(aperture))
+                _writer.WriteLine(String.Format("D{0:00}*", aperture.Id));
         }
 
         /// <summary>
@@ -416,11 +416,11 @@
         /// 
         public void BeginRegion() {
 
-            if (inRegion)
+            if (_inRegion)
                 throw new InvalidOperationException("Ya hay una region abierta.");
 
-            inRegion = true;
-            writer.WriteLine("G36*");
+            _inRegion = true;
+            _writer.WriteLine("G36*");
         }
 
         /// <summary>
@@ -429,11 +429,11 @@
         /// 
         public void EndRegion() {
 
-            if (!inRegion)
+            if (!_inRegion)
                 throw new InvalidOperationException("No hay ninguna region abierta.");
 
-            writer.WriteLine("G37*");
-            inRegion = false;
+            _writer.WriteLine("G37*");
+            _inRegion = false;
         }
 
         /// <summary>
@@ -465,8 +465,8 @@
         /// 
         public void LoadPolarity(Polarity polarity) {
 
-            if (state.SetAperturePolarity(polarity))
-                writer.WriteLine(String.Format("%LP{0}*%", polarity == Polarity.Dark ? "D" : "C"));
+            if (_state.SetAperturePolarity(polarity))
+                _writer.WriteLine(String.Format("%LP{0}*%", polarity == Polarity.Dark ? "D" : "C"));
         }
 
         /// <summary>
@@ -476,8 +476,8 @@
         /// 
         public void LoadRotation(Angle angle) {
 
-            if (state.SetApertureAngle(angle))
-                writer.WriteLine(String.Format("%LR{0}*%", (double)angle.Value / 100.0));
+            if (_state.SetApertureAngle(angle))
+                _writer.WriteLine(String.Format("%LR{0}*%", (double)angle.Value / 100.0));
         }
 
         public void LoadMirroring() {
@@ -497,33 +497,33 @@
         /// 
         public void SetInterpolationMode(InterpolationMode interpolationMode) {
 
-            if (state.SetInterpolationMode(interpolationMode)) {
+            if (_state.SetInterpolationMode(interpolationMode)) {
 
                 switch (interpolationMode) {
                     case InterpolationMode.Linear:
-                        writer.WriteLine("G01*");
+                        _writer.WriteLine("G01*");
                         break;
 
                     case InterpolationMode.CircularSingleCW:
                     case InterpolationMode.CircularMultipleCW:
-                        writer.WriteLine("G02*");
+                        _writer.WriteLine("G02*");
                         break;
 
                     case InterpolationMode.CircularSingleCCW:
                     case InterpolationMode.CircularMultipleCCW:
-                        writer.WriteLine("G03*");
+                        _writer.WriteLine("G03*");
                         break;
                 }
 
                 switch (interpolationMode) {
                     case InterpolationMode.CircularSingleCW:
                     case InterpolationMode.CircularSingleCCW:
-                        writer.WriteLine("G74*");
+                        _writer.WriteLine("G74*");
                         break;
 
                     case InterpolationMode.CircularMultipleCW:
                     case InterpolationMode.CircularMultipleCCW:
-                        writer.WriteLine("G75*");
+                        _writer.WriteLine("G75*");
                         break;
                 }
             }
@@ -543,11 +543,11 @@
             if ((decimals < 1) || (decimals > precision - 2))
                 throw new ArgumentOutOfRangeException(nameof(decimals));
 
-            this.precision = precision;
-            this.decimals = decimals;
-            this.fmtTemplate = null;
+            this._precision = precision;
+            this._decimals = decimals;
+            this._fmtTemplate = null;
 
-            writer.WriteLine("%FSLAX{0}{1}Y{0}{1}*%", precision - decimals, decimals);
+            _writer.WriteLine("%FSLAX{0}{1}Y{0}{1}*%", precision - decimals, decimals);
         }
 
         /// <summary>
@@ -560,7 +560,7 @@
             if (units == Units.Unknown)
                 throw new ArgumentOutOfRangeException(nameof(units));
 
-            writer.WriteLine(String.Format("%MO{0}*%", units == Units.Inches ? "IN" : "MM"));
+            _writer.WriteLine(String.Format("%MO{0}*%", units == Units.Inches ? "IN" : "MM"));
         }
 
         /// <summary>
@@ -583,9 +583,9 @@
         /// 
         public void SetTransformation(int offsetX, int offsetY, Angle rotation) {
 
-            this.offsetX = offsetX;
-            this.offsetY = offsetY;
-            this.rotation = rotation;
+            this._offsetX = offsetX;
+            this._offsetY = offsetY;
+            this._rotation = rotation;
         }
 
         /// <summary>
@@ -594,9 +594,9 @@
         /// 
         public void ResetTransformation() {
 
-            offsetX = 0;
-            offsetY = 0;
-            rotation = Angle.Zero;
+            _offsetX = 0;
+            _offsetY = 0;
+            _rotation = Angle.Zero;
         }
 
         /// <summary>
@@ -607,12 +607,12 @@
         /// 
         private string FormatNumber(int number) {
 
-            if (fmtTemplate == null) {
-                fmtTemplate = String.Format("{{0:{0}}}", new String('0', precision));
-                fmtScale = Math.Pow(10, decimals);
+            if (_fmtTemplate == null) {
+                _fmtTemplate = String.Format("{{0:{0}}}", new String('0', _precision));
+                _fmtScale = Math.Pow(10, _decimals);
             }
 
-            return String.Format(fmtTemplate, Math.Round(((double)number / 1000000.0) * fmtScale));
+            return String.Format(_fmtTemplate, Math.Round(((double)number / 1000000.0) * _fmtScale));
         }
     }
 }

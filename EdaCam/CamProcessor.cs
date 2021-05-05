@@ -1,15 +1,15 @@
-﻿namespace MikroPic.EdaTools.v1.Cam {
+﻿using System;
+using MikroPic.EdaTools.v1.Cam.Generators;
+using MikroPic.EdaTools.v1.Cam.Generators.Gerber;
+using MikroPic.EdaTools.v1.Cam.Generators.Ipcd356;
+using MikroPic.EdaTools.v1.Cam.Model;
+using MikroPic.EdaTools.v1.Core.Model.Board;
 
-    using System;
-    using MikroPic.EdaTools.v1.Cam.Generators;
-    using MikroPic.EdaTools.v1.Cam.Generators.Gerber;
-    using MikroPic.EdaTools.v1.Cam.Generators.Ipcd356;
-    using MikroPic.EdaTools.v1.Cam.Model;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
+namespace MikroPic.EdaTools.v1.Cam {
 
     public sealed class CamProcessor {
 
-        private readonly Project project;
+        private readonly Project _project;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -21,7 +21,7 @@
             if (project == null)
                 throw new ArgumentNullException(nameof(project));
 
-            this.project = project;
+            _project = project;
         }
 
         /// <summary>
@@ -33,7 +33,7 @@
         /// 
         public void Process(Board board, string targetName, string outputFolder) {
 
-            foreach (var target in project.Targets) {
+            foreach (var target in _project.Targets) {
                 if ((targetName == null) || (target.Name == targetName)) {
                     Generator generator = LoadGenerator(target);
                     generator.Generate(board, outputFolder);
