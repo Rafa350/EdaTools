@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
@@ -25,7 +26,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
              
                 var reader = new StreamReader(stream);
-                string source = reader.ReadToEnd();
+                var source = reader.ReadToEnd();
 
                 var parser = new SParser();
                 var tree = parser.Parse(source);
@@ -37,8 +38,25 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <inheritdoc/>
         /// 
         public Library ReadLibrary(string fileName) {
-            
-            throw new NotImplementedException();
+
+            var sb = new StringBuilder();
+            sb.Append('(');
+            var fNames = Directory.EnumerateFiles(fileName, "*.kicad_mod");
+            foreach (var fName in fNames) {
+
+                using (var stream = new FileStream(fName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                
+                    var reader = new StreamReader(stream);
+                    sb.Append(reader.ReadToEnd());
+                }
+            }
+            sb.Append(')');
+
+
+            var parser = new SParser();
+            var tree = parser.Parse(sb.ToString());
+
+            return ProcessLibrary(tree, Path.GetFileName(fileName));
         }
 
         /// <inheritdoc/>
@@ -48,9 +66,42 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Carrega un component desde una llibreria.
+        /// </summary>
+        /// <param name="componentName">Nom del component.</param>
+        /// <param name="board">La placa.</param>
+        /// 
+        private void LoadComponent(string componentName, Board board) {
+
+            var fileName = GetModuleFileName(componentName);
+            using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+
+                var reader = new StreamReader(stream);
+                var source = reader.ReadToEnd();
+
+                var parser = new SParser();
+                var tree = parser.Parse(source);
+
+                var libraryName = componentName.Split(':')[0];
+                var component = ParseLibraryModule(tree, tree.Root as SBranch, libraryName);
+
+                board.AddComponent(component);
+            }
+        }
+
+        /// <summary>
+        /// Procesa una placa.
+        /// </summary>
+        /// <param name="tree">El STree.</param>
+        /// <returns>La placa.</returns>
+        /// 
         private Board ProcessBoard(STree tree) {
 
             var board = new Board();
+
+            // Afegeix les capes basiques que no existeixen en la placa a importar
+            //
             board.AddLayer(new Layer(BoardSide.None, "Pads", LayerFunction.Unknown));
             board.AddLayer(new Layer(BoardSide.None, "Vias", LayerFunction.Unknown));
             board.AddLayer(new Layer(BoardSide.None, "Drils", LayerFunction.Unknown));
@@ -58,319 +109,314 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             board.AddLayer(new Layer(BoardSide.Top, "Names", LayerFunction.Unknown));
             board.AddLayer(new Layer(BoardSide.Bottom, "Values", LayerFunction.Unknown));
 
-            ParseLayers(tree, board);
-            ParseNets(tree, board);
-            ParseContent(tree, board);
+            // Procesa les capes
+            //
+            var layersNode = tree.SelectBranch(tree.Root, "layers");
+            foreach (var layerNode in layersNode.Nodes.OfType<SBranch>())
+                ProcessLayer(tree, layerNode, board);
+
+            // Procesa les senyals
+            //
+            foreach (var netNode in tree.SelectBranches(tree.Root, "net")) 
+                ProcessSignal(tree, netNode, board);
+
+            // Procesa els components referenciats en llibreries externes
+            //
+            foreach (var moduleNode in tree.SelectBranches(tree.Root, "module")) {
+                string componentName = tree.ValueAsString(moduleNode[1]);
+                if (board.GetComponent(componentName, false) == null) 
+                    LoadComponent(componentName, board);
+            }
+
+            // Procesa el contingut
+            //
+            foreach (var childNode in (tree.Root as SBranch).Nodes.OfType<SBranch>()) {
+                switch (tree.GetBranchName(childNode)) {
+                    case "module":
+                        ProcessPart(tree, childNode, board);
+                        break;
+
+                    case "via":
+                        ProcessVia(tree, childNode, board);
+                        break;
+
+                    case "gr_line":
+                    case "segment":
+                        ProcessLine(tree, childNode, board);
+                        break;
+                }
+            }
 
             return board;
         }
 
-        /// <summary>
-        /// Procesa els nodes 'net'
-        /// </summary>
-        /// <param name="tree">El STree</param>
-        /// <param name="board">L aplaca.</param>
-        /// 
-        private void ParseNets(STree tree, Board board) {
 
-            foreach (var netNode in tree.SelectBranches(tree.Root, "net")) {
-                string name = tree.ValueAsString(netNode[2]);
-                if (!string.IsNullOrEmpty(name)) {
-                    var signal = new Signal(name);
-                    board.AddSignal(signal);
-                }
-            }
-        }
-        
         /// <summary>
-        /// Procesa el node 'layers'.
+        /// Procesa una llibreria
         /// </summary>
         /// <param name="tree">El STree.</param>
-        /// <param name="board">La placa on afeigir les capes.</param>
+        /// <returns>La llibreria.</returns>
         /// 
-        private void ParseLayers(STree tree, Board board) {
+        private Library ProcessLibrary(STree tree, string libraryName) {
 
-            var layersNode = tree.SelectBranch(tree.Root, "layers");
-            if (layersNode != null) {
-                foreach (var layerNode in layersNode.Nodes.OfType<SBranch>()) {
+            var library = new Library("unknoun");
 
-                    string kcName = tree.ValueAsString(layerNode[1]);
-                    string type = tree.ValueAsString(layerNode[2]);
+            foreach (var childNode in (tree.Root as SBranch).Nodes.OfType<SBranch>()) 
+                library.AddComponent(ParseLibraryModule(tree, childNode, libraryName));
 
-                    BoardSide side = GetLayerSide(kcName);
-                    LayerFunction function = type == "signal" ? LayerFunction.Signal : GetLayerFunction(kcName);
-                    string tag = GetLayerTag(kcName);
-
-                    var layer = new Layer(side, tag, function);
-                    board.AddLayer(layer);
-                }
-            }
+            return library;
         }
 
         /// <summary>
-        /// Procesa els nodes 'module'
-        /// </summary>
-        /// <param name="tree">El STree.</param>
-        /// 
-        private void ParseContent(STree tree, Board board) {
-
-            foreach (var childNode in (tree.Root as SBranch).Nodes.OfType<SBranch>()) {
-                switch (tree.GetBranchName(childNode)) {
-                    case "module":
-                        ParseModule(tree, childNode, board);
-                        break;
-
-                    case "via":
-                        ParseVia(tree, childNode, board);
-                        break;
-
-                    case "segment":
-                    case "gr_line":
-                        ParseSegment(tree, childNode, board);
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Procesa un node 'via'
-        /// </summary>
-        /// <param name="tree">El STree</param>
-        /// <param name="node">El node</param>
-        /// <param name="board">La placa.</param>
-        /// 
-        private void ParseVia(STree tree, SBranch node, Board board) {
-
-            // Obte la posicio
-            //
-            var atNode = tree.SelectBranch(node, "at");
-            var p = new Vector2D(tree.ValueAsDouble(atNode[1]), tree.ValueAsDouble(atNode[2])) * _m;
-            var position = new Point((int)p.X, (int)p.Y);
-
-            // Obte el tamany
-            //
-            var sizeNode = tree.SelectBranch(node, "size");
-            int size = (int)(tree.ValueAsDouble(sizeNode[1]) * _scale);
-
-            // Obte el diametre del forat.
-            //
-            var drillNode = tree.SelectBranch(node, "drill");
-            int drill = (int)(tree.ValueAsDouble(drillNode[1]) * _scale);
-
-            // Obte el conjunt de capes.
-            //
-            LayerSet layerSet = ParseLayerSetDesignator(tree, tree.SelectBranch(node, "layers"));
-            layerSet += "Vias";
-            layerSet += "Drills";
-
-            var via = new ViaElement(layerSet, position, size, drill, ViaElement.ViaShape.Circle);
-            board.AddElement(via);
-        }
-
-        /// <summary>
-        /// Procesa un n ode 'segment'
+        /// Procesa una capa.
         /// </summary>
         /// <param name="tree">El STree.</param>
         /// <param name="node">El node.</param>
         /// <param name="board">La placa.</param>
         /// 
-        private void ParseSegment(STree tree, SBranch node, Board board) {
+        private static void ProcessLayer(STree tree, SBranch node, Board board) {
 
-            // Obte la posicio inicial
-            //
-            var startNode = tree.SelectBranch(node, "start");
-            var s = new Vector2D(tree.ValueAsDouble(startNode[1]), tree.ValueAsDouble(startNode[2])) * _m;
-            var start = new Point((int)s.X, (int)s.Y);
+            string kcName = tree.ValueAsString(node[1]);
+            string type = tree.ValueAsString(node[2]);
 
-            // Obte la posicio final
-            //
-            var endNode = tree.SelectBranch(node, "end");
-            var e = new Vector2D(tree.ValueAsDouble(endNode[1]), tree.ValueAsDouble(endNode[2])) * _m;
-            var end = new Point((int)e.X, (int)e.Y);
+            BoardSide side = GetLayerSide(kcName);
+            LayerFunction function = type == "signal" ? LayerFunction.Signal : GetLayerFunction(kcName);
+            string tag = GetLayerTag(kcName);
 
-            // Obte el gruix de linia
-            //
-            var widthNode = tree.SelectBranch(node, "width");
-            int thickness = (int)(tree.ValueAsDouble(widthNode[1]) * _scale);
-
-            // Obte el conjunt de capes.
-            //
-            var layerNode = tree.SelectBranch(node, "layer");
-            string kcLayer = tree.ValueAsString(layerNode[1]);
-            string layer = Layer.GetName(GetLayerSide(kcLayer), GetLayerTag(kcLayer));
-
-            var element = new LineElement(new LayerSet(layer), start, end, thickness, LineElement.CapStyle.Round);
-            board.AddElement(element);
+            var layer = new Layer(side, tag, function);
+            board.AddLayer(layer);
         }
 
         /// <summary>
-        /// Procesa un node 'module'.
+        /// Procesa una senal.
         /// </summary>
-        /// <param name="tree">El STree</param>
-        /// <param name="node">El node a procesar.</param>
+        /// <param name="tree">El STree.</param>
+        /// <param name="node">El node.</param>
         /// <param name="board">La placa.</param>
         /// 
-        private void ParseModule(STree tree, SBranch node, Board board) {
+        private static void ProcessSignal(STree tree, SBranch node, Board board) {
 
-            // Obte el nom 
-            //
             string name = tree.ValueAsString(node[1]);
 
-            // Obte la posicio i la rotacio
-            //
-            var atNode = tree.SelectBranch(node, "at");
-            var p = new Vector2D(tree.ValueAsDouble(atNode[1]), tree.ValueAsDouble(atNode[2])) * _m;
-            var position = new Point((int)p.X, (int)p.Y);
-            double r = atNode.Count == 4 ? tree.ValueAsDouble(atNode[3]) : 0;
-            var rotation = Angle.FromDegrees(r);
+            if (!string.IsNullOrEmpty(name)) {
+                var signal = new Signal(name);
+                board.AddSignal(signal);
+            }
+        }
 
-            // Obte la cara de la placa.
-            //
-            var layerNode = tree.SelectBranch(node, "layer");
-            string layer = tree.ValueAsString(layerNode[1]);
-            BoardSide side = layer == "Bottom" ? BoardSide.Bottom : BoardSide.Top;
+        /// <summary>
+        /// Obte un element via
+        /// </summary>
+        /// <param name="tree">El STree</param>
+        /// <param name="node">El node</param>
+        /// <returns>L'element creat.</returns>
+        /// 
+        private void ProcessVia(STree tree, SBranch node, Board board) {
 
-            /// Si no existeix com component, el crea
-            /// 
-            var componentName = String.Format("{0}", name);
-            var component = board.GetComponent(componentName, false);
-            if (component == null) {
+            var position = ParsePoint(tree, tree.SelectBranch(node, "at"));
+            var size = ParseMeasure(tree, tree.SelectBranch(node, "size"));
+            var drill = ParseMeasure(tree, tree.SelectBranch(node, "drill"));
+            var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layers"));
+            
+            layerSet += "Vias";
+            layerSet += "Drills";
 
-                component = new Component(componentName);
-                board.AddComponent(component);
+            var via = new ViaElement(layerSet, position, size, drill, ViaElement.ViaShape.Circle);
 
-                foreach (var childNode in node.Nodes.OfType<SBranch>()) {
-                    switch (tree.GetBranchName(childNode)) {
-                        case "fp_text":
-                            ParseModuleText(tree, childNode, component);
-                            break;
-
-                        case "fp_circle":
-                            ParseModuleCircle(tree, childNode, component);
-                            break;
-
-                        case "fp_line":
-                            ParseModuleLine(tree, childNode, component);
-                            break;
-
-                        case "fp_arc":
-                            ParseModuleArc(tree, childNode, component);
-                            break;
-
-                        case "pad":
-                            ParseModulePad(tree, childNode, component);
-                            break;
-                    }
-                }
-
-                // Correccio de coordinades
-                //
-                if (!rotation.IsZero)
-                    foreach (var element in component.Elements)
-                        if (element is IRotation e)
-                            e.Rotation -= rotation;
+            var netNode = tree.SelectBranch(node, "net");
+            if (netNode != null) {
+                var netName = tree.ValueAsString(netNode[1]);
+                board.Connect(board.GetSignal(netName), via);
             }
 
-            var partName = String.Format("{0}:{1}", name, _partCount++);
-            var part = new Part(component, partName, position, rotation, side == BoardSide.Bottom);
-            board.AddPart(part);
+            board.AddElement(via);
+        }
+
+        /// <summary>
+        /// Obte un component.
+        /// </summary>
+        /// <param name="tree">El STree.</param>
+        /// <param name="node">El node</param>
+        /// <param name="libraryName">El nom de la llibreria</param>
+        /// <returns>El component creat.</returns>
+        /// 
+        private Component ParseLibraryModule(STree tree, SBranch node, string libraryName) {
+
+            string name = tree.ValueAsString(node[1]);
+
+            var component = new Component(String.Format("{0}:{1}", libraryName, name));
 
             foreach (var childNode in node.Nodes.OfType<SBranch>()) {
                 switch (tree.GetBranchName(childNode)) {
                     case "fp_text":
-                        ParseModuleText(tree, childNode, part);
+                        ProcessText(tree, childNode, component);
+                        break;
+
+                    case "fp_circle":
+                        ProcessCircle(tree, childNode, component);
+                        break;
+
+                    case "fp_rectangle":
+                        throw new NotImplementedException();
+
+                    case "fp_line":
+                        ProcessLine(tree, childNode, component);
+                        break;
+
+                    case "fp_arc":
+                        ProcessArc(tree, childNode, component);
+                        break;
+
+                    case "pad":
+                        ProcessPadOrHole(tree, childNode, component);
                         break;
                 }
+            }
+
+            return component;
+        }
+
+        /// <summary>
+        /// Obte un part.
+        /// </summary>
+        /// <param name="tree">El STree</param>
+        /// <param name="node">El node a procesar.</param>
+        /// <param name="board">La placa.</param>
+        /// <returns>L'objecte 'part' creat.</returns>
+        /// 
+        private void ProcessPart(STree tree, SBranch node, Board board) {
+
+            string name = tree.ValueAsString(node[1]);
+
+            var at = ParseLocation(tree, tree.SelectBranch(node, "at"));
+            Point position = at.Item1;
+            Angle rotation = at.Item2;
+
+            var layerNode = tree.SelectBranch(node, "layer");
+            string layer = tree.ValueAsString(layerNode[1]);
+            BoardSide side = layer == "Bottom" ? BoardSide.Bottom : BoardSide.Top;
+
+            var component = board.GetComponent(name);
+            var partName = String.Format("{0}:{1}", name, _partCount++);
+
+            List<PartAttribute> attributes = null;
+            foreach (var childNode in node.Nodes.OfType<SBranch>()) {
+                if (tree.GetBranchName(childNode) == "fp_text") {
+
+                    bool attrVisible = false;
+                    string attrName = tree.ValueAsString(childNode[2]);
+                    string attrValue = tree.ValueAsString(childNode[2]);
+
+                    var atAttr = ParseLocation(tree, tree.SelectBranch(childNode, "at"));
+                    Point attrPosition = atAttr.Item1;
+                    Angle attrRotation = atAttr.Item2;
+
+                    switch (tree.ValueAsString(childNode[1])) {
+
+                        case "value":
+                            attrName = "VALUE";
+                            attrVisible = true;
+                            break;
+
+                        case "reference":
+                            attrName = "NAME";
+                            partName = attrValue;
+                            attrVisible = true;
+                            break;
+
+                        case "user":
+                            attrName = tree.ValueAsString(childNode[2]);
+                            break;
+                    }
+
+                    if (attributes == null)
+                        attributes = new List<PartAttribute>();
+                    var attribute = new PartAttribute(attrName, attrValue, attrVisible);
+                    attribute.Position = attrPosition;
+                    attribute.Rotation = attrRotation;
+                    attributes.Add(attribute);
+                }
+            }
+
+            var part = new Part(component, partName, position, rotation, side == BoardSide.Bottom);
+            if (attributes != null)
+                part.AddAttributes(attributes);
+
+            board.AddPart(part);
+        }
+
+        /// <summary>
+        /// Procesa una linia
+        /// </summary>
+        /// <param name="tree">STree.</param>
+        /// <param name="node">El node</param>
+        /// <param name="board">La placa.</param>
+        /// 
+        private void ProcessLine(STree tree, SBranch node, Board board) {
+
+            var start = ParsePoint(tree, tree.SelectBranch(node, "start"));
+            var end = ParsePoint(tree, tree.SelectBranch(node, "end"));
+            var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
+            int thickness = ParseMeasure(tree, tree.SelectBranch(node, "width"));
+
+            var element = new LineElement(layerSet, start, end, thickness, LineElement.CapStyle.Round);
+            board.AddElement(element);
+
+            var netNode = tree.SelectBranch(node, "net");
+            if (netNode != null) {
+                var netName = tree.ValueAsString(netNode[1]);
+                board.Connect(board.GetSignal(netName), element);
             }
         }
 
         /// <summary>
-        /// Procesa un node 'fp_line'
+        /// Obte un element line.
         /// </summary>
         /// <param name="tree">STree.</param>
         /// <param name="node">El node</param>
         /// <param name="component">El component.</param>
         /// 
-        private void ParseModuleLine(STree tree, SBranch node, Component component) {
+        private void ProcessLine(STree tree, SBranch node, Component component) {
 
-            // Obte el punt inicial
-            //
-            var startNode = tree.SelectBranch(node, "start");
-            var s = new Vector2D(tree.ValueAsDouble(startNode[1]), tree.ValueAsDouble(startNode[2])) * _m;
-            var start = new Point((int)s.X, (int)s.Y);
+            var start = ParsePoint(tree, tree.SelectBranch(node, "start"));
+            var end = ParsePoint(tree, tree.SelectBranch(node, "end"));
+            var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
+            int thickness = ParseMeasure(tree, tree.SelectBranch(node, "width"));
 
-            // Obte el punt final.
-            //
-            var endNode = tree.SelectBranch(node, "end");
-            var e = new Vector2D(tree.ValueAsDouble(endNode[1]), tree.ValueAsDouble(endNode[2])) * _m;
-            var end = new Point((int)e.X, (int) e.Y);
+            var element = new LineElement(layerSet, start, end, thickness, LineElement.CapStyle.Round);
 
-            // Obte el conjunt de capes.
-            //
-            var layerNode = tree.SelectBranch(node, "layer");
-            string kcLayer = tree.ValueAsString(layerNode[1]);
-            string layer = Layer.GetName(GetLayerSide(kcLayer), GetLayerTag(kcLayer));
-
-            // Obte el gruix de linia
-            //
-            var widthNode = tree.SelectBranch(node, "width");
-            int thickness = (int)(tree.ValueAsDouble(widthNode[1]) * _scale);
-
-            var element = new LineElement(new LayerSet(layer), start, end, thickness, LineElement.CapStyle.Round);
             component.AddElement(element);
         }
 
         /// <summary>
-        /// Procesa un node 'fp_arc'
+        /// Obte un element arc.
         /// </summary>
         /// <param name="tree">STree.</param>
-        /// <param name="node">El node</param>
+        /// <param name="node">El node.</param>
         /// <param name="component">El component.</param>
         /// 
-        private void ParseModuleArc(STree tree, SBranch node, Component component) {
+        private void ProcessArc(STree tree, SBranch node, Component component) {
 
-            // Obte el punt inicial
-            //
-            var centerNode = tree.SelectBranch(node, "start");
-            var c = new Vector2D(tree.ValueAsDouble(centerNode[1]), tree.ValueAsDouble(centerNode[2])) * _m;
-            var center = new Point((int)c.X, (int)c.Y);
+            var center = ParsePoint(tree, tree.SelectBranch(node, "start"));
+            var start = ParsePoint(tree, tree.SelectBranch(node, "end"));
+            var angle = ParseAngle(tree, tree.SelectBranch(node, "angle"));
+            var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
+            int thickness = ParseMeasure(tree, tree.SelectBranch(node, "width"));
 
-            // Obte el punt final
-            //
-            var endNode = tree.SelectBranch(node, "end");
-            var s = new Vector2D(tree.ValueAsDouble(endNode[1]), tree.ValueAsDouble(endNode[2])) * _m;
-            var start = new Point((int)s.X, (int)s.Y);
-
-            // Obte l'angle
-            //
-            var angleNode = tree.SelectBranch(node, "angle");
-            double a = tree.ValueAsDouble(angleNode[1]);
-            Angle angle = Angle.FromDegrees(a);
-
-            // Obte el conjunt de capes
-            //
-            var layerNode = tree.SelectBranch(node, "layer");
-            string kcLayer = tree.ValueAsString(layerNode[1]);
-            string layer = Layer.GetName(GetLayerSide(kcLayer), GetLayerTag(kcLayer));
-
-            // Obte l'amplada de linia
-            //
-            var widthNode = tree.SelectBranch(node, "width");
-            int thickness = (int)(tree.ValueAsDouble(widthNode[1]) * _scale);
-
-            var element = new ArcElement(new LayerSet(layer), start, ArcUtils.EndPosition(center, start, angle),
+            var element = new ArcElement(layerSet, start, ArcUtils.EndPosition(center, start, angle),
                 thickness, angle, LineElement.CapStyle.Flat);
+
             component.AddElement(element);
         }
 
         /// <summary>
-        /// Procesa un node 'fp_circle'
+        /// Obte un element circle.
         /// </summary>
         /// <param name="tree">STree</param>
         /// <param name="node">El node.</param>
         /// <param name="component">El component.</param>
         /// 
-        private void ParseModuleCircle(STree tree, SBranch node, Component component) {
+        private void ProcessCircle(STree tree, SBranch node, Component component) {
 
             // Obte el centre
             //
@@ -384,34 +430,27 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var e = new Vector2D(tree.ValueAsDouble(endNode[1]), tree.ValueAsDouble(endNode[2])) * _m;           
             int radius = (int)(Math.Sqrt(Math.Pow(e.X - s.X, 2) + Math.Pow(e.Y - s.Y, 2)));
 
-            // Obte el conjunt de capes
-            //
-            var layerNode = tree.SelectBranch(node, "layer");
-            string kcLayer = tree.ValueAsString(layerNode[1]);
-            string layer = Layer.GetName(GetLayerSide(kcLayer), GetLayerTag(kcLayer));
-
-            // Obte l'amplada de linia
-            //
-            var widthNode = tree.SelectBranch(node, "width");
-            int thickness = (int)(tree.ValueAsDouble(widthNode[1]) * _scale);
+            var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
+            int thickness = ParseMeasure(tree, tree.SelectBranch(node, "width"));
 
             // Obte el indicador de relleno
             //
             var fillNode = tree.SelectBranch(node, "fill");
             bool fill = (fillNode != null) && (tree.ValueAsString(fillNode[1]) == "solid");
 
-            var element = new CircleElement(new LayerSet(layer), center, radius, thickness, fill);
+            var element = new CircleElement(layerSet, center, radius, thickness, fill);
+
             component.AddElement(element);
         }
 
         /// <summary>
-        /// Procesa un node 'fp_text'.
+        /// Obte un element text.
         /// </summary>
         /// <param name="tree">El STree.</param>
         /// <param name="node">El node.</param>
         /// <param name="component">El component.</param>
         /// 
-        private void ParseModuleText(STree tree, SBranch node, Component component) {
+        private void ProcessText(STree tree, SBranch node, Component component) {
 
             string layer;
             string text;
@@ -420,11 +459,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             // Obte la posicio i la rotacio
             //
-            var atNode = tree.SelectBranch(node, "at");
-            var p = new Vector2D(tree.ValueAsDouble(atNode[1]), tree.ValueAsDouble(atNode[2])) * _m;
-            double r = atNode.Count == 4 ? tree.ValueAsDouble(atNode[3]) : 0;
-            var position = new Point((int)p.X, (int)p.Y);
-            var rotation = Angle.FromDegrees(r);
+            var at = ParseLocation(tree, tree.SelectBranch(node, "at"));
+            Point position = at.Item1;
+            Angle rotation = at.Item2;
 
             // Obte els efectes
             //
@@ -436,10 +473,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             if (effectsNode != null) {
                 var fontNode = tree.SelectBranch(effectsNode, "font");
                 if (fontNode != null) {
-                    var sizeNode = tree.SelectBranch(fontNode, "size");
-                    height = (int)(tree.ValueAsDouble(sizeNode[2]) * _scale);
-                    var thicknessNode = tree.SelectBranch(fontNode, "thickness");
-                    thickness = (int)(tree.ValueAsDouble(thicknessNode[1]) * _scale);
+                    height = ParseMeasure(tree, tree.SelectBranch(fontNode, "size"));
+                    thickness = ParseMeasure(tree, tree.SelectBranch(fontNode, "thickness"));
                 }
                 var justifyNode = tree.SelectBranch(effectsNode, "justify");
                 if (justifyNode != null) {
@@ -469,75 +504,41 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             if (type == "reference") {
                 layer = Layer.GetName(GetLayerSide(kcLayer), "Names");
-                text = ">NAME";
+                text = "{NAME}";
             }
             else if (type == "value") {
                 layer = Layer.GetName(GetLayerSide(kcLayer), "Values");
-                text = ">VALUE";
+                text = "{VALUE}";
             }
             else {
                 layer = Layer.GetName(GetLayerSide(kcLayer), GetLayerTag(kcLayer));
-                text = tree.ValueAsString(node[2]).Replace('%', '>');
+                text = String.Format("{{{0}}}", tree.ValueAsString(node[2]));
             }
 
             var element = new TextElement(new LayerSet(layer), position, rotation, height, 
                 thickness, horizontalAlign, verticalAlign, text);
+
             component.AddElement(element);
         }
-
+       
         /// <summary>
-        /// Procesa un node 'fp_text'.
-        /// </summary>
-        /// <param name="tree">El STree.</param>
-        /// <param name="node">El node.</param>
-        /// <param name="part">El part.</param>
-        /// 
-        private void ParseModuleText(STree tree, SBranch node, Part part) {
-
-            string name = tree.ValueAsString(node[1]);
-            string value = tree.ValueAsString(node[2]);
-
-            bool visible = false;
-            if (name == "value") {
-                name = "VALUE";
-                visible = true;
-            }
-            else if (name == "reference") {
-                name = "NAME";
-                visible = true;
-            }
-            else if (name == "user")
-                return;
-
-            var attribute = new PartAttribute(name, value, visible);
-            part.AddAttribute(attribute);
-        }
-
-        /// <summary>
-        /// Procesa un node 'pad'.
+        /// Obte un element pad o hole.
         /// </summary>
         /// <param name="tree">El STree</param>
         /// <param name="node">El node a procesar.</param>
-        /// <param name="component">El component.</param>
+        /// <param name="component">El component</param>
         /// 
-        private void ParseModulePad(STree tree, SBranch node, Component component) {
+        private void ProcessPadOrHole(STree tree, SBranch node, Component component) {
 
             string name = tree.ValueAsString(node[1]);
             string padType = tree.ValueAsString(node[2]);
             string shapeType = tree.ValueAsString(node[3]);
 
-            // Obte la posicio i la rotacio
-            //
-            var atNode = tree.SelectBranch(node, "at");
-            var p = new Vector2D(tree.ValueAsDouble(atNode[1]), tree.ValueAsDouble(atNode[2])) * _m;
-            double r = atNode.Count == 4 ? tree.ValueAsDouble(atNode[3]) : 0;
-            Point position = new Point((int)p.X, (int)p.Y);
-            Angle rotation = Angle.FromDegrees(r);
+            var at = ParseLocation(tree, tree.SelectBranch(node, "at"));
+            Point position = at.Item1;
+            Angle rotation = at.Item2;
 
-            var sizeNode = tree.SelectBranch(node, "size");
-            double sx = tree.ValueAsDouble(sizeNode[1]);
-            double sy = tree.ValueAsDouble(sizeNode[2]);
-            Size size = new Size((int)(sx * _scale), (int)(sy * _scale));
+            Size size = ParseSize(tree, tree.SelectBranch(node, "size"));
 
             var drillNode = tree.SelectBranch(node, "drill");
             int drill = drillNode == null ? 0 : (int)(tree.ValueAsDouble(drillNode[1]) * _scale);
@@ -550,13 +551,13 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             Element element;
             switch (padType) {               
                 case "smd": {
-                    LayerSet layerSet = ParseLayerSetDesignator(tree, tree.SelectBranch(node, "layers"));
+                    LayerSet layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layers"));
                     element = new SmdPadElement(name, layerSet, position, size, rotation, roundness);
                 }
                 break;
 
                 case "thru_hole": {
-                    LayerSet layerSet = ParseLayerSetDesignator(tree, tree.SelectBranch(node, "layers"));
+                    LayerSet layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layers"));
                     layerSet += "Drills";
                     layerSet += "Pads";
 
@@ -584,14 +585,89 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                     break;
 
                 default:
-                    throw new InvalidDataException("Tipo de pad no reconicido.");
+                    throw new InvalidDataException("Tipo de pad no reconocido.");
             }
 
-            if (element != null)
-                component.AddElement(element);
+            component.AddElement(element);
         }
 
-        private LayerSet ParseLayerSetDesignator(STree tree, SBranch node) {
+        /// <summary>
+        /// Obte un punt.
+        /// </summary>
+        /// <param name="tree">El STree.</param>
+        /// <param name="node">El node.</param>
+        /// <returns>El punt</returns>
+        /// 
+        private Point ParsePoint(STree tree, SBranch node) {
+
+            var p = new Vector2D(tree.ValueAsDouble(node[1]), tree.ValueAsDouble(node[2])) * _m;
+            return new Point((int)p.X, (int)p.Y);
+        }
+
+        /// <summary>
+        /// Obte un tamany.
+        /// </summary>
+        /// <param name="tree">El STree.</param>
+        /// <param name="node">El node.</param>
+        /// <returns>El tamany.</returns>
+        /// 
+        private static Size ParseSize(STree tree, SBranch node) {
+
+            double sx = tree.ValueAsDouble(node[1]);
+            double sy = tree.ValueAsDouble(node[2]);
+            return new Size((int)(sx * _scale), (int)(sy * _scale));
+        }
+
+        /// <summary>
+        /// Obte un angle.
+        /// </summary>
+        /// <param name="tree">El STree.</param>
+        /// <param name="node">El node.</param>
+        /// <returns>L'angle.</returns>
+        /// 
+        private static Angle ParseAngle(STree tree, SBranch node) {
+
+            double a = tree.ValueAsDouble(node[1]);
+            return Angle.FromDegrees(a);
+        }
+
+        /// <summary>
+        /// Obte una mesura.
+        /// </summary>
+        /// <param name="tree">El STree.</param>
+        /// <param name="node">El node.</param>
+        /// <returns>El valor.</returns>
+        /// 
+        private static int ParseMeasure(STree tree, SBranch node) {
+
+            return (int)(tree.ValueAsDouble(node[1]) * _scale);
+        }
+
+        /// <summary>
+        /// Obte una localitzacio (Posicio i rotacio)
+        /// </summary>
+        /// <param name="tree">El STree.</param>
+        /// <param name="node">El node.</param>
+        /// <returns>La posicio i la rotacio..</returns>
+        /// 
+        private (Point, Angle) ParseLocation(STree tree, SBranch node) {
+
+            var p = new Vector2D(tree.ValueAsDouble(node[1]), tree.ValueAsDouble(node[2])) * _m;
+            double r = node.Count == 4 ? tree.ValueAsDouble(node[3]) : 0;
+            var position = new Point((int)p.X, (int)p.Y);
+            var rotation = Angle.FromDegrees(r);
+
+            return (position, rotation);
+        }
+
+        /// <summary>
+        /// Obte un conjunt de capes.
+        /// </summary>
+        /// <param name="tree">El STree.</param>
+        /// <param name="node">El node.</param>
+        /// <returns>El resultat.</returns>
+        /// 
+        private static LayerSet ParseLayerSet(STree tree, SBranch node) {
 
             var sb = new StringBuilder();
             for (int i = 1; i < node.Count; i++) {
@@ -694,6 +770,17 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 default:
                     return LayerFunction.Unknown;
             }
+        }
+
+        private static string GetModuleFileName(string moduleName) {
+
+            string[] s = moduleName.Split(':', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+            string libBaseFolder = @"C:\Program Files\KiCad\share\kicad\modules\";
+            string libFolder = String.Format("{0}.pretty", s[0]);
+            string modFileName = String.Format("{0}.kicad_mod", s[1]);
+
+            return Path.Combine(libBaseFolder, libFolder, modFileName);
         }
     }
 }

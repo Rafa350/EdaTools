@@ -3,8 +3,9 @@
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
-    /// Clase que representa un atribut d'un bloc.
+    /// Clase que representa un atribut.
     /// </summary>
+    /// 
     public sealed class ComponentAttribute : IBoardVisitable {
 
         private readonly string _name;

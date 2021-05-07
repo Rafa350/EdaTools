@@ -5,8 +5,9 @@ using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
-    /// Clase que representa un atribut d'un component
+    /// Clase que representa un atribut
     /// </summary>
+    /// 
     public sealed class PartAttribute : IBoardVisitable {
 
         private readonly string _name;
@@ -95,23 +96,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// 
         public bool IsVisible {
-            get {
-                return _isVisible;
-            }
-            set {
-                _isVisible = value;
-            }
+            get =>_isVisible;
+            set => _isVisible = value;
         }
 
         /// <summary>
         /// Obte el nom del atribut.
         /// </summary>
         /// 
-        public string Name {
-            get {
-                return _name;
-            }
-        }
+        public string Name =>
+            _name;
 
         /// <summary>
         /// Obte la posicio del atribut.
@@ -184,40 +178,40 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         }
 
         /// <summary>
-        /// Obte el valor de l'atribut.
+        /// Obte o asigna el valor de l'atribut.
         /// </summary>
         /// 
         public string Value {
-            get {
-                return _value;
-            }
-            set {
-                this._value = value;
-            }
+            get => _value;
+            set => _value = value;
         }
 
-        public bool UsePosition {
-            get {
-                return _usePosition;
-            }
-        }
+        /// <summary>
+        /// Indica si conte informacio de posicio
+        /// </summary>
+        /// 
+        public bool UsePosition =>
+            _usePosition;
 
-        public bool UseRotation {
-            get {
-                return _useRotation;
-            }
-        }
+        /// <summary>
+        /// Indica si conte informacio de rotacio.
+        /// </summary>
+        /// 
+        public bool UseRotation =>
+            _useRotation;
 
-        public bool UseHeight {
-            get {
-                return _useHeight;
-            }
-        }
+        /// <summary>
+        /// Indica si conte informacio d'alçada
+        /// </summary>
+        /// 
+        public bool UseHeight =>
+            _useHeight;
 
-        public bool UseAlign {
-            get {
-                return _useAlign;
-            }
-        }
+        /// <summary>
+        /// Indica si conte informacio d'aliniacio.
+        /// </summary>
+        /// 
+        public bool UseAlign =>
+            _useAlign;
     }
 }

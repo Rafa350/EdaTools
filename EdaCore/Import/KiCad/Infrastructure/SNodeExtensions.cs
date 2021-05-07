@@ -2,8 +2,8 @@
 
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Globalization;
+    using System.Linq;
 
     public static class SNodeExtensions {
 
@@ -67,7 +67,7 @@
 
             SBranch branch = node as SBranch;
             if (branch == null)
-                return null;
+                return Enumerable.Empty<SBranch>();
 
             else {
                 List<SBranch> nodes = new List<SBranch>();

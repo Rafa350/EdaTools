@@ -29,13 +29,18 @@
             <layer side="bottom" tag="Document" function="unknown" />
             <layer side="top" tag="Document" function="unknown" />
         </layers>
-        <signals />
+        <signals>
+            <signal name="0" clearance="0.15" />
+            <signal name="1" clearance="0.15" />
+            <signal name="2" clearance="0.15" />
+            <signal name="3" clearance="0.15" />
+            <signal name="4" clearance="0.15" />
+        </signals>
         <components>
             <component name="Resistor_SMD:R_0603_1608Metric">
                 <elements>
-                    <text layers="Top.Names" position="0, 1.43" rotation="-180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="&gt;NAME" />
-                    <text layers="Top.Values" position="0, -1.43" rotation="-180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="&gt;VALUE" />
-                    <text layers="Top.Document" position="0, 0" rotation="-180" height="0.4" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="&gt;R" />
+                    <text layers="Top.Names" position="0, 1.43" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layers="Top.Values" position="0, -1.43" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
                     <line layers="Top.Document" startPosition="-0.8, -0.4125" endPosition="-0.8, 0.4125" thickness="0.1" />
                     <line layers="Top.Document" startPosition="-0.8, 0.4125" endPosition="0.8, 0.4125" thickness="0.1" />
                     <line layers="Top.Document" startPosition="0.8, 0.4125" endPosition="0.8, -0.4125" thickness="0.1" />
@@ -46,42 +51,60 @@
                     <line layers="Top.Keepout" startPosition="-1.48, 0.73" endPosition="1.48, 0.73" thickness="0.05" />
                     <line layers="Top.Keepout" startPosition="1.48, 0.73" endPosition="1.48, -0.73" thickness="0.05" />
                     <line layers="Top.Keepout" startPosition="1.48, -0.73" endPosition="-1.48, -0.73" thickness="0.05" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.825, 0" size="0.8, 0.95" roundness="0.5" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.825, 0" size="0.8, 0.95" roundness="0.5" />
+                    <spad name="1" layers="Top.Copper, Top.Stop, Top.Cream" position="-0.825, 0" size="0.8, 0.95" roundness="0.5" />
+                    <spad name="2" layers="Top.Copper, Top.Stop, Top.Cream" position="0.825, 0" size="0.8, 0.95" roundness="0.5" />
+                    <text layers="Top.Document" position="0, 0" height="0.4" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="{%R}" />
                 </elements>
             </component>
         </components>
         <parts>
-            <part name="Resistor_SMD:R_0603_1608Metric:0" component="Resistor_SMD:R_0603_1608Metric" position="111, -93.375" rotation="270">
+            <part name="R4" component="Resistor_SMD:R_0603_1608Metric" position="30, -25" rotation="270">
                 <attributes>
-                    <attribute name="NAME" value="R270" />
-                    <attribute name="VALUE" value="R_Small" />
+                    <attribute name="NAME" value="R4" position="0, 1.43" rotation="90" />
+                    <attribute name="VALUE" value="R_Small" position="0, -1.43" rotation="90" />
+                    <attribute name="%R" value="%R" visible="false" position="0, 0" rotation="90" />
                 </attributes>
             </part>
-            <part name="Resistor_SMD:R_0603_1608Metric:1" component="Resistor_SMD:R_0603_1608Metric" position="101.625, -93.25" rotation="180">
+            <part name="R3" component="Resistor_SMD:R_0603_1608Metric" position="20, -25" rotation="180">
                 <attributes>
-                    <attribute name="NAME" value="R180" />
-                    <attribute name="VALUE" value="R_Small" />
+                    <attribute name="NAME" value="R3" position="0, 1.43" rotation="0" />
+                    <attribute name="VALUE" value="R_Small" position="0, -1.43" rotation="0" />
+                    <attribute name="%R" value="%R" visible="false" position="0, 0" rotation="0" />
                 </attributes>
             </part>
-            <part name="Resistor_SMD:R_0603_1608Metric:2" component="Resistor_SMD:R_0603_1608Metric" position="111.5, -86.875" rotation="90">
+            <part name="R2" component="Resistor_SMD:R_0603_1608Metric" position="30, -20" rotation="90">
                 <attributes>
-                    <attribute name="NAME" value="R90" />
-                    <attribute name="VALUE" value="R_Small" />
+                    <attribute name="NAME" value="R2" position="0, 1.43" rotation="90" />
+                    <attribute name="VALUE" value="R_Small" position="0, -1.43" rotation="90" />
+                    <attribute name="%R" value="%R" visible="false" position="0, 0" rotation="90" />
                 </attributes>
             </part>
-            <part name="Resistor_SMD:R_0603_1608Metric:3" component="Resistor_SMD:R_0603_1608Metric" position="101.75, -87">
+            <part name="R1" component="Resistor_SMD:R_0603_1608Metric" position="20, -20">
                 <attributes>
-                    <attribute name="NAME" value="R0" />
-                    <attribute name="VALUE" value="R_Small" />
+                    <attribute name="NAME" value="R1" position="0, 1.43" rotation="0" />
+                    <attribute name="VALUE" value="R_Small" position="0, -1.43" rotation="0" />
+                    <attribute name="%R" value="%R" visible="false" position="0, 0" rotation="0" />
                 </attributes>
             </part>
         </parts>
         <elements>
-            <line layers="Profile" startPosition="76.25, -78.25" endPosition="76.25, -117.5" thickness="0.05" />
-            <line layers="Profile" startPosition="154.875, -78.25" endPosition="76.25, -78.25" thickness="0.05" />
-            <line layers="Profile" startPosition="154.875, -117.5" endPosition="154.875, -78.25" thickness="0.05" />
-            <line layers="Profile" startPosition="76.25, -117.5" endPosition="154.875, -117.5" thickness="0.05" />
+            <line layers="Profile" startPosition="16.375, -14" endPosition="16.375, -53.25" thickness="0.05" />
+            <line layers="Profile" startPosition="95, -14" endPosition="16.375, -14" thickness="0.05" />
+            <line layers="Profile" startPosition="95, -53.25" endPosition="95, -14" thickness="0.05" />
+            <line layers="Profile" startPosition="16.375, -53.25" endPosition="95, -53.25" thickness="0.05" />
+            <line layers="Top.Copper" startPosition="20.825, -25" endPosition="20.825, -20" thickness="0.25" signal="1" />
+            <via position="19.1, -22.1" layers="Top.Copper, Bottom.Copper, Vias, Drills" drill="0.4" outerSize="0.65" signal="2" />
+            <line layers="Top.Copper" startPosition="19.175, -22.025" endPosition="19.1, -22.1" thickness="0.25" signal="2" />
+            <line layers="Top.Copper" startPosition="19.175, -20" endPosition="19.175, -22.025" thickness="0.25" signal="2" />
+            <via position="30.1, -22.1" layers="Top.Copper, Bottom.Copper, Vias, Drills" drill="0.4" outerSize="0.65" signal="2" />
+            <line layers="Bottom.Copper" startPosition="19.1, -22.1" endPosition="30.1, -22.1" thickness="0.25" signal="2" />
+            <line layers="Top.Copper" startPosition="30.1, -20.925" endPosition="30, -20.825" thickness="0.25" signal="2" />
+            <line layers="Top.Copper" startPosition="30.1, -22.1" endPosition="30.1, -20.925" thickness="0.25" signal="2" />
+            <line layers="Top.Copper" startPosition="29.19999, -19.97501" endPosition="30, -19.175" thickness="0.25" signal="3" />
+            <line layers="Top.Copper" startPosition="29.19999, -23.37499" endPosition="29.19999, -19.97501" thickness="0.25" signal="3" />
+            <line layers="Top.Copper" startPosition="30, -24.175" endPosition="29.19999, -23.37499" thickness="0.25" signal="3" />
+            <line layers="Top.Copper" startPosition="20, -25.825" endPosition="30, -25.825" thickness="0.25" signal="4" />
+            <line layers="Top.Copper" startPosition="19.175, -25" endPosition="20, -25.825" thickness="0.25" signal="4" />
         </elements>
     </board>
 </document>
