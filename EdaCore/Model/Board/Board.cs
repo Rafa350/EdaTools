@@ -33,10 +33,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         public Board() {
         }
 
-        /// <summary>
-        /// Procesa un visitador.
-        /// </summary>
-        /// <param name="visitor">Visitador.</param>
+        /// <inheritdoc/>
         /// 
         public void AcceptVisitor(IBoardVisitor visitor) {
 

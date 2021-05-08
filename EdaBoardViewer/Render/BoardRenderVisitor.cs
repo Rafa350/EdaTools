@@ -126,7 +126,7 @@
 
             if (visualLayer.IsVisible(Part, text)) {
 
-                PartAttributeAdapter paa = new PartAttributeAdapter(Part, text);
+                var paa = new PartAttributeAdapter(Part, text);
 
                 if (font == null)
                     font = Font.Load("font.xml");

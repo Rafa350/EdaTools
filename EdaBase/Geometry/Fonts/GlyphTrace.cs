@@ -25,12 +25,14 @@
         /// Obte la posicio.
         /// </summary>
         /// 
-        public Point Position => _position;
+        public Point Position => 
+            _position;
 
         /// <summary>
         /// Obte el indicador de dibuix.
         /// </summary>
         /// 
-        public bool Stroke => _stroke;
+        public bool Stroke => 
+            _stroke;
     }
 }

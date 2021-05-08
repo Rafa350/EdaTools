@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
@@ -135,7 +136,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// 
         public IEnumerable<Element> Elements =>
-            _elements;
+            _elements == null ? Enumerable.Empty<Element>() : _elements;
 
         /// <summary>
         /// Indica si conte pads.
@@ -149,13 +150,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// 
         public IEnumerable<string> PadNames =>
-            _pads?.Keys;
+            _pads == null ? Enumerable.Empty<string>() : _pads.Keys;
 
         /// <summary>
         /// Enumera els pads.
         /// </summary>
         /// 
         public IEnumerable<PadElement> Pads =>
-            _pads?.Values;
+            _pads == null ? Enumerable.Empty<PadElement>() : _pads.Values;
     }
 }

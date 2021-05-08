@@ -46,10 +46,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// 
         public abstract Element Clone();
 
-        /// <summary>
-        /// Accepta un visitador.
-        /// </summary>
-        /// <param name="visitor">El visitador.</param>
+        /// <inheritdoc/>
         /// 
         public abstract void AcceptVisitor(IBoardVisitor visitor);
 

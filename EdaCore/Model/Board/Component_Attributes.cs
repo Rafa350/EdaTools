@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
@@ -109,13 +110,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// 
         public IEnumerable<String> AttributeNames =>
-            _attributes?.Keys;
+            _attributes == null ? Enumerable.Empty<string>() : _attributes.Keys;
 
         /// <summary>
         /// Enumera els atributs
         /// </summary>
         /// 
         public IEnumerable<ComponentAttribute> Attributes =>
-            _attributes?.Values;
+            _attributes == null ? Enumerable.Empty<ComponentAttribute>() : _attributes?.Values;
     }
 }

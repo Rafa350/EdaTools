@@ -52,7 +52,6 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             }
             sb.Append(')');
 
-
             var parser = new SParser();
             var tree = parser.Parse(sb.ToString());
 
@@ -84,9 +83,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 var tree = parser.Parse(source);
 
                 var libraryName = componentName.Split(':')[0];
-                var component = ParseLibraryModule(tree, tree.Root as SBranch, libraryName);
+                var library = new Library(libraryName);
+                ProcessModule(tree, tree.Root as SBranch, library);
 
-                board.AddComponent(component);
+                board.AddComponents(library.Components);
             }
         }
 
@@ -155,14 +155,15 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// Procesa una llibreria
         /// </summary>
         /// <param name="tree">El STree.</param>
+        /// <param name="libraryName">El nom de la llibreria.</param>
         /// <returns>La llibreria.</returns>
         /// 
         private Library ProcessLibrary(STree tree, string libraryName) {
 
-            var library = new Library("unknoun");
+            var library = new Library(libraryName);
 
             foreach (var childNode in (tree.Root as SBranch).Nodes.OfType<SBranch>()) 
-                library.AddComponent(ParseLibraryModule(tree, childNode, libraryName));
+                ProcessModule(tree, childNode, library);
 
             return library;
         }
@@ -176,12 +177,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// 
         private static void ProcessLayer(STree tree, SBranch node, Board board) {
 
-            string kcName = tree.ValueAsString(node[1]);
+            string name = tree.ValueAsString(node[1]);
             string type = tree.ValueAsString(node[2]);
 
-            BoardSide side = GetLayerSide(kcName);
-            LayerFunction function = type == "signal" ? LayerFunction.Signal : GetLayerFunction(kcName);
-            string tag = GetLayerTag(kcName);
+            BoardSide side = GetLayerSide(name);
+            LayerFunction function = type == "signal" ? LayerFunction.Signal : GetLayerFunction(name);
+            string tag = GetLayerTag(name);
 
             var layer = new Layer(side, tag, function);
             board.AddLayer(layer);
@@ -197,11 +198,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         private static void ProcessSignal(STree tree, SBranch node, Board board) {
 
             string name = tree.ValueAsString(node[1]);
-
-            if (!string.IsNullOrEmpty(name)) {
-                var signal = new Signal(name);
-                board.AddSignal(signal);
-            }
+            
+            var signal = new Signal(name);
+            board.AddSignal(signal);
         }
 
         /// <summary>
@@ -237,14 +236,13 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// </summary>
         /// <param name="tree">El STree.</param>
         /// <param name="node">El node</param>
-        /// <param name="libraryName">El nom de la llibreria</param>
-        /// <returns>El component creat.</returns>
+        /// <param name="library">La llibreria</param>
         /// 
-        private Component ParseLibraryModule(STree tree, SBranch node, string libraryName) {
+        private void ProcessModule(STree tree, SBranch node, Library library) {
 
             string name = tree.ValueAsString(node[1]);
 
-            var component = new Component(String.Format("{0}:{1}", libraryName, name));
+            var component = new Component(String.Format("{0}:{1}", library.Name, name));
 
             foreach (var childNode in node.Nodes.OfType<SBranch>()) {
                 switch (tree.GetBranchName(childNode)) {
@@ -273,7 +271,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 }
             }
 
-            return component;
+            library.AddComponent(component);
         }
 
         /// <summary>
@@ -282,15 +280,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <param name="tree">El STree</param>
         /// <param name="node">El node a procesar.</param>
         /// <param name="board">La placa.</param>
-        /// <returns>L'objecte 'part' creat.</returns>
         /// 
         private void ProcessPart(STree tree, SBranch node, Board board) {
 
             string name = tree.ValueAsString(node[1]);
 
-            var at = ParseLocation(tree, tree.SelectBranch(node, "at"));
-            Point position = at.Item1;
-            Angle rotation = at.Item2;
+            var (position, rotation) = ParseLocation(tree, tree.SelectBranch(node, "at"));
 
             var layerNode = tree.SelectBranch(node, "layer");
             string layer = tree.ValueAsString(layerNode[1]);
@@ -307,9 +302,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                     string attrName = tree.ValueAsString(childNode[2]);
                     string attrValue = tree.ValueAsString(childNode[2]);
 
-                    var atAttr = ParseLocation(tree, tree.SelectBranch(childNode, "at"));
-                    Point attrPosition = atAttr.Item1;
-                    Angle attrRotation = atAttr.Item2;
+                    var (attrPosition, attrRotation) = ParseLocation(tree, tree.SelectBranch(childNode, "at"));
+                    attrRotation -= rotation;
 
                     switch (tree.ValueAsString(childNode[1])) {
 
@@ -452,16 +446,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// 
         private void ProcessText(STree tree, SBranch node, Component component) {
 
-            string layer;
-            string text;
-
             string type = tree.ValueAsString(node[1]);
-
-            // Obte la posicio i la rotacio
-            //
-            var at = ParseLocation(tree, tree.SelectBranch(node, "at"));
-            Point position = at.Item1;
-            Angle rotation = at.Item2;
+            var (position, rotation) = ParseLocation(tree, tree.SelectBranch(node, "at"));
 
             // Obte els efectes
             //
@@ -500,18 +486,21 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             }
 
             var layerNode = tree.SelectBranch(node, "layer");
-            string kcLayer = tree.ValueAsString(layerNode[1]);
+            string layerName = tree.ValueAsString(layerNode[1]);
+
+            string layer;
+            string text;
 
             if (type == "reference") {
-                layer = Layer.GetName(GetLayerSide(kcLayer), "Names");
+                layer = Layer.GetName(GetLayerSide(layerName), "Names");
                 text = "{NAME}";
             }
             else if (type == "value") {
-                layer = Layer.GetName(GetLayerSide(kcLayer), "Values");
+                layer = Layer.GetName(GetLayerSide(layerName), "Values");
                 text = "{VALUE}";
             }
             else {
-                layer = Layer.GetName(GetLayerSide(kcLayer), GetLayerTag(kcLayer));
+                layer = Layer.GetName(GetLayerSide(layerName), GetLayerTag(layerName));
                 text = String.Format("{{{0}}}", tree.ValueAsString(node[2]));
             }
 
@@ -534,12 +523,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             string padType = tree.ValueAsString(node[2]);
             string shapeType = tree.ValueAsString(node[3]);
 
-            var at = ParseLocation(tree, tree.SelectBranch(node, "at"));
-            Point position = at.Item1;
-            Angle rotation = at.Item2;
-
-            Size size = ParseSize(tree, tree.SelectBranch(node, "size"));
-
+            var (position, rotation) = ParseLocation(tree, tree.SelectBranch(node, "at"));
+            var size = ParseSize(tree, tree.SelectBranch(node, "size"));
             var drillNode = tree.SelectBranch(node, "drill");
             int drill = drillNode == null ? 0 : (int)(tree.ValueAsDouble(drillNode[1]) * _scale);
 

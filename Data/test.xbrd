@@ -60,23 +60,23 @@
         <parts>
             <part name="R4" component="Resistor_SMD:R_0603_1608Metric" position="30, -25" rotation="270">
                 <attributes>
-                    <attribute name="NAME" value="R4" position="0, 1.43" rotation="90" />
-                    <attribute name="VALUE" value="R_Small" position="0, -1.43" rotation="90" />
-                    <attribute name="%R" value="%R" visible="false" position="0, 0" rotation="90" />
+                    <attribute name="NAME" value="R4" position="0, 1.43" rotation="-180" />
+                    <attribute name="VALUE" value="R_Small" position="0, -1.43" rotation="-180" />
+                    <attribute name="%R" value="%R" visible="false" position="0, 0" rotation="-180" />
                 </attributes>
             </part>
             <part name="R3" component="Resistor_SMD:R_0603_1608Metric" position="20, -25" rotation="180">
                 <attributes>
-                    <attribute name="NAME" value="R3" position="0, 1.43" rotation="0" />
-                    <attribute name="VALUE" value="R_Small" position="0, -1.43" rotation="0" />
-                    <attribute name="%R" value="%R" visible="false" position="0, 0" rotation="0" />
+                    <attribute name="NAME" value="R3" position="0, 1.43" rotation="-180" />
+                    <attribute name="VALUE" value="R_Small" position="0, -1.43" rotation="-180" />
+                    <attribute name="%R" value="%R" visible="false" position="0, 0" rotation="-180" />
                 </attributes>
             </part>
             <part name="R2" component="Resistor_SMD:R_0603_1608Metric" position="30, -20" rotation="90">
                 <attributes>
-                    <attribute name="NAME" value="R2" position="0, 1.43" rotation="90" />
-                    <attribute name="VALUE" value="R_Small" position="0, -1.43" rotation="90" />
-                    <attribute name="%R" value="%R" visible="false" position="0, 0" rotation="90" />
+                    <attribute name="NAME" value="R2" position="0, 1.43" rotation="0" />
+                    <attribute name="VALUE" value="R_Small" position="0, -1.43" rotation="0" />
+                    <attribute name="%R" value="%R" visible="false" position="0, 0" rotation="0" />
                 </attributes>
             </part>
             <part name="R1" component="Resistor_SMD:R_0603_1608Metric" position="20, -20">

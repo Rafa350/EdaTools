@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
@@ -63,24 +64,21 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// Indica si la biblioteca conte components.
         /// </summary>
         /// 
-        public bool HasComponents {
-            get {
-                return _components != null;
-            }
-        }
+        public bool HasComponents =>
+            _components != null;
 
         /// <summary>
         /// Enumera els noms dels components.
         /// </summary>
         /// 
         public IEnumerable<string> ComponentNames =>
-            _components.Keys;
+            _components == null ? Enumerable.Empty<string>() : _components.Keys;
 
         /// <summary>
         /// Enumera els components.
         /// </summary>
         /// 
         public IEnumerable<Component> Components =>
-            _components.Values;
+            _components == null ? Enumerable.Empty<Component>() : _components.Values;
     }
 }

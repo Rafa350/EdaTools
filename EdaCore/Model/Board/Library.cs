@@ -8,6 +8,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         private string _name;
         private string _description;
 
+        /// <summary>
+        /// Constructor del objecte.
+        /// </summary>
+        /// <param name="name">EWl nom de la llibraria.</param>
+        /// 
         public Library(string name) {
 
             if (String.IsNullOrEmpty(name))
@@ -16,6 +21,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             _name = name;
         }
 
+        /// <summary>
+        /// Constructor del objecte.
+        /// </summary>
+        /// <param name="name">El nom de la llibraria.</param>
+        /// <param name="description">La descripcio.</param>
+        /// <param name="components">Els components a afeigir.</param>
+        /// 
         public Library(string name, string description, IEnumerable<Component> components) {
 
             if (String.IsNullOrEmpty(name))
@@ -27,6 +39,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 AddComponents(components);
         }
 
+        /// <inheritdoc/>
+        /// 
         public void AcceptVisitor(IBoardVisitor visitor) {
 
             visitor.Visit(this);

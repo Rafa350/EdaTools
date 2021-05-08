@@ -48,10 +48,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             return new Layer(_side, _tag, _function);
         }
 
-        /// <summary>
-        /// Accepta un visitador.
-        /// </summary>
-        /// <param name="visitor">El visitador.</param>
+        /// <inheritdoc/>
         /// 
         public void AcceptVisitor(IBoardVisitor visitor) {
 

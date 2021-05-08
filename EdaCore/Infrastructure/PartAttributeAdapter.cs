@@ -8,6 +8,8 @@ namespace MikroPic.EdaTools.v1.Core.Infrastructure {
 
     public sealed class PartAttributeAdapter {
 
+        private const string _startMacro = "{";
+        private const string _endMacro = "}";
         private readonly PartAttribute _attribute;
         private readonly TextElement _text;
 
@@ -15,12 +17,15 @@ namespace MikroPic.EdaTools.v1.Core.Infrastructure {
 
             _text = text ?? throw new ArgumentNullException(nameof(text));
             
-            if (part != null && !String.IsNullOrEmpty(text.Value) && text.Value.StartsWith("{"))
-                _attribute = part.GetAttribute(text.Value.Substring(1, text.Value.Length - 2));
+            if ((part != null) && 
+                !String.IsNullOrEmpty(text.Value) && 
+                text.Value.StartsWith(_startMacro) && 
+                text.Value.EndsWith(_endMacro))
+                _attribute = part.GetAttribute(text.Value.Substring(_startMacro.Length, text.Value.Length - _startMacro.Length - _endMacro.Length));
         }
 
         public string Value =>
-            _attribute != null ? _text.Value.Replace(_attribute.Name, _attribute.Value) : _text.Value;
+            _attribute != null ? _text.Value.Replace(_text.Value, _attribute.Value) : _text.Value;
 
         public Point Position =>
             (_attribute != null) && _attribute.UsePosition ? _attribute.Position : _text.Position;

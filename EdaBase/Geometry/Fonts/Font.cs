@@ -1,18 +1,17 @@
-﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Fonts {
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Xml;
 
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.IO;
-    using System.Xml;
-    using MikroPic.EdaTools.v1.Base.Geometry;
+namespace MikroPic.EdaTools.v1.Base.Geometry.Fonts {
 
     public sealed class Font {
 
-        private readonly Dictionary<char, Glyph> glyphs = new Dictionary<char, Glyph>();
-        private readonly string name;
-        private readonly int ascendent;
-        private readonly int height;
+        private readonly Dictionary<char, Glyph> _glyphs = new Dictionary<char, Glyph>();
+        private readonly string _name;
+        private readonly int _ascendent;
+        private readonly int _height;
 
         /// <summary>
         /// Constructor privat de l'objecte
@@ -27,12 +26,12 @@
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
 
-            this.name = name;
-            this.height = height;
-            this.ascendent = ascendent;
+            _name = name;
+            _height = height;
+            _ascendent = ascendent;
 
-            foreach (Glyph glyph in glyphs)
-                this.glyphs.Add(glyph.Code, glyph);
+            foreach (var glyph in glyphs)
+                _glyphs.Add(glyph.Code, glyph);
         }
 
         /// <summary>
@@ -55,7 +54,7 @@
         /// 
         public static Font Load(Stream stream) {
 
-            XmlDocument doc = new XmlDocument();
+            var doc = new XmlDocument();
             doc.Load(stream);
 
             XmlNode fontNode = doc.SelectSingleNode("/resources/fontResource/font");
@@ -65,7 +64,7 @@
             int ascendent = XmlConvert.ToInt32(fontNode.Attributes["ascent"].Value);
             int descendent = XmlConvert.ToInt32(fontNode.Attributes["descent"].Value);
 
-            List<Glyph> glyphs = new List<Glyph>();
+            var glyphs = new List<Glyph>();
             foreach (XmlNode charNode in fontNode.SelectNodes("char")) {
 
                 string codeStr = charNode.Attributes["code"].Value;
@@ -136,7 +135,7 @@
             writer.WriteAttributeString("ascend", "");
             writer.WriteAttributeString("descend", "");
 
-            foreach (KeyValuePair<char, Glyph> kv in glyphs) {
+            foreach (KeyValuePair<char, Glyph> kv in _glyphs) {
 
                 Glyph glyph = kv.Value;
 
@@ -176,7 +175,7 @@
         public Glyph GetGlyph(char code) {
 
             Glyph glyph;
-            if (glyphs.TryGetValue(code, out glyph))
+            if (_glyphs.TryGetValue(code, out glyph))
                 return glyph;
             else
                 return null;
@@ -188,7 +187,7 @@
         /// 
         public string Name {
             get {
-                return name;
+                return _name;
             }
         }
 
@@ -198,7 +197,7 @@
         /// 
         public int Height {
             get {
-                return height;
+                return _height;
             }
         }
 
@@ -208,7 +207,7 @@
         /// 
         public int Ascendent {
             get {
-                return ascendent;
+                return _ascendent;
             }
         }
     }

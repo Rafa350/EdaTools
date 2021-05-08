@@ -36,6 +36,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             return new ComponentAttribute(_name, _value);
         }
 
+        /// <inheritdoc/>
+        /// 
         public void AcceptVisitor(IBoardVisitor visitor) {
 
             visitor.Visit(this);

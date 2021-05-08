@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "EdaImport": {
+      "commandName": "Project",
+      "commandLineArgs": "test.kicad_pcb test.xbrd /v",
+      "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\Net\\EdaTools\\Data"
+    }
+  }
+}

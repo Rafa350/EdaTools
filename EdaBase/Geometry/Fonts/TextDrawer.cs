@@ -38,7 +38,7 @@
         public IEnumerable<GlyphTrace> Draw(string text, Point position, HorizontalTextAlign horizontalAlign,
             VerticalTextAlign verticalAlign, int height) {
 
-            List<GlyphTrace> glyphTraces = new List<GlyphTrace>();
+            var glyphTraces = new List<GlyphTrace>();
 
             if (!String.IsNullOrEmpty(text)) {
 
@@ -46,9 +46,9 @@
                 //
                 int width = 0;
                 for (int i = 0; i < text.Length; i++) {
-                    Glyph glyph = _font.GetGlyph(text[i]);
+                    var glyph = _font.GetGlyph(text[i]);
                     if (glyph != null)
-                        width += glyph.Advance;
+                        width += (i == text.Length - 1) ? glyph.Width : glyph.Advance;
                 }
 
                 // Calcula els offsets en funcio de l'aliniacio
