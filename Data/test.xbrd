@@ -30,11 +30,10 @@
             <layer side="top" tag="Document" function="unknown" />
         </layers>
         <signals>
-            <signal name="0" clearance="0.15" />
-            <signal name="1" clearance="0.15" />
-            <signal name="2" clearance="0.15" />
-            <signal name="3" clearance="0.15" />
-            <signal name="4" clearance="0.15" />
+            <signal name="Net-(R1-Pad2)" clearance="0.15" />
+            <signal name="Net-(R1-Pad1)" clearance="0.15" />
+            <signal name="Net-(R2-Pad2)" clearance="0.15" />
+            <signal name="Net-(R3-Pad2)" clearance="0.15" />
         </signals>
         <components>
             <component name="Resistor_SMD:R_0603_1608Metric">
@@ -58,28 +57,44 @@
             </component>
         </components>
         <parts>
-            <part name="R4" component="Resistor_SMD:R_0603_1608Metric" position="30, -25" rotation="270">
+            <part name="Resistor_SMD:R_0603_1608Metric:0" component="Resistor_SMD:R_0603_1608Metric" position="30, -25" rotation="270">
+                <pads>
+                    <pad name="1" signal="Net-(R2-Pad2)" />
+                    <pad name="2" signal="Net-(R3-Pad2)" />
+                </pads>
                 <attributes>
                     <attribute name="NAME" value="R4" position="0, 1.43" rotation="-180" />
                     <attribute name="VALUE" value="R_Small" position="0, -1.43" rotation="-180" />
                     <attribute name="%R" value="%R" visible="false" position="0, 0" rotation="-180" />
                 </attributes>
             </part>
-            <part name="R3" component="Resistor_SMD:R_0603_1608Metric" position="20, -25" rotation="180">
+            <part name="Resistor_SMD:R_0603_1608Metric:1" component="Resistor_SMD:R_0603_1608Metric" position="20, -25" rotation="180">
+                <pads>
+                    <pad name="1" signal="Net-(R1-Pad2)" />
+                    <pad name="2" signal="Net-(R3-Pad2)" />
+                </pads>
                 <attributes>
                     <attribute name="NAME" value="R3" position="0, 1.43" rotation="-180" />
                     <attribute name="VALUE" value="R_Small" position="0, -1.43" rotation="-180" />
                     <attribute name="%R" value="%R" visible="false" position="0, 0" rotation="-180" />
                 </attributes>
             </part>
-            <part name="R2" component="Resistor_SMD:R_0603_1608Metric" position="30, -20" rotation="90">
+            <part name="Resistor_SMD:R_0603_1608Metric:2" component="Resistor_SMD:R_0603_1608Metric" position="30, -20" rotation="90">
+                <pads>
+                    <pad name="1" signal="Net-(R1-Pad1)" />
+                    <pad name="2" signal="Net-(R2-Pad2)" />
+                </pads>
                 <attributes>
                     <attribute name="NAME" value="R2" position="0, 1.43" rotation="0" />
                     <attribute name="VALUE" value="R_Small" position="0, -1.43" rotation="0" />
                     <attribute name="%R" value="%R" visible="false" position="0, 0" rotation="0" />
                 </attributes>
             </part>
-            <part name="R1" component="Resistor_SMD:R_0603_1608Metric" position="20, -20">
+            <part name="Resistor_SMD:R_0603_1608Metric:3" component="Resistor_SMD:R_0603_1608Metric" position="20, -20">
+                <pads>
+                    <pad name="1" signal="Net-(R1-Pad1)" />
+                    <pad name="2" signal="Net-(R1-Pad2)" />
+                </pads>
                 <attributes>
                     <attribute name="NAME" value="R1" position="0, 1.43" rotation="0" />
                     <attribute name="VALUE" value="R_Small" position="0, -1.43" rotation="0" />
@@ -92,19 +107,19 @@
             <line layers="Profile" startPosition="95, -14" endPosition="16.375, -14" thickness="0.05" />
             <line layers="Profile" startPosition="95, -53.25" endPosition="95, -14" thickness="0.05" />
             <line layers="Profile" startPosition="16.375, -53.25" endPosition="95, -53.25" thickness="0.05" />
-            <line layers="Top.Copper" startPosition="20.825, -25" endPosition="20.825, -20" thickness="0.25" signal="1" />
-            <via position="19.1, -22.1" layers="Top.Copper, Bottom.Copper, Vias, Drills" drill="0.4" outerSize="0.65" signal="2" />
-            <line layers="Top.Copper" startPosition="19.175, -22.025" endPosition="19.1, -22.1" thickness="0.25" signal="2" />
-            <line layers="Top.Copper" startPosition="19.175, -20" endPosition="19.175, -22.025" thickness="0.25" signal="2" />
-            <via position="30.1, -22.1" layers="Top.Copper, Bottom.Copper, Vias, Drills" drill="0.4" outerSize="0.65" signal="2" />
-            <line layers="Bottom.Copper" startPosition="19.1, -22.1" endPosition="30.1, -22.1" thickness="0.25" signal="2" />
-            <line layers="Top.Copper" startPosition="30.1, -20.925" endPosition="30, -20.825" thickness="0.25" signal="2" />
-            <line layers="Top.Copper" startPosition="30.1, -22.1" endPosition="30.1, -20.925" thickness="0.25" signal="2" />
-            <line layers="Top.Copper" startPosition="29.19999, -19.97501" endPosition="30, -19.175" thickness="0.25" signal="3" />
-            <line layers="Top.Copper" startPosition="29.19999, -23.37499" endPosition="29.19999, -19.97501" thickness="0.25" signal="3" />
-            <line layers="Top.Copper" startPosition="30, -24.175" endPosition="29.19999, -23.37499" thickness="0.25" signal="3" />
-            <line layers="Top.Copper" startPosition="20, -25.825" endPosition="30, -25.825" thickness="0.25" signal="4" />
-            <line layers="Top.Copper" startPosition="19.175, -25" endPosition="20, -25.825" thickness="0.25" signal="4" />
+            <line layers="Top.Copper" startPosition="20.825, -25" endPosition="20.825, -20" thickness="0.25" signal="Net-(R1-Pad2)" />
+            <via position="19.1, -22.1" layers="Top.Copper, Bottom.Copper, Vias, Drills" drill="0.4" outerSize="0.65" signal="Net-(R1-Pad1)" />
+            <line layers="Top.Copper" startPosition="19.175, -22.025" endPosition="19.1, -22.1" thickness="0.25" signal="Net-(R1-Pad1)" />
+            <line layers="Top.Copper" startPosition="19.175, -20" endPosition="19.175, -22.025" thickness="0.25" signal="Net-(R1-Pad1)" />
+            <via position="30.1, -22.1" layers="Top.Copper, Bottom.Copper, Vias, Drills" drill="0.4" outerSize="0.65" signal="Net-(R1-Pad1)" />
+            <line layers="Bottom.Copper" startPosition="19.1, -22.1" endPosition="30.1, -22.1" thickness="0.25" signal="Net-(R1-Pad1)" />
+            <line layers="Top.Copper" startPosition="30.1, -20.925" endPosition="30, -20.825" thickness="0.25" signal="Net-(R1-Pad1)" />
+            <line layers="Top.Copper" startPosition="30.1, -22.1" endPosition="30.1, -20.925" thickness="0.25" signal="Net-(R1-Pad1)" />
+            <line layers="Top.Copper" startPosition="29.19999, -19.97501" endPosition="30, -19.175" thickness="0.25" signal="Net-(R2-Pad2)" />
+            <line layers="Top.Copper" startPosition="29.19999, -23.37499" endPosition="29.19999, -19.97501" thickness="0.25" signal="Net-(R2-Pad2)" />
+            <line layers="Top.Copper" startPosition="30, -24.175" endPosition="29.19999, -23.37499" thickness="0.25" signal="Net-(R2-Pad2)" />
+            <line layers="Top.Copper" startPosition="20, -25.825" endPosition="30, -25.825" thickness="0.25" signal="Net-(R3-Pad2)" />
+            <line layers="Top.Copper" startPosition="19.175, -25" endPosition="20, -25.825" thickness="0.25" signal="Net-(R3-Pad2)" />
         </elements>
     </board>
 </document>

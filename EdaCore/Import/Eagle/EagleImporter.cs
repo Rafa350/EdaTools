@@ -258,7 +258,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// 
         private IEnumerable<Layer> ParseLayersNode(XmlNode layersNode) {
 
-            List<Layer> layers = new List<Layer>();
+            var layers = new List<Layer>();
 
             foreach (XmlNode layerNode in layersNode) {
                 Layer layer = ParseLayerNode(layerNode);
@@ -291,7 +291,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// 
         private IEnumerable<Component> ParsePackagesNode(XmlNode packagesNode) {
 
-            List<Component> components = new List<Component>();
+            var components = new List<Component>();
             foreach (XmlNode packageNode in packagesNode.ChildNodes) {
                 Component component = ParsePackageNode(packageNode);
                 components.Add(component);
@@ -311,7 +311,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             string packageName = packageNode.AttributeAsString("name");
             string packageDescription = null;
 
-            List<Element> elements = new List<Element>();
+            var elements = new List<Element>();
             foreach (XmlNode elementNode in packageNode.ChildNodes) {
                 Element element = null;
                 switch (elementNode.Name) {
@@ -373,7 +373,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// 
         private IEnumerable<Part> ParseElementsNode(XmlNode elementsNode) {
 
-            List<Part> parts = new List<Part>();
+            var parts = new List<Part>();
             foreach (XmlNode elementNode in elementsNode.ChildNodes) {
                 Part part = ParseElementNode(elementNode);
                 parts.Add(part);
@@ -1058,7 +1058,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="layerNum">Identificador de la capa.</param>
         /// <returns>El nom de la capa.</returns>
         /// 
-        private string GetLayerName(int layerNum) {
+        private static string GetLayerName(int layerNum) {
 
             return Layer.GetName(GetLayerSide(layerNum), GetLayerTag(layerNum));
         }

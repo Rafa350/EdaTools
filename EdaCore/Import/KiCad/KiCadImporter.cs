@@ -18,6 +18,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         private const double _scale = 1000000.0;
         private readonly Matrix2D _m = Matrix2D.CreateScale(_scale, -_scale);
         private int _partCount = 0;
+        private Dictionary<int, Signal> _signals = new Dictionary<int, Signal>();
 
         /// <inheritdoc/>
         /// 
@@ -150,7 +151,6 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             return board;
         }
 
-
         /// <summary>
         /// Procesa una llibreria
         /// </summary>
@@ -195,12 +195,18 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <param name="node">El node.</param>
         /// <param name="board">La placa.</param>
         /// 
-        private static void ProcessSignal(STree tree, SBranch node, Board board) {
+        private void ProcessSignal(STree tree, SBranch node, Board board) {
 
-            string name = tree.ValueAsString(node[1]);
+            int id = tree.ValueAsInteger(node[1]);
+            string name = tree.ValueAsString(node[2]);
             
-            var signal = new Signal(name);
-            board.AddSignal(signal);
+            if (!String.IsNullOrEmpty(name)) {
+
+                var signal = new Signal(name);
+                board.AddSignal(signal);
+
+                _signals.Add(id, signal);
+            }
         }
 
         /// <summary>
@@ -224,8 +230,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             var netNode = tree.SelectBranch(node, "net");
             if (netNode != null) {
-                var netName = tree.ValueAsString(netNode[1]);
-                board.Connect(board.GetSignal(netName), via);
+                int netId = tree.ValueAsInteger(netNode[1]);
+                board.Connect(_signals[netId], via);
             }
 
             board.AddElement(via);
@@ -294,7 +300,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var component = board.GetComponent(name);
             var partName = String.Format("{0}:{1}", name, _partCount++);
 
-            List<PartAttribute> attributes = null;
+            var part = new Part(component, partName, position, rotation, side == BoardSide.Bottom);
+
+            // Procesa els atributs
+            //
             foreach (var childNode in node.Nodes.OfType<SBranch>()) {
                 if (tree.GetBranchName(childNode) == "fp_text") {
 
@@ -323,19 +332,30 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                             break;
                     }
 
-                    if (attributes == null)
-                        attributes = new List<PartAttribute>();
                     var attribute = new PartAttribute(attrName, attrValue, attrVisible);
                     attribute.Position = attrPosition;
                     attribute.Rotation = attrRotation;
-                    attributes.Add(attribute);
+                    part.AddAttribute(attribute);
                 }
             }
 
-            var part = new Part(component, partName, position, rotation, side == BoardSide.Bottom);
-            if (attributes != null)
-                part.AddAttributes(attributes);
+            // Procesa les senyals
+            //
+            foreach (var childNode in node.Nodes.OfType<SBranch>()) {
+                if (tree.GetBranchName(childNode) == "pad") {
+                    var netNode = tree.SelectBranch(childNode, "net");
+                    if (netNode != null) {
 
+                        string padName = tree.ValueAsString(childNode[1]);
+                        int netId = tree.ValueAsInteger(netNode[1]);
+                        
+                        var pad = part.GetPad(padName);
+                        var signal = _signals[netId];
+                        board.Connect(signal, pad, part);
+                    }
+                }
+            }
+             
             board.AddPart(part);
         }
 
@@ -358,8 +378,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             var netNode = tree.SelectBranch(node, "net");
             if (netNode != null) {
-                var netName = tree.ValueAsString(netNode[1]);
-                board.Connect(board.GetSignal(netName), element);
+                int netId = tree.ValueAsInteger(netNode[1]);
+                board.Connect(_signals[netId], element);
             }
         }
 
@@ -757,9 +777,15 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             }
         }
 
-        private static string GetModuleFileName(string moduleName) {
+        /// <summary>
+        /// Obte el nom de fitxer del modul.
+        /// </summary>
+        /// <param name="name">El nom del modul.</param>
+        /// <returns>El nom de fitxer.</returns>
+        /// 
+        private static string GetModuleFileName(string name) {
 
-            string[] s = moduleName.Split(':', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            string[] s = name.Split(':', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
             string libBaseFolder = @"C:\Program Files\KiCad\share\kicad\modules\";
             string libFolder = String.Format("{0}.pretty", s[0]);
