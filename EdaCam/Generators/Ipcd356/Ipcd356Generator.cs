@@ -1,13 +1,13 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
+﻿using System;
+using System.IO;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Cam.Generators.Ipcd356.Builder;
+using MikroPic.EdaTools.v1.Cam.Model;
+using MikroPic.EdaTools.v1.Core.Model.Board;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 
-    using System;
-    using System.IO;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Cam.Generators.Ipcd356.Builder;
-    using MikroPic.EdaTools.v1.Cam.Model;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
+namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
 
     /// <summary>
     /// Generador de codi en format IPCD356
@@ -135,11 +135,11 @@
         /// </summary>
         private sealed class NetsVisitor : SignalVisitor {
 
-            private readonly Ipcd356Builder builder;
+            private readonly Ipcd356Builder _builder;
 
             public NetsVisitor(Ipcd356Builder builder) {
 
-                this.builder = builder;
+                _builder = builder;
             }
 
             public override void Visit(LineElement line) {
@@ -154,7 +154,7 @@
                     Point[] points = new Point[2];
                     points[0] = line.StartPosition;
                     points[1] = line.EndPosition;
-                    builder.Conductor(points, layerNum, line.Thickness, Signal.Name);
+                    _builder.Conductor(points, layerNum, line.Thickness, Signal.Name);
                 }
             }
 
@@ -170,7 +170,7 @@
                     Point[] points = new Point[2];
                     points[0] = arc.StartPosition;
                     points[1] = arc.EndPosition;
-                    builder.Conductor(points, layerNum, arc.Thickness, Signal.Name);
+                    _builder.Conductor(points, layerNum, arc.Thickness, Signal.Name);
                 }
             }
         }
@@ -189,8 +189,9 @@
 
             public override void Visit(ViaElement via) {
 
-                Signal signal = Board.GetSignal(via);
-                builder.Via(via.Position, via.Drill, signal.Name);
+                var signal = Board.GetSignal(via, null, false);
+                if (signal != null)
+                    builder.Via(via.Position, via.Drill, signal.Name);
             }
         }
 
@@ -199,11 +200,11 @@
         /// </summary>
         private sealed class PadsVisitor : ElementVisitor {
 
-            private readonly Ipcd356Builder builder;
+            private readonly Ipcd356Builder _builder;
 
             public PadsVisitor(Ipcd356Builder builder) {
 
-                this.builder = builder;
+                _builder = builder;
             }
 
             public override void Visit(SmdPadElement pad) {
@@ -214,7 +215,7 @@
                     Transformation t = Part.GetLocalTransformation();
                     Point position = t.ApplyTo(pad.Position);
 
-                    builder.SmdPad(position, TestAccess.Top, Part.Name, pad.Name, signal.Name);
+                    _builder.SmdPad(position, TestAccess.Top, Part.Name, pad.Name, signal.Name);
                 }
             }
 
@@ -226,7 +227,7 @@
                     Transformation t = Part.GetLocalTransformation();
                     Point position = t.ApplyTo(pad.Position);
 
-                    builder.ThPad(position, pad.Drill, Part.Name, pad.Name, signal.Name);
+                    _builder.ThPad(position, pad.Drill, Part.Name, pad.Name, signal.Name);
                 }
             }
         }
