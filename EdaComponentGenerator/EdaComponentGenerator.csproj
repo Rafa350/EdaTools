@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\binRelease</OutputPath>
+    <OutputPath>..\bin\Release</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
