@@ -34,7 +34,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdaExtractor", "EdaExtracto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdaImport", "EdaImport\EdaImport.csproj", "{5DDF36F8-93E7-440C-89A3-5940925FFBC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaExport", "EdaExport\EdaExport.csproj", "{DA4A1B89-04D9-4D34-91EE-FA5B68B2EA9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdaExport", "EdaExport\EdaExport.csproj", "{DA4A1B89-04D9-4D34-91EE-FA5B68B2EA9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaComponentGenerator", "EdaComponentGenerator\EdaComponentGenerator.csproj", "{8D7F9FA0-D161-4276-83B5-E06E003B0D19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,6 +84,10 @@ Global
 		{DA4A1B89-04D9-4D34-91EE-FA5B68B2EA9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA4A1B89-04D9-4D34-91EE-FA5B68B2EA9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA4A1B89-04D9-4D34-91EE-FA5B68B2EA9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D7F9FA0-D161-4276-83B5-E06E003B0D19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D7F9FA0-D161-4276-83B5-E06E003B0D19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D7F9FA0-D161-4276-83B5-E06E003B0D19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D7F9FA0-D161-4276-83B5-E06E003B0D19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +103,7 @@ Global
 		{4394D47B-2D94-44D5-8C9F-4EC292FDA3C2} = {E3221687-5D1E-464E-A24E-A8287F028C0D}
 		{5DDF36F8-93E7-440C-89A3-5940925FFBC3} = {E3221687-5D1E-464E-A24E-A8287F028C0D}
 		{DA4A1B89-04D9-4D34-91EE-FA5B68B2EA9D} = {E3221687-5D1E-464E-A24E-A8287F028C0D}
+		{8D7F9FA0-D161-4276-83B5-E06E003B0D19} = {E3221687-5D1E-464E-A24E-A8287F028C0D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {98C638C2-4E0C-43A4-9E0E-D0C6F59502FD}
