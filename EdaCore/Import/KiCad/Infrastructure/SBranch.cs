@@ -42,19 +42,22 @@
         /// Obte els nodes.
         /// </summary>
         /// 
-        public IEnumerable<SNode> Nodes => _nodes;
+        public IEnumerable<SNode> Nodes => 
+            _nodes;
 
         /// <summary>
         /// Indica si la branca es buida.
         /// </summary>
         /// 
-        public bool IsEmpty => _nodes.Count == 0;
+        public bool IsEmpty => 
+            _nodes.Count == 0;
 
         /// <summary>
         /// Obte el numero de nodes.
         /// </summary>
         /// 
-        public int Count => _nodes.Count;
+        public int Count => 
+            _nodes.Count;
 
         /// <summary>
         /// Obte un node.
@@ -62,13 +65,15 @@
         /// <param name="index">Index del node.</param>
         /// <returns>El node.</returns>
         /// 
-        public SNode this[int index] => _nodes[index];
+        public SNode this[int index] => 
+            _nodes[index];
 
         /// <summary>
         /// Obte el primer node.
         /// </summary>
         /// 
-        public SNode First => _nodes[0];
+        public SNode First => 
+            _nodes[0];
     }
 
 

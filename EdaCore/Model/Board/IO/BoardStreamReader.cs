@@ -514,9 +514,9 @@
 
             string name = _rd.AttributeAsString("name");
             string value = _rd.AttributeAsString("value");
-            bool visible = _rd.AttributeAsBoolean("visible", false);
+            bool visible = _rd.AttributeAsBoolean("visible", true);
 
-            PartAttribute attribute = new PartAttribute(name, value, visible);
+            var attribute = new PartAttribute(name, value, visible);
 
             if (_rd.AttributeExists("position"))
                 attribute.Position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));

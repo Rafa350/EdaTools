@@ -79,6 +79,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
                 var reader = new StreamReader(stream);
                 var source = reader.ReadToEnd();
+                reader.Close();
 
                 var parser = new SParser();
                 var tree = parser.Parse(source);
@@ -145,6 +146,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                     case "segment":
                         ProcessLine(tree, childNode, board);
                         break;
+
+                    case "zone":
+                        throw new NotImplementedException();
+                        break;
                 }
             }
 
@@ -199,14 +204,14 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             int id = tree.ValueAsInteger(node[1]);
             string name = tree.ValueAsString(node[2]);
-            
-            if (!String.IsNullOrEmpty(name)) {
 
-                var signal = new Signal(name);
-                board.AddSignal(signal);
+            if (String.IsNullOrEmpty(name))
+                name = "unnamed_signal";
 
-                _signals.Add(id, signal);
-            }
+            var signal = new Signal(name);
+            board.AddSignal(signal);
+
+            _signals.Add(id, signal);
         }
 
         /// <summary>
@@ -300,44 +305,48 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var component = board.GetComponent(name);
             var partName = String.Format("{0}:{1}", name, _partCount++);
 
-            var part = new Part(component, partName, position, rotation, side == BoardSide.Bottom);
-
             // Procesa els atributs
             //
+            List<PartAttribute> attributes = null;
             foreach (var childNode in node.Nodes.OfType<SBranch>()) {
                 if (tree.GetBranchName(childNode) == "fp_text") {
 
-                    bool attrVisible = false;
-                    string attrName = tree.ValueAsString(childNode[2]);
                     string attrValue = tree.ValueAsString(childNode[2]);
+
+                    bool attrVisible = childNode.Count == 6; // Si no te el node 'hide' es visible
 
                     var (attrPosition, attrRotation) = ParseLocation(tree, tree.SelectBranch(childNode, "at"));
                     attrRotation -= rotation;
 
+                    PartAttribute attribute = null;
                     switch (tree.ValueAsString(childNode[1])) {
 
                         case "value":
-                            attrName = "VALUE";
-                            attrVisible = true;
+                            attribute = new PartAttribute("VALUE", partName, attrVisible);
                             break;
 
                         case "reference":
-                            attrName = "NAME";
+                            attribute = new PartAttribute("NAME", attrValue, attrVisible);
                             partName = attrValue;
-                            attrVisible = true;
                             break;
 
                         case "user":
-                            attrName = tree.ValueAsString(childNode[2]);
                             break;
                     }
 
-                    var attribute = new PartAttribute(attrName, attrValue, attrVisible);
-                    attribute.Position = attrPosition;
-                    attribute.Rotation = attrRotation;
-                    part.AddAttribute(attribute);
+                    if (attribute != null) {
+                        attribute.Position = attrPosition;
+                        attribute.Rotation = attrRotation;
+                        if (attributes == null)
+                            attributes = new List<PartAttribute>();
+                        attributes.Add(attribute);
+                    }
                 }
             }
+
+            var part = new Part(component, partName, position, rotation, side == BoardSide.Bottom);
+            if (attributes != null)
+                part.AddAttributes(attributes);
 
             // Procesa les senyals
             //
@@ -351,7 +360,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                         
                         var pad = part.GetPad(padName);
                         var signal = _signals[netId];
-                        board.Connect(signal, pad, part);
+                        try {
+                            board.Connect(signal, pad, part);
+                        }
+                        catch {
+
+                        }
                     }
                 }
             }
@@ -521,7 +535,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             }
             else {
                 layer = Layer.GetName(GetLayerSide(layerName), GetLayerTag(layerName));
-                text = String.Format("{{{0}}}", tree.ValueAsString(node[2]));
+                text = tree.ValueAsString(node[2]);
+                if (text.StartsWith('%'))
+                    text = String.Format("{{{0}}}", text);
             }
 
             var element = new TextElement(new LayerSet(layer), position, rotation, height, 
@@ -786,12 +802,22 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         private static string GetModuleFileName(string name) {
 
             string[] s = name.Split(':', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-
-            string libBaseFolder = @"C:\Program Files\KiCad\share\kicad\modules\";
             string libFolder = String.Format("{0}.pretty", s[0]);
             string modFileName = String.Format("{0}.kicad_mod", s[1]);
+            string[] libBaseFolders = {
+                ".",
+                @"C:\Program Files\KiCad\share\kicad\modules",
+                @"C:\Users\Rafael\Documents\Projectes\KiCad\Libraries\User",
+                @"C:\Users\Rafael\Documents\Projectes\KiCad\Aplex",
+            };
 
-            return Path.Combine(libBaseFolder, libFolder, modFileName);
+            foreach (var libBaseFolder in libBaseFolders) {
+                string fileName = Path.Combine(libBaseFolder, libFolder, modFileName);
+                if (File.Exists(fileName))
+                    return fileName;
+            }
+
+            return name;
         }
     }
 }

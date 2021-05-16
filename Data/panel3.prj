@@ -4,7 +4,8 @@
     <!-- Localitzacio de les eines -->
     <PropertyGroup>
         <EdaCAMTool>..\bin\Debug\net5.0\EdaCamTool.exe</EdaCAMTool>
-        <EdaConvertTool>..\bin\Debug\net5.0\EdaImport.exe</EdaConvertTool>
+        <EdaImportTool>..\bin\Debug\net5.0\EdaImport.exe</EdaImportTool>
+        <EdaExportTool>..\bin\Debug\net5.0\EdaExport.exe</EdaExportTool>
         <EdaPanelizerTool>..\bin\Debug\net5.0\EdaPanelizer.exe</EdaPanelizerTool>
         <ZipTool>&quot;C:\Program Files\WinRAR\rar.exe&quot;</ZipTool>
     </PropertyGroup>
@@ -165,8 +166,17 @@
     <Target
         Name="Panelize"
         Inputs="$(MSBuildProjectName).xpnl; board3.xbrd"
-        Outputs="$(MSBuildProjectName).xbrd">
+        Outputs="$(MSBuildProjectName).xbrd"
+        DependsOnTargets="Import">
         <Exec Command="$(EdaPanelizerTool) $(MSBuildProjectName).xpnl" />
+    </Target>
+
+    <!-- Genera el fitxer del la etiqueta -->
+    <Target
+        Name="Import"
+        Inputs="board3.brd"
+        Outputs="board3.xbrd">
+        <Exec Command="$(EdaImportTool) board3.brd board3.xbrd /v" />
     </Target>
 
  </Project>

@@ -127,39 +127,41 @@
             if (visualLayer.IsVisible(Part, text)) {
 
                 var paa = new PartAttributeAdapter(Part, text);
+                if (paa.IsVisible) {
 
-                if (font == null)
-                    font = Font.Load("font.xml");
+                    if (font == null)
+                        font = Font.Load("font.xml");
 
-                var td = new TextDrawer(font);
-                IEnumerable<GlyphTrace> glyphTraces = td.Draw(paa.Value, new Point(0, 0), paa.HorizontalAlign, paa.VerticalAlign, paa.Height);
-                
-                var t = new Transformation();
-                //t.Scale(1, -1);
-                t.Translate(paa.Position);
-                t.Rotate(paa.Position, paa.Rotation);
+                    var td = new TextDrawer(font);
+                    IEnumerable<GlyphTrace> glyphTraces = td.Draw(paa.Value, new Point(0, 0), paa.HorizontalAlign, paa.VerticalAlign, paa.Height);
 
-                Matrix2D matrix = t.Matrix;
-                var m = new Avalonia.Matrix(matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.Tx, matrix.Ty);
-                using (context.PushPreTransform(m)) {
+                    var t = new Transformation();
+                    //t.Scale(1, -1);
+                    t.Translate(paa.Position);
+                    t.Rotate(paa.Position, paa.Rotation);
 
-                    bool first = true;
-                    var geometry = new StreamGeometry();
-                    using (var gc = geometry.Open()) {
-                        foreach (var glyphTrace in glyphTraces) {
-                            var p = new Avalonia.Point(glyphTrace.Position.X, glyphTrace.Position.Y);
-                            if (first || !glyphTrace.Stroke ) {
-                                gc.BeginFigure(p, false);
-                                first = false;
+                    Matrix2D matrix = t.Matrix;
+                    var m = new Avalonia.Matrix(matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.Tx, matrix.Ty);
+                    using (context.PushPreTransform(m)) {
+
+                        bool first = true;
+                        var geometry = new StreamGeometry();
+                        using (var gc = geometry.Open()) {
+                            foreach (var glyphTrace in glyphTraces) {
+                                var p = new Avalonia.Point(glyphTrace.Position.X, glyphTrace.Position.Y);
+                                if (first || !glyphTrace.Stroke) {
+                                    gc.BeginFigure(p, false);
+                                    first = false;
+                                }
+                                else
+                                    gc.LineTo(p);
                             }
-                            else
-                                gc.LineTo(p);
                         }
-                    }
 
-                    var pen = new Pen(new SolidColorBrush(visualLayer.Color), text.Thickness, null, PenLineCap.Round, PenLineJoin.Round);
-                    
-                    context.DrawGeometry(null, pen, geometry);
+                        var pen = new Pen(new SolidColorBrush(visualLayer.Color), text.Thickness, null, PenLineCap.Round, PenLineJoin.Round);
+
+                        context.DrawGeometry(null, pen, geometry);
+                    }
                 }
             }
         }

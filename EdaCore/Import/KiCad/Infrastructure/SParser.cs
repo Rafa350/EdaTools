@@ -8,8 +8,8 @@
 
         public STree Parse(string source) {
 
-            TextReader reader = new StringReader(source);
-            STokenizer tokenizer = new STokenizer(reader);
+            var reader = new StringReader(source);
+            var tokenizer = new STokenizer(reader);
             SNode root = ParseNode(tokenizer);
             
             return new STree(source, root);

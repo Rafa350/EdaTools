@@ -36,10 +36,16 @@ namespace MikroPic.EdaTools.v1.Core.Infrastructure {
         public int Height =>
             (_attribute != null) && _attribute.UseHeight ? _attribute.Height : _text.Height;
 
+        public bool IsVisible =>
+            _attribute == null ? true : _attribute.IsVisible;
+
         public HorizontalTextAlign HorizontalAlign =>
             (_attribute != null) && _attribute.UseAlign ? _attribute.HorizontalAlign : _text.HorizontalAlign;
 
         public VerticalTextAlign VerticalAlign =>
             (_attribute != null) && _attribute.UseAlign ? _attribute.VerticalAlign : _text.VerticalAlign;
+
+        public PartAttribute Attribute =>
+            _attribute;
     }
 }

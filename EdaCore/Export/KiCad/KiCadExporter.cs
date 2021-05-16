@@ -129,13 +129,13 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                 var type = "value";
                 var value = text.Value;
 
-                if (value == ">NAME") {
+                if (value == "{NAME}") {
                     value = "REF**";
                     type = "reference";
                 }
-                else if (value == ">VALUE") {
+                else if (value == "{VALUE}") {
                     value = _currentComponent.Name;
-                    type = "reference";
+                    type = "value";
                 }
 
                 var sb = new StringBuilder()
@@ -186,7 +186,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                     .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", position.X, position.Y, pad.Rotation.ToDegrees)
                     .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", pad.TopSize / _scale, pad.TopSize / _scale)
                     .AppendFormat(CultureInfo.InvariantCulture, "(drill {0}) ", pad.Drill / _scale)
-                    .AppendFormat("(layers {0})) ", GetLayerNames(pad.LayerSet));
+                    .Append("(layers *.Cu *.Mask))");
 
                 _writer.WriteLine(sb);
             }
@@ -200,7 +200,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                     .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1}) ", position.X, position.Y)
                     .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {0}) ", hole.Drill / _scale)
                     .AppendFormat(CultureInfo.InvariantCulture, "(drill {0}) ", hole.Drill / _scale)
-                    .Append("(layers *.Cu *.SilkS *.Mask))");
+                    .Append("(layers *.Cu *.Mask))");
 
                 _writer.WriteLine(sb);
             }

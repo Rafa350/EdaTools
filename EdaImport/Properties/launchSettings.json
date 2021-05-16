@@ -2,7 +2,7 @@
   "profiles": {
     "EdaImport": {
       "commandName": "Project",
-      "commandLineArgs": "test.kicad_pcb test.xbrd /v",
+      "commandLineArgs": "..\\..\\..\\KiCAD\\Aplex\\MD-CPU07.kicad_pcb MD-CPU07.xbrd /v",
       "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\Net\\EdaTools\\Data"
     }
   }

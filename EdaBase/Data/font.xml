@@ -388,6 +388,10 @@
             </char>
             
             <!-- Q -->
+            <char code="0x51" advance="6">
+                <glyph>
+                </glyph>
+            </char>
           
             <!-- 'R' -->
             <char code="0x52" advance="6">
@@ -405,8 +409,21 @@
             </char>
             
             <!-- S -->
+            <char code="0x53" advance="6">
+                <glyph>
+                </glyph>
+            </char>
+            
             <!-- T -->
-          
+            <char code="0x54" advance="6">
+                <glyph>
+                    <moveTo position="0, 6"/>
+                    <lineTo position="4, 1"/>                    
+                    <moveTo position="2, 6"/>
+                    <lineTo position="2, 0"/>                    
+                </glyph>
+            </char>
+
             <!-- 'U' -->
             <char code="0x55" advance="6">
                 <glyph>
@@ -420,10 +437,37 @@
             </char>
             
             <!-- V -->
+            <char code="0x56" advance="6">
+                <glyph>
+                    <moveTo position="0, 6"/>
+                    <lineTo position="2, 0"/>                    
+                    <lineTo position="6, 6"/>                    
+                </glyph>
+            </char>
+            
             <!-- W -->
+            <char code="0x57" advance="6">
+                <glyph>
+                </glyph>
+            </char>
+            
             <!-- X -->
+            <char code="0x58" advance="6">
+                <glyph>
+                </glyph>
+            </char>
+            
             <!-- Y -->
+            <char code="0x59" advance="6">
+                <glyph>
+                </glyph>
+            </char>
+            
             <!-- Z -->
+            <char code="0x5A" advance="6">
+                <glyph>
+                </glyph>
+            </char>
         
         </font>
     </fontResource>

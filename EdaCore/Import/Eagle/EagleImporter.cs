@@ -554,6 +554,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         private Element ParseTextNode(XmlNode node) {
 
             string value = node.InnerText;
+            if (value.StartsWith('>'))
+                value = String.Format("{{{0}}}", value.Substring(1));
 
             // Obte la posicio
             //
@@ -577,7 +579,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             int layerNum = node.AttributeAsInteger("layer");
             LayerSet layerSet = new LayerSet(GetLayerName(layerNum));
 
-            TextElement element = new TextElement(layerSet, position, rotation, height, thickness, horizontalAlign, verticalAlign);
+            var element = new TextElement(layerSet, position, rotation, height, thickness, horizontalAlign, verticalAlign);
             element.Value = value;
 
             return element;

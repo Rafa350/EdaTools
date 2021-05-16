@@ -176,7 +176,7 @@
             <signal name="O11B" clearance="0.15" />
         </signals>
         <components>
-            <component name="1X02/90@pinhead">
+            <component name="1X02/90@pinhead" description="&lt;b&gt;PIN HEADER&lt;/b&gt;">
                 <elements>
                     <line layers="Top.Place" startPosition="-2.54, -1.905" endPosition="0, -1.905" thickness="0.1524" />
                     <line layers="Top.Place" startPosition="0, -1.905" endPosition="0, 0.635" thickness="0.1524" />
@@ -189,15 +189,15 @@
                     <line layers="Top.Place" startPosition="1.27, 6.985" endPosition="1.27, 1.27" thickness="0.762" />
                     <tpad name="1" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="-1.27, -3.81" rotation="90" size="1.6256" drill="1.016" shape="oval" />
                     <tpad name="2" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="1.27, -3.81" rotation="90" size="1.6256" drill="1.016" shape="oval" />
-                    <text layers="Top.Names" position="-3.175, -3.81" rotation="90" height="1.27" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="4.445, -3.81" rotation="90" height="1.27" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-3.175, -3.81" rotation="90" height="1.27" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="4.445, -3.81" rotation="90" height="1.27" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Place" position="-1.27, 0.889" size="0.762, 0.508" />
                     <rectangle layers="Top.Place" position="1.27, 0.889" size="0.762, 0.508" />
                     <rectangle layers="Top.Place" position="-1.27, -2.413" size="0.762, 1.016" />
                     <rectangle layers="Top.Place" position="1.27, -2.413" size="0.762, 1.016" />
                 </elements>
             </component>
-            <component name="3,6@holes">
+            <component name="3,6@holes" description="&lt;b&gt;MOUNTING HOLE&lt;/b&gt; 3.6 mm with drill center">
                 <elements>
                     <arc layers="Top.Document" startPosition="-2.159, 0" endPosition="0, -2.159" angle="90" thickness="2.4892" lineCap="flat" />
                     <arc layers="Top.Document" startPosition="0, 2.159" endPosition="2.159, 0" angle="-90" thickness="2.4892" lineCap="flat" />
@@ -212,7 +212,7 @@
                     <hole layers="Holes" position="0, 0" drill="3.6" />
                 </elements>
             </component>
-            <component name="SO08@optoacopladores">
+            <component name="SO08@optoacopladores" description="8 Lead Plastic Small Outline. Narrow 3,90mm">
                 <elements>
                     <line layers="Top.Keepout" startPosition="-2.65, 4.2175" endPosition="2.65, 4.2175" thickness="0.1998" />
                     <line layers="Top.Keepout" startPosition="2.65, 4.2175" endPosition="2.65, -4.2175" thickness="0.1998" />
@@ -230,8 +230,8 @@
                     <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.905, 3.0425" size="0.6, 1.8" roundness="0.25" />
                     <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="0.635, 3.0425" size="0.6, 1.8" roundness="0.25" />
                     <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="1.905, 3.0425" size="0.6, 1.8" roundness="0.25" />
-                    <text layers="Top.Names" position="-3, -1.5" rotation="90" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="3, 1.5" rotation="270" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-3, -1.5" rotation="90" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="3, 1.5" rotation="270" height="1" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="-1.905, -2.23255" size="0.4902, 1.1001" />
                     <rectangle layers="Top.Document" position="-0.635, -2.23255" size="0.4902, 1.1001" />
                     <rectangle layers="Top.Document" position="0.635, -2.23255" size="0.4902, 1.1001" />
@@ -243,7 +243,7 @@
                     <circle layers="Top.Place" position="-1.75, -1" radius="0.2" />
                 </elements>
             </component>
-            <component name="SOP04@optoacopladores">
+            <component name="SOP04@optoacopladores" description="&lt;b&gt;SMALL OUTLINE PACKAGE&lt;/b&gt;">
                 <elements>
                     <line layers="Top.Keepout" startPosition="-2.28875, 3.9" endPosition="2.28875, 3.9" thickness="0.1998" />
                     <line layers="Top.Keepout" startPosition="2.28875, 3.9" endPosition="2.28875, -3.9" thickness="0.1998" />
@@ -257,8 +257,8 @@
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.27, -3.1" size="1, 1.25" roundness="0.25" />
                     <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="1.27, 3.1" size="1, 1.25" roundness="0.25" />
                     <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.27, 3.1" size="1, 1.25" roundness="0.25" />
-                    <text layers="Top.Names" position="-2.54, -3.81" rotation="90" height="1.27" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="3.81, -3.81" rotation="90" height="1.27" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-2.54, -3.81" rotation="90" height="1.27" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="3.81, -3.81" rotation="90" height="1.27" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="-1.27, -2.60745" size="0.4998, 1.1301" />
                     <rectangle layers="Top.Document" position="1.27, -2.60745" size="0.4998, 1.1301" />
                     <rectangle layers="Top.Document" position="1.27, 2.60745" size="0.4998, 1.1301" />
@@ -266,7 +266,7 @@
                     <circle layers="Top.Place" position="-1.27, -1.27" radius="0.2" />
                 </elements>
             </component>
-            <component name="DIL8-SMD@optoacopladores">
+            <component name="DIL8-SMD@optoacopladores" description="8 Lead Dual In-Line SMD">
                 <elements>
                     <line layers="Top.Place" startPosition="4.855, 3.18" endPosition="4.855, -2.164" thickness="0.1524" />
                     <line layers="Top.Place" startPosition="4.855, -2.164" endPosition="4.855, -3.18" thickness="0.1524" />
@@ -282,8 +282,8 @@
                     <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="1.27, 4.77" size="1.6, 2" roundness="0.25" />
                     <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.27, 4.77" size="1.6, 2" roundness="0.25" />
                     <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.81, 4.77" size="1.6, 2" roundness="0.25" />
-                    <text layers="Top.Names" position="-5.08, -3.175" rotation="90" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="6.35, -3.175" rotation="90" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-5.08, -3.175" rotation="90" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="6.35, -3.175" rotation="90" height="1" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="-3.8025, -4.175" size="1.225, 1.95" />
                     <rectangle layers="Top.Document" position="-1.2625, -4.175" size="1.225, 1.95" />
                     <rectangle layers="Top.Document" position="1.2775, -4.175" size="1.225, 1.95" />
@@ -294,7 +294,7 @@
                     <rectangle layers="Top.Document" position="-3.8175, 4.175" size="1.225, 1.95" rotation="180" />
                 </elements>
             </component>
-            <component name="1X05-2MM@pinhead200">
+            <component name="1X05-2MM@pinhead200" description="&lt;b&gt;PIN HEADER&lt;/b&gt;">
                 <elements>
                     <line layers="Top.Place" startPosition="5, -1" endPosition="-3, -1" thickness="0.127" />
                     <line layers="Top.Place" startPosition="-3, -1" endPosition="-5, -1" thickness="0.127" />
@@ -308,8 +308,8 @@
                     <tpad name="3" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="0, 0" rotation="90" size="1.28" drill="0.8" shape="octagon" />
                     <tpad name="4" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="2, 0" rotation="90" size="1.28" drill="0.8" shape="octagon" />
                     <tpad name="5" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="4, 0" rotation="90" size="1.28" drill="0.8" shape="octagon" />
-                    <text layers="Top.Names" position="-5, 1.5" height="1.27" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-5, -2.5" height="1.27" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-5, 1.5" height="1.27" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-5, -2.5" height="1.27" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="4, 0" size="0.508, 0.508" />
                     <rectangle layers="Top.Document" position="2, 0" size="0.508, 0.508" />
                     <rectangle layers="Top.Document" position="0, 0" size="0.508, 0.508" />
@@ -317,7 +317,7 @@
                     <rectangle layers="Top.Document" position="-4, 0" size="0.508, 0.508" rotation="90" />
                 </elements>
             </component>
-            <component name="SO16@maxim">
+            <component name="SO16@maxim" description="&lt;b&gt;Small Outline Package&lt;/b&gt; .150 SIOC&lt;p&gt;&#xA;Source: http://www.maxim-ic.com/package_drawings/21-0041B.pdf">
                 <elements>
                     <line layers="Top.Place" startPosition="4.699, 1.9558" endPosition="-4.699, 1.9558" thickness="0.1524" />
                     <arc layers="Top.Place" startPosition="4.699, -1.9558" endPosition="5.08, -1.5748" angle="90" thickness="0.1524" />
@@ -347,8 +347,8 @@
                     <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop" position="3.175, 3.0734" size="0.6604, 2.032" />
                     <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="4.445, -3.0734" size="0.6604, 2.032" />
                     <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop" position="4.445, 3.0734" size="0.6604, 2.032" />
-                    <text layers="Top.Values" position="-4.064, -0.635" height="1.27" thickness="0.1" value="&gt;VALUE" />
-                    <text layers="Top.Names" position="-5.461, -2.032" rotation="90" height="1.27" thickness="0.1" value="&gt;NAME" />
+                    <text layers="Top.Values" position="-4.064, -0.635" height="1.27" thickness="0.1" value="{VALUE}" />
+                    <text layers="Top.Names" position="-5.461, -2.032" rotation="90" height="1.27" thickness="0.1" value="{NAME}" />
                     <rectangle layers="Top.Document" position="-0.635, 2.5273" size="0.508, 1.143" />
                     <rectangle layers="Top.Document" position="-4.445, -2.5273" size="0.508, 1.143" />
                     <rectangle layers="Top.Document" position="-3.175, -2.5273" size="0.508, 1.143" />
@@ -367,7 +367,7 @@
                     <rectangle layers="Top.Document" position="4.445, 2.5273" size="0.508, 1.143" />
                 </elements>
             </component>
-            <component name="SM49@crystal">
+            <component name="SM49@crystal" description="&lt;b&gt;CRYSTAL&lt;/b&gt;">
                 <elements>
                     <arc layers="Top.Place" startPosition="3.429, -2.032" endPosition="5.109, -1.1429" angle="55.77" thickness="0.0508" />
                     <line layers="Top.Place" startPosition="5.715, -1.143" endPosition="5.715, -2.159" thickness="0.1524" />
@@ -417,12 +417,12 @@
                     <line layers="Top.Place" startPosition="0.635, 0" endPosition="1.143, 0" thickness="0.0508" />
                     <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.826, 0" size="5.08, 1.778" />
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="4.826, 0" size="5.08, 1.778" />
-                    <text layers="Top.Names" position="-5.715, 2.667" height="1.27" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-5.715, -4.064" height="1.27" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-5.715, 2.667" height="1.27" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-5.715, -4.064" height="1.27" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="ViaRestrict" position="0, 0.127" size="13.208, 5.334" />
                 </elements>
             </component>
-            <component name="TQFP44@microchip-pic">
+            <component name="TQFP44@microchip-pic" description="44-Lead Plastic Thin Quad Flatpack (PT) - 10x10x1mm (TQFP)">
                 <elements>
                     <line layers="Top.Place" startPosition="-4.8, 4.4" endPosition="-4.4, 4.8" thickness="0.2032" />
                     <line layers="Top.Place" startPosition="-4.4, 4.8" endPosition="4.4, 4.8" thickness="0.2032" />
@@ -477,8 +477,8 @@
                     <spad name="42" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.4, 5.8" size="0.5, 1.5" roundness="0.5" />
                     <spad name="43" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.2, 5.8" size="0.5, 1.5" roundness="0.5" />
                     <spad name="44" layers="Top.Copper, Top.Cream, Top.Stop" position="-4, 5.8" size="0.5, 1.5" roundness="0.5" />
-                    <text layers="Top.Names" position="-4.064, 6.858" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-4.064, -8.1201" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-4.064, 6.858" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-4.064, -8.1201" height="1" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="-5.52505, 4" size="1.1501, 0.3998" />
                     <rectangle layers="Top.Document" position="-5.52505, 3.2" size="1.1501, 0.4" />
                     <rectangle layers="Top.Document" position="-5.52505, 2.3999" size="1.1501, 0.4" />
@@ -525,7 +525,7 @@
                     <rectangle layers="Top.Document" position="-4, 5.52505" size="0.3998, 1.1501" />
                 </elements>
             </component>
-            <component name="1X5-SMD-90-E@hirose-df13">
+            <component name="1X5-SMD-90-E@hirose-df13" description="Conector Hirose DF13, 5 pin, smd, right angle, embossed">
                 <elements>
                     <line layers="Top.Place" startPosition="-3.875, 2.4662" endPosition="-3.875, -2.5" thickness="0.127" />
                     <line layers="Top.Place" startPosition="-3.875, -2.5" endPosition="3.895, -2.5" thickness="0.127" />
@@ -547,7 +547,7 @@
                     <spad name="S1" layers="Top.Copper, Top.Cream, Top.Stop" position="-5, 0" size="2.25, 3" roundness="0.25" />
                     <spad name="S2" layers="Top.Copper, Top.Cream, Top.Stop" position="5, 0" size="2.25, 3" roundness="0.25" />
                     <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="2.52, -3.5" size="0.7, 1.8" roundness="0.5" />
-                    <text layers="Top.Names" position="-3.75, 2.75" height="1" thickness="0.1" value="&gt;NAME" />
+                    <text layers="Top.Names" position="-3.75, 2.75" height="1" thickness="0.1" value="{NAME}" />
                     <rectangle layers="Top.Document" position="-2.5, -3.25" size="0.5, 1.5" />
                     <rectangle layers="Top.Document" position="-1.25, -3.25" size="0.5, 1.5" />
                     <rectangle layers="Top.Document" position="0, -3.25" size="0.5, 1.5" />
@@ -559,7 +559,7 @@
                     <hole layers="Holes" position="3.6, -2.125" drill="0.85" />
                 </elements>
             </component>
-            <component name="1X4-SMD-90-E@hirose-df13">
+            <component name="1X4-SMD-90-E@hirose-df13" description="Conector Hirose DF13, 4 pin, smd, right angle, embossed.">
                 <elements>
                     <line layers="Top.Place" startPosition="-3.25, 2.4662" endPosition="-3.25, -2.5" thickness="0.127" />
                     <line layers="Top.Place" startPosition="-3.25, -2.5" endPosition="3.25, -2.5" thickness="0.127" />
@@ -580,7 +580,7 @@
                     <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="1.875, -3.5" size="0.7, 1.8" roundness="0.5" />
                     <spad name="S1" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.375, 0" size="2.25, 3" roundness="0.25" />
                     <spad name="S2" layers="Top.Copper, Top.Cream, Top.Stop" position="4.375, 0" size="2.25, 3" roundness="0.25" />
-                    <text layers="Top.Names" position="-3.175, 2.85" height="1" thickness="0.1" value="&gt;NAME" />
+                    <text layers="Top.Names" position="-3.175, 2.85" height="1" thickness="0.1" value="{NAME}" />
                     <rectangle layers="Top.Document" position="-1.875, -3.25" size="0.5, 1.5" />
                     <rectangle layers="Top.Document" position="-0.625, -3.25" size="0.5, 1.5" />
                     <rectangle layers="Top.Document" position="0.625, -3.25" size="0.5, 1.5" />
@@ -591,7 +591,7 @@
                     <hole layers="Holes" position="2.955, -2.125" drill="0.85" />
                 </elements>
             </component>
-            <component name="SOT89@microchip-analog">
+            <component name="SOT89@microchip-analog" description="3-Lead Plastic Small Outline SOT-89">
                 <elements>
                     <line layers="Top.Document" startPosition="2.235, -1.245" endPosition="-2.235, -1.245" thickness="0.127" />
                     <line layers="Top.Document" startPosition="2.235, 1.219" endPosition="2.235, -1.245" thickness="0.127" />
@@ -607,8 +607,8 @@
                     <spad name="3" layers="Top.Copper" position="1.499, -1.981" size="1, 1.5" />
                     <spad name="2" layers="Top.Copper" position="0, -1.727" size="1, 2" />
                     <spad name="2@1" layers="Top.Copper, Top.Stop" position="0, 0.94" size="2.2, 3.7" roundness="1" />
-                    <text layers="Top.Names" position="-2.54, 3.175" height="1.27" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-2.4051, -4.3449" height="1.27" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-2.54, 3.175" height="1.27" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-2.4051, -4.3449" height="1.27" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="-1.4986, -1.6891" size="0.4572, 0.8382" />
                     <rectangle layers="Top.Document" position="1.4986, -1.6891" size="0.4572, 0.8382" />
                     <rectangle layers="Top.Document" position="0, -1.6891" size="0.5588, 0.8382" />
@@ -630,7 +630,7 @@
                     </region>
                 </elements>
             </component>
-            <component name="SOD123FL@diode">
+            <component name="SOD123FL@diode" description="SOD-123FL CASE 498-01 ISSUE A&lt;br&gt;">
                 <elements>
                     <line layers="Top.Document" startPosition="-1.35, 0.8" endPosition="1.35, 0.8" thickness="0.2032" />
                     <line layers="Top.Document" startPosition="1.35, 0.8" endPosition="1.35, -0.8" thickness="0.2032" />
@@ -640,14 +640,14 @@
                     <line layers="Top.Place" startPosition="0.85, -0.8" endPosition="-0.85, -0.8" thickness="0.2032" />
                     <spad name="A" layers="Top.Copper, Top.Cream, Top.Stop" position="1.625, 0" size="0.91, 1.22" />
                     <spad name="C" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.625, 0" size="0.91, 1.22" />
-                    <text layers="Top.Names" position="-2, 1" height="1.27" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-2, -2.5" height="1.27" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-2, 1" height="1.27" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-2, -2.5" height="1.27" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="-1.6125, 0" size="0.375, 1.1" />
                     <rectangle layers="Top.Document" position="1.6125, 0" size="0.375, 1.1" rotation="180" />
                     <rectangle layers="Top.Place" position="-0.8, 0.0125" size="0.3, 1.575" />
                 </elements>
             </component>
-            <component name="DF11-16DP-2DSA@hirose-df11">
+            <component name="DF11-16DP-2DSA@hirose-df11" description="Conector Hirose serie DF11, 16 pin recto">
                 <elements>
                     <tpad name="2" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="-7.02, -1" size="1.28" drill="0.8" shape="octagon" />
                     <tpad name="1" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="-7.02, 1" size="1.28" drill="0.8" shape="square" />
@@ -661,8 +661,8 @@
                     <tpad name="9" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="0.98, 1" size="1.28" drill="0.8" shape="octagon" />
                     <tpad name="12" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="2.98, -1" size="1.28" drill="0.8" shape="octagon" />
                     <tpad name="11" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="2.98, 1" size="1.28" drill="0.8" shape="octagon" />
-                    <text layers="Top.Names" position="-9.02, 2.5" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="8.98, -2.5" rotation="180" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-9.02, 2.5" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="8.98, -2.5" rotation="180" height="1" thickness="0.1" value="{VALUE}" />
                     <line layers="Top.Place" startPosition="-9.02, -2.25" endPosition="8.98, -2.25" thickness="0.127" />
                     <line layers="Top.Place" startPosition="8.98, -2.25" endPosition="8.98, 2.25" thickness="0.127" />
                     <line layers="Top.Place" startPosition="8.98, 2.25" endPosition="-9.02, 2.25" thickness="0.127" />
@@ -688,8 +688,8 @@
                     <tpad name="9" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="-0.02, 1" size="1.28" drill="0.8" shape="octagon" />
                     <tpad name="12" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="1.98, -1" size="1.28" drill="0.8" shape="octagon" />
                     <tpad name="11" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="1.98, 1" size="1.28" drill="0.8" shape="octagon" />
-                    <text layers="Top.Names" position="-10.02, 2.5" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="9.98, -2.5" rotation="180" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-10.02, 2.5" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="9.98, -2.5" rotation="180" height="1" thickness="0.1" value="{VALUE}" />
                     <line layers="Top.Place" startPosition="-10.02, -2.25" endPosition="9.98, -2.25" thickness="0.127" />
                     <line layers="Top.Place" startPosition="9.98, -2.25" endPosition="9.98, 2.25" thickness="0.127" />
                     <line layers="Top.Place" startPosition="9.98, 2.25" endPosition="-10.02, 2.25" thickness="0.127" />
@@ -703,7 +703,7 @@
                     <tpad name="18" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="7.98, -1" size="1.28" drill="0.8" shape="octagon" />
                 </elements>
             </component>
-            <component name="CE_7.3MM@logo">
+            <component name="CE_7.3MM@logo" description="&lt;b&gt;Logo CE 10 mm&lt;/b&gt;">
                 <elements>
                     <rectangle layers="Top.Place" position="8.21095, 3.63535" size="2.2385, 1.0745" />
                     <region layers="Top.Place" thickness="0.1432" filled="true">
@@ -720,7 +720,7 @@
                     </region>
                 </elements>
             </component>
-            <component name="ESD_10.00@logo">
+            <component name="ESD_10.00@logo" description="&lt;b&gt;Logo ESD 10 mm&lt;/b&gt;">
                 <elements>
                     <region layers="Top.Place" thickness="0.047" filled="true">
                         <segment position="0.0943, 0.0943" />
@@ -784,14 +784,14 @@
                     </region>
                 </elements>
             </component>
-            <component name="R-0805@smd-parts">
+            <component name="R-0805@smd-parts" description="Resistor 0805">
                 <elements>
                     <line layers="Top.Place" startPosition="-0.4725, 0.875" endPosition="0.4725, 0.875" thickness="0.1" />
                     <line layers="Top.Place" startPosition="-0.4725, -0.875" endPosition="0.4725, -0.875" thickness="0.1" />
                     <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
-                    <text layers="Top.Names" position="-1.875, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-1.875, -2.125" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-1.875, 1.25" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-1.875, -2.125" height="1" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Glue" position="0, 0" size="0.3998, 1.0002" />
                     <rectangle layers="Top.Document" position="-0.96875, 0" size="0.5625, 1.375" />
                     <rectangle layers="Top.Document" position="0.96875, 0" size="0.5625, 1.375" />
@@ -803,12 +803,12 @@
                     <line layers="Top.Keepout" startPosition="-1.875, -1" endPosition="-1.875, 1" thickness="0.1" />
                 </elements>
             </component>
-            <component name="C-0805@smd-parts">
+            <component name="C-0805@smd-parts" description="Capacitor 0805">
                 <elements>
                     <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
-                    <text layers="Top.Names" position="-1.88, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-1.88, -2.25" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-1.88, 1.25" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-1.88, -2.25" height="1" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Glue" position="0, 0" size="0.2002, 0.8002" />
                     <line layers="Top.Place" startPosition="-0.4725, 0.8825" endPosition="0.4725, 0.8825" thickness="0.1" />
                     <line layers="Top.Place" startPosition="-0.4725, -0.8825" endPosition="0.4725, -0.8825" thickness="0.1" />
@@ -822,7 +822,7 @@
                     <line layers="Top.Document" startPosition="-0.75, -0.5" endPosition="0.75, -0.5" thickness="0.2" />
                 </elements>
             </component>
-            <component name="C-SMC-A@smd-parts">
+            <component name="C-SMC-A@smd-parts" description="Polarized capacitor A size">
                 <elements>
                     <line layers="Top.Document" startPosition="-1.45, 0.75" endPosition="1.45, 0.75" thickness="0.1016" />
                     <line layers="Top.Document" startPosition="1.45, 0.75" endPosition="1.45, -0.75" thickness="0.1016" />
@@ -830,8 +830,8 @@
                     <line layers="Top.Document" startPosition="-1.45, -0.75" endPosition="-1.45, 0.75" thickness="0.1016" />
                     <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.4, 0" size="2, 1.2" roundness="0.25" />
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.4, 0" size="2, 1.2" roundness="0.25" />
-                    <text layers="Top.Names" position="-2.25, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-2.25, -2.25" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-2.25, 1.25" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-2.25, -2.25" height="1" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="-1.5, 0" size="0.2, 1.2" />
                     <rectangle layers="Top.Document" position="1.5, 0" size="0.2, 1.2" rotation="180" />
                     <rectangle layers="Top.Document" position="-1.125, 0" size="0.65, 1.5" />
@@ -844,14 +844,14 @@
                     <line layers="Top.Place" startPosition="-2.5, -0.875" endPosition="-2.5, 0.875" thickness="0.1" />
                 </elements>
             </component>
-            <component name="D-LED-0805@smd-parts">
+            <component name="D-LED-0805@smd-parts" description="Diode 0805">
                 <elements>
                     <line layers="Top.Place" startPosition="-1.75, 0.875" endPosition="0.4725, 0.875" thickness="0.1" />
                     <line layers="Top.Place" startPosition="-1.75, -0.875" endPosition="0.4725, -0.875" thickness="0.1" />
                     <spad name="C" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
                     <spad name="A" layers="Top.Copper, Top.Cream, Top.Stop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
-                    <text layers="Top.Names" position="-1.875, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-1.875, -2.125" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-1.875, 1.25" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-1.875, -2.125" height="1" thickness="0.1" value="{VALUE}" />
                     <line layers="Top.Keepout" startPosition="-1.875, 1" endPosition="1.875, 1" thickness="0.1" />
                     <line layers="Top.Keepout" startPosition="1.875, -1" endPosition="1.875, 1" thickness="0.1" />
                     <line layers="Top.Keepout" startPosition="-1.875, -1" endPosition="1.875, -1" thickness="0.1" />
@@ -889,14 +889,14 @@
                     <line layers="Top.Document" startPosition="0.25, -0.25" endPosition="-0.25, 0" thickness="0.1" />
                 </elements>
             </component>
-            <component name="L-0805@smd-parts">
+            <component name="L-0805@smd-parts" description="Inductor 0805">
                 <elements>
                     <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
                     <line layers="Top.Place" startPosition="-0.4725, 0.875" endPosition="0.4725, 0.875" thickness="0.1" />
                     <line layers="Top.Place" startPosition="-0.4725, -0.875" endPosition="0.4725, -0.875" thickness="0.1" />
-                    <text layers="Top.Names" position="-1.875, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-1.875, -2.125" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-1.875, 1.25" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-1.875, -2.125" height="1" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="-0.96875, 0" size="0.5625, 1.375" />
                     <rectangle layers="Top.Document" position="0.96875, 0" size="0.5625, 1.375" />
                     <rectangle layers="Top.Document" position="0, 0.4975" size="1.5, 0.25" />

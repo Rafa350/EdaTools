@@ -37,7 +37,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
             _name = name;
             _value = value;
-            IsVisible = isVisible;
+            _isVisible = isVisible;
             _horizontalAlign = HorizontalTextAlign.Left;
             _verticalAlign = VerticalTextAlign.Bottom;
             _usePosition = false;

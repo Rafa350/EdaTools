@@ -557,8 +557,8 @@
                     <line layers="Top.Place" startPosition="1.27, 6.985" endPosition="1.27, 1.27" thickness="0.762" />
                     <tpad name="1" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="-1.27, -3.81" rotation="90" size="1.6256" drill="1.016" shape="oval" />
                     <tpad name="2" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="1.27, -3.81" rotation="90" size="1.6256" drill="1.016" shape="oval" />
-                    <text layers="Top.Names" position="-3.175, -3.81" rotation="90" height="1.27" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="4.445, -3.81" rotation="90" height="1.27" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-3.175, -3.81" rotation="90" height="1.27" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="4.445, -3.81" rotation="90" height="1.27" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Place" position="-1.27, 0.889" size="0.762, 0.508" />
                     <rectangle layers="Top.Place" position="1.27, 0.889" size="0.762, 0.508" />
                     <rectangle layers="Top.Place" position="-1.27, -2.413" size="0.762, 1.016" />
@@ -598,8 +598,8 @@
                     <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.905, 3.0425" size="0.6, 1.8" roundness="0.25" />
                     <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="0.635, 3.0425" size="0.6, 1.8" roundness="0.25" />
                     <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="1.905, 3.0425" size="0.6, 1.8" roundness="0.25" />
-                    <text layers="Top.Names" position="-3, -1.5" rotation="90" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="3, 1.5" rotation="270" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-3, -1.5" rotation="90" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="3, 1.5" rotation="270" height="1" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="-1.905, -2.23255" size="0.4902, 1.1001" />
                     <rectangle layers="Top.Document" position="-0.635, -2.23255" size="0.4902, 1.1001" />
                     <rectangle layers="Top.Document" position="0.635, -2.23255" size="0.4902, 1.1001" />
@@ -625,8 +625,8 @@
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.27, -3.1" size="1, 1.25" roundness="0.25" />
                     <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="1.27, 3.1" size="1, 1.25" roundness="0.25" />
                     <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.27, 3.1" size="1, 1.25" roundness="0.25" />
-                    <text layers="Top.Names" position="-2.54, -3.81" rotation="90" height="1.27" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="3.81, -3.81" rotation="90" height="1.27" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-2.54, -3.81" rotation="90" height="1.27" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="3.81, -3.81" rotation="90" height="1.27" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="-1.27, -2.60745" size="0.4998, 1.1301" />
                     <rectangle layers="Top.Document" position="1.27, -2.60745" size="0.4998, 1.1301" />
                     <rectangle layers="Top.Document" position="1.27, 2.60745" size="0.4998, 1.1301" />
@@ -650,8 +650,8 @@
                     <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="1.27, 4.77" size="1.6, 2" roundness="0.25" />
                     <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.27, 4.77" size="1.6, 2" roundness="0.25" />
                     <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.81, 4.77" size="1.6, 2" roundness="0.25" />
-                    <text layers="Top.Names" position="-5.08, -3.175" rotation="90" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="6.35, -3.175" rotation="90" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-5.08, -3.175" rotation="90" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="6.35, -3.175" rotation="90" height="1" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="-3.8025, -4.175" size="1.225, 1.95" />
                     <rectangle layers="Top.Document" position="-1.2625, -4.175" size="1.225, 1.95" />
                     <rectangle layers="Top.Document" position="1.2775, -4.175" size="1.225, 1.95" />
@@ -676,8 +676,8 @@
                     <tpad name="3" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="0, 0" rotation="90" size="1.28" drill="0.8" shape="octagon" />
                     <tpad name="4" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="2, 0" rotation="90" size="1.28" drill="0.8" shape="octagon" />
                     <tpad name="5" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="4, 0" rotation="90" size="1.28" drill="0.8" shape="octagon" />
-                    <text layers="Top.Names" position="-5, 1.5" height="1.27" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-5, -2.5" height="1.27" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-5, 1.5" height="1.27" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-5, -2.5" height="1.27" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="4, 0" size="0.508, 0.508" />
                     <rectangle layers="Top.Document" position="2, 0" size="0.508, 0.508" />
                     <rectangle layers="Top.Document" position="0, 0" size="0.508, 0.508" />
@@ -715,8 +715,8 @@
                     <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop" position="3.175, 3.0734" size="0.6604, 2.032" />
                     <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="4.445, -3.0734" size="0.6604, 2.032" />
                     <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop" position="4.445, 3.0734" size="0.6604, 2.032" />
-                    <text layers="Top.Values" position="-4.064, -0.635" height="1.27" thickness="0.1" value="&gt;VALUE" />
-                    <text layers="Top.Names" position="-5.461, -2.032" rotation="90" height="1.27" thickness="0.1" value="&gt;NAME" />
+                    <text layers="Top.Values" position="-4.064, -0.635" height="1.27" thickness="0.1" value="{VALUE}" />
+                    <text layers="Top.Names" position="-5.461, -2.032" rotation="90" height="1.27" thickness="0.1" value="{NAME}" />
                     <rectangle layers="Top.Document" position="-0.635, 2.5273" size="0.508, 1.143" />
                     <rectangle layers="Top.Document" position="-4.445, -2.5273" size="0.508, 1.143" />
                     <rectangle layers="Top.Document" position="-3.175, -2.5273" size="0.508, 1.143" />
@@ -785,8 +785,8 @@
                     <line layers="Top.Place" startPosition="0.635, 0" endPosition="1.143, 0" thickness="0.0508" />
                     <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.826, 0" size="5.08, 1.778" />
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="4.826, 0" size="5.08, 1.778" />
-                    <text layers="Top.Names" position="-5.715, 2.667" height="1.27" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-5.715, -4.064" height="1.27" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-5.715, 2.667" height="1.27" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-5.715, -4.064" height="1.27" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="ViaRestrict" position="0, 0.127" size="13.208, 5.334" />
                 </elements>
             </component>
@@ -845,8 +845,8 @@
                     <spad name="42" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.4, 5.8" size="0.5, 1.5" roundness="0.5" />
                     <spad name="43" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.2, 5.8" size="0.5, 1.5" roundness="0.5" />
                     <spad name="44" layers="Top.Copper, Top.Cream, Top.Stop" position="-4, 5.8" size="0.5, 1.5" roundness="0.5" />
-                    <text layers="Top.Names" position="-4.064, 6.858" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-4.064, -8.1201" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-4.064, 6.858" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-4.064, -8.1201" height="1" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="-5.52505, 4" size="1.1501, 0.3998" />
                     <rectangle layers="Top.Document" position="-5.52505, 3.2" size="1.1501, 0.4" />
                     <rectangle layers="Top.Document" position="-5.52505, 2.3999" size="1.1501, 0.4" />
@@ -915,7 +915,7 @@
                     <spad name="S1" layers="Top.Copper, Top.Cream, Top.Stop" position="-5, 0" size="2.25, 3" roundness="0.25" />
                     <spad name="S2" layers="Top.Copper, Top.Cream, Top.Stop" position="5, 0" size="2.25, 3" roundness="0.25" />
                     <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="2.52, -3.5" size="0.7, 1.8" roundness="0.5" />
-                    <text layers="Top.Names" position="-3.75, 2.75" height="1" thickness="0.1" value="&gt;NAME" />
+                    <text layers="Top.Names" position="-3.75, 2.75" height="1" thickness="0.1" value="{NAME}" />
                     <rectangle layers="Top.Document" position="-2.5, -3.25" size="0.5, 1.5" />
                     <rectangle layers="Top.Document" position="-1.25, -3.25" size="0.5, 1.5" />
                     <rectangle layers="Top.Document" position="0, -3.25" size="0.5, 1.5" />
@@ -948,7 +948,7 @@
                     <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="1.875, -3.5" size="0.7, 1.8" roundness="0.5" />
                     <spad name="S1" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.375, 0" size="2.25, 3" roundness="0.25" />
                     <spad name="S2" layers="Top.Copper, Top.Cream, Top.Stop" position="4.375, 0" size="2.25, 3" roundness="0.25" />
-                    <text layers="Top.Names" position="-3.175, 2.85" height="1" thickness="0.1" value="&gt;NAME" />
+                    <text layers="Top.Names" position="-3.175, 2.85" height="1" thickness="0.1" value="{NAME}" />
                     <rectangle layers="Top.Document" position="-1.875, -3.25" size="0.5, 1.5" />
                     <rectangle layers="Top.Document" position="-0.625, -3.25" size="0.5, 1.5" />
                     <rectangle layers="Top.Document" position="0.625, -3.25" size="0.5, 1.5" />
@@ -975,8 +975,8 @@
                     <spad name="3" layers="Top.Copper" position="1.499, -1.981" size="1, 1.5" />
                     <spad name="2" layers="Top.Copper" position="0, -1.727" size="1, 2" />
                     <spad name="2@1" layers="Top.Copper, Top.Stop" position="0, 0.94" size="2.2, 3.7" roundness="1" />
-                    <text layers="Top.Names" position="-2.54, 3.175" height="1.27" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-2.4051, -4.3449" height="1.27" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-2.54, 3.175" height="1.27" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-2.4051, -4.3449" height="1.27" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="-1.4986, -1.6891" size="0.4572, 0.8382" />
                     <rectangle layers="Top.Document" position="1.4986, -1.6891" size="0.4572, 0.8382" />
                     <rectangle layers="Top.Document" position="0, -1.6891" size="0.5588, 0.8382" />
@@ -1008,8 +1008,8 @@
                     <line layers="Top.Place" startPosition="0.85, -0.8" endPosition="-0.85, -0.8" thickness="0.2032" />
                     <spad name="A" layers="Top.Copper, Top.Cream, Top.Stop" position="1.625, 0" size="0.91, 1.22" />
                     <spad name="C" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.625, 0" size="0.91, 1.22" />
-                    <text layers="Top.Names" position="-2, 1" height="1.27" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-2, -2.5" height="1.27" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-2, 1" height="1.27" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-2, -2.5" height="1.27" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="-1.6125, 0" size="0.375, 1.1" />
                     <rectangle layers="Top.Document" position="1.6125, 0" size="0.375, 1.1" rotation="180" />
                     <rectangle layers="Top.Place" position="-0.8, 0.0125" size="0.3, 1.575" />
@@ -1029,8 +1029,8 @@
                     <tpad name="9" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="0.98, 1" size="1.28" drill="0.8" shape="octagon" />
                     <tpad name="12" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="2.98, -1" size="1.28" drill="0.8" shape="octagon" />
                     <tpad name="11" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="2.98, 1" size="1.28" drill="0.8" shape="octagon" />
-                    <text layers="Top.Names" position="-9.02, 2.5" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="8.98, -2.5" rotation="180" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-9.02, 2.5" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="8.98, -2.5" rotation="180" height="1" thickness="0.1" value="{VALUE}" />
                     <line layers="Top.Place" startPosition="-9.02, -2.25" endPosition="8.98, -2.25" thickness="0.127" />
                     <line layers="Top.Place" startPosition="8.98, -2.25" endPosition="8.98, 2.25" thickness="0.127" />
                     <line layers="Top.Place" startPosition="8.98, 2.25" endPosition="-9.02, 2.25" thickness="0.127" />
@@ -1056,8 +1056,8 @@
                     <tpad name="9" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="-0.02, 1" size="1.28" drill="0.8" shape="octagon" />
                     <tpad name="12" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="1.98, -1" size="1.28" drill="0.8" shape="octagon" />
                     <tpad name="11" layers="Pads, Drills, Top.Copper, Top.Stop, Bottom.Copper, Bottom.Stop" position="1.98, 1" size="1.28" drill="0.8" shape="octagon" />
-                    <text layers="Top.Names" position="-10.02, 2.5" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="9.98, -2.5" rotation="180" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-10.02, 2.5" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="9.98, -2.5" rotation="180" height="1" thickness="0.1" value="{VALUE}" />
                     <line layers="Top.Place" startPosition="-10.02, -2.25" endPosition="9.98, -2.25" thickness="0.127" />
                     <line layers="Top.Place" startPosition="9.98, -2.25" endPosition="9.98, 2.25" thickness="0.127" />
                     <line layers="Top.Place" startPosition="9.98, 2.25" endPosition="-10.02, 2.25" thickness="0.127" />
@@ -1158,8 +1158,8 @@
                     <line layers="Top.Place" startPosition="-0.4725, -0.875" endPosition="0.4725, -0.875" thickness="0.1" />
                     <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
-                    <text layers="Top.Names" position="-1.875, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-1.875, -2.125" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-1.875, 1.25" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-1.875, -2.125" height="1" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Glue" position="0, 0" size="0.3998, 1.0002" />
                     <rectangle layers="Top.Document" position="-0.96875, 0" size="0.5625, 1.375" />
                     <rectangle layers="Top.Document" position="0.96875, 0" size="0.5625, 1.375" />
@@ -1175,8 +1175,8 @@
                 <elements>
                     <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
-                    <text layers="Top.Names" position="-1.88, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-1.88, -2.25" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-1.88, 1.25" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-1.88, -2.25" height="1" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Glue" position="0, 0" size="0.2002, 0.8002" />
                     <line layers="Top.Place" startPosition="-0.4725, 0.8825" endPosition="0.4725, 0.8825" thickness="0.1" />
                     <line layers="Top.Place" startPosition="-0.4725, -0.8825" endPosition="0.4725, -0.8825" thickness="0.1" />
@@ -1198,8 +1198,8 @@
                     <line layers="Top.Document" startPosition="-1.45, -0.75" endPosition="-1.45, 0.75" thickness="0.1016" />
                     <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.4, 0" size="2, 1.2" roundness="0.25" />
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.4, 0" size="2, 1.2" roundness="0.25" />
-                    <text layers="Top.Names" position="-2.25, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-2.25, -2.25" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-2.25, 1.25" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-2.25, -2.25" height="1" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="-1.5, 0" size="0.2, 1.2" />
                     <rectangle layers="Top.Document" position="1.5, 0" size="0.2, 1.2" rotation="180" />
                     <rectangle layers="Top.Document" position="-1.125, 0" size="0.65, 1.5" />
@@ -1218,8 +1218,8 @@
                     <line layers="Top.Place" startPosition="-1.75, -0.875" endPosition="0.4725, -0.875" thickness="0.1" />
                     <spad name="C" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.95, 0" size="1.3, 1.5" roundness="0.25" />
                     <spad name="A" layers="Top.Copper, Top.Cream, Top.Stop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
-                    <text layers="Top.Names" position="-1.875, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-1.875, -2.125" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-1.875, 1.25" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-1.875, -2.125" height="1" thickness="0.1" value="{VALUE}" />
                     <line layers="Top.Keepout" startPosition="-1.875, 1" endPosition="1.875, 1" thickness="0.1" />
                     <line layers="Top.Keepout" startPosition="1.875, -1" endPosition="1.875, 1" thickness="0.1" />
                     <line layers="Top.Keepout" startPosition="-1.875, -1" endPosition="1.875, -1" thickness="0.1" />
@@ -1263,8 +1263,8 @@
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.95, 0" size="1.3, 1.5" roundness="0.25" />
                     <line layers="Top.Place" startPosition="-0.4725, 0.875" endPosition="0.4725, 0.875" thickness="0.1" />
                     <line layers="Top.Place" startPosition="-0.4725, -0.875" endPosition="0.4725, -0.875" thickness="0.1" />
-                    <text layers="Top.Names" position="-1.875, 1.25" height="1" thickness="0.1" value="&gt;NAME" />
-                    <text layers="Top.Values" position="-1.875, -2.125" height="1" thickness="0.1" value="&gt;VALUE" />
+                    <text layers="Top.Names" position="-1.875, 1.25" height="1" thickness="0.1" value="{NAME}" />
+                    <text layers="Top.Values" position="-1.875, -2.125" height="1" thickness="0.1" value="{VALUE}" />
                     <rectangle layers="Top.Document" position="-0.96875, 0" size="0.5625, 1.375" />
                     <rectangle layers="Top.Document" position="0.96875, 0" size="0.5625, 1.375" />
                     <rectangle layers="Top.Document" position="0, 0.4975" size="1.5, 0.25" />
