@@ -194,7 +194,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!rd.IsStartTag("hole"))
                 throw new InvalidDataException("Se esperaba <hole>");
 
-            LayerSet layerSet = LayerSet.Parse(rd.AttributeAsString("layers"));
             Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
             int drill = XmlTypeParser.ParseNumber(rd.AttributeAsString("drill"));
 
@@ -202,7 +201,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!rd.IsEndTag("hole"))
                 throw new InvalidDataException("Se esperaba </hole>");
 
-            return new HoleElement(layerSet, position, drill);
+            return new HoleElement(position, drill);
         }
 
         /// <summary>

@@ -864,7 +864,6 @@
             if (!_rd.IsStartTag("hole"))
                 throw new InvalidDataException("Se esperaba <hole>");
 
-            LayerSet layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
             Point position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
             int drill = XmlTypeParser.ParseNumber(_rd.AttributeAsString("drill"));
 
@@ -872,7 +871,7 @@
             if (!_rd.IsEndTag("hole"))
                 throw new InvalidDataException("Se esperaba </hole>");
 
-            HoleElement hole = new HoleElement(layerSet, position, drill);
+            var hole = new HoleElement(position, drill);
 
             return hole;
         }

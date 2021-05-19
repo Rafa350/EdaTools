@@ -16,12 +16,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <summary>
         /// Constructir de l'objecte.
         /// </summary>
-        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="position">Pocicio del centre.</param>
         /// <param name="drill">Diametre del forat.</param>
         /// 
-        public HoleElement(LayerSet layerSet, Point position, int drill) :
-            base(layerSet) {
+        public HoleElement(Point position, int drill) :
+            base(new LayerSet("Holes")) {
 
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException(nameof(drill));
@@ -37,7 +36,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Element Clone() {
 
-            return new HoleElement(LayerSet, _position, _drill);
+            return new HoleElement(_position, _drill);
         }
 
         /// <summary>

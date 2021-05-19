@@ -13,6 +13,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private string _name;
         private Point _position;
         private Angle _rotation;
+        private bool _autoStop;
+        private int _stopMargin;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -71,6 +73,24 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public Angle Rotation {
             get => _rotation;
             set => _rotation = value;
+        }
+
+        /// <summary>
+        /// Indica si es genera mascara automaticament.
+        /// </summary>
+        /// 
+        public bool AutoStop {
+            get => _autoStop;
+            set => _autoStop = value;
+        }
+
+        /// <summary>
+        /// Marge de la mascara de soldadura
+        /// </summary>
+        /// 
+        public int StopMargin {
+            get => _stopMargin;
+            set => _stopMargin = value;
         }
     }
 }

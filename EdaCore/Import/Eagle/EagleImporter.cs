@@ -752,8 +752,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             //
             int drill = ParseNumber(node.AttributeAsString("drill"));
 
-            LayerSet layerSet = new LayerSet("Holes");
-            HoleElement element = new HoleElement(layerSet, position, drill);
+            var element = new HoleElement(position, drill);
 
             return element;
         }
@@ -791,7 +790,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 rotation = ParseAngle(rot);
             }
 
-            Part part = new Part(GetComponent(componentKey), name, position, rotation, flip);
+            var part = new Part(GetComponent(componentKey), name, position, rotation, flip);
 
             bool hasNameAttribute = false;
             bool hasValueAttribute = false;

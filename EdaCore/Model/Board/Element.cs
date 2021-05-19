@@ -12,6 +12,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         Arc,
         Rectangle,
         Circle,
+        Polygon,
         Text,
         SmdPad,
         ThPad,
@@ -85,7 +86,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         }
 
         /// <summary>
-        /// Obte el tipus d'element
+        /// Obte el identificador del tipus d'element
         /// </summary>
         /// 
         public abstract ElementType ElementType { get; }

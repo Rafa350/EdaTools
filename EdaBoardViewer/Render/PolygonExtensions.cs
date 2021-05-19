@@ -1,13 +1,15 @@
 ﻿namespace EdaBoardViewer.Render {
 
+    using System.Linq;
     using Avalonia.Media;
+    using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
     public static class PolygonExtensions {
 
         public static Geometry ToGeometry(this Polygon polygon) {
 
-            StreamGeometry g = new StreamGeometry();
+            var g = new StreamGeometry();
             using (StreamGeometryContext gc = g.Open())
                 StreamPolygon(gc, polygon, polygon.Childs == null ? 1 : 0);
 
@@ -20,15 +22,12 @@
             //
             if (polygon.Points != null) {
 
-                bool first = true;
-                foreach (var point in polygon.Points) {
-                    if (first) {
-                        first = false;
-                        gc.BeginFigure(point.ToPoint(), true);
-                    }
-                    else
-                        gc.LineTo(point.ToPoint());
-                }
+                Point[] points = polygon.Points.ToArray();
+
+                gc.BeginFigure(points[0].ToPoint(), true);
+                for (int i = 1; i < points.Length; i++)
+                    gc.LineTo(points[i].ToPoint());
+                gc.LineTo(points[0].ToPoint());
             }
 
             // Procesa els poligons fills

@@ -174,11 +174,12 @@
                     Board.GetRegionPolygon(region, layer.Name, new Transformation()) :
                     region.GetPolygon(layer.Side);
 
+                var pen = new Pen(new SolidColorBrush(visualLayer.Color), region.Thickness, null, PenLineCap.Round, PenLineJoin.Round);
                 var brush = new SolidColorBrush(visualLayer.Color);
 
                 var geometry = polygon.ToGeometry();
 
-                context.DrawGeometry(brush, null, geometry);
+                context.DrawGeometry(brush, pen, geometry);
             }
         }
 

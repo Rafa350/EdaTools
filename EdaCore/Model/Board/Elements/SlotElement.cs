@@ -121,10 +121,8 @@
         /// Obte el tipus d'element.
         /// </summary>
         /// 
-        public override ElementType ElementType {
-            get {
-                return ElementType.SlotPad;
-            }
-        }
+        public override ElementType ElementType =>
+            ElementType.SlotPad;
+
     }
 }

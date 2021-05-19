@@ -72,6 +72,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 case BoardSide.Bottom:
                     sb.Append("Bottom.");
                     break;
+                case BoardSide.Inner:
+                    sb.Append("Inner.");
+                    break;
             }
             sb.Append(name);
 

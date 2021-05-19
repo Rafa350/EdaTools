@@ -37,6 +37,20 @@
                 VisualMode.Element,
                 Color.FromArgb(100, 0, 0, 150)));
 
+            vls.Add(new VisualLayer("Inner2",
+                new string[] { "Inner.Copper2" },
+                new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Rectangle, ElementType.Circle, ElementType.Region, ElementType.SmdPad, ElementType.Text },
+                true,
+                VisualMode.Element,
+                Color.FromArgb(100, 0, 0, 75)));
+
+            vls.Add(new VisualLayer("Inner1",
+                new string[] { "Inner.Copper1" },
+                new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Rectangle, ElementType.Circle, ElementType.Region, ElementType.SmdPad, ElementType.Text },
+                true,
+                VisualMode.Element,
+                Color.FromArgb(100, 75, 0, 0)));
+
             vls.Add(new VisualLayer("Top",
                 new string[] { "Top.Copper" },
                 new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Rectangle, ElementType.Circle, ElementType.Region, ElementType.SmdPad, ElementType.Text },

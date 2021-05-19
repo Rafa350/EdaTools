@@ -179,7 +179,6 @@
             // Obte el conjunt de capes
             //
             LayerSet millingLayerSet = new LayerSet("Milling");
-            LayerSet holesLayerSet = new LayerSet("Holes");
 
             // Obte els punts de tall d'una linia 
             //
@@ -227,8 +226,8 @@
 
                 // Afegeix els forats a la placa
                 //
-                targetBoard.AddElement(new HoleElement(holesLayerSet, q1, drill));
-                targetBoard.AddElement(new HoleElement(holesLayerSet, q2, drill));
+                targetBoard.AddElement(new HoleElement(q1, drill));
+                targetBoard.AddElement(new HoleElement(q2, drill));
             }
         }
 

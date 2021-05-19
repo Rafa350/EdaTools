@@ -42,8 +42,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <param name="position">Posicio.</param>
         /// <param name="rotation">Orientacio.</param>
         /// <param name="size">Tamany/diametre del pad.</param>
-        /// <param name="shape">Diametre del forat.</param>
-        /// <param name="drill">Forma de la corona.</param>
+        /// <param name="drill">Diametre del forat.</param>
+        /// <param name="shape">Forma de la corona.</param>
         /// 
         public ThPadElement(string name, LayerSet layerSet, Point position, Angle rotation, int size, ThPadShape shape, int drill) :
             this(name, layerSet, position, rotation, size, size, size, shape, drill) {

@@ -13,6 +13,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         private Size _size;
         private Ratio _roundness;
+        private bool _autoCream;
+        private int _creamMargin;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -153,41 +155,49 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// 
         public Size Size {
-            get {
-                return _size;
-            }
-            set {
-                _size = value;
-            }
+            get => _size;
+            set => _size = value;
         }
 
         /// <summary>
         /// Obte o asigna el factor d'arrodoniment de les cantonades del pad.
         /// </summary>
         /// 
-        public Ratio Roundness {
-            get {
-                return _roundness;
-            }
-            set {
-                _roundness = value;
-            }
+        public Ratio Roundness { 
+            get => _roundness;
+            set => _roundness = value;
         }
 
         /// <summary>
         /// Obte el radi de curvatura de les cantonades.
         /// </summary>
         /// 
-        public int Radius {
-            get {
-                return (Math.Min(_size.Width, _size.Height) * _roundness) / 2;
-            }
+        public int Radius =>
+            (Math.Min(_size.Width, _size.Height) * _roundness) / 2;
+
+        /// <summary>
+        /// Indica si es genera pasta automaticament.
+        /// </summary>
+        /// 
+        public bool AutoCream {
+            get => _autoCream;
+            set => _autoCream = value;
+        }
+
+        /// <summary>
+        /// Marge de la pasta de soldadura
+        /// </summary>
+        /// 
+        public int CreamMargin {
+            get => _creamMargin;
+            set => _creamMargin = value;
         }
 
         /// <summary>
         /// Obte el tipus d'element.
         /// </summary>
         /// 
-        public override ElementType ElementType => ElementType.SmdPad;
+        public override ElementType ElementType => 
+            ElementType.SmdPad;
     }
 }

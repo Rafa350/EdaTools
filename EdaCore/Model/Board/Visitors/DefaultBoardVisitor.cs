@@ -34,6 +34,9 @@
         public virtual void Visit(CircleElement circle) {
         }
 
+        public virtual void Visit(PolygonElement polygon) {
+        }
+
         public virtual void Visit(SmdPadElement pad) {
         }
 

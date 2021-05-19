@@ -79,7 +79,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                     // la regio, o en les capes restrict o profile.
                     //
                     foreach (var element in Elements) {
-                        if (element != region && !(element is TextElement)) {
+                        if ((element != region) && !(element is TextElement)) {
 
                             // El element es en la capa d'interes
                             //
@@ -96,7 +96,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                                 }
                             }
 
-                            // El element esta el la capa restrict o la capa holes
+                            // El element esta el la capa restrict o holes
                             //
                             else if (element.IsOnLayer(restrictLayer.Name) || element.IsOnLayer("Holes")) {
                                 Polygon elementPolygon = element.GetPolygon(restrictLayer.Side);
@@ -128,7 +128,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                             if (element != region) {
 
                                 LayerSet elementLayers = part.GetLocalLayerSet(element);
-                                if (elementLayers.Contains(layer.Name) || elementLayers.Contains(restrictLayer.Name) || elementLayers.Contains("Holes")) {
+                                if (elementLayers.Contains(layer.Name) || 
+                                    elementLayers.Contains(restrictLayer.Name) || 
+                                    element is HoleElement) { 
 
                                     // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
                                     //

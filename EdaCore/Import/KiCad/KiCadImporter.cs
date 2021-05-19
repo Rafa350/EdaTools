@@ -110,6 +110,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             board.AddLayer(new Layer(BoardSide.None, "Holes", LayerFunction.Unknown));
             board.AddLayer(new Layer(BoardSide.Top, "Names", LayerFunction.Unknown));
             board.AddLayer(new Layer(BoardSide.Bottom, "Values", LayerFunction.Unknown));
+            board.AddLayer(new Layer(BoardSide.Top, "Restrict", LayerFunction.Unknown));
+            board.AddLayer(new Layer(BoardSide.Inner, "Restrict", LayerFunction.Unknown));
+            board.AddLayer(new Layer(BoardSide.Bottom, "Restrict", LayerFunction.Unknown));
+            //board.AddLayer(new Layer(BoardSide.Top, "Keepout", LayerFunction.Unknown));
+            //board.AddLayer(new Layer(BoardSide.Bottom, "Keepout", LayerFunction.Unknown));
 
             // Procesa les capes
             //
@@ -148,7 +153,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                         break;
 
                     case "zone":
-                        throw new NotImplementedException();
+                        ProcessZone(tree, childNode, board);
                         break;
                 }
             }
@@ -194,7 +199,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         }
 
         /// <summary>
-        /// Procesa una senal.
+        /// Procesa una senyal.
         /// </summary>
         /// <param name="tree">El STree.</param>
         /// <param name="node">El node.</param>
@@ -215,7 +220,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         }
 
         /// <summary>
-        /// Obte un element via
+        /// Procesa una via
         /// </summary>
         /// <param name="tree">El STree</param>
         /// <param name="node">El node</param>
@@ -226,10 +231,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var position = ParsePoint(tree, tree.SelectBranch(node, "at"));
             var size = ParseMeasure(tree, tree.SelectBranch(node, "size"));
             var drill = ParseMeasure(tree, tree.SelectBranch(node, "drill"));
-            var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layers"));
-            
+
+            var layerSet = new LayerSet();
             layerSet += "Vias";
             layerSet += "Drills";
+            foreach (var layer in board.GetSignalLayers())
+                layerSet += layer.Name;
 
             var via = new ViaElement(layerSet, position, size, drill, ViaElement.ViaShape.Circle);
 
@@ -243,11 +250,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         }
 
         /// <summary>
-        /// Obte un component.
+        /// Procesa un modul en una llibreria.
         /// </summary>
         /// <param name="tree">El STree.</param>
-        /// <param name="node">El node</param>
-        /// <param name="library">La llibreria</param>
+        /// <param name="node">El node.</param>
+        /// <param name="library">La llibreria.</param>
         /// 
         private void ProcessModule(STree tree, SBranch node, Library library) {
 
@@ -286,9 +293,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         }
 
         /// <summary>
-        /// Obte un part.
+        /// Procesa un modul en una placa.
         /// </summary>
-        /// <param name="tree">El STree</param>
+        /// <param name="tree">El STree.</param>
         /// <param name="node">El node a procesar.</param>
         /// <param name="board">La placa.</param>
         /// 
@@ -374,7 +381,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         }
 
         /// <summary>
-        /// Procesa una linia
+        /// Procesa una linia en una placa.
         /// </summary>
         /// <param name="tree">STree.</param>
         /// <param name="node">El node</param>
@@ -398,10 +405,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         }
 
         /// <summary>
-        /// Obte un element line.
+        /// Procesa una linia en un component.
         /// </summary>
         /// <param name="tree">STree.</param>
-        /// <param name="node">El node</param>
+        /// <param name="node">El node.</param>
         /// <param name="component">El component.</param>
         /// 
         private void ProcessLine(STree tree, SBranch node, Component component) {
@@ -417,7 +424,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         }
 
         /// <summary>
-        /// Obte un element arc.
+        /// Procesa un arc en un component.
         /// </summary>
         /// <param name="tree">STree.</param>
         /// <param name="node">El node.</param>
@@ -438,9 +445,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         }
 
         /// <summary>
-        /// Obte un element circle.
+        /// Procesa un cercle en un component.
         /// </summary>
-        /// <param name="tree">STree</param>
+        /// <param name="tree">STree.</param>
         /// <param name="node">El node.</param>
         /// <param name="component">El component.</param>
         /// 
@@ -472,7 +479,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         }
 
         /// <summary>
-        /// Obte un element text.
+        /// Procesa un text en un component.
         /// </summary>
         /// <param name="tree">El STree.</param>
         /// <param name="node">El node.</param>
@@ -547,11 +554,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         }
        
         /// <summary>
-        /// Obte un element pad o hole.
+        /// Procesa un pad o forat en un component.
         /// </summary>
         /// <param name="tree">El STree</param>
         /// <param name="node">El node a procesar.</param>
-        /// <param name="component">El component</param>
+        /// <param name="component">El component.</param>
         /// 
         private void ProcessPadOrHole(STree tree, SBranch node, Component component) {
 
@@ -602,7 +609,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 break;
 
                 case "np_thru_hole":
-                    element = new HoleElement(new LayerSet("Holes"), position, drill);
+                    element = new HoleElement(position, drill);
                     break;
 
                 default:
@@ -611,6 +618,48 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             component.AddElement(element);
         }
+
+        /// <summary>
+        /// Procesa un zona en una placa
+        /// </summary>
+        /// <param name="tree">STree.</param>
+        /// <param name="node">El node.</param>
+        /// <param name="board">La placa.</param>
+        /// 
+        private void ProcessZone(STree tree, SBranch node, Board board) {
+
+            var layerNode = tree.SelectBranch(node, "layer");
+            if (layerNode == null)
+                layerNode = tree.SelectBranch(node, "layers");
+            var layerSet = ParseLayerSet(tree, layerNode);
+            var connectedPadNode = tree.SelectBranch(node, "connect_pads");
+            var clearanceNode = tree.SelectBranch(connectedPadNode, "clearance");
+            int clearance = ParseMeasure(tree, clearanceNode);
+
+            //var thickness = ParseMeasure(tree, tree.SelectBranch(node, "min_thickness"));
+            var thickness = 100000;
+
+            var element = new RegionElement(layerSet, thickness, true, clearance);
+            board.AddElement(element);
+
+            var polygonNode = tree.SelectBranch(node, "polygon");
+            if (polygonNode != null) {
+                var ptsNode = tree.SelectBranch(polygonNode, "pts");
+                if (ptsNode != null) {
+                    foreach (var xyNode in ptsNode.Nodes.OfType<SBranch>()) {
+                        var point = ParsePoint(tree, xyNode);
+                        element.AddLine(point);
+                    }
+                }
+            }
+
+            var netNode = tree.SelectBranch(node, "net");
+            if (netNode != null) {
+                int netId = tree.ValueAsInteger(netNode[1]);
+                board.Connect(_signals[netId], element);
+            }
+        }
+
 
         /// <summary>
         /// Obte un punt.
@@ -720,10 +769,14 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// 
         private static BoardSide GetLayerSide(string kcName) {
 
-            return
-                kcName.Contains("Top") || kcName.Contains("F.") ? BoardSide.Top :
-                kcName.Contains("Bottom") || kcName.Contains("B.") ? BoardSide.Bottom :
-                BoardSide.None;
+            if (kcName.Contains("Top") || kcName.Contains("F."))
+                return BoardSide.Top;
+            else if (kcName.Contains("Bottom") || kcName.Contains("B."))
+                return BoardSide.Bottom;
+            else if (kcName.Contains("In"))
+                return BoardSide.Inner;
+            else
+                return BoardSide.None;
         }
 
         /// <summary>
@@ -740,6 +793,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 case "F.Cu":
                 case "B.Cu":
                     return "Copper";
+
+                case "In1.Cu":
+                    return "Copper1";
+
+                case "In2.Cu":
+                    return "Copper2";
 
                 case "F.Paste":
                 case "B.Paste":
@@ -786,7 +845,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 case "Bottom":
                 case "F.Cu":
                 case "B.Cu":
+                case "In1.Cu":
+                case "In2.Cu":
                     return LayerFunction.Signal;
+
+                case "Edge.Cuts":
+                    return LayerFunction.Outline;
 
                 default:
                     return LayerFunction.Unknown;
