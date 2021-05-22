@@ -1,12 +1,7 @@
 ﻿using System;
 using System.IO;
-using MikroPic.EdaTools.v1.Core.Import;
-using MikroPic.EdaTools.v1.Core.Import.Eagle;
-using MikroPic.EdaTools.v1.Core.Import.KiCad;
 using MikroPic.EdaTools.v1.Core.Export.KiCad;
-using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.IO;
-using MikroPic.EdaTools.v1.Core.Model.Net;
 
 namespace MikroPic.EdaTools.v1.Export {
 

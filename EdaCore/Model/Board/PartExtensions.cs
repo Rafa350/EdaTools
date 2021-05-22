@@ -1,5 +1,4 @@
-﻿using System;
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
@@ -7,7 +6,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
         public static Transformation GetLocalTransformation(this Part part) {
 
-            Transformation t = new Transformation();
+            var t = new Transformation();
             t.Translate(part.Position);
             t.Rotate(part.Position, part.Rotation);
             if (part.Flip)
@@ -19,17 +18,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
             if (part.IsFlipped) {
                 LayerSet layerSet = default;
-                foreach (var layerName in element.LayerSet) {
-                    if (layerName.Contains(".")) {
-                        string[] s = layerName.Split('.');
-                        if (s[0] == "Top")
-                            s[0] = "Bottom";
-                        else if (s[0] == "Bottom")
-                            s[0] = "Top";
-                        layerSet += Layer.GetName((BoardSide)Enum.Parse(typeof(BoardSide), s[0]), s[1]);
-                    }
-                    else
-                        layerSet += layerName;
+                foreach (var layerId in element.LayerSet) {
+                    var layerIdString = layerId.ToString();
+                    if (layerIdString.Contains("Top."))
+                        layerIdString = layerIdString.Replace("Top.", "Bottom.");
+                    else if (layerIdString.Contains("Bottom."))
+                        layerIdString = layerIdString.Replace("Bottom.", "Top.");
+                    layerSet += LayerId.Get(layerIdString);
                 }
                 return layerSet;
             }

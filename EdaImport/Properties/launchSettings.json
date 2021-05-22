@@ -1,6 +1,11 @@
 {
   "profiles": {
-    "EdaImport": {
+    "EdaImport_Eagle": {
+      "commandName": "Project",
+      "commandLineArgs": "..\\..\\..\\Eagle\\Projects\\MD-CPU\\MD-CPU04D\\MD-CPU04D.brd MD-CPU04D.xbrd /v",
+      "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\Net\\EdaTools\\Data"
+    },
+    "EdaImport_KiCAD": {
       "commandName": "Project",
       "commandLineArgs": "..\\..\\..\\KiCAD\\Aplex\\MD-CPU07.kicad_pcb MD-CPU07.xbrd /v",
       "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\Net\\EdaTools\\Data"

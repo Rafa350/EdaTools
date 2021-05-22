@@ -9,7 +9,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// 
     public sealed partial class Board {
 
-        private Dictionary<string, Layer> _layers = new Dictionary<string, Layer>();
+        private Dictionary<LayerId, Layer> _layers = new Dictionary<LayerId, Layer>();
         private Layer _outlineLayer;
         private Layer _topLayer;
         private Layer _bottomLayer;
@@ -24,11 +24,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             if (layer == null)
                 throw new ArgumentNullException(nameof(layer));
 
-            string name = layer.Name;
-
-            if ((_layers != null) && _layers.ContainsKey(name))
+            if ((_layers != null) && _layers.ContainsKey(layer.Id))
                 throw new InvalidOperationException(
-                    String.Format("La capa '{0}', ya esta asignada a esta placa.", name));
+                    String.Format("La capa '{0}', ya esta asignada a esta placa.", layer.Id));
 
             if (layer.IsTopCopper)
                 _topLayer = layer;
@@ -42,8 +40,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             }
 
             if (_layers == null)
-                _layers = new Dictionary<string, Layer>();
-            _layers.Add(name, layer);
+                _layers = new Dictionary<LayerId, Layer>();
+            _layers.Add(layer.Id, layer);
         }
 
         /// <summary>
@@ -70,13 +68,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             if (layer == null)
                 throw new ArgumentNullException(nameof(layer));
 
-            string name = layer.Name;
-
-            if ((_layers == null) || !_layers.ContainsKey(name))
+            if ((_layers == null) || !_layers.ContainsKey(layer.Id))
                 throw new InvalidOperationException(
-                    String.Format("No se encontro la capa '{0}'.", name));
+                    String.Format("No se encontro la capa '{0}'.", layer.Id));
 
-            _layers.Remove(name);
+            _layers.Remove(layer.Id);
             if (_layers.Count == 0)
                 _layers = null;
 
@@ -89,35 +85,22 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         }
 
         /// <summary>
-        /// Obte una capa pel seu nom complert.
+        /// Obte una capa pel seu identificador.
         /// </summary>
-        /// <param name="name">El nom de la capa.</param>
+        /// <param name="id">El identificador de la capa.</param>
         /// <param name="throwOnError">True si cal generar una excepcio si no el troba.</param>
         /// <returns>La capa.</returns>
         /// 
-        public Layer GetLayer(string name, bool throwOnError = true) {
+        public Layer GetLayer(LayerId id, bool throwOnError = true) {
 
-            if ((_layers != null) && _layers.TryGetValue(name, out var layer))
+            if ((_layers != null) && _layers.TryGetValue(id, out var layer))
                 return layer;
 
             else if (throwOnError)
                 throw new InvalidOperationException(
-                    String.Format("No se encontro la capa '{0}'.", name));
+                    String.Format("No se encontro la capa '{0}'.", id));
             else
                 return null;
-        }
-
-        /// <summary>
-        /// Obte una capa per la seva cara i la seva etiqueta.
-        /// </summary>
-        /// <param name="side">La cara de la placa on es troba.</param>
-        /// <param name="tag">El nom curt</param>
-        /// <param name="throwOnError">True si cal generar una excepcio en cas d'error.</param>
-        /// <returns>La capa, o null si no la troba.</returns>
-        /// 
-        public Layer GetLayer(BoardSide side, string tag, bool throwOnError = true) {
-
-            return GetLayer(Layer.GetName(side, tag), throwOnError);
         }
 
         /// <summary>
@@ -128,7 +111,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
             var signalLayers = new List<Layer>();
 
-            foreach (var layer in _layers.Values) 
+            foreach (var layer in _layers.Values)
                 if (layer.Function == LayerFunction.Signal)
                     signalLayers.Add(layer);
 
@@ -138,22 +121,22 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <summary>
         /// Obte els elements d'una capa.
         /// </summary>
-        /// <param name="name">Nom de la capa.</param>
+        /// <param name="layer">La capa.</param>
         /// <param name="includeComponents">Indica si cal incluir els elements dels components.</param>
         /// <returns>Els elements.</returns>
         /// 
-        public IEnumerable<Element> GetElements(string name, bool includeComponents = true) {
+        public IEnumerable<Element> GetElements(Layer layer, bool includeComponents = true) {
 
             var list = new List<Element>();
 
             foreach (var element in Elements)
-                if (element.IsOnLayer(name))
+                if (element.IsOnLayer(layer))
                     list.Add(element);
 
             if (includeComponents)
                 foreach (var component in Components)
                     foreach (var element in component.Elements)
-                        if (element.IsOnLayer(name))
+                        if (element.IsOnLayer(layer))
                             list.Add(element);
 
             return list;
@@ -217,3 +200,4 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             _layers?.Values;
     }
 }
+

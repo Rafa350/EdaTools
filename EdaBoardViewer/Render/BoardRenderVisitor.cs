@@ -171,7 +171,7 @@
             if (visualLayer.IsVisible(Part, region)) {
 
                 var polygon = layer.Function == LayerFunction.Signal ?
-                    Board.GetRegionPolygon(region, layer.Name, new Transformation()) :
+                    Board.GetRegionPolygon(region, layer, new Transformation()) :
                     region.GetPolygon(layer.Side);
 
                 var pen = new Pen(new SolidColorBrush(visualLayer.Color), region.Thickness, null, PenLineCap.Round, PenLineJoin.Round);

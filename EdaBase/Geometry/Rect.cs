@@ -112,7 +112,7 @@
         /// <returns>True si son iguals.</returns>
         /// 
         public override bool Equals(object obj) =>
-            (obj is Rect other) ? Equals(other) : false;
+            (obj is Rect other) && Equals(other);
 
         public static bool operator ==(Rect r1, Rect r2) => 
             r1.Equals(r2); 

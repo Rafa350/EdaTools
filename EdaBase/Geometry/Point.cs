@@ -91,7 +91,7 @@
         /// <returns>True si son iguals.</returns>
         /// 
         public override bool Equals(object obj) =>
-            (obj is Point other) ? Equals(other) : false;
+            (obj is Point other) && Equals(other);
 
         /// <summary>
         /// Operador ==

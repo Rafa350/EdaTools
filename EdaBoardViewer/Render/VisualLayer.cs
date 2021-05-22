@@ -10,7 +10,7 @@
 
     public sealed class VisualLayer {
 
-        private readonly string[] layerIds;
+        private readonly LayerId[] layerIds;
         private readonly ElementType[] elementTypes;
         private readonly string name;
         private readonly VisualMode visualMode;
@@ -27,7 +27,7 @@
         /// <param name="visualMode">Modus de visualitzacio.</param>
         /// <param name="color">Color.</param>
         /// 
-        public VisualLayer(string name, string[] layerIds, ElementType[] elementTypes, bool visible, VisualMode visualMode, Color color) {
+        public VisualLayer(string name, LayerId[] layerIds, ElementType[] elementTypes, bool visible, VisualMode visualMode, Color color) {
 
             this.name = name;
             this.layerIds = layerIds;
@@ -90,7 +90,7 @@
         /// Obte la llista de capes de la placa.
         /// </summary>
         /// 
-        public string[] LayerIds => 
+        public LayerId[] LayerIds => 
             layerIds;
 
         /// <summary>

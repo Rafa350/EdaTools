@@ -1,79 +1,39 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Text;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    public struct LayerSet : IEnumerable<string> {
+    public struct LayerSet : IEnumerable<LayerId> {
 
-        private readonly string[] storage;
+        private readonly HashSet<LayerId> _set;
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="name">El element a afeigir.</param>
+        /// <param name="ids">Identificadors.</param>
         /// 
-        public LayerSet(string element) {
+        public LayerSet(params LayerId[] ids) {
 
-            storage = new string[1] { element };
+            if (ids == null)
+                throw new ArgumentNullException(nameof(ids));
+
+            _set = new HashSet<LayerId>(ids);
         }
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="element1">Primer element.</param>
-        /// <param name="element2">Segon element.</param>
+        /// <param name="ids">Identificadors.</param>
         /// 
-        public LayerSet(string element1, string element2) {
+        public LayerSet(IEnumerable<LayerId> ids) {
 
-            storage = new string[2] { element1, element2 };
-        }
+            if (ids == null)
+                throw new ArgumentNullException(nameof(ids));
 
-        /// <summary>
-        /// Constructor de l'objecte.
-        /// </summary>
-        /// <param name="element1">Primer element.</param>
-        /// <param name="element2">Segon element.</param>
-        /// <param name="element3">Tercer element.</param>
-        /// 
-        public LayerSet(string element1, string element2, string element3) {
-
-            storage = new string[3] { element1, element2, element3 };
-        }
-
-        /// <summary>
-        /// Constructor de l'objecte.
-        /// </summary>
-        /// <param name="elements">Elements.</param>
-        /// 
-        public LayerSet(params string[] elements) {
-
-            if (elements == null)
-                throw new ArgumentNullException(nameof(elements));
-
-            storage = new string[elements.Length];
-            elements.CopyTo(storage, 0);
-        }
-
-        /// <summary>
-        /// Constructor de l'objecte.
-        /// </summary>
-        /// <param name="elements">Elements.</param>
-        /// 
-        public LayerSet(IEnumerable<string> elements) {
-
-            if (elements == null)
-                throw new ArgumentNullException(nameof(elements));
-
-            if (!(elements is ICollection<string> collection)) {
-                List<string> e = new List<string>(elements);
-                storage = e.ToArray();
-            }
-            else {
-                storage = new string[collection.Count];
-                collection.CopyTo(storage, 0);
-            }
+            _set = new HashSet<LayerId>(ids);
         }
 
         /// <summary>
@@ -83,78 +43,70 @@
         /// 
         public LayerSet(LayerSet other) {
 
-            storage = new string[other.storage.Length];
-            other.storage.CopyTo(storage, 0);
+            _set = new HashSet<LayerId>(other);
         }
 
         /// <summary>
-        /// Comprova si un element pertany al conjunt.
+        /// Constructor privat
         /// </summary>
-        /// <param name="element">Element.</param>
+        /// <param name="set">Contingut.</param>
+        /// 
+        private LayerSet(HashSet<LayerId> set) {
+
+            _set = set;
+        }
+
+        /// <summary>
+        /// Comprova si un identificador pertany al conjunt.
+        /// </summary>
+        /// <param name="id">Identificador.</param>
         /// <returns>True si pertany, false en cas contrari.</returns>
         /// 
-        public bool Contains(string element) {
+        public bool Contains(LayerId id) =>
+            _set.Contains(id);
 
-            for (int i = 0; i < storage.Length; i++)
-                if (element.Equals(storage[i]))
-                    return true;
+        /// <summary>
+        /// Obte un objecte que es la unio d'altres dos.
+        /// </summary>
+        /// <param name="set1">Primer conjunt.</param>
+        /// <param name="set2">Segon conjunt.</param>
+        /// <returns>El resultat de l'operacio.</returns>
+        /// 
+        public static LayerSet operator +(LayerSet set1, LayerSet set2) =>
+            new LayerSet(set1._set.Union(set2._set));
 
-            return false;
+        /// <summary>
+        /// Obte un conjunt que es la unio d'altres dos.
+        /// </summary>
+        /// <param name="set">Conjunt.</param>
+        /// <param name="id">Identificador.</param>
+        /// <returns>El resultat de l'operacio.</returns>
+        /// 
+        public static LayerSet operator +(LayerSet set, LayerId id) {
+
+            if (set._set == default)
+                return new LayerSet(id);
+            else if (set.Contains(id))
+                return new LayerSet(set);
+            else {
+                var s = new HashSet<LayerId>(set._set);
+                s.Add(id);
+                return new LayerSet(s);
+            }
         }
 
         /// <summary>
-        /// Operador +
+        /// Obte un conjunt que es la diferencia d'altres dos.
         /// </summary>
-        /// <param name="a">Primer conjunt.</param>
-        /// <param name="b">Segon conjunt.</param>
+        /// <param name="set">Conjunt.</param>
+        /// <param name="id">Itentificador.</param>
         /// <returns>El resultat de l'operacio.</returns>
         /// 
-        public static LayerSet operator +(LayerSet a, LayerSet b) {
+        public static LayerSet operator -(LayerSet set, LayerId id) {
 
-            string[] s = new string[a.storage.Length + b.storage.Length];
-            a.storage.CopyTo(s, 0);
-            b.storage.CopyTo(s, a.storage.Length);
+            var s = new HashSet<LayerId>(set);
+            s.Remove(id);
             return new LayerSet(s);
-        }
-
-        /// <summary>
-        /// Operador +
-        /// </summary>
-        /// <param name="a">Conjunt.</param>
-        /// <param name="b">Element.</param>
-        /// <returns>El resultat de l'operacio.</returns>
-        /// 
-        public static LayerSet operator +(LayerSet a, string b) {
-
-            if (a.storage == null)
-                return new LayerSet(b);
-            else {
-                string[] s = new string[a.storage.Length + 1];
-                a.storage.CopyTo(s, 0);
-                s[a.storage.Length] = b;
-                return new LayerSet(s);
-            }
-        }
-
-        /// <summary>
-        /// Operador -
-        /// </summary>
-        /// <param name="a">Conjunt.</param>
-        /// <param name="b">Element.</param>
-        /// <returns>El resultat de l'operacio.</returns>
-        /// 
-        public static LayerSet operator -(LayerSet a, string b) {
-
-            if (a.storage == null)
-                return new LayerSet(b);
-            else {
-                string[] s = new string[a.storage.Length - 1];
-                int i = 0;
-                foreach (var aa in a)
-                    if (aa != b)
-                        s[i++] = aa;
-                return new LayerSet(s);
-            }
         }
 
         /// <summary>
@@ -164,14 +116,14 @@
         /// 
         public override string ToString() {
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             bool first = true;
-            foreach (var element in storage) {
+            foreach (var id in _set) {
                 if (first)
                     first = false;
                 else
                     sb.Append(", ");
-                sb.Append(element.ToString());
+                sb.Append(id);
             }
             return sb.ToString();
         }
@@ -182,24 +134,25 @@
             if (String.IsNullOrEmpty(s))
                 throw new ArgumentNullException(nameof(s));
 
-            string[] ss = s.Split(',');
-            string[] elements = new string[ss.Length];
-            for (int i = 0; i < ss.Length; i++)
-                elements[i] = ss[i].Trim();
-            return new LayerSet(elements);
+            var ss = s.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            
+            LayerSet layerSet = new LayerSet();
+            foreach (var sss in ss)
+                layerSet += LayerId.Get(sss);
+            return layerSet;
         }
 
-        public IEnumerator<string> GetEnumerator() =>
-            ((IEnumerable<string>)storage).GetEnumerator();
+        public IEnumerator<LayerId> GetEnumerator() =>
+            _set == default ? null : _set.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() =>
-            ((IEnumerable<string>)storage).GetEnumerator();
+            _set == default ? null : _set.GetEnumerator();
 
         /// <summary>
         /// Obte l'indicador de conjunt buit.
         /// </summary>
         /// 
         public bool IsEmpty =>
-            (storage == null) || (storage.Length == 0);
+            (_set == default) || (_set.Count == 0);
     }
 }

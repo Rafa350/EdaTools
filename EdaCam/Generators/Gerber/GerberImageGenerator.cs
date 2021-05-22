@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
@@ -100,7 +101,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// 
         private void PrepareApertures(ApertureDictionary apertures, Board board) {
 
-            foreach (var layerId in Target.LayerNames) {
+            foreach (var layerId in Target.LayerNames.Select(name => LayerId.Get(name))) {
                 ApertureCreatorVisitor visitor = new ApertureCreatorVisitor(layerId, apertures);
                 board.AcceptVisitor(visitor);
             }
@@ -218,7 +219,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         private void GenerateRegions(GerberBuilder gb, Board board, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN POLYGONS");
-            foreach (var layerId in Target.LayerNames) {
+            foreach (var layerId in Target.LayerNames.Select(name => LayerId.Get(name))) {
                 IBoardVisitor visitor = new RegionGeneratorVisitor(gb, layerId, apertures);
                 visitor.Visit(board);
             }
@@ -235,7 +236,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         private void GenerateImage(GerberBuilder gb, Board board, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
-            foreach (var layerId in Target.LayerNames) {
+            foreach (var layerId in Target.LayerNames.Select(name => LayerId.Get(name))) {
                 IBoardVisitor visitor = new ImageGeneratorVisitor(gb, layerId, apertures);
                 board.AcceptVisitor(visitor);
             }
@@ -248,7 +249,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// 
         private sealed class ApertureCreatorVisitor : ElementVisitor {
 
-            private readonly string _layerId;
+            private readonly LayerId _layerId;
             private readonly ApertureDictionary _apertures;
 
             /// <summary>
@@ -257,7 +258,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// <param name="layerId">El identificador de la capa a procesar.</param>
             /// <param name="apertures">El diccionari d'apertures.</param>
             /// 
-            public ApertureCreatorVisitor(string layerId, ApertureDictionary apertures) {
+            public ApertureCreatorVisitor(LayerId layerId, ApertureDictionary apertures) {
 
                 _layerId = layerId;
                 _apertures = apertures;
@@ -439,7 +440,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// 
         private sealed class ImageGeneratorVisitor : ElementVisitor {
 
-            private readonly string _layerId;
+            private readonly LayerId _layerId;
             private readonly GerberBuilder _gb;
             private readonly ApertureDictionary _apertures;
 
@@ -450,7 +451,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// <param name="layerId">El identificador de la capa a procesar.</param>
             /// <param name="apertures">Diccionari d'apertures.</param>
             /// 
-            public ImageGeneratorVisitor(GerberBuilder gb, string layerId, ApertureDictionary apertures) {
+            public ImageGeneratorVisitor(GerberBuilder gb, LayerId layerId, ApertureDictionary apertures) {
 
                 _gb = gb;
                 _layerId = layerId;
@@ -807,9 +808,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// </summary>
         private sealed class RegionGeneratorVisitor : ElementVisitor {
 
-            private readonly GerberBuilder gb;
-            private readonly string layerId;
-            private readonly ApertureDictionary apertures;
+            private readonly GerberBuilder _gb;
+            private readonly LayerId _layerId;
+            private readonly ApertureDictionary _apertures;
 
             /// <summary>
             /// Constructor del objecte.
@@ -819,11 +820,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// <param name="layer">La capa a procesar.</param>
             /// <param name="apertures">Diccionari d'apertures.</param>
             /// 
-            public RegionGeneratorVisitor(GerberBuilder gb, string layerId, ApertureDictionary apertures) {
+            public RegionGeneratorVisitor(GerberBuilder gb, LayerId layerId, ApertureDictionary apertures) {
 
-                this.gb = gb;
-                this.layerId = layerId;
-                this.apertures = apertures;
+                this._gb = gb;
+                _layerId = layerId;
+                this._apertures = apertures;
             }
 
             /// <summary>
@@ -837,7 +838,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     Transformation t = new Transformation();
                     if (Part != null)
                         t = Part.GetLocalTransformation();
-                    Polygon polygon = Board.GetRegionPolygon(region, layerId, t);
+                    Polygon polygon = Board.GetRegionPolygon(region, Board.GetLayer(_layerId), t);
                     DrawPolygon(polygon, region.Thickness);
                 }
             }
@@ -868,17 +869,17 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                     // Dibuixa el contingut de la regio
                     //
-                    gb.LoadPolarity((level % 2) == 0 ? Polarity.Clear : Polarity.Dark);
-                    gb.BeginRegion();
-                    gb.Region(polygon.Points, true);
-                    gb.EndRegion();
+                    _gb.LoadPolarity((level % 2) == 0 ? Polarity.Clear : Polarity.Dark);
+                    _gb.BeginRegion();
+                    _gb.Region(polygon.Points, true);
+                    _gb.EndRegion();
 
                     // Dibuixa el perfil de la regio
                     //
-                    Aperture ap = apertures.GetCircleAperture(thickness);
-                    gb.SelectAperture(ap);
-                    gb.LoadPolarity(Polarity.Dark);
-                    gb.Polygon(polygon.Points);
+                    Aperture ap = _apertures.GetCircleAperture(thickness);
+                    _gb.SelectAperture(ap);
+                    _gb.LoadPolarity(Polarity.Dark);
+                    _gb.Polygon(polygon.Points);
                 }
 
                 // Processa els fills. Amb level < 2 evitem els poligons orfres
@@ -890,7 +891,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             private bool CanVisit(Element element) {
 
-                return element.LayerSet.Contains(layerId);
+                return element.LayerSet.Contains(_layerId);
             }
         }
     }

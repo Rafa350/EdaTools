@@ -72,8 +72,8 @@
     <xs:element
         name="layer">
         <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:string"/>
             <xs:attribute name="side" use="required" type="boardSideType"/>
-            <xs:attribute name="tag" use="required" type="nameType"/>
             <xs:attribute name="function" use="required" type="layerFunctionType"/>
         </xs:complexType>
     </xs:element>

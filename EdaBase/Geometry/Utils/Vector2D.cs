@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace MikroPic.EdaTools.v1.Base.Geometry.Utils {
-    
+
     /// <summary>
     /// Estructura que representa un vector 2D
     /// </summary>

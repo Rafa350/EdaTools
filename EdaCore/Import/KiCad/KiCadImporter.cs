@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Collections.Generic;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
@@ -104,15 +104,17 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             // Afegeix les capes basiques que no existeixen en la placa a importar
             //
-            board.AddLayer(new Layer(BoardSide.None, "Pads", LayerFunction.Unknown));
-            board.AddLayer(new Layer(BoardSide.None, "Vias", LayerFunction.Unknown));
-            board.AddLayer(new Layer(BoardSide.None, "Drils", LayerFunction.Unknown));
-            board.AddLayer(new Layer(BoardSide.None, "Holes", LayerFunction.Unknown));
-            board.AddLayer(new Layer(BoardSide.Top, "Names", LayerFunction.Unknown));
-            board.AddLayer(new Layer(BoardSide.Bottom, "Values", LayerFunction.Unknown));
-            board.AddLayer(new Layer(BoardSide.Top, "Restrict", LayerFunction.Unknown));
-            board.AddLayer(new Layer(BoardSide.Inner, "Restrict", LayerFunction.Unknown));
-            board.AddLayer(new Layer(BoardSide.Bottom, "Restrict", LayerFunction.Unknown));
+            board.AddLayer(new Layer(LayerId.Pads, BoardSide.None, LayerFunction.Unknown));
+            board.AddLayer(new Layer(LayerId.Vias, BoardSide.None, LayerFunction.Unknown));
+            board.AddLayer(new Layer(LayerId.Drills, BoardSide.None, LayerFunction.Unknown));
+            board.AddLayer(new Layer(LayerId.Holes, BoardSide.None, LayerFunction.Unknown));
+            board.AddLayer(new Layer(LayerId.TopNames, BoardSide.Top, LayerFunction.Unknown));
+            board.AddLayer(new Layer(LayerId.BottomNames, BoardSide.Bottom, LayerFunction.Unknown));
+            board.AddLayer(new Layer(LayerId.TopValues, BoardSide.Top, LayerFunction.Unknown));
+            board.AddLayer(new Layer(LayerId.BottomValues, BoardSide.Bottom, LayerFunction.Unknown));
+            board.AddLayer(new Layer(LayerId.TopRestrict, BoardSide.Top, LayerFunction.Unknown));
+            board.AddLayer(new Layer(LayerId.InnerRestrict, BoardSide.Inner, LayerFunction.Unknown));
+            board.AddLayer(new Layer(LayerId.BottomRestrict, BoardSide.Bottom, LayerFunction.Unknown));
             //board.AddLayer(new Layer(BoardSide.Top, "Keepout", LayerFunction.Unknown));
             //board.AddLayer(new Layer(BoardSide.Bottom, "Keepout", LayerFunction.Unknown));
 
@@ -191,10 +193,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             string type = tree.ValueAsString(node[2]);
 
             BoardSide side = GetLayerSide(name);
+            LayerId id = GetLayerId(name);
             LayerFunction function = type == "signal" ? LayerFunction.Signal : GetLayerFunction(name);
-            string tag = GetLayerTag(name);
 
-            var layer = new Layer(side, tag, function);
+            var layer = new Layer(id, side, function);
             board.AddLayer(layer);
         }
 
@@ -233,10 +235,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var drill = ParseMeasure(tree, tree.SelectBranch(node, "drill"));
 
             var layerSet = new LayerSet();
-            layerSet += "Vias";
-            layerSet += "Drills";
             foreach (var layer in board.GetSignalLayers())
-                layerSet += layer.Name;
+                layerSet += layer.Id;
 
             var via = new ViaElement(layerSet, position, size, drill, ViaElement.ViaShape.Circle);
 
@@ -529,25 +529,25 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var layerNode = tree.SelectBranch(node, "layer");
             string layerName = tree.ValueAsString(layerNode[1]);
 
-            string layer;
+            LayerId layerId;
             string text;
 
             if (type == "reference") {
-                layer = Layer.GetName(GetLayerSide(layerName), "Names");
+                layerId = layerName.Contains("F.") ? LayerId.TopNames : LayerId.BottomNames;
                 text = "{NAME}";
             }
             else if (type == "value") {
-                layer = Layer.GetName(GetLayerSide(layerName), "Values");
+                layerId = layerName.Contains("F.") ? LayerId.TopValues: LayerId.BottomValues;
                 text = "{VALUE}";
             }
             else {
-                layer = Layer.GetName(GetLayerSide(layerName), GetLayerTag(layerName));
+                layerId = GetLayerId(layerName);
                 text = tree.ValueAsString(node[2]);
                 if (text.StartsWith('%'))
                     text = String.Format("{{{0}}}", text);
             }
 
-            var element = new TextElement(new LayerSet(layer), position, rotation, height, 
+            var element = new TextElement(new LayerSet(layerId), position, rotation, height, 
                 thickness, horizontalAlign, verticalAlign, text);
 
             component.AddElement(element);
@@ -586,8 +586,6 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
                 case "thru_hole": {
                     LayerSet layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layers"));
-                    layerSet += "Drills";
-                    layerSet += "Pads";
 
                     ThPadElement.ThPadShape shape;
                     switch (shapeType) {
@@ -751,10 +749,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 else if (kcName.Contains("*.Mask")) 
                     sb.Append("Top.Stop, Bottom.Stop");                
                 else {
-                    string tag = GetLayerTag(kcName);
-                    BoardSide side = GetLayerSide(kcName);
-                    string name = Layer.GetName(side, tag);
-                    sb.Append(name);
+                    var layerId = GetLayerId(kcName);
+                    sb.Append(layerId.ToString());
                 }
             }
 
@@ -829,6 +825,67 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
                 default:
                     return kcName.Replace('.', '_');
+            }
+        }
+
+        /// <summary>
+        /// Obte el identificador de la capa a partir del seu nom.
+        /// </summary>
+        /// <param name="kcName">Nom de la capa.</param>
+        /// <returns>El identificador.</returns>
+        /// 
+        private static LayerId GetLayerId(string kcName) {
+
+            switch (kcName) {
+                case "Top":
+                case "F.Cu":
+                    return LayerId.TopCopper;
+
+                case "Bottom":
+                case "B.Cu":
+                    return LayerId.BottomCopper;
+
+                case "In1.Cu":
+                    return LayerId.InnerCopper1;
+
+                case "In2.Cu":
+                    return LayerId.InnerCopper2;
+
+                case "F.Paste":
+                    return LayerId.TopCream;
+
+                case "B.Paste":
+                    return LayerId.BottomCream;
+
+                case "F.Adhes":
+                    return LayerId.TopGlue;
+
+                case "B.Adhes":
+                    return LayerId.BottomGlue;
+
+                case "F.Mask":
+                    return LayerId.TopStop;
+
+                case "B.Mask":
+                    return LayerId.BottomStop;
+
+                case "F.SilkS":
+                    return LayerId.Get("Top.Place");
+
+                case "B.SilkS":
+                    return LayerId.Get("Bottom.Place");
+
+                case "F.CrtYd":
+                    return LayerId.Get("Top.Keepout");
+
+                case "B.CrtYd":
+                    return LayerId.Get("Bottom.Keepout");
+
+                case "Edge.Cuts":
+                    return LayerId.Profile;
+
+                default:
+                    return LayerId.Get(kcName);
             }
         }
 

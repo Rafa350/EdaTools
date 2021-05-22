@@ -77,11 +77,22 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         public abstract Rect GetBoundingBox(BoardSide side);
 
         /// <summary>
+        /// Obte el conjunt de capes. Permet modificar el contingut en els
+        /// elements derivats.
+        /// </summary>
+        /// <returns>El resultat.</returns>
+        /// 
+        protected virtual LayerSet GetLayerSet() {
+
+            return _layerSet;
+        }
+
+        /// <summary>
         /// Obte o asigna el conjunt de capes.
         /// </summary>
         /// 
         public LayerSet LayerSet { 
-            get => _layerSet;
+            get => GetLayerSet();
             set => _layerSet = value;
         }
 

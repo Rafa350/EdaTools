@@ -50,7 +50,7 @@
             _value == other._value;
 
         public override bool Equals(object obj) =>
-            (obj is Ratio other) ? Equals(other) : false;
+            (obj is Ratio other) && Equals(other);
 
         public static bool operator ==(Ratio r1, Ratio r2) => 
             r1.Equals(r2);

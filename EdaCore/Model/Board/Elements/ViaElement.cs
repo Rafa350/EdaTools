@@ -211,16 +211,22 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
+        /// Obte el conjunt de capes.
+        /// </summary>
+        /// <returns>El resultat.</returns>
+        /// 
+        protected override LayerSet GetLayerSet() {
+
+            return base.GetLayerSet() + LayerId.Vias + LayerId.Drills;
+        }
+
+        /// <summary>
         ///  Obte o asigna la posicio del centre del cercle.
         /// </summary>
         /// 
         public Point Position {
-            get {
-                return _position;
-            }
-            set {
-                _position = value;
-            }
+            get => _position;
+            set => _position = value;
         }
 
         /// <summary>

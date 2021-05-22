@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Funcio de la capa.
@@ -20,21 +18,21 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// 
     public sealed class Layer : IBoardVisitable {
 
+        private readonly LayerId _id;
         private readonly BoardSide _side;
-        private readonly string _tag;
         private readonly LayerFunction _function = LayerFunction.Unknown;
 
         /// <summary>
         /// Constructor.
         /// </summary>
+        /// <param name="id">Identificador de la capa.</param>
         /// <param name="side">Cara de la placa.</param>
-        /// <param name="tag">Etiqueta de la capa.</param>
         /// <param name="function">Functio de la capa.</param>
         /// 
-        public Layer(BoardSide side, string tag, LayerFunction function) {
+        public Layer(LayerId id, BoardSide side, LayerFunction function) {
 
+            _id = id;
             _side = side;
-            _tag = tag;
             _function = function;
         }
 
@@ -45,7 +43,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// 
         public Layer Clone() {
 
-            return new Layer(_side, _tag, _function);
+            return new Layer(_id, _side, _function);
         }
 
         /// <inheritdoc/>
@@ -56,83 +54,66 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         }
 
         /// <summary>
-        /// Genera un nom de capa.
-        /// </summary>
-        /// <param name="side">Cara.</param>
-        /// <param name="name">Etiqueta.</param>
-        /// <returns>El nom.</returns>
-        /// 
-        public static string GetName(BoardSide side, string name) {
-
-            StringBuilder sb = new StringBuilder();
-            switch (side) {
-                case BoardSide.Top:
-                    sb.Append("Top.");
-                    break;
-                case BoardSide.Bottom:
-                    sb.Append("Bottom.");
-                    break;
-                case BoardSide.Inner:
-                    sb.Append("Inner.");
-                    break;
-            }
-            sb.Append(name);
-
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Obte la cara
+        /// Obte el identificador.
         /// </summary>
         /// 
-        public BoardSide Side => _side;
-
-        /// <summary>
-        /// Obte l'etiqueta.
-        /// </summary>
-        /// 
-        public string Tag => _tag;
+        public LayerId Id =>
+            _id;
 
         /// <summary>
         /// Obte el nom.
         /// </summary>
         /// 
-        public string Name => GetName(_side, _tag);
+        public string Name => 
+            _id.ToString();
+
+        /// <summary>
+        /// Obte la cara
+        /// </summary>
+        /// 
+        public BoardSide Side => 
+            _side;
 
         /// <summary>
         /// Obte la funcio.
         /// </summary>
         /// 
-        public LayerFunction Function => _function;
+        public LayerFunction Function => 
+            _function;
 
         /// <summary>
         /// Indica si la capa esta en la cara superior.
         /// </summary>
         /// 
-        public bool IsTop => _side == BoardSide.Top;
+        public bool IsTop => 
+            _side == BoardSide.Top;
 
         /// <summary>
         /// Indica si es la capa de coure superior.
         /// </summary>
         /// 
-        public bool IsTopCopper => (_side == BoardSide.Top) && (_function == LayerFunction.Signal);
+        public bool IsTopCopper => 
+            (_side == BoardSide.Top) && (_function == LayerFunction.Signal);
 
         /// <summary>
         /// Indica si la capa esta en la cara inferior.
         /// </summary>
         /// 
-        public bool IsBottom => _side == BoardSide.Bottom;
+        public bool IsBottom => 
+            _side == BoardSide.Bottom;
 
         /// <summary>
         /// Indica si es la capa de coure inferior.
         /// </summary>
         /// 
-        public bool IsBottomCopper => (_side == BoardSide.Bottom) && (_function == LayerFunction.Signal);
+        public bool IsBottomCopper => 
+            (_side == BoardSide.Bottom) && (_function == LayerFunction.Signal);
 
         /// <summary>
         /// Indica si es una capa interna.
         /// </summary>
         /// 
-        public bool IsInner =>_side == BoardSide.Inner;
+        public bool IsInner =>
+            _side == BoardSide.Inner;
     }
 }

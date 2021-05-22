@@ -261,6 +261,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
+        /// Obte el conjunt de capes.
+        /// </summary>
+        /// <returns>El resultat.</returns>
+        /// 
+        protected override LayerSet GetLayerSet() {
+            
+            return base.GetLayerSet() + LayerId.Drills + LayerId.Pads + LayerId.TopCopper + LayerId.BottomCopper;
+        }
+
+        /// <summary>
         /// Obte o asigna la forma del pad.
         /// </summary>
         /// 

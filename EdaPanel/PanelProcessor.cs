@@ -74,10 +74,10 @@
         /// 
         private void AddLayers() {
 
-            if (targetBoard.GetLayer("Milling", false) == null)
-                targetBoard.AddLayer(new Layer(BoardSide.None, "Milling", LayerFunction.Mechanical));
-            if (targetBoard.GetLayer("LocalProfile", false) == null)
-                targetBoard.AddLayer(new Layer(BoardSide.None, "LocalProfile", LayerFunction.Mechanical));
+            if (targetBoard.GetLayer(LayerId.Milling, false) == null)
+                targetBoard.AddLayer(new Layer(LayerId.Milling, BoardSide.None, LayerFunction.Mechanical));
+            if (targetBoard.GetLayer(LayerId.Get("LocalProfile"), false) == null)
+                targetBoard.AddLayer(new Layer(LayerId.Get("LocalProfile"), BoardSide.None, LayerFunction.Mechanical));
         }
 
         /// <summary>
@@ -94,7 +94,7 @@
             // capes son comuns a totes les plaques que formen el panel.
             //
             foreach (var layer in board.Layers)
-                if (targetBoard.GetLayer(layer.Name, false) == null)
+                if (targetBoard.GetLayer(layer.Id, false) == null)
                     targetBoard.AddLayer(layer.Clone());
 
             // Afegeix els senyals. Cada placa te les seves propies.
@@ -147,9 +147,9 @@
                 foreach (var boardElement in board.Elements) {
 
                     Element panelElement = boardElement.Clone();
-                    if (boardElement.LayerSet.Contains(Layer.GetName(BoardSide.None, "Profile"))) {
-                        boardElement.LayerSet += Layer.GetName(BoardSide.None, "LocalProfile");
-                        boardElement.LayerSet -= Layer.GetName(BoardSide.None, "Profile");
+                    if (boardElement.LayerSet.Contains(LayerId.Profile)) {
+                        boardElement.LayerSet += LayerId.Get("LocalProfile");
+                        boardElement.LayerSet -= LayerId.Profile;
                     }
                     transformableElements.Add(panelElement);
                     targetBoard.AddElement(panelElement);
@@ -178,7 +178,7 @@
 
             // Obte el conjunt de capes
             //
-            LayerSet millingLayerSet = new LayerSet("Milling");
+            LayerSet millingLayerSet = new LayerSet(LayerId.Milling);
 
             // Obte els punts de tall d'una linia 
             //
@@ -239,7 +239,7 @@
         private void AddProfile(Size size) {
 
             Rect rect = new Rect(new Point(0, 0), size);
-            LayerSet profileLayer = new LayerSet("Profile");
+            LayerSet profileLayer = new LayerSet(LayerId.Profile);
             targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Right, rect.Top), 100000, LineElement.CapStyle.Round));
             targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Bottom), new Point(rect.Right, rect.Bottom), 100000, LineElement.CapStyle.Round));
             targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Left, rect.Bottom), 100000, LineElement.CapStyle.Round));

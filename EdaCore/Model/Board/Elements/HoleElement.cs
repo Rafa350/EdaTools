@@ -20,7 +20,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <param name="drill">Diametre del forat.</param>
         /// 
         public HoleElement(Point position, int drill) :
-            base(new LayerSet("Holes")) {
+            base(default) {
 
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException(nameof(drill));
@@ -83,6 +83,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override Rect GetBoundingBox(BoardSide side) {
 
             return new Rect(_position.X - _drill / 2, _position.Y - _drill / 2, _drill, _drill);
+        }
+
+        /// <summary>
+        /// Obte el conjunt de capes.
+        /// </summary>
+        /// <returns>El resultat.</returns>
+        /// 
+        protected override LayerSet GetLayerSet() {
+            
+            return base.GetLayerSet() + LayerId.Holes;
         }
 
         /// <summary>

@@ -1,7 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Utils {
 
     using System;
-    using System.ComponentModel;
 
     /// <summary>
     /// Operacions amb arcs.

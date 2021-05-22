@@ -145,9 +145,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
             public override void Visit(LineElement line) {
 
                 int layerNum = 3;
-                if (line.LayerSet.Contains("Top.Copper"))
+                if (line.LayerSet.Contains(LayerId.TopCopper))
                     layerNum = 1;
-                else if (line.LayerSet.Contains("Bottom.Copper"))
+                else if (line.LayerSet.Contains(LayerId.BottomCopper))
                     layerNum = 2;
 
                 if (layerNum > 0) {
@@ -161,9 +161,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
             public override void Visit(ArcElement arc) {
 
                 int layerNum = 3;
-                if (arc.LayerSet.Contains("Top.Copper"))
+                if (arc.LayerSet.Contains(LayerId.TopCopper))
                     layerNum = 1;
-                else if (arc.LayerSet.Contains("Bottom.Copper"))
+                else if (arc.LayerSet.Contains(LayerId.BottomCopper))
                     layerNum = 2;
 
                 if (layerNum > 0) {

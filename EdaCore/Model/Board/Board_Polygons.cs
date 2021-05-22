@@ -22,7 +22,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// 
         public Polygon GetOutlinePolygon() {
 
-            IEnumerable<Element> elements = GetElements(_outlineLayer.Name);
+            IEnumerable<Element> elements = GetElements(_outlineLayer);
             List<Segment> segments = new List<Segment>();
             foreach (var element in elements) {
                 if (element is LineElement line)
@@ -41,20 +41,18 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// Calcula el poligon d'una regio.
         /// </summary>
         /// <param name="region">L'element de tipus regio.</param>
-        /// <param name="layerName">El nom de la capa a procesar.</param>
+        /// <param name="layer">La capa a procesar.</param>
         /// <param name="transformation">Transformacio a aplicar al poligon.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public Polygon GetRegionPolygon(RegionElement region, string layerName, Transformation transformation) {
+        public Polygon GetRegionPolygon(RegionElement region, Layer layer, Transformation transformation) {
 
             if (region == null)
                 throw new ArgumentNullException(nameof(region));
 
             // Si el poligon no es troba en la capa d'interes, no cal fer res
             //
-            if (region.IsOnLayer(layerName)) {
-
-                Layer layer = GetLayer(layerName);
+            if (region.IsOnLayer(layer)) {
 
                 // Obte el poligon de la regio i el transforma si s'escau
                 //
@@ -73,7 +71,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                     List<Polygon> holePolygons = new List<Polygon>();
 
-                    Layer restrictLayer = GetLayer(layer.Side, "Restrict");
+                    Layer restrictLayer = GetLayer(layer.Side == BoardSide.Top ? LayerId.Get("Top.Restrict") : LayerId.Get("Bottom.Restrict"));
 
                     // Procesa els elements de la placa que es troben en la mateixa capa que 
                     // la regio, o en les capes restrict o profile.
@@ -83,7 +81,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                             // El element es en la capa d'interes
                             //
-                            if (element.IsOnLayer(layerName)) {
+                            if (element.IsOnLayer(layer)) {
 
                                 // Si no esta en la mateixa senyal que la regio, genera un forat.
                                 //
@@ -98,7 +96,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                             // El element esta el la capa restrict o holes
                             //
-                            else if (element.IsOnLayer(restrictLayer.Name) || element.IsOnLayer("Holes")) {
+                            else if (element.IsOnLayer(restrictLayer) || element.IsOnLayer(LayerId.Holes)) {
                                 Polygon elementPolygon = element.GetPolygon(restrictLayer.Side);
                                 if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                     holePolygons.Add(elementPolygon);
@@ -106,7 +104,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                             // El element esta el la capa profile
                             //
-                            else if (element.IsOnLayer(_outlineLayer.Name)) {
+                            else if (element.IsOnLayer(_outlineLayer)) {
                                 Polygon elementPolygon = element.GetOutlinePolygon(BoardSide.None, _outlineClearance);
                                 if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                     holePolygons.Add(elementPolygon);
@@ -128,8 +126,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                             if (element != region) {
 
                                 LayerSet elementLayers = part.GetLocalLayerSet(element);
-                                if (elementLayers.Contains(layer.Name) || 
-                                    elementLayers.Contains(restrictLayer.Name) || 
+                                if (elementLayers.Contains(layer.Id) || 
+                                    elementLayers.Contains(restrictLayer.Id) || 
                                     element is HoleElement) { 
 
                                     // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
@@ -187,7 +185,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 int minY = Int32.MaxValue;
                 int maxX = Int32.MinValue;
                 int maxY = Int32.MinValue;
-                foreach (var element in GetElements(_outlineLayer.Name)) {
+                foreach (var element in GetElements(_outlineLayer)) {
                     Rect r = element.GetBoundingBox(BoardSide.None);
                     if (minX > r.Left)
                         minX = r.Left;

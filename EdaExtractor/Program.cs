@@ -1,8 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Extractor {
 
+    using System.IO;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.IO;
-    using System.IO;
 
     class Program {
 

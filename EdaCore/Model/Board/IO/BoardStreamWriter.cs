@@ -405,8 +405,8 @@
 
                 writer.WriteStartElement("layer");
 
+                writer.WriteAttributeString("id", layer.Id.ToString());
                 writer.WriteAttributeEnum("side", layer.Side);
-                writer.WriteAttributeString("tag", layer.Tag);
                 writer.WriteAttributeEnum("function", layer.Function);
 
                 writer.WriteEndElement();

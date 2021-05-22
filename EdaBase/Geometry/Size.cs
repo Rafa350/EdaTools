@@ -78,7 +78,7 @@
         /// <returns>True si son iguals.</returns>
         /// 
         public override bool Equals(object obj) =>
-            (obj is Size other) ? Equals(other) : false;
+            (obj is Size other) && Equals(other);
 
         public static bool operator ==(Size s1, Size s2) => 
             s1.Equals(s2);

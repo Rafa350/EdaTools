@@ -7,11 +7,11 @@
     using Avalonia.Input;
     using Avalonia.Markup.Xaml;
     using Avalonia.Media;
+    using EdaBoardViewer.Render;
+    using EdaBoardViewer.Tools;
     using EdaBoardViewer.Views.Controls;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.IO;
-    using EdaBoardViewer.Render;
-    using EdaBoardViewer.Tools;
 
     public class SceneView : UserControl {
 
@@ -32,6 +32,7 @@
                 //string fileName = "panel3.xbrd";
                 //string fileName = "test.xbrd";
                 string fileName = "md-cpu07.xbrd";
+                //string fileName = "md-cpu04d.xbrd";
                 using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
                     BoardStreamReader reader = new BoardStreamReader(stream);
                     board = reader.Read();
