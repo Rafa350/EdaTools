@@ -1,9 +1,10 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Import.KiCad.Infrastructure {
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
 
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
+namespace MikroPic.EdaTools.v1.Core.Import.KiCad.Infrastructure {
 
     public static class SNodeExtensions {
 
@@ -41,6 +42,20 @@
 
             else
                 throw new InvalidOperationException("No es un nodo terminal.");
+        }
+
+        public static string ValueAsStrings(this STree tree, SNode node) {
+
+            var sb = new StringBuilder();
+            bool first = true;
+            foreach (var n in (node as SBranch).Nodes) {
+                if (first)
+                    first = false;
+                else
+                    sb.Append(", ");
+                sb.Append(tree.GetNodeValue(n as SLeaf));
+            }
+            return sb.ToString();
         }
 
         public static string GetBranchName(this STree tree, SBranch branch) {

@@ -59,14 +59,14 @@
                 Color.FromArgb(100, 150, 0, 0)));
 
             vls.Add(new VisualLayer("TopPlace",
-                new LayerId[] { LayerId.Get("Top.Place") },
+                new LayerId[] { LayerId.TopPlace },
                 null,
                 true,
                 VisualMode.Element,
                 Color.FromArgb(204, 211, 211, 211)));
 
             vls.Add(new VisualLayer("TopDocument",
-                new LayerId[] { LayerId.Get("Top.Document") },
+                new LayerId[] { LayerId.TopDocument },
                 null,
                 true,
                 VisualMode.Element,
@@ -93,23 +93,22 @@
                 VisualMode.Element,
                 Color.FromArgb(180, 0, 128, 0)));
 
-            //vls.Add(new VisualLayer("Drills", new LayerSet(Layer.DrillsId), true, new Color(255, 255, 255, 255)));
             vls.Add(new VisualLayer("Holes",
                 new LayerId[] { LayerId.Holes },
-                null,
+                new ElementType[] { ElementType.Hole },
                 true,
                 VisualMode.Element,
                 Color.FromArgb(255, 240, 128, 128)));
 
             vls.Add(new VisualLayer("Milling",
-                new LayerId[] { LayerId.Get("Milling") },
+                new LayerId[] { LayerId.Milling },
                 null,
                 true,
                 VisualMode.Element,
                 Color.FromArgb(255, 32, 216, 200)));
 
             vls.Add(new VisualLayer("Keepout",
-                new LayerId[] { LayerId.Get("Top.Keepout") },
+                new LayerId[] { LayerId.TopKeepout },
                 null,
                 true,
                 VisualMode.Element,

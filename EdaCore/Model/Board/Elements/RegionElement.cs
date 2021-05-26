@@ -13,14 +13,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
-        /// <param name="layerSet">El conjunt de capes.</param>
+        /// <param name="layerId">La capa.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="filled">True si es ple.</param>
         /// <param name="clearance">Distancia d'aillament.</param>
         /// <param name="segments">Llista de segments.</param>
         /// 
-        public RegionElement(LayerSet layerSet, int thickness, bool filled, int clearance, IEnumerable<Segment> segments = null) :
-            base(layerSet, thickness, filled, segments) {
+        public RegionElement(LayerId layerId, int thickness, bool filled, int clearance, IEnumerable<Segment> segments = null) :
+            base(layerId, thickness, filled, segments) {
 
             if (clearance < 0)
                 throw new ArgumentOutOfRangeException(nameof(clearance));
@@ -32,20 +32,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                     Add(segment);
         }
 
-        /// <summary>
-        ///  Obte un clon de l'objecte.
-        /// </summary>
-        /// <returns>El clon de l'objecte.</returns>
+        /// <inheritdoc/>
         /// 
         public override Element Clone() {
 
-            return new RegionElement(LayerSet, Thickness, Filled, _clearance, Segments);
+            return new RegionElement(LayerId, Thickness, Filled, _clearance, Segments);
         }
 
-        /// <summary>
-        /// Accepta un visitador.
-        /// </summary>
-        /// <param name="visitor">El visitador.</param>
+        /// <inheritdoc/>
         /// 
         public override void AcceptVisitor(IBoardVisitor visitor) {
 

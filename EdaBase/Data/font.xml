@@ -418,7 +418,7 @@
             <char code="0x54" advance="6">
                 <glyph>
                     <moveTo position="0, 6"/>
-                    <lineTo position="4, 1"/>                    
+                    <lineTo position="4, 6"/>                    
                     <moveTo position="2, 6"/>
                     <lineTo position="2, 0"/>                    
                 </glyph>
@@ -454,12 +454,21 @@
             <!-- X -->
             <char code="0x58" advance="6">
                 <glyph>
+                    <moveTo position="0, 6"/>
+                    <lineTo position="4, 0"/>
+                    <moveTo position="4, 6"/>
+                    <lineTo position="0, 0"/>
                 </glyph>
             </char>
             
             <!-- Y -->
             <char code="0x59" advance="6">
                 <glyph>
+                    <moveTo position="0, 6"/>
+                    <lineTo position="2, 3"/>
+                    <lineTo position="4, 6"/>
+                    <moveTo position="2, 3"/>
+                    <lineTo position="2, 0"/>
                 </glyph>
             </char>
             

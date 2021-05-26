@@ -9,8 +9,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un rectangle.
     /// </summary>
     /// 
-    public sealed class RectangleElement : Element, IPosition, ISize, IRotation {
+    public sealed class RectangleElement : Element, ILayer, IPosition, ISize, IRotation {
 
+        private LayerId _layerId;
         private Point _position;
         private Size _size;
         private Angle _rotation;
@@ -21,7 +22,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
-        /// <param name="layerSet">El conjunt de capes.</param>
+        /// <param name="layerId">La capa.</param>
         /// <param name="position">Posicio del centre geometric.</param>
         /// <param name="size">Amplada i alçada del rectangle.</param>
         /// <param name="roundness">Factor d'arrodoniment de les cantonades.</param>
@@ -29,9 +30,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <param name="thickness">Amplada de linia. Si es zero, es un rectangle ple.</param>
         /// <param name="filled">True indica si cal omplir el rectangle.</param>
         /// 
-        public RectangleElement(LayerSet layerSet, Point position, Size size, Ratio roundness, Angle rotation, int thickness, bool filled) :
-            base(layerSet) {
+        public RectangleElement(LayerId layerId, Point position, Size size, Ratio roundness, Angle rotation, int thickness, bool filled) :
+            base() {
 
+            _layerId = layerId;
             _position = position;
             _size = size;
             _roundness = roundness;
@@ -40,20 +42,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             _filled = filled;
         }
 
-        /// <summary>
-        /// Obte un clon de l'element.
-        /// </summary>
-        /// <returns>El clon de l'element.</returns>
+        /// <inheritdoc/>
         /// 
         public override Element Clone() {
 
-            return new RectangleElement(LayerSet, _position, _size, _roundness, _rotation, _thickness, _filled);
+            return new RectangleElement(_layerId, _position, _size, _roundness, _rotation, _thickness, _filled);
         }
 
-        /// <summary>
-        /// Accepta un visitador del objecte.
-        /// </summary>
-        /// <param name="visitor">El visitador.</param>
+        /// <inheritdoc/>
         /// 
         public override void AcceptVisitor(IBoardVisitor visitor) {
 
@@ -69,15 +65,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override Polygon GetPolygon(BoardSide side) {
 
             if (Filled) {
-                Point[] points = PolygonBuilder.MakeRectangle(_position, _size, Radius, _rotation);
+                var points = PolygonBuilder.MakeRectangle(_position, _size, Radius, _rotation);
                 return new Polygon(points);
             }
             else {
-                Size outerSize = new Size(_size.Width + _thickness, _size.Height + _thickness);
-                Point[] outerPoints = PolygonBuilder.MakeRectangle(_position, outerSize, Radius, _rotation);
+                var outerSize = new Size(_size.Width + _thickness, _size.Height + _thickness);
+                var outerPoints = PolygonBuilder.MakeRectangle(_position, outerSize, Radius, _rotation);
 
-                Size innerSize = new Size(_size.Width - _thickness, _size.Height - _thickness);
-                Point[] innerPoints = PolygonBuilder.MakeRectangle(_position, innerSize, Math.Max(0, Radius - _thickness), _rotation);
+                var innerSize = new Size(_size.Width - _thickness, _size.Height - _thickness);
+                var innerPoints = PolygonBuilder.MakeRectangle(_position, innerSize, Math.Max(0, Radius - _thickness), _rotation);
 
                 return new Polygon(outerPoints, new Polygon(innerPoints));
             }
@@ -92,8 +88,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Size outerSize = new Size(_size.Width + _thickness + spacing * 2, _size.Height + _thickness + spacing * 2);
-            Point[] points = PolygonBuilder.MakeRectangle(_position, outerSize, Radius, _rotation);
+            var outerSize = new Size(_size.Width + _thickness + spacing * 2, _size.Height + _thickness + spacing * 2);
+            var points = PolygonBuilder.MakeRectangle(_position, outerSize, Radius, _rotation);
             return new Polygon(points);
         }
 
@@ -117,16 +113,21 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
+        /// Obte o asigna la capa.
+        /// </summary>
+        /// 
+        public LayerId LayerId {
+            get => _layerId;
+            set => _layerId = value;
+        }
+
+        /// <summary>
         ///  Obte o asigna la posicio del centre geometric del rectangle.
         /// </summary>
         /// 
         public Point Position {
-            get {
-                return _position;
-            }
-            set {
-                _position = value;
-            }
+            get => _position;
+            set => _position = value;
         }
 
         /// <summary>
@@ -152,24 +153,17 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// 
         public Ratio Roundness {
-            get {
-                return _roundness;
-            }
-            set {
-                _roundness = value;
-            }
+            get => _roundness;
+            set => _roundness = value;
         }
 
         /// <summary>
         /// Obte el radi de curvatura de les cantonades.
         /// </summary>
         /// 
-        public int Radius {
-            get {
-                return (Math.Min(_size.Width, _size.Height) * _roundness) >> 1;
-            }
-        }
-
+        public int Radius =>
+            (Math.Min(_size.Width, _size.Height) * _roundness) >> 1;
+            
         /// <summary>
         /// Obte o asigna l'amplada de linia.
         /// </summary>
@@ -191,13 +185,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// 
         public bool Filled {
-            get {
-                return (_thickness == 0) || _filled;
-            }
-            set {
-                _filled = value;
-            }
+            get => (_thickness == 0) || _filled;
+            set => _filled = value;
         }
+
+        /// <inheritdoc/>
+        /// 
+        public override bool IsOnLayer(LayerId layerId) =>
+            _layerId == layerId;
 
         /// <summary>
         /// Obte el tipus d'element.

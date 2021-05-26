@@ -9,7 +9,9 @@
         name="document">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="board" maxOccurs="unbounded" minOccurs="1"/>
+                <xs:choice minOccurs="1" maxOccurs="1">
+                    <xs:element ref="board" maxOccurs="unbounded" minOccurs="1"/>
+                </xs:choice>
             </xs:sequence>
             <xs:attribute name="version" use="required" type="xs:string"/>
             <xs:attribute name="documentType" use="required" type="xs:string"/>
@@ -175,7 +177,7 @@
     <xs:element
         name="line">
         <xs:complexType>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
+            <xs:attribute name="layer" use="required" type="xs:string"/>
             <xs:attribute name="startPosition" use="required" type="pointType"/>
             <xs:attribute name="endPosition" use="required" type="pointType"/>
             <xs:attribute name="thickness" use="optional" type="xs:double"/>
@@ -187,7 +189,7 @@
     <xs:element
         name="arc">
         <xs:complexType>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
+            <xs:attribute name="layer" use="required" type="xs:string"/>
             <xs:attribute name="startPosition" use="required" type="pointType"/>
             <xs:attribute name="endPosition" use="required" type="pointType"/>
             <xs:attribute name="angle" use="required" type="angleType"/>
@@ -200,7 +202,7 @@
     <xs:element
         name="rectangle">
         <xs:complexType>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
+            <xs:attribute name="layer" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="size" use="required" type="sizeType"/>
             <xs:attribute name="rotation" use="optional" type="angleType"/>
@@ -213,7 +215,7 @@
     <xs:element
         name="circle">
         <xs:complexType>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
+            <xs:attribute name="layer" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="thickness" use="optional" type="xs:double"/>
             <xs:attribute name="radius" use="required" type="xs:double"/>
@@ -227,7 +229,7 @@
             <xs:sequence>
                 <xs:element ref="segment" minOccurs="1" maxOccurs="unbounded"/>
             </xs:sequence>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
+            <xs:attribute name="layer" use="required" type="xs:string"/>
             <xs:attribute name="thickness" use="optional" type="xs:double"/>
             <xs:attribute name="clearance" use="optional" type="xs:double"/>
             <xs:attribute name="filled" use="optional" type="xs:boolean"/>
@@ -246,7 +248,8 @@
     <xs:element
         name="via">
         <xs:complexType>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
+            <xs:attribute name="topLayer" use="required" type="xs:string"/>
+            <xs:attribute name="bottomLayer" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="outerSize" use="required" type="xs:double"/>
             <xs:attribute name="innerSize" use="optional" type="xs:double"/>
@@ -260,12 +263,13 @@
         name="tpad">
         <xs:complexType>
             <xs:attribute name="name" use="required" type="nameType"/>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="size" use="required" type="xs:double"/>
             <xs:attribute name="drill" use="required" type="xs:double"/>
             <xs:attribute name="rotation" use="optional" type="angleType"/>
             <xs:attribute name="shape" use="optional" type="tpadShapeType"/>
+            <xs:attribute name="stop" use="optional" type="xs:string"/>
+            <xs:attribute name="stopMargin" use="optional" type="xs:double"/>
         </xs:complexType>
     </xs:element>
 
@@ -273,18 +277,21 @@
         name="spad">
         <xs:complexType>
             <xs:attribute name="name" use="required" type="nameType"/>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
+            <xs:attribute name="layer" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="size" use="required" type="sizeType"/>
             <xs:attribute name="rotation" use="optional" type="angleType"/>
             <xs:attribute name="roundness" use="optional" type="xs:double"/>
+            <xs:attribute name="stop" use="optional" type="xs:string"/>
+            <xs:attribute name="cream" use="optional" type="xs:string"/>
+            <xs:attribute name="creamMargin" use="optional" type="xs:double"/>
         </xs:complexType>
     </xs:element>
 
     <xs:element
         name="text">
         <xs:complexType>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
+            <xs:attribute name="layer" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="height" use="required" type="xs:double"/>
             <xs:attribute name="thickness" use="required" type="xs:double"/>
@@ -298,7 +305,6 @@
     <xs:element
         name="hole">
         <xs:complexType>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="drill" use="required" type="xs:double"/>
         </xs:complexType>

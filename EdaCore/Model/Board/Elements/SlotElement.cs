@@ -12,9 +12,9 @@
         private int _innerSize;
         private int _bottomSize;
 
-        SlotElement(string name, LayerSet layerSet, Point position, Angle rotation, int topSize,
+        SlotElement(string name, Point position, Angle rotation, int topSize,
             int innerSize, int bottomSize, int drill, int length) :
-            base(name, layerSet, position, rotation) {
+            base(name, position, rotation) {
 
             if (topSize < 0)
                 throw new ArgumentOutOfRangeException(nameof(topSize));
@@ -35,16 +35,22 @@
             _length = length;
         }
 
+        /// <inheritdoc/>
+        /// 
         public override Element Clone() {
 
-            return new SlotElement(Name, LayerSet, Position, Rotation, _topSize, _innerSize, _bottomSize, _drill, _length);
+            return new SlotElement(Name, Position, Rotation, _topSize, _innerSize, _bottomSize, _drill, _length);
         }
 
+        /// <inheritdoc/>
+        /// 
         public override void AcceptVisitor(IBoardVisitor visitor) {
 
             visitor.Visit(this);
         }
 
+        /// <inheritdoc/>
+        /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
             double a = Rotation.ToRadiants;
@@ -66,35 +72,32 @@
             return new Rect(Position.X - (w / 2), Position.Y - (h / 2), w, h);
         }
 
+        /// <inheritdoc/>
+        /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
             throw new System.NotImplementedException();
         }
 
+        /// <inheritdoc/>
+        /// 
         public override Polygon GetPolygon(BoardSide side) {
             throw new System.NotImplementedException();
         }
 
+        /// <inheritdoc/>
+        /// 
         public override Polygon GetThermalPolygon(BoardSide side, int spacing, int width) {
             throw new System.NotImplementedException();
         }
 
-        public int Length {
-            get {
-                return _length;
-            }
-        }
+        public int Length =>
+            _length;
 
-        public int TopSize {
-            get {
-                return _topSize;
-            }
-        }
+        public int TopSize =>
+            _topSize;
 
-        public int InnerSize {
-            get {
-                return _innerSize;
-            }
-        }
+        public int InnerSize =>
+            _innerSize;
 
         public int BottomSize {
             get {

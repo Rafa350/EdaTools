@@ -2,7 +2,7 @@
   "profiles": {
     "EdaCamTool": {
       "commandName": "Project",
-      "commandLineArgs": "panel3.xcam /o:panel3_Build /v",
+      "commandLineArgs": "md-cpu07.xcam /o:md-cpu07_Build /v",
       "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\Net\\EdaTools\\Data"
     }
   }

@@ -20,7 +20,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <param name="drill">Diametre del forat.</param>
         /// 
         public HoleElement(Point position, int drill) :
-            base(default) {
+            base() {
 
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException(nameof(drill));
@@ -29,10 +29,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             _drill = drill;
         }
 
-        /// <summary>
-        /// Obte un clon de l'element.
-        /// </summary>
-        /// <returns>El clon de l'element.</returns>
+        /// <inheritdoc/>
         /// 
         public override Element Clone() {
 
@@ -57,7 +54,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            Point[] points = PolygonBuilder.MakeCircle(_position, _drill / 2);
+            var points = PolygonBuilder.MakeCircle(_position, _drill / 2);
             return new Polygon(points);
         }
 
@@ -70,7 +67,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = PolygonBuilder.MakeCircle(_position, (_drill / 2) + spacing);
+            var points = PolygonBuilder.MakeCircle(_position, (_drill / 2) + spacing);
             return new Polygon(points);
         }
 
@@ -85,15 +82,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             return new Rect(_position.X - _drill / 2, _position.Y - _drill / 2, _drill, _drill);
         }
 
-        /// <summary>
-        /// Obte el conjunt de capes.
-        /// </summary>
-        /// <returns>El resultat.</returns>
+        /// <inheritdoc/>
         /// 
-        protected override LayerSet GetLayerSet() {
+        public override bool IsOnLayer(LayerId layerId) =>
+            layerId == LayerId.Holes;
             
-            return base.GetLayerSet() + LayerId.Holes;
-        }
 
         /// <summary>
         ///  Obte o asigna la posicio del centre del cercle.

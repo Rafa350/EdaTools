@@ -8,8 +8,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// <summary>
     /// Clase que representa un cercle.
     /// </summary>
-    public sealed class CircleElement : Element, IPosition {
+    public sealed class CircleElement : Element, ILayer, IPosition {
 
+        private LayerId _layerId;
         private Point _position;
         private int _radius;
         private int _thickness;
@@ -18,30 +19,30 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="layerSet">El conjunt de capes.</param>
+        /// <param name="layerId">La capa.</param>
         /// <param name="position">Posicio del centre.</param>
         /// <param name="radius">Radi.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="filled">True si cal omplir el cercle.</param>
         /// 
-        public CircleElement(LayerSet layerSet, Point position, int radius, int thickness, bool filled) :
-            base(layerSet) {
+        public CircleElement(LayerId layerId, Point position, int radius, int thickness, bool filled) :
+            base() {
 
+            _layerId = layerId;
             _position = position;
             _radius = radius;
             _thickness = thickness;
             _filled = filled;
         }
 
+        /// <inheritdoc/>
+        /// 
         public override Element Clone() {
 
-            return new CircleElement(LayerSet, _position, _radius, _thickness, _filled);
+            return new CircleElement(_layerId, _position, _radius, _thickness, _filled);
         }
 
-        /// <summary>
-        /// Accepta un visitador del objecte.
-        /// </summary>
-        /// <param name="visitor">El visitador.</param>
+        /// <inheritdoc/>
         /// 
         public override void AcceptVisitor(IBoardVisitor visitor) {
 
@@ -57,12 +58,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override Polygon GetPolygon(BoardSide side) {
 
             if (Filled) {
-                Point[] points = PolygonBuilder.MakeCircle(_position, _radius);
+                var points = PolygonBuilder.MakeCircle(_position, _radius);
                 return new Polygon(points);
             }
             else {
-                Point[] outerPoints = PolygonBuilder.MakeCircle(_position, _radius + (_thickness / 2));
-                Point[] innerPoints = PolygonBuilder.MakeCircle(_position, _radius - (_thickness / 2));
+                var outerPoints = PolygonBuilder.MakeCircle(_position, _radius + (_thickness / 2));
+                var innerPoints = PolygonBuilder.MakeCircle(_position, _radius - (_thickness / 2));
                 return new Polygon(outerPoints, new Polygon(innerPoints));
             }
         }
@@ -76,7 +77,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Point[] points = PolygonBuilder.MakeCircle(_position, _radius + (_thickness / 2) + spacing);
+            var points = PolygonBuilder.MakeCircle(_position, _radius + (_thickness / 2) + spacing);
             return new Polygon(points);
         }
 
@@ -90,6 +91,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
             int r = _radius + (_thickness / 2);
             return new Rect(_position.X - r, _position.Y - r, r + r, r + r);
+        }
+
+        /// <summary>
+        /// Obte o asigna la capa.
+        /// </summary>
+        /// 
+        public LayerId LayerId {
+            get => _layerId;
+            set => _layerId = value;
         }
 
         /// <summary>
@@ -157,6 +167,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => (_thickness == 0) || _filled;
             set => _filled = value;
         }
+
+        /// <inheritdoc/>
+        /// 
+        public override bool IsOnLayer(LayerId layerId) =>
+            _layerId == layerId;
 
         /// <summary>
         /// Obte el tipus d'element.

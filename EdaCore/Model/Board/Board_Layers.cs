@@ -11,8 +11,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
         private Dictionary<LayerId, Layer> _layers = new Dictionary<LayerId, Layer>();
         private Layer _outlineLayer;
-        private Layer _topLayer;
-        private Layer _bottomLayer;
 
         /// <summary>
         /// Afegeix una capa a la placa. L'ordre en que s'afegeixen corresponen a l'apilament fisic de la placa.
@@ -28,15 +26,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 throw new InvalidOperationException(
                     String.Format("La capa '{0}', ya esta asignada a esta placa.", layer.Id));
 
-            if (layer.IsTopCopper)
-                _topLayer = layer;
-            else if (layer.IsBottomCopper)
-                _bottomLayer = layer;
-            else if (layer.Function == LayerFunction.Outline) {
-                if (_outlineLayer == null)
-                    _outlineLayer = layer;
-                else
-                    throw new InvalidOperationException("Solo puede haber una capa con la funcion 'Outline'");
+            if (layer.Function == LayerFunction.Outline) {
+                if (_outlineLayer != null)
+                    throw new InvalidOperationException("Solo puede haber una capa con la funcion OutLine.");
+                _outlineLayer = layer;
             }
 
             if (_layers == null)
@@ -75,13 +68,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             _layers.Remove(layer.Id);
             if (_layers.Count == 0)
                 _layers = null;
-
-            if (_topLayer == layer)
-                _topLayer = null;
-            else if (_bottomLayer == layer)
-                _bottomLayer = null;
-            else if (_outlineLayer == layer)
-                _outlineLayer = null;
         }
 
         /// <summary>
@@ -130,60 +116,17 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             var list = new List<Element>();
 
             foreach (var element in Elements)
-                if (element.IsOnLayer(layer))
+                if (element.IsOnLayer(layer.Id))
                     list.Add(element);
 
             if (includeComponents)
                 foreach (var component in Components)
                     foreach (var element in component.Elements)
-                        if (element.IsOnLayer(layer))
+                        if (element.IsOnLayer(layer.Id))
                             list.Add(element);
 
             return list;
         }
-
-        /// <summary>
-        /// Obte les capes d'un element.
-        /// </summary>
-        /// <param name="element">L'element.</param>
-        /// <returns>Les capes.</returns>
-        /// 
-        public IEnumerable<Layer> GetLayers(Element element) {
-
-            if (element == null)
-                throw new ArgumentNullException(nameof(element));
-
-            var list = new List<Layer>();
-
-            foreach (var id in element.LayerSet) {
-                Layer layer = GetLayer(id, false);
-                if (layer != null)
-                    list.Add(layer);
-            }
-
-            return list;
-        }
-
-        /// <summary>
-        /// Obte la capa superior.
-        /// </summary>
-        /// 
-        public Layer TopLayer =>
-            _topLayer;
-
-        /// <summary>
-        /// Obte la capa inferior.
-        /// </summary>
-        /// 
-        public Layer BottomLayer =>
-           _bottomLayer;
-
-        /// <summary>
-        /// Obte la capa de perfil.
-        /// </summary>
-        /// 
-        public Layer OutlineLayer =>
-            _outlineLayer;
 
         /// <summary>
         /// Indica si te capes
@@ -198,6 +141,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// 
         public IEnumerable<Layer> Layers =>
             _layers?.Values;
+
+        /// <summary>
+        /// Obte la capa del perfil de la placa.
+        /// </summary>
+        /// 
+        public Layer OutlineLayer =>
+            _outlineLayer;
     }
 }
 

@@ -46,7 +46,7 @@
 
                 writer.WriteStartElement("line");
 
-                writer.WriteAttributeString("layers", line.LayerSet.ToString());
+                writer.WriteAttributeString("layer", line.LayerId.ToString());
                 writer.WriteAttributeString("startPosition", XmlTypeFormater.FormatPoint(line.StartPosition));
                 writer.WriteAttributeString("endPosition", XmlTypeFormater.FormatPoint(line.EndPosition));
                 if (line.Thickness > 0)
@@ -72,7 +72,7 @@
 
                 writer.WriteStartElement("arc");
 
-                writer.WriteAttributeString("layers", arc.LayerSet.ToString());
+                writer.WriteAttributeString("layer", arc.LayerId.ToString());
                 writer.WriteAttributeString("startPosition", XmlTypeFormater.FormatPoint(arc.StartPosition));
                 writer.WriteAttributeString("endPosition", XmlTypeFormater.FormatPoint(arc.EndPosition));
                 writer.WriteAttributeString("angle", XmlTypeFormater.FormatAngle(arc.Angle));
@@ -99,7 +99,7 @@
 
                 writer.WriteStartElement("rectangle");
 
-                writer.WriteAttributeString("layers", rectangle.LayerSet.ToString());
+                writer.WriteAttributeString("layer", rectangle.LayerId.ToString());
                 writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(rectangle.Position));
                 writer.WriteAttributeString("size", XmlTypeFormater.FormatSize(rectangle.Size));
                 if (!rectangle.Rotation.IsZero)
@@ -122,7 +122,7 @@
 
                 writer.WriteStartElement("circle");
 
-                writer.WriteAttributeString("layers", circle.LayerSet.ToString());
+                writer.WriteAttributeString("layer", circle.LayerId.ToString());
                 writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(circle.Position));
                 writer.WriteAttributeString("radius", XmlTypeFormater.FormatNumber(circle.Radius));
                 if (circle.Thickness > 0) {
@@ -143,7 +143,7 @@
 
                 writer.WriteStartElement("text");
 
-                writer.WriteAttributeString("layers", text.LayerSet.ToString());
+                writer.WriteAttributeString("layer", text.LayerId.ToString());
                 writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(text.Position));
                 if (!text.Rotation.IsZero)
                     writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(text.Rotation));
@@ -168,7 +168,6 @@
 
                 writer.WriteStartElement("hole");
 
-                writer.WriteAttributeString("layers", hole.LayerSet.ToString());
                 writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(hole.Position));
                 writer.WriteAttributeString("drill", XmlTypeFormater.FormatNumber(hole.Drill));
 
@@ -185,13 +184,23 @@
                 writer.WriteStartElement("spad");
 
                 writer.WriteAttributeString("name", pad.Name);
-                writer.WriteAttributeString("layers", pad.LayerSet.ToString());
+                writer.WriteAttributeString("layer", pad.LayerId.ToString());
                 writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(pad.Position));
                 if (!pad.Rotation.IsZero)
                     writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(pad.Rotation));
                 writer.WriteAttributeString("size", XmlTypeFormater.FormatSize(pad.Size));
                 if (!pad.Roundness.IsZero)
                     writer.WriteAttributeString("roundness", XmlTypeFormater.FormatRatio(pad.Roundness));
+                if (pad.Stop) {
+                    writer.WriteAttributeString("stop", "true");
+                    if (pad.StopMargin > 0)
+                        writer.WriteAttributeString("stopMargin", XmlTypeFormater.FormatNumber(pad.StopMargin));
+                }
+                if (pad.Cream) {
+                    writer.WriteAttributeString("cream", "true");
+                    if (pad.CreamMargin > 0)
+                        writer.WriteAttributeString("creamMargin", XmlTypeFormater.FormatNumber(pad.CreamMargin));
+                }
 
                 if (currentBoard != null) {
                     Signal signal = currentBoard.GetSignal(pad, currentPart, false);
@@ -212,7 +221,6 @@
                 writer.WriteStartElement("tpad");
 
                 writer.WriteAttributeString("name", pad.Name);
-                writer.WriteAttributeString("layers", pad.LayerSet.ToString());
                 writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(pad.Position));
                 if (!pad.Rotation.IsZero)
                     writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(pad.Rotation));
@@ -220,6 +228,10 @@
                 writer.WriteAttributeString("drill", XmlTypeFormater.FormatNumber(pad.Drill));
                 if (pad.Shape != ThPadElement.ThPadShape.Circle)
                     writer.WriteAttributeEnum("shape", pad.Shape);
+                if (pad.Stop) {
+                    writer.WriteAttributeString("stop", "true");
+                    writer.WriteAttributeString("stopMargin", XmlTypeFormater.FormatNumber(pad.StopMargin));
+                }
 
                 if (currentBoard != null) {
                     Signal signal = currentBoard.GetSignal(pad, currentPart, false);
@@ -283,7 +295,7 @@
 
                 writer.WriteStartElement("region");
 
-                writer.WriteAttributeString("layers", region.LayerSet.ToString());
+                writer.WriteAttributeString("layer", region.LayerId.ToString());
                 if (region.Thickness > 0) {
                     writer.WriteAttributeString("thickness", XmlTypeFormater.FormatNumber(region.Thickness));
                     if (region.Filled)
@@ -376,16 +388,15 @@
 
                 writer.WriteStartElement("via");
 
+                writer.WriteAttributeString("topLayer", via.TopLayerId.ToString());
+                writer.WriteAttributeString("bottomLayer", via.BottomLayerId.ToString());
                 writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(via.Position));
-                writer.WriteAttributeString("layers", via.LayerSet.ToString());
                 writer.WriteAttributeString("drill", XmlTypeFormater.FormatNumber(via.Drill));
                 writer.WriteAttributeString("outerSize", XmlTypeFormater.FormatNumber(via.OuterSize));
                 if (via.InnerSize != via.OuterSize)
                     writer.WriteAttributeString("innerSize", XmlTypeFormater.FormatNumber(via.InnerSize));
                 if (via.Shape != ViaElement.ViaShape.Circle)
                     writer.WriteAttributeEnum("shape", via.Shape);
-                if (via.Type != ViaElement.ViaType.Through)
-                    writer.WriteAttributeEnum("type", via.Type);
 
                 if (currentBoard != null) {
                     Signal signal = currentBoard.GetSignal(via, null, false);

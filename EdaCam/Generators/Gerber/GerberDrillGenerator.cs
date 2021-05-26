@@ -90,8 +90,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// 
         private void PrepareApertures(ApertureDictionary apertures, Board board) {
 
-            foreach (var layerId in Target.LayerNames.Select(name => LayerId.Get(name))) {
-                IBoardVisitor visitor = new PrepareAperturesVisitor(layerId, apertures);
+            foreach (var name in Target.LayerNames) {
+                var visitor = new PrepareAperturesVisitor(LayerId.Get(name), apertures);
                 board.AcceptVisitor(visitor);
             }
         }
@@ -176,8 +176,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         private void GenerateImage(GerberBuilder gb, Board board, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
-            foreach (var layerId in Target.LayerNames.Select(name => LayerId.Get(name))) {
-                IBoardVisitor visitor = new ImageGeneratorVisitor(gb, layerId, apertures);
+            foreach (var name in Target.LayerNames) {
+                var visitor = new ImageGeneratorVisitor(gb, LayerId.Get(name), apertures);
                 board.AcceptVisitor(visitor);
             }
             gb.Comment("END IMAGE");
@@ -260,7 +260,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             private bool CanVisit(Element element) {
 
-                return element.LayerSet.Contains(_layerId);
+                return element.IsOnLayer(_layerId);
             }
         }
 
@@ -409,7 +409,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             private bool CanVisit(Element element) {
 
-                return element.LayerSet.Contains(_layerId);
+                return element.IsOnLayer(_layerId);
             }
         }
     }

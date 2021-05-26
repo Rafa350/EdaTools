@@ -19,14 +19,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             Oval
         }
 
-        private const double Cos2250 = 0.92387953251128675612818318939679;
+        private const double _cos2250 = 0.92387953251128675612818318939679;
 
-        private int drcTopSizeMin = 175000;
-        private int drcTopSizeMax = 2500000;
-        private Ratio drcTopSizePercent = Ratio.P25;
-        private int drcBottomSizeMin = 175000;
-        private int drcBottomSizeMax = 2500000;
-        private Ratio drcBottomSizePercent = Ratio.P25;
+        private int _drcTopSizeMin = 175000;
+        private int _drcTopSizeMax = 2500000;
+        private Ratio _drcTopSizePercent = Ratio.P25;
+        private int _drcBottomSizeMin = 175000;
+        private int _drcBottomSizeMax = 2500000;
+        private Ratio _drcBottomSizePercent = Ratio.P25;
 
         private ThPadShape _shape = ThPadShape.Circle;
         private int _topSize;
@@ -38,22 +38,20 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// Constructor del objecte.
         /// </summary>
         /// <param name="name">Nom.</param>
-        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="position">Posicio.</param>
         /// <param name="rotation">Orientacio.</param>
         /// <param name="size">Tamany/diametre del pad.</param>
         /// <param name="drill">Diametre del forat.</param>
         /// <param name="shape">Forma de la corona.</param>
         /// 
-        public ThPadElement(string name, LayerSet layerSet, Point position, Angle rotation, int size, ThPadShape shape, int drill) :
-            this(name, layerSet, position, rotation, size, size, size, shape, drill) {
+        public ThPadElement(string name, Point position, Angle rotation, int size, ThPadShape shape, int drill) :
+            this(name, position, rotation, size, size, size, shape, drill) {
         }
 
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
         /// <param name="name">Nom.</param>
-        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="position">Posicio.</param>
         /// <param name="rotation">Orientacio.</param>
         /// <param name="topSize">Tamany/diametre del pad.</param>
@@ -62,9 +60,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <param name="bottom">Diametre del forat.</param>
         /// <param name="drill">Forma de la corona.</param>
         /// 
-        public ThPadElement(string name, LayerSet layerSet, Point position, Angle rotation, int topSize, int innerSize,
+        public ThPadElement(string name, Point position, Angle rotation, int topSize, int innerSize,
             int bottomSize, ThPadShape shape, int drill) :
-            base(name, layerSet, position, rotation) {
+            base(name, position, rotation) {
 
             if (topSize < 0)
                 throw new ArgumentOutOfRangeException(nameof(topSize));
@@ -85,20 +83,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             _shape = shape;
         }
 
-        /// <summary>
-        /// Obte un clon de l'element.
-        /// </summary>
-        /// <returns>El clon de l'element.</returns>
+
+        /// <inheritdoc/>
         /// 
         public override Element Clone() {
 
-            return new ThPadElement(Name, LayerSet, Position, Rotation, _topSize, _innerSize, _bottomSize, _shape, _drill);
+            return new ThPadElement(Name, Position, Rotation, _topSize, _innerSize, _bottomSize, _shape, _drill);
         }
 
-        /// <summary>
-        /// Accepta un visitador.
-        /// </summary>
-        /// <param name="visitor">El visitador.</param>
+        /// <inheritdoc/>
         /// 
         public override void AcceptVisitor(IBoardVisitor visitor) {
 
@@ -139,7 +132,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                         Rotation);
 
                 case ThPadShape.Octagon: {
-                    int s = (int)((double)sizeD2 / Cos2250);
+                    int s = (int)((double)sizeD2 / _cos2250);
                     return PolygonBuilder.MakeRegularPolygon(
                         8,
                         Position,
@@ -173,8 +166,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             Polygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
-                Point[] points = MakePoints(side, 0);
-                Point[] holePoints = PolygonBuilder.MakeCircle(Position, _drill / 2);
+                var points = MakePoints(side, 0);
+                var holePoints = PolygonBuilder.MakeCircle(Position, _drill / 2);
                 polygon = new Polygon(points, new Polygon(holePoints));
 
                 PolygonCache.Save(hash, polygon);
@@ -196,7 +189,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             Polygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
                 
-                Point[] points = MakePoints(side, spacing);
+                var points = MakePoints(side, spacing);
                 polygon = new Polygon(points);
 
                 PolygonCache.Save(hash, polygon);
@@ -260,15 +253,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 BottomSize;
         }
 
-        /// <summary>
-        /// Obte el conjunt de capes.
-        /// </summary>
-        /// <returns>El resultat.</returns>
+        /// <inheritdoc/>
         /// 
-        protected override LayerSet GetLayerSet() {
-            
-            return base.GetLayerSet() + LayerId.Drills + LayerId.Pads + LayerId.TopCopper + LayerId.BottomCopper;
-        }
+        public override bool IsOnLayer(LayerId layerId) =>
+            layerId.IsSignal || (layerId == LayerId.Drills);
 
         /// <summary>
         /// Obte o asigna la forma del pad.
@@ -302,7 +290,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public int TopSize {
             get {
                 if (_topSize == 0) {
-                    int ring = Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, _drill * drcTopSizePercent));
+                    int ring = Math.Max(_drcTopSizeMin, Math.Min(_drcTopSizeMax, _drill * _drcTopSizePercent));
                     return _drill + ring * 2;
                 }
                 else
@@ -319,7 +307,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public int BottomSize {
             get {
                 if (_bottomSize == 0) {
-                    int ring = Math.Max(drcBottomSizeMin, Math.Min(drcBottomSizeMax, _drill * drcBottomSizePercent));
+                    int ring = Math.Max(_drcBottomSizeMin, Math.Min(_drcBottomSizeMax, _drill * _drcBottomSizePercent));
                     return _drill + ring * 2;
                 }
                 else
@@ -337,7 +325,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public int InnerSize {
             get {
                 if (_innerSize == 0) {
-                    int ring = Math.Max(drcTopSizeMin, Math.Min(drcTopSizeMax, _drill * drcTopSizePercent));
+                    int ring = Math.Max(_drcTopSizeMin, Math.Min(_drcTopSizeMax, _drill * _drcTopSizePercent));
                     return _drill + ring * 2;
                 }
                 else

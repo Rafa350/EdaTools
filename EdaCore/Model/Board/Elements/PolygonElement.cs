@@ -10,7 +10,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// <summary>
     /// Clase que representa una regio poligonal.
     /// </summary>
-    public class PolygonElement : Element {
+    public class PolygonElement : Element, ILayer {
 
         public sealed class Segment {
 
@@ -35,23 +35,25 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         private readonly List<Segment> _segments = new List<Segment>();
+        private LayerId _layerId;
         private int _thickness;
         private bool _filled;
 
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
-        /// <param name="layerSet">El conjunt de capes.</param>
+        /// <param name="layerId">La capa.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="filled">True si es ple.</param>
         /// <param name="segments">Llista de segments.</param>
         /// 
-        public PolygonElement(LayerSet layerSet, int thickness, bool filled, IEnumerable<Segment> segments = null) :
-            base(layerSet) {
+        public PolygonElement(LayerId layerId, int thickness, bool filled, IEnumerable<Segment> segments = null) :
+            base() {
 
             if (thickness < 0)
                 throw new ArgumentOutOfRangeException(nameof(thickness));
 
+            _layerId = layerId;
             _thickness = thickness;
             _filled = filled;
 
@@ -60,20 +62,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                     Add(segment);
         }
 
-        /// <summary>
-        /// Obrte una copia del objecte.
-        /// </summary>
-        /// <returns>L'objecte creat.</returns>
+        /// <inheritdoc/>
         /// 
         public override Element Clone() {
 
-            return new PolygonElement(LayerSet, _thickness, _filled, _segments);
+            return new PolygonElement(_layerId, _thickness, _filled, _segments);
         }
 
-        /// <summary>
-        /// Accepta un visitador.
-        /// </summary>
-        /// <param name="visitor">El visitador.</param>
+        /// <inheritdoc/>
         /// 
         public override void AcceptVisitor(IBoardVisitor visitor) {
 
@@ -192,6 +188,20 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public void AddArc(Point position, Angle angle) {
 
             Add(new Segment(position, angle));
+        }
+
+        /// <inheritdoc/>
+        /// 
+        public override bool IsOnLayer(LayerId layerId) =>
+            _layerId == layerId;
+
+        /// <summary>
+        /// Obte o asigna la capa.
+        /// </summary>
+        /// 
+        public LayerId LayerId {
+            get => _layerId;
+            set => _layerId = value;
         }
 
         /// <summary>

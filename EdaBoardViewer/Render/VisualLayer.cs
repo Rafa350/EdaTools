@@ -10,12 +10,12 @@
 
     public sealed class VisualLayer {
 
-        private readonly LayerId[] layerIds;
-        private readonly ElementType[] elementTypes;
-        private readonly string name;
-        private readonly VisualMode visualMode;
-        private readonly Color color;
-        private bool visible;
+        private readonly LayerId[] _layerIds;
+        private readonly ElementType[] _elementTypes;
+        private readonly string _name;
+        private readonly VisualMode _visualMode;
+        private readonly Color _color;
+        private bool _visible;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -29,12 +29,12 @@
         /// 
         public VisualLayer(string name, LayerId[] layerIds, ElementType[] elementTypes, bool visible, VisualMode visualMode, Color color) {
 
-            this.name = name;
-            this.layerIds = layerIds;
-            this.elementTypes = elementTypes;
-            this.visible = visible;
-            this.visualMode = visualMode;
-            this.color = color;
+            _name = name;
+            _layerIds = layerIds;
+            _elementTypes = elementTypes;
+            _visible = visible;
+            _visualMode = visualMode;
+            _color = color;
         }
 
         /// <summary>
@@ -42,7 +42,7 @@
         /// </summary>
         /// 
         public string Name => 
-            name;
+            _name;
 
         /// <summary>
         /// Comprova si un element es visible en aquesta capa.
@@ -52,19 +52,15 @@
         /// <returns>True si es visible, false en cas contrari.</returns>
         /// 
         public bool IsVisible(Part part, Element element) {
-
-            LayerSet layerSet = ((part != null) && part.Flip) ?
-                part.GetLocalLayerSet(element) :
-                element.LayerSet;
-
+            
             // Seleccio per capa
             //
             bool layerOk = false;
-            if (layerIds == null)
+            if (_layerIds == null)
                 layerOk = true;
             else
-                foreach (var layerId in layerIds) {
-                    if (layerSet.Contains(layerId)) {
+                foreach (var layerId in _layerIds) { 
+                    if (element.IsOnLayer(((part != null) && part.IsFlipped) ? layerId.Flip() : layerId)) {
                         layerOk = true;
                         break;
                     }
@@ -73,10 +69,10 @@
             // Seleccio per tipus
             //
             bool typeOk = false;
-            if (elementTypes == null)
+            if (_elementTypes == null)
                 typeOk = true;
             else
-                foreach (var elementType in elementTypes) {
+                foreach (var elementType in _elementTypes) {
                     if (element.ElementType == elementType) {
                         typeOk = true;
                         break;
@@ -91,21 +87,21 @@
         /// </summary>
         /// 
         public LayerId[] LayerIds => 
-            layerIds;
+            _layerIds;
 
         /// <summary>
         /// Obte la llista de tipus d'elements.
         /// </summary>
         /// 
         public ElementType[] ElementTypes =>
-            elementTypes;
+            _elementTypes;
 
         /// <summary>
         /// Obte el modus de visualitzacio.
         /// </summary>
         /// 
         public VisualMode VisualMode => 
-            visualMode;
+            _visualMode;
 
         /// <summary>
         /// Obte o asigna el indicador de visibilitat.
@@ -113,10 +109,10 @@
         /// 
         public bool Visible {
             get {
-                return visible;
+                return _visible;
             }
             set {
-                visible = value;
+                _visible = value;
             }
         }
 
@@ -125,13 +121,13 @@
         /// </summary>
         /// 
         public Color Color =>
-            Color.FromRgb(color.R, color.G, color.B);
+            Color.FromRgb(_color.R, _color.G, _color.B);
 
         /// <summary>
         /// Obte la opacitat.
         /// </summary>
         /// 
         public double Opacity =>
-            color.A / 255.0;
+            _color.A / 255.0;
     }
 }

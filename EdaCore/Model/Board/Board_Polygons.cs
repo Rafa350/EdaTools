@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
@@ -22,8 +23,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// 
         public Polygon GetOutlinePolygon() {
 
-            IEnumerable<Element> elements = GetElements(_outlineLayer);
-            List<Segment> segments = new List<Segment>();
+            var elements = GetElements(GetLayer(LayerId.Profile));
+            var segments = new List<Segment>();
             foreach (var element in elements) {
                 if (element is LineElement line)
                     segments.Add(new Segment(line.StartPosition, line.EndPosition));
@@ -45,23 +46,23 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="transformation">Transformacio a aplicar al poligon.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public Polygon GetRegionPolygon(RegionElement region, Layer layer, Transformation transformation) {
+        public Polygon GetRegionPolygon(RegionElement region, LayerId layerId, Transformation transformation) {
 
             if (region == null)
                 throw new ArgumentNullException(nameof(region));
 
             // Si el poligon no es troba en la capa d'interes, no cal fer res
             //
-            if (region.IsOnLayer(layer)) {
+            if (region.LayerId == layerId) {
 
                 // Obte el poligon de la regio i el transforma si s'escau
                 //
-                Polygon regionPolygon = region.GetPolygon(layer.Side);
+                Polygon regionPolygon = region.GetPolygon(layerId.Side);
                 regionPolygon = regionPolygon.Transformed(transformation);
 
                 // Si estem en capes de senyal, cal generar els porus i termals
                 //
-                if (layer.Function == LayerFunction.Signal) {
+                if (layerId.IsSignal) {
 
                     Rect regionBBox = regionPolygon.BoundingBox.Inflated(region.Clearance, region.Clearance);
 
@@ -71,40 +72,50 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                     List<Polygon> holePolygons = new List<Polygon>();
 
-                    Layer restrictLayer = GetLayer(layer.Side == BoardSide.Top ? LayerId.Get("Top.Restrict") : LayerId.Get("Bottom.Restrict"));
+                    LayerId restrictLayerId = layerId.Side == BoardSide.Top ? LayerId.TopRestrict : LayerId.BottomRestrict;
 
-                    // Procesa els elements de la placa que es troben en la mateixa capa que 
-                    // la regio, o en les capes restrict o profile.
+                    // Procesa els elements de la placa.
                     //
                     foreach (var element in Elements) {
-                        if ((element != region) && !(element is TextElement)) {
+                        if (element != region) {
 
-                            // El element es en la capa d'interes
+                            // Comprova si l'element es troba en la mateixa capa que la regio
                             //
-                            if (element.IsOnLayer(layer)) {
+                            if (element.IsOnLayer(layerId)) {
 
-                                // Si no esta en la mateixa senyal que la regio, genera un forat.
+                                // Comprova si el element pertany a una senal diferent de la regio
                                 //
                                 if (GetSignal(element, null, false) != regionSignal) {
+
+                                    // Genera un forat
+                                    //
                                     int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
                                     int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
-                                    Polygon elementPolygon = element.GetOutlinePolygon(layer.Side, clearance);
+                                    Polygon elementPolygon = element.GetOutlinePolygon(layerId.Side, clearance);
                                     if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                         holePolygons.Add(elementPolygon);
                                 }
                             }
 
-                            // El element esta el la capa restrict o holes
+                            // Comprova si l'element es troba en les capes restrict o holes.
                             //
-                            else if (element.IsOnLayer(restrictLayer) || element.IsOnLayer(LayerId.Holes)) {
-                                Polygon elementPolygon = element.GetPolygon(restrictLayer.Side);
+                            else if (element.IsOnLayer(restrictLayerId) ||
+                                     element.IsOnLayer(LayerId.Holes) ||
+                                     element.IsOnLayer(LayerId.Drills)) {
+
+                                // Genera un forat.
+                                //
+                                Polygon elementPolygon = element.GetPolygon(layerId.Side);
                                 if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                     holePolygons.Add(elementPolygon);
                             }
 
-                            // El element esta el la capa profile
+                            // Comprova si l'element es troba en la capa profiles.
                             //
-                            else if (element.IsOnLayer(_outlineLayer)) {
+                            else if (element.IsOnLayer(LayerId.Profile)) {
+
+                                // Genera un forat.
+                                //
                                 Polygon elementPolygon = element.GetOutlinePolygon(BoardSide.None, _outlineClearance);
                                 if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                     holePolygons.Add(elementPolygon);
@@ -120,21 +131,21 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                         //
                         Transformation localTransformation = part.GetLocalTransformation();
 
-                        // Procesa tots els elements del part, que no siguin la propia regio
+                        // Procesa els elements del component que es troben en la mateixa capa que la regio.
+                        // Si l'element no pertany a la mateixa senyal, genera un forat
                         //
                         foreach (var element in part.Elements) {
                             if (element != region) {
 
-                                LayerSet elementLayers = part.GetLocalLayerSet(element);
-                                if (elementLayers.Contains(layer.Id) || 
-                                    elementLayers.Contains(restrictLayer.Id) || 
-                                    element is HoleElement) { 
+                                if (element.IsOnLayer(layerId) ||
+                                    element.IsOnLayer(restrictLayerId) ||
+                                    element.IsOnLayer(LayerId.Holes)) {
 
                                     // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
                                     //
                                     if (GetSignal(element, part, false) != regionSignal) {
                                         int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
-                                        Polygon outlinePolygon = element.GetOutlinePolygon(layer.Side, clearance);
+                                        Polygon outlinePolygon = element.GetOutlinePolygon(layerId.Side, clearance);
                                         outlinePolygon = outlinePolygon.Transformed(localTransformation);
                                         if (part.Flip)
                                             outlinePolygon.Reverse();
@@ -142,12 +153,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                                             holePolygons.Add(outlinePolygon);
                                     }
 
-                                    // En es un pad i esta conectat per tant, genera un thermal
+
+                                    // En cas contrari (es a dir esta conectat) genera un thermal unicament
+                                    // en els pads
                                     //
-                                    else if (element is PadElement) {
+                                    else if ((element.ElementType == ElementType.SmdPad) ||
+                                             (element.ElementType == ElementType.ThPad)) {
+
                                         int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
                                         int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
-                                        Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layer.Side, clearance, 200000);
+                                        Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layerId.Side, clearance, 200000);
                                         thermalPolygon = thermalPolygon.Transformed(localTransformation);
                                         foreach (var child in thermalPolygon.Childs) {
                                             if (regionBBox.IntersectsWith(child.BoundingBox))
@@ -180,27 +195,23 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// 
         public Rect GetBoundingBox() {
 
-            if (_outlineLayer != null) {
-                int minX = Int32.MaxValue;
-                int minY = Int32.MaxValue;
-                int maxX = Int32.MinValue;
-                int maxY = Int32.MinValue;
-                foreach (var element in GetElements(_outlineLayer)) {
-                    Rect r = element.GetBoundingBox(BoardSide.None);
-                    if (minX > r.Left)
-                        minX = r.Left;
-                    if (minY > r.Bottom)
-                        minY = r.Bottom;
-                    if (maxX < r.Right)
-                        maxX = r.Right;
-                    if (maxY < r.Top)
-                        maxY = r.Top;
-                }
-
-                return new Rect(minX, minY, maxX - minX, maxY - minY);
+            int minX = Int32.MaxValue;
+            int minY = Int32.MaxValue;
+            int maxX = Int32.MinValue;
+            int maxY = Int32.MinValue;
+            foreach (var element in GetElements(_outlineLayer)) {
+                Rect r = element.GetBoundingBox(BoardSide.None);
+                if (minX > r.Left)
+                    minX = r.Left;
+                if (minY > r.Bottom)
+                    minY = r.Bottom;
+                if (maxX < r.Right)
+                    maxX = r.Right;
+                if (maxY < r.Top)
+                    maxY = r.Top;
             }
-            else
-                return new Rect(0, 0, 100000000, 100000000);
+
+            return new Rect(minX, minY, maxX - minX, maxY - minY);
         }
 
         /// <summary>

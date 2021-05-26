@@ -147,9 +147,9 @@
                 foreach (var boardElement in board.Elements) {
 
                     Element panelElement = boardElement.Clone();
-                    if (boardElement.LayerSet.Contains(LayerId.Profile)) {
-                        boardElement.LayerSet += LayerId.Get("LocalProfile");
-                        boardElement.LayerSet -= LayerId.Profile;
+                    if (boardElement.IsOnLayer(LayerId.Profile)) {
+                        if (boardElement is ILayer e)
+                            e.LayerId = LayerId.Get("LocalProfile");
                     }
                     transformableElements.Add(panelElement);
                     targetBoard.AddElement(panelElement);
@@ -175,10 +175,6 @@
         /// <param name="cut">El item.</param>
         /// 
         private void AddCut(CutItem cut) {
-
-            // Obte el conjunt de capes
-            //
-            LayerSet millingLayerSet = new LayerSet(LayerId.Milling);
 
             // Obte els punts de tall d'una linia 
             //
@@ -209,7 +205,7 @@
 
                 // Afegeix la linia a la placa
                 //
-                targetBoard.AddElement(new LineElement(millingLayerSet, q1, q2,
+                targetBoard.AddElement(new LineElement(LayerId.Milling, q1, q2,
                     cut.Thickness, LineElement.CapStyle.Round));
             }
 
@@ -239,11 +235,10 @@
         private void AddProfile(Size size) {
 
             Rect rect = new Rect(new Point(0, 0), size);
-            LayerSet profileLayer = new LayerSet(LayerId.Profile);
-            targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Right, rect.Top), 100000, LineElement.CapStyle.Round));
-            targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Bottom), new Point(rect.Right, rect.Bottom), 100000, LineElement.CapStyle.Round));
-            targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Left, rect.Top), new Point(rect.Left, rect.Bottom), 100000, LineElement.CapStyle.Round));
-            targetBoard.AddElement(new LineElement(profileLayer, new Point(rect.Right, rect.Top), new Point(rect.Right, rect.Bottom), 100000, LineElement.CapStyle.Round));
+            targetBoard.AddElement(new LineElement(LayerId.Profile, new Point(rect.Left, rect.Top), new Point(rect.Right, rect.Top), 100000, LineElement.CapStyle.Round));
+            targetBoard.AddElement(new LineElement(LayerId.Profile, new Point(rect.Left, rect.Bottom), new Point(rect.Right, rect.Bottom), 100000, LineElement.CapStyle.Round));
+            targetBoard.AddElement(new LineElement(LayerId.Profile, new Point(rect.Left, rect.Top), new Point(rect.Left, rect.Bottom), 100000, LineElement.CapStyle.Round));
+            targetBoard.AddElement(new LineElement(LayerId.Profile, new Point(rect.Right, rect.Top), new Point(rect.Right, rect.Bottom), 100000, LineElement.CapStyle.Round));
         }
 
         private sealed class TransformVisitor : DefaultBoardVisitor {

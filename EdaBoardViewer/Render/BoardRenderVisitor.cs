@@ -104,7 +104,7 @@
 
             if (visualLayer.IsVisible(Part, pad)) {
 
-                var brush = new SolidColorBrush(pad.Name == "1" ? Colors.AliceBlue : visualLayer.Color);
+                var brush = new SolidColorBrush(visualLayer.Color);
                 var geometry = pad.GetPolygon(layer.Side).ToGeometry();
 
                 context.DrawGeometry(brush, null, geometry);
@@ -167,11 +167,11 @@
         }
 
         public override void Visit(RegionElement region) {
-
+    
             if (visualLayer.IsVisible(Part, region)) {
 
                 var polygon = layer.Function == LayerFunction.Signal ?
-                    Board.GetRegionPolygon(region, layer, new Transformation()) :
+                    Board.GetRegionPolygon(region, layer.Id, new Transformation()) :
                     region.GetPolygon(layer.Side);
 
                 var pen = new Pen(new SolidColorBrush(visualLayer.Color), region.Thickness, null, PenLineCap.Round, PenLineJoin.Round);

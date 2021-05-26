@@ -101,8 +101,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// 
         private void PrepareApertures(ApertureDictionary apertures, Board board) {
 
-            foreach (var layerId in Target.LayerNames.Select(name => LayerId.Get(name))) {
-                ApertureCreatorVisitor visitor = new ApertureCreatorVisitor(layerId, apertures);
+            foreach (var name in Target.LayerNames) {
+                var visitor = new ApertureCreatorVisitor(LayerId.Get(name), apertures);
                 board.AcceptVisitor(visitor);
             }
         }
@@ -219,8 +219,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         private void GenerateRegions(GerberBuilder gb, Board board, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN POLYGONS");
-            foreach (var layerId in Target.LayerNames.Select(name => LayerId.Get(name))) {
-                IBoardVisitor visitor = new RegionGeneratorVisitor(gb, layerId, apertures);
+            foreach (var name in Target.LayerNames) {
+                var visitor = new RegionGeneratorVisitor(gb, LayerId.Get(name), apertures);
                 visitor.Visit(board);
             }
             gb.Comment("END POLYGONS");
@@ -236,8 +236,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         private void GenerateImage(GerberBuilder gb, Board board, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
-            foreach (var layerId in Target.LayerNames.Select(name => LayerId.Get(name))) {
-                IBoardVisitor visitor = new ImageGeneratorVisitor(gb, layerId, apertures);
+            foreach (var name in Target.LayerNames) {
+                var visitor = new ImageGeneratorVisitor(gb, LayerId.Get(name), apertures);
                 board.AcceptVisitor(visitor);
             }
             gb.Comment("END IMAGE");
@@ -430,7 +430,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             private bool CanVisit(Element element) {
 
-                return element.LayerSet.Contains(_layerId);
+                return element.IsOnLayer(_layerId);
             }
         }
 
@@ -777,7 +777,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             private bool CanVisit(Element element) {
 
-                return element.LayerSet.Contains(_layerId);
+                return element.IsOnLayer(_layerId);
             }
         }
 
@@ -838,7 +838,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     Transformation t = new Transformation();
                     if (Part != null)
                         t = Part.GetLocalTransformation();
-                    Polygon polygon = Board.GetRegionPolygon(region, Board.GetLayer(_layerId), t);
+                    Polygon polygon = Board.GetRegionPolygon(region, _layerId, t);
                     DrawPolygon(polygon, region.Thickness);
                 }
             }
@@ -891,7 +891,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             private bool CanVisit(Element element) {
 
-                return element.LayerSet.Contains(_layerId);
+                return element.IsOnLayer(_layerId);
             }
         }
     }

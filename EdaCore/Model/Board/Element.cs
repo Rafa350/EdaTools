@@ -28,18 +28,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// 
     public abstract class Element : IBoardVisitable {
 
-        private LayerSet _layerSet;
-
-        /// <summary>
-        /// Constructor de l'objecte.
-        /// </summary>
-        /// <param name="layerSet">El conjunt de capes.</param>
-        /// 
-        public Element(LayerSet layerSet) {
-
-            _layerSet = layerSet;
-        }
-
         /// <summary>
         /// Obte una copia en profunditat de l'objecte.
         /// </summary>
@@ -55,7 +43,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// Obte el poligon del element.
         /// </summary>
         /// <param name="side">Cara de la placa.</param>
-        /// <returns>El poligon</returns>
+        /// <returns>El poligon.</returns>
         /// 
         public abstract Polygon GetPolygon(BoardSide side);
 
@@ -77,24 +65,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         public abstract Rect GetBoundingBox(BoardSide side);
 
         /// <summary>
-        /// Obte el conjunt de capes. Permet modificar el contingut en els
-        /// elements derivats.
+        /// Indica si l'element es present en una capa.
         /// </summary>
-        /// <returns>El resultat.</returns>
+        /// <param name="layerId">La capa.</param>
+        /// <returns>True si es present.</returns>
         /// 
-        protected virtual LayerSet GetLayerSet() {
-
-            return _layerSet;
-        }
-
-        /// <summary>
-        /// Obte o asigna el conjunt de capes.
-        /// </summary>
-        /// 
-        public LayerSet LayerSet { 
-            get => GetLayerSet();
-            set => _layerSet = value;
-        }
+        public virtual bool IsOnLayer(LayerId layerId) =>
+            false;
 
         /// <summary>
         /// Obte el identificador del tipus d'element

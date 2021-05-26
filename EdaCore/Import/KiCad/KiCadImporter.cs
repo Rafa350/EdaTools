@@ -196,8 +196,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             LayerId id = GetLayerId(name);
             LayerFunction function = type == "signal" ? LayerFunction.Signal : GetLayerFunction(name);
 
-            var layer = new Layer(id, side, function);
-            board.AddLayer(layer);
+            if (board.GetLayer(id, false) == null) {
+                var layer = new Layer(id, side, function);
+                board.AddLayer(layer);
+            }
         }
 
         /// <summary>
@@ -234,11 +236,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var size = ParseMeasure(tree, tree.SelectBranch(node, "size"));
             var drill = ParseMeasure(tree, tree.SelectBranch(node, "drill"));
 
-            var layerSet = new LayerSet();
+            /*var layerSet = new LayerSet();
             foreach (var layer in board.GetSignalLayers())
-                layerSet += layer.Id;
+                layerSet += layer.Id;*/
 
-            var via = new ViaElement(layerSet, position, size, drill, ViaElement.ViaShape.Circle);
+            var via = new ViaElement(LayerId.TopCopper, LayerId.BottomCopper, position, size, drill, ViaElement.ViaShape.Circle);
 
             var netNode = tree.SelectBranch(node, "net");
             if (netNode != null) {
@@ -391,10 +393,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             var start = ParsePoint(tree, tree.SelectBranch(node, "start"));
             var end = ParsePoint(tree, tree.SelectBranch(node, "end"));
-            var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
+            var layerId = ParseLayerId(tree, tree.SelectBranch(node, "layer"));
             int thickness = ParseMeasure(tree, tree.SelectBranch(node, "width"));
 
-            var element = new LineElement(layerSet, start, end, thickness, LineElement.CapStyle.Round);
+            var element = new LineElement(layerId, start, end, thickness, LineElement.CapStyle.Round);
             board.AddElement(element);
 
             var netNode = tree.SelectBranch(node, "net");
@@ -415,10 +417,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             var start = ParsePoint(tree, tree.SelectBranch(node, "start"));
             var end = ParsePoint(tree, tree.SelectBranch(node, "end"));
-            var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
+            var layerId = ParseLayerId(tree, tree.SelectBranch(node, "layer"));
             int thickness = ParseMeasure(tree, tree.SelectBranch(node, "width"));
 
-            var element = new LineElement(layerSet, start, end, thickness, LineElement.CapStyle.Round);
+            var element = new LineElement(layerId, start, end, thickness, LineElement.CapStyle.Round);
 
             component.AddElement(element);
         }
@@ -435,10 +437,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var center = ParsePoint(tree, tree.SelectBranch(node, "start"));
             var start = ParsePoint(tree, tree.SelectBranch(node, "end"));
             var angle = ParseAngle(tree, tree.SelectBranch(node, "angle"));
-            var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
+            var layerId = ParseLayerId(tree, tree.SelectBranch(node, "layer"));
             int thickness = ParseMeasure(tree, tree.SelectBranch(node, "width"));
 
-            var element = new ArcElement(layerSet, start, ArcUtils.EndPosition(center, start, angle),
+            var element = new ArcElement(layerId, start, ArcUtils.EndPosition(center, start, angle),
                 thickness, angle, LineElement.CapStyle.Flat);
 
             component.AddElement(element);
@@ -465,7 +467,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var e = new Vector2D(tree.ValueAsDouble(endNode[1]), tree.ValueAsDouble(endNode[2])) * _m;           
             int radius = (int)(Math.Sqrt(Math.Pow(e.X - s.X, 2) + Math.Pow(e.Y - s.Y, 2)));
 
-            var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
+            var layerId = ParseLayerId(tree, tree.SelectBranch(node, "layer"));
             int thickness = ParseMeasure(tree, tree.SelectBranch(node, "width"));
 
             // Obte el indicador de relleno
@@ -473,7 +475,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var fillNode = tree.SelectBranch(node, "fill");
             bool fill = (fillNode != null) && (tree.ValueAsString(fillNode[1]) == "solid");
 
-            var element = new CircleElement(layerSet, center, radius, thickness, fill);
+            var element = new CircleElement(layerId, center, radius, thickness, fill);
 
             component.AddElement(element);
         }
@@ -547,7 +549,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                     text = String.Format("{{{0}}}", text);
             }
 
-            var element = new TextElement(new LayerSet(layerId), position, rotation, height, 
+            var element = new TextElement(layerId, position, rotation, height, 
                 thickness, horizontalAlign, verticalAlign, text);
 
             component.AddElement(element);
@@ -576,17 +578,21 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 Ratio.Zero :
                 Ratio.FromValue((int)(tree.ValueAsDouble(roundnessNode[1]) * 2000.0));
 
-            Element element;
             switch (padType) {               
                 case "smd": {
-                    LayerSet layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layers"));
-                    element = new SmdPadElement(name, layerSet, position, size, rotation, roundness);
+                    var layersNode = tree.SelectBranch(node, "layers");
+                    var s = tree.ValueAsStrings(layersNode);
+                    bool cream = s.Contains("Paste");
+                    bool stop = s.Contains("Mask");
+                    var layerId = s.Contains("F.") ? LayerId.TopCopper : LayerId.BottomCopper;
+                    var element = new SmdPadElement(name, layerId, position, size, rotation, roundness);
+                    element.Cream = cream;
+                    element.Stop = stop;
+                    component.AddElement(element);
                 }
                 break;
 
                 case "thru_hole": {
-                    LayerSet layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layers"));
-
                     ThPadElement.ThPadShape shape;
                     switch (shapeType) {
                         case "oval":
@@ -602,19 +608,20 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                             break;
                     }
 
-                    element = new ThPadElement(name, layerSet, position, rotation, size.Width, shape, drill);
+                    var element = new ThPadElement(name, position, rotation, size.Width, shape, drill);
+                    component.AddElement(element);
                 }
                 break;
 
-                case "np_thru_hole":
-                    element = new HoleElement(position, drill);
+                case "np_thru_hole": {
+                    var element = new HoleElement(position, drill);
+                    component.AddElement(element);
                     break;
+                }
 
                 default:
                     throw new InvalidDataException("Tipo de pad no reconocido.");
             }
-
-            component.AddElement(element);
         }
 
         /// <summary>
@@ -629,7 +636,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var layerNode = tree.SelectBranch(node, "layer");
             if (layerNode == null)
                 layerNode = tree.SelectBranch(node, "layers");
-            var layerSet = ParseLayerSet(tree, layerNode);
+            var layerId = ParseLayerId(tree, layerNode);
             var connectedPadNode = tree.SelectBranch(node, "connect_pads");
             var clearanceNode = tree.SelectBranch(connectedPadNode, "clearance");
             int clearance = ParseMeasure(tree, clearanceNode);
@@ -637,7 +644,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             //var thickness = ParseMeasure(tree, tree.SelectBranch(node, "min_thickness"));
             var thickness = 100000;
 
-            var element = new RegionElement(layerSet, thickness, true, clearance);
+            var element = new RegionElement(layerId, thickness, true, clearance);
             board.AddElement(element);
 
             var polygonNode = tree.SelectBranch(node, "polygon");
@@ -728,6 +735,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             return (position, rotation);
         }
 
+        private LayerId ParseLayerId(STree tree, SBranch node) {
+
+            return GetLayerId(tree.ValueAsString(node[1]));
+        }
+
         /// <summary>
         /// Obte un conjunt de capes.
         /// </summary>
@@ -735,7 +747,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <param name="node">El node.</param>
         /// <returns>El resultat.</returns>
         /// 
-        private static LayerSet ParseLayerSet(STree tree, SBranch node) {
+        /*private static LayerSet ParseLayerSet(STree tree, SBranch node) {
 
             var sb = new StringBuilder();
             for (int i = 1; i < node.Count; i++) {
@@ -755,7 +767,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             }
 
             return LayerSet.Parse(sb.ToString());
-        }
+        }*/
 
         /// <summary>
         /// Obte la cara de la placa a partir d'un nom de capa.
@@ -773,59 +785,6 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 return BoardSide.Inner;
             else
                 return BoardSide.None;
-        }
-
-        /// <summary>
-        /// Obte el tag de la capa a partir del seu nom.
-        /// </summary>
-        /// <param name="kcName">Nom de la capa.</param>
-        /// <returns>El tag.</returns>
-        /// 
-        private static string GetLayerTag(string kcName) {
-
-            switch (kcName) {
-                case "Top":
-                case "Bottom":
-                case "F.Cu":
-                case "B.Cu":
-                    return "Copper";
-
-                case "In1.Cu":
-                    return "Copper1";
-
-                case "In2.Cu":
-                    return "Copper2";
-
-                case "F.Paste":
-                case "B.Paste":
-                    return "Cream";
-
-                case "F.Adhes":
-                case "B.Adhes":
-                    return "Glue";
-
-                case "F.Mask":
-                case "B.Mask":
-                    return "Stop";
-
-                case "F.Fab":
-                case "B.Fab":
-                    return "Document";
-
-                case "F.SilkS":
-                case "B.SilkS":
-                    return "Place";
-
-                case "F.CrtYd":
-                case "B.CrtYd":
-                    return "Keepout";
-
-                case "Edge.Cuts":
-                    return "Profile";
-
-                default:
-                    return kcName.Replace('.', '_');
-            }
         }
 
         /// <summary>
@@ -870,16 +829,16 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                     return LayerId.BottomStop;
 
                 case "F.SilkS":
-                    return LayerId.Get("Top.Place");
+                    return LayerId.TopPlace;
 
                 case "B.SilkS":
-                    return LayerId.Get("Bottom.Place");
+                    return LayerId.BottomPlace;
 
                 case "F.CrtYd":
-                    return LayerId.Get("Top.Keepout");
+                    return LayerId.TopKeepout;
 
                 case "B.CrtYd":
-                    return LayerId.Get("Bottom.Keepout");
+                    return LayerId.BottomKeepout;
 
                 case "Edge.Cuts":
                     return LayerId.Profile;

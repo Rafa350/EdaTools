@@ -277,9 +277,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         private Layer ParseLayerNode(XmlNode layerNode) {
 
             int layerNum = Int32.Parse(layerNode.Attributes["number"].Value);
-            var layer = new Layer(GetLayerId(layerNum), GetLayerSide(layerNum), GetLayerFunction(layerNum));
-
-            return layer;
+            return new Layer(GetLayerId(layerNum), GetLayerSide(layerNum), GetLayerFunction(layerNum));
         }
 
         /// <summary>
@@ -441,9 +439,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                     break;
             }
 
-            var layerSet = new LayerSet(LayerId.Pads, LayerId.Drills, LayerId.TopCopper, LayerId.TopStop, 
-                LayerId.BottomCopper, LayerId.BottomStop);
-            return new ThPadElement(name, layerSet, position, rotation, size, shape, drill);
+            return new ThPadElement(name, position, rotation, size, shape, drill);
         }
 
         /// <summary>
@@ -484,13 +480,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             bool cream = node.AttributeAsBoolean("cream", true);
 
             int layerNum = node.AttributeAsInteger("layer");
-            var layerSet = new LayerSet(GetLayerId(layerNum));
-            if (cream)
-                layerSet = layerSet + LayerId.TopCream;
-            if (stop)
-                layerSet = layerSet + LayerId.TopStop;
+            var layerId = GetLayerId(layerNum);
 
-            return new SmdPadElement(name, layerSet, position, size, rotation, roundness);
+            return new SmdPadElement(name, layerId, position, size, rotation, roundness);
         }
 
         /// <summary>
@@ -512,10 +504,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 size = ParseNumber(node.AttributeAsString("diameter"));
 
             string extent = node.AttributeAsString("extent");
-            string[] layerNames = extent.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
-            int[] layerNums = new int[layerNames.Length];
-            for (int i = 0; i < layerNums.Length; i++)
-                layerNums[i] = Int32.Parse(layerNames[i]);
+            string[] layerNames = extent.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            LayerId topLayerId = GetLayerId(Int32.Parse(layerNames[0]));
+            LayerId bottomLayerId = GetLayerId(Int32.Parse(layerNames[1]));
 
             ViaElement.ViaShape shape = ViaElement.ViaShape.Circle;
             string shapeName = node.AttributeAsString("shape");
@@ -529,10 +520,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                     break;
             }
 
-            var layerSet = new LayerSet(LayerId.Vias, LayerId.Drills);
-            foreach (int layerNum in layerNums)
-                layerSet += GetLayerId(layerNum);
-            return new ViaElement(layerSet, position, size, drill, shape);
+            return new ViaElement(topLayerId, bottomLayerId, position, size, drill, shape);
         }
 
         /// <summary>
@@ -567,9 +555,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             int thickness = 100000;
 
             int layerNum = node.AttributeAsInteger("layer");
-            var layerSet = new LayerSet(GetLayerId(layerNum));
+            var layerId = GetLayerId(layerNum);
 
-            var element = new TextElement(layerSet, position, rotation, height, thickness, horizontalAlign, verticalAlign);
+            var element = new TextElement(layerId, position, rotation, height, thickness, horizontalAlign, verticalAlign);
             element.Value = value;
 
             return element;
@@ -600,13 +588,13 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 thickness = 100000;
 
             int layerNum = node.AttributeAsInteger("layer");
-            var layerSet = new LayerSet(GetLayerId(layerNum));
+            var layerId = GetLayerId(layerNum);
 
             Element element;
             if (angle.IsZero)
-                element = new LineElement(layerSet, p1, p2, thickness, lineCap);
+                element = new LineElement(layerId, p1, p2, thickness, lineCap);
             else
-                element = new ArcElement(layerSet, p1, p2, thickness, angle, lineCap);
+                element = new ArcElement(layerId, p1, p2, thickness, angle, lineCap);
 
             return element;
         }
@@ -641,9 +629,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 thickness = ParseNumber(node.AttributeAsString("width"));
 
             int layerNum = node.AttributeAsInteger("layer");
-            var layerSet = new LayerSet(GetLayerId(layerNum));
+            var layerId = GetLayerId(layerNum);
 
-            return new RectangleElement(layerSet, position, size, Ratio.Zero, rotation, thickness, thickness == 0);
+            return new RectangleElement(layerId, position, size, Ratio.Zero, rotation, thickness, thickness == 0);
         }
 
         /// <summary>
@@ -671,9 +659,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             int radius = ParseNumber(node.AttributeAsString("radius"));
 
             int layerNum = node.AttributeAsInteger("layer");
-            var layerSet = new LayerSet(GetLayerId(layerNum));
+            var layerId = GetLayerId(layerNum);
 
-            return new CircleElement(layerSet, position, radius, thickness, thickness == 0);
+            return new CircleElement(layerId, position, radius, thickness, thickness == 0);
         }
 
         /// <summary>
@@ -695,7 +683,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 clearance = ParseNumber(node.AttributeAsString("isolate"));
 
             int layerNum = node.AttributeAsInteger("layer");
-            var layerSet = new LayerSet(GetLayerId(layerNum));
+            var layerId = GetLayerId(layerNum);
 
             List<RegionElement.Segment> segments = new List<RegionElement.Segment>();
             foreach (XmlNode vertexNode in node.SelectNodes("vertex")) {
@@ -715,7 +703,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 segments.Add(new RegionElement.Segment(vertex, angle));
             }
 
-            return new RegionElement(layerSet, thickness, true, clearance, segments);
+            return new RegionElement(layerId, thickness, true, clearance, segments);
         }
 
         /// <summary>
@@ -1056,15 +1044,15 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                     return LayerId.Vias;
 
                 case 19:
-                    return LayerId.Get("Unrouted");
+                    return LayerId.Unrouted;
 
                 case 20:
                     return LayerId.Profile;
 
                 case 21:
-                    return LayerId.Get("Top.Place");              
+                    return LayerId.TopPlace;              
                 case 22:
-                    return LayerId.Get("Bottom.Place");
+                    return LayerId.BottomPlace;
 
                 case 25:
                     return LayerId.TopNames;
@@ -1092,17 +1080,17 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                     return LayerId.BottomGlue;
 
                 case 39:
-                    return LayerId.Get("Top.Keepout");
+                    return LayerId.TopKeepout;
                 case 40:
-                    return LayerId.Get("Bottom.Keepout");
+                    return LayerId.BottomKeepout;
 
                 case 41:
-                    return LayerId.Get("Top.Restrict");
+                    return LayerId.TopRestrict;
                 case 42:
-                    return LayerId.Get("Bottom.Restrict");
+                    return LayerId.BottomRestrict;
 
                 case 43:
-                    return LayerId.Get("ViaRestrict");
+                    return LayerId.ViaRestrict;
 
                 case drillsLayerNum:
                     return LayerId.Drills;
@@ -1111,12 +1099,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                     return LayerId.Holes;
 
                 case 51:
-                    return LayerId.Get("Top.Document");
+                    return LayerId.TopDocument;
                 case 52:
-                    return LayerId.Get("Bottom.Document");
+                    return LayerId.BottomDocument;
 
                 default:
-                    return LayerId.Get("Unknown" + layerNum.ToString());
+                    return LayerId.Get(String.Format("Unknown{0}", layerNum));
             }
         }
 

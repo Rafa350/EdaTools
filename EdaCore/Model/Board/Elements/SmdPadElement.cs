@@ -11,10 +11,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// </summary>
     public sealed class SmdPadElement : PadElement {
 
+        private LayerId _layerId;
         private Size _size;
         private Ratio _roundness;
-        private bool _autoCream;
-        private int _creamMargin;
+        private bool _cream = false;
+        private int _creamMargin = 0;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -26,27 +27,22 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="roundness">Percentatge d'arrodoniment de les cantonades.</param>
         /// 
-        public SmdPadElement(string name, LayerSet layerSet, Point position, Size size, Angle rotation, Ratio roundness) :
-            base(name, layerSet, position, rotation) {
+        public SmdPadElement(string name, LayerId layerId, Point position, Size size, Angle rotation, Ratio roundness) :
+            base(name, position, rotation) {
 
+            _layerId = layerId;
             _size = size;
             _roundness = roundness;
         }
 
-        /// <summary>
-        /// Obte un clon de l'element.
-        /// </summary>
-        /// <returns>El clon de l'element.</returns>
+        /// <inheritdoc/>
         /// 
         public override Element Clone() {
 
-            return new SmdPadElement(Name, LayerSet, Position, _size, Rotation, _roundness);
+            return new SmdPadElement(Name, _layerId, Position, _size, Rotation, _roundness);
         }
 
-        /// <summary>
-        /// Accepta un visitador.
-        /// </summary>
-        /// <param name="visitor">El visitador.</param>
+        /// <inheritdoc/>
         /// 
         public override void AcceptVisitor(IBoardVisitor visitor) {
 
@@ -129,8 +125,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
             List<Polygon> childs = new List<Polygon>();
             childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
-            if (childs.Count != 4)
-                throw new InvalidProgramException("Thermal generada incorrectamente.");
+            //if (childs.Count != 4)
+            //    throw new InvalidProgramException("Thermal generada incorrectamente.");
             return new Polygon(null, childs.ToArray());
         }
 
@@ -148,6 +144,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             int h = (int)(_size.Width * Math.Sin(a) + _size.Height * Math.Cos(a));
 
             return new Rect(Position.X - (w / 2), Position.Y - (h / 2), w, h);
+        }
+
+        /// <inheritdoc/>
+        /// 
+        public override bool IsOnLayer(LayerId layerId) =>
+            _layerId == layerId;
+
+        public LayerId LayerId {
+            get => _layerId;
+            set => _layerId = value;
         }
 
         /// <summary>
@@ -179,9 +185,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// Indica si es genera pasta automaticament.
         /// </summary>
         /// 
-        public bool AutoCream {
-            get => _autoCream;
-            set => _autoCream = value;
+        public bool Cream {
+            get => _cream;
+            set => _cream = value; 
         }
 
         /// <summary>

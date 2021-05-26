@@ -13,7 +13,7 @@
     }
 
     /// <summary>
-    /// Clare quie representa una capa de la placa.
+    /// Clase que representa una capa de la placa.
     /// </summary>
     /// 
     public sealed class Layer : IBoardVisitable {

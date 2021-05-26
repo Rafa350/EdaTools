@@ -64,7 +64,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                     .Append("  (fp_line ")
                     .AppendFormat(CultureInfo.InvariantCulture, "(start {0} {1}) ", start.X, start.Y)
                     .AppendFormat(CultureInfo.InvariantCulture, "(end {0} {1}) ", end.X, end.Y)
-                    .AppendFormat("(layer {0}) ", GetLayerNames(line.LayerSet))
+                    .AppendFormat("(layer {0}) ", GetLayerNames(line.LayerId))
                     .AppendFormat(CultureInfo.InvariantCulture, "(width {0}))", line.Thickness / _scale);
 
                 _writer.WriteLine(sb.ToString());
@@ -90,7 +90,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                     .AppendFormat(CultureInfo.InvariantCulture, "(xy {0} {1}) ", end.X, start.Y)
                     .AppendFormat(CultureInfo.InvariantCulture, "(xy {0} {1}) ", end.X, end.Y)
                     .AppendFormat(CultureInfo.InvariantCulture, "(xy {0} {1})) ", start.X, end.Y)
-                    .AppendFormat("(layer {0}) ", GetLayerNames(rectangle.LayerSet))
+                    .AppendFormat("(layer {0}) ", GetLayerNames(rectangle.LayerId))
                     .AppendFormat(CultureInfo.InvariantCulture, "(width {0}))", rectangle.Thickness / _scale);
 
                 _writer.WriteLine(sb.ToString());
@@ -141,7 +141,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                 var sb = new StringBuilder()
                     .AppendFormat("  (fp_text {0} \"{1}\" ", type, value)
                     .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", text.Position.X / _scale, -text.Position.Y / _scale, text.Rotation)
-                    .AppendFormat("(layer {0}) ", GetLayerNames(text.LayerSet))
+                    .AppendFormat("(layer {0}) ", GetLayerNames(text.LayerId))
                     .AppendLine()
                     .Append("    (effects ")
                     .Append("(font ")
@@ -166,7 +166,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                     .AppendFormat("  (pad {0} smd roundrect ", pad.Name)
                     .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", position.X, position.Y, pad.Rotation.ToDegrees)
                     .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", pad.Size.Width / _scale, pad.Size.Height / _scale)
-                    .AppendFormat("(layers {0}) ", GetLayerNames(pad.LayerSet))
+                    .AppendFormat("(layers {0}) ", GetLayerNames(pad.LayerId))
                     .AppendFormat(CultureInfo.InvariantCulture, "(roundrect_rratio {0}))", pad.Roundness.Value / 2000.0);
 
                 _writer.WriteLine(sb);
@@ -211,89 +211,84 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// <param name="layerSet">Conjunt de capes</param>
             /// <returns>Els noms de les capes</returns>
             /// 
-            private string GetLayerNames(LayerSet layerSet) {
+            private string GetLayerNames(LayerId layerId) {
 
-                var sb = new StringBuilder();
-                foreach (var layerName in layerSet.ToString().Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)) {
-                    var newLayerName = layerName;
-                    switch (layerName) {
-                        case "Top.Copper": 
-                            newLayerName = "F.Cu"; 
-                            break;
+                var layerName = layerId.ToString();
+                switch (layerName) {
+                    case "Top.Copper":
+                        layerName = "F.Cu";
+                        break;
 
-                        case "Bottom.Copper":
-                            newLayerName = "B.Cu";
-                            break;
+                    case "Bottom.Copper":
+                        layerName = "B.Cu";
+                        break;
 
-                        case "Top.Stop":
-                            newLayerName = "F.Mask";
-                            break;
+                    case "Top.Stop":
+                        layerName = "F.Mask";
+                        break;
 
-                        case "Bottom.Stop":
-                            newLayerName = "B.Mask";
-                            break;
+                    case "Bottom.Stop":
+                        layerName = "B.Mask";
+                        break;
 
-                        case "Top.Cream":
-                            newLayerName = "F.Paste";
-                            break;
+                    case "Top.Cream":
+                        layerName = "F.Paste";
+                        break;
 
-                        case "Bottom.Cream":
-                            newLayerName = "B.Paste";
-                            break;
+                    case "Bottom.Cream":
+                        layerName = "B.Paste";
+                        break;
 
-                        case "Top.Glue":
-                            newLayerName = "F.Adhes";
-                            break;
+                    case "Top.Glue":
+                        layerName = "F.Adhes";
+                        break;
 
-                        case "Bottom.Glue":
-                            newLayerName = "B.Adhes";
-                            break;
+                    case "Bottom.Glue":
+                        layerName = "B.Adhes";
+                        break;
 
-                        case "Top.Names":
-                            newLayerName = "F.SilkS";
-                            break;
+                    case "Top.Names":
+                        layerName = "F.SilkS";
+                        break;
 
-                        case "Bottom.Names":
-                            newLayerName = "B.SilkS";
-                            break;
+                    case "Bottom.Names":
+                        layerName = "B.SilkS";
+                        break;
 
-                        case "Top.Values":
-                            newLayerName = "F.Fab";
-                            break;
+                    case "Top.Values":
+                        layerName = "F.Fab";
+                        break;
 
-                        case "Bottom.Values":
-                            newLayerName = "B.Fab";
-                            break;
+                    case "Bottom.Values":
+                        layerName = "B.Fab";
+                        break;
 
-                        case "Top.Place":
-                            newLayerName = "F.SilkS";
-                            break;
+                    case "Top.Place":
+                        layerName = "F.SilkS";
+                        break;
 
-                        case "Bottom.Place":
-                            newLayerName = "B.SilkS";
-                            break;
+                    case "Bottom.Place":
+                        layerName = "B.SilkS";
+                        break;
 
-                        case "Top.Keepout":
-                            newLayerName = "F.CrtYd";
-                            break;
+                    case "Top.Keepout":
+                        layerName = "F.CrtYd";
+                        break;
 
-                        case "Bottom.Keepout":
-                            newLayerName = "B.CrtYd";
-                            break;
+                    case "Bottom.Keepout":
+                        layerName = "B.CrtYd";
+                        break;
 
-                        case "Top.Document":
-                            newLayerName = "F.Fab";
-                            break;
+                    case "Top.Document":
+                        layerName = "F.Fab";
+                        break;
 
-                        case "Bottom.Document":
-                            newLayerName = "B.Fab";
-                            break;
-                    }
-                    sb.Append(newLayerName);
-                    sb.Append(' ');
+                    case "Bottom.Document":
+                        layerName = "B.Fab";
+                        break;
                 }
 
-                return sb.ToString();
+                return layerName;
             }
         }
 
