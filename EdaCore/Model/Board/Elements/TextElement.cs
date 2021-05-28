@@ -53,50 +53,36 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             _value = value;
         }
 
+        /// <inheritdoc/>
+        /// 
         public override Element Clone() {
 
             return new TextElement(_layerId, _position, _rotation, _height, _thickness,
                 _horizontalAlign, _verticalAlign, _value);
         }
 
-        /// <summary>
-        /// Accepta  un visitador.
-        /// </summary>
-        /// <param name="visitor">El visitador.</param>
+        /// <inheritdoc/>
         /// 
         public override void AcceptVisitor(IBoardVisitor visitor) {
 
             visitor.Visit(this);
         }
 
-        /// <summary>
-        /// Crea el poligon del element.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <returns>El poligon.</returns>
+        /// <inheritdoc/>
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
             return null;
         }
 
-        /// <summary>
-        /// Crea el poligon espaiat del element.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <param name="spacing">Espaiat</param>
-        /// <returns>El poligon.</returns>
+        /// <inheritdoc/>
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
             return null;
         }
 
-        /// <summary>
-        /// Calcula el bounding box del element.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <returns>El bounding box.</returns>
+        /// <inheritdoc/>
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
@@ -194,9 +180,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             set => _value = value;
         }
 
-        /// <summary>
-        /// Obte el tipus d'element.
-        /// </summary>
+        /// <inheritdoc/>
         /// 
         public override ElementType ElementType =>
             ElementType.Text;

@@ -37,7 +37,7 @@
 
             schemas = new XmlSchemaSet();
 
-            string schemaResourceName = "MikroPic.EdaTools.v1.Core.Model.Board.IO.Schemas.XBRD.xsd";
+            string schemaResourceName = "MikroPic.EdaTools.v1.Core.Model.Board.IO.Schemas.BoardDocument.xsd";
             Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(schemaResourceName);
             if (resourceStream == null)
                 throw new Exception(String.Format("No se encontro el recurso '{0}'", schemaResourceName));

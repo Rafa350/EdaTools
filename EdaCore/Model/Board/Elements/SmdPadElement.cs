@@ -9,6 +9,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// <summary>
     /// Clase que representa un pad superficial
     /// </summary>
+    /// 
     public sealed class SmdPadElement : PadElement {
 
         private LayerId _layerId;
@@ -55,11 +56,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             (Rotation.GetHashCode() * 73429) +
             _roundness.GetHashCode();
 
-        /// <summary>
-        /// Crea el poligon del element.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <returns>El poligon.</returns>
+        /// <inheritdoc/>
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
@@ -75,12 +72,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             return polygon;
         }
 
-        /// <summary>
-        /// Crea el poligon exterior del element.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <param name="spacing">Espaiat</param>
-        /// <returns>El poligon.</returns>
+        /// <inheritdoc/>
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
@@ -103,13 +95,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             return polygon;
         }
 
-        /// <summary>
-        /// Crea el poligon del thermal.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <param name="spacing">Espaiat.</param>
-        /// <param name="width">Amplada dels conductors.</param>
-        /// <returns>El poligon.</returns>
+        /// <inheritdoc/>
         /// 
         public override Polygon GetThermalPolygon(BoardSide side, int spacing, int width) {
 
@@ -130,11 +116,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             return new Polygon(null, childs.ToArray());
         }
 
-        /// <summary>
-        /// Calcula el bounding box del element.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <returns>El bounding box.</returns>
+        /// <inheritdoc/>
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
@@ -151,6 +133,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override bool IsOnLayer(LayerId layerId) =>
             _layerId == layerId;
 
+        /// <summary>
+        /// Obte o asigna la capa.
+        /// </summary>
+        /// 
         public LayerId LayerId {
             get => _layerId;
             set => _layerId = value;
@@ -199,9 +185,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             set => _creamMargin = value;
         }
 
-        /// <summary>
-        /// Obte el tipus d'element.
-        /// </summary>
+        /// <inheritdoc/>
         /// 
         public override ElementType ElementType => 
             ElementType.SmdPad;

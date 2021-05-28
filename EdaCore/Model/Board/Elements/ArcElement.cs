@@ -8,6 +8,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// <summary>
     /// Clase que representa un arc.
     /// </summary>
+    /// 
     public sealed class ArcElement : LineElement, IConectable {
 
         private Angle _angle;
@@ -42,11 +43,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             visitor.Visit(this);
         }
 
-        /// <summary>
-        /// Crea el poligon del objecte.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <returns>El poligon.</returns>
+        /// <inheritdoc/>
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
@@ -54,12 +51,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             return new Polygon(points);
         }
 
-        /// <summary>
-        /// Crea el poligon espaiat del element.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <param name="spacing">Espaiat</param>
-        /// <returns>El poligon.</returns>
+        /// <inheritdoc/>
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
@@ -67,11 +59,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             return new Polygon(points);
         }
 
-        /// <summary>
-        /// Obte l'envolvent de l'element
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <returns>El rectangle envolvent.</returns>
+        /// <inheritdoc/>
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
@@ -116,9 +104,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public int Radius =>
             ArcUtils.Radius(StartPosition, EndPosition, _angle);
 
-        /// <summary>
-        /// Obte el tipus d'element.
-        /// </summary>
+        /// <inheritdoc/>
         /// 
         public override ElementType ElementType =>
             ElementType.Arc;

@@ -29,7 +29,7 @@
         static ProjectStreamReader() {
 
             schemas = new XmlSchemaSet();
-            string schemaResourceName = "MikroPic.EdaTools.v1.Panel.Model.IO.Schemas.XPNL.xsd";
+            string schemaResourceName = "MikroPic.EdaTools.v1.Panel.Model.IO.Schemas.PanelDocument.xsd";
             Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(schemaResourceName);
             if (resourceStream == null)
                 throw new Exception(String.Format("No se encontro el recurso '{0}'", schemaResourceName));

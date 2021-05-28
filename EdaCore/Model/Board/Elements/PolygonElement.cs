@@ -10,6 +10,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// <summary>
     /// Clase que representa una regio poligonal.
     /// </summary>
+    /// 
     public class PolygonElement : Element, ILayer {
 
         public sealed class Segment {
@@ -76,11 +77,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             visitor.Visit(this);
         }
 
-        /// <summary>
-        /// Crea el poligon del element.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <returns>El poligon.</returns>
+        /// <inheritdoc/>
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
@@ -131,13 +128,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             return new Polygon(points.ToArray());
         }
 
-        /// <summary>
-        /// Crea el poligon espaiat del element.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <param name="spacing">Espaiat</param>
-        /// <returns>El poligon.</returns>
-        ///
+        /// <inheritdoc/>
+        /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
             Polygon polygon = GetPolygon(side);
@@ -147,11 +139,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 return polygon;
         }
 
-        /// <summary>
-        /// Calcula el bounding box del element.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <returns>El bounding box.</returns>
+        /// <inheritdoc/>
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 

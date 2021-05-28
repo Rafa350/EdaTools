@@ -2,10 +2,7 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <EmbeddedResource Update="Model\Board\IO\Schemas\XBRD.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Model\Board\IO\Schemas\XLIB.xsd">
+    <EmbeddedResource Update="Model\Board\IO\Schemas\BoardDocument.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

@@ -20,11 +20,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Model\IO\Schemas\XPNL.xsd" />
+    <None Remove="Model\IO\Schemas\PanelDocument.xsd" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Model\IO\Schemas\XPNL.xsd" />
+    <EmbeddedResource Include="Model\IO\Schemas\PanelDocument.xsd" />
   </ItemGroup>
 
   <ItemGroup>

@@ -120,9 +120,7 @@
             }
         }
 
-        /// <summary>
-        /// Obte el tipus d'element.
-        /// </summary>
+        /// <inheritdoc/>
         /// 
         public override ElementType ElementType =>
             ElementType.SlotPad;

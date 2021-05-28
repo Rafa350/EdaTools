@@ -22,7 +22,7 @@
         /// 
         static ProjectStreamReader() {
 
-            string schemaResourceName = "MikroPic.EdaTools.v1.Cam.Model.IO.Schemas.XCAM.xsd";
+            string schemaResourceName = "MikroPic.EdaTools.v1.Cam.Model.IO.Schemas.CamDocument.xsd";
             Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(schemaResourceName);
             if (resourceStream == null)
                 throw new Exception(String.Format("No se encontro el recurso '{0}'", schemaResourceName));

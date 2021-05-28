@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
@@ -87,8 +86,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                                 //
                                 if (GetSignal(element, null, false) != regionSignal) {
 
-                                    // Genera un forat
-                                    //
                                     int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
                                     int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
                                     Polygon elementPolygon = element.GetOutlinePolygon(layerId.Side, clearance);
@@ -103,8 +100,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                                      element.IsOnLayer(LayerId.Holes) ||
                                      element.IsOnLayer(LayerId.Drills)) {
 
-                                // Genera un forat.
-                                //
                                 Polygon elementPolygon = element.GetPolygon(layerId.Side);
                                 if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                     holePolygons.Add(elementPolygon);
@@ -114,8 +109,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                             //
                             else if (element.IsOnLayer(LayerId.Profile)) {
 
-                                // Genera un forat.
-                                //
                                 Polygon elementPolygon = element.GetOutlinePolygon(BoardSide.None, _outlineClearance);
                                 if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                     holePolygons.Add(elementPolygon);
@@ -144,6 +137,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                                     // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
                                     //
                                     if (GetSignal(element, part, false) != regionSignal) {
+
                                         int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
                                         Polygon outlinePolygon = element.GetOutlinePolygon(layerId.Side, clearance);
                                         outlinePolygon = outlinePolygon.Transformed(localTransformation);

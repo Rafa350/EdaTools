@@ -87,7 +87,7 @@
             using (XmlWriter writer = XmlWriter.Create(stream, settings)) {
                 writer.WriteStartDocument();
 
-                writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/XPNL.xsd");
+                writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/PanelDocument.xsd");
 
                 writer.WriteAttributeInteger("version", version);
                 writer.WriteAttributeString("documentType", "panel");

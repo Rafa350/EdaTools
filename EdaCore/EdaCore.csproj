@@ -20,13 +20,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Model\Board\IO\Schemas\XBRD.xsd" />
-    <None Remove="Model\Board\IO\Schemas\XLIB.xsd" />
+    <None Remove="Model\Board\IO\Schemas\BoardDocument.xsd" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Model\Board\IO\Schemas\XBRD.xsd" />
-    <EmbeddedResource Include="Model\Board\IO\Schemas\XLIB.xsd" />
+    <EmbeddedResource Include="Model\Board\IO\Schemas\BoardDocument.xsd" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,20 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema
     elementFormDefault="qualified"
-    targetNamespace="http://MikroPic.com/schemas/edatools/v1/XLIB.xsd"
-    xmlns="http://MikroPic.com/schemas/edatools/v1/XLIB.xsd"
+    targetNamespace="http://MikroPic.com/schemas/edatools/v1/EdaBoardDocument.xsd"
+    xmlns="http://MikroPic.com/schemas/edatools/v1/EdaBoardDocument.xsd"
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:element
         name="document">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="library" maxOccurs="unbounded" minOccurs="1"/>
+                <xs:choice minOccurs="1" maxOccurs="1">
+                    <xs:element ref="board" maxOccurs="unbounded" minOccurs="1"/>
+                    <xs:element ref="library" maxOccurs="unbounded" minOccurs="1"/>
+                </xs:choice>
             </xs:sequence>
             <xs:attribute name="version" use="required" type="xs:string"/>
             <xs:attribute name="documentType" use="required" type="xs:string"/>
             <xs:attribute name="distanceUnits" use="required" type="distanceUnitsType"/>
             <xs:attribute name="angleUnits" use="required" type="angleUnitsType"/>            
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element
+        name="board">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="layers" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="signals" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="components" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="parts" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="elements" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="position" use="optional" type="pointType"/>
+            <xs:attribute name="rotation" use="optional" type="angleType"/>
         </xs:complexType>
     </xs:element>
 
@@ -27,7 +45,25 @@
             <xs:attribute name="name" use="required" type="xs:string"/>
         </xs:complexType>
     </xs:element>
-       
+
+    <xs:element
+        name="layers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="layer" maxOccurs="unbounded" minOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element
+        name="signals">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="signal" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
     <xs:element
         name="components">
         <xs:complexType>
@@ -36,7 +72,33 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-   
+
+    <xs:element
+        name="parts">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="part" maxOccurs="unbounded" minOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element
+        name="layer">
+        <xs:complexType>
+            <xs:attribute name="id" use="required" type="xs:string"/>
+            <xs:attribute name="side" use="required" type="boardSideType"/>
+            <xs:attribute name="function" use="required" type="layerFunctionType"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element
+        name="signal">
+        <xs:complexType>
+            <xs:attribute name="name" use="required" type="nameType"/>
+            <xs:attribute name="clearance" use="optional" type="xs:double"/>
+        </xs:complexType>
+    </xs:element>
+    
     <xs:element
         name="component">
         <xs:complexType>
@@ -46,6 +108,21 @@
             <xs:attribute name="name" use="required" type="nameType"/>
             <xs:attribute name="description" use="optional" type="xs:string"/>
         </xs:complexType>
+    </xs:element>
+
+    <xs:element
+        name="part">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="pads" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="attributes" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="name" use="required" type="nameType"/>
+            <xs:attribute name="component" use="required" type="nameType"/>
+            <xs:attribute name="position" use="required" type="pointType"/>
+            <xs:attribute name="rotation" use="optional" type="angleType"/>
+            <xs:attribute name="flip" use="optional" type="xs:boolean"/>
+        </xs:complexType>        
     </xs:element>
 
     <xs:element
@@ -72,6 +149,23 @@
     </xs:element>
 
     <xs:element
+        name="pads">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="pad" maxOccurs="unbounded" minOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element
+        name="pad">
+        <xs:complexType>
+            <xs:attribute name="name" use="required" type="nameType"/>
+            <xs:attribute name="signal" use="required" type="nameType"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element
         name="elements">
         <xs:complexType>
             <xs:sequence>
@@ -81,6 +175,7 @@
                     <xs:element ref="rectangle"/>
                     <xs:element ref="circle"/>
                     <xs:element ref="region"/>
+                    <xs:element ref="via"/>
                     <xs:element ref="tpad"/>
                     <xs:element ref="spad"/>
                     <xs:element ref="text"/>
@@ -93,7 +188,7 @@
     <xs:element
         name="line">
         <xs:complexType>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
+            <xs:attribute name="layer" use="required" type="xs:string"/>
             <xs:attribute name="startPosition" use="required" type="pointType"/>
             <xs:attribute name="endPosition" use="required" type="pointType"/>
             <xs:attribute name="thickness" use="optional" type="xs:double"/>
@@ -105,7 +200,7 @@
     <xs:element
         name="arc">
         <xs:complexType>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
+            <xs:attribute name="layer" use="required" type="xs:string"/>
             <xs:attribute name="startPosition" use="required" type="pointType"/>
             <xs:attribute name="endPosition" use="required" type="pointType"/>
             <xs:attribute name="angle" use="required" type="angleType"/>
@@ -118,7 +213,7 @@
     <xs:element
         name="rectangle">
         <xs:complexType>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
+            <xs:attribute name="layer" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="size" use="required" type="sizeType"/>
             <xs:attribute name="rotation" use="optional" type="angleType"/>
@@ -131,7 +226,7 @@
     <xs:element
         name="circle">
         <xs:complexType>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
+            <xs:attribute name="layer" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="thickness" use="optional" type="xs:double"/>
             <xs:attribute name="radius" use="required" type="xs:double"/>
@@ -145,7 +240,7 @@
             <xs:sequence>
                 <xs:element ref="segment" minOccurs="1" maxOccurs="unbounded"/>
             </xs:sequence>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
+            <xs:attribute name="layer" use="required" type="xs:string"/>
             <xs:attribute name="thickness" use="optional" type="xs:double"/>
             <xs:attribute name="clearance" use="optional" type="xs:double"/>
             <xs:attribute name="filled" use="optional" type="xs:boolean"/>
@@ -162,15 +257,30 @@
     </xs:element>
 
     <xs:element
+        name="via">
+        <xs:complexType>
+            <xs:attribute name="topLayer" use="required" type="xs:string"/>
+            <xs:attribute name="bottomLayer" use="required" type="xs:string"/>
+            <xs:attribute name="position" use="required" type="pointType"/>
+            <xs:attribute name="outerSize" use="required" type="xs:double"/>
+            <xs:attribute name="innerSize" use="optional" type="xs:double"/>
+            <xs:attribute name="drill" use="required" type="xs:double"/>
+            <xs:attribute name="shape" use="optional" type="viaShapeType"/>
+            <xs:attribute name="signal" use="optional" type="nameType"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element
         name="tpad">
         <xs:complexType>
             <xs:attribute name="name" use="required" type="nameType"/>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="size" use="required" type="xs:double"/>
             <xs:attribute name="drill" use="required" type="xs:double"/>
             <xs:attribute name="rotation" use="optional" type="angleType"/>
             <xs:attribute name="shape" use="optional" type="tpadShapeType"/>
+            <xs:attribute name="stop" use="optional" type="xs:string"/>
+            <xs:attribute name="stopMargin" use="optional" type="xs:double"/>
         </xs:complexType>
     </xs:element>
 
@@ -178,18 +288,21 @@
         name="spad">
         <xs:complexType>
             <xs:attribute name="name" use="required" type="nameType"/>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
+            <xs:attribute name="layer" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="size" use="required" type="sizeType"/>
             <xs:attribute name="rotation" use="optional" type="angleType"/>
             <xs:attribute name="roundness" use="optional" type="xs:double"/>
+            <xs:attribute name="stop" use="optional" type="xs:string"/>
+            <xs:attribute name="cream" use="optional" type="xs:string"/>
+            <xs:attribute name="creamMargin" use="optional" type="xs:double"/>
         </xs:complexType>
     </xs:element>
 
     <xs:element
         name="text">
         <xs:complexType>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
+            <xs:attribute name="layer" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="height" use="required" type="xs:double"/>
             <xs:attribute name="thickness" use="required" type="xs:double"/>
@@ -203,7 +316,6 @@
     <xs:element
         name="hole">
         <xs:complexType>
-            <xs:attribute name="layers" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="drill" use="required" type="xs:double"/>
         </xs:complexType>
@@ -241,6 +353,15 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType
+        name="viaShapeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="square"/>
+            <xs:enumeration value="octagon"/>
+            <xs:enumeration value="circle"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
     <xs:simpleType
         name="tpadShapeType">
         <xs:restriction base="xs:string">
@@ -295,6 +416,17 @@
             <xs:enumeration value="bottom"/>
             <xs:enumeration value="inner"/>
             <xs:enumeration value="none"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="layerFunctionType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="signal"/>
+            <xs:enumeration value="design"/>
+            <xs:enumeration value="mechanical"/>
+            <xs:enumeration value="outline"/>
+            <xs:enumeration value="unknown"/>
         </xs:restriction>
     </xs:simpleType>
 

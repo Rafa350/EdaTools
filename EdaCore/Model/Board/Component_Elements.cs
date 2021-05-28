@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
@@ -12,7 +11,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     public sealed partial class Component {
 
         private List<Element> _elements;
-        private Dictionary<string, PadElement> _pads;
 
         /// <summary>
         /// Afeigeix un element.
@@ -30,17 +28,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             if (_elements == null)
                 _elements = new List<Element>();
             _elements.Add(element);
-
-            // Si l'element es un Pad, l'afegeix la llista de pads.
-            //
-            if (element is PadElement pad) {
-                if (_pads == null)
-                    _pads = new Dictionary<string, PadElement>();
-                ///////////////////////////////////////////////////////////////
-                if (!_pads.ContainsKey(pad.Name)) // PROVISIONAL
-                        _pads.Add(pad.Name, pad);
-                //////////////////////////////////////////////////////////////
-            }
         }
 
         /// <summary>
@@ -77,14 +64,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             _elements.Remove(element);
             if (_elements.Count == 0)
                 _elements = null;
-
-            // Si l'element es un pad, tambe l'elimina de la llista de pads.
-            //
-            if (element is PadElement pad) {
-                _pads.Remove(pad.Name);
-                if (_pads.Count == 0)
-                    _pads = null;
-            }
         }
 
         /// <summary>
@@ -96,32 +75,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             if (_elements != null) {
                 _elements.Clear();
                 _elements = null;
-
-                if (_pads != null) {
-                    _pads.Clear();
-                    _pads = null;
-                }
             }
-        }
-
-        /// <summary>
-        /// Obte un pad pel seu nom.
-        /// </summary>
-        /// <param name="name">El nom del pad.</param>
-        /// <param name="throwOnError">True si dispara una excepcio si no el troba.</param>
-        /// <returns>El pad. Null si no el troba.</returns>
-        /// 
-        public PadElement GetPad(string name, bool throwOnError = true) {
-
-            if ((_pads != null) && _pads.TryGetValue(name, out PadElement pad))
-                return pad;
-
-            else if (throwOnError)
-                throw new InvalidOperationException(
-                    String.Format("No se encontro el pad '{0}' en el componente '{1}'.", name, this._name));
-
-            else
-                return null;
         }
 
         /// <summary>
@@ -137,26 +91,5 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// 
         public IEnumerable<Element> Elements =>
             _elements == null ? Enumerable.Empty<Element>() : _elements;
-
-        /// <summary>
-        /// Indica si conte pads.
-        /// </summary>
-        /// 
-        public bool HasPads =>
-            _pads != null;
-
-        /// <summary>
-        /// Enumera el nom dels pads.
-        /// </summary>
-        /// 
-        public IEnumerable<string> PadNames =>
-            _pads == null ? Enumerable.Empty<string>() : _pads.Keys;
-
-        /// <summary>
-        /// Enumera els pads.
-        /// </summary>
-        /// 
-        public IEnumerable<PadElement> Pads =>
-            _pads == null ? Enumerable.Empty<PadElement>() : _pads.Values;
     }
 }

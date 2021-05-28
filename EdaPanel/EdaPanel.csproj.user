@@ -2,7 +2,7 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <EmbeddedResource Update="Model\IO\Schemas\XPNL.xsd">
+    <EmbeddedResource Update="Model\IO\Schemas\PanelDocument.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

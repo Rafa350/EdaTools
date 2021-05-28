@@ -2,7 +2,7 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <EmbeddedResource Update="Model\IO\Schemas\XCAM.xsd">
+    <EmbeddedResource Update="Model\IO\Schemas\CamDocument.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

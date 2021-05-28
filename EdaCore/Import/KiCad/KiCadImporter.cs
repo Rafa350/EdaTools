@@ -115,8 +115,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             board.AddLayer(new Layer(LayerId.TopRestrict, BoardSide.Top, LayerFunction.Unknown));
             board.AddLayer(new Layer(LayerId.InnerRestrict, BoardSide.Inner, LayerFunction.Unknown));
             board.AddLayer(new Layer(LayerId.BottomRestrict, BoardSide.Bottom, LayerFunction.Unknown));
-            //board.AddLayer(new Layer(BoardSide.Top, "Keepout", LayerFunction.Unknown));
-            //board.AddLayer(new Layer(BoardSide.Bottom, "Keepout", LayerFunction.Unknown));
+            board.AddLayer(new Layer(LayerId.TopKeepout, BoardSide.Top, LayerFunction.Unknown));
+            board.AddLayer(new Layer(LayerId.BottomKeepout, BoardSide.Bottom, LayerFunction.Unknown));
 
             // Procesa les capes
             //
@@ -235,10 +235,6 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var position = ParsePoint(tree, tree.SelectBranch(node, "at"));
             var size = ParseMeasure(tree, tree.SelectBranch(node, "size"));
             var drill = ParseMeasure(tree, tree.SelectBranch(node, "drill"));
-
-            /*var layerSet = new LayerSet();
-            foreach (var layer in board.GetSignalLayers())
-                layerSet += layer.Id;*/
 
             var via = new ViaElement(LayerId.TopCopper, LayerId.BottomCopper, position, size, drill, ViaElement.ViaShape.Circle);
 
@@ -640,9 +636,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var connectedPadNode = tree.SelectBranch(node, "connect_pads");
             var clearanceNode = tree.SelectBranch(connectedPadNode, "clearance");
             int clearance = ParseMeasure(tree, clearanceNode);
-
-            //var thickness = ParseMeasure(tree, tree.SelectBranch(node, "min_thickness"));
-            var thickness = 100000;
+            var thickness = ParseMeasure(tree, tree.SelectBranch(node, "min_thickness"));
 
             var element = new RegionElement(layerId, thickness, true, clearance);
             board.AddElement(element);
@@ -735,39 +729,17 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             return (position, rotation);
         }
 
-        private LayerId ParseLayerId(STree tree, SBranch node) {
-
-            return GetLayerId(tree.ValueAsString(node[1]));
-        }
-
         /// <summary>
-        /// Obte un conjunt de capes.
+        /// Obte la capa del element.
         /// </summary>
         /// <param name="tree">El STree.</param>
         /// <param name="node">El node.</param>
-        /// <returns>El resultat.</returns>
+        /// <returns>El identificador de la capa.</returns>
         /// 
-        /*private static LayerSet ParseLayerSet(STree tree, SBranch node) {
+        private static LayerId ParseLayerId(STree tree, SBranch node) {
 
-            var sb = new StringBuilder();
-            for (int i = 1; i < node.Count; i++) {
-                if (i > 1)
-                    sb.Append(',');
-
-                string kcName = tree.ValueAsString(node[i]);
-
-                if (kcName.Contains("*.Cu") || kcName.Contains("F&B.Cu")) 
-                    sb.Append("Top.Copper, Bottom.Copper");
-                else if (kcName.Contains("*.Mask")) 
-                    sb.Append("Top.Stop, Bottom.Stop");                
-                else {
-                    var layerId = GetLayerId(kcName);
-                    sb.Append(layerId.ToString());
-                }
-            }
-
-            return LayerSet.Parse(sb.ToString());
-        }*/
+            return GetLayerId(tree.ValueAsString(node[1]));
+        }        
 
         /// <summary>
         /// Obte la cara de la placa a partir d'un nom de capa.
@@ -856,21 +828,14 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// 
         private static LayerFunction GetLayerFunction(string kcName) {
 
-            switch (kcName) {
-                case "Top":
-                case "Bottom":
-                case "F.Cu":
-                case "B.Cu":
-                case "In1.Cu":
-                case "In2.Cu":
-                    return LayerFunction.Signal;
+            if (kcName.Contains(".Cu"))
+                return LayerFunction.Signal;
 
-                case "Edge.Cuts":
-                    return LayerFunction.Outline;
+            else if (kcName == "Edge.Cuts")
+                return LayerFunction.Outline;
 
-                default:
-                    return LayerFunction.Unknown;
-            }
+            else
+                return LayerFunction.Unknown;
         }
 
         /// <summary>

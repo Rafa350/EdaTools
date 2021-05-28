@@ -577,7 +577,7 @@
 
                 writer.WriteStartDocument();
 
-                writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/XBRD.xsd");
+                writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/BoardDocument.xsd");
                 writer.WriteAttributeInteger("version", version);
                 writer.WriteAttributeString("documentType", "board");
                 writer.WriteAttributeString("distanceUnits", distanceUnits);
@@ -611,7 +611,7 @@
 
                 writer.WriteStartDocument();
 
-                writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/XLIB.xsd");
+                writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/BoardDocument.xsd");
                 writer.WriteAttributeInteger("version", version);
                 writer.WriteAttributeString("documentType", "componentLibrary");
                 writer.WriteAttributeString("distanceUnits", distanceUnits);

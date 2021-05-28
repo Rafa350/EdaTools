@@ -194,13 +194,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// 
         public bool HasPads => 
-            _component.HasPads;
+            _component.HasPads();
 
         /// <summary>
         /// Enumera els pads
         /// </summary>
         /// 
         public IEnumerable<PadElement> Pads => 
-            _component.Pads;
+            _component.Pads();
     }
 }

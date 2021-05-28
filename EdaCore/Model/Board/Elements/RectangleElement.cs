@@ -56,11 +56,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             visitor.Visit(this);
         }
 
-        /// <summary>
-        /// Crea el poligon del element.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <returns>El poligon.</returns>
+        /// <inheritdoc/>
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
@@ -79,12 +75,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             }
         }
 
-        /// <summary>
-        /// Crea el poligon exterior del element.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <param name="spacing">Espaiat</param>
-        /// <returns>El poligon.</returns>
+        /// <inheritdoc/>
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
@@ -93,11 +84,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             return new Polygon(points);
         }
 
-        /// <summary>
-        /// Calcula el bounding box del element.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <returns>El bounding box.</returns>
+        /// <inheritdoc/>
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
@@ -194,9 +181,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override bool IsOnLayer(LayerId layerId) =>
             _layerId == layerId;
 
-        /// <summary>
-        /// Obte el tipus d'element.
-        /// </summary>
+        /// <inheritdoc/>
         /// 
         public override ElementType ElementType =>
             ElementType.Rectangle;

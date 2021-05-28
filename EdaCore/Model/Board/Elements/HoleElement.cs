@@ -8,6 +8,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// <summary>
     /// Clase que representa un forat no conductor.
     /// </summary>
+    /// 
     public sealed class HoleElement : Element, IPosition {
 
         private Point _position;
@@ -36,21 +37,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             return new HoleElement(_position, _drill);
         }
 
-        /// <summary>
-        /// Accepta un visitador del objecte.
-        /// </summary>
-        /// <param name="visitor">El visitador.</param>
+        /// <inheritdoc/>
         /// 
         public override void AcceptVisitor(IBoardVisitor visitor) {
 
             visitor.Visit(this);
         }
 
-        /// <summary>
-        /// Crea el poligon del element.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <returns>El poligon.</returns>
+        /// <inheritdoc/>
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
@@ -58,12 +52,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             return new Polygon(points);
         }
 
-        /// <summary>
-        /// Crea el poligon exterior del element.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <param name="spacing">Espaiat</param>
-        /// <returns>El poligon.</returns>
+        /// <inheritdoc/>
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
@@ -71,11 +60,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             return new Polygon(points);
         }
 
-        /// <summary>
-        /// Calcula el bounding box del element.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <returns>El bounding box.</returns>
+        /// <inheritdoc/>
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
@@ -111,9 +96,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             }
         }
 
-        /// <summary>
-        /// Obte el tipus d'element.
-        /// </summary>
+        /// <inheritdoc>
         /// 
         public override ElementType ElementType =>
             ElementType.Hole;

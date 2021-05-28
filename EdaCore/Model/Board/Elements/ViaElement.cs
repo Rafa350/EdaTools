@@ -80,20 +80,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             _shape = shape;
         }
 
-        /// <summary>
-        /// Obte un clon de l'element.
-        /// </summary>
-        /// <returns>El clon de l'element.</returns>
+        /// <inheritdoc/>
         /// 
         public override Element Clone() {
 
             return new ViaElement(_topLayerId, _bottomLayerId, _position, _outerSize, _innerSize, _drill, _shape);
         }
 
-        /// <summary>
-        /// Accepta un visitador.
-        /// </summary>
-        /// <param name="visitor">El visitador.</param>
+        /// <inheritdoc/>
         /// 
         public override void AcceptVisitor(IBoardVisitor visitor) {
 
@@ -189,11 +183,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             return polygon;
         }
 
-        /// <summary>
-        /// Calcula el bounding box del element.
-        /// </summary>
-        /// <param name="side">Cara de la placa.</param>
-        /// <returns>El bounding box.</returns>
+        /// <inheritdoc/>
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
@@ -294,9 +284,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             set => _shape = value;
         }
 
-        /// <summary>
-        /// Obte el tipus d'element.
-        /// </summary>
+        /// <inheritdoc/>
         /// 
         public override ElementType ElementType => 
             ElementType.Via;

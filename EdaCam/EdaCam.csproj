@@ -19,11 +19,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Model\IO\Schemas\XCAM.xsd" />
+    <None Remove="Model\IO\Schemas\CamDocument.xsd" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Model\IO\Schemas\XCAM.xsd" />
+    <EmbeddedResource Include="Model\IO\Schemas\CamDocument.xsd" />
   </ItemGroup>
 
   <ItemGroup>

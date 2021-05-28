@@ -4,8 +4,9 @@ using System.Collections.Generic;
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
-    /// Clase que representa una regio poligonal.
+    /// Clase que representa una regio poligonal conductora.
     /// </summary>
+    /// 
     public sealed class RegionElement : PolygonElement, IConectable {
 
         private int _clearance;
