@@ -11,6 +11,7 @@
                 <options>
                     <option name="imageType" value="copper"/>
                     <option name="layerLevel" value="1"/>
+                    <option name="layerSide" value="Top"/>
                 </options>
             </target>
 
@@ -21,7 +22,8 @@
                 </layers>
                 <options>
                     <option name="imageType" value="copper"/>
-                    <option name="layerLevel" value="1"/>
+                    <option name="layerLevel" value="2"/>
+                    <option name="layerSide" value="Inr"/>
                 </options>
             </target>
 
@@ -32,7 +34,8 @@
                 </layers>
                 <options>
                     <option name="imageType" value="copper"/>
-                    <option name="layerLevel" value="1"/>
+                    <option name="layerLevel" value="3"/>
+                    <option name="layerSide" value="Inr"/>
                 </options>
             </target>
 
@@ -43,7 +46,8 @@
                 </layers>
                 <options>
                     <option name="imageType" value="copper"/>
-                    <option name="layerLevel" value="2"/>
+                    <option name="layerLevel" value="4"/>
+                    <option name="layerSide" value="Bottom"/>
                 </options>
             </target>
 
@@ -99,7 +103,7 @@
                 </options>
             </target>
 
-            <!-- Forats no platejats capes 1-2 -->
+            <!-- Forats no platejats capes 1-4 -->
             <target name="NonPlated.1.2.Drill" output="NonPlated$1$2$NPTH$Drill.gbr" generator="gerber-drill">
                 <layers>
                     <layer name="Holes"/>
@@ -111,7 +115,7 @@
                 </options>
             </target>
 
-            <!-- Forats platejats capes 1-2 -->
+            <!-- Forats platejats capes 1-4 -->
             <target name="Plated.1.2.Drill" output="Plated$1$2$PTH$Drill.gbr" generator="gerber-drill">
                 <layers>
                     <layer name="Drills"/>
@@ -122,6 +126,10 @@
                     <option name="bottomLevel" value="2"/>
                 </options>
             </target>
+            
+            <!-- Components en capa L1-->
+
+            <!-- Components en capa L4-->
 
             <!-- Netlist IPC-D-356 -->
             <target name="IPC-D356" output="Netlist.ipc" generator="ipc-D356">

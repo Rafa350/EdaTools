@@ -12,21 +12,14 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
     /// <summary>
     /// Clase per generar fitxers gerber de forats i fresats.
     /// </summary>
-    public sealed class GerberDrillGenerator : Generator {
-
-        public enum DrillType {
-            PlatedDrill,
-            NonPlatedDrill,
-            PlatedRoute,
-            NonPlatedRoute
-        }
+    public sealed class GerberComponentGenerator : Generator {
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="target">El target.</param>
         /// 
-        public GerberDrillGenerator(Target target) :
+        public GerberComponentGenerator(Target target) :
             base(target) {
         }
 
@@ -107,32 +100,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             gb.Comment(String.Format("Start timestamp: {0:HH:mm:ss.fff}", DateTime.Now));
             gb.Comment("BEGIN HEADER");
 
-            DrillType drillType = (DrillType)Enum.Parse(typeof(DrillType), Target.GetOptionValue("drillType"), true);
-            int topLevel = Int32.Parse(Target.GetOptionValue("topLevel"));
-            int bottomLevel = Int32.Parse(Target.GetOptionValue("bottomLevel"));
+            int layerLevel = Int32.Parse(Target.GetOptionValue("layerLevel"));
+            string layerSide = Target.GetOptionValue("layerSide");
 
-            switch (drillType) {
-                case DrillType.PlatedDrill:
-                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,Plated,{0},{1},PTH,Drill", topLevel, bottomLevel));
-                    gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
-                    break;
-
-                case DrillType.NonPlatedDrill:
-                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,NonPlated,{0},{1},NPTH,Drill", topLevel, bottomLevel));
-                    gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
-                    break;
-
-                case DrillType.PlatedRoute:
-                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,Plated,{0},{1},PTH,Route", topLevel, bottomLevel));
-                    gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
-                    break;
-
-                case DrillType.NonPlatedRoute:
-                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,NonPlated,{0},{1},NPTH,Route", topLevel, bottomLevel));
-                    gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
-                    break;
-            }
-            gb.Attribute(AttributeScope.File, ".Part,Single");
+            gb.Attribute(AttributeScope.File, String.Format(".FileFunction,Component,L{0},{1}", layerLevel, layerSide));
+            gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
             gb.SetUnits(Units.Milimeters);
             gb.SetCoordinateFormat(8, 5);
             gb.LoadPolarity(Polarity.Dark);
@@ -203,63 +175,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             }
 
             /// <summary>
-            /// Visita un element de tipus 'LineElement'.
+            /// Visita un objecte Part
             /// </summary>
-            /// <param name="line">L'element a visitar.</param>
+            /// <param name="part">L'objecte.</param>
             /// 
-            public override void Visit(LineElement line) {
-
-                if (CanVisit(line))
-                    _apertures.DefineCircleAperture(line.Thickness);
-            }
-
-            /// <summary>
-            /// Visuita un element de tipus 'ArcElement'
-            /// </summary>
-            /// <param name="arc">L'element a visitar.</param>
-            /// 
-            public override void Visit(ArcElement arc) {
-
-                if (CanVisit(arc))
-                    _apertures.DefineCircleAperture(arc.Thickness);
-            }
-
-            /// <summary>
-            /// Visita un element de tipus 'HoleElement'
-            /// </summary>
-            /// <param name="hole">L'element a visitar.</param>
-            /// 
-            public override void Visit(HoleElement hole) {
-
-                if (CanVisit(hole))
-                    _apertures.DefineCircleAperture(hole.Drill);
-            }
-
-            /// <summary>
-            /// Visita un element de tipus 'ViaElement'
-            /// </summary>
-            /// <param name="via">L'element a visitar.</param>
-            /// 
-            public override void Visit(ViaElement via) {
-
-                if (CanVisit(via))
-                    _apertures.DefineCircleAperture(via.Drill);
-            }
-
-            /// <summary>
-            /// Viita un element de tipus 'ThPadElement'
-            /// </summary>
-            /// <param name="pad">L'element a visitar.</param>
-            /// 
-            public override void Visit(ThPadElement pad) {
-
-                if (CanVisit(pad))
-                    _apertures.DefineCircleAperture(pad.Drill);
-            }
-
-            private bool CanVisit(Element element) {
-
-                return element.IsOnLayer(_layerId);
+            public override void Visit(Part part) {
             }
         }
 

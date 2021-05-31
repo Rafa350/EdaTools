@@ -114,7 +114,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         private void GenerateFileHeader(GerberBuilder gb) {
 
             gb.Comment("BEGIN FILE");
-            gb.Comment("EdaTools v1.0.");
+            gb.Comment("EdaTools v2.0.");
             gb.Comment("EdaTools CAM processor. Gerber generator.");
             gb.Comment(String.Format("Start timestamp: {0:HH:mm:ss.fff}", DateTime.Now));
             gb.Comment("BEGIN HEADER");
@@ -123,7 +123,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             switch (imageType) {
                 case ImageType.Copper: {
                     int layerLevel = Int32.Parse(Target.GetOptionValue("layerLevel"));
-                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,Copper,L{0},{1},Signal", layerLevel, layerLevel == 1 ? "Top" : "Bot"));
+                    string layerSide = Target.GetOptionValue("layerSide");
+                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,Copper,L{0},{1},Signal", layerLevel, layerSide));
                     gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
                 }

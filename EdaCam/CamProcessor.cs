@@ -56,9 +56,13 @@ namespace MikroPic.EdaTools.v1.Cam {
                 case "gerber-drill":
                     return new GerberDrillGenerator(target);
 
+                case "gerber-component":
+                    return new GerberComponentGenerator(target);
+
                 case "ipc-D356":
                     return new Ipcd356Generator(target);
 
+                case "ipc-2581":
                 default:
                     throw new InvalidOperationException("Tipo de generador desconocido.");
             }
