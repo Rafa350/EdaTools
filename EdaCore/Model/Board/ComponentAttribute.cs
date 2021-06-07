@@ -1,4 +1,5 @@
 ﻿using System;
+using MikroPic.EdaTools.v1.Core.Model.Common;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
@@ -6,7 +7,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// Clase que representa un atribut.
     /// </summary>
     /// 
-    public sealed class ComponentAttribute : IBoardVisitable {
+    public sealed class ComponentAttribute : IVisitable<IBoardVisitor> {
 
         private readonly string _name;
         private string _value;

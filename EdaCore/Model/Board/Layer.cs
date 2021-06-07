@@ -1,4 +1,6 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using MikroPic.EdaTools.v1.Core.Model.Common;
+
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Funcio de la capa.
@@ -16,7 +18,7 @@
     /// Clase que representa una capa de la placa.
     /// </summary>
     /// 
-    public sealed class Layer : IBoardVisitable {
+    public sealed class Layer : IVisitable<IBoardVisitor> {
 
         private readonly LayerId _id;
         private readonly BoardSide _side;

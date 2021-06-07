@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using MikroPic.EdaTools.v1.Core.Model.Common;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    public sealed partial class Library : IBoardVisitable {
+    public sealed partial class Library : IVisitable<IBoardVisitor> {
 
         private string _name;
         private string _description;

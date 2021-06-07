@@ -1,5 +1,6 @@
 ﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+using MikroPic.EdaTools.v1.Core.Model.Common;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
@@ -26,7 +27,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// Clase base per tots els elements de la placa.
     /// </summary>
     /// 
-    public abstract class Element : IBoardVisitable {
+    public abstract class Element : IVisitable<IBoardVisitor> {
 
         /// <summary>
         /// Obte una copia en profunditat de l'objecte.

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+using MikroPic.EdaTools.v1.Core.Model.Common;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    public sealed partial class Part : IPosition, IRotation, IName, IBoardVisitable {
+    public sealed partial class Part : IPosition, IRotation, IName, IVisitable<IBoardVisitor> {
 
         private readonly string _name;
         private Point _position;

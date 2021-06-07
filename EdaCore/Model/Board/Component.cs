@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers;
+using MikroPic.EdaTools.v1.Core.Model.Common;
 using NetSerializer.Attributes;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
@@ -10,7 +11,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// </summary>
     /// 
     [NetSerializer(typeof(ComponentSerializer), AliasName = "Component")]
-    public sealed partial class Component : IBoardVisitable, IName {
+    public sealed partial class Component : IVisitable<IBoardVisitor>, IName {
 
         private readonly string _name;
         private string _description;

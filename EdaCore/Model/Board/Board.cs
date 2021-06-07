@@ -1,5 +1,6 @@
 ﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers;
+using MikroPic.EdaTools.v1.Core.Model.Common;
 using NetSerializer.Attributes;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
@@ -21,7 +22,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// </summary>
     /// 
     [NetSerializer(typeof(BoardSerializer), AliasName = "Board")]
-    public sealed partial class Board : IBoardVisitable {
+    public sealed partial class Board : IVisitable<IBoardVisitor> {
 
         private Point _position;
         private Angle _rotation;

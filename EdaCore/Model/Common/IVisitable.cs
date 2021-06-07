@@ -1,12 +1,12 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿namespace MikroPic.EdaTools.v1.Core.Model.Common {
 
-    public interface IBoardVisitable {
+    public interface IVisitable<T> {
 
         /// <summary>
         /// Accepta un visitador
         /// </summary>
         /// <param name="visitor">El visitador.</param>
         /// 
-        void AcceptVisitor(IBoardVisitor visitor);
+        void AcceptVisitor(T visitor);
     }
 }

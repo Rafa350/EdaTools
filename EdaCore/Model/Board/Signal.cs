@@ -1,11 +1,12 @@
 ﻿using System;
+using MikroPic.EdaTools.v1.Core.Model.Common;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Clase que representa una senyal.
     /// </summary>
-    public sealed class Signal : IName, IBoardVisitable {
+    public sealed class Signal : IName, IVisitable<IBoardVisitor> {
 
         private readonly string _name;
         private int _clearance = 150000;
