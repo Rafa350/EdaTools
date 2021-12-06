@@ -39,7 +39,7 @@
 
             if ((targets != null) && targets.ContainsKey(target.Name))
                 throw new InvalidOperationException(
-                    String.Format("Ya existe un objetivo con el nombbre '{0}' en el proyecto.", target.Name));
+                    String.Format("Ya existe un objetivo con el nombre '{0}' en el proyecto.", target.Name));
 
             if (targets == null)
                 targets = new Dictionary<string, Target>();
