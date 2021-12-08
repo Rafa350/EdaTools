@@ -1,8 +1,8 @@
-﻿namespace MikroPic.EdaTools.v1.Extractor {
+﻿using System.IO;
+using MikroPic.EdaTools.v1.Core.Model.Board;
+using MikroPic.EdaTools.v1.Core.Model.Board.IO;
 
-    using System.IO;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
+namespace MikroPic.EdaTools.v1.Extractor {
 
     class Program {
 
@@ -36,17 +36,17 @@
 
         private static Board LoadBoard(string fileName) {
 
-            using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                BoardStreamReader reader = new BoardStreamReader(stream);
+            using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
+                var reader = new BoardStreamReader(stream);
                 return reader.Read();
             }
         }
 
         private static void ExtractData(Board board, string fileName) {
 
-            using (Stream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
-                using (TextWriter writer = new StreamWriter(stream)) {
-                    PartExtractor extractor = new PartExtractor(board);
+            using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
+                using (var writer = new StreamWriter(stream)) {
+                    var extractor = new PartExtractor(board);
                     extractor.Extract(writer);
                 }
             }

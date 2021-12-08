@@ -40,7 +40,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         public override void Generate(Board board, string outputFolder, GeneratorOptions options = null) {
 
             if (board == null)
-                throw new ArgumentNullException("panel");
+                throw new ArgumentNullException(nameof(board));
 
             if (String.IsNullOrEmpty(outputFolder))
                 throw new ArgumentNullException(nameof(outputFolder));

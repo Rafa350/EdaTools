@@ -30,7 +30,6 @@ namespace MikroPic.EdaTools.v1.Export {
 
             string targetExt = Path.GetExtension(targetPath);
 
-
             if (String.Compare(targetExt, ".pretty", true) == 0) {
 
                 using (var stream = new FileStream(sourcePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {

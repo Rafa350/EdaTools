@@ -327,7 +327,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                     switch (tree.ValueAsString(childNode[1])) {
 
                         case "value":
-                            attribute = new PartAttribute("VALUE", partName, attrVisible);
+                            attribute = new PartAttribute("VALUE", attrValue, attrVisible);
                             break;
 
                         case "reference":
