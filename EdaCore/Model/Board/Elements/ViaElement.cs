@@ -60,7 +60,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <param name="shape">Forma de la corona.</param>
         /// 
         public ViaElement(LayerId topLayerId, LayerId bottomLayerId, Point position, int outerSize, int innerSize, int drill, ViaShape shape) :
-            base() {
+            base(new LayerSet(LayerId.Vias, LayerId.Drills)) {
 
             if (innerSize < 0)
                 throw new ArgumentOutOfRangeException(nameof(innerSize));
@@ -183,6 +183,17 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             return polygon;
         }
 
+        /// <summary>
+        /// Obte el poligon del forat
+        /// </summary>
+        /// <returns>El poligon </returns>
+        /// 
+        public Polygon GetDrillPolygon() {
+
+            var points = PolygonBuilder.MakeCircle(Position, _drill / 2);
+            return new Polygon(points);
+        }
+
         /// <inheritdoc/>
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
@@ -228,9 +239,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// 
         public int Drill {
-            get {
-                return _drill;
-            }
+            get => _drill;
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Drill");

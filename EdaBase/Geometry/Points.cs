@@ -1,7 +1,7 @@
-﻿namespace MikroPic.EdaTools.v1.Base.Geometry {
+﻿using System.Collections;
+using System.Collections.Generic;
 
-    using System.Collections;
-    using System.Collections.Generic;
+namespace MikroPic.EdaTools.v1.Base.Geometry {
 
     /// <summary>
     /// Colleccio inmutable de punts.

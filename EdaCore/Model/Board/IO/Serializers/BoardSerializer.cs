@@ -50,8 +50,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers {
 
             if (name == "Layers") {
                 Layer[] layers = board.HasLayers ? board.Layers.ToArray() : null;
-                var serializer = GetSerializer(typeof(Layer[]));
-                serializer.Serialize(writer, name, typeof(Layer[]), layers);
+                var serializer = GetSerializer(typeof(LayerId[]));
+                serializer.Serialize(writer, name, typeof(LayerId[]), layers);
             }
 
             else if (name == "Components") {

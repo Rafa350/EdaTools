@@ -129,8 +129,8 @@ namespace MikroPic.EdaTools.v1.CamTool {
         /// 
         private static Board LoadBoard(string boardPath) {
 
-            using (Stream stream = new FileStream(boardPath, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                BoardStreamReader reader = new BoardStreamReader(stream);
+            using (var stream = new FileStream(boardPath, FileMode.Open, FileAccess.Read, FileShare.None)) {
+                var reader = new BoardStreamReader(stream);
                 return reader.Read();
             }
         }
@@ -143,8 +143,8 @@ namespace MikroPic.EdaTools.v1.CamTool {
         /// 
         private static Project LoadProject(string projectPath) {
 
-            using (Stream stream = new FileStream(projectPath, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                ProjectStreamReader reader = new ProjectStreamReader(stream);
+            using (var stream = new FileStream(projectPath, FileMode.Open, FileAccess.Read, FileShare.None)) {
+                var reader = new ProjectStreamReader(stream);
                 return reader.Read();
             }
         }

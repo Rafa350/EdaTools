@@ -12,16 +12,17 @@
 
     public sealed class BoardRenderVisitor : ElementVisitor {
 
-        private readonly Layer layer;
-        private readonly VisualLayer visualLayer;
-        private readonly DrawingContext context;
+        private readonly Color _background = Color.FromRgb(0x30, 0x30, 0x30);
+        private readonly Layer _layer;
+        private readonly VisualLayer _visualLayer;
+        private readonly DrawingContext _context;
         private Font font;
 
         public BoardRenderVisitor(Layer layer, VisualLayer visualLayer, DrawingContext context) {
 
-            this.layer = layer;
-            this.visualLayer = visualLayer;
-            this.context = context;
+            _layer = layer;
+            _visualLayer = visualLayer;
+            _context = context;
         }
 
         public override void Visit(Board board) {
@@ -31,9 +32,9 @@
 
         public override void Visit(LineElement line) {
 
-            if (visualLayer.IsVisible(Part, line)) {
+            if (_visualLayer.IsVisible(Part, line)) {
 
-                var brush = new SolidColorBrush(visualLayer.Color);
+                var brush = new SolidColorBrush(_visualLayer.Color);
 
                 var lineCap = line.LineCap == LineElement.CapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round;
                 var pen = new Pen(brush, line.Thickness, null, lineCap);
@@ -41,90 +42,112 @@
                 var start = line.StartPosition.ToPoint();
                 var end = line.EndPosition.ToPoint();
 
-                context.DrawLine(pen, start, end);
+                _context.DrawLine(pen, start, end);
             }
         }
 
         public override void Visit(RectangleElement rectangle) {
 
-            if (visualLayer.IsVisible(Part, rectangle)) {
+            if (_visualLayer.IsVisible(Part, rectangle)) {
 
-                var brush = new SolidColorBrush(visualLayer.Color);
-                var geometry = rectangle.GetPolygon(layer.Side).ToGeometry();
+                var brush = new SolidColorBrush(_visualLayer.Color);
+                var geometry = rectangle.GetPolygon(_layer.Side).ToGeometry();
 
-                context.DrawGeometry(brush, null, geometry);
+                _context.DrawGeometry(brush, null, geometry);
             }
         }
 
         public override void Visit(ArcElement arc) {
 
-            if (visualLayer.IsVisible(Part, arc)) {
+            if (_visualLayer.IsVisible(Part, arc)) {
 
-                var brush = new SolidColorBrush(visualLayer.Color);
-                var geometry = arc.GetPolygon(layer.Side).ToGeometry();
+                var brush = new SolidColorBrush(_visualLayer.Color);
+                var geometry = arc.GetPolygon(_layer.Side).ToGeometry();
 
-                context.DrawGeometry(brush, null, geometry);
+                _context.DrawGeometry(brush, null, geometry);
             }
         }
 
         public override void Visit(CircleElement circle) {
 
-            if (visualLayer.IsVisible(Part, circle)) {
+            if (_visualLayer.IsVisible(Part, circle)) {
 
-                var brush = new SolidColorBrush(visualLayer.Color);
-                var geometry = circle.GetPolygon(layer.Side).ToGeometry();
+                var brush = new SolidColorBrush(_visualLayer.Color);
+                var geometry = circle.GetPolygon(_layer.Side).ToGeometry();
 
-                context.DrawGeometry(brush, null, geometry);
+                _context.DrawGeometry(brush, null, geometry);
             }
         }
 
         public override void Visit(ViaElement via) {
 
-            if (visualLayer.IsVisible(Part, via)) {
+            if (_visualLayer.IsVisible(Part, via)) {
 
-                var brush = new SolidColorBrush(visualLayer.Color);
-                var geometry = via.GetPolygon(layer.Side).ToGeometry();
+                switch (_visualLayer.VisualMode) {
+                    case VisualMode.Element: {
+                        var brush = new SolidColorBrush(_visualLayer.Color);
+                        var geometry = via.GetPolygon(_layer.Side).ToGeometry();
+                        _context.DrawGeometry(brush, null, geometry);
+                    }
+                    break;
 
-                context.DrawGeometry(brush, null, geometry);
+                    case VisualMode.Drill: {
+                        var drillBrush = new SolidColorBrush(_background);
+                        var drillGeometry = via.GetDrillPolygon().ToGeometry();
+                        _context.DrawGeometry(drillBrush, null, drillGeometry);
+                    }
+                    break;
+                }
             }
         }
 
         public override void Visit(ThPadElement pad) {
 
-            if (visualLayer.IsVisible(Part, pad)) {
+            if (_visualLayer.IsVisible(Part, pad)) {
 
-                var brush = new SolidColorBrush(visualLayer.Color);
-                var geometry = pad.GetPolygon(layer.Side).ToGeometry();
+                switch (_visualLayer.VisualMode) {
+                    case VisualMode.Element : {
+                        var brush = new SolidColorBrush(_visualLayer.Color);
+                        var geometry = pad.GetPolygon(_layer.Side).ToGeometry();
+                        _context.DrawGeometry(brush, null, geometry);
+                    }
+                    break;
 
-                context.DrawGeometry(brush, null, geometry);
+                case VisualMode.Drill: {
+                        var drillBrush = new SolidColorBrush(_background);
+                        var drillGeometry = pad.GetDrillPolygon().ToGeometry();
+                        _context.DrawGeometry(drillBrush, null, drillGeometry);
+                    }
+                    break;
+                }
             }
         }
 
         public override void Visit(SmdPadElement pad) {
 
-            if (visualLayer.IsVisible(Part, pad)) {
+            if (_visualLayer.IsVisible(Part, pad)) {
 
-                var brush = new SolidColorBrush(visualLayer.Color);
-                var geometry = pad.GetPolygon(layer.Side).ToGeometry();
+                var brush = new SolidColorBrush(_visualLayer.Color);
+                var geometry = pad.GetPolygon(_layer.Side).ToGeometry();
 
-                context.DrawGeometry(brush, null, geometry);
+                _context.DrawGeometry(brush, null, geometry);
             }
         }
 
         public override void Visit(HoleElement hole) {
 
-            if (visualLayer.IsVisible(Part, hole)) {
+            if (_visualLayer.IsVisible(Part, hole)) {
 
-                var brush = new SolidColorBrush(visualLayer.Color);
-                var geometry = hole.GetPolygon(layer.Side).ToGeometry();
+                var brush = new SolidColorBrush(_visualLayer.Color);
+                var geometry = hole.GetPolygon(_layer.Side).ToGeometry();
 
-                context.DrawGeometry(brush, null, geometry);
+                _context.DrawGeometry(brush, null, geometry);
             }
         }
 
         public override void Visit(TextElement text) {
 
-            if (visualLayer.IsVisible(Part, text)) {
+            if (_visualLayer.IsVisible(Part, text)) {
 
                 var paa = new PartAttributeAdapter(Part, text);
                 if (paa.IsVisible) {
@@ -142,7 +165,7 @@
 
                     Matrix2D matrix = t.Matrix;
                     var m = new Avalonia.Matrix(matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.Tx, matrix.Ty);
-                    using (context.PushPreTransform(m)) {
+                    using (_context.PushPreTransform(m)) {
 
                         bool first = true;
                         var geometry = new StreamGeometry();
@@ -158,9 +181,9 @@
                             }
                         }
 
-                        var pen = new Pen(new SolidColorBrush(visualLayer.Color), text.Thickness, null, PenLineCap.Round, PenLineJoin.Round);
+                        var pen = new Pen(new SolidColorBrush(_visualLayer.Color), text.Thickness, null, PenLineCap.Round, PenLineJoin.Round);
 
-                        context.DrawGeometry(null, pen, geometry);
+                        _context.DrawGeometry(null, pen, geometry);
                     }
                 }
             }
@@ -168,18 +191,18 @@
 
         public override void Visit(RegionElement region) {
     
-            if (visualLayer.IsVisible(Part, region)) {
+            if (_visualLayer.IsVisible(Part, region)) {
 
-                var polygon = layer.Function == LayerFunction.Signal ?
-                    Board.GetRegionPolygon(region, layer.Id, new Transformation()) :
-                    region.GetPolygon(layer.Side);
+                var polygon = _layer.Function == LayerFunction.Signal ?
+                    Board.GetRegionPolygon(region, _layer.Id, new Transformation()) :
+                    region.GetPolygon(_layer.Side);
 
-                var pen = new Pen(new SolidColorBrush(visualLayer.Color), region.Thickness, null, PenLineCap.Round, PenLineJoin.Round);
-                var brush = new SolidColorBrush(visualLayer.Color);
+                var pen = new Pen(new SolidColorBrush(_visualLayer.Color), region.Thickness, null, PenLineCap.Round, PenLineJoin.Round);
+                var brush = new SolidColorBrush(_visualLayer.Color);
 
                 var geometry = polygon.ToGeometry();
 
-                context.DrawGeometry(brush, pen, geometry);
+                _context.DrawGeometry(brush, pen, geometry);
             }
         }
 
@@ -189,7 +212,7 @@
             Matrix2D matrix = transformation.Matrix;
 
             var m = new Avalonia.Matrix(matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.Tx, matrix.Ty);
-            using (context.PushPreTransform(m))
+            using (_context.PushPreTransform(m))
                 base.Visit(part);
         }
     }

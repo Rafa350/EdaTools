@@ -11,7 +11,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa una regio poligonal.
     /// </summary>
     /// 
-    public class PolygonElement : Element, ILayer {
+    public class PolygonElement : Element {
 
         public sealed class Segment {
 
@@ -36,25 +36,23 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         private readonly List<Segment> _segments = new List<Segment>();
-        private LayerId _layerId;
         private int _thickness;
         private bool _filled;
 
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
-        /// <param name="layerId">La capa.</param>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="filled">True si es ple.</param>
         /// <param name="segments">Llista de segments.</param>
         /// 
-        public PolygonElement(LayerId layerId, int thickness, bool filled, IEnumerable<Segment> segments = null) :
-            base() {
+        public PolygonElement(LayerSet layerSet, int thickness, bool filled, IEnumerable<Segment> segments = null) :
+            base(layerSet) {
 
             if (thickness < 0)
                 throw new ArgumentOutOfRangeException(nameof(thickness));
 
-            _layerId = layerId;
             _thickness = thickness;
             _filled = filled;
 
@@ -67,7 +65,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Element Clone() {
 
-            return new PolygonElement(_layerId, _thickness, _filled, _segments);
+            return new PolygonElement(LayerSet, _thickness, _filled, _segments);
         }
 
         /// <inheritdoc/>
@@ -178,28 +176,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             Add(new Segment(position, angle));
         }
 
-        /// <inheritdoc/>
-        /// 
-        public override bool IsOnLayer(LayerId layerId) =>
-            _layerId == layerId;
-
-        /// <summary>
-        /// Obte o asigna la capa.
-        /// </summary>
-        /// 
-        public LayerId LayerId {
-            get => _layerId;
-            set => _layerId = value;
-        }
-
         /// <summary>
         /// Obte o asigna l'amplada de linia del perfil.
         /// </summary>
         /// 
         public int Thickness {
-            get {
-                return _thickness;
-            }
+            get => _thickness;
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Tickness");

@@ -49,7 +49,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
     public enum AttributeScope {
         File,
         Aperture,
-        Part
+        Object
     }
 
     /// <summary>
@@ -129,7 +129,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
                     prefix = "A";
                     break;
 
-                case AttributeScope.Part:
+                case AttributeScope.Object:
                     prefix = "O";
                     break;
             }

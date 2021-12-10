@@ -16,15 +16,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="layerId">La capa.</param>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="startPosition">La posicio inicial.</param>
         /// <param name="endPosition">La posicio final.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="angle">Angle del arc.</param>
         /// <param name="lineCap">Extrems de linia.</param>
         /// 
-        public ArcElement(LayerId layerId, Point startPosition, Point endPosition, int thickness, Angle angle, CapStyle lineCap) :
-            base(layerId, startPosition, endPosition, thickness, lineCap) {
+        public ArcElement(LayerSet layerSet, Point startPosition, Point endPosition, int thickness, Angle angle, CapStyle lineCap) :
+            base(layerSet, startPosition, endPosition, thickness, lineCap) {
 
             _angle = angle;
         }
@@ -33,7 +33,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         ///  
         public override Element Clone() {
 
-            return new ArcElement(LayerId, StartPosition, EndPosition, Thickness, _angle, LineCap);
+            return new ArcElement(LayerSet, StartPosition, EndPosition, Thickness, _angle, LineCap);
         }
 
         /// <inheritdoc/>

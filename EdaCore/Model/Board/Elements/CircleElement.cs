@@ -9,9 +9,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un cercle.
     /// </summary>
     /// 
-    public sealed class CircleElement : Element, ILayer, IPosition {
+    public sealed class CircleElement : Element, IPosition {
 
-        private LayerId _layerId;
         private Point _position;
         private int _radius;
         private int _thickness;
@@ -20,16 +19,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="layerId">La capa.</param>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="position">Posicio del centre.</param>
         /// <param name="radius">Radi.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="filled">True si cal omplir el cercle.</param>
         /// 
-        public CircleElement(LayerId layerId, Point position, int radius, int thickness, bool filled) :
-            base() {
+        public CircleElement(LayerSet layerSet, Point position, int radius, int thickness, bool filled) :
+            base(layerSet) {
 
-            _layerId = layerId;
             _position = position;
             _radius = radius;
             _thickness = thickness;
@@ -40,7 +38,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Element Clone() {
 
-            return new CircleElement(_layerId, _position, _radius, _thickness, _filled);
+            return new CircleElement(LayerSet, _position, _radius, _thickness, _filled);
         }
 
         /// <inheritdoc/>
@@ -79,15 +77,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
             int r = _radius + (_thickness / 2);
             return new Rect(_position.X - r, _position.Y - r, r + r, r + r);
-        }
-
-        /// <summary>
-        /// Obte o asigna la capa.
-        /// </summary>
-        /// 
-        public LayerId LayerId {
-            get => _layerId;
-            set => _layerId = value;
         }
 
         /// <summary>
@@ -155,11 +144,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => (_thickness == 0) || _filled;
             set => _filled = value;
         }
-
-        /// <inheritdoc/>
-        /// 
-        public override bool IsOnLayer(LayerId layerId) =>
-            _layerId == layerId;
 
         /// <inheritdoc/>
         /// 

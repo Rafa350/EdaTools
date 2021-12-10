@@ -43,9 +43,6 @@
         public virtual void Visit(ThPadElement pad) {
         }
 
-        public virtual void Visit(SlotElement pad) {
-        }
-
         public virtual void Visit(RegionElement region) {
         }
 

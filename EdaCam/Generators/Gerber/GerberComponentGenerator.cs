@@ -33,7 +33,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         public override void Generate(Board board, string outputFolder, GeneratorOptions options = null) {
 
             if (board == null)
-                throw new ArgumentNullException("panel");
+                throw new ArgumentNullException(nameof(board));
 
             if (String.IsNullOrEmpty(outputFolder))
                 throw new ArgumentNullException(nameof(outputFolder));
@@ -206,124 +206,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 _apertures = apertures;
             }
 
-            /// <summary>
-            /// Visita un object 'ArcElement'
-            /// </summary>
-            /// <param name="arc">L'element a visitar.</param>
-            /// 
-            public override void Visit(ArcElement arc) {
-
-                if (CanVisit(arc)) {
-
-                    Point startPosition = arc.StartPosition;
-                    Point endPosition = arc.EndPosition;
-                    Point center = arc.Center;
-                    if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
-                        startPosition = t.ApplyTo(startPosition);
-                        endPosition = t.ApplyTo(endPosition);
-                        center = t.ApplyTo(center);
-                    }
-
-                    Aperture ap = _apertures.GetCircleAperture(arc.Thickness);
-
-                    _gb.SelectAperture(ap);
-                    _gb.MoveTo(startPosition);
-                    _gb.ArcTo(endPosition.X, endPosition.Y,
-                        center.X - startPosition.X, center.Y - startPosition.Y,
-                        arc.Angle.Value < 0 ? ArcDirection.CW : ArcDirection.CCW);
-                }
-            }
-
-            /// <summary>
-            /// Visita un object 'LineElement'
-            /// </summary>
-            /// <param name="line">L'element a visitar.</param>
-            /// 
-            public override void Visit(LineElement line) {
-
-                if (CanVisit(line)) {
-
-                    Point startPosition = line.StartPosition;
-                    Point endPosition = line.EndPosition;
-                    if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
-                        startPosition = t.ApplyTo(startPosition);
-                        endPosition = t.ApplyTo(endPosition);
-                    }
-
-                    Aperture ap = _apertures.GetCircleAperture(line.Thickness);
-
-                    _gb.SelectAperture(ap);
-                    _gb.MoveTo(startPosition);
-                    _gb.LineTo(endPosition);
-                }
-            }
-
-            /// <summary>
-            /// Visita un object 'HoleElement'
-            /// </summary>
-            /// <param name="hole">El element a visitar.</param>
-            /// 
-            public override void Visit(HoleElement hole) {
-
-                if (CanVisit(hole)) {
-
-                    Point position = hole.Position;
-                    if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
-                        position = t.ApplyTo(position);
-                    }
-
-                    Aperture ap = _apertures.GetCircleAperture(hole.Drill);
-
-                    _gb.SelectAperture(ap);
-                    _gb.FlashAt(position);
-                }
-            }
-
-            /// <summary>
-            /// Visita un objecte 'ViaElement'.
-            /// </summary>
-            /// <param name="via">L'objecte a visitar.</param>
-            /// 
-            public override void Visit(ViaElement via) {
-
-                if (CanVisit(via)) {
-
-                    Point position = via.Position;
-                    if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
-                        position = t.ApplyTo(position);
-                    }
-
-                    Aperture ap = _apertures.GetCircleAperture(via.Drill);
-
-                    _gb.SelectAperture(ap);
-                    _gb.FlashAt(position);
-                }
-            }
-
-            /// <summary>
-            /// Visita un objecte 'ThPadElement'.
-            /// </summary>
-            /// <param name="pad">L'objecte a visitar.</param>
-            /// 
-            public override void Visit(ThPadElement pad) {
-
-                if (CanVisit(pad)) {
-
-                    Point position = pad.Position;
-                    if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
-                        position = t.ApplyTo(position);
-                    }
-
-                    Aperture ap = _apertures.GetCircleAperture(pad.Drill);
-
-                    _gb.SelectAperture(ap);
-                    _gb.FlashAt(position);
-                }
+            public override void Visit(Part part) {
             }
 
             private bool CanVisit(Element element) {

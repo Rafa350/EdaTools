@@ -9,9 +9,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un text.
     /// </summary>
     /// 
-    public sealed class TextElement : Element, ILayer, IPosition, IRotation {
+    public sealed class TextElement : Element, IPosition, IRotation {
 
-        private LayerId _layerId;
         private Point _position;
         private Angle _rotation;
         private int _height;
@@ -23,7 +22,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="layerId">La capa.</param>
+        /// <param name="layerSet">El conjunt de capes</param>
         /// <param name="position">Posicio.</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="height">Alçada de lletra.</param>
@@ -32,10 +31,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <param name="verticalAlign">Aliniacio vertical.</param>
         /// <param name="value">El valor del text.</param>
         /// 
-        public TextElement(LayerId layerId, Point position, Angle rotation, int height, int thickness,
+        public TextElement(LayerSet layerSet, Point position, Angle rotation, int height, int thickness,
             HorizontalTextAlign horizontalAlign = HorizontalTextAlign.Left,
             VerticalTextAlign verticalAlign = VerticalTextAlign.Bottom, string value = null) :
-            base() {
+            base(layerSet) {
 
             if (height <= 0)
                 throw new ArgumentOutOfRangeException(nameof(height));
@@ -43,7 +42,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             if (thickness <= 0)
                 throw new ArgumentOutOfRangeException(nameof(thickness));
 
-            _layerId = layerId;
             _position = position;
             _rotation = rotation;
             _height = height;
@@ -57,7 +55,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Element Clone() {
 
-            return new TextElement(_layerId, _position, _rotation, _height, _thickness,
+            return new TextElement(LayerSet, _position, _rotation, _height, _thickness,
                 _horizontalAlign, _verticalAlign, _value);
         }
 
@@ -87,20 +85,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override Rect GetBoundingBox(BoardSide side) {
 
             throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        /// 
-        public override bool IsOnLayer(LayerId layerId) =>
-            _layerId == layerId;
-
-        /// <summary>
-        /// Obte o asigna la capa.
-        /// </summary>
-        /// 
-        public LayerId LayerId {
-            get => _layerId;
-            set => _layerId = value;
         }
 
         /// <summary>

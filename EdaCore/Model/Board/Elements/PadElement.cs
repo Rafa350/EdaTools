@@ -13,17 +13,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private string _name;
         private Point _position;
         private Angle _rotation;
-        private bool _stop = false;
-        private int _stopMargin = 0;
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
         /// <param name="name">Nom del pad.</param>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="position">Posicio.</param>
         /// 
-        public PadElement(string name, Point position, Angle rotation) :
-            base() {
+        public PadElement(string name, LayerSet layerSet, Point position, Angle rotation) :
+            base(layerSet) {
 
             _name = name;
             _position = position;
@@ -45,9 +44,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// 
         public string Name {
-            get {
-                return _name;
-            }
+            get => _name;
             set {
                 if (String.IsNullOrEmpty(value))
                     throw new ArgumentNullException("Pad.Name");
@@ -72,24 +69,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public Angle Rotation {
             get => _rotation;
             set => _rotation = value;
-        }
-
-        /// <summary>
-        /// Indica si es genera mascara automaticament.
-        /// </summary>
-        /// 
-        public bool Stop {
-            get => _stop;
-            set => _stop = value;
-        }
-
-        /// <summary>
-        /// Marge de la mascara de soldadura
-        /// </summary>
-        /// 
-        public int StopMargin {
-            get => _stopMargin;
-            set => _stopMargin = value;
         }
     }
 }

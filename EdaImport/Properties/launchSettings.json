@@ -7,8 +7,8 @@
     },
     "EdaImport_KiCAD": {
       "commandName": "Project",
-      "commandLineArgs": "..\\..\\..\\KiCAD\\Aplex\\MD-CPU07.kicad_pcb MD-CPU07.xbrd /v",
-      "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\Net\\EdaTools\\Data"
+      "commandLineArgs": "C:\\Users\\Rafael\\Documents\\Projectes\\KiCad\\DSP04X\\dsp04x.kicad_pcb x.xbrd /v",
+      "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\EDA\\DSP04X"
     }
   }
 }

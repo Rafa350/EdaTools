@@ -1,6 +1,6 @@
-﻿namespace MikroPic.EdaTools.v1.Base.Geometry {
+﻿using System;
 
-    using System;
+namespace MikroPic.EdaTools.v1.Base.Geometry {
 
     /// <summary>
     /// Objecte que representa un rectangle aliniat amb els eixos X i Y.

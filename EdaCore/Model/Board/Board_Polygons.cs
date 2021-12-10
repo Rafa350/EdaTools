@@ -52,7 +52,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
             // Si el poligon no es troba en la capa d'interes, no cal fer res
             //
-            if (region.LayerId == layerId) {
+            if (region.LayerSet.Contains(layerId)) {
 
                 // Obte el poligon de la regio i el transforma si s'escau
                 //

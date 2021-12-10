@@ -29,6 +29,18 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// 
     public abstract class Element : IVisitable<IBoardVisitor> {
 
+        private readonly LayerSet _layerSet;
+
+        /// <summary>
+        /// Constructor del element.
+        /// </summary>
+        /// <param name="layerSet">El conjunt de capes en el que es present.</param>
+        /// 
+        protected Element(LayerSet layerSet) {
+
+            _layerSet = layerSet;
+        }
+
         /// <summary>
         /// Obte una copia en profunditat de l'objecte.
         /// </summary>
@@ -72,7 +84,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <returns>True si es present.</returns>
         /// 
         public virtual bool IsOnLayer(LayerId layerId) =>
-            false;
+            _layerSet.Contains(layerId);
+
+        /// <summary>
+        /// El conjun de capes on es present l'element.
+        /// </summary>
+        /// 
+        public LayerSet LayerSet =>
+            _layerSet;
 
         /// <summary>
         /// Obte el identificador del tipus d'element

@@ -16,7 +16,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             Square,
             Octagon,
             Circle,
-            Oval
+            Oval,
+            Slot
         }
 
         private const double _cos2250 = 0.92387953251128675612818318939679;
@@ -38,31 +39,33 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// Constructor del objecte.
         /// </summary>
         /// <param name="name">Nom.</param>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="position">Posicio.</param>
         /// <param name="rotation">Orientacio.</param>
         /// <param name="size">Tamany/diametre del pad.</param>
         /// <param name="drill">Diametre del forat.</param>
         /// <param name="shape">Forma de la corona.</param>
         /// 
-        public ThPadElement(string name, Point position, Angle rotation, int size, ThPadShape shape, int drill) :
-            this(name, position, rotation, size, size, size, shape, drill) {
+        public ThPadElement(string name, LayerSet layerSet, Point position, Angle rotation, int size, ThPadShape shape, int drill) :
+            this(name, layerSet, position, rotation, size, size, size, shape, drill) {
         }
 
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
         /// <param name="name">Nom.</param>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="position">Posicio.</param>
         /// <param name="rotation">Orientacio.</param>
         /// <param name="topSize">Tamany/diametre del pad.</param>
         /// <param name="innerSize">Tamany/diametre del pad.</param>
-        /// <param name="innerSize">Tamany/diametre del pad.</param>
-        /// <param name="bottom">Diametre del forat.</param>
+        /// <param name="bottomSize">Tamany/diametre del pad.</param>
+        /// <param name="shape">Forma del pad.</param>
         /// <param name="drill">Forma de la corona.</param>
         /// 
-        public ThPadElement(string name, Point position, Angle rotation, int topSize, int innerSize,
+        public ThPadElement(string name, LayerSet layerSet, Point position, Angle rotation, int topSize, int innerSize,
             int bottomSize, ThPadShape shape, int drill) :
-            base(name, position, rotation) {
+            base(name, layerSet, position, rotation) {
 
             if (topSize < 0)
                 throw new ArgumentOutOfRangeException(nameof(topSize));
@@ -76,6 +79,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException(nameof(drill));
 
+            LayerSet.Add(LayerId.Drills);
             _topSize = topSize;
             _innerSize = innerSize;
             _bottomSize = bottomSize;
@@ -88,7 +92,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Element Clone() {
 
-            return new ThPadElement(Name, Position, Rotation, _topSize, _innerSize, _bottomSize, _shape, _drill);
+            return new ThPadElement(Name, LayerSet, Position, Rotation, _topSize, _innerSize, _bottomSize, _shape, _drill);
         }
 
         /// <inheritdoc/>
@@ -208,6 +212,17 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             return new Polygon(null, childs.ToArray());
         }
 
+        /// <summary>
+        /// Obte el poligon del forat
+        /// </summary>
+        /// <returns>El poligon </returns>
+        /// 
+        public Polygon GetDrillPolygon() {
+
+            var points = PolygonBuilder.MakeCircle(Position, _drill / 2);
+            return new Polygon(points);
+        }
+
         /// <inheritdoc/>
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
@@ -237,7 +252,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <inheritdoc/>
         /// 
         public override bool IsOnLayer(LayerId layerId) =>
-            layerId.IsSignal || (layerId == LayerId.Drills);
+            layerId.IsSignal || base.IsOnLayer(layerId);
 
         /// <summary>
         /// Obte o asigna la forma del pad.
@@ -253,9 +268,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// 
         public int Drill {
-            get {
-                return _drill;
-            }
+            get => _drill;
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Drill");

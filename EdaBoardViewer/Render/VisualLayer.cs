@@ -5,7 +5,8 @@
 
     public enum VisualMode {
         Element,
-        Outline
+        Outline,
+        Drill
     }
 
     public sealed class VisualLayer {

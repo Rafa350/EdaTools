@@ -2,8 +2,8 @@
   "profiles": {
     "EdaCamTool": {
       "commandName": "Project",
-      "commandLineArgs": "md-cpu07.xcam /o:md-cpu07_Build /v",
-      "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\Net\\EdaTools\\Data"
+      "commandLineArgs": "dsp04x.xcam /o:build /v /b:Build/dsp04x.xbrd",
+      "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\EDA\\DSP04X"
     }
   }
 }

@@ -12,11 +12,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// 
     public sealed class SmdPadElement : PadElement {
 
-        private LayerId _layerId;
         private Size _size;
         private Ratio _roundness;
-        private bool _cream = false;
-        private int _creamMargin = 0;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -28,10 +25,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="roundness">Percentatge d'arrodoniment de les cantonades.</param>
         /// 
-        public SmdPadElement(string name, LayerId layerId, Point position, Size size, Angle rotation, Ratio roundness) :
-            base(name, position, rotation) {
+        public SmdPadElement(string name, LayerSet layerSet, Point position, Size size, Angle rotation, Ratio roundness) :
+            base(name, layerSet, position, rotation) {
 
-            _layerId = layerId;
             _size = size;
             _roundness = roundness;
         }
@@ -40,7 +36,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Element Clone() {
 
-            return new SmdPadElement(Name, _layerId, Position, _size, Rotation, _roundness);
+            return new SmdPadElement(Name, LayerSet, Position, _size, Rotation, _roundness);
         }
 
         /// <inheritdoc/>
@@ -128,22 +124,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             return new Rect(Position.X - (w / 2), Position.Y - (h / 2), w, h);
         }
 
-        /// <inheritdoc/>
-        /// 
-        public override bool IsOnLayer(LayerId layerId) =>
-            _layerId == layerId;
-
         /// <summary>
-        /// Obte o asigna la capa.
-        /// </summary>
-        /// 
-        public LayerId LayerId {
-            get => _layerId;
-            set => _layerId = value;
-        }
-
-        /// <summary>
-        /// Obte o asigna el tamany del pad.
+        /// El tamany del pad.
         /// </summary>
         /// 
         public Size Size {
@@ -152,7 +134,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// Obte o asigna el factor d'arrodoniment de les cantonades del pad.
+        /// El factor d'arrodoniment de les cantonades del pad.
         /// </summary>
         /// 
         public Ratio Roundness { 
@@ -161,29 +143,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// Obte el radi de curvatura de les cantonades.
+        /// Radi de curvatura de les cantonades.
         /// </summary>
         /// 
         public int Radius =>
             (Math.Min(_size.Width, _size.Height) * _roundness) / 2;
-
-        /// <summary>
-        /// Indica si es genera pasta automaticament.
-        /// </summary>
-        /// 
-        public bool Cream {
-            get => _cream;
-            set => _cream = value; 
-        }
-
-        /// <summary>
-        /// Marge de la pasta de soldadura
-        /// </summary>
-        /// 
-        public int CreamMargin {
-            get => _creamMargin;
-            set => _creamMargin = value;
-        }
 
         /// <inheritdoc/>
         /// 

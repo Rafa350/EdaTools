@@ -64,7 +64,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                     .Append("  (fp_line ")
                     .AppendFormat(CultureInfo.InvariantCulture, "(start {0} {1}) ", start.X, start.Y)
                     .AppendFormat(CultureInfo.InvariantCulture, "(end {0} {1}) ", end.X, end.Y)
-                    .AppendFormat("(layer {0}) ", GetLayerNames(line.LayerId))
+                    .AppendFormat("(layer {0}) ", GetLayerNames(line.LayerSet))
                     .AppendFormat(CultureInfo.InvariantCulture, "(width {0}))", line.Thickness / _scale);
 
                 _writer.WriteLine(sb.ToString());
@@ -90,7 +90,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                     .AppendFormat(CultureInfo.InvariantCulture, "(xy {0} {1}) ", end.X, start.Y)
                     .AppendFormat(CultureInfo.InvariantCulture, "(xy {0} {1}) ", end.X, end.Y)
                     .AppendFormat(CultureInfo.InvariantCulture, "(xy {0} {1})) ", start.X, end.Y)
-                    .AppendFormat("(layer {0}) ", GetLayerNames(rectangle.LayerId))
+                    .AppendFormat("(layer {0}) ", GetLayerNames(rectangle.LayerSet))
                     .AppendFormat(CultureInfo.InvariantCulture, "(width {0}))", rectangle.Thickness / _scale);
 
                 _writer.WriteLine(sb.ToString());
@@ -141,7 +141,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                 var sb = new StringBuilder()
                     .AppendFormat("  (fp_text {0} \"{1}\" ", type, value)
                     .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", text.Position.X / _scale, -text.Position.Y / _scale, text.Rotation)
-                    .AppendFormat("(layer {0}) ", GetLayerNames(text.LayerId))
+                    .AppendFormat("(layer {0}) ", GetLayerNames(text.LayerSet))
                     .AppendLine()
                     .Append("    (effects ")
                     .Append("(font ")
@@ -166,7 +166,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                     .AppendFormat("  (pad {0} smd roundrect ", pad.Name)
                     .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", position.X, position.Y, pad.Rotation.ToDegrees)
                     .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", pad.Size.Width / _scale, pad.Size.Height / _scale)
-                    .AppendFormat("(layers {0}) ", GetLayerNames(pad.LayerId))
+                    .AppendFormat("(layers {0}) ", GetLayerNames(pad.LayerSet))
                     .AppendFormat(CultureInfo.InvariantCulture, "(roundrect_rratio {0}))", pad.Roundness.Value / 2000.0);
 
                 _writer.WriteLine(sb);
@@ -203,6 +203,22 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                     .Append("(layers *.Cu *.Mask))");
 
                 _writer.WriteLine(sb);
+            }
+
+            private string GetLayerNames(LayerSet layerSet) {
+
+                var sb = new StringBuilder();
+
+                bool first = true;
+                foreach (var layerId in layerSet) {
+                    if (first)
+                        first = false;
+                    else
+                        sb.Append(' ');
+                    sb.Append(GetLayerNames(layerId));
+                }
+
+                return sb.ToString();
             }
 
             /// <summary>

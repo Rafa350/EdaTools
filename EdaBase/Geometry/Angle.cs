@@ -1,6 +1,6 @@
-﻿namespace MikroPic.EdaTools.v1.Base.Geometry {
+﻿using System;
 
-    using System;
+namespace MikroPic.EdaTools.v1.Base.Geometry {
 
     /// <summary>
     /// Clase per representar angles. Els angles son en centesimes 

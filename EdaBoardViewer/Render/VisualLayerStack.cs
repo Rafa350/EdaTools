@@ -28,7 +28,7 @@
 
         public static VisualLayerStack CreateDefault() {
 
-            VisualLayerStack vls = new VisualLayerStack();
+            var vls = new VisualLayerStack();
 
             vls.Add(new VisualLayer("Bottom",
                 new LayerId[] { LayerId.BottomCopper },
@@ -92,6 +92,13 @@
                 true,
                 VisualMode.Element,
                 Color.FromArgb(180, 0, 128, 0)));
+
+            vls.Add(new VisualLayer("Drils",
+                new LayerId[] { LayerId.Drills },
+                new ElementType[] { ElementType.Via, ElementType.ThPad },
+                true,
+                VisualMode.Drill,
+                Color.FromArgb(255, 255, 255, 255)));
 
             vls.Add(new VisualLayer("Holes",
                 new LayerId[] { LayerId.Holes },

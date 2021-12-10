@@ -9,7 +9,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa una linia.
     /// </summary>
     /// 
-    public class LineElement : Element, ILayer, IConectable {
+    public class LineElement : Element, IConectable {
 
         public enum CapStyle {
             Round,
@@ -18,26 +18,24 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         private Point _startPosition;
         private Point _endPosition;
-        private LayerId _layerId;
         private int _thickness;
         private CapStyle _lineCap = CapStyle.Round;
 
         /// <summary>
         /// Constructor de l'objecte.
         /// </summary>
-        /// <param name="layerId">La capa.</param>
+        /// <param name="layerSet">El conjunt de capes.</param>
         /// <param name="startPosition">La posicio inicial.</param>
         /// <param name="endPosition">La posicio final.</param>
         /// <param name="thickness">Amplada de linia.</param>
         /// <param name="lineCap">Forma dels extrems de linia.</param>
         /// 
-        public LineElement(LayerId layerId, Point startPosition, Point endPosition, int thickness, CapStyle lineCap) :
-            base() {
+        public LineElement(LayerSet layerSet, Point startPosition, Point endPosition, int thickness, CapStyle lineCap) :
+            base(layerSet) {
 
             if (thickness < 0)
                 throw new ArgumentOutOfRangeException(nameof(thickness));
 
-            _layerId = layerId;
             _startPosition = startPosition;
             _endPosition = endPosition;
             _thickness = thickness;
@@ -48,7 +46,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Element Clone() {
 
-            return new LineElement(_layerId, _startPosition, _endPosition, _thickness, _lineCap);
+            return new LineElement(LayerSet, _startPosition, _endPosition, _thickness, _lineCap);
         }
 
         /// <inheritdoc/>
@@ -104,22 +102,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// Obte o asigna la capa.
-        /// </summary>
-        /// 
-        public LayerId LayerId {
-            get => _layerId;
-            set => _layerId = value;
-        }
-
-        /// <summary>
         ///  Obte o asigna l'amplada de linia.
         /// </summary>
         /// 
         public int Thickness {
-            get {
-                return _thickness;
-            }
+            get => _thickness;
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Thickness");
@@ -136,11 +123,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => _lineCap;
             set => _lineCap = value;
         }
-
-        /// <inheritdoc/>
-        /// 
-        public override bool IsOnLayer(LayerId layerId) =>
-            _layerId == layerId;
 
         /// <inheritdoc/>
         /// 

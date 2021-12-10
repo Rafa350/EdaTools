@@ -400,7 +400,19 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// 
         private Element ParsePadNode(XmlNode node) {
 
+            // Obte el nom
+            //
             string name = node.AttributeAsString("name");
+
+            // Obte el conjunt de capes
+            //
+            //LayerSet layerSet = ParseLayer(node.AttributeAsString("layers"));
+            LayerSet layerSet = new LayerSet();
+            layerSet.Add(LayerId.TopCopper);
+            layerSet.Add(LayerId.BottomCopper);
+            layerSet.Add(LayerId.TopStop);
+            layerSet.Add(LayerId.BottomStop);
+            layerSet.Add(LayerId.Drills);
 
             // Obte la posicio
             //
@@ -439,7 +451,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                     break;
             }
 
-            return new ThPadElement(name, position, rotation, size, shape, drill);
+            return new ThPadElement(name, layerSet, position, rotation, size, shape, drill);
         }
 
         /// <summary>
@@ -476,13 +488,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             if (node.AttributeExists("roundness"))
                 roundness = ParseRatio(node.AttributeAsString("roundness"));
 
-            bool stop = node.AttributeAsBoolean("stop", true);
-            bool cream = node.AttributeAsBoolean("cream", true);
-
             int layerNum = node.AttributeAsInteger("layer");
             var layerId = GetLayerId(layerNum);
+            var layerSet = new LayerSet();
+            layerSet.Add(layerId);
 
-            return new SmdPadElement(name, layerId, position, size, rotation, roundness);
+            return new SmdPadElement(name, layerSet, position, size, rotation, roundness);
         }
 
         /// <summary>
@@ -556,8 +567,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
             int layerNum = node.AttributeAsInteger("layer");
             var layerId = GetLayerId(layerNum);
+            var layerSet = new LayerSet(layerId);
 
-            var element = new TextElement(layerId, position, rotation, height, thickness, horizontalAlign, verticalAlign);
+            var element = new TextElement(layerSet, position, rotation, height, thickness, horizontalAlign, verticalAlign);
             element.Value = value;
 
             return element;
@@ -589,12 +601,13 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
             int layerNum = node.AttributeAsInteger("layer");
             var layerId = GetLayerId(layerNum);
+            var layerSet = new LayerSet(layerId);
 
             Element element;
             if (angle.IsZero)
-                element = new LineElement(layerId, p1, p2, thickness, lineCap);
+                element = new LineElement(layerSet, p1, p2, thickness, lineCap);
             else
-                element = new ArcElement(layerId, p1, p2, thickness, angle, lineCap);
+                element = new ArcElement(layerSet, p1, p2, thickness, angle, lineCap);
 
             return element;
         }
@@ -630,8 +643,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
             int layerNum = node.AttributeAsInteger("layer");
             var layerId = GetLayerId(layerNum);
+            var layerSet = new LayerSet(layerId);
 
-            return new RectangleElement(layerId, position, size, Ratio.Zero, rotation, thickness, thickness == 0);
+            return new RectangleElement(layerSet, position, size, Ratio.Zero, rotation, thickness, thickness == 0);
         }
 
         /// <summary>
@@ -660,8 +674,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
             int layerNum = node.AttributeAsInteger("layer");
             var layerId = GetLayerId(layerNum);
+            var layerSet = new LayerSet(layerId);
 
-            return new CircleElement(layerId, position, radius, thickness, thickness == 0);
+            return new CircleElement(layerSet, position, radius, thickness, thickness == 0);
         }
 
         /// <summary>
@@ -684,6 +699,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
             int layerNum = node.AttributeAsInteger("layer");
             var layerId = GetLayerId(layerNum);
+            var layerSet = new LayerSet(layerId);
 
             List<RegionElement.Segment> segments = new List<RegionElement.Segment>();
             foreach (XmlNode vertexNode in node.SelectNodes("vertex")) {
@@ -703,7 +719,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 segments.Add(new RegionElement.Segment(vertex, angle));
             }
 
-            return new RegionElement(layerId, thickness, true, clearance, segments);
+            return new RegionElement(layerSet, thickness, true, clearance, segments);
         }
 
         /// <summary>
@@ -724,7 +740,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             //
             int drill = ParseNumber(node.AttributeAsString("drill"));
 
-            return new HoleElement(position, drill);
+            return new HoleElement(new LayerSet(LayerId.Holes), position, drill);
         }
 
         /// <summary>

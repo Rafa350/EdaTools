@@ -443,6 +443,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             private readonly LayerId _layerId;
             private readonly GerberBuilder _gb;
             private readonly ApertureDictionary _apertures;
+            private Part _currentPart;
 
             /// <summary>
             /// Constructor del objecte.
@@ -456,6 +457,19 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 _gb = gb;
                 _layerId = layerId;
                 _apertures = apertures;
+                _currentPart = null;
+            }
+
+            public override void Visit(Part part) {
+
+                var savedPart = _currentPart;
+                _currentPart = part;
+                try {
+                    base.Visit(part);
+                }
+                finally {
+                    _currentPart = savedPart;
+                }
             }
 
             /// <summary>
@@ -735,6 +749,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     // Escriu el gerber
                     //
                     _gb.SelectAperture(ap);
+                    _gb.Attribute(AttributeScope.Object, String.Format(".P,{0},{1}", _currentPart.Name, pad.Name));
                     _gb.FlashAt(position);
                 }
             }
@@ -771,6 +786,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     // Escriu el gerber
                     //
                     _gb.SelectAperture(ap);
+                    _gb.Attribute(AttributeScope.Object, String.Format(".P,{0},{1}", _currentPart.Name, pad.Name));
                     _gb.FlashAt(position);
                 }
             }
