@@ -1,13 +1,14 @@
-﻿namespace MikroPic.EdaTools.v1.Panelizer {
+﻿using System;
+using System.IO;
 
-    using System;
-    using System.IO;
-    using MikroPic.EdaTools.v1.Base.IO;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
-    using MikroPic.EdaTools.v1.Panel;
-    using MikroPic.EdaTools.v1.Panel.Model;
-    using MikroPic.EdaTools.v1.Panel.Model.IO;
+using MikroPic.EdaTools.v1.Base.IO;
+using MikroPic.EdaTools.v1.Core.Model.Board;
+using MikroPic.EdaTools.v1.Core.Model.Board.IO;
+using MikroPic.EdaTools.v1.Panel;
+using MikroPic.EdaTools.v1.Panel.Model;
+using MikroPic.EdaTools.v1.Panel.Model.IO;
+
+namespace MikroPic.EdaTools.v1.Panelizer {
 
     class Program {
 
@@ -60,8 +61,8 @@
                     Console.WriteLine();
                 }
 
-                Panel project = LoadProject(projectPath);
-                Board board = GenerateBoard(project, sourceFolder);
+                EdaPanel project = LoadProject(projectPath);
+                EdaBoard board = GenerateBoard(project, sourceFolder);
                 SaveBoard(board, targetPath);
 
                 if (pause) {
@@ -77,12 +78,12 @@
         /// <param name="projectPath">Ruta del projecte projecte.</param>
         /// <returns>El projecte.</returns>
         /// 
-        private static Panel LoadProject(string projectPath) {
+        private static EdaPanel LoadProject(string projectPath) {
 
             using (Stream stream = new FileStream(projectPath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
 
                 ProjectStreamReader reader = new ProjectStreamReader(stream);
-                Panel project = reader.Read();
+                EdaPanel project = reader.Read();
 
                 return project;
             }
@@ -94,7 +95,7 @@
         /// <param name="board">La placa.</param>
         /// <param name="boardPath">Ruta de la placa.</param>
         /// 
-        private static void SaveBoard(Board board, string boardPath) {
+        private static void SaveBoard(EdaBoard board, string boardPath) {
 
             using (Stream stream = new FileStream(boardPath, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 BoardStreamWriter writer = new BoardStreamWriter(stream);
@@ -109,9 +110,9 @@
         /// <param name="sourceFolder">Carpeta dels fitxers d'entrada.</param>
         /// <returns>La placa generada.</returns>
         /// 
-        private static Board GenerateBoard(Panel project, string sourceFolder) {
+        private static EdaBoard GenerateBoard(EdaPanel project, string sourceFolder) {
 
-            Board targetBoard = new Board();
+            EdaBoard targetBoard = new EdaBoard();
 
             FileStreamLocator sourceLocator = new FileStreamLocator();
             sourceLocator.AddFolder(sourceFolder);

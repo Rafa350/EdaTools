@@ -15,7 +15,7 @@
         /// <param name="angle">Angle d'apertura.</param>
         /// <returns>El centre.</returns>
         /// 
-        public static Point Center(Point startPosition, Point endPosition, Angle angle) {
+        public static EdaPoint Center(EdaPoint startPosition, EdaPoint endPosition, EdaAngle angle) {
 
             double x1 = startPosition.X;
             double y1 = startPosition.Y;
@@ -30,7 +30,7 @@
             double dy = y2 - y1;
             double d = Math.Sqrt((dx * dx) + (dy * dy));
 
-            double a = angle.ToRadiants / 2.0;
+            double a = angle.AsRadiants / 2.0;
 
             double r = Math.Abs(d / 2.0 / Math.Sin(a));
             double s = Math.Abs(r * Math.Cos(a));
@@ -42,7 +42,7 @@
             double cx = mx + s * (y1 - y2) / d;
             double cy = my + s * (x2 - x1) / d;
 
-            return new Point((int)cx, (int)cy);
+            return new EdaPoint((int)cx, (int)cy);
         }
 
         /// <summary>
@@ -52,9 +52,9 @@
         /// <param name="center">Centre.</param>
         /// <returns>L'angle.</returns>
         /// 
-        public static Angle StartAngle(Point startPosition, Point center) {
+        public static EdaAngle StartAngle(EdaPoint startPosition, EdaPoint center) {
 
-            return Angle.FromRadiants(Math.Atan2(startPosition.Y - center.Y, startPosition.X - center.X));
+            return EdaAngle.FromRadiants(Math.Atan2(startPosition.Y - center.Y, startPosition.X - center.X));
         }
 
         /// <summary>
@@ -64,32 +64,32 @@
         /// <param name="center">Centre.</param>
         /// <returns>L'angle.</returns>
         /// 
-        public static Angle EndAngle(Point endPosition, Point center) {
+        public static EdaAngle EndAngle(EdaPoint endPosition, EdaPoint center) {
 
-            return Angle.FromRadiants(Math.Atan2(endPosition.Y - center.Y, endPosition.X - center.X));
+            return EdaAngle.FromRadiants(Math.Atan2(endPosition.Y - center.Y, endPosition.X - center.X));
         }
 
-        public static Point EndPosition(Point center, Point startPosition, Angle angle) {
+        public static EdaPoint EndPosition(EdaPoint center, EdaPoint startPosition, EdaAngle angle) {
 
-            double r = angle.ToRadiants;
+            double r = angle.AsRadiants;
             double sin = Math.Sin(r);
             double cos = Math.Cos(r);
-            
+
             double x = startPosition.X;
             double y = startPosition.Y;
 
-            return new Point(
+            return new EdaPoint(
                 center.X + (int)((x * cos) - (y * sin)),
                 center.Y + (int)((x * sin) + (y * cos)));
         }
 
-        public static int Radius(Point startPosition, Point endPosition, Angle angle) {
+        public static int Radius(EdaPoint startPosition, EdaPoint endPosition, EdaAngle angle) {
 
             double dx = endPosition.X - startPosition.X;
             double dy = endPosition.Y - startPosition.Y;
             double d = Math.Sqrt((dx * dx) + (dy * dy));
 
-            double a = angle.ToRadiants / 2.0;
+            double a = angle.AsRadiants / 2.0;
 
             return (int)Math.Abs(d / 2.0 / Math.Sin(a));
         }

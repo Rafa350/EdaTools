@@ -4,7 +4,7 @@
 
     public static class PointExtensions {
 
-        public static Avalonia.Point ToPoint(this Point point) {
+        public static Avalonia.Point ToPoint(this EdaPoint point) {
 
             return new Avalonia.Point(point.X, point.Y);
         }

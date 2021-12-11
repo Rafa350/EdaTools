@@ -7,20 +7,20 @@
     /// </summary>
     public abstract class ElementVisitor : DefaultBoardVisitor {
 
-        private Board currentBoard;
-        private Part currentPart;
+        private EdaBoard currentBoard;
+        private EdaPart currentPart;
 
         /// <summary>
         /// Visita un objecte 'Board'
         /// </summary>
         /// <param name="board">L'objecte a visitar.</param>
         /// 
-        public override void Visit(Board board) {
+        public override void Visit(EdaBoard board) {
 
             if (board == null)
                 throw new ArgumentNullException(nameof(board));
 
-            Board savedBoard = currentBoard;
+            EdaBoard savedBoard = currentBoard;
             currentBoard = board;
             try {
                 if (board.HasParts)
@@ -41,12 +41,12 @@
         /// </summary>
         /// <param name="part">L'objecte a visitar.</param>
         /// 
-        public override void Visit(Part part) {
+        public override void Visit(EdaPart part) {
 
             if (part == null)
                 throw new ArgumentNullException(nameof(part));
 
-            Part savedPart = currentPart;
+            EdaPart savedPart = currentPart;
             currentPart = part;
             try {
                 if (part.HasElements)
@@ -62,7 +62,7 @@
         /// Obte la capa que s'esta visitant.
         /// </summary>
         /// 
-        protected Board Board {
+        protected EdaBoard Board {
             get {
                 return currentBoard;
             }
@@ -72,7 +72,7 @@
         /// Obte el component que s'esta visitant.
         /// </summary>
         /// 
-        protected Part Part {
+        protected EdaPart Part {
             get {
                 return currentPart;
             }

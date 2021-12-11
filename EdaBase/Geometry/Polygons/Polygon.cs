@@ -2,6 +2,7 @@
 
     using System;
     using System.Collections.Generic;
+
     using MikroPic.EdaTools.v1.Base.Geometry;
 
     /// <summary>
@@ -10,7 +11,7 @@
     /// 
     public sealed class Polygon {
 
-        private readonly Point[] _points;
+        private readonly EdaPoint[] _points;
         private readonly Polygon[] _childs;
         private Rect? _bbox = null;
 
@@ -19,7 +20,7 @@
         /// </summary>
         /// <param name="points">Llista de punts.</param>
         /// 
-        public Polygon(params Point[] points) {
+        public Polygon(params EdaPoint[] points) {
 
             if ((points != null) && (points.Length < 3))
                 throw new InvalidOperationException("La lista ha de contener un minimo de 3 puntos.");
@@ -33,7 +34,7 @@
         /// <param name="points">Lista de punts.</param>
         /// <param name="childs">Llista de fills.</param>
         /// 
-        public Polygon(Point[] points, params Polygon[] childs) {
+        public Polygon(EdaPoint[] points, params Polygon[] childs) {
 
             if ((points != null) && (points.Length < 3))
                 throw new InvalidOperationException("La lista ha de contener un minimo de 3 puntos.");
@@ -66,11 +67,11 @@
         /// </summary>
         /// <returns>La nova llista de punts.</returns>
         /// 
-        public Point[] ClonePoints() {
+        public EdaPoint[] ClonePoints() {
 
-            Point[] clonedPoints = null;
+            EdaPoint[] clonedPoints = null;
             if (_points != null) {
-                clonedPoints = new Point[_points.Length];
+                clonedPoints = new EdaPoint[_points.Length];
                 _points.CopyTo(clonedPoints, 0);
             }
             return clonedPoints;
@@ -116,7 +117,7 @@
         /// <param name="points">Llista de punts.</param>
         /// <returns>L'area del poligon.</returns>
         /// 
-        private static int GetSignedArea(Point[] points) {
+        private static int GetSignedArea(EdaPoint[] points) {
 
             if (points == null)
                 return 0;
@@ -144,7 +145,7 @@
         /// <param name="points">La llista de punts.</param>
         /// <returns>El rectangle envolvent.</returns>
         /// 
-        private static Rect GetBoundingBox(Point[] points) {
+        private static Rect GetBoundingBox(EdaPoint[] points) {
 
             if (points == null)
                 return new Rect(0, 0, 0, 0);
@@ -206,12 +207,12 @@
         /// </summary>
         /// 
         public int NumChilds => _childs == null ? 0 : _childs.Length;
-            
+
         /// <summary>
         /// Obte els punts del poligon.
         /// </summary>
         /// 
-        public IEnumerable<Point> Points => _points;
+        public IEnumerable<EdaPoint> Points => _points;
 
         /// <summary>
         /// Obte els fills del poligon.

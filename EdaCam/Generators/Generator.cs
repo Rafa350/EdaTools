@@ -1,4 +1,5 @@
 ﻿using System;
+
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 
@@ -28,7 +29,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators {
         /// <param name="outputFolder">Carpeta de sortida.</param>
         /// <param name="options">Opcions.</param>
         /// 
-        public abstract void Generate(Board board, string outputFolder, GeneratorOptions options = null);
+        public abstract void Generate(EdaBoard board, string outputFolder, GeneratorOptions options = null);
 
         /// <summary>
         /// Obte el target.

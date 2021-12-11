@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
+
 using MikroPic.EdaTools.v1.Base.Xml;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
@@ -112,12 +113,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// </summary>
         /// <returns>La llista d'objectes 'Component' obtinguda.</returns>
         /// 
-        private IEnumerable<Component> ParseComponentsNode() {
+        private IEnumerable<EdaComponent> ParseComponentsNode() {
 
             if (!_rd.IsStartTag("components"))
                 throw new InvalidDataException("Se esperaba <components>");
 
-            var components = new List<Component>();
+            var components = new List<EdaComponent>();
 
             _rd.NextTag();
             while (_rd.IsStartTag("component")) {
@@ -136,7 +137,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// </summary>
         /// <returns>L'objecte 'Component' obtingut.</returns>
         /// 
-        private Component ParseComponentNode() {
+        private EdaComponent ParseComponentNode() {
 
             if (!_rd.IsStartTag("component"))
                 throw new InvalidDataException("Se esperaba <component>");
@@ -144,7 +145,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             string name = _rd.AttributeAsString("name");
             string description = _rd.AttributeAsString("description");
 
-            var component = new Component(name);
+            var component = new EdaComponent(name);
             component.Description = description;
 
             _rd.NextTag();
@@ -162,12 +163,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// </summary>
         /// <returns>La llista d'objectres 'Element' obtinguda.</returns>
         /// 
-        private IEnumerable<Element> ParseComponentElementsNode() {
+        private IEnumerable<EdaElement> ParseComponentElementsNode() {
 
             if (!_rd.IsStartTag("elements"))
                 throw new InvalidDataException("Se esperaba <elements>");
 
-            List<Element> elements = new List<Element>();
+            List<EdaElement> elements = new List<EdaElement>();
 
             _rd.NextTag();
             while (_rd.IsStart) {

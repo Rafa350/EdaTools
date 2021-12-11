@@ -25,7 +25,7 @@
                 RegionBorderColorProperty,
                 RegionTagBackgroundProperty,
                 RegionTagBorderColorProperty,
-                
+
                 ValueDivisorProperty,
                 ValueMatrixProperty);
         }

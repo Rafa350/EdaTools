@@ -8,6 +8,6 @@
     /// 
     public interface IRotation {
 
-        Angle Rotation { get; set; }
+        EdaAngle Rotation { get; set; }
     }
 }

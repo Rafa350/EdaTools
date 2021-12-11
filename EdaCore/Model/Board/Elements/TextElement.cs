@@ -1,4 +1,5 @@
 ﻿using System;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
@@ -9,55 +10,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un text.
     /// </summary>
     /// 
-    public sealed class TextElement : Element, IPosition, IRotation {
+    public sealed class TextElement : EdaElement, IPosition, IRotation {
 
-        private Point _position;
-        private Angle _rotation;
+        private EdaPoint _position;
+        private EdaAngle _rotation;
         private int _height;
         private int _thickness;
         private HorizontalTextAlign _horizontalAlign;
         private VerticalTextAlign _verticalAlign;
         private string _value;
-
-        /// <summary>
-        /// Constructor de l'objecte.
-        /// </summary>
-        /// <param name="layerSet">El conjunt de capes</param>
-        /// <param name="position">Posicio.</param>
-        /// <param name="rotation">Angle de rotacio.</param>
-        /// <param name="height">Alçada de lletra.</param>
-        /// <param name="thickness">Amplada de linia.</param>
-        /// <param name="horizontalAlign">Aliniacio horitzontal.</param>
-        /// <param name="verticalAlign">Aliniacio vertical.</param>
-        /// <param name="value">El valor del text.</param>
-        /// 
-        public TextElement(LayerSet layerSet, Point position, Angle rotation, int height, int thickness,
-            HorizontalTextAlign horizontalAlign = HorizontalTextAlign.Left,
-            VerticalTextAlign verticalAlign = VerticalTextAlign.Bottom, string value = null) :
-            base(layerSet) {
-
-            if (height <= 0)
-                throw new ArgumentOutOfRangeException(nameof(height));
-
-            if (thickness <= 0)
-                throw new ArgumentOutOfRangeException(nameof(thickness));
-
-            _position = position;
-            _rotation = rotation;
-            _height = height;
-            _thickness = thickness;
-            _horizontalAlign = horizontalAlign;
-            _verticalAlign = verticalAlign;
-            _value = value;
-        }
-
-        /// <inheritdoc/>
-        /// 
-        public override Element Clone() {
-
-            return new TextElement(LayerSet, _position, _rotation, _height, _thickness,
-                _horizontalAlign, _verticalAlign, _value);
-        }
 
         /// <inheritdoc/>
         /// 
@@ -91,7 +52,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         ///  Obte o asigna la posicio del centre del cercle.
         /// </summary>
         /// 
-        public Point Position {
+        public EdaPoint Position {
             get => _position;
             set => _position = value;
         }
@@ -100,7 +61,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// Obte o asigna l'angle de rotacio.
         /// </summary>
         /// 
-        public Angle Rotation {
+        public EdaAngle Rotation {
             get => _rotation;
             set => _rotation = value;
         }
@@ -110,9 +71,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// 
         public int Height {
-            get {
-                return _height;
-            }
+            get => _height;
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Height");
@@ -126,9 +85,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// 
         public int Thickness {
-            get {
-                return _thickness;
-            }
+            get => _thickness;
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Thickness");

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using MikroPic.EdaTools.v1.Core.Model.Common;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
@@ -29,7 +30,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="description">La descripcio.</param>
         /// <param name="components">Els components a afeigir.</param>
         /// 
-        public Library(string name, string description, IEnumerable<Component> components) {
+        public Library(string name, string description, IEnumerable<EdaComponent> components) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));

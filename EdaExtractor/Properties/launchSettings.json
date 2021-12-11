@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "EdaExtractor": {
+      "commandName": "Project",
+      "commandLineArgs": "dsp04x"
+    }
+  }
+}

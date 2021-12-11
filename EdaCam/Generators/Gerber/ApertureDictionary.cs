@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
 using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures;
@@ -83,7 +84,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="tag">Etiqueta.</param>
         /// <returns>La clau unica.</returns>
         /// 
-        private static int GetRectangleKey(int width, int height, Angle rotation, string tag) {
+        private static int GetRectangleKey(int width, int height, EdaAngle rotation, string tag) {
 
             string s = String.Format(CultureInfo.InvariantCulture, "rectangle;{0};{1};{2};{3}", width, height, rotation.Value, tag);
             return s.GetHashCode();
@@ -99,7 +100,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="tag">Etiqueta.</param>
         /// <returns>La clau unica.</returns>
         /// 
-        private static int GetRoundRectangleKey(int width, int height, int radius, Angle rotation, string tag) {
+        private static int GetRoundRectangleKey(int width, int height, int radius, EdaAngle rotation, string tag) {
 
             string s = String.Format(CultureInfo.InvariantCulture, "round;{0};{1};{2};{3};{4}", width, height, radius, rotation.Value, tag);
             return s.GetHashCode();
@@ -113,7 +114,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="tag">Etiqueta.</param>
         /// <returns>La clau unica.</returns>
         /// 
-        private static int GetOctagonKey(int size, Angle rotation, string tag) {
+        private static int GetOctagonKey(int size, EdaAngle rotation, string tag) {
 
             string s = String.Format(CultureInfo.InvariantCulture, "octagon;{0};{1};{2}", size, rotation.Value, tag);
             return s.GetHashCode();
@@ -128,7 +129,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="tag">Etiqueta.</param>
         /// <returns>la clau unica.</returns>
         /// 
-        private static int GetOvalKey(int width, int height, Angle rotation, string tag) {
+        private static int GetOvalKey(int width, int height, EdaAngle rotation, string tag) {
 
             string s = String.Format(CultureInfo.InvariantCulture, "oval;{0};{1};{2};{3}", width, height, rotation.Value, tag);
             return s.GetHashCode();
@@ -160,7 +161,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="tag">Etiqueta.</param>
         /// 
-        public void DefineRectangleAperture(int width, int height, Angle rotation, string tag = null) {
+        public void DefineRectangleAperture(int width, int height, EdaAngle rotation, string tag = null) {
 
             if (width <= 0)
                 throw new ArgumentOutOfRangeException(nameof(width));
@@ -190,7 +191,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="tag">Etiqueta.</param>
         /// 
-        public void DefineRoundRectangleAperture(int width, int height, int radius, Angle rotation, string tag = null) {
+        public void DefineRoundRectangleAperture(int width, int height, int radius, EdaAngle rotation, string tag = null) {
 
             if (width <= 0)
                 throw new ArgumentOutOfRangeException(nameof(width));
@@ -221,14 +222,14 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="tag">Etiqueta.</param>
         /// 
-        public void DefineOctagonAperture(int size, Angle rotation, string tag = null) {
+        public void DefineOctagonAperture(int size, EdaAngle rotation, string tag = null) {
 
             if (size <= 0)
                 throw new ArgumentOutOfRangeException(nameof(size));
 
             int key = GetOctagonKey(size, rotation, tag);
             if (!_items.ContainsKey(key)) {
-                Aperture ap = new PoligonAperture(_apertureId++, tag, 8, size, rotation + Angle.FromValue(2250));
+                Aperture ap = new PoligonAperture(_apertureId++, tag, 8, size, rotation + EdaAngle.FromValue(2250));
                 _items.Add(key, ap);
             }
         }
@@ -241,7 +242,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="tag">Etiqueta.</param>
         /// 
-        public void DefineOvalAperture(int width, int height, Angle rotation, string tag = null) {
+        public void DefineOvalAperture(int width, int height, EdaAngle rotation, string tag = null) {
 
             if (width <= 0)
                 throw new ArgumentOutOfRangeException(nameof(width));
@@ -253,9 +254,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             if (!_items.ContainsKey(key)) {
 
                 Aperture ap;
-                if (rotation == Angle.Zero || rotation == Angle.Deg180)
+                if (rotation == EdaAngle.Zero || rotation == EdaAngle.Deg180)
                     ap = new ObroundAperture(_apertureId++, tag, width, height);
-                else if (rotation == Angle.Deg90 || rotation == Angle.Deg270)
+                else if (rotation == EdaAngle.Deg90 || rotation == EdaAngle.Deg270)
                     ap = new ObroundAperture(_apertureId++, tag, height, width);
                 else
                     throw new NotImplementedException("Angulo de rotacion no implementado para la apertura oval.");
@@ -286,7 +287,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="tag">Etiqueta.</param>
         /// <returns>L'apertura.</returns>
         /// 
-        public Aperture GetRectangleAperture(int width, int height, Angle rotation, string tag = null) {
+        public Aperture GetRectangleAperture(int width, int height, EdaAngle rotation, string tag = null) {
 
             int key = GetRectangleKey(width, height, rotation, tag);
             return _items[key];
@@ -302,7 +303,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="tag">Etiqueta.</param>
         /// <returns>L'apertura.</returns>
         /// 
-        public Aperture GetRoundRectangleAperture(int width, int height, int radius, Angle rotation, string tag = null) {
+        public Aperture GetRoundRectangleAperture(int width, int height, int radius, EdaAngle rotation, string tag = null) {
 
             int key = GetRoundRectangleKey(width, height, radius, rotation, tag);
             return _items[key];
@@ -316,7 +317,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="tag">Etiqueta.</param>
         /// <returns>L'apertura.</returns>
         /// 
-        public Aperture GetOctagonAperture(int size, Angle rotation, string tag = null) {
+        public Aperture GetOctagonAperture(int size, EdaAngle rotation, string tag = null) {
 
             int key = GetOctagonKey(size, rotation, tag);
             return _items[key];
@@ -331,7 +332,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="tag">Etiqueta.</param>
         /// <returns>L'apertura.</returns>
         /// 
-        public Aperture GetOvalAperture(int width, int height, Angle rotation, string tag = null) {
+        public Aperture GetOvalAperture(int width, int height, EdaAngle rotation, string tag = null) {
 
             int key = GetOvalKey(width, height, rotation, tag);
             return _items[key];

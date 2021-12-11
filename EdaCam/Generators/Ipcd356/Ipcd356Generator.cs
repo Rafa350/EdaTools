@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Cam.Generators.Ipcd356.Builder;
 using MikroPic.EdaTools.v1.Cam.Model;
@@ -26,7 +27,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
         /// <param name="outputFolder">La carpeta de sortida.</param>
         /// <param name="options">Opcions.</param>
         /// 
-        public override void Generate(Board board, string outputFolder, GeneratorOptions options = null) {
+        public override void Generate(EdaBoard board, string outputFolder, GeneratorOptions options = null) {
 
             if (board == null)
                 throw new ArgumentNullException(nameof(board));
@@ -88,7 +89,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
         /// <param name="builder">El generador de codi.</param>
         /// <param name="board">La placa a procesar.</param>
         /// 
-        private void GenerateVias(Ipcd356Builder builder, Board board) {
+        private void GenerateVias(Ipcd356Builder builder, EdaBoard board) {
 
             builder.Comment("BEGIN VIAS");
 
@@ -104,7 +105,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
         /// <param name="builder">El generador de codi.</param>
         /// <param name="board">La placa a procesar.</param>
         /// 
-        private void GeneratePads(Ipcd356Builder builder, Board board) {
+        private void GeneratePads(Ipcd356Builder builder, EdaBoard board) {
 
             builder.Comment("BEGIN PADS");
 
@@ -120,7 +121,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
         /// <param name="builder">El generador de codi.</param>
         /// <param name="board">La placa a procesar.</param>
         /// 
-        private void GenerateNets(Ipcd356Builder builder, Board board) {
+        private void GenerateNets(Ipcd356Builder builder, EdaBoard board) {
 
             builder.Comment("BEGIN NETS");
 
@@ -145,13 +146,13 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
             public override void Visit(LineElement line) {
 
                 int layerNum = 3;
-                if (line.IsOnLayer(LayerId.TopCopper))
+                if (line.IsOnLayer(EdaLayerId.TopCopper))
                     layerNum = 1;
-                else if (line.IsOnLayer(LayerId.BottomCopper))
+                else if (line.IsOnLayer(EdaLayerId.BottomCopper))
                     layerNum = 2;
 
                 if (layerNum > 0) {
-                    Point[] points = new Point[2];
+                    EdaPoint[] points = new EdaPoint[2];
                     points[0] = line.StartPosition;
                     points[1] = line.EndPosition;
                     _builder.Conductor(points, layerNum, line.Thickness, Signal.Name);
@@ -161,13 +162,13 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
             public override void Visit(ArcElement arc) {
 
                 int layerNum = 3;
-                if (arc.IsOnLayer(LayerId.TopCopper))
+                if (arc.IsOnLayer(EdaLayerId.TopCopper))
                     layerNum = 1;
-                else if (arc.IsOnLayer(LayerId.BottomCopper))
+                else if (arc.IsOnLayer(EdaLayerId.BottomCopper))
                     layerNum = 2;
 
                 if (layerNum > 0) {
-                    Point[] points = new Point[2];
+                    EdaPoint[] points = new EdaPoint[2];
                     points[0] = arc.StartPosition;
                     points[1] = arc.EndPosition;
                     _builder.Conductor(points, layerNum, arc.Thickness, Signal.Name);
@@ -209,11 +210,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
 
             public override void Visit(SmdPadElement pad) {
 
-                Signal signal = Board.GetSignal(pad, Part, false);
+                EdaSignal signal = Board.GetSignal(pad, Part, false);
                 if (signal != null) {
 
                     Transformation t = Part.GetLocalTransformation();
-                    Point position = t.ApplyTo(pad.Position);
+                    EdaPoint position = t.ApplyTo(pad.Position);
 
                     _builder.SmdPad(position, TestAccess.Top, Part.Name, pad.Name, signal.Name);
                 }
@@ -221,11 +222,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
 
             public override void Visit(ThPadElement pad) {
 
-                Signal signal = Board.GetSignal(pad, Part, false);
+                EdaSignal signal = Board.GetSignal(pad, Part, false);
                 if (signal != null) {
 
                     Transformation t = Part.GetLocalTransformation();
-                    Point position = t.ApplyTo(pad.Position);
+                    EdaPoint position = t.ApplyTo(pad.Position);
 
                     _builder.ThPad(position, pad.Drill, Part.Name, pad.Name, signal.Name);
                 }

@@ -6,14 +6,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     public sealed partial class Library {
 
-        private Dictionary<string, Component> _components;
+        private Dictionary<string, EdaComponent> _components;
 
         /// <summary>
         /// Afegeix un component.
         /// </summary>
         /// <param name="component">El component a afeigir.</param>
         /// 
-        public void AddComponent(Component component) {
+        public void AddComponent(EdaComponent component) {
 
             if (component == null)
                 throw new ArgumentNullException(nameof(component));
@@ -23,7 +23,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                     String.Format("El componente '{0}', ya pertenece a la biblioteca.", component.Name));
 
             if (_components == null)
-                _components = new Dictionary<string, Component>();
+                _components = new Dictionary<string, EdaComponent>();
             _components.Add(component.Name, component);
         }
 
@@ -32,7 +32,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// <param name="components">Els components a afeigir.</param>
         /// 
-        public void AddComponents(IEnumerable<Component> components) {
+        public void AddComponents(IEnumerable<EdaComponent> components) {
 
             if (components == null)
                 throw new ArgumentNullException(nameof(components));
@@ -46,7 +46,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// <param name="component">El component a eliminar.</param>
         /// 
-        public void RemoveComponent(Component component) {
+        public void RemoveComponent(EdaComponent component) {
 
             if (component == null)
                 throw new ArgumentNullException(nameof(component));
@@ -78,7 +78,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// Enumera els components.
         /// </summary>
         /// 
-        public IEnumerable<Component> Components =>
-            _components == null ? Enumerable.Empty<Component>() : _components.Values;
+        public IEnumerable<EdaComponent> Components =>
+            _components == null ? Enumerable.Empty<EdaComponent>() : _components.Values;
     }
 }

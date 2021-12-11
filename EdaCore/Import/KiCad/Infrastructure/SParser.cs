@@ -11,7 +11,7 @@
             var reader = new StringReader(source);
             var tokenizer = new STokenizer(reader);
             SNode root = ParseNode(tokenizer);
-            
+
             return new STree(source, root);
         }
 

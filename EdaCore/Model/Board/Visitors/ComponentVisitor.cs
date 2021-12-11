@@ -4,15 +4,15 @@
 
     public abstract class ComponentVisitor : DefaultBoardVisitor {
 
-        private Board currentBoard;
-        private Component currentComponent;
+        private EdaBoard currentBoard;
+        private EdaComponent currentComponent;
 
-        public override void Visit(Board board) {
+        public override void Visit(EdaBoard board) {
 
             if (board == null)
                 throw new ArgumentNullException(nameof(board));
 
-            Board savedBoard = currentBoard;
+            EdaBoard savedBoard = currentBoard;
             currentBoard = board;
             try {
                 if (board.HasComponents)
@@ -24,12 +24,12 @@
             }
         }
 
-        public override void Visit(Component component) {
+        public override void Visit(EdaComponent component) {
 
             if (component == null)
                 throw new ArgumentNullException(nameof(component));
 
-            Component savedComponent = currentComponent;
+            EdaComponent savedComponent = currentComponent;
             currentComponent = component;
             try {
                 if (component.HasElements)
@@ -45,13 +45,13 @@
             }
         }
 
-        protected Board Board {
+        protected EdaBoard Board {
             get {
                 return currentBoard;
             }
         }
 
-        protected Component Component {
+        protected EdaComponent Component {
             get {
                 return currentComponent;
             }

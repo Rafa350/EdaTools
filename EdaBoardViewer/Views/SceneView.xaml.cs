@@ -2,14 +2,17 @@
 
     using System;
     using System.IO;
+
     using Avalonia;
     using Avalonia.Controls;
     using Avalonia.Input;
     using Avalonia.Markup.Xaml;
     using Avalonia.Media;
+
     using EdaBoardViewer.Render;
     using EdaBoardViewer.Tools;
     using EdaBoardViewer.Views.Controls;
+
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.IO;
 
@@ -22,9 +25,9 @@
             Right
         }
 
-        private class BoardScene: ISceneRenderer {
+        private class BoardScene : ISceneRenderer {
 
-            private Board board;
+            private EdaBoard board;
 
             public BoardScene() {
 
@@ -169,7 +172,7 @@
             // Si es prem el boto dret, mostra la seleccio.
             //
             if (pressedButton != PointerButton.None) {
-                
+
                 Point start = new Point(Math.Min(pressedPos.X, currentPos.X), Math.Min(pressedPos.Y, currentPos.Y));
                 Size size = new Size(Math.Abs(currentPos.X - pressedPos.X), Math.Abs(currentPos.Y - pressedPos.Y));
 
@@ -206,7 +209,7 @@
                 pressedButton = PointerButton.Left;
             else if (pp.Properties.IsMiddleButtonPressed)
                 pressedButton = PointerButton.Middle;
-            else 
+            else
                 pressedButton = PointerButton.Right;
 
             switch (pressedButton) {

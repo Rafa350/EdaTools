@@ -1,4 +1,5 @@
 ﻿using System;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
@@ -9,34 +10,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un forat no conductor.
     /// </summary>
     /// 
-    public sealed class HoleElement : Element, IPosition {
+    public sealed class HoleElement : EdaElement, IPosition {
 
-        private Point _position;
+        private EdaPoint _position;
         private int _drill;
-
-        /// <summary>
-        /// Constructir de l'objecte.
-        /// </summary>
-        /// <param name="layerSet">El conjunt de capes.</param>
-        /// <param name="position">Pocicio del centre.</param>
-        /// <param name="drill">Diametre del forat.</param>
-        /// 
-        public HoleElement(LayerSet layerSet, Point position, int drill) :
-            base(layerSet) {
-
-            if (drill <= 0)
-                throw new ArgumentOutOfRangeException(nameof(drill));
-
-            _position = position;
-            _drill = drill;
-        }
-
-        /// <inheritdoc/>
-        /// 
-        public override Element Clone() {
-
-            return new HoleElement(LayerSet, _position, _drill);
-        }
 
         /// <inheritdoc/>
         /// 
@@ -69,16 +46,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        ///  Obte o asigna la posicio del centre del cercle.
+        ///  La posicio del centre del cercle.
         /// </summary>
         /// 
-        public Point Position {
+        public EdaPoint Position {
             get => _position;
             set => _position = value;
         }
 
         /// <summary>
-        /// Obte o asigna el diametre del forat.
+        /// El diametre del forat.
         /// </summary>
         /// 
         public int Drill {

@@ -61,14 +61,14 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
         /// Obte el macro associat a l'apertura.
         /// </summary>
         /// 
-        public Macro Macro => 
+        public Macro Macro =>
             _macro;
 
         /// <summary>
         /// Obte els arguments del macro.
         /// </summary>
         /// 
-        public int[] Args => 
+        public int[] Args =>
             _args;
     }
 }

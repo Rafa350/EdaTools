@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Text;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
@@ -13,7 +14,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
         private readonly int _vertex;
         private readonly int _diameter;
         private readonly int _drill;
-        private readonly Angle _rotation;
+        private readonly EdaAngle _rotation;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -25,7 +26,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="drill">Diametre del forat.</param>
         /// 
-        public PoligonAperture(int id, object tag, int vertex, int diameter, Angle rotation, int drill = 0) :
+        public PoligonAperture(int id, object tag, int vertex, int diameter, EdaAngle rotation, int drill = 0) :
             base(id, tag) {
 
             if ((vertex < 3) || (vertex > 12))
@@ -69,28 +70,28 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
         /// Obte el numero de vertex
         /// </summary>
         /// 
-        public int Vertex => 
+        public int Vertex =>
             _vertex;
 
         /// <summary>
         /// Obte el diametre exterior del poligon.
         /// </summary>
         /// 
-        public int Diameter => 
+        public int Diameter =>
             _diameter;
 
         /// <summary>
         /// Obte el diametre del forat.
         /// </summary>
         /// 
-        public int Drill => 
+        public int Drill =>
             _drill;
 
         /// <summary>
         /// Obte l'angle de rotacio.
         /// </summary>
         /// 
-        public Angle Rotation => 
+        public EdaAngle Rotation =>
             _rotation;
     }
 }

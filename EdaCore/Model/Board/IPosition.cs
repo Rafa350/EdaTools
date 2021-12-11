@@ -8,6 +8,6 @@
     /// 
     public interface IPosition {
 
-        Point Position { get; set; }
+        EdaPoint Position { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 
     using System;
     using System.Collections.Generic;
+
     using MikroPic.EdaTools.v1.Base.Geometry;
 
     public sealed class Target {
@@ -10,8 +11,8 @@
         private string fileName;
         private string generatorName;
         private IEnumerable<string> layerNames;
-        private Point position;
-        private Angle rotation;
+        private EdaPoint position;
+        private EdaAngle rotation;
         private Dictionary<string, TargetOption> options;
 
         public Target(string name) {
@@ -33,7 +34,7 @@
         /// <param name="layerNames">Llista de noms de capes a procesar.</param>
         /// <param name="options">Llista d'opcions</param>
         /// 
-        public Target(string name, string fileName, string generatorName, Point position, Angle rotation, IEnumerable<string> layerNames = null, IEnumerable<TargetOption> options = null) {
+        public Target(string name, string fileName, string generatorName, EdaPoint position, EdaAngle rotation, IEnumerable<string> layerNames = null, IEnumerable<TargetOption> options = null) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
@@ -145,7 +146,7 @@
             }
         }
 
-        public Point Position {
+        public EdaPoint Position {
             get {
                 return position;
             }
@@ -154,7 +155,7 @@
             }
         }
 
-        public Angle Rotation {
+        public EdaAngle Rotation {
             get {
                 return rotation;
             }

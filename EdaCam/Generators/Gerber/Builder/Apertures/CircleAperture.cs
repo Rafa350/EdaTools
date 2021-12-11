@@ -56,14 +56,14 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
         /// Obte el diametre extern.
         /// </summary>
         /// 
-        public int Diameter => 
+        public int Diameter =>
             _diameter;
 
         /// <summary>
         /// Obte el diametre del forat.
         /// </summary>
         /// 
-        public int Drill => 
+        public int Drill =>
             _drill;
     }
 }

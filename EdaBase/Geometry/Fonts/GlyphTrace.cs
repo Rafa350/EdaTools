@@ -6,7 +6,7 @@
     /// </summary>
     public struct GlyphTrace {
 
-        private readonly Point _position;
+        private readonly EdaPoint _position;
         private readonly bool _stroke;
 
         /// <summary>
@@ -15,7 +15,7 @@
         /// <param name="position">Posicio final del traç.</param>
         /// <param name="stroke">True si es dibuixa el traç fins a la posicio final.</param>.
         /// 
-        public GlyphTrace(Point position, bool stroke) {
+        public GlyphTrace(EdaPoint position, bool stroke) {
 
             _position = position;
             _stroke = stroke;
@@ -25,14 +25,14 @@
         /// Obte la posicio.
         /// </summary>
         /// 
-        public Point Position => 
+        public EdaPoint Position =>
             _position;
 
         /// <summary>
         /// Obte el indicador de dibuix.
         /// </summary>
         /// 
-        public bool Stroke => 
+        public bool Stroke =>
             _stroke;
     }
 }

@@ -13,7 +13,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// <param name="board">La placa</param>
         /// 
-        void Visit(Board board);
+        void Visit(EdaBoard board);
 
         /// <summary>
         /// Visita una llibreria
@@ -27,25 +27,25 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// <param name="layer">La capa</param>
         /// 
-        void Visit(Layer layer);
+        void Visit(EdaLayer layer);
 
-        void Visit(Part part);
-        void Visit(PartAttribute attribute);
-        void Visit(Signal signal);
+        void Visit(EdaPart part);
+        void Visit(EdaPartAttribute attribute);
+        void Visit(EdaSignal signal);
 
         /// <summary>
         /// Visita un component
         /// </summary>
         /// <param name="block">El component</param>
         /// 
-        void Visit(Component block);
-        
+        void Visit(EdaComponent block);
+
         /// <summary>
         /// Visita un atribut de component.
         /// </summary>
         /// <param name="attribute">L'atribut.</param>
         /// 
-        void Visit(ComponentAttribute attribute);
+        void Visit(EdaComponentAttribute attribute);
 
         /// <summary>
         /// Visita un element de tipus linia.
@@ -53,37 +53,37 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="line">La linia.</param>
         /// 
         void Visit(LineElement line);
-        
+
         /// <summary>
         /// Visita un element de tipus arc.
         /// </summary>
         /// <param name="arc">L'arc a visitar.</param>
         /// 
         void Visit(ArcElement arc);
-        
+
         /// <summary>
         /// Visita un element de tipus rectangle.
         /// </summary>
         /// <param name="rectangle">El rectangle.</param>
         /// 
         void Visit(RectangleElement rectangle);
-        
+
         /// <summary>
         /// Visita un element de tipus cercle.
         /// </summary>
         /// <param name="circle">El cercle.</param>
         /// 
         void Visit(CircleElement circle);
-        
+
         /// <summary>
         /// Visita un element de tipus poligon.
         /// </summary>
         /// <param name="polygon">El poligon.</param>
         /// 
         void Visit(PolygonElement polygon);
-        
+
         void Visit(ViaElement via);
-        
+
         void Visit(SmdPadElement pad);
         void Visit(ThPadElement pad);
         void Visit(RegionElement region);

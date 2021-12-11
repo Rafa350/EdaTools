@@ -1,4 +1,5 @@
 ﻿using System;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Core.Model.Board;
@@ -10,16 +11,16 @@ namespace MikroPic.EdaTools.v1.Core.Infrastructure {
 
         private const string _startMacro = "{";
         private const string _endMacro = "}";
-        private readonly PartAttribute _attribute;
+        private readonly EdaPartAttribute _attribute;
         private readonly TextElement _text;
 
-        public PartAttributeAdapter(Part part, TextElement text) {
+        public PartAttributeAdapter(EdaPart part, TextElement text) {
 
             _text = text ?? throw new ArgumentNullException(nameof(text));
-            
-            if ((part != null) && 
-                !String.IsNullOrEmpty(text.Value) && 
-                text.Value.StartsWith(_startMacro) && 
+
+            if ((part != null) &&
+                !String.IsNullOrEmpty(text.Value) &&
+                text.Value.StartsWith(_startMacro) &&
                 text.Value.EndsWith(_endMacro))
                 _attribute = part.GetAttribute(text.Value.Substring(_startMacro.Length, text.Value.Length - _startMacro.Length - _endMacro.Length));
         }
@@ -27,10 +28,10 @@ namespace MikroPic.EdaTools.v1.Core.Infrastructure {
         public string Value =>
             _attribute != null ? _text.Value.Replace(_text.Value, _attribute.Value) : _text.Value;
 
-        public Point Position =>
+        public EdaPoint Position =>
             (_attribute != null) && _attribute.UsePosition ? _attribute.Position : _text.Position;
 
-        public Angle Rotation =>
+        public EdaAngle Rotation =>
             (_attribute != null) && _attribute.UseRotation ? _attribute.Rotation : _text.Rotation;
 
         public int Height =>
@@ -45,7 +46,7 @@ namespace MikroPic.EdaTools.v1.Core.Infrastructure {
         public VerticalTextAlign VerticalAlign =>
             (_attribute != null) && _attribute.UseAlign ? _attribute.VerticalAlign : _text.VerticalAlign;
 
-        public PartAttribute Attribute =>
+        public EdaPartAttribute Attribute =>
             _attribute;
     }
 }

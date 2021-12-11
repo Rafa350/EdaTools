@@ -1,16 +1,17 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Xml;
+using System.Xml.Schema;
 
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Reflection;
-    using System.Xml;
-    using System.Xml.Schema;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
-    using MikroPic.EdaTools.v1.Base.Xml;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
+using MikroPic.EdaTools.v1.Base.Xml;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+using MikroPic.EdaTools.v1.Core.Model.IO;
+
+namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
     /// <summary>
     /// Clase per la lectura de plaques des d'un stream
@@ -26,7 +27,7 @@
         private static readonly XmlSchemaSet schemas;
 
         private readonly XmlReaderAdapter _rd;
-        private Board _board;
+        private EdaBoard _board;
         private int _version;
 
         /// <summary>
@@ -78,9 +79,9 @@
         /// </summary>
         /// <returns>La placa.</returns>
         /// 
-        public Board Read() {
+        public EdaBoard Read() {
 
-            _board = new Board();
+            _board = new EdaBoard();
 
             _rd.NextTag();
             ParseDocumentNode();
@@ -147,12 +148,12 @@
         /// </summary>
         /// <returns>La llista d'objectes 'Layer' obtinguda.</returns>
         /// 
-        private IEnumerable<Layer> ParseLayersNode() {
+        private IEnumerable<EdaLayer> ParseLayersNode() {
 
             if (!_rd.IsStartTag("layers"))
                 throw new InvalidDataException("Se esperaba <layers>");
 
-            List<Layer> layers = new List<Layer>();
+            List<EdaLayer> layers = new List<EdaLayer>();
 
             _rd.NextTag();
             while (_rd.IsStartTag("layer")) {
@@ -171,7 +172,7 @@
         /// </summary>
         /// <returns>L'objecte 'Layer' obtingut.</returns>
         /// 
-        private Layer ParseLayerNode() {
+        private EdaLayer ParseLayerNode() {
 
             if (!_rd.IsStartTag("layer"))
                 throw new InvalidDataException("Se esperaba <layer>");
@@ -184,19 +185,19 @@
             if (!_rd.IsEndTag("layer"))
                 throw new InvalidDataException("Se esperaba </layer>");
 
-            return new Layer(LayerId.Parse(id), side, function);
+            return new EdaLayer(EdaLayerId.Parse(id), side, function);
         }
 
         /// <summary>
         /// Procesa el node 'signals'.
         /// </summary>
         /// 
-        private IEnumerable<Signal> ParseSignalsNode() {
+        private IEnumerable<EdaSignal> ParseSignalsNode() {
 
             if (!_rd.IsStartTag("signals"))
                 throw new InvalidDataException("Se esperaba <signals>");
 
-            List<Signal> signals = new List<Signal>();
+            List<EdaSignal> signals = new List<EdaSignal>();
 
             _rd.NextTag();
             while (_rd.IsStartTag("signal")) {
@@ -215,19 +216,22 @@
         /// </summary>
         /// <returns>L'objecte 'Signal' obtingut.</returns>
         /// 
-        private Signal ParseSignalNode() {
+        private EdaSignal ParseSignalNode() {
 
             if (!_rd.IsStartTag("signal"))
                 throw new InvalidDataException("Se esperaba <signal>");
 
-            string name = _rd.AttributeAsString("name");
+            var name = _rd.AttributeAsString("name");
+            var clearance = EdaParser.ParseScalar(_rd.AttributeAsString("clearance"));
 
             _rd.NextTag();
             if (!_rd.IsEndTag("signal"))
                 throw new InvalidDataException("Se esperaba </signal>");
 
-            Signal signal = new Signal(name);
-            return signal;
+            return new EdaSignal {
+                Name = name,
+                Clearance = clearance
+            };
         }
 
         /// <summary>
@@ -235,12 +239,12 @@
         /// </summary>
         /// <returns>La llista d'objectes 'Component' obtinguda.</returns>
         /// 
-        private IEnumerable<Component> ParseComponentsNode() {
+        private IEnumerable<EdaComponent> ParseComponentsNode() {
 
             if (!_rd.IsStartTag("components"))
                 throw new InvalidDataException("Se esperaba <components>");
 
-            List<Component> blocks = new List<Component>();
+            var blocks = new List<EdaComponent>();
 
             _rd.NextTag();
             while (_rd.IsStartTag("component")) {
@@ -259,14 +263,14 @@
         /// </summary>
         /// <returns>L'objecte 'Component' obtingut.</returns>
         /// 
-        private Component ParseComponentNode() {
+        private EdaComponent ParseComponentNode() {
 
             if (!_rd.IsStartTag("component"))
                 throw new InvalidDataException("Se esperaba <component>");
 
             string name = _rd.AttributeAsString("name");
 
-            Component block = new Component(name);
+            var block = new EdaComponent(name);
 
             _rd.NextTag();
             block.AddElements(ParseComponentElementsNode());
@@ -283,12 +287,12 @@
         /// </summary>
         /// <returns>La llista d'objectres 'Element' obtinguda.</returns>
         /// 
-        private IEnumerable<Element> ParseComponentElementsNode() {
+        private IEnumerable<EdaElement> ParseComponentElementsNode() {
 
             if (!_rd.IsStartTag("elements"))
                 throw new InvalidDataException("Se esperaba <elements>");
 
-            List<Element> elements = new List<Element>();
+            List<EdaElement> elements = new List<EdaElement>();
 
             _rd.NextTag();
             while (_rd.IsStart) {
@@ -346,12 +350,12 @@
         /// </summary>
         /// <returns>La llista d'objectes 'Element' obtinguda.</returns>
         /// 
-        private IEnumerable<Element> ParseBoardElementsNode() {
+        private IEnumerable<EdaElement> ParseBoardElementsNode() {
 
             if (!_rd.IsStartTag("elements"))
                 throw new InvalidDataException("Se esperaba <elements>");
 
-            List<Element> elements = new List<Element>();
+            List<EdaElement> elements = new List<EdaElement>();
 
             _rd.NextTag();
             while (_rd.IsStart) {
@@ -413,12 +417,12 @@
         /// </summary>
         /// <returns>La llista d'objectes 'Part' obtinguts.</returns>
         /// 
-        private IEnumerable<Part> ParsePartsNode() {
+        private IEnumerable<EdaPart> ParsePartsNode() {
 
             if (!_rd.IsStartTag("parts"))
                 throw new InvalidDataException("Se esperaba <parts>");
 
-            List<Part> parts = new List<Part>();
+            List<EdaPart> parts = new List<EdaPart>();
 
             _rd.NextTag();
             while (_rd.IsStartTag("part")) {
@@ -437,19 +441,19 @@
         /// </summary>
         /// <returns>L'objecte 'Part' obtingut.</returns>
         /// 
-        private Part ParsePartNode() {
+        private EdaPart ParsePartNode() {
 
             if (!_rd.IsStartTag("part"))
                 throw new InvalidDataException("Se esperaba <part>");
 
             string name = _rd.AttributeAsString("name");
-            Point position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
-            Angle rotation = XmlTypeParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
+            EdaPoint position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
+            EdaAngle rotation = EdaParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
             bool flip = _rd.AttributeAsBoolean("flip", false);
             string blockName = _rd.AttributeAsString("component");
 
-            Component block = _board.GetComponent(blockName);
-            Part part = new Part(block, name, position, rotation, flip);
+            var block = _board.GetComponent(blockName);
+            EdaPart part = new EdaPart(block, name, position, rotation, flip);
 
             _rd.NextTag();
             while (_rd.IsStart) {
@@ -461,7 +465,7 @@
                     case "pads":
                         foreach (var padInfo in ParsePartPadsNode()) {
                             PadElement pad = part.GetPad(padInfo.Name);
-                            Signal signal = _board.GetSignal(padInfo.SignalName);
+                            EdaSignal signal = _board.GetSignal(padInfo.SignalName);
                             _board.Connect(signal, pad, part);
                         }
                         break;
@@ -482,12 +486,12 @@
         /// Procesa el node 'attributes'
         /// </summary>
         /// 
-        private IEnumerable<PartAttribute> ParsePartAttributesNode() {
+        private IEnumerable<EdaPartAttribute> ParsePartAttributesNode() {
 
             if (!_rd.IsStartTag("attributes"))
                 throw new InvalidDataException("Se esperaba <attributes>");
 
-            List<PartAttribute> attributes = new List<PartAttribute>();
+            List<EdaPartAttribute> attributes = new List<EdaPartAttribute>();
 
             _rd.NextTag();
             while (_rd.IsStartTag("attribute")) {
@@ -506,7 +510,7 @@
         /// </summary>
         /// <returns>L'objecte 'partAttribute' obtingut.</returns>
         /// 
-        private PartAttribute ParsePartAttributeNode() {
+        private EdaPartAttribute ParsePartAttributeNode() {
 
             if (!_rd.IsStartTag("attribute"))
                 throw new InvalidDataException("Se esperaba <attribute>");
@@ -515,16 +519,16 @@
             string value = _rd.AttributeAsString("value");
             bool visible = _rd.AttributeAsBoolean("visible", true);
 
-            var attribute = new PartAttribute(name, value, visible);
+            var attribute = new EdaPartAttribute(name, value, visible);
 
             if (_rd.AttributeExists("position"))
-                attribute.Position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
+                attribute.Position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
 
             if (_rd.AttributeExists("rotation"))
-                attribute.Rotation = XmlTypeParser.ParseAngle(_rd.AttributeAsString("rotation"));
+                attribute.Rotation = EdaParser.ParseAngle(_rd.AttributeAsString("rotation"));
 
             if (_rd.AttributeExists("height"))
-                attribute.Height = XmlTypeParser.ParseNumber(_rd.AttributeAsString("height"));
+                attribute.Height = EdaParser.ParseScalar(_rd.AttributeAsString("height"));
 
             if (_rd.AttributeExists("horizontalAlign"))
                 attribute.HorizontalAlign = _rd.AttributeAsEnum("horizontalAlign", HorizontalTextAlign.Left);
@@ -584,6 +588,7 @@
                 Name = padName,
                 SignalName = signalName
             };
+
             return padInfo;
         }
 
@@ -596,10 +601,10 @@
             if (!_rd.IsStartTag("line"))
                 throw new InvalidDataException("Se esperaba <line>");
 
-            var layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
-            var startPosition = XmlTypeParser.ParsePoint(_rd.AttributeAsString("startPosition"));
-            var endPosition = XmlTypeParser.ParsePoint(_rd.AttributeAsString("endPosition"));
-            var thickness = XmlTypeParser.ParseNumber(_rd.AttributeAsString("thickness", "0"));
+            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layers"));
+            var startPosition = EdaParser.ParsePoint(_rd.AttributeAsString("startPosition"));
+            var endPosition = EdaParser.ParsePoint(_rd.AttributeAsString("endPosition"));
+            var thickness = EdaParser.ParseScalar(_rd.AttributeAsString("thickness", "0"));
             var lineCap = _rd.AttributeAsEnum<LineElement.CapStyle>("lineCap", LineElement.CapStyle.Round);
             var signalName = _rd.AttributeAsString("signal");
 
@@ -607,7 +612,14 @@
             if (!_rd.IsEndTag("line"))
                 throw new InvalidDataException("Se esperaba </line>");
 
-            var line = new LineElement(layerSet, startPosition, endPosition, thickness, lineCap);
+            var line = new LineElement {
+                LayerSet = layerSet,
+                StartPosition = startPosition,
+                EndPosition = endPosition,
+                Thickness = thickness,
+                LineCap = lineCap
+            };
+
             if (signalName != null) {
                 var signal = _board.GetSignal(signalName);
                 _board.Connect(signal, line);
@@ -626,11 +638,11 @@
             if (!_rd.IsStartTag("arc"))
                 throw new InvalidDataException("Se esperaba <arc>");
 
-            var layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
-            var startPosition = XmlTypeParser.ParsePoint(_rd.AttributeAsString("startPosition"));
-            var endPosition = XmlTypeParser.ParsePoint(_rd.AttributeAsString("endPosition"));
-            var thickness = XmlTypeParser.ParseNumber(_rd.AttributeAsString("thickness"));
-            var angle = XmlTypeParser.ParseAngle(_rd.AttributeAsString("angle"));
+            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layers"));
+            var startPosition = EdaParser.ParsePoint(_rd.AttributeAsString("startPosition"));
+            var endPosition = EdaParser.ParsePoint(_rd.AttributeAsString("endPosition"));
+            var thickness = EdaParser.ParseScalar(_rd.AttributeAsString("thickness"));
+            var angle = EdaParser.ParseAngle(_rd.AttributeAsString("angle"));
             var lineCap = _rd.AttributeAsEnum<LineElement.CapStyle>("lineCap", LineElement.CapStyle.Round);
             var signalName = _rd.AttributeAsString("signal");
 
@@ -638,7 +650,15 @@
             if (!_rd.IsEndTag("arc"))
                 throw new InvalidDataException("Se esperaba </arc>");
 
-            var arc = new ArcElement(layerSet, startPosition, endPosition, thickness, angle, lineCap);
+            var arc = new ArcElement {
+                LayerSet = layerSet,
+                StartPosition = startPosition,
+                EndPosition = endPosition,
+                Thickness = thickness,
+                Angle = angle,
+                LineCap = lineCap
+            };
+
             if (signalName != null) {
                 var signal = _board.GetSignal(signalName);
                 _board.Connect(signal, arc);
@@ -657,19 +677,27 @@
             if (!_rd.IsStartTag("rectangle"))
                 throw new InvalidDataException("Se esperaba <rectangle>");
 
-            var layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
-            var position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
-            var size = XmlTypeParser.ParseSize(_rd.AttributeAsString("size"));
-            var rotation = XmlTypeParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
-            var thickness = XmlTypeParser.ParseNumber(_rd.AttributeAsString("thickness", "0"));
-            var roundness = XmlTypeParser.ParseRatio(_rd.AttributeAsString("roundness", "0"));
+            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layers"));
+            var position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
+            var size = EdaParser.ParseSize(_rd.AttributeAsString("size"));
+            var rotation = EdaParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
+            var thickness = EdaParser.ParseScalar(_rd.AttributeAsString("thickness", "0"));
+            var roundness = EdaRatio.Parse(_rd.AttributeAsString("roundness", "0"));
             var filled = _rd.AttributeAsBoolean("filled", thickness == 0);
 
             _rd.NextTag();
             if (!_rd.IsEndTag("rectangle"))
                 throw new InvalidDataException("Se esperaba </rectangle>");
 
-            return new RectangleElement(layerSet, position, size, roundness, rotation, thickness, filled);
+            return new RectangleElement {
+                LayerSet = layerSet,
+                Position = position,
+                Size = size,
+                Roundness = roundness,
+                Rotation = rotation,
+                Thickness = thickness,
+                Filled = filled
+            };
         }
 
         /// <summary>
@@ -682,17 +710,23 @@
             if (!_rd.IsStartTag("circle"))
                 throw new InvalidDataException("Se esperaba <circle>");
 
-            var layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
-            var position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
-            var radius = XmlTypeParser.ParseNumber(_rd.AttributeAsString("radius"));
-            var thickness = XmlTypeParser.ParseNumber(_rd.AttributeAsString("thickness", "0"));
+            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layers"));
+            var position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
+            var radius = EdaParser.ParseScalar(_rd.AttributeAsString("radius"));
+            var thickness = EdaParser.ParseScalar(_rd.AttributeAsString("thickness", "0"));
             var filled = _rd.AttributeAsBoolean("filled", thickness == 0);
 
             _rd.NextTag();
             if (!_rd.IsEndTag("circle"))
                 throw new InvalidDataException("Se esperaba </circle>");
 
-            return new CircleElement(layerSet, position, radius, thickness, filled);
+            return new CircleElement {
+                LayerSet = layerSet,
+                Position = position,
+                Radius = radius,
+                Thickness = thickness,
+                Filled = filled
+            };
         }
 
         /// <summary>
@@ -705,25 +739,33 @@
             if (!_rd.IsStartTag("region"))
                 throw new InvalidDataException("Se esperaba <region>");
 
-            var layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
+            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layers"));
             var thickness = _rd.AttributeExists("thickness") ?
-                XmlTypeParser.ParseNumber(_rd.AttributeAsString("thickness")) :
+                EdaParser.ParseScalar(_rd.AttributeAsString("thickness")) :
                 0;
             var filled = _rd.AttributeAsBoolean("filled", thickness == 0);
-            var clearance = XmlTypeParser.ParseNumber(_rd.AttributeAsString("clearance", "0"));
+            var clearance = EdaParser.ParseScalar(_rd.AttributeAsString("clearance", "0"));
             var signalName = _rd.AttributeAsString("signal");
 
-            var region = new RegionElement(layerSet, thickness, filled, clearance);
+            var region = new RegionElement {
+                LayerSet = layerSet,
+                Thickness = thickness,
+                Filled = filled,
+                Clearance = clearance
+            };
+
             if (signalName != null) {
                 var signal = _board.GetSignal(signalName);
                 _board.Connect(signal, region);
             }
 
             _rd.NextTag();
+            var segments = new List<EdaArcPoint>();
             while (_rd.IsStartTag("segment")) {
-                region.Add(ParseRegionSegmentNode());
+                segments.Add(ParseRegionSegmentNode());
                 _rd.NextTag();
             }
+            region.AddSegments(segments);
 
             if (!_rd.IsEndTag("region"))
                 throw new InvalidDataException("Se esperaba </region>");
@@ -734,23 +776,21 @@
         /// <summary>
         /// Procesa un node 'segment'
         /// </summary>
-        /// <returns>L'objecte 'RegionElement.Segment' obtingut.</returns>
+        /// <returns>L'objecte 'ArcPoint' obtingut.</returns>
         /// 
-        private RegionElement.Segment ParseRegionSegmentNode() {
+        private EdaArcPoint ParseRegionSegmentNode() {
 
             if (!_rd.IsStartTag("segment"))
                 throw new InvalidDataException("Se esperaba <segment>");
 
-            var position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
-            var angle = XmlTypeParser.ParseAngle(_rd.AttributeAsString("angle", "0"));
+            var position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
+            var angle = EdaParser.ParseAngle(_rd.AttributeAsString("angle", "0"));
 
             _rd.NextTag();
             if (!_rd.IsEndTag("segment"))
                 throw new InvalidDataException("Se esperaba </segment>");
 
-            RegionElement.Segment segment = new RegionElement.Segment(position, angle);
-
-            return segment;
+            return new EdaArcPoint(position, angle);
         }
 
         /// <summary>
@@ -764,11 +804,11 @@
                 throw new InvalidDataException("Se esperaba <tpad>");
 
             var name = _rd.AttributeAsString("name");
-            var layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
-            var position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
-            var size = XmlTypeParser.ParseNumber(_rd.AttributeAsString("size"));
-            var rotation = XmlTypeParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
-            var drill = XmlTypeParser.ParseNumber(_rd.AttributeAsString("drill"));
+            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layers"));
+            var position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
+            var size = EdaParser.ParseScalar(_rd.AttributeAsString("size"));
+            var rotation = EdaParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
+            var drill = EdaParser.ParseScalar(_rd.AttributeAsString("drill"));
             var shape = _rd.AttributeAsEnum<ThPadElement.ThPadShape>("shape", ThPadElement.ThPadShape.Circle);
             var signalName = _rd.AttributeAsString("signal");
 
@@ -776,7 +816,18 @@
             if (!_rd.IsEndTag("tpad"))
                 throw new InvalidDataException("Se esperaba </tpad>");
 
-            var pad = new ThPadElement(name, layerSet, position, rotation, size, shape, drill);
+            var pad = new ThPadElement {
+                Name = name,
+                LayerSet = layerSet,
+                Position = position,
+                Rotation = rotation,
+                TopSize = size,
+                InnerSize = size,
+                BottomSize = size,
+                Shape = shape,
+                Drill = drill
+            };
+
             if (signalName != null) {
                 var signal = _board.GetSignal(signalName);
                 _board.Connect(signal, pad);
@@ -796,18 +847,26 @@
                 throw new InvalidDataException("Se esperaba <spad>");
 
             var name = _rd.AttributeAsString("name");
-            var layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
-            var position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
-            var size = XmlTypeParser.ParseSize(_rd.AttributeAsString("size"));
-            var rotation = XmlTypeParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
-            var roundness = XmlTypeParser.ParseRatio(_rd.AttributeAsString("roundness", "0"));
+            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layers"));
+            var position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
+            var size = EdaParser.ParseSize(_rd.AttributeAsString("size"));
+            var rotation = EdaParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
+            var roundness = EdaParser.ParseRatio(_rd.AttributeAsString("roundness", "0"));
             var signalName = _rd.AttributeAsString("signal");
 
             _rd.NextTag();
             if (!_rd.IsEndTag("spad"))
                 throw new InvalidDataException("Se esperaba </spad>");
 
-            var pad = new SmdPadElement(name, layerSet, position, size, rotation, roundness);
+            var pad = new SmdPadElement {
+                Name = name,
+                LayerSet = layerSet,
+                Position = position,
+                Size = size,
+                Rotation = rotation,
+                Roundness = roundness
+            };
+
             if (signalName != null) {
                 var signal = _board.GetSignal(signalName);
                 _board.Connect(signal, pad);
@@ -826,14 +885,13 @@
             if (!_rd.IsStartTag("via"))
                 throw new InvalidDataException("Se esperaba <via>");
 
-            var topLayerId = LayerId.Parse(_rd.AttributeAsString("topLayer"));
-            var bottomLayerId = LayerId.Parse(_rd.AttributeAsString("bottomLayer"));
-            var position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
-            var outerSize = XmlTypeParser.ParseNumber(_rd.AttributeAsString("outerSize"));
+            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layers"));
+            var position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
+            var outerSize = EdaParser.ParseScalar(_rd.AttributeAsString("outerSize"));
             var innerSize = _rd.AttributeExists("innerSize") ?
-                XmlTypeParser.ParseNumber(_rd.AttributeAsString("innerSize")) :
+                EdaParser.ParseScalar(_rd.AttributeAsString("innerSize")) :
                 outerSize;
-            var drill = XmlTypeParser.ParseNumber(_rd.AttributeAsString("drill"));
+            var drill = EdaParser.ParseScalar(_rd.AttributeAsString("drill"));
             var shape = _rd.AttributeAsEnum<ViaElement.ViaShape>("shape", ViaElement.ViaShape.Circle);
             var signalName = _rd.AttributeAsString("signal");
 
@@ -841,7 +899,15 @@
             if (!_rd.IsEndTag("via"))
                 throw new InvalidDataException("Se esperaba </via>");
 
-            var via = new ViaElement(topLayerId, bottomLayerId, position, outerSize, innerSize, drill, shape);
+            var via = new ViaElement { 
+                LayerSet = layerSet,
+                Position = position, 
+                OuterSize = outerSize, 
+                InnerSize = innerSize, 
+                Drill = drill, 
+                Shape = shape 
+            };
+
             if (signalName != null) {
                 var signal = _board.GetSignal(signalName);
                 _board.Connect(signal, via);
@@ -860,14 +926,19 @@
             if (!_rd.IsStartTag("hole"))
                 throw new InvalidDataException("Se esperaba <hole>");
 
-            var position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
-            var drill = XmlTypeParser.ParseNumber(_rd.AttributeAsString("drill"));
+            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layers"));
+            var position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
+            var drill = EdaParser.ParseScalar(_rd.AttributeAsString("drill"));
 
             _rd.NextTag();
             if (!_rd.IsEndTag("hole"))
                 throw new InvalidDataException("Se esperaba </hole>");
 
-            return new HoleElement(new LayerSet(LayerId.Holes), position, drill);
+            return new HoleElement {
+                LayerSet = layerSet,
+                Position = position,
+                Drill = drill
+            };
         }
 
         /// <summary>
@@ -880,20 +951,29 @@
             if (!_rd.IsStartTag("text"))
                 throw new InvalidDataException("Se esperaba <text>");
 
-            var layerSet = LayerSet.Parse(_rd.AttributeAsString("layers"));
-            var position = XmlTypeParser.ParsePoint(_rd.AttributeAsString("position"));
-            var rotation = XmlTypeParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
-            var height = XmlTypeParser.ParseNumber(_rd.AttributeAsString("height"));
+            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layers"));
+            var position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
+            var rotation = EdaParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
+            var height = EdaParser.ParseScalar(_rd.AttributeAsString("height"));
             var horizontalAlign = _rd.AttributeAsEnum("horizontalAlign", HorizontalTextAlign.Left);
             var verticalAlign = _rd.AttributeAsEnum("verticalAlign", VerticalTextAlign.Bottom);
-            var thickness = XmlTypeParser.ParseNumber(_rd.AttributeAsString("thickness"));
+            var thickness = EdaParser.ParseScalar(_rd.AttributeAsString("thickness"));
             var value = _rd.AttributeAsString("value");
 
             _rd.NextTag();
             if (!_rd.IsEndTag("text"))
                 throw new InvalidDataException("Se esperaba </text>");
 
-            return new TextElement(layerSet, position, rotation, height, thickness, horizontalAlign, verticalAlign, value);
+            return new TextElement {
+                LayerSet = layerSet,
+                Position = position,
+                Rotation = rotation,
+                Height = height,
+                Thickness = thickness,
+                HorizontalAlign = horizontalAlign,
+                VerticalAlign = verticalAlign,
+                Value = value
+            };
         }
     }
 }

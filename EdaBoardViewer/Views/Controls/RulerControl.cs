@@ -17,7 +17,7 @@
         RightToLeft
     }
 
-    public sealed partial class RulerControl: Control {
+    public sealed partial class RulerControl : Control {
 
         /// <summary>
         /// Constructor estatic.

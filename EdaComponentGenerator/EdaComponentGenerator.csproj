@@ -6,6 +6,7 @@
     <StartupObject>EdaComponentGenerator.Program</StartupObject>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>signature.pfx</AssemblyOriginatorKeyFile>
+    <BaseOutputPath>..\bin</BaseOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -1,6 +1,7 @@
 ﻿namespace EdaBoardViewer.Views.Controls {
 
     using System;
+
     using Avalonia;
     using Avalonia.Controls;
     using Avalonia.Media;
@@ -73,7 +74,7 @@
                 new Point(x, y1),
                 new Point(x, y2));
         }
-        
+
         /// <summary>
         /// Dibuixa la regio.
         /// </summary>
@@ -122,7 +123,7 @@
                 double v = value / valueDivisor;
 
                 Point p = Transform(new Point(value, value));
-                double x = Orientation == RulerOrientation.Horizontal ? p.X: p.Y;
+                double x = Orientation == RulerOrientation.Horizontal ? p.X : p.Y;
 
                 // Limita el numero de linies a dibuixar
                 //

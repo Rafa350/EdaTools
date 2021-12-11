@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using System.Xml;
+
     using MikroPic.EdaTools.v1.Base.Xml;
     using MikroPic.EdaTools.v1.Panel.Model.Visitors;
 
@@ -38,7 +39,7 @@
             /// </summary>
             /// <param name="panel">El panell a visitar.</param>
             /// 
-            public override void Visit(Panel panel) {
+            public override void Visit(EdaPanel panel) {
 
                 writer.WriteStartElement("panel");
 
@@ -74,7 +75,7 @@
         /// </summary>
         /// <param name="board">La placa.</param>
         /// 
-        public void Write(Panel panel) {
+        public void Write(EdaPanel panel) {
 
             if (panel == null)
                 throw new ArgumentNullException(nameof(panel));
@@ -94,7 +95,7 @@
                 writer.WriteAttributeString("distanceUnits", distanceUnits);
                 writer.WriteAttributeString("angleUnits", angleunits);
 
-                IPanelVisitor visitor = new Visitor(writer);
+                IEdaPanelVisitor visitor = new Visitor(writer);
                 panel.AcceptVisitor(visitor);
 
                 writer.WriteEndElement();

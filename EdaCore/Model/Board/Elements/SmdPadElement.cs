@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
@@ -12,32 +13,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// 
     public sealed class SmdPadElement : PadElement {
 
-        private Size _size;
-        private Ratio _roundness;
-
-        /// <summary>
-        /// Constructor de l'objecte.
-        /// </summary>
-        /// <param name="name">Nom del pad.</param>
-        /// <param name="layerSet">El conjunt de capes.</param>
-        /// <param name="position">Posicio.</param>
-        /// <param name="size">Tamany</param>
-        /// <param name="rotation">Angle de rotacio.</param>
-        /// <param name="roundness">Percentatge d'arrodoniment de les cantonades.</param>
-        /// 
-        public SmdPadElement(string name, LayerSet layerSet, Point position, Size size, Angle rotation, Ratio roundness) :
-            base(name, layerSet, position, rotation) {
-
-            _size = size;
-            _roundness = roundness;
-        }
-
-        /// <inheritdoc/>
-        /// 
-        public override Element Clone() {
-
-            return new SmdPadElement(Name, LayerSet, Position, _size, Rotation, _roundness);
-        }
+        private EdaSize _size;
+        private EdaRatio _roundness = EdaRatio.Zero;
 
         /// <inheritdoc/>
         /// 
@@ -59,8 +36,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             int hash = GetHashCode() + side.GetHashCode() * 981;
             Polygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
-                
-                Point[] points = PolygonBuilder.MakeRectangle(Position, Size, Radius, Rotation);
+
+                EdaPoint[] points = PolygonBuilder.MakeRectangle(Position, Size, Radius, Rotation);
                 polygon = new Polygon(points);
 
                 PolygonCache.Save(hash, polygon);
@@ -76,9 +53,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             Polygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
-                Point[] points = PolygonBuilder.MakeRectangle(
+                EdaPoint[] points = PolygonBuilder.MakeRectangle(
                     Position,
-                    new Size(
+                    new EdaSize(
                         _size.Width + spacing + spacing,
                         _size.Height + spacing + spacing),
                     Radius + spacing,
@@ -99,7 +76,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             Polygon thermal = new Polygon(
                 PolygonBuilder.MakeCross(
                     Position,
-                    new Size(
+                    new EdaSize(
                         _size.Width + spacing + spacing,
                         _size.Height + spacing + spacing),
                     width,
@@ -116,7 +93,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
-            double a = Rotation.ToRadiants;
+            double a = Rotation.AsRadiants;
 
             int w = (int)(_size.Width * Math.Cos(a) + _size.Height * Math.Sin(a));
             int h = (int)(_size.Width * Math.Sin(a) + _size.Height * Math.Cos(a));
@@ -128,7 +105,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// El tamany del pad.
         /// </summary>
         /// 
-        public Size Size {
+        public EdaSize Size {
             get => _size;
             set => _size = value;
         }
@@ -137,7 +114,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// El factor d'arrodoniment de les cantonades del pad.
         /// </summary>
         /// 
-        public Ratio Roundness { 
+        public EdaRatio Roundness {
             get => _roundness;
             set => _roundness = value;
         }
@@ -151,7 +128,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override ElementType ElementType => 
+        public override ElementType ElementType =>
             ElementType.SmdPad;
     }
 }

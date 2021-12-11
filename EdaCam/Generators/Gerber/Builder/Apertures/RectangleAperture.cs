@@ -62,21 +62,21 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
         /// Obte l'asmplada.
         /// </summary>
         /// 
-        public int Width => 
+        public int Width =>
             _width;
 
         /// <summary>
         /// Obte l'alçada.
         /// </summary>
         /// 
-        public int Height => 
+        public int Height =>
             _height;
 
         /// <summary>
         /// Obte el diametre del forat.
         /// </summary>
         /// 
-        public int Drill => 
+        public int Drill =>
             _drill;
     }
 }

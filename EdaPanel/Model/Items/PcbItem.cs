@@ -1,13 +1,14 @@
 ﻿namespace MikroPic.EdaTools.v1.Panel.Model.Items {
 
     using System;
+
     using MikroPic.EdaTools.v1.Base.Geometry;
 
-    public sealed class PcbItem : PanelItem {
+    public sealed class PcbItem : EdaPanelItem {
 
-        private Point _position;
-        private Size _size;
-        private Angle _rotation;
+        private EdaPoint _position;
+        private EdaSize _size;
+        private EdaAngle _rotation;
         private string _fileName;
 
         /// <summary>
@@ -32,7 +33,7 @@
         /// <param name="size">Tamany de la envolvent de la placa.</param>
         /// <param name="rotation">Angle de rotacio de la placa centrat en la posicio.</param>
         /// 
-        public PcbItem(string fileName, Point position, Size size, Angle rotation) {
+        public PcbItem(string fileName, EdaPoint position, EdaSize size, EdaAngle rotation) {
 
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException(nameof(fileName));
@@ -43,7 +44,7 @@
             _fileName = fileName;
         }
 
-        public override void AcceptVisitor(IPanelVisitor visitor) {
+        public override void AcceptVisitor(IEdaPanelVisitor visitor) {
 
             visitor.Visit(this);
         }
@@ -58,7 +59,7 @@
         /// Obte o asigna la posicio.
         /// </summary>
         /// 
-        public Point Position {
+        public EdaPoint Position {
             set {
                 _position = value;
             }
@@ -71,7 +72,7 @@
         /// Obte o asigna el tamany de la envolvent..
         /// </summary>
         /// 
-        public Size Size {
+        public EdaSize Size {
             set {
                 _size = value;
             }
@@ -84,7 +85,7 @@
         /// Obte o asigna la rotacio.
         /// </summary>
         /// 
-        public Angle Rotation {
+        public EdaAngle Rotation {
             set {
                 _rotation = value;
             }

@@ -1,7 +1,7 @@
-﻿namespace MikroPic.EdaTools.v1.Base.Xml {
+﻿using System;
+using System.Xml;
 
-    using System;
-    using System.Xml;
+namespace MikroPic.EdaTools.v1.Base.Xml {
 
     public static class XmlWriterExtensions {
 

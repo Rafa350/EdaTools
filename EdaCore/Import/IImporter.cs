@@ -11,7 +11,7 @@ namespace MikroPic.EdaTools.v1.Core.Import {
         /// <param name="fileName">Nom del fitxer.</param>
         /// <returns>La placa.</returns>
         /// 
-        Board ReadBoard(string fileName);
+        EdaBoard ReadBoard(string fileName);
 
         /// <summary>
         /// Importa una llibraria

@@ -1,6 +1,7 @@
 ﻿namespace EdaBoardViewer.Tools {
 
     using System;
+
     using Avalonia;
 
     /// <summary>
@@ -9,7 +10,7 @@
     /// 
     public class DesignTool {
 
-        public class PointerEventArgs: EventArgs {
+        public class PointerEventArgs : EventArgs {
 
             private readonly Point position;
 
@@ -84,7 +85,7 @@
         /// 
         private Point Snap(Point p) {
 
-            return new Point (
+            return new Point(
                 Math.Round(p.X / xSnap) * xSnap,
                 Math.Round(p.Y / xSnap) * ySnap);
         }
@@ -238,7 +239,7 @@
         /// Obte l'estat de l'eina.
         /// </summary>
         /// 
-        public ToolState State => 
+        public ToolState State =>
             state;
 
         /// <summary>

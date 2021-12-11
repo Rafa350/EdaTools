@@ -1,4 +1,5 @@
 ﻿using System;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
@@ -9,7 +10,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa una via
     /// </summary>
     /// 
-    public sealed class ViaElement : Element, IPosition, IConectable {
+    public sealed class ViaElement : EdaElement, IPosition, IConectable {
 
         public enum ViaShape {
             Square,
@@ -21,71 +22,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         private int _drcOuterSizeMin = 125000;
         private int _drcOuterSizeMax = 2500000;
-        private Ratio _drcOuterSizePercent = Ratio.P25;
+        private EdaRatio _drcOuterSizePercent = EdaRatio.P25;
         private int _drcInnerSizeMin = 125000;
         private int _drcInnerSizeMax = 2500000;
-        private Ratio _drcInnerSizePercent = Ratio.P25;
+        private EdaRatio _drcInnerSizePercent = EdaRatio.P25;
 
-        private LayerId _topLayerId;
-        private LayerId _bottomLayerId;
-        private Point _position;
+        private EdaPoint _position;
         private int _drill;
         private int _outerSize = 0;
         private int _innerSize = 0;
         private ViaShape _shape = ViaShape.Circle;
-
-        /// <summary>
-        /// Constructor del objecte.
-        /// </summary>
-        /// <param name="topLayerId">La capa superior.</param>
-        /// <param name="bottomLayerId">La capa inferior.</param>
-        /// <param name="position">Posicio.</param>
-        /// <param name="size">Tamany/diametre de la corona.</param>
-        /// <param name="drill">Diametre del forat.</param>
-        /// <param name="shape">Forma de la corona.</param>
-        /// 
-        public ViaElement(LayerId topLayerId, LayerId bottomLayerId, Point position, int size, int drill, ViaShape shape) :
-            this(topLayerId, bottomLayerId, position, size, size, drill, shape) {
-        }
-
-        /// <summary>
-        /// Constructor del objecte.
-        /// </summary>
-        /// <param name="topLayerId">La capa superior.</param>
-        /// <param name="bottomLayerId">La capa inferior.</param>
-        /// <param name="position">Posicio.</param>
-        /// <param name="outerSize">Tamany/diametre de la corona per capes externes.</param>
-        /// <param name="innerSize">Tamany/diametre de la corona per capes internes.</param>
-        /// <param name="drill">Diametre del forat.</param>
-        /// <param name="shape">Forma de la corona.</param>
-        /// 
-        public ViaElement(LayerId topLayerId, LayerId bottomLayerId, Point position, int outerSize, int innerSize, int drill, ViaShape shape) :
-            base(new LayerSet(LayerId.Vias, LayerId.Drills)) {
-
-            if (innerSize < 0)
-                throw new ArgumentOutOfRangeException(nameof(innerSize));
-
-            if (outerSize < 0)
-                throw new ArgumentOutOfRangeException(nameof(outerSize));
-
-            if (drill <= 0)
-                throw new ArgumentOutOfRangeException(nameof(drill));
-
-            _topLayerId = topLayerId;
-            _bottomLayerId = bottomLayerId;
-            _position = position;
-            _outerSize = outerSize;
-            _innerSize = innerSize;
-            _drill = drill;
-            _shape = shape;
-        }
-
-        /// <inheritdoc/>
-        /// 
-        public override Element Clone() {
-
-            return new ViaElement(_topLayerId, _bottomLayerId, _position, _outerSize, _innerSize, _drill, _shape);
-        }
 
         /// <inheritdoc/>
         /// 
@@ -100,8 +46,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <returns>El hash.</returns>
         /// 
         public override int GetHashCode() =>
-            (_topLayerId.GetHashCode() * 999) +
-            (_bottomLayerId.GetHashCode() * 37) + 
             (_position.GetHashCode() * 17) +
             (_outerSize * 31) +
             (_innerSize * 111) +
@@ -115,7 +59,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <param name="spacing">Espaiat.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        private Point[] MakePoints(BoardSide side, int spacing) {
+        private EdaPoint[] MakePoints(BoardSide side, int spacing) {
 
             int size = side == BoardSide.Inner ? InnerSize : OuterSize;
             int sizeM2 = size * 2;
@@ -130,16 +74,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 case ViaShape.Square:
                     return PolygonBuilder.MakeRectangle(
                         _position,
-                        new Size(size + spacingM2, size + spacingM2),
+                        new EdaSize(size + spacingM2, size + spacingM2),
                         0,
-                        Angle.FromValue(0));
+                        EdaAngle.FromValue(0));
 
                 case ViaShape.Octagon:
                     return PolygonBuilder.MakeRegularPolygon(
                         8,
                         _position,
                         (int)((double)sizeD2 / _cos2250) + spacing,
-                        Angle.FromValue(2250));
+                        EdaAngle.FromValue(2250));
 
                 default:
                     return PolygonBuilder.MakeCircle(
@@ -204,32 +148,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override bool IsOnLayer(LayerId layerId) =>
-            layerId.IsSignal || (layerId == LayerId.Vias) || (layerId == LayerId.Drills);
-
-        /// <summary>
-        /// Obte o asigna la capa superior.
-        /// </summary>
-        /// 
-        public LayerId TopLayerId {
-            get => _topLayerId;
-            set => _topLayerId = value;
-        }
-
-        /// <summary>
-        /// Obte o asigfna la capa inferior.
-        /// </summary>
-        /// 
-        public LayerId BottomLayerId {
-            get => _bottomLayerId;
-            set => _bottomLayerId = value;
-        }
+        public override bool IsOnLayer(EdaLayerId layerId) =>
+            layerId.IsSignal || (layerId == EdaLayerId.Vias) || (layerId == EdaLayerId.Drills);
 
         /// <summary>
         ///  Obte o asigna la posicio del centre del cercle.
         /// </summary>
         /// 
-        public Point Position {
+        public EdaPoint Position {
             get => _position;
             set => _position = value;
         }
@@ -261,9 +187,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 else
                     return _outerSize;
             }
-            set {
-                _outerSize = value;
-            }
+            set => _outerSize = value;
         }
 
         /// <summary>
@@ -279,9 +203,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 else
                     return _innerSize;
             }
-            set {
-                _innerSize = value;
-            }
+            set => _innerSize = value;
         }
 
         /// <summary>
@@ -295,7 +217,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override ElementType ElementType => 
+        public override ElementType ElementType =>
             ElementType.Via;
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace EdaBoardViewer.Views.Controls {
 
     using System;
+
     using Avalonia;
 
     public delegate void ViewPointChangedEventHandler(object sender, EventArgs e);

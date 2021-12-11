@@ -1,24 +1,24 @@
 ﻿using System;
 
 namespace MikroPic.EdaTools.v1.Base.Geometry {
-    
+
     public readonly struct Roundness {
 
-        private readonly Ratio _topLeft;
-        private readonly Ratio _topRight;
-        private readonly Ratio _bottomLeft;
-        private readonly Ratio _bottomRight;
+        private readonly EdaRatio _topLeft;
+        private readonly EdaRatio _topRight;
+        private readonly EdaRatio _bottomLeft;
+        private readonly EdaRatio _bottomRight;
 
-        public Roundness(Ratio roundness) {
+        public Roundness(EdaRatio roundness) {
 
             _topLeft = roundness;
-            _topRight = roundness;  
-            _bottomLeft = roundness;    
-            _bottomRight = roundness;  
+            _topRight = roundness;
+            _bottomLeft = roundness;
+            _bottomRight = roundness;
         }
 
-        public Roundness(Ratio topLeft, Ratio topRight, Ratio bottomLeft, Ratio bottomRight) {
-         
+        public Roundness(EdaRatio topLeft, EdaRatio topRight, EdaRatio bottomLeft, EdaRatio bottomRight) {
+
             _topLeft = topLeft;
             _topRight = topRight;
             _bottomLeft = bottomLeft;
@@ -32,10 +32,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
 
             try {
                 string[] s = source.Split(',');
-                var topLeft = Ratio.Parse(s[0]);
-                var topRight = Ratio.Parse(s[1]);
-                var bottomLeft = Ratio.Parse(s[2]);
-                var bottomRight = Ratio.Parse(s[3]);
+                var topLeft = EdaRatio.Parse(s[0]);
+                var topRight = EdaRatio.Parse(s[1]);
+                var bottomLeft = EdaRatio.Parse(s[2]);
+                var bottomRight = EdaRatio.Parse(s[3]);
 
                 return new Roundness(topLeft, topRight, bottomLeft, bottomRight);
             }
@@ -45,9 +45,9 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             }
         }
 
-        public Ratio TopLeft => _topLeft;
-        public Ratio TopRight => _topRight;
-        public Ratio BottomLeft => _bottomLeft;
-        public Ratio BottomRight => _bottomRight;
+        public EdaRatio TopLeft => _topLeft;
+        public EdaRatio TopRight => _topRight;
+        public EdaRatio BottomLeft => _bottomLeft;
+        public EdaRatio BottomRight => _bottomRight;
     }
 }

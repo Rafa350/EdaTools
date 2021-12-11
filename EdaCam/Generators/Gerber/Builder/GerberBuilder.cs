@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
@@ -65,7 +66,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
         private int _decimals = 4;
         private int _offsetX = 0;
         private int _offsetY = 0;
-        private Angle _rotation = Angle.Zero;
+        private EdaAngle _rotation = EdaAngle.Zero;
         private string _fmtTemplate = null;
         private double _fmtScale = 0;
 
@@ -143,7 +144,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
         /// </summary>
         /// <param name="position">La posicio.</param>
         /// 
-        public void FlashAt(Point position) {
+        public void FlashAt(EdaPoint position) {
 
             FlashAt(position.X, position.Y);
         }
@@ -179,7 +180,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
         /// </summary>
         /// <param name="position">La posicio.</param>
         /// 
-        public void MoveTo(Point position) {
+        public void MoveTo(EdaPoint position) {
 
             MoveTo(position.X, position.Y);
         }
@@ -219,7 +220,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
         /// </summary>
         /// <param name="position">La posicio.</param>
         /// 
-        public void LineTo(Point position) {
+        public void LineTo(EdaPoint position) {
 
             LineTo(position.X, position.Y);
         }
@@ -259,7 +260,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
             }
         }
 
-        public void ArcTo(Point point, Point center, ArcDirection direction, ArcQuadrant quadrant = ArcQuadrant.Multiple) {
+        public void ArcTo(EdaPoint point, EdaPoint center, ArcDirection direction, ArcQuadrant quadrant = ArcQuadrant.Multiple) {
 
             ArcTo(point.X, point.Y, center.X, center.Y, direction, quadrant);
         }
@@ -315,9 +316,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
         /// </summary>
         /// <param name="points">Sequencia de punts.</param>
         /// 
-        public void Polyline(IEnumerable<Point> points) {
+        public void Polyline(IEnumerable<EdaPoint> points) {
 
-            foreach (Point point in points)
+            foreach (EdaPoint point in points)
                 LineTo(point);
         }
 
@@ -326,11 +327,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
         /// </summary>
         /// <param name="points">Sequencia de punts.</param>
         /// 
-        public void Polygon(IEnumerable<Point> points) {
+        public void Polygon(IEnumerable<EdaPoint> points) {
 
             bool first = true;
-            Point firstPoint = default(Point);
-            foreach (Point point in points) {
+            EdaPoint firstPoint = default(EdaPoint);
+            foreach (EdaPoint point in points) {
                 if (first) {
                     first = false;
                     firstPoint = point;
@@ -441,11 +442,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
         /// </summary>
         /// <param name="points">La llista de punts que conformen la regio.</param>
         /// 
-        public void Region(IEnumerable<Point> points, bool close = false) {
+        public void Region(IEnumerable<EdaPoint> points, bool close = false) {
 
             bool first = true;
-            Point firstPoint = default(Point);
-            foreach (Point point in points) {
+            EdaPoint firstPoint = default(EdaPoint);
+            foreach (EdaPoint point in points) {
                 if (first) {
                     first = false;
                     firstPoint = point;
@@ -474,7 +475,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
         /// </summary>
         /// <param name="angle">Angle de rotacio.</param>
         /// 
-        public void LoadRotation(Angle angle) {
+        public void LoadRotation(EdaAngle angle) {
 
             if (_state.SetApertureAngle(angle))
                 _writer.WriteLine(String.Format("%LR{0}*%", (double)angle.Value / 100.0));
@@ -569,7 +570,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
         /// <param name="offset">Desplaçament</param>
         /// <param name="rotation">Rotacio respecte el punt especificat com a desplaxament.</param>
         /// 
-        public void SetTransformation(Point offset, Angle rotation) {
+        public void SetTransformation(EdaPoint offset, EdaAngle rotation) {
 
             SetTransformation(offset.X, offset.Y, rotation);
         }
@@ -581,7 +582,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
         /// <param name="offsetY">Desplaçament y</param>
         /// <param name="rotation">Rotacio respecte el punt especificat com a desplaxament.</param>
         /// 
-        public void SetTransformation(int offsetX, int offsetY, Angle rotation) {
+        public void SetTransformation(int offsetX, int offsetY, EdaAngle rotation) {
 
             this._offsetX = offsetX;
             this._offsetY = offsetY;
@@ -596,7 +597,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
 
             _offsetX = 0;
             _offsetY = 0;
-            _rotation = Angle.Zero;
+            _rotation = EdaAngle.Zero;
         }
 
         /// <summary>

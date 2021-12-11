@@ -1,12 +1,14 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
+﻿using System;
+using System.IO;
+using System.Xml;
 
-    using System;
-    using System.IO;
-    using System.Xml;
-    using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
-    using MikroPic.EdaTools.v1.Base.Xml;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
+using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
+using MikroPic.EdaTools.v1.Base.Xml;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
+using MikroPic.EdaTools.v1.Core.Model.IO;
+
+namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
     /// <summary>
     /// Clase per la escriptura de plaques en un stream.
@@ -14,27 +16,27 @@
     /// 
     public sealed class BoardStreamWriter {
 
-        private const int version = 213;
-        private const string distanceUnits = "mm";
-        private const string angleUnits = "deg";
+        private const int _version = 213;
+        private const string _distanceUnits = "mm";
+        private const string _angleUnits = "deg";
 
-        private readonly Stream stream;
+        private readonly Stream _stream;
 
         private class Visitor : DefaultBoardVisitor {
 
-            private readonly XmlWriter writer;
-            private Board currentBoard;
-            private Part currentPart;
+            private readonly XmlWriter _writer;
+            private EdaBoard _currentBoard;
+            private EdaPart _currentPart;
 
             /// <summary>
             /// Constructor del objecte. Visita els objectes d'una placa,
             /// per generar el stream de sortida.
             /// </summary>
-            /// <param name="wr">Objecte per escriure el stream de sortida.</param>
+            /// <param name="writer">Objecte per escriure el stream de sortida.</param>
             /// 
             public Visitor(XmlWriter writer) {
 
-                this.writer = writer;
+                _writer = writer;
             }
 
             /// <summary>
@@ -44,23 +46,23 @@
             /// 
             public override void Visit(LineElement line) {
 
-                writer.WriteStartElement("line");
+                _writer.WriteStartElement("line");
 
-                writer.WriteAttributeString("layers", line.LayerSet.ToString());
-                writer.WriteAttributeString("startPosition", XmlTypeFormater.FormatPoint(line.StartPosition));
-                writer.WriteAttributeString("endPosition", XmlTypeFormater.FormatPoint(line.EndPosition));
+                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(line.LayerSet));
+                _writer.WriteAttributeString("startPosition", EdaFormatter.FormatPoint(line.StartPosition));
+                _writer.WriteAttributeString("endPosition", EdaFormatter.FormatPoint(line.EndPosition));
                 if (line.Thickness > 0)
-                    writer.WriteAttributeString("thickness", XmlTypeFormater.FormatNumber(line.Thickness));
+                    _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(line.Thickness));
                 if (line.LineCap != LineElement.CapStyle.Round)
-                    writer.WriteAttributeEnum("lineCap", line.LineCap);
+                    _writer.WriteAttributeEnum("lineCap", line.LineCap);
 
-                if (currentBoard != null) {
-                    Signal signal = currentBoard.GetSignal(line, currentPart, false);
+                if (_currentBoard != null) {
+                    EdaSignal signal = _currentBoard.GetSignal(line, _currentPart, false);
                     if (signal != null)
-                        writer.WriteAttributeString("signal", signal.Name);
+                        _writer.WriteAttributeString("signal", signal.Name);
                 }
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
             /// <summary>
@@ -70,24 +72,24 @@
             /// 
             public override void Visit(ArcElement arc) {
 
-                writer.WriteStartElement("arc");
+                _writer.WriteStartElement("arc");
 
-                writer.WriteAttributeString("layers", arc.LayerSet.ToString());
-                writer.WriteAttributeString("startPosition", XmlTypeFormater.FormatPoint(arc.StartPosition));
-                writer.WriteAttributeString("endPosition", XmlTypeFormater.FormatPoint(arc.EndPosition));
-                writer.WriteAttributeString("angle", XmlTypeFormater.FormatAngle(arc.Angle));
+                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(arc.LayerSet));
+                _writer.WriteAttributeString("startPosition", EdaFormatter.FormatPoint(arc.StartPosition));
+                _writer.WriteAttributeString("endPosition", EdaFormatter.FormatPoint(arc.EndPosition));
+                _writer.WriteAttributeString("angle", EdaFormatter.FormatAngle(arc.Angle));
                 if (arc.Thickness > 0)
-                    writer.WriteAttributeString("thickness", XmlTypeFormater.FormatNumber(arc.Thickness));
+                    _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(arc.Thickness));
                 if (arc.LineCap != LineElement.CapStyle.Round)
-                    writer.WriteAttributeEnum("lineCap", arc.LineCap);
+                    _writer.WriteAttributeEnum("lineCap", arc.LineCap);
 
-                if (currentBoard != null) {
-                    Signal signal = currentBoard.GetSignal(arc, currentPart, false);
+                if (_currentBoard != null) {
+                    EdaSignal signal = _currentBoard.GetSignal(arc, _currentPart, false);
                     if (signal != null)
-                        writer.WriteAttributeString("signal", signal.Name);
+                        _writer.WriteAttributeString("signal", signal.Name);
                 }
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
             /// <summary>
@@ -97,20 +99,20 @@
             /// 
             public override void Visit(RectangleElement rectangle) {
 
-                writer.WriteStartElement("rectangle");
+                _writer.WriteStartElement("rectangle");
 
-                writer.WriteAttributeString("layers", rectangle.LayerSet.ToString());
-                writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(rectangle.Position));
-                writer.WriteAttributeString("size", XmlTypeFormater.FormatSize(rectangle.Size));
+                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(rectangle.LayerSet));
+                _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(rectangle.Position));
+                _writer.WriteAttributeString("size", EdaFormatter.FormatSize(rectangle.Size));
                 if (!rectangle.Rotation.IsZero)
-                    writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(rectangle.Rotation));
+                    _writer.WriteAttributeString("rotation", EdaFormatter.FormatAngle(rectangle.Rotation));
                 if (rectangle.Thickness > 0) {
-                    writer.WriteAttributeString("thickness", XmlTypeFormater.FormatNumber(rectangle.Thickness));
+                    _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(rectangle.Thickness));
                     if (rectangle.Filled)
-                        writer.WriteAttributeBool("filled", true);
+                        _writer.WriteAttributeBool("filled", true);
                 }
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
             /// <summary>
@@ -120,18 +122,18 @@
             /// 
             public override void Visit(CircleElement circle) {
 
-                writer.WriteStartElement("circle");
+                _writer.WriteStartElement("circle");
 
-                writer.WriteAttributeString("layers", circle.LayerSet.ToString());
-                writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(circle.Position));
-                writer.WriteAttributeString("radius", XmlTypeFormater.FormatNumber(circle.Radius));
+                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(circle.LayerSet));
+                _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(circle.Position));
+                _writer.WriteAttributeString("radius", EdaFormatter.FormatScalar(circle.Radius));
                 if (circle.Thickness > 0) {
-                    writer.WriteAttributeString("thickness", XmlTypeFormater.FormatNumber(circle.Thickness));
+                    _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(circle.Thickness));
                     if (circle.Filled)
-                        writer.WriteAttributeBool("filled", true);
+                        _writer.WriteAttributeBool("filled", true);
                 }
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
             /// <summary>
@@ -141,22 +143,22 @@
             /// 
             public override void Visit(TextElement text) {
 
-                writer.WriteStartElement("text");
+                _writer.WriteStartElement("text");
 
-                writer.WriteAttributeString("layers", text.LayerSet.ToString());
-                writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(text.Position));
+                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(text.LayerSet));
+                _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(text.Position));
                 if (!text.Rotation.IsZero)
-                    writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(text.Rotation));
-                writer.WriteAttributeString("height", XmlTypeFormater.FormatNumber(text.Height));
-                writer.WriteAttributeString("thickness", XmlTypeFormater.FormatNumber(text.Thickness));
+                    _writer.WriteAttributeString("rotation", EdaFormatter.FormatAngle(text.Rotation));
+                _writer.WriteAttributeString("height", EdaFormatter.FormatScalar(text.Height));
+                _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(text.Thickness));
                 if (text.HorizontalAlign != HorizontalTextAlign.Left)
-                    writer.WriteAttributeEnum("horizontalAlign", text.HorizontalAlign);
+                    _writer.WriteAttributeEnum("horizontalAlign", text.HorizontalAlign);
                 if (text.VerticalAlign != VerticalTextAlign.Bottom)
-                    writer.WriteAttributeEnum("verticalAlign", text.VerticalAlign);
+                    _writer.WriteAttributeEnum("verticalAlign", text.VerticalAlign);
                 if (!String.IsNullOrEmpty(text.Value))
-                    writer.WriteAttributeString("value", text.Value);
+                    _writer.WriteAttributeString("value", text.Value);
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
             /// <summary>
@@ -166,13 +168,13 @@
             /// 
             public override void Visit(HoleElement hole) {
 
-                writer.WriteStartElement("hole");
+                _writer.WriteStartElement("hole");
 
-                writer.WriteAttributeString("layers", hole.LayerSet.ToString());
-                writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(hole.Position));
-                writer.WriteAttributeString("drill", XmlTypeFormater.FormatNumber(hole.Drill));
+                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(hole.LayerSet));
+                _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(hole.Position));
+                _writer.WriteAttributeString("drill", EdaFormatter.FormatScalar(hole.Drill));
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
             /// <summary>
@@ -182,24 +184,24 @@
             /// 
             public override void Visit(SmdPadElement pad) {
 
-                writer.WriteStartElement("spad");
+                _writer.WriteStartElement("spad");
 
-                writer.WriteAttributeString("name", pad.Name);
-                writer.WriteAttributeString("layers", pad.LayerSet.ToString());
-                writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(pad.Position));
+                _writer.WriteAttributeString("name", pad.Name);
+                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(pad.LayerSet));
+                _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(pad.Position));
                 if (!pad.Rotation.IsZero)
-                    writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(pad.Rotation));
-                writer.WriteAttributeString("size", XmlTypeFormater.FormatSize(pad.Size));
+                    _writer.WriteAttributeString("rotation", EdaFormatter.FormatAngle(pad.Rotation));
+                _writer.WriteAttributeString("size", EdaFormatter.FormatSize(pad.Size));
                 if (!pad.Roundness.IsZero)
-                    writer.WriteAttributeString("roundness", XmlTypeFormater.FormatRatio(pad.Roundness));
+                    _writer.WriteAttributeString("roundness", EdaFormatter.FormatRatio(pad.Roundness));
 
-                if (currentBoard != null) {
-                    Signal signal = currentBoard.GetSignal(pad, currentPart, false);
+                if (_currentBoard != null) {
+                    EdaSignal signal = _currentBoard.GetSignal(pad, _currentPart, false);
                     if (signal != null)
-                        writer.WriteAttributeString("signal", signal.Name);
+                        _writer.WriteAttributeString("signal", signal.Name);
                 }
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
             /// <summary>
@@ -209,25 +211,25 @@
             /// 
             public override void Visit(ThPadElement pad) {
 
-                writer.WriteStartElement("tpad");
+                _writer.WriteStartElement("tpad");
 
-                writer.WriteAttributeString("name", pad.Name);
-                writer.WriteAttributeString("layers", pad.LayerSet.ToString());
-                writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(pad.Position));
+                _writer.WriteAttributeString("name", pad.Name);
+                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(pad.LayerSet));
+                _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(pad.Position));
                 if (!pad.Rotation.IsZero)
-                    writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(pad.Rotation));
-                writer.WriteAttributeString("size", XmlTypeFormater.FormatNumber(pad.TopSize));
-                writer.WriteAttributeString("drill", XmlTypeFormater.FormatNumber(pad.Drill));
+                    _writer.WriteAttributeString("rotation", EdaFormatter.FormatAngle(pad.Rotation));
+                _writer.WriteAttributeString("size", EdaFormatter.FormatScalar(pad.TopSize));
+                _writer.WriteAttributeString("drill", EdaFormatter.FormatScalar(pad.Drill));
                 if (pad.Shape != ThPadElement.ThPadShape.Circle)
-                    writer.WriteAttributeEnum("shape", pad.Shape);
+                    _writer.WriteAttributeEnum("shape", pad.Shape);
 
-                if (currentBoard != null) {
-                    Signal signal = currentBoard.GetSignal(pad, currentPart, false);
+                if (_currentBoard != null) {
+                    EdaSignal signal = _currentBoard.GetSignal(pad, _currentPart, false);
                     if (signal != null)
-                        writer.WriteAttributeString("signal", signal.Name);
+                        _writer.WriteAttributeString("signal", signal.Name);
                 }
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
             /// <summary>
@@ -235,28 +237,28 @@
             /// </summary>
             /// <param name="attr">L'objecte a visitar.</param>
             /// 
-            public override void Visit(PartAttribute attr) {
+            public override void Visit(EdaPartAttribute attr) {
 
-                writer.WriteStartElement("attribute");
+                _writer.WriteStartElement("attribute");
 
-                writer.WriteAttributeString("name", attr.Name);
-                writer.WriteAttributeString("value", attr.Value);
+                _writer.WriteAttributeString("name", attr.Name);
+                _writer.WriteAttributeString("value", attr.Value);
                 if (!attr.IsVisible)
-                    writer.WriteAttributeBool("visible", attr.IsVisible);
+                    _writer.WriteAttributeBool("visible", attr.IsVisible);
                 if (attr.UsePosition)
-                    writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(attr.Position));
+                    _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(attr.Position));
                 if (attr.UseRotation)
-                    writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(attr.Rotation));
+                    _writer.WriteAttributeString("rotation", EdaFormatter.FormatAngle(attr.Rotation));
                 if (attr.UseHeight)
-                    writer.WriteAttributeString("height", XmlTypeFormater.FormatNumber(attr.Height));
+                    _writer.WriteAttributeString("height", EdaFormatter.FormatScalar(attr.Height));
                 if (attr.UseAlign) {
                     if (attr.HorizontalAlign != HorizontalTextAlign.Left)
-                        writer.WriteAttributeEnum("horizontalAlign", attr.HorizontalAlign);
+                        _writer.WriteAttributeEnum("horizontalAlign", attr.HorizontalAlign);
                     if (attr.VerticalAlign != VerticalTextAlign.Bottom)
-                        writer.WriteAttributeEnum("verticalAlign", attr.VerticalAlign);
+                        _writer.WriteAttributeEnum("verticalAlign", attr.VerticalAlign);
                 }
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
             /// <summary>
@@ -264,14 +266,14 @@
             /// </summary>
             /// <param name="attr">L'objecte a visitar.</param>
             /// 
-            public override void Visit(ComponentAttribute attr) {
+            public override void Visit(EdaComponentAttribute attr) {
 
-                writer.WriteStartElement("attribute");
+                _writer.WriteStartElement("attribute");
 
-                writer.WriteAttributeString("name", attr.Name);
-                writer.WriteAttributeString("value", attr.Value);
+                _writer.WriteAttributeString("name", attr.Name);
+                _writer.WriteAttributeString("value", attr.Value);
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
             /// <summary>
@@ -281,32 +283,32 @@
             /// 
             public override void Visit(RegionElement region) {
 
-                writer.WriteStartElement("region");
+                _writer.WriteStartElement("region");
 
-                writer.WriteAttributeString("layers", region.LayerSet.ToString());
+                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(region.LayerSet));
                 if (region.Thickness > 0) {
-                    writer.WriteAttributeString("thickness", XmlTypeFormater.FormatNumber(region.Thickness));
+                    _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(region.Thickness));
                     if (region.Filled)
-                        writer.WriteAttributeString("filled", "true");
+                        _writer.WriteAttributeString("filled", "true");
                 }
                 if (region.Clearance > 0)
-                    writer.WriteAttributeString("clearance", XmlTypeFormater.FormatNumber(region.Clearance));
+                    _writer.WriteAttributeString("clearance", EdaFormatter.FormatScalar(region.Clearance));
 
-                if (currentBoard != null) {
-                    Signal signal = currentBoard.GetSignal(region, currentPart, false);
+                if (_currentBoard != null) {
+                    EdaSignal signal = _currentBoard.GetSignal(region, _currentPart, false);
                     if (signal != null)
-                        writer.WriteAttributeString("signal", signal.Name);
+                        _writer.WriteAttributeString("signal", signal.Name);
                 }
 
                 foreach (var segment in region.Segments) {
-                    writer.WriteStartElement("segment");
-                    writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(segment.Position));
-                    if (!segment.Angle.IsZero)
-                        writer.WriteAttributeString("angle", XmlTypeFormater.FormatAngle(segment.Angle));
-                    writer.WriteEndElement();
+                    _writer.WriteStartElement("segment");
+                    _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(segment.Position));
+                    if (!segment.Arc.IsZero)
+                        _writer.WriteAttributeString("angle", EdaFormatter.FormatAngle(segment.Arc));
+                    _writer.WriteEndElement();
                 }
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
             /// <summary>
@@ -314,56 +316,56 @@
             /// </summary>
             /// <param name="part">L'objecte a visitar.</param>
             /// 
-            public override void Visit(Part part) {
+            public override void Visit(EdaPart part) {
 
-                currentPart = part;
+                _currentPart = part;
                 try {
-                    writer.WriteStartElement("part");
+                    _writer.WriteStartElement("part");
 
                     // Escriu els parametres
                     //
-                    writer.WriteAttributeString("name", part.Name);
-                    writer.WriteAttributeString("component", part.Component.Name);
-                    writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(part.Position));
+                    _writer.WriteAttributeString("name", part.Name);
+                    _writer.WriteAttributeString("component", part.Component.Name);
+                    _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(part.Position));
                     if (!part.Rotation.IsZero)
-                        writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(part.Rotation));
+                        _writer.WriteAttributeString("rotation", EdaFormatter.FormatAngle(part.Rotation));
                     if (part.Flip)
-                        writer.WriteAttributeString("flip", "true");
+                        _writer.WriteAttributeString("flip", "true");
 
                     // Escriu la llista de pads que tenen conexio.
                     //
                     if (part.HasPads) {
                         bool empty = true;
                         foreach (PadElement pad in part.Pads) {
-                            Signal signal = currentBoard.GetSignal(pad, part, false);
+                            EdaSignal signal = _currentBoard.GetSignal(pad, part, false);
                             if (signal != null) {
                                 if (empty) {
                                     empty = false;
-                                    writer.WriteStartElement("pads");
+                                    _writer.WriteStartElement("pads");
                                 }
-                                writer.WriteStartElement("pad");
-                                writer.WriteAttributeString("name", pad.Name);
-                                writer.WriteAttributeString("signal", signal.Name);
-                                writer.WriteEndElement();
+                                _writer.WriteStartElement("pad");
+                                _writer.WriteAttributeString("name", pad.Name);
+                                _writer.WriteAttributeString("signal", signal.Name);
+                                _writer.WriteEndElement();
                             }
                         }
                         if (!empty)
-                            writer.WriteEndElement();
+                            _writer.WriteEndElement();
                     }
 
                     // Escriu la llista d'atributs.
                     //
                     if (part.HasAttributes) {
-                        writer.WriteStartElement("attributes");
+                        _writer.WriteStartElement("attributes");
                         foreach (var attribute in part.Attributes)
                             attribute.AcceptVisitor(this);
-                        writer.WriteEndElement();
+                        _writer.WriteEndElement();
                     }
 
-                    writer.WriteEndElement();
+                    _writer.WriteEndElement();
                 }
                 finally {
-                    currentPart = null;
+                    _currentPart = null;
                 }
             }
 
@@ -374,25 +376,24 @@
             /// 
             public override void Visit(ViaElement via) {
 
-                writer.WriteStartElement("via");
+                _writer.WriteStartElement("via");
 
-                writer.WriteAttributeString("topLayer", via.TopLayerId.ToString());
-                writer.WriteAttributeString("bottomLayer", via.BottomLayerId.ToString());
-                writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(via.Position));
-                writer.WriteAttributeString("drill", XmlTypeFormater.FormatNumber(via.Drill));
-                writer.WriteAttributeString("outerSize", XmlTypeFormater.FormatNumber(via.OuterSize));
+                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(via.LayerSet));
+                _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(via.Position));
+                _writer.WriteAttributeString("drill", EdaFormatter.FormatScalar(via.Drill));
+                _writer.WriteAttributeString("outerSize", EdaFormatter.FormatScalar(via.OuterSize));
                 if (via.InnerSize != via.OuterSize)
-                    writer.WriteAttributeString("innerSize", XmlTypeFormater.FormatNumber(via.InnerSize));
+                    _writer.WriteAttributeString("innerSize", EdaFormatter.FormatScalar(via.InnerSize));
                 if (via.Shape != ViaElement.ViaShape.Circle)
-                    writer.WriteAttributeEnum("shape", via.Shape);
+                    _writer.WriteAttributeEnum("shape", via.Shape);
 
-                if (currentBoard != null) {
-                    Signal signal = currentBoard.GetSignal(via, null, false);
+                if (_currentBoard != null) {
+                    EdaSignal signal = _currentBoard.GetSignal(via, null, false);
                     if (signal != null)
-                        writer.WriteAttributeString("signal", signal.Name);
+                        _writer.WriteAttributeString("signal", signal.Name);
                 }
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
             /// <summary>
@@ -400,15 +401,15 @@
             /// </summary>
             /// <param name="layer">L'objecte a visitar.</param>
             /// 
-            public override void Visit(Layer layer) {
+            public override void Visit(EdaLayer layer) {
 
-                writer.WriteStartElement("layer");
+                _writer.WriteStartElement("layer");
 
-                writer.WriteAttributeString("id", layer.Id.ToString());
-                writer.WriteAttributeEnum("side", layer.Side);
-                writer.WriteAttributeEnum("function", layer.Function);
+                _writer.WriteAttributeString("id", layer.Id.ToString());
+                _writer.WriteAttributeEnum("side", layer.Side);
+                _writer.WriteAttributeEnum("function", layer.Function);
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
             /// <summary>
@@ -416,15 +417,15 @@
             /// </summary>
             /// <param name="signal">L'objecte a visitar.</param>
             /// 
-            public override void Visit(Signal signal) {
+            public override void Visit(EdaSignal signal) {
 
-                writer.WriteStartElement("signal");
+                _writer.WriteStartElement("signal");
 
-                writer.WriteAttributeString("name", signal.Name);
+                _writer.WriteAttributeString("name", signal.Name);
                 if (signal.Clearance > 0)
-                    writer.WriteAttributeString("clearance", XmlTypeFormater.FormatNumber(signal.Clearance));
+                    _writer.WriteAttributeString("clearance", EdaFormatter.FormatScalar(signal.Clearance));
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
             /// <summary>
@@ -432,29 +433,29 @@
             /// </summary>
             /// <param name="component">E'objecte a visitar.</param>
             /// 
-            public override void Visit(Component component) {
+            public override void Visit(EdaComponent component) {
 
-                writer.WriteStartElement("component");
+                _writer.WriteStartElement("component");
 
-                writer.WriteAttributeString("name", component.Name);
+                _writer.WriteAttributeString("name", component.Name);
                 if (!String.IsNullOrEmpty(component.Description))
-                    writer.WriteAttributeString("description", component.Description);
+                    _writer.WriteAttributeString("description", component.Description);
 
                 if (component.HasElements) {
-                    writer.WriteStartElement("elements");
+                    _writer.WriteStartElement("elements");
                     foreach (var element in component.Elements)
                         element.AcceptVisitor(this);
-                    writer.WriteEndElement();
+                    _writer.WriteEndElement();
                 }
 
                 if (component.HasAttributes) {
-                    writer.WriteStartElement("attributes");
+                    _writer.WriteStartElement("attributes");
                     foreach (var attribute in component.Attributes)
                         attribute.AcceptVisitor(this);
-                    writer.WriteEndElement();
+                    _writer.WriteEndElement();
                 }
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
             /// <summary>
@@ -462,48 +463,48 @@
             /// </summary>
             /// <param name="board">La placa a visitar.</param>
             /// 
-            public override void Visit(Board board) {
+            public override void Visit(EdaBoard board) {
 
-                currentBoard = board;
+                _currentBoard = board;
 
-                writer.WriteStartElement("board");
-                writer.WriteAttributeString("position", XmlTypeFormater.FormatPoint(board.Position));
-                writer.WriteAttributeString("rotation", XmlTypeFormater.FormatAngle(board.Rotation));
+                _writer.WriteStartElement("board");
+                _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(board.Position));
+                _writer.WriteAttributeString("rotation", EdaFormatter.FormatAngle(board.Rotation));
 
-                writer.WriteStartElement("layers");
+                _writer.WriteStartElement("layers");
                 foreach (var layer in board.Layers)
                     layer.AcceptVisitor(this);
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
 
                 if (board.HasSignals) {
-                    writer.WriteStartElement("signals");
+                    _writer.WriteStartElement("signals");
                     foreach (var signal in board.Signals)
                         signal.AcceptVisitor(this);
-                    writer.WriteEndElement();
+                    _writer.WriteEndElement();
                 }
 
                 if (board.HasComponents) {
-                    writer.WriteStartElement("components");
+                    _writer.WriteStartElement("components");
                     foreach (var component in board.Components)
                         component.AcceptVisitor(this);
-                    writer.WriteEndElement();
+                    _writer.WriteEndElement();
                 }
 
                 if (board.HasParts) {
-                    writer.WriteStartElement("parts");
+                    _writer.WriteStartElement("parts");
                     foreach (var part in board.Parts)
                         part.AcceptVisitor(this);
-                    writer.WriteEndElement();
+                    _writer.WriteEndElement();
                 }
 
                 if (board.HasElements) {
-                    writer.WriteStartElement("elements");
+                    _writer.WriteStartElement("elements");
                     foreach (var element in board.Elements)
                         element.AcceptVisitor(this);
-                    writer.WriteEndElement();
+                    _writer.WriteEndElement();
                 }
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
 
             /// <summary>
@@ -513,20 +514,20 @@
             /// 
             public override void Visit(Library library) {
 
-                writer.WriteStartElement("library");
+                _writer.WriteStartElement("library");
 
-                writer.WriteAttributeString("name", library.Name);
+                _writer.WriteAttributeString("name", library.Name);
                 if (!String.IsNullOrEmpty(library.Description))
-                    writer.WriteAttributeString("description", library.Description);
+                    _writer.WriteAttributeString("description", library.Description);
 
                 if (library.HasComponents) {
-                    writer.WriteStartElement("components");
+                    _writer.WriteStartElement("components");
                     foreach (var component in library.Components)
                         component.AcceptVisitor(this);
-                    writer.WriteEndElement();
+                    _writer.WriteEndElement();
                 }
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
         }
 
@@ -543,7 +544,7 @@
             if (!stream.CanWrite)
                 throw new InvalidOperationException("El stream no es de escritura.");
 
-            this.stream = stream;
+            this._stream = stream;
         }
 
         /// <summary>
@@ -551,25 +552,25 @@
         /// </summary>
         /// <param name="board">La placa.</param>
         /// 
-        public void Write(Board board) {
+        public void Write(EdaBoard board) {
 
             if (board == null)
                 throw new ArgumentNullException(nameof(board));
 
-            XmlWriterSettings settings = new XmlWriterSettings();
+            var settings = new XmlWriterSettings();
             settings.Indent = true;
             settings.IndentChars = "    ";
             settings.CloseOutput = true;
 
-            using (XmlWriter writer = XmlWriter.Create(stream, settings)) {
+            using (var writer = XmlWriter.Create(_stream, settings)) {
 
                 writer.WriteStartDocument();
 
                 writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/BoardDocument.xsd");
-                writer.WriteAttributeInteger("version", version);
+                writer.WriteAttributeInteger("version", _version);
                 writer.WriteAttributeString("documentType", "board");
-                writer.WriteAttributeString("distanceUnits", distanceUnits);
-                writer.WriteAttributeString("angleUnits", angleUnits);
+                writer.WriteAttributeString("distanceUnits", _distanceUnits);
+                writer.WriteAttributeString("angleUnits", _angleUnits);
 
                 IBoardVisitor visitor = new Visitor(writer);
                 board.AcceptVisitor(visitor);
@@ -595,15 +596,15 @@
             settings.IndentChars = "    ";
             settings.CloseOutput = true;
 
-            using (XmlWriter writer = XmlWriter.Create(stream, settings)) {
+            using (XmlWriter writer = XmlWriter.Create(_stream, settings)) {
 
                 writer.WriteStartDocument();
 
                 writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/BoardDocument.xsd");
-                writer.WriteAttributeInteger("version", version);
+                writer.WriteAttributeInteger("version", _version);
                 writer.WriteAttributeString("documentType", "componentLibrary");
-                writer.WriteAttributeString("distanceUnits", distanceUnits);
-                writer.WriteAttributeString("angleUnits", angleUnits);
+                writer.WriteAttributeString("distanceUnits", _distanceUnits);
+                writer.WriteAttributeString("angleUnits", _angleUnits);
 
                 IBoardVisitor visitor = new Visitor(writer);
                 library.AcceptVisitor(visitor);

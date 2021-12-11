@@ -2,6 +2,7 @@
 
     using System;
     using System.Collections.Generic;
+
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
@@ -41,7 +42,7 @@
 
         }
 
-        private readonly Dictionary<Point, ConnectivityAnchor> anchors = new Dictionary<Point, ConnectivityAnchor>();
+        private readonly Dictionary<EdaPoint, ConnectivityAnchor> anchors = new Dictionary<EdaPoint, ConnectivityAnchor>();
         private readonly Dictionary<Tuple<ConnectivityAnchor, ConnectivityAnchor>, ConnectivityEdge> edges = new Dictionary<Tuple<ConnectivityAnchor, ConnectivityAnchor>, ConnectivityEdge>();
 
         /// <summary>
@@ -49,7 +50,7 @@
         /// </summary>
         /// <param name="board">La placa a afeigir.</param>
         /// 
-        public void Add(Board board) {
+        public void Add(EdaBoard board) {
 
             if (board == null)
                 throw new ArgumentNullException(nameof(board));
@@ -63,7 +64,7 @@
         /// </summary>
         /// <param name="element">L'element a afeigir.</param>
         /// 
-        public void Add(Element element) {
+        public void Add(EdaElement element) {
 
             if (element == null)
                 throw new ArgumentNullException(nameof(element));
@@ -89,7 +90,7 @@
         /// </summary>
         /// <param name="element">L'element a eliminar.</param>
         /// 
-        public void Remove(Element element) {
+        public void Remove(EdaElement element) {
 
         }
 
@@ -99,9 +100,9 @@
         /// <param name="position">La posicio.</param>
         /// <returns>La pista com a llista d'elements.</returns>
         /// 
-        public IEnumerable<Element> GetChainedElements(Point position) {
+        public IEnumerable<EdaElement> GetChainedElements(EdaPoint position) {
 
-            HashSet<Element> chain = new HashSet<Element>();
+            HashSet<EdaElement> chain = new HashSet<EdaElement>();
             //            GetChainedElements(position, chain);
             return chain;
         }
@@ -140,7 +141,7 @@
         /// <param name="position">La posicio.</param>
         /// <returns>L'anclatge d'aquesta posicio.</returns>
         /// 
-        private ConnectivityAnchor GetAnchor(Point position) {
+        private ConnectivityAnchor GetAnchor(EdaPoint position) {
 
             if (!anchors.TryGetValue(position, out ConnectivityAnchor anchor)) {
                 anchor = new ConnectivityAnchor(position);
@@ -156,7 +157,7 @@
         /// <param name="anchor">L'anclatge.</param>
         /// <param name="element">El element.</param>
         /// 
-        private void DefineItem(ConnectivityAnchor anchor, Element element) {
+        private void DefineItem(ConnectivityAnchor anchor, EdaElement element) {
 
             ConnectivityItem item = new ConnectivityItem(element);
             anchor.AddItem(item);
@@ -243,7 +244,7 @@
         /// <param name="position">La posicio.</param>
         /// <param name="element">El element.</param>
         /// 
-        private void RemoveElement(Point position, Element element) {
+        private void RemoveElement(EdaPoint position, EdaElement element) {
         }
 
         public void Clear() {

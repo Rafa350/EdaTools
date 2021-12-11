@@ -21,7 +21,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// </summary>
         /// <param name="v">Vector de translacio.</param>
         /// 
-        public void Translate(Point v) {
+        public void Translate(EdaPoint v) {
 
             Translate(v.X, v.Y);
         }
@@ -57,7 +57,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="scaleX">Escala X</param>
         /// <param name="scaleY">Escala Y</param>
         /// 
-        public void Scale(Point center, int scaleX, int scaleY) {
+        public void Scale(EdaPoint center, int scaleX, int scaleY) {
 
             if ((scaleX != 1) || (scaleY != 1))
                 _m *= Matrix2D.CreateScale(scaleX, scaleY, center.X, center.Y);
@@ -82,10 +82,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// </summary>
         /// <param name="rotation">Angle de rotacio.</param>
         /// 
-        public void Rotate(Angle rotation) {
+        public void Rotate(EdaAngle rotation) {
 
             if (!rotation.IsZero)
-                _m *= Matrix2D.CreateRotation(rotation.ToDegrees);
+                _m *= Matrix2D.CreateRotation(rotation.AsDegrees);
         }
 
         /// <summary>
@@ -94,10 +94,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="center">Coordinades del centre de rotacio.</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// 
-        public void Rotate(Point center, Angle rotation) {
+        public void Rotate(EdaPoint center, EdaAngle rotation) {
 
             if (!rotation.IsZero)
-                _m *= Matrix2D.CreateRotation(rotation.ToDegrees, center.X, center.Y);
+                _m *= Matrix2D.CreateRotation(rotation.AsDegrees, center.X, center.Y);
         }
 
         /// <summary>
@@ -107,10 +107,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="centerY">Coordinada Y del centre de rotacio.</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// 
-        public void Rotate(int centerX, int centerY, Angle rotation) {
+        public void Rotate(int centerX, int centerY, EdaAngle rotation) {
 
             if (!rotation.IsZero)
-                _m *= Matrix2D.CreateRotation(rotation.ToDegrees, centerX, centerY);
+                _m *= Matrix2D.CreateRotation(rotation.AsDegrees, centerX, centerY);
         }
 
         /// <summary>
@@ -119,12 +119,12 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="point">El punt.</param>
         /// <returns>El punt transformat.</returns>
         /// 
-        public Point ApplyTo(Point point) {
+        public EdaPoint ApplyTo(EdaPoint point) {
 
             double x = (point.X * _m.M11) + (point.Y * _m.M21) + _m.Tx;
             double y = (point.X * _m.M12) + (point.Y * _m.M22) + _m.Ty;
 
-            return new Point((int)x, (int)y);
+            return new EdaPoint((int)x, (int)y);
         }
 
         /// <summary>
@@ -132,18 +132,18 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// </summary>
         /// <param name="points">El array de punts.</param>
         /// 
-        public void ApplyTo(Point[] points) {
+        public void ApplyTo(EdaPoint[] points) {
 
             for (int i = 0; i < points.Length; i++) {
 
                 double x = (points[i].X * _m.M11) + (points[i].Y * _m.M21) + _m.Tx;
                 double y = (points[i].X * _m.M12) + (points[i].Y * _m.M22) + _m.Ty;
 
-                points[i] = new Point((int)x, (int)y);
+                points[i] = new EdaPoint((int)x, (int)y);
             }
         }
 
-        public Matrix2D Matrix => 
+        public Matrix2D Matrix =>
             _m;
     }
 }

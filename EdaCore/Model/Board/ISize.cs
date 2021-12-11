@@ -8,6 +8,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// 
     public interface ISize {
 
-        Size Size { get; set; }
+        EdaSize Size { get; set; }
     }
 }

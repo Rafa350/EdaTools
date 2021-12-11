@@ -38,7 +38,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Fonts {
         /// Obte el codi de la figura.
         /// </summary>
         /// 
-        public char Code => 
+        public char Code =>
             _code;
 
         /// <summary>
@@ -52,21 +52,21 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Fonts {
         /// Obte l'avanç del caracter.
         /// </summary>
         /// 
-        public int Advance => 
+        public int Advance =>
             _advance;
 
         /// <summary>
         /// Obte el numero de traços.
         /// </summary>
         /// 
-        public int NumTraces => 
+        public int NumTraces =>
             _traces == null ? 0 : _traces.Length;
 
         /// <summary>
         /// Obte els traços de la figura.
         /// </summary>
         /// 
-        public IEnumerable<GlyphTrace> 
+        public IEnumerable<GlyphTrace>
             Traces => _traces;
     }
 }

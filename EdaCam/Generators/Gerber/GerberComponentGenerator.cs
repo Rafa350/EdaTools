@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
-using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
@@ -30,7 +30,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="outputFolder">La carpeta de sortida.</param>
         /// <param name="options">Opcions.</param>
         /// 
-        public override void Generate(Board board, string outputFolder, GeneratorOptions options = null) {
+        public override void Generate(EdaBoard board, string outputFolder, GeneratorOptions options = null) {
 
             if (board == null)
                 throw new ArgumentNullException(nameof(board));
@@ -80,10 +80,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="board">La placa.</param>
         /// <param name="layerNames">Els noms de les capes a procesar.</param>
         /// 
-        private void PrepareApertures(ApertureDictionary apertures, Board board) {
+        private void PrepareApertures(ApertureDictionary apertures, EdaBoard board) {
 
             foreach (var name in Target.LayerNames) {
-                var visitor = new PrepareAperturesVisitor(LayerId.Get(name), apertures);
+                var visitor = new PrepareAperturesVisitor(EdaLayerId.Get(name), apertures);
                 board.AcceptVisitor(visitor);
             }
         }
@@ -108,7 +108,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             gb.SetUnits(Units.Milimeters);
             gb.SetCoordinateFormat(8, 5);
             gb.LoadPolarity(Polarity.Dark);
-            gb.LoadRotation(Angle.Zero);
+            gb.LoadRotation(EdaAngle.Zero);
             gb.Comment("END HEADER");
         }
 
@@ -144,11 +144,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="board">La placa a procesar.</param>
         /// <param name="apertures">El diccionari d'apoertures.</param>
         /// 
-        private void GenerateImage(GerberBuilder gb, Board board, ApertureDictionary apertures) {
+        private void GenerateImage(GerberBuilder gb, EdaBoard board, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
             foreach (var name in Target.LayerNames) {
-                var visitor = new ImageGeneratorVisitor(gb, LayerId.Get(name), apertures);
+                var visitor = new ImageGeneratorVisitor(gb, EdaLayerId.Get(name), apertures);
                 board.AcceptVisitor(visitor);
             }
             gb.Comment("END IMAGE");
@@ -159,7 +159,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// </summary>
         private sealed class PrepareAperturesVisitor : ElementVisitor {
 
-            private readonly LayerId _layerId;
+            private readonly EdaLayerId _layerId;
             private readonly ApertureDictionary _apertures;
 
             /// <summary>
@@ -168,7 +168,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// <param name="layerId">El identificador de la capa a procesar.</param>
             /// <param name="apertures">El diccionari d'apertures a preparar.</param>
             /// 
-            public PrepareAperturesVisitor(LayerId layerId, ApertureDictionary apertures) {
+            public PrepareAperturesVisitor(EdaLayerId layerId, ApertureDictionary apertures) {
 
                 _layerId = layerId;
                 _apertures = apertures;
@@ -179,7 +179,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="part">L'objecte.</param>
             /// 
-            public override void Visit(Part part) {
+            public override void Visit(EdaPart part) {
             }
         }
 
@@ -189,7 +189,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         private sealed class ImageGeneratorVisitor : ElementVisitor {
 
             private readonly GerberBuilder _gb;
-            private readonly LayerId _layerId;
+            private readonly EdaLayerId _layerId;
             private readonly ApertureDictionary _apertures;
 
             /// <summary>
@@ -199,17 +199,17 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// <param name="layerId">Identificador de la capa a procesar.</param>
             /// <param name="apertures">El diccionari d'apertures.</param>
             /// 
-            public ImageGeneratorVisitor(GerberBuilder gb, LayerId layerId, ApertureDictionary apertures) {
+            public ImageGeneratorVisitor(GerberBuilder gb, EdaLayerId layerId, ApertureDictionary apertures) {
 
                 _gb = gb;
                 _layerId = layerId;
                 _apertures = apertures;
             }
 
-            public override void Visit(Part part) {
+            public override void Visit(EdaPart part) {
             }
 
-            private bool CanVisit(Element element) {
+            private bool CanVisit(EdaElement element) {
 
                 return element.IsOnLayer(_layerId);
             }

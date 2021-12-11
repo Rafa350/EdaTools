@@ -6,8 +6,10 @@
     using System.Reflection;
     using System.Xml;
     using System.Xml.Schema;
+
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Xml;
+    using MikroPic.EdaTools.v1.Core.Model.IO;
     using MikroPic.EdaTools.v1.Panel.Model;
     using MikroPic.EdaTools.v1.Panel.Model.Items;
 
@@ -70,10 +72,10 @@
         /// </summary>
         /// <returns>El panell.</returns>
         /// 
-        public Panel Read() {
+        public EdaPanel Read() {
 
             rd.NextTag();
-            Panel project = ParseDocumentNode();
+            EdaPanel project = ParseDocumentNode();
 
             return project;
         }
@@ -83,7 +85,7 @@
         /// </summary>
         /// <returns>L'objecte 'Project' obtingut.</returns>
         /// 
-        private Panel ParseDocumentNode() {
+        private EdaPanel ParseDocumentNode() {
 
             if (!rd.IsStartTag("document"))
                 throw new InvalidDataException("Se esperaba <document>");
@@ -91,7 +93,7 @@
             version = rd.AttributeAsInteger("version");
 
             rd.NextTag();
-            Panel project = ParseProjectNode();
+            EdaPanel project = ParseProjectNode();
 
             rd.NextTag();
             if (!rd.IsEndTag("document"))
@@ -105,21 +107,21 @@
         /// </summary>
         /// <returns>L'objecte 'Project' obtingut.</returns>
         /// 
-        private Panel ParseProjectNode() {
+        private EdaPanel ParseProjectNode() {
 
             if (!rd.IsStartTag("project"))
                 throw new InvalidDataException("Se esperaba <project>");
 
-            Size size = XmlTypeParser.ParseSize(rd.AttributeAsString("size"));
+            EdaSize size = EdaParser.ParseSize(rd.AttributeAsString("size"));
 
             rd.NextTag();
-            IEnumerable<PanelItem> elements = ParseItemsNode();
+            IEnumerable<EdaPanelItem> elements = ParseItemsNode();
 
             rd.NextTag();
             if (!rd.IsEndTag("project"))
                 throw new InvalidDataException("Se esperaba </project>");
 
-            Panel project = new Panel();
+            EdaPanel project = new EdaPanel();
             project.Size = size;
             project.AddItems(elements);
 
@@ -131,12 +133,12 @@
         /// </summary>
         /// <returns>La coleccio d'objectes 'ProjectItem' obtinguda.</returns>
         /// 
-        private IEnumerable<PanelItem> ParseItemsNode() {
+        private IEnumerable<EdaPanelItem> ParseItemsNode() {
 
             if (!rd.IsStartTag("items"))
                 throw new InvalidDataException("Se esperaba <items>");
 
-            List<PanelItem> items = new List<PanelItem>();
+            List<EdaPanelItem> items = new List<EdaPanelItem>();
 
             rd.NextTag();
             while (rd.IsStart) {
@@ -172,13 +174,13 @@
                 throw new InvalidDataException("Se esperaba <board>");
 
             string fileName = rd.AttributeAsString("file");
-            Point position = XmlTypeParser.ParsePoint(rd.AttributeAsString("position"));
-            Size size = rd.AttributeExists("size") ?
-                XmlTypeParser.ParseSize(rd.AttributeAsString("size")) :
-                new Size(0, 0);
-            Angle rotation = rd.AttributeExists("rotation") ?
-                XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation")) :
-                Angle.Zero;
+            EdaPoint position = EdaParser.ParsePoint(rd.AttributeAsString("position"));
+            EdaSize size = rd.AttributeExists("size") ?
+                EdaParser.ParseSize(rd.AttributeAsString("size")) :
+                new EdaSize(0, 0);
+            EdaAngle rotation = rd.AttributeExists("rotation") ?
+                EdaParser.ParseAngle(rd.AttributeAsString("rotation")) :
+                EdaAngle.Zero;
 
             rd.NextTag();
             if (!rd.IsEndTag("board"))
@@ -197,14 +199,14 @@
             if (!rd.IsStartTag("cut"))
                 throw new InvalidDataException("Se esperaba <cut>");
 
-            Point startPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("startPosition"));
-            Point endPosition = XmlTypeParser.ParsePoint(rd.AttributeAsString("endPosition"));
-            int thickness = XmlTypeParser.ParseNumber(rd.AttributeAsString("thickness"));
-            int cutSpacing = XmlTypeParser.ParseNumber(rd.AttributeAsString("cutSpacing"));
-            int holeSpacing = XmlTypeParser.ParseNumber(rd.AttributeAsString("holeSpacing"));
-            int holeDiameter = XmlTypeParser.ParseNumber(rd.AttributeAsString("holeDiameter"));
+            EdaPoint startPosition = EdaParser.ParsePoint(rd.AttributeAsString("startPosition"));
+            EdaPoint endPosition = EdaParser.ParsePoint(rd.AttributeAsString("endPosition"));
+            int thickness = EdaParser.ParseScalar(rd.AttributeAsString("thickness"));
+            int cutSpacing = EdaParser.ParseScalar(rd.AttributeAsString("cutSpacing"));
+            int holeSpacing = EdaParser.ParseScalar(rd.AttributeAsString("holeSpacing"));
+            int holeDiameter = EdaParser.ParseScalar(rd.AttributeAsString("holeDiameter"));
             int margin = rd.AttributeExists("margin") ?
-                XmlTypeParser.ParseNumber(rd.AttributeAsString("margin")) :
+                EdaParser.ParseScalar(rd.AttributeAsString("margin")) :
                 0;
             int cuts = rd.AttributeExists("cuts") ?
                 rd.AttributeAsInteger("cuts") :

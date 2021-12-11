@@ -2,6 +2,7 @@
 
     using System;
     using System.IO;
+
     using MikroPic.EdaTools.v1.Base.Geometry;
 
     public enum TestAccess {
@@ -24,7 +25,7 @@
         private readonly TextWriter writer;
         private int offsetX;
         private int offsetY;
-        private Angle rotation;
+        private EdaAngle rotation;
 
         /// <summary>
         /// Constructor del objecte
@@ -76,7 +77,7 @@
         /// <param name="offset">Desplaçament</param>
         /// <param name="rotation">Rotacio respecte el punt especificat com a desplaxament.</param>
         /// 
-        public void SetTransformation(Point offset, Angle rotation) {
+        public void SetTransformation(EdaPoint offset, EdaAngle rotation) {
 
             SetTransformation(offset.X, offset.Y, rotation);
         }
@@ -88,7 +89,7 @@
         /// <param name="offsetY">Desplaçament y</param>
         /// <param name="rotation">Rotacio respecte el punt especificat com a desplaxament.</param>
         /// 
-        public void SetTransformation(int offsetX, int offsetY, Angle rotation) {
+        public void SetTransformation(int offsetX, int offsetY, EdaAngle rotation) {
 
             this.offsetX = offsetX;
             this.offsetY = offsetY;
@@ -103,7 +104,7 @@
 
             offsetX = 0;
             offsetY = 0;
-            rotation = Angle.Zero;
+            rotation = EdaAngle.Zero;
         }
 
         /// <summary>
@@ -132,7 +133,7 @@
         /// <param name="thickness">Amplada del conductor.</param>
         /// <param name="netName">Nom de la xarxa del conductor.</param>
         /// 
-        public void Conductor(Point[] points, int layerNum, int thickness, string netName) {
+        public void Conductor(EdaPoint[] points, int layerNum, int thickness, string netName) {
 
             if (points == null)
                 throw new ArgumentNullException(nameof(points));
@@ -184,7 +185,7 @@
         /// <param name="padId">Identificador del pad.</param>
         /// <param name="netName">Nom de la xarxa a la que pertany el pad.</param>
         /// 
-        public void ThPad(Point position, int drill, string partId, string padId, string netName) {
+        public void ThPad(EdaPoint position, int drill, string partId, string padId, string netName) {
 
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException(nameof(drill));
@@ -218,7 +219,7 @@
         /// <param name="padId">Identificador del pad.</param>
         /// <param name="netName">Nom de la xarxa a la que pertany el pad.</param>
         /// 
-        public void SmdPad(Point position, TestAccess access, string partId, string padId, string netName) {
+        public void SmdPad(EdaPoint position, TestAccess access, string partId, string padId, string netName) {
 
             if (String.IsNullOrEmpty(partId))
                 throw new ArgumentNullException(nameof(partId));
@@ -247,7 +248,7 @@
         /// <param name="drill">Diametre del forat.</param>
         /// <param name="netName">Nom de la arxa a la que pertany la via.</param>
         /// 
-        public void Via(Point position, int drill, string netName) {
+        public void Via(EdaPoint position, int drill, string netName) {
 
             if (drill <= 0)
                 throw new ArgumentOutOfRangeException(nameof(drill));

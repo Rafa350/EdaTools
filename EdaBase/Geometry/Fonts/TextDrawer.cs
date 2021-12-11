@@ -2,6 +2,7 @@
 
     using System;
     using System.Collections.Generic;
+
     using MikroPic.EdaTools.v1.Base.Geometry;
 
     /// <summary>
@@ -35,7 +36,7 @@
         /// <param name="height">Alçada de lletra.</param>
         /// <returns>La llista de glyphs preparats per dibuixar.</returns>
         /// 
-        public IEnumerable<GlyphTrace> Draw(string text, Point position, HorizontalTextAlign horizontalAlign,
+        public IEnumerable<GlyphTrace> Draw(string text, EdaPoint position, HorizontalTextAlign horizontalAlign,
             VerticalTextAlign verticalAlign, int height) {
 
             var glyphTraces = new List<GlyphTrace>();
@@ -95,7 +96,7 @@
                             bool first = true;
                             foreach (var trace in glyph.Traces) {
 
-                                Point p = new Point(
+                                EdaPoint p = new EdaPoint(
                                     position.X + ((trace.Position.X + offset + offsetX) * scale),
                                     position.Y + ((trace.Position.Y + offsetY) * scale));
 
@@ -105,7 +106,7 @@
                                 first = false;
                             }
                         }
-                        
+
                         offset += glyph.Advance;
                     }
                 }
@@ -121,7 +122,7 @@
         /// <param name="stroke">True si cal dibuixar, false per nomes moure.</param>
         /// <param name="first">True si es el primer punt.</param>
         /// 
-        protected virtual void Trace(Point position, bool stroke, bool first) {
+        protected virtual void Trace(EdaPoint position, bool stroke, bool first) {
 
         }
     }

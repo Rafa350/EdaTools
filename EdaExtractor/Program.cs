@@ -1,4 +1,5 @@
 ﻿using System.IO;
+
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.IO;
 
@@ -21,7 +22,7 @@ namespace MikroPic.EdaTools.v1.Extractor {
 
                 string outputFileName = string.Format(@"{0}\{1}_PartList.xml", folder, name);
 
-                Board board = LoadBoard(inputFileName);
+                EdaBoard board = LoadBoard(inputFileName);
                 ExtractData(board, outputFileName);
             }
         }
@@ -34,7 +35,7 @@ namespace MikroPic.EdaTools.v1.Extractor {
 
         }
 
-        private static Board LoadBoard(string fileName) {
+        private static EdaBoard LoadBoard(string fileName) {
 
             using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
                 var reader = new BoardStreamReader(stream);
@@ -42,7 +43,7 @@ namespace MikroPic.EdaTools.v1.Extractor {
             }
         }
 
-        private static void ExtractData(Board board, string fileName) {
+        private static void ExtractData(EdaBoard board, string fileName) {
 
             using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (var writer = new StreamWriter(stream)) {

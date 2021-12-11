@@ -3,13 +3,14 @@
     using System;
     using System.IO;
     using System.Xml;
+
     using MikroPic.EdaTools.v1.Core.Model.Board;
 
     public sealed class NetExtractor {
 
-        private readonly Board board;
+        private readonly EdaBoard board;
 
-        public NetExtractor(Board board) {
+        public NetExtractor(EdaBoard board) {
 
             if (board == null)
                 throw new ArgumentNullException("board");

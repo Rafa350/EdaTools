@@ -1,4 +1,5 @@
 ﻿using System;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
@@ -9,37 +10,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un cercle.
     /// </summary>
     /// 
-    public sealed class CircleElement : Element, IPosition {
+    public sealed class CircleElement : EdaElement, IPosition {
 
-        private Point _position;
+        private EdaPoint _position;
         private int _radius;
         private int _thickness;
         private bool _filled;
-
-        /// <summary>
-        /// Constructor de l'objecte.
-        /// </summary>
-        /// <param name="layerSet">El conjunt de capes.</param>
-        /// <param name="position">Posicio del centre.</param>
-        /// <param name="radius">Radi.</param>
-        /// <param name="thickness">Amplada de linia.</param>
-        /// <param name="filled">True si cal omplir el cercle.</param>
-        /// 
-        public CircleElement(LayerSet layerSet, Point position, int radius, int thickness, bool filled) :
-            base(layerSet) {
-
-            _position = position;
-            _radius = radius;
-            _thickness = thickness;
-            _filled = filled;
-        }
-
-        /// <inheritdoc/>
-        /// 
-        public override Element Clone() {
-
-            return new CircleElement(LayerSet, _position, _radius, _thickness, _filled);
-        }
 
         /// <inheritdoc/>
         /// 
@@ -80,22 +56,20 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        ///  Obte o asigna la posicio del centre del cercle.
+        ///  La posicio del centre del cercle.
         /// </summary>
         /// 
-        public Point Position {
+        public EdaPoint Position {
             get => _position;
             set => _position = value;
         }
 
         /// <summary>
-        /// Obte o asigna el radi del cercle.
+        /// El radi del cercle.
         /// </summary>
         /// 
         public int Radius {
-            get {
-                return _radius;
-            }
+            get => _radius;
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Radius");
@@ -105,13 +79,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// Obte o asigna el diametre del cercle.
+        /// Diametre del cercle.
         /// </summary>
         /// 
         public int Diameter {
-            get {
-                return _radius * 2;
-            }
+            get => _radius * 2;
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException("Diameter");
@@ -121,13 +93,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// Obte o asigna l'amplada de linia.
+        /// L'amplada de linia.
         /// </summary>
         /// 
         public int Thickness {
-            get {
-                return _thickness;
-            }
+            get => _thickness;
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Thickness");
@@ -137,10 +107,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// Obte o asigna el indicador de cercle ple.
+        /// Indicador de cercle ple.
         /// </summary>
         /// 
-        public bool Filled { 
+        public bool Filled {
             get => (_thickness == 0) || _filled;
             set => _filled = value;
         }

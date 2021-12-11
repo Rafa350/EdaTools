@@ -1,28 +1,29 @@
-﻿namespace MikroPic.EdaTools.v1.Panel {
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.IO;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
-    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
-    using MikroPic.EdaTools.v1.Panel.Model;
-    using MikroPic.EdaTools.v1.Panel.Model.Items;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.IO;
+using MikroPic.EdaTools.v1.Core.Model.Board;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+using MikroPic.EdaTools.v1.Core.Model.Board.IO;
+using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
+using MikroPic.EdaTools.v1.Panel.Model;
+using MikroPic.EdaTools.v1.Panel.Model.Items;
+
+namespace MikroPic.EdaTools.v1.Panel {
 
     public sealed class PanelProcessor {
 
-        private readonly Dictionary<string, Board> sourceBoardCache = new Dictionary<string, Board>();
-        private readonly Board targetBoard;
+        private readonly Dictionary<string, EdaBoard> sourceBoardCache = new Dictionary<string, EdaBoard>();
+        private readonly EdaBoard targetBoard;
 
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
         /// <param name="targetBoard">La placa de desti.</param>
         /// 
-        public PanelProcessor(Board targetBoard) {
+        public PanelProcessor(EdaBoard targetBoard) {
 
             if (targetBoard == null)
                 throw new ArgumentNullException("board");
@@ -36,7 +37,7 @@
         /// <param name="project">El projecte del panell.</param>
         /// <param name="locator">Localitzador de recursos.</param>
         /// 
-        public void Panelize(Panel project, IStreamLocator locator) {
+        public void Panelize(EdaPanel project, IStreamLocator locator) {
 
             // Afegeix les capes minimes necesaries pel panell.
             //
@@ -48,7 +49,7 @@
             foreach (var item in project.Items) {
                 if (item is PcbItem pcb) {
 
-                    if (!sourceBoardCache.TryGetValue(pcb.FileName, out Board sourceBoard)) {
+                    if (!sourceBoardCache.TryGetValue(pcb.FileName, out EdaBoard sourceBoard)) {
                         string path = locator.GetPath(pcb.FileName);
                         using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
                             BoardStreamReader reader = new BoardStreamReader(stream);
@@ -74,10 +75,10 @@
         /// 
         private void AddLayers() {
 
-            if (targetBoard.GetLayer(LayerId.Milling, false) == null)
-                targetBoard.AddLayer(new Layer(LayerId.Milling, BoardSide.None, LayerFunction.Mechanical));
-            if (targetBoard.GetLayer(LayerId.Get("LocalProfile"), false) == null)
-                targetBoard.AddLayer(new Layer(LayerId.Get("LocalProfile"), BoardSide.None, LayerFunction.Mechanical));
+            if (targetBoard.GetLayer(EdaLayerId.Milling, false) == null)
+                targetBoard.AddLayer(new EdaLayer(EdaLayerId.Milling, BoardSide.None, LayerFunction.Mechanical));
+            if (targetBoard.GetLayer(EdaLayerId.Get("LocalProfile"), false) == null)
+                targetBoard.AddLayer(new EdaLayer(EdaLayerId.Get("LocalProfile"), BoardSide.None, LayerFunction.Mechanical));
         }
 
         /// <summary>
@@ -88,7 +89,7 @@
         /// <param name="rotation">Orientacio.</param>
         /// <param name="index">Index de la placa.</param>
         /// 
-        private void AddBoard(Board board, Point position, Angle rotation, int index) {
+        private void AddBoard(EdaBoard board, EdaPoint position, EdaAngle rotation, int index) {
 
             // Afegeix les capes que no existeixin en la placa de destinacio. Les 
             // capes son comuns a totes les plaques que formen el panel.
@@ -117,16 +118,16 @@
             // Afegeix els parts a la placa
             //
             if (board.HasParts) {
-                List<Part> transformableParts = new List<Part>();
+                List<EdaPart> transformableParts = new List<EdaPart>();
                 foreach (var part in board.Parts) {
-                    Component component = targetBoard.GetComponent(part.Component.Name);
-                    Part panelPart = part.Clone(String.Format("{1}@{0}", index, part.Name), component);
+                    EdaComponent component = targetBoard.GetComponent(part.Component.Name);
+                    EdaPart panelPart = part.Clone(String.Format("{1}@{0}", index, part.Name), component);
                     transformableParts.Add(panelPart);
                     targetBoard.AddPart(panelPart);
 
                     foreach (var panelElement in panelPart.Elements) {
                         if (panelElement is PadElement panelPad) {
-                            Signal signal = board.GetSignal(part.GetPad(panelPad.Name), part, false);
+                            EdaSignal signal = board.GetSignal(part.GetPad(panelPad.Name), part, false);
                             if (signal != null) {
                                 string panelSignalName = String.Format("{1}@{0}", index, signal.Name);
                                 targetBoard.Connect(targetBoard.GetSignal(panelSignalName), panelPad, panelPart);
@@ -143,19 +144,19 @@
             // Afegeix els elements de la placa
             //
             if (board.HasElements) {
-                List<Element> transformableElements = new List<Element>();
+                List<EdaElement> transformableElements = new List<EdaElement>();
                 foreach (var boardElement in board.Elements) {
 
-                    Element panelElement = boardElement.Clone();
-                    if (boardElement.IsOnLayer(LayerId.Profile)) {
-                        boardElement.LayerSet.Remove(LayerId.Profile);
-                        boardElement.LayerSet.Add(LayerId.Get("LocalProfile"));
+                    EdaElement panelElement = boardElement.Clone();
+                    if (boardElement.IsOnLayer(EdaLayerId.Profile)) {
+                        boardElement.LayerSet.Remove(EdaLayerId.Profile);
+                        boardElement.LayerSet.Add(EdaLayerId.Get("LocalProfile"));
                     }
                     transformableElements.Add(panelElement);
                     targetBoard.AddElement(panelElement);
 
                     if (boardElement is IConectable) {
-                        Signal signal = board.GetSignal(boardElement, null, false);
+                        EdaSignal signal = board.GetSignal(boardElement, null, false);
                         if (signal != null) {
                             string panelSignalName = String.Format("{1}@{0}", index, signal.Name);
                             targetBoard.Connect(targetBoard.GetSignal(panelSignalName), panelElement as IConectable);
@@ -192,7 +193,7 @@
             //
             Transformation t = new Transformation();
             t.Translate(cut.StartPosition);
-            t.Rotate(cut.StartPosition, Angle.FromRadiants(rad));
+            t.Rotate(cut.StartPosition, EdaAngle.FromRadiants(rad));
 
             // Afegeix les linies de tall
             //
@@ -200,13 +201,18 @@
 
                 // Transforma els punts a la posicio real
                 //
-                Point q1 = t.ApplyTo(new Point(cutPoints[i], 0));
-                Point q2 = t.ApplyTo(new Point(cutPoints[i + 1], 0));
+                EdaPoint q1 = t.ApplyTo(new EdaPoint(cutPoints[i], 0));
+                EdaPoint q2 = t.ApplyTo(new EdaPoint(cutPoints[i + 1], 0));
 
                 // Afegeix la linia a la placa
                 //
-                targetBoard.AddElement(new LineElement(new LayerSet(LayerId.Milling), q1, q2,
-                    cut.Thickness, LineElement.CapStyle.Round));
+                targetBoard.AddElement(new LineElement {
+                    LayerSet = new EdaLayerSet(EdaLayerId.Milling),
+                    StartPosition = q1,
+                    EndPosition = q2,
+                    Thickness = cut.Thickness,
+                    LineCap = LineElement.CapStyle.Round
+                });
             }
 
             // Afegeix els forats
@@ -217,13 +223,22 @@
                 //
                 int drill = cut.HoleDiameter;
                 int offset = (cut.Thickness - drill) / 2;
-                Point q1 = t.ApplyTo(new Point(holePoints[i], -offset));
-                Point q2 = t.ApplyTo(new Point(holePoints[i], offset));
+                EdaPoint q1 = t.ApplyTo(new EdaPoint(holePoints[i], -offset));
+                EdaPoint q2 = t.ApplyTo(new EdaPoint(holePoints[i], offset));
 
                 // Afegeix els forats a la placa
                 //
-                targetBoard.AddElement(new HoleElement(new LayerSet(LayerId.Holes), q1, drill));
-                targetBoard.AddElement(new HoleElement(new LayerSet(LayerId.Holes), q2, drill));
+                targetBoard.AddElement(new HoleElement {
+                    LayerSet = new EdaLayerSet(EdaLayerId.Holes),
+                    Position = q1,
+                    Drill = drill
+                });
+
+                targetBoard.AddElement(new HoleElement {
+                    LayerSet = new EdaLayerSet(EdaLayerId.Holes),
+                    Position = q2,
+                    Drill = drill
+                });
             }
         }
 
@@ -232,20 +247,48 @@
         /// </summary>
         /// <param name="size">El tamany del panell.</param>
         /// 
-        private void AddProfile(Size size) {
+        private void AddProfile(EdaSize size) {
 
-            Rect rect = new Rect(new Point(0, 0), size);
-            targetBoard.AddElement(new LineElement(new LayerSet(LayerId.Profile), new Point(rect.Left, rect.Top), new Point(rect.Right, rect.Top), 100000, LineElement.CapStyle.Round));
-            targetBoard.AddElement(new LineElement(new LayerSet(LayerId.Profile), new Point(rect.Left, rect.Bottom), new Point(rect.Right, rect.Bottom), 100000, LineElement.CapStyle.Round));
-            targetBoard.AddElement(new LineElement(new LayerSet(LayerId.Profile), new Point(rect.Left, rect.Top), new Point(rect.Left, rect.Bottom), 100000, LineElement.CapStyle.Round));
-            targetBoard.AddElement(new LineElement(new LayerSet(LayerId.Profile), new Point(rect.Right, rect.Top), new Point(rect.Right, rect.Bottom), 100000, LineElement.CapStyle.Round));
+            var rect = new Rect(new EdaPoint(0, 0), size);
+
+            targetBoard.AddElement(new LineElement {
+                LayerSet = new EdaLayerSet(EdaLayerId.Profile),
+                StartPosition = new EdaPoint(rect.Left, rect.Top),
+                EndPosition = new EdaPoint(rect.Right, rect.Top),
+                Thickness = 100000,
+                LineCap = LineElement.CapStyle.Round
+            });
+
+            targetBoard.AddElement(new LineElement {
+                LayerSet = new EdaLayerSet(EdaLayerId.Profile),
+                StartPosition = new EdaPoint(rect.Left, rect.Bottom),
+                EndPosition = new EdaPoint(rect.Right, rect.Bottom),
+                Thickness = 100000,
+                LineCap = LineElement.CapStyle.Round
+            });
+
+            targetBoard.AddElement(new LineElement {
+                LayerSet = new EdaLayerSet(EdaLayerId.Profile),
+                StartPosition = new EdaPoint(rect.Left, rect.Top),
+                EndPosition = new EdaPoint(rect.Left, rect.Bottom),
+                Thickness = 100000,
+                LineCap = LineElement.CapStyle.Round
+            });
+
+            targetBoard.AddElement(new LineElement {
+                LayerSet = new EdaLayerSet(EdaLayerId.Profile),
+                StartPosition = new EdaPoint(rect.Right, rect.Top),
+                EndPosition = new EdaPoint(rect.Right, rect.Bottom),
+                Thickness = 100000,
+                LineCap = LineElement.CapStyle.Round
+            });
         }
 
         private sealed class TransformVisitor : DefaultBoardVisitor {
 
             private readonly Transformation transformation;
 
-            public TransformVisitor(Point offset, Angle rotation) {
+            public TransformVisitor(EdaPoint offset, EdaAngle rotation) {
 
                 transformation = new Transformation();
                 transformation.Translate(offset);
@@ -300,7 +343,7 @@
                 hole.Position = transformation.ApplyTo(hole.Position);
             }
 
-            public override void Visit(Part part) {
+            public override void Visit(EdaPart part) {
 
                 part.Position = transformation.ApplyTo(part.Position);
             }

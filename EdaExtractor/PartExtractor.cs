@@ -3,12 +3,13 @@
     using System;
     using System.IO;
     using System.Xml;
+
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Core.Model.Board;
 
     public sealed class PartExtractor {
 
-        private readonly Board board;
+        private readonly EdaBoard board;
         private string ignoreAttributeName = "PARTLIST-IGNORE";
 
         /// <summary>
@@ -16,7 +17,7 @@
         /// </summary>
         /// <param name="board">La placa.</param>
         /// 
-        public PartExtractor(Board board) {
+        public PartExtractor(EdaBoard board) {
 
             if (board == null)
                 throw new ArgumentNullException("board");
@@ -45,7 +46,7 @@
                 wr.WriteAttributeString("units", "mm");
                 wr.WriteStartElement("parts");
 
-                foreach (Part part in board.Parts) {
+                foreach (EdaPart part in board.Parts) {
 
                     if (part.GetAttribute(ignoreAttributeName) == null) {
 
@@ -56,7 +57,7 @@
                         wr.WriteAttributeString("flip", part.Flip.ToString());
 
                         bool hasAttributes = false;
-                        foreach (PartAttribute attribute in part.Attributes) {
+                        foreach (EdaPartAttribute attribute in part.Attributes) {
                             if (!hasAttributes) {
                                 hasAttributes = true;
                                 wr.WriteStartElement("attributes");
@@ -97,7 +98,7 @@
         /// <param name="point">El valor del punt.</param>
         /// <returns>El valor formatejat.</returns>
         /// 
-        private static string FormatPoint(Point point) {
+        private static string FormatPoint(EdaPoint point) {
 
             return String.Format(
                 "{0}, {1}",
@@ -111,7 +112,7 @@
         /// <param name="angle">El valor del angle</param>
         /// <returns>El angle formatejat.</returns>
         /// 
-        private static string FormatAngle(Angle angle) {
+        private static string FormatAngle(EdaAngle angle) {
 
             return XmlConvert.ToString(angle.Value / 100.0);
         }

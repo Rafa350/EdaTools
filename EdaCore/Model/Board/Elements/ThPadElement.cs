@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
@@ -24,76 +25,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         private int _drcTopSizeMin = 175000;
         private int _drcTopSizeMax = 2500000;
-        private Ratio _drcTopSizePercent = Ratio.P25;
+        private EdaRatio _drcTopSizePercent = EdaRatio.P25;
         private int _drcBottomSizeMin = 175000;
         private int _drcBottomSizeMax = 2500000;
-        private Ratio _drcBottomSizePercent = Ratio.P25;
+        private EdaRatio _drcBottomSizePercent = EdaRatio.P25;
 
         private ThPadShape _shape = ThPadShape.Circle;
         private int _topSize;
         private int _innerSize;
         private int _bottomSize;
         private int _drill;
-
-        /// <summary>
-        /// Constructor del objecte.
-        /// </summary>
-        /// <param name="name">Nom.</param>
-        /// <param name="layerSet">El conjunt de capes.</param>
-        /// <param name="position">Posicio.</param>
-        /// <param name="rotation">Orientacio.</param>
-        /// <param name="size">Tamany/diametre del pad.</param>
-        /// <param name="drill">Diametre del forat.</param>
-        /// <param name="shape">Forma de la corona.</param>
-        /// 
-        public ThPadElement(string name, LayerSet layerSet, Point position, Angle rotation, int size, ThPadShape shape, int drill) :
-            this(name, layerSet, position, rotation, size, size, size, shape, drill) {
-        }
-
-        /// <summary>
-        /// Constructor del objecte.
-        /// </summary>
-        /// <param name="name">Nom.</param>
-        /// <param name="layerSet">El conjunt de capes.</param>
-        /// <param name="position">Posicio.</param>
-        /// <param name="rotation">Orientacio.</param>
-        /// <param name="topSize">Tamany/diametre del pad.</param>
-        /// <param name="innerSize">Tamany/diametre del pad.</param>
-        /// <param name="bottomSize">Tamany/diametre del pad.</param>
-        /// <param name="shape">Forma del pad.</param>
-        /// <param name="drill">Forma de la corona.</param>
-        /// 
-        public ThPadElement(string name, LayerSet layerSet, Point position, Angle rotation, int topSize, int innerSize,
-            int bottomSize, ThPadShape shape, int drill) :
-            base(name, layerSet, position, rotation) {
-
-            if (topSize < 0)
-                throw new ArgumentOutOfRangeException(nameof(topSize));
-
-            if (innerSize < 0)
-                throw new ArgumentOutOfRangeException(nameof(innerSize));
-
-            if (bottomSize < 0)
-                throw new ArgumentOutOfRangeException(nameof(bottomSize));
-
-            if (drill <= 0)
-                throw new ArgumentOutOfRangeException(nameof(drill));
-
-            LayerSet.Add(LayerId.Drills);
-            _topSize = topSize;
-            _innerSize = innerSize;
-            _bottomSize = bottomSize;
-            _drill = drill;
-            _shape = shape;
-        }
-
-
-        /// <inheritdoc/>
-        /// 
-        public override Element Clone() {
-
-            return new ThPadElement(Name, LayerSet, Position, Rotation, _topSize, _innerSize, _bottomSize, _shape, _drill);
-        }
 
         /// <inheritdoc/>
         /// 
@@ -118,7 +59,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <param name="spacing">Espaiat.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        private Point[] MakePoints(BoardSide side, int spacing) {
+        private EdaPoint[] MakePoints(BoardSide side, int spacing) {
 
             int size = GetSize(side);
             int sizeM2 = size * 2;
@@ -131,7 +72,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 case ThPadShape.Square:
                     return PolygonBuilder.MakeRectangle(
                         Position,
-                        new Size(size + spacingM2, size + spacingM2),
+                        new EdaSize(size + spacingM2, size + spacingM2),
                         spacing,
                         Rotation);
 
@@ -141,13 +82,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                         8,
                         Position,
                         s + spacing,
-                        Rotation + Angle.FromValue(2250));
+                        Rotation + EdaAngle.FromValue(2250));
                 }
 
                 case ThPadShape.Oval:
                     return PolygonBuilder.MakeRectangle(
                         Position,
-                        new Size(sizeM2 + spacingM2, size + spacingM2),
+                        new EdaSize(sizeM2 + spacingM2, size + spacingM2),
                         sizeD2 + spacing,
                         Rotation);
 
@@ -183,7 +124,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             int hash = GetHashCode() + (side.GetHashCode() * 47211) + spacing * 99997;
             Polygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
-                
+
                 var points = MakePoints(side, spacing);
                 polygon = new Polygon(points);
 
@@ -203,7 +144,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             int h = size + spacing + spacing;
 
             Polygon pour = GetOutlinePolygon(side, spacing);
-            Polygon thermal = new Polygon(PolygonBuilder.MakeCross(Position, new Size(w, h), width, Rotation));
+            Polygon thermal = new Polygon(PolygonBuilder.MakeCross(Position, new EdaSize(w, h), width, Rotation));
 
             List<Polygon> childs = new List<Polygon>();
             childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
@@ -251,7 +192,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override bool IsOnLayer(LayerId layerId) =>
+        public override bool IsOnLayer(EdaLayerId layerId) =>
             layerId.IsSignal || base.IsOnLayer(layerId);
 
         /// <summary>
@@ -290,9 +231,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 else
                     return _topSize;
             }
-            set {
-                _topSize = value;
-            }
+            set => _topSize = value;
         }
         /// <summary>
         /// Obte o asigna el tamany del pad de la cara inferior
@@ -307,9 +246,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 else
                     return _bottomSize;
             }
-            set {
-                _bottomSize = value;
-            }
+            set => _bottomSize = value;
         }
 
         /// <summary>
@@ -325,14 +262,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 else
                     return _innerSize;
             }
-            set {
-                _innerSize = value;
-            }
+            set => _innerSize = value;
         }
 
         /// <inheritdoc/>
         /// 
-        public override ElementType ElementType => 
+        public override ElementType ElementType =>
             ElementType.ThPad;
     }
 }

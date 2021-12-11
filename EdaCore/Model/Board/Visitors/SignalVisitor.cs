@@ -2,19 +2,20 @@
 
     using System;
     using System.Collections.Generic;
+
     using MikroPic.EdaTools.v1.Core.Model.Board;
 
     public abstract class SignalVisitor : DefaultBoardVisitor {
 
-        private Board currentBoard;
-        private Signal currentSignal;
+        private EdaBoard currentBoard;
+        private EdaSignal currentSignal;
 
-        public override void Visit(Board board) {
+        public override void Visit(EdaBoard board) {
 
             if (board == null)
                 throw new ArgumentNullException(nameof(board));
 
-            Board savedBoard = currentBoard;
+            EdaBoard savedBoard = currentBoard;
             currentBoard = board;
             try {
                 foreach (var signal in board.Signals)
@@ -25,15 +26,15 @@
             }
         }
 
-        public override void Visit(Signal signal) {
+        public override void Visit(EdaSignal signal) {
 
-            Signal savedSignal = currentSignal;
+            EdaSignal savedSignal = currentSignal;
             currentSignal = signal;
             try {
-                IEnumerable<Tuple<IConectable, Part>> items = currentBoard.GetConnectedItems(signal);
+                IEnumerable<Tuple<IConectable, EdaPart>> items = currentBoard.GetConnectedItems(signal);
                 if (items != null)
                     foreach (var item in items) {
-                        if (item.Item1 is Element element)
+                        if (item.Item1 is EdaElement element)
                             element.AcceptVisitor(this);
                     }
             }
@@ -42,13 +43,13 @@
             }
         }
 
-        protected Board Board {
+        protected EdaBoard Board {
             get {
                 return currentBoard;
             }
         }
 
-        protected Signal Signal {
+        protected EdaSignal Signal {
             get {
                 return currentSignal;
             }

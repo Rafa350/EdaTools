@@ -1,4 +1,5 @@
 ﻿using System;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
@@ -9,43 +10,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un rectangle.
     /// </summary>
     /// 
-    public sealed class RectangleElement : Element, IPosition, ISize, IRotation {
+    public sealed class RectangleElement : EdaElement, IPosition, ISize, IRotation {
 
-        private Point _position;
-        private Size _size;
-        private Angle _rotation;
-        private Ratio _roundness;
+        private EdaPoint _position;
+        private EdaSize _size;
+        private EdaAngle _rotation;
+        private EdaRatio _roundness;
         private int _thickness;
         private bool _filled;
-
-        /// <summary>
-        /// Constructor del objecte.
-        /// </summary>
-        /// <param name="layerSet">El conjunt de capes.</param>
-        /// <param name="position">Posicio del centre geometric.</param>
-        /// <param name="size">Amplada i alçada del rectangle.</param>
-        /// <param name="roundness">Factor d'arrodoniment de les cantonades.</param>
-        /// <param name="rotation">Angle de rotacio.</param>
-        /// <param name="thickness">Amplada de linia. Si es zero, es un rectangle ple.</param>
-        /// <param name="filled">True indica si cal omplir el rectangle.</param>
-        /// 
-        public RectangleElement(LayerSet layerSet, Point position, Size size, Ratio roundness, Angle rotation, int thickness, bool filled) :
-            base(layerSet) {
-
-            _position = position;
-            _size = size;
-            _roundness = roundness;
-            _rotation = rotation;
-            _thickness = thickness;
-            _filled = filled;
-        }
-
-        /// <inheritdoc/>
-        /// 
-        public override Element Clone() {
-
-            return new RectangleElement(LayerSet, _position, _size, _roundness, _rotation, _thickness, _filled);
-        }
 
         /// <inheritdoc/>
         /// 
@@ -63,10 +35,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 return new Polygon(points);
             }
             else {
-                var outerSize = new Size(_size.Width + _thickness, _size.Height + _thickness);
+                var outerSize = new EdaSize(_size.Width + _thickness, _size.Height + _thickness);
                 var outerPoints = PolygonBuilder.MakeRectangle(_position, outerSize, Radius, _rotation);
 
-                var innerSize = new Size(_size.Width - _thickness, _size.Height - _thickness);
+                var innerSize = new EdaSize(_size.Width - _thickness, _size.Height - _thickness);
                 var innerPoints = PolygonBuilder.MakeRectangle(_position, innerSize, Math.Max(0, Radius - _thickness), _rotation);
 
                 return new Polygon(outerPoints, new Polygon(innerPoints));
@@ -77,7 +49,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            var outerSize = new Size(_size.Width + _thickness + spacing * 2, _size.Height + _thickness + spacing * 2);
+            var outerSize = new EdaSize(_size.Width + _thickness + spacing * 2, _size.Height + _thickness + spacing * 2);
             var points = PolygonBuilder.MakeRectangle(_position, outerSize, Radius, _rotation);
             return new Polygon(points);
         }
@@ -89,7 +61,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             double width = _size.Width + _thickness;
             double height = _size.Height + _thickness;
 
-            double a = _rotation.ToRadiants;
+            double a = _rotation.AsRadiants;
 
             int w = (int)(width * Math.Cos(a) + height * Math.Sin(a));
             int h = (int)(width * Math.Sin(a) + height * Math.Cos(a));
@@ -98,56 +70,54 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        ///  Obte o asigna la posicio del centre geometric del rectangle.
+        ///  La posicio del centre geometric del rectangle.
         /// </summary>
         /// 
-        public Point Position {
+        public EdaPoint Position {
             get => _position;
             set => _position = value;
         }
 
         /// <summary>
-        /// Obte o asigna el tamany del rectangle.
+        /// El tamany del rectangle.
         /// </summary>
         /// 
-        public Size Size {
+        public EdaSize Size {
             get => _size;
             set => _size = value;
         }
 
         /// <summary>
-        /// Obte o asigna l'angle de rotacio.
+        /// L'angle de rotacio.
         /// </summary>
         /// 
-        public Angle Rotation {
+        public EdaAngle Rotation {
             get => _rotation;
             set => _rotation = value;
         }
 
         /// <summary>
-        /// Obte o asigna el factor d'arrodoniment de les cantonades.
+        /// El factor d'arrodoniment de les cantonades.
         /// </summary>
         /// 
-        public Ratio Roundness {
+        public EdaRatio Roundness {
             get => _roundness;
             set => _roundness = value;
         }
 
         /// <summary>
-        /// Obte el radi de curvatura de les cantonades.
+        /// El radi de curvatura de les cantonades.
         /// </summary>
         /// 
         public int Radius =>
-            (Math.Min(_size.Width, _size.Height) * _roundness) >> 1;
-            
+            (Math.Min(_size.Width, _size.Height) * _roundness) / 2;
+
         /// <summary>
-        /// Obte o asigna l'amplada de linia.
+        /// Amplada de linia.
         /// </summary>
         /// 
         public int Thickness {
-            get {
-                return _thickness;
-            }
+            get => _thickness;
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException("Thickness");

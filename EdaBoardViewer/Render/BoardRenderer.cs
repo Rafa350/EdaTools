@@ -1,6 +1,7 @@
 ﻿namespace EdaBoardViewer.Render {
 
     using Avalonia.Media;
+
     using MikroPic.EdaTools.v1.Core.Model.Board;
 
     public sealed class BoardRenderer {
@@ -12,7 +13,7 @@
             this.context = context;
         }
 
-        public void Render(Board board) {
+        public void Render(EdaBoard board) {
 
             VisualLayerStack visualLayers = VisualLayerStack.CreateDefault();
             foreach (VisualLayer visualLayer in visualLayers.VisualLayers) {

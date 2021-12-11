@@ -45,14 +45,14 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
         /// Obte el ID del macro.
         /// </summary>
         /// 
-        public int Id => 
+        public int Id =>
             _id;
 
         /// <summary>
         /// Obte la comanda Gerber per la definicio del macro.
         /// </summary>
         /// 
-        public string Command => 
+        public string Command =>
             GetCommand();
     }
 }

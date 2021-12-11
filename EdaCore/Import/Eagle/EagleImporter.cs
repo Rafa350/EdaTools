@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Xml;
@@ -24,25 +25,25 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         private const int drillsLayerNum = 44;
         private const int holesLayerNum = 45;
 
-        private readonly Dictionary<string, Component> componentDict = new Dictionary<string, Component>();
-        private readonly Dictionary<string, Signal> signalDict = new Dictionary<string, Signal>();
-        private readonly Dictionary<Element, string> mapElementSignal = new Dictionary<Element, string>();
+        private readonly Dictionary<string, EdaComponent> componentDict = new Dictionary<string, EdaComponent>();
+        private readonly Dictionary<string, EdaSignal> signalDict = new Dictionary<string, EdaSignal>();
+        private readonly Dictionary<EdaElement, string> mapElementSignal = new Dictionary<EdaElement, string>();
 
-        private Board board;
+        private EdaBoard board;
         private XmlDocument doc;
 
 
         /// <inheritdoc/>
         /// 
-        public Board ReadBoard(string fileName) {
+        public EdaBoard ReadBoard(string fileName) {
 
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
 
                 doc = ReadXmlDocument(stream);
-                board = new Board();
+                board = new EdaBoard();
 
                 XmlNode layersNode = doc.SelectSingleNode("eagle/drawing/layers");
-                IEnumerable<Layer> layers = ParseLayersNode(layersNode);
+                IEnumerable<EdaLayer> layers = ParseLayersNode(layersNode);
                 board.AddLayers(layers);
 
                 ProcessSignals();
@@ -62,10 +63,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 doc = ReadXmlDocument(stream);
 
                 XmlNode layersNode = doc.SelectSingleNode("eagle/drawing/layers");
-                IEnumerable<Layer> layers = ParseLayersNode(layersNode);
+                IEnumerable<EdaLayer> layers = ParseLayersNode(layersNode);
 
                 XmlNode packagesNode = doc.SelectSingleNode("eagle/drawing/library/packages");
-                IEnumerable<Component> components = ParsePackagesNode(packagesNode);
+                IEnumerable<EdaComponent> components = ParsePackagesNode(packagesNode);
 
                 Library library = new Library("unnamed");
                 library.AddComponents(components);
@@ -121,7 +122,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             //
             foreach (XmlNode signalNode in doc.SelectNodes("eagle/drawing/board/signals/signal")) {
 
-                Signal signal = ParseSignalNode(signalNode);
+                EdaSignal signal = ParseSignalNode(signalNode);
                 board.AddSignal(signal);
                 signalDict.Add(signal.Name, signal);
             }
@@ -142,7 +143,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 // Procesa el tag <package>
                 //
                 foreach (XmlNode packageNode in libraryNode.SelectNodes("packages/package")) {
-                    Component component = ParsePackageNode(packageNode, libraryName);
+                    var component = ParsePackageNode(packageNode, libraryName);
                     board.AddComponent(component);
                     componentDict.Add(component.Name, component);
                 }
@@ -157,14 +158,14 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
             // Procesa el tag <elements>
             //
-            foreach (Part part in ParseElementsNode(doc.SelectSingleNode("eagle/drawing/board/elements")))
+            foreach (EdaPart part in ParseElementsNode(doc.SelectSingleNode("eagle/drawing/board/elements")))
                 board.AddPart(part);
 
             // Procesa el tag <plain>
             //
             foreach (XmlNode node in doc.SelectSingleNode("eagle/drawing/board/plain")) {
 
-                Element element = null;
+                EdaElement element = null;
                 switch (node.Name) {
                     case "wire":
                         element = ParseWireNode(node);
@@ -198,13 +199,13 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             foreach (XmlNode node in doc.SelectSingleNode("eagle/drawing/board/signals")) {
 
                 string signalName = node.AttributeAsString("name");
-                Signal signal = signalDict[signalName];
+                EdaSignal signal = signalDict[signalName];
 
                 foreach (XmlNode childNode in node.SelectNodes("contactref")) {
                     string partName = childNode.AttributeAsString("element");
                     string padName = childNode.AttributeAsString("pad");
 
-                    Part part = board.GetPart(partName, true);
+                    EdaPart part = board.GetPart(partName, true);
                     foreach (PadElement pad in part.Pads) {
                         if (pad.Name == padName)
                             try {
@@ -219,7 +220,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 }
 
                 foreach (XmlNode childNode in node.ChildNodes) {
-                    Element element = null;
+                    EdaElement element = null;
                     switch (childNode.Name) {
                         case "wire":
                             element = ParseWireNode(childNode);
@@ -256,12 +257,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="layersNode">El node a procesar.</param>
         /// <returns>La llista de capes.</returns>
         /// 
-        private IEnumerable<Layer> ParseLayersNode(XmlNode layersNode) {
+        private IEnumerable<EdaLayer> ParseLayersNode(XmlNode layersNode) {
 
-            var layers = new List<Layer>();
+            var layers = new List<EdaLayer>();
 
             foreach (XmlNode layerNode in layersNode) {
-                Layer layer = ParseLayerNode(layerNode);
+                EdaLayer layer = ParseLayerNode(layerNode);
                 layers.Add(layer);
             }
 
@@ -274,10 +275,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="layerNode">El node a procesar.</param>
         /// <returns>L'objecte 'Layer' creat.</returns>
         /// 
-        private Layer ParseLayerNode(XmlNode layerNode) {
+        private EdaLayer ParseLayerNode(XmlNode layerNode) {
 
             int layerNum = Int32.Parse(layerNode.Attributes["number"].Value);
-            return new Layer(GetLayerId(layerNum), GetLayerSide(layerNum), GetLayerFunction(layerNum));
+            return new EdaLayer(GetLayerId(layerNum), GetLayerSide(layerNum), GetLayerFunction(layerNum));
         }
 
         /// <summary>
@@ -286,11 +287,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="packagesNode">El node a procesar.</param>
         /// <returns>La llista de components.</returns>
         /// 
-        private IEnumerable<Component> ParsePackagesNode(XmlNode packagesNode) {
+        private IEnumerable<EdaComponent> ParsePackagesNode(XmlNode packagesNode) {
 
-            var components = new List<Component>();
+            var components = new List<EdaComponent>();
             foreach (XmlNode packageNode in packagesNode.ChildNodes) {
-                Component component = ParsePackageNode(packageNode);
+                var component = ParsePackageNode(packageNode);
                 components.Add(component);
             }
 
@@ -303,14 +304,14 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="packageNode">El node a procesar.</param>
         /// <returns>El component.</returns>
         /// 
-        private Component ParsePackageNode(XmlNode packageNode, string libraryName = null) {
+        private EdaComponent ParsePackageNode(XmlNode packageNode, string libraryName = null) {
 
             string packageName = packageNode.AttributeAsString("name");
             string packageDescription = null;
 
-            var elements = new List<Element>();
+            var elements = new List<EdaElement>();
             foreach (XmlNode elementNode in packageNode.ChildNodes) {
-                Element element = null;
+                EdaElement element = null;
                 switch (elementNode.Name) {
                     case "description":
                         packageDescription = elementNode.InnerText;
@@ -357,7 +358,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             }
 
             string name = libraryName == null ? packageName : String.Format("{0}@{1}", packageName, libraryName);
-            var component = new Component(name, elements);
+            var component = new EdaComponent(name, elements);
             component.Description = packageDescription;
             return component;
         }
@@ -368,11 +369,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="elementsNode">El node a procesar.</param>
         /// <returns>La llista d'elements.</returns>
         /// 
-        private IEnumerable<Part> ParseElementsNode(XmlNode elementsNode) {
+        private IEnumerable<EdaPart> ParseElementsNode(XmlNode elementsNode) {
 
-            var parts = new List<Part>();
+            var parts = new List<EdaPart>();
             foreach (XmlNode elementNode in elementsNode.ChildNodes) {
-                Part part = ParseElementNode(elementNode);
+                EdaPart part = ParseElementNode(elementNode);
                 parts.Add(part);
             }
 
@@ -385,11 +386,15 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte Signal creat.</returns>
         /// 
-        private Signal ParseSignalNode(XmlNode node) {
+        private EdaSignal ParseSignalNode(XmlNode node) {
 
-            string signalName = node.AttributeAsString("name");
+            var name = node.AttributeAsString("name");
+            var clearance = 150000;
 
-            return new Signal(signalName);
+            return new EdaSignal {
+                Name = name,
+                Clearance = clearance
+            };
         }
 
         /// <summary>
@@ -398,7 +403,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'ThPadElement' creat.</returns>
         /// 
-        private Element ParsePadNode(XmlNode node) {
+        private EdaElement ParsePadNode(XmlNode node) {
 
             // Obte el nom
             //
@@ -407,22 +412,22 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             // Obte el conjunt de capes
             //
             //LayerSet layerSet = ParseLayer(node.AttributeAsString("layers"));
-            LayerSet layerSet = new LayerSet();
-            layerSet.Add(LayerId.TopCopper);
-            layerSet.Add(LayerId.BottomCopper);
-            layerSet.Add(LayerId.TopStop);
-            layerSet.Add(LayerId.BottomStop);
-            layerSet.Add(LayerId.Drills);
+            EdaLayerSet layerSet = new EdaLayerSet();
+            layerSet.Add(EdaLayerId.TopCopper);
+            layerSet.Add(EdaLayerId.BottomCopper);
+            layerSet.Add(EdaLayerId.TopStop);
+            layerSet.Add(EdaLayerId.BottomStop);
+            layerSet.Add(EdaLayerId.Drills);
 
             // Obte la posicio
             //
             int x = ParseNumber(node.AttributeAsString("x"));
             int y = ParseNumber(node.AttributeAsString("y"));
-            Point position = new Point(x, y);
+            EdaPoint position = new EdaPoint(x, y);
 
             // Obte l'angle de rotacio
             //
-            Angle rotation = Angle.Zero;
+            EdaAngle rotation = EdaAngle.Zero;
             if (node.AttributeExists("rot"))
                 rotation = ParseAngle(node.AttributeAsString("rot"));
 
@@ -451,7 +456,17 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                     break;
             }
 
-            return new ThPadElement(name, layerSet, position, rotation, size, shape, drill);
+            return new ThPadElement {
+                Name = name,
+                LayerSet = layerSet,
+                Position = position,
+                Rotation = rotation,
+                TopSize = size,
+                InnerSize = size,
+                BottomSize = size,
+                Shape = shape,
+                Drill = drill
+            };
         }
 
         /// <summary>
@@ -460,7 +475,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'SmdPadElement' creat.</returns>
         /// 
-        private Element ParseSmdNode(XmlNode node) {
+        private EdaElement ParseSmdNode(XmlNode node) {
 
             string name = node.AttributeAsString("name");
 
@@ -468,32 +483,37 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             //
             int x = ParseNumber(node.AttributeAsString("x"));
             int y = ParseNumber(node.AttributeAsString("y"));
-            Point position = new Point(x, y);
+            EdaPoint position = new EdaPoint(x, y);
 
             // Obte el tamany
             //
             int width = ParseNumber(node.AttributeAsString("dx"));
             int height = ParseNumber(node.AttributeAsString("dy"));
-            Size size = new Size(width, height);
+            EdaSize size = new EdaSize(width, height);
 
             // Obte la rotacio
             //
-            Angle rotation = Angle.Zero;
+            EdaAngle rotation = EdaAngle.Zero;
             if (node.AttributeExists("rot"))
                 ParseAngle(node.AttributeAsString("rot"));
 
             // Obte el factor d'arrodoniment
             //
-            Ratio roundness = Ratio.Zero;
+            EdaRatio roundness = EdaRatio.Zero;
             if (node.AttributeExists("roundness"))
                 roundness = ParseRatio(node.AttributeAsString("roundness"));
 
             int layerNum = node.AttributeAsInteger("layer");
-            var layerId = GetLayerId(layerNum);
-            var layerSet = new LayerSet();
-            layerSet.Add(layerId);
+            var layerSet = new EdaLayerSet(GetLayerId(layerNum));
 
-            return new SmdPadElement(name, layerSet, position, size, rotation, roundness);
+            return new SmdPadElement {
+                Name = name,
+                LayerSet = layerSet,
+                Position = position,
+                Size = size,
+                Rotation = rotation,
+                Roundness = roundness
+            };
         }
 
         /// <summary>
@@ -502,11 +522,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'ViaElement' creat.</returns>
         /// 
-        private Element ParseViaNode(XmlNode node) {
+        private EdaElement ParseViaNode(XmlNode node) {
 
             int x = ParseNumber(node.AttributeAsString("x"));
             int y = ParseNumber(node.AttributeAsString("y"));
-            Point position = new Point(x, y);
+            EdaPoint position = new EdaPoint(x, y);
 
             int drill = ParseNumber(node.AttributeAsString("drill"));
 
@@ -516,8 +536,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
             string extent = node.AttributeAsString("extent");
             string[] layerNames = extent.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-            LayerId topLayerId = GetLayerId(Int32.Parse(layerNames[0]));
-            LayerId bottomLayerId = GetLayerId(Int32.Parse(layerNames[1]));
+            EdaLayerId topLayerId = GetLayerId(Int32.Parse(layerNames[0]));
+            EdaLayerId bottomLayerId = GetLayerId(Int32.Parse(layerNames[1]));
 
             ViaElement.ViaShape shape = ViaElement.ViaShape.Circle;
             string shapeName = node.AttributeAsString("shape");
@@ -531,7 +551,14 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                     break;
             }
 
-            return new ViaElement(topLayerId, bottomLayerId, position, size, drill, shape);
+            return new ViaElement { 
+                LayerSet = new EdaLayerSet(topLayerId, bottomLayerId), 
+                Position = position, 
+                OuterSize = size, 
+                InnerSize = size,
+                Drill = drill, 
+                Shape = shape 
+            };
         }
 
         /// <summary>
@@ -540,7 +567,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'TextElement' creat.</returns>
         /// 
-        private Element ParseTextNode(XmlNode node) {
+        private EdaElement ParseTextNode(XmlNode node) {
 
             string value = node.InnerText;
             if (value.StartsWith('>'))
@@ -550,11 +577,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             //
             int x = ParseNumber(node.AttributeAsString("x"));
             int y = ParseNumber(node.AttributeAsString("y"));
-            Point position = new Point(x, y);
+            EdaPoint position = new EdaPoint(x, y);
 
             // Obte l'angle de rotacio
             //
-            Angle rotation = Angle.Zero;
+            EdaAngle rotation = EdaAngle.Zero;
             if (node.AttributeExists("rot"))
                 rotation = ParseAngle(node.AttributeAsString("rot"));
 
@@ -566,10 +593,17 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             int thickness = 100000;
 
             int layerNum = node.AttributeAsInteger("layer");
-            var layerId = GetLayerId(layerNum);
-            var layerSet = new LayerSet(layerId);
+            var layerSet = new EdaLayerSet(GetLayerId(layerNum));
 
-            var element = new TextElement(layerSet, position, rotation, height, thickness, horizontalAlign, verticalAlign);
+            var element = new TextElement {
+                LayerSet = layerSet,
+                Position = position,
+                Rotation = rotation,
+                Height = height,
+                Thickness = thickness,
+                HorizontalAlign = horizontalAlign,
+                VerticalAlign = verticalAlign
+            };
             element.Value = value;
 
             return element;
@@ -581,17 +615,17 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'LineElement' o ArcElement' creat.</returns>
         /// 
-        private Element ParseWireNode(XmlNode node) {
+        private EdaElement ParseWireNode(XmlNode node) {
 
             int x1 = ParseNumber(node.AttributeAsString("x1"));
             int y1 = ParseNumber(node.AttributeAsString("y1"));
-            Point p1 = new Point(x1, y1);
+            EdaPoint p1 = new EdaPoint(x1, y1);
 
             int x2 = ParseNumber(node.AttributeAsString("x2"));
             int y2 = ParseNumber(node.AttributeAsString("y2"));
-            Point p2 = new Point(x2, y2);
+            EdaPoint p2 = new EdaPoint(x2, y2);
 
-            Angle angle = Angle.Zero;
+            EdaAngle angle = EdaAngle.Zero;
             if (node.AttributeExists("curve"))
                 angle = ParseAngle(node.AttributeAsString("curve"));
             LineElement.CapStyle lineCap = node.AttributeAsString("cap") == null ? LineElement.CapStyle.Round : LineElement.CapStyle.Flat;
@@ -601,13 +635,24 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
             int layerNum = node.AttributeAsInteger("layer");
             var layerId = GetLayerId(layerNum);
-            var layerSet = new LayerSet(layerId);
 
-            Element element;
+            EdaElement element;
             if (angle.IsZero)
-                element = new LineElement(layerSet, p1, p2, thickness, lineCap);
+                element = new LineElement {
+                    StartPosition = p1,
+                    EndPosition = p2,
+                    Thickness = thickness,
+                    LineCap = lineCap
+                };
             else
-                element = new ArcElement(layerSet, p1, p2, thickness, angle, lineCap);
+                element = new ArcElement {
+                    StartPosition = p1,
+                    EndPosition = p2,
+                    Thickness = thickness,
+                    Angle = angle,
+                    LineCap = lineCap
+                };
+            element.LayerSet.Add(layerId);
 
             return element;
         }
@@ -618,7 +663,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'RectangleElement' creat.</returns>
         /// 
-        private Element ParseRectangleNode(XmlNode node) {
+        private EdaElement ParseRectangleNode(XmlNode node) {
 
             // Obte la posicio i el tamany
             //
@@ -626,12 +671,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             int y1 = ParseNumber(node.AttributeAsString("y1"));
             int x2 = ParseNumber(node.AttributeAsString("x2"));
             int y2 = ParseNumber(node.AttributeAsString("y2"));
-            Point position = new Point((x1 + x2) / 2, (y1 + y2) / 2);
-            Size size = new Size(x2 - x1, y2 - y1);
+            var position = new EdaPoint((x1 + x2) / 2, (y1 + y2) / 2);
+            var size = new EdaSize(x2 - x1, y2 - y1);
 
             // Obte l'angle de rotacio
             //
-            Angle rotation = Angle.Zero;
+            var rotation = EdaAngle.Zero;
             if (node.AttributeExists("rot"))
                 rotation = ParseAngle(node.AttributeAsString("rot"));
 
@@ -641,11 +686,18 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             if (node.AttributeExists("width"))
                 thickness = ParseNumber(node.AttributeAsString("width"));
 
-            int layerNum = node.AttributeAsInteger("layer");
-            var layerId = GetLayerId(layerNum);
-            var layerSet = new LayerSet(layerId);
+            var layerNum = node.AttributeAsInteger("layer");
+            var layerSet = new EdaLayerSet(GetLayerId(layerNum));
 
-            return new RectangleElement(layerSet, position, size, Ratio.Zero, rotation, thickness, thickness == 0);
+            return new RectangleElement {
+                LayerSet = layerSet,
+                Position = position,
+                Size = size,
+                Roundness = EdaRatio.Zero,
+                Rotation = rotation,
+                Thickness = thickness,
+                Filled = thickness == 0
+            };
         }
 
         /// <summary>
@@ -654,13 +706,13 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'CircleElement' creat.</returns>
         /// 
-        private Element ParseCircleNode(XmlNode node) {
+        private EdaElement ParseCircleNode(XmlNode node) {
 
             // obte la posicio
             //
             int x = ParseNumber(node.AttributeAsString("x"));
             int y = ParseNumber(node.AttributeAsString("y"));
-            Point position = new Point(x, y);
+            var position = new EdaPoint(x, y);
 
             // Obte l'amplada de linia
             //
@@ -673,10 +725,15 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             int radius = ParseNumber(node.AttributeAsString("radius"));
 
             int layerNum = node.AttributeAsInteger("layer");
-            var layerId = GetLayerId(layerNum);
-            var layerSet = new LayerSet(layerId);
+            var layerSet = new EdaLayerSet(GetLayerId(layerNum));
 
-            return new CircleElement(layerSet, position, radius, thickness, thickness == 0);
+            return new CircleElement {
+                LayerSet = layerSet,
+                Position = position,
+                Radius = radius,
+                Thickness = thickness,
+                Filled = thickness == 0
+            };
         }
 
         /// <summary>
@@ -685,7 +742,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'RegionElement' creat.</returns>
         /// 
-        private Element ParsePolygonNode(XmlNode node) {
+        private EdaElement ParsePolygonNode(XmlNode node) {
 
             // Obte l'amplada de linia
             //
@@ -699,27 +756,34 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
             int layerNum = node.AttributeAsInteger("layer");
             var layerId = GetLayerId(layerNum);
-            var layerSet = new LayerSet(layerId);
+            var layerSet = new EdaLayerSet(layerId);
 
-            List<RegionElement.Segment> segments = new List<RegionElement.Segment>();
+            var segments = new List<EdaArcPoint>();
             foreach (XmlNode vertexNode in node.SelectNodes("vertex")) {
 
                 // Obte la posicio
                 //
                 int x = ParseNumber(vertexNode.AttributeAsString("x"));
                 int y = ParseNumber(vertexNode.AttributeAsString("y"));
-                Point vertex = new Point(x, y);
+                EdaPoint vertex = new EdaPoint(x, y);
 
                 // Obte la curvatura
                 //
-                Angle angle = Angle.Zero;
+                EdaAngle angle = EdaAngle.Zero;
                 if (vertexNode.AttributeExists("curve"))
                     angle = ParseAngle(vertexNode.AttributeAsString("curve"));
 
-                segments.Add(new RegionElement.Segment(vertex, angle));
+                segments.Add(new EdaArcPoint(vertex, angle));
             }
 
-            return new RegionElement(layerSet, thickness, true, clearance, segments);
+            var element = new RegionElement {
+                LayerSet = layerSet,
+                Thickness = thickness,
+                Filled = true,
+                Clearance = clearance,
+            };
+            element.AddSegments(segments);
+            return element;
         }
 
         /// <summary>
@@ -728,19 +792,24 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'HoleElement' creat.</returns>
         /// 
-        private Element ParseHoleNode(XmlNode node) {
+        private EdaElement ParseHoleNode(XmlNode node) {
 
             // obte la posicio
             //
             int x = ParseNumber(node.AttributeAsString("x"));
             int y = ParseNumber(node.AttributeAsString("y"));
-            var position = new Point(x, y);
+            var position = new EdaPoint(x, y);
 
             // Obte el diametre del forat
             //
             int drill = ParseNumber(node.AttributeAsString("drill"));
 
-            return new HoleElement(new LayerSet(LayerId.Holes), position, drill);
+            var element = new HoleElement {
+                Position = position,
+                Drill = drill
+            };
+            element.LayerSet.Add(EdaLayerId.Holes);
+            return element;
         }
 
         /// <summary>
@@ -749,7 +818,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'Part' creat.</returns>
         /// 
-        private Part ParseElementNode(XmlNode node) {
+        private EdaPart ParseElementNode(XmlNode node) {
 
             string name = node.AttributeAsString("name");
             string value = node.AttributeAsString("value");
@@ -762,11 +831,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             //
             int x = ParseNumber(node.AttributeAsString("x"));
             int y = ParseNumber(node.AttributeAsString("y"));
-            Point position = new Point(x, y);
+            EdaPoint position = new EdaPoint(x, y);
 
             // Obte l'angle de rotacio i la cara
             //
-            Angle rotation = Angle.Zero;
+            EdaAngle rotation = EdaAngle.Zero;
             bool flip = false;
             if (node.AttributeExists("rot")) {
                 string rot = node.AttributeAsString("rot");
@@ -776,13 +845,13 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 rotation = ParseAngle(rot);
             }
 
-            var part = new Part(GetComponent(componentKey), name, position, rotation, flip);
+            var part = new EdaPart(GetComponent(componentKey), name, position, rotation, flip);
 
             bool hasNameAttribute = false;
             bool hasValueAttribute = false;
             foreach (XmlNode attrNode in node.SelectNodes("attribute")) {
 
-                PartAttribute parameter = ParseAttributeNode(attrNode);
+                EdaPartAttribute parameter = ParseAttributeNode(attrNode);
 
                 // Inicialitza els valor per defecte dels parametres NAME i VALUE
                 //
@@ -797,24 +866,24 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
                 // Corrigeix perque la posicio sigui relativa al component
                 //
-                Point p = new Point(parameter.Position.X, parameter.Position.Y);
+                EdaPoint p = new EdaPoint(parameter.Position.X, parameter.Position.Y);
 
                 Transformation t = new Transformation();
                 t.Rotate(position, -rotation);
-                t.Translate(new Point(-position.X, -position.Y));
+                t.Translate(new EdaPoint(-position.X, -position.Y));
                 p = t.ApplyTo(p);
 
-                parameter.Position = new Point((int)p.X, (int)p.Y);
+                parameter.Position = new EdaPoint((int)p.X, (int)p.Y);
                 parameter.Rotation = parameter.Rotation - rotation;
 
                 part.AddAttribute(parameter);
             }
 
             if (!hasNameAttribute)
-                part.AddAttribute(new PartAttribute("NAME", name, true));
+                part.AddAttribute(new EdaPartAttribute("NAME", name, true));
 
             if (!hasValueAttribute)
-                part.AddAttribute(new PartAttribute("VALUE", value, true));
+                part.AddAttribute(new EdaPartAttribute("VALUE", value, true));
 
             return part;
         }
@@ -825,12 +894,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'PartAttribute' creat.</returns>
         /// 
-        private PartAttribute ParseAttributeNode(XmlNode node) {
+        private EdaPartAttribute ParseAttributeNode(XmlNode node) {
 
             string name = node.AttributeAsString("name");
             string value = node.AttributeAsString("value");
 
-            PartAttribute attribute = new PartAttribute(name, value);
+            EdaPartAttribute attribute = new EdaPartAttribute(name, value);
 
             attribute.IsVisible = node.AttributeAsString("display") != "off";
 
@@ -839,7 +908,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             if (node.AttributeExists("x")) {
                 int x = ParseNumber(node.AttributeAsString("x"));
                 int y = ParseNumber(node.AttributeAsString("y"));
-                attribute.Position = new Point(x, y);
+                attribute.Position = new EdaPoint(x, y);
             }
 
             // Obte l'angle de rotacio
@@ -936,7 +1005,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="name">El nom del component.</param>
         /// <returns>El component.</returns>
         /// 
-        private Component GetComponent(string name) {
+        private EdaComponent GetComponent(string name) {
 
             return componentDict[name];
         }
@@ -959,10 +1028,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="s">El text a convertir.</param>
         /// <returns>El valor obtingut.</returns>
         /// 
-        private static Ratio ParseRatio(string s) {
+        private static EdaRatio ParseRatio(string s) {
 
             double value = XmlConvert.ToDouble(s);
-            return Ratio.FromValue((int)(value * 10.0));
+            return EdaRatio.FromValue((int)(value * 10.0));
         }
 
         /// <summary>
@@ -972,7 +1041,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <returns>El valor obtingut.</returns>
         /// <remarks>L'angle pot portar un prefix, que cal descartar.</remarks>
         /// 
-        private static Angle ParseAngle(string s) {
+        private static EdaAngle ParseAngle(string s) {
 
             int index = 0;
             if (Char.IsLetter(s[index]))
@@ -981,7 +1050,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 index++;
 
             double value = XmlConvert.ToDouble(s.Substring(index));
-            return Angle.FromValue((int)(value * 100.0));
+            return EdaAngle.FromValue((int)(value * 100.0));
         }
 
         /// <summary>
@@ -1044,83 +1113,83 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="layerNum">Identificador de la capa.</param>
         /// <returns>L'etiqueta.</returns>
         /// 
-        private static LayerId GetLayerId(int layerNum) {
+        private static EdaLayerId GetLayerId(int layerNum) {
 
             switch (layerNum) {
                 case topLayerNum:
-                    return LayerId.TopCopper;
+                    return EdaLayerId.TopCopper;
 
                 case bottomLayerNum:
-                    return LayerId.BottomCopper;
+                    return EdaLayerId.BottomCopper;
 
                 case padsLayerNum:
-                    return LayerId.Pads;
+                    return EdaLayerId.Pads;
 
                 case viasLayerNum:
-                    return LayerId.Vias;
+                    return EdaLayerId.Vias;
 
                 case 19:
-                    return LayerId.Unrouted;
+                    return EdaLayerId.Unrouted;
 
                 case 20:
-                    return LayerId.Profile;
+                    return EdaLayerId.Profile;
 
                 case 21:
-                    return LayerId.TopPlace;              
+                    return EdaLayerId.TopPlace;
                 case 22:
-                    return LayerId.BottomPlace;
+                    return EdaLayerId.BottomPlace;
 
                 case 25:
-                    return LayerId.TopNames;
+                    return EdaLayerId.TopNames;
                 case 26:
-                    return LayerId.BottomNames;
+                    return EdaLayerId.BottomNames;
 
                 case 27:
-                    return LayerId.TopValues;
+                    return EdaLayerId.TopValues;
                 case 28:
-                    return LayerId.BottomValues;
+                    return EdaLayerId.BottomValues;
 
                 case 29:
-                    return LayerId.TopStop;                
+                    return EdaLayerId.TopStop;
                 case 30:
-                    return LayerId.BottomStop;
+                    return EdaLayerId.BottomStop;
 
                 case 31:
-                    return LayerId.TopCream;
+                    return EdaLayerId.TopCream;
                 case 32:
-                    return LayerId.BottomCream;
+                    return EdaLayerId.BottomCream;
 
                 case 35:
-                    return LayerId.TopGlue;
+                    return EdaLayerId.TopGlue;
                 case 36:
-                    return LayerId.BottomGlue;
+                    return EdaLayerId.BottomGlue;
 
                 case 39:
-                    return LayerId.TopKeepout;
+                    return EdaLayerId.TopKeepout;
                 case 40:
-                    return LayerId.BottomKeepout;
+                    return EdaLayerId.BottomKeepout;
 
                 case 41:
-                    return LayerId.TopRestrict;
+                    return EdaLayerId.TopRestrict;
                 case 42:
-                    return LayerId.BottomRestrict;
+                    return EdaLayerId.BottomRestrict;
 
                 case 43:
-                    return LayerId.ViaRestrict;
+                    return EdaLayerId.ViaRestrict;
 
                 case drillsLayerNum:
-                    return LayerId.Drills;
+                    return EdaLayerId.Drills;
 
                 case holesLayerNum:
-                    return LayerId.Holes;
+                    return EdaLayerId.Holes;
 
                 case 51:
-                    return LayerId.TopDocument;
+                    return EdaLayerId.TopDocument;
                 case 52:
-                    return LayerId.BottomDocument;
+                    return EdaLayerId.BottomDocument;
 
                 default:
-                    return LayerId.Get(String.Format("Unknown{0}", layerNum));
+                    return EdaLayerId.Get(String.Format("Unknown{0}", layerNum));
             }
         }
 

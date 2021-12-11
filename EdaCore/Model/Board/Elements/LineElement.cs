@@ -1,4 +1,5 @@
 ﻿using System;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
@@ -9,45 +10,17 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa una linia.
     /// </summary>
     /// 
-    public class LineElement : Element, IConectable {
+    public class LineElement : EdaElement, IConectable {
 
         public enum CapStyle {
             Round,
             Flat
         }
 
-        private Point _startPosition;
-        private Point _endPosition;
+        private EdaPoint _startPosition;
+        private EdaPoint _endPosition;
         private int _thickness;
         private CapStyle _lineCap = CapStyle.Round;
-
-        /// <summary>
-        /// Constructor de l'objecte.
-        /// </summary>
-        /// <param name="layerSet">El conjunt de capes.</param>
-        /// <param name="startPosition">La posicio inicial.</param>
-        /// <param name="endPosition">La posicio final.</param>
-        /// <param name="thickness">Amplada de linia.</param>
-        /// <param name="lineCap">Forma dels extrems de linia.</param>
-        /// 
-        public LineElement(LayerSet layerSet, Point startPosition, Point endPosition, int thickness, CapStyle lineCap) :
-            base(layerSet) {
-
-            if (thickness < 0)
-                throw new ArgumentOutOfRangeException(nameof(thickness));
-
-            _startPosition = startPosition;
-            _endPosition = endPosition;
-            _thickness = thickness;
-            _lineCap = lineCap;
-        }
-
-        /// <inheritdoc/>
-        /// 
-        public override Element Clone() {
-
-            return new LineElement(LayerSet, _startPosition, _endPosition, _thickness, _lineCap);
-        }
 
         /// <inheritdoc/>
         /// 
@@ -87,7 +60,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// Obte o asigna la posicio inicial.
         /// </summary>
         /// 
-        public Point StartPosition { 
+        public EdaPoint StartPosition {
             get => _startPosition;
             set => _startPosition = value;
         }
@@ -96,7 +69,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// Obte o asigna la posicio final.
         /// </summary>
         /// 
-        public Point EndPosition {
+        public EdaPoint EndPosition {
             get => _endPosition;
             set => _endPosition = value;
         }

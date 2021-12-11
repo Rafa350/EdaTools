@@ -1,7 +1,9 @@
 ﻿namespace EdaBoardViewer.Render {
 
     using System.Linq;
+
     using Avalonia.Media;
+
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
@@ -22,7 +24,7 @@
             //
             if (polygon.Points != null) {
 
-                Point[] points = polygon.Points.ToArray();
+                EdaPoint[] points = polygon.Points.ToArray();
 
                 gc.BeginFigure(points[0].ToPoint(), true);
                 for (int i = 1; i < points.Length; i++)

@@ -2,19 +2,20 @@
 
     using System;
     using System.Collections.Generic;
+
     using MikroPic.EdaTools.v1.Base.Geometry;
 
     public sealed class ConnectivityAnchor {
 
-        private Point position;
+        private EdaPoint position;
         private List<ConnectivityItem> items;
 
-        public ConnectivityAnchor(Point position) {
+        public ConnectivityAnchor(EdaPoint position) {
 
             this.position = position;
         }
 
-        public ConnectivityAnchor(Point position, IEnumerable<ConnectivityItem> items) {
+        public ConnectivityAnchor(EdaPoint position, IEnumerable<ConnectivityItem> items) {
 
             if (items == null)
                 throw new ArgumentNullException(nameof(items));
@@ -45,7 +46,7 @@
                 items = null;
         }
 
-        public void MoveTo(Point position) {
+        public void MoveTo(EdaPoint position) {
 
             this.position = position;
         }

@@ -4,8 +4,10 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Xml;
+using MikroPic.EdaTools.v1.Core.Model.IO;
 
 namespace MikroPic.EdaTools.v1.Cam.Model.IO {
 
@@ -150,12 +152,12 @@ namespace MikroPic.EdaTools.v1.Cam.Model.IO {
             string name = rd.AttributeAsString("name");
             string fileName = rd.AttributeAsString("output");
             string generatorName = rd.AttributeAsString("generator");
-            Point position = rd.AttributeExists("position") ?
-                XmlTypeParser.ParsePoint(rd.AttributeAsString("position")) :
-                new Point(0, 0);
-            Angle rotation = rd.AttributeExists("rotation") ?
-                XmlTypeParser.ParseAngle(rd.AttributeAsString("rotation")) :
-                Angle.Zero;
+            EdaPoint position = rd.AttributeExists("position") ?
+                EdaParser.ParsePoint(rd.AttributeAsString("position")) :
+                new EdaPoint(0, 0);
+            EdaAngle rotation = rd.AttributeExists("rotation") ?
+                EdaParser.ParseAngle(rd.AttributeAsString("rotation")) :
+                EdaAngle.Zero;
 
             IEnumerable<string> layers = null;
             IEnumerable<TargetOption> options = null;

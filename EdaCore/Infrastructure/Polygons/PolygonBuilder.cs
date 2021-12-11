@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Infrastructure.Polygons {
 
     using System;
+
     using MikroPic.EdaTools.v1.Base.Geometry;
 
     /// <summary>
@@ -22,16 +23,16 @@
         /// <param name="capRounded">True si els extrems son arrodonits.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static Point[] MakeLineTrace(Point start, Point end, int thickness, bool capRounded) {
+        public static EdaPoint[] MakeLineTrace(EdaPoint start, EdaPoint end, int thickness, bool capRounded) {
 
             int dx = end.X - start.X;
             int dy = end.Y - start.Y;
-            Angle angle = Angle.FromRadiants(Math.Atan2(dy, dx));
+            EdaAngle angle = EdaAngle.FromRadiants(Math.Atan2(dy, dx));
 
-            Point[] a1 = MakeArc(end, thickness / 2, angle + Angle.Deg270, Angle.Deg180);
-            Point[] a2 = MakeArc(start, thickness / 2, angle + Angle.Deg90, Angle.Deg180);
+            EdaPoint[] a1 = MakeArc(end, thickness / 2, angle + EdaAngle.Deg270, EdaAngle.Deg180);
+            EdaPoint[] a2 = MakeArc(start, thickness / 2, angle + EdaAngle.Deg90, EdaAngle.Deg180);
 
-            Point[] points = new Point[a1.Length + a2.Length];
+            EdaPoint[] points = new EdaPoint[a1.Length + a2.Length];
             a1.CopyTo(points, 0);
             a2.CopyTo(points, a1.Length);
 
@@ -49,15 +50,15 @@
         /// <param name="capRounded">True si els extrems son arrodonits.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static Point[] MakeArcTrace(Point center, int radius, Angle startAngle, Angle angle, int thickness, bool capRounded) {
+        public static EdaPoint[] MakeArcTrace(EdaPoint center, int radius, EdaAngle startAngle, EdaAngle angle, int thickness, bool capRounded) {
 
             int innerRadius = radius - (thickness / 2);
             int outerRadius = radius + (thickness / 2);
 
-            Point[] a1 = MakeArc(center, outerRadius, startAngle, angle);
-            Point[] a2 = MakeArc(center, innerRadius, startAngle + angle, -angle);
+            EdaPoint[] a1 = MakeArc(center, outerRadius, startAngle, angle);
+            EdaPoint[] a2 = MakeArc(center, innerRadius, startAngle + angle, -angle);
 
-            Point[] points = new Point[a1.Length + a2.Length];
+            EdaPoint[] points = new EdaPoint[a1.Length + a2.Length];
             a1.CopyTo(points, 0);
             a2.CopyTo(points, a1.Length);
 
@@ -71,9 +72,9 @@
         /// <param name="radius">Radi.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static Point[] MakeCircle(Point center, int radius) {
+        public static EdaPoint[] MakeCircle(EdaPoint center, int radius) {
 
-            return MakeRegularPolygon(circleFacets, center, radius, Angle.Zero);
+            return MakeRegularPolygon(circleFacets, center, radius, EdaAngle.Zero);
         }
 
         /// <summary>
@@ -86,7 +87,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static Point[] MakeRectangle(Point position, Size size, int radius, Angle rotation) {
+        public static EdaPoint[] MakeRectangle(EdaPoint position, EdaSize size, int radius, EdaAngle rotation) {
 
             int x = position.X;
             int y = position.Y;
@@ -103,26 +104,26 @@
 
             // Rectangle sense cantonades arrodonides
             //
-            Point[] points;
+            EdaPoint[] points;
             if (radius == 0) {
 
-                points = new Point[4];
-                points[0] = new Point(x + dx, y + dy);
-                points[1] = new Point(x - dx, y + dy);
-                points[2] = new Point(x - dx, y - dy);
-                points[3] = new Point(x + dx, y - dy);
+                points = new EdaPoint[4];
+                points[0] = new EdaPoint(x + dx, y + dy);
+                points[1] = new EdaPoint(x - dx, y + dy);
+                points[2] = new EdaPoint(x - dx, y - dy);
+                points[3] = new EdaPoint(x + dx, y - dy);
             }
 
             // Rectangle amb cantonades arrodonides
             //
             else {
 
-                Point[] a1 = MakeArc(new Point(x + dx, y + dy), radius, Angle.Zero, Angle.Deg90);
-                Point[] a2 = MakeArc(new Point(x - dx, y + dy), radius, Angle.Deg90, Angle.Deg90);
-                Point[] a3 = MakeArc(new Point(x - dx, y - dy), radius, Angle.Deg180, Angle.Deg90);
-                Point[] a4 = MakeArc(new Point(x + dx, y - dy), radius, Angle.Deg270, Angle.Deg90);
+                EdaPoint[] a1 = MakeArc(new EdaPoint(x + dx, y + dy), radius, EdaAngle.Zero, EdaAngle.Deg90);
+                EdaPoint[] a2 = MakeArc(new EdaPoint(x - dx, y + dy), radius, EdaAngle.Deg90, EdaAngle.Deg90);
+                EdaPoint[] a3 = MakeArc(new EdaPoint(x - dx, y - dy), radius, EdaAngle.Deg180, EdaAngle.Deg90);
+                EdaPoint[] a4 = MakeArc(new EdaPoint(x + dx, y - dy), radius, EdaAngle.Deg270, EdaAngle.Deg90);
 
-                points = new Point[a1.Length + a2.Length + a3.Length + a4.Length];
+                points = new EdaPoint[a1.Length + a2.Length + a3.Length + a4.Length];
                 a1.CopyTo(points, 0);
                 a2.CopyTo(points, a1.Length);
                 a3.CopyTo(points, a1.Length + a2.Length);
@@ -149,7 +150,7 @@
         /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static Point[] MakeCross(Point position, Size size, int thickness, Angle rotation) {
+        public static EdaPoint[] MakeCross(EdaPoint position, EdaSize size, int thickness, EdaAngle rotation) {
 
             int dx = size.Width / 2;
             int dy = size.Height / 2;
@@ -173,23 +174,23 @@
             int xMax = x + dx;
             int yMax = y + dy;
 
-            Point[] points = new Point[12];
+            EdaPoint[] points = new EdaPoint[12];
 
-            points[0] = new Point(xMax, y + dt);
-            points[1] = new Point(x + dt, y + dt);
-            points[2] = new Point(x + dt, yMax);
+            points[0] = new EdaPoint(xMax, y + dt);
+            points[1] = new EdaPoint(x + dt, y + dt);
+            points[2] = new EdaPoint(x + dt, yMax);
 
-            points[3] = new Point(x - dt, yMax);
-            points[4] = new Point(x - dt, y + dt);
-            points[5] = new Point(xMin, y + dt);
+            points[3] = new EdaPoint(x - dt, yMax);
+            points[4] = new EdaPoint(x - dt, y + dt);
+            points[5] = new EdaPoint(xMin, y + dt);
 
-            points[6] = new Point(xMin, y - dt);
-            points[7] = new Point(x - dt, y - dt);
-            points[8] = new Point(x - dt, yMin);
+            points[6] = new EdaPoint(xMin, y - dt);
+            points[7] = new EdaPoint(x - dt, y - dt);
+            points[8] = new EdaPoint(x - dt, yMin);
 
-            points[9] = new Point(x + dt, yMin);
-            points[10] = new Point(x + dt, y - dt);
-            points[11] = new Point(xMax, y - dt);
+            points[9] = new EdaPoint(x + dt, yMin);
+            points[10] = new EdaPoint(x + dt, y - dt);
+            points[11] = new EdaPoint(xMax, y - dt);
 
             // Si es una rotacio arbitraria, fa servir calcul amb matrius
             //
@@ -214,12 +215,12 @@
         /// coincideix amb en numero de segments.
         /// </returns>
         /// 
-        public static Point[] MakeRegularPolygon(int sides, Point position, int radius, Angle rotation) {
+        public static EdaPoint[] MakeRegularPolygon(int sides, EdaPoint position, int radius, EdaAngle rotation) {
 
             // Calcula el punt inicial
             //
-            double x = radius * Math.Cos(rotation.ToRadiants);
-            double y = radius * Math.Sin(rotation.ToRadiants);
+            double x = radius * Math.Cos(rotation.AsRadiants);
+            double y = radius * Math.Sin(rotation.AsRadiants);
 
             // Calcula els sinus i cosinus del gir a aplicar a cada iteracio
             //
@@ -229,13 +230,13 @@
 
             // Crea l'array de punts
             //
-            Point[] points = new Point[sides];
+            EdaPoint[] points = new EdaPoint[sides];
 
             // Ompla l'array amb els punts calculats.
             //
             for (int i = 0; i < sides; i++) {
 
-                points[i] = new Point(
+                points[i] = new EdaPoint(
                     (int)x + position.X,
                     (int)y + position.Y);
 
@@ -259,16 +260,16 @@
         /// el numero de segments mes un.
         /// </returns>
         /// 
-        public static Point[] MakeArc(Point center, int radius, Angle startAngle, Angle angle, bool discardLast = false) {
+        public static EdaPoint[] MakeArc(EdaPoint center, int radius, EdaAngle startAngle, EdaAngle angle, bool discardLast = false) {
 
             // Calcula el numero de segments
             //
-            int numSegments = (int)Math.Abs(Math.Floor((angle.ToDegrees * 32.0) / 360.0));
+            int numSegments = (int)Math.Abs(Math.Floor((angle.AsDegrees * 32.0) / 360.0));
             int numPoints = numSegments + (discardLast ? 0 : 1);
 
             // Calcula l'angle de cada segment
             //
-            double radSegment = angle.ToRadiants / numSegments;
+            double radSegment = angle.AsRadiants / numSegments;
 
             // Calcula el centre
             //
@@ -277,8 +278,8 @@
 
             // Calcula el punt inicial
             //
-            double x = radius * Math.Cos(startAngle.ToRadiants);
-            double y = radius * Math.Sin(startAngle.ToRadiants);
+            double x = radius * Math.Cos(startAngle.AsRadiants);
+            double y = radius * Math.Sin(startAngle.AsRadiants);
 
             // Calcula el sinus i el cosinus del gir a aplicar a cada iteracio
             //
@@ -287,11 +288,11 @@
 
             // Crea l'array de punts
             //
-            Point[] points = new Point[numPoints];
+            EdaPoint[] points = new EdaPoint[numPoints];
 
             for (int i = 0; i < numPoints; i++) {
 
-                points[i] = new Point((int)(x + cx), (int)(y + cy));
+                points[i] = new EdaPoint((int)(x + cx), (int)(y + cy));
 
                 double tx = x;
                 x = (cos * tx) - (sin * y);

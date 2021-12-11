@@ -1,8 +1,10 @@
 namespace EdaBoardViewer {
 
     using System;
+
     using Avalonia.Controls;
     using Avalonia.Controls.Templates;
+
     using EdaBoardViewer.ViewModels;
 
     public class ViewLocator : IDataTemplate {

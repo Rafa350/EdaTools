@@ -9,10 +9,6 @@
         private int _viaInnerSize;
         private int _viaDrill;
 
-        public SignalGroup() {
-
-        }
-
         public string Name {
             get => _name;
             set => _name = value;
@@ -33,7 +29,7 @@
             set => _viaOuterSize = value;
         }
 
-       public int ViaInnerSize {
+        public int ViaInnerSize {
             get => _viaInnerSize;
             set => _viaInnerSize = value;
         }

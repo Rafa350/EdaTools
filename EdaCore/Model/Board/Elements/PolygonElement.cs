@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
@@ -11,62 +12,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa una regio poligonal.
     /// </summary>
     /// 
-    public class PolygonElement : Element {
+    public class PolygonElement : EdaElement {
 
-        public sealed class Segment {
-
-            private Point _position;
-            private Angle _angle;
-
-            public Segment(Point position, Angle angle) {
-
-                _position = position;
-                _angle = angle;
-            }
-
-            public Point Position {
-                get => _position;
-                set => _position = value;
-            }
-
-            public Angle Angle {
-                get => _angle;
-                set => _angle = value;
-            }
-        }
-
-        private readonly List<Segment> _segments = new List<Segment>();
+        private readonly List<EdaArcPoint> _segments = new List<EdaArcPoint>();
         private int _thickness;
         private bool _filled;
-
-        /// <summary>
-        /// Constructor del objecte.
-        /// </summary>
-        /// <param name="layerSet">El conjunt de capes.</param>
-        /// <param name="thickness">Amplada de linia.</param>
-        /// <param name="filled">True si es ple.</param>
-        /// <param name="segments">Llista de segments.</param>
-        /// 
-        public PolygonElement(LayerSet layerSet, int thickness, bool filled, IEnumerable<Segment> segments = null) :
-            base(layerSet) {
-
-            if (thickness < 0)
-                throw new ArgumentOutOfRangeException(nameof(thickness));
-
-            _thickness = thickness;
-            _filled = filled;
-
-            if (segments != null)
-                foreach (var segment in segments)
-                    Add(segment);
-        }
-
-        /// <inheritdoc/>
-        /// 
-        public override Element Clone() {
-
-            return new PolygonElement(LayerSet, _thickness, _filled, _segments);
-        }
 
         /// <inheritdoc/>
         /// 
@@ -79,11 +29,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            var firstPoint = new Point();
-            var prevPoint = new Point();
-            var angle = Angle.Zero;
+            var firstPoint = new EdaPoint();
+            var prevPoint = new EdaPoint();
+            var angle = EdaAngle.Zero;
 
-            var points = new List<Point>();
+            var points = new List<EdaPoint>();
 
             bool first = true;
             foreach (var segment in _segments) {
@@ -103,23 +53,23 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 // Tram circular
                 //
                 else {
-                    Point center = ArcUtils.Center(prevPoint, segment.Position, angle);
+                    EdaPoint center = ArcUtils.Center(prevPoint, segment.Position, angle);
                     int radius = ArcUtils.Radius(prevPoint, segment.Position, angle);
-                    Angle startAngle = ArcUtils.StartAngle(prevPoint, center);
+                    EdaAngle startAngle = ArcUtils.StartAngle(prevPoint, center);
                     points.AddRange(PolygonBuilder.MakeArc(center, radius, startAngle, angle));
                 }
 
                 prevPoint = segment.Position;
-                angle = segment.Angle;
+                angle = segment.Arc;
             }
 
             if (angle.IsZero)
                 points.Add(firstPoint);
 
             else {
-                Point center = ArcUtils.Center(prevPoint, firstPoint, angle);
+                EdaPoint center = ArcUtils.Center(prevPoint, firstPoint, angle);
                 int radius = ArcUtils.Radius(prevPoint, firstPoint, angle);
-                Angle startAngle = ArcUtils.StartAngle(prevPoint, center);
+                EdaAngle startAngle = ArcUtils.StartAngle(prevPoint, center);
                 points.AddRange(PolygonBuilder.MakeArc(center, radius, startAngle, angle, false));
             }
 
@@ -146,34 +96,23 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// Afegeix un segment a la regio.
+        /// Afegeix un segment al poligon.
         /// </summary>
-        /// <param name="segment">El segment a afeigir.</param>
+        /// <param name="segment">El segment.</param>
         /// 
-        public void Add(Segment segment) {
+        public void AddSegment(EdaArcPoint segment) {
 
             _segments.Add(segment);
         }
 
         /// <summary>
-        /// Afegeix una linia a la regio.
+        /// Afegeix una diversos segments al poligon.
         /// </summary>
-        /// <param name="position">Vertex final de la linia</param>
+        /// <param name="segments">Els segments.</param>
         /// 
-        public void AddLine(Point position) {
+        public void AddSegments(IEnumerable<EdaArcPoint> segments) {
 
-            Add(new Segment(position, Angle.Zero));
-        }
-
-        /// <summary>
-        /// Afegeix un arc a la regio.
-        /// </summary>
-        /// <param name="position">Vertec final del arc.</param>
-        /// <param name="angle">Angle del arc.</param>
-        /// 
-        public void AddArc(Point position, Angle angle) {
-
-            Add(new Segment(position, angle));
+            _segments.AddRange(segments);
         }
 
         /// <summary>
@@ -200,15 +139,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// Obte la llista se segments.
+        /// La llista se segments.
         /// </summary>
         /// 
-        public IEnumerable<Segment> Segments =>
+        public IEnumerable<EdaArcPoint> Segments =>
             _segments;
 
         /// <inheritdoc/>
         /// 
-        public override ElementType ElementType => 
-            ElementType.Polygon; 
+        public override ElementType ElementType =>
+            ElementType.Polygon;
     }
 }

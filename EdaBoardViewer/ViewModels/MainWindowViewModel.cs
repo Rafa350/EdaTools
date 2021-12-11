@@ -2,9 +2,11 @@
 
     using System.Reactive;
     using System.Threading.Tasks;
+
     using Avalonia;
     using Avalonia.Controls;
     using Avalonia.Controls.ApplicationLifetimes;
+
     using ReactiveUI;
 
     public class MainWindowViewModel : ViewModelBase {

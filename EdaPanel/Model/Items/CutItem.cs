@@ -3,10 +3,10 @@
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Panel.Model;
 
-    public sealed class CutItem : PanelItem {
+    public sealed class CutItem : EdaPanelItem {
 
-        private Point _startPosition;
-        private Point _endPosition;
+        private EdaPoint _startPosition;
+        private EdaPoint _endPosition;
         private int _thickness;
         private int _margin;
         private int _cuts;
@@ -28,7 +28,7 @@
         /// <param name="holeDiameter">Diametre dels forats.</param>
         /// <param name="holeSpacing">Espai entre forats.</param>
         /// 
-        public CutItem(Point startPosition, Point endPosition, int thickness, int margin, int cuts, int cutSpacing, int holes, int holeDiameter, int holeSpacing) {
+        public CutItem(EdaPoint startPosition, EdaPoint endPosition, int thickness, int margin, int cuts, int cutSpacing, int holes, int holeDiameter, int holeSpacing) {
 
             _startPosition = startPosition;
             _endPosition = endPosition;
@@ -41,7 +41,7 @@
             _holeSpacing = holeSpacing;
         }
 
-        public override void AcceptVisitor(IPanelVisitor visitor) {
+        public override void AcceptVisitor(IEdaPanelVisitor visitor) {
 
             visitor.Visit(this);
         }
@@ -50,7 +50,7 @@
         /// Obte o asigna la posicio inicial.
         /// </summary>
         /// 
-        public Point StartPosition {
+        public EdaPoint StartPosition {
             get {
                 return _startPosition;
             }
@@ -63,7 +63,7 @@
         /// Obte o asigna la posicio final.
         /// </summary>
         /// 
-        public Point EndPosition {
+        public EdaPoint EndPosition {
             get {
                 return _endPosition;
             }

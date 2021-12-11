@@ -6,7 +6,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
     /// Objecte que representa un rectangle aliniat amb els eixos X i Y.
     /// </summary>
     /// 
-    public readonly struct Rect: IEquatable<Rect> {
+    public readonly struct Rect : IEquatable<Rect> {
 
         private readonly int _x;
         private readonly int _y;
@@ -40,7 +40,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="position">Posicio.</param>
         /// <param name="size">Tamany</param>
         /// 
-        public Rect(Point position, Size size) {
+        public Rect(EdaPoint position, EdaSize size) {
 
             _x = position.X;
             _y = position.Y;
@@ -67,7 +67,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// 
         public Rect Inflated(int dx, int dy) =>
             new Rect(_x - dx, _y - dy, _width + dx + dx, _height + dy + dy);
-        
+
         /// <summary>
         /// Obte la unio amb un altre rectangle
         /// </summary>
@@ -102,7 +102,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="other">L'altre rectangle.</param>
         /// <returns>True si son iguals.</returns>
         /// 
-        public bool Equals(Rect other) => 
+        public bool Equals(Rect other) =>
             (_x, _y, _width, _height) == (other._x, other._y, other._width, other._height);
 
         /// <summary>
@@ -114,10 +114,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         public override bool Equals(object obj) =>
             (obj is Rect other) && Equals(other);
 
-        public static bool operator ==(Rect r1, Rect r2) => 
-            r1.Equals(r2); 
+        public static bool operator ==(Rect r1, Rect r2) =>
+            r1.Equals(r2);
 
-        public static bool operator !=(Rect r1, Rect r2) => 
+        public static bool operator !=(Rect r1, Rect r2) =>
             !r1.Equals(r2);
 
         /// <summary>
@@ -132,15 +132,15 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// Obte la posicio del rectangle
         /// </summary>
         /// 
-        public Point Position => 
-            new Point(_x, _y);
+        public EdaPoint Position =>
+            new EdaPoint(_x, _y);
 
         /// <summary>
         /// Obte el tamany del rectangle
         /// </summary>
         /// 
-        public Size Size => 
-            new Size(_width, _height);
+        public EdaSize Size =>
+            new EdaSize(_width, _height);
 
         /// <summary>
         /// Obte la coordinada X
@@ -173,7 +173,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         public int Right =>
             _x + _width - 1;
 
-        public int Top => 
+        public int Top =>
             _y + _height - 1;
 
         /// <summary>

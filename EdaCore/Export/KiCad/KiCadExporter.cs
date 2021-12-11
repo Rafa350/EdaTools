@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Text;
+
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
@@ -9,14 +10,14 @@ using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 
 namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
 
-    public sealed class KiCadExporter: IExporter {
+    public sealed class KiCadExporter : IExporter {
 
-        private sealed class Visitor: DefaultBoardVisitor {
+        private sealed class Visitor : DefaultBoardVisitor {
 
             private const double _scale = 1000000.0;
             private readonly TextWriter _writer;
             private readonly Matrix2D _m = Matrix2D.CreateScale(1 / _scale, -1 / _scale);
-            private Component _currentComponent;
+            private EdaComponent _currentComponent;
 
             /// <summary>
             /// Contructor
@@ -33,7 +34,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// </summary>
             /// <param name="component">El component</param>
             /// 
-            public override void Visit(Component component) {
+            public override void Visit(EdaComponent component) {
 
                 var sb = new StringBuilder()
                     .AppendFormat("(module \"{0}\" (layer F.Cu) (tedit 0) ", component.Name)
@@ -76,7 +77,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// <param name="rectangle">El rectangle</param>
             /// 
             public override void Visit(RectangleElement rectangle) {
-                
+
                 var start = new Vector2D(
                     rectangle.Position.X - (rectangle.Size.Width / 2),
                     rectangle.Position.Y - (rectangle.Size.Height / 2)) * _m;
@@ -164,7 +165,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
 
                 var sb = new StringBuilder()
                     .AppendFormat("  (pad {0} smd roundrect ", pad.Name)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", position.X, position.Y, pad.Rotation.ToDegrees)
+                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", position.X, position.Y, pad.Rotation.AsDegrees)
                     .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", pad.Size.Width / _scale, pad.Size.Height / _scale)
                     .AppendFormat("(layers {0}) ", GetLayerNames(pad.LayerSet))
                     .AppendFormat(CultureInfo.InvariantCulture, "(roundrect_rratio {0}))", pad.Roundness.Value / 2000.0);
@@ -183,7 +184,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
 
                 var sb = new StringBuilder()
                     .AppendFormat("  (pad {0} thru_hole circle ", pad.Name)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", position.X, position.Y, pad.Rotation.ToDegrees)
+                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", position.X, position.Y, pad.Rotation.AsDegrees)
                     .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", pad.TopSize / _scale, pad.TopSize / _scale)
                     .AppendFormat(CultureInfo.InvariantCulture, "(drill {0}) ", pad.Drill / _scale)
                     .Append("(layers *.Cu *.Mask))");
@@ -205,7 +206,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                 _writer.WriteLine(sb);
             }
 
-            private string GetLayerNames(LayerSet layerSet) {
+            private string GetLayerNames(EdaLayerSet layerSet) {
 
                 var sb = new StringBuilder();
 
@@ -227,7 +228,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// <param name="layerSet">Conjunt de capes</param>
             /// <returns>Els noms de les capes</returns>
             /// 
-            private string GetLayerNames(LayerId layerId) {
+            private string GetLayerNames(EdaLayerId layerId) {
 
                 var layerName = layerId.ToString();
                 switch (layerName) {

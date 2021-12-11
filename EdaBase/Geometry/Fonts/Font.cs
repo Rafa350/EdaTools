@@ -82,7 +82,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Fonts {
                     string[] s = positionStr.Split(',');
                     int x = XmlConvert.ToInt32(s[0]);
                     int y = XmlConvert.ToInt32(s[1]);
-                    Point position = new Point(x, y);
+                    EdaPoint position = new EdaPoint(x, y);
 
                     switch (strokeNode.Name) {
                         case "moveTo":

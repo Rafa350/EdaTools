@@ -1,6 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons {
 
     using System.Collections.Generic;
+
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure;
 
@@ -148,7 +149,7 @@
 
         public static Polygon CreateFromSegments(IEnumerable<Segment> lines) {
 
-            Point[] points = Polygonizer.Poligonize(lines);
+            EdaPoint[] points = Polygonizer.Poligonize(lines);
             return points == null ? null : new Polygon(points);
         }
 
@@ -186,9 +187,9 @@
         private static Polygon ToPolygon(List<IntPoint> points) {
 
             IntPoint[] srcArray = points.ToArray();
-            Point[] dstArray = new Point[srcArray.Length];
+            EdaPoint[] dstArray = new EdaPoint[srcArray.Length];
             for (int i = 0; i < srcArray.Length; i++)
-                dstArray[i] = new Point((int)srcArray[i].X, (int)srcArray[i].Y);
+                dstArray[i] = new EdaPoint((int)srcArray[i].X, (int)srcArray[i].Y);
             return new Polygon(dstArray);
         }
 
@@ -200,11 +201,11 @@
         /// 
         private static Polygon ToPolygon(PolyNode polyNode) {
 
-            Point[] points;
+            EdaPoint[] points;
             if (polyNode.Contour.Count > 0) {
-                points = new Point[polyNode.Contour.Count];
+                points = new EdaPoint[polyNode.Contour.Count];
                 for (int i = 0; i < polyNode.Contour.Count; i++)
-                    points[i] = new Point((int)polyNode.Contour[i].X, (int)polyNode.Contour[i].Y);
+                    points[i] = new EdaPoint((int)polyNode.Contour[i].X, (int)polyNode.Contour[i].Y);
             }
             else
                 points = null;

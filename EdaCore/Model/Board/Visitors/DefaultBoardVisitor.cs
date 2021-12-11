@@ -10,16 +10,16 @@
     /// 
     public abstract class DefaultBoardVisitor : IBoardVisitor {
 
-        public virtual void Visit(Board board) {
+        public virtual void Visit(EdaBoard board) {
         }
 
         public virtual void Visit(Library library) {
         }
 
-        public virtual void Visit(Layer layer) {
+        public virtual void Visit(EdaLayer layer) {
         }
 
-        public virtual void Visit(Signal signal) {
+        public virtual void Visit(EdaSignal signal) {
         }
 
         public virtual void Visit(LineElement line) {
@@ -55,16 +55,16 @@
         public virtual void Visit(ViaElement via) {
         }
 
-        public virtual void Visit(Part part) {
+        public virtual void Visit(EdaPart part) {
         }
 
-        public virtual void Visit(Component block) {
+        public virtual void Visit(EdaComponent block) {
         }
 
-        public virtual void Visit(PartAttribute attribute) {
+        public virtual void Visit(EdaPartAttribute attribute) {
         }
 
-        public virtual void Visit(ComponentAttribute attribute) {
+        public virtual void Visit(EdaComponentAttribute attribute) {
         }
     }
 }

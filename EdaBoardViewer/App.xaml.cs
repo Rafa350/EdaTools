@@ -3,6 +3,7 @@
     using Avalonia;
     using Avalonia.Controls.ApplicationLifetimes;
     using Avalonia.Markup.Xaml;
+
     using EdaBoardViewer.ViewModels;
     using EdaBoardViewer.Views;
 

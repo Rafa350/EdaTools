@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+
 using NetSerializer.Descriptors;
 using NetSerializer.Storage;
 using NetSerializer.TypeSerializers;
@@ -11,7 +12,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers {
     /// Serialitzador per la clase 'LblLabel'
     /// </summary>
     /// 
-    public sealed class ComponentSerializer: ClassSerializer {
+    public sealed class ComponentSerializer : ClassSerializer {
 
         /// <inheritdoc/>
         /// 
@@ -23,7 +24,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers {
         /// 
         public override bool CanSerialize(Type type) {
 
-            return type == typeof(Component);
+            return type == typeof(EdaComponent);
         }
 
         /// <inheritdoc/>
@@ -44,7 +45,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers {
         /// 
         protected override void SerializeProperty(StorageWriter writer, object obj, PropertyDescriptor propertyDescriptor) {
 
-            var component = (Component) obj;
+            var component = (EdaComponent)obj;
             var name = propertyDescriptor.Name;
 
             if (name == "Name") {
@@ -53,15 +54,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers {
             }
 
             else if (name == "Elements") {
-                Element[] elements = component.HasElements ? component.Elements.ToArray() : null;
-                var serializer = GetSerializer(typeof(Element[]));
-                serializer.Serialize(writer, name, typeof(Element[]), elements);
+                EdaElement[] elements = component.HasElements ? component.Elements.ToArray() : null;
+                var serializer = GetSerializer(typeof(EdaElement[]));
+                serializer.Serialize(writer, name, typeof(EdaElement[]), elements);
             }
 
             else if (name == "Attributes") {
-                ComponentAttribute[] attributes = component.HasAttributes ? component.Attributes.ToArray() : null;
-                var serializer = GetSerializer(typeof(ComponentAttribute[]));
-                serializer.Serialize(writer, name, typeof(ComponentAttribute[]), attributes);
+                EdaComponentAttribute[] attributes = component.HasAttributes ? component.Attributes.ToArray() : null;
+                var serializer = GetSerializer(typeof(EdaComponentAttribute[]));
+                serializer.Serialize(writer, name, typeof(EdaComponentAttribute[]), attributes);
             }
 
             else
@@ -72,14 +73,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers {
         /// 
         protected override void DeserializeProperty(StorageReader reader, object obj, PropertyDescriptor propertyDescriptor) {
 
-            var component = (Component)obj;
+            var component = (EdaComponent)obj;
             var name = propertyDescriptor.Name;
 
             if (name == "Elements") {
-                var serializer = GetSerializer(typeof(Element[]));
-                serializer.Deserialize(reader, name, typeof(Element[]), out object elements);
+                var serializer = GetSerializer(typeof(EdaElement[]));
+                serializer.Deserialize(reader, name, typeof(EdaElement[]), out object elements);
                 if (elements != null)
-                    Array.ForEach((Element[])elements, item => component.AddElement(item));
+                    Array.ForEach((EdaElement[])elements, item => component.AddElement(item));
             }
 
             else

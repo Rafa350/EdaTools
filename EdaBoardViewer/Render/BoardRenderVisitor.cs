@@ -1,7 +1,9 @@
 ﻿namespace EdaBoardViewer.Render {
 
     using System.Collections.Generic;
+
     using Avalonia.Media;
+
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
     using MikroPic.EdaTools.v1.Base.Geometry.Utils;
@@ -13,19 +15,19 @@
     public sealed class BoardRenderVisitor : ElementVisitor {
 
         private readonly Color _background = Color.FromRgb(0x30, 0x30, 0x30);
-        private readonly Layer _layer;
+        private readonly EdaLayer _layer;
         private readonly VisualLayer _visualLayer;
         private readonly DrawingContext _context;
         private Font font;
 
-        public BoardRenderVisitor(Layer layer, VisualLayer visualLayer, DrawingContext context) {
+        public BoardRenderVisitor(EdaLayer layer, VisualLayer visualLayer, DrawingContext context) {
 
             _layer = layer;
             _visualLayer = visualLayer;
             _context = context;
         }
 
-        public override void Visit(Board board) {
+        public override void Visit(EdaBoard board) {
 
             base.Visit(board);
         }
@@ -106,14 +108,14 @@
             if (_visualLayer.IsVisible(Part, pad)) {
 
                 switch (_visualLayer.VisualMode) {
-                    case VisualMode.Element : {
+                    case VisualMode.Element: {
                         var brush = new SolidColorBrush(_visualLayer.Color);
                         var geometry = pad.GetPolygon(_layer.Side).ToGeometry();
                         _context.DrawGeometry(brush, null, geometry);
                     }
                     break;
 
-                case VisualMode.Drill: {
+                    case VisualMode.Drill: {
                         var drillBrush = new SolidColorBrush(_background);
                         var drillGeometry = pad.GetDrillPolygon().ToGeometry();
                         _context.DrawGeometry(drillBrush, null, drillGeometry);
@@ -156,7 +158,7 @@
                         font = Font.Load("font.xml");
 
                     var td = new TextDrawer(font);
-                    IEnumerable<GlyphTrace> glyphTraces = td.Draw(paa.Value, new Point(0, 0), paa.HorizontalAlign, paa.VerticalAlign, paa.Height);
+                    IEnumerable<GlyphTrace> glyphTraces = td.Draw(paa.Value, new EdaPoint(0, 0), paa.HorizontalAlign, paa.VerticalAlign, paa.Height);
 
                     var t = new Transformation();
                     //t.Scale(1, -1);
@@ -190,7 +192,7 @@
         }
 
         public override void Visit(RegionElement region) {
-    
+
             if (_visualLayer.IsVisible(Part, region)) {
 
                 var polygon = _layer.Function == LayerFunction.Signal ?
@@ -206,7 +208,7 @@
             }
         }
 
-        public override void Visit(Part part) {
+        public override void Visit(EdaPart part) {
 
             Transformation transformation = part.GetLocalTransformation();
             Matrix2D matrix = transformation.Matrix;

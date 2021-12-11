@@ -1,4 +1,5 @@
 ﻿using System;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
@@ -10,7 +11,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
 
         private Aperture _aperture = null;
         private Polarity _aperturePolarity = Polarity.Dark;
-        private Angle _apertureAngle = Angle.Zero;
+        private EdaAngle _apertureAngle = EdaAngle.Zero;
         private double _apertureScale = 0;
         private bool _apertureMirror = false;
         private InterpolationMode _interpolationMode = InterpolationMode.Unknown;
@@ -97,7 +98,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
         /// <param name="apertureAngle">El valor de l'angle en graus.</param>
         /// <returns>True si ha canviat l'estat.</returns>
         /// 
-        public bool SetApertureAngle(Angle apertureAngle) {
+        public bool SetApertureAngle(EdaAngle apertureAngle) {
 
             if (_apertureAngle != apertureAngle) {
                 _apertureAngle = apertureAngle;
@@ -147,56 +148,56 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
         /// Obte el modus d'interpolacio.
         /// </summary>
         /// 
-        public InterpolationMode InterpolationMode => 
+        public InterpolationMode InterpolationMode =>
             InterpolationMode;
 
         /// <summary>
         /// Obte la coordinada X de la posicio actual.
         /// </summary>
         /// 
-        public int X => 
+        public int X =>
             _x;
 
         /// <summary>
         /// Obte la coordinada Y de la posicio actual.
         /// </summary>
         /// 
-        public int Y => 
+        public int Y =>
             _y;
 
         /// <summary>
         /// Obte l'apertura seleccionada.
         /// </summary>
         /// 
-        public Aperture Aperture => 
+        public Aperture Aperture =>
             _aperture;
 
         /// <summary>
         /// Obte l'angle de l'apertura.
         /// </summary>
         /// 
-        public Angle ApertureAngle => 
+        public EdaAngle ApertureAngle =>
             _apertureAngle;
 
         /// <summary>
         /// Opte la polaritat de l'apertura.
         /// </summary>
         /// 
-        public Polarity AperturePolarity => 
+        public Polarity AperturePolarity =>
             _aperturePolarity;
 
         /// <summary>
         /// Opte la reflexio de l'apertura.
         /// </summary>
         /// 
-        public bool ApertureMirror => 
+        public bool ApertureMirror =>
             _apertureMirror;
 
         /// <summary>
         /// Obte l'escala de l'apertura.
         /// </summary>
         /// 
-        public double ApertureScale => 
+        public double ApertureScale =>
             _apertureScale;
     }
 }

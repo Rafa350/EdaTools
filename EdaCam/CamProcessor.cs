@@ -1,4 +1,5 @@
 ﻿using System;
+
 using MikroPic.EdaTools.v1.Cam.Generators;
 using MikroPic.EdaTools.v1.Cam.Generators.Gerber;
 using MikroPic.EdaTools.v1.Cam.Generators.Ipcd356;
@@ -31,7 +32,7 @@ namespace MikroPic.EdaTools.v1.Cam {
         /// <param name="targetName">Nom del target a procesar. Si es null, els procesa tots.</param>
         /// <param name="outputFolder">Carpeta de sortida.</param>
         /// 
-        public void Process(Board board, string targetName, string outputFolder) {
+        public void Process(EdaBoard board, string targetName, string outputFolder) {
 
             foreach (var target in _project.Targets) {
                 if ((targetName == null) || (target.Name == targetName)) {

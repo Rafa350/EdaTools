@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+
 using MikroPic.EdaTools.v1.Cam;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Cam.Model.IO;
@@ -69,7 +70,7 @@ namespace MikroPic.EdaTools.v1.CamTool {
                 }
 
                 Project project = LoadProject(projectPath);
-                Board board = LoadBoard(boardPath);
+                EdaBoard board = LoadBoard(boardPath);
                 ProcessProject(project, board, targetName, outputFolder);
 
                 if (pause)
@@ -127,7 +128,7 @@ namespace MikroPic.EdaTools.v1.CamTool {
         /// <param name="boardPath">La ruta de la placa.</param>
         /// <returns>La placa.</returns>
         /// 
-        private static Board LoadBoard(string boardPath) {
+        private static EdaBoard LoadBoard(string boardPath) {
 
             using (var stream = new FileStream(boardPath, FileMode.Open, FileAccess.Read, FileShare.None)) {
                 var reader = new BoardStreamReader(stream);
@@ -157,7 +158,7 @@ namespace MikroPic.EdaTools.v1.CamTool {
         /// <param name="targetName">El nom del target.</param>
         /// <param name="outputFolder">Carpeta de sortida.</param>
         /// 
-        private static void ProcessProject(Project project, Board board, string targetName, string outputFolder) {
+        private static void ProcessProject(Project project, EdaBoard board, string targetName, string outputFolder) {
 
             CamProcessor camProcessor = new CamProcessor(project);
             camProcessor.Process(board, targetName, outputFolder);

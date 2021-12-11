@@ -112,7 +112,7 @@
                                 Next();
                                 type = TokenType.Word;
                             }
-                            else 
+                            else
                                 Next();
                             break;
                     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
@@ -45,7 +46,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="outputFolder">Carpeta de sortida.</param>
         /// <param name="options">Options.</param>
         /// 
-        public override void Generate(Board board, string outputFolder, GeneratorOptions options) {
+        public override void Generate(EdaBoard board, string outputFolder, GeneratorOptions options) {
 
             if (board == null)
                 throw new ArgumentNullException(nameof(board));
@@ -98,10 +99,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="apertures">El diccionari a preparar.</param>
         /// <param name="board">La placa a procesar.</param>
         /// 
-        private void PrepareApertures(ApertureDictionary apertures, Board board) {
+        private void PrepareApertures(ApertureDictionary apertures, EdaBoard board) {
 
             foreach (var name in Target.LayerNames) {
-                var visitor = new ApertureCreatorVisitor(LayerId.Get(name), apertures);
+                var visitor = new ApertureCreatorVisitor(EdaLayerId.Get(name), apertures);
                 board.AcceptVisitor(visitor);
             }
         }
@@ -216,11 +217,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="board">La placa.</param>
         /// <param name="apertures">El diccionari d'apertures.</param>
         /// 
-        private void GenerateRegions(GerberBuilder gb, Board board, ApertureDictionary apertures) {
+        private void GenerateRegions(GerberBuilder gb, EdaBoard board, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN POLYGONS");
             foreach (var name in Target.LayerNames) {
-                var visitor = new RegionGeneratorVisitor(gb, LayerId.Get(name), apertures);
+                var visitor = new RegionGeneratorVisitor(gb, EdaLayerId.Get(name), apertures);
                 visitor.Visit(board);
             }
             gb.Comment("END POLYGONS");
@@ -233,11 +234,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="board">La placa.</param>
         /// <param name="apertures">El diccionari d'apertures.</param>
         /// 
-        private void GenerateImage(GerberBuilder gb, Board board, ApertureDictionary apertures) {
+        private void GenerateImage(GerberBuilder gb, EdaBoard board, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
             foreach (var name in Target.LayerNames) {
-                var visitor = new ImageGeneratorVisitor(gb, LayerId.Get(name), apertures);
+                var visitor = new ImageGeneratorVisitor(gb, EdaLayerId.Get(name), apertures);
                 board.AcceptVisitor(visitor);
             }
             gb.Comment("END IMAGE");
@@ -249,7 +250,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// 
         private sealed class ApertureCreatorVisitor : ElementVisitor {
 
-            private readonly LayerId _layerId;
+            private readonly EdaLayerId _layerId;
             private readonly ApertureDictionary _apertures;
 
             /// <summary>
@@ -258,7 +259,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// <param name="layerId">El identificador de la capa a procesar.</param>
             /// <param name="apertures">El diccionari d'apertures.</param>
             /// 
-            public ApertureCreatorVisitor(LayerId layerId, ApertureDictionary apertures) {
+            public ApertureCreatorVisitor(EdaLayerId layerId, ApertureDictionary apertures) {
 
                 _layerId = layerId;
                 _apertures = apertures;
@@ -298,7 +299,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     // Si es ple, es 'flashea'
                     //
                     if (rectangle.Filled) {
-                        Angle rotation = rectangle.Rotation + (Part == null ? Angle.Zero : Part.Rotation);
+                        EdaAngle rotation = rectangle.Rotation + (Part == null ? EdaAngle.Zero : Part.Rotation);
                         _apertures.DefineRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotation);
                     }
 
@@ -355,11 +356,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                             break;
 
                         case ViaElement.ViaShape.Square:
-                            _apertures.DefineRectangleAperture(via.OuterSize, via.OuterSize, Angle.Zero);
+                            _apertures.DefineRectangleAperture(via.OuterSize, via.OuterSize, EdaAngle.Zero);
                             break;
 
                         case ViaElement.ViaShape.Octagon:
-                            _apertures.DefineOctagonAperture(via.OuterSize, Angle.Zero);
+                            _apertures.DefineOctagonAperture(via.OuterSize, EdaAngle.Zero);
                             break;
                     }
             }
@@ -372,7 +373,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             public override void Visit(ThPadElement pad) {
 
                 if (CanVisit(pad)) {
-                    Angle rotation = pad.Rotation;
+                    EdaAngle rotation = pad.Rotation;
                     if (Part != null)
                         rotation += Part.Rotation;
                     switch (pad.Shape) {
@@ -403,7 +404,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             public override void Visit(SmdPadElement pad) {
 
                 if (CanVisit(pad)) {
-                    Angle rotation = pad.Rotation;
+                    EdaAngle rotation = pad.Rotation;
                     if (Part != null)
                         rotation += Part.Rotation;
                     if (pad.Roundness.IsZero)
@@ -428,7 +429,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     _apertures.DefineCircleAperture(region.Thickness);
             }
 
-            private bool CanVisit(Element element) {
+            private bool CanVisit(EdaElement element) {
 
                 return element.IsOnLayer(_layerId);
             }
@@ -440,10 +441,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// 
         private sealed class ImageGeneratorVisitor : ElementVisitor {
 
-            private readonly LayerId _layerId;
+            private readonly EdaLayerId _layerId;
             private readonly GerberBuilder _gb;
             private readonly ApertureDictionary _apertures;
-            private Part _currentPart;
+            private EdaPart _currentPart;
 
             /// <summary>
             /// Constructor del objecte.
@@ -452,7 +453,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// <param name="layerId">El identificador de la capa a procesar.</param>
             /// <param name="apertures">Diccionari d'apertures.</param>
             /// 
-            public ImageGeneratorVisitor(GerberBuilder gb, LayerId layerId, ApertureDictionary apertures) {
+            public ImageGeneratorVisitor(GerberBuilder gb, EdaLayerId layerId, ApertureDictionary apertures) {
 
                 _gb = gb;
                 _layerId = layerId;
@@ -460,7 +461,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 _currentPart = null;
             }
 
-            public override void Visit(Part part) {
+            public override void Visit(EdaPart part) {
 
                 var savedPart = _currentPart;
                 _currentPart = part;
@@ -483,8 +484,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                     // Calcula les coordinades, mesures, rotacions, etc
                     //
-                    Point startPosition = line.StartPosition;
-                    Point endPosition = line.EndPosition;
+                    EdaPoint startPosition = line.StartPosition;
+                    EdaPoint endPosition = line.EndPosition;
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
                         startPosition = t.ApplyTo(startPosition);
@@ -514,9 +515,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                     // Calcula les coordinades, mesures, rotacions, etc
                     //
-                    Point startPosition = arc.StartPosition;
-                    Point endPosition = arc.EndPosition;
-                    Point center = arc.Center;
+                    EdaPoint startPosition = arc.StartPosition;
+                    EdaPoint endPosition = arc.EndPosition;
+                    EdaPoint center = arc.Center;
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
                         startPosition = t.ApplyTo(startPosition);
@@ -551,8 +552,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                         // Calcula les coordinades, mesures, rotacions, etc
                         //
-                        Point position = rectangle.Position;
-                        Angle rotation = rectangle.Rotation;
+                        EdaPoint position = rectangle.Position;
+                        EdaAngle rotation = rectangle.Rotation;
                         if (Part != null) {
                             Transformation t = Part.GetLocalTransformation();
                             position = t.ApplyTo(position);
@@ -576,9 +577,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                         // Obte el poligon
                         //
-                        Layer layer = Board.GetLayer(_layerId);
+                        EdaLayer layer = Board.GetLayer(_layerId);
                         Polygon polygon = rectangle.GetPolygon(layer.Side);
-                        Point[] points = polygon.ClonePoints();
+                        EdaPoint[] points = polygon.ClonePoints();
 
                         if (Part != null) {
                             Transformation t = Part.GetLocalTransformation();
@@ -606,7 +607,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                         // Calcula les coordinades, mesures, rotacions, etc
                         //
-                        Point position = circle.Position;
+                        EdaPoint position = circle.Position;
                         if (Part != null) {
                             Transformation t = Part.GetLocalTransformation();
                             position = t.ApplyTo(position);
@@ -630,9 +631,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                         // Obte el poligon
                         //
-                        Layer layer = Board.GetLayer(_layerId);
+                        EdaLayer layer = Board.GetLayer(_layerId);
                         Polygon polygon = circle.GetPolygon(layer.Side);
-                        Point[] points = polygon.ClonePoints();
+                        EdaPoint[] points = polygon.ClonePoints();
 
                         if (Part != null) {
                             Transformation t = Part.GetLocalTransformation();
@@ -662,7 +663,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     GerberTextDrawer dr = new GerberTextDrawer(font, _gb);
 
                     PartAttributeAdapter paa = new PartAttributeAdapter(Part, text);
-                    Point position = paa.Position;
+                    EdaPoint position = paa.Position;
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
                         position = t.ApplyTo(position);
@@ -691,11 +692,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                             break;
 
                         case ViaElement.ViaShape.Square:
-                            ap = _apertures.GetRectangleAperture(via.OuterSize, via.OuterSize, Angle.Zero);
+                            ap = _apertures.GetRectangleAperture(via.OuterSize, via.OuterSize, EdaAngle.Zero);
                             break;
 
                         case ViaElement.ViaShape.Octagon:
-                            ap = _apertures.GetOctagonAperture(via.OuterSize, Angle.Zero);
+                            ap = _apertures.GetOctagonAperture(via.OuterSize, EdaAngle.Zero);
                             break;
                     }
 
@@ -717,8 +718,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                     // Calcula les coordinades, mesures, rotacions, etc
                     //
-                    Point position = pad.Position;
-                    Angle rotation = pad.Rotation;
+                    EdaPoint position = pad.Position;
+                    EdaAngle rotation = pad.Rotation;
                     if (Part != null) {
                         rotation += Part.Rotation;
                         Transformation t = Part.GetLocalTransformation();
@@ -765,8 +766,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                     // Calcula les coordinades, mesures, rotacions, etc
                     //
-                    Point position = pad.Position;
-                    Angle rotation = pad.Rotation;
+                    EdaPoint position = pad.Position;
+                    EdaAngle rotation = pad.Rotation;
                     if (Part != null) {
                         rotation += Part.Rotation;
                         Transformation t = Part.GetLocalTransformation();
@@ -791,7 +792,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 }
             }
 
-            private bool CanVisit(Element element) {
+            private bool CanVisit(EdaElement element) {
 
                 return element.IsOnLayer(_layerId);
             }
@@ -810,7 +811,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 this.gb = gb;
             }
 
-            protected override void Trace(Point position, bool stroke, bool first) {
+            protected override void Trace(EdaPoint position, bool stroke, bool first) {
 
                 if (first || !stroke)
                     gb.MoveTo(position);
@@ -825,7 +826,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         private sealed class RegionGeneratorVisitor : ElementVisitor {
 
             private readonly GerberBuilder _gb;
-            private readonly LayerId _layerId;
+            private readonly EdaLayerId _layerId;
             private readonly ApertureDictionary _apertures;
 
             /// <summary>
@@ -836,7 +837,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// <param name="layer">La capa a procesar.</param>
             /// <param name="apertures">Diccionari d'apertures.</param>
             /// 
-            public RegionGeneratorVisitor(GerberBuilder gb, LayerId layerId, ApertureDictionary apertures) {
+            public RegionGeneratorVisitor(GerberBuilder gb, EdaLayerId layerId, ApertureDictionary apertures) {
 
                 this._gb = gb;
                 _layerId = layerId;
@@ -905,7 +906,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         DrawPolygon(child, level + 1, thickness);
             }
 
-            private bool CanVisit(Element element) {
+            private bool CanVisit(EdaElement element) {
 
                 return element.IsOnLayer(_layerId);
             }

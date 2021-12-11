@@ -1,36 +1,32 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Geometry {
 
-    // ********************
-    // TODO: Opcio per que no sigui inmutable
-    // ********************
-
     public readonly struct Segment {
 
-        private readonly Point start;
-        private readonly Point end;
+        private readonly EdaPoint _start;
+        private readonly EdaPoint _end;
+        private readonly EdaAngle _angle;
 
-        public Segment(Point start, Point end) {
+        public Segment(EdaPoint start, EdaPoint end) {
 
-            this.start = start;
-            this.end = end;
+            _start = start;
+            _end = end;
+            _angle = EdaAngle.Zero;
         }
 
-        public Segment(Point start, int length, Angle angle) {
+        public Segment(EdaPoint start, int length, EdaAngle angle) {
 
-            this.start = start;
-            this.end = start;
+            _start = start;
+            _end = start;
+            _angle = angle;
         }
 
-        public Point Start {
-            get {
-                return start;
-            }
-        }
+        public EdaPoint Start =>
+            _start;
 
-        public Point End {
-            get {
-                return end;
-            }
-        }
+        public EdaPoint End =>
+            _end;
+
+        public EdaAngle Angle =>
+            _angle;
     }
 }

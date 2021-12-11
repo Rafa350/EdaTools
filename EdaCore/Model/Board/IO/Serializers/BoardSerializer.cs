@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+
 using NetSerializer.Descriptors;
 using NetSerializer.Storage;
 using NetSerializer.TypeSerializers;
@@ -11,7 +12,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers {
     /// Serialitzador per la clase 'LblLabel'
     /// </summary>
     /// 
-    public sealed class BoardSerializer: ClassSerializer {
+    public sealed class BoardSerializer : ClassSerializer {
 
         /// <inheritdoc/>
         /// 
@@ -23,7 +24,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers {
         /// 
         public override bool CanSerialize(Type type) {
 
-            return type == typeof(Board);
+            return type == typeof(EdaBoard);
         }
 
         /// <inheritdoc/>
@@ -45,31 +46,31 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers {
         /// 
         protected override void SerializeProperty(StorageWriter writer, object obj, PropertyDescriptor propertyDescriptor) {
 
-            var board = (Board) obj;
+            var board = (EdaBoard)obj;
             var name = propertyDescriptor.Name;
 
             if (name == "Layers") {
-                Layer[] layers = board.HasLayers ? board.Layers.ToArray() : null;
-                var serializer = GetSerializer(typeof(LayerId[]));
-                serializer.Serialize(writer, name, typeof(LayerId[]), layers);
+                EdaLayer[] layers = board.HasLayers ? board.Layers.ToArray() : null;
+                var serializer = GetSerializer(typeof(EdaLayerId[]));
+                serializer.Serialize(writer, name, typeof(EdaLayerId[]), layers);
             }
 
             else if (name == "Components") {
-                Component[] components = board.HasComponents ? board.Components.ToArray() : null;
-                var serializer = GetSerializer(typeof(Component[]));
-                serializer.Serialize(writer, name, typeof(Component[]), components);
+                EdaComponent[] components = board.HasComponents ? board.Components.ToArray() : null;
+                var serializer = GetSerializer(typeof(EdaComponent[]));
+                serializer.Serialize(writer, name, typeof(EdaComponent[]), components);
             }
 
             else if (name == "Elements") {
-                Element[] elements = board.HasElements ? board.Elements.ToArray() : null;
-                var serializer = GetSerializer(typeof(Element[]));
-                serializer.Serialize(writer, name, typeof(Element[]), elements);
+                EdaElement[] elements = board.HasElements ? board.Elements.ToArray() : null;
+                var serializer = GetSerializer(typeof(EdaElement[]));
+                serializer.Serialize(writer, name, typeof(EdaElement[]), elements);
             }
 
             else if (name == "Parts") {
-                Part[] parts = board.HasParts ? board.Parts.ToArray() : null;
-                var serializer = GetSerializer(typeof(Part[]));
-                serializer.Serialize(writer, name, typeof(Part[]), parts);
+                EdaPart[] parts = board.HasParts ? board.Parts.ToArray() : null;
+                var serializer = GetSerializer(typeof(EdaPart[]));
+                serializer.Serialize(writer, name, typeof(EdaPart[]), parts);
             }
 
             else
@@ -80,14 +81,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers {
         /// 
         protected override void DeserializeProperty(StorageReader reader, object obj, PropertyDescriptor propertyDescriptor) {
 
-            var board = (Board)obj;
+            var board = (EdaBoard)obj;
             var name = propertyDescriptor.Name;
 
             if (name == "Components") {
-                var serializer = GetSerializer(typeof(Component[]));
-                serializer.Deserialize(reader, name, typeof(Component[]), out object components);
+                var serializer = GetSerializer(typeof(EdaComponent[]));
+                serializer.Deserialize(reader, name, typeof(EdaComponent[]), out object components);
                 if (components != null)
-                    Array.ForEach((Component[])components, item => board.AddComponent(item));
+                    Array.ForEach((EdaComponent[])components, item => board.AddComponent(item));
             }
 
             else

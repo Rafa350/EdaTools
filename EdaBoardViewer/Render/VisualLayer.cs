@@ -1,6 +1,7 @@
 ﻿namespace EdaBoardViewer.Render {
 
     using Avalonia.Media;
+
     using MikroPic.EdaTools.v1.Core.Model.Board;
 
     public enum VisualMode {
@@ -11,7 +12,7 @@
 
     public sealed class VisualLayer {
 
-        private readonly LayerId[] _layerIds;
+        private readonly EdaLayerId[] _layerIds;
         private readonly ElementType[] _elementTypes;
         private readonly string _name;
         private readonly VisualMode _visualMode;
@@ -28,7 +29,7 @@
         /// <param name="visualMode">Modus de visualitzacio.</param>
         /// <param name="color">Color.</param>
         /// 
-        public VisualLayer(string name, LayerId[] layerIds, ElementType[] elementTypes, bool visible, VisualMode visualMode, Color color) {
+        public VisualLayer(string name, EdaLayerId[] layerIds, ElementType[] elementTypes, bool visible, VisualMode visualMode, Color color) {
 
             _name = name;
             _layerIds = layerIds;
@@ -42,7 +43,7 @@
         /// Obte el nom de la capa
         /// </summary>
         /// 
-        public string Name => 
+        public string Name =>
             _name;
 
         /// <summary>
@@ -52,15 +53,15 @@
         /// <param name="element">L'element a comprobar.</param>
         /// <returns>True si es visible, false en cas contrari.</returns>
         /// 
-        public bool IsVisible(Part part, Element element) {
-            
+        public bool IsVisible(EdaPart part, EdaElement element) {
+
             // Seleccio per capa
             //
             bool layerOk = false;
             if (_layerIds == null)
                 layerOk = true;
             else
-                foreach (var layerId in _layerIds) { 
+                foreach (var layerId in _layerIds) {
                     if (element.IsOnLayer(((part != null) && part.IsFlipped) ? layerId.Flip() : layerId)) {
                         layerOk = true;
                         break;
@@ -87,7 +88,7 @@
         /// Obte la llista de capes de la placa.
         /// </summary>
         /// 
-        public LayerId[] LayerIds => 
+        public EdaLayerId[] LayerIds =>
             _layerIds;
 
         /// <summary>
@@ -101,7 +102,7 @@
         /// Obte el modus de visualitzacio.
         /// </summary>
         /// 
-        public VisualMode VisualMode => 
+        public VisualMode VisualMode =>
             _visualMode;
 
         /// <summary>
