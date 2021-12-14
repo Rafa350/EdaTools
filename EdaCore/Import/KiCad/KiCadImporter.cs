@@ -14,7 +14,7 @@ using MikroPic.EdaTools.v1.Core.Model.Net;
 
 namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
-    public sealed class KiCadImporter : IImporter {
+    public sealed class KiCadImporter : IEdaImporter {
 
         private const double _scale = 1000000.0;
         private readonly Matrix2D _m = Matrix2D.CreateScale(_scale, -_scale);
@@ -39,7 +39,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
         /// <inheritdoc/>
         /// 
-        public Library ReadLibrary(string fileName) {
+        public EdaLibrary ReadLibrary(string fileName) {
 
             var sb = new StringBuilder();
             sb.Append('(');
@@ -84,7 +84,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 var tree = parser.Parse(source);
 
                 var libraryName = componentName.Split(':')[0];
-                var library = new Library(libraryName);
+                var library = new EdaLibrary(libraryName);
                 ProcessModule(tree, tree.Root as SBranch, library);
 
                 board.AddComponents(library.Components);
@@ -169,9 +169,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <param name="libraryName">El nom de la llibreria.</param>
         /// <returns>La llibreria.</returns>
         /// 
-        private Library ProcessLibrary(STree tree, string libraryName) {
+        private EdaLibrary ProcessLibrary(STree tree, string libraryName) {
 
-            var library = new Library(libraryName);
+            var library = new EdaLibrary(libraryName);
 
             foreach (var childNode in (tree.Root as SBranch).Nodes.OfType<SBranch>())
                 ProcessModule(tree, childNode, library);
@@ -264,11 +264,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <param name="node">El node.</param>
         /// <param name="library">La llibreria.</param>
         /// 
-        private void ProcessModule(STree tree, SBranch node, Library library) {
+        private void ProcessModule(STree tree, SBranch node, EdaLibrary library) {
 
             string name = tree.ValueAsString(node[1]);
 
-            var component = new EdaComponent(String.Format("{0}:{1}", library.Name, name));
+            var component = new EdaComponent();
+            component.Name = String.Format("{0}:{1}", library.Name, name);
 
             foreach (var childNode in node.Nodes.OfType<SBranch>()) {
                 switch (tree.GetBranchName(childNode)) {
@@ -341,7 +342,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                             break;
 
                         case "reference":
-                            attribute = new EdaPartAttribute("NAME", attrValue, attrVisible);
+                            attribute = new EdaPartAttribute("NAME", "{%name}", attrVisible);
                             partName = attrValue;
                             break;
 
@@ -359,7 +360,13 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 }
             }
 
-            var part = new EdaPart(component, partName, position, rotation, side == BoardSide.Bottom);
+            var part = new EdaPart { 
+                Component = component, 
+                Name = partName, 
+                Position = position, 
+                Rotation = rotation, 
+                Flip = side == BoardSide.Bottom 
+            };
             if (attributes != null)
                 part.AddAttributes(attributes);
 
@@ -710,8 +717,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 Thickness = thickness,
                 Filled = true,
                 Clearance = clearance,
+                Segments = segments
             };
-            element.AddSegments(segments);
             board.AddElement(element);
 
             var netNode = tree.SelectBranch(node, "net");

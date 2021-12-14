@@ -2,7 +2,7 @@
 
 namespace MikroPic.EdaTools.v1.Core.Export {
 
-    public interface IExporter {
+    public interface IEdaExporter {
 
         /// <summary>
         /// Escriu una llibreria en un fitxer
@@ -10,6 +10,6 @@ namespace MikroPic.EdaTools.v1.Core.Export {
         /// <param name="targetPath">Destinacio.</param>
         /// <param name="library">La llibraria.</param>
         /// 
-        void WriteLibrary(string targetPath, Library library);
+        void WriteLibrary(string targetPath, EdaLibrary library);
     }
 }

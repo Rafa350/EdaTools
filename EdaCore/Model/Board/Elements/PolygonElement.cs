@@ -14,13 +14,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// 
     public class PolygonElement : EdaElement {
 
-        private readonly List<EdaArcPoint> _segments = new List<EdaArcPoint>();
+        private IEnumerable<EdaArcPoint> _segments;
         private int _thickness;
         private bool _filled;
 
         /// <inheritdoc/>
         /// 
-        public override void AcceptVisitor(IBoardVisitor visitor) {
+        public override void AcceptVisitor(IEdaBoardVisitor visitor) {
 
             visitor.Visit(this);
         }
@@ -29,90 +29,85 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            var firstPoint = new EdaPoint();
-            var prevPoint = new EdaPoint();
-            var angle = EdaAngle.Zero;
-
-            var points = new List<EdaPoint>();
-
-            bool first = true;
-            foreach (var segment in _segments) {
-
-                // Guarda el primer punt, per tancar el poligon
-                //
-                if (first) {
-                    first = false;
-                    firstPoint = segment.Position;
-                }
-
-                // Tram recte
-                //
-                if (angle.IsZero)
-                    points.Add(segment.Position);
-
-                // Tram circular
-                //
-                else {
-                    EdaPoint center = ArcUtils.Center(prevPoint, segment.Position, angle);
-                    int radius = ArcUtils.Radius(prevPoint, segment.Position, angle);
-                    EdaAngle startAngle = ArcUtils.StartAngle(prevPoint, center);
-                    points.AddRange(PolygonBuilder.MakeArc(center, radius, startAngle, angle));
-                }
-
-                prevPoint = segment.Position;
-                angle = segment.Arc;
-            }
-
-            if (angle.IsZero)
-                points.Add(firstPoint);
+            if (_segments == null)
+                return null;
 
             else {
-                EdaPoint center = ArcUtils.Center(prevPoint, firstPoint, angle);
-                int radius = ArcUtils.Radius(prevPoint, firstPoint, angle);
-                EdaAngle startAngle = ArcUtils.StartAngle(prevPoint, center);
-                points.AddRange(PolygonBuilder.MakeArc(center, radius, startAngle, angle, false));
-            }
+                var firstPoint = new EdaPoint();
+                var prevPoint = new EdaPoint();
+                var angle = EdaAngle.Zero;
 
-            return new Polygon(points.ToArray());
+                var points = new List<EdaPoint>();
+
+                bool first = true;
+                foreach (var segment in _segments) {
+
+                    // Guarda el primer punt, per tancar el poligon
+                    //
+                    if (first) {
+                        first = false;
+                        firstPoint = segment.Position;
+                    }
+
+                    // Tram recte
+                    //
+                    if (angle.IsZero)
+                        points.Add(segment.Position);
+
+                    // Tram circular
+                    //
+                    else {
+                        EdaPoint center = ArcUtils.Center(prevPoint, segment.Position, angle);
+                        int radius = ArcUtils.Radius(prevPoint, segment.Position, angle);
+                        EdaAngle startAngle = ArcUtils.StartAngle(prevPoint, center);
+                        points.AddRange(PolygonBuilder.MakeArc(center, radius, startAngle, angle));
+                    }
+
+                    prevPoint = segment.Position;
+                    angle = segment.Arc;
+                }
+
+                if (angle.IsZero)
+                    points.Add(firstPoint);
+
+                else {
+                    EdaPoint center = ArcUtils.Center(prevPoint, firstPoint, angle);
+                    int radius = ArcUtils.Radius(prevPoint, firstPoint, angle);
+                    EdaAngle startAngle = ArcUtils.StartAngle(prevPoint, center);
+                    points.AddRange(PolygonBuilder.MakeArc(center, radius, startAngle, angle, false));
+                }
+
+                return new Polygon(points.ToArray());
+            }
         }
 
         /// <inheritdoc/>
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            Polygon polygon = GetPolygon(side);
-            if (spacing != 0)
-                return PolygonProcessor.Offset(polygon, spacing);
-            else
-                return polygon;
+            if (_segments == null)
+                return null;
+
+            else {
+                Polygon polygon = GetPolygon(side);
+                if (spacing != 0)
+                    return PolygonProcessor.Offset(polygon, spacing);
+                else
+                    return polygon;
+            }
         }
 
         /// <inheritdoc/>
         /// 
         public override Rect GetBoundingBox(BoardSide side) {
 
-            Polygon polygon = GetPolygon(side);
-            return polygon.BoundingBox;
-        }
+            if (_segments == null)
+                return new Rect(0, 0, 0, 0);
 
-        /// <summary>
-        /// Afegeix un segment al poligon.
-        /// </summary>
-        /// <param name="segment">El segment.</param>
-        /// 
-        public void AddSegment(EdaArcPoint segment) {
-
-            _segments.Add(segment);
-        }
-
-        /// <summary>
-        /// Afegeix una diversos segments al poligon.
-        /// </summary>
-        /// <param name="segments">Els segments.</param>
-        /// 
-        public void AddSegments(IEnumerable<EdaArcPoint> segments) {
-
-            _segments.AddRange(segments);
+            else {
+                Polygon polygon = GetPolygon(side);
+                return polygon.BoundingBox;
+            }
         }
 
         /// <summary>
@@ -139,11 +134,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// La llista se segments.
+        /// La llista de segments.
         /// </summary>
         /// 
-        public IEnumerable<EdaArcPoint> Segments =>
-            _segments;
+        public IEnumerable<EdaArcPoint> Segments {
+            get => _segments;
+            set => _segments = value;
+        }
 
         /// <inheritdoc/>
         /// 

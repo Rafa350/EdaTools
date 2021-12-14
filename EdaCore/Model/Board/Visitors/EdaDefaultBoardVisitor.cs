@@ -8,12 +8,12 @@
     /// pero no fa cap accio.
     /// </summary>
     /// 
-    public abstract class DefaultBoardVisitor : IBoardVisitor {
+    public abstract class EdaDefaultBoardVisitor : IEdaBoardVisitor {
 
         public virtual void Visit(EdaBoard board) {
         }
 
-        public virtual void Visit(Library library) {
+        public virtual void Visit(EdaLibrary library) {
         }
 
         public virtual void Visit(EdaLayer layer) {

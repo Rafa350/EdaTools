@@ -26,7 +26,7 @@ namespace MikroPic.EdaTools.v1.Panel {
         public PanelProcessor(EdaBoard targetBoard) {
 
             if (targetBoard == null)
-                throw new ArgumentNullException("board");
+                throw new ArgumentNullException(nameof(targetBoard));
 
             this.targetBoard = targetBoard;
         }
@@ -50,9 +50,9 @@ namespace MikroPic.EdaTools.v1.Panel {
                 if (item is PcbItem pcb) {
 
                     if (!sourceBoardCache.TryGetValue(pcb.FileName, out EdaBoard sourceBoard)) {
-                        string path = locator.GetPath(pcb.FileName);
-                        using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                            BoardStreamReader reader = new BoardStreamReader(stream);
+                        var path = locator.GetPath(pcb.FileName);
+                        using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
+                            var reader = new BoardStreamReader(stream);
                             sourceBoard = reader.Read();
                         }
                         sourceBoardCache.Add(pcb.FileName, sourceBoard);
@@ -103,7 +103,7 @@ namespace MikroPic.EdaTools.v1.Panel {
             foreach (var signal in board.Signals) {
                 string signalName = String.Format("{1}@{0}", index, signal.Name);
                 if (targetBoard.GetSignal(signalName, false) == null)
-                    targetBoard.AddSignal(signal.Clone(signalName));
+                    targetBoard.AddSignal(CloneSignal(signal, signalName));
             }
 
             // Afegeix els components que no existeixin en la placa de destinacio. Els
@@ -112,7 +112,7 @@ namespace MikroPic.EdaTools.v1.Panel {
             if (board.HasComponents) {
                 foreach (var component in board.Components)
                     if (targetBoard.GetComponent(component.Name, false) == null)
-                        targetBoard.AddComponent(component.Clone());
+                        targetBoard.AddComponent(CloneComponent(component));
             }
 
             // Afegeix els parts a la placa
@@ -121,7 +121,7 @@ namespace MikroPic.EdaTools.v1.Panel {
                 List<EdaPart> transformableParts = new List<EdaPart>();
                 foreach (var part in board.Parts) {
                     EdaComponent component = targetBoard.GetComponent(part.Component.Name);
-                    EdaPart panelPart = part.Clone(String.Format("{1}@{0}", index, part.Name), component);
+                    EdaPart panelPart = ClonePart(part, String.Format("{1}@{0}", index, part.Name), component);
                     transformableParts.Add(panelPart);
                     targetBoard.AddPart(panelPart);
 
@@ -147,7 +147,7 @@ namespace MikroPic.EdaTools.v1.Panel {
                 List<EdaElement> transformableElements = new List<EdaElement>();
                 foreach (var boardElement in board.Elements) {
 
-                    EdaElement panelElement = boardElement.Clone();
+                    EdaElement panelElement = CloneElement(boardElement);
                     if (boardElement.IsOnLayer(EdaLayerId.Profile)) {
                         boardElement.LayerSet.Remove(EdaLayerId.Profile);
                         boardElement.LayerSet.Add(EdaLayerId.Get("LocalProfile"));
@@ -155,11 +155,11 @@ namespace MikroPic.EdaTools.v1.Panel {
                     transformableElements.Add(panelElement);
                     targetBoard.AddElement(panelElement);
 
-                    if (boardElement is IConectable) {
+                    if (boardElement is IEdaConectable) {
                         EdaSignal signal = board.GetSignal(boardElement, null, false);
                         if (signal != null) {
                             string panelSignalName = String.Format("{1}@{0}", index, signal.Name);
-                            targetBoard.Connect(targetBoard.GetSignal(panelSignalName), panelElement as IConectable);
+                            targetBoard.Connect(targetBoard.GetSignal(panelSignalName), panelElement as IEdaConectable);
                         }
                     }
                 }
@@ -284,7 +284,61 @@ namespace MikroPic.EdaTools.v1.Panel {
             });
         }
 
-        private sealed class TransformVisitor : DefaultBoardVisitor {
+        /// <summary>
+        /// Clona un senyal
+        /// </summary>
+        /// <param name="signal">El senyal.</param>
+        /// <param name="name">El nom de la senyal clonada.</param>
+        /// <returns>El clon.</returns>
+        /// 
+        private static EdaSignal CloneSignal(EdaSignal signal, string name) {
+
+            var clon = new EdaSignal {
+                Name = name,
+                Clearance = signal.Clearance
+            };
+
+            return clon;
+        }
+
+        private static EdaPart ClonePart(EdaPart part, string name, EdaComponent component) {
+
+            var clon = new EdaPart {
+                Name = name,
+                Component = component,
+                Position = part.Position,
+                Rotation = part.Rotation,
+                Flip = part.Flip
+            };
+
+            return clon;
+        }
+
+        /// <summary>
+        /// Clona un component.
+        /// </summary>
+        /// <param name="component">El component</param>
+        /// <returns>EWl clon</returns>
+        /// 
+        private static EdaComponent CloneComponent(EdaComponent component) {
+
+            var clon = new EdaComponent {
+                Name = component.Name,
+                Description = component.Description,
+            };
+
+            foreach (var element in component.Elements)
+                clon.AddElement(CloneElement(element));
+
+            return clon;
+        }
+
+        private static EdaElement CloneElement(EdaElement element) {
+
+            return null;
+        }
+
+        private sealed class TransformVisitor : EdaDefaultBoardVisitor {
 
             private readonly Transformation transformation;
 
@@ -334,8 +388,8 @@ namespace MikroPic.EdaTools.v1.Panel {
 
             public override void Visit(RegionElement region) {
 
-                foreach (var segment in region.Segments)
-                    segment.Position = transformation.ApplyTo(segment.Position);
+                //foreach (var segment in region.Segments)
+                  //  segment.Position = transformation.ApplyTo(segment.Position);
             }
 
             public override void Visit(HoleElement hole) {

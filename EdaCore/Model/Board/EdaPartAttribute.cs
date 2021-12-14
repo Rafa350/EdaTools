@@ -10,7 +10,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// Clase que representa un atribut
     /// </summary>
     /// 
-    public sealed class EdaPartAttribute : IVisitable<IBoardVisitor> {
+    public sealed class EdaPartAttribute : IEdaVisitable<IEdaBoardVisitor> {
 
         private readonly string _name;
         private string _value;
@@ -72,7 +72,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             _useAlign = true;
         }
 
-        public void AcceptVisitor(IBoardVisitor visitor) {
+        public void AcceptVisitor(IEdaBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

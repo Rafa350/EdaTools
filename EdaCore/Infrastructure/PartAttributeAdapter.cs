@@ -13,6 +13,7 @@ namespace MikroPic.EdaTools.v1.Core.Infrastructure {
         private const string _endMacro = "}";
         private readonly EdaPartAttribute _attribute;
         private readonly TextElement _text;
+        private readonly string _attrValue;
 
         public PartAttributeAdapter(EdaPart part, TextElement text) {
 
@@ -21,12 +22,17 @@ namespace MikroPic.EdaTools.v1.Core.Infrastructure {
             if ((part != null) &&
                 !String.IsNullOrEmpty(text.Value) &&
                 text.Value.StartsWith(_startMacro) &&
-                text.Value.EndsWith(_endMacro))
+                text.Value.EndsWith(_endMacro)) {
+
                 _attribute = part.GetAttribute(text.Value.Substring(_startMacro.Length, text.Value.Length - _startMacro.Length - _endMacro.Length));
+                _attrValue = _attribute.Value;
+                if (_attrValue == "{%name}")
+                    _attrValue = part.Name;
+            }
         }
 
         public string Value =>
-            _attribute != null ? _text.Value.Replace(_text.Value, _attribute.Value) : _text.Value;
+            _attribute != null ? _text.Value.Replace(_text.Value, _attrValue) : _text.Value;
 
         public EdaPoint Position =>
             (_attribute != null) && _attribute.UsePosition ? _attribute.Position : _text.Position;

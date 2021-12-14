@@ -4,7 +4,7 @@
     /// Interficie per tots els objectes que tenen nom.
     /// </summary>
     /// 
-    public interface IName {
+    public interface IEdaName {
 
         string Name { get; }
     }

@@ -60,6 +60,9 @@ namespace MikroPic.EdaTools.v1.Cam {
                 case "gerber-component":
                     return new GerberComponentGenerator(target);
 
+                case "gerber-job":
+                    return new GerberJobGenerator(target);
+
                 case "ipc-D356":
                     return new Ipcd356Generator(target);
 

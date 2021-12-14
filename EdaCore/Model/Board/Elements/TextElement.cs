@@ -10,7 +10,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un text.
     /// </summary>
     /// 
-    public sealed class TextElement : EdaElement, IPosition, IRotation {
+    public sealed class TextElement : EdaElement, IEdaPosition, IEdaRotation {
 
         private EdaPoint _position;
         private EdaAngle _rotation;
@@ -22,7 +22,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override void AcceptVisitor(IBoardVisitor visitor) {
+        public override void AcceptVisitor(IEdaBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

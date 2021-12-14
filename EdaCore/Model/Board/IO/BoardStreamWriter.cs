@@ -22,7 +22,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
         private readonly Stream _stream;
 
-        private class Visitor : DefaultBoardVisitor {
+        private class Visitor : EdaDefaultBoardVisitor {
 
             private readonly XmlWriter _writer;
             private EdaBoard _currentBoard;
@@ -300,13 +300,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                         _writer.WriteAttributeString("signal", signal.Name);
                 }
 
-                foreach (var segment in region.Segments) {
-                    _writer.WriteStartElement("segment");
-                    _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(segment.Position));
-                    if (!segment.Arc.IsZero)
-                        _writer.WriteAttributeString("angle", EdaFormatter.FormatAngle(segment.Arc));
-                    _writer.WriteEndElement();
-                }
+                if (region.Segments != null)
+                    foreach (var segment in region.Segments) {
+                        _writer.WriteStartElement("segment");
+                        _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(segment.Position));
+                        if (!segment.Arc.IsZero)
+                            _writer.WriteAttributeString("angle", EdaFormatter.FormatAngle(segment.Arc));
+                        _writer.WriteEndElement();
+                    }
 
                 _writer.WriteEndElement();
             }
@@ -512,7 +513,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             /// </summary>
             /// <param name="library">La llibreria.</param>
             /// 
-            public override void Visit(Library library) {
+            public override void Visit(EdaLibrary library) {
 
                 _writer.WriteStartElement("library");
 
@@ -572,7 +573,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 writer.WriteAttributeString("distanceUnits", _distanceUnits);
                 writer.WriteAttributeString("angleUnits", _angleUnits);
 
-                IBoardVisitor visitor = new Visitor(writer);
+                IEdaBoardVisitor visitor = new Visitor(writer);
                 board.AcceptVisitor(visitor);
 
                 writer.WriteEndElement();
@@ -586,7 +587,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// </summary>
         /// <param name="library">La placa.</param>
         /// 
-        public void Write(Library library) {
+        public void Write(EdaLibrary library) {
 
             if (library == null)
                 throw new ArgumentNullException(nameof(library));
@@ -606,7 +607,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 writer.WriteAttributeString("distanceUnits", _distanceUnits);
                 writer.WriteAttributeString("angleUnits", _angleUnits);
 
-                IBoardVisitor visitor = new Visitor(writer);
+                IEdaBoardVisitor visitor = new Visitor(writer);
                 library.AcceptVisitor(visitor);
 
                 writer.WriteEndElement();

@@ -6,7 +6,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// Interficie per a tots els objectes que tenen tamany.
     /// </summary>
     /// 
-    public interface ISize {
+    public interface IEdaSize {
 
         EdaSize Size { get; set; }
     }

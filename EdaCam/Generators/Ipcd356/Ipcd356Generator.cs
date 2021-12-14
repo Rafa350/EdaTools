@@ -93,7 +93,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
 
             builder.Comment("BEGIN VIAS");
 
-            IBoardVisitor visitor = new ViasVisitor(builder);
+            IEdaBoardVisitor visitor = new ViasVisitor(builder);
             board.AcceptVisitor(visitor);
 
             builder.Comment("END VIAS");
@@ -109,7 +109,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
 
             builder.Comment("BEGIN PADS");
 
-            IBoardVisitor visitor = new PadsVisitor(builder);
+            IEdaBoardVisitor visitor = new PadsVisitor(builder);
             board.AcceptVisitor(visitor);
 
             builder.Comment("END PADS");
@@ -125,7 +125,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
 
             builder.Comment("BEGIN NETS");
 
-            IBoardVisitor visitor = new NetsVisitor(builder);
+            IEdaBoardVisitor visitor = new NetsVisitor(builder);
             board.AcceptVisitor(visitor);
 
             builder.Comment("END NETS");
@@ -134,7 +134,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
         /// <summary>
         /// Visitador per generar els senyals
         /// </summary>
-        private sealed class NetsVisitor : SignalVisitor {
+        private sealed class NetsVisitor : EdaSignalVisitor {
 
             private readonly Ipcd356Builder _builder;
 
@@ -179,7 +179,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
         /// <summary>
         /// Visitador per generar les definicions de vias
         /// </summary>
-        private sealed class ViasVisitor : ElementVisitor {
+        private sealed class ViasVisitor : EdaElementVisitor {
 
             private readonly Ipcd356Builder builder;
 
@@ -199,7 +199,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
         /// <summary>
         /// Visitador per generar les definicions de pads
         /// </summary>
-        private sealed class PadsVisitor : ElementVisitor {
+        private sealed class PadsVisitor : EdaElementVisitor {
 
             private readonly Ipcd356Builder _builder;
 

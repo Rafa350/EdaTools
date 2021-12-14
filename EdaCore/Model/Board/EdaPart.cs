@@ -7,41 +7,17 @@ using MikroPic.EdaTools.v1.Core.Model.Common;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    public sealed partial class EdaPart : IPosition, IRotation, IName, IVisitable<IBoardVisitor> {
+    public sealed partial class EdaPart : IEdaPosition, IEdaRotation, IEdaName, IEdaVisitable<IEdaBoardVisitor> {
 
-        private readonly string _name;
+        private string _name;
         private EdaPoint _position;
         private EdaAngle _rotation;
         private bool _flip;
-        private readonly EdaComponent _component;
-
-        /// <summary>
-        /// Constructor de l'objecte.
-        /// </summary>
-        /// <param name="component">El component associat.</param>
-        /// <param name="name">El nom.</param>
-        /// <param name="position">Posicio.</param>
-        /// <param name="rotation">Angle de rotacio</param>
-        /// <param name="flip">Indica la cara de la placa.</param>
-        /// 
-        public EdaPart(EdaComponent component, string name, EdaPoint position, EdaAngle rotation, bool flip = false) {
-
-            if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException(nameof(name));
-
-            if (component == null)
-                throw new ArgumentNullException(nameof(component));
-
-            _name = name;
-            _position = position;
-            _rotation = rotation;
-            _flip = flip;
-            _component = component;
-        }
+        private EdaComponent _component;
 
         /// <inheritdoc/>
         /// 
-        public void AcceptVisitor(IBoardVisitor visitor) {
+        public void AcceptVisitor(IEdaBoardVisitor visitor) {
 
             visitor.Visit(this);
         }
@@ -114,21 +90,25 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         }
 
         /// <summary>
-        /// Obte o asigna el nom.
+        /// El nom.
         /// </summary>
         /// 
-        public string Name =>
-            _name;
+        public string Name {
+            get => _name;
+            set => _name = value;
+        }
 
         /// <summary>
-        /// Obte el component
+        /// El component
         /// </summary>
         /// 
-        public EdaComponent Component =>
-            _component;
+        public EdaComponent Component {
+            get => _component;
+            set => _component = value;
+        }
 
         /// <summary>
-        /// Obte o asigna la posicio.
+        /// La posicio.
         /// </summary>
         /// 
         public EdaPoint Position {
@@ -137,7 +117,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         }
 
         /// <summary>
-        /// Obte o asigna l'angle de rotacio.
+        /// L'angle de rotacio.
         /// </summary>
         /// 
         public EdaAngle Rotation {
@@ -146,7 +126,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         }
 
         /// <summary>
-        /// Obte o asigna si el component esta girat
+        /// Indica si el component esta girat
         /// </summary>
         /// 
         public bool Flip {

@@ -72,20 +72,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// Indica si conte atributs.
         /// </summary>
         /// 
-        public bool HasAttributes {
-            get {
-                return _attributes != null;
-            }
-        }
+        public bool HasAttributes =>
+            _attributes != null;
 
         /// <summary>
         /// Obte la llista d'atributs.
         /// </summary>
         /// 
-        public IEnumerable<EdaPartAttribute> Attributes {
-            get {
-                return _attributes?.Values;
-            }
-        }
+        public IEnumerable<EdaPartAttribute> Attributes =>
+            _attributes?.Values;
     }
 }

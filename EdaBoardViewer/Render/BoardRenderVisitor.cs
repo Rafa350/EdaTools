@@ -12,7 +12,7 @@
     using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
     using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 
-    public sealed class BoardRenderVisitor : ElementVisitor {
+    public sealed class BoardRenderVisitor : EdaElementVisitor {
 
         private readonly Color _background = Color.FromRgb(0x30, 0x30, 0x30);
         private readonly EdaLayer _layer;

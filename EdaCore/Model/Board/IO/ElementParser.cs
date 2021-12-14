@@ -312,7 +312,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 segments.Add(new EdaArcPoint(position, angle));
                 rd.NextTag();
             }
-            region.AddSegments(segments);
+            region.Segments = segments;
 
             if (!rd.IsEndTag("region"))
                 throw new InvalidDataException("Se esperaba </region>");

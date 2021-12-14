@@ -10,7 +10,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un rectangle.
     /// </summary>
     /// 
-    public sealed class RectangleElement : EdaElement, IPosition, ISize, IRotation {
+    public sealed class RectangleElement : EdaElement, IEdaPosition, IEdaSize, IEdaRotation {
 
         private EdaPoint _position;
         private EdaSize _size;
@@ -21,7 +21,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override void AcceptVisitor(IBoardVisitor visitor) {
+        public override void AcceptVisitor(IEdaBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

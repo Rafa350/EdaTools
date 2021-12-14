@@ -23,14 +23,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// </summary>
     /// 
     [NetSerializer(typeof(BoardSerializer), AliasName = "Board")]
-    public sealed partial class EdaBoard : IVisitable<IBoardVisitor> {
+    public sealed partial class EdaBoard : IEdaVisitable<IEdaBoardVisitor> {
 
         private EdaPoint _position;
         private EdaAngle _rotation;
 
         /// <inheritdoc/>
         /// 
-        public void AcceptVisitor(IBoardVisitor visitor) {
+        public void AcceptVisitor(IEdaBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

@@ -5,7 +5,7 @@
 
     using MikroPic.EdaTools.v1.Core.Model.Board;
 
-    public abstract class SignalVisitor : DefaultBoardVisitor {
+    public abstract class EdaSignalVisitor : EdaDefaultBoardVisitor {
 
         private EdaBoard currentBoard;
         private EdaSignal currentSignal;
@@ -31,7 +31,7 @@
             EdaSignal savedSignal = currentSignal;
             currentSignal = signal;
             try {
-                IEnumerable<Tuple<IConectable, EdaPart>> items = currentBoard.GetConnectedItems(signal);
+                IEnumerable<Tuple<IEdaConectable, EdaPart>> items = currentBoard.GetConnectedItems(signal);
                 if (items != null)
                     foreach (var item in items) {
                         if (item.Item1 is EdaElement element)

@@ -15,7 +15,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.IO {
             String.Format(_ci, "{0}", value / 1000000.0);
 
         public static string FormatAngle(EdaAngle value) =>
-            String.Format(_ci, "{0}", value.AsDegrees / 100.0);
+            String.Format(_ci, "{0}", value.Value / 100.0);
 
         public static string FormatRatio(EdaRatio value) =>
             String.Format(_ci, "{0}", value.Value / 1000.0);

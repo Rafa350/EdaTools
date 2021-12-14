@@ -13,35 +13,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// </summary>
     /// 
     [NetSerializer(typeof(ComponentSerializer), AliasName = "Component")]
-    public sealed partial class EdaComponent : IVisitable<IBoardVisitor>, IName {
+    public sealed partial class EdaComponent : IEdaVisitable<IEdaBoardVisitor>, IEdaName {
 
         private string _name;
         private string _description;
 
-        /// <summary>
-        /// Constructor de l'objecte.
-        /// </summary>
-        /// <param name="name">Identificador del bloc.</param>
-        /// <param name="elements">Llista d'elements.</param>
-        /// <param name="attributes">Llista d'atributs.</param>
-        /// 
-        public EdaComponent(string name, IEnumerable<EdaElement> elements = null, IEnumerable<EdaComponentAttribute> attributes = null) {
-
-            if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException(nameof(name));
-
-            _name = name;
-
-            if (elements != null)
-                AddElements(elements);
-
-            if (attributes != null)
-                AddAttributes(attributes);
-        }
-
         /// <inheritdoc/>
         /// 
-        public void AcceptVisitor(IBoardVisitor visitor) {
+        public void AcceptVisitor(IEdaBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

@@ -10,14 +10,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un forat no conductor.
     /// </summary>
     /// 
-    public sealed class HoleElement : EdaElement, IPosition {
+    public sealed class HoleElement : EdaElement, IEdaPosition {
 
         private EdaPoint _position;
         private int _drill;
 
         /// <inheritdoc/>
         /// 
-        public override void AcceptVisitor(IBoardVisitor visitor) {
+        public override void AcceptVisitor(IEdaBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

@@ -27,13 +27,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// Clase base per tots els elements de la placa.
     /// </summary>
     /// 
-    public abstract class EdaElement : IVisitable<IBoardVisitor> {
+    public abstract class EdaElement : IEdaVisitable<IEdaBoardVisitor> {
 
         private EdaLayerSet _layerSet;
 
         /// <inheritdoc/>
         /// 
-        public abstract void AcceptVisitor(IBoardVisitor visitor);
+        public abstract void AcceptVisitor(IEdaBoardVisitor visitor);
 
         /// <summary>
         /// Obte el poligon del element.
@@ -67,7 +67,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <returns>True si es present.</returns>
         /// 
         public virtual bool IsOnLayer(EdaLayerId layerId) =>
-            LayerSet.Contains(layerId);
+            _layerSet == null ? false : _layerSet.Contains(layerId);
 
         /// <summary>
         /// El conjun de capes on es present l'element.

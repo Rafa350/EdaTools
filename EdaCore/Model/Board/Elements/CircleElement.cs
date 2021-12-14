@@ -10,7 +10,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un cercle.
     /// </summary>
     /// 
-    public sealed class CircleElement : EdaElement, IPosition {
+    public sealed class CircleElement : EdaElement, IEdaPosition {
 
         private EdaPoint _position;
         private int _radius;
@@ -19,7 +19,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override void AcceptVisitor(IBoardVisitor visitor) {
+        public override void AcceptVisitor(IEdaBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

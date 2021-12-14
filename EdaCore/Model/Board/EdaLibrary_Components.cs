@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    public sealed partial class Library {
+    public sealed partial class EdaLibrary {
 
         private Dictionary<string, EdaComponent> _components;
 

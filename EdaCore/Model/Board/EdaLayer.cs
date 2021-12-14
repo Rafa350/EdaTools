@@ -18,7 +18,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// Clase que representa una capa de la placa.
     /// </summary>
     /// 
-    public sealed class EdaLayer : IVisitable<IBoardVisitor> {
+    public sealed class EdaLayer : IEdaVisitable<IEdaBoardVisitor> {
 
         private readonly EdaLayerId _id;
         private readonly BoardSide _side;
@@ -50,7 +50,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
         /// <inheritdoc/>
         /// 
-        public void AcceptVisitor(IBoardVisitor visitor) {
+        public void AcceptVisitor(IEdaBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

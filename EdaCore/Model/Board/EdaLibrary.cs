@@ -5,7 +5,7 @@ using MikroPic.EdaTools.v1.Core.Model.Common;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    public sealed partial class Library : IVisitable<IBoardVisitor> {
+    public sealed partial class EdaLibrary : IEdaVisitable<IEdaBoardVisitor> {
 
         private string _name;
         private string _description;
@@ -15,7 +15,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// <param name="name">EWl nom de la llibraria.</param>
         /// 
-        public Library(string name) {
+        public EdaLibrary(string name) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
@@ -30,7 +30,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="description">La descripcio.</param>
         /// <param name="components">Els components a afeigir.</param>
         /// 
-        public Library(string name, string description, IEnumerable<EdaComponent> components) {
+        public EdaLibrary(string name, string description, IEnumerable<EdaComponent> components) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
@@ -43,7 +43,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
         /// <inheritdoc/>
         /// 
-        public void AcceptVisitor(IBoardVisitor visitor) {
+        public void AcceptVisitor(IEdaBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

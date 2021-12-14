@@ -5,7 +5,7 @@
     /// <summary>
     /// Clase per visitar els elements.
     /// </summary>
-    public abstract class ElementVisitor : DefaultBoardVisitor {
+    public abstract class EdaElementVisitor : EdaDefaultBoardVisitor {
 
         private EdaBoard currentBoard;
         private EdaPart currentPart;

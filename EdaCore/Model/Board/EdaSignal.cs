@@ -8,14 +8,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// Clase que representa una senyal.
     /// </summary>
     /// 
-    public sealed class EdaSignal : IName, IVisitable<IBoardVisitor> {
+    public sealed class EdaSignal : IEdaName, IEdaVisitable<IEdaBoardVisitor> {
 
         private string _name;
         private int _clearance = 150000;
 
         /// <inheritdoc/>
         /// 
-        public void AcceptVisitor(IBoardVisitor visitor) {
+        public void AcceptVisitor(IEdaBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

@@ -13,7 +13,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
         private static readonly XmlSchemaSet _schemas;
         private readonly XmlReaderAdapter _rd;
-        private Library _library;
+        private EdaLibrary _library;
         private int _version;
 
         /// <summary>
@@ -60,9 +60,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             _rd = new XmlReaderAdapter(reader);
         }
 
-        public Library Read() {
+        public EdaLibrary Read() {
 
-            _library = new Library("unnamed");
+            _library = new EdaLibrary("unnamed");
 
             _rd.NextTag();
             ParseDocumentNode();
@@ -145,7 +145,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             string name = _rd.AttributeAsString("name");
             string description = _rd.AttributeAsString("description");
 
-            var component = new EdaComponent(name);
+            var component = new EdaComponent();
+            component.Name = name;
             component.Description = description;
 
             _rd.NextTag();

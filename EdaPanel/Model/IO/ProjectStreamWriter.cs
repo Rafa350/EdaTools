@@ -19,7 +19,7 @@
 
         private readonly Stream stream;
 
-        private class Visitor : DefaultPanelVisitor {
+        private class Visitor : EdaDefaultPanelVisitor {
 
             private readonly XmlWriter writer;
 

@@ -9,13 +9,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un arc.
     /// </summary>
     /// 
-    public sealed class ArcElement : LineElement, IConectable {
+    public sealed class ArcElement : LineElement, IEdaConectable {
 
         private EdaAngle _angle;
 
         /// <inheritdoc/>
         /// 
-        public override void AcceptVisitor(IBoardVisitor visitor) {
+        public override void AcceptVisitor(IEdaBoardVisitor visitor) {
 
             visitor.Visit(this);
         }

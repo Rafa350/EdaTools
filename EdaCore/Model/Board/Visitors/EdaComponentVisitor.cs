@@ -2,7 +2,7 @@
 
     using System;
 
-    public abstract class ComponentVisitor : DefaultBoardVisitor {
+    public abstract class EdaComponentVisitor : EdaDefaultBoardVisitor {
 
         private EdaBoard currentBoard;
         private EdaComponent currentComponent;

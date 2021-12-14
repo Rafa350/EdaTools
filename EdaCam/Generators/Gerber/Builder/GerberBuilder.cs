@@ -50,7 +50,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
     public enum AttributeScope {
         File,
         Aperture,
-        Object
+        Object,
+        Delete
     }
 
     /// <summary>
@@ -117,25 +118,30 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
         /// </summary>
         /// <param name="attr"></param>
         /// 
-        public void Attribute(AttributeScope scope, string attr) {
+        public void Attribute(AttributeScope scope, string attr = null) {
 
-            string prefix = null;
+            char prefix = '\0';
 
             switch (scope) {
                 case AttributeScope.File:
-                    prefix = "F";
+                    prefix = 'F';
                     break;
 
                 case AttributeScope.Aperture:
-                    prefix = "A";
+                    prefix = 'A';
                     break;
 
                 case AttributeScope.Object:
-                    prefix = "O";
+                    prefix = 'O';
+                    break;
+
+                case AttributeScope.Delete:
+                    prefix = 'D';
                     break;
             }
 
-            _writer.WriteLine(String.Format("%T{0}{1}*%", prefix, attr));
+            if (prefix != '\0')
+                _writer.WriteLine(String.Format("%T{0}{1}*%", prefix, attr));
         }
 
         /// <summary>

@@ -3,7 +3,7 @@ using MikroPic.EdaTools.v1.Core.Model.Net;
 
 namespace MikroPic.EdaTools.v1.Core.Import {
 
-    public interface IImporter {
+    public interface IEdaImporter {
 
         /// <summary>
         /// Importa una placa
@@ -19,7 +19,7 @@ namespace MikroPic.EdaTools.v1.Core.Import {
         /// <param name="fileName">Nom del fitxer.</param>
         /// <returns>La llibreria.</returns>
         /// 
-        Library ReadLibrary(string fileName);
+        EdaLibrary ReadLibrary(string fileName);
 
         /// <summary>
         /// Importa una netlist

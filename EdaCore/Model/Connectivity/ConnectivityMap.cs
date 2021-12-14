@@ -10,7 +10,7 @@
 
     public sealed class ConnectivityMap {
 
-        private sealed class AddElementVisitor : ElementVisitor {
+        private sealed class AddElementVisitor : EdaElementVisitor {
 
             private readonly ConnectivityMap map;
 

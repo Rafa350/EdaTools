@@ -6,7 +6,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// Interficie pels visitadors de placa
     /// </summary>
     /// 
-    public interface IBoardVisitor {
+    public interface IEdaBoardVisitor {
 
         /// <summary>
         /// Visita una placa.
@@ -20,7 +20,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// <param name="library">La llibraria</param>
         /// 
-        void Visit(Library library);
+        void Visit(EdaLibrary library);
 
         /// <summary>
         /// Visita una capa

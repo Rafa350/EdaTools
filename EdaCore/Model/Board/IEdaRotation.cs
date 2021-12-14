@@ -6,7 +6,7 @@
     /// Interficie per tots els elements que tenen rotacio.
     /// </summary>
     /// 
-    public interface IRotation {
+    public interface IEdaRotation {
 
         EdaAngle Rotation { get; set; }
     }

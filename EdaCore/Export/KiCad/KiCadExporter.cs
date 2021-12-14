@@ -10,9 +10,9 @@ using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 
 namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
 
-    public sealed class KiCadExporter : IExporter {
+    public sealed class KiCadExporter : IEdaExporter {
 
-        private sealed class Visitor : DefaultBoardVisitor {
+        private sealed class Visitor : EdaDefaultBoardVisitor {
 
             private const double _scale = 1000000.0;
             private readonly TextWriter _writer;
@@ -312,7 +312,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
 
         /// <inheritdoc/>
         /// 
-        public void WriteLibrary(string targetPath, Library library) {
+        public void WriteLibrary(string targetPath, EdaLibrary library) {
 
             if (!Directory.Exists(targetPath))
                 Directory.CreateDirectory(targetPath);

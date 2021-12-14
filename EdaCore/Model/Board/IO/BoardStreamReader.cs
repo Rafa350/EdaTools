@@ -153,7 +153,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsStartTag("layers"))
                 throw new InvalidDataException("Se esperaba <layers>");
 
-            List<EdaLayer> layers = new List<EdaLayer>();
+            var layers = new List<EdaLayer>();
 
             _rd.NextTag();
             while (_rd.IsStartTag("layer")) {
@@ -191,13 +191,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// <summary>
         /// Procesa el node 'signals'.
         /// </summary>
+        /// <returns>La llista de senyals.</returns>
         /// 
         private IEnumerable<EdaSignal> ParseSignalsNode() {
 
             if (!_rd.IsStartTag("signals"))
                 throw new InvalidDataException("Se esperaba <signals>");
 
-            List<EdaSignal> signals = new List<EdaSignal>();
+            var signals = new List<EdaSignal>();
 
             _rd.NextTag();
             while (_rd.IsStartTag("signal")) {
@@ -244,18 +245,18 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsStartTag("components"))
                 throw new InvalidDataException("Se esperaba <components>");
 
-            var blocks = new List<EdaComponent>();
+            var components = new List<EdaComponent>();
 
             _rd.NextTag();
             while (_rd.IsStartTag("component")) {
-                blocks.Add(ParseComponentNode());
+                components.Add(ParseComponentNode());
                 _rd.NextTag();
             }
 
             if (!_rd.IsEndTag("components"))
                 throw new InvalidDataException("Se esperaba </components>");
 
-            return blocks;
+            return components;
         }
 
         /// <summary>
@@ -270,16 +271,17 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
             string name = _rd.AttributeAsString("name");
 
-            var block = new EdaComponent(name);
+            var component = new EdaComponent();
+            component.Name = name;
 
             _rd.NextTag();
-            block.AddElements(ParseComponentElementsNode());
+            component.AddElements(ParseComponentElementsNode());
             _rd.NextTag();
 
             if (!_rd.IsEndTag("component"))
                 throw new InvalidDataException("Se esperaba </component>");
 
-            return block;
+            return component;
         }
 
         /// <summary>
@@ -292,7 +294,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsStartTag("elements"))
                 throw new InvalidDataException("Se esperaba <elements>");
 
-            List<EdaElement> elements = new List<EdaElement>();
+            var elements = new List<EdaElement>();
 
             _rd.NextTag();
             while (_rd.IsStart) {
@@ -355,7 +357,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsStartTag("elements"))
                 throw new InvalidDataException("Se esperaba <elements>");
 
-            List<EdaElement> elements = new List<EdaElement>();
+            var elements = new List<EdaElement>();
 
             _rd.NextTag();
             while (_rd.IsStart) {
@@ -450,10 +452,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             EdaPoint position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
             EdaAngle rotation = EdaParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
             bool flip = _rd.AttributeAsBoolean("flip", false);
-            string blockName = _rd.AttributeAsString("component");
+            string componentName = _rd.AttributeAsString("component");
 
-            var block = _board.GetComponent(blockName);
-            EdaPart part = new EdaPart(block, name, position, rotation, flip);
+            var component = _board.GetComponent(componentName);
+            EdaPart part = new EdaPart { 
+                Component = component, 
+                Name = name, 
+                Position = position, 
+                Rotation = rotation, 
+                Flip = flip };
 
             _rd.NextTag();
             while (_rd.IsStart) {
@@ -491,7 +498,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsStartTag("attributes"))
                 throw new InvalidDataException("Se esperaba <attributes>");
 
-            List<EdaPartAttribute> attributes = new List<EdaPartAttribute>();
+            var attributes = new List<EdaPartAttribute>();
 
             _rd.NextTag();
             while (_rd.IsStartTag("attribute")) {
@@ -553,7 +560,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsStartTag("pads"))
                 throw new InvalidDataException("Se esperaba <pads>");
 
-            List<PadInfo> pads = new List<PadInfo>();
+            var pads = new List<PadInfo>();
 
             _rd.NextTag();
             while (_rd.IsStartTag("pad")) {
@@ -612,7 +619,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsEndTag("line"))
                 throw new InvalidDataException("Se esperaba </line>");
 
-            var line = new LineElement {
+            var element = new LineElement {
                 LayerSet = layerSet,
                 StartPosition = startPosition,
                 EndPosition = endPosition,
@@ -622,10 +629,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
             if (signalName != null) {
                 var signal = _board.GetSignal(signalName);
-                _board.Connect(signal, line);
+                _board.Connect(signal, element);
             }
 
-            return line;
+            return element;
         }
 
         /// <summary>
@@ -650,7 +657,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsEndTag("arc"))
                 throw new InvalidDataException("Se esperaba </arc>");
 
-            var arc = new ArcElement {
+            var element = new ArcElement {
                 LayerSet = layerSet,
                 StartPosition = startPosition,
                 EndPosition = endPosition,
@@ -661,10 +668,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
             if (signalName != null) {
                 var signal = _board.GetSignal(signalName);
-                _board.Connect(signal, arc);
+                _board.Connect(signal, element);
             }
 
-            return arc;
+            return element;
         }
 
         /// <summary>
@@ -689,7 +696,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsEndTag("rectangle"))
                 throw new InvalidDataException("Se esperaba </rectangle>");
 
-            return new RectangleElement {
+            var element = new RectangleElement {
                 LayerSet = layerSet,
                 Position = position,
                 Size = size,
@@ -698,6 +705,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 Thickness = thickness,
                 Filled = filled
             };
+
+            return element;
         }
 
         /// <summary>
@@ -720,13 +729,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsEndTag("circle"))
                 throw new InvalidDataException("Se esperaba </circle>");
 
-            return new CircleElement {
+            var element = new CircleElement {
                 LayerSet = layerSet,
                 Position = position,
                 Radius = radius,
                 Thickness = thickness,
                 Filled = filled
             };
+
+            return element;
         }
 
         /// <summary>
@@ -747,7 +758,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             var clearance = EdaParser.ParseScalar(_rd.AttributeAsString("clearance", "0"));
             var signalName = _rd.AttributeAsString("signal");
 
-            var region = new RegionElement {
+            var element = new RegionElement {
                 LayerSet = layerSet,
                 Thickness = thickness,
                 Filled = filled,
@@ -756,21 +767,23 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
             if (signalName != null) {
                 var signal = _board.GetSignal(signalName);
-                _board.Connect(signal, region);
+                _board.Connect(signal, element);
             }
 
             _rd.NextTag();
-            var segments = new List<EdaArcPoint>();
+            List<EdaArcPoint> segments = null;
             while (_rd.IsStartTag("segment")) {
+                if (segments == null)
+                    segments = new List<EdaArcPoint>();
                 segments.Add(ParseRegionSegmentNode());
                 _rd.NextTag();
             }
-            region.AddSegments(segments);
+            element.Segments = segments;
 
             if (!_rd.IsEndTag("region"))
                 throw new InvalidDataException("Se esperaba </region>");
 
-            return region;
+            return element;
         }
 
         /// <summary>
@@ -816,7 +829,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsEndTag("tpad"))
                 throw new InvalidDataException("Se esperaba </tpad>");
 
-            var pad = new ThPadElement {
+            var element = new ThPadElement {
                 Name = name,
                 LayerSet = layerSet,
                 Position = position,
@@ -830,10 +843,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
             if (signalName != null) {
                 var signal = _board.GetSignal(signalName);
-                _board.Connect(signal, pad);
+                _board.Connect(signal, element);
             }
 
-            return pad;
+            return element;
         }
 
         /// <summary>
@@ -858,7 +871,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsEndTag("spad"))
                 throw new InvalidDataException("Se esperaba </spad>");
 
-            var pad = new SmdPadElement {
+            var element = new SmdPadElement {
                 Name = name,
                 LayerSet = layerSet,
                 Position = position,
@@ -869,10 +882,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
             if (signalName != null) {
                 var signal = _board.GetSignal(signalName);
-                _board.Connect(signal, pad);
+                _board.Connect(signal, element);
             }
 
-            return pad;
+            return element;
         }
 
         /// <summary>
@@ -899,7 +912,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsEndTag("via"))
                 throw new InvalidDataException("Se esperaba </via>");
 
-            var via = new ViaElement { 
+            var element = new ViaElement { 
                 LayerSet = layerSet,
                 Position = position, 
                 OuterSize = outerSize, 
@@ -910,10 +923,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
             if (signalName != null) {
                 var signal = _board.GetSignal(signalName);
-                _board.Connect(signal, via);
+                _board.Connect(signal, element);
             }
 
-            return via;
+            return element;
         }
 
         /// <summary>
@@ -964,7 +977,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsEndTag("text"))
                 throw new InvalidDataException("Se esperaba </text>");
 
-            return new TextElement {
+            var element = new TextElement {
                 LayerSet = layerSet,
                 Position = position,
                 Rotation = rotation,
@@ -974,6 +987,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 VerticalAlign = verticalAlign,
                 Value = value
             };
+
+            return element;
         }
     }
 }

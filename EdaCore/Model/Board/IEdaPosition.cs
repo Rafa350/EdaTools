@@ -6,7 +6,7 @@
     /// Interficie per tots els objectes que tenen posicio.
     /// </summary>
     /// 
-    public interface IPosition {
+    public interface IEdaPosition {
 
         EdaPoint Position { get; set; }
     }

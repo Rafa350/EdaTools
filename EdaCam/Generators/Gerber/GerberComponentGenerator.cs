@@ -157,7 +157,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <summary>
         /// Visitador per preparar les apertures. Visita els element que tenen forats.
         /// </summary>
-        private sealed class PrepareAperturesVisitor : ElementVisitor {
+        private sealed class PrepareAperturesVisitor : EdaElementVisitor {
 
             private readonly EdaLayerId _layerId;
             private readonly ApertureDictionary _apertures;
@@ -186,7 +186,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <summary>
         /// Visitador per generar la imatge. Visita els elements que tenen forars.
         /// </summary>
-        private sealed class ImageGeneratorVisitor : ElementVisitor {
+        private sealed class ImageGeneratorVisitor : EdaElementVisitor {
 
             private readonly GerberBuilder _gb;
             private readonly EdaLayerId _layerId;

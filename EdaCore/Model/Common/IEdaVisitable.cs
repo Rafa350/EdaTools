@@ -1,6 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Common {
 
-    public interface IVisitable<T> {
+    public interface IEdaVisitable<T> {
 
         /// <summary>
         /// Accepta un visitador

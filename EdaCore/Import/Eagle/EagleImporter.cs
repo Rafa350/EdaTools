@@ -16,7 +16,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
     /// Clase per importar una placa desde Eagle
     /// </summary>
     /// 
-    public sealed class EagleImporter : IImporter {
+    public sealed class EagleImporter : IEdaImporter {
 
         private const int topLayerNum = 1;
         private const int bottomLayerNum = 16;
@@ -56,7 +56,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
         /// <inheritdoc/>
         /// 
-        public Library ReadLibrary(string fileName) {
+        public EdaLibrary ReadLibrary(string fileName) {
 
             using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
 
@@ -68,7 +68,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 XmlNode packagesNode = doc.SelectSingleNode("eagle/drawing/library/packages");
                 IEnumerable<EdaComponent> components = ParsePackagesNode(packagesNode);
 
-                Library library = new Library("unnamed");
+                EdaLibrary library = new EdaLibrary("unnamed");
                 library.AddComponents(components);
                 return library;
             }
@@ -97,7 +97,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// 
         private XmlDocument ReadXmlDocument(Stream stream) {
 
-            XmlReaderSettings settings = new XmlReaderSettings {
+            var settings = new XmlReaderSettings {
                 DtdProcessing = DtdProcessing.Ignore,
                 CloseInput = true,
                 IgnoreComments = true,
@@ -105,8 +105,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 IgnoreWhitespace = true
             };
 
-            XmlReader reader = XmlReader.Create(stream, settings);
-            XmlDocument doc = new XmlDocument();
+            var reader = XmlReader.Create(stream, settings);
+            var doc = new XmlDocument();
             doc.Load(reader);
 
             return doc;
@@ -244,7 +244,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                     if (element != null) {
                         board.AddElement(element);
 
-                        if (element is IConectable conectable)
+                        if (element is IEdaConectable conectable)
                             board.Connect(signal, conectable);
                     }
                 }
@@ -358,8 +358,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             }
 
             string name = libraryName == null ? packageName : String.Format("{0}@{1}", packageName, libraryName);
-            var component = new EdaComponent(name, elements);
+            
+            var component = new EdaComponent();
+            component.Name = name;
             component.Description = packageDescription;
+            component.AddElements(elements);
+            
             return component;
         }
 
@@ -781,8 +785,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 Thickness = thickness,
                 Filled = true,
                 Clearance = clearance,
+                Segments = segments
             };
-            element.AddSegments(segments);
             return element;
         }
 
@@ -845,7 +849,13 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 rotation = ParseAngle(rot);
             }
 
-            var part = new EdaPart(GetComponent(componentKey), name, position, rotation, flip);
+            var part = new EdaPart {
+                Component = GetComponent(componentKey),
+                Name = name,
+                Position = position,
+                Rotation = rotation,
+                Flip = flip
+            };
 
             bool hasNameAttribute = false;
             bool hasValueAttribute = false;

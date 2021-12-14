@@ -193,7 +193,25 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         private void GenerateApertures(GerberBuilder gb, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN APERTURES");
-            gb.DefineApertures(apertures.Apertures);
+
+            ImageType imageType = (ImageType)Enum.Parse(typeof(ImageType), Target.GetOptionValue("imageType"), true);
+
+            foreach (var aperture in apertures.Apertures) {
+
+                bool hasAttributes = false;
+                switch (imageType) {
+                    case ImageType.Profile:
+                        hasAttributes = true;
+                        gb.Attribute(AttributeScope.Aperture, ".AperFunction.Profile");
+                        break;
+                }
+
+                gb.DefineAperture(aperture);
+
+                if (hasAttributes)
+                    gb.Attribute(AttributeScope.Delete);
+            }
+
             gb.Comment("END APERTURES");
         }
 
@@ -248,7 +266,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// Visitador per preparar les apertures.
         /// </summary>
         /// 
-        private sealed class ApertureCreatorVisitor : ElementVisitor {
+        private sealed class ApertureCreatorVisitor : EdaElementVisitor {
 
             private readonly EdaLayerId _layerId;
             private readonly ApertureDictionary _apertures;
@@ -439,7 +457,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// Visitador per generar la imatge.
         /// </summary>
         /// 
-        private sealed class ImageGeneratorVisitor : ElementVisitor {
+        private sealed class ImageGeneratorVisitor : EdaElementVisitor {
 
             private readonly EdaLayerId _layerId;
             private readonly GerberBuilder _gb;
@@ -750,7 +768,6 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     // Escriu el gerber
                     //
                     _gb.SelectAperture(ap);
-                    _gb.Attribute(AttributeScope.Object, String.Format(".P,{0},{1}", _currentPart.Name, pad.Name));
                     _gb.FlashAt(position);
                 }
             }
@@ -787,7 +804,6 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     // Escriu el gerber
                     //
                     _gb.SelectAperture(ap);
-                    _gb.Attribute(AttributeScope.Object, String.Format(".P,{0},{1}", _currentPart.Name, pad.Name));
                     _gb.FlashAt(position);
                 }
             }
@@ -801,6 +817,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <summary>
         /// Clase per generar la imatge dels texts
         /// </summary>
+        /// 
         private class GerberTextDrawer : TextDrawer {
 
             private readonly GerberBuilder gb;
@@ -823,7 +840,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <summary>
         /// Clase per generar la imatge amb regions poligonals.
         /// </summary>
-        private sealed class RegionGeneratorVisitor : ElementVisitor {
+        private sealed class RegionGeneratorVisitor : EdaElementVisitor {
 
             private readonly GerberBuilder _gb;
             private readonly EdaLayerId _layerId;

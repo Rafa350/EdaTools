@@ -40,7 +40,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
         /// 
         protected override string GetCommand() {
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("%ADD");
             sb.AppendFormat("{0}", Id);
             sb.Append("C,");

@@ -4,6 +4,6 @@
     /// Interficie per tots els elements que poden estar conectats.
     /// </summary>
     /// 
-    public interface IConectable {
+    public interface IEdaConectable {
     }
 }
