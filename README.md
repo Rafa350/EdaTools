@@ -8,6 +8,7 @@ Tools and utilities for PCB design.
 EdaImport
 -Convert EAGLE v7 BRD file to EdaTools board file (.XBRD)
 -Convert EAGLE v7 LBR file to EdaTools library file (.XLIB)
+-Convert KiCad pcb file to EdaTools board file (.XBRD)
 
 EdaExport
 -Convert EdaTools board file (.XBRD) to EAGLE or KiCAD
@@ -21,8 +22,8 @@ EdaPanelizer.
 
 EdaCAMTool.
 -Create production files from CAM project file (.XCAM).
--Generate gerber image files.
--Generate gerber drill and route files.
+-Generate gerber X3 image files.
+-Generate gerber X3 drill and route files.
 -Generate IPC-D356 netlist.
 -Compliant with Ucamco Gerber File Format Specification (www.ucamco.com)
 -Passed test with "https://gerber-viewer.ucamco.com/"
