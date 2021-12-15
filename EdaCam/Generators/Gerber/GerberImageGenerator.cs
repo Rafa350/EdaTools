@@ -20,13 +20,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
         public enum ImageType {
             Copper,
-            TopSolderMask,
-            BottomSolderMask,
-            TopCream,
-            BottomCream,
+            SolderMask,
+            Cream,
             Profile,
-            TopLegend,
-            BottomLegend
+            Legend,
         }
 
         /// <summary>
@@ -125,46 +122,38 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 case ImageType.Copper: {
                     int layerLevel = Int32.Parse(Target.GetOptionValue("layerLevel"));
                     string layerSide = Target.GetOptionValue("layerSide");
-                    gb.Attribute(AttributeScope.File, String.Format(".FileFunction,Copper,L{0},{1},Signal", layerLevel, layerSide));
+                    gb.Attribute(AttributeScope.File, $".FileFunction,Copper,L{layerLevel},{layerSide},Signal");
                     gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
                 }
 
-                case ImageType.TopSolderMask:
-                    gb.Attribute(AttributeScope.File, ".FileFunction,Soldermask,Top");
+                case ImageType.SolderMask: {
+                    string layerSide = Target.GetOptionValue("layerSide");
+                    gb.Attribute(AttributeScope.File, $".FileFunction,Soldermask,{layerSide}");
                     gb.Attribute(AttributeScope.File, ".FilePolarity,Negative");
                     break;
+                }
 
-                case ImageType.BottomSolderMask:
-                    gb.Attribute(AttributeScope.File, ".FileFunction,Soldermask,Bot");
+                case ImageType.Cream: {
+                    string layerSide = Target.GetOptionValue("layerSide");
+                    gb.Attribute(AttributeScope.File, $".FileFunction,Paste,{layerSide}");
                     gb.Attribute(AttributeScope.File, ".FilePolarity,Negative");
                     break;
+                }
 
-                case ImageType.TopCream:
-                    gb.Attribute(AttributeScope.File, ".FileFunction,Paste,Top");
-                    gb.Attribute(AttributeScope.File, ".FilePolarity,Negative");
-                    break;
-
-                case ImageType.BottomCream:
-                    gb.Attribute(AttributeScope.File, ".FileFunction,Paste,Bot");
-                    gb.Attribute(AttributeScope.File, ".FilePolarity,Negative");
-                    break;
-
-                case ImageType.TopLegend:
-                    gb.Attribute(AttributeScope.File, ".FileFunction,Legend,Top");
+                case ImageType.Legend: {
+                    string layerSide = Target.GetOptionValue("layerSide");
+                    gb.Attribute(AttributeScope.File, $".FileFunction,Legend,{layerSide}");
                     gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
-
-                case ImageType.BottomLegend:
-                    gb.Attribute(AttributeScope.File, ".FileFunction,Legend,Bot");
-                    gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
-                    break;
+                }
 
                 case ImageType.Profile:
                     gb.Attribute(AttributeScope.File, ".FileFunction,Profile,NP");
                     gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
                     break;
             }
+
             gb.Attribute(AttributeScope.File, ".Part,Single");
             gb.SetUnits(Units.Milimeters);
             gb.SetCoordinateFormat(8, 5);
@@ -193,25 +182,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         private void GenerateApertures(GerberBuilder gb, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN APERTURES");
-
-            ImageType imageType = (ImageType)Enum.Parse(typeof(ImageType), Target.GetOptionValue("imageType"), true);
-
-            foreach (var aperture in apertures.Apertures) {
-
-                bool hasAttributes = false;
-                switch (imageType) {
-                    case ImageType.Profile:
-                        hasAttributes = true;
-                        gb.Attribute(AttributeScope.Aperture, ".AperFunction.Profile");
-                        break;
-                }
-
-                gb.DefineAperture(aperture);
-
-                if (hasAttributes)
-                    gb.Attribute(AttributeScope.Delete);
-            }
-
+            gb.DefineApertures(apertures.Apertures);
             gb.Comment("END APERTURES");
         }
 
@@ -386,7 +357,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// <summary>
             /// Visita un objecte 'ThPadElement'
             /// </summary>
-            /// <param name="pad">L'objecte a visitar.</param>
+            /// <param name="pad">L'objecte.</param>
             /// 
             public override void Visit(ThPadElement pad) {
 
@@ -417,7 +388,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// <summary>
             /// Visita un objecte 'SmdPadElement'
             /// </summary>
-            /// <param name="pad">L'objecte a visitar.</param>
+            /// <param name="pad">L'objecte.</param>
             /// 
             public override void Visit(SmdPadElement pad) {
 
@@ -479,6 +450,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 _currentPart = null;
             }
 
+            /// <summary>
+            /// Visita un objecte 'EdaPart'
+            /// </summary>
+            /// <param name="part">L'objecte.</param>
+            /// 
             public override void Visit(EdaPart part) {
 
                 var savedPart = _currentPart;
@@ -492,9 +468,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             }
 
             /// <summary>
-            /// Visita objecte 'LineElement'
+            /// Visita un objecte 'EdaLineElement'
             /// </summary>
-            /// <param name="line">L'objecte a visitar.</param>
+            /// <param name="line">L'objecte.</param>
             /// 
             public override void Visit(LineElement line) {
 
@@ -523,9 +499,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             }
 
             /// <summary>
-            /// Visita objecte 'ArcElement'.
+            /// Visita un objecte 'EdaArcElement'.
             /// </summary>
-            /// <param name="arc">L'objecte a visitar.</param>
+            /// <param name="arc">L'objecte.</param>
             /// 
             public override void Visit(ArcElement arc) {
 
@@ -558,9 +534,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             }
 
             /// <summary>
-            /// Visita un objecte 'RectangleElement'.
+            /// Visita un objecte 'EdaRectangleElement'.
             /// </summary>
-            /// <param name="rectangle">L'objecte a visitar.</param>
+            /// <param name="rectangle">L'objecte.</param>
             /// 
             public override void Visit(RectangleElement rectangle) {
 
@@ -613,9 +589,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             }
 
             /// <summary>
-            /// Visita un objecte CircleElement
+            /// Visita un objecte 'EdaCircleElement'
             /// </summary>
-            /// <param name="circle">L'objecte a visitar.</param>
+            /// <param name="circle">L'objecte.</param>
             /// 
             public override void Visit(CircleElement circle) {
 
@@ -666,6 +642,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 }
             }
 
+            /// <summary>
+            /// Visita un objecte 'EdaTextElement'
+            /// </summary>
+            /// <param name="text">L'objecte.</param>
+            /// 
             public override void Visit(TextElement text) {
 
                 if (CanVisit(text)) {
@@ -692,9 +673,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             }
 
             /// <summary>
-            /// Visita un objecte 'ViaElement'.
+            /// Visita un objecte 'EdaViaElement'.
             /// </summary>
-            /// <param name="via">L'objecte a visitar.</param>
+            /// <param name="via">L'objecte.</param>
             /// 
             public override void Visit(ViaElement via) {
 

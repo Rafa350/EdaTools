@@ -909,7 +909,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// 
         private static LayerFunction GetLayerFunction(string kcName) {
 
-            if (kcName.Contains(".Cu"))
+            if (kcName.EndsWith(".Cu"))
                 return LayerFunction.Signal;
 
             else if (kcName == "Edge.Cuts")

@@ -1,9 +1,9 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Model {
+﻿using System;
+using System.Collections.Generic;
 
-    using System;
-    using System.Collections.Generic;
+using MikroPic.EdaTools.v1.Base.Geometry;
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
+namespace MikroPic.EdaTools.v1.Cam.Model {
 
     public sealed class Target {
 

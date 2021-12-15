@@ -1,7 +1,7 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Model {
+﻿using System;
+using System.Collections.Generic;
 
-    using System;
-    using System.Collections.Generic;
+namespace MikroPic.EdaTools.v1.Cam.Model {
 
     public sealed class Project {
 
@@ -92,30 +92,21 @@
         /// Indica si conte objectius.
         /// </summary>
         /// 
-        public bool HasTargets {
-            get {
-                return targets != null;
-            }
-        }
+        public bool HasTargets =>
+            targets != null;
 
         /// <summary>
         /// Obte la col·leccio de noms dels objectius.
         /// </summary>
         /// 
-        public IEnumerable<string> TargetNames {
-            get {
-                return targets?.Keys;
-            }
-        }
+        public IEnumerable<string> TargetNames =>
+            targets?.Keys;
 
         /// <summary>
         /// Obte la col·leccio d'objectius.
         /// </summary>
         /// 
-        public IEnumerable<Target> Targets {
-            get {
-                return targets?.Values;
-            }
-        }
+        public IEnumerable<Target> Targets =>
+            targets?.Values;
     }
 }
