@@ -142,7 +142,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                                         int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
                                         Polygon outlinePolygon = element.GetOutlinePolygon(layerId.Side, clearance);
                                         outlinePolygon = outlinePolygon.Transformed(localTransformation);
-                                        if (part.Flip)
+                                        if (part.IsFlipped)
                                             outlinePolygon.Reverse();
                                         if (regionBBox.IntersectsWith(outlinePolygon.BoundingBox))
                                             holePolygons.Add(outlinePolygon);

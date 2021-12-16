@@ -451,7 +451,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             string name = _rd.AttributeAsString("name");
             EdaPoint position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
             EdaAngle rotation = EdaParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
-            bool flip = _rd.AttributeAsBoolean("flip", false);
+            PartSide side = _rd.AttributeAsEnum("side", PartSide.Top);
             string componentName = _rd.AttributeAsString("component");
 
             var component = _board.GetComponent(componentName);
@@ -460,7 +460,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 Name = name, 
                 Position = position, 
                 Rotation = rotation, 
-                Flip = flip };
+                Side = side };
 
             _rd.NextTag();
             while (_rd.IsStart) {

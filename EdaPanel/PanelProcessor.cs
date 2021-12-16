@@ -308,7 +308,7 @@ namespace MikroPic.EdaTools.v1.Panel {
                 Component = component,
                 Position = part.Position,
                 Rotation = part.Rotation,
-                Flip = part.Flip
+                Side = part.Side
             };
 
             return clon;

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
 using MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers;
 using MikroPic.EdaTools.v1.Core.Model.Common;
 

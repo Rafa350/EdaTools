@@ -330,8 +330,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                     _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(part.Position));
                     if (!part.Rotation.IsZero)
                         _writer.WriteAttributeString("rotation", EdaFormatter.FormatAngle(part.Rotation));
-                    if (part.Flip)
-                        _writer.WriteAttributeString("flip", "true");
+                    if (part.Side != PartSide.Top)
+                        _writer.WriteAttributeEnum("side", part.Side);
 
                     // Escriu la llista de pads que tenen conexio.
                     //

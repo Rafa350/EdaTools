@@ -121,7 +121,7 @@
             <xs:attribute name="component" use="required" type="nameType"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="rotation" use="optional" type="angleType"/>
-            <xs:attribute name="flip" use="optional" type="xs:boolean"/>
+            <xs:attribute name="side" use="optional" type="partSideType"/>
         </xs:complexType>        
     </xs:element>
 
@@ -416,6 +416,14 @@
             <xs:enumeration value="bottom"/>
             <xs:enumeration value="inner"/>
             <xs:enumeration value="none"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="partSideType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="top"/>
+            <xs:enumeration value="bottom"/>
         </xs:restriction>
     </xs:simpleType>
 

@@ -5,6 +5,7 @@ using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
@@ -13,6 +14,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
     /// Clase per generar fitxers gerber de forats i fresats.
     /// </summary>
     public sealed class GerberComponentGenerator : Generator {
+
+        private Aperture _outlineAperture;
+        private Aperture _centroidAperture;
+        private Aperture _padKeyAperture;
+        private Aperture _padAperture;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -74,7 +80,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         }
 
         /// <summary>
-        /// Prepara el diccionari d'apertures
+        /// Prepara el diccionari d'apertures. Son apertures fixes per representar
+        /// els centroids, els pads, etc.
         /// </summary>
         /// <param name="apertures">El diccionari d'apertures.</param>
         /// <param name="board">La placa.</param>
@@ -82,10 +89,17 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// 
         private void PrepareApertures(ApertureDictionary apertures, EdaBoard board) {
 
-            foreach (var name in Target.LayerNames) {
-                var visitor = new PrepareAperturesVisitor(EdaLayerId.Get(name), apertures);
-                board.AcceptVisitor(visitor);
-            }
+            // Defineix la apertura pel centroid
+            //
+            _centroidAperture = apertures.DefineCircleAperture(300000);
+
+            // Defineix la apertura pel pin 1
+            //
+            //_padKeyAperture = apertures.DefineCircleAperture();
+
+            // Defineix la apertura els pins diferens de 1
+            //
+            //_padAperture = apertures.DefineCircleAperture(0);
         }
 
         /// <summary>
@@ -133,7 +147,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         private void GenerateApertures(GerberBuilder gb, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN APERTURES");
-            gb.DefineApertures(apertures.Apertures);
+            gb.Attribute(AttributeScope.Aperture, ".AperFunction,ComponentMain");
+            gb.DefineAperture(_centroidAperture);
             gb.Comment("END APERTURES");
         }
 
@@ -148,39 +163,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             gb.Comment("BEGIN IMAGE");
             foreach (var name in Target.LayerNames) {
-                var visitor = new ImageGeneratorVisitor(gb, EdaLayerId.Get(name), apertures);
+                PartSide side = EdaLayerId.Get(name).Side == BoardSide.Top ? PartSide.Top : PartSide.Bottom;
+                var visitor = new ImageGeneratorVisitor(gb, side,  _centroidAperture);
                 board.AcceptVisitor(visitor);
             }
             gb.Comment("END IMAGE");
-        }
-
-        /// <summary>
-        /// Visitador per preparar les apertures. Visita els element que tenen forats.
-        /// </summary>
-        private sealed class PrepareAperturesVisitor : EdaElementVisitor {
-
-            private readonly EdaLayerId _layerId;
-            private readonly ApertureDictionary _apertures;
-
-            /// <summary>
-            /// Constructor de l'objecte.
-            /// </summary>
-            /// <param name="layerId">El identificador de la capa a procesar.</param>
-            /// <param name="apertures">El diccionari d'apertures a preparar.</param>
-            /// 
-            public PrepareAperturesVisitor(EdaLayerId layerId, ApertureDictionary apertures) {
-
-                _layerId = layerId;
-                _apertures = apertures;
-            }
-
-            /// <summary>
-            /// Visita un objecte Part
-            /// </summary>
-            /// <param name="part">L'objecte.</param>
-            /// 
-            public override void Visit(EdaPart part) {
-            }
         }
 
         /// <summary>
@@ -189,29 +176,46 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         private sealed class ImageGeneratorVisitor : EdaElementVisitor {
 
             private readonly GerberBuilder _gb;
-            private readonly EdaLayerId _layerId;
-            private readonly ApertureDictionary _apertures;
+            private readonly PartSide _side;
+            private readonly Aperture _centroidAperture;
 
             /// <summary>
             /// Constructor de la clase.
             /// </summary>
             /// <param name="gb">El generador de gerbers.</param>
             /// <param name="layerId">Identificador de la capa a procesar.</param>
-            /// <param name="apertures">El diccionari d'apertures.</param>
+            /// <param name="centroidAperture">L'apertura pel centroid.</param>
             /// 
-            public ImageGeneratorVisitor(GerberBuilder gb, EdaLayerId layerId, ApertureDictionary apertures) {
+            public ImageGeneratorVisitor(GerberBuilder gb, PartSide side, Aperture centroidAperture) {
 
                 _gb = gb;
-                _layerId = layerId;
-                _apertures = apertures;
+                _side = side;
+                _centroidAperture = centroidAperture;
             }
 
+            /// <summary>
+            /// Visita un element 'Part'
+            /// </summary>
+            /// <param name="part">L'element a visitar.</param>
+            /// 
             public override void Visit(EdaPart part) {
+
+                if (part.Side == _side) {
+                    _gb.SelectAperture(_centroidAperture);
+                    _gb.Attribute(AttributeScope.Object, $".C,{part.Name}");
+                    _gb.Attribute(AttributeScope.Object, $".CRot,{part.Rotation.AsDegrees}");
+                    _gb.FlashAt(part.Position.X, part.Position.Y);
+                }
             }
 
-            private bool CanVisit(EdaElement element) {
+            /// <summary>
+            /// Visita un element SmdPadElement'
+            /// </summary>
+            /// <param name="pad">Lélement a visitar.</param>
+            /// 
+            public override void Visit(SmdPadElement pad) {
 
-                return element.IsOnLayer(_layerId);
+                //_gb.SelectAperture(_PadAperture);
             }
         }
     }

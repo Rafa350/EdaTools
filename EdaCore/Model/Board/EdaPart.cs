@@ -7,12 +7,17 @@ using MikroPic.EdaTools.v1.Core.Model.Common;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
+    public enum PartSide {
+        Top,
+        Bottom
+    }
+
     public sealed partial class EdaPart : IEdaPosition, IEdaRotation, IEdaName, IEdaVisitable<IEdaBoardVisitor> {
 
         private string _name;
         private EdaPoint _position;
-        private EdaAngle _rotation;
-        private bool _flip;
+        private EdaAngle _rotation = EdaAngle.Zero;
+        private PartSide _side = PartSide.Top;
         private EdaComponent _component;
 
         /// <inheritdoc/>
@@ -126,12 +131,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         }
 
         /// <summary>
-        /// Indica si el component esta girat
+        /// La cara de la placa on es el component.
         /// </summary>
         /// 
-        public bool Flip {
-            get => _flip;
-            set => _flip = value;
+        public PartSide Side {
+            get => _side;
+            set => _side = value;
         }
 
         /// <summary>
@@ -139,7 +144,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// 
         public bool IsFlipped =>
-            _flip;
+            _side == PartSide.Bottom;
 
         /// <summary>
         /// Indica si conte elements

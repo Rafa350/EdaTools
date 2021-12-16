@@ -316,7 +316,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             var layerNode = tree.SelectBranch(node, "layer");
             var layer = tree.ValueAsString(layerNode[1]);
-            var side = layer == "Bottom" ? BoardSide.Bottom : BoardSide.Top;
+            var side = layer == "Bottom" ? PartSide.Bottom : PartSide.Top;
 
             var component = board.GetComponent(name);
             var partName = String.Format("{0}:{1}", name, _partCount++);
@@ -365,7 +365,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 Name = partName, 
                 Position = position, 
                 Rotation = rotation, 
-                Flip = side == BoardSide.Bottom 
+                Side = side
             };
             if (attributes != null)
                 part.AddAttributes(attributes);

@@ -835,16 +835,16 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             //
             int x = ParseNumber(node.AttributeAsString("x"));
             int y = ParseNumber(node.AttributeAsString("y"));
-            EdaPoint position = new EdaPoint(x, y);
+            var position = new EdaPoint(x, y);
 
             // Obte l'angle de rotacio i la cara
             //
             EdaAngle rotation = EdaAngle.Zero;
-            bool flip = false;
+            PartSide side = PartSide.Top;
             if (node.AttributeExists("rot")) {
                 string rot = node.AttributeAsString("rot");
-                if (rot.Contains("M"))
-                    flip = true;
+                if (rot.Contains('M'))
+                    side = PartSide.Bottom;
 
                 rotation = ParseAngle(rot);
             }
@@ -854,7 +854,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 Name = name,
                 Position = position,
                 Rotation = rotation,
-                Flip = flip
+                Side = side
             };
 
             bool hasNameAttribute = false;

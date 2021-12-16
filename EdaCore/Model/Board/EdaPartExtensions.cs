@@ -9,7 +9,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             var t = new Transformation();
             t.Translate(part.Position);
             t.Rotate(part.Position, part.Rotation);
-            if (part.Flip)
+            if (part.IsFlipped)
                 t.Scale(part.Position, -1, 1);
             return t;
         }

@@ -140,17 +140,20 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// </summary>
         /// <param name="diameter">Diametre.</param>
         /// <param name="tag">Etiqueta.</param>
+        /// <returns>L'apertura afeigida.</returns>
         /// 
-        public void DefineCircleAperture(int diameter, string tag = null) {
+        public Aperture DefineCircleAperture(int diameter, string tag = null) {
 
             if (diameter <= 0)
                 throw new ArgumentOutOfRangeException(nameof(diameter));
 
             int key = GetCircleKey(diameter, tag);
-            if (!_items.ContainsKey(key)) {
-                Aperture ap = new CircleAperture(_apertureId++, tag, diameter);
+            if (!_items.TryGetValue(key, out Aperture ap)) {
+                ap = new CircleAperture(_apertureId++, tag, diameter);
                 _items.Add(key, ap);
             }
+
+            return ap;
         }
 
         /// <summary>
@@ -160,8 +163,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="height">Alçada.</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="tag">Etiqueta.</param>
+        /// <returns>L'apertura afeigida.</returns>
         /// 
-        public void DefineRectangleAperture(int width, int height, EdaAngle rotation, string tag = null) {
+        public Aperture DefineRectangleAperture(int width, int height, EdaAngle rotation, string tag = null) {
 
             if (width <= 0)
                 throw new ArgumentOutOfRangeException(nameof(width));
@@ -170,8 +174,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 throw new ArgumentOutOfRangeException(nameof(height));
 
             int key = GetRectangleKey(width, height, rotation, tag);
-            if (!_items.ContainsKey(key)) {
-                Aperture ap;
+            if (!_items.TryGetValue(key, out Aperture ap)) {
                 if (rotation.IsHorizontal)
                     ap = new RectangleAperture(_apertureId++, tag, width, height);
                 else if (rotation.IsVertical)
@@ -180,6 +183,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     ap = new MacroAperture(_apertureId++, tag, _rectangleMacro, width, height, rotation.Value);
                 _items.Add(key, ap);
             }
+
+            return ap;
         }
 
         /// <summary>
@@ -190,8 +195,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="radius">Radi de corvatura.</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="tag">Etiqueta.</param>
+        /// <returns>L'apertura afeigida.</returns>
         /// 
-        public void DefineRoundRectangleAperture(int width, int height, int radius, EdaAngle rotation, string tag = null) {
+        public Aperture DefineRoundRectangleAperture(int width, int height, int radius, EdaAngle rotation, string tag = null) {
 
             if (width <= 0)
                 throw new ArgumentOutOfRangeException(nameof(width));
@@ -209,10 +215,12 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 throw new ArgumentOutOfRangeException(nameof(radius));
 
             int key = GetRoundRectangleKey(width, height, radius, rotation, tag);
-            if (!_items.ContainsKey(key)) {
-                Aperture ap = new MacroAperture(_apertureId++, tag, _roundRectangleMacro, width, height, radius, rotation.Value * 10000);
+            if (!_items.TryGetValue(key, out Aperture ap)) {
+                ap = new MacroAperture(_apertureId++, tag, _roundRectangleMacro, width, height, radius, rotation.Value * 10000);
                 _items.Add(key, ap);
             }
+
+            return ap;
         }
 
         /// <summary>
@@ -221,17 +229,20 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="size">Diametre exterior.</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="tag">Etiqueta.</param>
+        /// <returns>L'apertura afeigida.</returns>
         /// 
-        public void DefineOctagonAperture(int size, EdaAngle rotation, string tag = null) {
+        public Aperture DefineOctagonAperture(int size, EdaAngle rotation, string tag = null) {
 
             if (size <= 0)
                 throw new ArgumentOutOfRangeException(nameof(size));
 
             int key = GetOctagonKey(size, rotation, tag);
-            if (!_items.ContainsKey(key)) {
-                Aperture ap = new PoligonAperture(_apertureId++, tag, 8, size, rotation + EdaAngle.FromValue(2250));
+            if (!_items.TryGetValue(key, out Aperture ap)) {
+                ap = new PoligonAperture(_apertureId++, tag, 8, size, rotation + EdaAngle.FromValue(2250));
                 _items.Add(key, ap);
             }
+
+            return ap;
         }
 
         /// <summary>
@@ -241,8 +252,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <param name="height">Alçada.</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <param name="tag">Etiqueta.</param>
+        /// <returns>L'apertura afeigida.</returns>
         /// 
-        public void DefineOvalAperture(int width, int height, EdaAngle rotation, string tag = null) {
+        public Aperture DefineOvalAperture(int width, int height, EdaAngle rotation, string tag = null) {
 
             if (width <= 0)
                 throw new ArgumentOutOfRangeException(nameof(width));
@@ -251,9 +263,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 throw new ArgumentOutOfRangeException(nameof(height));
 
             int key = GetOvalKey(width, height, rotation, tag);
-            if (!_items.ContainsKey(key)) {
-
-                Aperture ap;
+            if (!_items.TryGetValue(key, out Aperture ap)) {
                 if (rotation == EdaAngle.Zero || rotation == EdaAngle.Deg180)
                     ap = new ObroundAperture(_apertureId++, tag, width, height);
                 else if (rotation == EdaAngle.Deg90 || rotation == EdaAngle.Deg270)
@@ -263,10 +273,12 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                 _items.Add(key, ap);
             }
+
+            return ap;
         }
 
         /// <summary>
-        /// Obte una aperturew de tipus cercle.
+        /// Obte una aperture de tipus cercle.
         /// </summary>
         /// <param name="diameter">Diametre.</param>
         /// <param name="tag">Etiqueta.</param>

@@ -54,7 +54,7 @@
                         wr.WriteAttributeString("name", part.Name);
                         wr.WriteAttributeString("position", FormatPoint(part.Position));
                         wr.WriteAttributeString("rotation", FormatAngle(part.Rotation));
-                        wr.WriteAttributeString("flip", part.Flip.ToString());
+                        wr.WriteAttributeString("flip", part.Side.ToString());
 
                         bool hasAttributes = false;
                         foreach (EdaPartAttribute attribute in part.Attributes) {
