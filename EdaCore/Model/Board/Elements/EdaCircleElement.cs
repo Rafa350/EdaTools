@@ -1,8 +1,6 @@
 ﻿using System;
-
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
@@ -10,7 +8,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un cercle.
     /// </summary>
     /// 
-    public sealed class CircleElement : EdaElement, IEdaPosition {
+    public sealed class EdaCircleElement : EdaElement, IEdaPosition {
 
         private EdaPoint _position;
         private int _radius;
@@ -29,12 +27,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override Polygon GetPolygon(BoardSide side) {
 
             if (Filled) {
-                var points = PolygonBuilder.MakeCircle(_position, _radius);
+                var points = EdaPoints.CreateCircle(_position, _radius);
                 return new Polygon(points);
             }
             else {
-                var outerPoints = PolygonBuilder.MakeCircle(_position, _radius + (_thickness / 2));
-                var innerPoints = PolygonBuilder.MakeCircle(_position, _radius - (_thickness / 2));
+                var outerPoints = EdaPoints.CreateCircle(_position, _radius + (_thickness / 2));
+                var innerPoints = EdaPoints.CreateCircle(_position, _radius - (_thickness / 2));
                 return new Polygon(outerPoints, new Polygon(innerPoints));
             }
         }
@@ -43,16 +41,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            var points = PolygonBuilder.MakeCircle(_position, _radius + (_thickness / 2) + spacing);
+            var points = EdaPoints.CreateCircle(_position, _radius + (_thickness / 2) + spacing);
             return new Polygon(points);
         }
 
         /// <inheritdoc/>
         /// 
-        public override Rect GetBoundingBox(BoardSide side) {
+        public override EdaRect GetBoundingBox(BoardSide side) {
 
             int r = _radius + (_thickness / 2);
-            return new Rect(_position.X - r, _position.Y - r, r + r, r + r);
+            return new EdaRect(_position.X - r, _position.Y - r, r + r, r + r);
         }
 
         /// <summary>
@@ -72,7 +70,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => _radius;
             set {
                 if (value <= 0)
-                    throw new ArgumentOutOfRangeException("Radius");
+                    throw new ArgumentOutOfRangeException(nameof(Radius));
 
                 _radius = value;
             }
@@ -86,7 +84,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => _radius * 2;
             set {
                 if (value <= 0)
-                    throw new ArgumentOutOfRangeException("Diameter");
+                    throw new ArgumentOutOfRangeException(nameof(Diameter));
 
                 _radius = value / 2;
             }
@@ -100,7 +98,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => _thickness;
             set {
                 if (value < 0)
-                    throw new ArgumentOutOfRangeException("Thickness");
+                    throw new ArgumentOutOfRangeException(nameof(Thickness));
 
                 _thickness = value;
             }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Common;
@@ -43,7 +42,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public Rect GetBoundingBox(BoardSide side) {
+        public EdaRect GetBoundingBox(BoardSide side) {
 
             if (HasElements) {
 
@@ -53,7 +52,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 int bottom = int.MinValue;
 
                 foreach (var element in Elements) {
-                    Rect r = element.GetBoundingBox(side);
+                    EdaRect r = element.GetBoundingBox(side);
                     if (left > r.Left)
                         left = r.Left;
                     if (top > r.Top)
@@ -64,10 +63,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                         bottom = r.Bottom;
                 }
 
-                return new Rect(left, top, right - left + 1, top - bottom + 1);
+                return new EdaRect(left, top, right - left + 1, top - bottom + 1);
             }
             else
-                return new Rect();
+                return new EdaRect();
         }
 
         /// <summary>
@@ -77,7 +76,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="throwOnError">True si dispara una execepcio si no el troba.</param>
         /// <returns>El pad. Null si no el troba.</returns>
         /// 
-        public PadElement GetPad(string name, bool throwOnError = true) {
+        public EdaPadElement GetPad(string name, bool throwOnError = true) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
@@ -171,7 +170,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// Enumera els pads
         /// </summary>
         /// 
-        public IEnumerable<PadElement> Pads =>
+        public IEnumerable<EdaPadElement> Pads =>
             _component.Pads();
     }
 }

@@ -1,7 +1,6 @@
 ﻿
 using MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers;
 using MikroPic.EdaTools.v1.Core.Model.Common;
-
 using NetSerializer.Attributes;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {

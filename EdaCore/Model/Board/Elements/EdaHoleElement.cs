@@ -1,8 +1,6 @@
 ﻿using System;
-
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
@@ -10,7 +8,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un forat no conductor.
     /// </summary>
     /// 
-    public sealed class HoleElement : EdaElement, IEdaPosition {
+    public sealed class EdaHoleElement : EdaElement, IEdaPosition {
 
         private EdaPoint _position;
         private int _drill;
@@ -26,7 +24,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            var points = PolygonBuilder.MakeCircle(_position, _drill / 2);
+            var points = EdaPoints.CreateCircle(_position, _drill / 2);
             return new Polygon(points);
         }
 
@@ -34,15 +32,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            var points = PolygonBuilder.MakeCircle(_position, (_drill / 2) + spacing);
+            var points = EdaPoints.CreateCircle(_position, (_drill / 2) + spacing);
             return new Polygon(points);
         }
 
         /// <inheritdoc/>
         /// 
-        public override Rect GetBoundingBox(BoardSide side) {
+        public override EdaRect GetBoundingBox(BoardSide side) {
 
-            return new Rect(_position.X - _drill / 2, _position.Y - _drill / 2, _drill, _drill);
+            return new EdaRect(_position.X - _drill / 2, _position.Y - _drill / 2, _drill, _drill);
         }
 
         /// <summary>
@@ -62,7 +60,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => _drill;
             set {
                 if (value <= 0)
-                    throw new ArgumentOutOfRangeException("Drill");
+                    throw new ArgumentOutOfRangeException(nameof(Drill));
 
                 _drill = value;
             }

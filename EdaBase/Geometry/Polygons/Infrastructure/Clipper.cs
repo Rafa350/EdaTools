@@ -1228,13 +1228,13 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         private ClipType m_ClipType;
         private Maxima m_Maxima;
         private TEdge m_SortedEdges;
-        private List<IntersectNode> m_IntersectList;
-        IComparer<IntersectNode> m_IntersectNodeComparer;
+        private readonly List<IntersectNode> m_IntersectList;
+        readonly IComparer<IntersectNode> m_IntersectNodeComparer;
         private bool m_ExecuteLocked;
         private PolyFillType m_ClipFillType;
         private PolyFillType m_SubjFillType;
-        private List<Join> m_Joins;
-        private List<Join> m_GhostJoins;
+        private readonly List<Join> m_Joins;
+        private readonly List<Join> m_GhostJoins;
         private bool m_UsingPolyTree;
 #if use_xyz
       public delegate void ZFillCallback(IntPoint bot1, IntPoint top1, 
@@ -3940,12 +3940,12 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         private Paths m_destPolys;
         private Path m_srcPoly;
         private Path m_destPoly;
-        private List<DoublePoint> m_normals = new List<DoublePoint>();
+        private readonly List<DoublePoint> m_normals = new List<DoublePoint>();
         private double m_delta, m_sinA, m_sin, m_cos;
         private double m_miterLim, m_StepsPerRad;
 
         private IntPoint m_lowest;
-        private PolyNode m_polyNodes = new PolyNode();
+        private readonly PolyNode m_polyNodes = new PolyNode();
 
         public double ArcTolerance { get; set; }
         public double MiterLimit { get; set; }

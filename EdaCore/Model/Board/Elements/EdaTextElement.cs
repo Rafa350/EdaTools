@@ -1,5 +1,4 @@
 ﻿using System;
-
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
@@ -10,7 +9,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un text.
     /// </summary>
     /// 
-    public sealed class TextElement : EdaElement, IEdaPosition, IEdaRotation {
+    public sealed class EdaTextElement : EdaElement, IEdaPosition, IEdaRotation {
 
         private EdaPoint _position;
         private EdaAngle _rotation;
@@ -43,7 +42,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override Rect GetBoundingBox(BoardSide side) {
+        public override EdaRect GetBoundingBox(BoardSide side) {
 
             throw new NotImplementedException();
         }

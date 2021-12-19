@@ -56,7 +56,7 @@ namespace MikroPic.EdaTools.v1.Panel.Model {
         /// Enumera els elements
         /// </summary>
         /// 
-        public IEnumerable<EdaPanelItem> Items => 
+        public IEnumerable<EdaPanelItem> Items =>
             _items;
 
         /// <summary>

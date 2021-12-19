@@ -9,7 +9,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.IO {
 
     public static class EdaFormatter {
 
-        private static CultureInfo _ci = CultureInfo.InvariantCulture;
+        private static readonly CultureInfo _ci = CultureInfo.InvariantCulture;
 
         public static string FormatScalar(int value) =>
             String.Format(_ci, "{0}", value / 1000000.0);
@@ -17,8 +17,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.IO {
         public static string FormatAngle(EdaAngle value) =>
             String.Format(_ci, "{0}", value.Value / 100.0);
 
-        public static string FormatRatio(EdaRatio value) =>
-            String.Format(_ci, "{0}", value.Value / 1000.0);
+        public static string FormatRatio(EdaRatio value) => 
+            String.Format(_ci, "{0}", value.AsPercent);
 
         public static string FormatPoint(EdaPoint value) =>
             String.Format(_ci, "{0}, {1}", value.X / 1000000.0, value.Y / 1000000.0);

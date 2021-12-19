@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
-using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
@@ -12,7 +11,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa una regio poligonal.
     /// </summary>
     /// 
-    public class PolygonElement : EdaElement {
+    public class EdaPolygonElement : EdaElement {
 
         private IEnumerable<EdaArcPoint> _segments;
         private int _thickness;
@@ -37,7 +36,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 var prevPoint = new EdaPoint();
                 var angle = EdaAngle.Zero;
 
-                var points = new List<EdaPoint>();
+                var points = EdaPoints.Create();
 
                 bool first = true;
                 foreach (var segment in _segments) {
@@ -52,7 +51,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                     // Tram recte
                     //
                     if (angle.IsZero)
-                        points.Add(segment.Position);
+                        points.AddPoint(segment.Position);
 
                     // Tram circular
                     //
@@ -60,7 +59,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                         EdaPoint center = ArcUtils.Center(prevPoint, segment.Position, angle);
                         int radius = ArcUtils.Radius(prevPoint, segment.Position, angle);
                         EdaAngle startAngle = ArcUtils.StartAngle(prevPoint, center);
-                        points.AddRange(PolygonBuilder.MakeArc(center, radius, startAngle, angle));
+                        points.AddArcPoints(center, radius, startAngle, angle);
                     }
 
                     prevPoint = segment.Position;
@@ -68,16 +67,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 }
 
                 if (angle.IsZero)
-                    points.Add(firstPoint);
+                    points.AddPoint(firstPoint);
 
                 else {
                     EdaPoint center = ArcUtils.Center(prevPoint, firstPoint, angle);
                     int radius = ArcUtils.Radius(prevPoint, firstPoint, angle);
                     EdaAngle startAngle = ArcUtils.StartAngle(prevPoint, center);
-                    points.AddRange(PolygonBuilder.MakeArc(center, radius, startAngle, angle, false));
+                    points.AddArcPoints(center, radius, startAngle, angle, false);
                 }
 
-                return new Polygon(points.ToArray());
+                return new Polygon(points);
             }
         }
 
@@ -99,10 +98,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override Rect GetBoundingBox(BoardSide side) {
+        public override EdaRect GetBoundingBox(BoardSide side) {
 
             if (_segments == null)
-                return new Rect(0, 0, 0, 0);
+                return new EdaRect(0, 0, 0, 0);
 
             else {
                 Polygon polygon = GetPolygon(side);

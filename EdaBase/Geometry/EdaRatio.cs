@@ -27,6 +27,9 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         public static EdaRatio FromValue(int value) =>
             new EdaRatio(value);
 
+        public static EdaRatio FromPercent(double value) =>
+            new EdaRatio((int)(value * 1000.0));
+
         public static int operator *(int n, EdaRatio r) =>
             (int)((n * (long)r._value) / 1000L);
 
@@ -35,23 +38,6 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
 
         public override int GetHashCode() =>
             _value * 11337793;
-
-        /// <summary>
-        /// Converteix a string
-        /// </summary>
-        /// <returns>La representacio del valor.</returns>
-        /// 
-        public override string ToString() =>
-            _value.ToString();
-
-        /// <summary>
-        /// Crea un objecte 'EdaRatio' a partir de la seva representacio textual.
-        /// </summary>
-        /// <param name="s">La representacio del valor</param>
-        /// <returns>El valor.</returns>
-        /// 
-        public static EdaRatio Parse(string s) =>
-            EdaRatio.FromValue((int)Double.Parse(s));
 
         public bool Equals(EdaRatio other) =>
             _value == other._value;
@@ -74,6 +60,9 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
 
         public bool IsMax =>
             _value == 1000.0;
+
+        public double AsPercent =>
+            _value / 1000.0;
 
         public int Value =>
             _value;

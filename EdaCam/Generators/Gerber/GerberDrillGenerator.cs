@@ -208,7 +208,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="line">L'element a visitar.</param>
             /// 
-            public override void Visit(LineElement line) {
+            public override void Visit(EdaLineElement line) {
 
                 if (CanVisit(line))
                     _apertures.DefineCircleAperture(line.Thickness);
@@ -219,7 +219,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="arc">L'element a visitar.</param>
             /// 
-            public override void Visit(ArcElement arc) {
+            public override void Visit(EdaArcElement arc) {
 
                 if (CanVisit(arc))
                     _apertures.DefineCircleAperture(arc.Thickness);
@@ -230,7 +230,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="hole">L'element a visitar.</param>
             /// 
-            public override void Visit(HoleElement hole) {
+            public override void Visit(EdaHoleElement hole) {
 
                 if (CanVisit(hole))
                     _apertures.DefineCircleAperture(hole.Drill);
@@ -241,7 +241,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="via">L'element a visitar.</param>
             /// 
-            public override void Visit(ViaElement via) {
+            public override void Visit(EdaViaElement via) {
 
                 if (CanVisit(via))
                     _apertures.DefineCircleAperture(via.Drill);
@@ -252,7 +252,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="pad">L'element a visitar.</param>
             /// 
-            public override void Visit(ThPadElement pad) {
+            public override void Visit(EdaThPadElement pad) {
 
                 if (CanVisit(pad))
                     _apertures.DefineCircleAperture(pad.Drill);
@@ -292,7 +292,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="arc">L'element a visitar.</param>
             /// 
-            public override void Visit(ArcElement arc) {
+            public override void Visit(EdaArcElement arc) {
 
                 if (CanVisit(arc)) {
 
@@ -321,7 +321,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="line">L'element a visitar.</param>
             /// 
-            public override void Visit(LineElement line) {
+            public override void Visit(EdaLineElement line) {
 
                 if (CanVisit(line)) {
 
@@ -346,7 +346,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="hole">El element a visitar.</param>
             /// 
-            public override void Visit(HoleElement hole) {
+            public override void Visit(EdaHoleElement hole) {
 
                 if (CanVisit(hole)) {
 
@@ -368,7 +368,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="via">L'objecte a visitar.</param>
             /// 
-            public override void Visit(ViaElement via) {
+            public override void Visit(EdaViaElement via) {
 
                 if (CanVisit(via)) {
 
@@ -390,7 +390,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="pad">L'objecte a visitar.</param>
             /// 
-            public override void Visit(ThPadElement pad) {
+            public override void Visit(EdaThPadElement pad) {
 
                 if (CanVisit(pad)) {
 

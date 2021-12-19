@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Xml;
-
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Xml;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
@@ -44,7 +43,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             /// </summary>
             /// <param name="line">L'objecte a visitar.</param>
             /// 
-            public override void Visit(LineElement line) {
+            public override void Visit(EdaLineElement line) {
 
                 _writer.WriteStartElement("line");
 
@@ -53,7 +52,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 _writer.WriteAttributeString("endPosition", EdaFormatter.FormatPoint(line.EndPosition));
                 if (line.Thickness > 0)
                     _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(line.Thickness));
-                if (line.LineCap != LineElement.CapStyle.Round)
+                if (line.LineCap != EdaLineElement.CapStyle.Round)
                     _writer.WriteAttributeEnum("lineCap", line.LineCap);
 
                 if (_currentBoard != null) {
@@ -70,7 +69,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             /// </summary>
             /// <param name="arc">L'objecte a visitar.</param>
             /// 
-            public override void Visit(ArcElement arc) {
+            public override void Visit(EdaArcElement arc) {
 
                 _writer.WriteStartElement("arc");
 
@@ -80,7 +79,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 _writer.WriteAttributeString("angle", EdaFormatter.FormatAngle(arc.Angle));
                 if (arc.Thickness > 0)
                     _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(arc.Thickness));
-                if (arc.LineCap != LineElement.CapStyle.Round)
+                if (arc.LineCap != EdaLineElement.CapStyle.Round)
                     _writer.WriteAttributeEnum("lineCap", arc.LineCap);
 
                 if (_currentBoard != null) {
@@ -97,7 +96,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             /// </summary>
             /// <param name="rectangle">L'objecte a visitar.</param>
             /// 
-            public override void Visit(RectangleElement rectangle) {
+            public override void Visit(EdaRectangleElement rectangle) {
 
                 _writer.WriteStartElement("rectangle");
 
@@ -120,7 +119,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             /// </summary>
             /// <param name="circle">L'element a visitar.</param>
             /// 
-            public override void Visit(CircleElement circle) {
+            public override void Visit(EdaCircleElement circle) {
 
                 _writer.WriteStartElement("circle");
 
@@ -141,7 +140,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             /// </summary>
             /// <param name="text">L'element a visitar</param>
             /// 
-            public override void Visit(TextElement text) {
+            public override void Visit(EdaTextElement text) {
 
                 _writer.WriteStartElement("text");
 
@@ -166,7 +165,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             /// </summary>
             /// <param name="hole">L'element a visitar.</param>
             /// 
-            public override void Visit(HoleElement hole) {
+            public override void Visit(EdaHoleElement hole) {
 
                 _writer.WriteStartElement("hole");
 
@@ -182,7 +181,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             /// </summary>
             /// <param name="pad">L'element a visitar-</param>
             /// 
-            public override void Visit(SmdPadElement pad) {
+            public override void Visit(EdaSmdPadElement pad) {
 
                 _writer.WriteStartElement("spad");
 
@@ -192,8 +191,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 if (!pad.Rotation.IsZero)
                     _writer.WriteAttributeString("rotation", EdaFormatter.FormatAngle(pad.Rotation));
                 _writer.WriteAttributeString("size", EdaFormatter.FormatSize(pad.Size));
-                if (!pad.Roundness.IsZero)
-                    _writer.WriteAttributeString("roundness", EdaFormatter.FormatRatio(pad.Roundness));
+                if (!pad.CornerRatio.IsZero) {
+                    _writer.WriteAttributeString("cornerRatio", EdaFormatter.FormatRatio(pad.CornerRatio));
+                    _writer.WriteAttributeEnum("cornerShape", pad.CornerShape);
+                }
 
                 if (_currentBoard != null) {
                     EdaSignal signal = _currentBoard.GetSignal(pad, _currentPart, false);
@@ -209,7 +210,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             /// </summary>
             /// <param name="pad">L'element a visitar.</param>
             /// 
-            public override void Visit(ThPadElement pad) {
+            public override void Visit(EdaThPadElement pad) {
 
                 _writer.WriteStartElement("tpad");
 
@@ -218,10 +219,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(pad.Position));
                 if (!pad.Rotation.IsZero)
                     _writer.WriteAttributeString("rotation", EdaFormatter.FormatAngle(pad.Rotation));
-                _writer.WriteAttributeString("size", EdaFormatter.FormatScalar(pad.TopSize));
+                if (!pad.CornerRatio.IsZero) {
+                    _writer.WriteAttributeString("cornerRatio", EdaFormatter.FormatRatio(pad.CornerRatio));
+                    _writer.WriteAttributeEnum("cornerShape", pad.CornerShape);
+                }
+                _writer.WriteAttributeString("topSize", EdaFormatter.FormatSize(pad.TopSize));
+                if (pad.InnerSize != pad.TopSize)
+                    _writer.WriteAttributeString("innerSize", EdaFormatter.FormatSize(pad.InnerSize));
+                if (pad.BottomSize != pad.TopSize)
+                    _writer.WriteAttributeString("bottomSize", EdaFormatter.FormatSize(pad.BottomSize));
                 _writer.WriteAttributeString("drill", EdaFormatter.FormatScalar(pad.Drill));
-                if (pad.Shape != ThPadElement.ThPadShape.Circle)
-                    _writer.WriteAttributeEnum("shape", pad.Shape);
 
                 if (_currentBoard != null) {
                     EdaSignal signal = _currentBoard.GetSignal(pad, _currentPart, false);
@@ -281,7 +288,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             /// </summary>
             /// <param name="region">L'objecte a visitar.</param>
             /// 
-            public override void Visit(RegionElement region) {
+            public override void Visit(EdaRegionElement region) {
 
                 _writer.WriteStartElement("region");
 
@@ -337,7 +344,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                     //
                     if (part.HasPads) {
                         bool empty = true;
-                        foreach (PadElement pad in part.Pads) {
+                        foreach (EdaPadElement pad in part.Pads) {
                             EdaSignal signal = _currentBoard.GetSignal(pad, part, false);
                             if (signal != null) {
                                 if (empty) {
@@ -375,7 +382,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             /// </summary>
             /// <param name="via">L'objecte a visitar.</param>
             /// 
-            public override void Visit(ViaElement via) {
+            public override void Visit(EdaViaElement via) {
 
                 _writer.WriteStartElement("via");
 
@@ -385,7 +392,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 _writer.WriteAttributeString("outerSize", EdaFormatter.FormatScalar(via.OuterSize));
                 if (via.InnerSize != via.OuterSize)
                     _writer.WriteAttributeString("innerSize", EdaFormatter.FormatScalar(via.InnerSize));
-                if (via.Shape != ViaElement.ViaShape.Circle)
+                if (via.Shape != EdaViaElement.ViaShape.Circle)
                     _writer.WriteAttributeEnum("shape", via.Shape);
 
                 if (_currentBoard != null) {

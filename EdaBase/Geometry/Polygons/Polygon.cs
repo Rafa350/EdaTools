@@ -1,9 +1,7 @@
-﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons {
+﻿using System;
+using System.Collections.Generic;
 
-    using System;
-    using System.Collections.Generic;
-
-    using MikroPic.EdaTools.v1.Base.Geometry;
+namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons {
 
     /// <summary>
     /// Clase que representa un poligon amb fills. Aquesta clase es inmutable.
@@ -11,18 +9,18 @@
     /// 
     public sealed class Polygon {
 
-        private readonly EdaPoint[] _points;
+        private readonly EdaPoints _points;
         private readonly Polygon[] _childs;
-        private Rect? _bbox = null;
+        private EdaRect? _bbox = null;
 
         /// <summary>
         /// Constructor del poligon.
         /// </summary>
         /// <param name="points">Llista de punts.</param>
         /// 
-        public Polygon(params EdaPoint[] points) {
+        public Polygon(EdaPoints points) {
 
-            if ((points != null) && (points.Length < 3))
+            if ((points != null) && (points.Count < 3))
                 throw new InvalidOperationException("La lista ha de contener un minimo de 3 puntos.");
 
             _points = points;
@@ -34,9 +32,9 @@
         /// <param name="points">Lista de punts.</param>
         /// <param name="childs">Llista de fills.</param>
         /// 
-        public Polygon(EdaPoint[] points, params Polygon[] childs) {
+        public Polygon(EdaPoints points, params Polygon[] childs) {
 
-            if ((points != null) && (points.Length < 3))
+            if ((points != null) && (points.Count < 3))
                 throw new InvalidOperationException("La lista ha de contener un minimo de 3 puntos.");
 
             _points = points;
@@ -67,14 +65,13 @@
         /// </summary>
         /// <returns>La nova llista de punts.</returns>
         /// 
-        public EdaPoint[] ClonePoints() {
+        public EdaPoints ClonePoints() {
 
-            EdaPoint[] clonedPoints = null;
-            if (_points != null) {
-                clonedPoints = new EdaPoint[_points.Length];
-                _points.CopyTo(clonedPoints, 0);
-            }
-            return clonedPoints;
+            return _points == null ? null : EdaPoints.Create(_points);
+        }
+
+        public void Reverse() {
+
         }
 
         /// <summary>
@@ -85,16 +82,12 @@
         private void Transform(Transformation transformation) {
 
             if (_points != null)
-                transformation.ApplyTo(_points);
+                for (int i = 0; i < _points.Count; i++)
+                    _points[i] = transformation.ApplyTo(_points[i]);
 
             if (_childs != null)
                 for (int i = 0; i < _childs.Length; i++)
                     _childs[i].Transform(transformation);
-        }
-
-        public void Reverse() {
-
-            Array.Reverse(_points);
         }
 
         /// <summary>
@@ -117,7 +110,7 @@
         /// <param name="points">Llista de punts.</param>
         /// <returns>L'area del poligon.</returns>
         /// 
-        private static int GetSignedArea(EdaPoint[] points) {
+        private static int GetSignedArea(EdaPoints points) {
 
             if (points == null)
                 return 0;
@@ -125,7 +118,7 @@
             else {
                 int area = 0;
                 int i = 0;
-                while (i < points.Length - 1) {
+                while (i < points.Count - 1) {
                     area +=
                         (points[i + 1].X - points[i].X) *
                         (points[i + 1].Y + points[i].Y);
@@ -145,10 +138,10 @@
         /// <param name="points">La llista de punts.</param>
         /// <returns>El rectangle envolvent.</returns>
         /// 
-        private static Rect GetBoundingBox(EdaPoint[] points) {
+        private static EdaRect GetBoundingBox(EdaPoints points) {
 
             if (points == null)
-                return new Rect(0, 0, 0, 0);
+                return new EdaRect(0, 0, 0, 0);
 
             else {
                 int minX = Int32.MaxValue;
@@ -156,7 +149,7 @@
                 int maxX = Int32.MinValue;
                 int maxY = Int32.MinValue;
 
-                for (int i = 0; i < points.Length; i++) {
+                for (int i = 0; i < points.Count; i++) {
 
                     int x = points[i].X;
                     int y = points[i].Y;
@@ -172,23 +165,25 @@
                         maxY = y;
                 }
 
-                return new Rect(minX, minY, maxX - minX, maxY - minY);
+                return new EdaRect(minX, minY, maxX - minX, maxY - minY);
             }
         }
 
-        public bool IsClockwise => GetSignedArea(_points) < 0;
+        public bool IsClockwise =>
+            GetSignedArea(_points) < 0;
 
         /// <summary>
         /// Obte l'area del poligon
         /// </summary>
         /// 
-        public int Area => Math.Abs(GetSignedArea(_points));
+        public int Area =>
+            Math.Abs(GetSignedArea(_points));
 
         /// <summary>
         /// Obte el bounding-box del poligon.
         /// </summary>
         /// 
-        public Rect BoundingBox {
+        public EdaRect BoundingBox {
             get {
                 if (!_bbox.HasValue)
                     _bbox = GetBoundingBox(_points);
@@ -200,24 +195,28 @@
         /// Obte el numero de punts.
         /// </summary>
         /// 
-        public int NumPoints => _points == null ? 0 : _points.Length;
+        public int NumPoints =>
+            _points == null ? 0 : _points.Count;
 
         /// <summary>
         /// Obte el numero de fills.
         /// </summary>
         /// 
-        public int NumChilds => _childs == null ? 0 : _childs.Length;
+        public int NumChilds =>
+            _childs == null ? 0 : _childs.Length;
 
         /// <summary>
         /// Obte els punts del poligon.
         /// </summary>
         /// 
-        public IEnumerable<EdaPoint> Points => _points;
+        public IEnumerable<EdaPoint> Points =>
+            _points;
 
         /// <summary>
         /// Obte els fills del poligon.
         /// </summary>
         /// 
-        public IEnumerable<Polygon> Childs => _childs;
+        public IEnumerable<Polygon> Childs =>
+            _childs;
     }
 }

@@ -206,7 +206,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                     string padName = childNode.AttributeAsString("pad");
 
                     EdaPart part = board.GetPart(partName, true);
-                    foreach (PadElement pad in part.Pads) {
+                    foreach (EdaPadElement pad in part.Pads) {
                         if (pad.Name == padName)
                             try {
                                 board.Connect(signal, pad, part);
@@ -358,12 +358,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             }
 
             string name = libraryName == null ? packageName : String.Format("{0}@{1}", packageName, libraryName);
-            
+
             var component = new EdaComponent();
             component.Name = name;
             component.Description = packageDescription;
             component.AddElements(elements);
-            
+
             return component;
         }
 
@@ -445,30 +445,14 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             if (node.AttributeExists("diameter"))
                 size = ParseNumber(node.AttributeAsString("diameter"));
 
-            ThPadElement.ThPadShape shape = ThPadElement.ThPadShape.Circle;
-            switch (node.AttributeAsString("shape")) {
-                case "square":
-                    shape = ThPadElement.ThPadShape.Square;
-                    break;
-
-                case "octagon":
-                    shape = ThPadElement.ThPadShape.Octagon;
-                    break;
-
-                case "long":
-                    shape = ThPadElement.ThPadShape.Oval;
-                    break;
-            }
-
-            return new ThPadElement {
+            return new EdaThPadElement {
                 Name = name,
                 LayerSet = layerSet,
                 Position = position,
                 Rotation = rotation,
-                TopSize = size,
-                InnerSize = size,
-                BottomSize = size,
-                Shape = shape,
+                TopSize = new EdaSize(size, size),
+                InnerSize = new EdaSize(size, size),
+                BottomSize = new EdaSize(size, size),
                 Drill = drill
             };
         }
@@ -510,13 +494,13 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             int layerNum = node.AttributeAsInteger("layer");
             var layerSet = new EdaLayerSet(GetLayerId(layerNum));
 
-            return new SmdPadElement {
+            return new EdaSmdPadElement {
                 Name = name,
                 LayerSet = layerSet,
                 Position = position,
                 Size = size,
                 Rotation = rotation,
-                Roundness = roundness
+                CornerRatio = roundness
             };
         }
 
@@ -543,25 +527,25 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             EdaLayerId topLayerId = GetLayerId(Int32.Parse(layerNames[0]));
             EdaLayerId bottomLayerId = GetLayerId(Int32.Parse(layerNames[1]));
 
-            ViaElement.ViaShape shape = ViaElement.ViaShape.Circle;
+            EdaViaElement.ViaShape shape = EdaViaElement.ViaShape.Circle;
             string shapeName = node.AttributeAsString("shape");
             switch (shapeName) {
                 case "square":
-                    shape = ViaElement.ViaShape.Square;
+                    shape = EdaViaElement.ViaShape.Square;
                     break;
 
                 case "octagon":
-                    shape = ViaElement.ViaShape.Octagon;
+                    shape = EdaViaElement.ViaShape.Octagon;
                     break;
             }
 
-            return new ViaElement { 
-                LayerSet = new EdaLayerSet(topLayerId, bottomLayerId), 
-                Position = position, 
-                OuterSize = size, 
+            return new EdaViaElement {
+                LayerSet = new EdaLayerSet(topLayerId, bottomLayerId),
+                Position = position,
+                OuterSize = size,
                 InnerSize = size,
-                Drill = drill, 
-                Shape = shape 
+                Drill = drill,
+                Shape = shape
             };
         }
 
@@ -599,7 +583,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             int layerNum = node.AttributeAsInteger("layer");
             var layerSet = new EdaLayerSet(GetLayerId(layerNum));
 
-            var element = new TextElement {
+            var element = new EdaTextElement {
                 LayerSet = layerSet,
                 Position = position,
                 Rotation = rotation,
@@ -632,7 +616,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             EdaAngle angle = EdaAngle.Zero;
             if (node.AttributeExists("curve"))
                 angle = ParseAngle(node.AttributeAsString("curve"));
-            LineElement.CapStyle lineCap = node.AttributeAsString("cap") == null ? LineElement.CapStyle.Round : LineElement.CapStyle.Flat;
+            EdaLineElement.CapStyle lineCap = node.AttributeAsString("cap") == null ? EdaLineElement.CapStyle.Round : EdaLineElement.CapStyle.Flat;
             int thickness = ParseNumber(node.AttributeAsString("width"));
             if (thickness == 0)
                 thickness = 100000;
@@ -642,14 +626,14 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
             EdaElement element;
             if (angle.IsZero)
-                element = new LineElement {
+                element = new EdaLineElement {
                     StartPosition = p1,
                     EndPosition = p2,
                     Thickness = thickness,
                     LineCap = lineCap
                 };
             else
-                element = new ArcElement {
+                element = new EdaArcElement {
                     StartPosition = p1,
                     EndPosition = p2,
                     Thickness = thickness,
@@ -693,11 +677,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             var layerNum = node.AttributeAsInteger("layer");
             var layerSet = new EdaLayerSet(GetLayerId(layerNum));
 
-            return new RectangleElement {
+            return new EdaRectangleElement {
                 LayerSet = layerSet,
                 Position = position,
                 Size = size,
-                Roundness = EdaRatio.Zero,
+                CornerRatio = EdaRatio.Zero,
                 Rotation = rotation,
                 Thickness = thickness,
                 Filled = thickness == 0
@@ -731,7 +715,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             int layerNum = node.AttributeAsInteger("layer");
             var layerSet = new EdaLayerSet(GetLayerId(layerNum));
 
-            return new CircleElement {
+            return new EdaCircleElement {
                 LayerSet = layerSet,
                 Position = position,
                 Radius = radius,
@@ -780,7 +764,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 segments.Add(new EdaArcPoint(vertex, angle));
             }
 
-            var element = new RegionElement {
+            var element = new EdaRegionElement {
                 LayerSet = layerSet,
                 Thickness = thickness,
                 Filled = true,
@@ -808,7 +792,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             //
             int drill = ParseNumber(node.AttributeAsString("drill"));
 
-            var element = new HoleElement {
+            var element = new EdaHoleElement {
                 Position = position,
                 Drill = drill
             };

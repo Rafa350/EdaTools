@@ -19,7 +19,7 @@
                 this.map = map;
             }
 
-            public override void Visit(LineElement line) {
+            public override void Visit(EdaLineElement line) {
 
                 ConnectivityItem item = new ConnectivityItem(line);
 
@@ -32,7 +32,7 @@
                 map.DefineEdge(anchorA, anchorB);
             }
 
-            public override void Visit(ViaElement via) {
+            public override void Visit(EdaViaElement via) {
 
                 ConnectivityItem item = new ConnectivityItem(via);
 
@@ -69,19 +69,19 @@
             if (element == null)
                 throw new ArgumentNullException(nameof(element));
 
-            if (element is ViaElement via)
+            if (element is EdaViaElement via)
                 AddViaElement(via);
 
-            else if (element is SmdPadElement smd)
+            else if (element is EdaSmdPadElement smd)
                 AddSmdPadElement(smd);
 
-            else if (element is ThPadElement th)
+            else if (element is EdaThPadElement th)
                 AddThPadElement(th);
 
-            else if (element is LineElement line)
+            else if (element is EdaLineElement line)
                 AddLineElement(line);
 
-            else if (element is ArcElement arc)
+            else if (element is EdaArcElement arc)
                 AddLineElement(arc);
         }
 
@@ -185,7 +185,7 @@
         /// </summary>
         /// <param name="via">L'element a afeigir.</param>
         /// 
-        private void AddViaElement(ViaElement via) {
+        private void AddViaElement(EdaViaElement via) {
 
             ConnectivityItem item = new ConnectivityItem(via);
 
@@ -198,7 +198,7 @@
         /// </summary>
         /// <param name="pad">L'element a afeigir.</param>
         /// 
-        private void AddThPadElement(ThPadElement pad) {
+        private void AddThPadElement(EdaThPadElement pad) {
 
             ConnectivityItem item = new ConnectivityItem(pad);
 
@@ -211,7 +211,7 @@
         /// </summary>
         /// <param name="pad">L'element a afeigir.</param>
         /// 
-        private void AddSmdPadElement(SmdPadElement pad) {
+        private void AddSmdPadElement(EdaSmdPadElement pad) {
 
             ConnectivityItem item = new ConnectivityItem(pad);
 
@@ -225,7 +225,7 @@
         /// <param name="position">La posicio.</param>
         /// <param name="element">El element.</param>
         /// 
-        private void AddLineElement(LineElement line) {
+        private void AddLineElement(EdaLineElement line) {
 
             ConnectivityItem item = new ConnectivityItem(line);
 

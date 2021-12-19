@@ -2,20 +2,20 @@
 using System.IO;
 
 using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Cam.Generators.Ipcd356.Builder;
+using MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 
-namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
+namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
 
     /// <summary>
     /// Generador de codi en format IPCD356
     /// </summary>
-    public sealed class Ipcd356Generator : Generator {
+    public sealed class IPCD356Generator : Generator {
 
-        public Ipcd356Generator(Target target) :
+        public IPCD356Generator(Target target) :
             base(target) {
 
         }
@@ -42,7 +42,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
             using (TextWriter writer = new StreamWriter(
                 new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None))) {
 
-                Ipcd356Builder builder = new Ipcd356Builder(writer);
+                IPCD356Builder builder = new IPCD356Builder(writer);
 
                 GenerateFileHeader(builder);
                 builder.Comment("BEGIN BOARD");
@@ -59,7 +59,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
         /// </summary>
         /// <param name="builder">El generador de codi.</param>
         /// 
-        private void GenerateFileHeader(Ipcd356Builder builder) {
+        private void GenerateFileHeader(IPCD356Builder builder) {
 
             builder.Comment("BEGIN FILE");
             builder.Comment("EdaTools v1.0.");
@@ -76,7 +76,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
         /// </summary>
         /// <param name="builder">El generador de codi.</param>
         /// 
-        private void GenerateFileTail(Ipcd356Builder builder) {
+        private void GenerateFileTail(IPCD356Builder builder) {
 
             builder.Comment(String.Format("End timestamp: {0:HH:mm:ss.fff}", DateTime.Now));
             builder.Comment("END FILE");
@@ -89,7 +89,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
         /// <param name="builder">El generador de codi.</param>
         /// <param name="board">La placa a procesar.</param>
         /// 
-        private void GenerateVias(Ipcd356Builder builder, EdaBoard board) {
+        private void GenerateVias(IPCD356Builder builder, EdaBoard board) {
 
             builder.Comment("BEGIN VIAS");
 
@@ -105,7 +105,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
         /// <param name="builder">El generador de codi.</param>
         /// <param name="board">La placa a procesar.</param>
         /// 
-        private void GeneratePads(Ipcd356Builder builder, EdaBoard board) {
+        private void GeneratePads(IPCD356Builder builder, EdaBoard board) {
 
             builder.Comment("BEGIN PADS");
 
@@ -121,7 +121,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
         /// <param name="builder">El generador de codi.</param>
         /// <param name="board">La placa a procesar.</param>
         /// 
-        private void GenerateNets(Ipcd356Builder builder, EdaBoard board) {
+        private void GenerateNets(IPCD356Builder builder, EdaBoard board) {
 
             builder.Comment("BEGIN NETS");
 
@@ -136,14 +136,14 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
         /// </summary>
         private sealed class NetsVisitor : EdaSignalVisitor {
 
-            private readonly Ipcd356Builder _builder;
+            private readonly IPCD356Builder _builder;
 
-            public NetsVisitor(Ipcd356Builder builder) {
+            public NetsVisitor(IPCD356Builder builder) {
 
                 _builder = builder;
             }
 
-            public override void Visit(LineElement line) {
+            public override void Visit(EdaLineElement line) {
 
                 int layerNum = 3;
                 if (line.IsOnLayer(EdaLayerId.TopCopper))
@@ -159,7 +159,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
                 }
             }
 
-            public override void Visit(ArcElement arc) {
+            public override void Visit(EdaArcElement arc) {
 
                 int layerNum = 3;
                 if (arc.IsOnLayer(EdaLayerId.TopCopper))
@@ -181,14 +181,14 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
         /// </summary>
         private sealed class ViasVisitor : EdaElementVisitor {
 
-            private readonly Ipcd356Builder builder;
+            private readonly IPCD356Builder builder;
 
-            public ViasVisitor(Ipcd356Builder builder) {
+            public ViasVisitor(IPCD356Builder builder) {
 
                 this.builder = builder;
             }
 
-            public override void Visit(ViaElement via) {
+            public override void Visit(EdaViaElement via) {
 
                 var signal = Board.GetSignal(via, null, false);
                 if (signal != null)
@@ -201,14 +201,14 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
         /// </summary>
         private sealed class PadsVisitor : EdaElementVisitor {
 
-            private readonly Ipcd356Builder _builder;
+            private readonly IPCD356Builder _builder;
 
-            public PadsVisitor(Ipcd356Builder builder) {
+            public PadsVisitor(IPCD356Builder builder) {
 
                 _builder = builder;
             }
 
-            public override void Visit(SmdPadElement pad) {
+            public override void Visit(EdaSmdPadElement pad) {
 
                 EdaSignal signal = Board.GetSignal(pad, Part, false);
                 if (signal != null) {
@@ -220,7 +220,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356 {
                 }
             }
 
-            public override void Visit(ThPadElement pad) {
+            public override void Visit(EdaThPadElement pad) {
 
                 EdaSignal signal = Board.GetSignal(pad, Part, false);
                 if (signal != null) {

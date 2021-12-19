@@ -22,37 +22,37 @@
         public virtual void Visit(EdaSignal signal) {
         }
 
-        public virtual void Visit(LineElement line) {
+        public virtual void Visit(EdaLineElement line) {
         }
 
-        public virtual void Visit(ArcElement arc) {
+        public virtual void Visit(EdaArcElement arc) {
         }
 
-        public virtual void Visit(RectangleElement rectangle) {
+        public virtual void Visit(EdaRectangleElement rectangle) {
         }
 
-        public virtual void Visit(CircleElement circle) {
+        public virtual void Visit(EdaCircleElement circle) {
         }
 
-        public virtual void Visit(PolygonElement polygon) {
+        public virtual void Visit(EdaPolygonElement polygon) {
         }
 
-        public virtual void Visit(SmdPadElement pad) {
+        public virtual void Visit(EdaSmdPadElement pad) {
         }
 
-        public virtual void Visit(ThPadElement pad) {
+        public virtual void Visit(EdaThPadElement pad) {
         }
 
-        public virtual void Visit(RegionElement region) {
+        public virtual void Visit(EdaRegionElement region) {
         }
 
-        public virtual void Visit(TextElement text) {
+        public virtual void Visit(EdaTextElement text) {
         }
 
-        public virtual void Visit(HoleElement hole) {
+        public virtual void Visit(EdaHoleElement hole) {
         }
 
-        public virtual void Visit(ViaElement via) {
+        public virtual void Visit(EdaViaElement via) {
         }
 
         public virtual void Visit(EdaPart part) {

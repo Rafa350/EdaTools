@@ -1,8 +1,6 @@
 ﻿using System;
-
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
@@ -10,7 +8,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa una via
     /// </summary>
     /// 
-    public sealed class ViaElement : EdaElement, IEdaPosition, IEdaConectable {
+    public sealed class EdaViaElement : EdaElement, IEdaPosition, IEdaConectable {
 
         public enum ViaShape {
             Square,
@@ -20,12 +18,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         private const double _cos2250 = 0.92387953251128675612818318939679;
 
-        private int _drcOuterSizeMin = 125000;
-        private int _drcOuterSizeMax = 2500000;
-        private EdaRatio _drcOuterSizePercent = EdaRatio.P25;
-        private int _drcInnerSizeMin = 125000;
-        private int _drcInnerSizeMax = 2500000;
-        private EdaRatio _drcInnerSizePercent = EdaRatio.P25;
+        private readonly int _drcOuterSizeMin = 125000;
+        private readonly int _drcOuterSizeMax = 2500000;
+        private readonly EdaRatio _drcOuterSizePercent = EdaRatio.P25;
+        private readonly int _drcInnerSizeMin = 125000;
+        private readonly int _drcInnerSizeMax = 2500000;
+        private readonly EdaRatio _drcInnerSizePercent = EdaRatio.P25;
 
         private EdaPoint _position;
         private int _drill;
@@ -53,43 +51,47 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             (_shape.GetHashCode() * 23);
 
         /// <summary>
-        /// Calcula la llista de puns pels poligons
+        /// Obte la llista de puns pels poligons
         /// </summary>
         /// <param name="side">Cara de la placa.</param>
         /// <param name="spacing">Espaiat.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        private EdaPoint[] MakePoints(BoardSide side, int spacing) {
+        private EdaPoints MakePoints(BoardSide side, int spacing) {
 
             int size = side == BoardSide.Inner ? InnerSize : OuterSize;
-            int sizeM2 = size * 2;
-            int sizeD2 = size / 2;
-
-            int spacingM2 = spacing * 2;
-            int spacingD2 = spacing / 2;
-
             ViaShape shape = side == BoardSide.Inner ? ViaShape.Circle : this._shape;
-
             switch (shape) {
                 case ViaShape.Square:
-                    return PolygonBuilder.MakeRectangle(
+                    return EdaPoints.CreateRectangle(
                         _position,
-                        new EdaSize(size + spacingM2, size + spacingM2),
-                        0,
-                        EdaAngle.FromValue(0));
+                        new EdaSize(size + spacing + spacing, size + spacing + spacing),
+                        EdaRatio.Zero,
+                        false,
+                        EdaAngle.Zero);
 
                 case ViaShape.Octagon:
-                    return PolygonBuilder.MakeRegularPolygon(
+                    return EdaPoints.CreatePolygon(
                         8,
                         _position,
-                        (int)((double)sizeD2 / _cos2250) + spacing,
+                        (int)(size / 2 / _cos2250) + spacing,
                         EdaAngle.FromValue(2250));
 
                 default:
-                    return PolygonBuilder.MakeCircle(
+                    return EdaPoints.CreateCircle(
                         _position,
-                        sizeD2 + spacing);
+                        (size / 2) + spacing);
             }
+        }
+
+        /// <summary>
+        /// Obte la llista de punts pel poligon del forat.
+        /// </summary>
+        /// <returns>La llista de puints.</returns>
+        /// 
+        private EdaPoints MakeHolePoints() {
+
+            return EdaPoints.CreateCircle(_position, _drill / 2);
         }
 
         /// <inheritdoc/>
@@ -97,11 +99,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override Polygon GetPolygon(BoardSide side) {
 
             int hash = GetHashCode() * side.GetHashCode() * 273;
+
             Polygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
                 var points = MakePoints(side, 0);
-                var holePoints = PolygonBuilder.MakeCircle(_position, _drill / 2);
+                var holePoints = MakeHolePoints();
                 polygon = new Polygon(points, new Polygon(holePoints));
 
                 PolygonCache.Save(hash, polygon);
@@ -134,16 +137,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public Polygon GetDrillPolygon() {
 
-            var points = PolygonBuilder.MakeCircle(Position, _drill / 2);
+            var points = EdaPoints.CreateCircle(Position, _drill / 2);
             return new Polygon(points);
         }
 
         /// <inheritdoc/>
         /// 
-        public override Rect GetBoundingBox(BoardSide side) {
+        public override EdaRect GetBoundingBox(BoardSide side) {
 
             int size = side == BoardSide.Inner ? InnerSize : OuterSize;
-            return new Rect(_position.X - (size / 2), _position.Y - (size / 2), size, size);
+            return new EdaRect(_position.X - (size / 2), _position.Y - (size / 2), size, size);
         }
 
         /// <inheritdoc/>
@@ -168,7 +171,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => _drill;
             set {
                 if (value <= 0)
-                    throw new ArgumentOutOfRangeException("Drill");
+                    throw new ArgumentOutOfRangeException(nameof(Drill));
 
                 _drill = value;
             }

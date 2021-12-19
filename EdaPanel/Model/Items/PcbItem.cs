@@ -9,7 +9,7 @@
         private EdaPoint _position;
         private EdaSize _size;
         private EdaAngle _rotation;
-        private string _fileName;
+        private readonly string _fileName;
 
         /// <summary>
         /// Constructor de l'objecte.

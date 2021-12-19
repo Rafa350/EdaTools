@@ -6,7 +6,7 @@
 
     public static class EdaPanelExtensions {
 
-        public static IEnumerator<EdaPanelItem> Find(this EdaPanel panel, Rect r) {
+        public static IEnumerator<EdaPanelItem> Find(this EdaPanel panel, EdaRect r) {
 
             return null;
         }

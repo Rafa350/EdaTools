@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
@@ -11,10 +9,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un pad superficial
     /// </summary>
     /// 
-    public sealed class SmdPadElement : PadElement {
+    public sealed class EdaSmdPadElement : EdaPadElement {
+
+        public enum SmdPadCornerShape {
+            Round,
+            Flat
+        }
 
         private EdaSize _size;
-        private EdaRatio _roundness = EdaRatio.Zero;
+        private EdaRatio _cornerRatio = EdaRatio.Zero;
+        private SmdPadCornerShape _cornerShape = SmdPadCornerShape.Round;
 
         /// <inheritdoc/>
         /// 
@@ -27,7 +31,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             Position.GetHashCode() +
             Size.GetHashCode() +
             (Rotation.GetHashCode() * 73429) +
-            _roundness.GetHashCode();
+            _cornerRatio.GetHashCode();
 
         /// <inheritdoc/>
         /// 
@@ -37,7 +41,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             Polygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
-                EdaPoint[] points = PolygonBuilder.MakeRectangle(Position, Size, Radius, Rotation);
+                var points = EdaPoints.CreateRectangle(Position, Size, _cornerRatio, true, Rotation);
                 polygon = new Polygon(points);
 
                 PolygonCache.Save(hash, polygon);
@@ -53,13 +57,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             Polygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
-                EdaPoint[] points = PolygonBuilder.MakeRectangle(
-                    Position,
-                    new EdaSize(
-                        _size.Width + spacing + spacing,
-                        _size.Height + spacing + spacing),
-                    Radius + spacing,
-                    Rotation);
+                var outlineSize = new EdaSize(_size.Width + spacing + spacing, _size.Height + spacing + spacing);
+                var outlineCornerRatio = EdaRatio.FromPercent((double)(CornerSize + spacing) / (Math.Min(outlineSize.Width, outlineSize.Height) / 2));
+                var points = EdaPoints.CreateRectangle(Position, outlineSize, outlineCornerRatio, true, Rotation);
                 polygon = new Polygon(points);
 
                 PolygonCache.Save(hash, polygon);
@@ -74,7 +74,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
             Polygon pour = GetOutlinePolygon(side, spacing);
             Polygon thermal = new Polygon(
-                PolygonBuilder.MakeCross(
+                EdaPoints.CreateCross(
                     Position,
                     new EdaSize(
                         _size.Width + spacing + spacing,
@@ -91,14 +91,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override Rect GetBoundingBox(BoardSide side) {
+        public override EdaRect GetBoundingBox(BoardSide side) {
 
             double a = Rotation.AsRadiants;
 
             int w = (int)(_size.Width * Math.Cos(a) + _size.Height * Math.Sin(a));
             int h = (int)(_size.Width * Math.Sin(a) + _size.Height * Math.Cos(a));
 
-            return new Rect(Position.X - (w / 2), Position.Y - (h / 2), w, h);
+            return new EdaRect(Position.X - (w / 2), Position.Y - (h / 2), w, h);
         }
 
         /// <summary>
@@ -114,17 +114,26 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// El factor d'arrodoniment de les cantonades del pad.
         /// </summary>
         /// 
-        public EdaRatio Roundness {
-            get => _roundness;
-            set => _roundness = value;
+        public EdaRatio CornerRatio {
+            get => _cornerRatio;
+            set => _cornerRatio = value;
         }
 
         /// <summary>
         /// Radi de curvatura de les cantonades.
         /// </summary>
         /// 
-        public int Radius =>
-            (Math.Min(_size.Width, _size.Height) * _roundness) / 2;
+        public int CornerSize =>
+            (Math.Min(_size.Width, _size.Height) * _cornerRatio) / 2;
+
+        /// <summary>
+        /// Forma de les cantonades.
+        /// </summary>
+        /// 
+        public SmdPadCornerShape CornerShape {
+            get => _cornerShape;    
+            set => _cornerShape = value;
+        }
 
         /// <inheritdoc/>
         /// 

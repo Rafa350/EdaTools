@@ -17,23 +17,23 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// <param name="rd">El objecte per lleigir del stream</param>
         /// <returns>L'element obtingut.</returns>
         /// 
-        public static LineElement Line(XmlReaderAdapter rd) {
+        public static EdaLineElement Line(XmlReaderAdapter rd) {
 
             if (!rd.IsStartTag("line"))
                 throw new InvalidDataException("Se esperaba <line>");
 
             EdaLayerId layerId = EdaLayerId.Parse(rd.AttributeAsString("layer"));
             var layerSet = new EdaLayerSet(layerId);
-            EdaPoint startPosition = EdaPoint.Parse(rd.AttributeAsString("startPosition"));
-            EdaPoint endPosition = EdaPoint.Parse(rd.AttributeAsString("endPosition"));
+            EdaPoint startPosition = EdaParser.ParsePoint(rd.AttributeAsString("startPosition"));
+            EdaPoint endPosition = EdaParser.ParsePoint(rd.AttributeAsString("endPosition"));
             int thickness = EdaParser.ParseScalar(rd.AttributeAsString("thickness", "0"));
-            LineElement.CapStyle lineCap = rd.AttributeAsEnum<LineElement.CapStyle>("lineCap", LineElement.CapStyle.Round);
+            EdaLineElement.CapStyle lineCap = rd.AttributeAsEnum<EdaLineElement.CapStyle>("lineCap", EdaLineElement.CapStyle.Round);
 
             rd.NextTag();
             if (!rd.IsEndTag("line"))
                 throw new InvalidDataException("Se esperaba </line>");
 
-            return new LineElement {
+            return new EdaLineElement {
                 LayerSet = layerSet,
                 StartPosition = startPosition,
                 EndPosition = endPosition,
@@ -48,24 +48,24 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// <param name="rd">El objecte per lleigir del stream.</param>
         /// <returns>L'element obtingut</returns>
         /// 
-        public static ArcElement Arc(XmlReaderAdapter rd) {
+        public static EdaArcElement Arc(XmlReaderAdapter rd) {
 
             if (!rd.IsStartTag("arc"))
                 throw new InvalidDataException("Se esperaba <arc>");
 
             EdaLayerId layerId = EdaLayerId.Parse(rd.AttributeAsString("layer"));
             var layerSet = new EdaLayerSet(layerId);
-            EdaPoint startPosition = EdaPoint.Parse(rd.AttributeAsString("startPosition"));
-            EdaPoint endPosition = EdaPoint.Parse(rd.AttributeAsString("endPosition"));
+            EdaPoint startPosition = EdaParser.ParsePoint(rd.AttributeAsString("startPosition"));
+            EdaPoint endPosition = EdaParser.ParsePoint(rd.AttributeAsString("endPosition"));
             int thickness = EdaParser.ParseScalar(rd.AttributeAsString("thickness"));
-            EdaAngle angle = EdaAngle.Parse(rd.AttributeAsString("angle"));
-            LineElement.CapStyle lineCap = rd.AttributeAsEnum<LineElement.CapStyle>("lineCap", LineElement.CapStyle.Round);
+            EdaAngle angle = EdaParser.ParseAngle(rd.AttributeAsString("angle"));
+            EdaLineElement.CapStyle lineCap = rd.AttributeAsEnum<EdaLineElement.CapStyle>("lineCap", EdaLineElement.CapStyle.Round);
 
             rd.NextTag();
             if (!rd.IsEndTag("arc"))
                 throw new InvalidDataException("Se esperaba </arc>");
 
-            return new ArcElement {
+            return new EdaArcElement {
                 LayerSet = layerSet,
                 StartPosition = startPosition,
                 EndPosition = endPosition,
@@ -81,14 +81,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// <param name="rd">El objecte per lleigir del stream</param>
         /// <returns>L'element obtingut.</returns>
         /// 
-        public static CircleElement Circle(XmlReaderAdapter rd) {
+        public static EdaCircleElement Circle(XmlReaderAdapter rd) {
 
             if (!rd.IsStartTag("circle"))
                 throw new InvalidDataException("Se esperaba <circle>");
 
             EdaLayerId layerId = EdaLayerId.Parse(rd.AttributeAsString("layer"));
             var layerSet = new EdaLayerSet(layerId);
-            EdaPoint position = EdaPoint.Parse(rd.AttributeAsString("position"));
+            EdaPoint position = EdaParser.ParsePoint(rd.AttributeAsString("position"));
             int radius = EdaParser.ParseScalar(rd.AttributeAsString("radius"));
             int thickness = EdaParser.ParseScalar(rd.AttributeAsString("thickness", "0"));
             bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
@@ -97,7 +97,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!rd.IsEndTag("circle"))
                 throw new InvalidDataException("Se esperaba </circle>");
 
-            return new CircleElement {
+            return new EdaCircleElement {
                 LayerSet = layerSet,
                 Position = position,
                 Radius = radius,
@@ -112,29 +112,29 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// <param name="rd">El objecte per lleigir el srtream</param>
         /// <returns>L'element obtingut</returns>
         /// 
-        public static RectangleElement Rectangle(XmlReaderAdapter rd) {
+        public static EdaRectangleElement Rectangle(XmlReaderAdapter rd) {
 
             if (!rd.IsStartTag("rectangle"))
                 throw new InvalidDataException("Se esperaba <rectangle>");
 
             EdaLayerId layerId = EdaLayerId.Parse(rd.AttributeAsString("layer"));
             var layerSet = new EdaLayerSet(layerId);
-            EdaPoint position = EdaPoint.Parse(rd.AttributeAsString("position"));
-            EdaSize size = EdaSize.Parse(rd.AttributeAsString("size"));
-            EdaAngle rotation = EdaAngle.Parse(rd.AttributeAsString("rotation", "0"));
+            EdaPoint position = EdaParser.ParsePoint(rd.AttributeAsString("position"));
+            EdaSize size = EdaParser.ParseSize(rd.AttributeAsString("size"));
+            EdaAngle rotation = EdaParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
             int thickness = EdaParser.ParseScalar(rd.AttributeAsString("thickness", "0"));
-            EdaRatio roundness = EdaRatio.Parse(rd.AttributeAsString("roundness", "0"));
+            EdaRatio roundness = EdaParser.ParseRatio(rd.AttributeAsString("roundness", "0"));
             bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
 
             rd.NextTag();
             if (!rd.IsEndTag("rectangle"))
                 throw new InvalidDataException("Se esperaba </rectangle>");
 
-            return new RectangleElement {
+            return new EdaRectangleElement {
                 LayerSet = layerSet,
                 Position = position,
                 Size = size,
-                Roundness = roundness,
+                CornerRatio = roundness,
                 Rotation = rotation,
                 Thickness = thickness,
                 Filled = filled
@@ -147,7 +147,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// <param name="rd">El objecte per lleigir el srtream</param>
         /// <returns>L'element obtingut.</returns>
         /// 
-        public static SmdPadElement SPad(XmlReaderAdapter rd) {
+        public static EdaSmdPadElement SPad(XmlReaderAdapter rd) {
 
             if (!rd.IsStartTag("spad"))
                 throw new InvalidDataException("Se esperaba <spad>");
@@ -155,22 +155,22 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             string name = rd.AttributeAsString("name");
             EdaLayerId layerId = EdaLayerId.Parse(rd.AttributeAsString("layer"));
             var layerSet = new EdaLayerSet(layerId);
-            EdaPoint position = EdaPoint.Parse(rd.AttributeAsString("position"));
-            EdaSize size = EdaSize.Parse(rd.AttributeAsString("size"));
-            EdaAngle rotation = EdaAngle.Parse(rd.AttributeAsString("rotation", "0"));
-            EdaRatio roundness = EdaRatio.Parse(rd.AttributeAsString("roundness", "0"));
+            EdaPoint position = EdaParser.ParsePoint(rd.AttributeAsString("position"));
+            EdaSize size = EdaParser.ParseSize(rd.AttributeAsString("size"));
+            EdaAngle rotation = EdaParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
+            EdaRatio roundness = EdaParser.ParseRatio(rd.AttributeAsString("roundness", "0"));
 
             rd.NextTag();
             if (!rd.IsEndTag("spad"))
                 throw new InvalidDataException("Se esperaba </spad>");
 
-            return new SmdPadElement {
+            return new EdaSmdPadElement {
                 Name = name,
                 LayerSet = layerSet,
                 Position = position,
                 Size = size,
                 Rotation = rotation,
-                Roundness = roundness
+                CornerRatio = roundness
             };
         }
 
@@ -180,7 +180,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// <param name="rd">El objecte per lleigir el srtream</param>
         /// <returns>L'element obtinguc</returns>
         /// 
-        public static ThPadElement TPad(XmlReaderAdapter rd) {
+        public static EdaThPadElement TPad(XmlReaderAdapter rd) {
 
             if (!rd.IsStartTag("tpad"))
                 throw new InvalidDataException("Se esperaba <tpad>");
@@ -189,25 +189,23 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             EdaLayerId layerId = EdaLayerId.Parse(rd.AttributeAsString("layer"));
             var layerSet = new EdaLayerSet();
             layerSet.Add(layerId);
-            EdaPoint position = EdaPoint.Parse(rd.AttributeAsString("position"));
-            int size = EdaParser.ParseScalar(rd.AttributeAsString("size"));
-            EdaAngle rotation = EdaAngle.Parse(rd.AttributeAsString("rotation", "0"));
+            EdaPoint position = EdaParser.ParsePoint(rd.AttributeAsString("position"));
+            EdaSize size = EdaParser.ParseSize(rd.AttributeAsString("size"));
+            EdaAngle rotation = EdaParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
             int drill = EdaParser.ParseScalar(rd.AttributeAsString("drill"));
-            ThPadElement.ThPadShape shape = rd.AttributeAsEnum<ThPadElement.ThPadShape>("shape", ThPadElement.ThPadShape.Circle);
 
             rd.NextTag();
             if (!rd.IsEndTag("tpad"))
                 throw new InvalidDataException("Se esperaba </tpad>");
 
-            return new ThPadElement {
+            return new EdaThPadElement {
                 Name = name,
                 LayerSet = layerSet,
                 Position = position,
                 Rotation = rotation,
                 TopSize = size,
-                InnerSize = drill,
-                BottomSize = drill,
-                Shape = shape,
+                InnerSize = size,
+                BottomSize = size,
                 Drill = drill
             };
         }
@@ -217,15 +215,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// </summary>
         /// <returns>L'element obtingut.</returns>
         /// 
-        public static TextElement Text(XmlReaderAdapter rd) {
+        public static EdaTextElement Text(XmlReaderAdapter rd) {
 
             if (!rd.IsStartTag("text"))
                 throw new InvalidDataException("Se esperaba <text>");
 
             EdaLayerId layerId = EdaLayerId.Parse(rd.AttributeAsString("layer"));
             var layerSet = new EdaLayerSet(layerId);
-            EdaPoint position = EdaPoint.Parse(rd.AttributeAsString("position"));
-            EdaAngle rotation = EdaAngle.Parse(rd.AttributeAsString("rotation", "0"));
+            EdaPoint position = EdaParser.ParsePoint(rd.AttributeAsString("position"));
+            EdaAngle rotation = EdaParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
             int height = EdaParser.ParseScalar(rd.AttributeAsString("height"));
             HorizontalTextAlign horizontalAlign = rd.AttributeAsEnum("horizontalAlign", HorizontalTextAlign.Left);
             VerticalTextAlign verticalAlign = rd.AttributeAsEnum("verticalAlign", VerticalTextAlign.Bottom);
@@ -236,7 +234,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!rd.IsEndTag("text"))
                 throw new InvalidDataException("Se esperaba </text>");
 
-            return new TextElement {
+            return new EdaTextElement {
                 LayerSet = layerSet,
                 Position = position,
                 Rotation = rotation,
@@ -253,19 +251,19 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// </summary>
         /// <returns>L'element obtigut.</returns>
         /// 
-        public static HoleElement Hole(XmlReaderAdapter rd) {
+        public static EdaHoleElement Hole(XmlReaderAdapter rd) {
 
             if (!rd.IsStartTag("hole"))
                 throw new InvalidDataException("Se esperaba <hole>");
 
-            var position = EdaPoint.Parse(rd.AttributeAsString("position"));
+            var position = EdaParser.ParsePoint(rd.AttributeAsString("position"));
             var drill = EdaParser.ParseScalar(rd.AttributeAsString("drill"));
 
             rd.NextTag();
             if (!rd.IsEndTag("hole"))
                 throw new InvalidDataException("Se esperaba </hole>");
 
-            return new HoleElement {
+            return new EdaHoleElement {
                 LayerSet = new EdaLayerSet(EdaLayerId.Holes),
                 Position = position,
                 Drill = drill
@@ -277,7 +275,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// </summary>
         /// <returns>L'element obtingut.</returns>
         /// 
-        public static RegionElement Region(XmlReaderAdapter rd) {
+        public static EdaRegionElement Region(XmlReaderAdapter rd) {
 
             if (!rd.IsStartTag("region"))
                 throw new InvalidDataException("Se esperaba <region>");
@@ -290,7 +288,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             bool filled = rd.AttributeAsBoolean("filled", thickness == 0);
             int clearance = EdaParser.ParseScalar(rd.AttributeAsString("clearance", "0"));
 
-            var region = new RegionElement {
+            var region = new EdaRegionElement {
                 LayerSet = layerSet,
                 Thickness = thickness,
                 Filled = filled,
@@ -302,8 +300,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             var segments = new List<EdaArcPoint>();
             while (rd.IsStartTag("segment")) {
 
-                EdaPoint position = EdaPoint.Parse(rd.AttributeAsString("position"));
-                EdaAngle angle = EdaAngle.Parse(rd.AttributeAsString("angle", "0"));
+                EdaPoint position = EdaParser.ParsePoint(rd.AttributeAsString("position"));
+                EdaAngle angle = EdaParser.ParseAngle(rd.AttributeAsString("angle", "0"));
 
                 rd.NextTag();
                 if (!rd.IsEndTag("segment"))

@@ -1,7 +1,6 @@
 ﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
-using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
@@ -9,7 +8,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un arc.
     /// </summary>
     /// 
-    public sealed class ArcElement : LineElement, IEdaConectable {
+    public sealed class EdaArcElement : EdaLineElement, IEdaConectable {
 
         private EdaAngle _angle;
 
@@ -24,7 +23,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Polygon GetPolygon(BoardSide side) {
 
-            var points = PolygonBuilder.MakeArcTrace(Center, Radius, StartAngle, _angle, Thickness, LineCap == CapStyle.Round);
+            var points = EdaPoints.CreateArcTrace(Center, Radius, StartAngle, _angle, Thickness, LineCap == CapStyle.Round);
             return new Polygon(points);
         }
 
@@ -32,13 +31,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
-            var points = PolygonBuilder.MakeArcTrace(Center, Radius, StartAngle, _angle, Thickness + (spacing * 2), LineCap == CapStyle.Round);
+            var points = EdaPoints.CreateArcTrace(Center, Radius, StartAngle, _angle, Thickness + (spacing * 2), LineCap == CapStyle.Round);
             return new Polygon(points);
         }
 
         /// <inheritdoc/>
         /// 
-        public override Rect GetBoundingBox(BoardSide side) {
+        public override EdaRect GetBoundingBox(BoardSide side) {
 
             var polygon = GetPolygon(side);
             return polygon.BoundingBox;

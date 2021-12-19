@@ -259,7 +259,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="line">L'objecte a visitar.</param>
             /// 
-            public override void Visit(LineElement line) {
+            public override void Visit(EdaLineElement line) {
 
                 if (CanVisit(line))
                     _apertures.DefineCircleAperture(Math.Max(line.Thickness, 10000));
@@ -270,7 +270,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="arc">L'objecte a visitar.</param>
             /// 
-            public override void Visit(ArcElement arc) {
+            public override void Visit(EdaArcElement arc) {
 
                 if (CanVisit(arc))
                     _apertures.DefineCircleAperture(Math.Max(arc.Thickness, 10000));
@@ -281,7 +281,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="rectangle">L'objecte a visitar.</param>
             /// 
-            public override void Visit(RectangleElement rectangle) {
+            public override void Visit(EdaRectangleElement rectangle) {
 
                 if (CanVisit(rectangle)) {
 
@@ -304,7 +304,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="circle">L'objecte a visitar.</param>
             /// 
-            public override void Visit(CircleElement circle) {
+            public override void Visit(EdaCircleElement circle) {
 
                 if (CanVisit(circle)) {
 
@@ -325,7 +325,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="text">L'objecte a visitar.</param>
             /// 
-            public override void Visit(TextElement text) {
+            public override void Visit(EdaTextElement text) {
 
                 if (CanVisit(text))
                     _apertures.DefineCircleAperture(text.Thickness);
@@ -336,19 +336,19 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="via">L'objecte a visitar.</param>
             /// 
-            public override void Visit(ViaElement via) {
+            public override void Visit(EdaViaElement via) {
 
                 if (CanVisit(via))
                     switch (via.Shape) {
-                        case ViaElement.ViaShape.Circle:
+                        case EdaViaElement.ViaShape.Circle:
                             _apertures.DefineCircleAperture(via.OuterSize);
                             break;
 
-                        case ViaElement.ViaShape.Square:
+                        case EdaViaElement.ViaShape.Square:
                             _apertures.DefineRectangleAperture(via.OuterSize, via.OuterSize, EdaAngle.Zero);
                             break;
 
-                        case ViaElement.ViaShape.Octagon:
+                        case EdaViaElement.ViaShape.Octagon:
                             _apertures.DefineOctagonAperture(via.OuterSize, EdaAngle.Zero);
                             break;
                     }
@@ -359,28 +359,19 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="pad">L'objecte.</param>
             /// 
-            public override void Visit(ThPadElement pad) {
+            public override void Visit(EdaThPadElement pad) {
 
                 if (CanVisit(pad)) {
                     EdaAngle rotation = pad.Rotation;
                     if (Part != null)
                         rotation += Part.Rotation;
-                    switch (pad.Shape) {
-                        case ThPadElement.ThPadShape.Circle:
-                            _apertures.DefineCircleAperture(pad.TopSize);
-                            break;
-
-                        case ThPadElement.ThPadShape.Square:
-                            _apertures.DefineRectangleAperture(pad.TopSize, pad.TopSize, rotation);
-                            break;
-
-                        case ThPadElement.ThPadShape.Octagon:
-                            _apertures.DefineOctagonAperture(pad.TopSize, rotation);
-                            break;
-
-                        case ThPadElement.ThPadShape.Oval:
-                            _apertures.DefineOvalAperture(pad.TopSize * 2, pad.TopSize, rotation);
-                            break;
+                    if (pad.CornerRatio.IsMax)
+                        _apertures.DefineOvalAperture(pad.TopSize.Width, pad.TopSize.Height, rotation);
+                    else if (pad.CornerRatio.IsZero)
+                        _apertures.DefineRectangleAperture(pad.TopSize.Width, pad.TopSize.Height, rotation);
+                    else {
+                        int radius = pad.CornerRatio * Math.Min(pad.TopSize.Width, pad.TopSize.Height) / 2;
+                        _apertures.DefineRoundRectangleAperture(pad.TopSize.Width, pad.TopSize.Height, radius, rotation);
                     }
                 }
             }
@@ -390,18 +381,18 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="pad">L'objecte.</param>
             /// 
-            public override void Visit(SmdPadElement pad) {
+            public override void Visit(EdaSmdPadElement pad) {
 
                 if (CanVisit(pad)) {
                     EdaAngle rotation = pad.Rotation;
                     if (Part != null)
                         rotation += Part.Rotation;
-                    if (pad.Roundness.IsZero)
+                    if (pad.CornerRatio.IsZero)
                         _apertures.DefineRectangleAperture(pad.Size.Width, pad.Size.Height, rotation);
-                    else if (pad.Roundness.IsMax)
+                    else if (pad.CornerRatio.IsMax)
                         _apertures.DefineOvalAperture(pad.Size.Width, pad.Size.Height, rotation);
                     else {
-                        int radius = pad.Roundness * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
+                        int radius = pad.CornerRatio * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
                         _apertures.DefineRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
                     }
                 }
@@ -412,7 +403,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="region">L'objecte a visitar.</param>
             /// 
-            public override void Visit(RegionElement region) {
+            public override void Visit(EdaRegionElement region) {
 
                 if (CanVisit(region))
                     _apertures.DefineCircleAperture(region.Thickness);
@@ -472,7 +463,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="line">L'objecte.</param>
             /// 
-            public override void Visit(LineElement line) {
+            public override void Visit(EdaLineElement line) {
 
                 if (CanVisit(line)) {
 
@@ -503,7 +494,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="arc">L'objecte.</param>
             /// 
-            public override void Visit(ArcElement arc) {
+            public override void Visit(EdaArcElement arc) {
 
                 if (CanVisit(arc)) {
 
@@ -538,7 +529,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="rectangle">L'objecte.</param>
             /// 
-            public override void Visit(RectangleElement rectangle) {
+            public override void Visit(EdaRectangleElement rectangle) {
 
                 if (CanVisit(rectangle)) {
 
@@ -573,11 +564,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         //
                         EdaLayer layer = Board.GetLayer(_layerId);
                         Polygon polygon = rectangle.GetPolygon(layer.Side);
-                        EdaPoint[] points = polygon.ClonePoints();
+                        EdaPoints points = polygon.ClonePoints();
 
                         if (Part != null) {
                             Transformation t = Part.GetLocalTransformation();
-                            t.ApplyTo(points);
+                            points.Transform(t);
                         }
 
                         // Escriu el gerber
@@ -593,7 +584,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="circle">L'objecte.</param>
             /// 
-            public override void Visit(CircleElement circle) {
+            public override void Visit(EdaCircleElement circle) {
 
                 if (CanVisit(circle)) {
 
@@ -627,11 +618,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         //
                         EdaLayer layer = Board.GetLayer(_layerId);
                         Polygon polygon = circle.GetPolygon(layer.Side);
-                        EdaPoint[] points = polygon.ClonePoints();
+                        EdaPoints points = polygon.ClonePoints();
 
                         if (Part != null) {
                             Transformation t = Part.GetLocalTransformation();
-                            t.ApplyTo(points);
+                            points.Transform(t);
                         }
 
                         // Escriu el gerber
@@ -647,7 +638,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="text">L'objecte.</param>
             /// 
-            public override void Visit(TextElement text) {
+            public override void Visit(EdaTextElement text) {
 
                 if (CanVisit(text)) {
 
@@ -677,7 +668,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="via">L'objecte.</param>
             /// 
-            public override void Visit(ViaElement via) {
+            public override void Visit(EdaViaElement via) {
 
                 if (CanVisit(via)) {
 
@@ -686,15 +677,15 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     Aperture ap = null;
                     switch (via.Shape) {
                         default:
-                        case ViaElement.ViaShape.Circle:
+                        case EdaViaElement.ViaShape.Circle:
                             ap = _apertures.GetCircleAperture(via.OuterSize);
                             break;
 
-                        case ViaElement.ViaShape.Square:
+                        case EdaViaElement.ViaShape.Square:
                             ap = _apertures.GetRectangleAperture(via.OuterSize, via.OuterSize, EdaAngle.Zero);
                             break;
 
-                        case ViaElement.ViaShape.Octagon:
+                        case EdaViaElement.ViaShape.Octagon:
                             ap = _apertures.GetOctagonAperture(via.OuterSize, EdaAngle.Zero);
                             break;
                     }
@@ -711,54 +702,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="pad">L'objecte a visitar.</param>
             /// 
-            public override void Visit(ThPadElement pad) {
-
-                if (CanVisit(pad)) {
-
-                    // Calcula les coordinades, mesures, rotacions, etc
-                    //
-                    EdaPoint position = pad.Position;
-                    EdaAngle rotation = pad.Rotation;
-                    if (Part != null) {
-                        rotation += Part.Rotation;
-                        Transformation t = Part.GetLocalTransformation();
-                        position = t.ApplyTo(position);
-                    }
-
-                    // Selecciona l'apertura
-                    //
-                    Aperture ap = null;
-                    switch (pad.Shape) {
-                        case ThPadElement.ThPadShape.Circle:
-                            ap = _apertures.GetCircleAperture(pad.TopSize);
-                            break;
-
-                        case ThPadElement.ThPadShape.Square:
-                            ap = _apertures.GetRectangleAperture(pad.TopSize, pad.TopSize, rotation);
-                            break;
-
-                        case ThPadElement.ThPadShape.Octagon:
-                            ap = _apertures.GetOctagonAperture(pad.TopSize, rotation);
-                            break;
-
-                        case ThPadElement.ThPadShape.Oval:
-                            ap = _apertures.GetOvalAperture(pad.TopSize * 2, pad.TopSize, rotation);
-                            break;
-                    }
-
-                    // Escriu el gerber
-                    //
-                    _gb.SelectAperture(ap);
-                    _gb.FlashAt(position);
-                }
-            }
-
-            /// <summary>
-            /// Visita un objecte 'SmdPadElement'
-            /// </summary>
-            /// <param name="pad">L'objecte a visitar.</param>
-            /// 
-            public override void Visit(SmdPadElement pad) {
+            public override void Visit(EdaThPadElement pad) {
 
                 if (CanVisit(pad)) {
 
@@ -775,12 +719,50 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     // Selecciona l'apertura
                     //
                     Aperture ap;
-                    if (pad.Roundness.IsZero)
+                    if (pad.CornerRatio.IsMax)
+                        ap = _apertures.GetOvalAperture(pad.TopSize.Width, pad.TopSize.Height, rotation);
+                    else if (pad.CornerRatio.IsZero)
+                        ap = _apertures.GetRectangleAperture(pad.TopSize.Width, pad.TopSize.Height, rotation);
+                    else {
+                        int radius = pad.CornerRatio * Math.Min(pad.TopSize.Width, pad.TopSize.Height) / 2;
+                        ap = _apertures.GetRoundRectangleAperture(pad.TopSize.Width, pad.TopSize.Height, radius, rotation);
+                    }
+
+                    // Escriu el gerber
+                    //
+                    _gb.SelectAperture(ap);
+                    _gb.FlashAt(position);
+                }
+            }
+
+            /// <summary>
+            /// Visita un objecte 'SmdPadElement'
+            /// </summary>
+            /// <param name="pad">L'objecte a visitar.</param>
+            /// 
+            public override void Visit(EdaSmdPadElement pad) {
+
+                if (CanVisit(pad)) {
+
+                    // Calcula les coordinades, mesures, rotacions, etc
+                    //
+                    EdaPoint position = pad.Position;
+                    EdaAngle rotation = pad.Rotation;
+                    if (Part != null) {
+                        rotation += Part.Rotation;
+                        Transformation t = Part.GetLocalTransformation();
+                        position = t.ApplyTo(position);
+                    }
+
+                    // Selecciona l'apertura
+                    //
+                    Aperture ap;
+                    if (pad.CornerRatio.IsZero)
                         ap = _apertures.GetRectangleAperture(pad.Size.Width, pad.Size.Height, rotation);
-                    else if (pad.Roundness.IsMax)
+                    else if (pad.CornerRatio.IsMax)
                         ap = _apertures.GetOvalAperture(pad.Size.Width, pad.Size.Height, rotation);
                     else
-                        ap = _apertures.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, pad.Radius, rotation);
+                        ap = _apertures.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, pad.CornerSize, rotation);
 
                     // Escriu el gerber
                     //
@@ -847,7 +829,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="region">L'objecte a visitar.</param>
             /// 
-            public override void Visit(RegionElement region) {
+            public override void Visit(EdaRegionElement region) {
 
                 if (CanVisit(region)) {
                     Transformation t = new Transformation();

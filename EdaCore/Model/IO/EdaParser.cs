@@ -8,7 +8,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.IO {
 
     public static class EdaParser {
 
-        private static CultureInfo _ci = CultureInfo.InvariantCulture;
+        private static readonly CultureInfo _ci = CultureInfo.InvariantCulture;
 
         public static int ParseScalar(string source) =>
             (int)(Double.Parse(source, _ci) * 1000000.0);
@@ -52,7 +52,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.IO {
             string[] ss = source.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
             var layerSet = new EdaLayerSet();
-            foreach (var s in ss) 
+            foreach (var s in ss)
                 layerSet.Add(EdaLayerId.Parse(s));
 
             return layerSet;

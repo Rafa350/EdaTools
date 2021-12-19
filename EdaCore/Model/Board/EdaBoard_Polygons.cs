@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
@@ -14,7 +12,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// 
     public sealed partial class EdaBoard {
 
-        private int _outlineClearance = 250000;
+        private readonly int _outlineClearance = 250000;
 
         /// <summary>
         /// Obte el poligon del perfil de la placa. Es calcula amb els elements de la capa profile.
@@ -26,12 +24,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             var elements = GetElements(GetLayer(EdaLayerId.Profile));
             var segments = new List<Segment>();
             foreach (var element in elements) {
-                if (element is LineElement line)
+                if (element is EdaLineElement line)
                     segments.Add(new Segment(line.StartPosition, line.EndPosition));
 
-                else if (element is ArcElement arc) {
-                    EdaPoint[] points = PolygonBuilder.MakeArc(arc.Center, arc.Radius, arc.StartAngle, arc.Angle, true);
-                    for (int i = 1; i < points.Length; i++)
+                else if (element is EdaArcElement arc) {
+                    EdaPoints points = EdaPoints.Create()
+                        .AddArcPoints(arc.Center, arc.Radius, arc.StartAngle, arc.Angle, true)
+                        .Close();
+                    for (int i = 1; i < points.Count; i++)
                         segments.Add(new Segment(points[i - 1], points[i]));
                 }
             }
@@ -46,7 +46,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="transformation">Transformacio a aplicar al poligon.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public Polygon GetRegionPolygon(RegionElement region, EdaLayerId layerId, Transformation transformation) {
+        public Polygon GetRegionPolygon(EdaRegionElement region, EdaLayerId layerId, Transformation transformation) {
 
             if (region == null)
                 throw new ArgumentNullException(nameof(region));
@@ -64,7 +64,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 //
                 if (layerId.IsSignal) {
 
-                    Rect regionBBox = regionPolygon.BoundingBox.Inflated(region.Clearance, region.Clearance);
+                    EdaRect regionBBox = regionPolygon.BoundingBox.Inflated(region.Clearance, region.Clearance);
 
                     EdaSignal regionSignal = GetSignal(region, null, false);
 
@@ -157,7 +157,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                                         int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
                                         int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
-                                        Polygon thermalPolygon = ((PadElement)element).GetThermalPolygon(layerId.Side, clearance, 200000);
+                                        Polygon thermalPolygon = ((EdaPadElement)element).GetThermalPolygon(layerId.Side, clearance, 200000);
                                         thermalPolygon = thermalPolygon.Transformed(localTransformation);
                                         foreach (var child in thermalPolygon.Childs) {
                                             if (regionBBox.IntersectsWith(child.BoundingBox))
@@ -188,14 +188,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// <returns>El resultat.</returns>
         /// 
-        public Rect GetBoundingBox() {
+        public EdaRect GetBoundingBox() {
 
             int minX = Int32.MaxValue;
             int minY = Int32.MaxValue;
             int maxX = Int32.MinValue;
             int maxY = Int32.MinValue;
             foreach (var element in GetElements(_outlineLayer)) {
-                Rect r = element.GetBoundingBox(BoardSide.None);
+                EdaRect r = element.GetBoundingBox(BoardSide.None);
                 if (minX > r.Left)
                     minX = r.Left;
                 if (minY > r.Bottom)
@@ -206,7 +206,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                     maxY = r.Top;
             }
 
-            return new Rect(minX, minY, maxX - minX, maxY - minY);
+            return new EdaRect(minX, minY, maxX - minX, maxY - minY);
         }
 
         /// <summary>

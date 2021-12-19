@@ -6,7 +6,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
     /// Objecte que representa un rectangle aliniat amb els eixos X i Y.
     /// </summary>
     /// 
-    public readonly struct Rect : IEquatable<Rect> {
+    public readonly struct EdaRect : IEquatable<EdaRect> {
 
         private readonly int _x;
         private readonly int _y;
@@ -21,7 +21,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="width">Amplada</param>
         /// <param name="height">Alçada</param>
         /// 
-        public Rect(int x = 0, int y = 0, int width = 0, int height = 0) {
+        public EdaRect(int x = 0, int y = 0, int width = 0, int height = 0) {
 
             if (width < 0)
                 throw new ArgumentOutOfRangeException(nameof(width));
@@ -40,7 +40,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="position">Posicio.</param>
         /// <param name="size">Tamany</param>
         /// 
-        public Rect(EdaPoint position, EdaSize size) {
+        public EdaRect(EdaPoint position, EdaSize size) {
 
             _x = position.X;
             _y = position.Y;
@@ -55,8 +55,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="dy">Desplaçament Y</param>
         /// <returns>El resultat de l'operacio.</returns>
         /// 
-        public Rect Offset(int dx, int dy) =>
-            new Rect(_x + dx, _y + dy, _width, _height);
+        public EdaRect Offset(int dx, int dy) =>
+            new EdaRect(_x + dx, _y + dy, _width, _height);
 
         /// <summary>
         /// Obte un rectangle inflat.
@@ -65,8 +65,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="dy">Increment Y</param>
         /// <returns>El resultat de l'operacio.</returns>
         /// 
-        public Rect Inflated(int dx, int dy) =>
-            new Rect(_x - dx, _y - dy, _width + dx + dx, _height + dy + dy);
+        public EdaRect Inflated(int dx, int dy) =>
+            new EdaRect(_x - dx, _y - dy, _width + dx + dx, _height + dy + dy);
 
         /// <summary>
         /// Obte la unio amb un altre rectangle
@@ -74,14 +74,14 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="rect">Rectangle a unir.</param>
         /// <returns>El resultat de la unio.</returns>
         /// 
-        public Rect Union(Rect rect) {
+        public EdaRect Union(EdaRect rect) {
 
             int l = Math.Min(Left, rect.Left);
             int r = Math.Max(Right, rect.Right);
             int t = Math.Min(Top, rect.Top);
             int b = Math.Max(Bottom, rect.Bottom);
 
-            return new Rect(l, t, r - l + 1, b - t + 1);
+            return new EdaRect(l, t, r - l + 1, b - t + 1);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="r">El rectangle a verificar.</param>
         /// <returns>True si intersecten, false en cas contrari.</returns>
         /// 
-        public bool IntersectsWith(Rect r) {
+        public bool IntersectsWith(EdaRect r) {
 
             return (r.Left <= Right) && (r.Right >= Left) &&
                    (r.Bottom <= Top) && (r.Top >= Bottom);
@@ -102,7 +102,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="other">L'altre rectangle.</param>
         /// <returns>True si son iguals.</returns>
         /// 
-        public bool Equals(Rect other) =>
+        public bool Equals(EdaRect other) =>
             (_x, _y, _width, _height) == (other._x, other._y, other._width, other._height);
 
         /// <summary>
@@ -112,12 +112,12 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <returns>True si son iguals.</returns>
         /// 
         public override bool Equals(object obj) =>
-            (obj is Rect other) && Equals(other);
+            (obj is EdaRect other) && Equals(other);
 
-        public static bool operator ==(Rect r1, Rect r2) =>
+        public static bool operator ==(EdaRect r1, EdaRect r2) =>
             r1.Equals(r2);
 
-        public static bool operator !=(Rect r1, Rect r2) =>
+        public static bool operator !=(EdaRect r1, EdaRect r2) =>
             !r1.Equals(r2);
 
         /// <summary>

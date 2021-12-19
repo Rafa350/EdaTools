@@ -10,8 +10,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad.Infrastructure {
 
         public static double ValueAsDouble(this STree tree, SNode node) {
 
-            if (node is SLeaf n)
-                return Double.Parse(tree.GetNodeValue(n), CultureInfo.InvariantCulture);
+            if (node is SLeaf n) {
+                double r = Double.Parse(tree.GetNodeValue(n), CultureInfo.InvariantCulture);
+                return r;
+            }
 
             else
                 throw new InvalidOperationException("No es un nodo terminal.");

@@ -12,10 +12,10 @@ namespace MikroPic.EdaTools.v1.Core.Infrastructure {
         private const string _startMacro = "{";
         private const string _endMacro = "}";
         private readonly EdaPartAttribute _attribute;
-        private readonly TextElement _text;
+        private readonly EdaTextElement _text;
         private readonly string _attrValue;
 
-        public PartAttributeAdapter(EdaPart part, TextElement text) {
+        public PartAttributeAdapter(EdaPart part, EdaTextElement text) {
 
             _text = text ?? throw new ArgumentNullException(nameof(text));
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
@@ -20,7 +19,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="throwOnError">True si dispara una excepcio si no el troba.</param>
         /// <returns>El pad. Null si no el troba.</returns>
         /// 
-        public static PadElement GetPad(this EdaComponent component, string name, bool throwOnError = true) {
+        public static EdaPadElement GetPad(this EdaComponent component, string name, bool throwOnError = true) {
 
             var pad = component.Pads().First(pad => pad.Name == name);
             if (pad != null)
@@ -41,7 +40,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <returns>True si conte pads.</returns>
         /// 
         public static bool HasPads(this EdaComponent component) =>
-            component.Elements.OfType<PadElement>().Any();
+            component.Elements.OfType<EdaPadElement>().Any();
 
         /// <summary>
         /// Enumera el nom dels pads.
@@ -50,7 +49,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <returns>El resultat.</returns>
         /// 
         public static IEnumerable<string> PadNames(this EdaComponent component) =>
-            component.Elements.OfType<PadElement>().Select(pad => pad.Name);
+            component.Elements.OfType<EdaPadElement>().Select(pad => pad.Name);
 
         /// <summary>
         /// Enumera els pads.
@@ -58,7 +57,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="component">El component.</param>
         /// <returns>El resultat.</returns>
         /// 
-        public static IEnumerable<PadElement> Pads(this EdaComponent component) =>
-            component.Elements.OfType<PadElement>();
+        public static IEnumerable<EdaPadElement> Pads(this EdaComponent component) =>
+            component.Elements.OfType<EdaPadElement>();
     }
 }

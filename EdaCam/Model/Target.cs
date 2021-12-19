@@ -10,7 +10,7 @@ namespace MikroPic.EdaTools.v1.Cam.Model {
         private readonly string name;
         private string fileName;
         private string generatorName;
-        private IEnumerable<string> layerNames;
+        private readonly IEnumerable<string> layerNames;
         private EdaPoint position;
         private EdaAngle rotation;
         private Dictionary<string, TargetOption> options;

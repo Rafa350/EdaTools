@@ -32,13 +32,13 @@
             base.Visit(board);
         }
 
-        public override void Visit(LineElement line) {
+        public override void Visit(EdaLineElement line) {
 
             if (_visualLayer.IsVisible(Part, line)) {
 
                 var brush = new SolidColorBrush(_visualLayer.Color);
 
-                var lineCap = line.LineCap == LineElement.CapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round;
+                var lineCap = line.LineCap == EdaLineElement.CapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round;
                 var pen = new Pen(brush, line.Thickness, null, lineCap);
 
                 var start = line.StartPosition.ToPoint();
@@ -48,7 +48,7 @@
             }
         }
 
-        public override void Visit(RectangleElement rectangle) {
+        public override void Visit(EdaRectangleElement rectangle) {
 
             if (_visualLayer.IsVisible(Part, rectangle)) {
 
@@ -59,7 +59,7 @@
             }
         }
 
-        public override void Visit(ArcElement arc) {
+        public override void Visit(EdaArcElement arc) {
 
             if (_visualLayer.IsVisible(Part, arc)) {
 
@@ -70,7 +70,7 @@
             }
         }
 
-        public override void Visit(CircleElement circle) {
+        public override void Visit(EdaCircleElement circle) {
 
             if (_visualLayer.IsVisible(Part, circle)) {
 
@@ -81,7 +81,7 @@
             }
         }
 
-        public override void Visit(ViaElement via) {
+        public override void Visit(EdaViaElement via) {
 
             if (_visualLayer.IsVisible(Part, via)) {
 
@@ -103,7 +103,7 @@
             }
         }
 
-        public override void Visit(ThPadElement pad) {
+        public override void Visit(EdaThPadElement pad) {
 
             if (_visualLayer.IsVisible(Part, pad)) {
 
@@ -125,7 +125,7 @@
             }
         }
 
-        public override void Visit(SmdPadElement pad) {
+        public override void Visit(EdaSmdPadElement pad) {
 
             if (_visualLayer.IsVisible(Part, pad)) {
 
@@ -136,7 +136,7 @@
             }
         }
 
-        public override void Visit(HoleElement hole) {
+        public override void Visit(EdaHoleElement hole) {
 
             if (_visualLayer.IsVisible(Part, hole)) {
 
@@ -147,7 +147,7 @@
             }
         }
 
-        public override void Visit(TextElement text) {
+        public override void Visit(EdaTextElement text) {
 
             if (_visualLayer.IsVisible(Part, text)) {
 
@@ -191,7 +191,7 @@
             }
         }
 
-        public override void Visit(RegionElement region) {
+        public override void Visit(EdaRegionElement region) {
 
             if (_visualLayer.IsVisible(Part, region)) {
 

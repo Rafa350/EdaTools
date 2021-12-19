@@ -6,7 +6,7 @@
 
     public sealed class FontFactory {
 
-        private Dictionary<string, Font> _fontCache;
+        private readonly Dictionary<string, Font> _fontCache;
         private static FontFactory _instance;
 
         private FontFactory() {

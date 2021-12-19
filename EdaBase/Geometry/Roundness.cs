@@ -25,29 +25,16 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             _bottomRight = bottomRight;
         }
 
-        public override string ToString() =>
-            String.Format("{0}, {1}, {2}, {3}", _topLeft, _topRight, _bottomLeft, _bottomRight);
+        public EdaRatio TopLeft => 
+            _topLeft;
 
-        public static Roundness Parse(string source) {
+        public EdaRatio TopRight => 
+            _topRight;
 
-            try {
-                string[] s = source.Split(',');
-                var topLeft = EdaRatio.Parse(s[0]);
-                var topRight = EdaRatio.Parse(s[1]);
-                var bottomLeft = EdaRatio.Parse(s[2]);
-                var bottomRight = EdaRatio.Parse(s[3]);
+        public EdaRatio BottomLeft => 
+            _bottomLeft;
 
-                return new Roundness(topLeft, topRight, bottomLeft, bottomRight);
-            }
-            catch (Exception ex) {
-                throw new InvalidOperationException(
-                    String.Format("No es posible convertir el texto '{0}' a 'Roundness'.", source), ex);
-            }
-        }
-
-        public EdaRatio TopLeft => _topLeft;
-        public EdaRatio TopRight => _topRight;
-        public EdaRatio BottomLeft => _bottomLeft;
-        public EdaRatio BottomRight => _bottomRight;
+        public EdaRatio BottomRight => 
+            _bottomRight;
     }
 }

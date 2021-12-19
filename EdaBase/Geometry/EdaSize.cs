@@ -29,34 +29,6 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         }
 
         /// <summary>
-        /// Converteix l'objecte a text.
-        /// </summary>
-        /// <returns>El resultat de la conversio.</returns>
-        /// 
-        public override string ToString() =>
-            String.Format("{0}; {1}", _width.ToString(), _height.ToString());
-
-        /// <summary>
-        /// Converteix un texte a 'Size'
-        /// </summary>
-        /// <param name="source">El texte.</param>
-        /// <returns>El resultat de la converssio.</returns>
-        /// 
-        public static EdaSize Parse(string source) {
-
-            try {
-                string[] s = source.Split(';');
-                double width = Double.Parse(s[0]);
-                double height = Double.Parse(s[1]);
-
-                return new EdaSize((int)width, (int)height);
-            }
-            catch (Exception ex) {
-                throw new InvalidOperationException(String.Format("No es posible convertir el texto '{0}' a 'EdaSize'.", source), ex);
-            }
-        }
-
-        /// <summary>
         /// Obte el codi hash del objecte.
         /// </summary>
         /// <returns>El codi hash</returns>

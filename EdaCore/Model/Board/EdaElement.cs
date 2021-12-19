@@ -58,7 +58,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public abstract Rect GetBoundingBox(BoardSide side);
+        public abstract EdaRect GetBoundingBox(BoardSide side);
 
         /// <summary>
         /// Indica si l'element es present en una capa.

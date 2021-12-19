@@ -52,42 +52,42 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// <param name="line">La linia.</param>
         /// 
-        void Visit(LineElement line);
+        void Visit(EdaLineElement line);
 
         /// <summary>
         /// Visita un element de tipus arc.
         /// </summary>
         /// <param name="arc">L'arc a visitar.</param>
         /// 
-        void Visit(ArcElement arc);
+        void Visit(EdaArcElement arc);
 
         /// <summary>
         /// Visita un element de tipus rectangle.
         /// </summary>
         /// <param name="rectangle">El rectangle.</param>
         /// 
-        void Visit(RectangleElement rectangle);
+        void Visit(EdaRectangleElement rectangle);
 
         /// <summary>
         /// Visita un element de tipus cercle.
         /// </summary>
         /// <param name="circle">El cercle.</param>
         /// 
-        void Visit(CircleElement circle);
+        void Visit(EdaCircleElement circle);
 
         /// <summary>
         /// Visita un element de tipus poligon.
         /// </summary>
         /// <param name="polygon">El poligon.</param>
         /// 
-        void Visit(PolygonElement polygon);
+        void Visit(EdaPolygonElement polygon);
 
-        void Visit(ViaElement via);
+        void Visit(EdaViaElement via);
 
-        void Visit(SmdPadElement pad);
-        void Visit(ThPadElement pad);
-        void Visit(RegionElement region);
-        void Visit(TextElement text);
-        void Visit(HoleElement hole);
+        void Visit(EdaSmdPadElement pad);
+        void Visit(EdaThPadElement pad);
+        void Visit(EdaRegionElement region);
+        void Visit(EdaTextElement text);
+        void Visit(EdaHoleElement hole);
     }
 }

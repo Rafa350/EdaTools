@@ -32,7 +32,7 @@
         }
 
         private ToolState state = ToolState.Idle;
-        private bool autoDeactivate = false;
+        private readonly bool autoDeactivate = false;
         private double xSnap = 1;
         private double ySnap = 1;
         private Rect limits;

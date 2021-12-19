@@ -275,12 +275,13 @@
         <xs:complexType>
             <xs:attribute name="name" use="required" type="nameType"/>
             <xs:attribute name="position" use="required" type="pointType"/>
-            <xs:attribute name="size" use="required" type="xs:double"/>
+            <xs:attribute name="topSize" use="required" type="sizeType"/>
+            <xs:attribute name="innerSize" use="optional" type="sizeType"/>
+            <xs:attribute name="bottomSize" use="optional" type="sizeType"/>
             <xs:attribute name="drill" use="required" type="xs:double"/>
             <xs:attribute name="rotation" use="optional" type="angleType"/>
-            <xs:attribute name="shape" use="optional" type="tpadShapeType"/>
-            <xs:attribute name="stop" use="optional" type="xs:string"/>
-            <xs:attribute name="stopMargin" use="optional" type="xs:double"/>
+            <xs:attribute name="cornerRatio" use="optional" type="xs:double"/>
+            <xs:attribute name="cornerShape" use="optional" type="tpadCornerShapeType"/>
         </xs:complexType>
     </xs:element>
 
@@ -292,10 +293,8 @@
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="size" use="required" type="sizeType"/>
             <xs:attribute name="rotation" use="optional" type="angleType"/>
-            <xs:attribute name="roundness" use="optional" type="xs:double"/>
-            <xs:attribute name="stop" use="optional" type="xs:string"/>
-            <xs:attribute name="cream" use="optional" type="xs:string"/>
-            <xs:attribute name="creamMargin" use="optional" type="xs:double"/>
+            <xs:attribute name="cornerRatio" use="optional" type="xs:double"/>
+            <xs:attribute name="cornerShape" use="optional" type="spadCornerShapeType"/>
         </xs:complexType>
     </xs:element>
 
@@ -363,12 +362,18 @@
     </xs:simpleType>
     
     <xs:simpleType
-        name="tpadShapeType">
+        name="tpadCornerShapeType">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="square"/>
-            <xs:enumeration value="octagon"/>
-            <xs:enumeration value="circle"/>
-            <xs:enumeration value="oval"/>
+            <xs:enumeration value="round"/>
+            <xs:enumeration value="flat"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="spadCornerShapeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="round"/>
+            <xs:enumeration value="flat"/>
         </xs:restriction>
     </xs:simpleType>
 

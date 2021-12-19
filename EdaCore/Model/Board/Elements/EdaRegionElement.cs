@@ -6,7 +6,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa una regio poligonal conductora.
     /// </summary>
     /// 
-    public sealed class RegionElement : PolygonElement, IEdaConectable {
+    public sealed class EdaRegionElement : EdaPolygonElement, IEdaConectable {
 
         private int _clearance;
 

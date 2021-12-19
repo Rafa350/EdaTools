@@ -149,7 +149,7 @@
 
         public static Polygon CreateFromSegments(IEnumerable<Segment> lines) {
 
-            EdaPoint[] points = Polygonizer.Poligonize(lines);
+            EdaPoints points = Polygonizer.Poligonize(lines);
             return points == null ? null : new Polygon(points);
         }
 
@@ -186,11 +186,10 @@
         /// 
         private static Polygon ToPolygon(List<IntPoint> points) {
 
-            IntPoint[] srcArray = points.ToArray();
-            EdaPoint[] dstArray = new EdaPoint[srcArray.Length];
-            for (int i = 0; i < srcArray.Length; i++)
-                dstArray[i] = new EdaPoint((int)srcArray[i].X, (int)srcArray[i].Y);
-            return new Polygon(dstArray);
+            EdaPoints polygonPoints = EdaPoints.Create();
+            foreach (var point in points)
+                polygonPoints.AddPoint(new EdaPoint((int)point.X, (int)point.Y));
+            return new Polygon(polygonPoints);
         }
 
         /// <summary>
@@ -201,11 +200,11 @@
         /// 
         private static Polygon ToPolygon(PolyNode polyNode) {
 
-            EdaPoint[] points;
+            EdaPoints points;
             if (polyNode.Contour.Count > 0) {
-                points = new EdaPoint[polyNode.Contour.Count];
+                points = EdaPoints.Create();
                 for (int i = 0; i < polyNode.Contour.Count; i++)
-                    points[i] = new EdaPoint((int)polyNode.Contour[i].X, (int)polyNode.Contour[i].Y);
+                    points.AddPoint(new EdaPoint((int)polyNode.Contour[i].X, (int)polyNode.Contour[i].Y));
             }
             else
                 points = null;

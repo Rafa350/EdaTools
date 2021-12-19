@@ -56,7 +56,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// </summary>
             /// <param name="line">La linia</param>
             /// 
-            public override void Visit(LineElement line) {
+            public override void Visit(EdaLineElement line) {
 
                 var start = new Vector2D(line.StartPosition.X, line.StartPosition.Y) * _m;
                 var end = new Vector2D(line.EndPosition.X, line.EndPosition.Y) * _m;
@@ -76,7 +76,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// </summary>
             /// <param name="rectangle">El rectangle</param>
             /// 
-            public override void Visit(RectangleElement rectangle) {
+            public override void Visit(EdaRectangleElement rectangle) {
 
                 var start = new Vector2D(
                     rectangle.Position.X - (rectangle.Size.Width / 2),
@@ -102,7 +102,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// </summary>
             /// <param name="circle">El cercle</param>
             /// 
-            public override void Visit(CircleElement circle) {
+            public override void Visit(EdaCircleElement circle) {
 
                 var center = new Vector2D(
                     circle.Position.X,
@@ -125,7 +125,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// </summary>
             /// <param name="text">El text</param>
             /// 
-            public override void Visit(TextElement text) {
+            public override void Visit(EdaTextElement text) {
 
                 var type = "value";
                 var value = text.Value;
@@ -159,7 +159,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// </summary>
             /// <param name="pad">El pad</param>
             /// 
-            public override void Visit(SmdPadElement pad) {
+            public override void Visit(EdaSmdPadElement pad) {
 
                 var position = new Vector2D(pad.Position.X, pad.Position.Y) * _m;
 
@@ -168,7 +168,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                     .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", position.X, position.Y, pad.Rotation.AsDegrees)
                     .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", pad.Size.Width / _scale, pad.Size.Height / _scale)
                     .AppendFormat("(layers {0}) ", GetLayerNames(pad.LayerSet))
-                    .AppendFormat(CultureInfo.InvariantCulture, "(roundrect_rratio {0}))", pad.Roundness.Value / 2000.0);
+                    .AppendFormat(CultureInfo.InvariantCulture, "(roundrect_rratio {0}))", pad.CornerRatio.Value / 2000.0);
 
                 _writer.WriteLine(sb);
             }
@@ -178,21 +178,21 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// </summary>
             /// <param name="pad">El pad</param>
             /// 
-            public override void Visit(ThPadElement pad) {
+            public override void Visit(EdaThPadElement pad) {
 
                 var position = new Vector2D(pad.Position.X, pad.Position.Y) * _m;
 
                 var sb = new StringBuilder()
                     .AppendFormat("  (pad {0} thru_hole circle ", pad.Name)
                     .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", position.X, position.Y, pad.Rotation.AsDegrees)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", pad.TopSize / _scale, pad.TopSize / _scale)
+                    .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", pad.TopSize.Width / _scale, pad.TopSize.Height / _scale)
                     .AppendFormat(CultureInfo.InvariantCulture, "(drill {0}) ", pad.Drill / _scale)
                     .Append("(layers *.Cu *.Mask))");
 
                 _writer.WriteLine(sb);
             }
 
-            public override void Visit(HoleElement hole) {
+            public override void Visit(EdaHoleElement hole) {
 
                 var position = new Vector2D(hole.Position.X, hole.Position.Y) * _m;
 

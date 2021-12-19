@@ -87,17 +87,6 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         public override int GetHashCode() =>
             _value.GetHashCode();
 
-        /// <summary>
-        /// Converteix a string
-        /// </summary>
-        /// <returns>La representacio del valor.</returns>
-        /// 
-        public override string ToString() =>
-            _value.ToString();
-
-        public static EdaAngle Parse(string s) =>
-            EdaAngle.FromValue((int)Double.Parse(s));
-
         public static bool operator ==(EdaAngle a1, EdaAngle a2) =>
             a1._value == a2._value;
 

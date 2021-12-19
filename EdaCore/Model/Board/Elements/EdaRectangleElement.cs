@@ -1,8 +1,6 @@
 ﻿using System;
-
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-using MikroPic.EdaTools.v1.Core.Infrastructure.Polygons;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
@@ -10,12 +8,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un rectangle.
     /// </summary>
     /// 
-    public sealed class RectangleElement : EdaElement, IEdaPosition, IEdaSize, IEdaRotation {
+    public sealed class EdaRectangleElement : EdaElement, IEdaPosition, IEdaSize, IEdaRotation {
 
         private EdaPoint _position;
         private EdaSize _size;
         private EdaAngle _rotation;
-        private EdaRatio _roundness;
+        private EdaRatio _cornerRatio;
         private int _thickness;
         private bool _filled;
 
@@ -31,15 +29,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override Polygon GetPolygon(BoardSide side) {
 
             if (Filled) {
-                var points = PolygonBuilder.MakeRectangle(_position, _size, Radius, _rotation);
+                var points = EdaPoints.CreateRectangle(_position, _size, _cornerRatio, true, _rotation);
                 return new Polygon(points);
             }
             else {
                 var outerSize = new EdaSize(_size.Width + _thickness, _size.Height + _thickness);
-                var outerPoints = PolygonBuilder.MakeRectangle(_position, outerSize, Radius, _rotation);
+                var outerPoints = EdaPoints.CreateRectangle(_position, outerSize, _cornerRatio, true, _rotation);
 
                 var innerSize = new EdaSize(_size.Width - _thickness, _size.Height - _thickness);
-                var innerPoints = PolygonBuilder.MakeRectangle(_position, innerSize, Math.Max(0, Radius - _thickness), _rotation);
+                var innerCornerRatio = EdaRatio.FromPercent((double)(CornerSize - Thickness) / (Math.Min(innerSize.Width, innerSize.Height) / 2));
+                var innerPoints = EdaPoints.CreateRectangle(_position, innerSize, innerCornerRatio, true, _rotation);
 
                 return new Polygon(outerPoints, new Polygon(innerPoints));
             }
@@ -50,13 +49,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
 
             var outerSize = new EdaSize(_size.Width + _thickness + spacing * 2, _size.Height + _thickness + spacing * 2);
-            var points = PolygonBuilder.MakeRectangle(_position, outerSize, Radius, _rotation);
+            var points = EdaPoints.CreateRectangle(_position, outerSize, _cornerRatio, true, _rotation);
             return new Polygon(points);
         }
 
         /// <inheritdoc/>
         /// 
-        public override Rect GetBoundingBox(BoardSide side) {
+        public override EdaRect GetBoundingBox(BoardSide side) {
 
             double width = _size.Width + _thickness;
             double height = _size.Height + _thickness;
@@ -66,7 +65,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             int w = (int)(width * Math.Cos(a) + height * Math.Sin(a));
             int h = (int)(width * Math.Sin(a) + height * Math.Cos(a));
 
-            return new Rect(_position.X - (w / 2), _position.Y - (h / 2), w, h);
+            return new EdaRect(_position.X - (w / 2), _position.Y - (h / 2), w, h);
         }
 
         /// <summary>
@@ -100,17 +99,17 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// El factor d'arrodoniment de les cantonades.
         /// </summary>
         /// 
-        public EdaRatio Roundness {
-            get => _roundness;
-            set => _roundness = value;
+        public EdaRatio CornerRatio {
+            get => _cornerRatio;
+            set => _cornerRatio = value;
         }
 
         /// <summary>
         /// El radi de curvatura de les cantonades.
         /// </summary>
         /// 
-        public int Radius =>
-            (Math.Min(_size.Width, _size.Height) * _roundness) / 2;
+        public int CornerSize =>
+            (Math.Min(_size.Width, _size.Height) * _cornerRatio) / 2;
 
         /// <summary>
         /// Amplada de linia.
@@ -120,7 +119,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => _thickness;
             set {
                 if (value < 0)
-                    throw new ArgumentOutOfRangeException("Thickness");
+                    throw new ArgumentOutOfRangeException(nameof(Thickness));
 
                 _thickness = value;
             }

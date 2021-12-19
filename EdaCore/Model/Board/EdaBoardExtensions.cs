@@ -1,8 +1,7 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board {
+﻿using System.Collections.Generic;
+using MikroPic.EdaTools.v1.Base.Geometry;
 
-    using System.Collections.Generic;
-
-    using MikroPic.EdaTools.v1.Base.Geometry;
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     public static class EdaBoardExtensions {
 
@@ -13,7 +12,7 @@
         /// <param name="r">El rectangle</param>
         /// <returns>Enumera ela elements trobats. Null si no hi ha cap.</returns>
         /// 
-        public static IEnumerable<EdaElement> FindElement(this EdaBoard board, Rect r) {
+        public static IEnumerable<EdaElement> FindElement(this EdaBoard board, EdaRect r) {
 
             return null;
         }

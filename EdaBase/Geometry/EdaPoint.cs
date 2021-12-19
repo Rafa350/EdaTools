@@ -39,35 +39,6 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             new EdaPoint(_x + dx, _y + dy);
 
         /// <summary>
-        /// Converteix l'objecte a la seva representacio textual.
-        /// </summary>
-        /// <returns>El resultat de la conversio.</returns>
-        /// 
-        public override string ToString() =>
-            String.Format("{0}; {1}", _x.ToString(), _y.ToString());
-
-        /// <summary>
-        /// Crea un objecte 'EdaPoint' a partir de la seva representacio textual.
-        /// </summary>
-        /// <param name="source">El text a convertir.</param>
-        /// <returns>El resultat de la conversio.</returns>
-        /// 
-        public static EdaPoint Parse(string source) {
-
-            try {
-                string[] s = source.Split(';');
-                double x = Double.Parse(s[0]);
-                double y = Double.Parse(s[1]);
-
-                return new EdaPoint((int)x, (int)y);
-            }
-            catch (Exception ex) {
-                throw new InvalidOperationException(
-                    String.Format("No es posible convertir el texto '{0}' a 'EdaPoint'.", source), ex);
-            }
-        }
-
-        /// <summary>
         /// Retorna el valor hash del objecte.
         /// </summary>
         /// <returns>El valor hash.</returns>

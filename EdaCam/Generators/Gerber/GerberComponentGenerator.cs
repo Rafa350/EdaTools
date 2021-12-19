@@ -15,10 +15,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
     /// </summary>
     public sealed class GerberComponentGenerator : Generator {
 
-        private Aperture _outlineAperture;
+        private readonly Aperture _outlineAperture;
         private Aperture _centroidAperture;
-        private Aperture _padKeyAperture;
-        private Aperture _padAperture;
+        private readonly Aperture _padKeyAperture;
+        private readonly Aperture _padAperture;
 
         /// <summary>
         /// Constructor de l'objecte.
@@ -164,7 +164,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             gb.Comment("BEGIN IMAGE");
             foreach (var name in Target.LayerNames) {
                 PartSide side = EdaLayerId.Get(name).Side == BoardSide.Top ? PartSide.Top : PartSide.Bottom;
-                var visitor = new ImageGeneratorVisitor(gb, side,  _centroidAperture);
+                var visitor = new ImageGeneratorVisitor(gb, side, _centroidAperture);
                 board.AcceptVisitor(visitor);
             }
             gb.Comment("END IMAGE");
@@ -213,7 +213,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// </summary>
             /// <param name="pad">Lélement a visitar.</param>
             /// 
-            public override void Visit(SmdPadElement pad) {
+            public override void Visit(EdaSmdPadElement pad) {
 
                 //_gb.SelectAperture(_PadAperture);
             }

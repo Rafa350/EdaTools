@@ -1,9 +1,9 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Generators.Ipcd356.Builder {
+﻿using System;
+using System.IO;
 
-    using System;
-    using System.IO;
+using MikroPic.EdaTools.v1.Base.Geometry;
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
+namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
 
     public enum TestAccess {
         None,
@@ -20,7 +20,7 @@
     /// <summary>
     /// Generador de codi IPCD356
     /// </summary>
-    public sealed class Ipcd356Builder {
+    public sealed class IPCD356Builder {
 
         private readonly TextWriter writer;
         private int offsetX;
@@ -32,7 +32,7 @@
         /// </summary>
         /// <param name="writer">Escriptor de sortida.</param>
         /// 
-        public Ipcd356Builder(TextWriter writer) {
+        public IPCD356Builder(TextWriter writer) {
 
             if (writer == null)
                 throw new ArgumentNullException(nameof(writer));

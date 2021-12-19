@@ -9,7 +9,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un pad.
     /// </summary>
     /// 
-    public abstract class PadElement : EdaElement, IEdaPosition, IEdaRotation, IEdaName, IEdaConectable {
+    public abstract class EdaPadElement : EdaElement, IEdaPosition, IEdaRotation, IEdaName, IEdaConectable {
 
         private string _name;
         private EdaPoint _position;
@@ -33,7 +33,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => _name;
             set {
                 if (String.IsNullOrEmpty(value))
-                    throw new ArgumentNullException("Pad.Name");
+                    throw new ArgumentNullException(nameof(Name));
 
                 _name = value;
             }

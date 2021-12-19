@@ -126,7 +126,7 @@ namespace MikroPic.EdaTools.v1.Panel {
                     targetBoard.AddPart(panelPart);
 
                     foreach (var panelElement in panelPart.Elements) {
-                        if (panelElement is PadElement panelPad) {
+                        if (panelElement is EdaPadElement panelPad) {
                             EdaSignal signal = board.GetSignal(part.GetPad(panelPad.Name), part, false);
                             if (signal != null) {
                                 string panelSignalName = String.Format("{1}@{0}", index, signal.Name);
@@ -206,12 +206,12 @@ namespace MikroPic.EdaTools.v1.Panel {
 
                 // Afegeix la linia a la placa
                 //
-                targetBoard.AddElement(new LineElement {
+                targetBoard.AddElement(new EdaLineElement {
                     LayerSet = new EdaLayerSet(EdaLayerId.Milling),
                     StartPosition = q1,
                     EndPosition = q2,
                     Thickness = cut.Thickness,
-                    LineCap = LineElement.CapStyle.Round
+                    LineCap = EdaLineElement.CapStyle.Round
                 });
             }
 
@@ -228,13 +228,13 @@ namespace MikroPic.EdaTools.v1.Panel {
 
                 // Afegeix els forats a la placa
                 //
-                targetBoard.AddElement(new HoleElement {
+                targetBoard.AddElement(new EdaHoleElement {
                     LayerSet = new EdaLayerSet(EdaLayerId.Holes),
                     Position = q1,
                     Drill = drill
                 });
 
-                targetBoard.AddElement(new HoleElement {
+                targetBoard.AddElement(new EdaHoleElement {
                     LayerSet = new EdaLayerSet(EdaLayerId.Holes),
                     Position = q2,
                     Drill = drill
@@ -249,38 +249,38 @@ namespace MikroPic.EdaTools.v1.Panel {
         /// 
         private void AddProfile(EdaSize size) {
 
-            var rect = new Rect(new EdaPoint(0, 0), size);
+            var rect = new EdaRect(new EdaPoint(0, 0), size);
 
-            targetBoard.AddElement(new LineElement {
+            targetBoard.AddElement(new EdaLineElement {
                 LayerSet = new EdaLayerSet(EdaLayerId.Profile),
                 StartPosition = new EdaPoint(rect.Left, rect.Top),
                 EndPosition = new EdaPoint(rect.Right, rect.Top),
                 Thickness = 100000,
-                LineCap = LineElement.CapStyle.Round
+                LineCap = EdaLineElement.CapStyle.Round
             });
 
-            targetBoard.AddElement(new LineElement {
+            targetBoard.AddElement(new EdaLineElement {
                 LayerSet = new EdaLayerSet(EdaLayerId.Profile),
                 StartPosition = new EdaPoint(rect.Left, rect.Bottom),
                 EndPosition = new EdaPoint(rect.Right, rect.Bottom),
                 Thickness = 100000,
-                LineCap = LineElement.CapStyle.Round
+                LineCap = EdaLineElement.CapStyle.Round
             });
 
-            targetBoard.AddElement(new LineElement {
+            targetBoard.AddElement(new EdaLineElement {
                 LayerSet = new EdaLayerSet(EdaLayerId.Profile),
                 StartPosition = new EdaPoint(rect.Left, rect.Top),
                 EndPosition = new EdaPoint(rect.Left, rect.Bottom),
                 Thickness = 100000,
-                LineCap = LineElement.CapStyle.Round
+                LineCap = EdaLineElement.CapStyle.Round
             });
 
-            targetBoard.AddElement(new LineElement {
+            targetBoard.AddElement(new EdaLineElement {
                 LayerSet = new EdaLayerSet(EdaLayerId.Profile),
                 StartPosition = new EdaPoint(rect.Right, rect.Top),
                 EndPosition = new EdaPoint(rect.Right, rect.Bottom),
                 Thickness = 100000,
-                LineCap = LineElement.CapStyle.Round
+                LineCap = EdaLineElement.CapStyle.Round
             });
         }
 
@@ -349,50 +349,50 @@ namespace MikroPic.EdaTools.v1.Panel {
                 transformation.Rotate(rotation);
             }
 
-            public override void Visit(LineElement line) {
+            public override void Visit(EdaLineElement line) {
 
                 line.StartPosition = transformation.ApplyTo(line.StartPosition);
                 line.EndPosition = transformation.ApplyTo(line.EndPosition);
             }
 
-            public override void Visit(ArcElement arc) {
+            public override void Visit(EdaArcElement arc) {
 
                 arc.StartPosition = transformation.ApplyTo(arc.StartPosition);
                 arc.EndPosition = transformation.ApplyTo(arc.EndPosition);
             }
 
-            public override void Visit(RectangleElement rectangle) {
+            public override void Visit(EdaRectangleElement rectangle) {
 
                 rectangle.Position = transformation.ApplyTo(rectangle.Position);
             }
 
-            public override void Visit(CircleElement circle) {
+            public override void Visit(EdaCircleElement circle) {
 
                 circle.Position = transformation.ApplyTo(circle.Position);
             }
 
-            public override void Visit(SmdPadElement pad) {
+            public override void Visit(EdaSmdPadElement pad) {
 
                 pad.Position = transformation.ApplyTo(pad.Position);
             }
 
-            public override void Visit(ThPadElement pad) {
+            public override void Visit(EdaThPadElement pad) {
 
                 pad.Position = transformation.ApplyTo(pad.Position);
             }
 
-            public override void Visit(ViaElement via) {
+            public override void Visit(EdaViaElement via) {
 
                 via.Position = transformation.ApplyTo(via.Position);
             }
 
-            public override void Visit(RegionElement region) {
+            public override void Visit(EdaRegionElement region) {
 
                 //foreach (var segment in region.Segments)
-                  //  segment.Position = transformation.ApplyTo(segment.Position);
+                //  segment.Position = transformation.ApplyTo(segment.Position);
             }
 
-            public override void Visit(HoleElement hole) {
+            public override void Visit(EdaHoleElement hole) {
 
                 hole.Position = transformation.ApplyTo(hole.Position);
             }

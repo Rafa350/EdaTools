@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
@@ -19,7 +18,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         private const double _scale = 1000000.0;
         private readonly Matrix2D _m = Matrix2D.CreateScale(_scale, -_scale);
         private int _partCount = 0;
-        private Dictionary<int, EdaSignal> _signals = new Dictionary<int, EdaSignal>();
+        private readonly Dictionary<int, EdaSignal> _signals = new Dictionary<int, EdaSignal>();
 
         /// <inheritdoc/>
         /// 
@@ -239,13 +238,13 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var drill = ParseMeasure(tree, tree.SelectBranch(node, "drill"));
             var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layers"));
 
-            var via = new ViaElement { 
+            var via = new EdaViaElement {
                 LayerSet = layerSet,
-                Position = position, 
-                OuterSize = size, 
+                Position = position,
+                OuterSize = size,
                 InnerSize = size,
-                Drill = drill, 
-                Shape = ViaElement.ViaShape.Circle 
+                Drill = drill,
+                Shape = EdaViaElement.ViaShape.Circle
             };
 
             var netNode = tree.SelectBranch(node, "net");
@@ -360,11 +359,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 }
             }
 
-            var part = new EdaPart { 
-                Component = component, 
-                Name = partName, 
-                Position = position, 
-                Rotation = rotation, 
+            var part = new EdaPart {
+                Component = component,
+                Name = partName,
+                Position = position,
+                Rotation = rotation,
                 Side = side
             };
             if (attributes != null)
@@ -409,12 +408,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
             var thickness = ParseMeasure(tree, tree.SelectBranch(node, "width"));
 
-            var element = new LineElement {
+            var element = new EdaLineElement {
                 LayerSet = layerSet,
                 StartPosition = start,
                 EndPosition = end,
                 Thickness = thickness,
-                LineCap = LineElement.CapStyle.Round
+                LineCap = EdaLineElement.CapStyle.Round
             };
             board.AddElement(element);
 
@@ -439,12 +438,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
             var thickness = ParseMeasure(tree, tree.SelectBranch(node, "width"));
 
-            var element = new LineElement {
+            var element = new EdaLineElement {
                 LayerSet = layerSet,
                 StartPosition = start,
                 EndPosition = end,
                 Thickness = thickness,
-                LineCap = LineElement.CapStyle.Round
+                LineCap = EdaLineElement.CapStyle.Round
             };
             component.AddElement(element);
         }
@@ -464,13 +463,13 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
             var thickness = ParseMeasure(tree, tree.SelectBranch(node, "width"));
 
-            var element = new ArcElement {
+            var element = new EdaArcElement {
                 LayerSet = layerSet,
                 StartPosition = start,
                 EndPosition = ArcUtils.EndPosition(center, start, angle),
                 Thickness = thickness,
                 Angle = angle,
-                LineCap = LineElement.CapStyle.Flat
+                LineCap = EdaLineElement.CapStyle.Flat
             };
             component.AddElement(element);
         }
@@ -504,7 +503,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var fillNode = tree.SelectBranch(node, "fill");
             bool filled = (fillNode != null) && (tree.ValueAsString(fillNode[1]) == "solid");
 
-            var element = new CircleElement {
+            var element = new EdaCircleElement {
                 LayerSet = layerSet,
                 Position = center,
                 Radius = radius,
@@ -584,7 +583,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             }
             var layerSet = new EdaLayerSet(layerId);
 
-            var element = new TextElement {
+            var element = new EdaTextElement {
                 LayerSet = layerSet,
                 Position = position,
                 Rotation = rotation,
@@ -617,50 +616,52 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var drill = drillNode == null ? 0 : (int)(tree.ValueAsDouble(drillNode[1]) * _scale);
 
             var roundnessNode = tree.SelectBranch(node, "roundrect_rratio");
-            EdaRatio roundness = roundnessNode == null ?
+            var roundness = roundnessNode == null ?
                 EdaRatio.Zero :
-                EdaRatio.FromValue((int)(tree.ValueAsDouble(roundnessNode[1]) * 2000.0));
+                EdaRatio.FromPercent(tree.ValueAsDouble(roundnessNode[1]) * 2.0);
 
             switch (padType) {
                 case "smd": {
-                    var element = new SmdPadElement {
+                    var element = new EdaSmdPadElement {
                         Name = name,
                         LayerSet = layerSet,
                         Position = position,
                         Size = size,
                         Rotation = rotation,
-                        Roundness = roundness
+                        CornerRatio = roundness
                     };
                     component.AddElement(element);
                 }
                 break;
 
                 case "thru_hole": {
-                    ThPadElement.ThPadShape shape;
                     switch (shapeType) {
-                        case "oval":
-                            shape = size.Width == size.Height ? ThPadElement.ThPadShape.Circle : ThPadElement.ThPadShape.Oval;
+                        case "rect":
+                            roundness = EdaRatio.Zero;
                             break;
 
-                        case "rect":
-                            shape = ThPadElement.ThPadShape.Square;
+                        case "circle":
+                        case "oval":
+                            roundness = EdaRatio.P100;
+                            break;
+
+                        case "roundrect":
                             break;
 
                         default:
-                            shape = ThPadElement.ThPadShape.Circle;
-                            break;
+                            throw new InvalidOperationException("Tipo de forma desconocida.");
                     }
 
                     layerSet.Add(EdaLayerId.Drills);
-                    var element = new ThPadElement {
+                    var element = new EdaThPadElement {
                         Name = name,
                         LayerSet = layerSet,
                         Position = position,
+                        TopSize = size,
+                        InnerSize = size,
+                        BottomSize = size,
                         Rotation = rotation,
-                        TopSize = size.Width,
-                        InnerSize = size.Height,
-                        BottomSize = size.Height,
-                        Shape = shape,
+                        CornerRatio = roundness,
                         Drill = drill
                     };
                     component.AddElement(element);
@@ -668,7 +669,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 break;
 
                 case "np_thru_hole": {
-                    var element = new HoleElement {
+                    var element = new EdaHoleElement {
                         LayerSet = new EdaLayerSet(EdaLayerId.Holes),
                         Position = position,
                         Drill = drill
@@ -712,7 +713,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 }
             }
 
-            var element = new RegionElement {
+            var element = new EdaRegionElement {
                 LayerSet = layerSet,
                 Thickness = thickness,
                 Filled = true,

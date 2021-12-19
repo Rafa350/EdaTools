@@ -10,7 +10,7 @@
     public sealed class PartExtractor {
 
         private readonly EdaBoard board;
-        private string ignoreAttributeName = "PARTLIST-IGNORE";
+        private readonly string ignoreAttributeName = "PARTLIST-IGNORE";
 
         /// <summary>
         /// Contructor del objecte.

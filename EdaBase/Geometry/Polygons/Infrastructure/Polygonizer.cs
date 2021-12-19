@@ -7,7 +7,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
     public static class Polygonizer {
 
-        static public EdaPoint[] Poligonize(IEnumerable<Segment> segments) {
+        static public EdaPoints Poligonize(IEnumerable<Segment> segments) {
 
             if (segments == null)
                 throw new ArgumentNullException(nameof(segments));
@@ -25,7 +25,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
             if (segmentPool.Count > 2) {
 
-                List<EdaPoint> polygon = new List<EdaPoint>();
+                EdaPoints polygon = EdaPoints.Create();
 
                 while (segmentPool.Count > 0) {
                     Segment s;
@@ -34,13 +34,13 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                             p = s.End;
                         else
                             p = s.Start;
-                        polygon.Add(p);
+                        polygon.AddPoint(p);
                         segmentPool.Remove(s);
                     }
                     else
-                        return null;
+                        break;
                 }
-                return polygon.ToArray();
+                return polygon;
             }
             else
                 return null;

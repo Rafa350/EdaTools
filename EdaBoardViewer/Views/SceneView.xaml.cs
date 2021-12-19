@@ -27,7 +27,7 @@
 
         private class BoardScene : ISceneRenderer {
 
-            private EdaBoard board;
+            private readonly EdaBoard board;
 
             public BoardScene() {
 
@@ -58,14 +58,14 @@
         private readonly ViewPoint viewPoint;
         private readonly BoardScene boardScene;
 
-        private DesignTool currentTool = null;
-        private DesignTool selectorTool = new DesignTool();
+        private readonly DesignTool currentTool = null;
+        private readonly DesignTool selectorTool = new DesignTool();
 
         private PointerButton pressedButton = PointerButton.None;
         private Point currentPos;
         private Point pressedPos;
 
-        private Size boardSize = new Size(70 * valueDivisor, 67.5 * valueDivisor);
+        private readonly Size boardSize = new Size(70 * valueDivisor, 67.5 * valueDivisor);
 
         /// <summary>
         ///  Constructor.

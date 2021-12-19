@@ -1,15 +1,16 @@
 ﻿using System;
-using System.IO;
 using System.Globalization;
+using System.IO;
+using System.Text.Json;
 
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.GerberJob {
 
-    public sealed  class GerberJobGenerator: Generator {
+    public sealed class GerberJobGenerator : Generator {
 
-        public GerberJobGenerator(Target target):
+        public GerberJobGenerator(Target target) :
             base(target) {
         }
 
@@ -22,8 +23,13 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.GerberJob {
                 throw new ArgumentNullException(nameof(outputFolder));
 
             string fileName = Path.Combine(outputFolder, Target.FileName);
-            using (TextWriter writer = new StreamWriter(
-                new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None))) {
+
+            var jsonOptions = new JsonWriterOptions();
+            jsonOptions.Indented = true;
+
+            using (var writer = new Utf8JsonWriter(
+                new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None),
+                jsonOptions)) {
 
                 CultureInfo ci = CultureInfo.InvariantCulture;
 
@@ -39,17 +45,23 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.GerberJob {
                     if (layer.Function == LayerFunction.Signal)
                         layerNumber++;
 
-                writer.WriteLine('{');
-                writer.WriteLine("    \"Header\": {");
-                writer.WriteLine("    },");
-                writer.WriteLine("    \"GeneralSpecs\": {");
-                writer.WriteLine("        \"Size\": {");
-                writer.WriteLine(String.Format(ci, "            \"X\": {0},", labelWidth));
-                writer.WriteLine(String.Format(ci, "            \"Y\": {0}", labelHeight));
-                writer.WriteLine("        },");
-                writer.WriteLine(String.Format("        \"LayerNumber\": {0}", layerNumber));
-                writer.WriteLine("    }");
-                writer.WriteLine('}');
+                writer.WriteStartObject();
+
+                writer.WriteStartObject("Header");
+                writer.WriteEndObject();
+
+                writer.WriteStartObject("GeneralSpecs");
+
+                writer.WriteStartObject("Size");
+                writer.WriteNumber("X", labelWidth);
+                writer.WriteNumber("Y", labelHeight);
+                writer.WriteEndObject();
+
+                writer.WriteNumber("LayerNumber", layerNumber);
+
+                writer.WriteEndObject();
+
+                writer.WriteEndObject();
             }
         }
     }
