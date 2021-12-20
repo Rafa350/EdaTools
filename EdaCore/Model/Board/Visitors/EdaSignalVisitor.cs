@@ -1,37 +1,35 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
+﻿using System;
+using System.Collections.Generic;
 
-    using System;
-    using System.Collections.Generic;
-
-    using MikroPic.EdaTools.v1.Core.Model.Board;
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
 
     public abstract class EdaSignalVisitor : EdaDefaultBoardVisitor {
 
-        private EdaBoard currentBoard;
-        private EdaSignal currentSignal;
+        private EdaBoard _currentBoard;
+        private EdaSignal _currentSignal;
 
         public override void Visit(EdaBoard board) {
 
             if (board == null)
                 throw new ArgumentNullException(nameof(board));
 
-            EdaBoard savedBoard = currentBoard;
-            currentBoard = board;
+            EdaBoard savedBoard = _currentBoard;
+            _currentBoard = board;
             try {
                 foreach (var signal in board.Signals)
                     signal.AcceptVisitor(this);
             }
             finally {
-                currentBoard = savedBoard;
+                _currentBoard = savedBoard;
             }
         }
 
         public override void Visit(EdaSignal signal) {
 
-            EdaSignal savedSignal = currentSignal;
-            currentSignal = signal;
+            EdaSignal savedSignal = _currentSignal;
+            _currentSignal = signal;
             try {
-                IEnumerable<Tuple<IEdaConectable, EdaPart>> items = currentBoard.GetConnectedItems(signal);
+                IEnumerable<Tuple<IEdaConectable, EdaPart>> items = _currentBoard.GetConnectedItems(signal);
                 if (items != null)
                     foreach (var item in items) {
                         if (item.Item1 is EdaElement element)
@@ -39,20 +37,14 @@
                     }
             }
             finally {
-                currentSignal = savedSignal;
+                _currentSignal = savedSignal;
             }
         }
 
-        protected EdaBoard Board {
-            get {
-                return currentBoard;
-            }
-        }
-
-        protected EdaSignal Signal {
-            get {
-                return currentSignal;
-            }
-        }
+        protected EdaBoard Board =>
+            _currentBoard;
+            
+        protected EdaSignal Signal =>
+            _currentSignal;
     }
 }

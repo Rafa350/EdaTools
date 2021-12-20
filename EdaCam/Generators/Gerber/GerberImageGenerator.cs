@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
@@ -53,6 +52,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             string fileName = Path.Combine(outputFolder, Target.FileName);
 
+            ImageType imageType = (ImageType)Enum.Parse(typeof(ImageType), Target.GetOptionValue("imageType"), true);
+
             // Crea el fitxer de sortida
             //
             using (TextWriter writer = new StreamWriter(
@@ -70,7 +71,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                 // Genera la capcelera del fitxer
                 //
-                GenerateFileHeader(gb);
+                GenerateFileHeader(gb, imageType);
 
                 // Genera el diccionari de macros i apertures
                 //
@@ -81,7 +82,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 //
                 gb.Comment("BEGIN BOARD");
                 GenerateRegions(gb, board, apertures);
-                GenerateImage(gb, board, apertures);
+                GenerateImage(gb, imageType, board, apertures);
                 gb.Comment("END BOARD");
 
                 // Genera el final del fitxer
@@ -108,8 +109,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// Genera la capcelera del fitxer.
         /// </summary>
         /// <param name="gb">El generador de codi gerber.</param>
+        /// <param name="imageType">Tipus d'imatge a generar.</param>
         /// 
-        private void GenerateFileHeader(GerberBuilder gb) {
+        private void GenerateFileHeader(GerberBuilder gb, ImageType imageType) {
 
             gb.Comment("BEGIN FILE");
             gb.Comment("EdaTools v2.0.");
@@ -117,7 +119,6 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             gb.Comment(String.Format("Start timestamp: {0:HH:mm:ss.fff}", DateTime.Now));
             gb.Comment("BEGIN HEADER");
 
-            ImageType imageType = (ImageType)Enum.Parse(typeof(ImageType), Target.GetOptionValue("imageType"), true);
             switch (imageType) {
                 case ImageType.Copper: {
                     int layerLevel = Int32.Parse(Target.GetOptionValue("layerLevel"));
@@ -220,14 +221,15 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// Genera la seccio d'imatges del fitxer.
         /// </summary>
         /// <param name="gb">El generador de codi gerber.</param>
+        /// <param name="imageType">Tipus d'imatge a generar.</param>
         /// <param name="board">La placa.</param>
         /// <param name="apertures">El diccionari d'apertures.</param>
         /// 
-        private void GenerateImage(GerberBuilder gb, EdaBoard board, ApertureDictionary apertures) {
+        private void GenerateImage(GerberBuilder gb, ImageType imageType, EdaBoard board, ApertureDictionary apertures) {
 
             gb.Comment("BEGIN IMAGE");
             foreach (var name in Target.LayerNames) {
-                var visitor = new ImageGeneratorVisitor(gb, EdaLayerId.Get(name), apertures);
+                var visitor = new ImageGeneratorVisitor(gb, imageType, EdaLayerId.Get(name), apertures);
                 board.AcceptVisitor(visitor);
             }
             gb.Comment("END IMAGE");
@@ -421,10 +423,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// 
         private sealed class ImageGeneratorVisitor : EdaElementVisitor {
 
+            private readonly ImageType _imageType;
             private readonly EdaLayerId _layerId;
             private readonly GerberBuilder _gb;
             private readonly ApertureDictionary _apertures;
-            private EdaPart _currentPart;
 
             /// <summary>
             /// Constructor del objecte.
@@ -433,29 +435,12 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// <param name="layerId">El identificador de la capa a procesar.</param>
             /// <param name="apertures">Diccionari d'apertures.</param>
             /// 
-            public ImageGeneratorVisitor(GerberBuilder gb, EdaLayerId layerId, ApertureDictionary apertures) {
+            public ImageGeneratorVisitor(GerberBuilder gb, ImageType imageType, EdaLayerId layerId, ApertureDictionary apertures) {
 
                 _gb = gb;
+                _imageType = imageType;
                 _layerId = layerId;
                 _apertures = apertures;
-                _currentPart = null;
-            }
-
-            /// <summary>
-            /// Visita un objecte 'EdaPart'
-            /// </summary>
-            /// <param name="part">L'objecte.</param>
-            /// 
-            public override void Visit(EdaPart part) {
-
-                var savedPart = _currentPart;
-                _currentPart = part;
-                try {
-                    base.Visit(part);
-                }
-                finally {
-                    _currentPart = savedPart;
-                }
             }
 
             /// <summary>
@@ -727,11 +712,25 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         int radius = pad.CornerRatio * Math.Min(pad.TopSize.Width, pad.TopSize.Height) / 2;
                         ap = _apertures.GetRoundRectangleAperture(pad.TopSize.Width, pad.TopSize.Height, radius, rotation);
                     }
-
-                    // Escriu el gerber
-                    //
                     _gb.SelectAperture(ap);
+
+                    // Afegeix atributs
+                    // 
+                    if (_imageType == ImageType.Copper) {
+                        _gb.Attribute(AttributeScope.Object, $".P,{Part.Name},{pad.Name}");
+                        var signal = Board.GetSignal(pad, Part, false);
+                        if (signal != null)
+                            _gb.Attribute(AttributeScope.Object, $".N,{signal.Name}");
+                    }
+                    
+                    // Flashea
+                    //
                     _gb.FlashAt(position);
+                    
+                    // Borra els atribits
+                    //
+                    if (_imageType == ImageType.Copper)
+                        _gb.Attribute(AttributeScope.Delete);
                 }
             }
 
@@ -763,11 +762,25 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         ap = _apertures.GetOvalAperture(pad.Size.Width, pad.Size.Height, rotation);
                     else
                         ap = _apertures.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, pad.CornerSize, rotation);
-
-                    // Escriu el gerber
-                    //
                     _gb.SelectAperture(ap);
+
+                    // Afegeix atributs
+                    //
+                    if (_imageType == ImageType.Copper) {
+                        _gb.Attribute(AttributeScope.Object, $".P,{Part.Name},{pad.Name}");
+                        var signal = Board.GetSignal(pad, Part, false);
+                        if (signal != null)
+                            _gb.Attribute(AttributeScope.Object, $".N,{signal.Name}");
+                    }
+                    
+                    // Flashea
+                    //
                     _gb.FlashAt(position);
+                    
+                    // Borra atributs
+                    //
+                    if (_imageType == ImageType.Copper)
+                        _gb.Attribute(AttributeScope.Delete);
                 }
             }
 
@@ -819,9 +832,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// 
             public RegionGeneratorVisitor(GerberBuilder gb, EdaLayerId layerId, ApertureDictionary apertures) {
 
-                this._gb = gb;
+                _gb = gb;
                 _layerId = layerId;
-                this._apertures = apertures;
+                _apertures = apertures;
             }
 
             /// <summary>

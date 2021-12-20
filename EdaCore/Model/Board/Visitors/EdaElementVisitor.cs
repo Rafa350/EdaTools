@@ -1,14 +1,14 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
+﻿using System;
 
-    using System;
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
 
     /// <summary>
     /// Clase per visitar els elements.
     /// </summary>
     public abstract class EdaElementVisitor : EdaDefaultBoardVisitor {
 
-        private EdaBoard currentBoard;
-        private EdaPart currentPart;
+        private EdaBoard _currentBoard;
+        private EdaPart _currentPart;
 
         /// <summary>
         /// Visita un objecte 'Board'
@@ -20,8 +20,8 @@
             if (board == null)
                 throw new ArgumentNullException(nameof(board));
 
-            EdaBoard savedBoard = currentBoard;
-            currentBoard = board;
+            EdaBoard savedBoard = _currentBoard;
+            _currentBoard = board;
             try {
                 if (board.HasParts)
                     foreach (var part in board.Parts)
@@ -32,7 +32,7 @@
                         element.AcceptVisitor(this);
             }
             finally {
-                currentBoard = savedBoard;
+                _currentBoard = savedBoard;
             }
         }
 
@@ -46,15 +46,15 @@
             if (part == null)
                 throw new ArgumentNullException(nameof(part));
 
-            EdaPart savedPart = currentPart;
-            currentPart = part;
+            EdaPart savedPart = _currentPart;
+            _currentPart = part;
             try {
                 if (part.HasElements)
                     foreach (var element in part.Elements)
                         element.AcceptVisitor(this);
             }
             finally {
-                currentPart = savedPart;
+                _currentPart = savedPart;
             }
         }
 
@@ -62,20 +62,14 @@
         /// Obte la capa que s'esta visitant.
         /// </summary>
         /// 
-        protected EdaBoard Board {
-            get {
-                return currentBoard;
-            }
-        }
+        protected EdaBoard Board =>
+            _currentBoard;
 
         /// <summary>
         /// Obte el component que s'esta visitant.
         /// </summary>
         /// 
-        protected EdaPart Part {
-            get {
-                return currentPart;
-            }
-        }
+        protected EdaPart Part =>
+            _currentPart;
     }
 }
