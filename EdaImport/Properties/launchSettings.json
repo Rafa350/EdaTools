@@ -2,18 +2,13 @@
   "profiles": {
     "EdaImport_Eagle": {
       "commandName": "Project",
-      "commandLineArgs": "..\\..\\..\\Eagle\\Projects\\MD-CPU\\MD-CPU04D\\MD-CPU04D.brd MD-CPU04D.xbrd /v",
+      "commandLineArgs": "C:\\Users\\Rafael\\Documents\\Projectes\\Eagle\\Projects\\MD-CPU\\MD-CPU04D\\MD-CPU04D.brd MD-CPU04D.xbrd /v",
       "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\Net\\EdaTools\\Data"
     },
     "EdaImport_KiCAD": {
       "commandName": "Project",
       "commandLineArgs": "C:\\Users\\Rafael\\Documents\\Projectes\\KiCad\\DSP04X\\dsp04x.kicad_pcb x.xbrd /v",
       "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\EDA\\DSP04X"
-    },
-    "EdaImport_KiCAD_2": {
-      "commandName": "Project",
-      "commandLineArgs": "C:\\Users\\Rafael\\Documents\\Projectes\\KiCad\\Aplex\\md-cpu07.kicad_pcb x.xbrd /v",
-      "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\EDA\\AplexEDA"
     }
   }
 }

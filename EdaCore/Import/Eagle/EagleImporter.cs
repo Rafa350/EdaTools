@@ -415,7 +415,6 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
             // Obte el conjunt de capes
             //
-            //LayerSet layerSet = ParseLayer(node.AttributeAsString("layers"));
             EdaLayerSet layerSet = new EdaLayerSet();
             layerSet.Add(EdaLayerId.TopCopper);
             layerSet.Add(EdaLayerId.BottomCopper);
@@ -445,14 +444,38 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             if (node.AttributeExists("diameter"))
                 size = ParseNumber(node.AttributeAsString("diameter"));
 
+            var width = size;
+            var height = size;
+            var cornerRatio = EdaRatio.Zero;
+            var cornerShape = EdaThPadElement.ThPadCornerShape.Round;
+
+            // Obte la forma
+            //
+            switch (node.AttributeAsString("shape")) {
+                case "octagon":
+                    cornerShape = EdaThPadElement.ThPadCornerShape.Flat;
+                    cornerRatio = EdaRatio.FromPercent(0.54);
+                    break;
+
+                case "long":
+                    cornerRatio = EdaRatio.P100;
+                    width = height * 2;
+                    break;
+
+                default:
+                    break;
+            }
+
             return new EdaThPadElement {
                 Name = name,
                 LayerSet = layerSet,
                 Position = position,
                 Rotation = rotation,
-                TopSize = new EdaSize(size, size),
-                InnerSize = new EdaSize(size, size),
-                BottomSize = new EdaSize(size, size),
+                TopSize = new EdaSize(width, height),
+                InnerSize = new EdaSize(width, height),
+                BottomSize = new EdaSize(width, height),
+                CornerShape = cornerShape,
+                CornerRatio = cornerRatio,
                 Drill = drill
             };
         }

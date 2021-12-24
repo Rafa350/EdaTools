@@ -67,7 +67,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 Position,
                 new EdaSize(size.Width + spacing + spacing, size.Height + spacing + spacing),
                 _cornerRatio,
-                true,
+                _cornerType == ThPadCornerShape.Round,
                 Rotation);
         }
 
