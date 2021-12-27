@@ -8,7 +8,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
     /// Gestiona una coleccio de punts.
     /// </summary>
     /// 
-    public sealed class EdaPoints: IEnumerable<EdaPoint> {
+    public sealed class EdaPoints : IEnumerable<EdaPoint> {
 
         private readonly List<EdaPoint> _points;
         private bool _isClosed = false;
@@ -286,7 +286,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         public EdaPoints Close() {
 
             _isClosed = true;
-   
+
             return this;
         }
 

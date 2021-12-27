@@ -17,7 +17,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.IO {
         public static string FormatAngle(EdaAngle value) =>
             String.Format(_ci, "{0}", value.Value / 100.0);
 
-        public static string FormatRatio(EdaRatio value) => 
+        public static string FormatRatio(EdaRatio value) =>
             String.Format(_ci, "{0}", value.AsPercent);
 
         public static string FormatPoint(EdaPoint value) =>
@@ -42,5 +42,41 @@ namespace MikroPic.EdaTools.v1.Core.Model.IO {
             return sb.ToString();
 
         }
+
+        /*private static string FormatFixed(int number, int decimals) {
+
+            if (number == 0)
+                return "0";
+
+            else {
+                int d = decimals;
+                int n = Math.Abs(number);
+                var sb = new StringBuilder();
+
+                do {
+                    int digit = n % 10;
+                    if (d == 0)
+                        sb.Insert(0, '.');
+
+                    sb.Insert(0, (char)('0' + digit));
+
+                    n /= 10;
+                    d--;
+
+                } while (n != 0);
+
+                while (d > -1) {
+                    if (d == 0)
+                        sb.Insert(0, '.');
+                    sb.Insert(0, '0');
+                    d--;
+                }
+
+                if (number < 0)
+                    sb.Insert(0, '-');
+
+                return sb.ToString();
+            }
+        }*/
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MikroPic.EdaTools.v1.Base.Geometry {
+﻿namespace MikroPic.EdaTools.v1.Base.Geometry {
 
     public readonly struct Roundness {
 
@@ -25,16 +23,16 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             _bottomRight = bottomRight;
         }
 
-        public EdaRatio TopLeft => 
+        public EdaRatio TopLeft =>
             _topLeft;
 
-        public EdaRatio TopRight => 
+        public EdaRatio TopRight =>
             _topRight;
 
-        public EdaRatio BottomLeft => 
+        public EdaRatio BottomLeft =>
             _bottomLeft;
 
-        public EdaRatio BottomRight => 
+        public EdaRatio BottomRight =>
             _bottomRight;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
@@ -98,13 +99,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// 
         public IEnumerable<string> ComponentNames =>
-            _components?.Keys;
+            _components == null ? Enumerable.Empty<string>() : _components.Keys;
 
         /// <summary>
         /// Obte un enumerador pels blocs.
         /// </summary>
         /// 
         public IEnumerable<EdaComponent> Components =>
-            _components?.Values;
+            _components == null ? Enumerable.Empty<EdaComponent>() : _components.Values;
     }
 }

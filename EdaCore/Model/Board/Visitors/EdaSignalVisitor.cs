@@ -43,7 +43,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
 
         protected EdaBoard Board =>
             _currentBoard;
-            
+
         protected EdaSignal Signal =>
             _currentSignal;
     }

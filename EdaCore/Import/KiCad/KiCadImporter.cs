@@ -18,6 +18,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         private const double _scale = 1000000.0;
         private readonly Matrix2D _m = Matrix2D.CreateScale(_scale, -_scale);
         private int _partCount = 0;
+        private int _version = 5;
         private readonly Dictionary<int, EdaSignal> _signals = new Dictionary<int, EdaSignal>();
 
         /// <inheritdoc/>
@@ -116,6 +117,13 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             board.AddLayer(new EdaLayer(EdaLayerId.TopKeepout, BoardSide.Top, LayerFunction.Unknown));
             board.AddLayer(new EdaLayer(EdaLayerId.BottomKeepout, BoardSide.Bottom, LayerFunction.Unknown));
 
+            // Obte el numero de versio
+            //
+            var versionNode = tree.SelectBranch(tree.Root, "version");
+            var versionCode = tree.ValueAsString(versionNode[1]);
+            if (versionCode.StartsWith("2021"))
+                _version = 6;
+
             // Procesa les capes
             //
             var layersNode = tree.SelectBranch(tree.Root, "layers");
@@ -129,7 +137,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             // Procesa els components referenciats en llibreries externes
             //
-            foreach (var moduleNode in tree.SelectBranches(tree.Root, "module")) {
+            foreach (var moduleNode in tree.SelectBranches(tree.Root, _version == 5 ? "module" : "footprint")) {
                 string componentName = tree.ValueAsString(moduleNode[1]);
                 if (board.GetComponent(componentName, false) == null)
                     LoadComponent(componentName, board);
@@ -139,6 +147,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             //
             foreach (var childNode in (tree.Root as SBranch).Nodes.OfType<SBranch>()) {
                 switch (tree.GetBranchName(childNode)) {
+                    case "footprint":
                     case "module":
                         ProcessPart(tree, childNode, board);
                         break;

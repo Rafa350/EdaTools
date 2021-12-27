@@ -131,7 +131,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// 
         public SmdPadCornerShape CornerShape {
-            get => _cornerShape;    
+            get => _cornerShape;
             set => _cornerShape = value;
         }
 

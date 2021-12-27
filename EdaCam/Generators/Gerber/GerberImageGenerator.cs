@@ -722,11 +722,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         if (signal != null)
                             _gb.Attribute(AttributeScope.Object, $".N,{signal.Name}");
                     }
-                    
+
                     // Flashea
                     //
                     _gb.FlashAt(position);
-                    
+
                     // Borra els atribits
                     //
                     if (_imageType == ImageType.Copper)
@@ -772,11 +772,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         if (signal != null)
                             _gb.Attribute(AttributeScope.Object, $".N,{signal.Name}");
                     }
-                    
+
                     // Flashea
                     //
                     _gb.FlashAt(position);
-                    
+
                     // Borra atributs
                     //
                     if (_imageType == ImageType.Copper)

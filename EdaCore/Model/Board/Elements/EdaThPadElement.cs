@@ -88,11 +88,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             int hash = GetHashCode() + (side.GetHashCode() * 2798761);
             Polygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
-                
+
                 var points = MakePoints(side, 0);
                 var holePoints = MakeHolePonts();
                 polygon = new Polygon(points, new Polygon(holePoints));
-                
+
                 PolygonCache.Save(hash, polygon);
             }
 
