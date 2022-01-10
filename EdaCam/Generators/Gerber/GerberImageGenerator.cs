@@ -458,8 +458,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     EdaPoint endPosition = line.EndPosition;
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
-                        startPosition = t.ApplyTo(startPosition);
-                        endPosition = t.ApplyTo(endPosition);
+                        startPosition = t.Transform(startPosition);
+                        endPosition = t.Transform(endPosition);
                     }
 
                     // Selecciona l'apertura
@@ -490,9 +490,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     EdaPoint center = arc.Center;
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
-                        startPosition = t.ApplyTo(startPosition);
-                        endPosition = t.ApplyTo(endPosition);
-                        center = t.ApplyTo(center);
+                        startPosition = t.Transform(startPosition);
+                        endPosition = t.Transform(endPosition);
+                        center = t.Transform(center);
                     }
 
                     // Selecciona l'apertura
@@ -526,7 +526,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         EdaAngle rotation = rectangle.Rotation;
                         if (Part != null) {
                             Transformation t = Part.GetLocalTransformation();
-                            position = t.ApplyTo(position);
+                            position = t.Transform(position);
                             rotation += Part.Rotation;
                         }
 
@@ -548,8 +548,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         // Obte el poligon
                         //
                         EdaLayer layer = Board.GetLayer(_layerId);
-                        Polygon polygon = rectangle.GetPolygon(layer.Side);
-                        EdaPoints points = polygon.ClonePoints();
+                        EdaPolygon polygon = rectangle.GetPolygon(layer.Side);
+                        EdaPoints points = EdaPoints.Create(polygon.Points);
 
                         if (Part != null) {
                             Transformation t = Part.GetLocalTransformation();
@@ -580,7 +580,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         EdaPoint position = circle.Position;
                         if (Part != null) {
                             Transformation t = Part.GetLocalTransformation();
-                            position = t.ApplyTo(position);
+                            position = t.Transform(position);
                         }
 
                         // Selecciona l'apertura
@@ -602,8 +602,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         // Obte el poligon
                         //
                         EdaLayer layer = Board.GetLayer(_layerId);
-                        Polygon polygon = circle.GetPolygon(layer.Side);
-                        EdaPoints points = polygon.ClonePoints();
+                        EdaPolygon polygon = circle.GetPolygon(layer.Side);
+                        EdaPoints points = EdaPoints.Create(polygon.Points);
 
                         if (Part != null) {
                             Transformation t = Part.GetLocalTransformation();
@@ -641,7 +641,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     EdaPoint position = paa.Position;
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
-                        position = t.ApplyTo(position);
+                        position = t.Transform(position);
                     }
 
                     dr.Draw(paa.Value, position, paa.HorizontalAlign, paa.VerticalAlign, paa.Height);
@@ -698,7 +698,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     if (Part != null) {
                         rotation += Part.Rotation;
                         Transformation t = Part.GetLocalTransformation();
-                        position = t.ApplyTo(position);
+                        position = t.Transform(position);
                     }
 
                     // Selecciona l'apertura
@@ -750,7 +750,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     if (Part != null) {
                         rotation += Part.Rotation;
                         Transformation t = Part.GetLocalTransformation();
-                        position = t.ApplyTo(position);
+                        position = t.Transform(position);
                     }
 
                     // Selecciona l'apertura
@@ -848,7 +848,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     Transformation t = new Transformation();
                     if (Part != null)
                         t = Part.GetLocalTransformation();
-                    Polygon polygon = Board.GetRegionPolygon(region, _layerId, t);
+                    EdaPolygon polygon = Board.GetRegionPolygon(region, _layerId, t);
                     DrawPolygon(polygon, region.Thickness);
                 }
             }
@@ -859,7 +859,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// <param name="polygon">El poligon a dibuixar.</param>
             /// <param name="thickness">Amplada del perfil.</param>
             /// 
-            private void DrawPolygon(Polygon polygon, int thickness) {
+            private void DrawPolygon(EdaPolygon polygon, int thickness) {
 
                 DrawPolygon(polygon, (polygon.Points != null) ? 1 : 0, thickness);
             }
@@ -871,7 +871,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// <param name="level">Nivell d'anidad del poligon.</param>
             /// <param name="thickness">Amplada del perfil.</param>
             /// 
-            private void DrawPolygon(Polygon polygon, int level, int thickness) {
+            private void DrawPolygon(EdaPolygon polygon, int level, int thickness) {
 
                 // Procesa el poligon
                 //
@@ -895,7 +895,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 // Processa els fills. Amb level < 2 evitem els poligons orfres
                 //
                 if ((polygon.Childs != null) && (level < 2))
-                    foreach (Polygon child in polygon.Childs)
+                    foreach (EdaPolygon child in polygon.Childs)
                         DrawPolygon(child, level + 1, thickness);
             }
 

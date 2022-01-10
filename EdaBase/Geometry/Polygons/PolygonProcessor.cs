@@ -39,7 +39,7 @@
         /// <param name="op">Operacio de retall.</param>
         /// <returns>La sequencia de poligons resultants de l'operacio.</returns>
         /// 
-        public static IEnumerable<Polygon> Clip(Polygon sourcePolygon, Polygon clipPolygon, ClipOperation op) {
+        public static IEnumerable<EdaPolygon> Clip(EdaPolygon sourcePolygon, EdaPolygon clipPolygon, ClipOperation op) {
 
             cp.Clear();
             cp.AddPath(ToPointList(sourcePolygon), PolyType.ptSubject, true);
@@ -48,7 +48,7 @@
             List<List<IntPoint>> solution = new List<List<IntPoint>>();
             cp.Execute(GetClipType(op), solution, PolyFillType.pftNonZero);
 
-            List<Polygon> result = new List<Polygon>();
+            List<EdaPolygon> result = new List<EdaPolygon>();
             foreach (List<IntPoint> intPoints in solution)
                 result.Add(ToPolygon(intPoints));
             return result;
@@ -62,17 +62,17 @@
         /// <param name="op">Operacio de retall.</param>
         /// <returns>La sequencia de poligons resultants de l'operacio.</returns>
         /// 
-        public static IEnumerable<Polygon> Clip(Polygon sourcePolygon, IEnumerable<Polygon> clipPolygons, ClipOperation op) {
+        public static IEnumerable<EdaPolygon> Clip(EdaPolygon sourcePolygon, IEnumerable<EdaPolygon> clipPolygons, ClipOperation op) {
 
             cp.Clear();
             cp.AddPath(ToPointList(sourcePolygon), PolyType.ptSubject, true);
-            foreach (Polygon clipPolygon in clipPolygons)
+            foreach (EdaPolygon clipPolygon in clipPolygons)
                 cp.AddPath(ToPointList(clipPolygon), PolyType.ptClip, true);
 
             List<List<IntPoint>> solution = new List<List<IntPoint>>();
             cp.Execute(GetClipType(op), solution, PolyFillType.pftNonZero);
 
-            List<Polygon> result = new List<Polygon>();
+            List<EdaPolygon> result = new List<EdaPolygon>();
             foreach (List<IntPoint> intPoints in solution)
                 result.Add(ToPolygon(intPoints));
             return result;
@@ -86,11 +86,11 @@
         /// <param name="op">Operacio de retall.</param>
         /// <returns>Arbre de poligons.</returns>
         /// 
-        public static Polygon ClipExtended(Polygon sourcePolygon, IEnumerable<Polygon> clipPolygons, ClipOperation op) {
+        public static EdaPolygon ClipExtended(EdaPolygon sourcePolygon, IEnumerable<EdaPolygon> clipPolygons, ClipOperation op) {
 
             cp.Clear();
             cp.AddPath(ToPointList(sourcePolygon), PolyType.ptSubject, true);
-            foreach (Polygon clipPolygon in clipPolygons)
+            foreach (EdaPolygon clipPolygon in clipPolygons)
                 cp.AddPath(ToPointList(clipPolygon), PolyType.ptClip, true);
 
             PolyTree solution = new PolyTree();
@@ -105,22 +105,22 @@
         /// <param name="polygons">El poligons a fusionar.</param>
         /// <returns>La coleccio de poligons resultants de la fusio.</returns>
         /// 
-        public static IEnumerable<Polygon> Union(IEnumerable<Polygon> polygons) {
+        public static IEnumerable<EdaPolygon> Union(IEnumerable<EdaPolygon> polygons) {
 
             cp.Clear();
-            foreach (Polygon polygon in polygons)
+            foreach (EdaPolygon polygon in polygons)
                 cp.AddPath(ToPointList(polygon), PolyType.ptSubject, true);
 
             List<List<IntPoint>> solution = new List<List<IntPoint>>();
             cp.Execute(ClipType.ctUnion, solution, PolyFillType.pftNonZero);
 
-            List<Polygon> result = new List<Polygon>();
+            List<EdaPolygon> result = new List<EdaPolygon>();
             foreach (List<IntPoint> intPoints in solution)
                 result.Add(ToPolygon(intPoints));
             return result;
         }
 
-        public static Polygon Offset(Polygon sourcePoligon, double offset, OffsetJoin oj = OffsetJoin.Mitter) {
+        public static EdaPolygon Offset(EdaPolygon sourcePoligon, double offset, OffsetJoin oj = OffsetJoin.Mitter) {
 
             cpOffset.Clear();
             cpOffset.AddPath(ToPointList(sourcePoligon), GetJoinType(oj), EndType.etClosedPolygon);
@@ -131,26 +131,26 @@
             return ToPolygon(solutions[0]);
         }
 
-        public static IEnumerable<Polygon> Offset(IEnumerable<Polygon> sourcePoligons, double offset, OffsetJoin oj = OffsetJoin.Mitter) {
+        public static IEnumerable<EdaPolygon> Offset(IEnumerable<EdaPolygon> sourcePoligons, double offset, OffsetJoin oj = OffsetJoin.Mitter) {
 
             cpOffset.Clear();
-            foreach (Polygon sourcePolygon in sourcePoligons)
+            foreach (EdaPolygon sourcePolygon in sourcePoligons)
                 cpOffset.AddPath(ToPointList(sourcePolygon), GetJoinType(oj), EndType.etClosedPolygon);
 
             List<List<IntPoint>> solutions = new List<List<IntPoint>>();
             cpOffset.Execute(ref solutions, offset);
 
-            List<Polygon> results = new List<Polygon>(solutions.Count);
+            List<EdaPolygon> results = new List<EdaPolygon>(solutions.Count);
             foreach (List<IntPoint> solution in solutions)
                 results.Add(ToPolygon(solution));
 
             return results;
         }
 
-        public static Polygon CreateFromSegments(IEnumerable<Segment> lines) {
+        public static EdaPolygon CreateFromSegments(IEnumerable<Segment> lines) {
 
             EdaPoints points = Polygonizer.Poligonize(lines);
-            return points == null ? null : new Polygon(points);
+            return points == null ? null : new EdaPolygon(points);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@
         /// <param name="polygon">El poligon.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        private static List<IntPoint> ToPointList(Polygon polygon) {
+        private static List<IntPoint> ToPointList(EdaPolygon polygon) {
 
             if (polygon.Points != null) {
 
@@ -184,12 +184,12 @@
         /// <param name="points">La llista de punts.</param>
         /// <returns>El poligon.</returns>
         /// 
-        private static Polygon ToPolygon(List<IntPoint> points) {
+        private static EdaPolygon ToPolygon(List<IntPoint> points) {
 
             EdaPoints polygonPoints = EdaPoints.Create();
             foreach (var point in points)
                 polygonPoints.AddPoint(new EdaPoint((int)point.X, (int)point.Y));
-            return new Polygon(polygonPoints);
+            return new EdaPolygon(polygonPoints);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@
         /// <param name="polyNode">El PolyNode d'entrada.</param>
         /// <returns>El poligon.</returns>
         /// 
-        private static Polygon ToPolygon(PolyNode polyNode) {
+        private static EdaPolygon ToPolygon(PolyNode polyNode) {
 
             EdaPoints points;
             if (polyNode.Contour.Count > 0) {
@@ -209,16 +209,16 @@
             else
                 points = null;
 
-            Polygon[] childs;
+            EdaPolygon[] childs;
             if (polyNode.ChildCount > 0) {
-                childs = new Polygon[polyNode.ChildCount];
+                childs = new EdaPolygon[polyNode.ChildCount];
                 for (int i = 0; i < polyNode.ChildCount; i++)
                     childs[i] = ToPolygon(polyNode.Childs[i]);
             }
             else
                 childs = null;
 
-            return new Polygon(points, childs);
+            return new EdaPolygon(points, childs);
         }
 
         /// <summary>

@@ -201,8 +201,8 @@ namespace MikroPic.EdaTools.v1.Panel {
 
                 // Transforma els punts a la posicio real
                 //
-                EdaPoint q1 = t.ApplyTo(new EdaPoint(cutPoints[i], 0));
-                EdaPoint q2 = t.ApplyTo(new EdaPoint(cutPoints[i + 1], 0));
+                EdaPoint q1 = t.Transform(new EdaPoint(cutPoints[i], 0));
+                EdaPoint q2 = t.Transform(new EdaPoint(cutPoints[i + 1], 0));
 
                 // Afegeix la linia a la placa
                 //
@@ -223,8 +223,8 @@ namespace MikroPic.EdaTools.v1.Panel {
                 //
                 int drill = cut.HoleDiameter;
                 int offset = (cut.Thickness - drill) / 2;
-                EdaPoint q1 = t.ApplyTo(new EdaPoint(holePoints[i], -offset));
-                EdaPoint q2 = t.ApplyTo(new EdaPoint(holePoints[i], offset));
+                EdaPoint q1 = t.Transform(new EdaPoint(holePoints[i], -offset));
+                EdaPoint q2 = t.Transform(new EdaPoint(holePoints[i], offset));
 
                 // Afegeix els forats a la placa
                 //
@@ -351,39 +351,39 @@ namespace MikroPic.EdaTools.v1.Panel {
 
             public override void Visit(EdaLineElement line) {
 
-                line.StartPosition = transformation.ApplyTo(line.StartPosition);
-                line.EndPosition = transformation.ApplyTo(line.EndPosition);
+                line.StartPosition = transformation.Transform(line.StartPosition);
+                line.EndPosition = transformation.Transform(line.EndPosition);
             }
 
             public override void Visit(EdaArcElement arc) {
 
-                arc.StartPosition = transformation.ApplyTo(arc.StartPosition);
-                arc.EndPosition = transformation.ApplyTo(arc.EndPosition);
+                arc.StartPosition = transformation.Transform(arc.StartPosition);
+                arc.EndPosition = transformation.Transform(arc.EndPosition);
             }
 
             public override void Visit(EdaRectangleElement rectangle) {
 
-                rectangle.Position = transformation.ApplyTo(rectangle.Position);
+                rectangle.Position = transformation.Transform(rectangle.Position);
             }
 
             public override void Visit(EdaCircleElement circle) {
 
-                circle.Position = transformation.ApplyTo(circle.Position);
+                circle.Position = transformation.Transform(circle.Position);
             }
 
             public override void Visit(EdaSmdPadElement pad) {
 
-                pad.Position = transformation.ApplyTo(pad.Position);
+                pad.Position = transformation.Transform(pad.Position);
             }
 
             public override void Visit(EdaThPadElement pad) {
 
-                pad.Position = transformation.ApplyTo(pad.Position);
+                pad.Position = transformation.Transform(pad.Position);
             }
 
             public override void Visit(EdaViaElement via) {
 
-                via.Position = transformation.ApplyTo(via.Position);
+                via.Position = transformation.Transform(via.Position);
             }
 
             public override void Visit(EdaRegionElement region) {
@@ -394,12 +394,12 @@ namespace MikroPic.EdaTools.v1.Panel {
 
             public override void Visit(EdaHoleElement hole) {
 
-                hole.Position = transformation.ApplyTo(hole.Position);
+                hole.Position = transformation.Transform(hole.Position);
             }
 
             public override void Visit(EdaPart part) {
 
-                part.Position = transformation.ApplyTo(part.Position);
+                part.Position = transformation.Transform(part.Position);
             }
         }
     }

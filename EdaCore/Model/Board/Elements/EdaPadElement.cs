@@ -1,5 +1,4 @@
 ﻿using System;
-
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
@@ -23,7 +22,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <param name="width">Amplada dels conductors.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public abstract Polygon GetThermalPolygon(BoardSide side, int spacing, int width);
+        public abstract EdaPolygon GetThermalPolygon(BoardSide side, int spacing, int width);
 
         /// <summary>
         /// El nom.

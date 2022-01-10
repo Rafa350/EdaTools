@@ -83,15 +83,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override Polygon GetPolygon(BoardSide side) {
+        public override EdaPolygon GetPolygon(BoardSide side) {
 
             int hash = GetHashCode() + (side.GetHashCode() * 2798761);
-            Polygon polygon = PolygonCache.Get(hash);
+            EdaPolygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
                 var points = MakePoints(side, 0);
                 var holePoints = MakeHolePonts();
-                polygon = new Polygon(points, new Polygon(holePoints));
+                polygon = new EdaPolygon(points, new EdaPolygon(holePoints));
 
                 PolygonCache.Save(hash, polygon);
             }
@@ -101,14 +101,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
+        public override EdaPolygon GetOutlinePolygon(BoardSide side, int spacing) {
 
             int hash = GetHashCode() + (side.GetHashCode() * 47211) + spacing * 99997;
-            Polygon polygon = PolygonCache.Get(hash);
+            EdaPolygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
                 var points = MakePoints(side, spacing);
-                polygon = new Polygon(points);
+                polygon = new EdaPolygon(points);
 
                 PolygonCache.Save(hash, polygon);
             }
@@ -118,20 +118,20 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override Polygon GetThermalPolygon(BoardSide side, int spacing, int width) {
+        public override EdaPolygon GetThermalPolygon(BoardSide side, int spacing, int width) {
 
             EdaSize size = GetSize(side);
             int w = size.Width + spacing + spacing;
             int h = size.Height + spacing + spacing;
 
-            Polygon pour = GetOutlinePolygon(side, spacing);
-            Polygon thermal = new Polygon(EdaPoints.CreateCross(Position, new EdaSize(w, h), width, Rotation));
+            EdaPolygon pour = GetOutlinePolygon(side, spacing);
+            EdaPolygon thermal = new EdaPolygon(EdaPoints.CreateCross(Position, new EdaSize(w, h), width, Rotation));
 
-            List<Polygon> childs = new List<Polygon>();
+            List<EdaPolygon> childs = new List<EdaPolygon>();
             childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
             if (childs.Count != 4)
                 throw new InvalidProgramException("Thermal generada incorrectamente.");
-            return new Polygon(null, childs.ToArray());
+            return new EdaPolygon(null, childs);
         }
 
         /// <summary>
@@ -139,10 +139,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// <returns>El poligon </returns>
         /// 
-        public Polygon GetDrillPolygon() {
+        public EdaPolygon GetDrillPolygon() {
 
             var points = EdaPoints.CreateCircle(Position, _drill / 2);
-            return new Polygon(points);
+            return new EdaPolygon(points);
         }
 
         /// <inheritdoc/>

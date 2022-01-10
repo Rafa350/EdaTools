@@ -19,7 +19,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// <returns>El poligon.</returns>
         /// 
-        public Polygon GetOutlinePolygon() {
+        public EdaPolygon GetOutlinePolygon() {
 
             var elements = GetElements(GetLayer(EdaLayerId.Profile));
             var segments = new List<Segment>();
@@ -46,7 +46,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="transformation">Transformacio a aplicar al poligon.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public Polygon GetRegionPolygon(EdaRegionElement region, EdaLayerId layerId, Transformation transformation) {
+        public EdaPolygon GetRegionPolygon(EdaRegionElement region, EdaLayerId layerId, Transformation transformation) {
 
             if (region == null)
                 throw new ArgumentNullException(nameof(region));
@@ -57,8 +57,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                 // Obte el poligon de la regio i el transforma si s'escau
                 //
-                Polygon regionPolygon = region.GetPolygon(layerId.Side);
-                regionPolygon = regionPolygon.Transformed(transformation);
+                EdaPolygon regionPolygon = region.GetPolygon(layerId.Side);
+                regionPolygon = regionPolygon.Transform(transformation);
 
                 // Si estem en capes de senyal, cal generar els porus i termals
                 //
@@ -70,7 +70,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                     int thicknessCompensation = region.Thickness / 2;
 
-                    List<Polygon> holePolygons = new List<Polygon>();
+                    List<EdaPolygon> holePolygons = new List<EdaPolygon>();
 
                     EdaLayerId restrictLayerId = layerId.Side == BoardSide.Top ? EdaLayerId.TopRestrict : EdaLayerId.BottomRestrict;
 
@@ -89,7 +89,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                                     int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
                                     int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
-                                    Polygon elementPolygon = element.GetOutlinePolygon(layerId.Side, clearance);
+                                    EdaPolygon elementPolygon = element.GetOutlinePolygon(layerId.Side, clearance);
                                     if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                         holePolygons.Add(elementPolygon);
                                 }
@@ -101,7 +101,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                                      element.IsOnLayer(EdaLayerId.Holes) ||
                                      element.IsOnLayer(EdaLayerId.Drills)) {
 
-                                Polygon elementPolygon = element.GetPolygon(layerId.Side);
+                                EdaPolygon elementPolygon = element.GetPolygon(layerId.Side);
                                 if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                     holePolygons.Add(elementPolygon);
                             }
@@ -110,7 +110,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                             //
                             else if (element.IsOnLayer(EdaLayerId.Profile)) {
 
-                                Polygon elementPolygon = element.GetOutlinePolygon(BoardSide.None, _outlineClearance);
+                                EdaPolygon elementPolygon = element.GetOutlinePolygon(BoardSide.None, _outlineClearance);
                                 if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                     holePolygons.Add(elementPolygon);
                             }
@@ -140,10 +140,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                                     if (GetSignal(element, part, false) != regionSignal) {
 
                                         int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
-                                        Polygon outlinePolygon = element.GetOutlinePolygon(layerId.Side, clearance);
-                                        outlinePolygon = outlinePolygon.Transformed(localTransformation);
-                                        if (part.IsFlipped)
-                                            outlinePolygon.Reverse();
+                                        EdaPolygon outlinePolygon = element.GetOutlinePolygon(layerId.Side, clearance);
+                                        outlinePolygon = outlinePolygon.Transform(localTransformation);
+                                        //if (part.IsFlipped)
+                                        //    outlinePolygon.Reverse();
                                         if (regionBBox.IntersectsWith(outlinePolygon.BoundingBox))
                                             holePolygons.Add(outlinePolygon);
                                     }
@@ -157,8 +157,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                                         int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
                                         int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
-                                        Polygon thermalPolygon = ((EdaPadElement)element).GetThermalPolygon(layerId.Side, clearance, 200000);
-                                        thermalPolygon = thermalPolygon.Transformed(localTransformation);
+                                        EdaPolygon thermalPolygon = ((EdaPadElement)element).GetThermalPolygon(layerId.Side, clearance, 200000);
+                                        thermalPolygon = thermalPolygon.Transform(localTransformation);
                                         foreach (var child in thermalPolygon.Childs) {
                                             if (regionBBox.IntersectsWith(child.BoundingBox))
                                                 holePolygons.Add(child);

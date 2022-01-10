@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29613.14
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdaBase", "EdaBase\EdaBase.csproj", "{1479AF44-1BDA-42B1-A525-4805D0851C53}"
 EndProject
@@ -36,7 +36,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdaImport", "EdaImport\EdaI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdaExport", "EdaExport\EdaExport.csproj", "{DA4A1B89-04D9-4D34-91EE-FA5B68B2EA9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaComponentGenerator", "EdaComponentGenerator\EdaComponentGenerator.csproj", "{8D7F9FA0-D161-4276-83B5-E06E003B0D19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdaComponentGenerator", "EdaComponentGenerator\EdaComponentGenerator.csproj", "{8D7F9FA0-D161-4276-83B5-E06E003B0D19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

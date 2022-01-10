@@ -21,18 +21,18 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override Polygon GetPolygon(BoardSide side) {
+        public override EdaPolygon GetPolygon(BoardSide side) {
 
             var points = EdaPoints.CreateArcTrace(Center, Radius, StartAngle, _angle, Thickness, LineCap == CapStyle.Round);
-            return new Polygon(points);
+            return new EdaPolygon(points);
         }
 
         /// <inheritdoc/>
         /// 
-        public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
+        public override EdaPolygon GetOutlinePolygon(BoardSide side, int spacing) {
 
             var points = EdaPoints.CreateArcTrace(Center, Radius, StartAngle, _angle, Thickness + (spacing * 2), LineCap == CapStyle.Round);
-            return new Polygon(points);
+            return new EdaPolygon(points);
         }
 
         /// <inheritdoc/>

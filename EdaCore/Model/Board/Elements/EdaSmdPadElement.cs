@@ -35,14 +35,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override Polygon GetPolygon(BoardSide side) {
+        public override EdaPolygon GetPolygon(BoardSide side) {
 
             int hash = GetHashCode() + side.GetHashCode() * 981;
-            Polygon polygon = PolygonCache.Get(hash);
+            EdaPolygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
                 var points = EdaPoints.CreateRectangle(Position, Size, _cornerRatio, true, Rotation);
-                polygon = new Polygon(points);
+                polygon = new EdaPolygon(points);
 
                 PolygonCache.Save(hash, polygon);
             }
@@ -51,16 +51,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
+        public override EdaPolygon GetOutlinePolygon(BoardSide side, int spacing) {
 
             int hash = GetHashCode() + (side.GetHashCode() * 71) + (spacing * 27009);
-            Polygon polygon = PolygonCache.Get(hash);
+            EdaPolygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
                 var outlineSize = new EdaSize(_size.Width + spacing + spacing, _size.Height + spacing + spacing);
                 var outlineCornerRatio = EdaRatio.FromPercent((double)(CornerSize + spacing) / (Math.Min(outlineSize.Width, outlineSize.Height) / 2));
                 var points = EdaPoints.CreateRectangle(Position, outlineSize, outlineCornerRatio, true, Rotation);
-                polygon = new Polygon(points);
+                polygon = new EdaPolygon(points);
 
                 PolygonCache.Save(hash, polygon);
             }
@@ -70,10 +70,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override Polygon GetThermalPolygon(BoardSide side, int spacing, int width) {
+        public override EdaPolygon GetThermalPolygon(BoardSide side, int spacing, int width) {
 
-            Polygon pour = GetOutlinePolygon(side, spacing);
-            Polygon thermal = new Polygon(
+            EdaPolygon pour = GetOutlinePolygon(side, spacing);
+            EdaPolygon thermal = new EdaPolygon(
                 EdaPoints.CreateCross(
                     Position,
                     new EdaSize(
@@ -82,11 +82,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                     width,
                     Rotation));
 
-            List<Polygon> childs = new List<Polygon>();
+            List<EdaPolygon> childs = new List<EdaPolygon>();
             childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
             //if (childs.Count != 4)
             //    throw new InvalidProgramException("Thermal generada incorrectamente.");
-            return new Polygon(null, childs.ToArray());
+            return new EdaPolygon(null, childs);
         }
 
         /// <inheritdoc/>

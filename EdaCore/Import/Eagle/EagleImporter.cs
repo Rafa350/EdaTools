@@ -888,7 +888,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 Transformation t = new Transformation();
                 t.Rotate(position, -rotation);
                 t.Translate(new EdaPoint(-position.X, -position.Y));
-                p = t.ApplyTo(p);
+                p = t.Transform(p);
 
                 parameter.Position = new EdaPoint((int)p.X, (int)p.Y);
                 parameter.Rotation = parameter.Rotation - rotation;

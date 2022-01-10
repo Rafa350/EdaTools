@@ -26,11 +26,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override Polygon GetPolygon(BoardSide side) {
+        public override EdaPolygon GetPolygon(BoardSide side) {
 
             if (Filled) {
                 var points = EdaPoints.CreateRectangle(_position, _size, _cornerRatio, true, _rotation);
-                return new Polygon(points);
+                return new EdaPolygon(points);
             }
             else {
                 var outerSize = new EdaSize(_size.Width + _thickness, _size.Height + _thickness);
@@ -40,17 +40,17 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 var innerCornerRatio = EdaRatio.FromPercent((double)(CornerSize - Thickness) / (Math.Min(innerSize.Width, innerSize.Height) / 2));
                 var innerPoints = EdaPoints.CreateRectangle(_position, innerSize, innerCornerRatio, true, _rotation);
 
-                return new Polygon(outerPoints, new Polygon(innerPoints));
+                return new EdaPolygon(outerPoints, new EdaPolygon(innerPoints));
             }
         }
 
         /// <inheritdoc/>
         /// 
-        public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
+        public override EdaPolygon GetOutlinePolygon(BoardSide side, int spacing) {
 
             var outerSize = new EdaSize(_size.Width + _thickness + spacing * 2, _size.Height + _thickness + spacing * 2);
             var points = EdaPoints.CreateRectangle(_position, outerSize, _cornerRatio, true, _rotation);
-            return new Polygon(points);
+            return new EdaPolygon(points);
         }
 
         /// <inheritdoc/>

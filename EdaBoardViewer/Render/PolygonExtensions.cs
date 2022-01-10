@@ -9,7 +9,7 @@
 
     public static class PolygonExtensions {
 
-        public static Geometry ToGeometry(this Polygon polygon) {
+        public static Geometry ToGeometry(this EdaPolygon polygon) {
 
             var g = new StreamGeometry();
             using (StreamGeometryContext gc = g.Open())
@@ -18,7 +18,7 @@
             return g;
         }
 
-        private static void StreamPolygon(StreamGeometryContext gc, Polygon polygon, int level) {
+        private static void StreamPolygon(StreamGeometryContext gc, EdaPolygon polygon, int level) {
 
             // Procesa el poligon principal
             //

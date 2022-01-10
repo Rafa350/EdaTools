@@ -26,7 +26,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override Polygon GetPolygon(BoardSide side) {
+        public override EdaPolygon GetPolygon(BoardSide side) {
 
             if (_segments == null)
                 return null;
@@ -76,19 +76,19 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                     points.AddArcPoints(center, radius, startAngle, angle, false);
                 }
 
-                return new Polygon(points);
+                return new EdaPolygon(points);
             }
         }
 
         /// <inheritdoc/>
         /// 
-        public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
+        public override EdaPolygon GetOutlinePolygon(BoardSide side, int spacing) {
 
             if (_segments == null)
                 return null;
 
             else {
-                Polygon polygon = GetPolygon(side);
+                EdaPolygon polygon = GetPolygon(side);
                 if (spacing != 0)
                     return PolygonProcessor.Offset(polygon, spacing);
                 else
@@ -104,7 +104,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 return new EdaRect(0, 0, 0, 0);
 
             else {
-                Polygon polygon = GetPolygon(side);
+                EdaPolygon polygon = GetPolygon(side);
                 return polygon.BoundingBox;
             }
         }

@@ -41,7 +41,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="side">Cara de la placa.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public abstract Polygon GetPolygon(BoardSide side);
+        public abstract EdaPolygon GetPolygon(BoardSide side);
 
         /// <summary>
         /// Obte el poligon espaiat del element.
@@ -50,7 +50,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="spacing">Espaiat.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public abstract Polygon GetOutlinePolygon(BoardSide side, int spacing);
+        public abstract EdaPolygon GetOutlinePolygon(BoardSide side, int spacing);
 
         /// <summary>
         /// Obte el bounding box del element.

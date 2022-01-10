@@ -24,25 +24,25 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override Polygon GetPolygon(BoardSide side) {
+        public override EdaPolygon GetPolygon(BoardSide side) {
 
             if (Filled) {
                 var points = EdaPoints.CreateCircle(_position, _radius);
-                return new Polygon(points);
+                return new EdaPolygon(points);
             }
             else {
                 var outerPoints = EdaPoints.CreateCircle(_position, _radius + (_thickness / 2));
                 var innerPoints = EdaPoints.CreateCircle(_position, _radius - (_thickness / 2));
-                return new Polygon(outerPoints, new Polygon(innerPoints));
+                return new EdaPolygon(outerPoints, new EdaPolygon(innerPoints));
             }
         }
 
         /// <inheritdoc/>
         /// 
-        public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
+        public override EdaPolygon GetOutlinePolygon(BoardSide side, int spacing) {
 
             var points = EdaPoints.CreateCircle(_position, _radius + (_thickness / 2) + spacing);
-            return new Polygon(points);
+            return new EdaPolygon(points);
         }
 
         /// <inheritdoc/>

@@ -96,16 +96,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override Polygon GetPolygon(BoardSide side) {
+        public override EdaPolygon GetPolygon(BoardSide side) {
 
             int hash = GetHashCode() * side.GetHashCode() * 273;
 
-            Polygon polygon = PolygonCache.Get(hash);
+            EdaPolygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
                 var points = MakePoints(side, 0);
                 var holePoints = MakeHolePoints();
-                polygon = new Polygon(points, new Polygon(holePoints));
+                polygon = new EdaPolygon(points, new EdaPolygon(holePoints));
 
                 PolygonCache.Save(hash, polygon);
             }
@@ -115,14 +115,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override Polygon GetOutlinePolygon(BoardSide side, int spacing) {
+        public override EdaPolygon GetOutlinePolygon(BoardSide side, int spacing) {
 
             int hash = GetHashCode() + (side.GetHashCode() * 11327) + (spacing * 131);
-            Polygon polygon = PolygonCache.Get(hash);
+            EdaPolygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
                 var points = MakePoints(side, spacing);
-                polygon = new Polygon(points);
+                polygon = new EdaPolygon(points);
 
                 PolygonCache.Save(hash, polygon);
             }
@@ -135,10 +135,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// <returns>El poligon </returns>
         /// 
-        public Polygon GetDrillPolygon() {
+        public EdaPolygon GetDrillPolygon() {
 
             var points = EdaPoints.CreateCircle(Position, _drill / 2);
-            return new Polygon(points);
+            return new EdaPolygon(points);
         }
 
         /// <inheritdoc/>

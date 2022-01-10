@@ -383,7 +383,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         public void Transform(Transformation transformation) {
 
             for (int i = 0; i < _points.Count; i++)
-                _points[i] = transformation.ApplyTo(_points[i]);
+                _points[i] = transformation.Transform(_points[i]);
         }
 
         /// <summary>
@@ -414,6 +414,9 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// 
         IEnumerator IEnumerable.GetEnumerator() =>
             _points.GetEnumerator();
+
+        public EdaPoint[] ToArray() =>
+            _points.ToArray();
 
         /// <summary>
         /// El nombre d'0elements en la coleccio.

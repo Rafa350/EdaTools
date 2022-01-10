@@ -214,7 +214,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
                 if (signal != null) {
 
                     Transformation t = Part.GetLocalTransformation();
-                    EdaPoint position = t.ApplyTo(pad.Position);
+                    EdaPoint position = t.Transform(pad.Position);
 
                     _builder.SmdPad(position, TestAccess.Top, Part.Name, pad.Name, signal.Name);
                 }
@@ -226,7 +226,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
                 if (signal != null) {
 
                     Transformation t = Part.GetLocalTransformation();
-                    EdaPoint position = t.ApplyTo(pad.Position);
+                    EdaPoint position = t.Transform(pad.Position);
 
                     _builder.ThPad(position, pad.Drill, Part.Name, pad.Name, signal.Name);
                 }

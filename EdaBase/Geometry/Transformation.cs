@@ -119,7 +119,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="point">El punt.</param>
         /// <returns>El punt transformat.</returns>
         /// 
-        public EdaPoint ApplyTo(EdaPoint point) {
+        public EdaPoint Transform(EdaPoint point) {
 
             double x = (point.X * _m.M11) + (point.Y * _m.M21) + _m.Tx;
             double y = (point.X * _m.M12) + (point.Y * _m.M22) + _m.Ty;

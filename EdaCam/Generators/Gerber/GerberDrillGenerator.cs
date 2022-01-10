@@ -301,9 +301,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     EdaPoint center = arc.Center;
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
-                        startPosition = t.ApplyTo(startPosition);
-                        endPosition = t.ApplyTo(endPosition);
-                        center = t.ApplyTo(center);
+                        startPosition = t.Transform(startPosition);
+                        endPosition = t.Transform(endPosition);
+                        center = t.Transform(center);
                     }
 
                     Aperture ap = _apertures.GetCircleAperture(arc.Thickness);
@@ -329,8 +329,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     EdaPoint endPosition = line.EndPosition;
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
-                        startPosition = t.ApplyTo(startPosition);
-                        endPosition = t.ApplyTo(endPosition);
+                        startPosition = t.Transform(startPosition);
+                        endPosition = t.Transform(endPosition);
                     }
 
                     Aperture ap = _apertures.GetCircleAperture(line.Thickness);
@@ -353,7 +353,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     EdaPoint position = hole.Position;
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
-                        position = t.ApplyTo(position);
+                        position = t.Transform(position);
                     }
 
                     Aperture ap = _apertures.GetCircleAperture(hole.Drill);
@@ -375,7 +375,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     EdaPoint position = via.Position;
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
-                        position = t.ApplyTo(position);
+                        position = t.Transform(position);
                     }
 
                     Aperture ap = _apertures.GetCircleAperture(via.Drill);
@@ -397,7 +397,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     EdaPoint position = pad.Position;
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
-                        position = t.ApplyTo(position);
+                        position = t.Transform(position);
                     }
 
                     Aperture ap = _apertures.GetCircleAperture(pad.Drill);

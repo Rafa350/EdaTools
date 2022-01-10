@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
-
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
@@ -32,10 +33,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None),
                 settings)) {
 
-
                 writer.WriteStartDocument();
                 writer.WriteStartElement("IPC-2581A");
 
+                WriteContentSection(writer, board);
                 WriteEcadSection(writer, board);
 
                 writer.WriteEndElement();
@@ -43,6 +44,93 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             }
         }
 
+        /// <summary>
+        /// Escriu la seccio 'Content'
+        /// </summary>
+        /// <param name="writer">El escriptor XML.</param>
+        /// <param name="board">La placa.</param>
+        /// 
+        private void WriteContentSection(XmlWriter writer, EdaBoard board) {
+
+            writer.WriteStartElement("Content");
+
+            writer.WriteStartElement("DictionaryStandard");
+            writer.WriteAttributeString("units", "MILLIMETER");
+
+            var elements = new List<EdaElement>();
+            foreach (var component in board.Components) {
+                foreach (var element in component.Elements)
+                    elements.Add(element);
+            }
+            foreach (var element in board.Elements)
+                elements.Add(element);
+
+            var list = new HashSet<string>();
+            foreach (var layerName in new string[] { "Top.Copper", "Bottom.Copper" }) {
+                foreach (var element in elements)
+                    if (element.IsOnLayer(EdaLayerId.Get(layerName))) {
+                        if (element is EdaViaElement viaElement) {
+
+                            string id = $"via_{viaElement.OuterSize}";
+
+                            if (!list.Contains(id)) {
+                                list.Add(id);
+
+                                double diameter = viaElement.OuterSize / 1000000.0;
+
+                                writer.WriteStartElement("EntityStandard");
+                                writer.WriteAttributeString("id", id);
+
+                                writer.WriteStartElement("Circle");
+                                writer.WriteAttributeString("diameter", XmlConvert.ToString(diameter));
+                                writer.WriteEndElement();
+
+                                writer.WriteEndElement();
+                            }
+                        }
+
+                        else if (element is EdaSmdPadElement smdPadElement) {
+
+                            string id = $"smdpad_{smdPadElement.Size.Width}_{smdPadElement.Size.Height}_{smdPadElement.CornerSize}";
+
+                            if (!list.Contains(id)) {
+                                list.Add(id);
+
+                                double width = smdPadElement.Size.Width / 1000000.0;
+                                double height = smdPadElement.Size.Height / 1000000.0;
+                                double radius = smdPadElement.CornerSize / 1000000.0;
+
+                                writer.WriteStartElement("EntityStandard");
+                                writer.WriteAttributeString("id", id);
+
+                                writer.WriteStartElement(radius == 0 ? "RectCenter" : "RectRound");
+                                writer.WriteAttributeString("width", XmlConvert.ToString(width));
+                                writer.WriteAttributeString("height", XmlConvert.ToString(height));
+                                if (radius > 0) {
+                                    writer.WriteAttributeString("radius", XmlConvert.ToString(radius));
+                                    writer.WriteAttributeString("upperLeft", "TRUE");
+                                    writer.WriteAttributeString("upperRight", "TRUE");
+                                    writer.WriteAttributeString("lowerLeft", "TRUE");
+                                    writer.WriteAttributeString("lowerRight", "TRUE");
+                                }
+                                writer.WriteEndElement();
+
+                                writer.WriteEndElement();
+                            }
+                        }
+                    }
+            }
+
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        /// <summary>
+        /// Escriu la seccio 'ECad'
+        /// </summary>
+        /// <param name="writer">El escriptor XML</param>
+        /// <param name="board">La placa.</param>
+        /// 
         private void WriteEcadSection(XmlWriter writer, EdaBoard board) {
 
             writer.WriteStartElement("Ecad");
@@ -97,7 +185,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             writer.WriteEndElement();
         }
 
-        private void WritePolygon(XmlWriter writer, Polygon polygon) {
+        private void WritePolygon(XmlWriter writer, EdaPolygon polygon) {
 
             bool first = true;
             foreach (var point in polygon.Points) {
