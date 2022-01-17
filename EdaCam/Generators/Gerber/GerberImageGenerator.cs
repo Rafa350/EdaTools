@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
@@ -9,13 +7,15 @@ using MikroPic.EdaTools.v1.Core.Infrastructure;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
+using System;
+using System.IO;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
     /// <summary>
     /// Clase per generar el fitxers gerber d'imatge
     /// </summary>
-    public sealed class GerberImageGenerator : Generator {
+    public sealed class GerberImageGenerator: Generator {
 
         public enum ImageType {
             Copper,
@@ -121,33 +121,33 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             switch (imageType) {
                 case ImageType.Copper: {
-                    int layerLevel = Int32.Parse(Target.GetOptionValue("layerLevel"));
-                    string layerSide = Target.GetOptionValue("layerSide");
-                    gb.Attribute(AttributeScope.File, $".FileFunction,Copper,L{layerLevel},{layerSide},Signal");
-                    gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
-                    break;
-                }
+                        int layerLevel = Int32.Parse(Target.GetOptionValue("layerLevel"));
+                        string layerSide = Target.GetOptionValue("layerSide");
+                        gb.Attribute(AttributeScope.File, $".FileFunction,Copper,L{layerLevel},{layerSide},Signal");
+                        gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
+                        break;
+                    }
 
                 case ImageType.SolderMask: {
-                    string layerSide = Target.GetOptionValue("layerSide");
-                    gb.Attribute(AttributeScope.File, $".FileFunction,Soldermask,{layerSide}");
-                    gb.Attribute(AttributeScope.File, ".FilePolarity,Negative");
-                    break;
-                }
+                        string layerSide = Target.GetOptionValue("layerSide");
+                        gb.Attribute(AttributeScope.File, $".FileFunction,Soldermask,{layerSide}");
+                        gb.Attribute(AttributeScope.File, ".FilePolarity,Negative");
+                        break;
+                    }
 
                 case ImageType.Cream: {
-                    string layerSide = Target.GetOptionValue("layerSide");
-                    gb.Attribute(AttributeScope.File, $".FileFunction,Paste,{layerSide}");
-                    gb.Attribute(AttributeScope.File, ".FilePolarity,Negative");
-                    break;
-                }
+                        string layerSide = Target.GetOptionValue("layerSide");
+                        gb.Attribute(AttributeScope.File, $".FileFunction,Paste,{layerSide}");
+                        gb.Attribute(AttributeScope.File, ".FilePolarity,Negative");
+                        break;
+                    }
 
                 case ImageType.Legend: {
-                    string layerSide = Target.GetOptionValue("layerSide");
-                    gb.Attribute(AttributeScope.File, $".FileFunction,Legend,{layerSide}");
-                    gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
-                    break;
-                }
+                        string layerSide = Target.GetOptionValue("layerSide");
+                        gb.Attribute(AttributeScope.File, $".FileFunction,Legend,{layerSide}");
+                        gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
+                        break;
+                    }
 
                 case ImageType.Profile:
                     gb.Attribute(AttributeScope.File, ".FileFunction,Profile,NP");
@@ -239,7 +239,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// Visitador per preparar les apertures.
         /// </summary>
         /// 
-        private sealed class ApertureCreatorVisitor : EdaElementVisitor {
+        private sealed class ApertureCreatorVisitor: EdaElementVisitor {
 
             private readonly EdaLayerId _layerId;
             private readonly ApertureDictionary _apertures;
@@ -421,7 +421,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// Visitador per generar la imatge.
         /// </summary>
         /// 
-        private sealed class ImageGeneratorVisitor : EdaElementVisitor {
+        private sealed class ImageGeneratorVisitor: EdaElementVisitor {
 
             private readonly ImageType _imageType;
             private readonly EdaLayerId _layerId;
@@ -794,7 +794,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// Clase per generar la imatge dels texts
         /// </summary>
         /// 
-        private class GerberTextDrawer : TextDrawer {
+        private class GerberTextDrawer: TextDrawer {
 
             private readonly GerberBuilder gb;
 
@@ -816,7 +816,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <summary>
         /// Clase per generar la imatge amb regions poligonals.
         /// </summary>
-        private sealed class RegionGeneratorVisitor : EdaElementVisitor {
+        private sealed class RegionGeneratorVisitor: EdaElementVisitor {
 
             private readonly GerberBuilder _gb;
             private readonly EdaLayerId _layerId;

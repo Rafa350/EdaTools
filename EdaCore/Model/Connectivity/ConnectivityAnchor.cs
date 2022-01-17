@@ -1,9 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Connectivity {
 
+    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
     using System.Collections.Generic;
-
-    using MikroPic.EdaTools.v1.Base.Geometry;
 
     public sealed class ConnectivityAnchor {
 

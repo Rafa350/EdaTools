@@ -1,7 +1,6 @@
-﻿using System;
-
-using MikroPic.EdaTools.v1.Cam.Model;
+﻿using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
+using System;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators {
 

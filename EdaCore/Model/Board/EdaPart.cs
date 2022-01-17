@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Common;
+using System;
+using System.Collections.Generic;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
@@ -11,7 +11,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         Bottom
     }
 
-    public sealed partial class EdaPart : IEdaPosition, IEdaRotation, IEdaName, IEdaVisitable<IEdaBoardVisitor> {
+    public sealed partial class EdaPart: IEdaPosition, IEdaRotation, IEdaName, IEdaVisitable<IEdaBoardVisitor> {
 
         private string _name;
         private EdaPoint _position;

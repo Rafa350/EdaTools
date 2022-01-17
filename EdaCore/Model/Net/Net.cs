@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public sealed partial class Net : INetVisitable {
+    public sealed partial class Net: INetVisitable {
 
         public Net(IEnumerable<NetSignal> signals) {
 

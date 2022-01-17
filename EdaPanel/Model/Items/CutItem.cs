@@ -3,7 +3,7 @@
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Panel.Model;
 
-    public sealed class CutItem : EdaPanelItem {
+    public sealed class CutItem: EdaPanelItem {
 
         private EdaPoint _startPosition;
         private EdaPoint _endPosition;

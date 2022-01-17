@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Xml;
-
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Xml;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Net;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 
 namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
@@ -16,7 +15,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
     /// Clase per importar una placa desde Eagle
     /// </summary>
     /// 
-    public sealed class EagleImporter : IEdaImporter {
+    public sealed class EagleImporter: IEdaImporter {
 
         private const int topLayerNum = 1;
         private const int bottomLayerNum = 16;

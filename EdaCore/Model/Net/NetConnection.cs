@@ -2,7 +2,7 @@
 
     using System;
 
-    public sealed class NetConnection : INetVisitable {
+    public sealed class NetConnection: INetVisitable {
 
         private readonly string partName;
         private readonly string padName;

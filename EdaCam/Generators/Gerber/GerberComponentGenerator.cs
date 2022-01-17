@@ -1,19 +1,18 @@
-﻿using System;
-using System.IO;
-
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
+using System;
+using System.IO;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
     /// <summary>
     /// Clase per generar fitxers gerber de forats i fresats.
     /// </summary>
-    public sealed class GerberComponentGenerator : Generator {
+    public sealed class GerberComponentGenerator: Generator {
 
         private readonly Aperture _outlineAperture;
         private Aperture _centroidAperture;
@@ -173,7 +172,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <summary>
         /// Visitador per generar la imatge. Visita els elements que tenen forars.
         /// </summary>
-        private sealed class ImageGeneratorVisitor : EdaElementVisitor {
+        private sealed class ImageGeneratorVisitor: EdaElementVisitor {
 
             private readonly GerberBuilder _gb;
             private readonly PartSide _side;

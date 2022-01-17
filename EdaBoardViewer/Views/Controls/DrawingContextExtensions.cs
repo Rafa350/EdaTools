@@ -1,9 +1,8 @@
 ﻿namespace EdaBoardViewer.Views.Controls {
 
-    using System;
-
     using Avalonia;
     using Avalonia.Media;
+    using System;
 
     internal static class DrawingContextExtensions {
 

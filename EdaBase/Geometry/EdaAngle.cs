@@ -7,7 +7,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
     /// de grau i el gir es considera contrari al rellotge.
     /// </summary>
     /// 
-    public readonly struct EdaAngle : IEquatable<EdaAngle> {
+    public readonly struct EdaAngle: IEquatable<EdaAngle> {
 
         public static readonly EdaAngle Zero = new EdaAngle(0);
         public static readonly EdaAngle Deg45 = new EdaAngle(4500);

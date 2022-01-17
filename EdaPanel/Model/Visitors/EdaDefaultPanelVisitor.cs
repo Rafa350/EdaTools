@@ -1,10 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Panel.Model.Visitors {
 
+    using MikroPic.EdaTools.v1.Panel.Model.Items;
     using System;
 
-    using MikroPic.EdaTools.v1.Panel.Model.Items;
-
-    public abstract class EdaDefaultPanelVisitor : IEdaPanelVisitor {
+    public abstract class EdaDefaultPanelVisitor: IEdaPanelVisitor {
 
         public virtual void Visit(EdaPanel project) {
 

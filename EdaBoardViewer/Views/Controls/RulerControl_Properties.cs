@@ -4,7 +4,7 @@
     using Avalonia.Controls;
     using Avalonia.Media;
 
-    public sealed partial class RulerControl : Control {
+    public sealed partial class RulerControl: Control {
 
         public static readonly StyledProperty<IBrush> BackgroundProperty = AvaloniaProperty.Register<RulerControl, IBrush>(nameof(BackgroundProperty), Brushes.DarkCyan);
         public static readonly StyledProperty<IBrush> TagBrushProperty = AvaloniaProperty.Register<RulerControl, IBrush>(nameof(TagBrush), Brushes.White);

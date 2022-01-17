@@ -1,9 +1,8 @@
 ﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Fonts {
 
+    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
     using System.Collections.Generic;
-
-    using MikroPic.EdaTools.v1.Base.Geometry;
 
     /// <summary>
     /// Clase per generar els glyphs d'una cadena

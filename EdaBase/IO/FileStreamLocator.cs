@@ -8,7 +8,7 @@
     /// Localitzador de fitxers.
     /// </summary>
     /// 
-    public class FileStreamLocator : IStreamLocator {
+    public class FileStreamLocator: IStreamLocator {
 
         private readonly List<string> folders = new List<string>();
 

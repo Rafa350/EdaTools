@@ -7,7 +7,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
     /// <summary>
     /// Clase que representa una aperture rectangular.
     /// </summary>
-    public sealed class RectangleAperture : Aperture {
+    public sealed class RectangleAperture: Aperture {
 
         private readonly int _width;
         private readonly int _height;

@@ -1,15 +1,13 @@
 ﻿namespace EdaBoardViewer.ViewModels {
 
-    using System.Reactive;
-    using System.Threading.Tasks;
-
     using Avalonia;
     using Avalonia.Controls;
     using Avalonia.Controls.ApplicationLifetimes;
-
     using ReactiveUI;
+    using System.Reactive;
+    using System.Threading.Tasks;
 
-    public class MainWindowViewModel : ViewModelBase {
+    public class MainWindowViewModel: ViewModelBase {
 
         public ReactiveCommand<Unit, Unit> OpenCommand { get; }
 

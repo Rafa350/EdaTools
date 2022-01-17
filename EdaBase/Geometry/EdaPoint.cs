@@ -6,7 +6,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
     /// Estructura que representa un punt milionesimes de la unitat.
     /// </summary>
     /// 
-    public readonly struct EdaPoint : IEquatable<EdaPoint> {
+    public readonly struct EdaPoint: IEquatable<EdaPoint> {
 
         private readonly int _x;
         private readonly int _y;

@@ -1,14 +1,13 @@
-﻿using System;
+﻿using MikroPic.EdaTools.v1.Cam.Model;
+using MikroPic.EdaTools.v1.Core.Model.Board;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Text.Json;
 
-using MikroPic.EdaTools.v1.Cam.Model;
-using MikroPic.EdaTools.v1.Core.Model.Board;
-
 namespace MikroPic.EdaTools.v1.Cam.Generators.GerberJob {
 
-    public sealed class GerberJobGenerator : Generator {
+    public sealed class GerberJobGenerator: Generator {
 
         public GerberJobGenerator(Target target) :
             base(target) {

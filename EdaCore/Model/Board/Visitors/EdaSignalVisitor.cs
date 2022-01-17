@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
 
-    public abstract class EdaSignalVisitor : EdaDefaultBoardVisitor {
+    public abstract class EdaSignalVisitor: EdaDefaultBoardVisitor {
 
         private EdaBoard _currentBoard;
         private EdaSignal _currentSignal;

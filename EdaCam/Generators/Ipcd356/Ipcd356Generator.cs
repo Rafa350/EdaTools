@@ -1,19 +1,18 @@
-﻿using System;
-using System.IO;
-
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
+using System;
+using System.IO;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
 
     /// <summary>
     /// Generador de codi en format IPCD356
     /// </summary>
-    public sealed class IPCD356Generator : Generator {
+    public sealed class IPCD356Generator: Generator {
 
         public IPCD356Generator(Target target) :
             base(target) {
@@ -134,7 +133,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
         /// <summary>
         /// Visitador per generar els senyals
         /// </summary>
-        private sealed class NetsVisitor : EdaSignalVisitor {
+        private sealed class NetsVisitor: EdaSignalVisitor {
 
             private readonly IPCD356Builder _builder;
 
@@ -179,7 +178,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
         /// <summary>
         /// Visitador per generar les definicions de vias
         /// </summary>
-        private sealed class ViasVisitor : EdaElementVisitor {
+        private sealed class ViasVisitor: EdaElementVisitor {
 
             private readonly IPCD356Builder builder;
 
@@ -199,7 +198,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
         /// <summary>
         /// Visitador per generar les definicions de pads
         /// </summary>
-        private sealed class PadsVisitor : EdaElementVisitor {
+        private sealed class PadsVisitor: EdaElementVisitor {
 
             private readonly IPCD356Builder _builder;
 

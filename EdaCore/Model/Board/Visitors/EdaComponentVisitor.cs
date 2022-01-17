@@ -2,7 +2,7 @@
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
 
-    public abstract class EdaComponentVisitor : EdaDefaultBoardVisitor {
+    public abstract class EdaComponentVisitor: EdaDefaultBoardVisitor {
 
         private EdaBoard _currentBoard;
         private EdaComponent _currentComponent;

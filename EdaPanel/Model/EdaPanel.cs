@@ -1,11 +1,10 @@
-﻿using System;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
+using System;
 using System.Collections.Generic;
-
-using MikroPic.EdaTools.v1.Base.Geometry;
 
 namespace MikroPic.EdaTools.v1.Panel.Model {
 
-    public sealed class EdaPanel : IEdaPanelVisitable {
+    public sealed class EdaPanel: IEdaPanelVisitable {
 
         private EdaSize _size;
         private List<EdaPanelItem> _items;

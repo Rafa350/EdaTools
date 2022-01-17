@@ -6,7 +6,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
     /// Objecte que representa un rectangle aliniat amb els eixos X i Y.
     /// </summary>
     /// 
-    public readonly struct EdaRect : IEquatable<EdaRect> {
+    public readonly struct EdaRect: IEquatable<EdaRect> {
 
         private readonly int _x;
         private readonly int _y;

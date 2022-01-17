@@ -2,7 +2,7 @@
 
     using System;
 
-    public sealed class NetPart : INetVisitable {
+    public sealed class NetPart: INetVisitable {
 
         private readonly string name;
 

@@ -1,6 +1,6 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Net.Visitors {
 
-    public class DefaultNetVisitor : INetVisitor {
+    public class DefaultNetVisitor: INetVisitor {
 
         public virtual void Visit(Net net) {
 

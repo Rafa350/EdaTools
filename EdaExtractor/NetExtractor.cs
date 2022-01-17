@@ -1,10 +1,9 @@
-﻿namespace MikroPic.EdaTools.v1.Extractor {
+﻿using MikroPic.EdaTools.v1.Core.Model.Board;
+using System;
+using System.IO;
+using System.Xml;
 
-    using System;
-    using System.IO;
-    using System.Xml;
-
-    using MikroPic.EdaTools.v1.Core.Model.Board;
+namespace MikroPic.EdaTools.v1.Extractor {
 
     public sealed class NetExtractor {
 

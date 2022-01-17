@@ -2,7 +2,7 @@
 
     using System;
 
-    public sealed class SLeaf : SNode {
+    public sealed class SLeaf: SNode {
 
         private readonly int _position;
         private readonly int _length;

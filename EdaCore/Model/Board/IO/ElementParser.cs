@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Xml;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.IO;
+using System.Collections.Generic;
+using System.IO;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 

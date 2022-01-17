@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
+using System.Collections.Generic;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 

@@ -1,9 +1,8 @@
-﻿using System;
-
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+using System;
 
 namespace MikroPic.EdaTools.v1.Core.Infrastructure {
 

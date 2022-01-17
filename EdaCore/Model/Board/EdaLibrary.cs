@@ -1,10 +1,10 @@
-﻿using System;
+﻿using MikroPic.EdaTools.v1.Core.Model.Common;
+using System;
 using System.Collections.Generic;
-using MikroPic.EdaTools.v1.Core.Model.Common;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    public sealed partial class EdaLibrary : IEdaVisitable<IEdaBoardVisitor> {
+    public sealed partial class EdaLibrary: IEdaVisitable<IEdaBoardVisitor> {
 
         private string _name;
         private string _description;

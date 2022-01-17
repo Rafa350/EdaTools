@@ -6,7 +6,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// Clase que representa un atribut.
     /// </summary>
     /// 
-    public sealed class EdaComponentAttribute : IEdaVisitable<IEdaBoardVisitor> {
+    public sealed class EdaComponentAttribute: IEdaVisitable<IEdaBoardVisitor> {
 
         private string _name;
         private string _value;

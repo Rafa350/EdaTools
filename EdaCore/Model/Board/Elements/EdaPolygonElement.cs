@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
+using System;
+using System.Collections.Generic;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
@@ -11,7 +10,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa una regio poligonal.
     /// </summary>
     /// 
-    public class EdaPolygonElement : EdaElement {
+    public class EdaPolygonElement: EdaElement {
 
         private IEnumerable<EdaArcPoint> _segments;
         private int _thickness;

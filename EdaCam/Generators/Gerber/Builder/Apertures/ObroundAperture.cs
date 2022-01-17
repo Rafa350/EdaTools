@@ -7,7 +7,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
     /// <summary>
     /// Clase que representa una aperture eliptica.
     /// </summary>
-    public sealed class ObroundAperture : Aperture {
+    public sealed class ObroundAperture: Aperture {
 
         private readonly int _width;
         private readonly int _height;

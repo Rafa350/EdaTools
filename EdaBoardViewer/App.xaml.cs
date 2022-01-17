@@ -7,7 +7,7 @@
     using EdaBoardViewer.ViewModels;
     using EdaBoardViewer.Views;
 
-    public class App : Application {
+    public class App: Application {
 
         public override void Initialize() {
 

@@ -1,8 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Connectivity {
 
-    using System;
-
     using MikroPic.EdaTools.v1.Core.Model.Board;
+    using System;
 
     public sealed class ConnectivityItem {
 

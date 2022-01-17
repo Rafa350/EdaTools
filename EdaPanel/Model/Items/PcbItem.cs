@@ -1,10 +1,9 @@
 ﻿namespace MikroPic.EdaTools.v1.Panel.Model.Items {
 
+    using MikroPic.EdaTools.v1.Base.Geometry;
     using System;
 
-    using MikroPic.EdaTools.v1.Base.Geometry;
-
-    public sealed class PcbItem : EdaPanelItem {
+    public sealed class PcbItem: EdaPanelItem {
 
         private EdaPoint _position;
         private EdaSize _size;

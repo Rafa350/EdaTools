@@ -3,7 +3,7 @@
     using Avalonia.Controls;
     using Avalonia.Media;
 
-    public sealed partial class DesignControl : Control {
+    public sealed partial class DesignControl: Control {
 
         public static readonly StyledProperty<IBrush> BackgroundProperty = AvaloniaProperty.Register<DesignControl, IBrush>(nameof(BackgroundProperty), Brushes.Transparent);
         public static readonly StyledProperty<IBrush> TagBrushProperty = AvaloniaProperty.Register<DesignControl, IBrush>(nameof(TagBrush), Brushes.White);

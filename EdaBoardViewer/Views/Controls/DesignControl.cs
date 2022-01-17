@@ -3,7 +3,7 @@
     using Avalonia;
     using Avalonia.Controls;
 
-    public sealed partial class DesignControl : Control {
+    public sealed partial class DesignControl: Control {
 
         /// <summary>
         /// Constructor estatic.

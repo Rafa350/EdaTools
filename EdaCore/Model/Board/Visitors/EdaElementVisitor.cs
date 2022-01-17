@@ -5,7 +5,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
     /// <summary>
     /// Clase per visitar els elements.
     /// </summary>
-    public abstract class EdaElementVisitor : EdaDefaultBoardVisitor {
+    public abstract class EdaElementVisitor: EdaDefaultBoardVisitor {
 
         private EdaBoard _currentBoard;
         private EdaPart _currentPart;

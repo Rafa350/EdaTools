@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
-    public sealed class EdaLayerSet : IEnumerable<EdaLayerId> {
+    public sealed class EdaLayerSet: IEnumerable<EdaLayerId> {
 
         private readonly List<EdaLayerId> _items = new List<EdaLayerId>();
 

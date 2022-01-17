@@ -4,7 +4,7 @@
     using System.Collections;
     using System.Collections.Generic;
 
-    public sealed class SBranch : SNode, IEnumerable<SNode> {
+    public sealed class SBranch: SNode, IEnumerable<SNode> {
 
         private readonly List<SNode> _nodes;
 

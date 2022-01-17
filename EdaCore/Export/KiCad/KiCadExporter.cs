@@ -1,18 +1,17 @@
-﻿using System;
+﻿using MikroPic.EdaTools.v1.Base.Geometry.Utils;
+using MikroPic.EdaTools.v1.Core.Model.Board;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Text;
 
-using MikroPic.EdaTools.v1.Base.Geometry.Utils;
-using MikroPic.EdaTools.v1.Core.Model.Board;
-using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
-using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
-
 namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
 
-    public sealed class KiCadExporter : IEdaExporter {
+    public sealed class KiCadExporter: IEdaExporter {
 
-        private sealed class Visitor : EdaDefaultBoardVisitor {
+        private sealed class Visitor: EdaDefaultBoardVisitor {
 
             private const double _scale = 1000000.0;
             private readonly TextWriter _writer;

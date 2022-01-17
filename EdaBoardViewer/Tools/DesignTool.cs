@@ -1,8 +1,7 @@
 ﻿namespace EdaBoardViewer.Tools {
 
-    using System;
-
     using Avalonia;
+    using System;
 
     /// <summary>
     /// Clase que representa un eina de dibuix
@@ -10,7 +9,7 @@
     /// 
     public class DesignTool {
 
-        public class PointerEventArgs : EventArgs {
+        public class PointerEventArgs: EventArgs {
 
             private readonly Point position;
 

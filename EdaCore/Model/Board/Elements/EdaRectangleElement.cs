@@ -1,6 +1,6 @@
-﻿using System;
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+using System;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
@@ -8,7 +8,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un rectangle.
     /// </summary>
     /// 
-    public sealed class EdaRectangleElement : EdaElement, IEdaPosition, IEdaSize, IEdaRotation {
+    public sealed class EdaRectangleElement: EdaElement, IEdaPosition, IEdaSize, IEdaRotation {
 
         private EdaPoint _position;
         private EdaSize _size;

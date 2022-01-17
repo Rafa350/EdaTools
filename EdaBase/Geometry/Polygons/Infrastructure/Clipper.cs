@@ -71,13 +71,16 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         public double Y;
 
         public DoublePoint(double x = 0, double y = 0) {
-            this.X = x; this.Y = y;
+            this.X = x;
+            this.Y = y;
         }
         public DoublePoint(DoublePoint dp) {
-            this.X = dp.X; this.Y = dp.Y;
+            this.X = dp.X;
+            this.Y = dp.Y;
         }
         public DoublePoint(IntPoint ip) {
-            this.X = ip.X; this.Y = ip.Y;
+            this.X = ip.X;
+            this.Y = ip.Y;
         }
     };
 
@@ -86,7 +89,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
     // PolyTree & PolyNode classes
     //------------------------------------------------------------------------------
 
-    public class PolyTree : PolyNode {
+    public class PolyTree: PolyNode {
         internal List<PolyNode> m_AllPolys = new List<PolyNode>();
 
         //The GC probably handles this cleanup more efficiently ...
@@ -110,7 +113,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             get {
                 int result = m_AllPolys.Count;
                 //with negative offsets, ignore the hidden outer polygon ...
-                if (result > 0 && m_Childs[0] != m_AllPolys[0]) result--;
+                if (result > 0 && m_Childs[0] != m_AllPolys[0])
+                    result--;
                 return result;
             }
         }
@@ -196,8 +200,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
         public Int128(Int64 _lo) {
             lo = (UInt64)_lo;
-            if (_lo < 0) hi = -1;
-            else hi = 0;
+            if (_lo < 0)
+                hi = -1;
+            else
+                hi = 0;
         }
 
         public Int128(Int64 _hi, UInt64 _lo) {
@@ -215,8 +221,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         }
 
         public static bool operator ==(Int128 val1, Int128 val2) {
-            if ((object)val1 == (object)val2) return true;
-            else if ((object)val1 == null || (object)val2 == null) return false;
+            if ((object)val1 == (object)val2)
+                return true;
+            else if ((object)val1 == null || (object)val2 == null)
+                return false;
             return (val1.hi == val2.hi && val1.lo == val2.lo);
         }
 
@@ -252,7 +260,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         public static Int128 operator +(Int128 lhs, Int128 rhs) {
             lhs.hi += rhs.hi;
             lhs.lo += rhs.lo;
-            if (lhs.lo < rhs.lo) lhs.hi++;
+            if (lhs.lo < rhs.lo)
+                lhs.hi++;
             return lhs;
         }
 
@@ -285,8 +294,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
         public static Int128 Int128Mul(Int64 lhs, Int64 rhs) {
             bool negate = (lhs < 0) != (rhs < 0);
-            if (lhs < 0) lhs = -lhs;
-            if (rhs < 0) rhs = -rhs;
+            if (lhs < 0)
+                lhs = -lhs;
+            if (rhs < 0)
+                rhs = -rhs;
             UInt64 int1Hi = (UInt64)lhs >> 32;
             UInt64 int1Lo = (UInt64)lhs & 0xFFFFFFFF;
             UInt64 int2Hi = (UInt64)rhs >> 32;
@@ -302,7 +313,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             hi = (Int64)(a + (c >> 32));
 
             unchecked { lo = (c << 32) + b; }
-            if (lo < b) hi++;
+            if (lo < b)
+                hi++;
             Int128 result = new Int128(hi, lo);
             return negate ? -result : result;
         }
@@ -339,14 +351,17 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
     }
 #else
         public IntPoint(cInt X, cInt Y) {
-            this.X = X; this.Y = Y;
+            this.X = X;
+            this.Y = Y;
         }
         public IntPoint(double x, double y) {
-            this.X = (cInt)x; this.Y = (cInt)y;
+            this.X = (cInt)x;
+            this.Y = (cInt)y;
         }
 
         public IntPoint(IntPoint pt) {
-            this.X = pt.X; this.Y = pt.Y;
+            this.X = pt.X;
+            this.Y = pt.Y;
         }
 #endif
 
@@ -359,12 +374,14 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         }
 
         public override bool Equals(object obj) {
-            if (obj == null) return false;
+            if (obj == null)
+                return false;
             if (obj is IntPoint) {
                 IntPoint a = (IntPoint)obj;
                 return (X == a.X) && (Y == a.Y);
             }
-            else return false;
+            else
+                return false;
         }
 
         public override int GetHashCode() {
@@ -381,12 +398,16 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         public cInt bottom;
 
         public IntRect(cInt l, cInt t, cInt r, cInt b) {
-            this.left = l; this.top = t;
-            this.right = r; this.bottom = b;
+            this.left = l;
+            this.top = t;
+            this.right = r;
+            this.bottom = b;
         }
         public IntRect(IntRect ir) {
-            this.left = ir.left; this.top = ir.top;
-            this.right = ir.right; this.bottom = ir.bottom;
+            this.left = ir.left;
+            this.top = ir.top;
+            this.right = ir.right;
+            this.bottom = ir.bottom;
         }
     }
 
@@ -432,12 +453,15 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         internal IntPoint Pt;
     };
 
-    public class MyIntersectNodeSort : IComparer<IntersectNode> {
+    public class MyIntersectNodeSort: IComparer<IntersectNode> {
         public int Compare(IntersectNode node1, IntersectNode node2) {
             cInt i = node2.Pt.Y - node1.Pt.Y;
-            if (i > 0) return 1;
-            else if (i < 0) return -1;
-            else return 0;
+            if (i > 0)
+                return 1;
+            else if (i < 0)
+                return -1;
+            else
+                return 0;
         }
     }
 
@@ -531,7 +555,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         internal bool PointIsVertex(IntPoint pt, OutPt pp) {
             OutPt pp2 = pp;
             do {
-                if (pp2.Pt == pt) return true;
+                if (pp2.Pt == pt)
+                    return true;
                 pp2 = pp2.Next;
             }
             while (pp2 != pp);
@@ -564,7 +589,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 if (PointOnLineSegment(pt, pp2.Pt, pp2.Next.Pt, UseFullRange))
                     return true;
                 pp2 = pp2.Next;
-                if (pp2 == pp) break;
+                if (pp2 == pp)
+                    break;
             }
             return false;
         }
@@ -574,8 +600,9 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             if (UseFullRange)
                 return Int128.Int128Mul(e1.Delta.Y, e2.Delta.X) ==
                     Int128.Int128Mul(e1.Delta.X, e2.Delta.Y);
-            else return (cInt)(e1.Delta.Y) * (e2.Delta.X) ==
-              (cInt)(e1.Delta.X) * (e2.Delta.Y);
+            else
+                return (cInt)(e1.Delta.Y) * (e2.Delta.X) ==
+             (cInt)(e1.Delta.X) * (e2.Delta.Y);
         }
         //------------------------------------------------------------------------------
 
@@ -584,8 +611,9 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             if (UseFullRange)
                 return Int128.Int128Mul(pt1.Y - pt2.Y, pt2.X - pt3.X) ==
                   Int128.Int128Mul(pt1.X - pt2.X, pt2.Y - pt3.Y);
-            else return
-              (cInt)(pt1.Y - pt2.Y) * (pt2.X - pt3.X) - (cInt)(pt1.X - pt2.X) * (pt2.Y - pt3.Y) == 0;
+            else
+                return
+             (cInt)(pt1.Y - pt2.Y) * (pt2.X - pt3.X) - (cInt)(pt1.X - pt2.X) * (pt2.Y - pt3.Y) == 0;
         }
         //------------------------------------------------------------------------------
 
@@ -594,8 +622,9 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             if (UseFullRange)
                 return Int128.Int128Mul(pt1.Y - pt2.Y, pt3.X - pt4.X) ==
                   Int128.Int128Mul(pt1.X - pt2.X, pt3.Y - pt4.Y);
-            else return
-              (cInt)(pt1.Y - pt2.Y) * (pt3.X - pt4.X) - (cInt)(pt1.X - pt2.X) * (pt3.Y - pt4.Y) == 0;
+            else
+                return
+             (cInt)(pt1.Y - pt2.Y) * (pt3.X - pt4.X) - (cInt)(pt1.X - pt2.X) * (pt3.Y - pt4.Y) == 0;
         }
         //------------------------------------------------------------------------------
 
@@ -611,7 +640,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         public virtual void Clear() {
             DisposeLocalMinimaList();
             for (int i = 0; i < m_edges.Count; ++i) {
-                for (int j = 0; j < m_edges[i].Count; ++j) m_edges[i][j] = null;
+                for (int j = 0; j < m_edges[i].Count; ++j)
+                    m_edges[i][j] = null;
                 m_edges[i].Clear();
             }
             m_edges.Clear();
@@ -669,13 +699,19 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             TEdge E2;
             for (; ; )
             {
-                while (E.Bot != E.Prev.Bot || E.Curr == E.Top) E = E.Next;
-                if (E.Dx != horizontal && E.Prev.Dx != horizontal) break;
-                while (E.Prev.Dx == horizontal) E = E.Prev;
+                while (E.Bot != E.Prev.Bot || E.Curr == E.Top)
+                    E = E.Next;
+                if (E.Dx != horizontal && E.Prev.Dx != horizontal)
+                    break;
+                while (E.Prev.Dx == horizontal)
+                    E = E.Prev;
                 E2 = E;
-                while (E.Dx == horizontal) E = E.Next;
-                if (E.Top.Y == E.Prev.Bot.Y) continue; //ie just an intermediate horz.
-                if (E2.Prev.Bot.X < E.Bot.X) E = E2;
+                while (E.Dx == horizontal)
+                    E = E.Next;
+                if (E.Top.Y == E.Prev.Bot.Y)
+                    continue; //ie just an intermediate horz.
+                if (E2.Prev.Bot.X < E.Bot.X)
+                    E = E2;
                 break;
             }
             return E;
@@ -691,16 +727,22 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 //create another LocMin and calling ProcessBound once more ...
                 E = Result;
                 if (LeftBoundIsForward) {
-                    while (E.Top.Y == E.Next.Bot.Y) E = E.Next;
-                    while (E != Result && E.Dx == horizontal) E = E.Prev;
+                    while (E.Top.Y == E.Next.Bot.Y)
+                        E = E.Next;
+                    while (E != Result && E.Dx == horizontal)
+                        E = E.Prev;
                 }
                 else {
-                    while (E.Top.Y == E.Prev.Bot.Y) E = E.Prev;
-                    while (E != Result && E.Dx == horizontal) E = E.Next;
+                    while (E.Top.Y == E.Prev.Bot.Y)
+                        E = E.Prev;
+                    while (E != Result && E.Dx == horizontal)
+                        E = E.Next;
                 }
                 if (E == Result) {
-                    if (LeftBoundIsForward) Result = E.Next;
-                    else Result = E.Prev;
+                    if (LeftBoundIsForward)
+                        Result = E.Next;
+                    else
+                        Result = E.Prev;
                 }
                 else {
                     //there are more edges in the bound beyond result starting with E
@@ -724,8 +766,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 //We need to be careful with open paths because this may not be a
                 //true local minima (ie E may be following a skip edge).
                 //Also, consecutive horz. edges may start heading left before going right.
-                if (LeftBoundIsForward) EStart = E.Prev;
-                else EStart = E.Next;
+                if (LeftBoundIsForward)
+                    EStart = E.Prev;
+                else
+                    EStart = E.Next;
                 if (EStart.Dx == horizontal) //ie an adjoining horizontal skip edge
                 {
                     if (EStart.Bot.X != E.Bot.X && EStart.Top.X != E.Bot.X)
@@ -744,8 +788,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                     //only when the preceding edge attaches to the horizontal's left vertex
                     //unless a Skip edge is encountered when that becomes the top divide
                     Horz = Result;
-                    while (Horz.Prev.Dx == horizontal) Horz = Horz.Prev;
-                    if (Horz.Prev.Top.X > Result.Next.Top.X) Result = Horz.Prev;
+                    while (Horz.Prev.Dx == horizontal)
+                        Horz = Horz.Prev;
+                    if (Horz.Prev.Top.X > Result.Next.Top.X)
+                        Result = Horz.Prev;
                 }
                 while (E != Result) {
                     E.NextInLML = E.Next;
@@ -762,9 +808,11 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                     Result = Result.Prev;
                 if (Result.Dx == horizontal && Result.Prev.OutIdx != Skip) {
                     Horz = Result;
-                    while (Horz.Next.Dx == horizontal) Horz = Horz.Next;
+                    while (Horz.Next.Dx == horizontal)
+                        Horz = Horz.Next;
                     if (Horz.Next.Top.X == Result.Prev.Top.X ||
-                        Horz.Next.Top.X > Result.Prev.Top.X) Result = Horz.Next;
+                        Horz.Next.Top.X > Result.Prev.Top.X)
+                        Result = Horz.Next;
                 }
 
                 while (E != Result) {
@@ -792,13 +840,18 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 #endif
 
             int highI = (int)pg.Count - 1;
-            if (Closed) while (highI > 0 && (pg[highI] == pg[0])) --highI;
-            while (highI > 0 && (pg[highI] == pg[highI - 1])) --highI;
-            if ((Closed && highI < 2) || (!Closed && highI < 1)) return false;
+            if (Closed)
+                while (highI > 0 && (pg[highI] == pg[0]))
+                    --highI;
+            while (highI > 0 && (pg[highI] == pg[highI - 1]))
+                --highI;
+            if ((Closed && highI < 2) || (!Closed && highI < 1))
+                return false;
 
             //create a new edge array ...
             List<TEdge> edges = new List<TEdge>(highI + 1);
-            for (int i = 0; i <= highI; i++) edges.Add(new TEdge());
+            for (int i = 0; i <= highI; i++)
+                edges.Add(new TEdge());
 
             bool IsFlat = true;
 
@@ -820,8 +873,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             {
                 //nb: allows matching start and end points when not Closed ...
                 if (E.Curr == E.Next.Curr && (Closed || E.Next != eStart)) {
-                    if (E == E.Next) break;
-                    if (E == eStart) eStart = E.Next;
+                    if (E == E.Next)
+                        break;
+                    if (E == eStart)
+                        eStart = E.Next;
                     E = RemoveEdge(E);
                     eLoopStop = E;
                     continue;
@@ -836,14 +891,16 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                     //the default is to merge adjacent collinear edges into a single edge.
                     //However, if the PreserveCollinear property is enabled, only overlapping
                     //collinear edges (ie spikes) will be removed from closed paths.
-                    if (E == eStart) eStart = E.Next;
+                    if (E == eStart)
+                        eStart = E.Next;
                     E = RemoveEdge(E);
                     E = E.Prev;
                     eLoopStop = E;
                     continue;
                 }
                 E = E.Next;
-                if ((E == eLoopStop) || (!Closed && E.Next == eStart)) break;
+                if ((E == eLoopStop) || (!Closed && E.Next == eStart))
+                    break;
             }
 
             if ((!Closed && (E == E.Next)) || (Closed && (E.Prev == E.Next)))
@@ -859,7 +916,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             do {
                 InitEdge2(E, polyType);
                 E = E.Next;
-                if (IsFlat && E.Curr.Y != eStart.Curr.Y) IsFlat = false;
+                if (IsFlat && E.Curr.Y != eStart.Curr.Y)
+                    IsFlat = false;
             }
             while (E != eStart);
 
@@ -868,7 +926,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             //Totally flat paths must be handled differently when adding them
             //to LocalMinima list to avoid endless loops etc ...
             if (IsFlat) {
-                if (Closed) return false;
+                if (Closed)
+                    return false;
                 E.Prev.OutIdx = Skip;
                 LocalMinima locMin = new LocalMinima();
                 locMin.Next = null;
@@ -879,8 +938,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 locMin.RightBound.WindDelta = 0;
                 for (; ; )
                 {
-                    if (E.Bot.X != E.Prev.Top.X) ReverseHorizontal(E);
-                    if (E.Next.OutIdx == Skip) break;
+                    if (E.Bot.X != E.Prev.Top.X)
+                        ReverseHorizontal(E);
+                    if (E.Next.OutIdx == Skip)
+                        break;
                     E.NextInLML = E.Next;
                     E = E.Next;
                 }
@@ -895,13 +956,16 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
             //workaround to avoid an endless loop in the while loop below when
             //open paths have matching start and end points ...
-            if (E.Prev.Bot == E.Prev.Top) E = E.Next;
+            if (E.Prev.Bot == E.Prev.Top)
+                E = E.Next;
 
             for (; ; )
             {
                 E = FindNextLocMin(E);
-                if (E == EMin) break;
-                else if (EMin == null) EMin = E;
+                if (E == EMin)
+                    break;
+                else if (EMin == null)
+                    EMin = E;
 
                 //E and E.Prev now share a local minima (left aligned if horizontal).
                 //Compare their slopes to find which starts which bound ...
@@ -921,24 +985,29 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 locMin.LeftBound.Side = EdgeSide.esLeft;
                 locMin.RightBound.Side = EdgeSide.esRight;
 
-                if (!Closed) locMin.LeftBound.WindDelta = 0;
+                if (!Closed)
+                    locMin.LeftBound.WindDelta = 0;
                 else if (locMin.LeftBound.Next == locMin.RightBound)
                     locMin.LeftBound.WindDelta = -1;
-                else locMin.LeftBound.WindDelta = 1;
+                else
+                    locMin.LeftBound.WindDelta = 1;
                 locMin.RightBound.WindDelta = -locMin.LeftBound.WindDelta;
 
                 E = ProcessBound(locMin.LeftBound, leftBoundIsForward);
-                if (E.OutIdx == Skip) E = ProcessBound(E, leftBoundIsForward);
+                if (E.OutIdx == Skip)
+                    E = ProcessBound(E, leftBoundIsForward);
 
                 TEdge E2 = ProcessBound(locMin.RightBound, !leftBoundIsForward);
-                if (E2.OutIdx == Skip) E2 = ProcessBound(E2, !leftBoundIsForward);
+                if (E2.OutIdx == Skip)
+                    E2 = ProcessBound(E2, !leftBoundIsForward);
 
                 if (locMin.LeftBound.OutIdx == Skip)
                     locMin.LeftBound = null;
                 else if (locMin.RightBound.OutIdx == Skip)
                     locMin.RightBound = null;
                 InsertLocalMinima(locMin);
-                if (!leftBoundIsForward) E = E2;
+                if (!leftBoundIsForward)
+                    E = E2;
             }
             return true;
 
@@ -948,15 +1017,19 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         public bool AddPaths(Paths ppg, PolyType polyType, bool closed) {
             bool result = false;
             for (int i = 0; i < ppg.Count; ++i)
-                if (AddPath(ppg[i], polyType, closed)) result = true;
+                if (AddPath(ppg[i], polyType, closed))
+                    result = true;
             return result;
         }
         //------------------------------------------------------------------------------
 
         internal bool Pt2IsBetweenPt1AndPt3(IntPoint pt1, IntPoint pt2, IntPoint pt3) {
-            if ((pt1 == pt3) || (pt1 == pt2) || (pt3 == pt2)) return false;
-            else if (pt1.X != pt3.X) return (pt2.X > pt1.X) == (pt2.X < pt3.X);
-            else return (pt2.Y > pt1.Y) == (pt2.Y < pt3.Y);
+            if ((pt1 == pt3) || (pt1 == pt2) || (pt3 == pt2))
+                return false;
+            else if (pt1.X != pt3.X)
+                return (pt2.X > pt1.X) == (pt2.X < pt3.X);
+            else
+                return (pt2.Y > pt1.Y) == (pt2.Y < pt3.Y);
         }
         //------------------------------------------------------------------------------
 
@@ -973,8 +1046,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         private void SetDx(TEdge e) {
             e.Delta.X = (e.Top.X - e.Bot.X);
             e.Delta.Y = (e.Top.Y - e.Bot.Y);
-            if (e.Delta.Y == 0) e.Dx = horizontal;
-            else e.Dx = (double)(e.Delta.X) / (e.Delta.Y);
+            if (e.Delta.Y == 0)
+                e.Dx = horizontal;
+            else
+                e.Dx = (double)(e.Delta.X) / (e.Delta.Y);
         }
         //---------------------------------------------------------------------------
 
@@ -1019,7 +1094,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
         internal virtual void Reset() {
             m_CurrentLM = m_MinimaList;
-            if (m_CurrentLM == null) return; //ie nothing to process
+            if (m_CurrentLM == null)
+                return; //ie nothing to process
 
             //reset all edges ...
             m_Scanbeam = null;
@@ -1044,8 +1120,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
         public static IntRect GetBounds(Paths paths) {
             int i = 0, cnt = paths.Count;
-            while (i < cnt && paths[i].Count == 0) i++;
-            if (i == cnt) return new IntRect(0, 0, 0, 0);
+            while (i < cnt && paths[i].Count == 0)
+                i++;
+            if (i == cnt)
+                return new IntRect(0, 0, 0, 0);
             IntRect result = new IntRect();
             result.left = paths[i][0].X;
             result.right = result.left;
@@ -1053,10 +1131,14 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             result.bottom = result.top;
             for (; i < cnt; i++)
                 for (int j = 0; j < paths[i].Count; j++) {
-                    if (paths[i][j].X < result.left) result.left = paths[i][j].X;
-                    else if (paths[i][j].X > result.right) result.right = paths[i][j].X;
-                    if (paths[i][j].Y < result.top) result.top = paths[i][j].Y;
-                    else if (paths[i][j].Y > result.bottom) result.bottom = paths[i][j].Y;
+                    if (paths[i][j].X < result.left)
+                        result.left = paths[i][j].X;
+                    else if (paths[i][j].X > result.right)
+                        result.right = paths[i][j].X;
+                    if (paths[i][j].Y < result.top)
+                        result.top = paths[i][j].Y;
+                    else if (paths[i][j].Y > result.bottom)
+                        result.bottom = paths[i][j].Y;
                 }
             return result;
         }
@@ -1077,8 +1159,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             }
             else {
                 Scanbeam sb2 = m_Scanbeam;
-                while (sb2.Next != null && (Y <= sb2.Next.Y)) sb2 = sb2.Next;
-                if (Y == sb2.Y) return; //ie ignores duplicates
+                while (sb2.Next != null && (Y <= sb2.Next.Y))
+                    sb2 = sb2.Next;
+                if (Y == sb2.Y)
+                    return; //ie ignores duplicates
                 Scanbeam newSb = new Scanbeam();
                 newSb.Y = Y;
                 newSb.Next = sb2.Next;
@@ -1134,7 +1218,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             e.NextInLML.OutIdx = e.OutIdx;
             if (AelPrev != null)
                 AelPrev.NextInAEL = e.NextInLML;
-            else m_ActiveEdges = e.NextInLML;
+            else
+                m_ActiveEdges = e.NextInLML;
             if (AelNext != null)
                 AelNext.PrevInAEL = e.NextInLML;
             e.NextInLML.Side = e.Side;
@@ -1145,14 +1230,16 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             e.Curr = e.Bot;
             e.PrevInAEL = AelPrev;
             e.NextInAEL = AelNext;
-            if (!IsHorizontal(e)) InsertScanbeam(e.Top.Y);
+            if (!IsHorizontal(e))
+                InsertScanbeam(e.Top.Y);
         }
         //------------------------------------------------------------------------------
 
         internal void SwapPositionsInAEL(TEdge edge1, TEdge edge2) {
             //check that one or other edge hasn't already been removed from AEL ...
             if (edge1.NextInAEL == edge1.PrevInAEL ||
-              edge2.NextInAEL == edge2.PrevInAEL) return;
+              edge2.NextInAEL == edge2.PrevInAEL)
+                return;
 
             if (edge1.NextInAEL == edge2) {
                 TEdge next = edge2.NextInAEL;
@@ -1209,7 +1296,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 return; //already deleted
             if (AelPrev != null)
                 AelPrev.NextInAEL = AelNext;
-            else m_ActiveEdges = AelNext;
+            else
+                m_ActiveEdges = AelNext;
             if (AelNext != null)
                 AelNext.PrevInAEL = AelPrev;
             e.NextInAEL = null;
@@ -1219,7 +1307,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
     } //end ClipperBase
 
-    public class Clipper : ClipperBase {
+    public class Clipper: ClipperBase {
         //InitOptions that can be passed to the constructor ...
         public const int ioReverseSolution = 1;
         public const int ioStrictlySimple = 2;
@@ -1279,12 +1367,15 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             }
             else {
                 Maxima m = m_Maxima;
-                while (m.Next != null && (X >= m.Next.X)) m = m.Next;
-                if (X == m.X) return; //ie ignores duplicates (& CG to clean up newMax)
-                                      //insert newMax between m and m.Next ...
+                while (m.Next != null && (X >= m.Next.X))
+                    m = m.Next;
+                if (X == m.X)
+                    return; //ie ignores duplicates (& CG to clean up newMax)
+                            //insert newMax between m and m.Next ...
                 newMax.Next = m.Next;
                 newMax.Prev = m;
-                if (m.Next != null) m.Next.Prev = newMax;
+                if (m.Next != null)
+                    m.Next.Prev = newMax;
                 m.Next = newMax;
             }
         }
@@ -1316,9 +1407,11 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
         public bool Execute(ClipType clipType, Paths solution,
             PolyFillType subjFillType, PolyFillType clipFillType) {
-            if (m_ExecuteLocked) return false;
-            if (m_HasOpenPaths) throw
-              new ClipperException("Error: PolyTree struct is needed for open path clipping.");
+            if (m_ExecuteLocked)
+                return false;
+            if (m_HasOpenPaths)
+                throw
+new ClipperException("Error: PolyTree struct is needed for open path clipping.");
 
             m_ExecuteLocked = true;
             solution.Clear();
@@ -1330,7 +1423,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             try {
                 succeeded = ExecuteInternal();
                 //build the return polygons ...
-                if (succeeded) BuildResult(solution);
+                if (succeeded)
+                    BuildResult(solution);
             }
             finally {
                 DisposeAllPolyPts();
@@ -1342,7 +1436,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
         public bool Execute(ClipType clipType, PolyTree polytree,
             PolyFillType subjFillType, PolyFillType clipFillType) {
-            if (m_ExecuteLocked) return false;
+            if (m_ExecuteLocked)
+                return false;
             m_ExecuteLocked = true;
             m_SubjFillType = subjFillType;
             m_ClipFillType = clipFillType;
@@ -1352,7 +1447,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             try {
                 succeeded = ExecuteInternal();
                 //build the return polygons ...
-                if (succeeded) BuildResult2(polytree);
+                if (succeeded)
+                    BuildResult2(polytree);
             }
             finally {
                 DisposeAllPolyPts();
@@ -1367,7 +1463,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             //already already points to the correct FirstLeft ...
             if (outRec.FirstLeft == null ||
                   (outRec.IsHole != outRec.FirstLeft.IsHole &&
-                  outRec.FirstLeft.Pts != null)) return;
+                  outRec.FirstLeft.Pts != null))
+                return;
 
             OutRec orfl = outRec.FirstLeft;
             while (orfl != null && ((orfl.IsHole == outRec.IsHole) || orfl.Pts == null))
@@ -1383,12 +1480,14 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 m_Maxima = null;
 
                 cInt botY, topY;
-                if (!PopScanbeam(out botY)) return false;
+                if (!PopScanbeam(out botY))
+                    return false;
                 InsertLocalMinimaIntoAEL(botY);
                 while (PopScanbeam(out topY) || LocalMinimaPending()) {
                     ProcessHorizontals();
                     m_GhostJoins.Clear();
-                    if (!ProcessIntersections(topY)) return false;
+                    if (!ProcessIntersections(topY))
+                        return false;
                     ProcessEdgesAtTopOfScanbeam(topY);
                     botY = topY;
                     InsertLocalMinimaIntoAEL(botY);
@@ -1396,7 +1495,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
                 //fix orientations ...
                 foreach (OutRec outRec in m_PolyOuts) {
-                    if (outRec.Pts == null || outRec.IsOpen) continue;
+                    if (outRec.Pts == null || outRec.IsOpen)
+                        continue;
                     if ((outRec.IsHole ^ ReverseSolution) == (Area(outRec) > 0))
                         ReversePolyPtLinks(outRec.Pts);
                 }
@@ -1412,7 +1512,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                         FixupOutPolygon(outRec);
                 }
 
-                if (StrictlySimple) DoSimplePolygons();
+                if (StrictlySimple)
+                    DoSimplePolygons();
                 return true;
             }
             //catch { return false; }
@@ -1424,7 +1525,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         //------------------------------------------------------------------------------
 
         private void DisposeAllPolyPts() {
-            for (int i = 0; i < m_PolyOuts.Count; ++i) DisposeOutRec(i);
+            for (int i = 0; i < m_PolyOuts.Count; ++i)
+                DisposeOutRec(i);
             m_PolyOuts.Clear();
         }
         //------------------------------------------------------------------------------
@@ -1500,7 +1602,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                         InsertScanbeam(rb.Top.Y);
                 }
 
-                if (lb == null || rb == null) continue;
+                if (lb == null || rb == null)
+                    continue;
 
                 //if output polygons share an Edge with a horizontal rb, they'll need joining later ...
                 if (Op1 != null && IsHorizontal(rb) &&
@@ -1558,12 +1661,14 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 m_ActiveEdges = edge;
             }
             else {
-                if (startEdge == null) startEdge = m_ActiveEdges;
+                if (startEdge == null)
+                    startEdge = m_ActiveEdges;
                 while (startEdge.NextInAEL != null &&
                   !E2InsertsBeforeE1(startEdge.NextInAEL, edge))
                     startEdge = startEdge.NextInAEL;
                 edge.NextInAEL = startEdge.NextInAEL;
-                if (startEdge.NextInAEL != null) startEdge.NextInAEL.PrevInAEL = edge;
+                if (startEdge.NextInAEL != null)
+                    startEdge.NextInAEL.PrevInAEL = edge;
                 edge.PrevInAEL = startEdge;
                 startEdge.NextInAEL = edge;
             }
@@ -1574,9 +1679,11 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             if (e2.Curr.X == e1.Curr.X) {
                 if (e2.Top.Y > e1.Top.Y)
                     return e2.Top.X < TopX(e1, e2.Top.Y);
-                else return e1.Top.X > TopX(e2, e1.Top.Y);
+                else
+                    return e1.Top.X > TopX(e2, e1.Top.Y);
             }
-            else return e2.Curr.X < e1.Curr.X;
+            else
+                return e2.Curr.X < e1.Curr.X;
         }
         //------------------------------------------------------------------------------
 
@@ -1610,16 +1717,20 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             switch (pft) {
                 case PolyFillType.pftEvenOdd:
                     //return false if a subj line has been flagged as inside a subj polygon
-                    if (edge.WindDelta == 0 && edge.WindCnt != 1) return false;
+                    if (edge.WindDelta == 0 && edge.WindCnt != 1)
+                        return false;
                     break;
                 case PolyFillType.pftNonZero:
-                    if (Math.Abs(edge.WindCnt) != 1) return false;
+                    if (Math.Abs(edge.WindCnt) != 1)
+                        return false;
                     break;
                 case PolyFillType.pftPositive:
-                    if (edge.WindCnt != 1) return false;
+                    if (edge.WindCnt != 1)
+                        return false;
                     break;
                 default: //PolyFillType.pftNegative
-                    if (edge.WindCnt != -1) return false;
+                    if (edge.WindCnt != -1)
+                        return false;
                     break;
             }
 
@@ -1686,12 +1797,15 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         private void SetWindingCount(TEdge edge) {
             TEdge e = edge.PrevInAEL;
             //find the edge of the same polytype that immediately preceeds 'edge' in AEL
-            while (e != null && ((e.PolyTyp != edge.PolyTyp) || (e.WindDelta == 0))) e = e.PrevInAEL;
+            while (e != null && ((e.PolyTyp != edge.PolyTyp) || (e.WindDelta == 0)))
+                e = e.PrevInAEL;
             if (e == null) {
                 PolyFillType pft;
                 pft = (edge.PolyTyp == PolyType.ptSubject ? m_SubjFillType : m_ClipFillType);
-                if (edge.WindDelta == 0) edge.WindCnt = (pft == PolyFillType.pftNegative ? -1 : 1);
-                else edge.WindCnt = edge.WindDelta;
+                if (edge.WindDelta == 0)
+                    edge.WindCnt = (pft == PolyFillType.pftNegative ? -1 : 1);
+                else
+                    edge.WindCnt = edge.WindDelta;
                 edge.WindCnt2 = 0;
                 e = m_ActiveEdges; //ie get ready to calc WindCnt2
             }
@@ -1727,9 +1841,11 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                     if (Math.Abs(e.WindCnt) > 1) {
                         //outside prev poly but still inside another.
                         //when reversing direction of prev poly use the same WC 
-                        if (e.WindDelta * edge.WindDelta < 0) edge.WindCnt = e.WindCnt;
+                        if (e.WindDelta * edge.WindDelta < 0)
+                            edge.WindCnt = e.WindCnt;
                         //otherwise continue to 'decrease' WC ...
-                        else edge.WindCnt = e.WindCnt + edge.WindDelta;
+                        else
+                            edge.WindCnt = e.WindCnt + edge.WindDelta;
                     }
                     else
                         //now outside all polys of same polytype so set own WC ...
@@ -1744,7 +1860,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                     else if (e.WindDelta * edge.WindDelta < 0)
                         edge.WindCnt = e.WindCnt;
                     //otherwise add to WC ...
-                    else edge.WindCnt = e.WindCnt + edge.WindDelta;
+                    else
+                        edge.WindCnt = e.WindCnt + edge.WindDelta;
                 }
                 edge.WindCnt2 = e.WindCnt2;
                 e = e.NextInAEL; //ie get ready to calc WindCnt2
@@ -1790,10 +1907,12 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         internal Boolean PopEdgeFromSEL(out TEdge e) {
             //Pop edge from front of SEL (ie SEL is a FILO list)
             e = m_SortedEdges;
-            if (e == null) return false;
+            if (e == null)
+                return false;
             TEdge oldE = e;
             m_SortedEdges = e.NextInSEL;
-            if (m_SortedEdges != null) m_SortedEdges.PrevInSEL = null;
+            if (m_SortedEdges != null)
+                m_SortedEdges.PrevInSEL = null;
             oldE.NextInSEL = null;
             oldE.PrevInSEL = null;
             return true;
@@ -1868,7 +1987,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
         private void AddLocalMaxPoly(TEdge e1, TEdge e2, IntPoint pt) {
             AddOutPt(e1, pt);
-            if (e2.WindDelta == 0) AddOutPt(e2, pt);
+            if (e2.WindDelta == 0)
+                AddOutPt(e2, pt);
             if (e1.OutIdx == e2.OutIdx) {
                 e1.OutIdx = Unassigned;
                 e2.OutIdx = Unassigned;
@@ -1939,8 +2059,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 //OutRec.Pts is the 'Left-most' point & OutRec.Pts.Prev is the 'Right-most'
                 OutPt op = outRec.Pts;
                 bool ToFront = (e.Side == EdgeSide.esLeft);
-                if (ToFront && pt == op.Pt) return op;
-                else if (!ToFront && pt == op.Prev.Pt) return op.Prev;
+                if (ToFront && pt == op.Pt)
+                    return op;
+                else if (!ToFront && pt == op.Prev.Pt)
+                    return op.Prev;
 
                 OutPt newOp = new OutPt();
                 newOp.Idx = outRec.Idx;
@@ -1949,7 +2071,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 newOp.Prev = op.Prev;
                 newOp.Prev.Next = newOp;
                 op.Prev = newOp;
-                if (ToFront) outRec.Pts = newOp;
+                if (ToFront)
+                    outRec.Pts = newOp;
                 return newOp;
             }
         }
@@ -1972,8 +2095,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         //------------------------------------------------------------------------------
 
         private bool HorzSegmentsOverlap(cInt seg1a, cInt seg1b, cInt seg2a, cInt seg2b) {
-            if (seg1a > seg1b) Swap(ref seg1a, ref seg1b);
-            if (seg2a > seg2b) Swap(ref seg2a, ref seg2b);
+            if (seg1a > seg1b)
+                Swap(ref seg1a, ref seg1b);
+            if (seg2a > seg2b)
+                Swap(ref seg2a, ref seg2b);
             return (seg1a < seg2b) && (seg2a < seg1b);
         }
         //------------------------------------------------------------------------------
@@ -2003,24 +2128,30 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         //------------------------------------------------------------------------------
 
         private double GetDx(IntPoint pt1, IntPoint pt2) {
-            if (pt1.Y == pt2.Y) return horizontal;
-            else return (double)(pt2.X - pt1.X) / (pt2.Y - pt1.Y);
+            if (pt1.Y == pt2.Y)
+                return horizontal;
+            else
+                return (double)(pt2.X - pt1.X) / (pt2.Y - pt1.Y);
         }
         //---------------------------------------------------------------------------
 
         private bool FirstIsBottomPt(OutPt btmPt1, OutPt btmPt2) {
             OutPt p = btmPt1.Prev;
-            while ((p.Pt == btmPt1.Pt) && (p != btmPt1)) p = p.Prev;
+            while ((p.Pt == btmPt1.Pt) && (p != btmPt1))
+                p = p.Prev;
             double dx1p = Math.Abs(GetDx(btmPt1.Pt, p.Pt));
             p = btmPt1.Next;
-            while ((p.Pt == btmPt1.Pt) && (p != btmPt1)) p = p.Next;
+            while ((p.Pt == btmPt1.Pt) && (p != btmPt1))
+                p = p.Next;
             double dx1n = Math.Abs(GetDx(btmPt1.Pt, p.Pt));
 
             p = btmPt2.Prev;
-            while ((p.Pt == btmPt2.Pt) && (p != btmPt2)) p = p.Prev;
+            while ((p.Pt == btmPt2.Pt) && (p != btmPt2))
+                p = p.Prev;
             double dx2p = Math.Abs(GetDx(btmPt2.Pt, p.Pt));
             p = btmPt2.Next;
-            while ((p.Pt == btmPt2.Pt) && (p != btmPt2)) p = p.Next;
+            while ((p.Pt == btmPt2.Pt) && (p != btmPt2))
+                p = p.Next;
             double dx2n = Math.Abs(GetDx(btmPt2.Pt, p.Pt));
 
             if (Math.Max(dx1p, dx1n) == Math.Max(dx2p, dx2n) &&
@@ -2045,7 +2176,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                         pp = p;
                     }
                     else {
-                        if (p.Next != pp && p.Prev != pp) dups = p;
+                        if (p.Next != pp && p.Prev != pp)
+                            dups = p;
                     }
                 }
                 p = p.Next;
@@ -2053,9 +2185,11 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             if (dups != null) {
                 //there appears to be at least 2 vertices at bottomPt so ...
                 while (dups != p) {
-                    if (!FirstIsBottomPt(p, dups)) pp = dups;
+                    if (!FirstIsBottomPt(p, dups))
+                        pp = dups;
                     dups = dups.Next;
-                    while (dups.Pt != pp.Pt) dups = dups.Next;
+                    while (dups.Pt != pp.Pt)
+                        dups = dups.Next;
                 }
             }
             return pp;
@@ -2070,21 +2204,30 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 outRec2.BottomPt = GetBottomPt(outRec2.Pts);
             OutPt bPt1 = outRec1.BottomPt;
             OutPt bPt2 = outRec2.BottomPt;
-            if (bPt1.Pt.Y > bPt2.Pt.Y) return outRec1;
-            else if (bPt1.Pt.Y < bPt2.Pt.Y) return outRec2;
-            else if (bPt1.Pt.X < bPt2.Pt.X) return outRec1;
-            else if (bPt1.Pt.X > bPt2.Pt.X) return outRec2;
-            else if (bPt1.Next == bPt1) return outRec2;
-            else if (bPt2.Next == bPt2) return outRec1;
-            else if (FirstIsBottomPt(bPt1, bPt2)) return outRec1;
-            else return outRec2;
+            if (bPt1.Pt.Y > bPt2.Pt.Y)
+                return outRec1;
+            else if (bPt1.Pt.Y < bPt2.Pt.Y)
+                return outRec2;
+            else if (bPt1.Pt.X < bPt2.Pt.X)
+                return outRec1;
+            else if (bPt1.Pt.X > bPt2.Pt.X)
+                return outRec2;
+            else if (bPt1.Next == bPt1)
+                return outRec2;
+            else if (bPt2.Next == bPt2)
+                return outRec1;
+            else if (FirstIsBottomPt(bPt1, bPt2))
+                return outRec1;
+            else
+                return outRec2;
         }
         //------------------------------------------------------------------------------
 
         bool OutRec1RightOfOutRec2(OutRec outRec1, OutRec outRec2) {
             do {
                 outRec1 = outRec1.FirstLeft;
-                if (outRec1 == outRec2) return true;
+                if (outRec1 == outRec2)
+                    return true;
             } while (outRec1 != null);
             return false;
         }
@@ -2186,7 +2329,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         //------------------------------------------------------------------------------
 
         private void ReversePolyPtLinks(OutPt pp) {
-            if (pp == null) return;
+            if (pp == null)
+                return;
             OutPt pp1;
             OutPt pp2;
             pp1 = pp;
@@ -2229,20 +2373,23 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             if (e1.WindDelta == 0 || e2.WindDelta == 0) {
                 //ignore subject-subject open path intersections UNLESS they
                 //are both open paths, AND they are both 'contributing maximas' ...
-                if (e1.WindDelta == 0 && e2.WindDelta == 0) return;
+                if (e1.WindDelta == 0 && e2.WindDelta == 0)
+                    return;
                 //if intersecting a subj line with a subj poly ...
                 else if (e1.PolyTyp == e2.PolyTyp &&
                   e1.WindDelta != e2.WindDelta && m_ClipType == ClipType.ctUnion) {
                     if (e1.WindDelta == 0) {
                         if (e2Contributing) {
                             AddOutPt(e1, pt);
-                            if (e1Contributing) e1.OutIdx = Unassigned;
+                            if (e1Contributing)
+                                e1.OutIdx = Unassigned;
                         }
                     }
                     else {
                         if (e1Contributing) {
                             AddOutPt(e2, pt);
-                            if (e2Contributing) e2.OutIdx = Unassigned;
+                            if (e2Contributing)
+                                e2.OutIdx = Unassigned;
                         }
                     }
                 }
@@ -2250,12 +2397,14 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                     if ((e1.WindDelta == 0) && Math.Abs(e2.WindCnt) == 1 &&
                       (m_ClipType != ClipType.ctUnion || e2.WindCnt2 == 0)) {
                         AddOutPt(e1, pt);
-                        if (e1Contributing) e1.OutIdx = Unassigned;
+                        if (e1Contributing)
+                            e1.OutIdx = Unassigned;
                     }
                     else if ((e2.WindDelta == 0) && (Math.Abs(e1.WindCnt) == 1) &&
                       (m_ClipType != ClipType.ctUnion || e1.WindCnt2 == 0)) {
                         AddOutPt(e2, pt);
-                        if (e2Contributing) e2.OutIdx = Unassigned;
+                        if (e2Contributing)
+                            e2.OutIdx = Unassigned;
                     }
                 }
                 return;
@@ -2271,17 +2420,25 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                     e2.WindCnt = oldE1WindCnt;
                 }
                 else {
-                    if (e1.WindCnt + e2.WindDelta == 0) e1.WindCnt = -e1.WindCnt;
-                    else e1.WindCnt += e2.WindDelta;
-                    if (e2.WindCnt - e1.WindDelta == 0) e2.WindCnt = -e2.WindCnt;
-                    else e2.WindCnt -= e1.WindDelta;
+                    if (e1.WindCnt + e2.WindDelta == 0)
+                        e1.WindCnt = -e1.WindCnt;
+                    else
+                        e1.WindCnt += e2.WindDelta;
+                    if (e2.WindCnt - e1.WindDelta == 0)
+                        e2.WindCnt = -e2.WindCnt;
+                    else
+                        e2.WindCnt -= e1.WindDelta;
                 }
             }
             else {
-                if (!IsEvenOddFillType(e2)) e1.WindCnt2 += e2.WindDelta;
-                else e1.WindCnt2 = (e1.WindCnt2 == 0) ? 1 : 0;
-                if (!IsEvenOddFillType(e1)) e2.WindCnt2 -= e1.WindDelta;
-                else e2.WindCnt2 = (e2.WindCnt2 == 0) ? 1 : 0;
+                if (!IsEvenOddFillType(e2))
+                    e1.WindCnt2 += e2.WindDelta;
+                else
+                    e1.WindCnt2 = (e1.WindCnt2 == 0) ? 1 : 0;
+                if (!IsEvenOddFillType(e1))
+                    e2.WindCnt2 -= e1.WindDelta;
+                else
+                    e2.WindCnt2 = (e2.WindCnt2 == 0) ? 1 : 0;
             }
 
             PolyFillType e1FillType, e2FillType, e1FillType2, e2FillType2;
@@ -2304,14 +2461,26 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
             int e1Wc, e2Wc;
             switch (e1FillType) {
-                case PolyFillType.pftPositive: e1Wc = e1.WindCnt; break;
-                case PolyFillType.pftNegative: e1Wc = -e1.WindCnt; break;
-                default: e1Wc = Math.Abs(e1.WindCnt); break;
+                case PolyFillType.pftPositive:
+                    e1Wc = e1.WindCnt;
+                    break;
+                case PolyFillType.pftNegative:
+                    e1Wc = -e1.WindCnt;
+                    break;
+                default:
+                    e1Wc = Math.Abs(e1.WindCnt);
+                    break;
             }
             switch (e2FillType) {
-                case PolyFillType.pftPositive: e2Wc = e2.WindCnt; break;
-                case PolyFillType.pftNegative: e2Wc = -e2.WindCnt; break;
-                default: e2Wc = Math.Abs(e2.WindCnt); break;
+                case PolyFillType.pftPositive:
+                    e2Wc = e2.WindCnt;
+                    break;
+                case PolyFillType.pftNegative:
+                    e2Wc = -e2.WindCnt;
+                    break;
+                default:
+                    e2Wc = Math.Abs(e2.WindCnt);
+                    break;
             }
 
             if (e1Contributing && e2Contributing) {
@@ -2345,14 +2514,26 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 //neither edge is currently contributing ...
                 cInt e1Wc2, e2Wc2;
                 switch (e1FillType2) {
-                    case PolyFillType.pftPositive: e1Wc2 = e1.WindCnt2; break;
-                    case PolyFillType.pftNegative: e1Wc2 = -e1.WindCnt2; break;
-                    default: e1Wc2 = Math.Abs(e1.WindCnt2); break;
+                    case PolyFillType.pftPositive:
+                        e1Wc2 = e1.WindCnt2;
+                        break;
+                    case PolyFillType.pftNegative:
+                        e1Wc2 = -e1.WindCnt2;
+                        break;
+                    default:
+                        e1Wc2 = Math.Abs(e1.WindCnt2);
+                        break;
                 }
                 switch (e2FillType2) {
-                    case PolyFillType.pftPositive: e2Wc2 = e2.WindCnt2; break;
-                    case PolyFillType.pftNegative: e2Wc2 = -e2.WindCnt2; break;
-                    default: e2Wc2 = Math.Abs(e2.WindCnt2); break;
+                    case PolyFillType.pftPositive:
+                        e2Wc2 = e2.WindCnt2;
+                        break;
+                    case PolyFillType.pftNegative:
+                        e2Wc2 = -e2.WindCnt2;
+                        break;
+                    default:
+                        e2Wc2 = Math.Abs(e2.WindCnt2);
+                        break;
                 }
 
                 if (e1.PolyTyp != e2.PolyTyp) {
@@ -2390,7 +2571,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 return; //already deleted
             if (SelPrev != null)
                 SelPrev.NextInSEL = SelNext;
-            else m_SortedEdges = SelNext;
+            else
+                m_SortedEdges = SelNext;
             if (SelNext != null)
                 SelNext.PrevInSEL = SelPrev;
             e.NextInSEL = null;
@@ -2444,7 +2626,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 else {
                     while (currMax.Next != null && currMax.Next.X < horzEdge.Bot.X)
                         currMax = currMax.Next;
-                    if (currMax.X <= eLastHorz.Top.X) currMax = null;
+                    if (currMax.X <= eLastHorz.Top.X)
+                        currMax = null;
                 }
             }
 
@@ -2476,12 +2659,14 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                     };
 
                     if ((dir == Direction.dLeftToRight && e.Curr.X > horzRight) ||
-                      (dir == Direction.dRightToLeft && e.Curr.X < horzLeft)) break;
+                      (dir == Direction.dRightToLeft && e.Curr.X < horzLeft))
+                        break;
 
                     //Also break if we've got to the end of an intermediate horizontal edge ...
                     //nb: Smaller Dx's are to the right of larger Dx's ABOVE the horizontal.
                     if (e.Curr.X == horzEdge.Top.X && horzEdge.NextInLML != null &&
-                      e.Dx < horzEdge.NextInLML.Dx) break;
+                      e.Dx < horzEdge.NextInLML.Dx)
+                        break;
 
                     if (horzEdge.OutIdx >= 0 && !IsOpen)  //note: may be done multiple times
                     {
@@ -2528,10 +2713,12 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 } //end while(e != null)
 
                 //Break out of loop if HorzEdge.NextInLML is not also horizontal ...
-                if (horzEdge.NextInLML == null || !IsHorizontal(horzEdge.NextInLML)) break;
+                if (horzEdge.NextInLML == null || !IsHorizontal(horzEdge.NextInLML))
+                    break;
 
                 UpdateEdgeIntoAEL(ref horzEdge);
-                if (horzEdge.OutIdx >= 0) AddOutPt(horzEdge, horzEdge.Bot);
+                if (horzEdge.OutIdx >= 0)
+                    AddOutPt(horzEdge, horzEdge.Bot);
                 GetHorzDirection(horzEdge, out dir, out horzLeft, out horzRight);
 
             } //end for (;;)
@@ -2556,7 +2743,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                     op1 = AddOutPt(horzEdge, horzEdge.Top);
 
                     UpdateEdgeIntoAEL(ref horzEdge);
-                    if (horzEdge.WindDelta == 0) return;
+                    if (horzEdge.WindDelta == 0)
+                        return;
                     //nb: HorzEdge is no longer horizontal here
                     TEdge ePrev = horzEdge.PrevInAEL;
                     TEdge eNext = horzEdge.NextInAEL;
@@ -2579,7 +2767,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                     UpdateEdgeIntoAEL(ref horzEdge);
             }
             else {
-                if (horzEdge.OutIdx >= 0) AddOutPt(horzEdge, horzEdge.Top);
+                if (horzEdge.OutIdx >= 0)
+                    AddOutPt(horzEdge, horzEdge.Top);
                 DeleteFromAEL(horzEdge);
             }
         }
@@ -2619,16 +2808,19 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             //as above but returns null if MaxPair isn't in AEL (unless it's horizontal)
             TEdge result = GetMaximaPair(e);
             if (result == null || result.OutIdx == Skip ||
-              ((result.NextInAEL == result.PrevInAEL) && !IsHorizontal(result))) return null;
+              ((result.NextInAEL == result.PrevInAEL) && !IsHorizontal(result)))
+                return null;
             return result;
         }
         //------------------------------------------------------------------------------
 
         private bool ProcessIntersections(cInt topY) {
-            if (m_ActiveEdges == null) return true;
+            if (m_ActiveEdges == null)
+                return true;
             try {
                 BuildIntersectList(topY);
-                if (m_IntersectList.Count == 0) return true;
+                if (m_IntersectList.Count == 0)
+                    return true;
                 if (m_IntersectList.Count == 1 || FixupIntersectionOrder())
                     ProcessIntersectList();
                 else
@@ -2645,7 +2837,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         //------------------------------------------------------------------------------
 
         private void BuildIntersectList(cInt topY) {
-            if (m_ActiveEdges == null) return;
+            if (m_ActiveEdges == null)
+                return;
 
             //prepare for sorting ...
             TEdge e = m_ActiveEdges;
@@ -2681,8 +2874,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                     else
                         e = eNext;
                 }
-                if (e.PrevInSEL != null) e.PrevInSEL.NextInSEL = null;
-                else break;
+                if (e.PrevInSEL != null)
+                    e.PrevInSEL.NextInSEL = null;
+                else
+                    break;
             }
             m_SortedEdges = null;
         }
@@ -2712,8 +2907,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             for (int i = 0; i < cnt; i++) {
                 if (!EdgesAdjacent(m_IntersectList[i])) {
                     int j = i + 1;
-                    while (j < cnt && !EdgesAdjacent(m_IntersectList[j])) j++;
-                    if (j == cnt) return false;
+                    while (j < cnt && !EdgesAdjacent(m_IntersectList[j]))
+                        j++;
+                    if (j == cnt)
+                        return false;
 
                     IntersectNode tmp = m_IntersectList[i];
                     m_IntersectList[i] = m_IntersectList[j];
@@ -2827,11 +3024,14 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 }
 
                 if (IsMaximaEdge) {
-                    if (StrictlySimple) InsertMaxima(e.Top.X);
+                    if (StrictlySimple)
+                        InsertMaxima(e.Top.X);
                     TEdge ePrev = e.PrevInAEL;
                     DoMaxima(e);
-                    if (ePrev == null) e = m_ActiveEdges;
-                    else e = ePrev.NextInAEL;
+                    if (ePrev == null)
+                        e = m_ActiveEdges;
+                    else
+                        e = ePrev.NextInAEL;
                 }
                 else {
                     //2. promote horizontal edges, otherwise update Curr.X and Curr.Y ...
@@ -2930,7 +3130,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 DeleteFromAEL(eMaxPair);
             }
             else if (e.OutIdx >= 0 && eMaxPair.OutIdx >= 0) {
-                if (e.OutIdx >= 0) AddLocalMaxPoly(e, eMaxPair, e.Top);
+                if (e.OutIdx >= 0)
+                    AddLocalMaxPoly(e, eMaxPair, e.Top);
                 DeleteFromAEL(e);
                 DeleteFromAEL(eMaxPair);
             }
@@ -2949,7 +3150,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 DeleteFromAEL(eMaxPair);
             }
 #endif
-            else throw new ClipperException("DoMaxima error");
+            else
+                throw new ClipperException("DoMaxima error");
         }
         //------------------------------------------------------------------------------
 
@@ -2964,7 +3166,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         //------------------------------------------------------------------------------
 
         private int PointCount(OutPt pts) {
-            if (pts == null) return 0;
+            if (pts == null)
+                return 0;
             int result = 0;
             OutPt p = pts;
             do {
@@ -2981,10 +3184,12 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             polyg.Capacity = m_PolyOuts.Count;
             for (int i = 0; i < m_PolyOuts.Count; i++) {
                 OutRec outRec = m_PolyOuts[i];
-                if (outRec.Pts == null) continue;
+                if (outRec.Pts == null)
+                    continue;
                 OutPt p = outRec.Pts.Prev;
                 int cnt = PointCount(p);
-                if (cnt < 2) continue;
+                if (cnt < 2)
+                    continue;
                 Path pg = new Path(cnt);
                 for (int j = 0; j < cnt; j++) {
                     pg.Add(p.Pt);
@@ -3004,7 +3209,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 OutRec outRec = m_PolyOuts[i];
                 int cnt = PointCount(outRec.Pts);
                 if ((outRec.IsOpen && cnt < 2) ||
-                  (!outRec.IsOpen && cnt < 3)) continue;
+                  (!outRec.IsOpen && cnt < 3))
+                    continue;
                 FixHoleLinkage(outRec);
                 PolyNode pn = new PolyNode();
                 polytree.m_AllPolys.Add(pn);
@@ -3021,7 +3227,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             polytree.m_Childs.Capacity = m_PolyOuts.Count;
             for (int i = 0; i < m_PolyOuts.Count; i++) {
                 OutRec outRec = m_PolyOuts[i];
-                if (outRec.PolyNode == null) continue;
+                if (outRec.PolyNode == null)
+                    continue;
                 else if (outRec.IsOpen) {
                     outRec.PolyNode.IsOpen = true;
                     polytree.AddChild(outRec.PolyNode);
@@ -3041,14 +3248,16 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             while (pp != lastPP) {
                 pp = pp.Next;
                 if (pp.Pt == pp.Prev.Pt) {
-                    if (pp == lastPP) lastPP = pp.Prev;
+                    if (pp == lastPP)
+                        lastPP = pp.Prev;
                     OutPt tmpPP = pp.Prev;
                     tmpPP.Next = pp.Next;
                     pp.Next.Prev = tmpPP;
                     pp = tmpPP;
                 }
             }
-            if (pp == pp.Prev) outrec.Pts = null;
+            if (pp == pp.Prev)
+                outrec.Pts = null;
         }
         //------------------------------------------------------------------------------
 
@@ -3074,9 +3283,11 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                     pp.Next.Prev = pp.Prev;
                     pp = pp.Prev;
                 }
-                else if (pp == lastOK) break;
+                else if (pp == lastOK)
+                    break;
                 else {
-                    if (lastOK == null) lastOK = pp;
+                    if (lastOK == null)
+                        lastOK = pp;
                     pp = pp.Next;
                 }
             }
@@ -3123,7 +3334,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
               Direction.dRightToLeft : Direction.dLeftToRight);
             Direction Dir2 = (op2.Pt.X > op2b.Pt.X ?
               Direction.dRightToLeft : Direction.dLeftToRight);
-            if (Dir1 == Dir2) return false;
+            if (Dir1 == Dir2)
+                return false;
 
             //When DiscardLeft, we want Op1b to be on the Left of Op1, otherwise we
             //want Op1b to be on the Right. (And likewise with Op2 and Op2b.)
@@ -3134,7 +3346,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 while (op1.Next.Pt.X <= Pt.X &&
                   op1.Next.Pt.X >= op1.Pt.X && op1.Next.Pt.Y == Pt.Y)
                     op1 = op1.Next;
-                if (DiscardLeft && (op1.Pt.X != Pt.X)) op1 = op1.Next;
+                if (DiscardLeft && (op1.Pt.X != Pt.X))
+                    op1 = op1.Next;
                 op1b = DupOutPt(op1, !DiscardLeft);
                 if (op1b.Pt != Pt) {
                     op1 = op1b;
@@ -3146,7 +3359,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 while (op1.Next.Pt.X >= Pt.X &&
                   op1.Next.Pt.X <= op1.Pt.X && op1.Next.Pt.Y == Pt.Y)
                     op1 = op1.Next;
-                if (!DiscardLeft && (op1.Pt.X != Pt.X)) op1 = op1.Next;
+                if (!DiscardLeft && (op1.Pt.X != Pt.X))
+                    op1 = op1.Next;
                 op1b = DupOutPt(op1, DiscardLeft);
                 if (op1b.Pt != Pt) {
                     op1 = op1b;
@@ -3159,7 +3373,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 while (op2.Next.Pt.X <= Pt.X &&
                   op2.Next.Pt.X >= op2.Pt.X && op2.Next.Pt.Y == Pt.Y)
                     op2 = op2.Next;
-                if (DiscardLeft && (op2.Pt.X != Pt.X)) op2 = op2.Next;
+                if (DiscardLeft && (op2.Pt.X != Pt.X))
+                    op2 = op2.Next;
                 op2b = DupOutPt(op2, !DiscardLeft);
                 if (op2b.Pt != Pt) {
                     op2 = op2b;
@@ -3171,7 +3386,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 while (op2.Next.Pt.X >= Pt.X &&
                   op2.Next.Pt.X <= op2.Pt.X && op2.Next.Pt.Y == Pt.Y)
                     op2 = op2.Next;
-                if (!DiscardLeft && (op2.Pt.X != Pt.X)) op2 = op2.Next;
+                if (!DiscardLeft && (op2.Pt.X != Pt.X))
+                    op2 = op2.Next;
                 op2b = DupOutPt(op2, DiscardLeft);
                 if (op2b.Pt != Pt) {
                     op2 = op2b;
@@ -3211,7 +3427,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
             if (isHorizontal && (j.OffPt == j.OutPt1.Pt) && (j.OffPt == j.OutPt2.Pt)) {
                 //Strictly Simple join ...
-                if (outRec1 != outRec2) return false;
+                if (outRec1 != outRec2)
+                    return false;
                 op1b = j.OutPt1.Next;
                 while (op1b != op1 && (op1b.Pt == j.OffPt))
                     op1b = op1b.Next;
@@ -3220,7 +3437,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 while (op2b != op2 && (op2b.Pt == j.OffPt))
                     op2b = op2b.Next;
                 bool reverse2 = (op2b.Pt.Y > j.OffPt.Y);
-                if (reverse1 == reverse2) return false;
+                if (reverse1 == reverse2)
+                    return false;
                 if (reverse1) {
                     op1b = DupOutPt(op1, false);
                     op2b = DupOutPt(op2, true);
@@ -3253,14 +3471,16 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                     op1 = op1.Prev;
                 while (op1b.Next.Pt.Y == op1b.Pt.Y && op1b.Next != op1 && op1b.Next != op2)
                     op1b = op1b.Next;
-                if (op1b.Next == op1 || op1b.Next == op2) return false; //a flat 'polygon'
+                if (op1b.Next == op1 || op1b.Next == op2)
+                    return false; //a flat 'polygon'
 
                 op2b = op2;
                 while (op2.Prev.Pt.Y == op2.Pt.Y && op2.Prev != op2b && op2.Prev != op1b)
                     op2 = op2.Prev;
                 while (op2b.Next.Pt.Y == op2b.Pt.Y && op2b.Next != op2 && op2b.Next != op1)
                     op2b = op2b.Next;
-                if (op2b.Next == op2 || op2b.Next == op1) return false; //a flat 'polygon'
+                if (op2b.Next == op2 || op2b.Next == op1)
+                    return false; //a flat 'polygon'
 
                 cInt Left, Right;
                 //Op1 -. Op1b & Op2 -. Op2b are the extremites of the horizontal edges
@@ -3273,16 +3493,20 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 IntPoint Pt;
                 bool DiscardLeftSide;
                 if (op1.Pt.X >= Left && op1.Pt.X <= Right) {
-                    Pt = op1.Pt; DiscardLeftSide = (op1.Pt.X > op1b.Pt.X);
+                    Pt = op1.Pt;
+                    DiscardLeftSide = (op1.Pt.X > op1b.Pt.X);
                 }
                 else if (op2.Pt.X >= Left && op2.Pt.X <= Right) {
-                    Pt = op2.Pt; DiscardLeftSide = (op2.Pt.X > op2b.Pt.X);
+                    Pt = op2.Pt;
+                    DiscardLeftSide = (op2.Pt.X > op2b.Pt.X);
                 }
                 else if (op1b.Pt.X >= Left && op1b.Pt.X <= Right) {
-                    Pt = op1b.Pt; DiscardLeftSide = op1b.Pt.X > op1.Pt.X;
+                    Pt = op1b.Pt;
+                    DiscardLeftSide = op1b.Pt.X > op1.Pt.X;
                 }
                 else {
-                    Pt = op2b.Pt; DiscardLeftSide = (op2b.Pt.X > op2.Pt.X);
+                    Pt = op2b.Pt;
+                    DiscardLeftSide = (op2b.Pt.X > op2.Pt.X);
                 }
                 j.OutPt1 = op1;
                 j.OutPt2 = op2;
@@ -3295,28 +3519,35 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
                 //make sure the polygons are correctly oriented ...
                 op1b = op1.Next;
-                while ((op1b.Pt == op1.Pt) && (op1b != op1)) op1b = op1b.Next;
+                while ((op1b.Pt == op1.Pt) && (op1b != op1))
+                    op1b = op1b.Next;
                 bool Reverse1 = ((op1b.Pt.Y > op1.Pt.Y) ||
                   !SlopesEqual(op1.Pt, op1b.Pt, j.OffPt, m_UseFullRange));
                 if (Reverse1) {
                     op1b = op1.Prev;
-                    while ((op1b.Pt == op1.Pt) && (op1b != op1)) op1b = op1b.Prev;
+                    while ((op1b.Pt == op1.Pt) && (op1b != op1))
+                        op1b = op1b.Prev;
                     if ((op1b.Pt.Y > op1.Pt.Y) ||
-                      !SlopesEqual(op1.Pt, op1b.Pt, j.OffPt, m_UseFullRange)) return false;
+                      !SlopesEqual(op1.Pt, op1b.Pt, j.OffPt, m_UseFullRange))
+                        return false;
                 };
                 op2b = op2.Next;
-                while ((op2b.Pt == op2.Pt) && (op2b != op2)) op2b = op2b.Next;
+                while ((op2b.Pt == op2.Pt) && (op2b != op2))
+                    op2b = op2b.Next;
                 bool Reverse2 = ((op2b.Pt.Y > op2.Pt.Y) ||
                   !SlopesEqual(op2.Pt, op2b.Pt, j.OffPt, m_UseFullRange));
                 if (Reverse2) {
                     op2b = op2.Prev;
-                    while ((op2b.Pt == op2.Pt) && (op2b != op2)) op2b = op2b.Prev;
+                    while ((op2b.Pt == op2.Pt) && (op2b != op2))
+                        op2b = op2b.Prev;
                     if ((op2b.Pt.Y > op2.Pt.Y) ||
-                      !SlopesEqual(op2.Pt, op2b.Pt, j.OffPt, m_UseFullRange)) return false;
+                      !SlopesEqual(op2.Pt, op2b.Pt, j.OffPt, m_UseFullRange))
+                        return false;
                 }
 
                 if ((op1b == op1) || (op2b == op2) || (op1b == op2b) ||
-                  ((outRec1 == outRec2) && (Reverse1 == Reverse2))) return false;
+                  ((outRec1 == outRec2) && (Reverse1 == Reverse2)))
+                    return false;
 
                 if (Reverse1) {
                     op1b = DupOutPt(op1, false);
@@ -3349,30 +3580,37 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             //See "The Point in Polygon Problem for Arbitrary Polygons" by Hormann & Agathos
             //http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.88.5498&rep=rep1&type=pdf
             int result = 0, cnt = path.Count;
-            if (cnt < 3) return 0;
+            if (cnt < 3)
+                return 0;
             IntPoint ip = path[0];
             for (int i = 1; i <= cnt; ++i) {
                 IntPoint ipNext = (i == cnt ? path[0] : path[i]);
                 if (ipNext.Y == pt.Y) {
                     if ((ipNext.X == pt.X) || (ip.Y == pt.Y &&
-                      ((ipNext.X > pt.X) == (ip.X < pt.X)))) return -1;
+                      ((ipNext.X > pt.X) == (ip.X < pt.X))))
+                        return -1;
                 }
                 if ((ip.Y < pt.Y) != (ipNext.Y < pt.Y)) {
                     if (ip.X >= pt.X) {
-                        if (ipNext.X > pt.X) result = 1 - result;
+                        if (ipNext.X > pt.X)
+                            result = 1 - result;
                         else {
                             double d = (double)(ip.X - pt.X) * (ipNext.Y - pt.Y) -
                               (double)(ipNext.X - pt.X) * (ip.Y - pt.Y);
-                            if (d == 0) return -1;
-                            else if ((d > 0) == (ipNext.Y > ip.Y)) result = 1 - result;
+                            if (d == 0)
+                                return -1;
+                            else if ((d > 0) == (ipNext.Y > ip.Y))
+                                result = 1 - result;
                         }
                     }
                     else {
                         if (ipNext.X > pt.X) {
                             double d = (double)(ip.X - pt.X) * (ipNext.Y - pt.Y) -
                               (double)(ipNext.X - pt.X) * (ip.Y - pt.Y);
-                            if (d == 0) return -1;
-                            else if ((d > 0) == (ipNext.Y > ip.Y)) result = 1 - result;
+                            if (d == 0)
+                                return -1;
+                            else if ((d > 0) == (ipNext.Y > ip.Y))
+                                result = 1 - result;
                         }
                     }
                 }
@@ -3396,28 +3634,35 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
                 if (poly1y == pty) {
                     if ((poly1x == ptx) || (poly0y == pty &&
-                      ((poly1x > ptx) == (poly0x < ptx)))) return -1;
+                      ((poly1x > ptx) == (poly0x < ptx))))
+                        return -1;
                 }
                 if ((poly0y < pty) != (poly1y < pty)) {
                     if (poly0x >= ptx) {
-                        if (poly1x > ptx) result = 1 - result;
+                        if (poly1x > ptx)
+                            result = 1 - result;
                         else {
                             double d = (double)(poly0x - ptx) * (poly1y - pty) -
                               (double)(poly1x - ptx) * (poly0y - pty);
-                            if (d == 0) return -1;
-                            if ((d > 0) == (poly1y > poly0y)) result = 1 - result;
+                            if (d == 0)
+                                return -1;
+                            if ((d > 0) == (poly1y > poly0y))
+                                result = 1 - result;
                         }
                     }
                     else {
                         if (poly1x > ptx) {
                             double d = (double)(poly0x - ptx) * (poly1y - pty) -
                               (double)(poly1x - ptx) * (poly0y - pty);
-                            if (d == 0) return -1;
-                            if ((d > 0) == (poly1y > poly0y)) result = 1 - result;
+                            if (d == 0)
+                                return -1;
+                            if ((d > 0) == (poly1y > poly0y))
+                                result = 1 - result;
                         }
                     }
                 }
-                poly0x = poly1x; poly0y = poly1y;
+                poly0x = poly1x;
+                poly0y = poly1y;
             } while (startOp != op);
             return result;
         }
@@ -3428,7 +3673,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             do {
                 //nb: PointInPolygon returns 0 if false, +1 if true, -1 if pt on polygon
                 int res = PointInPolygon(op.Pt, outPt2);
-                if (res >= 0) return res > 0;
+                if (res >= 0)
+                    return res > 0;
                 op = op.Next;
             }
             while (op != outPt1);
@@ -3493,18 +3739,25 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 OutRec outRec1 = GetOutRec(join.OutPt1.Idx);
                 OutRec outRec2 = GetOutRec(join.OutPt2.Idx);
 
-                if (outRec1.Pts == null || outRec2.Pts == null) continue;
-                if (outRec1.IsOpen || outRec2.IsOpen) continue;
+                if (outRec1.Pts == null || outRec2.Pts == null)
+                    continue;
+                if (outRec1.IsOpen || outRec2.IsOpen)
+                    continue;
 
                 //get the polygon fragment with the correct hole state (FirstLeft)
                 //before calling JoinPoints() ...
                 OutRec holeStateRec;
-                if (outRec1 == outRec2) holeStateRec = outRec1;
-                else if (OutRec1RightOfOutRec2(outRec1, outRec2)) holeStateRec = outRec2;
-                else if (OutRec1RightOfOutRec2(outRec2, outRec1)) holeStateRec = outRec1;
-                else holeStateRec = GetLowermostRec(outRec1, outRec2);
+                if (outRec1 == outRec2)
+                    holeStateRec = outRec1;
+                else if (OutRec1RightOfOutRec2(outRec1, outRec2))
+                    holeStateRec = outRec2;
+                else if (OutRec1RightOfOutRec2(outRec2, outRec1))
+                    holeStateRec = outRec1;
+                else
+                    holeStateRec = GetLowermostRec(outRec1, outRec2);
 
-                if (!JoinPoints(join, outRec1, outRec2)) continue;
+                if (!JoinPoints(join, outRec1, outRec2))
+                    continue;
 
                 if (outRec1 == outRec2) {
                     //instead of joining two polygons, we've just created a new one by
@@ -3522,7 +3775,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                         outRec2.IsHole = !outRec1.IsHole;
                         outRec2.FirstLeft = outRec1;
 
-                        if (m_UsingPolyTree) FixupFirstLefts2(outRec2, outRec1);
+                        if (m_UsingPolyTree)
+                            FixupFirstLefts2(outRec2, outRec1);
 
                         if ((outRec2.IsHole ^ ReverseSolution) == (Area(outRec2) > 0))
                             ReversePolyPtLinks(outRec2.Pts);
@@ -3535,7 +3789,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                         outRec2.FirstLeft = outRec1.FirstLeft;
                         outRec1.FirstLeft = outRec2;
 
-                        if (m_UsingPolyTree) FixupFirstLefts2(outRec1, outRec2);
+                        if (m_UsingPolyTree)
+                            FixupFirstLefts2(outRec1, outRec2);
 
                         if ((outRec1.IsHole ^ ReverseSolution) == (Area(outRec1) > 0))
                             ReversePolyPtLinks(outRec1.Pts);
@@ -3546,7 +3801,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                         outRec2.FirstLeft = outRec1.FirstLeft;
 
                         //fixup FirstLeft pointers that may need reassigning to OutRec2
-                        if (m_UsingPolyTree) FixupFirstLefts1(outRec1, outRec2);
+                        if (m_UsingPolyTree)
+                            FixupFirstLefts1(outRec1, outRec2);
                     }
 
                 }
@@ -3563,7 +3819,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                     outRec2.FirstLeft = outRec1;
 
                     //fixup FirstLeft pointers that may need reassigning to OutRec1
-                    if (m_UsingPolyTree) FixupFirstLefts3(outRec2, outRec1);
+                    if (m_UsingPolyTree)
+                        FixupFirstLefts3(outRec2, outRec1);
                 }
             }
         }
@@ -3584,7 +3841,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             while (i < m_PolyOuts.Count) {
                 OutRec outrec = m_PolyOuts[i++];
                 OutPt op = outrec.Pts;
-                if (op == null || outrec.IsOpen) continue;
+                if (op == null || outrec.IsOpen)
+                    continue;
                 do //for each Pt in Polygon until duplicate found do ...
                 {
                     OutPt op2 = op.Next;
@@ -3606,7 +3864,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                                 //OutRec2 is contained by OutRec1 ...
                                 outrec2.IsHole = !outrec.IsHole;
                                 outrec2.FirstLeft = outrec;
-                                if (m_UsingPolyTree) FixupFirstLefts2(outrec2, outrec);
+                                if (m_UsingPolyTree)
+                                    FixupFirstLefts2(outrec2, outrec);
                             }
                             else
                             if (Poly2ContainsPoly1(outrec.Pts, outrec2.Pts)) {
@@ -3615,13 +3874,15 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                                 outrec.IsHole = !outrec2.IsHole;
                                 outrec2.FirstLeft = outrec.FirstLeft;
                                 outrec.FirstLeft = outrec2;
-                                if (m_UsingPolyTree) FixupFirstLefts2(outrec, outrec2);
+                                if (m_UsingPolyTree)
+                                    FixupFirstLefts2(outrec, outrec2);
                             }
                             else {
                                 //the 2 polygons are separate ...
                                 outrec2.IsHole = outrec.IsHole;
                                 outrec2.FirstLeft = outrec.FirstLeft;
-                                if (m_UsingPolyTree) FixupFirstLefts1(outrec, outrec2);
+                                if (m_UsingPolyTree)
+                                    FixupFirstLefts1(outrec, outrec2);
                             }
                             op2 = op; //ie get ready for the next iteration
                         }
@@ -3636,7 +3897,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
         public static double Area(Path poly) {
             int cnt = (int)poly.Count;
-            if (cnt < 3) return 0;
+            if (cnt < 3)
+                return 0;
             double a = 0;
             for (int i = 0, j = cnt - 1; i < cnt; ++i) {
                 a += ((double)poly[j].X + poly[i].X) * ((double)poly[j].Y - poly[i].Y);
@@ -3653,7 +3915,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
         internal double Area(OutPt op) {
             OutPt opFirst = op;
-            if (op == null) return 0;
+            if (op == null)
+                return 0;
             double a = 0;
             do {
                 a = a + (double)(op.Prev.Pt.X + op.Pt.X) * (double)(op.Prev.Pt.Y - op.Pt.Y);
@@ -3758,10 +4021,12 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
             int cnt = path.Count;
 
-            if (cnt == 0) return new Path();
+            if (cnt == 0)
+                return new Path();
 
             OutPt[] outPts = new OutPt[cnt];
-            for (int i = 0; i < cnt; ++i) outPts[i] = new OutPt();
+            for (int i = 0; i < cnt; ++i)
+                outPts[i] = new OutPt();
 
             for (int i = 0; i < cnt; ++i) {
                 outPts[i].Pt = path[i];
@@ -3792,7 +4057,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 }
             }
 
-            if (cnt < 3) cnt = 0;
+            if (cnt < 3)
+                cnt = 0;
             Path result = new Path(cnt);
             for (int i = 0; i < cnt; ++i) {
                 result.Add(op.Pt);
@@ -3840,7 +4106,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                     quad.Add(result[(i + 1) % pathCnt][j % polyCnt]);
                     quad.Add(result[(i + 1) % pathCnt][(j + 1) % polyCnt]);
                     quad.Add(result[i % pathCnt][(j + 1) % polyCnt]);
-                    if (!Orientation(quad)) quad.Reverse();
+                    if (!Orientation(quad))
+                        quad.Reverse();
                     quads.Add(quad);
                 }
             return quads;
@@ -3904,9 +4171,13 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         internal static void AddPolyNodeToPaths(PolyNode polynode, NodeType nt, Paths paths) {
             bool match = true;
             switch (nt) {
-                case NodeType.ntOpen: return;
-                case NodeType.ntClosed: match = !polynode.IsOpen; break;
-                default: break;
+                case NodeType.ntOpen:
+                    return;
+                case NodeType.ntClosed:
+                    match = !polynode.IsOpen;
+                    break;
+                default:
+                    break;
             }
 
             if (polynode.m_polygon.Count > 0 && match)
@@ -3974,14 +4245,16 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
         public void AddPath(Path path, JoinType joinType, EndType endType) {
             int highI = path.Count - 1;
-            if (highI < 0) return;
+            if (highI < 0)
+                return;
             PolyNode newNode = new PolyNode();
             newNode.m_jointype = joinType;
             newNode.m_endtype = endType;
 
             //strip duplicate points from path and also get index to the lowest point ...
             if (endType == EndType.etClosedLine || endType == EndType.etClosedPolygon)
-                while (highI > 0 && path[0] == path[highI]) highI--;
+                while (highI > 0 && path[0] == path[highI])
+                    highI--;
             newNode.m_polygon.Capacity = highI + 1;
             newNode.m_polygon.Add(path[0]);
             int j = 0, k = 0;
@@ -3991,14 +4264,17 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                     newNode.m_polygon.Add(path[i]);
                     if (path[i].Y > newNode.m_polygon[k].Y ||
                       (path[i].Y == newNode.m_polygon[k].Y &&
-                      path[i].X < newNode.m_polygon[k].X)) k = j;
+                      path[i].X < newNode.m_polygon[k].X))
+                        k = j;
                 }
-            if (endType == EndType.etClosedPolygon && j < 2) return;
+            if (endType == EndType.etClosedPolygon && j < 2)
+                return;
 
             m_polyNodes.AddChild(newNode);
 
             //if this path's lowest pt is lower than all the others then update m_lowest
-            if (endType != EndType.etClosedPolygon) return;
+            if (endType != EndType.etClosedPolygon)
+                return;
             if (m_lowest.X < 0)
                 m_lowest = new IntPoint(m_polyNodes.ChildCount - 1, k);
             else {
@@ -4044,7 +4320,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
         internal static DoublePoint GetUnitNormal(IntPoint pt1, IntPoint pt2) {
             double dx = (pt2.X - pt1.X);
             double dy = (pt2.Y - pt1.Y);
-            if ((dx == 0) && (dy == 0)) return new DoublePoint();
+            if ((dx == 0) && (dy == 0))
+                return new DoublePoint();
 
             double f = 1 * 1.0 / Math.Sqrt(dx * dx + dy * dy);
             dx *= f;
@@ -4070,8 +4347,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             }
 
             //see offset_triginometry3.svg in the documentation folder ...
-            if (MiterLimit > 2) m_miterLim = 2 / (MiterLimit * MiterLimit);
-            else m_miterLim = 0.5;
+            if (MiterLimit > 2)
+                m_miterLim = 2 / (MiterLimit * MiterLimit);
+            else
+                m_miterLim = 0.5;
 
             double y;
             if (ArcTolerance <= 0.0)
@@ -4085,7 +4364,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             m_sin = Math.Sin(two_pi / steps);
             m_cos = Math.Cos(two_pi / steps);
             m_StepsPerRad = steps / two_pi;
-            if (delta < 0.0) m_sin = -m_sin;
+            if (delta < 0.0)
+                m_sin = -m_sin;
 
             m_destPolys.Capacity = m_polyNodes.ChildCount * 2;
             for (int i = 0; i < m_polyNodes.ChildCount; i++) {
@@ -4118,9 +4398,12 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                             m_destPoly.Add(new IntPoint(
                               Round(m_srcPoly[0].X + X * delta),
                               Round(m_srcPoly[0].Y + Y * delta)));
-                            if (X < 0) X = 1;
-                            else if (Y < 0) Y = 1;
-                            else X = -1;
+                            if (X < 0)
+                                X = 1;
+                            else if (Y < 0)
+                                Y = 1;
+                            else
+                                X = -1;
                         }
                     }
                     m_destPolys.Add(m_destPoly);
@@ -4241,7 +4524,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 clpr.AddPath(outer, PolyType.ptSubject, true);
                 clpr.ReverseSolution = true;
                 clpr.Execute(ClipType.ctUnion, solution, PolyFillType.pftNegative, PolyFillType.pftNegative);
-                if (solution.Count > 0) solution.RemoveAt(0);
+                if (solution.Count > 0)
+                    solution.RemoveAt(0);
             }
         }
         //------------------------------------------------------------------------------
@@ -4300,8 +4584,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 }
                 //else angle ==> 180 degrees   
             }
-            else if (m_sinA > 1.0) m_sinA = 1.0;
-            else if (m_sinA < -1.0) m_sinA = -1.0;
+            else if (m_sinA > 1.0)
+                m_sinA = 1.0;
+            else if (m_sinA < -1.0)
+                m_sinA = -1.0;
 
             if (m_sinA * m_delta < 0) {
                 m_destPoly.Add(new IntPoint(Round(m_srcPoly[j].X + m_normals[k].X * m_delta),
@@ -4313,13 +4599,20 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             else
                 switch (jointype) {
                     case JoinType.jtMiter: {
-                        double r = 1 + (m_normals[j].X * m_normals[k].X +
-                          m_normals[j].Y * m_normals[k].Y);
-                        if (r >= m_miterLim) DoMiter(j, k, r); else DoSquare(j, k);
+                            double r = 1 + (m_normals[j].X * m_normals[k].X +
+                              m_normals[j].Y * m_normals[k].Y);
+                            if (r >= m_miterLim)
+                                DoMiter(j, k, r);
+                            else
+                                DoSquare(j, k);
+                            break;
+                        }
+                    case JoinType.jtSquare:
+                        DoSquare(j, k);
                         break;
-                    }
-                    case JoinType.jtSquare: DoSquare(j, k); break;
-                    case JoinType.jtRound: DoRound(j, k); break;
+                    case JoinType.jtRound:
+                        DoRound(j, k);
+                        break;
                 }
             k = j;
         }
@@ -4366,7 +4659,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
     }
 
     [Serializable]
-    class ClipperException : Exception {
+    class ClipperException: Exception {
         public ClipperException(string description) : base(description) { }
     }
     //------------------------------------------------------------------------------

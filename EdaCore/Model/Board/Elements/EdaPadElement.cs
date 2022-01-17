@@ -1,6 +1,6 @@
-﻿using System;
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+using System;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
@@ -8,7 +8,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un pad.
     /// </summary>
     /// 
-    public abstract class EdaPadElement : EdaElement, IEdaPosition, IEdaRotation, IEdaName, IEdaConectable {
+    public abstract class EdaPadElement: EdaElement, IEdaPosition, IEdaRotation, IEdaName, IEdaConectable {
 
         private string _name;
         private EdaPoint _position;

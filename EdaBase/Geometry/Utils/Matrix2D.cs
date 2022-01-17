@@ -7,7 +7,7 @@
     /// </summary>
     /// <remarks>Basat en Matrix de AvaloniaUI.</remarks>
     /// 
-    public readonly struct Matrix2D : IEquatable<Matrix2D> {
+    public readonly struct Matrix2D: IEquatable<Matrix2D> {
 
         private readonly double _m11;
         private readonly double _m12;

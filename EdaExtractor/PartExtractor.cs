@@ -1,11 +1,10 @@
-﻿namespace MikroPic.EdaTools.v1.Extractor {
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Core.Model.Board;
+using System;
+using System.IO;
+using System.Xml;
 
-    using System;
-    using System.IO;
-    using System.Xml;
-
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
+namespace MikroPic.EdaTools.v1.Extractor {
 
     public sealed class PartExtractor {
 
@@ -35,11 +34,11 @@
             if (writer == null)
                 throw new ArgumentNullException("writer");
 
-            XmlWriterSettings wrSettings = new XmlWriterSettings();
+            var wrSettings = new XmlWriterSettings();
             wrSettings.Indent = true;
             wrSettings.IndentChars = "    ";
             wrSettings.CloseOutput = true;
-            using (XmlWriter wr = XmlWriter.Create(writer, wrSettings)) {
+            using (var wr = XmlWriter.Create(writer, wrSettings)) {
 
                 wr.WriteStartDocument();
                 wr.WriteStartElement("board");
@@ -65,7 +64,7 @@
                             wr.WriteStartElement("attribute");
                             wr.WriteAttributeString("name", attribute.Name);
                             if (attribute.Value != null)
-                                wr.WriteAttributeString("value", attribute.Value);
+                                wr.WriteAttributeString("value", ResolveMacro(part, attribute.Value));
                             wr.WriteEndElement();
                         }
                         if (hasAttributes)
@@ -79,6 +78,12 @@
                 wr.WriteEndElement();
                 wr.WriteEndDocument();
             }
+        }
+
+        private static string ResolveMacro(EdaPart part, string text) {
+
+            text = text.Replace("{%name}", part.Name);
+            return text;
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
-﻿using System;
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+using System;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
@@ -8,7 +8,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa una via
     /// </summary>
     /// 
-    public sealed class EdaViaElement : EdaElement, IEdaPosition, IEdaConectable {
+    public sealed class EdaViaElement: EdaElement, IEdaPosition, IEdaConectable {
 
         public enum ViaShape {
             Square,

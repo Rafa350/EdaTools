@@ -7,7 +7,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
     /// <summary>
     /// Clase que representa una apertura circular.
     /// </summary>
-    public sealed class CircleAperture : Aperture {
+    public sealed class CircleAperture: Aperture {
 
         public readonly int _diameter;
         public readonly int _drill;

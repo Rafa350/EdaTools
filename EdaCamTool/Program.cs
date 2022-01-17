@@ -1,11 +1,10 @@
-﻿using System;
-using System.IO;
-
-using MikroPic.EdaTools.v1.Cam;
+﻿using MikroPic.EdaTools.v1.Cam;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Cam.Model.IO;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.IO;
+using System;
+using System.IO;
 
 namespace MikroPic.EdaTools.v1.CamTool {
 
@@ -26,7 +25,8 @@ namespace MikroPic.EdaTools.v1.CamTool {
             else {
 
                 string projectPath = args[0];
-                string boardPath = null; ;
+                string boardPath = null;
+                ;
                 string targetName = null;
                 string outputFolder = null;
                 bool pause = false;

@@ -1,19 +1,18 @@
-﻿using System;
-using System.IO;
-
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
+using System;
+using System.IO;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
     /// <summary>
     /// Clase per generar fitxers gerber de forats i fresats.
     /// </summary>
-    public sealed class GerberDrillGenerator : Generator {
+    public sealed class GerberDrillGenerator: Generator {
 
         public enum DrillType {
             PlatedDrill,
@@ -186,7 +185,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <summary>
         /// Visitador per preparar les apertures. Visita els element que tenen forats.
         /// </summary>
-        private sealed class PrepareAperturesVisitor : EdaElementVisitor {
+        private sealed class PrepareAperturesVisitor: EdaElementVisitor {
 
             private readonly EdaLayerId _layerId;
             private readonly ApertureDictionary _apertures;
@@ -267,7 +266,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// <summary>
         /// Visitador per generar la imatge. Visita els elements que tenen forars.
         /// </summary>
-        private sealed class ImageGeneratorVisitor : EdaElementVisitor {
+        private sealed class ImageGeneratorVisitor: EdaElementVisitor {
 
             private readonly GerberBuilder _gb;
             private readonly EdaLayerId _layerId;

@@ -8,7 +8,7 @@
         void Render(DrawingContext context);
     }
 
-    public sealed partial class SceneControl : Control {
+    public sealed partial class SceneControl: Control {
 
         static SceneControl() {
 

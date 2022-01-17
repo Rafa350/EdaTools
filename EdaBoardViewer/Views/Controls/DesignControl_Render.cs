@@ -1,14 +1,13 @@
 ﻿
 namespace EdaBoardViewer.Views.Controls {
 
-    using System;
-    using System.Globalization;
-
     using Avalonia;
     using Avalonia.Controls;
     using Avalonia.Media;
+    using System;
+    using System.Globalization;
 
-    public sealed partial class DesignControl : Control {
+    public sealed partial class DesignControl: Control {
 
         private const string xTagFormat = " X: {0:0.00} ";
         private const string yTagFormat = " Y: {0:0.00} ";

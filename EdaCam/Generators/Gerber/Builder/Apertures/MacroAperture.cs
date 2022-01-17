@@ -7,7 +7,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
     /// <summary>
     /// Clae que representa una apertura de macro.
     /// </summary>
-    public sealed class MacroAperture : Aperture {
+    public sealed class MacroAperture: Aperture {
 
         private readonly int[] _args;
         private readonly Macro _macro;

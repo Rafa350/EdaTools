@@ -7,7 +7,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
     /// pero no fa cap accio.
     /// </summary>
     /// 
-    public abstract class EdaDefaultBoardVisitor : IEdaBoardVisitor {
+    public abstract class EdaDefaultBoardVisitor: IEdaBoardVisitor {
 
         public virtual void Visit(EdaBoard board) {
         }

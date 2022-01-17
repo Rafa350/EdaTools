@@ -6,7 +6,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
     /// Representa un valor normalitzat a 1, en milesimes d'unitat.
     /// </summary>
     /// 
-    public readonly struct EdaRatio : IEquatable<EdaRatio> {
+    public readonly struct EdaRatio: IEquatable<EdaRatio> {
 
         public static readonly EdaRatio Zero = new EdaRatio(0);
         public static readonly EdaRatio P25 = new EdaRatio(250);

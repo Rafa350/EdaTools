@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.IO;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
@@ -10,6 +6,9 @@ using MikroPic.EdaTools.v1.Core.Model.Board.IO;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 using MikroPic.EdaTools.v1.Panel.Model;
 using MikroPic.EdaTools.v1.Panel.Model.Items;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace MikroPic.EdaTools.v1.Panel {
 
@@ -338,7 +337,7 @@ namespace MikroPic.EdaTools.v1.Panel {
             return null;
         }
 
-        private sealed class TransformVisitor : EdaDefaultBoardVisitor {
+        private sealed class TransformVisitor: EdaDefaultBoardVisitor {
 
             private readonly Transformation transformation;
 

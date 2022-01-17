@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
 using MikroPic.EdaTools.v1.Core.Import.KiCad.Infrastructure;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Net;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
-    public sealed class KiCadImporter : IEdaImporter {
+    public sealed class KiCadImporter: IEdaImporter {
 
         private const double _scale = 1000000.0;
         private readonly Matrix2D _m = Matrix2D.CreateScale(_scale, -_scale);
@@ -333,38 +333,49 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             //
             List<EdaPartAttribute> attributes = null;
             foreach (var childNode in node.Nodes.OfType<SBranch>()) {
-                if (tree.GetBranchName(childNode) == "fp_text") {
 
-                    string attrValue = tree.ValueAsString(childNode[2]);
+                EdaPartAttribute attribute = null;
+                switch (tree.GetBranchName(childNode)) {
+                    case "fp_text": {
+                            string attrValue = tree.ValueAsString(childNode[2]);
+                            bool attrVisible = childNode.Count == 6; // Si no te el node 'hide' es visible
+                            var (attrPosition, attrRotation) = ParseLocation(tree, tree.SelectBranch(childNode, "at"));
+                            attrRotation -= rotation;
 
-                    bool attrVisible = childNode.Count == 6; // Si no te el node 'hide' es visible
+                            switch (tree.ValueAsString(childNode[1])) {
 
-                    var (attrPosition, attrRotation) = ParseLocation(tree, tree.SelectBranch(childNode, "at"));
-                    attrRotation -= rotation;
+                                case "value":
+                                    attribute = new EdaPartAttribute("VALUE", attrValue, attrVisible);
+                                    break;
 
-                    EdaPartAttribute attribute = null;
-                    switch (tree.ValueAsString(childNode[1])) {
+                                case "reference":
+                                    attribute = new EdaPartAttribute("NAME", "{%name}", attrVisible);
+                                    partName = attrValue;
+                                    break;
 
-                        case "value":
-                            attribute = new EdaPartAttribute("VALUE", attrValue, attrVisible);
-                            break;
+                                case "user":
+                                    break;
+                            }
 
-                        case "reference":
-                            attribute = new EdaPartAttribute("NAME", "{%name}", attrVisible);
-                            partName = attrValue;
-                            break;
+                            if (attribute != null) {
+                                attribute.Position = attrPosition;
+                                attribute.Rotation = attrRotation;
+                            }
+                        }
+                        break;
 
-                        case "user":
-                            break;
-                    }
+                    case "property": {
+                            string attrName = tree.ValueAsString(childNode[1]);
+                            string attrValue = tree.ValueAsString(childNode[2]);
+                            attribute = new EdaPartAttribute(attrName, attrValue);
+                        }
+                        break;
+                }
 
-                    if (attribute != null) {
-                        attribute.Position = attrPosition;
-                        attribute.Rotation = attrRotation;
-                        if (attributes == null)
-                            attributes = new List<EdaPartAttribute>();
-                        attributes.Add(attribute);
-                    }
+                if (attribute != null) {
+                    if (attributes == null)
+                        attributes = new List<EdaPartAttribute>();
+                    attributes.Add(attribute);
                 }
             }
 
@@ -631,61 +642,61 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             switch (padType) {
                 case "smd": {
-                    var element = new EdaSmdPadElement {
-                        Name = name,
-                        LayerSet = layerSet,
-                        Position = position,
-                        Size = size,
-                        Rotation = rotation,
-                        CornerRatio = roundness
-                    };
-                    component.AddElement(element);
-                }
-                break;
+                        var element = new EdaSmdPadElement {
+                            Name = name,
+                            LayerSet = layerSet,
+                            Position = position,
+                            Size = size,
+                            Rotation = rotation,
+                            CornerRatio = roundness
+                        };
+                        component.AddElement(element);
+                    }
+                    break;
 
                 case "thru_hole": {
-                    switch (shapeType) {
-                        case "rect":
-                            roundness = EdaRatio.Zero;
-                            break;
+                        switch (shapeType) {
+                            case "rect":
+                                roundness = EdaRatio.Zero;
+                                break;
 
-                        case "circle":
-                        case "oval":
-                            roundness = EdaRatio.P100;
-                            break;
+                            case "circle":
+                            case "oval":
+                                roundness = EdaRatio.P100;
+                                break;
 
-                        case "roundrect":
-                            break;
+                            case "roundrect":
+                                break;
 
-                        default:
-                            throw new InvalidOperationException("Tipo de forma desconocida.");
+                            default:
+                                throw new InvalidOperationException("Tipo de forma desconocida.");
+                        }
+
+                        layerSet.Add(EdaLayerId.Drills);
+                        var element = new EdaThPadElement {
+                            Name = name,
+                            LayerSet = layerSet,
+                            Position = position,
+                            TopSize = size,
+                            InnerSize = size,
+                            BottomSize = size,
+                            Rotation = rotation,
+                            CornerRatio = roundness,
+                            Drill = drill
+                        };
+                        component.AddElement(element);
                     }
-
-                    layerSet.Add(EdaLayerId.Drills);
-                    var element = new EdaThPadElement {
-                        Name = name,
-                        LayerSet = layerSet,
-                        Position = position,
-                        TopSize = size,
-                        InnerSize = size,
-                        BottomSize = size,
-                        Rotation = rotation,
-                        CornerRatio = roundness,
-                        Drill = drill
-                    };
-                    component.AddElement(element);
-                }
-                break;
+                    break;
 
                 case "np_thru_hole": {
-                    var element = new EdaHoleElement {
-                        LayerSet = new EdaLayerSet(EdaLayerId.Holes),
-                        Position = position,
-                        Drill = drill
-                    };
-                    component.AddElement(element);
-                    break;
-                }
+                        var element = new EdaHoleElement {
+                            LayerSet = new EdaLayerSet(EdaLayerId.Holes),
+                            Position = position,
+                            Drill = drill
+                        };
+                        component.AddElement(element);
+                        break;
+                    }
 
                 default:
                     throw new InvalidDataException("Tipo de pad no reconocido.");
@@ -942,7 +953,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             string modFileName = String.Format("{0}.kicad_mod", s[1]);
             string[] libBaseFolders = {
                 ".",
-                @"C:\Program Files\KiCad\share\kicad\modules",
+                @"C:\Program Files\KiCad\6.0\share\kicad\footprints",
                 @"C:\Users\Rafael\Documents\Projectes\KiCad\Libraries\User",
                 @"C:\Users\Rafael\Documents\Projectes\KiCad\Aplex",
             };

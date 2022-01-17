@@ -1,7 +1,7 @@
-﻿using System;
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Core.Model.Common;
+using System;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
@@ -9,7 +9,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// Clase que representa un atribut
     /// </summary>
     /// 
-    public sealed class EdaPartAttribute : IEdaVisitable<IEdaBoardVisitor> {
+    public sealed class EdaPartAttribute: IEdaVisitable<IEdaBoardVisitor> {
 
         private readonly string _name;
         private string _value;

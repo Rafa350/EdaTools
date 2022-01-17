@@ -1,15 +1,14 @@
-﻿using System;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
+using System;
 using System.Globalization;
 using System.Text;
-
-using MikroPic.EdaTools.v1.Base.Geometry;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures {
 
     /// <summary>
     /// Clase que representa una apertura poligonal.
     /// </summary>
-    public sealed class PoligonAperture : Aperture {
+    public sealed class PoligonAperture: Aperture {
 
         private readonly int _vertex;
         private readonly int _diameter;

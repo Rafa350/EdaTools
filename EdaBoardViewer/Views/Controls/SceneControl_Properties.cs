@@ -3,7 +3,7 @@
     using Avalonia;
     using Avalonia.Controls;
 
-    public sealed partial class SceneControl : Control {
+    public sealed partial class SceneControl: Control {
 
         public static readonly StyledProperty<Matrix> ValueMatrixProperty = AvaloniaProperty.Register<SceneControl, Matrix>(nameof(ValueMatrix), Matrix.Identity);
         public static readonly StyledProperty<ISceneRenderer> SceneRendererProperty = AvaloniaProperty.Register<SceneControl, ISceneRenderer>(nameof(SceneRenderer), null);

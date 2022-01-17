@@ -18,7 +18,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// Clase que representa una capa de la placa.
     /// </summary>
     /// 
-    public sealed class EdaLayer : IEdaVisitable<IEdaBoardVisitor> {
+    public sealed class EdaLayer: IEdaVisitable<IEdaBoardVisitor> {
 
         private readonly EdaLayerId _id;
         private readonly BoardSide _side;
