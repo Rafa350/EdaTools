@@ -227,16 +227,18 @@ namespace MikroPic.EdaTools.v1.Panel {
 
                 // Afegeix els forats a la placa
                 //
-                targetBoard.AddElement(new EdaHoleElement {
-                    LayerSet = new EdaLayerSet(EdaLayerId.Holes),
+                targetBoard.AddElement(new EdaCircleElement {
+                    LayerSet = new EdaLayerSet(EdaLayerId.Unplatted),
                     Position = q1,
-                    Drill = drill
+                    Thickness = 0,
+                    Diameter = drill
                 });
 
-                targetBoard.AddElement(new EdaHoleElement {
-                    LayerSet = new EdaLayerSet(EdaLayerId.Holes),
+                targetBoard.AddElement(new EdaCircleElement {
+                    LayerSet = new EdaLayerSet(EdaLayerId.Unplatted),
                     Position = q2,
-                    Drill = drill
+                    Thickness = 0,
+                    Diameter = drill
                 });
             }
         }
@@ -389,11 +391,6 @@ namespace MikroPic.EdaTools.v1.Panel {
 
                 //foreach (var segment in region.Segments)
                 //  segment.Position = transformation.ApplyTo(segment.Position);
-            }
-
-            public override void Visit(EdaHoleElement hole) {
-
-                hole.Position = transformation.Transform(hole.Position);
             }
 
             public override void Visit(EdaPart part) {

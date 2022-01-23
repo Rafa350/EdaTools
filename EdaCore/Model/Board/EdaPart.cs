@@ -51,8 +51,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 int right = int.MinValue;
                 int bottom = int.MinValue;
 
+                EdaLayerId layerId = side == BoardSide.Top ? EdaLayerId.TopCopper : EdaLayerId.BottomCopper;
                 foreach (var element in Elements) {
-                    EdaRect r = element.GetBoundingBox(side);
+                    EdaRect r = element.GetBoundingBox(layerId);
                     if (left > r.Left)
                         left = r.Left;
                     if (top > r.Top)

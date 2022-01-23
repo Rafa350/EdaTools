@@ -17,12 +17,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <summary>
         /// Crea el poligon del thermal.
         /// </summary>
-        /// <param name="side">Cara de la placa.</param>
+        /// <param name="side">Identificador de la capa.</param>
         /// <param name="spacing">Espaiat.</param>
         /// <param name="width">Amplada dels conductors.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public abstract EdaPolygon GetThermalPolygon(BoardSide side, int spacing, int width);
+        public abstract EdaPolygon GetThermalPolygon(EdaLayerId layerId, int spacing, int width);
 
         /// <summary>
         /// El nom.

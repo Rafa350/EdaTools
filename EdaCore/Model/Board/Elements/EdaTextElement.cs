@@ -28,21 +28,21 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetPolygon(BoardSide side) {
+        public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
             return null;
         }
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetOutlinePolygon(BoardSide side, int spacing) {
+        public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
             return null;
         }
 
         /// <inheritdoc/>
         /// 
-        public override EdaRect GetBoundingBox(BoardSide side) {
+        public override EdaRect GetBoundingBox(EdaLayerId layerId) {
 
             throw new NotImplementedException();
         }

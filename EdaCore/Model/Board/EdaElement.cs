@@ -36,29 +36,29 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         public abstract void AcceptVisitor(IEdaBoardVisitor visitor);
 
         /// <summary>
-        /// Obte el poligon del element.
+        /// Obte el poligon del element en una capa.
         /// </summary>
-        /// <param name="side">Cara de la placa.</param>
+        /// <param name="layerId">Identificador de la capa.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public abstract EdaPolygon GetPolygon(BoardSide side);
+        public abstract EdaPolygon GetPolygon(EdaLayerId layerId);
 
         /// <summary>
         /// Obte el poligon espaiat del element.
         /// </summary>
-        /// <param name="side">Cara de la placa.</param>
+        /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="spacing">Espaiat.</param>
         /// <returns>El poligon.</returns>
         /// 
-        public abstract EdaPolygon GetOutlinePolygon(BoardSide side, int spacing);
+        public abstract EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing);
 
         /// <summary>
         /// Obte el bounding box del element.
         /// </summary>
-        /// <param name="side">Cara de la placa.</param>
+        /// <param name="layerId">Identificador de la capa.</param>
         /// <returns>El bounding box.</returns>
         /// 
-        public abstract EdaRect GetBoundingBox(BoardSide side);
+        public abstract EdaRect GetBoundingBox(EdaLayerId layerId);
 
         /// <summary>
         /// Indica si l'element es present en una capa.

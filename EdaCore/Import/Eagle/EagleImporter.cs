@@ -804,7 +804,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// 
         private EdaElement ParseHoleNode(XmlNode node) {
 
-            // obte la posicio
+            // Obte la posicio
             //
             int x = ParseNumber(node.AttributeAsString("x"));
             int y = ParseNumber(node.AttributeAsString("y"));
@@ -814,11 +814,20 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             //
             int drill = ParseNumber(node.AttributeAsString("drill"));
 
+            var element = new EdaCircleElement {
+                Position = position,
+                Diameter = drill,
+                Thickness = 0,
+                LayerSet = new EdaLayerSet { EdaLayerId.Unplatted }
+            };
+            /*
             var element = new EdaHoleElement {
                 Position = position,
                 Drill = drill
             };
             element.LayerSet.Add(EdaLayerId.Holes);
+            */
+            
             return element;
         }
 
@@ -1281,7 +1290,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 case 42:
                 case 51:
                 case 52:
-                    return LayerFunction.Design;
+                    return LayerFunction.Document;
 
                 default:
                     return LayerFunction.Unknown;

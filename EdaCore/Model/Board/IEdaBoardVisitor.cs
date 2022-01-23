@@ -88,6 +88,5 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         void Visit(EdaThPadElement pad);
         void Visit(EdaRegionElement region);
         void Visit(EdaTextElement text);
-        void Visit(EdaHoleElement hole);
     }
 }

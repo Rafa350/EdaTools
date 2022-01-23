@@ -35,9 +35,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetPolygon(BoardSide side) {
+        public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
-            int hash = GetHashCode() + side.GetHashCode() * 981;
+            int hash = GetHashCode() + layerId.GetHashCode() * 981;
             EdaPolygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
@@ -51,9 +51,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetOutlinePolygon(BoardSide side, int spacing) {
+        public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
-            int hash = GetHashCode() + (side.GetHashCode() * 71) + (spacing * 27009);
+            int hash = GetHashCode() + (layerId.GetHashCode() * 71) + (spacing * 27009);
             EdaPolygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
@@ -70,9 +70,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetThermalPolygon(BoardSide side, int spacing, int width) {
+        public override EdaPolygon GetThermalPolygon(EdaLayerId layerId, int spacing, int width) {
 
-            EdaPolygon pour = GetOutlinePolygon(side, spacing);
+            EdaPolygon pour = GetOutlinePolygon(layerId, spacing);
             EdaPolygon thermal = new EdaPolygon(
                 EdaPoints.CreateCross(
                     Position,
@@ -91,7 +91,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaRect GetBoundingBox(BoardSide side) {
+        public override EdaRect GetBoundingBox(EdaLayerId layerId) {
 
             double a = Rotation.AsRadiants;
 

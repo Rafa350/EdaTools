@@ -23,7 +23,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             public string SignalName;
         }
 
-        private static readonly XmlSchemaSet schemas;
+        private static readonly XmlSchemaSet _schemas;
 
         private readonly XmlReaderAdapter _rd;
         private EdaBoard _board;
@@ -35,16 +35,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// 
         static BoardStreamReader() {
 
-            schemas = new XmlSchemaSet();
+            _schemas = new XmlSchemaSet();
 
             string schemaResourceName = "MikroPic.EdaTools.v1.Core.Model.Board.IO.Schemas.BoardDocument.xsd";
             Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(schemaResourceName);
             if (resourceStream == null)
                 throw new Exception(String.Format("No se encontro el recurso '{0}'", schemaResourceName));
             XmlSchema schema = XmlSchema.Read(resourceStream, null);
-            schemas.Add(schema);
+            _schemas.Add(schema);
 
-            schemas.Compile();
+            _schemas.Compile();
         }
 
         /// <summary>
@@ -65,8 +65,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             settings.IgnoreWhitespace = true;
             settings.IgnoreComments = true;
             settings.CloseInput = false;
-            settings.Schemas = schemas;
-            settings.ValidationType = schemas == null ? ValidationType.None : ValidationType.Schema;
+            settings.Schemas = _schemas;
+            settings.ValidationType = _schemas == null ? ValidationType.None : ValidationType.Schema;
             settings.ConformanceLevel = ConformanceLevel.Document;
 
             XmlReader reader = XmlReader.Create(stream, settings);
@@ -326,10 +326,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                         elements.Add(ParseSPadNode());
                         break;
 
-                    case "hole":
-                        elements.Add(ParseHoleNode());
-                        break;
-
                     case "text":
                         elements.Add(ParseTextNode());
                         break;
@@ -391,10 +387,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
                     case "via":
                         elements.Add(ParseViaNode());
-                        break;
-
-                    case "hole":
-                        elements.Add(ParseHoleNode());
                         break;
 
                     case "text":
@@ -608,7 +600,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsStartTag("line"))
                 throw new InvalidDataException("Se esperaba <line>");
 
-            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layers"));
+            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layer"));
             var startPosition = EdaParser.ParsePoint(_rd.AttributeAsString("startPosition"));
             var endPosition = EdaParser.ParsePoint(_rd.AttributeAsString("endPosition"));
             var thickness = EdaParser.ParseScalar(_rd.AttributeAsString("thickness", "0"));
@@ -645,7 +637,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsStartTag("arc"))
                 throw new InvalidDataException("Se esperaba <arc>");
 
-            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layers"));
+            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layer"));
             var startPosition = EdaParser.ParsePoint(_rd.AttributeAsString("startPosition"));
             var endPosition = EdaParser.ParsePoint(_rd.AttributeAsString("endPosition"));
             var thickness = EdaParser.ParseScalar(_rd.AttributeAsString("thickness"));
@@ -684,13 +676,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsStartTag("rectangle"))
                 throw new InvalidDataException("Se esperaba <rectangle>");
 
-            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layers"));
+            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layer"));
             var position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
             var size = EdaParser.ParseSize(_rd.AttributeAsString("size"));
             var rotation = EdaParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
             var thickness = EdaParser.ParseScalar(_rd.AttributeAsString("thickness", "0"));
             var roundness = EdaParser.ParseRatio(_rd.AttributeAsString("roundness", "0"));
-            var filled = _rd.AttributeAsBoolean("filled", thickness == 0);
 
             _rd.NextTag();
             if (!_rd.IsEndTag("rectangle"))
@@ -702,8 +693,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 Size = size,
                 CornerRatio = roundness,
                 Rotation = rotation,
-                Thickness = thickness,
-                Filled = filled
+                Thickness = thickness
             };
 
             return element;
@@ -719,11 +709,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsStartTag("circle"))
                 throw new InvalidDataException("Se esperaba <circle>");
 
-            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layers"));
+            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layer"));
             var position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
             var radius = EdaParser.ParseScalar(_rd.AttributeAsString("radius"));
             var thickness = EdaParser.ParseScalar(_rd.AttributeAsString("thickness", "0"));
-            var filled = _rd.AttributeAsBoolean("filled", thickness == 0);
 
             _rd.NextTag();
             if (!_rd.IsEndTag("circle"))
@@ -733,8 +722,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 LayerSet = layerSet,
                 Position = position,
                 Radius = radius,
-                Thickness = thickness,
-                Filled = filled
+                Thickness = thickness
             };
 
             return element;
@@ -750,18 +738,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsStartTag("region"))
                 throw new InvalidDataException("Se esperaba <region>");
 
-            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layers"));
+            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layer"));
             var thickness = _rd.AttributeExists("thickness") ?
                 EdaParser.ParseScalar(_rd.AttributeAsString("thickness")) :
                 0;
-            var filled = _rd.AttributeAsBoolean("filled", thickness == 0);
             var clearance = EdaParser.ParseScalar(_rd.AttributeAsString("clearance", "0"));
             var signalName = _rd.AttributeAsString("signal");
 
             var element = new EdaRegionElement {
                 LayerSet = layerSet,
                 Thickness = thickness,
-                Filled = filled,
                 Clearance = clearance
             };
 
@@ -936,31 +922,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         }
 
         /// <summary>
-        /// Procesa un node 'hole'
-        /// </summary>
-        /// <returns>L'objecte 'HoleElement' obtigut.</returns>
-        /// 
-        private EdaHoleElement ParseHoleNode() {
-
-            if (!_rd.IsStartTag("hole"))
-                throw new InvalidDataException("Se esperaba <hole>");
-
-            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layers"));
-            var position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
-            var drill = EdaParser.ParseScalar(_rd.AttributeAsString("drill"));
-
-            _rd.NextTag();
-            if (!_rd.IsEndTag("hole"))
-                throw new InvalidDataException("Se esperaba </hole>");
-
-            return new EdaHoleElement {
-                LayerSet = layerSet,
-                Position = position,
-                Drill = drill
-            };
-        }
-
-        /// <summary>
         /// Procesa un node 'text'
         /// </summary>
         /// <returns>L'objecte 'TextElement' obtingut.</returns>
@@ -970,7 +931,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsStartTag("text"))
                 throw new InvalidDataException("Se esperaba <text>");
 
-            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layers"));
+            var layerSet = EdaParser.ParseLayerSet(_rd.AttributeAsString("layer"));
             var position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
             var rotation = EdaParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
             var height = EdaParser.ParseScalar(_rd.AttributeAsString("height"));

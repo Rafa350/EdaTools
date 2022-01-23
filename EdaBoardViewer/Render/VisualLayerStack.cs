@@ -101,8 +101,8 @@
                 Color.FromArgb(255, 255, 255, 255)));
 
             vls.Add(new VisualLayer("Holes",
-                new EdaLayerId[] { EdaLayerId.Holes },
-                new ElementType[] { ElementType.Hole },
+                new EdaLayerId[] { EdaLayerId.Unplatted },
+                new ElementType[] { ElementType.Circle },
                 true,
                 VisualMode.Element,
                 Color.FromArgb(255, 240, 128, 128)));

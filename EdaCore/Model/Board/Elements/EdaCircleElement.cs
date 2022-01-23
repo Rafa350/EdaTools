@@ -13,7 +13,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private EdaPoint _position;
         private int _radius;
         private int _thickness;
-        private bool _filled;
 
         /// <inheritdoc/>
         /// 
@@ -24,7 +23,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetPolygon(BoardSide side) {
+        public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
             if (Filled) {
                 var points = EdaPoints.CreateCircle(_position, _radius);
@@ -39,7 +38,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetOutlinePolygon(BoardSide side, int spacing) {
+        public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
             var points = EdaPoints.CreateCircle(_position, _radius + (_thickness / 2) + spacing);
             return new EdaPolygon(points);
@@ -47,7 +46,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaRect GetBoundingBox(BoardSide side) {
+        public override EdaRect GetBoundingBox(EdaLayerId layerId) {
 
             int r = _radius + (_thickness / 2);
             return new EdaRect(_position.X - r, _position.Y - r, r + r, r + r);
@@ -105,12 +104,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// Indicador de cercle ple.
+        /// Indicador de cercle ple. 
         /// </summary>
         /// 
         public bool Filled {
-            get => (_thickness == 0) || _filled;
-            set => _filled = value;
+            get => _thickness == 0;
+            set {
+                if (value)
+                    _thickness = 0;
+            }
         }
 
         /// <inheritdoc/>

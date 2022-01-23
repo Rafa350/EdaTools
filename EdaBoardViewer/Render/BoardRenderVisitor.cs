@@ -1,14 +1,14 @@
-﻿namespace EdaBoardViewer.Render {
+﻿using Avalonia.Media;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
+using MikroPic.EdaTools.v1.Base.Geometry.Utils;
+using MikroPic.EdaTools.v1.Core.Infrastructure;
+using MikroPic.EdaTools.v1.Core.Model.Board;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
+using System.Collections.Generic;
 
-    using Avalonia.Media;
-    using MikroPic.EdaTools.v1.Base.Geometry;
-    using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
-    using MikroPic.EdaTools.v1.Base.Geometry.Utils;
-    using MikroPic.EdaTools.v1.Core.Infrastructure;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
-    using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
-    using System.Collections.Generic;
+namespace EdaBoardViewer.Render {
 
     public sealed class BoardRenderVisitor: EdaElementVisitor {
 
@@ -51,7 +51,7 @@
             if (_visualLayer.IsVisible(Part, rectangle)) {
 
                 var brush = new SolidColorBrush(_visualLayer.Color);
-                var geometry = rectangle.GetPolygon(_layer.Side).ToGeometry();
+                var geometry = rectangle.GetPolygon(_layer.Id).ToGeometry();
 
                 _context.DrawGeometry(brush, null, geometry);
             }
@@ -62,7 +62,7 @@
             if (_visualLayer.IsVisible(Part, arc)) {
 
                 var brush = new SolidColorBrush(_visualLayer.Color);
-                var geometry = arc.GetPolygon(_layer.Side).ToGeometry();
+                var geometry = arc.GetPolygon(_layer.Id).ToGeometry();
 
                 _context.DrawGeometry(brush, null, geometry);
             }
@@ -73,7 +73,7 @@
             if (_visualLayer.IsVisible(Part, circle)) {
 
                 var brush = new SolidColorBrush(_visualLayer.Color);
-                var geometry = circle.GetPolygon(_layer.Side).ToGeometry();
+                var geometry = circle.GetPolygon(_layer.Id).ToGeometry();
 
                 _context.DrawGeometry(brush, null, geometry);
             }
@@ -86,7 +86,7 @@
                 switch (_visualLayer.VisualMode) {
                     case VisualMode.Element: {
                             var brush = new SolidColorBrush(_visualLayer.Color);
-                            var geometry = via.GetPolygon(_layer.Side).ToGeometry();
+                            var geometry = via.GetPolygon(_layer.Id).ToGeometry();
                             _context.DrawGeometry(brush, null, geometry);
                         }
                         break;
@@ -108,7 +108,7 @@
                 switch (_visualLayer.VisualMode) {
                     case VisualMode.Element: {
                             var brush = new SolidColorBrush(_visualLayer.Color);
-                            var geometry = pad.GetPolygon(_layer.Side).ToGeometry();
+                            var geometry = pad.GetPolygon(_layer.Id).ToGeometry();
                             _context.DrawGeometry(brush, null, geometry);
                         }
                         break;
@@ -128,18 +128,7 @@
             if (_visualLayer.IsVisible(Part, pad)) {
 
                 var brush = new SolidColorBrush(_visualLayer.Color);
-                var geometry = pad.GetPolygon(_layer.Side).ToGeometry();
-
-                _context.DrawGeometry(brush, null, geometry);
-            }
-        }
-
-        public override void Visit(EdaHoleElement hole) {
-
-            if (_visualLayer.IsVisible(Part, hole)) {
-
-                var brush = new SolidColorBrush(_visualLayer.Color);
-                var geometry = hole.GetPolygon(_layer.Side).ToGeometry();
+                var geometry = pad.GetPolygon(_layer.Id).ToGeometry();
 
                 _context.DrawGeometry(brush, null, geometry);
             }
@@ -195,7 +184,7 @@
 
                 var polygon = _layer.Function == LayerFunction.Signal ?
                     Board.GetRegionPolygon(region, _layer.Id, new Transformation()) :
-                    region.GetPolygon(_layer.Side);
+                    region.GetPolygon(_layer.Id);
 
                 var pen = new Pen(new SolidColorBrush(_visualLayer.Color), region.Thickness, null, PenLineCap.Round, PenLineJoin.Round);
                 var brush = new SolidColorBrush(_visualLayer.Color);

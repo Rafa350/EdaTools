@@ -53,14 +53,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <summary>
         /// Obte la llista de puns pels poligons
         /// </summary>
-        /// <param name="side">Cara de la placa.</param>
+        /// <param name="layerId">La capa.</param>
         /// <param name="spacing">Espaiat.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        private EdaPoints MakePoints(BoardSide side, int spacing) {
+        private EdaPoints MakePoints(EdaLayerId layerId, int spacing) {
 
-            int size = side == BoardSide.Inner ? InnerSize : OuterSize;
-            ViaShape shape = side == BoardSide.Inner ? ViaShape.Circle : this._shape;
+            int size = layerId.Side == BoardSide.Inner ? InnerSize : OuterSize;
+            ViaShape shape = layerId.Side == BoardSide.Inner ? ViaShape.Circle : this._shape;
             switch (shape) {
                 case ViaShape.Square:
                     return EdaPoints.CreateRectangle(
@@ -96,14 +96,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetPolygon(BoardSide side) {
+        public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
-            int hash = GetHashCode() * side.GetHashCode() * 273;
+            int hash = GetHashCode() * layerId.GetHashCode() * 273;
 
             EdaPolygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
-                var points = MakePoints(side, 0);
+                var points = MakePoints(layerId, 0);
                 var holePoints = MakeHolePoints();
                 polygon = new EdaPolygon(points, new EdaPolygon(holePoints));
 
@@ -115,13 +115,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetOutlinePolygon(BoardSide side, int spacing) {
+        public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
-            int hash = GetHashCode() + (side.GetHashCode() * 11327) + (spacing * 131);
+            int hash = GetHashCode() + (layerId.GetHashCode() * 11327) + (spacing * 131);
             EdaPolygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
-                var points = MakePoints(side, spacing);
+                var points = MakePoints(layerId, spacing);
                 polygon = new EdaPolygon(points);
 
                 PolygonCache.Save(hash, polygon);
@@ -143,16 +143,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaRect GetBoundingBox(BoardSide side) {
+        public override EdaRect GetBoundingBox(EdaLayerId layerId) {
 
-            int size = side == BoardSide.Inner ? InnerSize : OuterSize;
+            int size = layerId.Side == BoardSide.Inner ? InnerSize : OuterSize;
             return new EdaRect(_position.X - (size / 2), _position.Y - (size / 2), size, size);
         }
 
         /// <inheritdoc/>
         /// 
         public override bool IsOnLayer(EdaLayerId layerId) =>
-            layerId.IsSignal || (layerId == EdaLayerId.Vias) || (layerId == EdaLayerId.Drills);
+            layerId.IsSignal || (layerId == EdaLayerId.Vias) || (layerId == EdaLayerId.Platted);
 
         /// <summary>
         ///  Obte o asigna la posicio del centre del cercle.

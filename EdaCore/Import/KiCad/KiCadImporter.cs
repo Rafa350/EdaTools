@@ -106,7 +106,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             board.AddLayer(new EdaLayer(EdaLayerId.Pads, BoardSide.None, LayerFunction.Unknown));
             board.AddLayer(new EdaLayer(EdaLayerId.Vias, BoardSide.None, LayerFunction.Unknown));
             board.AddLayer(new EdaLayer(EdaLayerId.Drills, BoardSide.None, LayerFunction.Unknown));
-            board.AddLayer(new EdaLayer(EdaLayerId.Holes, BoardSide.None, LayerFunction.Unknown));
+            board.AddLayer(new EdaLayer(EdaLayerId.Platted, BoardSide.None, LayerFunction.Mechanical));
+            board.AddLayer(new EdaLayer(EdaLayerId.Unplatted, BoardSide.None, LayerFunction.Mechanical));
             board.AddLayer(new EdaLayer(EdaLayerId.TopNames, BoardSide.Top, LayerFunction.Unknown));
             board.AddLayer(new EdaLayer(EdaLayerId.BottomNames, BoardSide.Bottom, LayerFunction.Unknown));
             board.AddLayer(new EdaLayer(EdaLayerId.TopValues, BoardSide.Top, LayerFunction.Unknown));
@@ -689,10 +690,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                     break;
 
                 case "np_thru_hole": {
-                        var element = new EdaHoleElement {
-                            LayerSet = new EdaLayerSet(EdaLayerId.Holes),
+                        var element = new EdaCircleElement {
+                            LayerSet = new EdaLayerSet(EdaLayerId.Unplatted),
                             Position = position,
-                            Drill = drill
+                            Thickness = 0,
+                            Diameter = drill
                         };
                         component.AddElement(element);
                         break;

@@ -408,7 +408,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             public override void Visit(EdaRegionElement region) {
 
                 if (CanVisit(region))
-                    _apertures.DefineCircleAperture(region.Thickness);
+                    _apertures.DefineCircleAperture(Math.Max(100000, region.Thickness));
             }
 
             private bool CanVisit(EdaElement element) {
@@ -548,7 +548,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         // Obte el poligon
                         //
                         EdaLayer layer = Board.GetLayer(_layerId);
-                        EdaPolygon polygon = rectangle.GetPolygon(layer.Side);
+                        EdaPolygon polygon = rectangle.GetPolygon(layer.Id);
                         EdaPoints points = EdaPoints.Create(polygon.Points);
 
                         if (Part != null) {
@@ -602,7 +602,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         // Obte el poligon
                         //
                         EdaLayer layer = Board.GetLayer(_layerId);
-                        EdaPolygon polygon = circle.GetPolygon(layer.Side);
+                        EdaPolygon polygon = circle.GetPolygon(layer.Id);
                         EdaPoints points = EdaPoints.Create(polygon.Points);
 
                         if (Part != null) {
@@ -884,9 +884,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     _gb.Region(polygon.Points, true);
                     _gb.EndRegion();
 
-                    // Dibuixa el perfil de la regio
+                    // Dibuixa el perfil de la regio per arrodonir les cantonades
                     //
-                    Aperture ap = _apertures.GetCircleAperture(thickness);
+                    Aperture ap = _apertures.GetCircleAperture(Math.Max(100000, thickness));
                     _gb.SelectAperture(ap);
                     _gb.LoadPolarity(Polarity.Dark);
                     _gb.Polygon(polygon.Points);

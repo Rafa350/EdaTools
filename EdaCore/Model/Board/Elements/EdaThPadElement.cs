@@ -55,13 +55,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <summary>
         /// Crea la llista de punts d'un poligon
         /// </summary>
-        /// <param name="side">Cara de la placa</param>
+        /// <param name="layerId">La capa.</param>
         /// <param name="spacing">Espaiat.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        private EdaPoints MakePoints(BoardSide side, int spacing) {
+        private EdaPoints MakePoints(EdaLayerId layerId, int spacing) {
 
-            EdaSize size = GetSize(side);
+            EdaSize size = GetSize(layerId);
 
             return EdaPoints.CreateRectangle(
                 Position,
@@ -83,13 +83,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetPolygon(BoardSide side) {
+        public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
-            int hash = GetHashCode() + (side.GetHashCode() * 2798761);
+            int hash = GetHashCode() + (layerId.GetHashCode() * 2798761);
             EdaPolygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
-                var points = MakePoints(side, 0);
+                var points = MakePoints(layerId, 0);
                 var holePoints = MakeHolePonts();
                 polygon = new EdaPolygon(points, new EdaPolygon(holePoints));
 
@@ -101,13 +101,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetOutlinePolygon(BoardSide side, int spacing) {
+        public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
-            int hash = GetHashCode() + (side.GetHashCode() * 47211) + spacing * 99997;
+            int hash = GetHashCode() + (layerId.GetHashCode() * 47211) + spacing * 99997;
             EdaPolygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
-                var points = MakePoints(side, spacing);
+                var points = MakePoints(layerId, spacing);
                 polygon = new EdaPolygon(points);
 
                 PolygonCache.Save(hash, polygon);
@@ -118,13 +118,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetThermalPolygon(BoardSide side, int spacing, int width) {
+        public override EdaPolygon GetThermalPolygon(EdaLayerId layerId, int spacing, int width) {
 
-            EdaSize size = GetSize(side);
+            EdaSize size = GetSize(layerId);
             int w = size.Width + spacing + spacing;
             int h = size.Height + spacing + spacing;
 
-            EdaPolygon pour = GetOutlinePolygon(side, spacing);
+            EdaPolygon pour = GetOutlinePolygon(layerId, spacing);
             EdaPolygon thermal = new EdaPolygon(EdaPoints.CreateCross(Position, new EdaSize(w, h), width, Rotation));
 
             List<EdaPolygon> childs = new List<EdaPolygon>();
@@ -147,17 +147,18 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaRect GetBoundingBox(BoardSide side) =>
-            new EdaRect(new EdaPoint(0, 0), GetSize(side));
+        public override EdaRect GetBoundingBox(EdaLayerId layerId) =>
+            new EdaRect(new EdaPoint(0, 0), GetSize(layerId));
 
         /// <summary>
         /// Obte el tamany en funcio de la cara de la placa.
         /// </summary>
-        /// <param name="side">La cara.</param>
+        /// <param name="layerId">La capa.</param>
         /// <returns>El valor del tamany.</returns>
         /// 
-        private EdaSize GetSize(BoardSide side) {
+        private EdaSize GetSize(EdaLayerId layerId) {
 
+            var side = layerId.Side;
             return
                 side == BoardSide.Top ? TopSize :
                 side == BoardSide.Inner ? InnerSize :
@@ -167,7 +168,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <inheritdoc/>
         /// 
         public override bool IsOnLayer(EdaLayerId layerId) =>
-            layerId.IsSignal || base.IsOnLayer(layerId);
+            layerId.IsSignal || base.IsOnLayer(layerId) || (layerId == EdaLayerId.Platted);
 
         /// <summary>
         /// L'arrodoniment o planitut de les cantonades.

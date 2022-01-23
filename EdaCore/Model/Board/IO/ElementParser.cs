@@ -152,7 +152,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 throw new InvalidDataException("Se esperaba <spad>");
 
             string name = rd.AttributeAsString("name");
-            EdaLayerId layerId = EdaLayerId.Parse(rd.AttributeAsString("layer"));
+            EdaLayerId layerId = EdaLayerId.Parse(rd.AttributeAsString("layers"));
             var layerSet = new EdaLayerSet(layerId);
             EdaPoint position = EdaParser.ParsePoint(rd.AttributeAsString("position"));
             EdaSize size = EdaParser.ParseSize(rd.AttributeAsString("size"));
@@ -185,11 +185,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 throw new InvalidDataException("Se esperaba <tpad>");
 
             string name = rd.AttributeAsString("name");
-            EdaLayerId layerId = EdaLayerId.Parse(rd.AttributeAsString("layer"));
+            EdaLayerId layerId = EdaLayerId.Parse(rd.AttributeAsString("layers"));
             var layerSet = new EdaLayerSet();
             layerSet.Add(layerId);
             EdaPoint position = EdaParser.ParsePoint(rd.AttributeAsString("position"));
-            EdaSize size = EdaParser.ParseSize(rd.AttributeAsString("size"));
+            EdaSize size = EdaParser.ParseSize(rd.AttributeAsString("topSize"));
             EdaAngle rotation = EdaParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
             int drill = EdaParser.ParseScalar(rd.AttributeAsString("drill"));
 
@@ -246,30 +246,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         }
 
         /// <summary>
-        /// Obte un element Hole
-        /// </summary>
-        /// <returns>L'element obtigut.</returns>
-        /// 
-        public static EdaHoleElement Hole(XmlReaderAdapter rd) {
-
-            if (!rd.IsStartTag("hole"))
-                throw new InvalidDataException("Se esperaba <hole>");
-
-            var position = EdaParser.ParsePoint(rd.AttributeAsString("position"));
-            var drill = EdaParser.ParseScalar(rd.AttributeAsString("drill"));
-
-            rd.NextTag();
-            if (!rd.IsEndTag("hole"))
-                throw new InvalidDataException("Se esperaba </hole>");
-
-            return new EdaHoleElement {
-                LayerSet = new EdaLayerSet(EdaLayerId.Holes),
-                Position = position,
-                Drill = drill
-            };
-        }
-
-        /// <summary>
         /// Obte un element regio
         /// </summary>
         /// <returns>L'element obtingut.</returns>
@@ -279,7 +255,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!rd.IsStartTag("region"))
                 throw new InvalidDataException("Se esperaba <region>");
 
-            EdaLayerId layerId = EdaLayerId.Parse(rd.AttributeAsString("layers"));
+            EdaLayerId layerId = EdaLayerId.Parse(rd.AttributeAsString("layer"));
             var layerSet = new EdaLayerSet(layerId);
             int thickness = rd.AttributeExists("thickness") ?
                 EdaParser.ParseScalar(rd.AttributeAsString("thickness")) :

@@ -29,7 +29,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetPolygon(BoardSide side) {
+        public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
             var points = EdaPoints.CreateLineTrace(_startPosition, _endPosition, _thickness, LineCap == CapStyle.Round);
             return new EdaPolygon(points);
@@ -37,7 +37,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetOutlinePolygon(BoardSide side, int spacing) {
+        public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
             var points = EdaPoints.CreateLineTrace(_startPosition, _endPosition, _thickness + (spacing * 2), _lineCap == CapStyle.Round);
             return new EdaPolygon(points);
@@ -45,7 +45,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaRect GetBoundingBox(BoardSide side) {
+        public override EdaRect GetBoundingBox(EdaLayerId layerId
+            ) {
 
             return new EdaRect(
                 Math.Min(_startPosition.X, _endPosition.X) - _thickness / 2,

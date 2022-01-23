@@ -48,9 +48,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
         public virtual void Visit(EdaTextElement text) {
         }
 
-        public virtual void Visit(EdaHoleElement hole) {
-        }
-
         public virtual void Visit(EdaViaElement via) {
         }
 

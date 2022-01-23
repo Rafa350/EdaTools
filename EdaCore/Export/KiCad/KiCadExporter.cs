@@ -110,12 +110,22 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                     circle.Position.X + circle.Radius,
                     circle.Position.Y) * _m;
 
-                var sb = new StringBuilder()
-                    .AppendFormat("  (fp_circle ")
-                    .AppendFormat(CultureInfo.InvariantCulture, "(center {0} {1}) ", center.X, center.Y)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(end {0} {1}) ", end.X, end.Y)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(width {0})) ", circle.Thickness / _scale);
-
+                var sb = new StringBuilder();
+                if (circle.IsOnLayer(EdaLayerId.Unplatted)) {
+                    sb
+                        .Append("  (pad \"\" np_thru_hole circle ")
+                        .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1}) ", center.X, center.Y)
+                        .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {0}) ", circle.Diameter / _scale)
+                        .AppendFormat(CultureInfo.InvariantCulture, "(drill {0}) ", circle.Diameter / _scale)
+                        .Append("(layers *.Cu *.Mask))");
+                }
+                else {
+                    sb
+                        .AppendFormat("  (fp_circle ")
+                        .AppendFormat(CultureInfo.InvariantCulture, "(center {0} {1}) ", center.X, center.Y)
+                        .AppendFormat(CultureInfo.InvariantCulture, "(end {0} {1}) ", end.X, end.Y)
+                        .AppendFormat(CultureInfo.InvariantCulture, "(width {0})) ", circle.Thickness / _scale);
+                }
                 _writer.WriteLine(sb.ToString());
             }
 
@@ -140,7 +150,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
 
                 var sb = new StringBuilder()
                     .AppendFormat("  (fp_text {0} \"{1}\" ", type, value)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", text.Position.X / _scale, -text.Position.Y / _scale, text.Rotation)
+                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", text.Position.X / _scale, -text.Position.Y / _scale, text.Rotation.AsDegrees)
                     .AppendFormat("(layer {0}) ", GetLayerNames(text.LayerSet))
                     .AppendLine()
                     .Append("    (effects ")
@@ -186,20 +196,6 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                     .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", position.X, position.Y, pad.Rotation.AsDegrees)
                     .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", pad.TopSize.Width / _scale, pad.TopSize.Height / _scale)
                     .AppendFormat(CultureInfo.InvariantCulture, "(drill {0}) ", pad.Drill / _scale)
-                    .Append("(layers *.Cu *.Mask))");
-
-                _writer.WriteLine(sb);
-            }
-
-            public override void Visit(EdaHoleElement hole) {
-
-                var position = new Vector2D(hole.Position.X, hole.Position.Y) * _m;
-
-                var sb = new StringBuilder()
-                    .Append("  (pad \"\" np_thru_hole circle ")
-                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1}) ", position.X, position.Y)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {0}) ", hole.Drill / _scale)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(drill {0}) ", hole.Drill / _scale)
                     .Append("(layers *.Cu *.Mask))");
 
                 _writer.WriteLine(sb);

@@ -11,7 +11,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad.Infrastructure {
         public static double ValueAsDouble(this STree tree, SNode node) {
 
             if (node is SLeaf n) {
-                double r = Double.Parse(tree.GetNodeValue(n), CultureInfo.InvariantCulture);
+                string s = tree.GetNodeValue(n);
+                double r = Double.Parse(s, CultureInfo.InvariantCulture);
                 return r;
             }
 
@@ -21,8 +22,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad.Infrastructure {
 
         public static int ValueAsInteger(this STree tree, SNode node) {
 
-            if (node is SLeaf n)
-                return Int32.Parse(tree.GetNodeValue(n));
+            if (node is SLeaf n) {
+                string s = tree.GetNodeValue(n);
+                return Int32.Parse(s);
+            }
 
             else
                 throw new InvalidOperationException("No es un nodo terminal.");
@@ -30,8 +33,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad.Infrastructure {
 
         public static bool ValueAsBoolean(this STree tree, SNode node) {
 
-            if (node is SLeaf n)
-                return Boolean.Parse(tree.GetNodeValue(n));
+            if (node is SLeaf n) {
+                string s = tree.GetNodeValue(n);
+                return Boolean.Parse(s);
+            }
 
             else
                 throw new InvalidOperationException("No es un nodo terminal.");

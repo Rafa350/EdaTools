@@ -58,6 +58,9 @@ namespace MikroPic.EdaTools.v1.Cam {
                 case "gerber-drill":
                     return new GerberDrillGenerator(target);
 
+                case "gerber-route":
+                    return new GerberRouteGenerator(target);
+
                 case "gerber-component":
                     return new GerberComponentGenerator(target);
 

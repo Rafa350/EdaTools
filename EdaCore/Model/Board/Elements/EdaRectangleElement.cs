@@ -15,7 +15,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private EdaAngle _rotation;
         private EdaRatio _cornerRatio;
         private int _thickness;
-        private bool _filled;
 
         /// <inheritdoc/>
         /// 
@@ -26,7 +25,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetPolygon(BoardSide side) {
+        public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
             if (Filled) {
                 var points = EdaPoints.CreateRectangle(_position, _size, _cornerRatio, true, _rotation);
@@ -46,7 +45,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetOutlinePolygon(BoardSide side, int spacing) {
+        public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
             var outerSize = new EdaSize(_size.Width + _thickness + spacing * 2, _size.Height + _thickness + spacing * 2);
             var points = EdaPoints.CreateRectangle(_position, outerSize, _cornerRatio, true, _rotation);
@@ -55,7 +54,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaRect GetBoundingBox(BoardSide side) {
+        public override EdaRect GetBoundingBox(EdaLayerId layerId) {
 
             double width = _size.Width + _thickness;
             double height = _size.Height + _thickness;
@@ -126,12 +125,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// Obte o asigna el indicador de rectangle ple. Es el mateix que Thickness = 0.
+        /// Indicador de rectangle ple.
         /// </summary>
         /// 
         public bool Filled {
-            get => (_thickness == 0) || _filled;
-            set => _filled = value;
+            get => _thickness == 0;
+            set {
+                if (value)
+                    _thickness = 0;
+            }
         }
 
         /// <inheritdoc/>

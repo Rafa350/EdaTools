@@ -51,6 +51,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         public static readonly EdaLayerId Profile;
         public static readonly EdaLayerId Dimensions;
         public static readonly EdaLayerId Milling;
+        public static readonly EdaLayerId Platted;
+        public static readonly EdaLayerId Unplatted;
         public static readonly EdaLayerId Unrouted;
 
         private static readonly Dictionary<string, int> _fwDict;
@@ -104,6 +106,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         private const int _valueTopKeepout = 42;
         private const int _valueBottomKeepout = 43;
         private const int _valueUnrouted = 44;
+        private const int _valuePlatted = 45;
+        private const int _valueUnplatted = 46;
 
         private const int _sidePOS = 16;
         private const int _sideBITS = 0b11;
@@ -120,6 +124,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         private const int _typeOutline = 2 << _typePOS;
         private const int _typeUser = 3 << _typePOS;
         private const int _typeRestrict = 4 << _typePOS;
+        private const int _typeMechanical = 5 << _typePOS;
 
         private readonly int _value;
 
@@ -175,6 +180,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             Profile = Create(_valueProfile | _typeOutline, "Profile");
             Dimensions = Create(_valueDimensions, "Dimensions");
             Milling = Create(_valueMilling, "Milling");
+            Platted = Create(_valuePlatted | _typeMechanical, "Platted");
+            Unplatted = Create(_valueUnplatted | _typeMechanical, "Unplatted");
             Unrouted = Create(_valueUnrouted, "Unrouted");
         }
 

@@ -14,7 +14,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         private IEnumerable<EdaArcPoint> _segments;
         private int _thickness;
-        private bool _filled;
 
         /// <inheritdoc/>
         /// 
@@ -25,7 +24,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetPolygon(BoardSide side) {
+        public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
             if (_segments == null)
                 return null;
@@ -81,13 +80,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaPolygon GetOutlinePolygon(BoardSide side, int spacing) {
+        public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
             if (_segments == null)
                 return null;
 
             else {
-                EdaPolygon polygon = GetPolygon(side);
+                EdaPolygon polygon = GetPolygon(layerId);
                 if (spacing != 0)
                     return PolygonProcessor.Offset(polygon, spacing);
                 else
@@ -97,13 +96,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaRect GetBoundingBox(BoardSide side) {
+        public override EdaRect GetBoundingBox(EdaLayerId layerId) {
 
             if (_segments == null)
                 return new EdaRect(0, 0, 0, 0);
 
             else {
-                EdaPolygon polygon = GetPolygon(side);
+                EdaPolygon polygon = GetPolygon(layerId);
                 return polygon.BoundingBox;
             }
         }
@@ -127,8 +126,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// 
         public bool Filled {
-            get => (_thickness == 0) || _filled;
-            set => _filled = value;
+            get => _thickness == 0;
+            set {
+                if (value)
+                    _thickness = 0;
+            }
         }
 
         /// <summary>

@@ -47,7 +47,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
                 _writer.WriteStartElement("line");
 
-                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(line.LayerSet));
+                _writer.WriteAttributeString("layer", EdaFormatter.FormatLayerSet(line.LayerSet));
                 _writer.WriteAttributeString("startPosition", EdaFormatter.FormatPoint(line.StartPosition));
                 _writer.WriteAttributeString("endPosition", EdaFormatter.FormatPoint(line.EndPosition));
                 if (line.Thickness > 0)
@@ -73,7 +73,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
                 _writer.WriteStartElement("arc");
 
-                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(arc.LayerSet));
+                _writer.WriteAttributeString("layer", EdaFormatter.FormatLayerSet(arc.LayerSet));
                 _writer.WriteAttributeString("startPosition", EdaFormatter.FormatPoint(arc.StartPosition));
                 _writer.WriteAttributeString("endPosition", EdaFormatter.FormatPoint(arc.EndPosition));
                 _writer.WriteAttributeString("angle", EdaFormatter.FormatAngle(arc.Angle));
@@ -100,16 +100,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
                 _writer.WriteStartElement("rectangle");
 
-                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(rectangle.LayerSet));
+                _writer.WriteAttributeString("layer", EdaFormatter.FormatLayerSet(rectangle.LayerSet));
                 _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(rectangle.Position));
                 _writer.WriteAttributeString("size", EdaFormatter.FormatSize(rectangle.Size));
                 if (!rectangle.Rotation.IsZero)
                     _writer.WriteAttributeString("rotation", EdaFormatter.FormatAngle(rectangle.Rotation));
-                if (rectangle.Thickness > 0) {
+                if (rectangle.Thickness > 0) 
                     _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(rectangle.Thickness));
-                    if (rectangle.Filled)
-                        _writer.WriteAttributeBool("filled", true);
-                }
 
                 _writer.WriteEndElement();
             }
@@ -123,14 +120,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
                 _writer.WriteStartElement("circle");
 
-                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(circle.LayerSet));
+                _writer.WriteAttributeString("layer", EdaFormatter.FormatLayerSet(circle.LayerSet));
                 _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(circle.Position));
                 _writer.WriteAttributeString("radius", EdaFormatter.FormatScalar(circle.Radius));
-                if (circle.Thickness > 0) {
+                if (circle.Thickness > 0) 
                     _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(circle.Thickness));
-                    if (circle.Filled)
-                        _writer.WriteAttributeBool("filled", true);
-                }
 
                 _writer.WriteEndElement();
             }
@@ -144,7 +138,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
                 _writer.WriteStartElement("text");
 
-                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(text.LayerSet));
+                _writer.WriteAttributeString("layer", EdaFormatter.FormatLayerSet(text.LayerSet));
                 _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(text.Position));
                 if (!text.Rotation.IsZero)
                     _writer.WriteAttributeString("rotation", EdaFormatter.FormatAngle(text.Rotation));
@@ -156,22 +150,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                     _writer.WriteAttributeEnum("verticalAlign", text.VerticalAlign);
                 if (!String.IsNullOrEmpty(text.Value))
                     _writer.WriteAttributeString("value", text.Value);
-
-                _writer.WriteEndElement();
-            }
-
-            /// <summary>
-            /// Visita un element de tipus 'HoleElement'.
-            /// </summary>
-            /// <param name="hole">L'element a visitar.</param>
-            /// 
-            public override void Visit(EdaHoleElement hole) {
-
-                _writer.WriteStartElement("hole");
-
-                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(hole.LayerSet));
-                _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(hole.Position));
-                _writer.WriteAttributeString("drill", EdaFormatter.FormatScalar(hole.Drill));
 
                 _writer.WriteEndElement();
             }
@@ -292,12 +270,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
                 _writer.WriteStartElement("region");
 
-                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(region.LayerSet));
-                if (region.Thickness > 0) {
+                _writer.WriteAttributeString("layer", EdaFormatter.FormatLayerSet(region.LayerSet));
+                if (region.Thickness > 0) 
                     _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(region.Thickness));
-                    if (region.Filled)
-                        _writer.WriteAttributeString("filled", "true");
-                }
                 if (region.Clearance > 0)
                     _writer.WriteAttributeString("clearance", EdaFormatter.FormatScalar(region.Clearance));
 
