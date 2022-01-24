@@ -47,9 +47,19 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.GerberJob {
                 writer.WriteStartObject();
 
                 writer.WriteStartObject("Header");
+                writer.WriteStartObject("GenerationSoftware");
+                writer.WriteString("Vendor", "MikroPic");
+                writer.WriteString("Application", "EdaTools - EdaCamTool");
+                writer.WriteString("Version", "1.0");
+                writer.WriteEndObject();
+                writer.WriteString("CreationDate", DateTime.Now.ToString("O", DateTimeFormatInfo.InvariantInfo));
                 writer.WriteEndObject();
 
                 writer.WriteStartObject("GeneralSpecs");
+
+                writer.WriteStartObject("ProjectId");
+                writer.WriteString("Name", "X");
+                writer.WriteEndObject();
 
                 writer.WriteStartObject("Size");
                 writer.WriteNumber("X", labelWidth);

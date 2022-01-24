@@ -12,10 +12,10 @@ namespace MikroPic.EdaTools.v1.Cam.Model.IO {
 
     public sealed class ProjectStreamReader {
 
-        private static readonly XmlSchemaSet schemas;
+        private static readonly XmlSchemaSet _schemas;
 
-        private readonly XmlReaderAdapter rd;
-        private int version;
+        private readonly XmlReaderAdapter _rd;
+        private int _version;
 
         /// <summary>
         /// Constructor estatic de la clase
@@ -28,9 +28,9 @@ namespace MikroPic.EdaTools.v1.Cam.Model.IO {
             if (resourceStream == null)
                 throw new Exception(String.Format("No se encontro el recurso '{0}'", schemaResourceName));
 
-            schemas = new XmlSchemaSet();
-            schemas.Add(XmlSchema.Read(resourceStream, null));
-            schemas.Compile();
+            _schemas = new XmlSchemaSet();
+            _schemas.Add(XmlSchema.Read(resourceStream, null));
+            _schemas.Compile();
         }
 
         /// <summary>
@@ -51,12 +51,12 @@ namespace MikroPic.EdaTools.v1.Cam.Model.IO {
             settings.IgnoreWhitespace = true;
             settings.IgnoreComments = true;
             settings.CloseInput = false;
-            settings.Schemas = schemas;
-            settings.ValidationType = schemas == null ? ValidationType.None : ValidationType.Schema;
+            settings.Schemas = _schemas;
+            settings.ValidationType = _schemas == null ? ValidationType.None : ValidationType.Schema;
             settings.ConformanceLevel = ConformanceLevel.Document;
 
             XmlReader reader = XmlReader.Create(stream, settings);
-            rd = new XmlReaderAdapter(reader);
+            _rd = new XmlReaderAdapter(reader);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace MikroPic.EdaTools.v1.Cam.Model.IO {
         /// 
         public Project Read() {
 
-            rd.NextTag();
+            _rd.NextTag();
             Project project = ParseDocumentNode();
 
             return project;
@@ -79,16 +79,16 @@ namespace MikroPic.EdaTools.v1.Cam.Model.IO {
         /// 
         private Project ParseDocumentNode() {
 
-            if (!rd.IsStartTag("document"))
+            if (!_rd.IsStartTag("document"))
                 throw new InvalidDataException("Se esperaba <document>");
 
-            version = rd.AttributeAsInteger("version");
+            _version = _rd.AttributeAsInteger("version");
 
-            rd.NextTag();
+            _rd.NextTag();
             Project project = ParseProjectNode();
 
-            rd.NextTag();
-            if (!rd.IsEndTag("document"))
+            _rd.NextTag();
+            if (!_rd.IsEndTag("document"))
                 throw new InvalidDataException("Se esperaba </document>");
 
             return project;
@@ -101,14 +101,17 @@ namespace MikroPic.EdaTools.v1.Cam.Model.IO {
         /// 
         private Project ParseProjectNode() {
 
-            if (!rd.IsStartTag("project"))
+            if (!_rd.IsStartTag("project"))
                 throw new InvalidDataException("Se esperaba <project>");
 
-            rd.NextTag();
+            string name = _rd.AttributeAsString("name");
+            string revision = _rd.AttributeAsString("revision");
+
+            _rd.NextTag();
             IEnumerable<Target> targetList = ParseTargetsNode();
 
-            rd.NextTag();
-            if (!rd.IsEndTag("project"))
+            _rd.NextTag();
+            if (!_rd.IsEndTag("project"))
                 throw new InvalidDataException("Se esperaba </project>");
 
             Project project = new Project(targetList);
@@ -122,17 +125,17 @@ namespace MikroPic.EdaTools.v1.Cam.Model.IO {
         /// 
         private IEnumerable<Target> ParseTargetsNode() {
 
-            if (!rd.IsStartTag("targets"))
+            if (!_rd.IsStartTag("targets"))
                 throw new InvalidDataException("Se esperaba <targets>");
 
             List<Target> targets = new List<Target>();
 
-            rd.NextTag();
-            while (rd.IsStartTag("target")) {
+            _rd.NextTag();
+            while (_rd.IsStartTag("target")) {
                 targets.Add(ParseTargetNode());
-                rd.NextTag();
+                _rd.NextTag();
             }
-            if (!rd.IsEndTag("targets"))
+            if (!_rd.IsEndTag("targets"))
                 throw new InvalidDataException("Se esperaba </targets>");
 
             return targets;
@@ -145,32 +148,32 @@ namespace MikroPic.EdaTools.v1.Cam.Model.IO {
         /// 
         private Target ParseTargetNode() {
 
-            if (!rd.IsStartTag("target"))
+            if (!_rd.IsStartTag("target"))
                 throw new InvalidDataException("Se esperaba <target>");
 
-            string name = rd.AttributeAsString("name");
-            string fileName = rd.AttributeAsString("output");
-            string generatorName = rd.AttributeAsString("generator");
-            EdaPoint position = rd.AttributeExists("position") ?
-                EdaParser.ParsePoint(rd.AttributeAsString("position")) :
+            string name = _rd.AttributeAsString("name");
+            string fileName = _rd.AttributeAsString("output");
+            string generatorName = _rd.AttributeAsString("generator");
+            EdaPoint position = _rd.AttributeExists("position") ?
+                EdaParser.ParsePoint(_rd.AttributeAsString("position")) :
                 new EdaPoint(0, 0);
-            EdaAngle rotation = rd.AttributeExists("rotation") ?
-                EdaParser.ParseAngle(rd.AttributeAsString("rotation")) :
+            EdaAngle rotation = _rd.AttributeExists("rotation") ?
+                EdaParser.ParseAngle(_rd.AttributeAsString("rotation")) :
                 EdaAngle.Zero;
 
             IEnumerable<string> layers = null;
             IEnumerable<TargetOption> options = null;
 
-            rd.NextTag();
-            if (rd.IsStartTag("layers")) {
+            _rd.NextTag();
+            if (_rd.IsStartTag("layers")) {
                 layers = ParseLayersNode();
-                rd.NextTag();
+                _rd.NextTag();
             }
-            if (rd.IsStartTag("options")) {
+            if (_rd.IsStartTag("options")) {
                 options = ParseOptionsNode();
-                rd.NextTag();
+                _rd.NextTag();
             }
-            if (!rd.IsEndTag("target"))
+            if (!_rd.IsEndTag("target"))
                 throw new InvalidDataException("Se esperaba </target>");
 
             Target target = new Target(name, fileName, generatorName, position, rotation, layers, options);
@@ -184,17 +187,17 @@ namespace MikroPic.EdaTools.v1.Cam.Model.IO {
         /// 
         private IEnumerable<string> ParseLayersNode() {
 
-            if (!rd.IsStartTag("layers"))
+            if (!_rd.IsStartTag("layers"))
                 throw new InvalidDataException("Se esperaba <layers>");
 
             List<string> layerNames = new List<string>();
 
-            rd.NextTag();
-            while (rd.IsStartTag("layer")) {
+            _rd.NextTag();
+            while (_rd.IsStartTag("layer")) {
                 layerNames.Add(ParseLayerNode());
-                rd.NextTag();
+                _rd.NextTag();
             }
-            if (!rd.IsEndTag("layers"))
+            if (!_rd.IsEndTag("layers"))
                 throw new InvalidDataException("Se esperaba </layers>");
 
             return layerNames;
@@ -207,13 +210,13 @@ namespace MikroPic.EdaTools.v1.Cam.Model.IO {
         /// 
         private string ParseLayerNode() {
 
-            if (!rd.IsStartTag("layer"))
+            if (!_rd.IsStartTag("layer"))
                 throw new InvalidDataException("Se esperaba <layer>");
 
-            string name = rd.AttributeAsString("name");
+            string name = _rd.AttributeAsString("name");
 
-            rd.NextTag();
-            if (!rd.IsEndTag("layer"))
+            _rd.NextTag();
+            if (!_rd.IsEndTag("layer"))
                 throw new InvalidDataException("Se esperaba </layer>");
 
             return name;
@@ -226,17 +229,17 @@ namespace MikroPic.EdaTools.v1.Cam.Model.IO {
         /// 
         private IList<TargetOption> ParseOptionsNode() {
 
-            if (!rd.IsStartTag("options"))
+            if (!_rd.IsStartTag("options"))
                 throw new InvalidDataException("Se esperaba <options>");
 
             List<TargetOption> targetOptions = new List<TargetOption>();
 
-            rd.NextTag();
-            while (rd.IsStartTag("option")) {
+            _rd.NextTag();
+            while (_rd.IsStartTag("option")) {
                 targetOptions.Add(ParseOptionNode());
-                rd.NextTag();
+                _rd.NextTag();
             }
-            if (!rd.IsEndTag("options"))
+            if (!_rd.IsEndTag("options"))
                 throw new InvalidDataException("Se esperaba </options>");
 
             return targetOptions;
@@ -249,14 +252,14 @@ namespace MikroPic.EdaTools.v1.Cam.Model.IO {
         /// 
         private TargetOption ParseOptionNode() {
 
-            if (!rd.IsStartTag("option"))
+            if (!_rd.IsStartTag("option"))
                 throw new InvalidDataException("Se esperaba <option>");
 
-            string name = rd.AttributeAsString("name");
-            string value = rd.AttributeAsString("value");
+            string name = _rd.AttributeAsString("name");
+            string value = _rd.AttributeAsString("value");
 
-            rd.NextTag();
-            if (!rd.IsEndTag("option"))
+            _rd.NextTag();
+            if (!_rd.IsEndTag("option"))
                 throw new InvalidDataException("Se esperaba </option>");
 
             TargetOption targetOption = new TargetOption(name, value);

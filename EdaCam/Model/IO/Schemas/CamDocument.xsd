@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema
     elementFormDefault="qualified"
-    targetNamespace="http://MikroPic.com/schemas/edatools/v1/XCAM.xsd"
-    xmlns="http://MikroPic.com/schemas/edatools/v1/XCAM.xsd"
+    targetNamespace="http://MikroPic.com/schemas/edatools/v1/CamDocument.xsd"
+    xmlns="http://MikroPic.com/schemas/edatools/v1/CamDocument.xsd"
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:element
@@ -24,6 +24,8 @@
             <xs:sequence>
                 <xs:element ref="targets" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
+            <xs:attribute name="name" use="required" type="xs:string"/>
+            <xs:attribute name="revision" use="required" type="xs:string"/>
         </xs:complexType>
     </xs:element>
     

@@ -94,7 +94,7 @@
                 Color.FromArgb(180, 0, 128, 0)));
 
             vls.Add(new VisualLayer("Drils",
-                new EdaLayerId[] { EdaLayerId.Drills },
+                new EdaLayerId[] { EdaLayerId.Platted },
                 new ElementType[] { ElementType.Via, ElementType.ThPad },
                 true,
                 VisualMode.Drill,
