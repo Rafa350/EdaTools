@@ -743,12 +743,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 EdaParser.ParseScalar(_rd.AttributeAsString("thickness")) :
                 0;
             var clearance = EdaParser.ParseScalar(_rd.AttributeAsString("clearance", "0"));
+            var priority = _rd.AttributeAsInteger("priority");
             var signalName = _rd.AttributeAsString("signal");
 
             var element = new EdaRegionElement {
                 LayerSet = layerSet,
                 Thickness = thickness,
-                Clearance = clearance
+                Clearance = clearance,
+                Priority = priority
             };
 
             if (signalName != null) {
@@ -897,7 +899,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 EdaParser.ParseScalar(_rd.AttributeAsString("innerSize")) :
                 outerSize;
             var drill = EdaParser.ParseScalar(_rd.AttributeAsString("drill"));
-            var shape = _rd.AttributeAsEnum<EdaViaElement.ViaShape>("shape", EdaViaElement.ViaShape.Circle);
             var signalName = _rd.AttributeAsString("signal");
 
             _rd.NextTag();
@@ -909,8 +910,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 Position = position,
                 OuterSize = outerSize,
                 InnerSize = innerSize,
-                Drill = drill,
-                Shape = shape
+                Drill = drill
             };
 
             if (signalName != null) {

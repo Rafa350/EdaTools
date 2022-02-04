@@ -210,7 +210,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// <summary>
             /// Visita un element SmdPadElement'
             /// </summary>
-            /// <param name="pad">Lélement a visitar.</param>
+            /// <param name="pad">L'element a visitar.</param>
             /// 
             public override void Visit(EdaSmdPadElement pad) {
 

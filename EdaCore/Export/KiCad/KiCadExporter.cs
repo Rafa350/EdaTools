@@ -29,9 +29,9 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             }
 
             /// <summary>
-            /// Visita un component
+            /// Visita un objecte 'EdaComponent'
             /// </summary>
-            /// <param name="component">El component</param>
+            /// <param name="component">L'objecte a visitar.</param>
             /// 
             public override void Visit(EdaComponent component) {
 
@@ -51,9 +51,9 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             }
 
             /// <summary>
-            /// Visita una linia
+            /// Visita un objecte 'EdaLineElement'
             /// </summary>
-            /// <param name="line">La linia</param>
+            /// <param name="line">L'objecte a visitar.</param>
             /// 
             public override void Visit(EdaLineElement line) {
 
@@ -71,9 +71,9 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             }
 
             /// <summary>
-            /// Visita un rectangle
+            /// Visita un objecte 'EdaRectangleElement'
             /// </summary>
-            /// <param name="rectangle">El rectangle</param>
+            /// <param name="rectangle">L'objecte a visitar.</param>
             /// 
             public override void Visit(EdaRectangleElement rectangle) {
 
@@ -81,15 +81,13 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                     rectangle.Position.X - (rectangle.Size.Width / 2),
                     rectangle.Position.Y - (rectangle.Size.Height / 2)) * _m;
                 var end = new Vector2D(
-                    rectangle.Position.X + rectangle.Size.Width,
-                    rectangle.Position.Y + rectangle.Size.Height) * _m;
+                    rectangle.Position.X + rectangle.Size.Width / 2,
+                    rectangle.Position.Y + rectangle.Size.Height / 2) * _m;
 
                 var sb = new StringBuilder()
-                    .Append("  (fp_poly ")
-                    .AppendFormat(CultureInfo.InvariantCulture, "(pts (xy {0} {1}) ", start.X, start.Y)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(xy {0} {1}) ", end.X, start.Y)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(xy {0} {1}) ", end.X, end.Y)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(xy {0} {1})) ", start.X, end.Y)
+                    .Append("  (fp_rect ")
+                    .AppendFormat(CultureInfo.InvariantCulture, "(start {0} {1}) ", start.X, start.Y)
+                    .AppendFormat(CultureInfo.InvariantCulture, "(end {0} {1}) ", end.X, end.Y)
                     .AppendFormat("(layer {0}) ", GetLayerNames(rectangle.LayerSet))
                     .AppendFormat(CultureInfo.InvariantCulture, "(width {0}))", rectangle.Thickness / _scale);
 
@@ -99,7 +97,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// <summary>
             /// Visita un cercle
             /// </summary>
-            /// <param name="circle">El cercle</param>
+            /// <param name="circle">L'objecte a visitar.</param>
             /// 
             public override void Visit(EdaCircleElement circle) {
 
@@ -132,7 +130,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// <summary>
             /// Visita un text
             /// </summary>
-            /// <param name="text">El text</param>
+            /// <param name="text">L'objecte a visitar.</param>
             /// 
             public override void Visit(EdaTextElement text) {
 
@@ -166,15 +164,16 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// <summary>
             /// Visita un pad smd
             /// </summary>
-            /// <param name="pad">El pad</param>
+            /// <param name="pad">L'objecte a visitar.</param>
             /// 
             public override void Visit(EdaSmdPadElement pad) {
 
-                var position = new Vector2D(pad.Position.X, pad.Position.Y) * _m;
-
                 var sb = new StringBuilder()
                     .AppendFormat("  (pad {0} smd roundrect ", pad.Name)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", position.X, position.Y, pad.Rotation.AsDegrees)
+                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", 
+                        pad.Position.X / _scale, 
+                        pad.Position.Y / -_scale, 
+                        pad.Rotation.AsDegrees)
                     .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", pad.Size.Width / _scale, pad.Size.Height / _scale)
                     .AppendFormat("(layers {0}) ", GetLayerNames(pad.LayerSet))
                     .AppendFormat(CultureInfo.InvariantCulture, "(roundrect_rratio {0}))", pad.CornerRatio.Value / 2000.0);
@@ -185,15 +184,16 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// <summary>
             /// Visita un pad thruhole
             /// </summary>
-            /// <param name="pad">El pad</param>
+            /// <param name="pad">L'objecte a visitar.</param>
             /// 
             public override void Visit(EdaThPadElement pad) {
 
-                var position = new Vector2D(pad.Position.X, pad.Position.Y) * _m;
-
                 var sb = new StringBuilder()
                     .AppendFormat("  (pad {0} thru_hole circle ", pad.Name)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", position.X, position.Y, pad.Rotation.AsDegrees)
+                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", 
+                        pad.Position.X / _scale, 
+                        pad.Position.Y / -_scale, 
+                        pad.Rotation.AsDegrees)
                     .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", pad.TopSize.Width / _scale, pad.TopSize.Height / _scale)
                     .AppendFormat(CultureInfo.InvariantCulture, "(drill {0}) ", pad.Drill / _scale)
                     .Append("(layers *.Cu *.Mask))");
@@ -201,17 +201,17 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                 _writer.WriteLine(sb);
             }
 
-            private string GetLayerNames(EdaLayerSet layerSet) {
+            private static string GetLayerNames(EdaLayerSet layerSet) {
 
                 var sb = new StringBuilder();
 
                 bool first = true;
-                foreach (var layerId in layerSet) {
+                foreach (EdaLayerId layerId in layerSet.Items) {
                     if (first)
                         first = false;
                     else
                         sb.Append(' ');
-                    sb.Append(GetLayerNames(layerId));
+                    sb.Append(GetLayerName(layerId));
                 }
 
                 return sb.ToString();
@@ -220,10 +220,10 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// <summary>
             /// Obte el nom de les capes
             /// </summary>
-            /// <param name="layerSet">Conjunt de capes</param>
-            /// <returns>Els noms de les capes</returns>
+            /// <param name="layerId">La capa.</param>
+            /// <returns>El nom de les capa.</returns>
             /// 
-            private string GetLayerNames(EdaLayerId layerId) {
+            private static string GetLayerName(EdaLayerId layerId) {
 
                 var layerName = layerId.ToString();
                 switch (layerName) {

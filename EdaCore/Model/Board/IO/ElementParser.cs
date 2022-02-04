@@ -152,12 +152,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 throw new InvalidDataException("Se esperaba <spad>");
 
             string name = rd.AttributeAsString("name");
-            EdaLayerId layerId = EdaLayerId.Parse(rd.AttributeAsString("layers"));
-            var layerSet = new EdaLayerSet(layerId);
+            var layerSet = EdaParser.ParseLayerSet(rd.AttributeAsString("layers"));
             EdaPoint position = EdaParser.ParsePoint(rd.AttributeAsString("position"));
             EdaSize size = EdaParser.ParseSize(rd.AttributeAsString("size"));
             EdaAngle rotation = EdaParser.ParseAngle(rd.AttributeAsString("rotation", "0"));
-            EdaRatio roundness = EdaParser.ParseRatio(rd.AttributeAsString("roundness", "0"));
+            EdaRatio cornerRatio = EdaParser.ParseRatio(rd.AttributeAsString("cornerRatio", "0"));
+            var cornerShape = rd.AttributeAsEnum("cornerShape", EdaSmdPadElement.SmdPadCornerShape.Round);
 
             rd.NextTag();
             if (!rd.IsEndTag("spad"))
@@ -169,7 +169,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 Position = position,
                 Size = size,
                 Rotation = rotation,
-                CornerRatio = roundness
+                CornerRatio = cornerRatio,
+                CornerShape = cornerShape
             };
         }
 

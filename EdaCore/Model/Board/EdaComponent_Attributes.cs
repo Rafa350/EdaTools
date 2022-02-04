@@ -65,7 +65,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 throw new InvalidOperationException(
                     String.Format("No se encontro el atributo '{0}'.", attribute.Name));
 
-            // Elimina l'aqtribut de la llista d'atributs
+            // Elimina l'atribut de la llista d'atributs
             //
             _attributes.Remove(attribute.Name);
             if (_attributes.Count == 0)

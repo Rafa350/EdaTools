@@ -39,7 +39,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             }
 
             /// <summary>
-            /// Visita un element de tipus 'LineElement'
+            /// Visita un objecte 'EdaLineElement'
             /// </summary>
             /// <param name="line">L'objecte a visitar.</param>
             /// 
@@ -65,7 +65,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             }
 
             /// <summary>
-            /// Visita un element de tipus 'ArcElement'.
+            /// Visita un objecte 'EdaArcElement'.
             /// </summary>
             /// <param name="arc">L'objecte a visitar.</param>
             /// 
@@ -92,7 +92,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             }
 
             /// <summary>
-            /// Visita un element de tipus 'RectangleElement'.
+            /// Visita un objecte 'EdaRectangleElement'.
             /// </summary>
             /// <param name="rectangle">L'objecte a visitar.</param>
             /// 
@@ -105,14 +105,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 _writer.WriteAttributeString("size", EdaFormatter.FormatSize(rectangle.Size));
                 if (!rectangle.Rotation.IsZero)
                     _writer.WriteAttributeString("rotation", EdaFormatter.FormatAngle(rectangle.Rotation));
-                if (rectangle.Thickness > 0) 
+                if (rectangle.Thickness > 0)
                     _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(rectangle.Thickness));
 
                 _writer.WriteEndElement();
             }
 
             /// <summary>
-            /// Visita un element de tipus 'CircleElement'
+            /// Visita un objecte 'EdaCircleElement'
             /// </summary>
             /// <param name="circle">L'element a visitar.</param>
             /// 
@@ -123,16 +123,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 _writer.WriteAttributeString("layer", EdaFormatter.FormatLayerSet(circle.LayerSet));
                 _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(circle.Position));
                 _writer.WriteAttributeString("radius", EdaFormatter.FormatScalar(circle.Radius));
-                if (circle.Thickness > 0) 
+                if (circle.Thickness > 0)
                     _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(circle.Thickness));
 
                 _writer.WriteEndElement();
             }
 
             /// <summary>
-            /// Visita un element de tipus 'TextElement'
+            /// Visita un objecte 'EdaTextElement'
             /// </summary>
-            /// <param name="text">L'element a visitar</param>
+            /// <param name="text">L'objecte a visitar.</param>
             /// 
             public override void Visit(EdaTextElement text) {
 
@@ -155,9 +155,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             }
 
             /// <summary>
-            /// Visita un element de tipus 'SmdPadElement'
+            /// Visita un objecte 'EdaSmdPadElement'
             /// </summary>
-            /// <param name="pad">L'element a visitar-</param>
+            /// <param name="pad">L'objecte a visitar.</param>
             /// 
             public override void Visit(EdaSmdPadElement pad) {
 
@@ -184,9 +184,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             }
 
             /// <summary>
-            /// Visita un element de tipus 'ThPadElement'
+            /// Visita un objecte 'EdaThPadElement'
             /// </summary>
-            /// <param name="pad">L'element a visitar.</param>
+            /// <param name="pad">L'objecte a visitar.</param>
             /// 
             public override void Visit(EdaThPadElement pad) {
 
@@ -218,7 +218,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             }
 
             /// <summary>
-            /// Visita un objecte de tipus 'PartAttribute'
+            /// Visita un objecte 'EdaPartAttribute'
             /// </summary>
             /// <param name="attr">L'objecte a visitar.</param>
             /// 
@@ -247,7 +247,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             }
 
             /// <summary>
-            /// Visita un objecte de tipus 'BlockAttribute'
+            /// Visita un objecte 'EdaComponentAttribute'
             /// </summary>
             /// <param name="attr">L'objecte a visitar.</param>
             /// 
@@ -262,7 +262,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             }
 
             /// <summary>
-            /// Visita un objecte de tipus 'RegionElement'
+            /// Visita un objecte 'EdaRegionElement'
             /// </summary>
             /// <param name="region">L'objecte a visitar.</param>
             /// 
@@ -271,10 +271,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 _writer.WriteStartElement("region");
 
                 _writer.WriteAttributeString("layer", EdaFormatter.FormatLayerSet(region.LayerSet));
-                if (region.Thickness > 0) 
+                if (region.Thickness > 0)
                     _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(region.Thickness));
                 if (region.Clearance > 0)
                     _writer.WriteAttributeString("clearance", EdaFormatter.FormatScalar(region.Clearance));
+                if (region.Priority > 0)
+                    _writer.WriteAttributeInteger("priority", region.Priority);
 
                 if (_currentBoard != null) {
                     EdaSignal signal = _currentBoard.GetSignal(region, _currentPart, false);
@@ -295,7 +297,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             }
 
             /// <summary>
-            /// Visita un objecte de tipus 'Part'
+            /// Visita un objecte 'EdaPart'
             /// </summary>
             /// <param name="part">L'objecte a visitar.</param>
             /// 
@@ -353,7 +355,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             }
 
             /// <summary>
-            /// Visita un objecte de tipus 'ViaElement'.
+            /// Visita un objecte 'EdaVia'.
             /// </summary>
             /// <param name="via">L'objecte a visitar.</param>
             /// 
@@ -367,8 +369,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 _writer.WriteAttributeString("outerSize", EdaFormatter.FormatScalar(via.OuterSize));
                 if (via.InnerSize != via.OuterSize)
                     _writer.WriteAttributeString("innerSize", EdaFormatter.FormatScalar(via.InnerSize));
-                if (via.Shape != EdaViaElement.ViaShape.Circle)
-                    _writer.WriteAttributeEnum("shape", via.Shape);
 
                 if (_currentBoard != null) {
                     EdaSignal signal = _currentBoard.GetSignal(via, null, false);
@@ -380,7 +380,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             }
 
             /// <summary>
-            /// Visita un objecte de tipus 'Layer'.
+            /// Visita un objecte 'EdaLayer'.
             /// </summary>
             /// <param name="layer">L'objecte a visitar.</param>
             /// 
@@ -396,7 +396,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             }
 
             /// <summary>
-            /// Visita un objecte de tipous 'Signal'.
+            /// Visita un objecte 'EdaSignal'.
             /// </summary>
             /// <param name="signal">L'objecte a visitar.</param>
             /// 
@@ -412,9 +412,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             }
 
             /// <summary>
-            /// Visita un objecte de tipus 'Component'
+            /// Visita un objecte 'EdaComponent'
             /// </summary>
-            /// <param name="component">E'objecte a visitar.</param>
+            /// <param name="component">L'objecte a visitar.</param>
             /// 
             public override void Visit(EdaComponent component) {
 
@@ -442,9 +442,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             }
 
             /// <summary>
-            /// Visita una placa.
+            /// Visita un objecte 'EdaBoard'.
             /// </summary>
-            /// <param name="board">La placa a visitar.</param>
+            /// <param name="board">L'objecte a visitar.</param>
             /// 
             public override void Visit(EdaBoard board) {
 
@@ -491,9 +491,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             }
 
             /// <summary>
-            /// Visita una llibreria
+            /// Visita un objecte 'EdaLibrary'
             /// </summary>
-            /// <param name="library">La llibreria.</param>
+            /// <param name="library">L'objecte a visitar.</param>
             /// 
             public override void Visit(EdaLibrary library) {
 
@@ -531,7 +531,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         }
 
         /// <summary>
-        /// Escriu la placa en el stream de sortida.
+        /// Escriu una placa en un stream.
         /// </summary>
         /// <param name="board">La placa.</param>
         /// 
@@ -565,9 +565,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         }
 
         /// <summary>
-        /// Escriu la placa en el stream de sortida.
+        /// Escriu una llibraria en un stream.
         /// </summary>
-        /// <param name="library">La placa.</param>
+        /// <param name="library">La llibreria.</param>
         /// 
         public void Write(EdaLibrary library) {
 

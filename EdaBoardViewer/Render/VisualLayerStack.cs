@@ -105,7 +105,7 @@
                 new ElementType[] { ElementType.Circle },
                 true,
                 VisualMode.Element,
-                Color.FromArgb(255, 240, 128, 128)));
+                Color.FromArgb(255, 30, 30, 30)));
 
             vls.Add(new VisualLayer("Milling",
                 new EdaLayerId[] { EdaLayerId.Milling },

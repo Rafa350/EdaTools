@@ -514,7 +514,16 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 roundness = ParseRatio(node.AttributeAsString("roundness"));
 
             int layerNum = node.AttributeAsInteger("layer");
-            var layerSet = new EdaLayerSet(GetLayerId(layerNum));
+            var layerId = GetLayerId(layerNum);
+            var layerSet = new EdaLayerSet(layerId);
+            if (layerId.Side == BoardSide.Top) {
+                layerSet.Add(EdaLayerId.TopStop);
+                layerSet.Add(EdaLayerId.TopCream);
+            }
+            else {
+                layerSet.Add(EdaLayerId.BottomStop);
+                layerSet.Add(EdaLayerId.BottomCream);
+            }
 
             return new EdaSmdPadElement {
                 Name = name,
@@ -549,25 +558,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             EdaLayerId topLayerId = GetLayerId(Int32.Parse(layerNames[0]));
             EdaLayerId bottomLayerId = GetLayerId(Int32.Parse(layerNames[1]));
 
-            EdaViaElement.ViaShape shape = EdaViaElement.ViaShape.Circle;
-            string shapeName = node.AttributeAsString("shape");
-            switch (shapeName) {
-                case "square":
-                    shape = EdaViaElement.ViaShape.Square;
-                    break;
-
-                case "octagon":
-                    shape = EdaViaElement.ViaShape.Octagon;
-                    break;
-            }
-
             return new EdaViaElement {
                 LayerSet = new EdaLayerSet(topLayerId, bottomLayerId),
                 Position = position,
                 OuterSize = size,
                 InnerSize = size,
-                Drill = drill,
-                Shape = shape
+                Drill = drill
             };
         }
 
@@ -682,7 +678,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             int x2 = ParseNumber(node.AttributeAsString("x2"));
             int y2 = ParseNumber(node.AttributeAsString("y2"));
             var position = new EdaPoint((x1 + x2) / 2, (y1 + y2) / 2);
-            var size = new EdaSize(x2 - x1, y2 - y1);
+            var size = new EdaSize(Math.Abs(x2 - x1), Math.Abs(y2 - y1));
 
             // Obte l'angle de rotacio
             //
@@ -827,7 +823,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             };
             element.LayerSet.Add(EdaLayerId.Holes);
             */
-            
+
             return element;
         }
 

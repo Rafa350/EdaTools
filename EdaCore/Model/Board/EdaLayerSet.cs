@@ -66,6 +66,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             return _items.Contains(layerId);
         }
 
+        public IEnumerable<EdaLayerId> Items =>
+            _items;
+
         public IEnumerator<EdaLayerId> GetEnumerator() {
 
             return _items.GetEnumerator();

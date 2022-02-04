@@ -8,13 +8,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa una via
     /// </summary>
     /// 
-    public sealed class EdaViaElement: EdaElement, IEdaPosition, IEdaConectable {
-
-        public enum ViaShape {
-            Square,
-            Octagon,
-            Circle
-        }
+    public sealed class EdaViaElement: EdaElement, IEdaConectable {
 
         private const double _cos2250 = 0.92387953251128675612818318939679;
 
@@ -29,7 +23,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private int _drill;
         private int _outerSize = 0;
         private int _innerSize = 0;
-        private ViaShape _shape = ViaShape.Circle;
 
         /// <inheritdoc/>
         /// 
@@ -47,8 +40,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             (_position.GetHashCode() * 17) +
             (_outerSize * 31) +
             (_innerSize * 111) +
-            (_drill * 13) +
-            (_shape.GetHashCode() * 23);
+            (_drill * 13);
 
         /// <summary>
         /// Obte la llista de puns pels poligons
@@ -57,31 +49,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <param name="spacing">Espaiat.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        private EdaPoints MakePoints(EdaLayerId layerId, int spacing) {
+        private EdaPoints MakeViaPoints(EdaLayerId layerId, int spacing) {
 
             int size = layerId.Side == BoardSide.Inner ? InnerSize : OuterSize;
-            ViaShape shape = layerId.Side == BoardSide.Inner ? ViaShape.Circle : this._shape;
-            switch (shape) {
-                case ViaShape.Square:
-                    return EdaPoints.CreateRectangle(
-                        _position,
-                        new EdaSize(size + spacing + spacing, size + spacing + spacing),
-                        EdaRatio.Zero,
-                        false,
-                        EdaAngle.Zero);
-
-                case ViaShape.Octagon:
-                    return EdaPoints.CreatePolygon(
-                        8,
-                        _position,
-                        (int)(size / 2 / _cos2250) + spacing,
-                        EdaAngle.FromValue(2250));
-
-                default:
-                    return EdaPoints.CreateCircle(
-                        _position,
-                        (size / 2) + spacing);
-            }
+            return EdaPoints.CreateCircle(
+                _position,
+                (size / 2) + spacing);
         }
 
         /// <summary>
@@ -103,9 +76,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             EdaPolygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
-                var points = MakePoints(layerId, 0);
+                var viaPoints = MakeViaPoints(layerId, 0);
                 var holePoints = MakeHolePoints();
-                polygon = new EdaPolygon(points, new EdaPolygon(holePoints));
+                polygon = new EdaPolygon(viaPoints, new EdaPolygon(holePoints));
 
                 PolygonCache.Save(hash, polygon);
             }
@@ -121,8 +94,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             EdaPolygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
-                var points = MakePoints(layerId, spacing);
-                polygon = new EdaPolygon(points);
+                var viaPoints = MakeViaPoints(layerId, spacing);
+                polygon = new EdaPolygon(viaPoints);
 
                 PolygonCache.Save(hash, polygon);
             }
@@ -137,7 +110,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public EdaPolygon GetDrillPolygon() {
 
-            var points = EdaPoints.CreateCircle(Position, _drill / 2);
+            var points = MakeHolePoints();
             return new EdaPolygon(points);
         }
 
@@ -155,7 +128,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             layerId.IsSignal || (layerId == EdaLayerId.Vias) || (layerId == EdaLayerId.Platted);
 
         /// <summary>
-        ///  Obte o asigna la posicio del centre del cercle.
+        /// La posicio.
         /// </summary>
         /// 
         public EdaPoint Position {
@@ -164,7 +137,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// Obte o asigna el diametre del forat
+        /// El diametre del forat
         /// </summary>
         /// 
         public int Drill {
@@ -178,7 +151,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// Obte o asigna el tamany de la corona de les capes externes.
+        /// Tamany de la corona de les capes externes.
         /// </summary>
         /// 
         public int OuterSize {
@@ -194,7 +167,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// Obte o asigna el tamany de la corona de les capes internes.
+        /// Tamany de la corona de les capes internes.
         /// </summary>
         /// 
         public int InnerSize {
@@ -207,15 +180,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                     return _innerSize;
             }
             set => _innerSize = value;
-        }
-
-        /// <summary>
-        /// Obte o asigna la forma exterior. Les interiors sempre son circulars.
-        /// </summary>
-        /// 
-        public ViaShape Shape {
-            get => _shape;
-            set => _shape = value;
         }
 
         /// <inheritdoc/>

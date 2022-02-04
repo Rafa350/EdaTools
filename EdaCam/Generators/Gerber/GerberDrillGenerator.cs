@@ -148,9 +148,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// 
         private void GenerateApertures(GerberBuilder gb, ApertureDictionary apertures) {
 
-            gb.Comment("BEGIN APERTURES");
-            gb.DefineApertures(apertures.Apertures);
-            gb.Comment("END APERTURES");
+            if (apertures.Apertures != null) {
+                gb.Comment("BEGIN APERTURES");
+                gb.DefineApertures(apertures.Apertures);
+                gb.Comment("END APERTURES");
+            }
         }
 
         /// <summary>
@@ -197,19 +199,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// 
             public override void Visit(EdaCircleElement circle) {
 
-                if (circle.IsOnLayer(_layerId) && circle.Filled) 
+                if (circle.IsOnLayer(_layerId) && circle.Filled)
                     _apertures.DefineCircleAperture(circle.Diameter);
-            }
-
-            /// <summary>
-            /// Visita un element de tipus 'Rectangle'
-            /// </summary>
-            /// <param name="rectangle">L'element a visitar.</param>
-            /// 
-            public override void Visit(EdaRectangleElement rectangle) {
-
-                if (rectangle.IsOnLayer(_layerId) && rectangle.Filled) 
-                    _apertures.DefineRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rectangle.Rotation);
             }
 
             /// <summary>
@@ -274,28 +265,6 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     }
 
                     Aperture ap = _apertures.GetCircleAperture(circle.Diameter);
-                    _gb.SelectAperture(ap);
-
-                    _gb.FlashAt(position);
-                }
-            }
-
-            /// <summary>
-            /// Visita un object 'Rectangle'
-            /// </summary>
-            /// <param name="rectangle">L'element a visitar.</param>
-            /// 
-            public override void Visit(EdaRectangleElement rectangle) {
-
-                if (rectangle.IsOnLayer(_layerId) && rectangle.Filled) {
-
-                    EdaPoint position = rectangle.Position;
-                    if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
-                        position = t.Transform(position);
-                    }
-
-                    Aperture ap = _apertures.GetRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rectangle.Rotation);
                     _gb.SelectAperture(ap);
 
                     _gb.FlashAt(position);

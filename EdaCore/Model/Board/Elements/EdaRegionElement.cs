@@ -8,6 +8,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// 
     public sealed class EdaRegionElement: EdaPolygonElement, IEdaConectable {
 
+        private int _priority;
         private int _clearance;
 
         /// <inheritdoc/>
@@ -18,7 +19,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// Obte o asigna l'amplada del aillament
+        /// L'amplada del aillament
         /// </summary>
         /// 
         public int Clearance {
@@ -29,6 +30,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
                 _clearance = value;
             }
+        }
+
+        /// <summary>
+        /// La prioritat
+        /// </summary>
+        /// 
+        public int Priority {
+            get => _priority;   
+            set => _priority = value;
         }
 
         /// <inheritdoc/>

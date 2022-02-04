@@ -12,7 +12,7 @@
     </xsl:template>
 
     <xsl:template match="part">
-        <xsl:if test="attributes/attribute[@name='REFERENCE'] and (not (attributes/attribute[@name='NP']))">
+        <xsl:if test="attributes/attribute[@name='MPN'] and (not (attributes/attribute[@name='NP']))">
             <part>
                 <xsl:copy-of select="@*|node()"/>
             </part>

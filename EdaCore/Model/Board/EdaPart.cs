@@ -11,7 +11,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         Bottom
     }
 
-    public sealed partial class EdaPart: IEdaPosition, IEdaRotation, IEdaName, IEdaVisitable<IEdaBoardVisitor> {
+    public sealed partial class EdaPart: IEdaVisitable<IEdaBoardVisitor> {
 
         private string _name;
         private EdaPoint _position;

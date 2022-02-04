@@ -8,7 +8,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un cercle.
     /// </summary>
     /// 
-    public sealed class EdaCircleElement: EdaElement, IEdaPosition {
+    public sealed class EdaCircleElement: EdaElement {
 
         private EdaPoint _position;
         private int _radius;

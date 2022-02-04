@@ -4,6 +4,7 @@ using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
@@ -350,17 +351,30 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         }
 
         /// <summary>
-        /// Enumera tots els macros definits.
+        /// Enumera tots els macros en us.
         /// </summary>
         /// 
-        public IEnumerable<Macro> Macros =>
-            _macros;
+        public IEnumerable<Macro> Macros {
+            get {
+                List<Macro> macros = null;
+                foreach (var aperture in _items.Values.OfType<MacroAperture>()) {
 
+                    var macro = aperture.Macro;
+
+                    if ((macros == null) || !macros.Contains(macro)) {
+                        if (macros == null)
+                            macros = new List<Macro>();
+                        macros.Add(macro);
+                    }
+                }
+                return macros;
+            }
+        }
         /// <summary>
         /// Enumera totes les apertures definides.
         /// </summary>
         /// 
         public IEnumerable<Aperture> Apertures =>
-            _items.Values;
+            _items.Count == 0 ? null : _items.Values;
     }
 }

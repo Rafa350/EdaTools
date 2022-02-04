@@ -92,7 +92,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <summary>
         /// Obte la llista de capes de senyal, ordenades de la capa TOP a la BOTTOM
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Les capes.</returns>
+        /// 
         public IEnumerable<EdaLayer> GetSignalLayers() {
 
             var signalLayers = new List<EdaLayer>();

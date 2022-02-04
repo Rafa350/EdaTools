@@ -29,6 +29,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private EdaRatio _cornerRatio = EdaRatio.Zero;
         private ThPadCornerShape _cornerType = ThPadCornerShape.Round;
         private int _drill;
+        private int _slot;
 
         /// <inheritdoc/>
         /// 
@@ -50,18 +51,19 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             _cornerRatio.GetHashCode() +
             _cornerType.GetHashCode() +
             Rotation.GetHashCode() +
-            _drill * 37000;
+            _drill * 37000 +
+            _slot * 211;
 
         /// <summary>
-        /// Crea la llista de punts d'un poligon
+        /// Crea la llista de punts del poligon del pad.
         /// </summary>
         /// <param name="layerId">La capa.</param>
         /// <param name="spacing">Espaiat.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        private EdaPoints MakePoints(EdaLayerId layerId, int spacing) {
+        private EdaPoints MakePadPoints(EdaLayerId layerId, int spacing) {
 
-            EdaSize size = GetSize(layerId);
+            EdaSize size = GetPadSize(layerId);
 
             return EdaPoints.CreateRectangle(
                 Position,
@@ -76,9 +78,23 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// <returns>La llista de punts.</returns>
         /// 
-        private EdaPoints MakeHolePonts() {
+        private EdaPoints MakeHolePoints() {
 
-            return EdaPoints.CreateCircle(Position, _drill / 2);
+            if (_slot <= _drill)
+                return EdaPoints.CreateCircle(Position, _drill / 2);
+
+            else {
+                var size = GetSmallestPadSize();
+                bool h = size.Width >= size.Height;
+                int offset = (_slot - _drill) / 2;
+                var start = new EdaPoint(
+                    Position.X - (h ? offset : 0),
+                    Position.Y - (h ? 0 : offset));
+                var end = new EdaPoint(
+                    Position.X + (h ? offset : 0),
+                    Position.Y + (h ? 0 : offset));
+                return EdaPoints.CreateLineTrace(start, end, _drill, true);
+            }
         }
 
         /// <inheritdoc/>
@@ -89,9 +105,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             EdaPolygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
-                var points = MakePoints(layerId, 0);
-                var holePoints = MakeHolePonts();
-                polygon = new EdaPolygon(points, new EdaPolygon(holePoints));
+                var padPoints = MakePadPoints(layerId, 0);
+                var holePoints = MakeHolePoints();
+                polygon = new EdaPolygon(padPoints, new EdaPolygon(holePoints));
 
                 PolygonCache.Save(hash, polygon);
             }
@@ -107,8 +123,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             EdaPolygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
-                var points = MakePoints(layerId, spacing);
-                polygon = new EdaPolygon(points);
+                var padPoints = MakePadPoints(layerId, spacing);
+                polygon = new EdaPolygon(padPoints);
 
                 PolygonCache.Save(hash, polygon);
             }
@@ -120,15 +136,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetThermalPolygon(EdaLayerId layerId, int spacing, int width) {
 
-            EdaSize size = GetSize(layerId);
+            EdaSize size = GetPadSize(layerId);
             int w = size.Width + spacing + spacing;
             int h = size.Height + spacing + spacing;
 
-            EdaPolygon pour = GetOutlinePolygon(layerId, spacing);
-            EdaPolygon thermal = new EdaPolygon(EdaPoints.CreateCross(Position, new EdaSize(w, h), width, Rotation));
+            var padPolygon = GetOutlinePolygon(layerId, spacing);
+            var thermalPolygon = new EdaPolygon(EdaPoints.CreateCross(Position, new EdaSize(w, h), width, Rotation));
 
             List<EdaPolygon> childs = new List<EdaPolygon>();
-            childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
+            childs.AddRange(PolygonProcessor.Clip(padPolygon, thermalPolygon, PolygonProcessor.ClipOperation.Diference));
             if (childs.Count != 4)
                 throw new InvalidProgramException("Thermal generada incorrectamente.");
             return new EdaPolygon(null, childs);
@@ -141,28 +157,40 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public EdaPolygon GetDrillPolygon() {
 
-            var points = EdaPoints.CreateCircle(Position, _drill / 2);
-            return new EdaPolygon(points);
+            var holePoints = MakeHolePoints();
+            return new EdaPolygon(holePoints);
         }
 
         /// <inheritdoc/>
         /// 
         public override EdaRect GetBoundingBox(EdaLayerId layerId) =>
-            new EdaRect(new EdaPoint(0, 0), GetSize(layerId));
+            new EdaRect(new EdaPoint(0, 0), GetPadSize(layerId));
 
         /// <summary>
-        /// Obte el tamany en funcio de la cara de la placa.
+        /// Obte el tamany del pad en funcio de la capa.
         /// </summary>
         /// <param name="layerId">La capa.</param>
         /// <returns>El valor del tamany.</returns>
         /// 
-        private EdaSize GetSize(EdaLayerId layerId) {
+        private EdaSize GetPadSize(EdaLayerId layerId) {
 
             var side = layerId.Side;
             return
                 side == BoardSide.Top ? TopSize :
                 side == BoardSide.Inner ? InnerSize :
                 BottomSize;
+        }
+
+        /// <summary>
+        /// Obte el tamany mes petit del pad.
+        /// </summary>
+        /// <returns>El valor del tamany.</returns>
+        /// 
+        private EdaSize GetSmallestPadSize() {
+
+            return new EdaSize(
+                Math.Min(_topSize.Width, Math.Min(_innerSize.Width, _bottomSize.Width)),
+                Math.Min(_topSize.Height, Math.Min(_innerSize.Height, _bottomSize.Height)));
         }
 
         /// <inheritdoc/>
@@ -195,10 +223,46 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public int Drill {
             get => _drill;
             set {
-                if (value <= 0)
+                if ((value < 0) || (value >= DrilHiLimit))
                     throw new ArgumentOutOfRangeException(nameof(Drill));
 
                 _drill = value;
+            }
+        }
+
+        /// <summary>
+        /// El maxim valor del diametre del forat
+        /// </summary>
+        /// 
+        public int DrilHiLimit {
+            get {
+                EdaSize size = GetSmallestPadSize();
+                return Math.Min(size.Width, size.Height);
+            }
+        }
+
+        /// <summary>
+        /// L'amplada del slot.
+        /// </summary>
+        /// 
+        public int Slot {
+            get => _slot;
+            set {
+                if ((value < 0) || (value >= SlotHiLimit))
+                    throw new ArgumentOutOfRangeException(nameof(Slot));
+
+                _slot = value;
+            }
+        }
+
+        /// <summary>
+        /// El maxim valor del slot
+        /// </summary>
+        /// 
+        public int SlotHiLimit {
+            get {
+                EdaSize size = GetSmallestPadSize();
+                return Math.Min(size.Width, size.Height);
             }
         }
 

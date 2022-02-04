@@ -2,6 +2,7 @@
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
@@ -76,44 +77,42 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                     // Procesa els elements de la placa.
                     //
-                    foreach (var element in Elements) {
-                        if (element != region) {
+                    foreach (var element in Elements.Where(e => e != region)) {
 
-                            // Comprova si l'element es troba en la mateixa capa que la regio
+                        // Comprova si l'element es troba en la mateixa capa que la regio
+                        //
+                        if (element.IsOnLayer(layerId)) {
+
+                            // Comprova si el element pertany a una senal diferent de la regio
                             //
-                            if (element.IsOnLayer(layerId)) {
+                            if (GetSignal(element, null, false) != regionSignal) {
 
-                                // Comprova si el element pertany a una senal diferent de la regio
-                                //
-                                if (GetSignal(element, null, false) != regionSignal) {
-
-                                    int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
-                                    int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
-                                    EdaPolygon elementPolygon = element.GetOutlinePolygon(layerId, clearance);
-                                    if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
-                                        holePolygons.Add(elementPolygon);
-                                }
-                            }
-
-                            // Comprova si l'element es troba en les capes restrict o forats.
-                            //
-                            else if (element.IsOnLayer(restrictLayerId) ||
-                                     element.IsOnLayer(EdaLayerId.Unplatted) ||
-                                     element.IsOnLayer(EdaLayerId.Platted)) {
-
-                                EdaPolygon elementPolygon = element.GetPolygon(layerId);
+                                int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
+                                int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
+                                EdaPolygon elementPolygon = element.GetOutlinePolygon(layerId, clearance);
                                 if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                     holePolygons.Add(elementPolygon);
                             }
+                        }
 
-                            // Comprova si l'element es troba en la capa profiles.
-                            //
-                            else if (element.IsOnLayer(EdaLayerId.Profile)) {
+                        // Comprova si l'element es troba en les capes restrict o forats.
+                        //
+                        else if (element.IsOnLayer(restrictLayerId) ||
+                                 element.IsOnLayer(EdaLayerId.Unplatted) ||
+                                 element.IsOnLayer(EdaLayerId.Platted)) {
 
-                                EdaPolygon elementPolygon = element.GetOutlinePolygon(EdaLayerId.Profile, _outlineClearance);
-                                if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
-                                    holePolygons.Add(elementPolygon);
-                            }
+                            EdaPolygon elementPolygon = element.GetPolygon(layerId);
+                            if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
+                                holePolygons.Add(elementPolygon);
+                        }
+
+                        // Comprova si l'element es troba en la capa profiles.
+                        //
+                        else if (element.IsOnLayer(EdaLayerId.Profile)) {
+
+                            EdaPolygon elementPolygon = element.GetOutlinePolygon(EdaLayerId.Profile, _outlineClearance);
+                            if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
+                                holePolygons.Add(elementPolygon);
                         }
                     }
 
@@ -128,42 +127,41 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                         // Procesa els elements del component que es troben en la mateixa capa que la regio.
                         // Si l'element no pertany a la mateixa senyal, genera un forat
                         //
-                        foreach (var element in part.Elements) {
-                            if (element != region) {
+                        foreach (var element in part.Elements.Where(e => e != region)) {
 
-                                if (element.IsOnLayer(layerId) ||
-                                    element.IsOnLayer(restrictLayerId) ||
-                                    element.IsOnLayer(EdaLayerId.Unplatted)) {
+                            if (element.IsOnLayer(layerId) ||
+                                element.IsOnLayer(restrictLayerId) ||
+                                element.IsOnLayer(EdaLayerId.Unplatted)) {
 
-                                    // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
-                                    //
-                                    if (GetSignal(element, part, false) != regionSignal) {
+                                // Si l'element no esta conectat a la mateixa senyal que la regio, genera un forat
+                                //
+                                if (GetSignal(element, part, false) != regionSignal) {
 
-                                        int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
-                                        EdaPolygon outlinePolygon = element.GetOutlinePolygon(layerId, clearance);
-                                        outlinePolygon = outlinePolygon.Transform(localTransformation);
-                                        //if (part.IsFlipped)
-                                        //    outlinePolygon.Reverse();
-                                        if (regionBBox.IntersectsWith(outlinePolygon.BoundingBox))
-                                            holePolygons.Add(outlinePolygon);
-                                    }
+                                    int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
+                                    EdaPolygon elementPolygon = element.GetOutlinePolygon(layerId, clearance);
+                                    elementPolygon = elementPolygon.Transform(localTransformation);
+                                    //if (part.IsFlipped)
+                                    //    outlinePolygon.Reverse();
+                                    if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
+                                        holePolygons.Add(elementPolygon);
+                                }
 
 
-                                    // En cas contrari (es a dir esta conectat) genera un thermal unicament
-                                    // en els pads
-                                    //
-                                    else if ((element.ElementType == ElementType.SmdPad) ||
-                                             (element.ElementType == ElementType.ThPad)) {
+                                // En cas contrari (es a dir esta conectat) genera un thermal unicament
+                                // en els pads
+                                //
+                                else if ((element.ElementType == ElementType.SmdPad) ||
+                                         (element.ElementType == ElementType.ThPad)) {
 
-                                        int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
-                                        int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
-                                        EdaPolygon thermalPolygon = ((EdaPadElement)element).GetThermalPolygon(layerId, clearance, 200000);
-                                        thermalPolygon = thermalPolygon.Transform(localTransformation);
+                                    int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
+                                    int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
+                                    EdaPolygon thermalPolygon = ((EdaPadElement)element).GetThermalPolygon(layerId, clearance, 200000);
+                                    thermalPolygon = thermalPolygon.Transform(localTransformation);
+                                    if (thermalPolygon.HasChilds)
                                         foreach (var child in thermalPolygon.Childs) {
                                             if (regionBBox.IntersectsWith(child.BoundingBox))
                                                 holePolygons.Add(child);
                                         }
-                                    }
                                 }
                             }
                         }

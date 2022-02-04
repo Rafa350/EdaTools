@@ -85,9 +85,9 @@ namespace EdaBoardViewer.Render {
 
                 switch (_visualLayer.VisualMode) {
                     case VisualMode.Element: {
-                            var brush = new SolidColorBrush(_visualLayer.Color);
-                            var geometry = via.GetPolygon(_layer.Id).ToGeometry();
-                            _context.DrawGeometry(brush, null, geometry);
+                            var viaBrush = new SolidColorBrush(_visualLayer.Color);
+                            var viaGeometry = via.GetPolygon(_layer.Id).ToGeometry();
+                            _context.DrawGeometry(viaBrush, null, viaGeometry);
                         }
                         break;
 
@@ -107,9 +107,9 @@ namespace EdaBoardViewer.Render {
 
                 switch (_visualLayer.VisualMode) {
                     case VisualMode.Element: {
-                            var brush = new SolidColorBrush(_visualLayer.Color);
-                            var geometry = pad.GetPolygon(_layer.Id).ToGeometry();
-                            _context.DrawGeometry(brush, null, geometry);
+                            var padBrush = new SolidColorBrush(_visualLayer.Color);
+                            var padGeometry = pad.GetPolygon(_layer.Id).ToGeometry();
+                            _context.DrawGeometry(padBrush, null, padGeometry);
                         }
                         break;
 

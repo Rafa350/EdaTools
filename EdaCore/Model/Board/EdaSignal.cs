@@ -7,7 +7,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// Clase que representa una senyal.
     /// </summary>
     /// 
-    public sealed class EdaSignal: IEdaName, IEdaVisitable<IEdaBoardVisitor> {
+    public sealed class EdaSignal: IEdaVisitable<IEdaBoardVisitor> {
 
         private string _name;
         private int _clearance = 150000;

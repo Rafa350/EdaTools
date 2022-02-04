@@ -148,9 +148,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         /// 
         private void GenerateApertures(GerberBuilder gb, ApertureDictionary apertures) {
 
-            gb.Comment("BEGIN APERTURES");
-            gb.DefineApertures(apertures.Apertures);
-            gb.Comment("END APERTURES");
+            if (apertures.Apertures != null) {
+                gb.Comment("BEGIN APERTURES");
+                gb.DefineApertures(apertures.Apertures);
+                gb.Comment("END APERTURES");
+            }
         }
 
         /// <summary>

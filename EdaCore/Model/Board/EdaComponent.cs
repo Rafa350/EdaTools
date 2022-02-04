@@ -10,7 +10,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// </summary>
     /// 
     [NetSerializer(typeof(ComponentSerializer), AliasName = "Component")]
-    public sealed partial class EdaComponent: IEdaVisitable<IEdaBoardVisitor>, IEdaName {
+    public sealed partial class EdaComponent: IEdaVisitable<IEdaBoardVisitor> {
 
         private string _name;
         private string _description;
