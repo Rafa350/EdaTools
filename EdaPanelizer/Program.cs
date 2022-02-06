@@ -97,7 +97,7 @@ namespace MikroPic.EdaTools.v1.Panelizer {
         private static void SaveBoard(EdaBoard board, string boardPath) {
 
             using (Stream stream = new FileStream(boardPath, FileMode.Create, FileAccess.Write, FileShare.None)) {
-                BoardStreamWriter writer = new BoardStreamWriter(stream);
+                EdaBoardStreamWriter writer = new EdaBoardStreamWriter(stream);
                 writer.Write(board);
             }
         }

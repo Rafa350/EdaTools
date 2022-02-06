@@ -20,7 +20,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         SlotPad,
         Region,
         Via,
-        Hole
+        CircleHole,
+        LineHole,
+        ArcHole
     }
 
     /// <summary>

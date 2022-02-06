@@ -51,8 +51,8 @@ namespace MikroPic.EdaTools.v1.Panel {
                     if (!sourceBoardCache.TryGetValue(pcb.FileName, out EdaBoard sourceBoard)) {
                         var path = locator.GetPath(pcb.FileName);
                         using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                            var reader = new BoardStreamReader(stream);
-                            sourceBoard = reader.Read();
+                            var reader = new EdaBoardStreamReader(stream);
+                            sourceBoard = reader.ReadBoard();
                         }
                         sourceBoardCache.Add(pcb.FileName, sourceBoard);
                     }

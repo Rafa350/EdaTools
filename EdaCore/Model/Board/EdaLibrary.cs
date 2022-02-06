@@ -12,7 +12,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <summary>
         /// Constructor del objecte.
         /// </summary>
-        /// <param name="name">EWl nom de la llibraria.</param>
+        /// <param name="name">El nom de la llibraria.</param>
         /// 
         public EdaLibrary(string name) {
 

@@ -33,8 +33,8 @@ namespace MikroPic.EdaTools.v1.Export {
             if (String.Compare(targetExt, ".pretty", true) == 0) {
 
                 using (var stream = new FileStream(sourcePath, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                    var reader = new LibraryStreamReader(stream);
-                    var library = reader.Read();
+                    var reader = new EdaBoardStreamReader(stream);
+                    var library = reader.ReadLibrary();
 
                     var exporter = new KiCadExporter();
                     exporter.WriteLibrary(targetPath, library);

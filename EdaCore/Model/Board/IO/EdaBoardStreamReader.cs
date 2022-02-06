@@ -16,7 +16,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
     /// Clase per la lectura de plaques des d'un stream
     /// </summary>
     /// 
-    public sealed class BoardStreamReader {
+    public sealed class EdaBoardStreamReader {
 
         private struct PadInfo {
             public string Name;
@@ -26,14 +26,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         private static readonly XmlSchemaSet _schemas;
 
         private readonly XmlReaderAdapter _rd;
-        private EdaBoard _board;
+        private Dictionary<Tuple<IEdaConectable, EdaPart>, string> _elementSignal = new Dictionary<Tuple<IEdaConectable, EdaPart>, string>();
+        private Dictionary<string, EdaComponent> _components = new Dictionary<string, EdaComponent>();
         private int _version;
 
         /// <summary>
         /// Constructor estatic de la clase
         /// </summary>
         /// 
-        static BoardStreamReader() {
+        static EdaBoardStreamReader() {
 
             _schemas = new XmlSchemaSet();
 
@@ -52,7 +53,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// </summary>
         /// <param name="stream">Stream de lectura.</param>
         /// 
-        public BoardStreamReader(Stream stream) {
+        public EdaBoardStreamReader(Stream stream) {
 
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
@@ -78,69 +79,174 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// </summary>
         /// <returns>La placa.</returns>
         /// 
-        public EdaBoard Read() {
-
-            _board = new EdaBoard();
+        public EdaBoard ReadBoard() {
 
             _rd.NextTag();
-            ParseDocumentNode();
+            return ParseBoardDocumentNode();
+        }
 
-            return _board;
+        /// <summary>
+        /// Llegeix una llibraria
+        /// </summary>
+        /// <returns>La llibraria.</returns>
+        /// 
+        public EdaLibrary ReadLibrary() {
+
+            _rd.NextTag();
+            return ParseLibraryDocumentNode();
         }
 
         /// <summary>
         /// Procesa el node 'document'
         /// </summary>
+        /// <returns>La placa.</returns>
         /// 
-        private void ParseDocumentNode() {
+        private EdaBoard ParseBoardDocumentNode() {
 
             if (!_rd.IsStartTag("document"))
                 throw new InvalidDataException("Se esperaba <document>");
 
+            string documentType = _rd.AttributeAsString("documentType");
+            if (documentType != "board")
+                throw new InvalidDataException("No es un documentdo de tipo 'board'");
+
+            _version = _rd.AttributeAsInteger("version");
+
             _rd.NextTag();
-            ParseBoardNode();
+            EdaBoard board = ParseBoardNode();
 
             _rd.NextTag();
             if (!_rd.IsEndTag("document"))
                 throw new InvalidDataException("Se esperaba </document>");
+
+            return board;
+        }
+
+        /// <summary>
+        /// Procesa el node 'document'
+        /// </summary>
+        /// <returns>La llibreria.</returns>
+        /// 
+        private EdaLibrary ParseLibraryDocumentNode() {
+
+            if (!_rd.IsStartTag("document"))
+                throw new InvalidDataException("Se esperaba <document>");
+
+            string documentType = _rd.AttributeAsString("documentType");
+            if (documentType != "componentLibrary")
+                throw new InvalidDataException("No es un documentdo de tipo 'library'");
+
+            _version = _rd.AttributeAsInteger("version");
+
+            _rd.NextTag();
+            EdaLibrary library = ParseLibraryNode();
+
+            _rd.NextTag();
+            if (!_rd.IsEndTag("document"))
+                throw new InvalidDataException("Se esperaba </document>");
+
+            return library;
         }
 
         /// <summary>
         /// Procesa el node 'board'
         /// </summary>
+        /// <returns>La placa.</returns>
         /// 
-        private void ParseBoardNode() {
+        private EdaBoard ParseBoardNode() {
 
             if (!_rd.IsStartTag("board"))
                 throw new InvalidDataException("Se esperaba <board>");
 
-            _version = _rd.AttributeAsInteger("version");
-
             _rd.NextTag();
+            
+            List<EdaLayer> layers = null;
             if (_rd.TagName == "layers") {
-                _board.AddLayers(ParseLayersNode());
+                layers = new List<EdaLayer>();
+                layers.AddRange(ParseLayersNode());
                 _rd.NextTag();
             }
+
+            List<EdaSignal> signals = null;
             if (_rd.TagName == "signals") {
-                _board.AddSignals(ParseSignalsNode());
+                signals = new List<EdaSignal>();
+                signals.AddRange(ParseSignalsNode());
                 _rd.NextTag();
             }
+
+            List<EdaComponent> components = null;
             if (_rd.TagName == "components") {
-                _board.AddComponents(ParseComponentsNode());
+                components = new List<EdaComponent>();
+                components.AddRange(ParseComponentsNode());
                 _rd.NextTag();
             }
+
+            List<EdaPart> parts = null;
             if (_rd.TagName == "parts") {
-                _board.AddParts(ParsePartsNode());
+                parts = new List<EdaPart>();
+                parts.AddRange(ParsePartsNode());
                 _rd.NextTag();
             }
+
+            List<EdaElement> elements = null;
             if (_rd.TagName == "elements") {
-                _board.AddElements(ParseBoardElementsNode());
+                elements = new List<EdaElement>();
+                elements.AddRange(ParseBoardElementsNode());
                 _rd.NextTag();
+            }
+
+            // Crea la placa.
+            //
+            EdaBoard board = new EdaBoard();
+            if (layers != null)
+                board.AddLayers(layers);
+            if (signals != null)
+                board.AddSignals(signals);
+            if (components != null)
+                board.AddComponents(components);
+            if (parts != null) 
+                board.AddParts(parts);
+            if (elements != null)
+                board.AddElements(elements);
+            foreach (var elementSignal in _elementSignal) {
+                IEdaConectable element = elementSignal.Key.Item1;
+                EdaPart part = elementSignal.Key.Item2;
+                EdaSignal signal = board.GetSignal(elementSignal.Value);
+                board.Connect(signal, element, part);
             }
 
             if (!_rd.IsEndTag("board"))
                 throw new InvalidDataException("Se esperaba </board>");
+
+            return board;
         }
+
+        /// <summary>
+        /// Procesa el node 'board'
+        /// </summary>
+        /// <returns>La llibraria.</returns>
+        /// 
+        private EdaLibrary ParseLibraryNode() {
+
+            if (!_rd.IsStartTag("library"))
+                throw new InvalidDataException("Se esperaba <library>");
+
+            string name = _rd.AttributeAsString("name");
+
+            EdaLibrary library = new EdaLibrary(name);
+
+            _rd.NextTag();
+            if (_rd.TagName == "components") {
+                library.AddComponents(ParseComponentsNode());
+                _rd.NextTag();
+            }
+
+            if (!_rd.IsEndTag("library"))
+                throw new InvalidDataException("Se esperaba </library>");
+
+            return library;
+        }
+
 
         /// <summary>
         /// Procesa el node 'layers'.
@@ -272,6 +378,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
             var component = new EdaComponent();
             component.Name = name;
+            
+            RegisterComponent(component);
 
             _rd.NextTag();
             component.AddElements(ParseComponentElementsNode());
@@ -330,8 +438,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                         elements.Add(ParseTextNode());
                         break;
 
+                    case "circleHole":
+                        elements.Add(ParseCircleHoleNode());
+                        break;
+
+                    case "lineHole":
+                        elements.Add(ParseLineHoleNode());
+                        break;
+
                     default:
-                        throw new InvalidDataException("Se esperaba <line>, <arc>, <rectangle>, <circle>, <tpad>, <spad>, <via>, <text>, <region> o <hole>");
+                        throw new InvalidDataException("Se esperaba <line>, <arc>, <rectangle>, <circle>, <tpad>, <spad>, <via>, <text>, <region> <circleHole> o <lineHole>");
                 }
                 _rd.NextTag();
             }
@@ -444,8 +560,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             EdaAngle rotation = EdaParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
             PartSide side = _rd.AttributeAsEnum("side", PartSide.Top);
             string componentName = _rd.AttributeAsString("component");
+            var component = GetComponent(componentName);
 
-            var component = _board.GetComponent(componentName);
             EdaPart part = new EdaPart {
                 Component = component,
                 Name = name,
@@ -464,8 +580,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                     case "pads":
                         foreach (var padInfo in ParsePartPadsNode()) {
                             EdaPadElement pad = part.GetPad(padInfo.Name);
-                            EdaSignal signal = _board.GetSignal(padInfo.SignalName);
-                            _board.Connect(signal, pad, part);
+                            _elementSignal.Add(new Tuple<IEdaConectable, EdaPart>(pad, part), padInfo.SignalName);
                         }
                         break;
 
@@ -595,7 +710,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// Procesa el node 'line'
         /// </summary>
         /// 
-        private EdaLineElement ParseLineNode() {
+        private EdaElement ParseLineNode() {
 
             if (!_rd.IsStartTag("line"))
                 throw new InvalidDataException("Se esperaba <line>");
@@ -619,10 +734,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 LineCap = lineCap
             };
 
-            if (signalName != null) {
-                var signal = _board.GetSignal(signalName);
-                _board.Connect(signal, element);
-            }
+            if (signalName != null)
+                _elementSignal.Add(new Tuple<IEdaConectable, EdaPart>(element, null), signalName);
 
             return element;
         }
@@ -632,7 +745,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// </summary>
         /// <returns>L'objecte 'ArcElement' obtingut.</returns>
         /// 
-        private EdaArcElement ParseArcNode() {
+        private EdaElement ParseArcNode() {
 
             if (!_rd.IsStartTag("arc"))
                 throw new InvalidDataException("Se esperaba <arc>");
@@ -658,10 +771,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 LineCap = lineCap
             };
 
-            if (signalName != null) {
-                var signal = _board.GetSignal(signalName);
-                _board.Connect(signal, element);
-            }
+            if (signalName != null) 
+                _elementSignal.Add(new Tuple<IEdaConectable, EdaPart>(element, null), signalName);
 
             return element;
         }
@@ -671,7 +782,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// </summary>
         /// <returns>L'objecte 'RectangleElement' obtingut.</returns>
         /// 
-        private EdaRectangleElement ParseRectangleNode() {
+        private EdaElement ParseRectangleNode() {
 
             if (!_rd.IsStartTag("rectangle"))
                 throw new InvalidDataException("Se esperaba <rectangle>");
@@ -704,7 +815,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// </summary>
         /// <returns>L'objecte 'CircleElement' obtingut.</returns>
         /// 
-        private EdaCircleElement ParseCircleNode() {
+        private EdaElement ParseCircleNode() {
 
             if (!_rd.IsStartTag("circle"))
                 throw new InvalidDataException("Se esperaba <circle>");
@@ -733,7 +844,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// </summary>
         /// <returns>L'objecte 'RegionElement' obtingut.</returns>
         /// 
-        private EdaRegionElement ParseRegionNode() {
+        private EdaElement ParseRegionNode() {
 
             if (!_rd.IsStartTag("region"))
                 throw new InvalidDataException("Se esperaba <region>");
@@ -753,10 +864,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 Priority = priority
             };
 
-            if (signalName != null) {
-                var signal = _board.GetSignal(signalName);
-                _board.Connect(signal, element);
-            }
+            if (signalName != null) 
+                _elementSignal.Add(new Tuple<IEdaConectable, EdaPart>(element, null), signalName);
 
             _rd.NextTag();
             List<EdaArcPoint> segments = null;
@@ -799,7 +908,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// </summary>
         /// <returns>L'objecte 'TPadElement' obtingut</returns>
         /// 
-        private EdaThPadElement ParseTPadNode() {
+        private EdaElement ParseTPadNode() {
 
             if (!_rd.IsStartTag("tpad"))
                 throw new InvalidDataException("Se esperaba <tpad>");
@@ -833,10 +942,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 Drill = drill
             };
 
-            if (signalName != null) {
-                var signal = _board.GetSignal(signalName);
-                _board.Connect(signal, element);
-            }
+            if (signalName != null) 
+                _elementSignal.Add(new Tuple<IEdaConectable, EdaPart>(element, null), signalName);
 
             return element;
         }
@@ -846,7 +953,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// </summary>
         /// <returns>L'objecte 'SPadElement' obtingut.</returns>
         /// 
-        private EdaSmdPadElement ParseSPadNode() {
+        private EdaElement ParseSPadNode() {
 
             if (!_rd.IsStartTag("spad"))
                 throw new InvalidDataException("Se esperaba <spad>");
@@ -874,10 +981,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 CornerShape = cornerShape
             };
 
-            if (signalName != null) {
-                var signal = _board.GetSignal(signalName);
-                _board.Connect(signal, element);
-            }
+            if (signalName != null) 
+                _elementSignal.Add(new Tuple<IEdaConectable, EdaPart>(element, null), signalName);
 
             return element;
         }
@@ -887,7 +992,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// </summary>
         /// <param name="elementList">La llista d'elements.</param>
         /// 
-        private EdaViaElement ParseViaNode() {
+        private EdaElement ParseViaNode() {
 
             if (!_rd.IsStartTag("via"))
                 throw new InvalidDataException("Se esperaba <via>");
@@ -913,10 +1018,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 Drill = drill
             };
 
-            if (signalName != null) {
-                var signal = _board.GetSignal(signalName);
-                _board.Connect(signal, element);
-            }
+            if (signalName != null) 
+                _elementSignal.Add(new Tuple<IEdaConectable, EdaPart>(element, null), signalName);
 
             return element;
         }
@@ -926,7 +1029,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
         /// </summary>
         /// <returns>L'objecte 'TextElement' obtingut.</returns>
         /// 
-        private EdaTextElement ParseTextNode() {
+        private EdaElement ParseTextNode() {
 
             if (!_rd.IsStartTag("text"))
                 throw new InvalidDataException("Se esperaba <text>");
@@ -956,6 +1059,74 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             };
 
             return element;
+        }
+
+        /// <summary>
+        /// Procesa un node 'circleHole'
+        /// </summary>
+        /// <returns>L'element.</returns>
+        /// <exception cref="InvalidDataException">Dades incorrectes.</exception>
+        /// 
+        private EdaElement ParseCircleHoleNode() {
+
+            if (!_rd.IsStartTag("circleHole"))
+                throw new InvalidDataException("Se esperaba <circleHole>");
+
+            var position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
+            var diameter = EdaParser.ParseScalar(_rd.AttributeAsString("diameter"));
+            var platted = _rd.AttributeAsBoolean("platted");
+
+            _rd.NextTag();
+            if (!_rd.IsEndTag("circleHole"))
+                throw new InvalidDataException("Se esperaba </circleHole>");
+
+            var element = new EdaCircleHoleElement {
+                Position = position,
+                Diameter = diameter,
+                Platted = platted
+            };
+
+            return element;
+        }
+
+        /// <summary>
+        /// Procesa un n ode 'lineHole'
+        /// </summary>
+        /// <returns>L'element.</returns>
+        /// <exception cref="InvalidDataException">Dades incorrecters.</exception>
+        /// 
+        private EdaElement ParseLineHoleNode() {
+
+            if (!_rd.IsStartTag("lineHole"))
+                throw new InvalidDataException("Se esperaba <lineHole>");
+
+            var startPosition = EdaParser.ParsePoint(_rd.AttributeAsString("startPosition"));
+            var endPosition = EdaParser.ParsePoint(_rd.AttributeAsString("endPosition"));
+            var diameter = EdaParser.ParseScalar(_rd.AttributeAsString("diameter"));
+            var platted = _rd.AttributeAsBoolean("platted");
+
+            _rd.NextTag();
+            if (!_rd.IsEndTag("lineHole"))
+                throw new InvalidDataException("Se esperaba </lineHole>");
+
+            var element = new EdaLineHoleElement {
+                StartPosition = startPosition,
+                EndPosition = endPosition,
+                Diameter = diameter,
+                Platted = platted
+            };
+
+            return element;
+        }
+
+        private void RegisterComponent(EdaComponent component) {
+
+            _components.Add(component.Name, component);
+        }
+
+        private EdaComponent GetComponent(string name) {
+
+            return _components[name];
         }
     }
 }

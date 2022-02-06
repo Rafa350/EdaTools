@@ -36,13 +36,8 @@ namespace MikroPic.EdaTools.v1.Import {
                 var importer = new EagleImporter();
                 var board = importer.ReadBoard(sourcePath);
 
-                var writer = new BoardStreamWriter(new FileStream(targetPath, FileMode.Create, FileAccess.Write, FileShare.None));
+                var writer = new EdaBoardStreamWriter(new FileStream(targetPath, FileMode.Create, FileAccess.Write, FileShare.None));
                 writer.Write(board);
-
-                /*var boardWriter2 = new BoardWriter();
-                boardWriter2.Write(
-                    new FileStream(@"c:\temp\serialized.xml", FileMode.Create, FileAccess.Write, FileShare.None),
-                    board);*/
             }
 
             else if (String.Compare(sourceExt, ".sch", true) == 0) {
@@ -59,7 +54,7 @@ namespace MikroPic.EdaTools.v1.Import {
                 var importer = new EagleImporter();
                 var library = importer.ReadLibrary(sourcePath);
 
-                var writer = new BoardStreamWriter(new FileStream(targetPath, FileMode.Create, FileAccess.Write, FileShare.None));
+                var writer = new EdaBoardStreamWriter(new FileStream(targetPath, FileMode.Create, FileAccess.Write, FileShare.None));
                 writer.Write(library);
             }
 
@@ -68,7 +63,7 @@ namespace MikroPic.EdaTools.v1.Import {
                 var importer = new KiCadImporter();
                 var board = importer.ReadBoard(sourcePath);
 
-                var writer = new BoardStreamWriter(new FileStream(targetPath, FileMode.Create, FileAccess.Write, FileShare.None));
+                var writer = new EdaBoardStreamWriter(new FileStream(targetPath, FileMode.Create, FileAccess.Write, FileShare.None));
                 writer.Write(board);
             }
         }

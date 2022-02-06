@@ -29,16 +29,33 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// 
         void Visit(EdaLayer layer);
 
+        /// <summary>
+        /// Visita un 'Part'
+        /// </summary>
+        /// <param name="part">El part.</param>
+        /// 
         void Visit(EdaPart part);
+
+        /// <summary>
+        /// Visita un atribut d'un part.
+        /// </summary>
+        /// <param name="attribute">L'atribut.</param>
+        /// 
         void Visit(EdaPartAttribute attribute);
+
+        /// <summary>
+        /// Visita un senyal.
+        /// </summary>
+        /// <param name="signal">El senyal.</param>
+        /// 
         void Visit(EdaSignal signal);
 
         /// <summary>
         /// Visita un component
         /// </summary>
-        /// <param name="block">El component</param>
+        /// <param name="component">El component</param>
         /// 
-        void Visit(EdaComponent block);
+        void Visit(EdaComponent component);
 
         /// <summary>
         /// Visita un atribut de component.
@@ -48,45 +65,87 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         void Visit(EdaComponentAttribute attribute);
 
         /// <summary>
-        /// Visita un element de tipus linia.
+        /// Visita un element de tipus 'Line'.
         /// </summary>
-        /// <param name="line">La linia.</param>
+        /// <param name="element">L'element.</param>
         /// 
-        void Visit(EdaLineElement line);
+        void Visit(EdaLineElement element);
 
         /// <summary>
-        /// Visita un element de tipus arc.
+        /// Visita un element de tipus 'Arc'.
         /// </summary>
-        /// <param name="arc">L'arc a visitar.</param>
+        /// <param name="element">L'element.</param>
         /// 
-        void Visit(EdaArcElement arc);
+        void Visit(EdaArcElement element);
 
         /// <summary>
-        /// Visita un element de tipus rectangle.
+        /// Visita un element de tipus 'Rectangle'.
         /// </summary>
-        /// <param name="rectangle">El rectangle.</param>
+        /// <param name="element">L'element.</param>
         /// 
-        void Visit(EdaRectangleElement rectangle);
+        void Visit(EdaRectangleElement element);
 
         /// <summary>
-        /// Visita un element de tipus cercle.
+        /// Visita un element de tipus 'Circle'.
         /// </summary>
-        /// <param name="circle">El cercle.</param>
+        /// <param name="element">L'element.</param>
         /// 
-        void Visit(EdaCircleElement circle);
+        void Visit(EdaCircleElement element);
 
         /// <summary>
         /// Visita un element de tipus poligon.
         /// </summary>
-        /// <param name="polygon">El poligon.</param>
+        /// <param name="element">L'element.</param>
         /// 
-        void Visit(EdaPolygonElement polygon);
+        void Visit(EdaPolygonElement element);
 
-        void Visit(EdaViaElement via);
+        /// <summary>
+        /// Visita un element de tipus 'Via'
+        /// </summary>
+        /// <param name="element">L'element.</param>
+        /// 
+        void Visit(EdaViaElement element);
 
-        void Visit(EdaSmdPadElement pad);
-        void Visit(EdaThPadElement pad);
-        void Visit(EdaRegionElement region);
-        void Visit(EdaTextElement text);
+        /// <summary>
+        /// Visita un element de tipus 'SmdPad'
+        /// </summary>
+        /// <param name="element">L'element.</param>
+        /// 
+        void Visit(EdaSmdPadElement element);
+
+        /// <summary>
+        /// Visita un element de tipus 'ThPad'
+        /// </summary>
+        /// <param name="element">L'element.</param>
+        /// 
+        void Visit(EdaThPadElement element);
+
+        /// <summary>
+        /// Visita un element de tipus 'Region'
+        /// </summary>
+        /// <param name="element">L'element.</param>
+        /// 
+        void Visit(EdaRegionElement element);
+
+        /// <summary>
+        /// Visita un element de tipus 'Text'
+        /// </summary>
+        /// <param name="element">L'element.</param>
+        /// 
+        void Visit(EdaTextElement element);
+
+        /// <summary>
+        /// Visita un element de tipus 'CircleHole'
+        /// </summary>
+        /// <param name="element">L'element.</param>
+        /// 
+        void Visit(EdaCircleHoleElement element);
+
+        /// <summary>
+        /// Visita un element de tipus 'LineHole'
+        /// </summary>
+        /// <param name="circleHole">L'element.</param>
+        /// 
+        void Visit(EdaLineHoleElement element);
     }
 }

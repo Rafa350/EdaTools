@@ -131,8 +131,8 @@ namespace MikroPic.EdaTools.v1.CamTool {
         private static EdaBoard LoadBoard(string boardPath) {
 
             using (var stream = new FileStream(boardPath, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                var reader = new BoardStreamReader(stream);
-                return reader.Read();
+                var reader = new EdaBoardStreamReader(stream);
+                return reader.ReadBoard();
             }
         }
 

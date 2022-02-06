@@ -9,58 +9,104 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
     /// 
     public abstract class EdaDefaultBoardVisitor: IEdaBoardVisitor {
 
+        /// <inheritdoc/>
+        /// 
         public virtual void Visit(EdaBoard board) {
         }
 
+        /// <inheritdoc/>
+        /// 
         public virtual void Visit(EdaLibrary library) {
         }
 
+        /// <inheritdoc/>
+        /// 
         public virtual void Visit(EdaLayer layer) {
         }
 
+        /// <inheritdoc/>
+        /// 
         public virtual void Visit(EdaSignal signal) {
         }
 
-        public virtual void Visit(EdaLineElement line) {
+        /// <inheritdoc/>
+        /// 
+        public virtual void Visit(EdaLineElement element) {
         }
 
-        public virtual void Visit(EdaArcElement arc) {
+        /// <inheritdoc/>
+        /// 
+        public virtual void Visit(EdaArcElement element) {
         }
 
-        public virtual void Visit(EdaRectangleElement rectangle) {
+        /// <inheritdoc/>
+        /// 
+        public virtual void Visit(EdaRectangleElement element) {
         }
 
-        public virtual void Visit(EdaCircleElement circle) {
+        /// <inheritdoc/>
+        /// 
+        public virtual void Visit(EdaCircleElement element) {
         }
 
-        public virtual void Visit(EdaPolygonElement polygon) {
+        /// <inheritdoc/>
+        /// 
+        public virtual void Visit(EdaPolygonElement element) {
         }
 
-        public virtual void Visit(EdaSmdPadElement pad) {
+        /// <inheritdoc/>
+        /// 
+        public virtual void Visit(EdaSmdPadElement element) {
         }
 
-        public virtual void Visit(EdaThPadElement pad) {
+        /// <inheritdoc/>
+        /// 
+        public virtual void Visit(EdaThPadElement element) {
         }
 
-        public virtual void Visit(EdaRegionElement region) {
+        /// <inheritdoc/>
+        /// 
+        public virtual void Visit(EdaRegionElement element) {
         }
 
-        public virtual void Visit(EdaTextElement text) {
+        /// <inheritdoc/>
+        /// 
+        public virtual void Visit(EdaTextElement element) {
         }
 
-        public virtual void Visit(EdaViaElement via) {
+        /// <inheritdoc/>
+        /// 
+        public virtual void Visit(EdaViaElement element) {
         }
 
+        /// <inheritdoc/>
+        /// 
         public virtual void Visit(EdaPart part) {
         }
 
-        public virtual void Visit(EdaComponent block) {
+        /// <inheritdoc/>
+        /// 
+        public virtual void Visit(EdaComponent component) {
         }
 
+        /// <inheritdoc/>
+        /// 
         public virtual void Visit(EdaPartAttribute attribute) {
         }
 
+        /// <inheritdoc/>
+        /// 
         public virtual void Visit(EdaComponentAttribute attribute) {
+        }
+
+        /// <inheritdoc/>
+        /// 
+        public virtual void Visit(EdaCircleHoleElement element) {
+        }
+
+        /// <inheritdoc/>
+        /// 
+        public virtual void Visit(EdaLineHoleElement element) {
         }
     }
 }

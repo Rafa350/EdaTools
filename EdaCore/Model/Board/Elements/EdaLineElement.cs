@@ -45,8 +45,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
-        public override EdaRect GetBoundingBox(EdaLayerId layerId
-            ) {
+        public override EdaRect GetBoundingBox(EdaLayerId layerId) {
 
             return new EdaRect(
                 Math.Min(_startPosition.X, _endPosition.X) - _thickness / 2,

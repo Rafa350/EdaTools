@@ -3,6 +3,7 @@ using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 using System;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -29,9 +30,9 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             }
 
             /// <summary>
-            /// Visita un objecte 'EdaComponent'
+            /// Visita un component.
             /// </summary>
-            /// <param name="component">L'objecte a visitar.</param>
+            /// <param name="component">El component.</param>
             /// 
             public override void Visit(EdaComponent component) {
 
@@ -51,91 +52,81 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             }
 
             /// <summary>
-            /// Visita un objecte 'EdaLineElement'
+            /// Visita un element.
             /// </summary>
-            /// <param name="line">L'objecte a visitar.</param>
+            /// <param name="element">L'element.</param>
             /// 
-            public override void Visit(EdaLineElement line) {
+            public override void Visit(EdaLineElement element) {
 
-                var start = new Vector2D(line.StartPosition.X, line.StartPosition.Y) * _m;
-                var end = new Vector2D(line.EndPosition.X, line.EndPosition.Y) * _m;
+                var start = new Vector2D(element.StartPosition.X, element.StartPosition.Y) * _m;
+                var end = new Vector2D(element.EndPosition.X, element.EndPosition.Y) * _m;
 
                 var sb = new StringBuilder()
                     .Append("  (fp_line ")
                     .AppendFormat(CultureInfo.InvariantCulture, "(start {0} {1}) ", start.X, start.Y)
                     .AppendFormat(CultureInfo.InvariantCulture, "(end {0} {1}) ", end.X, end.Y)
-                    .AppendFormat("(layer {0}) ", GetLayerNames(line.LayerSet))
-                    .AppendFormat(CultureInfo.InvariantCulture, "(width {0}))", line.Thickness / _scale);
+                    .AppendFormat("(layer {0}) ", GetLayerNames(element.LayerSet))
+                    .AppendFormat(CultureInfo.InvariantCulture, "(width {0}))", element.Thickness / _scale);
 
                 _writer.WriteLine(sb.ToString());
             }
 
             /// <summary>
-            /// Visita un objecte 'EdaRectangleElement'
+            /// Visita un element
             /// </summary>
-            /// <param name="rectangle">L'objecte a visitar.</param>
+            /// <param name="element">L'element.</param>
             /// 
-            public override void Visit(EdaRectangleElement rectangle) {
+            public override void Visit(EdaRectangleElement element) {
 
                 var start = new Vector2D(
-                    rectangle.Position.X - (rectangle.Size.Width / 2),
-                    rectangle.Position.Y - (rectangle.Size.Height / 2)) * _m;
+                    element.Position.X - (element.Size.Width / 2),
+                    element.Position.Y - (element.Size.Height / 2)) * _m;
                 var end = new Vector2D(
-                    rectangle.Position.X + rectangle.Size.Width / 2,
-                    rectangle.Position.Y + rectangle.Size.Height / 2) * _m;
+                    element.Position.X + element.Size.Width / 2,
+                    element.Position.Y + element.Size.Height / 2) * _m;
 
                 var sb = new StringBuilder()
                     .Append("  (fp_rect ")
                     .AppendFormat(CultureInfo.InvariantCulture, "(start {0} {1}) ", start.X, start.Y)
                     .AppendFormat(CultureInfo.InvariantCulture, "(end {0} {1}) ", end.X, end.Y)
-                    .AppendFormat("(layer {0}) ", GetLayerNames(rectangle.LayerSet))
-                    .AppendFormat(CultureInfo.InvariantCulture, "(width {0}))", rectangle.Thickness / _scale);
+                    .AppendFormat("(layer {0}) ", GetLayerNames(element.LayerSet))
+                    .AppendFormat(CultureInfo.InvariantCulture, "(width {0}))", element.Thickness / _scale);
 
                 _writer.WriteLine(sb.ToString());
             }
 
             /// <summary>
-            /// Visita un cercle
+            /// Visita un element.
             /// </summary>
-            /// <param name="circle">L'objecte a visitar.</param>
+            /// <param name="element">L'element.</param>
             /// 
-            public override void Visit(EdaCircleElement circle) {
+            public override void Visit(EdaCircleElement element) {
 
                 var center = new Vector2D(
-                    circle.Position.X,
-                    circle.Position.Y) * _m;
+                    element.Position.X,
+                    element.Position.Y) * _m;
                 var end = new Vector2D(
-                    circle.Position.X + circle.Radius,
-                    circle.Position.Y) * _m;
+                    element.Position.X + element.Radius,
+                    element.Position.Y) * _m;
 
-                var sb = new StringBuilder();
-                if (circle.IsOnLayer(EdaLayerId.Unplatted)) {
-                    sb
-                        .Append("  (pad \"\" np_thru_hole circle ")
-                        .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1}) ", center.X, center.Y)
-                        .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {0}) ", circle.Diameter / _scale)
-                        .AppendFormat(CultureInfo.InvariantCulture, "(drill {0}) ", circle.Diameter / _scale)
-                        .Append("(layers *.Cu *.Mask))");
-                }
-                else {
-                    sb
-                        .AppendFormat("  (fp_circle ")
-                        .AppendFormat(CultureInfo.InvariantCulture, "(center {0} {1}) ", center.X, center.Y)
-                        .AppendFormat(CultureInfo.InvariantCulture, "(end {0} {1}) ", end.X, end.Y)
-                        .AppendFormat(CultureInfo.InvariantCulture, "(width {0})) ", circle.Thickness / _scale);
-                }
+                var sb = new StringBuilder()
+                    .AppendFormat("  (fp_circle ")
+                    .AppendFormat(CultureInfo.InvariantCulture, "(center {0} {1}) ", center.X, center.Y)
+                    .AppendFormat(CultureInfo.InvariantCulture, "(end {0} {1}) ", end.X, end.Y)
+                    .AppendFormat("(layer {0}) ", GetLayerNames(element.LayerSet))
+                    .AppendFormat(CultureInfo.InvariantCulture, "(width {0})) ", element.Thickness / _scale);
                 _writer.WriteLine(sb.ToString());
             }
 
             /// <summary>
-            /// Visita un text
+            /// Visita un element
             /// </summary>
-            /// <param name="text">L'objecte a visitar.</param>
+            /// <param name="element">L'element.</param>
             /// 
-            public override void Visit(EdaTextElement text) {
+            public override void Visit(EdaTextElement element) {
 
                 var type = "value";
-                var value = text.Value;
+                var value = element.Value;
 
                 if (value == "{NAME}") {
                     value = "REF**";
@@ -148,13 +139,13 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
 
                 var sb = new StringBuilder()
                     .AppendFormat("  (fp_text {0} \"{1}\" ", type, value)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", text.Position.X / _scale, -text.Position.Y / _scale, text.Rotation.AsDegrees)
-                    .AppendFormat("(layer {0}) ", GetLayerNames(text.LayerSet))
+                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", element.Position.X / _scale, -element.Position.Y / _scale, element.Rotation.AsDegrees)
+                    .AppendFormat("(layer {0}) ", GetLayerNames(element.LayerSet))
                     .AppendLine()
                     .Append("    (effects ")
                     .Append("(font ")
                     .AppendFormat("(size {0} {1}) ", 1, 1)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(thickness {0})) ", text.Thickness / _scale)
+                    .AppendFormat(CultureInfo.InvariantCulture, "(thickness {0})) ", element.Thickness / _scale)
                     .AppendFormat("(justify {0} {1})", "left", "bottom")
                     .AppendLine(")")
                     .Append("  )");
@@ -162,43 +153,71 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             }
 
             /// <summary>
-            /// Visita un pad smd
+            /// Visita un element.
             /// </summary>
-            /// <param name="pad">L'objecte a visitar.</param>
+            /// <param name="element">L'element.<param>
             /// 
-            public override void Visit(EdaSmdPadElement pad) {
+            public override void Visit(EdaSmdPadElement element) {
 
                 var sb = new StringBuilder()
-                    .AppendFormat("  (pad {0} smd roundrect ", pad.Name)
+                    .AppendFormat("  (pad {0} smd roundrect ", element.Name)
                     .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", 
-                        pad.Position.X / _scale, 
-                        pad.Position.Y / -_scale, 
-                        pad.Rotation.AsDegrees)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", pad.Size.Width / _scale, pad.Size.Height / _scale)
-                    .AppendFormat("(layers {0}) ", GetLayerNames(pad.LayerSet))
-                    .AppendFormat(CultureInfo.InvariantCulture, "(roundrect_rratio {0}))", pad.CornerRatio.Value / 2000.0);
+                        element.Position.X / _scale, 
+                        element.Position.Y / -_scale, 
+                        element.Rotation.AsDegrees)
+                    .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", element.Size.Width / _scale, element.Size.Height / _scale)
+                    .AppendFormat("(layers {0}) ", GetLayerNames(element.LayerSet))
+                    .AppendFormat(CultureInfo.InvariantCulture, "(roundrect_rratio {0}))", element.CornerRatio.Value / 2000.0);
 
                 _writer.WriteLine(sb);
             }
 
             /// <summary>
-            /// Visita un pad thruhole
+            /// Visita un element.
             /// </summary>
-            /// <param name="pad">L'objecte a visitar.</param>
+            /// <param name="element">L'element.</param>
             /// 
-            public override void Visit(EdaThPadElement pad) {
+            public override void Visit(EdaThPadElement element) {
 
                 var sb = new StringBuilder()
-                    .AppendFormat("  (pad {0} thru_hole circle ", pad.Name)
+                    .AppendFormat("  (pad {0} thru_hole circle ", element.Name)
                     .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", 
-                        pad.Position.X / _scale, 
-                        pad.Position.Y / -_scale, 
-                        pad.Rotation.AsDegrees)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", pad.TopSize.Width / _scale, pad.TopSize.Height / _scale)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(drill {0}) ", pad.Drill / _scale)
+                        element.Position.X / _scale, 
+                        element.Position.Y / -_scale, 
+                        element.Rotation.AsDegrees)
+                    .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", element.TopSize.Width / _scale, element.TopSize.Height / _scale)
+                    .AppendFormat(CultureInfo.InvariantCulture, "(drill {0}) ", element.Drill / _scale)
                     .Append("(layers *.Cu *.Mask))");
 
                 _writer.WriteLine(sb);
+            }
+
+            /// <summary>
+            /// Visita un element.
+            /// </summary>
+            /// <param name="element">L'element.</param>
+            /// 
+            public override void Visit(EdaCircleHoleElement element) {
+
+                var center = new Vector2D(
+                    element.Position.X,
+                    element.Position.Y) * _m;
+
+                var sb = new StringBuilder()
+                    .Append("  (pad \"\" np_thru_hole circle ")
+                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1}) ", center.X, center.Y)
+                    .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {0}) ", element.Diameter / _scale)
+                    .AppendFormat(CultureInfo.InvariantCulture, "(drill {0}) ", element.Diameter / _scale)
+                    .Append("(layers *.Cu *.Mask))");
+                _writer.WriteLine(sb.ToString());
+            }
+
+            /// <summary>
+            /// Visita un element.
+            /// </summary>
+            /// <param name="element">L'element.</param>
+            /// 
+            public override void Visit(EdaLineHoleElement element) {
             }
 
             private static string GetLayerNames(EdaLayerSet layerSet) {

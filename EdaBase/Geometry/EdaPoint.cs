@@ -81,18 +81,41 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="p2">Segon element a comparar.</param>
         /// <returns>True si son diferenmts.</returns>
         /// 
-        public static bool operator !=(EdaPoint p1, EdaPoint p2) => !p1.Equals(p2);
+        public static bool operator !=(EdaPoint p1, EdaPoint p2) => 
+            !p1.Equals(p2);
+
+        /// <summary>
+        /// Operador +
+        /// </summary>
+        /// <param name="p1">Primer element.</param>
+        /// <param name="p2">Segon element.</param>
+        /// <returns>El resultat.</returns>
+        /// 
+        public static EdaPoint operator +(EdaPoint p1, EdaPoint p2) =>
+            new EdaPoint(p1.X + p2.X, p1.Y + p2.Y);
+
+        /// <summary>
+        /// Operador -
+        /// </summary>
+        /// <param name="p1">Primer element.</param>
+        /// <param name="p2">Segon element.</param>
+        /// <returns>El resultat.</returns>
+        /// 
+        public static EdaPoint operator -(EdaPoint p1, EdaPoint p2) =>
+            new EdaPoint(p1.X - p2.X, p1.Y - p2.Y);
 
         /// <summary>
         /// Obte el valor de la coordinada X
         /// </summary>
         /// 
-        public int X => _x;
+        public int X => 
+            _x;
 
         /// <summary>
         /// Obte el valor de la coordinada Y
         /// </summary>
         /// 
-        public int Y => _y;
+        public int Y => 
+            _y;
     }
 }

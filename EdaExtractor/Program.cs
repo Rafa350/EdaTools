@@ -37,8 +37,8 @@ namespace MikroPic.EdaTools.v1.Extractor {
         private static EdaBoard LoadBoard(string fileName) {
 
             using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                var reader = new BoardStreamReader(stream);
-                return reader.Read();
+                var reader = new EdaBoardStreamReader(stream);
+                return reader.ReadBoard();
             }
         }
 

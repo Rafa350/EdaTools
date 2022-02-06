@@ -179,7 +179,8 @@
                     <xs:element ref="tpad"/>
                     <xs:element ref="spad"/>
                     <xs:element ref="text"/>
-                    <xs:element ref="hole"/>
+                    <xs:element ref="circleHole"/>
+                    <xs:element ref="lineHole"/>
                 </xs:choice>
             </xs:sequence>
         </xs:complexType>
@@ -313,10 +314,21 @@
     </xs:element>
 
     <xs:element
-        name="hole">
+        name="circleHole">
         <xs:complexType>
             <xs:attribute name="position" use="required" type="pointType"/>
-            <xs:attribute name="drill" use="required" type="xs:double"/>
+            <xs:attribute name="diameter" use="required" type="xs:double"/>
+            <xs:attribute name="platted" use="optional" type="xs:boolean"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element
+        name="lineHole">
+        <xs:complexType>
+            <xs:attribute name="startPosition" use="required" type="pointType"/>
+            <xs:attribute name="endPosition" use="required" type="pointType"/>
+            <xs:attribute name="diameter" use="required" type="xs:double"/>
+            <xs:attribute name="platted" use="optional" type="xs:boolean"/>
         </xs:complexType>
     </xs:element>
 

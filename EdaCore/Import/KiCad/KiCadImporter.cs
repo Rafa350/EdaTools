@@ -253,7 +253,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// 
         private void ProcessVia(STree tree, SBranch node, EdaBoard board) {
 
-            var position = ParsePoint(tree, tree.SelectBranch(node, "at"));
+            var position = ParsePoint(tree, tree.SelectBranch(node, "at")) - _origin;
             var size = ParseMeasure(tree, tree.SelectBranch(node, "size"));
             var drill = ParseMeasure(tree, tree.SelectBranch(node, "drill"));
             var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layers"));
@@ -330,7 +330,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             string name = tree.ValueAsString(node[1]);
 
-            var (position, rotation) = ParseLocation(tree, tree.SelectBranch(node, "at"));
+            var (position, rotation) = ParsePointAndAngle(tree, tree.SelectBranch(node, "at"));
+            position -= _origin;
 
             var layerNode = tree.SelectBranch(node, "layer");
             var layer = tree.ValueAsString(layerNode[1]);
@@ -349,7 +350,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                     case "fp_text": {
                             string attrValue = tree.ValueAsString(childNode[2]);
                             bool attrVisible = childNode.Count == 6; // Si no te el node 'hide' es visible
-                            var (attrPosition, attrRotation) = ParseLocation(tree, tree.SelectBranch(childNode, "at"));
+                            var (attrPosition, attrRotation) = ParsePointAndAngle(tree, tree.SelectBranch(childNode, "at"));
+                            attrPosition -= _origin;
                             attrRotation -= rotation;
 
                             switch (tree.ValueAsString(childNode[1])) {
@@ -433,8 +435,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// 
         private void ProcessLine(STree tree, SBranch node, EdaBoard board) {
 
-            var start = ParsePoint(tree, tree.SelectBranch(node, "start"));
-            var end = ParsePoint(tree, tree.SelectBranch(node, "end"));
+            var start = ParsePoint(tree, tree.SelectBranch(node, "start")) - _origin;
+            var end = ParsePoint(tree, tree.SelectBranch(node, "end")) - _origin;
             var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
             var thickness = ParseMeasure(tree, tree.SelectBranch(node, "width"));
 
@@ -513,8 +515,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// 
         private void ProcessCircle(STree tree, SBranch node, EdaComponent component) {
 
-            var center = ParsePoint(tree, tree.SelectBranch(node, "center"));
-            var end = ParsePoint(tree, tree.SelectBranch(node, "end"));
+            var center = ParsePoint(tree, tree.SelectBranch(node, "center")) - _origin;
+            var end = ParsePoint(tree, tree.SelectBranch(node, "end")) - _origin;
             int radius = (int)(Math.Sqrt(Math.Pow(end.X - center.X, 2) + Math.Pow(end.Y - center.Y, 2)));
 
             var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
@@ -545,7 +547,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         private void ProcessText(STree tree, SBranch node, EdaComponent component) {
 
             string type = tree.ValueAsString(node[1]);
-            var (position, rotation) = ParseLocation(tree, tree.SelectBranch(node, "at"));
+            var (position, rotation) = ParsePointAndAngle(tree, tree.SelectBranch(node, "at"));
 
             // Obte els efectes
             //
@@ -632,7 +634,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var shapeType = tree.ValueAsString(node[3]);
 
             var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layers"));
-            var (position, rotation) = ParseLocation(tree, tree.SelectBranch(node, "at"));
+            var (position, rotation) = ParsePointAndAngle(tree, tree.SelectBranch(node, "at"));
             var size = ParseSize(tree, tree.SelectBranch(node, "size"));
             var drillNode = tree.SelectBranch(node, "drill");
             var drill = drillNode == null ? 0 : (int)(tree.ValueAsDouble(drillNode[1]) * _scale);
@@ -691,11 +693,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                     break;
 
                 case "np_thru_hole": {
-                        var element = new EdaCircleElement {
-                            LayerSet = new EdaLayerSet(EdaLayerId.Unplatted),
+                        var element = new EdaCircleHoleElement {
                             Position = position,
-                            Thickness = 0,
-                            Diameter = drill
+                            Diameter = drill,
+                            Platted = false
                         };
                         component.AddElement(element);
                         break;
@@ -732,7 +733,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 var ptsNode = tree.SelectBranch(polygonNode, "pts");
                 if (ptsNode != null) {
                     foreach (var xyNode in ptsNode.Nodes.OfType<SBranch>()) {
-                        var point = ParsePoint(tree, xyNode);
+                        var point = ParsePoint(tree, xyNode) - _origin;
                         segments.Add(new EdaArcPoint(point));
                     }
                 }
@@ -768,6 +769,25 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             int x = (int)(tree.ValueAsDouble(node[1]) * _scale);
             int y = (int)(tree.ValueAsDouble(node[2]) * _scale * -1);
             return new EdaPoint(x, y);
+        }
+
+        /// <summary>
+        /// Obte un punt i un angle (Posicio i rotacio)
+        /// </summary>
+        /// <param name="tree">El STree.</param>
+        /// <param name="node">El node.</param>
+        /// <returns>El punt i l'angle.</returns>
+        /// 
+        private static (EdaPoint, EdaAngle) ParsePointAndAngle(STree tree, SBranch node) {
+
+            int x = (int)(tree.ValueAsDouble(node[1]) * _scale);
+            int y = (int)(tree.ValueAsDouble(node[2]) * _scale * -1);
+            var position = new EdaPoint(x, y);
+
+            double r = node.Count == 4 ? tree.ValueAsDouble(node[3]) : 0;
+            var rotation = EdaAngle.FromDegrees(r);
+
+            return (position, rotation);
         }
 
         /// <summary>
@@ -807,25 +827,6 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         private static int ParseMeasure(STree tree, SBranch node) {
 
             return (int)(tree.ValueAsDouble(node[1]) * _scale);
-        }
-
-        /// <summary>
-        /// Obte una localitzacio (Posicio i rotacio)
-        /// </summary>
-        /// <param name="tree">El STree.</param>
-        /// <param name="node">El node.</param>
-        /// <returns>La posicio i la rotacio..</returns>
-        /// 
-        private static (EdaPoint, EdaAngle) ParseLocation(STree tree, SBranch node) {
-
-            int x = (int)(tree.ValueAsDouble(node[1]) * _scale);
-            int y = (int)(tree.ValueAsDouble(node[2]) * _scale * -1);
-            var position = new EdaPoint(x, y);
-
-            double r = node.Count == 4 ? tree.ValueAsDouble(node[3]) : 0;
-            var rotation = EdaAngle.FromDegrees(r);
-
-            return (position, rotation);
         }
 
         /// <summary>

@@ -796,7 +796,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// Procesa un node 'HOLE'.
         /// </summary>
         /// <param name="node">El node a procesar.</param>
-        /// <returns>L'objecte 'HoleElement' creat.</returns>
+        /// <returns>L'objecte 'EdaElement'.</returns>
         /// 
         private EdaElement ParseHoleNode(XmlNode node) {
 
@@ -810,19 +810,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             //
             int drill = ParseNumber(node.AttributeAsString("drill"));
 
-            var element = new EdaCircleElement {
+            var element = new EdaCircleHoleElement {
                 Position = position,
                 Diameter = drill,
-                Thickness = 0,
-                LayerSet = new EdaLayerSet { EdaLayerId.Unplatted }
+                Platted = false
             };
-            /*
-            var element = new EdaHoleElement {
-                Position = position,
-                Drill = drill
-            };
-            element.LayerSet.Add(EdaLayerId.Holes);
-            */
 
             return element;
         }
