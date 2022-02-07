@@ -1,4 +1,5 @@
 ﻿using MikroPic.EdaTools.v1.Core.Model.Common;
+using System;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
@@ -10,6 +11,21 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
         private string _name;
         private string _value;
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="name">El nom.</param>
+        /// <param name="value">El valor.</param>
+        /// 
+        public EdaComponentAttribute(string name, string value = null) {
+
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException(nameof(name));
+
+            _name = name;
+            _value = value;
+        }
 
         /// <inheritdoc/>
         /// 
@@ -24,7 +40,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// 
         public string Name {
             get => _name;
-            set => _name = value;
+            set {
+                if (string.IsNullOrEmpty(value))
+                    throw new ArgumentNullException(nameof(Name));
+                _name = value;
+            }
         }
 
         /// <summary>

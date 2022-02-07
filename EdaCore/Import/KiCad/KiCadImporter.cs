@@ -131,7 +131,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var setupNode = tree.SelectBranch(tree.Root, "setup");
             if (setupNode != null) {
                 var auxAxisOriginNode = tree.SelectBranch(setupNode, "aux_axis_origin");
-                if (auxAxisOriginNode != null) 
+                if (auxAxisOriginNode != null)
                     _origin = ParsePoint(tree, auxAxisOriginNode);
             }
 

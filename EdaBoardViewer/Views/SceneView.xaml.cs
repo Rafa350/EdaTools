@@ -28,7 +28,7 @@
 
             public BoardScene() {
 
-                string fileName = "test.xbrd";
+                string fileName = @"C:\Users\Rafael\Documents\Projectes\EDA\DSP04X\dsp04x_panel.xbrd";
                 using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
                     EdaBoardStreamReader reader = new EdaBoardStreamReader(stream);
                     board = reader.ReadBoard();

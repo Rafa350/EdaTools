@@ -25,11 +25,15 @@ namespace EdaBoardViewer.Render {
             _context = context;
         }
 
+        /// <inheritdoc/>
+        /// 
         public override void Visit(EdaBoard board) {
 
             base.Visit(board);
         }
 
+        /// <inheritdoc/>
+        /// 
         public override void Visit(EdaLineElement line) {
 
             if (_visualLayer.IsVisible(Part, line)) {
@@ -46,6 +50,8 @@ namespace EdaBoardViewer.Render {
             }
         }
 
+        /// <inheritdoc/>
+        /// 
         public override void Visit(EdaRectangleElement rectangle) {
 
             if (_visualLayer.IsVisible(Part, rectangle)) {
@@ -57,6 +63,8 @@ namespace EdaBoardViewer.Render {
             }
         }
 
+        /// <inheritdoc/>
+        /// 
         public override void Visit(EdaArcElement arc) {
 
             if (_visualLayer.IsVisible(Part, arc)) {
@@ -68,6 +76,8 @@ namespace EdaBoardViewer.Render {
             }
         }
 
+        /// <inheritdoc/>
+        /// 
         public override void Visit(EdaCircleElement circle) {
 
             if (_visualLayer.IsVisible(Part, circle)) {
@@ -79,6 +89,21 @@ namespace EdaBoardViewer.Render {
             }
         }
 
+        /// <inheritdoc/>
+        /// 
+        public override void Visit(EdaCircleHoleElement element) {
+
+            if (_visualLayer.IsVisible(Part, element)) {
+
+                var brush = new SolidColorBrush(_visualLayer.Color);
+                var geometry = element.GetPolygon(_layer.Id).ToGeometry();
+
+                _context.DrawGeometry(brush, null, geometry);
+            }
+        }
+
+        /// <inheritdoc/>
+        /// 
         public override void Visit(EdaViaElement via) {
 
             if (_visualLayer.IsVisible(Part, via)) {
@@ -101,6 +126,8 @@ namespace EdaBoardViewer.Render {
             }
         }
 
+        /// <inheritdoc/>
+        /// 
         public override void Visit(EdaThPadElement pad) {
 
             if (_visualLayer.IsVisible(Part, pad)) {
@@ -123,6 +150,8 @@ namespace EdaBoardViewer.Render {
             }
         }
 
+        /// <inheritdoc/>
+        /// 
         public override void Visit(EdaSmdPadElement pad) {
 
             if (_visualLayer.IsVisible(Part, pad)) {
@@ -134,6 +163,8 @@ namespace EdaBoardViewer.Render {
             }
         }
 
+        /// <inheritdoc/>
+        /// 
         public override void Visit(EdaTextElement text) {
 
             if (_visualLayer.IsVisible(Part, text)) {
@@ -178,6 +209,8 @@ namespace EdaBoardViewer.Render {
             }
         }
 
+        /// <inheritdoc/>
+        /// 
         public override void Visit(EdaRegionElement region) {
 
             if (_visualLayer.IsVisible(Part, region)) {
@@ -195,6 +228,8 @@ namespace EdaBoardViewer.Render {
             }
         }
 
+        /// <inheritdoc/>
+        /// 
         public override void Visit(EdaPart part) {
 
             Transformation transformation = part.GetLocalTransformation();

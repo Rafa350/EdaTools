@@ -37,7 +37,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// 
         public int Priority {
-            get => _priority;   
+            get => _priority;
             set => _priority = value;
         }
 

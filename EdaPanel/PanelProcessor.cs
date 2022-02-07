@@ -95,7 +95,7 @@ namespace MikroPic.EdaTools.v1.Panel {
             //
             foreach (var layer in board.Layers)
                 if (targetBoard.GetLayer(layer.Id, false) == null)
-                    targetBoard.AddLayer(layer.Clone());
+                    targetBoard.AddLayer(CloneLayer(layer));
 
             // Afegeix els senyals. Cada placa te les seves propies.
             //
@@ -120,7 +120,8 @@ namespace MikroPic.EdaTools.v1.Panel {
                 List<EdaPart> transformableParts = new List<EdaPart>();
                 foreach (var part in board.Parts) {
                     EdaComponent component = targetBoard.GetComponent(part.Component.Name);
-                    EdaPart panelPart = ClonePart(part, String.Format("{1}@{0}", index, part.Name), component);
+                    string panelPartName = String.Format("{1}@{0}", index, part.Name);
+                    EdaPart panelPart = ClonePart(part, panelPartName, component);
                     transformableParts.Add(panelPart);
                     targetBoard.AddPart(panelPart);
 
@@ -227,18 +228,16 @@ namespace MikroPic.EdaTools.v1.Panel {
 
                 // Afegeix els forats a la placa
                 //
-                targetBoard.AddElement(new EdaCircleElement {
-                    LayerSet = new EdaLayerSet(EdaLayerId.Unplatted),
+                targetBoard.AddElement(new EdaCircleHoleElement {
                     Position = q1,
-                    Thickness = 0,
-                    Diameter = drill
+                    Diameter = drill,
+                    Platted = false
                 });
 
-                targetBoard.AddElement(new EdaCircleElement {
-                    LayerSet = new EdaLayerSet(EdaLayerId.Unplatted),
+                targetBoard.AddElement(new EdaCircleHoleElement {
                     Position = q2,
-                    Thickness = 0,
-                    Diameter = drill
+                    Diameter = drill,
+                    Platted = false
                 });
             }
         }
@@ -285,26 +284,37 @@ namespace MikroPic.EdaTools.v1.Panel {
             });
         }
 
+        private static EdaLayer CloneLayer(EdaLayer layer) {
+
+            return layer.Clone();
+        }
+
         /// <summary>
         /// Clona un senyal
         /// </summary>
-        /// <param name="signal">El senyal.</param>
+        /// <param name="signal">El senyal a clonar.</param>
         /// <param name="name">El nom de la senyal clonada.</param>
         /// <returns>El clon.</returns>
         /// 
         private static EdaSignal CloneSignal(EdaSignal signal, string name) {
 
-            var clon = new EdaSignal {
+            return new EdaSignal {
                 Name = name,
                 Clearance = signal.Clearance
             };
-
-            return clon;
         }
 
+        /// <summary>
+        /// Clona un part
+        /// </summary>
+        /// <param name="part">El part a clonar.</param>
+        /// <param name="name">El nom del part clonat.</param>
+        /// <param name="component">El component.</param>
+        /// <returns>El clon.</returns>
+        /// 
         private static EdaPart ClonePart(EdaPart part, string name, EdaComponent component) {
 
-            var clon = new EdaPart {
+            var newPart = new EdaPart {
                 Name = name,
                 Component = component,
                 Position = part.Position,
@@ -312,31 +322,129 @@ namespace MikroPic.EdaTools.v1.Panel {
                 Side = part.Side
             };
 
-            return clon;
+            if (part.HasAttributes)
+                foreach (var attr in part.Attributes) {
+                    var newAttr = new EdaPartAttribute(attr.Name, attr.Value);
+                    newPart.AddAttribute(newAttr);
+                }
+
+            return newPart;
         }
 
         /// <summary>
         /// Clona un component.
         /// </summary>
-        /// <param name="component">El component</param>
-        /// <returns>EWl clon</returns>
+        /// <param name="component">El component a clonar.</param>
+        /// <returns>El clon.</returns>
         /// 
         private static EdaComponent CloneComponent(EdaComponent component) {
 
-            var clon = new EdaComponent {
+            var newComponent = new EdaComponent {
                 Name = component.Name,
                 Description = component.Description,
             };
 
-            foreach (var element in component.Elements)
-                clon.AddElement(CloneElement(element));
+            if (component.HasElements)
+                foreach (var element in component.Elements)
+                    newComponent.AddElement(CloneElement(element));
 
-            return clon;
+            if (component.HasAttributes)
+                foreach (var attr in component.Attributes) {
+                    var newAttr = new EdaComponentAttribute(attr.Name, attr.Value);
+                    component.AddAttribute(newAttr);
+                }
+
+            return newComponent;
         }
 
+        /// <summary>
+        /// Clona un element.
+        /// </summary>
+        /// <param name="element">L'element a clonar.</param>
+        /// <returns>El clon.</returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        /// 
         private static EdaElement CloneElement(EdaElement element) {
 
-            return null;
+            if (element is EdaCircleElement circle)
+                return new EdaCircleElement {
+                    Position = circle.Position,
+                    Radius = circle.Radius,
+                    Thickness = circle.Thickness,
+                    LayerSet = circle.LayerSet
+                };
+
+            else if (element is EdaCircleHoleElement circleHole)
+                return new EdaCircleHoleElement {
+                    Position = circleHole.Position,
+                    Diameter = circleHole.Diameter,
+                    Platted = circleHole.Platted
+                };
+
+            else if (element is EdaLineElement line)
+                return new EdaLineElement {
+                    StartPosition = line.StartPosition,
+                    EndPosition = line.EndPosition,
+                    Thickness = line.Thickness,
+                    LayerSet = line.LayerSet
+                };
+
+            else if (element is EdaSmdPadElement smdPad)
+                return new EdaSmdPadElement {
+                    Name = smdPad.Name,
+                    Position = smdPad.Position,
+                    Rotation = smdPad.Rotation,
+                    LayerSet = smdPad.LayerSet,
+                    Size = smdPad.Size,
+                    CornerRatio = smdPad.CornerRatio,
+                    CornerShape = smdPad.CornerShape
+                };
+
+            else if (element is EdaThPadElement thPad)
+                return new EdaThPadElement {
+                    Name = thPad.Name,
+                    Position = thPad.Position,
+                    Rotation = thPad.Rotation,
+                    LayerSet = thPad.LayerSet,
+                    TopSize = thPad.TopSize,
+                    InnerSize = thPad.InnerSize,
+                    BottomSize = thPad.BottomSize,
+                    CornerRatio = thPad.CornerRatio,
+                    CornerShape = thPad.CornerShape,
+                    DrillDiameter = thPad.DrillDiameter,
+                    Slot = thPad.Slot
+                };
+
+            else if (element is EdaViaElement via)
+                return new EdaViaElement {
+                    Position = via.Position,
+                    OuterSize = via.OuterSize,
+                    InnerSize = via.InnerSize,
+                    LayerSet = via.LayerSet,
+                    DrillDiameter = via.DrillDiameter
+                };
+
+            else if (element is EdaTextElement text)
+                return new EdaTextElement {
+                    Position = text.Position,
+                    Rotation = text.Rotation,
+                    Thickness = text.Thickness,
+                    LayerSet = text.LayerSet,
+                    Height = text.Height,
+                    HorizontalAlign = text.HorizontalAlign,
+                    VerticalAlign = text.VerticalAlign,
+                    Value = text.Value
+                };
+
+            else if (element is EdaRegionElement region)
+                return new EdaRegionElement {
+                    Thickness = region.Thickness,
+                    Priority = region.Priority,
+                    Clearance = region.Clearance,
+                };
+
+            else
+                throw new InvalidOperationException($"No es posible cloner el elemento de tipo {element.ElementType}.");
         }
 
         private sealed class TransformVisitor: EdaDefaultBoardVisitor {

@@ -159,7 +159,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 throw new InvalidDataException("Se esperaba <board>");
 
             _rd.NextTag();
-            
+
             IEnumerable<EdaLayer> layers = null;
             if (_rd.TagName == "layers") {
                 layers = ParseLayersNode();
@@ -199,7 +199,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 board.AddSignals(signals);
             if (components != null)
                 board.AddComponents(components);
-            if (parts != null) 
+            if (parts != null)
                 board.AddParts(parts);
             if (elements != null)
                 board.AddElements(elements);
@@ -373,7 +373,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
             var component = new EdaComponent();
             component.Name = name;
-            
+
             RegisterComponent(component);
 
             _rd.NextTag();
@@ -502,6 +502,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
                     case "text":
                         elements.Add(ParseTextNode());
+                        break;
+
+                    case "circleHole":
+                        elements.Add(ParseCircleHoleNode());
                         break;
 
                     default:
@@ -766,7 +770,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 LineCap = lineCap
             };
 
-            if (signalName != null) 
+            if (signalName != null)
                 _elementSignal.Add(new Tuple<IEdaConectable, EdaPart>(element, null), signalName);
 
             return element;
@@ -859,7 +863,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 Priority = priority
             };
 
-            if (signalName != null) 
+            if (signalName != null)
                 _elementSignal.Add(new Tuple<IEdaConectable, EdaPart>(element, null), signalName);
 
             _rd.NextTag();
@@ -937,7 +941,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 DrillDiameter = drill
             };
 
-            if (signalName != null) 
+            if (signalName != null)
                 _elementSignal.Add(new Tuple<IEdaConectable, EdaPart>(element, null), signalName);
 
             return element;
@@ -976,7 +980,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 CornerShape = cornerShape
             };
 
-            if (signalName != null) 
+            if (signalName != null)
                 _elementSignal.Add(new Tuple<IEdaConectable, EdaPart>(element, null), signalName);
 
             return element;
@@ -1013,7 +1017,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 DrillDiameter = drill
             };
 
-            if (signalName != null) 
+            if (signalName != null)
                 _elementSignal.Add(new Tuple<IEdaConectable, EdaPart>(element, null), signalName);
 
             return element;

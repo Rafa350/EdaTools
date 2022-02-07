@@ -3,7 +3,6 @@ using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 using System;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -161,9 +160,9 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
 
                 var sb = new StringBuilder()
                     .AppendFormat("  (pad {0} smd roundrect ", element.Name)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", 
-                        element.Position.X / _scale, 
-                        element.Position.Y / -_scale, 
+                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ",
+                        element.Position.X / _scale,
+                        element.Position.Y / -_scale,
                         element.Rotation.AsDegrees)
                     .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", element.Size.Width / _scale, element.Size.Height / _scale)
                     .AppendFormat("(layers {0}) ", GetLayerNames(element.LayerSet))
@@ -181,9 +180,9 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
 
                 var sb = new StringBuilder()
                     .AppendFormat("  (pad {0} thru_hole circle ", element.Name)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ", 
-                        element.Position.X / _scale, 
-                        element.Position.Y / -_scale, 
+                    .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ",
+                        element.Position.X / _scale,
+                        element.Position.Y / -_scale,
                         element.Rotation.AsDegrees)
                     .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", element.TopSize.Width / _scale, element.TopSize.Height / _scale)
                     .AppendFormat(CultureInfo.InvariantCulture, "(drill {0}) ", element.DrillDiameter / _scale)

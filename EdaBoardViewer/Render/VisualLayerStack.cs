@@ -7,6 +7,12 @@
 
     public sealed class VisualLayerStack {
 
+        private static Color _padColor = Color.FromArgb(255, 234, 161, 64);
+        private static Color _viaColor = Color.FromArgb(180, 0, 128, 0);
+        private static Color _holeColor = Color.FromArgb(255, 50, 50, 50);
+        private static Color _topCopperColor = Color.FromArgb(100, 150, 0, 0);
+        private static Color _bottomCopperColor = Color.FromArgb(100, 0, 0, 150);
+
         private readonly List<VisualLayer> layers = new List<VisualLayer>();
 
         public void Add(VisualLayer layer) {
@@ -32,10 +38,10 @@
 
             vls.Add(new VisualLayer("Bottom",
                 new EdaLayerId[] { EdaLayerId.BottomCopper },
-                new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Rectangle, ElementType.Circle, ElementType.Region, ElementType.SmdPad, ElementType.Text },
+                new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Rectangle, ElementType.Circle, ElementType.Region, ElementType.Text },
                 true,
                 VisualMode.Element,
-                Color.FromArgb(100, 0, 0, 150)));
+                _bottomCopperColor));
 
             vls.Add(new VisualLayer("Inner2",
                 new EdaLayerId[] { EdaLayerId.InnerCopper2 },
@@ -53,12 +59,12 @@
 
             vls.Add(new VisualLayer("Top",
                 new EdaLayerId[] { EdaLayerId.TopCopper },
-                new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Rectangle, ElementType.Circle, ElementType.Region, ElementType.SmdPad, ElementType.Text },
+                new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Rectangle, ElementType.Circle, ElementType.Region, ElementType.Text },
                 true,
                 VisualMode.Element,
-                Color.FromArgb(100, 150, 0, 0)));
+                _topCopperColor));
 
-            vls.Add(new VisualLayer("TopPlace",
+            /*vls.Add(new VisualLayer("TopPlace",
                 new EdaLayerId[] { EdaLayerId.TopPlace },
                 null,
                 true,
@@ -78,41 +84,41 @@
                 true,
                 VisualMode.Element,
                 Color.FromArgb(255, 211, 211, 211)));
-
+            */
             vls.Add(new VisualLayer("Pads",
                 new EdaLayerId[] { EdaLayerId.TopCopper },
-                new ElementType[] { ElementType.ThPad },
+                new ElementType[] { ElementType.ThPad, ElementType.SmdPad },
                 true,
                 VisualMode.Element,
-                Color.FromArgb(255, 234, 161, 64)));
+                _padColor));
 
             vls.Add(new VisualLayer("Vias",
                 new EdaLayerId[] { EdaLayerId.TopCopper },
                 new ElementType[] { ElementType.Via },
                 true,
                 VisualMode.Element,
-                Color.FromArgb(180, 0, 128, 0)));
+                _viaColor));
 
-            vls.Add(new VisualLayer("Drils",
+            vls.Add(new VisualLayer("Platted",
                 new EdaLayerId[] { EdaLayerId.Platted },
-                new ElementType[] { ElementType.Via, ElementType.ThPad },
+                new ElementType[] { ElementType.Via, ElementType.ThPad, ElementType.CircleHole },
                 true,
                 VisualMode.Drill,
-                Color.FromArgb(255, 255, 255, 255)));
+                _holeColor));
 
-            vls.Add(new VisualLayer("Holes",
+            vls.Add(new VisualLayer("Unplatted",
                 new EdaLayerId[] { EdaLayerId.Unplatted },
-                new ElementType[] { ElementType.Circle },
+                new ElementType[] { ElementType.Circle, ElementType.CircleHole },
                 true,
                 VisualMode.Element,
-                Color.FromArgb(255, 30, 30, 30)));
+                _holeColor));
 
             vls.Add(new VisualLayer("Milling",
                 new EdaLayerId[] { EdaLayerId.Milling },
                 null,
                 true,
                 VisualMode.Element,
-                Color.FromArgb(255, 32, 216, 200)));
+                _holeColor));
 
             vls.Add(new VisualLayer("Keepout",
                 new EdaLayerId[] { EdaLayerId.TopKeepout },

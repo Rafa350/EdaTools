@@ -2,8 +2,8 @@
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 

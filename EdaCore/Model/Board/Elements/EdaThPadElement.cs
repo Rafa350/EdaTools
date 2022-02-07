@@ -1,7 +1,6 @@
 ﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using System;
-using System.Collections.Generic;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
@@ -27,7 +26,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private EdaSize _innerSize;
         private EdaSize _bottomSize;
         private EdaRatio _cornerRatio = EdaRatio.Zero;
-        private ThPadCornerShape _cornerType = ThPadCornerShape.Round;
+        private ThPadCornerShape _cornerShape = ThPadCornerShape.Round;
         private int _drillDiameter;
         private int _slot;
 
@@ -49,7 +48,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             _topSize.GetHashCode() +
             _bottomSize.GetHashCode() +
             _cornerRatio.GetHashCode() +
-            _cornerType.GetHashCode() +
+            _cornerShape.GetHashCode() +
             Rotation.GetHashCode() +
             _drillDiameter * 37000 +
             _slot * 211;
@@ -69,7 +68,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 Position,
                 new EdaSize(size.Width + spacing + spacing, size.Height + spacing + spacing),
                 _cornerRatio,
-                _cornerType == ThPadCornerShape.Round,
+                _cornerShape == ThPadCornerShape.Round,
                 Rotation);
         }
 
@@ -209,8 +208,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// 
         public ThPadCornerShape CornerShape {
-            get => _cornerType;
-            set => _cornerType = value;
+            get => _cornerShape;
+            set => _cornerShape = value;
         }
 
         /// <summary>
