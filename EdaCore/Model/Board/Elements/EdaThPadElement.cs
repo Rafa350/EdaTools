@@ -28,7 +28,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private EdaSize _bottomSize;
         private EdaRatio _cornerRatio = EdaRatio.Zero;
         private ThPadCornerShape _cornerType = ThPadCornerShape.Round;
-        private int _drill;
+        private int _drillDiameter;
         private int _slot;
 
         /// <inheritdoc/>
@@ -51,7 +51,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             _cornerRatio.GetHashCode() +
             _cornerType.GetHashCode() +
             Rotation.GetHashCode() +
-            _drill * 37000 +
+            _drillDiameter * 37000 +
             _slot * 211;
 
         /// <summary>
@@ -80,20 +80,21 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         private EdaPoints MakeHolePoints() {
 
-            if (_slot <= _drill)
-                return EdaPoints.CreateCircle(Position, _drill / 2);
+            if (_slot <= _drillDiameter)
+                return EdaPoints.CreateCircle(Position, _drillDiameter / 2);
 
             else {
                 var size = GetSmallestPadSize();
                 bool h = size.Width >= size.Height;
-                int offset = (_slot - _drill) / 2;
+                int offset = (_slot - _drillDiameter) / 2;
                 var start = new EdaPoint(
                     Position.X - (h ? offset : 0),
                     Position.Y - (h ? 0 : offset));
                 var end = new EdaPoint(
                     Position.X + (h ? offset : 0),
                     Position.Y + (h ? 0 : offset));
-                return EdaPoints.CreateLineTrace(start, end, _drill, true);
+                // TODO: Falta fer la rotacio del forat
+                return EdaPoints.CreateLineTrace(start, end, _drillDiameter, true);
             }
         }
 
@@ -142,11 +143,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
             var padPolygon = GetOutlinePolygon(layerId, spacing);
             var thermalPolygon = new EdaPolygon(EdaPoints.CreateCross(Position, new EdaSize(w, h), width, Rotation));
-
-            List<EdaPolygon> childs = new List<EdaPolygon>();
-            childs.AddRange(PolygonProcessor.Clip(padPolygon, thermalPolygon, PolygonProcessor.ClipOperation.Diference));
-            if (childs.Count != 4)
-                throw new InvalidProgramException("Thermal generada incorrectamente.");
+            var childs = PolygonProcessor.Clip(padPolygon, thermalPolygon, PolygonProcessor.ClipOperation.Diference);
             return new EdaPolygon(null, childs);
         }
 
@@ -220,15 +217,22 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// El diametre del forat.
         /// </summary>
         /// 
-        public int Drill {
-            get => _drill;
+        public int DrillDiameter {
+            get => _drillDiameter;
             set {
                 if ((value < 0) || (value >= DrilHiLimit))
-                    throw new ArgumentOutOfRangeException(nameof(Drill));
+                    throw new ArgumentOutOfRangeException(nameof(DrillDiameter));
 
-                _drill = value;
+                _drillDiameter = value;
             }
         }
+
+        /// <summary>
+        /// Posicio del forat.
+        /// </summary>
+        /// 
+        public EdaPoint DrillPosition =>
+            Position;
 
         /// <summary>
         /// El maxim valor del diametre del forat
@@ -252,6 +256,36 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                     throw new ArgumentOutOfRangeException(nameof(Slot));
 
                 _slot = value;
+            }
+        }
+
+        public EdaPoint SlotStartPosition {
+            get {
+                if (_slot < _drillDiameter)
+                    return DrillPosition;
+                else {
+                    var size = GetSmallestPadSize();
+                    bool h = size.Width >= size.Height;
+                    int offset = (_slot - _drillDiameter) / 2;
+                    return new EdaPoint(
+                        Position.X - (h ? offset : 0),
+                        Position.Y - (h ? 0 : offset));
+                }
+            }
+        }
+
+        public EdaPoint SlotEndPosition {
+            get {
+                if (_slot < _drillDiameter)
+                    return DrillPosition;
+                else {
+                    var size = GetSmallestPadSize();
+                    bool h = size.Width >= size.Height;
+                    int offset = (_slot - _drillDiameter) / 2;
+                    return new EdaPoint(
+                        Position.X + (h ? offset : 0),
+                        Position.Y + (h ? 0 : offset));
+                }
             }
         }
 

@@ -263,7 +263,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 Position = position,
                 OuterSize = size,
                 InnerSize = size,
-                Drill = drill
+                DrillDiameter = drill
             };
 
             var netNode = tree.SelectBranch(node, "net");
@@ -686,7 +686,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                             BottomSize = size,
                             Rotation = rotation,
                             CornerRatio = roundness,
-                            Drill = drill
+                            DrillDiameter = drill
                         };
                         component.AddElement(element);
                     }

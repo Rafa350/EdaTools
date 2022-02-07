@@ -10,7 +10,7 @@ using System.IO;
 namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
     /// <summary>
-    /// Clase per generar fitxers gerber de forats i fresats.
+    /// Clase per generar fitxers gerber del components.
     /// </summary>
     public sealed class GerberComponentGenerator: Generator {
 
@@ -170,7 +170,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         }
 
         /// <summary>
-        /// Visitador per generar la imatge. Visita els elements que tenen forars.
+        /// Visitador per generar la imatge
         /// </summary>
         private sealed class ImageGeneratorVisitor: EdaElementVisitor {
 
@@ -192,10 +192,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 _centroidAperture = centroidAperture;
             }
 
-            /// <summary>
-            /// Visita un element 'Part'
-            /// </summary>
-            /// <param name="part">L'element a visitar.</param>
+            /// <inheritdoc/>
             /// 
             public override void Visit(EdaPart part) {
 
@@ -207,10 +204,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 }
             }
 
-            /// <summary>
-            /// Visita un element SmdPadElement'
-            /// </summary>
-            /// <param name="pad">L'element a visitar.</param>
+            /// <inheritdoc/>
             /// 
             public override void Visit(EdaSmdPadElement pad) {
 

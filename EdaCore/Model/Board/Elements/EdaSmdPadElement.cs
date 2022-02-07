@@ -84,8 +84,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
             List<EdaPolygon> childs = new List<EdaPolygon>();
             childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
-            //if (childs.Count != 4)
-            //    throw new InvalidProgramException("Thermal generada incorrectamente.");
+            if (childs.Count != 4)
+                throw new InvalidProgramException("Thermal generada incorrectamente.");
             return new EdaPolygon(null, childs);
         }
 

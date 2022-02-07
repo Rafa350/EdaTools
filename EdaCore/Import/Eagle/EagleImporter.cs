@@ -475,7 +475,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 BottomSize = new EdaSize(width, height),
                 CornerShape = cornerShape,
                 CornerRatio = cornerRatio,
-                Drill = drill
+                DrillDiameter = drill
             };
         }
 
@@ -563,7 +563,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 Position = position,
                 OuterSize = size,
                 InnerSize = size,
-                Drill = drill
+                DrillDiameter = drill
             };
         }
 

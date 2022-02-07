@@ -10,7 +10,7 @@ using System.IO;
 namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
     /// <summary>
-    /// Clase per generar fitxers gerber de forats i fresats.
+    /// Clase per generar fitxers gerber de forats ranurats.
     /// </summary>
     public sealed class GerberRouteGenerator: Generator {
 
@@ -173,7 +173,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         }
 
         /// <summary>
-        /// Visitador per preparar les apertures. Visita els element que tenen forats.
+        /// Visitador per preparar les apertures. Visita els element que generen ranures.
         /// </summary>
         private sealed class PrepareAperturesVisitor: EdaElementVisitor {
 
@@ -192,53 +192,25 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 _apertures = apertures;
             }
 
-            /// <summary>
-            /// Visita un element de tipus 'Line'.
-            /// </summary>
-            /// <param name="line">L'element a visitar.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaLineElement line) {
+            public override void Visit(EdaThPadElement element) {
 
-                if (line.IsOnLayer(_layerId))
-                    _apertures.DefineCircleAperture(line.Thickness);
+                if (element.IsOnLayer(_layerId) && (element.Slot > element.DrillDiameter))
+                    _apertures.DefineCircleAperture(element.DrillDiameter);
             }
 
-            /// <summary>
-            /// Visuita un element de tipus 'Arc'
-            /// </summary>
-            /// <param name="arc">L'element a visitar.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaArcElement arc) {
+            public override void Visit(EdaLineHoleElement element) {
 
-                if (arc.IsOnLayer(_layerId))
-                    _apertures.DefineCircleAperture(arc.Thickness);
-            }
-
-            /// <summary>
-            /// Visita un element de tipus 'Circle'
-            /// </summary>
-            /// <param name="circle">L'element a visitar.</param>
-            /// 
-            public override void Visit(EdaCircleElement circle) {
-
-                if (circle.IsOnLayer(_layerId) && !circle.Filled)
-                    _apertures.DefineCircleAperture(circle.Thickness);
-            }
-
-            /// <summary>
-            /// Visita un element de tipus 'Rectangle'
-            /// </summary>
-            /// <param name="rectangle">L'element a visitar.</param>
-            /// 
-            public override void Visit(EdaRectangleElement rectangle) {
-
-                if (rectangle.IsOnLayer(_layerId) && !rectangle.Filled)
-                    _apertures.DefineCircleAperture(rectangle.Thickness);
+                if (element.IsOnLayer(_layerId))
+                    _apertures.DefineCircleAperture(element.Diameter);
             }
         }
 
         /// <summary>
-        /// Visitador per generar la imatge. Visita els elements que tenen forars.
+        /// Visitador per generar la imatge. Visita els elements que generen ranures.
         /// </summary>
         private sealed class ImageGeneratorVisitor: EdaElementVisitor {
 
@@ -260,95 +232,40 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 _apertures = apertures;
             }
 
-            /// <summary>
-            /// Visita un object 'Arc'
-            /// </summary>
-            /// <param name="arc">L'element a visitar.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaArcElement arc) {
+            public override void Visit(EdaThPadElement element) {
 
-                if (arc.IsOnLayer(_layerId)) {
+                if (element.IsOnLayer(_layerId) && (element.Slot > element.DrillDiameter)) {
 
-                    EdaPoint startPosition = arc.StartPosition;
-                    EdaPoint endPosition = arc.EndPosition;
-                    EdaPoint center = arc.Center;
-                    if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
-                        startPosition = t.Transform(startPosition);
-                        endPosition = t.Transform(endPosition);
-                        center = t.Transform(center);
-                    }
-
-                    Aperture ap = _apertures.GetCircleAperture(arc.Thickness);
-                    _gb.SelectAperture(ap);
-
-                    _gb.MoveTo(startPosition);
-                    _gb.ArcTo(endPosition.X, endPosition.Y,
-                        center.X - startPosition.X, center.Y - startPosition.Y,
-                        arc.Angle.Value < 0 ? ArcDirection.CW : ArcDirection.CCW);
                 }
             }
 
-            /// <summary>
-            /// Visita un object 'Line'
-            /// </summary>
-            /// <param name="line">L'element a visitar.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaLineElement line) {
+            public override void Visit(EdaLineHoleElement element) {
 
-                if (line.IsOnLayer(_layerId)) {
+                if (element.IsOnLayer(_layerId)) {
 
-                    EdaPoint startPosition = line.StartPosition;
-                    EdaPoint endPosition = line.EndPosition;
+                    // Calcula les coordinades, mesures, rotacions, etc
+                    //
+                    EdaPoint startPosition = element.StartPosition;
+                    EdaPoint endPosition = element.EndPosition;
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
                         startPosition = t.Transform(startPosition);
                         endPosition = t.Transform(endPosition);
                     }
 
-                    Aperture ap = _apertures.GetCircleAperture(line.Thickness);
-                    _gb.SelectAperture(ap);
+                    // Selecciona l'apertura
+                    //
+                    Aperture ap = _apertures.GetCircleAperture(element.Diameter);
 
+                    // Escriu el gerber
+                    //
+                    _gb.SelectAperture(ap);
                     _gb.MoveTo(startPosition);
                     _gb.LineTo(endPosition);
-                }
-            }
-
-            /// <summary>
-            /// Visita un object 'Circle'
-            /// </summary>
-            /// <param name="circle">L'element a visitar.</param>
-            /// 
-            public override void Visit(EdaCircleElement circle) {
-
-                if (circle.IsOnLayer(_layerId) && !circle.Filled) {
-
-                    EdaPoint position = circle.Position;
-                    if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
-                        position = t.Transform(position);
-                    }
-
-                    Aperture ap = _apertures.GetCircleAperture(circle.Thickness);
-                }
-            }
-
-            /// <summary>
-            /// Visita un object 'Rectangle'
-            /// </summary>
-            /// <param name="rectangle">L'element a visitar.</param>
-            /// 
-            public override void Visit(EdaRectangleElement rectangle) {
-
-                if (rectangle.IsOnLayer(_layerId) && !rectangle.Filled) {
-
-                    EdaPoint position = rectangle.Position;
-                    if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
-                        position = t.Transform(position);
-                    }
-
-                    Aperture ap = _apertures.GetRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rectangle.Rotation);
                 }
             }
         }

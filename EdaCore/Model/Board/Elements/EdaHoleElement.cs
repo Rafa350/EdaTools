@@ -14,7 +14,9 @@
         public override bool IsOnLayer(EdaLayerId layerId) {
             return
                 ((layerId == EdaLayerId.Platted) && _platted) ||
-                ((layerId == EdaLayerId.Unplatted) && !_platted);
+                ((layerId == EdaLayerId.Unplatted) && !_platted) ||
+                (layerId == EdaLayerId.TopStop) ||
+                (layerId == EdaLayerId.BottomStop);
         }
 
         /// <summary>

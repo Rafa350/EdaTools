@@ -191,7 +191,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
 
                 var signal = Board.GetSignal(via, null, false);
                 if (signal != null)
-                    builder.Via(via.Position, via.Drill, signal.Name);
+                    builder.Via(via.Position, via.DrillDiameter, signal.Name);
             }
         }
 
@@ -227,7 +227,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
                     Transformation t = Part.GetLocalTransformation();
                     EdaPoint position = t.Transform(pad.Position);
 
-                    _builder.ThPad(position, pad.Drill, Part.Name, pad.Name, signal.Name);
+                    _builder.ThPad(position, pad.DrillDiameter, Part.Name, pad.Name, signal.Name);
                 }
             }
         }

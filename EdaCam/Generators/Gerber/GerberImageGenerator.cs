@@ -260,146 +260,127 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 _apertures = apertures;
             }
 
-            /// <summary>
-            /// Visita un objecte 'LineElement'
-            /// </summary>
-            /// <param name="line">L'objecte a visitar.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaLineElement line) {
+            public override void Visit(EdaLineElement element) {
 
-                if (line.IsOnLayer(_layerId))
-                    _apertures.DefineCircleAperture(Math.Max(line.Thickness, 10000));
+                if (element.IsOnLayer(_layerId))
+                    _apertures.DefineCircleAperture(Math.Max(element.Thickness, 10000));
             }
 
-            /// <summary>
-            /// Visita un objecte 'ArcElement'
-            /// </summary>
-            /// <param name="arc">L'objecte a visitar.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaArcElement arc) {
+            public override void Visit(EdaArcElement element) {
 
-                if (arc.IsOnLayer(_layerId))
-                    _apertures.DefineCircleAperture(Math.Max(arc.Thickness, 10000));
+                if (element.IsOnLayer(_layerId))
+                    _apertures.DefineCircleAperture(Math.Max(element.Thickness, 10000));
             }
 
-            /// <summary>
-            /// Visita un objecte 'RectangleElement'
-            /// </summary>
-            /// <param name="rectangle">L'objecte a visitar.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaRectangleElement rectangle) {
+            public override void Visit(EdaRectangleElement element) {
 
-                if (rectangle.IsOnLayer(_layerId)) {
+                if (element.IsOnLayer(_layerId)) {
 
                     // Si es ple, es 'flashea'
                     //
-                    if (rectangle.Filled) {
-                        EdaAngle rotation = rectangle.Rotation + (Part == null ? EdaAngle.Zero : Part.Rotation);
-                        _apertures.DefineRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotation);
+                    if (element.Filled) {
+                        EdaAngle rotation = element.Rotation + (Part == null ? EdaAngle.Zero : Part.Rotation);
+                        _apertures.DefineRectangleAperture(element.Size.Width, element.Size.Height, rotation);
                     }
 
                     // En cas contrari es dibuixa
                     //
                     else
-                        _apertures.DefineCircleAperture(rectangle.Thickness);
+                        _apertures.DefineCircleAperture(element.Thickness);
                 }
             }
 
-            /// <summary>
-            /// Visita un objecte 'CircleElement'
-            /// </summary>
-            /// <param name="circle">L'objecte a visitar.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaCircleElement circle) {
+            public override void Visit(EdaCircleElement element) {
 
-                if (circle.IsOnLayer(_layerId)) {
+                if (element.IsOnLayer(_layerId)) {
 
                     // Si es ple, es 'flashea'
                     //
-                    if (circle.Filled)
-                        _apertures.DefineCircleAperture(circle.Diameter);
+                    if (element.Filled)
+                        _apertures.DefineCircleAperture(element.Diameter);
 
                     // En cas contrari es dibuixa
                     //
                     else
-                        _apertures.DefineCircleAperture(circle.Thickness);
+                        _apertures.DefineCircleAperture(element.Thickness);
                 }
             }
 
-            /// <summary>
-            /// Visita un objecte 'TextElement'
-            /// </summary>
-            /// <param name="text">L'objecte a visitar.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaTextElement text) {
+            public override void Visit(EdaTextElement element) {
 
-                if (text.IsOnLayer(_layerId))
-                    _apertures.DefineCircleAperture(text.Thickness);
+                if (element.IsOnLayer(_layerId))
+                    _apertures.DefineCircleAperture(element.Thickness);
             }
 
-            /// <summary>
-            /// Visita un objecte 'ViaElement'
-            /// </summary>
-            /// <param name="via">L'objecte a visitar.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaViaElement via) {
+            public override void Visit(EdaViaElement element) {
 
-                _apertures.DefineCircleAperture(via.OuterSize);
+                _apertures.DefineCircleAperture(element.OuterSize);
             }
 
-            /// <summary>
-            /// Visita un objecte 'ThPadElement'
-            /// </summary>
-            /// <param name="pad">L'objecte.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaThPadElement pad) {
+            public override void Visit(EdaThPadElement element) {
 
-                if (pad.IsOnLayer(_layerId)) {
-                    EdaAngle rotation = pad.Rotation;
+                if (element.IsOnLayer(_layerId)) {
+                    EdaAngle rotation = element.Rotation;
                     if (Part != null)
                         rotation += Part.Rotation;
-                    if (pad.CornerRatio.IsMax)
-                        _apertures.DefineOvalAperture(pad.TopSize.Width, pad.TopSize.Height, rotation);
-                    else if (pad.CornerRatio.IsZero)
-                        _apertures.DefineRectangleAperture(pad.TopSize.Width, pad.TopSize.Height, rotation);
+                    if (element.CornerRatio.IsMax)
+                        _apertures.DefineOvalAperture(element.TopSize.Width, element.TopSize.Height, rotation);
+                    else if (element.CornerRatio.IsZero)
+                        _apertures.DefineRectangleAperture(element.TopSize.Width, element.TopSize.Height, rotation);
                     else {
-                        int radius = pad.CornerRatio * Math.Min(pad.TopSize.Width, pad.TopSize.Height) / 2;
-                        _apertures.DefineRoundRectangleAperture(pad.TopSize.Width, pad.TopSize.Height, radius, rotation);
+                        int radius = element.CornerRatio * Math.Min(element.TopSize.Width, element.TopSize.Height) / 2;
+                        _apertures.DefineRoundRectangleAperture(element.TopSize.Width, element.TopSize.Height, radius, rotation);
                     }
                 }
             }
 
-            /// <summary>
-            /// Visita un objecte 'SmdPadElement'
-            /// </summary>
-            /// <param name="pad">L'objecte.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaSmdPadElement pad) {
+            public override void Visit(EdaSmdPadElement element) {
 
-                if (pad.IsOnLayer(_layerId)) {
-                    EdaAngle rotation = pad.Rotation;
+                if (element.IsOnLayer(_layerId)) {
+                    EdaAngle rotation = element.Rotation;
                     if (Part != null)
                         rotation += Part.Rotation;
-                    if (pad.CornerRatio.IsZero)
-                        _apertures.DefineRectangleAperture(pad.Size.Width, pad.Size.Height, rotation);
-                    else if (pad.CornerRatio.IsMax)
-                        _apertures.DefineOvalAperture(pad.Size.Width, pad.Size.Height, rotation);
+                    if (element.CornerRatio.IsZero)
+                        _apertures.DefineRectangleAperture(element.Size.Width, element.Size.Height, rotation);
+                    else if (element.CornerRatio.IsMax)
+                        _apertures.DefineOvalAperture(element.Size.Width, element.Size.Height, rotation);
                     else {
-                        int radius = pad.CornerRatio * Math.Min(pad.Size.Width, pad.Size.Height) / 2;
-                        _apertures.DefineRoundRectangleAperture(pad.Size.Width, pad.Size.Height, radius, rotation);
+                        int radius = element.CornerRatio * Math.Min(element.Size.Width, element.Size.Height) / 2;
+                        _apertures.DefineRoundRectangleAperture(element.Size.Width, element.Size.Height, radius, rotation);
                     }
                 }
             }
 
-            /// <summary>
-            /// Visita un objecte 'RegionElement'
-            /// </summary>
-            /// <param name="region">L'objecte a visitar.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaRegionElement region) {
+            public override void Visit(EdaCircleHoleElement element) {
 
-                if (region.IsOnLayer(_layerId))
-                    _apertures.DefineCircleAperture(Math.Max(100000, region.Thickness));
+                if (element.IsOnLayer(_layerId))
+                    _apertures.DefineCircleAperture(element.Diameter);
+            }
+
+            /// <inheritdoc/>
+            /// 
+            public override void Visit(EdaRegionElement element) {
+
+                if (element.IsOnLayer(_layerId))
+                    _apertures.DefineCircleAperture(Math.Max(100000, element.Thickness));
             }
         }
 
@@ -429,19 +410,16 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 _apertures = apertures;
             }
 
-            /// <summary>
-            /// Visita un objecte 'EdaLineElement'
-            /// </summary>
-            /// <param name="line">L'objecte.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaLineElement line) {
+            public override void Visit(EdaLineElement element) {
 
-                if (line.IsOnLayer(_layerId)) {
+                if (element.IsOnLayer(_layerId)) {
 
                     // Calcula les coordinades, mesures, rotacions, etc
                     //
-                    EdaPoint startPosition = line.StartPosition;
-                    EdaPoint endPosition = line.EndPosition;
+                    EdaPoint startPosition = element.StartPosition;
+                    EdaPoint endPosition = element.EndPosition;
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
                         startPosition = t.Transform(startPosition);
@@ -450,7 +428,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                     // Selecciona l'apertura
                     //
-                    Aperture ap = _apertures.GetCircleAperture(Math.Max(line.Thickness, 10000));
+                    Aperture ap = _apertures.GetCircleAperture(Math.Max(element.Thickness, 10000));
 
                     // Escriu el gerber
                     //
@@ -460,20 +438,17 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 }
             }
 
-            /// <summary>
-            /// Visita un objecte 'EdaArcElement'.
-            /// </summary>
-            /// <param name="arc">L'objecte.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaArcElement arc) {
+            public override void Visit(EdaArcElement element) {
 
-                if (arc.IsOnLayer(_layerId)) {
+                if (element.IsOnLayer(_layerId)) {
 
                     // Calcula les coordinades, mesures, rotacions, etc
                     //
-                    EdaPoint startPosition = arc.StartPosition;
-                    EdaPoint endPosition = arc.EndPosition;
-                    EdaPoint center = arc.Center;
+                    EdaPoint startPosition = element.StartPosition;
+                    EdaPoint endPosition = element.EndPosition;
+                    EdaPoint center = element.Center;
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
                         startPosition = t.Transform(startPosition);
@@ -483,7 +458,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                     // Selecciona l'apertura
                     //
-                    Aperture ap = _apertures.GetCircleAperture(Math.Max(arc.Thickness, 10000));
+                    Aperture ap = _apertures.GetCircleAperture(Math.Max(element.Thickness, 10000));
 
                     // Escriu el gerber
                     //
@@ -491,25 +466,22 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     _gb.MoveTo(startPosition);
                     _gb.ArcTo(endPosition.X, endPosition.Y,
                         center.X - startPosition.X, center.Y - startPosition.Y,
-                        arc.Angle.Value < 0 ? ArcDirection.CW : ArcDirection.CCW);
+                        element.Angle.Value < 0 ? ArcDirection.CW : ArcDirection.CCW);
                 }
             }
 
-            /// <summary>
-            /// Visita un objecte 'EdaRectangleElement'.
-            /// </summary>
-            /// <param name="rectangle">L'objecte.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaRectangleElement rectangle) {
+            public override void Visit(EdaRectangleElement element) {
 
-                if (rectangle.IsOnLayer(_layerId)) {
+                if (element.IsOnLayer(_layerId)) {
 
-                    if (rectangle.Filled) {
+                    if (element.Filled) {
 
                         // Calcula les coordinades, mesures, rotacions, etc
                         //
-                        EdaPoint position = rectangle.Position;
-                        EdaAngle rotation = rectangle.Rotation;
+                        EdaPoint position = element.Position;
+                        EdaAngle rotation = element.Rotation;
                         if (Part != null) {
                             Transformation t = Part.GetLocalTransformation();
                             position = t.Transform(position);
@@ -518,7 +490,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                         // Selecciona l'apertura
                         //
-                        Aperture ap = _apertures.GetRectangleAperture(rectangle.Size.Width, rectangle.Size.Height, rotation);
+                        Aperture ap = _apertures.GetRectangleAperture(element.Size.Width, element.Size.Height, rotation);
 
                         // Escriu el gerber
                         //
@@ -529,12 +501,12 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     else {
                         // Selecciona l'apertura
                         //
-                        Aperture ap = _apertures.GetCircleAperture(rectangle.Thickness);
+                        Aperture ap = _apertures.GetCircleAperture(element.Thickness);
 
                         // Obte el poligon
                         //
                         EdaLayer layer = Board.GetLayer(_layerId);
-                        EdaPolygon polygon = rectangle.GetPolygon(layer.Id);
+                        EdaPolygon polygon = element.GetPolygon(layer.Id);
                         EdaPoints points = EdaPoints.Create(polygon.Points);
 
                         if (Part != null) {
@@ -550,20 +522,17 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 }
             }
 
-            /// <summary>
-            /// Visita un objecte 'EdaCircleElement'
-            /// </summary>
-            /// <param name="circle">L'objecte.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaCircleElement circle) {
+            public override void Visit(EdaCircleElement element) {
 
-                if (circle.IsOnLayer(_layerId)) {
+                if (element.IsOnLayer(_layerId)) {
 
-                    if (circle.Filled) {
+                    if (element.Filled) {
 
                         // Calcula les coordinades, mesures, rotacions, etc
                         //
-                        EdaPoint position = circle.Position;
+                        EdaPoint position = element.Position;
                         if (Part != null) {
                             Transformation t = Part.GetLocalTransformation();
                             position = t.Transform(position);
@@ -571,7 +540,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                         // Selecciona l'apertura
                         //
-                        Aperture ap = _apertures.GetCircleAperture(circle.Diameter);
+                        Aperture ap = _apertures.GetCircleAperture(element.Diameter);
 
                         // Escriu el gerber
                         //
@@ -583,12 +552,12 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                         // Selecciona l'apertura
                         //
-                        Aperture ap = _apertures.GetCircleAperture(circle.Thickness);
+                        Aperture ap = _apertures.GetCircleAperture(element.Thickness);
 
                         // Obte el poligon
                         //
                         EdaLayer layer = Board.GetLayer(_layerId);
-                        EdaPolygon polygon = circle.GetPolygon(layer.Id);
+                        EdaPolygon polygon = element.GetPolygon(layer.Id);
                         EdaPoints points = EdaPoints.Create(polygon.Points);
 
                         if (Part != null) {
@@ -604,18 +573,15 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 }
             }
 
-            /// <summary>
-            /// Visita un objecte 'EdaTextElement'
-            /// </summary>
-            /// <param name="text">L'objecte.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaTextElement text) {
+            public override void Visit(EdaTextElement element) {
 
-                if (text.IsOnLayer(_layerId)) {
+                if (element.IsOnLayer(_layerId)) {
 
                     // Selecciona l'apertura
                     //
-                    Aperture ap = _apertures.GetCircleAperture(text.Thickness);
+                    Aperture ap = _apertures.GetCircleAperture(element.Thickness);
 
                     // Escriu el gerber
                     //
@@ -623,7 +589,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     Font font = FontFactory.Instance.GetFont("Standard");
                     GerberTextDrawer dr = new GerberTextDrawer(font, _gb);
 
-                    PartAttributeAdapter paa = new PartAttributeAdapter(Part, text);
+                    PartAttributeAdapter paa = new PartAttributeAdapter(Part, element);
                     EdaPoint position = paa.Position;
                     if (Part != null) {
                         Transformation t = Part.GetLocalTransformation();
@@ -634,39 +600,33 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 }
             }
 
-            /// <summary>
-            /// Visita un objecte 'EdaViaElement'.
-            /// </summary>
-            /// <param name="via">L'objecte.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaViaElement via) {
+            public override void Visit(EdaViaElement element) {
 
-                if (via.IsOnLayer(_layerId)) {
+                if (element.IsOnLayer(_layerId)) {
 
                     // Selecciona l'apertura
                     //
-                    Aperture ap = _apertures.GetCircleAperture(via.OuterSize);
+                    Aperture ap = _apertures.GetCircleAperture(element.OuterSize);
 
                     // Escriu el gerber
                     //
                     _gb.SelectAperture(ap);
-                    _gb.FlashAt(via.Position);
+                    _gb.FlashAt(element.Position);
                 }
             }
 
-            /// <summary>
-            /// Visita un objecte 'ThPadElement'
-            /// </summary>
-            /// <param name="pad">L'objecte a visitar.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaThPadElement pad) {
+            public override void Visit(EdaThPadElement element) {
 
-                if (pad.IsOnLayer(_layerId)) {
+                if (element.IsOnLayer(_layerId)) {
 
                     // Calcula les coordinades, mesures, rotacions, etc
                     //
-                    EdaPoint position = pad.Position;
-                    EdaAngle rotation = pad.Rotation;
+                    EdaPoint position = element.Position;
+                    EdaAngle rotation = element.Rotation;
                     if (Part != null) {
                         rotation += Part.Rotation;
                         Transformation t = Part.GetLocalTransformation();
@@ -676,21 +636,21 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     // Selecciona l'apertura
                     //
                     Aperture ap;
-                    if (pad.CornerRatio.IsMax)
-                        ap = _apertures.GetOvalAperture(pad.TopSize.Width, pad.TopSize.Height, rotation);
-                    else if (pad.CornerRatio.IsZero)
-                        ap = _apertures.GetRectangleAperture(pad.TopSize.Width, pad.TopSize.Height, rotation);
+                    if (element.CornerRatio.IsMax)
+                        ap = _apertures.GetOvalAperture(element.TopSize.Width, element.TopSize.Height, rotation);
+                    else if (element.CornerRatio.IsZero)
+                        ap = _apertures.GetRectangleAperture(element.TopSize.Width, element.TopSize.Height, rotation);
                     else {
-                        int radius = pad.CornerRatio * Math.Min(pad.TopSize.Width, pad.TopSize.Height) / 2;
-                        ap = _apertures.GetRoundRectangleAperture(pad.TopSize.Width, pad.TopSize.Height, radius, rotation);
+                        int radius = element.CornerRatio * Math.Min(element.TopSize.Width, element.TopSize.Height) / 2;
+                        ap = _apertures.GetRoundRectangleAperture(element.TopSize.Width, element.TopSize.Height, radius, rotation);
                     }
                     _gb.SelectAperture(ap);
 
                     // Afegeix atributs
                     // 
                     if (_imageType == ImageType.Copper) {
-                        _gb.Attribute(AttributeScope.Object, $".P,{Part.Name},{pad.Name}");
-                        var signal = Board.GetSignal(pad, Part, false);
+                        _gb.Attribute(AttributeScope.Object, $".P,{Part.Name},{element.Name}");
+                        var signal = Board.GetSignal(element, Part, false);
                         if (signal != null)
                             _gb.Attribute(AttributeScope.Object, $".N,{signal.Name}");
                     }
@@ -706,19 +666,16 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 }
             }
 
-            /// <summary>
-            /// Visita un objecte 'SmdPadElement'
-            /// </summary>
-            /// <param name="pad">L'objecte a visitar.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaSmdPadElement pad) {
+            public override void Visit(EdaSmdPadElement element) {
 
-                if (pad.IsOnLayer(_layerId)) {
+                if (element.IsOnLayer(_layerId)) {
 
                     // Calcula les coordinades, mesures, rotacions, etc
                     //
-                    EdaPoint position = pad.Position;
-                    EdaAngle rotation = pad.Rotation;
+                    EdaPoint position = element.Position;
+                    EdaAngle rotation = element.Rotation;
                     if (Part != null) {
                         rotation += Part.Rotation;
                         Transformation t = Part.GetLocalTransformation();
@@ -728,19 +685,19 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     // Selecciona l'apertura
                     //
                     Aperture ap;
-                    if (pad.CornerRatio.IsZero)
-                        ap = _apertures.GetRectangleAperture(pad.Size.Width, pad.Size.Height, rotation);
-                    else if (pad.CornerRatio.IsMax)
-                        ap = _apertures.GetOvalAperture(pad.Size.Width, pad.Size.Height, rotation);
+                    if (element.CornerRatio.IsZero)
+                        ap = _apertures.GetRectangleAperture(element.Size.Width, element.Size.Height, rotation);
+                    else if (element.CornerRatio.IsMax)
+                        ap = _apertures.GetOvalAperture(element.Size.Width, element.Size.Height, rotation);
                     else
-                        ap = _apertures.GetRoundRectangleAperture(pad.Size.Width, pad.Size.Height, pad.CornerSize, rotation);
+                        ap = _apertures.GetRoundRectangleAperture(element.Size.Width, element.Size.Height, element.CornerSize, rotation);
                     _gb.SelectAperture(ap);
 
                     // Afegeix atributs
                     //
                     if (_imageType == ImageType.Copper) {
-                        _gb.Attribute(AttributeScope.Object, $".P,{Part.Name},{pad.Name}");
-                        var signal = Board.GetSignal(pad, Part, false);
+                        _gb.Attribute(AttributeScope.Object, $".P,{Part.Name},{element.Name}");
+                        var signal = Board.GetSignal(element, Part, false);
                         if (signal != null)
                             _gb.Attribute(AttributeScope.Object, $".N,{signal.Name}");
                     }
@@ -804,19 +761,16 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 _apertures = apertures;
             }
 
-            /// <summary>
-            /// Visita un objecte RegionElement
-            /// </summary>
-            /// <param name="region">L'objecte a visitar.</param>
+            /// <inheritdoc/>
             /// 
-            public override void Visit(EdaRegionElement region) {
+            public override void Visit(EdaRegionElement element) {
 
-                if (CanVisit(region)) {
+                if (element.IsOnLayer(_layerId)) {
                     Transformation t = new Transformation();
                     if (Part != null)
                         t = Part.GetLocalTransformation();
-                    EdaPolygon polygon = Board.GetRegionPolygon(region, _layerId, t);
-                    DrawPolygon(polygon, region.Thickness);
+                    EdaPolygon polygon = Board.GetRegionPolygon(element, _layerId, t);
+                    DrawPolygon(polygon, element.Thickness);
                 }
             }
 
@@ -864,11 +818,6 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 if ((polygon.Childs != null) && (level < 2))
                     foreach (EdaPolygon child in polygon.Childs)
                         DrawPolygon(child, level + 1, thickness);
-            }
-
-            private bool CanVisit(EdaElement element) {
-
-                return element.IsOnLayer(_layerId);
             }
         }
     }

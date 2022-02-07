@@ -10,8 +10,9 @@ using System.IO;
 namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
     /// <summary>
-    /// Clase per generar fitxers gerber de forats i fresats.
+    /// Clase per generar fitxers gerber dels forats.
     /// </summary>
+    /// 
     public sealed class GerberDrillGenerator: Generator {
 
         public enum DrillType {
@@ -173,8 +174,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         }
 
         /// <summary>
-        /// Visitador per preparar les apertures. Visita els element que tenen forats.
+        /// Visitador per preparar les apertures. Visita els element que generen forats circulars.
         /// </summary>
+        /// 
         private sealed class PrepareAperturesVisitor: EdaElementVisitor {
 
             private readonly EdaLayerId _layerId;
@@ -192,10 +194,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 _apertures = apertures;
             }
 
-            /// <summary>
-            /// Visita un element de tipus 'Circle'
-            /// </summary>
-            /// <param name="element">L'element a visitar.</param>
+            /// <inheritdoc/>
             /// 
             public override void Visit(EdaCircleElement element) {
 
@@ -203,45 +202,25 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     _apertures.DefineCircleAperture(element.Diameter);
             }
 
-            /// <summary>
-            /// Visita un element de tipus 'Via'
-            /// </summary>
-            /// <param name="element">L'element a visitar.</param>
+            /// <inheritdoc/>
             /// 
             public override void Visit(EdaViaElement element) {
 
                 if (element.IsOnLayer(_layerId))
-                    _apertures.DefineCircleAperture(element.Drill);
+                    _apertures.DefineCircleAperture(element.DrillDiameter);
             }
 
-            /// <summary>
-            /// Visita un element de tipus 'ThPad'
-            /// </summary>
-            /// <param name="element">L'element a visitar.</param>
+            /// <inheritdoc/>
             /// 
             public override void Visit(EdaThPadElement element) {
 
-                if (element.IsOnLayer(_layerId))
-                    _apertures.DefineCircleAperture(element.Drill);
+                if (element.IsOnLayer(_layerId) && (element.Slot < element.DrillDiameter))
+                    _apertures.DefineCircleAperture(element.DrillDiameter);
             }
 
-            /// <summary>
-            /// Visita un element de tipus 'CircleHole'
-            /// </summary>
-            /// <param name="element">L'element a visitar.</param>
+            /// <inheritdoc/>
             /// 
             public override void Visit(EdaCircleHoleElement element) {
-
-                if (element.IsOnLayer(_layerId))
-                    _apertures.DefineCircleAperture(element.Diameter);
-            }
-
-            /// <summary>
-            /// Visita un element de tipus 'LineHole'
-            /// </summary>
-            /// <param name="element">L'element a visitar.</param>
-            /// 
-            public override void Visit(EdaLineHoleElement element) {
 
                 if (element.IsOnLayer(_layerId))
                     _apertures.DefineCircleAperture(element.Diameter);
@@ -249,8 +228,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
         }
 
         /// <summary>
-        /// Visitador per generar la imatge. Visita els elements que tenen forars.
+        /// Visitador per generar la imatge. Visita els elements que generen forats circulars.
         /// </summary>
+        /// 
         private sealed class ImageGeneratorVisitor: EdaElementVisitor {
 
             private readonly GerberBuilder _gb;
@@ -271,10 +251,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 _apertures = apertures;
             }
 
-            /// <summary>
-            /// Visita un element de tipus 'Circle'
-            /// </summary>
-            /// <param name="element">L'element a visitar.</param>
+            /// <inheritdoc/>
             /// 
             public override void Visit(EdaCircleElement element) {
 
@@ -293,10 +270,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                 }
             }
 
-            /// <summary>
-            /// Visita un element de tipus 'Via'.
-            /// </summary>
-            /// <param name="element">L'element a visitar.</param>
+            /// <inheritdoc/>
             /// 
             public override void Visit(EdaViaElement element) {
 
@@ -308,21 +282,18 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         position = t.Transform(position);
                     }
 
-                    Aperture ap = _apertures.GetCircleAperture(element.Drill);
+                    Aperture ap = _apertures.GetCircleAperture(element.DrillDiameter);
                     _gb.SelectAperture(ap);
 
                     _gb.FlashAt(position);
                 }
             }
 
-            /// <summary>
-            /// Visita un element de tipus 'ThPad'.
-            /// </summary>
-            /// <param name="element">L'element a visitar.</param>
+            /// <inheritdoc/>
             /// 
             public override void Visit(EdaThPadElement element) {
 
-                if (element.IsOnLayer(_layerId)) {
+                if (element.IsOnLayer(_layerId) && (element.Slot < element.DrillDiameter)) {
 
                     EdaPoint position = element.Position;
                     if (Part != null) {
@@ -330,17 +301,14 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         position = t.Transform(position);
                     }
 
-                    Aperture ap = _apertures.GetCircleAperture(element.Drill);
+                    Aperture ap = _apertures.GetCircleAperture(element.DrillDiameter);
                     _gb.SelectAperture(ap);
 
                     _gb.FlashAt(position);
                 }
             }
 
-            /// <summary>
-            /// Visita un element de tipus 'CircleHole'
-            /// </summary>
-            /// <param name="element">L'element a visitar.</param>
+            /// <inheritdoc/>
             /// 
             public override void Visit(EdaCircleHoleElement element) {
 
@@ -356,37 +324,6 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     _gb.SelectAperture(ap);
 
                     _gb.FlashAt(position);
-                }
-            }
-
-            /// <summary>
-            /// Visita un element de tipus 'LineHole'
-            /// </summary>
-            /// <param name="element">L'element a visitar.</param>
-            /// 
-            public override void Visit(EdaLineHoleElement element) {
-
-                if (element.IsOnLayer(_layerId)) {
-
-                    // Calcula les coordinades, mesures, rotacions, etc
-                    //
-                    EdaPoint startPosition = element.StartPosition;
-                    EdaPoint endPosition = element.EndPosition;
-                    if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
-                        startPosition = t.Transform(startPosition);
-                        endPosition = t.Transform(endPosition);
-                    }
-
-                    // Selecciona l'apertura
-                    //
-                    Aperture ap = _apertures.GetCircleAperture(element.Diameter);
-
-                    // Escriu el gerber
-                    //
-                    _gb.SelectAperture(ap);
-                    _gb.MoveTo(startPosition);
-                    _gb.LineTo(endPosition);
                 }
             }
         }

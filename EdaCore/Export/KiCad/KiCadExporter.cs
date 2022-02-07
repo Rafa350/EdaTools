@@ -186,7 +186,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                         element.Position.Y / -_scale, 
                         element.Rotation.AsDegrees)
                     .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", element.TopSize.Width / _scale, element.TopSize.Height / _scale)
-                    .AppendFormat(CultureInfo.InvariantCulture, "(drill {0}) ", element.Drill / _scale)
+                    .AppendFormat(CultureInfo.InvariantCulture, "(drill {0}) ", element.DrillDiameter / _scale)
                     .Append("(layers *.Cu *.Mask))");
 
                 _writer.WriteLine(sb);

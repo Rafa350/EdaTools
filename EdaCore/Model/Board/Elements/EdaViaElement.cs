@@ -20,7 +20,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private readonly EdaRatio _drcInnerSizePercent = EdaRatio.P25;
 
         private EdaPoint _position;
-        private int _drill;
+        private int _drillDiameter;
         private int _outerSize = 0;
         private int _innerSize = 0;
 
@@ -40,7 +40,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             (_position.GetHashCode() * 17) +
             (_outerSize * 31) +
             (_innerSize * 111) +
-            (_drill * 13);
+            (_drillDiameter * 13);
 
         /// <summary>
         /// Obte la llista de puns pels poligons
@@ -52,9 +52,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private EdaPoints MakeViaPoints(EdaLayerId layerId, int spacing) {
 
             int size = layerId.Side == BoardSide.Inner ? InnerSize : OuterSize;
-            return EdaPoints.CreateCircle(
-                _position,
-                (size / 2) + spacing);
+            return EdaPoints.CreateCircle(_position, (size / 2) + spacing);
         }
 
         /// <summary>
@@ -64,7 +62,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         private EdaPoints MakeHolePoints() {
 
-            return EdaPoints.CreateCircle(_position, _drill / 2);
+            return EdaPoints.CreateCircle(_position, _drillDiameter / 2);
         }
 
         /// <inheritdoc/>
@@ -140,13 +138,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// El diametre del forat
         /// </summary>
         /// 
-        public int Drill {
-            get => _drill;
+        public int DrillDiameter {
+            get => _drillDiameter;
             set {
                 if (value <= 0)
-                    throw new ArgumentOutOfRangeException(nameof(Drill));
+                    throw new ArgumentOutOfRangeException(nameof(DrillDiameter));
 
-                _drill = value;
+                _drillDiameter = value;
             }
         }
 
@@ -157,8 +155,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public int OuterSize {
             get {
                 if (_outerSize == 0) {
-                    int ring = Math.Max(_drcOuterSizeMin, Math.Min(_drcOuterSizeMax, _drill * _drcOuterSizePercent));
-                    return _drill + ring * 2;
+                    int ring = Math.Max(_drcOuterSizeMin, Math.Min(_drcOuterSizeMax, _drillDiameter * _drcOuterSizePercent));
+                    return _drillDiameter + ring * 2;
                 }
                 else
                     return _outerSize;
@@ -173,8 +171,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public int InnerSize {
             get {
                 if (_innerSize == 0) {
-                    int ring = Math.Max(_drcInnerSizeMin, Math.Min(_drcInnerSizeMax, _drill * _drcInnerSizePercent));
-                    return _drill + ring * 2;
+                    int ring = Math.Max(_drcInnerSizeMin, Math.Min(_drcInnerSizeMax, _drillDiameter * _drcInnerSizePercent));
+                    return _drillDiameter + ring * 2;
                 }
                 else
                     return _innerSize;

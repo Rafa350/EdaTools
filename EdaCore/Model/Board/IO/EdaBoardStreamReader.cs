@@ -160,38 +160,33 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
             _rd.NextTag();
             
-            List<EdaLayer> layers = null;
+            IEnumerable<EdaLayer> layers = null;
             if (_rd.TagName == "layers") {
-                layers = new List<EdaLayer>();
-                layers.AddRange(ParseLayersNode());
+                layers = ParseLayersNode();
                 _rd.NextTag();
             }
 
-            List<EdaSignal> signals = null;
+            IEnumerable<EdaSignal> signals = null;
             if (_rd.TagName == "signals") {
-                signals = new List<EdaSignal>();
-                signals.AddRange(ParseSignalsNode());
+                signals = ParseSignalsNode();
                 _rd.NextTag();
             }
 
-            List<EdaComponent> components = null;
+            IEnumerable<EdaComponent> components = null;
             if (_rd.TagName == "components") {
-                components = new List<EdaComponent>();
-                components.AddRange(ParseComponentsNode());
+                components = ParseComponentsNode();
                 _rd.NextTag();
             }
 
-            List<EdaPart> parts = null;
+            IEnumerable<EdaPart> parts = null;
             if (_rd.TagName == "parts") {
-                parts = new List<EdaPart>();
-                parts.AddRange(ParsePartsNode());
+                parts = ParsePartsNode();
                 _rd.NextTag();
             }
 
-            List<EdaElement> elements = null;
+            IEnumerable<EdaElement> elements = null;
             if (_rd.TagName == "elements") {
-                elements = new List<EdaElement>();
-                elements.AddRange(ParseBoardElementsNode());
+                elements = ParseBoardElementsNode();
                 _rd.NextTag();
             }
 
@@ -939,7 +934,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 TopSize = topSize,
                 InnerSize = innerSize,
                 BottomSize = bottomSize,
-                Drill = drill
+                DrillDiameter = drill
             };
 
             if (signalName != null) 
@@ -1015,7 +1010,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 Position = position,
                 OuterSize = outerSize,
                 InnerSize = innerSize,
-                Drill = drill
+                DrillDiameter = drill
             };
 
             if (signalName != null) 

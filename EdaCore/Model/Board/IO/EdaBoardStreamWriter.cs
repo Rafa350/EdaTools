@@ -185,13 +185,94 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                     _writer.WriteAttributeString("innerSize", EdaFormatter.FormatSize(element.InnerSize));
                 if (element.BottomSize != element.TopSize)
                     _writer.WriteAttributeString("bottomSize", EdaFormatter.FormatSize(element.BottomSize));
-                _writer.WriteAttributeString("drill", EdaFormatter.FormatScalar(element.Drill));
+                _writer.WriteAttributeString("drill", EdaFormatter.FormatScalar(element.DrillDiameter));
 
                 if (_currentBoard != null) {
                     EdaSignal signal = _currentBoard.GetSignal(element, _currentPart, false);
                     if (signal != null)
                         _writer.WriteAttributeString("signal", signal.Name);
                 }
+
+                _writer.WriteEndElement();
+            }
+
+            /// <inheritdoc/>
+            /// 
+            public override void Visit(EdaViaElement element) {
+
+                _writer.WriteStartElement("via");
+
+                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(element.LayerSet));
+                _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(element.Position));
+                _writer.WriteAttributeString("drill", EdaFormatter.FormatScalar(element.DrillDiameter));
+                _writer.WriteAttributeString("outerSize", EdaFormatter.FormatScalar(element.OuterSize));
+                if (element.InnerSize != element.OuterSize)
+                    _writer.WriteAttributeString("innerSize", EdaFormatter.FormatScalar(element.InnerSize));
+
+                if (_currentBoard != null) {
+                    EdaSignal signal = _currentBoard.GetSignal(element, null, false);
+                    if (signal != null)
+                        _writer.WriteAttributeString("signal", signal.Name);
+                }
+
+                _writer.WriteEndElement();
+            }
+
+            /// <inheritdoc/>
+            /// 
+            public override void Visit(EdaCircleHoleElement element) {
+
+                _writer.WriteStartElement("circleHole");
+
+                _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(element.Position));
+                _writer.WriteAttributeString("diameter", EdaFormatter.FormatScalar(element.Diameter));
+                _writer.WriteAttributeBool("platted", element.Platted);
+
+                _writer.WriteEndElement();
+            }
+
+            /// <inheritdoc/>
+            /// 
+            public override void Visit(EdaLineHoleElement element) {
+
+                _writer.WriteStartElement("lineHole");
+
+                _writer.WriteAttributeString("startPosition", EdaFormatter.FormatPoint(element.StartPosition));
+                _writer.WriteAttributeString("endPosition", EdaFormatter.FormatPoint(element.EndPosition));
+                _writer.WriteAttributeString("diameter", EdaFormatter.FormatScalar(element.Diameter));
+                _writer.WriteAttributeBool("platted", element.Platted);
+
+                _writer.WriteEndElement();
+            }
+
+            /// <inheritdoc/>
+            /// 
+            public override void Visit(EdaRegionElement element) {
+
+                _writer.WriteStartElement("region");
+
+                _writer.WriteAttributeString("layer", EdaFormatter.FormatLayerSet(element.LayerSet));
+                if (element.Thickness > 0)
+                    _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(element.Thickness));
+                if (element.Clearance > 0)
+                    _writer.WriteAttributeString("clearance", EdaFormatter.FormatScalar(element.Clearance));
+                if (element.Priority > 0)
+                    _writer.WriteAttributeInteger("priority", element.Priority);
+
+                if (_currentBoard != null) {
+                    EdaSignal signal = _currentBoard.GetSignal(element, _currentPart, false);
+                    if (signal != null)
+                        _writer.WriteAttributeString("signal", signal.Name);
+                }
+
+                if (element.Segments != null)
+                    foreach (var segment in element.Segments) {
+                        _writer.WriteStartElement("segment");
+                        _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(segment.Position));
+                        if (!segment.Arc.IsZero)
+                            _writer.WriteAttributeString("angle", EdaFormatter.FormatAngle(segment.Arc));
+                        _writer.WriteEndElement();
+                    }
 
                 _writer.WriteEndElement();
             }
@@ -230,38 +311,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
                 _writer.WriteAttributeString("name", attr.Name);
                 _writer.WriteAttributeString("value", attr.Value);
-
-                _writer.WriteEndElement();
-            }
-
-            /// <inheritdoc/>
-            /// 
-            public override void Visit(EdaRegionElement element) {
-
-                _writer.WriteStartElement("region");
-
-                _writer.WriteAttributeString("layer", EdaFormatter.FormatLayerSet(element.LayerSet));
-                if (element.Thickness > 0)
-                    _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(element.Thickness));
-                if (element.Clearance > 0)
-                    _writer.WriteAttributeString("clearance", EdaFormatter.FormatScalar(element.Clearance));
-                if (element.Priority > 0)
-                    _writer.WriteAttributeInteger("priority", element.Priority);
-
-                if (_currentBoard != null) {
-                    EdaSignal signal = _currentBoard.GetSignal(element, _currentPart, false);
-                    if (signal != null)
-                        _writer.WriteAttributeString("signal", signal.Name);
-                }
-
-                if (element.Segments != null)
-                    foreach (var segment in element.Segments) {
-                        _writer.WriteStartElement("segment");
-                        _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(segment.Position));
-                        if (!segment.Arc.IsZero)
-                            _writer.WriteAttributeString("angle", EdaFormatter.FormatAngle(segment.Arc));
-                        _writer.WriteEndElement();
-                    }
 
                 _writer.WriteEndElement();
             }
@@ -319,55 +368,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 finally {
                     _currentPart = null;
                 }
-            }
-
-            /// <inheritdoc/>
-            /// 
-            public override void Visit(EdaViaElement element) {
-
-                _writer.WriteStartElement("via");
-
-                _writer.WriteAttributeString("layers", EdaFormatter.FormatLayerSet(element.LayerSet));
-                _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(element.Position));
-                _writer.WriteAttributeString("drill", EdaFormatter.FormatScalar(element.Drill));
-                _writer.WriteAttributeString("outerSize", EdaFormatter.FormatScalar(element.OuterSize));
-                if (element.InnerSize != element.OuterSize)
-                    _writer.WriteAttributeString("innerSize", EdaFormatter.FormatScalar(element.InnerSize));
-
-                if (_currentBoard != null) {
-                    EdaSignal signal = _currentBoard.GetSignal(element, null, false);
-                    if (signal != null)
-                        _writer.WriteAttributeString("signal", signal.Name);
-                }
-
-                _writer.WriteEndElement();
-            }
-
-            /// <inheritdoc/>
-            /// 
-            public override void Visit(EdaCircleHoleElement element) {
-
-                _writer.WriteStartElement("circleHole");
-
-                _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(element.Position));
-                _writer.WriteAttributeString("diameter", EdaFormatter.FormatScalar(element.Diameter));
-                _writer.WriteAttributeBool("platted", element.Platted);
-
-                _writer.WriteEndElement();
-            }
-
-            /// <inheritdoc/>
-            /// 
-            public override void Visit(EdaLineHoleElement element) {
-
-                _writer.WriteStartElement("lineHole");
-
-                _writer.WriteAttributeString("startPosition", EdaFormatter.FormatPoint(element.StartPosition));
-                _writer.WriteAttributeString("endPosition", EdaFormatter.FormatPoint(element.EndPosition));
-                _writer.WriteAttributeString("diameter", EdaFormatter.FormatScalar(element.Diameter));
-                _writer.WriteAttributeBool("platted", element.Platted);
-
-                _writer.WriteEndElement();
             }
 
             /// <summary>
