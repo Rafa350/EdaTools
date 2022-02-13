@@ -19,7 +19,7 @@ namespace MikroPic.EdaTools.v1.Extractor {
         public PartExtractor(EdaBoard board) {
 
             if (board == null)
-                throw new ArgumentNullException("board");
+                throw new ArgumentNullException(nameof(board));
 
             this.board = board;
         }
@@ -32,7 +32,7 @@ namespace MikroPic.EdaTools.v1.Extractor {
         public void Extract(TextWriter writer) {
 
             if (writer == null)
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
 
             var wrSettings = new XmlWriterSettings();
             wrSettings.Indent = true;

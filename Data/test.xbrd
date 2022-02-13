@@ -310,8 +310,8 @@
                     <text layer="Top.Names" position="0, 4.2" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
                     <text layer="Top.Values" position="0, -4.2" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
                     <text layer="F.Fab" position="0.3, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
-                    <circle layer="Cmts.User" position="-96, 107.5" radius="3.2" thickness="0.15" />
-                    <circle layer="Top.Keepout" position="-96, 107.5" radius="3.45" thickness="0.05" />
+                    <circle layer="Cmts.User" position="0, 0" radius="3.2" thickness="0.15" />
+                    <circle layer="Top.Keepout" position="0, 0" radius="3.45" thickness="0.05" />
                     <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
                     <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
                     <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
@@ -971,31 +971,36 @@
             </part>
         </parts>
         <elements>
-            <line layer="Profile" startPosition="58.99, 67.5" endPosition="74, 67.5" thickness="0.05" />
-            <line layer="Profile" startPosition="57, 67.5" endPosition="4, 67.5" thickness="0.05" />
+            <line layer="Profile" startPosition="58.99, 67.5" endPosition="69.5, 67.5" thickness="0.05" />
+            <line layer="Profile" startPosition="57, 67.5" endPosition="8.5, 67.5" thickness="0.05" />
+            <arc layer="Profile" startPosition="65, 4.5" endPosition="74, 4.5" angle="180" thickness="0.05" lineCap="flat" />
             <line layer="Profile" startPosition="57, 67.5" endPosition="57, 63.5" thickness="0.05" />
             <line layer="Profile" startPosition="0, 59.5" endPosition="0, 8" thickness="0.05" />
+            <arc layer="Profile" startPosition="8.5, 67.5" endPosition="4, 63" angle="90" thickness="0.05" lineCap="flat" />
             <line layer="Profile" startPosition="74, 8" endPosition="78, 8" thickness="0.05" />
-            <line layer="Profile" startPosition="4, 8" endPosition="4, 0" thickness="0.05" />
-            <line layer="Profile" startPosition="4, 59.5" endPosition="4, 67.5" thickness="0.05" />
+            <line layer="Profile" startPosition="4, 8" endPosition="4, 4.5" thickness="0.05" />
+            <line layer="Profile" startPosition="4, 59.5" endPosition="4, 63" thickness="0.05" />
             <line layer="Profile" startPosition="4, 59.5" endPosition="0, 59.5" thickness="0.05" />
             <line layer="Profile" startPosition="57, 63.5" endPosition="59.01, 63.5" thickness="0.05" />
-            <line layer="Profile" startPosition="4, 0" endPosition="13, 0" thickness="0.05" />
-            <line layer="Profile" startPosition="30, 60.5" endPosition="30, 62.5" thickness="0.05" />
-            <line layer="Profile" startPosition="65, 0" endPosition="74, 0" thickness="0.05" />
-            <line layer="Profile" startPosition="30, 62.5" endPosition="48, 62.5" thickness="0.05" />
-            <line layer="Profile" startPosition="74, 0" endPosition="74, 8" thickness="0.05" />
+            <line layer="Profile" startPosition="30, 61.25" endPosition="30, 63.25" thickness="0.05" />
+            <line layer="Profile" startPosition="30, 63.25" endPosition="48, 63.25" thickness="0.05" />
+            <arc layer="Profile" startPosition="4, 4.5" endPosition="13, 4.5" angle="180" thickness="0.05" lineCap="flat" />
+            <line layer="Profile" startPosition="74, 4.5" endPosition="74, 8" thickness="0.05" />
             <line layer="Profile" startPosition="59.01, 63.5" endPosition="58.99, 67.5" thickness="0.05" />
             <line layer="Profile" startPosition="13, 8" endPosition="65, 8" thickness="0.05" />
             <line layer="Profile" startPosition="78, 8" endPosition="78, 59.5" thickness="0.05" />
-            <line layer="Profile" startPosition="48, 62.5" endPosition="48, 60.5" thickness="0.05" />
+            <line layer="Profile" startPosition="48, 63.25" endPosition="48, 61.25" thickness="0.05" />
             <line layer="Profile" startPosition="4, 8" endPosition="0, 8" thickness="0.05" />
-            <line layer="Profile" startPosition="74, 67.5" endPosition="74, 59.5" thickness="0.05" />
-            <line layer="Profile" startPosition="13, 0" endPosition="13, 8" thickness="0.05" />
-            <line layer="Profile" startPosition="65, 8" endPosition="65, 0" thickness="0.05" />
+            <line layer="Profile" startPosition="74, 63" endPosition="74, 59.5" thickness="0.05" />
+            <arc layer="Profile" startPosition="74, 63" endPosition="69.5, 67.5" angle="90" thickness="0.05" lineCap="flat" />
+            <line layer="Profile" startPosition="13, 4.5" endPosition="13, 8" thickness="0.05" />
+            <line layer="Profile" startPosition="65, 8" endPosition="65, 4.5" thickness="0.05" />
             <line layer="Profile" startPosition="74, 59.5" endPosition="78, 59.5" thickness="0.05" />
-            <line layer="Profile" startPosition="48, 60.5" endPosition="30, 60.5" thickness="0.05" />
+            <line layer="Profile" startPosition="48, 61.25" endPosition="30, 61.25" thickness="0.05" />
+            <line layer="Top.Copper" startPosition="61.1, 63.4" endPosition="61.1, 59.1" thickness="0.6" signal="GND" />
             <line layer="Top.Copper" startPosition="49.49, 41.63" endPosition="49.51, 41.61" thickness="0.2" signal="GND" />
+            <line layer="Top.Copper" startPosition="61.1, 59.1" endPosition="61.1, 58.4" thickness="0.6" signal="GND" />
+            <line layer="Top.Copper" startPosition="61.1, 58.4" endPosition="61.125, 58.375" thickness="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="43.875, 14.5" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="41.125, 13.25" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="70.125, 25.75" drill="0.35" outerSize="0.6" signal="GND" />
@@ -1025,6 +1030,7 @@
             <via layers="Top.Copper, Bottom.Copper" position="62.625, 32.375" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="58.125, 12.600849" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="37.625, 23" drill="0.35" outerSize="0.6" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="73.875, 57.125" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="18.25, 37.125" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="55.5, 58.2" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="57.9, 19.8" drill="0.35" outerSize="0.6" signal="GND" />
@@ -1032,6 +1038,7 @@
             <via layers="Top.Copper, Bottom.Copper" position="39, 49.5" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="17.375, 56" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="0.875, 42.625" drill="0.35" outerSize="0.6" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="61.1, 59.1" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="13.75, 55.625" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="34.625, 12.25" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="38, 33.6" drill="0.35" outerSize="0.6" signal="GND" />
@@ -1045,6 +1052,7 @@
             <via layers="Top.Copper, Bottom.Copper" position="55.875, 33.875" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="11.375, 9.875" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="25.625, 31.625" drill="0.35" outerSize="0.6" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="75.125, 53.5" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="38.25, 46.375" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="45.1, 49.4" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="9.375, 46.125" drill="0.35" outerSize="0.6" signal="GND" />
@@ -1097,7 +1105,6 @@
             <via layers="Top.Copper, Bottom.Copper" position="35.4, 43.5" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="57.75, 31.25" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="46.5, 24.3" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="57.625, 61.25" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="20.25, 44" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="47.625, 14.125" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="61.5, 39.5" drill="0.35" outerSize="0.6" signal="GND" />
@@ -1107,7 +1114,6 @@
             <via layers="Top.Copper, Bottom.Copper" position="7.6, 37" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="53.25, 43.875" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="29.8, 16.3" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="52.25, 59.375" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="16.2, 13" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="66.7, 48.9" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="5.9, 23.7" drill="0.35" outerSize="0.6" signal="GND" />
@@ -1145,6 +1151,7 @@
             <via layers="Top.Copper, Bottom.Copper" position="25.375, 43.75" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="46.5, 26.3" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="42.5255, 24.770014" drill="0.35" outerSize="0.6" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="61.1, 58.4" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="16.75, 18.625" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="60.25, 24.75" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="72.3, 48.6" drill="0.35" outerSize="0.6" signal="GND" />
@@ -1222,6 +1229,7 @@
             <via layers="Top.Copper, Bottom.Copper" position="23.9, 16.9" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="46.625, 20" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="32.875, 23.625" drill="0.35" outerSize="0.6" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="74.875, 50.5" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="11, 38.8" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="9.7, 35.3" drill="0.35" outerSize="0.6" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="42.5255, 19.856251" drill="0.35" outerSize="0.6" signal="GND" />
@@ -1440,26 +1448,10 @@
             <line layer="Top.Copper" startPosition="52.8, 33.8875" endPosition="52.8, 35.75" thickness="0.6" signal="Net-(R2-Pad1)" />
             <line layer="Top.Copper" startPosition="52.8, 35.75" endPosition="52.925, 35.875" thickness="0.6" signal="Net-(R2-Pad1)" />
             <region layer="Top.Copper" clearance="0.15" signal="GND">
-                <segment position="74, 59.5" />
                 <segment position="78, 59.5" />
                 <segment position="78, 8" />
-                <segment position="74, 8" />
-                <segment position="74, 0" />
-                <segment position="65, 0" />
-                <segment position="65, 8" />
-                <segment position="13, 8" />
-                <segment position="13, 0" />
-                <segment position="4, 0" />
-                <segment position="4, 8" />
                 <segment position="0, 8" />
                 <segment position="0, 59.5" />
-                <segment position="4, 59.5" />
-                <segment position="4, 67.5" />
-                <segment position="57, 67.5" />
-                <segment position="57, 63.5" />
-                <segment position="59, 63.5" />
-                <segment position="59, 67.5" />
-                <segment position="74, 67.5" />
             </region>
             <region layer="Top.Copper" clearance="0.15" priority="1" signal="+5V">
                 <segment position="62.125, 50.875" />
@@ -1489,26 +1481,10 @@
                 <segment position="19.5, 54" />
             </region>
             <region layer="Bottom.Copper" clearance="0.15" signal="GND">
-                <segment position="74, 59.5" />
                 <segment position="78, 59.5" />
                 <segment position="78, 8" />
-                <segment position="74, 8" />
-                <segment position="74, 0" />
-                <segment position="65, 0" />
-                <segment position="65, 8" />
-                <segment position="13, 8" />
-                <segment position="13, 0" />
-                <segment position="4, 0" />
-                <segment position="4, 8" />
                 <segment position="0, 8" />
                 <segment position="0, 59.5" />
-                <segment position="4, 59.5" />
-                <segment position="4, 67.5" />
-                <segment position="57, 67.5" />
-                <segment position="57, 63.5" />
-                <segment position="59, 63.5" />
-                <segment position="59, 67.5" />
-                <segment position="74, 67.5" />
             </region>
         </elements>
     </board>

@@ -10,6 +10,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
     /// 
     public sealed class EdaPoints: IEnumerable<EdaPoint> {
 
+        private const int _circleFacets = 32;
+
         private readonly List<EdaPoint> _points;
         private bool _isClosed = false;
 
@@ -22,9 +24,15 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             _points = new List<EdaPoint>();
         }
 
+        /// <summary>
+        /// Contructor privat.
+        /// </summary>
+        /// <param name="points">Els punt inicials.</param>
+        /// 
         private EdaPoints(IEnumerable<EdaPoint> points) {
 
             _points = new List<EdaPoint>(points);
+            _isClosed = true;
         }
 
         /// <summary>
@@ -87,9 +95,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             int innerRadius = radius - (thickness / 2);
             int outerRadius = radius + (thickness / 2);
 
+            int numSegments = (int)Math.Abs(Math.Floor(angle.AsDegrees * _circleFacets / 360.0));
             var points = new EdaPoints();
-            points.AddArcPoints(center, outerRadius, startAngle, angle);
-            points.AddArcPoints(center, innerRadius, startAngle + angle, -angle);
+            points.AddArcPoints(center, outerRadius, startAngle, angle, false, numSegments);
+            points.AddArcPoints(center, innerRadius, startAngle + angle, -angle, false, numSegments);
             points.Close();
 
             return points;
@@ -178,7 +187,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="facets">Nombre de cares per definit el cercle.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static EdaPoints CreateCircle(EdaPoint center, int radius, int facets = 32) {
+        public static EdaPoints CreateCircle(EdaPoint center, int radius, int facets = _circleFacets) {
 
             return CreatePolygon(facets, center, radius, EdaAngle.Zero);
         }
@@ -330,16 +339,28 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="startAngle">Angle inicial.</param>
         /// <param name="angle">Angle del arc.</param>
         /// <param name="discardLast">Descarta l'ultim punt.</param>
+        /// <param name="numSegments">Nombre se segments del arc. Si es zero el calcula</param>
         /// <returns>El propi objecte.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Arguments fora de rang.</exception>
         /// 
-        public EdaPoints AddArcPoints(EdaPoint center, int radius, EdaAngle startAngle, EdaAngle angle, bool discardLast = false) {
+        public EdaPoints AddArcPoints(EdaPoint center, int radius, EdaAngle startAngle, EdaAngle angle, bool discardLast = false, int numSegments = 0) {
+
+            if (radius <= 0)
+                throw new ArgumentOutOfRangeException(nameof(radius));
+
+            if (numSegments < 0)
+                throw new ArgumentOutOfRangeException(nameof(numSegments));
 
             if (_isClosed)
                 throw new InvalidOperationException("Imposible agregar mas puntos, la lista esta cerrada.");
 
-            // Calcula el numero de segments
+            // Calcula el nombre de segments
             //
-            int numSegments = (int)Math.Abs(Math.Floor(angle.AsDegrees * 32.0 / 360.0));
+            if (numSegments == 0)
+                numSegments = (int)Math.Abs(Math.Floor(angle.AsDegrees * _circleFacets / 360.0));
+
+            // Calcula el numero de punts
+            //
             int numPoints = numSegments + (discardLast ? 0 : 1);
 
             // Calcula l'angle de cada segment
@@ -419,7 +440,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             _points.ToArray();
 
         /// <summary>
-        /// El nombre d'0elements en la coleccio.
+        /// El nombre d'elements en la coleccio.
         /// </summary>
         /// 
         public int Count =>

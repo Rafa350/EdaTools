@@ -1,10 +1,11 @@
-﻿namespace MikroPic.EdaTools.v1.Base.Geometry.Utils {
+﻿using System;
 
-    using System;
+namespace MikroPic.EdaTools.v1.Base.Geometry.Utils {
 
     /// <summary>
     /// Operacions amb arcs.
     /// </summary>
+    /// 
     public static class ArcUtils {
 
         /// <summary>
@@ -42,7 +43,38 @@
             double cx = mx + s * (y1 - y2) / d;
             double cy = my + s * (x2 - x1) / d;
 
-            return new EdaPoint((int)cx, (int)cy);
+            return new EdaPoint(RoundInteger((int)cx), RoundInteger((int)cy));
+        }
+
+        /// <summary>
+        /// Calcula el centre del arc.
+        /// </summary>
+        /// <param name="startPosition">Posicio inicial.</param>
+        /// <param name="endPosition">Posicio final.</param>
+        /// <param name="midPoint">Punt mitj de l'arc.</param>
+        /// <returns>El centre.</returns>
+        /// 
+        public static EdaPoint Center(EdaPoint startPosition, EdaPoint endPosition, EdaPoint midPoint) {
+
+            double x1 = startPosition.X;
+            double y1 = startPosition.Y;
+            double x2 = midPoint.X;
+            double y2 = midPoint.Y;
+            double x3 = endPosition.X;
+            double y3 = endPosition.Y;
+
+            double dax = x2 - x1;
+            double day = y2 - y1;
+            double dbx = x3 - x2;
+            double dby = y3 - y2;
+
+            double ma = day / dax;
+            double mb = dby / dbx;
+
+            double cx = (ma * mb * (y1 - y3) + mb * (x1 + x2) - ma * (x2 + x3)) / (2 * (mb - ma));
+            double cy = -1 * (cx - (x1 + x2) / 2) / ma + (y1 + y2) / 2;
+
+            return new EdaPoint(RoundInteger((int)cx), RoundInteger((int)cy));
         }
 
         /// <summary>
@@ -79,8 +111,8 @@
             double y = startPosition.Y;
 
             return new EdaPoint(
-                center.X + (int)((x * cos) - (y * sin)),
-                center.Y + (int)((x * sin) + (y * cos)));
+                RoundInteger(center.X + (int)((x * cos) - (y * sin))),
+                RoundInteger(center.Y + (int)((x * sin) + (y * cos))));
         }
 
         public static int Radius(EdaPoint startPosition, EdaPoint endPosition, EdaAngle angle) {
@@ -91,7 +123,16 @@
 
             double a = angle.AsRadiants / 2.0;
 
-            return (int)Math.Abs(d / 2.0 / Math.Sin(a));
+            return RoundInteger((int)Math.Abs(d / 2.0 / Math.Sin(a)));
+        }
+
+        private static int RoundInteger(int value, int precission = 1000) {
+
+            int error = value % precission;
+            if (error > (precission / 2))
+                return value + precission - error;
+            else
+                return value - error;
         }
     }
 }

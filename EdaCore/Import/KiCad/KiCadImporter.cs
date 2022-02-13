@@ -172,6 +172,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                         ProcessLine(tree, childNode, board);
                         break;
 
+                    case "gr_arc":
+                        ProcessArc(tree, childNode, board);
+                        break;
+
                     case "zone":
                         ProcessZone(tree, childNode, board);
                         break;
@@ -447,6 +451,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 Thickness = thickness,
                 LineCap = EdaLineElement.CapStyle.Round
             };
+
             board.AddElement(element);
 
             var netNode = tree.SelectBranch(node, "net");
@@ -477,7 +482,50 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 Thickness = thickness,
                 LineCap = EdaLineElement.CapStyle.Round
             };
+
             component.AddElement(element);
+        }
+
+        /// <summary>
+        /// Procesa un node 'gr_arc'.
+        /// </summary>
+        /// <param name="tree">STree.</param>
+        /// <param name="node">El node.</param>
+        /// <param name="board">La placa.</param>
+        /// 
+        private void ProcessArc(STree tree, SBranch node, EdaBoard board) {
+
+            var start = ParsePoint(tree, tree.SelectBranch(node, "start")) - _origin;
+            var mid = ParsePoint(tree, tree.SelectBranch(node, "mid")) - _origin;
+            var end = ParsePoint(tree, tree.SelectBranch(node, "end")) - _origin;
+            var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
+            var thickness = ParseMeasure(tree, tree.SelectBranch(node, "width"));
+
+            EdaPoint center = ArcUtils.Center(start, end, mid);
+            var startAngle = ArcUtils.StartAngle(start, center).AsDegrees;
+            var endAngle = ArcUtils.EndAngle(end, center).AsDegrees;
+            var angle = startAngle - endAngle;
+            while (angle < 0)
+                angle += 360;
+            while (angle >= 360)
+                angle -= 360;
+
+            var element = new EdaArcElement {
+                LayerSet = layerSet,
+                StartPosition = angle > 0 ? end : start,
+                EndPosition = angle > 0 ? start : end,
+                Thickness = thickness,
+                Angle = EdaAngle.FromDegrees(Math.Abs(angle)),
+                LineCap = EdaLineElement.CapStyle.Flat
+            };
+            
+            board.AddElement(element);
+
+            var netNode = tree.SelectBranch(node, "net");
+            if (netNode != null) {
+                var netId = tree.ValueAsInteger(netNode[1]);
+                board.Connect(_signals[netId], element);
+            }
         }
 
         /// <summary>
@@ -503,6 +551,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 Angle = angle,
                 LineCap = EdaLineElement.CapStyle.Flat
             };
+            
             component.AddElement(element);
         }
 
@@ -515,8 +564,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// 
         private void ProcessCircle(STree tree, SBranch node, EdaComponent component) {
 
-            var center = ParsePoint(tree, tree.SelectBranch(node, "center")) - _origin;
-            var end = ParsePoint(tree, tree.SelectBranch(node, "end")) - _origin;
+            var center = ParsePoint(tree, tree.SelectBranch(node, "center"));
+            var end = ParsePoint(tree, tree.SelectBranch(node, "end"));
             int radius = (int)(Math.Sqrt(Math.Pow(end.X - center.X, 2) + Math.Pow(end.Y - center.Y, 2)));
 
             var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
@@ -725,7 +774,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var connectedPadNode = tree.SelectBranch(node, "connect_pads");
             var clearanceNode = tree.SelectBranch(connectedPadNode, "clearance");
             int clearance = ParseMeasure(tree, clearanceNode);
-            var thickness = ParseMeasure(tree, tree.SelectBranch(node, "min_thickness"));
+
+            var fillSettingsNode = tree.SelectBranch(node, "fill");
+            var radiusNode = tree.SelectBranch(fillSettingsNode, "radius");
+            var radius = ParseMeasure(tree, radiusNode);
 
             var segments = new List<EdaArcPoint>();
             var polygonNode = tree.SelectBranch(node, "polygon");
@@ -741,7 +793,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             var element = new EdaRegionElement {
                 LayerSet = layerSet,
-                Thickness = thickness,
+                Thickness = radius * 2,
                 Filled = true,
                 Clearance = clearance,
                 Priority = priority,

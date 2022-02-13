@@ -5,6 +5,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons {
 
     /// <summary>
     /// Objecte que representa un poligon amb fills. Aquesta clase es inmutable.
+    /// Els punt van ordenats en direccio contrari al rellotge.
     /// </summary>
     /// 
     public sealed class EdaPolygon {
@@ -121,7 +122,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons {
         }
 
         /// <summary>
-        /// Obte el bounding-box del poligon.
+        /// El bounding-box del poligon.
         /// </summary>
         /// 
         public EdaRect BoundingBox {
@@ -133,14 +134,14 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons {
         }
 
         /// <summary>
-        /// Obte el numero de punts.
+        /// El numero de punts.
         /// </summary>
         /// 
         public int NumPoints =>
             _points == null ? 0 : _points.Count;
 
         /// <summary>
-        /// Obte el numero de fills.
+        /// El numero de fills.
         /// </summary>
         /// 
         public int NumChilds =>
@@ -161,14 +162,14 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons {
             NumChilds > 0;
 
         /// <summary>
-        /// Obte els punts del poligon.
+        /// Els punts del poligon.
         /// </summary>
         /// 
         public IEnumerable<EdaPoint> Points =>
             _points;
 
         /// <summary>
-        /// Obte els fills del poligon.
+        /// Els fills del poligon.
         /// </summary>
         /// 
         public IEnumerable<EdaPolygon> Childs =>

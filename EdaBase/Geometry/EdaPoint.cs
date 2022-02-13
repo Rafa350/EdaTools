@@ -38,13 +38,15 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         public EdaPoint Offset(int dx, int dy) =>
             new EdaPoint(_x + dx, _y + dy);
 
-        /// <summary>
-        /// Retorna el valor hash del objecte.
-        /// </summary>
-        /// <returns>El valor hash.</returns>
+        /// <inheritdoc/>
         /// 
         public override int GetHashCode() =>
             (_x * 371) + (_y * 27);
+
+        /// <inheritdoc/>
+        /// 
+        public override string ToString() =>
+            String.Format("{0}; {1}", Math.Round(_x / 1000000.0, 3), Math.Round(_y / 1000000.0, 3));
 
         /// <summary>
         /// Operacio de comparacio entre dos objectes..

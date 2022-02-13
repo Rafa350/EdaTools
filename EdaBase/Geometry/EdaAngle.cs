@@ -4,7 +4,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
 
     /// <summary>
     /// Clase per representar angles. Els angles son en centesimes 
-    /// de grau i el gir es considera contrari al rellotge.
+    /// de grau i el gir positiu es contrari al rellotge.
     /// </summary>
     /// 
     public readonly struct EdaAngle: IEquatable<EdaAngle> {
@@ -27,6 +27,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         private EdaAngle(int value) {
 
             _value = value % 36000;
+            //if (_value < 0)
+              //  _value += 36000;
         }
 
         /// <summary>
@@ -86,6 +88,9 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// 
         public override int GetHashCode() =>
             _value.GetHashCode();
+
+        public override string ToString() =>
+            AsDegrees.ToString();
 
         public static bool operator ==(EdaAngle a1, EdaAngle a2) =>
             a1._value == a2._value;
@@ -168,7 +173,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// Obte el valor de l'angle en centesimes graus.
         /// </summary>
         /// 
-        public int Value => _value;
+        public int Value => 
+            _value;
 
         /// <summary>
         /// Obte el valor de l'angle en graus

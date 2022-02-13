@@ -23,16 +23,24 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
-            var points = EdaPoints.CreateArcTrace(Center, Radius, StartAngle, _angle, Thickness, LineCap == CapStyle.Round);
-            return new EdaPolygon(points);
+            if (_angle == EdaAngle.Zero)
+                return base.GetPolygon(layerId);
+            else {
+                var points = EdaPoints.CreateArcTrace(Center, Radius, StartAngle, _angle, Thickness, LineCap == CapStyle.Round);
+                return new EdaPolygon(points);
+            }
         }
 
         /// <inheritdoc/>
         /// 
         public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
-            var points = EdaPoints.CreateArcTrace(Center, Radius, StartAngle, _angle, Thickness + (spacing * 2), LineCap == CapStyle.Round);
-            return new EdaPolygon(points);
+            if (_angle == EdaAngle.Zero)
+                return base.GetOutlinePolygon(layerId, spacing);
+            else {
+                var points = EdaPoints.CreateArcTrace(Center, Radius, StartAngle, _angle, Thickness + (spacing * 2), LineCap == CapStyle.Round);
+                return new EdaPolygon(points);
+            }
         }
 
         /// <inheritdoc/>
@@ -44,7 +52,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// Obte o asigna l'angle del arc.
+        /// L'angle del arc.
         /// </summary>
         /// 
         public EdaAngle Angle {
@@ -53,28 +61,28 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// Obte el centre de l'arc.
+        /// El centre de l'arc.
         /// </summary>
         /// 
         public EdaPoint Center =>
             ArcUtils.Center(StartPosition, EndPosition, _angle);
 
         /// <summary>
-        /// Obte l'angle inicial del arc.
+        /// L'angle inicial del arc.
         /// </summary>
         /// 
         public EdaAngle StartAngle =>
             ArcUtils.StartAngle(StartPosition, Center);
 
         /// <summary>
-        /// Obtel'angle final del arc.
+        /// L'angle final del arc.
         /// </summary>
         /// 
         public EdaAngle EndAngle =>
             ArcUtils.EndAngle(EndPosition, Center);
 
         /// <summary>
-        /// Obte el radi de l'arc.
+        /// El radi de l'arc.
         /// </summary>
         /// 
         public int Radius =>

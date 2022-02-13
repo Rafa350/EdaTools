@@ -83,9 +83,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                         //
                         if (element.IsOnLayer(layerId)) {
 
-                            // Comprova si el element pertany a una senal diferent de la regio
+                            // Comprova si el element pertany a una senyal diferent de la regio
                             //
-                            if (GetSignal(element, null, false) != regionSignal) {
+                            if (GetSignal(element, null, false) != regionSignal) { 
+
+                                // Si l'element es  un altre regio, pero amb una prioritat inferior, aleshores no
+                                // el foreda.
+                                //
+                                if (element is EdaRegionElement regionElement)
+                                    if (region.Priority > regionElement.Priority)
+                                        continue;
 
                                 int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
                                 int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
