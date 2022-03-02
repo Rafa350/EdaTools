@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "EdaPanelizer": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\Rafael\\Documents\\Projectes\\EDA\\DSP04X\\dsp04x.xpnl /v /s:build  /o:dsp04x_panel.xbrd",
+      "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\EDA\\DSP04X"
+    }
+  }
+}
