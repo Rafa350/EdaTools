@@ -179,11 +179,24 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             public override void Visit(EdaThPadElement element) {
 
                 var sb = new StringBuilder()
-                    .AppendFormat("  (pad {0} thru_hole circle ", element.Name)
+                    .AppendFormat("  (pad {0} thru_hole {1} ", 
+                        element.Name,
+                        element.CornerRatio.IsZero ? "rect" : "roundrect")
                     .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ",
                         element.Position.X / _scale,
                         element.Position.Y / -_scale,
-                        element.Rotation.AsDegrees)
+                        element.Rotation.AsDegrees);
+
+                if (!element.CornerRatio.IsZero) {
+                    if (element.CornerShape == EdaThPadElement.ThPadCornerShape.Round)
+                        sb.AppendFormat(CultureInfo.InvariantCulture, "(roundrect_rratio {0}) ",
+                            element.CornerRatio.AsPercent / 2.0);
+                    else
+                        sb.AppendFormat(CultureInfo.InvariantCulture, "(roundrect_rratio 0) (chamfer_ratio {0}) (chamfer top_left top_right bottom_left bottom_right) ",
+                            element.CornerRatio.AsPercent / 2.0);
+                }
+
+                sb
                     .AppendFormat(CultureInfo.InvariantCulture, "(size {0} {1}) ", element.TopSize.Width / _scale, element.TopSize.Height / _scale)
                     .AppendFormat(CultureInfo.InvariantCulture, "(drill {0}) ", element.DrillDiameter / _scale)
                     .Append("(layers *.Cu *.Mask))");

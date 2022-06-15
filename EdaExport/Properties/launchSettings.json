@@ -2,7 +2,7 @@
   "profiles": {
     "EdaExport": {
       "commandName": "Project",
-      "commandLineArgs": "hirose-df13.xlib hirose-df13.pretty /v",
+      "commandLineArgs": "jst-pa.xlib jst-pa.pretty /v",
       "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\KiCad\\Libraries\\User"
     }
   }
