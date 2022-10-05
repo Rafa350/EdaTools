@@ -5,7 +5,7 @@
 	<xsl:output method="text" encoding="windows-1252"/>
 
     <xsl:key 
-        name="referenceKey" match="part" use="attributes/attribute[@name='REFERENCE']/@value"/>
+        name="referenceKey" match="part" use="attributes/attribute[@name='MPN']/@value"/>
 
     <xsl:template match="/">
         <xsl:text>manufacturer part number, manufacturer, quantity, reference designators</xsl:text>
@@ -14,14 +14,14 @@
     </xsl:template>
 
     <xsl:template match="parts">
-        <xsl:for-each select="part[generate-id() = generate-id(key('referenceKey', attributes/attribute[@name='REFERENCE']/@value)[1])]">
-            <xsl:value-of select="attributes/attribute[@name='REFERENCE']/@value"/>
+        <xsl:for-each select="part[generate-id() = generate-id(key('referenceKey', attributes/attribute[@name='MPN']/@value)[1])]">
+            <xsl:value-of select="attributes/attribute[@name='MPN']/@value"/>
             <xsl:text>, </xsl:text>
-            <xsl:value-of select="attributes/attribute[@name='MANUFACTURER']/@value"/>
+            <xsl:value-of select="attributes/attribute[@name='MNF']/@value"/>
             <xsl:text>, </xsl:text>
-            <xsl:value-of select="count(key('referenceKey', attributes/attribute[@name='REFERENCE']/@value))" />
+            <xsl:value-of select="count(key('referenceKey', attributes/attribute[@name='MPN']/@value))" />
             <xsl:text>,</xsl:text>
-            <xsl:for-each select="key('referenceKey', attributes/attribute[@name='REFERENCE']/@value)">
+            <xsl:for-each select="key('referenceKey', attributes/attribute[@name='MPN']/@value)">
                 <xsl:text> </xsl:text>
                 <xsl:value-of select="@name"/>
             </xsl:for-each>
