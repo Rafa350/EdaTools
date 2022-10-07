@@ -1,7 +1,7 @@
-﻿using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 

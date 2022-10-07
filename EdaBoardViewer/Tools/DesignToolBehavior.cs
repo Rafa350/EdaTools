@@ -1,8 +1,8 @@
 ﻿namespace EdaBoardViewer.Tools {
 
+    using System;
     using Avalonia.Controls;
     using Avalonia.Input;
-    using System;
 
     public sealed class DesignToolBehavior<TControl> where TControl : Control {
 

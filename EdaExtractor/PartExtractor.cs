@@ -1,8 +1,8 @@
-﻿using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Core.Model.Board;
-using System;
+﻿using System;
 using System.IO;
 using System.Xml;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Core.Model.Board;
 
 namespace MikroPic.EdaTools.v1.Extractor {
 
@@ -43,6 +43,8 @@ namespace MikroPic.EdaTools.v1.Extractor {
                 wr.WriteStartDocument();
                 wr.WriteStartElement("board");
                 wr.WriteAttributeString("units", "mm");
+                wr.WriteAttributeString("position", FormatPoint(board.Position));
+                wr.WriteAttributeString("rotation", FormatAngle(board.Rotation));
                 wr.WriteStartElement("parts");
 
                 foreach (EdaPart part in board.Parts) {

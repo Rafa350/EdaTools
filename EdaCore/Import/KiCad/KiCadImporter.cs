@@ -1,15 +1,15 @@
-﻿using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
 using MikroPic.EdaTools.v1.Core.Import.KiCad.Infrastructure;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Net;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
@@ -131,8 +131,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var setupNode = tree.SelectBranch(tree.Root, "setup");
             if (setupNode != null) {
                 var auxAxisOriginNode = tree.SelectBranch(setupNode, "aux_axis_origin");
-                if (auxAxisOriginNode != null)
+                if (auxAxisOriginNode != null) {
                     _origin = ParsePoint(tree, auxAxisOriginNode);
+                    board.Position = _origin;
+                }
             }
 
             // Procesa les capes
@@ -518,7 +520,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 Angle = EdaAngle.FromDegrees(Math.Abs(angle)),
                 LineCap = EdaLineElement.CapStyle.Flat
             };
-            
+
             board.AddElement(element);
 
             var netNode = tree.SelectBranch(node, "net");
@@ -551,7 +553,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 Angle = angle,
                 LineCap = EdaLineElement.CapStyle.Flat
             };
-            
+
             component.AddElement(element);
         }
 

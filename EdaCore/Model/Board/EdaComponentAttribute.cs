@@ -1,5 +1,5 @@
-﻿using MikroPic.EdaTools.v1.Core.Model.Common;
-using System;
+﻿using System;
+using MikroPic.EdaTools.v1.Core.Model.Common;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 

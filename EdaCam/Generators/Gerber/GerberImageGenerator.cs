@@ -1,4 +1,6 @@
-﻿using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using System;
+using System.IO;
+using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
@@ -7,8 +9,6 @@ using MikroPic.EdaTools.v1.Core.Infrastructure;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
-using System;
-using System.IO;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
@@ -766,10 +766,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             public override void Visit(EdaRegionElement element) {
 
                 if (element.IsOnLayer(_layerId)) {
-                    Transformation t = new Transformation();
+                    var t = new Transformation();
                     if (Part != null)
                         t = Part.GetLocalTransformation();
-                    EdaPolygon polygon = Board.GetRegionPolygon(element, _layerId, t);
+                    var polygon = Board.GetRegionPolygon(element, _layerId, t);
                     DrawPolygon(polygon, element.Thickness);
                 }
             }

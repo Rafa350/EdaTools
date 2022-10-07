@@ -28,7 +28,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
 
             _value = value % 36000;
             //if (_value < 0)
-              //  _value += 36000;
+            //  _value += 36000;
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// Obte el valor de l'angle en centesimes graus.
         /// </summary>
         /// 
-        public int Value => 
+        public int Value =>
             _value;
 
         /// <summary>

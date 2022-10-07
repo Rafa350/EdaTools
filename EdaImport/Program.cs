@@ -1,8 +1,8 @@
-﻿using MikroPic.EdaTools.v1.Core.Import.Eagle;
+﻿using System;
+using System.IO;
+using MikroPic.EdaTools.v1.Core.Import.Eagle;
 using MikroPic.EdaTools.v1.Core.Import.KiCad;
 using MikroPic.EdaTools.v1.Core.Model.Board.IO;
-using System;
-using System.IO;
 
 namespace MikroPic.EdaTools.v1.Import {
 

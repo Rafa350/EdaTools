@@ -1,14 +1,14 @@
-﻿using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
-using MikroPic.EdaTools.v1.Base.Xml;
-using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
-using MikroPic.EdaTools.v1.Core.Model.IO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
+using MikroPic.EdaTools.v1.Base.Xml;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+using MikroPic.EdaTools.v1.Core.Model.IO;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
@@ -158,6 +158,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsStartTag("board"))
                 throw new InvalidDataException("Se esperaba <board>");
 
+            EdaPoint position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
+            EdaAngle rotation = EdaParser.ParseAngle(_rd.AttributeAsString("rotation"));
+
             _rd.NextTag();
 
             IEnumerable<EdaLayer> layers = null;
@@ -192,7 +195,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
             // Crea la placa.
             //
-            EdaBoard board = new EdaBoard();
+            var board = new EdaBoard();
+            board.Position = position;
+            board.Rotation = rotation;
             if (layers != null)
                 board.AddLayers(layers);
             if (signals != null)

@@ -1,11 +1,11 @@
-﻿using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
+﻿using System;
+using System.IO;
+using System.Xml;
+using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Xml;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 using MikroPic.EdaTools.v1.Core.Model.IO;
-using System;
-using System.IO;
-using System.Xml;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 

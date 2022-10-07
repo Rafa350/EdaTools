@@ -1,7 +1,7 @@
 ﻿namespace MikroPic.EdaTools.v1.Panel.Model.Visitors {
 
-    using MikroPic.EdaTools.v1.Panel.Model.Items;
     using System;
+    using MikroPic.EdaTools.v1.Panel.Model.Items;
 
     public abstract class EdaDefaultPanelVisitor: IEdaPanelVisitor {
 

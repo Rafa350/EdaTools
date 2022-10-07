@@ -1,11 +1,11 @@
-﻿using MikroPic.EdaTools.v1.Base.IO;
+﻿using System;
+using System.IO;
+using MikroPic.EdaTools.v1.Base.IO;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.IO;
 using MikroPic.EdaTools.v1.Panel;
 using MikroPic.EdaTools.v1.Panel.Model;
 using MikroPic.EdaTools.v1.Panel.Model.IO;
-using System;
-using System.IO;
 
 namespace MikroPic.EdaTools.v1.Panelizer {
 

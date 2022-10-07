@@ -1,9 +1,9 @@
-﻿using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
@@ -85,7 +85,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                             // Comprova si el element pertany a una senyal diferent de la regio
                             //
-                            if (GetSignal(element, null, false) != regionSignal) { 
+                            if (GetSignal(element, null, false) != regionSignal) {
 
                                 // Si l'element es  un altre regio, pero amb una prioritat inferior, aleshores no
                                 // el foreda.

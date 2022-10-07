@@ -1,4 +1,5 @@
-﻿using Avalonia.Media;
+﻿using System.Collections.Generic;
+using Avalonia.Media;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
@@ -6,7 +7,6 @@ using MikroPic.EdaTools.v1.Core.Infrastructure;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
-using System.Collections.Generic;
 
 namespace EdaBoardViewer.Render {
 

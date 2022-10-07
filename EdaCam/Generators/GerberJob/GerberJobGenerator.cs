@@ -1,9 +1,9 @@
-﻿using MikroPic.EdaTools.v1.Cam.Model;
-using MikroPic.EdaTools.v1.Core.Model.Board;
-using System;
+﻿using System;
 using System.Globalization;
 using System.IO;
 using System.Text.Json;
+using MikroPic.EdaTools.v1.Cam.Model;
+using MikroPic.EdaTools.v1.Core.Model.Board;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.GerberJob {
 

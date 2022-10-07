@@ -1,5 +1,7 @@
 ﻿namespace EdaBoardViewer.Views {
 
+    using System;
+    using System.IO;
     using Avalonia;
     using Avalonia.Controls;
     using Avalonia.Input;
@@ -10,8 +12,6 @@
     using EdaBoardViewer.Views.Controls;
     using MikroPic.EdaTools.v1.Core.Model.Board;
     using MikroPic.EdaTools.v1.Core.Model.Board.IO;
-    using System;
-    using System.IO;
 
     public class SceneView: UserControl {
 

@@ -1,9 +1,9 @@
 ﻿namespace EdaBoardViewer.Render {
 
+    using System.Linq;
     using Avalonia.Media;
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
-    using System.Linq;
 
     public static class PolygonExtensions {
 

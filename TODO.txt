@@ -1,6 +1,7 @@
-Importacio:
-    Importar llibreries Eagle
-    Inportar netlist de Eagle i generar PHDL
+Generacio de poligons.
+Utilitzar els parametres de regio de KiCAD v6.
+-clearance
+-amplada minima de linia
 
 
     

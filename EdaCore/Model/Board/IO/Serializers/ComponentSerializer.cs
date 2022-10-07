@@ -1,9 +1,9 @@
-﻿using NetSerializer.Descriptors;
+﻿using System;
+using System.Linq;
+using NetSerializer.Descriptors;
 using NetSerializer.Storage;
 using NetSerializer.TypeSerializers;
 using NetSerializer.TypeSerializers.Serializers;
-using System;
-using System.Linq;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers {
 

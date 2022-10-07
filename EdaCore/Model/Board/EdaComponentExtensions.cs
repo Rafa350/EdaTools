@@ -1,7 +1,7 @@
-﻿using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 

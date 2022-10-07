@@ -1,8 +1,8 @@
-﻿using MikroPic.EdaTools.v1.Base.Geometry;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using MikroPic.EdaTools.v1.Base.Geometry;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
 

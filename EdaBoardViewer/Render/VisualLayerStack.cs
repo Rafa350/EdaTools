@@ -1,9 +1,9 @@
 ﻿namespace EdaBoardViewer.Render {
 
-    using Avalonia.Media;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
     using System;
     using System.Collections.Generic;
+    using Avalonia.Media;
+    using MikroPic.EdaTools.v1.Core.Model.Board;
 
     public sealed class VisualLayerStack {
 

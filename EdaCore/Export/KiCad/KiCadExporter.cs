@@ -1,11 +1,11 @@
-﻿using MikroPic.EdaTools.v1.Base.Geometry.Utils;
-using MikroPic.EdaTools.v1.Core.Model.Board;
-using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
-using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
-using System;
+﻿using System;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using MikroPic.EdaTools.v1.Base.Geometry.Utils;
+using MikroPic.EdaTools.v1.Core.Model.Board;
+using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 
 namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
 
@@ -179,7 +179,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             public override void Visit(EdaThPadElement element) {
 
                 var sb = new StringBuilder()
-                    .AppendFormat("  (pad {0} thru_hole {1} ", 
+                    .AppendFormat("  (pad {0} thru_hole {1} ",
                         element.Name,
                         element.CornerRatio.IsZero ? "rect" : "roundrect")
                     .AppendFormat(CultureInfo.InvariantCulture, "(at {0} {1} {2}) ",

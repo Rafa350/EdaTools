@@ -1,10 +1,10 @@
-﻿using MikroPic.EdaTools.v1.Cam;
+﻿using System;
+using System.IO;
+using MikroPic.EdaTools.v1.Cam;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Cam.Model.IO;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.IO;
-using System;
-using System.IO;
 
 namespace MikroPic.EdaTools.v1.CamTool {
 

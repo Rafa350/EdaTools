@@ -1,11 +1,11 @@
-﻿using MikroPic.EdaTools.v1.Cam.Generators;
+﻿using System;
+using MikroPic.EdaTools.v1.Cam.Generators;
 using MikroPic.EdaTools.v1.Cam.Generators.Gerber;
 using MikroPic.EdaTools.v1.Cam.Generators.GerberJob;
 using MikroPic.EdaTools.v1.Cam.Generators.IPC2581;
 using MikroPic.EdaTools.v1.Cam.Generators.IPCD356;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
-using System;
 
 namespace MikroPic.EdaTools.v1.Cam {
 

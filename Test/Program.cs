@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 
 
 namespace MyApp // Note: actual namespace depends on the project name.

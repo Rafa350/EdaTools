@@ -1,10 +1,10 @@
-﻿using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
-using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
+using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder.Apertures;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 

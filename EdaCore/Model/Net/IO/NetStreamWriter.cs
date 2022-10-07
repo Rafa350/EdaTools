@@ -1,10 +1,10 @@
 ﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
-    using MikroPic.EdaTools.v1.Core.Model.Net;
-    using MikroPic.EdaTools.v1.Core.Model.Net.Visitors;
     using System;
     using System.IO;
     using System.Xml;
+    using MikroPic.EdaTools.v1.Core.Model.Net;
+    using MikroPic.EdaTools.v1.Core.Model.Net.Visitors;
 
     /// <summary>
     /// Clase per la escriptura de plaques en un stream.

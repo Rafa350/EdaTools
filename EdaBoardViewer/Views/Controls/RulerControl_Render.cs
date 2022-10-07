@@ -1,9 +1,9 @@
 ﻿namespace EdaBoardViewer.Views.Controls {
 
+    using System;
     using Avalonia;
     using Avalonia.Controls;
     using Avalonia.Media;
-    using System;
 
     public sealed partial class RulerControl: Control {
 
