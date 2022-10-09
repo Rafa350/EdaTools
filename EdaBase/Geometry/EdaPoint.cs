@@ -36,7 +36,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <returns>El nou punt resultant.</returns>
         /// 
         public EdaPoint Offset(int dx, int dy) =>
-            new EdaPoint(_x + dx, _y + dy);
+            new(_x + dx, _y + dy);
 
         /// <inheritdoc/>
         /// 
@@ -94,7 +94,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <returns>El resultat.</returns>
         /// 
         public static EdaPoint operator +(EdaPoint p1, EdaPoint p2) =>
-            new EdaPoint(p1.X + p2.X, p1.Y + p2.Y);
+            new(p1.X + p2.X, p1.Y + p2.Y);
 
         /// <summary>
         /// Operador -
@@ -104,7 +104,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <returns>El resultat.</returns>
         /// 
         public static EdaPoint operator -(EdaPoint p1, EdaPoint p2) =>
-            new EdaPoint(p1.X - p2.X, p1.Y - p2.Y);
+            new(p1.X - p2.X, p1.Y - p2.Y);
 
         /// <summary>
         /// Obte el valor de la coordinada X

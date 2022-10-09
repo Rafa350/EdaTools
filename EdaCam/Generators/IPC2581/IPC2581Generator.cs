@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
-using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
-namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
+namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581
+{
 
     public sealed class IPC2581Generator: Generator {
 

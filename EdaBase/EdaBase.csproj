@@ -29,6 +29,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Clipper2\Clipper2.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Data\font.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

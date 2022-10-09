@@ -1,8 +1,8 @@
 ﻿using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Core.Model.Common;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board {
+namespace MikroPic.EdaTools.v1.Core.Model.Board
+{
 
     /// <summary>
     /// Identifica el tipus d'element

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System;
 using System.IO;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
-using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Infrastructure;
@@ -10,7 +10,8 @@ using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 
-namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
+namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber
+{
 
     /// <summary>
     /// Clase per generar el fitxers gerber d'imatge
@@ -369,7 +370,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             /// <inheritdoc/>
             /// 
-            public override void Visit(EdaCircleHoleElement element) {
+            public override void Visit(EdaCircularHoleElement element) {
 
                 if (element.IsOnLayer(_layerId))
                     _apertures.DefineCircleAperture(element.Diameter);
@@ -421,7 +422,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     EdaPoint startPosition = element.StartPosition;
                     EdaPoint endPosition = element.EndPosition;
                     if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
+                        EdaTransformation t = Part.GetLocalTransformation();
                         startPosition = t.Transform(startPosition);
                         endPosition = t.Transform(endPosition);
                     }
@@ -450,7 +451,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     EdaPoint endPosition = element.EndPosition;
                     EdaPoint center = element.Center;
                     if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
+                        EdaTransformation t = Part.GetLocalTransformation();
                         startPosition = t.Transform(startPosition);
                         endPosition = t.Transform(endPosition);
                         center = t.Transform(center);
@@ -483,7 +484,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         EdaPoint position = element.Position;
                         EdaAngle rotation = element.Rotation;
                         if (Part != null) {
-                            Transformation t = Part.GetLocalTransformation();
+                            EdaTransformation t = Part.GetLocalTransformation();
                             position = t.Transform(position);
                             rotation += Part.Rotation;
                         }
@@ -507,11 +508,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         //
                         EdaLayer layer = Board.GetLayer(_layerId);
                         EdaPolygon polygon = element.GetPolygon(layer.Id);
-                        EdaPoints points = EdaPoints.Create(polygon.Points);
+                        IEnumerable<EdaPoint> points = polygon.Points;
 
                         if (Part != null) {
-                            Transformation t = Part.GetLocalTransformation();
-                            points.Transform(t);
+                            EdaTransformation t = Part.GetLocalTransformation();
+                            points = t.Transform(points);
                         }
 
                         // Escriu el gerber
@@ -534,7 +535,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         //
                         EdaPoint position = element.Position;
                         if (Part != null) {
-                            Transformation t = Part.GetLocalTransformation();
+                            EdaTransformation t = Part.GetLocalTransformation();
                             position = t.Transform(position);
                         }
 
@@ -558,11 +559,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         //
                         EdaLayer layer = Board.GetLayer(_layerId);
                         EdaPolygon polygon = element.GetPolygon(layer.Id);
-                        EdaPoints points = EdaPoints.Create(polygon.Points);
+                        IEnumerable<EdaPoint> points = polygon.Points;
 
                         if (Part != null) {
-                            Transformation t = Part.GetLocalTransformation();
-                            points.Transform(t);
+                            EdaTransformation t = Part.GetLocalTransformation();
+                            points = t.Transform(points);
                         }
 
                         // Escriu el gerber
@@ -592,7 +593,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     PartAttributeAdapter paa = new PartAttributeAdapter(Part, element);
                     EdaPoint position = paa.Position;
                     if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
+                        EdaTransformation t = Part.GetLocalTransformation();
                         position = t.Transform(position);
                     }
 
@@ -629,7 +630,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     EdaAngle rotation = element.Rotation;
                     if (Part != null) {
                         rotation += Part.Rotation;
-                        Transformation t = Part.GetLocalTransformation();
+                        EdaTransformation t = Part.GetLocalTransformation();
                         position = t.Transform(position);
                     }
 
@@ -678,7 +679,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     EdaAngle rotation = element.Rotation;
                     if (Part != null) {
                         rotation += Part.Rotation;
-                        Transformation t = Part.GetLocalTransformation();
+                        EdaTransformation t = Part.GetLocalTransformation();
                         position = t.Transform(position);
                     }
 
@@ -766,7 +767,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             public override void Visit(EdaRegionElement element) {
 
                 if (element.IsOnLayer(_layerId)) {
-                    var t = new Transformation();
+                    var t = new EdaTransformation();
                     if (Part != null)
                         t = Part.GetLocalTransformation();
                     var polygon = Board.GetRegionPolygon(element, _layerId, t);

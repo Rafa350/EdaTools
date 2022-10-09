@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
+using MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board {
+namespace MikroPic.EdaTools.v1.Core.Model.Board
+{
 
     /// <summary>
     /// Classe que representa una placa de circuit imprès.
@@ -29,14 +30,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                     segments.Add(new Segment(line.StartPosition, line.EndPosition));
 
                 else if (element is EdaArcElement arc) {
-                    EdaPoints points = EdaPoints.Create()
-                        .AddArcPoints(arc.Center, arc.Radius, arc.StartAngle, arc.Angle, true)
-                        .Close();
+                    var points = new List<EdaPoint>(EdaPointFactory.CreateArc(arc.Center, arc.Radius, arc.StartAngle, arc.Angle, true));
                     for (int i = 1; i < points.Count; i++)
                         segments.Add(new Segment(points[i - 1], points[i]));
                 }
             }
-            return PolygonProcessor.CreateFromSegments(segments);
+
+            var p = Polygonizer.Poligonize(segments);
+            return p == null ? null : new EdaPolygon(p);
         }
 
         /// <summary>
@@ -47,7 +48,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="transformation">Transformacio a aplicar al poligon.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public EdaPolygon GetRegionPolygon(EdaRegionElement region, EdaLayerId layerId, Transformation transformation) {
+        public EdaPolygon GetRegionPolygon(EdaRegionElement region, EdaLayerId layerId, EdaTransformation transformation) {
 
             if (region == null)
                 throw new ArgumentNullException(nameof(region));
@@ -71,7 +72,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                     int thicknessCompensation = region.Thickness / 2;
 
-                    List<EdaPolygon> holePolygons = new List<EdaPolygon>();
+                    var holePolygons = new List<EdaPolygon>();
 
                     EdaLayerId restrictLayerId = layerId.Side == BoardSide.Top ? EdaLayerId.TopRestrict : EdaLayerId.BottomRestrict;
 
@@ -96,7 +97,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                                 int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
                                 int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
-                                EdaPolygon elementPolygon = element.GetOutlinePolygon(layerId, clearance);
+                                var elementPolygon = element.GetOutlinePolygon(layerId, clearance);
                                 if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                     holePolygons.Add(elementPolygon);
                             }
@@ -108,7 +109,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                                  element.IsOnLayer(EdaLayerId.Unplatted) ||
                                  element.IsOnLayer(EdaLayerId.Platted)) {
 
-                            EdaPolygon elementPolygon = element.GetPolygon(layerId);
+                            var elementPolygon = element.GetPolygon(layerId);
                             if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                 holePolygons.Add(elementPolygon);
                         }
@@ -117,7 +118,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                         //
                         else if (element.IsOnLayer(EdaLayerId.Profile)) {
 
-                            EdaPolygon elementPolygon = element.GetOutlinePolygon(EdaLayerId.Profile, _outlineClearance);
+                            var elementPolygon = element.GetOutlinePolygon(EdaLayerId.Profile, _outlineClearance);
                             if (regionBBox.IntersectsWith(elementPolygon.BoundingBox))
                                 holePolygons.Add(elementPolygon);
                         }
@@ -129,7 +130,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                         // Obte la transformacio
                         //
-                        Transformation localTransformation = part.GetLocalTransformation();
+                        EdaTransformation localTransformation = part.GetLocalTransformation();
 
                         // Procesa els elements del component que es troben en la mateixa capa que la regio.
                         // Si l'element no pertany a la mateixa senyal, genera un forat
@@ -145,7 +146,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                                 if (GetSignal(element, part, false) != regionSignal) {
 
                                     int clearance = thicknessCompensation + Math.Max(regionSignal.Clearance, region.Clearance);
-                                    EdaPolygon elementPolygon = element.GetOutlinePolygon(layerId, clearance);
+                                    var elementPolygon = element.GetOutlinePolygon(layerId, clearance);
                                     elementPolygon = elementPolygon.Transform(localTransformation);
                                     //if (part.IsFlipped)
                                     //    outlinePolygon.Reverse();
@@ -162,7 +163,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                                     int signalClearance = regionSignal == null ? 0 : regionSignal.Clearance;
                                     int clearance = thicknessCompensation + Math.Max(signalClearance, region.Clearance);
-                                    EdaPolygon thermalPolygon = ((EdaPadElement)element).GetThermalPolygon(layerId, clearance, 200000);
+                                    var thermalPolygon = ((EdaPadElement)element).GetThermalPolygon(layerId, clearance, 200000);
                                     thermalPolygon = thermalPolygon.Transform(localTransformation);
                                     if (thermalPolygon.HasChilds)
                                         foreach (var child in thermalPolygon.Childs) {
@@ -176,7 +177,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                     // Genera el poligon amb els forats pertinents
                     //
-                    return PolygonProcessor.ClipExtended(regionPolygon, holePolygons, PolygonProcessor.ClipOperation.Diference);
+                    return regionPolygon.Substract(holePolygons);
                 }
 
                 // Si no es capa de senyal no cal fer res mes, ja que no te forats
@@ -211,7 +212,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                     maxY = r.Top;
             }
 
-            return new EdaRect(minX, minY, maxX - minX, maxY - minY);
+            return new(minX, minY, maxX - minX, maxY - minY);
         }
 
         /// <summary>

@@ -1,8 +1,8 @@
 ﻿using System;
 using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
+{
 
     /// <summary>
     /// Clase que representa un cercle.
@@ -26,12 +26,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
             if (Filled) {
-                var points = EdaPoints.CreateCircle(_position, _radius);
+                var points = EdaPointFactory.CreateCircle(_position, _radius);
                 return new EdaPolygon(points);
             }
             else {
-                var outerPoints = EdaPoints.CreateCircle(_position, _radius + (_thickness / 2));
-                var innerPoints = EdaPoints.CreateCircle(_position, _radius - (_thickness / 2));
+                var outerPoints = EdaPointFactory.CreateCircle(_position, _radius + (_thickness / 2));
+                var innerPoints = EdaPointFactory.CreateCircle(_position, _radius - (_thickness / 2));
                 return new EdaPolygon(outerPoints, new EdaPolygon(innerPoints));
             }
         }
@@ -40,7 +40,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
-            var points = EdaPoints.CreateCircle(_position, _radius + (_thickness / 2) + spacing);
+            var points = EdaPointFactory.CreateCircle(_position, _radius + (_thickness / 2) + spacing);
             return new EdaPolygon(points);
         }
 

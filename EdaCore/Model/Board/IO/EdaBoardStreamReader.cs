@@ -1084,7 +1084,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsEndTag("circleHole"))
                 throw new InvalidDataException("Se esperaba </circleHole>");
 
-            var element = new EdaCircleHoleElement {
+            var element = new EdaCircularHoleElement {
                 Position = position,
                 Diameter = diameter,
                 Platted = platted
@@ -1113,7 +1113,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             if (!_rd.IsEndTag("lineHole"))
                 throw new InvalidDataException("Se esperaba </lineHole>");
 
-            var element = new EdaLineHoleElement {
+            var element = new EdaLinearHoleElement {
                 StartPosition = startPosition,
                 EndPosition = endPosition,
                 Diameter = diameter,

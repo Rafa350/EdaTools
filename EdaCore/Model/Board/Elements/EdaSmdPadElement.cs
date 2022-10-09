@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
+{
 
     /// <summary>
     /// Clase que representa un pad superficial
@@ -41,7 +42,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             EdaPolygon polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
-                var points = EdaPoints.CreateRectangle(Position, Size, _cornerRatio, true, Rotation);
+                var points = EdaPointFactory.CreateRectangle(Position, Size, _cornerRatio, true, Rotation);
                 polygon = new EdaPolygon(points);
 
                 PolygonCache.Save(hash, polygon);
@@ -54,12 +55,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
             int hash = GetHashCode() + (layerId.GetHashCode() * 71) + (spacing * 27009);
-            EdaPolygon polygon = PolygonCache.Get(hash);
+            var polygon = PolygonCache.Get(hash);
             if (polygon == null) {
 
                 var outlineSize = new EdaSize(_size.Width + spacing + spacing, _size.Height + spacing + spacing);
                 var outlineCornerRatio = EdaRatio.FromPercent((double)(CornerSize + spacing) / (Math.Min(outlineSize.Width, outlineSize.Height) / 2));
-                var points = EdaPoints.CreateRectangle(Position, outlineSize, outlineCornerRatio, true, Rotation);
+                var points = EdaPointFactory.CreateRectangle(Position, outlineSize, outlineCornerRatio, true, Rotation);
                 polygon = new EdaPolygon(points);
 
                 PolygonCache.Save(hash, polygon);
@@ -72,9 +73,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetThermalPolygon(EdaLayerId layerId, int spacing, int width) {
 
-            EdaPolygon pour = GetOutlinePolygon(layerId, spacing);
-            EdaPolygon thermal = new EdaPolygon(
-                EdaPoints.CreateCross(
+            var polygon = GetOutlinePolygon(layerId, spacing);
+            var hole = new EdaPolygon(
+                EdaPointFactory.CreateCross(
                     Position,
                     new EdaSize(
                         _size.Width + spacing + spacing,
@@ -82,11 +83,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                     width,
                     Rotation));
 
-            List<EdaPolygon> childs = new List<EdaPolygon>();
-            childs.AddRange(PolygonProcessor.Clip(pour, thermal, PolygonProcessor.ClipOperation.Diference));
-            if (childs.Count != 4)
-                throw new InvalidProgramException("Thermal generada incorrectamente.");
-            return new EdaPolygon(null, childs);
+            return polygon.Substract(hole);
         }
 
         /// <inheritdoc/>

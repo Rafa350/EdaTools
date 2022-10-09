@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
+{
 
     /// <summary>
     /// Clase que representa una via
@@ -49,10 +51,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <param name="spacing">Espaiat.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        private EdaPoints MakeViaPoints(EdaLayerId layerId, int spacing) {
+        private IEnumerable<EdaPoint> MakeViaPoints(EdaLayerId layerId, int spacing) {
 
             int size = layerId.Side == BoardSide.Inner ? InnerSize : OuterSize;
-            return EdaPoints.CreateCircle(_position, (size / 2) + spacing);
+            return EdaPointFactory.CreateCircle(_position, (size / 2) + spacing);
         }
 
         /// <summary>
@@ -60,9 +62,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// <returns>La llista de puints.</returns>
         /// 
-        private EdaPoints MakeHolePoints() {
+        private IEnumerable<EdaPoint> MakeHolePoints() {
 
-            return EdaPoints.CreateCircle(_position, _drillDiameter / 2);
+            return EdaPointFactory.CreateCircle(_position, _drillDiameter / 2);
         }
 
         /// <inheritdoc/>

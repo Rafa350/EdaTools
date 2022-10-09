@@ -1,8 +1,8 @@
 ﻿using System;
 using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
+{
 
     /// <summary>
     /// Clase que representa una linia.
@@ -31,7 +31,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
-            var points = EdaPoints.CreateLineTrace(_startPosition, _endPosition, _thickness, LineCap == CapStyle.Round);
+            var points = EdaPointFactory.CreateLineTrace(_startPosition, _endPosition, _thickness, LineCap == CapStyle.Round);
             return new EdaPolygon(points);
         }
 
@@ -39,7 +39,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
-            var points = EdaPoints.CreateLineTrace(_startPosition, _endPosition, _thickness + (spacing * 2), _lineCap == CapStyle.Round);
+            var points = EdaPointFactory.CreateLineTrace(_startPosition, _endPosition, _thickness + (spacing * 2), _lineCap == CapStyle.Round);
             return new EdaPolygon(points);
         }
 

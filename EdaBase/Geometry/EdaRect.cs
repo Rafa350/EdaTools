@@ -56,7 +56,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <returns>El resultat de l'operacio.</returns>
         /// 
         public EdaRect Offset(int dx, int dy) =>
-            new EdaRect(_x + dx, _y + dy, _width, _height);
+            new(_x + dx, _y + dy, _width, _height);
 
         /// <summary>
         /// Obte un rectangle inflat.
@@ -66,7 +66,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <returns>El resultat de l'operacio.</returns>
         /// 
         public EdaRect Inflated(int dx, int dy) =>
-            new EdaRect(_x - dx, _y - dy, _width + dx + dx, _height + dy + dy);
+            new(_x - dx, _y - dy, _width + dx + dx, _height + dy + dy);
 
         /// <summary>
         /// Obte la unio amb un altre rectangle
@@ -81,7 +81,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             int t = Math.Min(Top, rect.Top);
             int b = Math.Max(Bottom, rect.Bottom);
 
-            return new EdaRect(l, t, r - l + 1, b - t + 1);
+            return new(l, t, r - l + 1, b - t + 1);
         }
 
         /// <summary>
@@ -133,42 +133,48 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// </summary>
         /// 
         public EdaPoint Position =>
-            new EdaPoint(_x, _y);
+            new(_x, _y);
 
         /// <summary>
         /// Obte el tamany del rectangle
         /// </summary>
         /// 
         public EdaSize Size =>
-            new EdaSize(_width, _height);
+            new(_width, _height);
 
         /// <summary>
         /// Obte la coordinada X
         /// </summary>
         /// 
-        public int X => _x;
+        public int X => 
+            _x;
 
         /// <summary>
         /// Obte la coordinada Y.
         /// </summary>
         /// 
-        public int Y => _y;
+        public int Y => 
+            _y;
 
         /// <summary>
         /// Obte l'amplada.
         /// </summary>
         /// 
-        public int Width => _width;
+        public int Width => 
+            _width;
 
         /// <summary>
         /// Obte l'alçada.
         /// </summary>
         /// 
-        public int Height => _height;
+        public int Height => 
+            _height;
 
-        public int Left => _x;
+        public int Left => 
+            _x;
 
-        public int Bottom => _y;
+        public int Bottom => 
+            _y;
 
         public int Right =>
             _x + _width - 1;

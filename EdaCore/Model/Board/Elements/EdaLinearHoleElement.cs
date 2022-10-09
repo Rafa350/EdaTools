@@ -1,14 +1,14 @@
 ﻿using System;
 using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
+{
 
     /// <summary>
     /// Clase que representa un forat en forma de linia en la placa.
     /// </summary>
     /// 
-    public class EdaLineHoleElement: EdaHoleElement {
+    public class EdaLinearHoleElement: EdaHoleElement {
 
         private EdaPoint _startPosition;
         private EdaPoint _endPosition;
@@ -37,7 +37,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
-            EdaPoints points = EdaPoints.CreateLineTrace(_startPosition, _endPosition, Diameter + (spacing * 2), true);
+            var points = EdaPointFactory.CreateLineTrace(_startPosition, _endPosition, Diameter + (spacing * 2), true);
             return new EdaPolygon(points);
         }
 
@@ -45,7 +45,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
-            EdaPoints points = EdaPoints.CreateLineTrace(_startPosition, _endPosition, Diameter, true);
+            var points = EdaPointFactory.CreateLineTrace(_startPosition, _endPosition, Diameter, true);
             return new EdaPolygon(points);
         }
 

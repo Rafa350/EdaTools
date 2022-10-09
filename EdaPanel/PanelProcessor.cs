@@ -191,7 +191,7 @@ namespace MikroPic.EdaTools.v1.Panel {
 
             // Calcula la transformacio
             //
-            Transformation t = new Transformation();
+            EdaTransformation t = new EdaTransformation();
             t.Translate(cut.StartPosition);
             t.Rotate(cut.StartPosition, EdaAngle.FromRadiants(rad));
 
@@ -228,13 +228,13 @@ namespace MikroPic.EdaTools.v1.Panel {
 
                 // Afegeix els forats a la placa
                 //
-                targetBoard.AddElement(new EdaCircleHoleElement {
+                targetBoard.AddElement(new EdaCircularHoleElement {
                     Position = q1,
                     Diameter = drill,
                     Platted = false
                 });
 
-                targetBoard.AddElement(new EdaCircleHoleElement {
+                targetBoard.AddElement(new EdaCircularHoleElement {
                     Position = q2,
                     Diameter = drill,
                     Platted = false
@@ -374,8 +374,8 @@ namespace MikroPic.EdaTools.v1.Panel {
                     LayerSet = circle.LayerSet
                 };
 
-            else if (element is EdaCircleHoleElement circleHole)
-                return new EdaCircleHoleElement {
+            else if (element is EdaCircularHoleElement circleHole)
+                return new EdaCircularHoleElement {
                     Position = circleHole.Position,
                     Diameter = circleHole.Diameter,
                     Platted = circleHole.Platted
@@ -449,11 +449,11 @@ namespace MikroPic.EdaTools.v1.Panel {
 
         private sealed class TransformVisitor: EdaDefaultBoardVisitor {
 
-            private readonly Transformation transformation;
+            private readonly EdaTransformation transformation;
 
             public TransformVisitor(EdaPoint offset, EdaAngle rotation) {
 
-                transformation = new Transformation();
+                transformation = new EdaTransformation();
                 transformation.Translate(offset);
                 transformation.Rotate(rotation);
             }

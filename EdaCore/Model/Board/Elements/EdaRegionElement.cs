@@ -10,6 +10,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         private int _priority;
         private int _clearance;
+        private int _minThickness;
 
         /// <inheritdoc/>
         /// 
@@ -29,6 +30,20 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                     throw new ArgumentOutOfRangeException("Clearance");
 
                 _clearance = value;
+            }
+        }
+
+        /// <summary>
+        /// L'amplada minima de la regio
+        /// </summary>
+        /// 
+        public int MinThickness {
+            get => _minThickness;
+            set {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException("MinThickness");
+
+                _minThickness = value;
             }
         }
 

@@ -202,7 +202,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             /// <inheritdoc/>
             /// 
-            public override void Visit(EdaLineHoleElement element) {
+            public override void Visit(EdaLinearHoleElement element) {
 
                 if (element.IsOnLayer(_layerId))
                     _apertures.DefineCircleAperture(element.Diameter);
@@ -243,7 +243,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             /// <inheritdoc/>
             /// 
-            public override void Visit(EdaLineHoleElement element) {
+            public override void Visit(EdaLinearHoleElement element) {
 
                 if (element.IsOnLayer(_layerId)) {
 
@@ -252,7 +252,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     EdaPoint startPosition = element.StartPosition;
                     EdaPoint endPosition = element.EndPosition;
                     if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
+                        EdaTransformation t = Part.GetLocalTransformation();
                         startPosition = t.Transform(startPosition);
                         endPosition = t.Transform(endPosition);
                     }

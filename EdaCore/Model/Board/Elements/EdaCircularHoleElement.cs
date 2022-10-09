@@ -1,13 +1,13 @@
 ﻿using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
+{
 
     /// <summary>
     /// Clase que representa un forat circular en la placa.
     /// </summary>
     /// 
-    public sealed class EdaCircleHoleElement: EdaHoleElement {
+    public sealed class EdaCircularHoleElement: EdaHoleElement {
 
         private EdaPoint _position;
 
@@ -31,7 +31,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
             int radius = Diameter / 2;
-            EdaPoints points = EdaPoints.CreateCircle(Position, radius + spacing);
+            var points = EdaPointFactory.CreateCircle(Position, radius + spacing);
             return new EdaPolygon(points);
         }
 
@@ -40,7 +40,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
             int radius = Diameter / 2;
-            EdaPoints points = EdaPoints.CreateCircle(Position, radius);
+            var points = EdaPointFactory.CreateCircle(Position, radius);
             return new EdaPolygon(points);
         }
 

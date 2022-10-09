@@ -7,13 +7,13 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
         public static void Main(string[] args) {
 
-            EdaPoints p1 = EdaPoints.CreateLineTrace(new EdaPoint(0, 0), new EdaPoint(100, 100), 5, true);
+            var p1 = EdaPointFactory.CreateLineTrace(new EdaPoint(0, 0), new EdaPoint(100, 100), 5, true);
 
-            EdaPoints p2 = EdaPoints.CreateLineTrace(new EdaPoint(0, 0), new EdaPoint(-100, 100), 5, true);
+            var p2 = EdaPointFactory.CreateLineTrace(new EdaPoint(0, 0), new EdaPoint(-100, 100), 5, true);
 
-            EdaPoints p3 = EdaPoints.CreateLineTrace(new EdaPoint(0, 0), new EdaPoint(-100, -100), 5, true);
+            var p3 = EdaPointFactory.CreateLineTrace(new EdaPoint(0, 0), new EdaPoint(-100, -100), 5, true);
 
-            EdaPoints p4 = EdaPoints.CreateLineTrace(new EdaPoint(0, 0), new EdaPoint(100, -100), 5, true);
+            var p4 = EdaPointFactory.CreateLineTrace(new EdaPoint(0, 0), new EdaPoint(100, -100), 5, true);
         }
     }
 }

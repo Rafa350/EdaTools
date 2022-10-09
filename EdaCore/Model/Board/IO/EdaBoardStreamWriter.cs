@@ -220,7 +220,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
             /// <inheritdoc/>
             /// 
-            public override void Visit(EdaCircleHoleElement element) {
+            public override void Visit(EdaCircularHoleElement element) {
 
                 _writer.WriteStartElement("circleHole");
 
@@ -233,7 +233,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
             /// <inheritdoc/>
             /// 
-            public override void Visit(EdaLineHoleElement element) {
+            public override void Visit(EdaLinearHoleElement element) {
 
                 _writer.WriteStartElement("lineHole");
 

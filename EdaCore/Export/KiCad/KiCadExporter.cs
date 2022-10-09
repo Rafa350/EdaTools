@@ -209,7 +209,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// </summary>
             /// <param name="element">L'element.</param>
             /// 
-            public override void Visit(EdaCircleHoleElement element) {
+            public override void Visit(EdaCircularHoleElement element) {
 
                 var center = new Vector2D(
                     element.Position.X,
@@ -229,7 +229,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// </summary>
             /// <param name="element">L'element.</param>
             /// 
-            public override void Visit(EdaLineHoleElement element) {
+            public override void Visit(EdaLinearHoleElement element) {
             }
 
             private static string GetLayerNames(EdaLayerSet layerSet) {

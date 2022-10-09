@@ -1,8 +1,8 @@
 ﻿using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
+{
 
     /// <summary>
     /// Clase que representa un arc.
@@ -26,7 +26,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             if (_angle == EdaAngle.Zero)
                 return base.GetPolygon(layerId);
             else {
-                var points = EdaPoints.CreateArcTrace(Center, Radius, StartAngle, _angle, Thickness, LineCap == CapStyle.Round);
+                var points = EdaPointFactory.CreateArcTrace(Center, Radius, StartAngle, _angle, Thickness, LineCap == CapStyle.Round);
                 return new EdaPolygon(points);
             }
         }
@@ -38,7 +38,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             if (_angle == EdaAngle.Zero)
                 return base.GetOutlinePolygon(layerId, spacing);
             else {
-                var points = EdaPoints.CreateArcTrace(Center, Radius, StartAngle, _angle, Thickness + (spacing * 2), LineCap == CapStyle.Round);
+                var points = EdaPointFactory.CreateArcTrace(Center, Radius, StartAngle, _angle, Thickness + (spacing * 2), LineCap == CapStyle.Round);
                 return new EdaPolygon(points);
             }
         }

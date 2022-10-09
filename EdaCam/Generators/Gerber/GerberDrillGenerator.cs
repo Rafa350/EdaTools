@@ -220,7 +220,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             /// <inheritdoc/>
             /// 
-            public override void Visit(EdaCircleHoleElement element) {
+            public override void Visit(EdaCircularHoleElement element) {
 
                 if (element.IsOnLayer(_layerId))
                     _apertures.DefineCircleAperture(element.Diameter);
@@ -259,7 +259,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                     EdaPoint position = element.Position;
                     if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
+                        EdaTransformation t = Part.GetLocalTransformation();
                         position = t.Transform(position);
                     }
 
@@ -278,7 +278,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                     EdaPoint position = element.Position;
                     if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
+                        EdaTransformation t = Part.GetLocalTransformation();
                         position = t.Transform(position);
                     }
 
@@ -297,7 +297,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                     EdaPoint position = element.Position;
                     if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
+                        EdaTransformation t = Part.GetLocalTransformation();
                         position = t.Transform(position);
                     }
 
@@ -310,13 +310,13 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             /// <inheritdoc/>
             /// 
-            public override void Visit(EdaCircleHoleElement element) {
+            public override void Visit(EdaCircularHoleElement element) {
 
                 if (element.IsOnLayer(_layerId)) {
 
                     EdaPoint position = element.Position;
                     if (Part != null) {
-                        Transformation t = Part.GetLocalTransformation();
+                        EdaTransformation t = Part.GetLocalTransformation();
                         position = t.Transform(position);
                     }
 

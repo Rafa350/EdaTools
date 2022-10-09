@@ -139,13 +139,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// <param name="element">L'element.</param>
         /// 
-        void Visit(EdaCircleHoleElement element);
+        void Visit(EdaCircularHoleElement element);
 
         /// <summary>
         /// Visita un element de tipus 'LineHole'
         /// </summary>
         /// <param name="circleHole">L'element.</param>
         /// 
-        void Visit(EdaLineHoleElement element);
+        void Visit(EdaLinearHoleElement element);
     }
 }

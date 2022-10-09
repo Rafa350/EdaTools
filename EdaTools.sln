@@ -38,7 +38,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdaExport", "EdaExport\EdaE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdaComponentGenerator", "EdaComponentGenerator\EdaComponentGenerator.csproj", "{8D7F9FA0-D161-4276-83B5-E06E003B0D19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{C1FC88B7-F150-454B-84A5-9D7F0F94564E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{C1FC88B7-F150-454B-84A5-9D7F0F94564E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clipper2", "Clipper2\Clipper2.csproj", "{3A877F5A-D247-4A1E-9C97-4607A08C536D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -94,6 +96,10 @@ Global
 		{C1FC88B7-F150-454B-84A5-9D7F0F94564E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1FC88B7-F150-454B-84A5-9D7F0F94564E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1FC88B7-F150-454B-84A5-9D7F0F94564E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A877F5A-D247-4A1E-9C97-4607A08C536D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A877F5A-D247-4A1E-9C97-4607A08C536D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A877F5A-D247-4A1E-9C97-4607A08C536D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A877F5A-D247-4A1E-9C97-4607A08C536D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +117,7 @@ Global
 		{DA4A1B89-04D9-4D34-91EE-FA5B68B2EA9D} = {E3221687-5D1E-464E-A24E-A8287F028C0D}
 		{8D7F9FA0-D161-4276-83B5-E06E003B0D19} = {E3221687-5D1E-464E-A24E-A8287F028C0D}
 		{C1FC88B7-F150-454B-84A5-9D7F0F94564E} = {E3221687-5D1E-464E-A24E-A8287F028C0D}
+		{3A877F5A-D247-4A1E-9C97-4607A08C536D} = {0CBCDECB-D253-4477-B1AA-1DBE17687F0B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {98C638C2-4E0C-43A4-9E0E-D0C6F59502FD}

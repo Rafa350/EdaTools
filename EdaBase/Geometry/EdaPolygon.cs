@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons {
+namespace MikroPic.EdaTools.v1.Base.Geometry {
 
     /// <summary>
     /// Objecte que representa un poligon amb fills. Aquesta clase es inmutable.
@@ -26,7 +25,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons {
         }
 
         /// <summary>
-        /// Constreix un poligon amb un poligon (forat) interior.
+        /// Construeix un poligon amb un poligon (forat) interior.
         /// </summary>
         /// <param name="points">Els punts.</param>
         /// <param name="child">El poligons interior.</param>
@@ -96,10 +95,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons {
                 return new EdaRect(0, 0, 0, 0);
 
             else {
-                int minX = Int32.MaxValue;
-                int minY = Int32.MaxValue;
-                int maxX = Int32.MinValue;
-                int maxY = Int32.MinValue;
+                int minX = int.MaxValue;
+                int minY = int.MaxValue;
+                int maxX = int.MinValue;
+                int maxY = int.MinValue;
 
                 foreach (var point in _points) {
 
@@ -176,4 +175,3 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons {
             _childs;
     }
 }
-

@@ -91,7 +91,7 @@ namespace EdaBoardViewer.Render {
 
         /// <inheritdoc/>
         /// 
-        public override void Visit(EdaCircleHoleElement element) {
+        public override void Visit(EdaCircularHoleElement element) {
 
             if (_visualLayer.IsVisible(Part, element)) {
 
@@ -178,7 +178,7 @@ namespace EdaBoardViewer.Render {
                     var td = new TextDrawer(font);
                     IEnumerable<GlyphTrace> glyphTraces = td.Draw(paa.Value, new EdaPoint(0, 0), paa.HorizontalAlign, paa.VerticalAlign, paa.Height);
 
-                    var t = new Transformation();
+                    var t = new EdaTransformation();
                     //t.Scale(1, -1);
                     t.Translate(paa.Position);
                     t.Rotate(paa.Position, paa.Rotation);
@@ -216,7 +216,7 @@ namespace EdaBoardViewer.Render {
             if (_visualLayer.IsVisible(Part, region)) {
 
                 var polygon = _layer.Function == LayerFunction.Signal ?
-                    Board.GetRegionPolygon(region, _layer.Id, new Transformation()) :
+                    Board.GetRegionPolygon(region, _layer.Id, new EdaTransformation()) :
                     region.GetPolygon(_layer.Id);
 
                 var pen = new Pen(new SolidColorBrush(_visualLayer.Color), region.Thickness, null, PenLineCap.Round, PenLineJoin.Round);
@@ -232,7 +232,7 @@ namespace EdaBoardViewer.Render {
         /// 
         public override void Visit(EdaPart part) {
 
-            Transformation transformation = part.GetLocalTransformation();
+            EdaTransformation transformation = part.GetLocalTransformation();
             Matrix2D matrix = transformation.Matrix;
 
             var m = new Avalonia.Matrix(matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.Tx, matrix.Ty);

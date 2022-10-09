@@ -1,17 +1,18 @@
-﻿using MikroPic.EdaTools.v1.Base.Geometry.Utils;
+﻿using System.Collections.Generic;
+using MikroPic.EdaTools.v1.Base.Geometry.Utils;
 
 namespace MikroPic.EdaTools.v1.Base.Geometry {
 
-    public sealed class Transformation {
+    public sealed class EdaTransformation {
 
         private Matrix2D _m;
 
-        public Transformation() {
+        public EdaTransformation() {
 
             _m = Matrix2D.Identity;
         }
 
-        public Transformation(Matrix2D m) {
+        public EdaTransformation(Matrix2D m) {
 
             _m = m;
         }
@@ -114,7 +115,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         }
 
         /// <summary>
-        /// Aplica la transfornmacio a un punt.
+        /// Aplica la transformacio a un punt.
         /// </summary>
         /// <param name="point">El punt.</param>
         /// <returns>El punt transformat.</returns>
@@ -128,21 +129,28 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         }
 
         /// <summary>
-        /// Aplica la transformacio a un array de punts.
+        /// Aplica la transformacio a una coleccio de punts.
         /// </summary>
-        /// <param name="points">El array de punts.</param>
+        /// <param name="point">La coleccio de punts.</param>
+        /// <returns>La coleccio de punts del resultat de la transformacio.</returns>
         /// 
-        public void ApplyTo(EdaPoint[] points) {
+        public IEnumerable<EdaPoint> Transform(IEnumerable<EdaPoint> points) {
 
-            for (int i = 0; i < points.Length; i++) {
-
-                double x = (points[i].X * _m.M11) + (points[i].Y * _m.M21) + _m.Tx;
-                double y = (points[i].X * _m.M12) + (points[i].Y * _m.M22) + _m.Ty;
-
-                points[i] = new EdaPoint((int)x, (int)y);
+            var result = new List<EdaPoint>();
+            
+            foreach (var point in points) {
+                double x = (point.X * _m.M11) + (point.Y * _m.M21) + _m.Tx;
+                double y = (point.X * _m.M12) + (point.Y * _m.M22) + _m.Ty;
+                result.Add(new EdaPoint((int)x, (int)y));
             }
+
+            return result;
         }
 
+        /// <summary>
+        /// Obte la matriu de la transformacio.
+        /// </summary>
+        /// 
         public Matrix2D Matrix =>
             _m;
     }

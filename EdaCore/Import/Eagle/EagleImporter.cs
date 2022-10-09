@@ -810,7 +810,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             //
             int drill = ParseNumber(node.AttributeAsString("drill"));
 
-            var element = new EdaCircleHoleElement {
+            var element = new EdaCircularHoleElement {
                 Position = position,
                 Diameter = drill,
                 Platted = false
@@ -881,7 +881,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 //
                 EdaPoint p = new EdaPoint(parameter.Position.X, parameter.Position.Y);
 
-                Transformation t = new Transformation();
+                EdaTransformation t = new EdaTransformation();
                 t.Rotate(position, -rotation);
                 t.Translate(new EdaPoint(-position.X, -position.Y));
                 p = t.Transform(p);

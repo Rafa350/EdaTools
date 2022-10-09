@@ -1,17 +1,17 @@
+using System;
+using System.Collections.Generic;
+
 namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
-    using System;
-    using System.Collections.Generic;
-    using MikroPic.EdaTools.v1.Base.Geometry;
 
     public static class Polygonizer {
 
-        static public EdaPoints Poligonize(IEnumerable<Segment> segments) {
+        static public IEnumerable<EdaPoint> Poligonize(IEnumerable<Segment> segments) {
 
             if (segments == null)
                 throw new ArgumentNullException(nameof(segments));
 
-            EdaPoint p = default(EdaPoint);
+            EdaPoint p = default;
             bool first = true;
             HashSet<Segment> segmentPool = new HashSet<Segment>();
             foreach (var segment in segments) {
@@ -24,7 +24,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
             if (segmentPool.Count > 2) {
 
-                EdaPoints polygon = EdaPoints.Create();
+                var points = new List<EdaPoint>();
 
                 while (segmentPool.Count > 0) {
                     Segment s;
@@ -33,13 +33,13 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                             p = s.End;
                         else
                             p = s.Start;
-                        polygon.AddPoint(p);
+                        points.Add(p);
                         segmentPool.Remove(s);
                     }
                     else
                         break;
                 }
-                return polygon;
+                return points;
             }
             else
                 return null;
@@ -52,7 +52,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
         private static bool FindSegmentWidthVertex(IEnumerable<Segment> segments, EdaPoint point, out Segment result) {
 
-            result = default(Segment);
+            result = default;
             foreach (var segment in segments) {
                 if (Compare(segment.Start, point)) {
                     result = segment;

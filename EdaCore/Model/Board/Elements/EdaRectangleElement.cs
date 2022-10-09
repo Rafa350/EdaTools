@@ -1,8 +1,8 @@
 ﻿using System;
 using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
+{
 
     /// <summary>
     /// Clase que representa un rectangle.
@@ -28,16 +28,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
             if (Filled) {
-                var points = EdaPoints.CreateRectangle(_position, _size, _cornerRatio, true, _rotation);
+                var points = EdaPointFactory.CreateRectangle(_position, _size, _cornerRatio, true, _rotation);
                 return new EdaPolygon(points);
             }
             else {
                 var outerSize = new EdaSize(_size.Width + _thickness, _size.Height + _thickness);
-                var outerPoints = EdaPoints.CreateRectangle(_position, outerSize, _cornerRatio, true, _rotation);
+                var outerPoints = EdaPointFactory.CreateRectangle(_position, outerSize, _cornerRatio, true, _rotation);
 
                 var innerSize = new EdaSize(_size.Width - _thickness, _size.Height - _thickness);
                 var innerCornerRatio = EdaRatio.FromPercent((double)(CornerSize - Thickness) / (Math.Min(innerSize.Width, innerSize.Height) / 2));
-                var innerPoints = EdaPoints.CreateRectangle(_position, innerSize, innerCornerRatio, true, _rotation);
+                var innerPoints = EdaPointFactory.CreateRectangle(_position, innerSize, innerCornerRatio, true, _rotation);
 
                 return new EdaPolygon(outerPoints, new EdaPolygon(innerPoints));
             }
@@ -48,7 +48,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
             var outerSize = new EdaSize(_size.Width + _thickness + spacing * 2, _size.Height + _thickness + spacing * 2);
-            var points = EdaPoints.CreateRectangle(_position, outerSize, _cornerRatio, true, _rotation);
+            var points = EdaPointFactory.CreateRectangle(_position, outerSize, _cornerRatio, true, _rotation);
             return new EdaPolygon(points);
         }
 

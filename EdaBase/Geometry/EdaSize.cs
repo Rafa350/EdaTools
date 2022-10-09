@@ -64,12 +64,14 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// Obte l'amplada.
         /// </summary>
         /// 
-        public int Width => _width;
+        public int Width => 
+            _width;
 
         /// <summary>
         /// Obte l'alçada
         /// </summary>
         /// 
-        public int Height => _height;
+        public int Height => 
+            _height;
     }
 }

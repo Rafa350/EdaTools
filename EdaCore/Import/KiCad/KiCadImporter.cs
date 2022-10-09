@@ -744,7 +744,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                     break;
 
                 case "np_thru_hole": {
-                        var element = new EdaCircleHoleElement {
+                        var element = new EdaCircularHoleElement {
                             Position = position,
                             Diameter = drill,
                             Platted = false

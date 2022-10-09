@@ -4,9 +4,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     public static class EdaPartExtensions {
 
-        public static Transformation GetLocalTransformation(this EdaPart part) {
+        public static EdaTransformation GetLocalTransformation(this EdaPart part) {
 
-            var t = new Transformation();
+            var t = new EdaTransformation();
             t.Translate(part.Position);
             t.Rotate(part.Position, part.Rotation);
             if (part.IsFlipped)

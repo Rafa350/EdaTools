@@ -101,12 +101,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
 
         /// <inheritdoc/>
         /// 
-        public virtual void Visit(EdaCircleHoleElement element) {
+        public virtual void Visit(EdaCircularHoleElement element) {
         }
 
         /// <inheritdoc/>
         /// 
-        public virtual void Visit(EdaLineHoleElement element) {
+        public virtual void Visit(EdaLinearHoleElement element) {
         }
     }
 }
