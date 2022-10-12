@@ -6,6 +6,12 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
 
     public static class EdaPolygonExtensions {
 
+        /// <summary>
+        /// Clona un poligon.
+        /// </summary>
+        /// <param name="polygon">El poligon a clonar.</param>
+        /// <returns>El resultat de l'operacio.</returns>
+        /// 
         public static EdaPolygon Clone(this EdaPolygon polygon) {
 
             List<EdaPolygon> childs = null;
@@ -25,6 +31,13 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             return new EdaPolygon(points, childs);
         }
 
+        /// <summary>
+        /// Transforma un poligon.
+        /// </summary>
+        /// <param name="polygon">El poligon a transformat.</param>
+        /// <param name="transformation">La transformacio.</param>
+        /// <returns>El resultat de l'operacio.</returns>
+        /// 
         public static EdaPolygon Transform(this EdaPolygon polygon, EdaTransformation transformation) {
 
             List<EdaPolygon> childs = null;
@@ -41,44 +54,60 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             return new EdaPolygon(points, childs);
         }
 
+        /// <summary>
+        /// Subtraccio d'un poligon.
+        /// </summary>
+        /// <param name="polygon">El poligon.</param>
+        /// <param name="toSubstract">Els poligons a substreure.</param>
+        /// <returns>El resultat de l'operacio.</returns>
+        /// 
         public static EdaPolygon Substract(this EdaPolygon polygon, params EdaPolygon[] toSubstract) {
 
             return polygon.Substract((IEnumerable<EdaPolygon>)toSubstract);
         }
 
+        /// <summary>
+        /// Subtraccio d'un poligon.
+        /// </summary>
+        /// <param name="polygon">El poligon.</param>
+        /// <param name="toSubstract">Els poligons a substreure.</param>
+        /// <returns>El resultat de l'operacio.</returns>
+        /// 
         public static EdaPolygon Substract(this EdaPolygon polygon, IEnumerable<EdaPolygon> toSubstract) {
 
             var cp = new Clipper64();
-            cp.AddSubject(ToPath64(polygon));
+            cp.AddSubject(ToPath64(polygon.Points));
             foreach (var p in toSubstract)
-                cp.AddClip(ToPath64(p));
+                cp.AddClip(ToPath64(p.Points));
             var solution = new PolyTree64();
             cp.Execute(ClipType.Difference, FillRule.NonZero, solution);
 
             return ToPolygon(solution);
         }
 
-        public static EdaPolygon Inflate(this EdaPolygon polygon, int delta) {
+        /// <summary>
+        /// Canvia el tamany d'un poligon.
+        /// </summary>
+        /// <param name="polygon">El poligon.</param>
+        /// <param name="delta">El increment de tamany.</param>
+        /// <returns>El resultat.</returns>
+        /// 
+        public static EdaPolygon Offset(this EdaPolygon polygon, int delta) {
+
+            List<EdaPolygon> childs = null;
+            if (polygon.HasChilds) {
+                childs = new List<EdaPolygon>();
+                foreach (var child in polygon.Childs)
+                    childs.Add(Offset(child, delta));
+            }
 
             var cpo = new ClipperOffset();
-            cpo.AddPath(ToPath64(polygon), JoinType.Round, EndType.Round);
+            cpo.AddPath(ToPath64(polygon.Points), JoinType.Round, EndType.Round);
             var solution = cpo.Execute(delta);
-
-            return ToPolygon(solution[0]);
-        }
-
-        public static EdaPolygon Deflate(this EdaPolygon polygon, int delta) {
-
-            var cpo = new ClipperOffset();
-            cpo.AddPath(ToPath64(polygon), JoinType.Round, EndType.Round);
-            var solution = cpo.Execute(-delta);
-
-            return ToPolygon(solution[0]);
-        }
-
-        private static Path64 ToPath64(EdaPolygon polygon) {
-
-            return ToPath64(polygon.Points);
+            //if (solution.Count < 2) {
+                var points = ToPoints(solution[0]);
+                return new EdaPolygon(points, childs);
+            //}
         }
 
         private static Path64 ToPath64(IEnumerable<EdaPoint> points) {
@@ -89,13 +118,13 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             return path;
         }
 
-        private static EdaPolygon ToPolygon(Path64 path) {
-
+        private static IEnumerable<EdaPoint> ToPoints(Path64 path) {
+            
             var points = new List<EdaPoint>(path.Count);
-            foreach (var item in path) {
+            foreach (var item in path) 
                 points.Add(new EdaPoint((int)item.X, (int)item.Y));
-            }
-            return new EdaPolygon(points);
+
+            return points;
         }
 
         private static EdaPolygon ToPolygon(PolyPath64 tree) {

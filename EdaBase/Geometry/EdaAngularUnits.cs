@@ -4,7 +4,7 @@
     /// Units for angles.
     /// </summary>
     /// 
-    public enum AngularUnits {
+    public enum EdaAngularUnits {
         Degrees,
         Radiants
     }

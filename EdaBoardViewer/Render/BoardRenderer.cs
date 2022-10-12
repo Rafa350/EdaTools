@@ -1,12 +1,13 @@
 ﻿using Avalonia;
 using Avalonia.Media;
 using MikroPic.EdaTools.v1.Core.Model.Board;
+using SkiaSharp;
 
 namespace EdaBoardViewer.Render {
 
     public sealed class BoardRenderer {
 
-        private static Color _boardColor = Color.FromArgb(255, 0, 32, 0);
+        private static Color _boardColor = Color.FromArgb(255, 0, 48, 0);
         private readonly DrawingContext context;
 
         public BoardRenderer(DrawingContext context) {
@@ -16,9 +17,10 @@ namespace EdaBoardViewer.Render {
 
         public void Render(EdaBoard board) {
 
-            var r = board.GetBoundingBox();
             var brush = new SolidColorBrush(_boardColor);
-            context.FillRectangle(brush, new Rect(r.X, r.Y, r.Width, r.Height));
+
+            var geometry = board.GetOutlinePolygon().ToGeometry();
+            context.DrawGeometry(brush, null, geometry);
 
             VisualLayerStack visualLayers = VisualLayerStack.CreateDefault();
             foreach (VisualLayer visualLayer in visualLayers.VisualLayers) {

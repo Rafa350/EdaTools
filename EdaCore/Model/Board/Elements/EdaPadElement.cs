@@ -1,8 +1,7 @@
 ﻿using System;
 using MikroPic.EdaTools.v1.Base.Geometry;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
-{
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
     /// Clase que representa un pad.
@@ -13,16 +12,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
         private string _name;
         private EdaPoint _position;
         private EdaAngle _rotation;
-
-        /// <summary>
-        /// Crea el poligon del thermal.
-        /// </summary>
-        /// <param name="side">Identificador de la capa.</param>
-        /// <param name="spacing">Espaiat.</param>
-        /// <param name="width">Amplada dels conductors.</param>
-        /// <returns>El poligon.</returns>
-        /// 
-        public abstract EdaPolygon GetThermalPolygon(EdaLayerId layerId, int spacing, int width);
 
         /// <summary>
         /// El nom.

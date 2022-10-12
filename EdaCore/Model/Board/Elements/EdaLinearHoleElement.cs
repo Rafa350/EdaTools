@@ -1,8 +1,7 @@
 ﻿using System;
 using MikroPic.EdaTools.v1.Base.Geometry;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
-{
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
     /// Clase que representa un forat en forma de linia en la placa.
@@ -24,10 +23,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
         /// 
         public override EdaRect GetBoundingBox(EdaLayerId layerId) {
 
-            int radius = Diameter / 2;
+            int r = Diameter / 2;
             return new EdaRect(
-                Math.Min(_startPosition.X, _endPosition.X) - radius,
-                Math.Min(_startPosition.Y, _endPosition.Y) - radius,
+                Math.Min(_startPosition.X, _endPosition.X) - r,
+                Math.Min(_startPosition.Y, _endPosition.Y) - r,
                 Math.Abs(_endPosition.X - _startPosition.X + 1) + Diameter,
                 Math.Abs(_endPosition.Y - _startPosition.Y + 1) + Diameter);
         }

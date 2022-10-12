@@ -1,8 +1,7 @@
 ﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Core.Model.Common;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board
-{
+namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
     /// Identifica el tipus d'element
@@ -38,7 +37,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board
         public abstract void AcceptVisitor(IEdaBoardVisitor visitor);
 
         /// <summary>
-        /// Obte el poligon del element en una capa.
+        /// Obte el poligon del element.
         /// </summary>
         /// <param name="layerId">Identificador de la capa.</param>
         /// <returns>El poligon.</returns>
@@ -46,7 +45,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board
         public abstract EdaPolygon GetPolygon(EdaLayerId layerId);
 
         /// <summary>
-        /// Obte el poligon espaiat del element.
+        /// Obte el poligon exterior del element.
         /// </summary>
         /// <param name="layerId">Identificador de la capa.</param>
         /// <param name="spacing">Espaiat.</param>
@@ -55,10 +54,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board
         public abstract EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing);
 
         /// <summary>
-        /// Obte el bounding box del element.
+        /// Obte el rectangle envolvent del element.
         /// </summary>
         /// <param name="layerId">Identificador de la capa.</param>
-        /// <returns>El bounding box.</returns>
+        /// <returns>El rectangle envolvent.</returns>
         /// 
         public abstract EdaRect GetBoundingBox(EdaLayerId layerId);
 
@@ -77,8 +76,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board
         /// 
         public EdaLayerSet LayerSet {
             get {
-                if (_layerSet == null)
-                    _layerSet = new EdaLayerSet();
+                _layerSet ??= new EdaLayerSet();
                 return _layerSet;
             }
             set => _layerSet = value;

@@ -1,8 +1,7 @@
 ﻿using System;
 using MikroPic.EdaTools.v1.Base.Geometry;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
-{
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
     /// Clase que representa un cercle.
@@ -49,7 +48,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
         public override EdaRect GetBoundingBox(EdaLayerId layerId) {
 
             int r = _radius + (_thickness / 2);
-            return new EdaRect(_position.X - r, _position.Y - r, r + r, r + r);
+            int d = r + r;
+            return new EdaRect(_position.X - r, _position.Y - r, d, d);
         }
 
         /// <summary>

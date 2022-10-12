@@ -244,6 +244,8 @@
             <xs:attribute name="layer" use="required" type="xs:string"/>
             <xs:attribute name="thickness" use="optional" type="xs:double"/>
             <xs:attribute name="clearance" use="optional" type="xs:double"/>
+            <xs:attribute name="thermalThickness" use="optional" type="xs:double"/>
+            <xs:attribute name="thermalClearance" use="optional" type="xs:double"/>
             <xs:attribute name="filled" use="optional" type="xs:boolean"/>
             <xs:attribute name="signal" use="optional" type="nameType"/>
         </xs:complexType>

@@ -1,8 +1,7 @@
 ﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
-{
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
     /// Clase que representa un arc.

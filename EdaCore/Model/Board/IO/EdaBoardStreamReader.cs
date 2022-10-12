@@ -865,6 +865,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 LayerSet = layerSet,
                 Thickness = thickness,
                 Clearance = clearance,
+                ThermalThickness = 400000,
+                ThermalClearance = 200000,
                 Priority = priority
             };
 

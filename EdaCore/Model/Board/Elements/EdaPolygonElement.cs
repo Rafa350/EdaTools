@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
-{
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
     /// Clase que representa una regio poligonal.
@@ -86,11 +85,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
                 return null;
 
             else {
-                EdaPolygon polygon = GetPolygon(layerId);
-                if (spacing != 0)
-                    return polygon.Inflate(spacing);
-                else
-                    return polygon;
+                var polygon = GetPolygon(layerId);
+                return (spacing == 0) ? polygon : polygon.Offset(spacing);
             }
         }
 
@@ -102,7 +98,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
                 return new EdaRect(0, 0, 0, 0);
 
             else {
-                EdaPolygon polygon = GetPolygon(layerId);
+                var polygon = GetPolygon(layerId);
                 return polygon.BoundingBox;
             }
         }
@@ -115,7 +111,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
             get => _thickness;
             set {
                 if (value < 0)
-                    throw new ArgumentOutOfRangeException("Tickness");
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 _thickness = value;
             }

@@ -11,6 +11,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private int _priority;
         private int _clearance;
         private int _minThickness;
+        private int _thermalClearance;
+        private int _thermalThickness;
 
         /// <inheritdoc/>
         /// 
@@ -41,10 +43,28 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => _minThickness;
             set {
                 if (value < 0)
-                    throw new ArgumentOutOfRangeException("MinThickness");
+                    throw new ArgumentOutOfRangeException(nameof(MinThickness));
 
                 _minThickness = value;
             }
+        }
+
+        /// <summary>
+        /// El espaiat dels termals.
+        /// </summary>
+        /// 
+        public int ThermalClearance {
+            get => Math.Max(_thermalClearance, _clearance);
+            set => _thermalClearance = value;
+        }
+
+        /// <summary>
+        /// L'amplada dels termals.
+        /// </summary>
+        /// 
+        public int ThermalThickness {
+            get => _thermalThickness;
+            set => _thermalThickness = value;
         }
 
         /// <summary>

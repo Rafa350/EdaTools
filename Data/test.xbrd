@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <document version="213" documentType="board" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/BoardDocument.xsd">
-    <board position="0, 0" rotation="0">
+    <board position="96, -107.5" rotation="0">
         <layers>
             <layer id="Pads" side="none" function="unknown" />
             <layer id="Vias" side="none" function="unknown" />
@@ -103,23 +103,23 @@
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
                 </elements>
             </component>
-            <component name="Inductor_SMD:L_0805_2012Metric">
+            <component name="Inductor_SMD:L_0603_1608Metric">
                 <elements>
-                    <text layer="Top.Names" position="0, 1.55" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.55" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
-                    <line layer="Top.Place" startPosition="-0.399622, 0.56" endPosition="0.399622, 0.56" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="-0.399622, -0.56" endPosition="0.399622, -0.56" thickness="0.12" />
-                    <line layer="Top.Keepout" startPosition="-1.75, 0.85" endPosition="1.75, 0.85" thickness="0.05" />
-                    <line layer="Top.Keepout" startPosition="-1.75, -0.85" endPosition="-1.75, 0.85" thickness="0.05" />
-                    <line layer="Top.Keepout" startPosition="1.75, -0.85" endPosition="-1.75, -0.85" thickness="0.05" />
-                    <line layer="Top.Keepout" startPosition="1.75, 0.85" endPosition="1.75, -0.85" thickness="0.05" />
-                    <line layer="F.Fab" startPosition="1, 0.45" endPosition="1, -0.45" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-1, 0.45" endPosition="1, 0.45" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-1, -0.45" endPosition="-1, 0.45" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="1, -0.45" endPosition="-1, -0.45" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.0625, 0" size="0.875, 1.2" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.0625, 0" size="0.875, 1.2" cornerRatio="0.5" cornerShape="round" />
+                    <text layer="Top.Names" position="0, 1.43" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.43" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.4" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <line layer="Top.Place" startPosition="-0.162779, -0.51" endPosition="0.162779, -0.51" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-0.162779, 0.51" endPosition="0.162779, 0.51" thickness="0.12" />
+                    <line layer="Top.Keepout" startPosition="1.48, -0.73" endPosition="-1.48, -0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.48, 0.73" endPosition="1.48, 0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.48, -0.73" endPosition="-1.48, 0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="1.48, 0.73" endPosition="1.48, -0.73" thickness="0.05" />
+                    <line layer="F.Fab" startPosition="0.8, -0.4" endPosition="-0.8, -0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="0.8, 0.4" endPosition="0.8, -0.4" thickness="0.1" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.7875, 0" size="0.875, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.7875, 0" size="0.875, 0.95" cornerRatio="0.5" cornerShape="round" />
                 </elements>
             </component>
             <component name="Resistor_SMD:R_0603_1608Metric">
@@ -309,7 +309,7 @@
                 <elements>
                     <text layer="Top.Names" position="0, 4.2" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
                     <text layer="Top.Values" position="0, -4.2" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0.3, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="F.Fab" position="0, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <circle layer="Cmts.User" position="0, 0" radius="3.2" thickness="0.15" />
                     <circle layer="Top.Keepout" position="0, 0" radius="3.45" thickness="0.05" />
                     <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
@@ -492,7 +492,7 @@
                     <attribute name="PKG" value="0603" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="SPN" value="80-C0603C105K3RLR" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="25V" visible="false" />
@@ -513,7 +513,7 @@
                     <attribute name="PKG" value="0603" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="SPN" value="80-C0603104K3RAC7411" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="25V" visible="false" />
@@ -534,7 +534,7 @@
                     <attribute name="PKG" value="0603" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="SPN" value="80-C0603C105K3RLR" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="25V" visible="false" />
@@ -555,7 +555,7 @@
                     <attribute name="PKG" value="0603" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="SPN" value="80-C0603C105K3RLR" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="25V" visible="false" />
@@ -563,21 +563,21 @@
                     <attribute name="VALUE" value="1u" visible="false" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
-            <part name="FB1" component="Inductor_SMD:L_0805_2012Metric" position="61.11, 50.82" rotation="-90">
+            <part name="FB1" component="Inductor_SMD:L_0603_1608Metric" position="61.11, 50.82" rotation="-90">
                 <pads>
                     <pad name="1" signal="+5V" />
                     <pad name="2" signal="Net-(D1-Pad1)" />
                 </pads>
                 <attributes>
-                    <attribute name="MNF" value="TE-CONECTIVITY" visible="false" />
-                    <attribute name="MPN" value="1-1624117-7" visible="false" />
-                    <attribute name="PKG" value="0805" visible="false" />
+                    <attribute name="MNF" value="MURATA" visible="false" />
+                    <attribute name="MPN" value="BLM18AG601SN1D" visible="false" />
+                    <attribute name="PKG" value="0803" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="SPN" value="571-1-1624117-7" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-92.58, 107.49" rotation="0" />
-                    <attribute name="VALUE" value="600R" visible="false" position="-96, 105.95" rotation="180" />
+                    <attribute name="NAME" value="{%name}" visible="false" position="-96, 106.09" rotation="0" />
+                    <attribute name="VALUE" value="600R" visible="false" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
             <part name="R1" component="Resistor_SMD:R_0603_1608Metric" position="4.5, 29.25">
@@ -592,7 +592,7 @@
                     <attribute name="RESISTANCE" value="10K" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="SPN" value="652-CR0603FX-1002ELF" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="1%" visible="false" />
                     <attribute name="NAME" value="{%name}" visible="false" position="-98.5, 107.5" rotation="0" />
@@ -612,7 +612,7 @@
                     <attribute name="PKG" value="0603" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="SPN" value="80-C0603C105K3RLR" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="25V" visible="false" />
@@ -630,7 +630,7 @@
                     <attribute name="MPN" value="MBR0540T1G" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="SPN" value="863-MBR0540T1G" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="NAME" value="{%name}" visible="false" position="-99.46, 107.46" rotation="180" />
                     <attribute name="VALUE" value="MBR0540" visible="false" position="-96, 105.4" rotation="0" />
@@ -642,13 +642,13 @@
                     <pad name="2" signal="Net-(J5-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="MNF" value="BUYDISPLAY" visible="false" />
-                    <attribute name="MPN" value="ER-CON2.0-2P-SMD" visible="false" />
-                    <attribute name="SPL" value="BUYDISPLAY" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="JST" visible="false" />
+                    <attribute name="MPN" value="S2B-PH-SM4-TB" visible="false" />
+                    <attribute name="SPL" value="DIGIKEY" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="NAME" value="{%name}" visible="false" position="-91.5, 107.5" rotation="180" />
-                    <attribute name="VALUE" value="ER-CON2.0-2P-SMD" visible="false" position="-96, 105.75" rotation="0" />
+                    <attribute name="VALUE" value="S3B-PH-SM4-TB" visible="false" position="-96, 105.75" rotation="0" />
                 </attributes>
             </part>
             <part name="U2" component="Package_TO_SOT_SMD:SOT-353_SC-70-5" position="20, 54.16" rotation="180">
@@ -665,7 +665,7 @@
                     <attribute name="PKG" value="SOT-353" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="SPN" value="998-MIC5366-3.3YC5TR" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="NAME" value="{%name}" visible="false" position="-96.02, 105.08" rotation="-180" />
                     <attribute name="VALUE" value="MIC5366-3.3YC5" visible="false" position="-96, 105.5" rotation="0" />
@@ -680,9 +680,9 @@
                 </pads>
                 <attributes>
                     <attribute name="MNF" value="HIROSE" visible="false" />
-                    <attribute name="MPN" value="DF13-4P-1.25H(21)" visible="false" />
+                    <attribute name="MPN" value="" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="NAME" value="{%name}" visible="false" position="-91.66, 104.69" rotation="90" />
                     <attribute name="VALUE" value="DF13-4P-1.25H(21)" visible="false" position="-96, 107.5" rotation="0" />
@@ -724,7 +724,7 @@
                     <attribute name="MPN" value="PIC18F26K22-I/SO" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="SPN" value="579-PIC18F26K22ISO" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="NAME" value="{%name}" visible="false" position="-88.93, 113.86" rotation="90" />
                     <attribute name="VALUE" value="PIC18F26K22-I/SO" visible="false" position="-96, 97.6" rotation="0" />
@@ -743,7 +743,7 @@
                     <attribute name="PKG" value="0603" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="SPN" value="80-C0603C103K3RLR" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="25V" visible="false" />
@@ -764,7 +764,7 @@
                     <attribute name="PKG" value="A" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="SPN" value="80-T491A106K0067280" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="6.3V" visible="false" />
@@ -785,7 +785,7 @@
                     <attribute name="PKG" value="A" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="SPN" value="80-T491A106K0067280" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="6.3V" visible="false" />
@@ -830,7 +830,7 @@
                     <attribute name="PKG" value="0603" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="SPN" value="80-C0603C103K3RLR" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="25V" visible="false" />
@@ -872,7 +872,7 @@
                     <attribute name="MPN" value="FH12-26S-0.5SH(55)" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="SPN" value="798-FH12-26S-0.5SH55" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="NAME" value="{%name}" visible="false" position="-106.5, 108.825" rotation="-180" />
                     <attribute name="VALUE" value="FH12-26S-0.5SH" visible="false" position="-96, 101.9" rotation="-180" />
@@ -904,7 +904,7 @@
                     <attribute name="NP" value="" visible="false" />
                     <attribute name="SPL" value="ONDARADIO" visible="false" />
                     <attribute name="SPN" value="CO3302" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="NAME" value="{%name}" visible="false" position="-94.85, 102.85" rotation="0" />
                     <attribute name="VALUE" value="CO3302" visible="false" position="-94.73, 103.42" rotation="0" />
@@ -923,7 +923,7 @@
                     <attribute name="PKG" value="0603" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="SPN" value="80-C0603104K3RAC7411" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="25V" visible="false" />
@@ -945,7 +945,7 @@
                     <attribute name="MPN" value="NCR421UX" visible="false" />
                     <attribute name="PKG" value="SC-74" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="NAME" value="{%name}" visible="false" position="-97.625, 110.25" rotation="90" />
                     <attribute name="VALUE" value="NCR421U" visible="false" position="-96, 105.1" rotation="0" />
@@ -960,13 +960,13 @@
                     <attribute name="MNF" value="PANASONIC" visible="false" />
                     <attribute name="MPN" value="ERA-3AHD200V" visible="false" />
                     <attribute name="PKG" value="0603" visible="false" />
-                    <attribute name="RESISTANCE" value="20" visible="false" />
+                    <attribute name="RESISTANCE" value="12" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
-                    <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="1%" visible="false" />
                     <attribute name="NAME" value="{%name}" visible="false" position="-96, 108.93" rotation="0" />
-                    <attribute name="VALUE" value="20R" visible="false" position="-96, 106.07" rotation="0" />
+                    <attribute name="VALUE" value="12R" visible="false" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
         </parts>
@@ -1001,247 +1001,247 @@
             <line layer="Top.Copper" startPosition="49.49, 41.63" endPosition="49.51, 41.61" thickness="0.2" signal="GND" />
             <line layer="Top.Copper" startPosition="61.1, 59.1" endPosition="61.1, 58.4" thickness="0.6" signal="GND" />
             <line layer="Top.Copper" startPosition="61.1, 58.4" endPosition="61.125, 58.375" thickness="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="43.875, 14.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="41.125, 13.25" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="70.125, 25.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="59.25, 37.875" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="24, 12.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="9.2, 26.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="7.875, 19.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="61, 10" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="31.625, 35" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="31.1, 13.8" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="40.7, 24.4" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="12, 50.25" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="49.375, 41.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="13, 27.6" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="66, 38.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="21.9005, 39.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="31.375, 20" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="46.25, 17.25" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="2.4, 58.6" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="24.5, 8.9" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="6.9, 26.7" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="1.75, 46.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="20.8, 34.2" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="50, 20.375" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="14.848911, 52.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="69.4, 21.6" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="62.625, 32.375" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="58.125, 12.600849" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="37.625, 23" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="73.875, 57.125" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="18.25, 37.125" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="55.5, 58.2" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="57.9, 19.8" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="53.9, 14.9" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="39, 49.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="17.375, 56" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="0.875, 42.625" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="61.1, 59.1" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="13.75, 55.625" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="34.625, 12.25" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="38, 33.6" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="17.8, 35.3" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="5.875, 41.375" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="51.2, 17.6" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="74.1, 32.3" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="68.5, 53.375" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="70.1, 39.6" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="5.75, 56.25" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="55.875, 33.875" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="11.375, 9.875" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="25.625, 31.625" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="75.125, 53.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="38.25, 46.375" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="45.1, 49.4" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="9.375, 46.125" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="18.75, 39.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="44.8, 32.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="23.875, 39.3495" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="50.1, 33.6" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="65.7, 42.6" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="55.5, 55" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="70.4, 47.2" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="58.1, 55.8" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="24.8, 21.226478" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="35, 33.875" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="67.25, 17" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="61.5, 21" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="46.625, 18.625" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="36.125, 56.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="30, 12" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="33.199999, 18.6" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="51.125, 14.125" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="64.125, 44.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="31.375, 18.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="5.875, 32.625" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="60.375, 27.625" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="17.4, 9" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="4.5, 9.8" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="12.375, 25.625" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="26.375, 35.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="8.125, 54.25" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="54.5, 22.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="57.7995, 43.774846" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="51.4, 27" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="49.625, 29.875" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="7, 29.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="10.625, 13.375" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="48.25, 46.125" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="26.5, 14" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="67.625, 9.875" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="12.5, 43" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="19.625, 20.375" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="16.4, 26.8" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="40.25, 8.875" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="10.5, 30.125" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="41.75, 58.125" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="3.5, 54.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="66.5, 51.6" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="22.75, 56" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="1.75, 9.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="5.75, 47.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="35.4, 43.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="57.75, 31.25" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="46.5, 24.3" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="20.25, 44" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="47.625, 14.125" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="61.5, 39.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="74.8, 26.8" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="3.650301, 42.786057" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="16.2, 30.2" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="7.6, 37" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="53.25, 43.875" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="29.8, 16.3" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="16.2, 13" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="66.7, 48.9" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="5.9, 23.7" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="34.75, 14.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="54.5, 19.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="4.7, 26.2" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="42.5255, 21.812896" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="46.2, 21.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="32, 48.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="57.375, 9" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="30.2, 25.485501" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="32.5, 40" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="40.375, 55.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="25.625, 19.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="35.625, 25" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="20.9, 17.1" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="37.75, 13.25" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="61.5, 17.9" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="61.5, 19.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="46.375, 35.875" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="54.6, 47.4" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="47.625, 18.625" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="3.8, 18.1" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="42.875, 11.875" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="20.25, 45.875" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="3.9, 22.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="51.8, 10" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="51.625, 49.25" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="36.199999, 26.4" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="65.3, 15" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="44.25, 44.875" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="31.4, 15.7" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="4.25, 30.625" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="3, 53.4" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="25.375, 43.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="46.5, 26.3" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="42.5255, 24.770014" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="61.1, 58.4" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="16.75, 18.625" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="60.25, 24.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="72.3, 48.6" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="65.125, 21.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="21.1, 13.1" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="40.625, 42" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="1.375, 22.25" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="47.625, 11" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="11.7, 54.3" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="25.625, 16.375" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="31.3, 17.6" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="32.5, 31.3" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="29.75, 50.125" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="26.25, 23.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="37.75, 25.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="67.125, 29.125" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="32.625, 8.875" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="31.7, 56.9" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="15.375, 35.375" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="1.125, 34.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="26.25, 39.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="8.5, 16.3" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="20.25, 58.375" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="25.75, 57.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="17.5, 58.25" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="52.4, 38.1" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="22.9, 34" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="34.375, 55.375" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="12.25, 52.625" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="30.375, 20" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="51.3, 55.6" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="50.4, 24.1" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="5.75, 46" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="16.125, 28.625" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="20.125, 50.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="69.5, 51.8" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="27.25, 55.125" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="61.1, 43" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="70.4, 30.1" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="21.125, 9.875" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="17.25, 23.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="24.2, 25.485501" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="65.7, 56.8" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="30.375, 18.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="1.5, 55.375" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="13, 20.3" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="35.6, 19.4" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="3.5, 56.25" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="1.875, 13.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="5.75, 54.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="48.25, 55.375" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="13, 30.125" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="61.875, 14.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="47.625, 20" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="40.75, 31.625" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="5.25, 49.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="45.8, 57.6" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="61.5, 22.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="13.7, 16" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="30.375, 58.625" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="49.75, 37.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="33.8, 21.226478" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="38.125, 17.375" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="54.5, 21" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="41.3, 27.2" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="59, 48.625" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="20.6, 25.485501" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="16.2, 33.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="26.375, 45.875" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="20, 54.8" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="64, 28" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="22.625, 23.625" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="3.5, 46" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="11.75, 30" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="23.9, 16.9" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="46.625, 20" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="32.875, 23.625" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="74.875, 50.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="11, 38.8" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="9.7, 35.3" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="42.5255, 19.856251" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="66.3, 35.3" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="5.5, 14.2" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="30, 45.2" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="13.7, 37" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="27.625, 8.75" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="45.125, 8.875" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="3.5, 47.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="20, 53.5" drill="0.35" outerSize="0.6" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="9.2, 56.6" drill="0.35" outerSize="0.6" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="43.875, 14.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="41.125, 13.25" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="70.125, 25.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="59.25, 37.875" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="24, 12.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="9.2, 26.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="7.875, 19.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="61, 10" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="31.625, 35" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="31.1, 13.8" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="40.7, 24.4" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="12, 50.25" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="49.375, 41.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="13, 27.6" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="66, 38.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="21.9005, 39.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="31.375, 20" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="46.25, 17.25" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="2.4, 58.6" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="24.5, 8.9" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="6.9, 26.7" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="1.75, 46.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="20.8, 34.2" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="50, 20.375" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="14.848911, 52.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="69.4, 21.6" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="62.625, 32.375" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="58.125, 12.600849" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="37.625, 23" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="73.875, 57.125" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="18.25, 37.125" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="55.5, 58.2" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="57.9, 19.8" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="53.9, 14.9" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="39, 49.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="17.375, 56" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="0.875, 42.625" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="61.1, 59.1" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="13.75, 55.625" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="34.625, 12.25" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="38, 33.6" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="17.8, 35.3" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="5.875, 41.375" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="51.2, 17.6" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="74.1, 32.3" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="68.5, 53.375" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="70.1, 39.6" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="5.75, 56.25" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="55.809668, 33.940332" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="11.375, 9.875" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="25.625, 31.625" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="75.125, 53.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="38.25, 46.375" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="45.1, 49.4" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="9.375, 46.125" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="18.75, 39.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="44.8, 32.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="23.875, 39.3495" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="50.1, 33.6" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="65.7, 42.6" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="55.5, 55" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="70.4, 47.2" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="58.1, 55.8" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="24.8, 21.226478" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="35, 33.875" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="67.25, 17" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="61.5, 21" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="46.625, 18.625" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="36.125, 56.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="30, 12" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="33.199999, 18.6" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="51.125, 14.125" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="64.125, 44.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="31.375, 18.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="5.875, 32.625" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="60.375, 27.625" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="17.4, 9" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="4.5, 9.8" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="12.375, 25.625" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="26.375, 35.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="8.125, 54.25" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="54.5, 22.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="58, 43.7" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="51.4, 27" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="49.625, 29.875" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="7, 29.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="10.625, 13.375" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="48.25, 46.125" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="26.5, 14" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="67.625, 9.875" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="12.5, 43" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="19.625, 20.375" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="16.4, 26.8" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="40.25, 8.875" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="10.5, 30.125" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="41.75, 58.125" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="3.5, 54.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="66.5, 51.6" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="22.75, 56" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="1.75, 9.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="5.75, 47.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="35.4, 43.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="58.2, 31.1" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="46.5, 24.3" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="20.25, 44" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="47.625, 14.125" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="61.5, 39.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="74.8, 26.8" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="3.650301, 42.786057" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="16.2, 30.2" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="7.6, 37" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="53.25, 43.875" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="29.8, 16.3" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="16.2, 13" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="66.7, 48.9" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="5.9, 23.7" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="34.75, 14.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="54.5, 19.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="4.7, 26.2" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="42.5255, 21.812896" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="46.2, 21.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="32, 48.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="57.375, 9" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="30.2, 25.485501" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="32.5, 40" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="40.375, 55.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="25.625, 19.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="35.625, 25" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="20.9, 17.1" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="37.75, 13.25" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="61.5, 17.9" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="61.5, 19.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="46.375, 35.875" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="54.6, 47.4" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="47.625, 18.625" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="3.8, 18.1" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="42.875, 11.875" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="20.25, 45.875" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="3.9, 22.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="51.8, 10" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="51.625, 49.25" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="36.199999, 26.4" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="65.3, 15" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="44.25, 44.875" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="31.4, 15.7" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="4.25, 30.625" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="3, 53.4" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="25.375, 43.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="46.5, 26.3" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="42.5255, 24.770014" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="61.1, 58.4" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="16.75, 18.625" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="60.25, 24.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="72.3, 48.6" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="65.125, 21.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="21.1, 13.1" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="40.625, 42" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="1.375, 22.25" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="47.625, 11" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="11.7, 54.3" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="25.625, 16.375" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="31.3, 17.6" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="32.5, 31.3" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="29.75, 50.125" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="26.25, 23.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="37.75, 25.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="67.125, 29.125" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="32.625, 8.875" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="31.7, 56.9" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="15.375, 35.375" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="1.125, 34.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="26.25, 39.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="8.5, 16.3" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="20.25, 58.375" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="25.75, 57.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="17.5, 58.25" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="52.4, 38.1" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="22.9, 34" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="34.375, 55.375" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="12.25, 52.625" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="30.375, 20" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="51.3, 55.6" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="50.4, 24.1" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="5.75, 46" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="16.125, 28.625" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="20.125, 50.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="69.5, 51.8" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="27.25, 55.125" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="61.1, 43" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="70.4, 30.1" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="21.125, 9.875" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="17.25, 23.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="24.2, 25.485501" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="65.7, 56.8" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="30.375, 18.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="1.5, 55.375" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="13, 20.3" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="35.6, 19.4" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="3.5, 56.25" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="1.875, 13.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="5.75, 54.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="48.25, 55.375" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="13, 30.125" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="61.875, 14.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="47.625, 20" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="40.75, 31.625" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="5.25, 49.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="45.8, 57.6" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="61.5, 22.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="13.7, 16" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="30.375, 58.625" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="49.75, 37.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="33.8, 21.226478" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="38.125, 17.375" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="54.5, 21" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="41.3, 27.2" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="59, 48.625" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="20.6, 25.485501" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="16.2, 33.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="26.375, 45.875" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="20, 54.8" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="64, 28" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="22.625, 23.625" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="3.5, 46" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="11.75, 30" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="23.9, 16.9" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="46.625, 20" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="32.875, 23.625" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="74.875, 50.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="11, 38.8" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="9.7, 35.3" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="42.5255, 19.856251" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="66.3, 35.3" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="5.5, 14.2" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="30, 45.2" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="13.7, 37" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="27.625, 8.75" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="45.125, 8.875" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="3.5, 47.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="20, 53.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="9.2, 56.6" drill="0.25" outerSize="0.5" signal="GND" />
             <line layer="Top.Copper" startPosition="38.725, 12.5" endPosition="38.725, 10.9" thickness="0.4" signal="+3V3" />
             <line layer="Top.Copper" startPosition="2.165, 34.46" endPosition="2.125, 34.5" thickness="0.4" signal="+3V3" />
             <line layer="Top.Copper" startPosition="38.75, 16.1" endPosition="38.75, 15.23" thickness="0.2" signal="+3V3" />
@@ -1259,9 +1259,9 @@
             <line layer="Top.Copper" startPosition="36.75, 16.1" endPosition="36.75, 14.025" thickness="0.2" signal="Net-(C7-Pad1)" />
             <line layer="Top.Copper" startPosition="63.56, 53.01" endPosition="63.56, 63.32" thickness="0.6" signal="Net-(D1-Pad2)" />
             <line layer="Top.Copper" startPosition="63.56, 49.71" endPosition="61.1575, 49.71" thickness="0.6" signal="Net-(D1-Pad1)" />
+            <line layer="Top.Copper" startPosition="57, 14.5" endPosition="57, 52" thickness="0.6" signal="+5V" />
             <line layer="Top.Copper" startPosition="20.95, 54.81" endPosition="21.475, 54.81" thickness="0.2" signal="+5V" />
-            <line layer="Top.Copper" startPosition="56.875, 20.125" endPosition="56.75, 52.25" thickness="0.6" signal="+5V" />
-            <line layer="Top.Copper" startPosition="57, 14.5" endPosition="56.875, 20.125" thickness="0.6" signal="+5V" />
+            <line layer="Top.Copper" startPosition="57, 52" endPosition="56.75, 52.25" thickness="0.6" signal="+5V" />
             <line layer="Top.Copper" startPosition="21.6, 54.685" endPosition="21.6, 53.6" thickness="0.2" signal="+5V" />
             <line layer="Top.Copper" startPosition="21.475, 54.81" endPosition="21.6, 54.685" thickness="0.2" signal="+5V" />
             <line layer="Top.Copper" startPosition="5.325, 29.25" endPosition="5.325, 31.325" thickness="0.2" signal="/ICSP-VPP" />
@@ -1283,30 +1283,30 @@
             <line layer="Top.Copper" startPosition="21.275, 36.65" endPosition="21.25, 36.625" thickness="0.2" signal="/DP-RD" />
             <line layer="Top.Copper" startPosition="43.25, 26.685006" endPosition="42.249999, 27.685007" thickness="0.2" signal="/DP-RD" />
             <line layer="Top.Copper" startPosition="43.25, 16.1" endPosition="43.25, 26.685006" thickness="0.2" signal="/DP-RD" />
-            <via layers="Top.Copper, Bottom.Copper" position="21.25, 36.625" drill="0.35" outerSize="0.6" signal="/DP-RD" />
-            <via layers="Top.Copper, Bottom.Copper" position="42.249999, 36.624999" drill="0.35" outerSize="0.6" signal="/DP-RD" />
+            <via layers="Top.Copper, Bottom.Copper" position="21.25, 36.625" drill="0.25" outerSize="0.5" signal="/DP-RD" />
+            <via layers="Top.Copper, Bottom.Copper" position="42.249999, 36.624999" drill="0.25" outerSize="0.5" signal="/DP-RD" />
             <line layer="Bottom.Copper" startPosition="21.25, 36.625" endPosition="42.249999, 36.624999" thickness="0.2" signal="/DP-RD" />
             <line layer="Top.Copper" startPosition="43.75, 26.75" endPosition="43, 27.5" thickness="0.2" signal="/DP-WR" />
             <line layer="Top.Copper" startPosition="22.5, 41.035" endPosition="22.5, 37.75" thickness="0.2" signal="/DP-WR" />
             <line layer="Top.Copper" startPosition="43.75, 16.1" endPosition="43.75, 26.75" thickness="0.2" signal="/DP-WR" />
             <line layer="Top.Copper" startPosition="43, 27.5" endPosition="43, 37.625" thickness="0.2" signal="/DP-WR" />
-            <via layers="Top.Copper, Bottom.Copper" position="22.5, 37.75" drill="0.35" outerSize="0.6" signal="/DP-WR" />
-            <via layers="Top.Copper, Bottom.Copper" position="43, 37.625" drill="0.35" outerSize="0.6" signal="/DP-WR" />
+            <via layers="Top.Copper, Bottom.Copper" position="22.5, 37.75" drill="0.25" outerSize="0.5" signal="/DP-WR" />
+            <via layers="Top.Copper, Bottom.Copper" position="43, 37.625" drill="0.25" outerSize="0.5" signal="/DP-WR" />
             <line layer="Bottom.Copper" startPosition="22.5, 37.75" endPosition="42.875, 37.75" thickness="0.2" signal="/DP-WR" />
             <line layer="Bottom.Copper" startPosition="42.875, 37.75" endPosition="43, 37.625" thickness="0.2" signal="/DP-WR" />
             <line layer="Top.Copper" startPosition="23.815, 43.185" endPosition="23.75, 43.25" thickness="0.2" signal="/SDA" />
             <line layer="Top.Copper" startPosition="23.815, 41.08" endPosition="23.815, 43.185" thickness="0.2" signal="/SDA" />
             <line layer="Top.Copper" startPosition="8.125, 51.75" endPosition="9.375, 51.75" thickness="0.2" signal="/SDA" />
-            <via layers="Top.Copper, Bottom.Copper" position="9.375, 51.75" drill="0.35" outerSize="0.6" signal="/SDA" />
-            <via layers="Top.Copper, Bottom.Copper" position="23.75, 43.25" drill="0.35" outerSize="0.6" signal="/SDA" />
+            <via layers="Top.Copper, Bottom.Copper" position="9.375, 51.75" drill="0.25" outerSize="0.5" signal="/SDA" />
+            <via layers="Top.Copper, Bottom.Copper" position="23.75, 43.25" drill="0.25" outerSize="0.5" signal="/SDA" />
             <line layer="Bottom.Copper" startPosition="20, 43.25" endPosition="23.75, 43.25" thickness="0.2" signal="/SDA" />
             <line layer="Bottom.Copper" startPosition="11.5, 51.75" endPosition="20, 43.25" thickness="0.2" signal="/SDA" />
             <line layer="Bottom.Copper" startPosition="9.375, 51.75" endPosition="11.5, 51.75" thickness="0.2" signal="/SDA" />
             <line layer="Top.Copper" startPosition="23.815, 31.78" endPosition="25.375, 33.34" thickness="0.2" signal="/SCL" />
             <line layer="Top.Copper" startPosition="25.375, 33.34" endPosition="25.375, 42" thickness="0.2" signal="/SCL" />
             <line layer="Top.Copper" startPosition="8.125, 50.5" endPosition="9.375, 50.5" thickness="0.2" signal="/SCL" />
-            <via layers="Top.Copper, Bottom.Copper" position="9.375, 50.5" drill="0.35" outerSize="0.6" signal="/SCL" />
-            <via layers="Top.Copper, Bottom.Copper" position="25.375, 42" drill="0.35" outerSize="0.6" signal="/SCL" />
+            <via layers="Top.Copper, Bottom.Copper" position="9.375, 50.5" drill="0.25" outerSize="0.5" signal="/SCL" />
+            <via layers="Top.Copper, Bottom.Copper" position="25.375, 42" drill="0.25" outerSize="0.5" signal="/SCL" />
             <line layer="Bottom.Copper" startPosition="10.6875, 50.5" endPosition="19.1875, 42" thickness="0.2" signal="/SCL" />
             <line layer="Bottom.Copper" startPosition="9.375, 50.5" endPosition="10.6875, 50.5" thickness="0.2" signal="/SCL" />
             <line layer="Bottom.Copper" startPosition="19.1875, 42" endPosition="25.375, 42" thickness="0.2" signal="/SCL" />
@@ -1318,39 +1318,39 @@
             <line layer="Top.Copper" startPosition="44.650499, 28.927675" endPosition="44.974501, 29.251677" thickness="0.2" signal="/DP-RST" />
             <line layer="Top.Copper" startPosition="44.650499, 27.126677" endPosition="44.650499, 28.927675" thickness="0.2" signal="/DP-RST" />
             <line layer="Top.Copper" startPosition="44.75, 16.1" endPosition="44.75, 27.027176" thickness="0.2" signal="/DP-RST" />
-            <via layers="Top.Copper, Bottom.Copper" position="22.6, 30.2245" drill="0.35" outerSize="0.6" signal="/DP-RST" />
-            <via layers="Top.Copper, Bottom.Copper" position="44.875, 30.25" drill="0.35" outerSize="0.6" signal="/DP-RST" />
+            <via layers="Top.Copper, Bottom.Copper" position="22.6, 30.2245" drill="0.25" outerSize="0.5" signal="/DP-RST" />
+            <via layers="Top.Copper, Bottom.Copper" position="44.875, 30.25" drill="0.25" outerSize="0.5" signal="/DP-RST" />
             <line layer="Bottom.Copper" startPosition="44.875, 30.25" endPosition="22.6255, 30.25" thickness="0.2" signal="/DP-RST" />
             <line layer="Bottom.Copper" startPosition="22.6255, 30.25" endPosition="22.6, 30.2245" thickness="0.2" signal="/DP-RST" />
             <line layer="Top.Copper" startPosition="44.25, 29.5255" endPosition="44.3495, 29.625" thickness="0.2" signal="/DP-A0" />
             <line layer="Top.Copper" startPosition="44.25, 16.1" endPosition="44.25, 29.5255" thickness="0.2" signal="/DP-A0" />
             <line layer="Top.Copper" startPosition="21.275, 31.78" endPosition="21.275, 29.614502" thickness="0.2" signal="/DP-A0" />
             <line layer="Top.Copper" startPosition="21.275, 29.614502" endPosition="21.290002, 29.5995" thickness="0.2" signal="/DP-A0" />
-            <via layers="Top.Copper, Bottom.Copper" position="44.3495, 29.625" drill="0.35" outerSize="0.6" signal="/DP-A0" />
-            <via layers="Top.Copper, Bottom.Copper" position="21.290002, 29.5995" drill="0.35" outerSize="0.6" signal="/DP-A0" />
+            <via layers="Top.Copper, Bottom.Copper" position="44.3495, 29.625" drill="0.25" outerSize="0.5" signal="/DP-A0" />
+            <via layers="Top.Copper, Bottom.Copper" position="21.290002, 29.5995" drill="0.25" outerSize="0.5" signal="/DP-A0" />
             <line layer="Bottom.Copper" startPosition="21.315502, 29.625" endPosition="44.3495, 29.625" thickness="0.2" signal="/DP-A0" />
             <line layer="Bottom.Copper" startPosition="21.290002, 29.5995" endPosition="21.315502, 29.625" thickness="0.2" signal="/DP-A0" />
             <line layer="Top.Copper" startPosition="20.005, 31.78" endPosition="20.005, 29.005" thickness="0.2" signal="/DP-CS" />
             <line layer="Top.Copper" startPosition="45.25, 16.1" endPosition="45.25, 27.375" thickness="0.2" signal="/DP-CS" />
             <line layer="Top.Copper" startPosition="20.005, 29.005" endPosition="20, 29" thickness="0.2" signal="/DP-CS" />
-            <via layers="Top.Copper, Bottom.Copper" position="20, 29" drill="0.35" outerSize="0.6" signal="/DP-CS" />
-            <via layers="Top.Copper, Bottom.Copper" position="45.25, 27.375" drill="0.35" outerSize="0.6" signal="/DP-CS" />
+            <via layers="Top.Copper, Bottom.Copper" position="20, 29" drill="0.25" outerSize="0.5" signal="/DP-CS" />
+            <via layers="Top.Copper, Bottom.Copper" position="45.25, 27.375" drill="0.25" outerSize="0.5" signal="/DP-CS" />
             <line layer="Bottom.Copper" startPosition="45.25, 27.375" endPosition="43.625, 29" thickness="0.2" signal="/DP-CS" />
             <line layer="Bottom.Copper" startPosition="43.625, 29" endPosition="20, 29" thickness="0.2" signal="/DP-CS" />
             <line layer="Top.Copper" startPosition="39.75, 18.26631" endPosition="38.5, 19.51631" thickness="0.2" signal="/DP-D6" />
             <line layer="Top.Copper" startPosition="18.735, 31.78" endPosition="18.735, 27.735012" thickness="0.2" signal="/DP-D6" />
             <line layer="Top.Copper" startPosition="39.75, 16.1" endPosition="39.75, 18.26631" thickness="0.2" signal="/DP-D6" />
             <line layer="Top.Copper" startPosition="38.5, 19.51631" endPosition="38.5, 27.625" thickness="0.2" signal="/DP-D6" />
-            <via layers="Top.Copper, Bottom.Copper" position="38.5, 27.625" drill="0.35" outerSize="0.6" signal="/DP-D6" />
-            <via layers="Top.Copper, Bottom.Copper" position="18.735, 27.735012" drill="0.35" outerSize="0.6" signal="/DP-D6" />
+            <via layers="Top.Copper, Bottom.Copper" position="38.5, 27.625" drill="0.25" outerSize="0.5" signal="/DP-D6" />
+            <via layers="Top.Copper, Bottom.Copper" position="18.735, 27.735012" drill="0.25" outerSize="0.5" signal="/DP-D6" />
             <line layer="Bottom.Copper" startPosition="18.735, 27.735012" endPosition="18.845012, 27.625" thickness="0.2" signal="/DP-D6" />
             <line layer="Bottom.Copper" startPosition="18.845012, 27.625" endPosition="38.5, 27.625" thickness="0.2" signal="/DP-D6" />
             <line layer="Top.Copper" startPosition="17.465, 31.78" endPosition="17.465, 27.135" thickness="0.2" signal="/DP-D7" />
             <line layer="Top.Copper" startPosition="39.25, 16.1" endPosition="39.25, 18.201318" thickness="0.2" signal="/DP-D7" />
             <line layer="Top.Copper" startPosition="37, 20.451318" endPosition="37, 26.75" thickness="0.2" signal="/DP-D7" />
             <line layer="Top.Copper" startPosition="39.25, 18.201318" endPosition="37, 20.451318" thickness="0.2" signal="/DP-D7" />
-            <via layers="Top.Copper, Bottom.Copper" position="17.465, 27.135" drill="0.35" outerSize="0.6" signal="/DP-D7" />
-            <via layers="Top.Copper, Bottom.Copper" position="37, 26.75" drill="0.35" outerSize="0.6" signal="/DP-D7" />
+            <via layers="Top.Copper, Bottom.Copper" position="17.465, 27.135" drill="0.25" outerSize="0.5" signal="/DP-D7" />
+            <via layers="Top.Copper, Bottom.Copper" position="37, 26.75" drill="0.25" outerSize="0.5" signal="/DP-D7" />
             <line layer="Bottom.Copper" startPosition="17.465, 27.135" endPosition="36.615, 27.135" thickness="0.2" signal="/DP-D7" />
             <line layer="Bottom.Copper" startPosition="36.615, 27.135" endPosition="37, 26.75" thickness="0.2" signal="/DP-D7" />
             <line layer="Top.Copper" startPosition="40.25, 18.331305" endPosition="39.5, 19.081305" thickness="0.2" signal="/DP-D5" />
@@ -1358,8 +1358,8 @@
             <line layer="Top.Copper" startPosition="14.925, 25.490054" endPosition="14.96, 25.455054" thickness="0.2" signal="/DP-D5" />
             <line layer="Top.Copper" startPosition="14.925, 31.78" endPosition="14.925, 25.490054" thickness="0.2" signal="/DP-D5" />
             <line layer="Top.Copper" startPosition="40.25, 16.1" endPosition="40.25, 18.331305" thickness="0.2" signal="/DP-D5" />
-            <via layers="Top.Copper, Bottom.Copper" position="39.5, 21.8" drill="0.35" outerSize="0.6" signal="/DP-D5" />
-            <via layers="Top.Copper, Bottom.Copper" position="14.96, 25.455054" drill="0.35" outerSize="0.6" signal="/DP-D5" />
+            <via layers="Top.Copper, Bottom.Copper" position="39.5, 21.8" drill="0.25" outerSize="0.5" signal="/DP-D5" />
+            <via layers="Top.Copper, Bottom.Copper" position="14.96, 25.455054" drill="0.25" outerSize="0.5" signal="/DP-D5" />
             <line layer="Bottom.Copper" startPosition="34.814, 24.886" endPosition="37.9, 21.8" thickness="0.2" signal="/DP-D5" />
             <line layer="Bottom.Copper" startPosition="15.529054, 24.886" endPosition="34.814, 24.886" thickness="0.2" signal="/DP-D5" />
             <line layer="Bottom.Copper" startPosition="37.9, 21.8" endPosition="39.5, 21.8" thickness="0.2" signal="/DP-D5" />
@@ -1369,8 +1369,8 @@
             <line layer="Top.Copper" startPosition="40.75, 18.396298" endPosition="40.2, 18.946298" thickness="0.2" signal="/DP-D4" />
             <line layer="Top.Copper" startPosition="13.655, 24.745" endPosition="13.655003, 24.744997" thickness="0.2" signal="/DP-D4" />
             <line layer="Top.Copper" startPosition="40.75, 16.1" endPosition="40.75, 18.396298" thickness="0.2" signal="/DP-D4" />
-            <via layers="Top.Copper, Bottom.Copper" position="40.2, 21.2" drill="0.35" outerSize="0.6" signal="/DP-D4" />
-            <via layers="Top.Copper, Bottom.Copper" position="13.655003, 24.744997" drill="0.35" outerSize="0.6" signal="/DP-D4" />
+            <via layers="Top.Copper, Bottom.Copper" position="40.2, 21.2" drill="0.25" outerSize="0.5" signal="/DP-D4" />
+            <via layers="Top.Copper, Bottom.Copper" position="13.655003, 24.744997" drill="0.25" outerSize="0.5" signal="/DP-D4" />
             <line layer="Bottom.Copper" startPosition="13.91351, 24.48649" endPosition="34.64781, 24.48649" thickness="0.2" signal="/DP-D4" />
             <line layer="Bottom.Copper" startPosition="37.9343, 21.2" endPosition="40.2, 21.2" thickness="0.2" signal="/DP-D4" />
             <line layer="Bottom.Copper" startPosition="13.655003, 24.744997" endPosition="13.91351, 24.48649" thickness="0.2" signal="/DP-D4" />
@@ -1382,8 +1382,8 @@
             <line layer="Top.Copper" startPosition="41.202274, 17.850583" endPosition="41.199088, 17.853769" thickness="0.2" signal="/DP-D3" />
             <line layer="Top.Copper" startPosition="12.385, 31.78" endPosition="12.385, 26.985" thickness="0.2" signal="/DP-D3" />
             <line layer="Top.Copper" startPosition="41.199088, 17.853769" endPosition="41.199088, 18.51291" thickness="0.2" signal="/DP-D3" />
-            <via layers="Top.Copper, Bottom.Copper" position="12.3, 26.9" drill="0.35" outerSize="0.6" signal="/DP-D3" />
-            <via layers="Top.Copper, Bottom.Copper" position="41.000006, 23.3" drill="0.35" outerSize="0.6" signal="/DP-D3" />
+            <via layers="Top.Copper, Bottom.Copper" position="12.3, 26.9" drill="0.25" outerSize="0.5" signal="/DP-D3" />
+            <via layers="Top.Copper, Bottom.Copper" position="41.000006, 23.3" drill="0.25" outerSize="0.5" signal="/DP-D3" />
             <line layer="Bottom.Copper" startPosition="15.3, 26.9" endPosition="12.3, 26.9" thickness="0.2" signal="/DP-D3" />
             <line layer="Bottom.Copper" startPosition="35.514998, 26.085001" endPosition="16.114999, 26.085001" thickness="0.2" signal="/DP-D3" />
             <line layer="Bottom.Copper" startPosition="38.3, 23.3" endPosition="35.514998, 26.085001" thickness="0.2" signal="/DP-D3" />
@@ -1397,8 +1397,8 @@
             <line layer="Top.Copper" startPosition="41.75, 16.1" endPosition="41.75, 17.096296" thickness="0.2" signal="/DP-D2" />
             <line layer="Top.Copper" startPosition="11.115, 24.260021" endPosition="11.12, 24.255021" thickness="0.2" signal="/DP-D2" />
             <line layer="Top.Copper" startPosition="41.598599, 18.998599" endPosition="41.6, 19" thickness="0.2" signal="/DP-D2" />
-            <via layers="Top.Copper, Bottom.Copper" position="41.6, 19" drill="0.35" outerSize="0.6" signal="/DP-D2" />
-            <via layers="Top.Copper, Bottom.Copper" position="11.12, 24.255021" drill="0.35" outerSize="0.6" signal="/DP-D2" />
+            <via layers="Top.Copper, Bottom.Copper" position="41.6, 19" drill="0.25" outerSize="0.5" signal="/DP-D2" />
+            <via layers="Top.Copper, Bottom.Copper" position="11.12, 24.255021" drill="0.25" outerSize="0.5" signal="/DP-D2" />
             <line layer="Bottom.Copper" startPosition="35.074999, 22.625" endPosition="38.7, 19" thickness="0.2" signal="/DP-D2" />
             <line layer="Bottom.Copper" startPosition="12.750021, 22.625" endPosition="35.074999, 22.625" thickness="0.2" signal="/DP-D2" />
             <line layer="Bottom.Copper" startPosition="11.12, 24.255021" endPosition="12.750021, 22.625" thickness="0.2" signal="/DP-D2" />
@@ -1409,8 +1409,8 @@
             <line layer="Top.Copper" startPosition="9.845, 23.86001" endPosition="9.85, 23.85501" thickness="0.2" signal="/DP-D1" />
             <line layer="Top.Copper" startPosition="42.050999, 18.120474" endPosition="42.1981, 18.267575" thickness="0.2" signal="/DP-D1" />
             <line layer="Top.Copper" startPosition="9.845, 31.78" endPosition="9.845, 23.86001" thickness="0.2" signal="/DP-D1" />
-            <via layers="Top.Copper, Bottom.Copper" position="42.1981, 18.267575" drill="0.35" outerSize="0.6" signal="/DP-D1" />
-            <via layers="Top.Copper, Bottom.Copper" position="9.85, 23.85501" drill="0.35" outerSize="0.6" signal="/DP-D1" />
+            <via layers="Top.Copper, Bottom.Copper" position="42.1981, 18.267575" drill="0.25" outerSize="0.5" signal="/DP-D1" />
+            <via layers="Top.Copper, Bottom.Copper" position="9.85, 23.85501" drill="0.25" outerSize="0.5" signal="/DP-D1" />
             <line layer="Bottom.Copper" startPosition="9.85, 23.85501" endPosition="11.479521, 22.225489" thickness="0.2" signal="/DP-D1" />
             <line layer="Bottom.Copper" startPosition="34.874511, 22.225489" endPosition="38.832425, 18.267575" thickness="0.2" signal="/DP-D1" />
             <line layer="Bottom.Copper" startPosition="38.832425, 18.267575" endPosition="42.1981, 18.267575" thickness="0.2" signal="/DP-D1" />
@@ -1418,17 +1418,18 @@
             <line layer="Top.Copper" startPosition="42.75, 17.50888" endPosition="42.6505, 17.60838" thickness="0.2" signal="/DP-D0" />
             <line layer="Top.Copper" startPosition="8.575, 31.78" endPosition="8.575, 23.255" thickness="0.2" signal="/DP-D0" />
             <line layer="Top.Copper" startPosition="42.75, 16.1" endPosition="42.75, 17.50888" thickness="0.2" signal="/DP-D0" />
-            <via layers="Top.Copper, Bottom.Copper" position="8.575, 23.255" drill="0.35" outerSize="0.6" signal="/DP-D0" />
-            <via layers="Top.Copper, Bottom.Copper" position="42.6505, 17.60838" drill="0.35" outerSize="0.6" signal="/DP-D0" />
+            <via layers="Top.Copper, Bottom.Copper" position="8.575, 23.255" drill="0.25" outerSize="0.5" signal="/DP-D0" />
+            <via layers="Top.Copper, Bottom.Copper" position="42.6505, 17.60838" drill="0.25" outerSize="0.5" signal="/DP-D0" />
             <line layer="Bottom.Copper" startPosition="38.92592, 17.60838" endPosition="42.6505, 17.60838" thickness="0.2" signal="/DP-D0" />
             <line layer="Bottom.Copper" startPosition="8.575, 23.255" endPosition="10.004021, 21.825979" thickness="0.2" signal="/DP-D0" />
             <line layer="Bottom.Copper" startPosition="34.708322, 21.825978" endPosition="38.92592, 17.60838" thickness="0.2" signal="/DP-D0" />
             <line layer="Bottom.Copper" startPosition="10.004021, 21.825979" endPosition="34.708322, 21.825978" thickness="0.2" signal="/DP-D0" />
-            <line layer="Top.Copper" startPosition="50.875, 33.5375" endPosition="50.875, 38.75" thickness="0.2" signal="/BK-PWM" />
+            <line layer="Top.Copper" startPosition="52.8, 31.6125" endPosition="51.9375, 31.6125" thickness="0.2" signal="/BK-PWM" />
             <line layer="Top.Copper" startPosition="16.25, 41.025001" endPosition="16.25, 38.75" thickness="0.2" signal="/BK-PWM" />
-            <line layer="Top.Copper" startPosition="52.8, 31.6125" endPosition="50.875, 33.5375" thickness="0.2" signal="/BK-PWM" />
-            <via layers="Top.Copper, Bottom.Copper" position="16.25, 38.75" drill="0.35" outerSize="0.6" signal="/BK-PWM" />
-            <via layers="Top.Copper, Bottom.Copper" position="50.875, 38.75" drill="0.35" outerSize="0.6" signal="/BK-PWM" />
+            <line layer="Top.Copper" startPosition="50.875, 32.675" endPosition="50.875, 38.75" thickness="0.2" signal="/BK-PWM" />
+            <line layer="Top.Copper" startPosition="51.9375, 31.6125" endPosition="50.875, 32.675" thickness="0.2" signal="/BK-PWM" />
+            <via layers="Top.Copper, Bottom.Copper" position="16.25, 38.75" drill="0.25" outerSize="0.5" signal="/BK-PWM" />
+            <via layers="Top.Copper, Bottom.Copper" position="50.875, 38.75" drill="0.25" outerSize="0.5" signal="/BK-PWM" />
             <line layer="Bottom.Copper" startPosition="16.25, 38.75" endPosition="50.875, 38.75" thickness="0.2" signal="/BK-PWM" />
             <line layer="Top.Copper" startPosition="53.75, 29.5" endPosition="52.875, 28.625" thickness="0.6" signal="Net-(J5-Pad2)" />
             <line layer="Top.Copper" startPosition="53.75, 31.6125" endPosition="53.75, 33.8875" thickness="0.6" signal="Net-(J5-Pad2)" />
@@ -1447,19 +1448,19 @@
             <line layer="Top.Copper" startPosition="32.75, 16.1" endPosition="32.75, 14.15" thickness="0.2" signal="Net-(C8-Pad2)" />
             <line layer="Top.Copper" startPosition="52.8, 33.8875" endPosition="52.8, 35.75" thickness="0.6" signal="Net-(R2-Pad1)" />
             <line layer="Top.Copper" startPosition="52.8, 35.75" endPosition="52.925, 35.875" thickness="0.6" signal="Net-(R2-Pad1)" />
-            <region layer="Top.Copper" clearance="0.15" signal="GND">
+            <region layer="Top.Copper" clearance="0.2" thermalThickness="0.5" signal="GND">
                 <segment position="78, 59.5" />
                 <segment position="78, 8" />
                 <segment position="0, 8" />
                 <segment position="0, 59.5" />
             </region>
-            <region layer="Top.Copper" clearance="0.15" priority="1" signal="+5V">
+            <region layer="Top.Copper" clearance="0.2" thermalThickness="0.5" priority="1" signal="+5V">
                 <segment position="62.125, 50.875" />
                 <segment position="20.5, 50.875" />
                 <segment position="20.5, 53.75" />
                 <segment position="62.125, 53.75" />
             </region>
-            <region layer="Top.Copper" clearance="0.15" priority="1" signal="+3V3">
+            <region layer="Top.Copper" clearance="0.2" thermalThickness="0.5" priority="1" signal="+3V3">
                 <segment position="19.5, 49.625" />
                 <segment position="29.25, 49.625" />
                 <segment position="29.25, 46.75" />
@@ -1480,7 +1481,7 @@
                 <segment position="16.5, 54" />
                 <segment position="19.5, 54" />
             </region>
-            <region layer="Bottom.Copper" clearance="0.15" signal="GND">
+            <region layer="Bottom.Copper" clearance="0.2" thermalThickness="0.5" thermalClearance="0.21" signal="GND">
                 <segment position="78, 59.5" />
                 <segment position="78, 8" />
                 <segment position="0, 8" />

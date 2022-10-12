@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
-{
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
     /// Clase que representa un pad throught hole
@@ -134,19 +133,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
             return polygon;
         }
 
-        /// <inheritdoc/>
-        /// 
-        public override EdaPolygon GetThermalPolygon(EdaLayerId layerId, int spacing, int width) {
-
-            EdaSize size = GetPadSize(layerId);
-            int w = size.Width + spacing + spacing;
-            int h = size.Height + spacing + spacing;
-
-            var padPolygon = GetOutlinePolygon(layerId, spacing);
-            var thermalPolygon = new EdaPolygon(EdaPointFactory.CreateCross(Position, new EdaSize(w, h), width, Rotation));
-            return padPolygon.Substract(thermalPolygon);
-        }
-
         /// <summary>
         /// Obte el poligon del forat
         /// </summary>
@@ -161,7 +147,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
         /// <inheritdoc/>
         /// 
         public override EdaRect GetBoundingBox(EdaLayerId layerId) =>
-            new EdaRect(new EdaPoint(0, 0), GetPadSize(layerId));
+            new(new EdaPoint(0, 0), GetPadSize(layerId));
 
         /// <summary>
         /// Obte el tamany del pad en funcio de la capa.

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
 
 namespace MikroPic.EdaTools.v1.Base.Geometry {
@@ -120,6 +121,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="point">El punt.</param>
         /// <returns>El punt transformat.</returns>
         /// 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public EdaPoint Transform(EdaPoint point) {
 
             double x = (point.X * _m.M11) + (point.Y * _m.M21) + _m.Tx;
@@ -137,7 +139,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         public IEnumerable<EdaPoint> Transform(IEnumerable<EdaPoint> points) {
 
             var result = new List<EdaPoint>();
-            
+
             foreach (var point in points) {
                 double x = (point.X * _m.M11) + (point.Y * _m.M21) + _m.Tx;
                 double y = (point.X * _m.M12) + (point.Y * _m.M22) + _m.Ty;

@@ -256,6 +256,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                     _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(element.Thickness));
                 if (element.Clearance > 0)
                     _writer.WriteAttributeString("clearance", EdaFormatter.FormatScalar(element.Clearance));
+                if (element.ThermalThickness > element.Thickness)
+                    _writer.WriteAttributeString("thermalThickness", EdaFormatter.FormatScalar(element.ThermalThickness));
+                if (element.ThermalClearance > element.Clearance)
+                    _writer.WriteAttributeString("thermalClearance", EdaFormatter.FormatScalar(element.ThermalClearance));
                 if (element.Priority > 0)
                     _writer.WriteAttributeInteger("priority", element.Priority);
 

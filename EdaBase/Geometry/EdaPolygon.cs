@@ -58,33 +58,6 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
 
 
         /// <summary>
-        /// Obte l'area del poligon amb signe.
-        /// </summary>
-        /// <returns>L'area del poligon.</returns>
-        /// 
-        /*private int GetSignedArea() {
-
-            if (_points == null)
-                return 0;
-
-            else {
-                int area = 0;
-                int i = 0;
-                while (i < _points.Count - 1) {
-                    area +=
-                        (_points[i + 1].X - _points[i].X) *
-                        (_points[i + 1].Y + _points[i].Y);
-                    i++;
-                }
-                area +=
-                    (_points[0].X - _points[i].X) *
-                    (_points[0].Y + _points[i].Y);
-
-                return area / 2;
-            }
-        }*/
-
-        /// <summary>
         /// Obte el rectangle envolvent de la llista de punts.
         /// </summary>
         /// <returns>El rectangle envolvent.</returns>

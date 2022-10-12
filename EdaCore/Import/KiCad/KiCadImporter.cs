@@ -778,6 +778,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             int clearance = ParseMeasure(tree, clearanceNode);
 
             var fillSettingsNode = tree.SelectBranch(node, "fill");
+            var thermalClearanceNode = tree.SelectBranch(fillSettingsNode, "thermal_gap");
+            var thermalClearance = ParseMeasure(tree, thermalClearanceNode);
+            var thermalThicknessNode = tree.SelectBranch(fillSettingsNode, "thermal_bridge_width");
+            var thermalThickness = ParseMeasure(tree, thermalThicknessNode);
             var radiusNode = tree.SelectBranch(fillSettingsNode, "radius");
             var radius = ParseMeasure(tree, radiusNode);
 
@@ -795,9 +799,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             var element = new EdaRegionElement {
                 LayerSet = layerSet,
-                Thickness = radius * 2,
-                Filled = true,
                 Clearance = clearance,
+                Thickness = radius * 2,
+                ThermalClearance = thermalClearance,
+                ThermalThickness = thermalThickness,
+                Filled = true,
                 Priority = priority,
                 Segments = segments
             };

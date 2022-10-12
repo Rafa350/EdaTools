@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
-{
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
     /// Clase que representa un pad superficial
@@ -67,23 +65,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements
             }
 
             return polygon;
-        }
-
-        /// <inheritdoc/>
-        /// 
-        public override EdaPolygon GetThermalPolygon(EdaLayerId layerId, int spacing, int width) {
-
-            var polygon = GetOutlinePolygon(layerId, spacing);
-            var hole = new EdaPolygon(
-                EdaPointFactory.CreateCross(
-                    Position,
-                    new EdaSize(
-                        _size.Width + spacing + spacing,
-                        _size.Height + spacing + spacing),
-                    width,
-                    Rotation));
-
-            return polygon.Substract(hole);
         }
 
         /// <inheritdoc/>
