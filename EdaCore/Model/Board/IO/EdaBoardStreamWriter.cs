@@ -98,6 +98,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                     _writer.WriteAttributeString("rotation", EdaFormatter.FormatAngle(element.Rotation));
                 if (element.Thickness > 0)
                     _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(element.Thickness));
+                if (element.Filled)
+                    _writer.WriteAttributeString("filled", "true");
 
                 _writer.WriteEndElement();
             }
@@ -113,6 +115,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 _writer.WriteAttributeString("radius", EdaFormatter.FormatScalar(element.Radius));
                 if (element.Thickness > 0)
                     _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(element.Thickness));
+                if (element.Filled)
+                    _writer.WriteAttributeString("filled", "true");
 
                 _writer.WriteEndElement();
             }

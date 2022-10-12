@@ -828,6 +828,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             var position = EdaParser.ParsePoint(_rd.AttributeAsString("position"));
             var radius = EdaParser.ParseScalar(_rd.AttributeAsString("radius"));
             var thickness = EdaParser.ParseScalar(_rd.AttributeAsString("thickness", "0"));
+            var filled = _rd.AttributeAsBoolean("filled");
 
             _rd.NextTag();
             if (!_rd.IsEndTag("circle"))
@@ -837,7 +838,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 LayerSet = layerSet,
                 Position = position,
                 Radius = radius,
-                Thickness = thickness
+                Thickness = thickness,
+                Filled = filled
             };
 
             return element;

@@ -31,7 +31,7 @@
                 //string fileName = @"C:\Users\Rafael\Documents\Projectes\EDA\DSP04X\dsp04x_panel.xbrd";
                 string fileName = @"C:\Users\Rafael\Documents\Projectes\EDA\DSP04X\build\dsp04x.xbrd";
                 using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
-                    EdaBoardStreamReader reader = new EdaBoardStreamReader(stream);
+                    var reader = new EdaBoardStreamReader(stream);
                     board = reader.ReadBoard();
                 }
             }

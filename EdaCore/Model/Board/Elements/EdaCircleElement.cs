@@ -11,7 +11,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         private EdaPoint _position;
         private int _radius;
-        private int _thickness;
+        private int _thickness = 100000;
+        private bool _filled;
 
         /// <inheritdoc/>
         /// 
@@ -24,12 +25,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
-            if (Filled) {
-                var points = EdaPointFactory.CreateCircle(_position, _radius);
-                return new EdaPolygon(points);
-            }
-            else {
-                var outerPoints = EdaPointFactory.CreateCircle(_position, _radius + (_thickness / 2));
+            var outerPoints = EdaPointFactory.CreateCircle(_position, _radius + (_thickness / 2));
+            if (_filled) 
+                return new EdaPolygon(outerPoints);
+            else { 
                 var innerPoints = EdaPointFactory.CreateCircle(_position, _radius - (_thickness / 2));
                 return new EdaPolygon(outerPoints, new EdaPolygon(innerPoints));
             }
@@ -70,7 +69,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(Radius));
-
                 _radius = value;
             }
         }
@@ -84,7 +82,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(Diameter));
-
                 _radius = value / 2;
             }
         }
@@ -98,7 +95,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(Thickness));
-
                 _thickness = value;
             }
         }
@@ -108,11 +104,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// 
         public bool Filled {
-            get => _thickness == 0;
-            set {
-                if (value)
-                    _thickness = 0;
-            }
+            get => _filled;
+            set => _filled = value;
         }
 
         /// <inheritdoc/>

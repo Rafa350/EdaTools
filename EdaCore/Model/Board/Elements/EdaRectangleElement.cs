@@ -14,6 +14,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private EdaAngle _rotation;
         private EdaRatio _cornerRatio;
         private int _thickness;
+        private bool _filled;
 
         /// <inheritdoc/>
         /// 
@@ -26,18 +27,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
-            if (Filled) {
-                var points = EdaPointFactory.CreateRectangle(_position, _size, _cornerRatio, true, _rotation);
-                return new EdaPolygon(points);
-            }
+            var outerSize = new EdaSize(_size.Width + _thickness, _size.Height + _thickness);
+            var outerPoints = EdaPointFactory.CreateRectangle(_position, outerSize, _cornerRatio, true, _rotation);
+            if (_filled)
+                return new EdaPolygon(outerPoints);          
             else {
-                var outerSize = new EdaSize(_size.Width + _thickness, _size.Height + _thickness);
-                var outerPoints = EdaPointFactory.CreateRectangle(_position, outerSize, _cornerRatio, true, _rotation);
-
                 var innerSize = new EdaSize(_size.Width - _thickness, _size.Height - _thickness);
                 var innerCornerRatio = EdaRatio.FromPercent((double)(CornerSize - Thickness) / (Math.Min(innerSize.Width, innerSize.Height) / 2));
                 var innerPoints = EdaPointFactory.CreateRectangle(_position, innerSize, innerCornerRatio, true, _rotation);
-
                 return new EdaPolygon(outerPoints, new EdaPolygon(innerPoints));
             }
         }
@@ -118,7 +115,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(Thickness));
-
                 _thickness = value;
             }
         }
@@ -128,11 +124,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// 
         public bool Filled {
-            get => _thickness == 0;
-            set {
-                if (value)
-                    _thickness = 0;
-            }
+            get => _filled;
+            set => _filled = value;
         }
 
         /// <inheritdoc/>
