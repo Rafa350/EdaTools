@@ -35,7 +35,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 var innerSize = new EdaSize(_size.Width - _thickness, _size.Height - _thickness);
                 var innerCornerRatio = EdaRatio.FromPercent((double)(CornerSize - Thickness) / (Math.Min(innerSize.Width, innerSize.Height) / 2));
                 var innerPoints = EdaPointFactory.CreateRectangle(_position, innerSize, innerCornerRatio, true, _rotation);
-                return new EdaPolygon(outerPoints, new EdaPolygon(innerPoints));
+                return new EdaPolygon(outerPoints, innerPoints);
             }
         }
 

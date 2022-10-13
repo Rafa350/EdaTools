@@ -10,7 +10,7 @@ namespace EdaBoardViewer.Render {
 
             var g = new StreamGeometry();
             using (StreamGeometryContext gc = g.Open())
-                StreamPolygon(gc, polygon, polygon.Childs == null ? 1 : 0);
+                StreamPolygon(gc, polygon, polygon.Holes == null ? 1 : 0);
 
             return g;
         }
@@ -19,9 +19,9 @@ namespace EdaBoardViewer.Render {
 
             // Procesa el poligon principal
             //
-            if (polygon.Points != null) {
+            if (polygon.Contour != null) {
 
-                EdaPoint[] points = polygon.Points.ToArray();
+                EdaPoint[] points = polygon.Contour.ToArray();
 
                 gc.BeginFigure(points[0].ToPoint(), true);
                 for (int i = 1; i < points.Length; i++)
@@ -31,8 +31,8 @@ namespace EdaBoardViewer.Render {
 
             // Procesa els poligons fills
             //
-            if ((polygon.Childs != null) && (level < 2))
-                foreach (var child in polygon.Childs)
+            if ((polygon.Holes != null) && (level < 2))
+                foreach (var child in polygon.Holes)
                     StreamPolygon(gc, child, level + 1);
         }
     }

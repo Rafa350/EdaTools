@@ -29,7 +29,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => _clearance;
             set {
                 if (value < 0)
-                    throw new ArgumentOutOfRangeException("Clearance");
+                    throw new ArgumentOutOfRangeException(nameof(Clearance));
 
                 _clearance = value;
             }
@@ -55,7 +55,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public int ThermalClearance {
             get => Math.Max(_thermalClearance, _clearance);
-            set => _thermalClearance = value;
+            set {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException(nameof(ThermalClearance));
+                _thermalClearance = value;
+            }
         }
 
         /// <summary>
@@ -64,7 +68,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public int ThermalThickness {
             get => _thermalThickness;
-            set => _thermalThickness = value;
+            set {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException(nameof(ThermalThickness));
+                _thermalThickness = value;
+            }
         }
 
         /// <summary>

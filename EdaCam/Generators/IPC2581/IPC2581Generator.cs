@@ -188,7 +188,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         private void WritePolygon(XmlWriter writer, EdaPolygon polygon) {
 
             bool first = true;
-            foreach (var point in polygon.Points) {
+            foreach (var point in polygon.Contour) {
 
                 if (first) {
                     first = false;

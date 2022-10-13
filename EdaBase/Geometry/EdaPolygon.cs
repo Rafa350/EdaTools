@@ -3,59 +3,70 @@
 namespace MikroPic.EdaTools.v1.Base.Geometry {
 
     /// <summary>
-    /// Objecte que representa un poligon amb fills. Aquesta clase es inmutable.
+    /// Objecte que representa un poligon amb forats. Aquesta clase es inmutable.
     /// Els punt van ordenats en direccio contrari al rellotge.
     /// </summary>
     /// 
     public sealed class EdaPolygon {
 
-        private readonly List<EdaPoint> _points;
-        private readonly List<EdaPolygon> _childs;
+        private readonly EdaPoints _contour;
+        private readonly List<EdaPoints> _holes;
         private EdaRect? _bbox = null;
 
         /// <summary>
-        /// Construei un poligon simple.
+        /// Construeix un poligon, amb forats.
         /// </summary>
-        /// <param name="points">Els punts.</param>
+        /// <param name="contour">El conjunt de punts del contorn.</param>
+        /// <param name="holes">El conjunt de forats interiors.</param>
         /// 
-        public EdaPolygon(IEnumerable<EdaPoint> points) {
-
-            if (points != null)
-                _points = new List<EdaPoint>(points);
+        public EdaPolygon(IEnumerable<EdaPoint> contour, params IEnumerable<EdaPoint>[] holes) :
+            this(contour, (IEnumerable<EdaPoints>) holes){
         }
 
         /// <summary>
-        /// Construeix un poligon amb un poligon (forat) interior.
+        /// Construeix un poligon, amb forats.
         /// </summary>
-        /// <param name="points">Els punts.</param>
-        /// <param name="child">El poligons interior.</param>
+        /// <param name="contour">El conjunt de punts del contorn.</param>
+        /// <param name="holes">El conjunt de forats interiors.</param>
         /// 
-        public EdaPolygon(IEnumerable<EdaPoint> points, EdaPolygon child) {
+        public EdaPolygon(IEnumerable<EdaPoint> contour, IEnumerable<IEnumerable<EdaPoint>> holes) {
 
-            if (points != null)
-                _points = new List<EdaPoint>(points);
+            _contour = new EdaPoints(contour);
 
-            if (child != null) {
-                _childs = new List<EdaPolygon>(1);
-                _childs.Add(child);
+            if (holes != null) {
+                _holes = new List<EdaPoints>();
+                foreach (var hole in holes)
+                    _holes.Add(new EdaPoints(hole));
             }
         }
 
         /// <summary>
-        /// Construeix un poligon, amb mes d'un poligon (forat) interior.
+        /// Construeix un poligon, amb forats.
         /// </summary>
-        /// <param name="points">Els punts.</param>
-        /// <param name="childs">Els poligons interiors.</param>
+        /// <param name="contour">El conjunt de punts del contorn.</param>
+        /// <param name="holes">El conjunt de forats interiors.</param>
         /// 
-        public EdaPolygon(IEnumerable<EdaPoint> points, IEnumerable<EdaPolygon> childs) {
+        public EdaPolygon(EdaPoints contour, params EdaPoints[] holes):
+            this(contour, (IEnumerable<EdaPoints>) holes) {
 
-            if (points != null)
-                _points = new List<EdaPoint>(points);
-
-            if (childs != null)
-                _childs = new List<EdaPolygon>(childs);
         }
 
+        /// <summary>
+        /// Construeix un poligon, amb forats.
+        /// </summary>
+        /// <param name="contour">El conjunt de punts del contorn.</param>
+        /// <param name="holes">El conjunt de forats interiors.</param>
+        /// 
+        public EdaPolygon(EdaPoints contour, IEnumerable<EdaPoints> holes) {
+
+            _contour = contour;
+
+            if (holes != null) {
+                _holes = new List<EdaPoints>();
+                foreach (var hole in holes)
+                    _holes.Add(hole);
+            }
+        }
 
         /// <summary>
         /// Obte el rectangle envolvent de la llista de punts.
@@ -64,7 +75,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// 
         private EdaRect GetBoundingBox() {
 
-            if (_points == null)
+            if (_contour == null)
                 return new EdaRect(0, 0, 0, 0);
 
             else {
@@ -73,7 +84,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
                 int maxX = int.MinValue;
                 int maxY = int.MinValue;
 
-                foreach (var point in _points) {
+                foreach (var point in _contour) {
 
                     int x = point.X;
                     int y = point.Y;
@@ -106,45 +117,18 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         }
 
         /// <summary>
-        /// El numero de punts.
-        /// </summary>
-        /// 
-        public int NumPoints =>
-            _points == null ? 0 : _points.Count;
-
-        /// <summary>
-        /// El numero de fills.
-        /// </summary>
-        /// 
-        public int NumChilds =>
-            _childs == null ? 0 : _childs.Count;
-
-        /// <summary>
-        /// Indica si el poligon te punts.
-        /// </summary>
-        /// 
-        public bool HasPoints =>
-            NumPoints > 0;
-
-        /// <summary>
-        /// Indica si el poligon te fills
-        /// </summary>
-        /// 
-        public bool HasChilds =>
-            NumChilds > 0;
-
-        /// <summary>
         /// Els punts del poligon.
         /// </summary>
         /// 
-        public IEnumerable<EdaPoint> Points =>
-            _points;
+        public EdaPoints Contour =>
+            _contour;
 
         /// <summary>
         /// Els fills del poligon.
         /// </summary>
         /// 
-        public IEnumerable<EdaPolygon> Childs =>
-            _childs;
+        public IEnumerable<EdaPoints> Holes =>
+            _holes;
     }
 }
+

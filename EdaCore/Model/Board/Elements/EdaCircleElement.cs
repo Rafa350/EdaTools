@@ -30,7 +30,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 return new EdaPolygon(outerPoints);
             else { 
                 var innerPoints = EdaPointFactory.CreateCircle(_position, _radius - (_thickness / 2));
-                return new EdaPolygon(outerPoints, new EdaPolygon(innerPoints));
+                return new EdaPolygon(outerPoints, innerPoints);
             }
         }
 

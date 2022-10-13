@@ -108,7 +108,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
                 var padPoints = MakePadPoints(layerId, 0);
                 var holePoints = MakeHolePoints();
-                polygon = new EdaPolygon(padPoints, new EdaPolygon(holePoints));
+                polygon = new EdaPolygon(padPoints, holePoints);
 
                 PolygonCache.Save(hash, polygon);
             }

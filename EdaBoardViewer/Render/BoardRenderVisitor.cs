@@ -216,7 +216,7 @@ namespace EdaBoardViewer.Render {
             if (_visualLayer.IsVisible(Part, region)) {
 
                 var polygon = _layer.Function == LayerFunction.Signal ?
-                    Board.GetRegionPolygon(region, _layer.Id, new EdaTransformation()) :
+                    Board.GetRegionPolygons(region, _layer.Id, new EdaTransformation()) :
                     region.GetPolygon(_layer.Id);
 
                 var pen = new Pen(new SolidColorBrush(_visualLayer.Color), region.Thickness, null, PenLineCap.Round, PenLineJoin.Round);

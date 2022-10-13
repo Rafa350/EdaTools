@@ -77,7 +77,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
                 var viaPoints = MakeViaPoints(layerId, 0);
                 var holePoints = MakeHolePoints();
-                polygon = new EdaPolygon(viaPoints, new EdaPolygon(holePoints));
+                polygon = new EdaPolygon(viaPoints, holePoints);
 
                 PolygonCache.Save(hash, polygon);
             }

@@ -507,7 +507,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         //
                         EdaLayer layer = Board.GetLayer(_layerId);
                         EdaPolygon polygon = element.GetPolygon(layer.Id);
-                        IEnumerable<EdaPoint> points = polygon.Points;
+                        IEnumerable<EdaPoint> points = polygon.Contour;
 
                         if (Part != null) {
                             EdaTransformation t = Part.GetLocalTransformation();
@@ -558,7 +558,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         //
                         EdaLayer layer = Board.GetLayer(_layerId);
                         EdaPolygon polygon = element.GetPolygon(layer.Id);
-                        IEnumerable<EdaPoint> points = polygon.Points;
+                        IEnumerable<EdaPoint> points = polygon.Contour;
 
                         if (Part != null) {
                             EdaTransformation t = Part.GetLocalTransformation();
@@ -769,7 +769,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     var t = new EdaTransformation();
                     if (Part != null)
                         t = Part.GetLocalTransformation();
-                    var polygon = Board.GetRegionPolygon(element, _layerId, t);
+                    var polygon = Board.GetRegionPolygons(element, _layerId, t);
                     DrawPolygon(polygon, element.Thickness);
                 }
             }
@@ -782,7 +782,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// 
             private void DrawPolygon(EdaPolygon polygon, int thickness) {
 
-                DrawPolygon(polygon, (polygon.Points != null) ? 1 : 0, thickness);
+                DrawPolygon(polygon, (polygon.Contour != null) ? 1 : 0, thickness);
             }
 
             /// <summary>
@@ -796,13 +796,13 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                 // Procesa el poligon
                 //
-                if (polygon.Points != null) {
+                if (polygon.Contour != null) {
 
                     // Dibuixa el contingut de la regio
                     //
                     _gb.LoadPolarity((level % 2) == 0 ? Polarity.Clear : Polarity.Dark);
                     _gb.BeginRegion();
-                    _gb.Region(polygon.Points, true);
+                    _gb.Region(polygon.Contour, true);
                     _gb.EndRegion();
 
                     // Dibuixa el perfil de la regio per arrodonir les cantonades
@@ -810,13 +810,13 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     Aperture ap = _apertures.GetCircleAperture(Math.Max(100000, thickness));
                     _gb.SelectAperture(ap);
                     _gb.LoadPolarity(Polarity.Dark);
-                    _gb.Polygon(polygon.Points);
+                    _gb.Polygon(polygon.Contour);
                 }
 
                 // Processa els fills. Amb level < 2 evitem els poligons orfres
                 //
-                if ((polygon.Childs != null) && (level < 2))
-                    foreach (EdaPolygon child in polygon.Childs)
+                if ((polygon.Holes != null) && (level < 2))
+                    foreach (EdaPolygon child in polygon.Holes)
                         DrawPolygon(child, level + 1, thickness);
             }
         }

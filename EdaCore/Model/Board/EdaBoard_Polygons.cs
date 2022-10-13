@@ -130,12 +130,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 if (signal == regionSignal) {
 
                     if (element is EdaPadElement padElement) {
-                        var polygon = GetThermalPolygon(padElement);
-                        if (polygon.HasChilds)
-                            foreach (var child in polygon.Childs) {
-                                if (_regionBounds.IntersectsWith(child.BoundingBox))
-                                    _polygons.Add(child);
-                            }
+                        var polygons = GetThermalPolygons(padElement);
+                        foreach(var polygon in polygons)
+                            if (_regionBounds.IntersectsWith(polygon.BoundingBox))
+                                _polygons.Add(polygon);
                     }
                 }
 
@@ -153,9 +151,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             /// Genera el poligon d'un termal.
             /// </summary>
             /// <param name="element">L'element.</param>
-            /// <returns>El poligon.</returns>
+            /// <returns>El resultat. Pot ser mes d'un poligon.</returns>
             /// 
-            private EdaPolygon GetThermalPolygon(EdaPadElement element) {
+            private IEnumerable<EdaPolygon> GetThermalPolygons(EdaPadElement element) {
 
                 var elementPoligon = element.GetOutlinePolygon(_layerId, _region.ThermalClearance);
 
@@ -163,13 +161,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 var thermalPoints = EdaPointFactory.CreateCross(element.Position, bounds.Size, _region.ThermalThickness, element.Rotation);
                 var thermalPoligon = new EdaPolygon(thermalPoints);
                 
-                var polygon = elementPoligon.Substract(thermalPoligon);
+                var results = elementPoligon.Substract(thermalPoligon);
                 if (Part != null) {
                     var transformation = Part.GetLocalTransformation();
-                    polygon = polygon.Transform(transformation);
+                    var polygons = new List<EdaPolygon>();
+                    foreach (var result in results)
+                        polygons.Add(result.Transform(transformation));
+                    return polygons;
                 }
-
-                return polygon;
+                else 
+                    return results;
             }
 
             /// <summary>
@@ -223,7 +224,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="transformation">Transformacio a aplicar al poligon.</param>
         /// <returns>El poligon generat.</returns>
         /// 
-        public EdaPolygon GetRegionPolygon(EdaRegionElement region, EdaLayerId layerId, EdaTransformation transformation) {
+        public IEnumerable<EdaPolygon> GetRegionPolygons(EdaRegionElement region, EdaLayerId layerId, EdaTransformation transformation) {
 
             if (region == null)
                 throw new ArgumentNullException(nameof(region));
@@ -234,9 +235,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             visitor.Visit(this);
 
             EdaPolygon polygon = region.GetPolygon(layerId);
-            polygon = polygon.Substract(holes);
+            var polygons = polygon.Substract(holes);
 
-            return (transformation == null) ? polygon : polygon.Transform(transformation);
+            //return (transformation == null) ? polygons : polygons.Transform(transformation);
+            return polygons;
         }
 
         /// <summary>
