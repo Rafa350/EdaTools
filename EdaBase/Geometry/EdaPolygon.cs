@@ -9,9 +9,19 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
     /// 
     public sealed class EdaPolygon {
 
-        private readonly EdaPoints _contour;
-        private readonly List<EdaPoints> _holes;
-        private EdaRect? _bbox = null;
+        private List<EdaPoint> _contour;
+        private List<List<EdaPoint>> _holes;
+        private EdaRect? _bounds = null;
+
+        /// <summary>
+        /// Construeix un poligon.
+        /// </summary>
+        /// <param name="contour">El conjunt de punts del contorn.</param>
+        /// 
+        public EdaPolygon(IEnumerable<EdaPoint> contour) {
+
+            Initialize(contour, null);
+        }
 
         /// <summary>
         /// Construeix un poligon, amb forats.
@@ -19,8 +29,9 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="contour">El conjunt de punts del contorn.</param>
         /// <param name="holes">El conjunt de forats interiors.</param>
         /// 
-        public EdaPolygon(IEnumerable<EdaPoint> contour, params IEnumerable<EdaPoint>[] holes) :
-            this(contour, (IEnumerable<EdaPoints>) holes){
+        public EdaPolygon(IEnumerable<EdaPoint> contour, params IEnumerable<EdaPoint>[] holes) {
+
+            Initialize(contour, holes);
         }
 
         /// <summary>
@@ -31,38 +42,70 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// 
         public EdaPolygon(IEnumerable<EdaPoint> contour, IEnumerable<IEnumerable<EdaPoint>> holes) {
 
-            _contour = new EdaPoints(contour);
+            Initialize(contour, holes);
+        }
+
+        /// <summary>
+        /// Construeix un poligon.
+        /// </summary>
+        /// <param name="contour">El conjunt de punts del contorn.</param>
+        /// 
+        public EdaPolygon(List<EdaPoint> contour) {
+
+            Initialize(contour, null);
+        }
+
+        /// <summary>
+        /// Construeix un poligon, amb forats.
+        /// </summary>
+        /// <param name="contour">El conjunt de punts del contorn.</param>
+        /// <param name="holes">El conjunt de forats interiors.</param>
+        /// 
+        public EdaPolygon(List<EdaPoint> contour, params List<EdaPoint>[] holes) {
+
+            Initialize(contour, holes);
+        }
+
+        /// <summary>
+        /// Construeix un poligon, amb forats.
+        /// </summary>
+        /// <param name="contour">El conjunt de punts del contorn.</param>
+        /// <param name="holes">El conjunt de forats interiors.</param>
+        /// 
+        public EdaPolygon(List<EdaPoint> contour, IEnumerable<List<EdaPoint>> holes) {
+
+            Initialize(contour, holes);
+        }
+
+        /// <summary>
+        /// Inicialitzacio.
+        /// </summary>
+        /// <param name="contour">Els punts del contorn.</param>
+        /// <param name="holes">Els punts dels forats.</param>
+        /// 
+        private void Initialize(IEnumerable<EdaPoint> contour, IEnumerable<IEnumerable<EdaPoint>> holes) {
+
+            _contour = new List<EdaPoint>(contour);
 
             if (holes != null) {
-                _holes = new List<EdaPoints>();
+                _holes = new List<List<EdaPoint>>();
                 foreach (var hole in holes)
-                    _holes.Add(new EdaPoints(hole));
+                    _holes.Add(new List<EdaPoint>(hole));
             }
         }
 
         /// <summary>
-        /// Construeix un poligon, amb forats.
+        /// Inicialitzacio.
         /// </summary>
-        /// <param name="contour">El conjunt de punts del contorn.</param>
-        /// <param name="holes">El conjunt de forats interiors.</param>
+        /// <param name="contour">Els punts del contorn.</param>
+        /// <param name="holes">Els punts dels forats.</param>
         /// 
-        public EdaPolygon(EdaPoints contour, params EdaPoints[] holes):
-            this(contour, (IEnumerable<EdaPoints>) holes) {
-
-        }
-
-        /// <summary>
-        /// Construeix un poligon, amb forats.
-        /// </summary>
-        /// <param name="contour">El conjunt de punts del contorn.</param>
-        /// <param name="holes">El conjunt de forats interiors.</param>
-        /// 
-        public EdaPolygon(EdaPoints contour, IEnumerable<EdaPoints> holes) {
+        private void Initialize(List<EdaPoint> contour, IEnumerable<List<EdaPoint>> holes) {
 
             _contour = contour;
 
             if (holes != null) {
-                _holes = new List<EdaPoints>();
+                _holes = new List<List<EdaPoint>>();
                 foreach (var hole in holes)
                     _holes.Add(hole);
             }
@@ -73,7 +116,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// </summary>
         /// <returns>El rectangle envolvent.</returns>
         /// 
-        private EdaRect GetBoundingBox() {
+        private EdaRect ComputeBounds() {
 
             if (_contour == null)
                 return new EdaRect(0, 0, 0, 0);
@@ -108,11 +151,11 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// El bounding-box del poligon.
         /// </summary>
         /// 
-        public EdaRect BoundingBox {
+        public EdaRect Bounds {
             get {
-                if (!_bbox.HasValue)
-                    _bbox = GetBoundingBox();
-                return _bbox.Value;
+                if (!_bounds.HasValue)
+                    _bounds = ComputeBounds();
+                return _bounds.Value;
             }
         }
 
@@ -120,15 +163,22 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// Els punts del poligon.
         /// </summary>
         /// 
-        public EdaPoints Contour =>
+        public IEnumerable<EdaPoint> Contour =>
             _contour;
 
         /// <summary>
         /// Els fills del poligon.
         /// </summary>
         /// 
-        public IEnumerable<EdaPoints> Holes =>
+        public IEnumerable<IEnumerable<EdaPoint>> Holes =>
             _holes;
+
+        /// <summary>
+        /// Retorna true si el poligon te forats.
+        /// </summary>
+        /// 
+        public bool HasHoles =>
+            _holes != null;
     }
 }
 

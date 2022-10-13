@@ -47,7 +47,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override EdaRect GetBoundingBox(EdaLayerId layerId) {
 
             var polygon = GetPolygon(layerId);
-            return polygon.BoundingBox;
+            return polygon.Bounds;
         }
 
         /// <summary>

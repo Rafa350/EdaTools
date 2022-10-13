@@ -172,20 +172,20 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             int y3 = y + ht;
             int y4 = y + hh;
 
-            var points = new List<EdaPoint>();
-
-            points.Add(new EdaPoint(x4, y3));
-            points.Add(new EdaPoint(x3, y3));
-            points.Add(new EdaPoint(x3, y4));
-            points.Add(new EdaPoint(x2, y4));
-            points.Add(new EdaPoint(x2, y3));
-            points.Add(new EdaPoint(x1, y3));
-            points.Add(new EdaPoint(x1, y2));
-            points.Add(new EdaPoint(x2, y2));
-            points.Add(new EdaPoint(x2, y1));
-            points.Add(new EdaPoint(x3, y1));
-            points.Add(new EdaPoint(x3, y2));
-            points.Add(new EdaPoint(x4, y2));
+            var points = new List<EdaPoint> {
+                new EdaPoint(x4, y3),
+                new EdaPoint(x3, y3),
+                new EdaPoint(x3, y4),
+                new EdaPoint(x2, y4),
+                new EdaPoint(x2, y3),
+                new EdaPoint(x1, y3),
+                new EdaPoint(x1, y2),
+                new EdaPoint(x2, y2),
+                new EdaPoint(x2, y1),
+                new EdaPoint(x3, y1),
+                new EdaPoint(x3, y2),
+                new EdaPoint(x4, y2)
+            };
 
             if (rotation.IsZero)
                 return points;

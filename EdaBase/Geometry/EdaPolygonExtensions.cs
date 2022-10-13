@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Clipper2Lib;
 
@@ -28,49 +29,60 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
 
             // Transaforma el contorn.
             //
-            var contour = new EdaPoints(transformation.Transform(polygon.Contour));
+            var contour = new List<EdaPoint>(transformation.Transform(polygon.Contour));
 
             // Transforma els forats.
             //
-            List<EdaPoints> holes = null;
-            if (polygon.Holes != null) {
-                holes = new List<EdaPoints>();
+            List<List<EdaPoint>> holes = null;
+            if (polygon.HasHoles) {
+                holes = new List<List<EdaPoint>>();
                 foreach (var hole in polygon.Holes)
-                    holes.Add(new EdaPoints(transformation.Transform(hole)));
+                    holes.Add(new List<EdaPoint>(transformation.Transform(hole)));
             }
 
             return new EdaPolygon(contour, holes);
         }
 
-        /// <summary>
-        /// Subtraccio d'un o diversos poligons.
-        /// </summary>
-        /// <param name="polygon">El poligon.</param>
-        /// <param name="toSubstract">Els poligons a substreure.</param>
-        /// <returns>El resultat de l'operacio. Pot ser mes d'un poligon.</returns>
-        /// 
-        public static IEnumerable<EdaPolygon> Substract(this EdaPolygon polygon, params EdaPolygon[] toSubstract) {
+        public static IEnumerable<EdaPolygon> Transform(this IEnumerable<EdaPolygon> polygons, EdaTransformation transformation) {
 
-            return polygon.Substract((IEnumerable<EdaPolygon>)toSubstract);
+            var transformedPolygons = new List<EdaPolygon>();
+            foreach (var polygon in polygons)
+                transformedPolygons.Add(polygon.Transform(transformation));
+            return transformedPolygons;
         }
 
         /// <summary>
         /// Subtraccio d'un o diversos poligons.
         /// </summary>
         /// <param name="polygon">El poligon.</param>
-        /// <param name="toSubstract">Els poligons a substreure.</param>
+        /// <param name="substractPolygons">Els poligons a substreure.</param>
+        /// <returns>El resultat de l'operacio. Pot ser mes d'un poligon.</returns>
+        /// 
+        public static IEnumerable<EdaPolygon> Substract(this EdaPolygon polygon, params EdaPolygon[] substractPolygons) {
+
+            return polygon.Substract((IEnumerable<EdaPolygon>)substractPolygons);
+        }
+
+        /// <summary>
+        /// Subtraccio d'un o diversos poligons.
+        /// </summary>
+        /// <param name="polygon">El poligon.</param>
+        /// <param name="substractPolygons">Els poligons a substreure.</param>
         /// <returns>El resultat de l'operacio. Pot ser mes d0un poligon.</returns>
         /// 
-        public static IEnumerable<EdaPolygon> Substract(this EdaPolygon polygon, IEnumerable<EdaPolygon> toSubstract) {
+        public static IEnumerable<EdaPolygon> Substract(this EdaPolygon polygon, IEnumerable<EdaPolygon> substractPolygons) {
 
             var cp = new Clipper64();
+            
             cp.AddSubject(ToPath64(polygon.Contour));
-            foreach (var p in toSubstract)
-                cp.AddClip(ToPath64(p.Contour));
-            var solution = new PolyTree64();
-            cp.Execute(ClipType.Difference, FillRule.NonZero, solution);
+            
+            foreach (var substractPolygon in substractPolygons)
+                cp.AddClip(ToPath64(substractPolygon.Contour));
+            
+            var tree = new PolyTree64();
+            cp.Execute(ClipType.Difference, FillRule.NonZero, tree);
 
-            return ToPolygons(solution);
+            return ToPolygons(tree);
         }
 
         /// <summary>
@@ -81,23 +93,15 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <returns>El resultat.</returns>
         /// 
         public static EdaPolygon Offset(this EdaPolygon polygon, int delta) {
-            /*
-                        List<EdaPolygon> childs = null;
-                        if (polygon.Holes != null) {
-                            childs = new List<EdaPolygon>();
-                            foreach (var child in polygon.Holes)
-                                childs.Add(Offset(child, delta));
-                        }
+            
+            var cpo = new ClipperOffset();
 
-                        var cpo = new ClipperOffset();
-                        cpo.AddPath(ToPath64(polygon.Contour), JoinType.Round, EndType.Round);
-                        var solution = cpo.Execute(delta);
-                        //if (solution.Count < 2) {
-                            var points = ToPoints(solution[0]);
-                            return new EdaPolygon(points, childs);
-                        //}*/
+            cpo.AddPath(ToPath64(polygon.Contour), JoinType.Round, EndType.Round);
+            
+            var solution = cpo.Execute(delta);
 
-            return null;
+            var points = ToPoints(solution[0]);
+            return new EdaPolygon(points);
         }
 
         private static Path64 ToPath64(IEnumerable<EdaPoint> points) {
@@ -112,23 +116,22 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
 
         private static IEnumerable<EdaPolygon> ToPolygons(PolyPath64 tree) {
 
-            /*List<EdaPoint>  = null;
-            if (tree.Polygon != null) {
-                points = new List<EdaPoint>(tree.Polygon.Count);
-                foreach (var item in tree.Polygon)
-                    points.Add(new EdaPoint((int)item.X, (int)item.Y));
-            }
+            var polygons = new List<EdaPolygon>(tree.Count);
+            if (tree.Count > 0) 
+                foreach (PolyPath64 item in tree) {
 
-            List<List<EdaPoint>> childs = null;
-            if (tree.Count > 0) {
-                childs = new List<EdaPolygon>(tree.Count);
-                foreach (var item in tree.OfType<PolyPath64>())
-                    childs.Add(ToPolygon(item));
-            }
+                    List<List<EdaPoint>> holes = null;
+                    if (item.Count > 0) {
+                        holes = new List<List<EdaPoint>>();
+                        foreach (PolyPath64 subItem in item)
+                            holes.Add(new List<EdaPoint>(subItem.Polygon.Select(i => new EdaPoint((int)i.X, (int)i.Y))));
+                    }
 
-            return new EdaPolygon(points, childs);
-            */
-            return null;
+                    var contour = new List<EdaPoint>(item.Polygon.Select(i => new EdaPoint((int)i.X, (int)i.Y)));
+                    polygons.Add(new EdaPolygon(contour, holes));
+                }
+
+            return polygons;
         }
     }
 }

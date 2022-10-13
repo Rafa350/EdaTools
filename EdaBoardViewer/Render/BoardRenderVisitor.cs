@@ -215,14 +215,14 @@ namespace EdaBoardViewer.Render {
 
             if (_visualLayer.IsVisible(Part, region)) {
 
-                var polygon = _layer.Function == LayerFunction.Signal ?
+                var polygons = _layer.Function == LayerFunction.Signal ?
                     Board.GetRegionPolygons(region, _layer.Id, new EdaTransformation()) :
-                    region.GetPolygon(_layer.Id);
+                    new List<EdaPolygon>() { region.GetPolygon(_layer.Id) };
 
                 var pen = new Pen(new SolidColorBrush(_visualLayer.Color), region.Thickness, null, PenLineCap.Round, PenLineJoin.Round);
                 var brush = new SolidColorBrush(_visualLayer.Color);
 
-                var geometry = polygon.ToGeometry();
+                var geometry = polygons.ToGeometry();
 
                 _context.DrawGeometry(brush, pen, geometry);
             }

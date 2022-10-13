@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using Avalonia;
 using Avalonia.Media;
 using MikroPic.EdaTools.v1.Base.Geometry;
 
@@ -9,31 +10,46 @@ namespace EdaBoardViewer.Render {
         public static Geometry ToGeometry(this EdaPolygon polygon) {
 
             var g = new StreamGeometry();
-            using (StreamGeometryContext gc = g.Open())
-                StreamPolygon(gc, polygon, polygon.Holes == null ? 1 : 0);
+            using (StreamGeometryContext gc = g.Open()) {
+                ToGeometry(gc, polygon);
+            }
 
             return g;
         }
 
-        private static void StreamPolygon(StreamGeometryContext gc, EdaPolygon polygon, int level) {
+        public static Geometry ToGeometry(this IEnumerable<EdaPolygon> polygons) {
 
-            // Procesa el poligon principal
-            //
-            if (polygon.Contour != null) {
-
-                EdaPoint[] points = polygon.Contour.ToArray();
-
-                gc.BeginFigure(points[0].ToPoint(), true);
-                for (int i = 1; i < points.Length; i++)
-                    gc.LineTo(points[i].ToPoint());
-                gc.LineTo(points[0].ToPoint());
+            var g = new StreamGeometry();
+            using (StreamGeometryContext gc = g.Open()) {
+                foreach(var polygon in polygons)
+                    ToGeometry(gc, polygon);
             }
 
-            // Procesa els poligons fills
-            //
-            if ((polygon.Holes != null) && (level < 2))
-                foreach (var child in polygon.Holes)
-                    StreamPolygon(gc, child, level + 1);
+            return g;
+        }
+
+        private static void ToGeometry(StreamGeometryContext gc, EdaPolygon polygon) {
+
+            ToGeometry(gc, polygon.Contour);
+            if (polygon.HasHoles)
+                foreach (var hole in polygon.Holes)
+                    ToGeometry(gc, hole);
+        }
+
+        private static void ToGeometry(StreamGeometryContext gc, IEnumerable<EdaPoint> points) {
+
+            bool first = true;
+            Point firstPoint = default;
+            foreach (var point in points) {
+                if (first) {
+                    firstPoint = point.ToPoint();
+                    gc.BeginFigure(firstPoint, true);
+                    first = false;
+                }
+                else
+                    gc.LineTo(point.ToPoint());
+            }
+            gc.LineTo(firstPoint);
         }
     }
 }

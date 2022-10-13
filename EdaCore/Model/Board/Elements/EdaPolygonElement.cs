@@ -99,7 +99,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
             else {
                 var polygon = GetPolygon(layerId);
-                return polygon.BoundingBox;
+                return polygon.Bounds;
             }
         }
 

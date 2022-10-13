@@ -769,8 +769,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     var t = new EdaTransformation();
                     if (Part != null)
                         t = Part.GetLocalTransformation();
-                    var polygon = Board.GetRegionPolygons(element, _layerId, t);
-                    DrawPolygon(polygon, element.Thickness);
+                    var polygons = Board.GetRegionPolygons(element, _layerId, t);
+                    foreach (var polygon in polygons)
+                        DrawPolygon(polygon, element.Thickness);
                 }
             }
 
@@ -815,9 +816,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                 // Processa els fills. Amb level < 2 evitem els poligons orfres
                 //
-                if ((polygon.Holes != null) && (level < 2))
-                    foreach (EdaPolygon child in polygon.Holes)
-                        DrawPolygon(child, level + 1, thickness);
+                /*if ((polygon.Holes != null) && (level < 2))
+                    foreach (var hole in polygon.Holes)
+                        DrawPolygon(hole, level + 1, thickness);*/
             }
         }
     }

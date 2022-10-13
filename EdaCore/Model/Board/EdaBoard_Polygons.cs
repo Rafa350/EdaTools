@@ -82,7 +82,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                             int clearance = Math.Max(signalClearance, _region.Clearance);
 
                             var polygon = element.GetOutlinePolygon(_layerId, clearance);
-                            if (_regionBounds.IntersectsWith(polygon.BoundingBox))
+                            if (_regionBounds.IntersectsWith(polygon.Bounds))
                                 _polygons.Add(polygon);
                         }
                     }
@@ -92,14 +92,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             public override void Visit(EdaCircularHoleElement element) {
 
                 var polygon = GetOutlinePolygon(element, _outlineClearance);
-                if (_regionBounds.IntersectsWith(polygon.BoundingBox))
+                if (_regionBounds.IntersectsWith(polygon.Bounds))
                     _polygons.Add(polygon);
             }
 
             public override void Visit(EdaLinearHoleElement element) {
 
                 var polygon = GetOutlinePolygon(element, _outlineClearance);
-                if (_regionBounds.IntersectsWith(polygon.BoundingBox))
+                if (_regionBounds.IntersectsWith(polygon.Bounds))
                     _polygons.Add(polygon);
             }
 
@@ -111,7 +111,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             private void VisitProfileElement(EdaElement element) {
 
                 var polygon = element.GetOutlinePolygon(EdaLayerId.Profile, _outlineClearance);
-                if (_regionBounds.IntersectsWith(polygon.BoundingBox))
+                if (_regionBounds.IntersectsWith(polygon.Bounds))
                     _polygons.Add(polygon);
             }
 
@@ -132,7 +132,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                     if (element is EdaPadElement padElement) {
                         var polygons = GetThermalPolygons(padElement);
                         foreach(var polygon in polygons)
-                            if (_regionBounds.IntersectsWith(polygon.BoundingBox))
+                            if (_regionBounds.IntersectsWith(polygon.Bounds))
                                 _polygons.Add(polygon);
                     }
                 }
@@ -142,7 +142,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 else {
                     var clearance = Math.Max(regionSignal.Clearance, _region.Clearance);
                     var polygon = GetOutlinePolygon(element, clearance);
-                    if (_regionBounds.IntersectsWith(polygon.BoundingBox))
+                    if (_regionBounds.IntersectsWith(polygon.Bounds))
                         _polygons.Add(polygon);
                 }
             }
@@ -157,7 +157,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                 var elementPoligon = element.GetOutlinePolygon(_layerId, _region.ThermalClearance);
 
-                var bounds = elementPoligon.BoundingBox;
+                var bounds = elementPoligon.Bounds;
                 var thermalPoints = EdaPointFactory.CreateCross(element.Position, bounds.Size, _region.ThermalThickness, element.Rotation);
                 var thermalPoligon = new EdaPolygon(thermalPoints);
                 
@@ -237,9 +237,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             EdaPolygon polygon = region.GetPolygon(layerId);
             var polygons = polygon.Substract(holes);
 
-            //return (transformation == null) ? polygons : polygons.Transform(transformation);
-            return polygons;
-        }
+            return (transformation == null) ? polygons : polygons.Transform(transformation);
+         }
 
         /// <summary>
         /// Calcula el rectangle envolvent de la placa
@@ -273,5 +272,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// 
         public EdaSize Size =>
             GetBoundingBox().Size;
+
+        /// <summary>
+        /// Obte el rectangle envolvent de la placa.
+        /// </summary>
+        /// 
+        public EdaRect Bounds =>
+            GetBoundingBox();
     }
 }
