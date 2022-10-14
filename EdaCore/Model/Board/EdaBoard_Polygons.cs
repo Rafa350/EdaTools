@@ -49,6 +49,17 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                     VisitSignalElement(element);
             }
 
+            public override void Visit(EdaCircleElement element) {
+
+            /*    if ((_layerId.IsTop && element.IsOnLayer(EdaLayerId.TopKeepout)) ||
+                    (_layerId.IsBottom && element.IsOnLayer(EdaLayerId.BottomKeepout))) {
+
+                    var polygon = GetOutlinePolygon(element, _outlineClearance);
+                    if (_regionBounds.IntersectsWith(polygon.Bounds))
+                        _polygons.Add(polygon);
+                }*/
+            }
+
             public override void Visit(EdaThPadElement element) {
 
                 if (element.IsOnLayer(_layerId))
@@ -129,6 +140,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 //
                 if (signal == regionSignal) {
 
+                    // Si es un pad genera un termal
+                    //
                     if (element is EdaPadElement padElement) {
                         var polygons = GetThermalPolygons(padElement);
                         foreach(var polygon in polygons)
@@ -137,10 +150,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                     }
                 }
 
-                // En cas contrari genera un forat.
+                // En cas contrari, si es d'un senyal diferent, genera un forat.
                 //
                 else {
                     var clearance = Math.Max(regionSignal.Clearance, _region.Clearance);
+                    if (element is EdaPadElement padElement)
+                        clearance = Math.Max(clearance, padElement.Clearance);
                     var polygon = GetOutlinePolygon(element, clearance);
                     if (_regionBounds.IntersectsWith(polygon.Bounds))
                         _polygons.Add(polygon);

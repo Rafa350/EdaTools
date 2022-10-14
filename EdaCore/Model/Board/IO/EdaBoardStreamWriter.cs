@@ -159,6 +159,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                     _writer.WriteAttributeString("cornerRatio", EdaFormatter.FormatRatio(element.CornerRatio));
                     _writer.WriteAttributeEnum("cornerShape", element.CornerShape);
                 }
+                if (element.Clearance > 0)
+                    _writer.WriteAttributeString("clearance", EdaFormatter.FormatScalar(element.Clearance));
 
                 if (_currentBoard != null) {
                     EdaSignal signal = _currentBoard.GetSignal(element, _currentPart, false);
@@ -184,6 +186,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                     _writer.WriteAttributeString("cornerRatio", EdaFormatter.FormatRatio(element.CornerRatio));
                     _writer.WriteAttributeEnum("cornerShape", element.CornerShape);
                 }
+                if (element.Clearance > 0)
+                    _writer.WriteAttributeString("clearance", EdaFormatter.FormatScalar(element.Clearance));
                 _writer.WriteAttributeString("topSize", EdaFormatter.FormatSize(element.TopSize));
                 if (element.InnerSize != element.TopSize)
                     _writer.WriteAttributeString("innerSize", EdaFormatter.FormatSize(element.InnerSize));

@@ -120,8 +120,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             gb.Attribute(AttributeScope.File, ".FilePolarity,Positive");
             gb.SetUnits(Units.Milimeters);
             gb.SetCoordinateFormat(8, 5);
-            gb.LoadPolarity(Polarity.Dark);
-            gb.LoadRotation(EdaAngle.Zero);
+            gb.SetPolarity(Polarity.Dark);
+            gb.SetRotation(EdaAngle.Zero);
             gb.Comment("END HEADER");
         }
 

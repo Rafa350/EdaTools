@@ -6,7 +6,7 @@ using System.Text;
 
 namespace MikroPic.EdaTools.v1.Core.Import.KiCad.Infrastructure {
 
-    public static class SNodeExtensions {
+    public static class STreeExtensions {
 
         public static double ValueAsDouble(this STree tree, SNode node) {
 

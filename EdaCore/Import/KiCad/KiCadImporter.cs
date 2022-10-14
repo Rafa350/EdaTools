@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
@@ -16,6 +17,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
     public sealed class KiCadImporter: IEdaImporter {
 
         private const double _scale = 1000000.0;
+        private const bool _inlineMode = true;
 
         private EdaPoint _origin;
         private int _partCount = 0;
@@ -151,7 +153,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             // Procesa els components referenciats en llibreries externes
             //
             foreach (var moduleNode in tree.SelectBranches(tree.Root, _version == 5 ? "module" : "footprint")) {
-                string componentName = tree.ValueAsString(moduleNode[1]);
+                string name = tree.ValueAsString(moduleNode[1]);
+                var tsNode = tree.SelectBranch(moduleNode, "tstamp");
+                var ts = tsNode == null ? "0" : tree.ValueAsString(tsNode[1]);
+
+                string componentName = name;
                 if (board.GetComponent(componentName, false) == null)
                     LoadComponent(componentName, board);
             }
@@ -291,6 +297,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         private void ProcessModule(STree tree, SBranch node, EdaLibrary library) {
 
             string name = tree.ValueAsString(node[1]);
+
+            var tsNode = tree.SelectBranch(node, "tstamp");
+            var ts = tsNode == null ? "0" : tree.ValueAsString(tsNode[1]);
 
             var component = new EdaComponent();
             component.Name = String.Format("{0}:{1}", library.Name, name);
@@ -687,8 +696,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layers"));
             var (position, rotation) = ParsePointAndAngle(tree, tree.SelectBranch(node, "at"));
             var size = ParseSize(tree, tree.SelectBranch(node, "size"));
+            
             var drillNode = tree.SelectBranch(node, "drill");
             var drill = drillNode == null ? 0 : (int)(tree.ValueAsDouble(drillNode[1]) * _scale);
+            
+            var clearanceNode = tree.SelectBranch(node, "clearance");
+            var clearance = clearanceNode == null ? 0 : (int)(tree.ValueAsDouble(clearanceNode[1]) * _scale);
 
             var roundnessNode = tree.SelectBranch(node, "roundrect_rratio");
             var roundness = roundnessNode == null ?
@@ -703,7 +716,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                             Position = position,
                             Size = size,
                             Rotation = rotation,
-                            CornerRatio = roundness
+                            CornerRatio = roundness,
+                            Clearance = clearance
                         };
                         component.AddElement(element);
                     }
@@ -737,7 +751,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                             BottomSize = size,
                             Rotation = rotation,
                             CornerRatio = roundness,
-                            DrillDiameter = drill
+                            DrillDiameter = drill,
+                            Clearance = clearance
                         };
                         component.AddElement(element);
                     }
@@ -815,7 +830,6 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 board.Connect(_signals[netId], element);
             }
         }
-
 
         /// <summary>
         /// Obte un punt.
@@ -1025,6 +1039,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 ".",
                 @"C:\Program Files\KiCad\6.0\share\kicad\footprints",
                 @"C:\Users\Rafael\Documents\Projectes\KiCad\Libraries\User",
+                @"C:\Users\Rafael\Documents\Projectes\KiCad\KiCad\footprints",
                 @"C:\Users\Rafael\Documents\Projectes\KiCad\Aplex",
             };
 

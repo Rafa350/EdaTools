@@ -30,7 +30,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(Clearance));
-
                 _clearance = value;
             }
         }
@@ -44,7 +43,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(MinThickness));
-
                 _minThickness = value;
             }
         }

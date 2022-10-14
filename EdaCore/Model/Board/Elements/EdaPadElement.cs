@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.WebSockets;
 using MikroPic.EdaTools.v1.Base.Geometry;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
@@ -12,6 +13,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private string _name;
         private EdaPoint _position;
         private EdaAngle _rotation;
+        private int _clearance;
 
         /// <summary>
         /// El nom.
@@ -22,7 +24,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             set {
                 if (String.IsNullOrEmpty(value))
                     throw new ArgumentNullException(nameof(Name));
-
                 _name = value;
             }
         }
@@ -43,6 +44,20 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public EdaAngle Rotation {
             get => _rotation;
             set => _rotation = value;
+        }
+
+
+        /// <summary>
+        /// Amplada del aillament.
+        /// </summary>
+        /// 
+        public int Clearance {
+            get => _clearance;
+            set {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException(nameof(Clearance));
+                _clearance = value;
+            }
         }
     }
 }

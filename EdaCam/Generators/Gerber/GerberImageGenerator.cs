@@ -158,7 +158,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             gb.Attribute(AttributeScope.File, ".Part,Single");
             gb.SetUnits(Units.Milimeters);
             gb.SetCoordinateFormat(8, 5);
-            gb.LoadPolarity(Polarity.Dark);
+            gb.SetPolarity(Polarity.Dark);
             gb.Comment("END HEADER");
         }
 
@@ -779,29 +779,18 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
             /// Dibuixa un poligon
             /// </summary>
             /// <param name="polygon">El poligon a dibuixar.</param>
+            /// <param name="level">Nivell d'anidad del poligon.</param>
             /// <param name="thickness">Amplada del perfil.</param>
             /// 
             private void DrawPolygon(EdaPolygon polygon, int thickness) {
 
-                DrawPolygon(polygon, (polygon.Contour != null) ? 1 : 0, thickness);
-            }
-
-            /// <summary>
-            /// Dibuixa un poligon
-            /// </summary>
-            /// <param name="polygon">El poligon a dibuixar.</param>
-            /// <param name="level">Nivell d'anidad del poligon.</param>
-            /// <param name="thickness">Amplada del perfil.</param>
-            /// 
-            private void DrawPolygon(EdaPolygon polygon, int level, int thickness) {
-
-                // Procesa el poligon
+                // Procesa el contorn
                 //
                 if (polygon.Contour != null) {
 
                     // Dibuixa el contingut de la regio
                     //
-                    _gb.LoadPolarity((level % 2) == 0 ? Polarity.Clear : Polarity.Dark);
+                    _gb.SetPolarity(Polarity.Dark);
                     _gb.BeginRegion();
                     _gb.Region(polygon.Contour, true);
                     _gb.EndRegion();
@@ -810,15 +799,21 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     //
                     Aperture ap = _apertures.GetCircleAperture(Math.Max(100000, thickness));
                     _gb.SelectAperture(ap);
-                    _gb.LoadPolarity(Polarity.Dark);
+                    _gb.SetPolarity(Polarity.Dark);
                     _gb.Polygon(polygon.Contour);
                 }
 
-                // Processa els fills. Amb level < 2 evitem els poligons orfres
+                // Processa els forats
                 //
-                /*if ((polygon.Holes != null) && (level < 2))
-                    foreach (var hole in polygon.Holes)
-                        DrawPolygon(hole, level + 1, thickness);*/
+                if (polygon.HasHoles) {
+                    _gb.SetPolarity(Polarity.Clear);
+                    foreach (var hole in polygon.Holes) {
+                        _gb.BeginRegion();
+                        _gb.Region(hole, true);
+                        _gb.EndRegion();
+                    }
+                    _gb.SetPolarity(Polarity.Dark);
+                }
             }
         }
     }

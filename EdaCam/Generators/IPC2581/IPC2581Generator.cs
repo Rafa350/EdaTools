@@ -78,7 +78,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
                                 double diameter = viaElement.OuterSize / 1000000.0;
 
-                                writer.WriteStartElement("EntityStandard");
+                                writer.WriteStartElement("EntryStandard");
                                 writer.WriteAttributeString("id", id);
 
                                 writer.WriteStartElement("Circle");
@@ -100,7 +100,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                                 double height = smdPadElement.Size.Height / 1000000.0;
                                 double radius = smdPadElement.CornerSize / 1000000.0;
 
-                                writer.WriteStartElement("EntityStandard");
+                                writer.WriteStartElement("EntryStandard");
                                 writer.WriteAttributeString("id", id);
 
                                 writer.WriteStartElement(radius == 0 ? "RectCenter" : "RectRound");

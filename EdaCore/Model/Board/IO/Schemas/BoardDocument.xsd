@@ -285,6 +285,7 @@
             <xs:attribute name="rotation" use="optional" type="angleType"/>
             <xs:attribute name="cornerRatio" use="optional" type="xs:double"/>
             <xs:attribute name="cornerShape" use="optional" type="tpadCornerShapeType"/>
+            <xs:attribute name="clearance" use="optional" type="xs:double"/>
         </xs:complexType>
     </xs:element>
 
@@ -298,6 +299,7 @@
             <xs:attribute name="rotation" use="optional" type="angleType"/>
             <xs:attribute name="cornerRatio" use="optional" type="xs:double"/>
             <xs:attribute name="cornerShape" use="optional" type="spadCornerShapeType"/>
+            <xs:attribute name="clearance" use="optional" type="xs:double"/>
         </xs:complexType>
     </xs:element>
 

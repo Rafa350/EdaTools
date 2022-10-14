@@ -84,36 +84,93 @@
             <signal name="Net-(R2-Pad1)" clearance="0.15" />
         </signals>
         <components>
-            <component name="Capacitor_SMD:C_0603_1608Metric">
+            <component name="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a0f453">
                 <elements>
-                    <text layer="Top.Names" position="0, 1.43" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Names" position="0, -1.5" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.43" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.4" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <line layer="Top.Place" startPosition="-0.14058, 0.51" endPosition="0.14058, 0.51" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-0.14058, -0.51" endPosition="0.14058, -0.51" thickness="0.12" />
+                    <line layer="Top.Keepout" startPosition="-1.48, -0.73" endPosition="-1.48, 0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.48, 0.73" endPosition="1.48, 0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="1.48, 0.73" endPosition="1.48, -0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="1.48, -0.73" endPosition="-1.48, -0.73" thickness="0.05" />
+                    <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="0.8, -0.4" endPosition="-0.8, -0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="0.8, 0.4" endPosition="0.8, -0.4" thickness="0.1" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                </elements>
+            </component>
+            <component name="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a0f464">
+                <elements>
+                    <text layer="Top.Names" position="-2.5, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
                     <text layer="Top.Values" position="0, -1.43" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
                     <text layer="F.Fab" position="0, 0" height="0.4" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.14058, -0.51" endPosition="0.14058, -0.51" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.14058, 0.51" endPosition="0.14058, 0.51" thickness="0.12" />
+                    <line layer="Top.Keepout" startPosition="1.48, 0.73" endPosition="1.48, -0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.48, 0.73" endPosition="1.48, 0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.48, -0.73" endPosition="-1.48, 0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="1.48, -0.73" endPosition="-1.48, -0.73" thickness="0.05" />
+                    <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="0.8, 0.4" endPosition="0.8, -0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="0.8, -0.4" endPosition="-0.8, -0.4" thickness="0.1" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                </elements>
+            </component>
+            <component name="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a0f4a8">
+                <elements>
+                    <text layer="Top.Names" position="2.5, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.43" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.4" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <line layer="Top.Place" startPosition="-0.14058, 0.51" endPosition="0.14058, 0.51" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-0.14058, -0.51" endPosition="0.14058, -0.51" thickness="0.12" />
+                    <line layer="Top.Keepout" startPosition="1.48, -0.73" endPosition="-1.48, -0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.48, 0.73" endPosition="1.48, 0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="1.48, 0.73" endPosition="1.48, -0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.48, -0.73" endPosition="-1.48, 0.73" thickness="0.05" />
+                    <line layer="F.Fab" startPosition="0.8, -0.4" endPosition="-0.8, -0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="0.8, 0.4" endPosition="0.8, -0.4" thickness="0.1" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                </elements>
+            </component>
+            <component name="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a0f4b9">
+                <elements>
+                    <text layer="Top.Names" position="-2.47, 0.07" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.43" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.4" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <line layer="Top.Place" startPosition="-0.14058, -0.51" endPosition="0.14058, -0.51" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-0.14058, 0.51" endPosition="0.14058, 0.51" thickness="0.12" />
+                    <line layer="Top.Keepout" startPosition="1.48, -0.73" endPosition="-1.48, -0.73" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="-1.48, -0.73" endPosition="-1.48, 0.73" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="1.48, 0.73" endPosition="1.48, -0.73" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="-1.48, 0.73" endPosition="1.48, 0.73" thickness="0.05" />
-                    <line layer="Top.Keepout" startPosition="1.48, -0.73" endPosition="-1.48, -0.73" thickness="0.05" />
-                    <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.8, 0.4" endPosition="0.8, -0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.8, -0.4" endPosition="-0.8, -0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
                     <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
                 </elements>
             </component>
-            <component name="Inductor_SMD:L_0603_1608Metric">
+            <component name="Inductor_SMD:L_0603_1608Metric:00000000-0000-0000-0000-000061a0f4e3">
                 <elements>
-                    <text layer="Top.Names" position="0, 1.43" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.43" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" height="0.4" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="0, -1.41" rotation="-90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.43" rotation="-90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" rotation="-90" height="0.4" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.162779, -0.51" endPosition="0.162779, -0.51" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.162779, 0.51" endPosition="0.162779, 0.51" thickness="0.12" />
-                    <line layer="Top.Keepout" startPosition="1.48, -0.73" endPosition="-1.48, -0.73" thickness="0.05" />
-                    <line layer="Top.Keepout" startPosition="-1.48, 0.73" endPosition="1.48, 0.73" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="-1.48, -0.73" endPosition="-1.48, 0.73" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="1.48, 0.73" endPosition="1.48, -0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.48, 0.73" endPosition="1.48, 0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="1.48, -0.73" endPosition="-1.48, -0.73" thickness="0.05" />
                     <line layer="F.Fab" startPosition="0.8, -0.4" endPosition="-0.8, -0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
@@ -122,82 +179,101 @@
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.7875, 0" size="0.875, 0.95" cornerRatio="0.5" cornerShape="round" />
                 </elements>
             </component>
-            <component name="Resistor_SMD:R_0603_1608Metric">
+            <component name="Resistor_SMD:R_0603_1608Metric:00000000-0000-0000-0000-000061a0f4f4">
                 <elements>
-                    <text layer="Top.Names" position="0, 1.43" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Names" position="-2.5, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
                     <text layer="Top.Values" position="0, -1.43" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
                     <text layer="F.Fab" position="0, 0" height="0.4" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
-                    <line layer="Top.Place" startPosition="-0.237258, -0.522499" endPosition="0.237258, -0.522499" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.237258, 0.522499" endPosition="0.237258, 0.522499" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-0.237258, -0.522499" endPosition="0.237258, -0.522499" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="-1.48, 0.73" endPosition="1.48, 0.73" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="1.48, 0.73" endPosition="1.48, -0.73" thickness="0.05" />
-                    <line layer="Top.Keepout" startPosition="-1.48, -0.73" endPosition="-1.48, 0.73" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="1.48, -0.73" endPosition="-1.48, -0.73" thickness="0.05" />
-                    <line layer="F.Fab" startPosition="0.8, 0.4125" endPosition="0.8, -0.4125" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-0.8, 0.4125" endPosition="0.8, 0.4125" thickness="0.1" />
+                    <line layer="Top.Keepout" startPosition="-1.48, -0.73" endPosition="-1.48, 0.73" thickness="0.05" />
                     <line layer="F.Fab" startPosition="0.8, -0.4125" endPosition="-0.8, -0.4125" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.8, 0.4125" endPosition="0.8, 0.4125" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.8, -0.4125" endPosition="-0.8, 0.4125" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="0.8, 0.4125" endPosition="0.8, -0.4125" thickness="0.1" />
                     <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.825, 0" size="0.8, 0.95" cornerRatio="0.5" cornerShape="round" />
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.825, 0" size="0.8, 0.95" cornerRatio="0.5" cornerShape="round" />
                 </elements>
             </component>
-            <component name="Diode_SMD:D_SOD-123">
+            <component name="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a10710">
                 <elements>
-                    <text layer="Top.Names" position="0, 2" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -2.1" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 2" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="0, 1.43" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.43" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.4" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <line layer="Top.Place" startPosition="-0.14058, -0.51" endPosition="0.14058, -0.51" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-0.14058, 0.51" endPosition="0.14058, 0.51" thickness="0.12" />
+                    <line layer="Top.Keepout" startPosition="-1.48, -0.73" endPosition="-1.48, 0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.48, 0.73" endPosition="1.48, 0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="1.48, 0.73" endPosition="1.48, -0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="1.48, -0.73" endPosition="-1.48, -0.73" thickness="0.05" />
+                    <line layer="F.Fab" startPosition="0.8, -0.4" endPosition="-0.8, -0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="0.8, 0.4" endPosition="0.8, -0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                </elements>
+            </component>
+            <component name="Diode_SMD:D_SOD-123:00000000-0000-0000-0000-000061a108fc">
+                <elements>
+                    <text layer="Top.Names" position="-3.46, -0.04" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -2.1" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 2" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-2.25, 1" endPosition="1.65, 1" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-2.25, 1" endPosition="-2.25, -1" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-2.25, -1" endPosition="1.65, -1" thickness="0.12" />
-                    <line layer="Top.Keepout" startPosition="2.35, 1.15" endPosition="2.35, -1.15" thickness="0.05" />
-                    <line layer="Top.Keepout" startPosition="-2.35, 1.15" endPosition="2.35, 1.15" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="2.35, -1.15" endPosition="-2.35, -1.15" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-2.35, 1.15" endPosition="2.35, 1.15" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="2.35, 1.15" endPosition="2.35, -1.15" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="-2.35, 1.15" endPosition="-2.35, -1.15" thickness="0.05" />
-                    <line layer="F.Fab" startPosition="1.4, -0.9" endPosition="-1.4, -0.9" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="0.25, 0.4" endPosition="0.25, -0.4" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-1.4, -0.9" endPosition="-1.4, 0.9" thickness="0.1" />
                     <line layer="F.Fab" startPosition="1.4, 0.9" endPosition="1.4, -0.9" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-0.35, 0" endPosition="-0.35, 0.55" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-1.4, 0.9" endPosition="1.4, 0.9" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.75, 0" endPosition="-0.35, 0" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="0.25, 0.4" endPosition="0.25, -0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.35, 0" endPosition="-0.35, 0.55" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.25, 0" endPosition="0.75, 0" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-0.35, 0" endPosition="0.25, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.25, -0.4" endPosition="-0.35, 0" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-1.4, -0.9" endPosition="-1.4, 0.9" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="1.4, -0.9" endPosition="-1.4, -0.9" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.35, 0" endPosition="-0.35, -0.55" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-1.4, 0.9" endPosition="1.4, 0.9" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.35, 0" endPosition="0.25, 0.4" thickness="0.1" />
                     <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.65, 0" size="0.9, 1.2" />
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.65, 0" size="0.9, 1.2" />
                 </elements>
             </component>
-            <component name="er-con:ER-CON2.0-2P-SMD">
+            <component name="er-con:ER-CON2.0-2P-SMD:00000000-0000-0000-0000-000061a14be1">
                 <elements>
-                    <text layer="Top.Names" position="3, 2" rotation="-90" height="0.95" thickness="0.076" value="{NAME}" />
-                    <text layer="Top.Values" position="0, 0" height="1.27" thickness="0.15" horizontalAlign="right" verticalAlign="top" value="{VALUE}" />
-                    <line layer="Top.Place" startPosition="-2.5, 6.5" endPosition="-2.5, 0" thickness="0.4064" />
-                    <line layer="Top.Place" startPosition="-2.5, 0" endPosition="2.5, 0" thickness="0.4064" />
-                    <line layer="Top.Place" startPosition="2.5, 0" endPosition="2.5, 6.5" thickness="0.4064" />
+                    <text layer="Top.Names" position="4.5, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.75" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
                     <line layer="Top.Place" startPosition="2.5, 6.5" endPosition="-2.5, 6.5" thickness="0.4064" />
-                    <spad name="G1" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.5, 4.5" size="1.4, 3.8" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="G2" layers="Top.Copper, Top.Cream, Top.Stop" position="3.5, 4.5" size="1.4, 3.8" cornerRatio="0.5" cornerShape="round" />
+                    <line layer="Top.Place" startPosition="-2.5, 0" endPosition="2.5, 0" thickness="0.4064" />
+                    <line layer="Top.Place" startPosition="-2.5, 6.5" endPosition="-2.5, 0" thickness="0.4064" />
+                    <line layer="Top.Place" startPosition="2.5, 0" endPosition="2.5, 6.5" thickness="0.4064" />
                     <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1, -2" size="1, 2.85" cornerRatio="0.5" cornerShape="round" />
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1, -2" rotation="180" size="1, 2.85" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="G1" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.5, 4.5" size="1.4, 3.8" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="G2" layers="Top.Copper, Top.Cream, Top.Stop" position="3.5, 4.5" size="1.4, 3.8" cornerRatio="0.5" cornerShape="round" />
                 </elements>
             </component>
-            <component name="Package_TO_SOT_SMD:SOT-353_SC-70-5">
+            <component name="Package_TO_SOT_SMD:SOT-353_SC-70-5:00000000-0000-0000-0000-000061a16fbd">
                 <elements>
-                    <text layer="Top.Names" position="0, 2" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Names" position="-0.02, -2.42" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
                     <text layer="Top.Values" position="0, -2" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
                     <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.075" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
-                    <line layer="Top.Place" startPosition="-0.7, -1.16" endPosition="0.7, -1.16" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0.7, 1.16" endPosition="-1.2, 1.16" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-0.7, -1.16" endPosition="0.7, -1.16" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="-1.6, -1.4" endPosition="1.6, -1.4" thickness="0.05" />
-                    <line layer="Top.Keepout" startPosition="-1.6, 1.4" endPosition="1.6, 1.4" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="1.6, -1.4" endPosition="1.6, 1.4" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.6, 1.4" endPosition="1.6, 1.4" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="-1.6, 1.4" endPosition="-1.6, -1.4" thickness="0.05" />
                     <line layer="F.Fab" startPosition="0.675, 1.1" endPosition="0.675, -1.1" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-0.175, 1.1" endPosition="-0.675, 0.6" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="0.675, 1.1" endPosition="-0.175, 1.1" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.675, -1.1" endPosition="-0.675, -1.1" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.175, 1.1" endPosition="-0.675, 0.6" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.675, 0.6" endPosition="-0.675, -1.1" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="0.675, 1.1" endPosition="-0.175, 1.1" thickness="0.1" />
                     <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.95, 0.65" size="0.65, 0.4" />
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.95, 0" size="0.65, 0.4" />
                     <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.95, -0.65" size="0.65, 0.4" />
@@ -205,55 +281,56 @@
                     <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="0.95, 0.65" size="0.65, 0.4" />
                 </elements>
             </component>
-            <component name="hirose-df13:1X4-SMD-90-E">
+            <component name="hirose-df13:1X4-SMD-90-E:00000000-0000-0000-0000-000061a1813e">
                 <elements>
-                    <line layer="Top.Place" startPosition="-3.25, 2.466199" endPosition="-3.25, -2.5" thickness="0.127" />
-                    <line layer="Top.Place" startPosition="-3.25, -2.5" endPosition="3.25, -2.5" thickness="0.127" />
-                    <line layer="Top.Place" startPosition="3.25, -2.5" endPosition="3.25, 2.466199" thickness="0.127" />
-                    <line layer="Top.Place" startPosition="3.25, 2.466199" endPosition="-1.5, 2.466199" thickness="0.127" />
-                    <line layer="Top.Place" startPosition="-1.5, 2.466199" endPosition="-3.25, 2.466199" thickness="0.127" />
+                    <text layer="Top.Names" position="4.34, -2.81" rotation="180" height="1" thickness="0.15" value="{NAME}" />
+                    <text layer="Top.Values" position="0, 0" rotation="90" height="1.27" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <line layer="Top.Place" startPosition="-2, 1.5" endPosition="-1.5, 2.4662" thickness="0.127" />
+                    <line layer="Top.Place" startPosition="-3.25, 2.4662" endPosition="-3.25, -2.5" thickness="0.127" />
+                    <line layer="Top.Place" startPosition="3.25, -2.5" endPosition="3.25, 2.4662" thickness="0.127" />
+                    <line layer="Top.Place" startPosition="-1.5, 2.4662" endPosition="-3.25, 2.4662" thickness="0.127" />
+                    <line layer="Top.Place" startPosition="3.25, 2.4662" endPosition="-1.5, 2.4662" thickness="0.127" />
                     <line layer="Top.Place" startPosition="-2.5, 2.4663" endPosition="-2, 1.5" thickness="0.127" />
-                    <line layer="Top.Place" startPosition="-2, 1.5" endPosition="-1.5, 2.466199" thickness="0.127" />
+                    <line layer="Top.Place" startPosition="-3.25, -2.5" endPosition="3.25, -2.5" thickness="0.127" />
                     <line layer="F.Fab" startPosition="-3.25, 1.375" endPosition="-3.5, 1.375" thickness="0.127" />
-                    <line layer="F.Fab" startPosition="-3.5, 1.375" endPosition="-3.5, -1.625" thickness="0.127" />
-                    <line layer="F.Fab" startPosition="-3.5, -1.625" endPosition="-3.25, -1.625" thickness="0.127" />
-                    <line layer="F.Fab" startPosition="3.25, 1.375" endPosition="3.5, 1.375" thickness="0.127" />
-                    <line layer="F.Fab" startPosition="3.5, 1.375" endPosition="3.5, -1.625" thickness="0.127" />
                     <line layer="F.Fab" startPosition="3.5, -1.625" endPosition="3.25, -1.625" thickness="0.127" />
-                    <spad name="2" layers="Top.Copper, Top.Stop, Top.Cream" position="-0.625, -3.5" size="0.7, 1.8" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="1" layers="Top.Copper, Top.Stop, Top.Cream" position="-1.875, -3.5" size="0.7, 1.8" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="3" layers="Top.Copper, Top.Stop, Top.Cream" position="0.625, -3.5" size="0.7, 1.8" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="4" layers="Top.Copper, Top.Stop, Top.Cream" position="1.875, -3.5" size="0.7, 1.8" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="S1" layers="Top.Copper, Top.Stop, Top.Cream" position="-4.375, 0" size="2.25, 3" cornerRatio="0.25" cornerShape="round" />
-                    <spad name="S2" layers="Top.Copper, Top.Stop, Top.Cream" position="4.375, 0" size="2.25, 3" cornerRatio="0.25" cornerShape="round" />
-                    <text layer="Top.Names" position="-3.175, 2.85" height="1" thickness="0.1" value="{NAME}" />
-                    <circleHole position="-2.955, -2.125" diameter="0.85" platted="false" />
+                    <line layer="F.Fab" startPosition="-3.5, -1.625" endPosition="-3.25, -1.625" thickness="0.127" />
+                    <line layer="F.Fab" startPosition="-3.5, 1.375" endPosition="-3.5, -1.625" thickness="0.127" />
+                    <line layer="F.Fab" startPosition="3.5, 1.375" endPosition="3.5, -1.625" thickness="0.127" />
+                    <line layer="F.Fab" startPosition="3.25, 1.375" endPosition="3.5, 1.375" thickness="0.127" />
                     <circleHole position="2.955, -2.125" diameter="0.85" platted="false" />
+                    <circleHole position="-2.955, -2.125" diameter="0.85" platted="false" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.875, -3.5" size="0.7, 1.8" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.625, -3.5" size="0.7, 1.8" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="0.625, -3.5" size="0.7, 1.8" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="1.875, -3.5" size="0.7, 1.8" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="S1" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.375, 0" size="2.25, 3" cornerRatio="0.25" cornerShape="round" />
+                    <spad name="S2" layers="Top.Copper, Top.Cream, Top.Stop" position="4.375, 0" size="2.25, 3" cornerRatio="0.25" cornerShape="round" />
                 </elements>
             </component>
-            <component name="Package_SO:SOIC-28W_7.5x17.9mm_P1.27mm">
+            <component name="Package_SO:SOIC-28W_7.5x17.9mm_P1.27mm:00000000-0000-0000-0000-000061a1a777">
                 <elements>
-                    <text layer="Top.Names" position="0, 9.9" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -9.9" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
-                    <line layer="Top.Place" startPosition="0, -9.06" endPosition="-3.86, -9.06" thickness="0.12" />
+                    <text layer="Top.Names" position="7.07, 6.36" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -9.9" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-3.86, -9.06" endPosition="-3.86, -8.815" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, -9.06" endPosition="3.86, -9.06" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="3.86, 9.06" endPosition="3.86, 8.815" thickness="0.12" />
                     <line layer="Top.Place" startPosition="3.86, -9.06" endPosition="3.86, -8.815" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="3.86, 9.06" endPosition="3.86, 8.815" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="0, -9.06" endPosition="-3.86, -9.06" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="0, 9.06" endPosition="3.86, 9.06" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-3.86, 8.815" endPosition="-5.675, 8.815" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-3.86, 9.06" endPosition="-3.86, 8.815" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="0, 9.06" endPosition="3.86, 9.06" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, 9.06" endPosition="-3.86, 9.06" thickness="0.12" />
+                    <line layer="Top.Keepout" startPosition="-5.93, -9.2" endPosition="5.93, -9.2" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-5.93, 9.2" endPosition="-5.93, -9.2" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="5.93, -9.2" endPosition="5.93, 9.2" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="5.93, 9.2" endPosition="-5.93, 9.2" thickness="0.05" />
-                    <line layer="Top.Keepout" startPosition="-5.93, 9.2" endPosition="-5.93, -9.2" thickness="0.05" />
-                    <line layer="Top.Keepout" startPosition="-5.93, -9.2" endPosition="5.93, -9.2" thickness="0.05" />
+                    <line layer="F.Fab" startPosition="-3.75, -8.95" endPosition="-3.75, 7.95" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="3.75, 8.95" endPosition="3.75, -8.95" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-2.75, 8.95" endPosition="3.75, 8.95" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-3.75, 7.95" endPosition="-2.75, 8.95" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-3.75, -8.95" endPosition="-3.75, 7.95" thickness="0.1" />
                     <line layer="F.Fab" startPosition="3.75, -8.95" endPosition="-3.75, -8.95" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="3.75, 8.95" endPosition="3.75, -8.95" thickness="0.1" />
                     <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, 8.255" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, 6.985" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
                     <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, 5.715" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
@@ -284,128 +361,241 @@
                     <spad name="28" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, 8.255" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
                 </elements>
             </component>
-            <component name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A">
+            <component name="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a1c081">
                 <elements>
-                    <text layer="Top.Names" position="0, 1.75" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Names" position="-2.5, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.43" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.4" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <line layer="Top.Place" startPosition="-0.14058, -0.51" endPosition="0.14058, -0.51" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-0.14058, 0.51" endPosition="0.14058, 0.51" thickness="0.12" />
+                    <line layer="Top.Keepout" startPosition="-1.48, -0.73" endPosition="-1.48, 0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="1.48, -0.73" endPosition="-1.48, -0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="1.48, 0.73" endPosition="1.48, -0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.48, 0.73" endPosition="1.48, 0.73" thickness="0.05" />
+                    <line layer="F.Fab" startPosition="0.8, -0.4" endPosition="-0.8, -0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="0.8, 0.4" endPosition="0.8, -0.4" thickness="0.1" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                </elements>
+            </component>
+            <component name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:00000000-0000-0000-0000-000061a1cdf8">
+                <elements>
+                    <text layer="Top.Names" position="3.375, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
                     <text layer="Top.Values" position="0, -1.75" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
                     <text layer="F.Fab" position="0, 0" height="0.8" thickness="0.12" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <line layer="Top.Place" startPosition="1.6, 0.935" endPosition="-2.31, 0.935" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-2.31, 0.935" endPosition="-2.31, -0.935" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-2.31, -0.935" endPosition="1.6, -0.935" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="1.6, 0.935" endPosition="-2.31, 0.935" thickness="0.12" />
-                    <line layer="Top.Keepout" startPosition="2.3, -1.05" endPosition="-2.3, -1.05" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="2.3, 1.05" endPosition="2.3, -1.05" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="-2.3, -1.05" endPosition="-2.3, 1.05" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="-2.3, 1.05" endPosition="2.3, 1.05" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="2.3, -1.05" endPosition="-2.3, -1.05" thickness="0.05" />
+                    <line layer="F.Fab" startPosition="-1.6, -0.8" endPosition="1.6, -0.8" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="1.6, -0.8" endPosition="1.6, 0.8" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="1.6, 0.8" endPosition="-1.2, 0.8" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-1.6, 0.4" endPosition="-1.6, -0.8" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-1.2, 0.8" endPosition="-1.6, 0.4" thickness="0.1" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.35, 0" size="1.4, 1.35" cornerRatio="0.37" cornerShape="round" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.35, 0" size="1.4, 1.35" cornerRatio="0.37" cornerShape="round" />
+                </elements>
+            </component>
+            <component name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:00000000-0000-0000-0000-000061a1d586">
+                <elements>
+                    <text layer="Top.Names" position="0, 1.75" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.75" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.8" thickness="0.12" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <line layer="Top.Place" startPosition="-2.31, 0.935" endPosition="-2.31, -0.935" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="1.6, 0.935" endPosition="-2.31, 0.935" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-2.31, -0.935" endPosition="1.6, -0.935" thickness="0.12" />
+                    <line layer="Top.Keepout" startPosition="-2.3, -1.05" endPosition="-2.3, 1.05" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-2.3, 1.05" endPosition="2.3, 1.05" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="2.3, -1.05" endPosition="-2.3, -1.05" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="2.3, 1.05" endPosition="2.3, -1.05" thickness="0.05" />
+                    <line layer="F.Fab" startPosition="1.6, -0.8" endPosition="1.6, 0.8" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="1.6, 0.8" endPosition="-1.2, 0.8" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-1.2, 0.8" endPosition="-1.6, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-1.6, 0.4" endPosition="-1.6, -0.8" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="1.6, 0.8" endPosition="-1.2, 0.8" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="1.6, -0.8" endPosition="1.6, 0.8" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-1.6, -0.8" endPosition="1.6, -0.8" thickness="0.1" />
                     <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.35, 0" size="1.4, 1.35" cornerRatio="0.37" cornerShape="round" />
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.35, 0" size="1.4, 1.35" cornerRatio="0.37" cornerShape="round" />
                 </elements>
             </component>
-            <component name="MountingHole:MountingHole_3.2mm_M3_Pad_Via">
+            <component name="MountingHole:MountingHole_3.2mm_M3_Pad_Via:00000000-0000-0000-0000-000061a4d432">
                 <elements>
                     <text layer="Top.Names" position="0, 4.2" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
                     <text layer="Top.Values" position="0, -4.2" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="F.Fab" position="0.3, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <circle layer="Cmts.User" position="0, 0" radius="3.2" thickness="0.15" />
                     <circle layer="Top.Keepout" position="0, 0" radius="3.45" thickness="0.05" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="2.4, 0" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" cornerRatio="1" cornerShape="round" topSize="6.4, 6.4" drill="3.2" />
                     <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
                     <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
                     <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" cornerRatio="1" cornerShape="round" clearance="1" topSize="6.4, 6.4" drill="3.2" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="2.4, 0" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
                     <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-2.4, 0" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
                 </elements>
             </component>
-            <component name="Connector_FFC-FPC:Hirose_FH12-26S-0.5SH_1x26-1MP_P0.50mm_Horizontal">
+            <component name="MountingHole:MountingHole_3.2mm_M3_Pad_Via:00000000-0000-0000-0000-000061a5451e">
                 <elements>
-                    <text layer="Top.Names" position="0, 3.7" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Names" position="0, 4.2" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -4.2" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0.3, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <circle layer="Cmts.User" position="0, 0" radius="3.2" thickness="0.15" />
+                    <circle layer="Top.Keepout" position="0, 0" radius="3.45" thickness="0.05" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="2.4, 0" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" cornerRatio="1" cornerShape="round" clearance="1" topSize="6.4, 6.4" drill="3.2" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-2.4, 0" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                </elements>
+            </component>
+            <component name="MountingHole:MountingHole_3.2mm_M3_Pad_Via:00000000-0000-0000-0000-000061a5456a">
+                <elements>
+                    <text layer="Top.Names" position="0, 4.2" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -4.2" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0.3, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <circle layer="Cmts.User" position="0, 0" radius="3.2" thickness="0.15" />
+                    <circle layer="Top.Keepout" position="0, 0" radius="3.45" thickness="0.05" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" cornerRatio="1" cornerShape="round" clearance="1" topSize="6.4, 6.4" drill="3.2" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-2.4, 0" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="2.4, 0" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                </elements>
+            </component>
+            <component name="MountingHole:MountingHole_3.2mm_M3_Pad_Via:00000000-0000-0000-0000-000061a545b6">
+                <elements>
+                    <text layer="Top.Names" position="0, 4.2" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -4.2" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0.3, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <circle layer="Cmts.User" position="0, 0" radius="3.2" thickness="0.15" />
+                    <circle layer="Top.Keepout" position="0, 0" radius="3.45" thickness="0.05" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-2.4, 0" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" cornerRatio="1" cornerShape="round" clearance="1" topSize="6.4, 6.4" drill="3.2" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="2.4, 0" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                </elements>
+            </component>
+            <component name="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a698ec">
+                <elements>
+                    <text layer="Top.Names" position="2.5, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.43" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.4" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <line layer="Top.Place" startPosition="-0.14058, -0.51" endPosition="0.14058, -0.51" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-0.14058, 0.51" endPosition="0.14058, 0.51" thickness="0.12" />
+                    <line layer="Top.Keepout" startPosition="1.48, -0.73" endPosition="-1.48, -0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.48, 0.73" endPosition="1.48, 0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="1.48, 0.73" endPosition="1.48, -0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.48, -0.73" endPosition="-1.48, 0.73" thickness="0.05" />
+                    <line layer="F.Fab" startPosition="0.8, -0.4" endPosition="-0.8, -0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="0.8, 0.4" endPosition="0.8, -0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                </elements>
+            </component>
+            <component name="Connector_FFC-FPC:Hirose_FH12-26S-0.5SH_1x26-1MP_P0.50mm_Horizontal:00000000-0000-0000-0000-000061a6f6c2">
+                <elements>
+                    <text layer="Top.Names" position="-10.5, 1.325" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
                     <text layer="Top.Values" position="0, -5.6" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
                     <text layer="F.Fab" position="0, -3.7" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
-                    <line layer="Top.Place" startPosition="-8.15, -2.76" endPosition="-8.15, -4.5" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="-6.66, 1.3" endPosition="-8.15, 1.3" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-8.15, 1.3" endPosition="-8.15, -0.04" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="8.15, -4.5" endPosition="8.15, -2.76" thickness="0.12" />
                     <line layer="Top.Place" startPosition="6.66, 1.3" endPosition="8.15, 1.3" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="8.15, 1.3" endPosition="8.15, -0.04" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-6.66, 1.3" endPosition="-8.15, 1.3" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-6.66, 1.3" endPosition="-6.66, 2.5" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="8.15, 1.3" endPosition="8.15, -0.04" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-8.15, -2.76" endPosition="-8.15, -4.5" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-8.15, -4.5" endPosition="8.15, -4.5" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="8.15, -4.5" endPosition="8.15, -2.76" thickness="0.12" />
+                    <line layer="Top.Keepout" startPosition="9.55, -4.9" endPosition="9.55, 3" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-9.55, 3" endPosition="-9.55, -4.9" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="-9.55, -4.9" endPosition="9.55, -4.9" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="9.55, 3" endPosition="-9.55, 3" thickness="0.05" />
-                    <line layer="Top.Keepout" startPosition="-9.55, 3" endPosition="-9.55, -4.9" thickness="0.05" />
-                    <line layer="Top.Keepout" startPosition="9.55, -4.9" endPosition="9.55, 3" thickness="0.05" />
-                    <line layer="F.Fab" startPosition="-7.45, -3.7" endPosition="-7.95, -3.7" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="0, 1.2" endPosition="8.05, 1.2" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="0, 1.2" endPosition="-8.05, 1.2" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="8.05, 1.2" endPosition="8.05, -3.4" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="7.45, -3.4" endPosition="7.45, -3.7" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-6.25, 0.492893" endPosition="-5.75, 1.2" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-7.45, -3.4" endPosition="-7.45, -3.7" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-7.95, -3.7" endPosition="-7.95, -4.4" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="7.95, -4.4" endPosition="0, -4.4" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-6.75, 1.2" endPosition="-6.25, 0.492893" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="7.95, -3.7" endPosition="7.95, -4.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="8.05, 1.2" endPosition="8.05, -3.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-8.05, -3.4" endPosition="-7.45, -3.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="7.45, -3.7" endPosition="7.95, -3.7" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="0, 1.2" endPosition="-8.05, 1.2" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-7.95, -4.4" endPosition="0, -4.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="7.95, -4.4" endPosition="0, -4.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="0, 1.2" endPosition="8.05, 1.2" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-8.05, 1.2" endPosition="-8.05, -3.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="8.05, -3.4" endPosition="7.45, -3.4" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-7.45, -3.4" endPosition="-7.45, -3.7" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-8.05, -3.4" endPosition="-7.45, -3.4" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-6.25, 1.85" size="0.3, 1.3" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.75, 1.85" size="0.3, 1.3" />
-                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.25, 1.85" size="0.3, 1.3" />
-                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.75, 1.85" size="0.3, 1.3" />
-                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.25, 1.85" size="0.3, 1.3" />
-                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.75, 1.85" size="0.3, 1.3" />
-                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.25, 1.85" size="0.3, 1.3" />
-                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.75, 1.85" size="0.3, 1.3" />
-                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.25, 1.85" size="0.3, 1.3" />
-                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.75, 1.85" size="0.3, 1.3" />
-                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.25, 1.85" size="0.3, 1.3" />
-                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.75, 1.85" size="0.3, 1.3" />
-                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.25, 1.85" size="0.3, 1.3" />
-                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop" position="0.25, 1.85" size="0.3, 1.3" />
-                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop" position="0.75, 1.85" size="0.3, 1.3" />
-                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop" position="1.25, 1.85" size="0.3, 1.3" />
-                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop" position="1.75, 1.85" size="0.3, 1.3" />
-                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop" position="2.25, 1.85" size="0.3, 1.3" />
-                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop" position="2.75, 1.85" size="0.3, 1.3" />
-                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop" position="3.25, 1.85" size="0.3, 1.3" />
-                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop" position="3.75, 1.85" size="0.3, 1.3" />
-                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop" position="4.25, 1.85" size="0.3, 1.3" />
-                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop" position="4.75, 1.85" size="0.3, 1.3" />
-                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop" position="5.25, 1.85" size="0.3, 1.3" />
-                    <spad name="25" layers="Top.Copper, Top.Cream, Top.Stop" position="5.75, 1.85" size="0.3, 1.3" />
-                    <spad name="26" layers="Top.Copper, Top.Cream, Top.Stop" position="6.25, 1.85" size="0.3, 1.3" />
-                    <spad name="MP" layers="Top.Copper, Top.Cream, Top.Stop" position="8.15, -1.4" size="1.8, 2.2" />
-                    <spad name="MP" layers="Top.Copper, Top.Cream, Top.Stop" position="-8.15, -1.4" size="1.8, 2.2" />
+                    <line layer="F.Fab" startPosition="-6.75, 1.2" endPosition="-6.25, 0.492893" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="7.95, -3.7" endPosition="7.95, -4.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-6.25, 0.492893" endPosition="-5.75, 1.2" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="7.45, -3.4" endPosition="7.45, -3.7" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-7.45, -3.7" endPosition="-7.95, -3.7" thickness="0.1" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-6.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop" position="0.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop" position="0.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop" position="1.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop" position="1.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop" position="2.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop" position="2.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop" position="3.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop" position="3.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop" position="4.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop" position="4.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop" position="5.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="25" layers="Top.Copper, Top.Cream, Top.Stop" position="5.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="26" layers="Top.Copper, Top.Cream, Top.Stop" position="6.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="MP" layers="Top.Copper, Top.Cream, Top.Stop" position="8.15, -1.4" size="1.8, 2.2" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="MP" layers="Top.Copper, Top.Cream, Top.Stop" position="-8.15, -1.4" size="1.8, 2.2" cornerRatio="0.5" cornerShape="round" />
                 </elements>
             </component>
-            <component name="Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical">
+            <component name="Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical:00000000-0000-0000-0000-000061abe25c">
                 <elements>
-                    <text layer="Top.Names" position="0, 2.06" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Names" position="2.55, 0.06" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
                     <text layer="Top.Values" position="0, -10.06" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
                     <text layer="F.Fab" position="0, -4" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
-                    <line layer="Top.Place" startPosition="-1.06, -1" endPosition="1.06, -1" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="-1.06, 0" endPosition="-1.06, 1.06" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-1.06, -9.06" endPosition="1.06, -9.06" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-1.06, 1.06" endPosition="0, 1.06" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="1.06, -1" endPosition="1.06, -9.06" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-1.06, -1" endPosition="1.06, -1" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-1.06, -1" endPosition="-1.06, -9.06" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-1.06, 0" endPosition="-1.06, 1.06" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="1.06, -1" endPosition="1.06, -9.06" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="1.5, 1.5" endPosition="-1.5, 1.5" thickness="0.05" />
-                    <line layer="Top.Keepout" startPosition="-1.5, -9.5" endPosition="1.5, -9.5" thickness="0.05" />
-                    <line layer="Top.Keepout" startPosition="1.5, -9.5" endPosition="1.5, 1.5" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="-1.5, 1.5" endPosition="-1.5, -9.5" thickness="0.05" />
-                    <line layer="F.Fab" startPosition="-1, 0.5" endPosition="-0.5, 1" thickness="0.1" />
+                    <line layer="Top.Keepout" startPosition="1.5, -9.5" endPosition="1.5, 1.5" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.5, -9.5" endPosition="1.5, -9.5" thickness="0.05" />
                     <line layer="F.Fab" startPosition="1, 1" endPosition="1, -9" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-0.5, 1" endPosition="1, 1" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-1, -9" endPosition="-1, 0.5" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-1, 0.5" endPosition="-0.5, 1" thickness="0.1" />
                     <line layer="F.Fab" startPosition="1, -9" endPosition="-1, -9" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-1, -9" endPosition="-1, 0.5" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.5, 1" endPosition="1, 1" thickness="0.1" />
                     <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" topSize="1.35, 1.35" drill="0.8" />
                     <tpad name="2" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -2" cornerRatio="1" cornerShape="round" topSize="1.35, 1.35" drill="0.8" />
                     <tpad name="3" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -4" cornerRatio="1" cornerShape="round" topSize="1.35, 1.35" drill="0.8" />
@@ -413,62 +603,81 @@
                     <tpad name="5" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -8" cornerRatio="1" cornerShape="round" topSize="1.35, 1.35" drill="0.8" />
                 </elements>
             </component>
-            <component name="Connector_Molex:Molex_KK-254_AE-6410-02A_1x02_P2.54mm_Vertical">
+            <component name="Connector_Molex:Molex_KK-254_AE-6410-02A_1x02_P2.54mm_Vertical:00000000-0000-0000-0000-000061ac2e6e">
                 <elements>
-                    <text layer="Top.Names" position="1.27, 4.12" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Names" position="1.15, -4.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
                     <text layer="Top.Values" position="1.27, -4.08" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
                     <text layer="F.Fab" position="1.27, 2.22" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
-                    <line layer="Top.Place" startPosition="-1.38, -2.99" endPosition="3.92, -2.99" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="0.8, 2.43" endPosition="0.8, 3.03" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-1.67, 2" endPosition="-1.67, -2" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="-1.38, 3.03" endPosition="-1.38, -2.99" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="1.74, 3.03" endPosition="1.74, 2.43" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="2.54, -1.99" endPosition="2.54, -2.99" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="0.8, 2.43" endPosition="0.8, 3.03" thickness="0.12" />
                     <line layer="Top.Place" startPosition="2.29, -2.99" endPosition="2.29, -1.99" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="-0.8, 2.43" endPosition="0.8, 2.43" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="1.74, 2.43" endPosition="3.34, 2.43" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="2.29, -1.46" endPosition="2.54, -1.99" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="0, -1.99" endPosition="2.54, -1.99" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="0, -2.99" endPosition="0, -1.99" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="0.25, -2.99" endPosition="0.25, -1.99" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="0, -1.99" endPosition="0.25, -1.46" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="3.92, 3.03" endPosition="-1.38, 3.03" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-1.38, 3.03" endPosition="-1.38, -2.99" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.8, 3.03" endPosition="-0.8, 2.43" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="3.92, -2.99" endPosition="3.92, 3.03" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="3.34, 2.43" endPosition="3.34, 3.03" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="2.29, -1.46" endPosition="2.54, -1.99" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0.25, -1.46" endPosition="2.29, -1.46" thickness="0.12" />
-                    <line layer="Top.Keepout" startPosition="-1.77, -3.38" endPosition="4.31, -3.38" thickness="0.05" />
-                    <line layer="Top.Keepout" startPosition="4.31, 3.42" endPosition="-1.77, 3.42" thickness="0.05" />
+                    <line layer="Top.Place" startPosition="0.25, -2.99" endPosition="0.25, -1.99" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-1.38, -2.99" endPosition="3.92, -2.99" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="3.92, -2.99" endPosition="3.92, 3.03" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="3.92, 3.03" endPosition="-1.38, 3.03" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="0, -1.99" endPosition="0.25, -1.46" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="1.74, 3.03" endPosition="1.74, 2.43" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="1.74, 2.43" endPosition="3.34, 2.43" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="0, -2.99" endPosition="0, -1.99" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-0.8, 2.43" endPosition="0.8, 2.43" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="3.34, 2.43" endPosition="3.34, 3.03" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="2.54, -1.99" endPosition="2.54, -2.99" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="0, -1.99" endPosition="2.54, -1.99" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="4.31, -3.38" endPosition="4.31, 3.42" thickness="0.05" />
                     <line layer="Top.Keepout" startPosition="-1.77, 3.42" endPosition="-1.77, -3.38" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.77, -3.38" endPosition="4.31, -3.38" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="4.31, 3.42" endPosition="-1.77, 3.42" thickness="0.05" />
                     <line layer="F.Fab" startPosition="3.81, -2.88" endPosition="3.81, 2.92" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.562893, 0" endPosition="-1.27, -0.5" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-1.27, -2.88" endPosition="3.81, -2.88" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-1.27, 2.92" endPosition="-1.27, -2.88" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-0.562893, 0" endPosition="-1.27, -0.5" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="3.81, 2.92" endPosition="-1.27, 2.92" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-1.27, 0.5" endPosition="-0.562893, 0" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="3.81, 2.92" endPosition="-1.27, 2.92" thickness="0.1" />
                     <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" cornerRatio="0.287" cornerShape="round" topSize="1.74, 2.19" drill="1.19" />
                     <tpad name="2" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="2.54, 0" cornerRatio="1" cornerShape="round" topSize="1.74, 2.19" drill="1.19" />
                 </elements>
             </component>
-            <component name="Package_SO:SC-74-6_1.5x2.9mm_P0.95mm">
+            <component name="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061b8ff15">
                 <elements>
-                    <text layer="Top.Names" position="0, 2.4" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -2.4" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" height="0.38" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
-                    <line layer="Top.Place" startPosition="0, 1.56" endPosition="0.75, 1.56" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="0, 1.56" endPosition="-1.85, 1.56" thickness="0.12" />
-                    <line layer="Top.Place" startPosition="0, -1.56" endPosition="0.75, -1.56" thickness="0.12" />
+                    <text layer="Top.Names" position="2.5, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.43" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.4" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <line layer="Top.Place" startPosition="-0.14058, -0.51" endPosition="0.14058, -0.51" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-0.14058, 0.51" endPosition="0.14058, 0.51" thickness="0.12" />
+                    <line layer="Top.Keepout" startPosition="1.48, -0.73" endPosition="-1.48, -0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.48, -0.73" endPosition="-1.48, 0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.48, 0.73" endPosition="1.48, 0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="1.48, 0.73" endPosition="1.48, -0.73" thickness="0.05" />
+                    <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="0.8, 0.4" endPosition="0.8, -0.4" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="0.8, -0.4" endPosition="-0.8, -0.4" thickness="0.1" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                </elements>
+            </component>
+            <component name="Package_SO:SC-74-6_1.5x2.9mm_P0.95mm:7ed2abd9-bbed-4f95-9218-99faed10990d">
+                <elements>
+                    <text layer="Top.Names" position="-1.625, 2.75" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -2.4" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.38" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="0, -1.56" endPosition="-0.75, -1.56" thickness="0.12" />
-                    <line layer="Top.Keepout" startPosition="2.1, -1.7" endPosition="2.1, 1.7" thickness="0.05" />
-                    <line layer="Top.Keepout" startPosition="2.1, 1.7" endPosition="-2.1, 1.7" thickness="0.05" />
-                    <line layer="Top.Keepout" startPosition="-2.1, -1.7" endPosition="2.1, -1.7" thickness="0.05" />
+                    <line layer="Top.Place" startPosition="0, 1.56" endPosition="-1.85, 1.56" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="0, 1.56" endPosition="0.75, 1.56" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="0, -1.56" endPosition="0.75, -1.56" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="-2.1, 1.7" endPosition="-2.1, -1.7" thickness="0.05" />
-                    <line layer="F.Fab" startPosition="-0.75, -1.45" endPosition="-0.75, 1.075" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-0.75, 1.075" endPosition="-0.375, 1.45" thickness="0.1" />
+                    <line layer="Top.Keepout" startPosition="2.1, -1.7" endPosition="2.1, 1.7" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-2.1, -1.7" endPosition="2.1, -1.7" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="2.1, 1.7" endPosition="-2.1, 1.7" thickness="0.05" />
+                    <line layer="F.Fab" startPosition="-0.375, 1.45" endPosition="0.75, 1.45" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.75, -1.45" endPosition="-0.75, -1.45" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.75, 1.45" endPosition="0.75, -1.45" thickness="0.1" />
-                    <line layer="F.Fab" startPosition="-0.375, 1.45" endPosition="0.75, 1.45" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.75, 1.075" endPosition="-0.375, 1.45" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.75, -1.45" endPosition="-0.75, 1.075" thickness="0.1" />
                     <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.1375, 0.95" size="1.425, 0.5" cornerRatio="0.5" cornerShape="round" />
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.1375, 0" size="1.425, 0.5" cornerRatio="0.5" cornerShape="round" />
                     <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.1375, -0.95" size="1.425, 0.5" cornerRatio="0.5" cornerShape="round" />
@@ -477,9 +686,28 @@
                     <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="1.1375, 0.95" size="1.425, 0.5" cornerRatio="0.5" cornerShape="round" />
                 </elements>
             </component>
+            <component name="Resistor_SMD:R_0603_1608Metric:b0879d7b-5c17-4095-b4c9-5a2b9719c6a0">
+                <elements>
+                    <text layer="Top.Names" position="0, 1.43" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.43" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.4" thickness="0.06" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <line layer="Top.Place" startPosition="-0.237258, 0.522499" endPosition="0.237258, 0.522499" thickness="0.12" />
+                    <line layer="Top.Place" startPosition="-0.237258, -0.522499" endPosition="0.237258, -0.522499" thickness="0.12" />
+                    <line layer="Top.Keepout" startPosition="1.48, -0.73" endPosition="-1.48, -0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.48, -0.73" endPosition="-1.48, 0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="1.48, 0.73" endPosition="1.48, -0.73" thickness="0.05" />
+                    <line layer="Top.Keepout" startPosition="-1.48, 0.73" endPosition="1.48, 0.73" thickness="0.05" />
+                    <line layer="F.Fab" startPosition="0.8, 0.4125" endPosition="0.8, -0.4125" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="0.8, -0.4125" endPosition="-0.8, -0.4125" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.8, -0.4125" endPosition="-0.8, 0.4125" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-0.8, 0.4125" endPosition="0.8, 0.4125" thickness="0.1" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.825, 0" size="0.8, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.825, 0" size="0.8, 0.95" cornerRatio="0.5" cornerShape="round" />
+                </elements>
+            </component>
         </components>
         <parts>
-            <part name="C2" component="Capacitor_SMD:C_0603_1608Metric" position="22.75, 54.125" rotation="90">
+            <part name="C2" component="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a0f453" position="22.75, 54.125" rotation="90">
                 <pads>
                     <pad name="1" signal="+5V" />
                     <pad name="2" signal="GND" />
@@ -500,7 +728,7 @@
                     <attribute name="VALUE" value="1u" visible="false" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
-            <part name="C3" component="Capacitor_SMD:C_0603_1608Metric" position="18.25, 45.375">
+            <part name="C3" component="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a0f464" position="18.25, 45.375">
                 <pads>
                     <pad name="1" signal="+3V3" />
                     <pad name="2" signal="GND" />
@@ -521,7 +749,7 @@
                     <attribute name="VALUE" value="100n" visible="false" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
-            <part name="C7" component="Capacitor_SMD:C_0603_1608Metric" position="36.75, 13.25" rotation="-90">
+            <part name="C7" component="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a0f4a8" position="36.75, 13.25" rotation="-90">
                 <pads>
                     <pad name="1" signal="Net-(C7-Pad1)" />
                     <pad name="2" signal="Net-(C7-Pad2)" />
@@ -542,7 +770,7 @@
                     <attribute name="VALUE" value="1u" visible="false" position="-96, 106.07" rotation="180" />
                 </attributes>
             </part>
-            <part name="C8" component="Capacitor_SMD:C_0603_1608Metric" position="32.75, 13.25" rotation="90">
+            <part name="C8" component="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a0f4b9" position="32.75, 13.25" rotation="90">
                 <pads>
                     <pad name="1" signal="GND" />
                     <pad name="2" signal="Net-(C8-Pad2)" />
@@ -563,7 +791,7 @@
                     <attribute name="VALUE" value="1u" visible="false" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
-            <part name="FB1" component="Inductor_SMD:L_0603_1608Metric" position="61.11, 50.82" rotation="-90">
+            <part name="FB1" component="Inductor_SMD:L_0603_1608Metric:00000000-0000-0000-0000-000061a0f4e3" position="61.11, 50.82" rotation="-90">
                 <pads>
                     <pad name="1" signal="+5V" />
                     <pad name="2" signal="Net-(D1-Pad1)" />
@@ -580,7 +808,7 @@
                     <attribute name="VALUE" value="600R" visible="false" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
-            <part name="R1" component="Resistor_SMD:R_0603_1608Metric" position="4.5, 29.25">
+            <part name="R1" component="Resistor_SMD:R_0603_1608Metric:00000000-0000-0000-0000-000061a0f4f4" position="4.5, 29.25">
                 <pads>
                     <pad name="1" signal="+3V3" />
                     <pad name="2" signal="/ICSP-VPP" />
@@ -599,7 +827,7 @@
                     <attribute name="VALUE" value="10K" visible="false" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
-            <part name="C4" component="Capacitor_SMD:C_0603_1608Metric" position="17.375, 54.125" rotation="90">
+            <part name="C4" component="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a10710" position="17.375, 54.125" rotation="90">
                 <pads>
                     <pad name="1" signal="+3V3" />
                     <pad name="2" signal="GND" />
@@ -620,7 +848,7 @@
                     <attribute name="VALUE" value="1u" visible="false" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
-            <part name="D1" component="Diode_SMD:D_SOD-123" position="63.56, 51.36" rotation="90">
+            <part name="D1" component="Diode_SMD:D_SOD-123:00000000-0000-0000-0000-000061a108fc" position="63.56, 51.36" rotation="90">
                 <pads>
                     <pad name="1" signal="Net-(D1-Pad1)" />
                     <pad name="2" signal="Net-(D1-Pad2)" />
@@ -636,7 +864,7 @@
                     <attribute name="VALUE" value="MBR0540" visible="false" position="-96, 105.4" rotation="0" />
                 </attributes>
             </part>
-            <part name="J5" component="er-con:ER-CON2.0-2P-SMD" position="58, 16.5">
+            <part name="J5" component="er-con:ER-CON2.0-2P-SMD:00000000-0000-0000-0000-000061a14be1" position="58, 16.5">
                 <pads>
                     <pad name="1" signal="+5V" />
                     <pad name="2" signal="Net-(J5-Pad2)" />
@@ -651,7 +879,7 @@
                     <attribute name="VALUE" value="S3B-PH-SM4-TB" visible="false" position="-96, 105.75" rotation="0" />
                 </attributes>
             </part>
-            <part name="U2" component="Package_TO_SOT_SMD:SOT-353_SC-70-5" position="20, 54.16" rotation="180">
+            <part name="U2" component="Package_TO_SOT_SMD:SOT-353_SC-70-5:00000000-0000-0000-0000-000061a16fbd" position="20, 54.16" rotation="180">
                 <pads>
                     <pad name="1" signal="+5V" />
                     <pad name="2" signal="GND" />
@@ -671,10 +899,10 @@
                     <attribute name="VALUE" value="MIC5366-3.3YC5" visible="false" position="-96, 105.5" rotation="0" />
                 </attributes>
             </part>
-            <part name="J1" component="hirose-df13:1X4-SMD-90-E" position="4.625, 51.125" rotation="90">
+            <part name="J1" component="hirose-df13:1X4-SMD-90-E:00000000-0000-0000-0000-000061a1813e" position="4.625, 51.125" rotation="90">
                 <pads>
-                    <pad name="2" signal="/SCL" />
                     <pad name="1" signal="unconnected-(J1-Pad1)" />
+                    <pad name="2" signal="/SCL" />
                     <pad name="3" signal="/SDA" />
                     <pad name="4" signal="GND" />
                 </pads>
@@ -688,7 +916,7 @@
                     <attribute name="VALUE" value="DF13-4P-1.25H(21)" visible="false" position="-96, 107.5" rotation="0" />
                 </attributes>
             </part>
-            <part name="U1" component="Package_SO:SOIC-28W_7.5x17.9mm_P1.27mm" position="15.56, 36.43" rotation="90">
+            <part name="U1" component="Package_SO:SOIC-28W_7.5x17.9mm_P1.27mm:00000000-0000-0000-0000-000061a1a777" position="15.56, 36.43" rotation="90">
                 <pads>
                     <pad name="1" signal="/ICSP-VPP" />
                     <pad name="2" signal="/DP-D0" />
@@ -730,7 +958,7 @@
                     <attribute name="VALUE" value="PIC18F26K22-I/SO" visible="false" position="-96, 97.6" rotation="0" />
                 </attributes>
             </part>
-            <part name="C1" component="Capacitor_SMD:C_0603_1608Metric" position="18.25, 43.75">
+            <part name="C1" component="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a1c081" position="18.25, 43.75">
                 <pads>
                     <pad name="1" signal="+3V3" />
                     <pad name="2" signal="GND" />
@@ -751,7 +979,7 @@
                     <attribute name="VALUE" value="10n" visible="false" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
-            <part name="C9" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A" position="46.25, 12.625">
+            <part name="C9" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:00000000-0000-0000-0000-000061a1cdf8" position="46.25, 12.625">
                 <pads>
                     <pad name="1" signal="+3V3" />
                     <pad name="2" signal="GND" />
@@ -772,7 +1000,7 @@
                     <attribute name="VALUE" value="10u" visible="false" position="-96, 105.75" rotation="0" />
                 </attributes>
             </part>
-            <part name="C10" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A" position="14.875, 49.73" rotation="90">
+            <part name="C10" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:00000000-0000-0000-0000-000061a1d586" position="14.875, 49.73" rotation="90">
                 <pads>
                     <pad name="1" signal="+3V3" />
                     <pad name="2" signal="GND" />
@@ -793,31 +1021,31 @@
                     <attribute name="VALUE" value="10u" visible="false" position="-96, 105.75" rotation="0" />
                 </attributes>
             </part>
-            <part name="MH1" component="MountingHole:MountingHole_3.2mm_M3_Pad_Via" position="8.5, 63">
+            <part name="MH1" component="MountingHole:MountingHole_3.2mm_M3_Pad_Via:00000000-0000-0000-0000-000061a4d432" position="8.5, 63">
                 <attributes>
                     <attribute name="NAME" value="{%name}" visible="false" position="-96, 111.7" rotation="0" />
                     <attribute name="VALUE" value="MountingHole_3.2mm_M3_Pad_Via" visible="false" position="-96, 103.3" rotation="0" />
                 </attributes>
             </part>
-            <part name="NH2" component="MountingHole:MountingHole_3.2mm_M3_Pad_Via" position="69.5, 63">
+            <part name="NH2" component="MountingHole:MountingHole_3.2mm_M3_Pad_Via:00000000-0000-0000-0000-000061a5451e" position="69.5, 63">
                 <attributes>
                     <attribute name="NAME" value="{%name}" visible="false" position="-96, 111.7" rotation="0" />
                     <attribute name="VALUE" value="MountingHole_3.2mm_M3_Pad_Via" visible="false" position="-96, 103.3" rotation="0" />
                 </attributes>
             </part>
-            <part name="MH4" component="MountingHole:MountingHole_3.2mm_M3_Pad_Via" position="69.5, 4.5">
+            <part name="MH4" component="MountingHole:MountingHole_3.2mm_M3_Pad_Via:00000000-0000-0000-0000-000061a5456a" position="69.5, 4.5">
                 <attributes>
                     <attribute name="NAME" value="{%name}" visible="false" position="-96, 111.7" rotation="0" />
                     <attribute name="VALUE" value="MountingHole_3.2mm_M3_Pad_Via" visible="false" position="-96, 103.3" rotation="0" />
                 </attributes>
             </part>
-            <part name="MH3" component="MountingHole:MountingHole_3.2mm_M3_Pad_Via" position="8.5, 4.5">
+            <part name="MH3" component="MountingHole:MountingHole_3.2mm_M3_Pad_Via:00000000-0000-0000-0000-000061a545b6" position="8.5, 4.5">
                 <attributes>
                     <attribute name="NAME" value="{%name}" visible="false" position="-96, 111.7" rotation="0" />
                     <attribute name="VALUE" value="MountingHole_3.2mm_M3_Pad_Via" visible="false" position="-96, 103.3" rotation="0" />
                 </attributes>
             </part>
-            <part name="C6" component="Capacitor_SMD:C_0603_1608Metric" position="39.5, 14">
+            <part name="C6" component="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a698ec" position="39.5, 14">
                 <pads>
                     <pad name="1" signal="+3V3" />
                     <pad name="2" signal="GND" />
@@ -838,7 +1066,7 @@
                     <attribute name="VALUE" value="10n" visible="false" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
-            <part name="J4" component="Connector_FFC-FPC:Hirose_FH12-26S-0.5SH_1x26-1MP_P0.50mm_Horizontal" position="39, 17.95" rotation="180">
+            <part name="J4" component="Connector_FFC-FPC:Hirose_FH12-26S-0.5SH_1x26-1MP_P0.50mm_Horizontal:00000000-0000-0000-0000-000061a6f6c2" position="39, 17.95" rotation="180">
                 <pads>
                     <pad name="1" signal="/DP-CS" />
                     <pad name="2" signal="/DP-RST" />
@@ -878,7 +1106,7 @@
                     <attribute name="VALUE" value="FH12-26S-0.5SH" visible="false" position="-96, 101.9" rotation="-180" />
                 </attributes>
             </part>
-            <part name="J2" component="Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical" position="4.05, 32.46" rotation="180">
+            <part name="J2" component="Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical:00000000-0000-0000-0000-000061abe25c" position="4.05, 32.46" rotation="180">
                 <pads>
                     <pad name="1" signal="/ICSP-VPP" />
                     <pad name="2" signal="+3V3" />
@@ -894,7 +1122,7 @@
                     <attribute name="VALUE" value="Conn_01x05" visible="false" position="-96, 97.44" rotation="-180" />
                 </attributes>
             </part>
-            <part name="J3" component="Connector_Molex:Molex_KK-254_AE-6410-02A_1x02_P2.54mm_Vertical" position="61.1, 63.4">
+            <part name="J3" component="Connector_Molex:Molex_KK-254_AE-6410-02A_1x02_P2.54mm_Vertical:00000000-0000-0000-0000-000061ac2e6e" position="61.1, 63.4">
                 <pads>
                     <pad name="1" signal="GND" />
                     <pad name="2" signal="Net-(D1-Pad2)" />
@@ -910,7 +1138,7 @@
                     <attribute name="VALUE" value="CO3302" visible="false" position="-94.73, 103.42" rotation="0" />
                 </attributes>
             </part>
-            <part name="C5" component="Capacitor_SMD:C_0603_1608Metric" position="39.5, 12.5">
+            <part name="C5" component="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061b8ff15" position="39.5, 12.5">
                 <pads>
                     <pad name="1" signal="+3V3" />
                     <pad name="2" signal="GND" />
@@ -931,7 +1159,7 @@
                     <attribute name="VALUE" value="100n" visible="false" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
-            <part name="U3" component="Package_SO:SC-74-6_1.5x2.9mm_P0.95mm" position="53.75, 32.75" rotation="90">
+            <part name="U3" component="Package_SO:SC-74-6_1.5x2.9mm_P0.95mm:7ed2abd9-bbed-4f95-9218-99faed10990d" position="53.75, 32.75" rotation="90">
                 <pads>
                     <pad name="1" signal="/BK-PWM" />
                     <pad name="2" signal="Net-(J5-Pad2)" />
@@ -951,7 +1179,7 @@
                     <attribute name="VALUE" value="NCR421U" visible="false" position="-96, 105.1" rotation="0" />
                 </attributes>
             </part>
-            <part name="R2" component="Resistor_SMD:R_0603_1608Metric" position="53.75, 35.875">
+            <part name="R2" component="Resistor_SMD:R_0603_1608Metric:b0879d7b-5c17-4095-b4c9-5a2b9719c6a0" position="53.75, 35.875">
                 <pads>
                     <pad name="1" signal="Net-(R2-Pad1)" />
                     <pad name="2" signal="GND" />
@@ -973,10 +1201,8 @@
         <elements>
             <line layer="Profile" startPosition="58.99, 67.5" endPosition="69.5, 67.5" thickness="0.05" />
             <line layer="Profile" startPosition="57, 67.5" endPosition="8.5, 67.5" thickness="0.05" />
-            <arc layer="Profile" startPosition="65, 4.5" endPosition="74, 4.5" angle="180" thickness="0.05" lineCap="flat" />
             <line layer="Profile" startPosition="57, 67.5" endPosition="57, 63.5" thickness="0.05" />
             <line layer="Profile" startPosition="0, 59.5" endPosition="0, 8" thickness="0.05" />
-            <arc layer="Profile" startPosition="8.5, 67.5" endPosition="4, 63" angle="90" thickness="0.05" lineCap="flat" />
             <line layer="Profile" startPosition="74, 8" endPosition="78, 8" thickness="0.05" />
             <line layer="Profile" startPosition="4, 8" endPosition="4, 4.5" thickness="0.05" />
             <line layer="Profile" startPosition="4, 59.5" endPosition="4, 63" thickness="0.05" />
@@ -984,7 +1210,6 @@
             <line layer="Profile" startPosition="57, 63.5" endPosition="59.01, 63.5" thickness="0.05" />
             <line layer="Profile" startPosition="30, 61.25" endPosition="30, 63.25" thickness="0.05" />
             <line layer="Profile" startPosition="30, 63.25" endPosition="48, 63.25" thickness="0.05" />
-            <arc layer="Profile" startPosition="4, 4.5" endPosition="13, 4.5" angle="180" thickness="0.05" lineCap="flat" />
             <line layer="Profile" startPosition="74, 4.5" endPosition="74, 8" thickness="0.05" />
             <line layer="Profile" startPosition="59.01, 63.5" endPosition="58.99, 67.5" thickness="0.05" />
             <line layer="Profile" startPosition="13, 8" endPosition="65, 8" thickness="0.05" />
@@ -992,7 +1217,6 @@
             <line layer="Profile" startPosition="48, 63.25" endPosition="48, 61.25" thickness="0.05" />
             <line layer="Profile" startPosition="4, 8" endPosition="0, 8" thickness="0.05" />
             <line layer="Profile" startPosition="74, 63" endPosition="74, 59.5" thickness="0.05" />
-            <arc layer="Profile" startPosition="74, 63" endPosition="69.5, 67.5" angle="90" thickness="0.05" lineCap="flat" />
             <line layer="Profile" startPosition="13, 4.5" endPosition="13, 8" thickness="0.05" />
             <line layer="Profile" startPosition="65, 8" endPosition="65, 4.5" thickness="0.05" />
             <line layer="Profile" startPosition="74, 59.5" endPosition="78, 59.5" thickness="0.05" />

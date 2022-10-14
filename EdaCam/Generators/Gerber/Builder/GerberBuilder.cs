@@ -469,7 +469,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
         /// </summary>
         /// <param name="polarity">Datk o Clear.</param>
         /// 
-        public void LoadPolarity(Polarity polarity) {
+        public void SetPolarity(Polarity polarity) {
 
             if (_state.SetAperturePolarity(polarity))
                 _writer.WriteLine(String.Format("%LP{0}*%", polarity == Polarity.Dark ? "D" : "C"));
@@ -480,18 +480,18 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber.Builder {
         /// </summary>
         /// <param name="angle">Angle de rotacio.</param>
         /// 
-        public void LoadRotation(EdaAngle angle) {
+        public void SetRotation(EdaAngle angle) {
 
             if (_state.SetApertureAngle(angle))
                 _writer.WriteLine(String.Format("%LR{0}*%", (double)angle.Value / 100.0));
         }
 
-        public void LoadMirroring() {
+        public void SetMirroring() {
 
             throw new NotImplementedException();
         }
 
-        public void LoadScaling() {
+        public void SetScaling() {
 
             throw new NotImplementedException();
         }

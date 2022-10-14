@@ -75,6 +75,4 @@
         public SNode First =>
             _nodes[0];
     }
-
-
 }

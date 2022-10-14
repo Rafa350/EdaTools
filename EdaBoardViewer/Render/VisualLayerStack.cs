@@ -56,7 +56,7 @@
                 true,
                 VisualMode.Element,
                 Color.FromArgb(100, 75, 0, 0)));
-
+           
             vls.Add(new VisualLayer("Top",
                 new EdaLayerId[] { EdaLayerId.TopCopper },
                 new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Rectangle, ElementType.Circle, ElementType.Region, ElementType.Text },
@@ -126,7 +126,7 @@
                 true,
                 VisualMode.Element,
                 Color.FromArgb(255, 64, 64, 64)));
-
+           
             vls.Add(new VisualLayer("Profiles",
                 new EdaLayerId[] { EdaLayerId.Profile },
                 null,
