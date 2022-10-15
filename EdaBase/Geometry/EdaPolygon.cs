@@ -1,91 +1,125 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MikroPic.EdaTools.v1.Base.Geometry {
 
     /// <summary>
     /// Objecte que representa un poligon amb forats. Aquesta clase es inmutable.
-    /// Els punt van ordenats en direccio contrari al rellotge.
+    /// Els punt van ordenats en direccio contraria al rellotge. El poligon sempre
+    /// te un contorm i opcionalment una llista de forats.
+    /// Hi ha l'opcio de construir el poligon amb llistes de punts externes. En aquest
+    /// cas els punt poden ser modificats, menipulant les llistes.
     /// </summary>
     /// 
     public sealed class EdaPolygon {
 
-        private List<EdaPoint> _contour;
+        private List<EdaPoint> _outline;
         private List<List<EdaPoint>> _holes;
         private EdaRect? _bounds = null;
 
         /// <summary>
         /// Construeix un poligon.
         /// </summary>
-        /// <param name="contour">El conjunt de punts del contorn.</param>
+        /// <param name="outline">El conjunt de punts del contorn.</param>
         /// 
-        public EdaPolygon(IEnumerable<EdaPoint> contour) {
+        public EdaPolygon(IEnumerable<EdaPoint> outline) {
 
-            Initialize(contour, null);
+            if (outline == null)
+                throw new ArgumentNullException(nameof(outline));
+
+            Initialize(outline, null);
         }
 
         /// <summary>
         /// Construeix un poligon, amb forats.
         /// </summary>
-        /// <param name="contour">El conjunt de punts del contorn.</param>
+        /// <param name="outline">El conjunt de punts del contorn.</param>
         /// <param name="holes">El conjunt de forats interiors.</param>
         /// 
-        public EdaPolygon(IEnumerable<EdaPoint> contour, params IEnumerable<EdaPoint>[] holes) {
+        public EdaPolygon(IEnumerable<EdaPoint> outline, params IEnumerable<EdaPoint>[] holes) {
 
-            Initialize(contour, holes);
+            if (outline == null)
+                throw new ArgumentNullException(nameof(outline));
+
+            Initialize(outline, holes);
         }
 
         /// <summary>
         /// Construeix un poligon, amb forats.
         /// </summary>
-        /// <param name="contour">El conjunt de punts del contorn.</param>
+        /// <param name="outline">El conjunt de punts del contorn.</param>
         /// <param name="holes">El conjunt de forats interiors.</param>
         /// 
-        public EdaPolygon(IEnumerable<EdaPoint> contour, IEnumerable<IEnumerable<EdaPoint>> holes) {
+        public EdaPolygon(IEnumerable<EdaPoint> outline, IEnumerable<IEnumerable<EdaPoint>> holes) {
 
-            Initialize(contour, holes);
+            if (outline == null)
+                throw new ArgumentNullException(nameof(outline));
+
+            Initialize(outline, holes);
         }
 
         /// <summary>
-        /// Construeix un poligon.
+        /// Construeix un poligon. 
         /// </summary>
-        /// <param name="contour">El conjunt de punts del contorn.</param>
+        /// <param name="outline">La llista de punts del contorn.</param>
+        /// <remarks>Les llistes son externes al poligon.</remarks>
         /// 
-        public EdaPolygon(List<EdaPoint> contour) {
+        public EdaPolygon(List<EdaPoint> outline) {
 
-            Initialize(contour, null);
+            if (outline == null)
+                throw new ArgumentNullException(nameof(outline));
+
+            if (outline.Count < 3)
+                throw new ArgumentOutOfRangeException(nameof(outline));
+
+            Initialize(outline, null);
         }
 
         /// <summary>
         /// Construeix un poligon, amb forats.
         /// </summary>
-        /// <param name="contour">El conjunt de punts del contorn.</param>
-        /// <param name="holes">El conjunt de forats interiors.</param>
+        /// <param name="outline">La llista de punts del contorn.</param>
+        /// <param name="holes">La llista de forats interiors.</param>
+        /// <remarks>Les llistes son externes al poligon.</remarks>
         /// 
-        public EdaPolygon(List<EdaPoint> contour, params List<EdaPoint>[] holes) {
+        public EdaPolygon(List<EdaPoint> outline, params List<EdaPoint>[] holes) {
 
-            Initialize(contour, holes);
+            if (outline == null)
+                throw new ArgumentNullException(nameof(outline));
+
+            if (outline.Count < 3)
+                throw new ArgumentOutOfRangeException(nameof(outline));
+
+            Initialize(outline, holes);
         }
 
         /// <summary>
         /// Construeix un poligon, amb forats.
         /// </summary>
-        /// <param name="contour">El conjunt de punts del contorn.</param>
-        /// <param name="holes">El conjunt de forats interiors.</param>
+        /// <param name="outline">La llista de punts del contorn.</param>
+        /// <param name="holes">La llista de forats interiors.</param>
+        /// <remarks>Les llistes son externes al poligon.</remarks>
         /// 
-        public EdaPolygon(List<EdaPoint> contour, IEnumerable<List<EdaPoint>> holes) {
+        public EdaPolygon(List<EdaPoint> outline, IEnumerable<List<EdaPoint>> holes) {
 
-            Initialize(contour, holes);
+            if (outline == null)
+                throw new ArgumentNullException(nameof(outline));
+
+            if (outline.Count < 3)
+                throw new ArgumentOutOfRangeException(nameof(outline));
+
+            Initialize(outline, holes);
         }
 
         /// <summary>
         /// Inicialitzacio.
         /// </summary>
-        /// <param name="contour">Els punts del contorn.</param>
-        /// <param name="holes">Els punts dels forats.</param>
+        /// <param name="outline">El conjunt de punts del contorn.</param>
+        /// <param name="holes">El conjunt de forats.</param>
         /// 
-        private void Initialize(IEnumerable<EdaPoint> contour, IEnumerable<IEnumerable<EdaPoint>> holes) {
+        private void Initialize(IEnumerable<EdaPoint> outline, IEnumerable<IEnumerable<EdaPoint>> holes) {
 
-            _contour = new List<EdaPoint>(contour);
+            _outline = new List<EdaPoint>(outline);
 
             if (holes != null) {
                 _holes = new List<List<EdaPoint>>();
@@ -97,12 +131,13 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <summary>
         /// Inicialitzacio.
         /// </summary>
-        /// <param name="contour">Els punts del contorn.</param>
-        /// <param name="holes">Els punts dels forats.</param>
+        /// <param name="outline">La llista punts del contorn.</param>
+        /// <param name="holes">La llista punts dels forats.</param>
+        /// <remarks>Les llistes son externes al poligon.</remarks>
         /// 
-        private void Initialize(List<EdaPoint> contour, IEnumerable<List<EdaPoint>> holes) {
+        private void Initialize(List<EdaPoint> outline, IEnumerable<List<EdaPoint>> holes) {
 
-            _contour = contour;
+            _outline = outline;
 
             if (holes != null) {
                 _holes = new List<List<EdaPoint>>();
@@ -118,7 +153,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// 
         private EdaRect ComputeBounds() {
 
-            if (_contour == null)
+            if ((_outline == null) || (_outline.Count < 3))
                 return new EdaRect(0, 0, 0, 0);
 
             else {
@@ -127,7 +162,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
                 int maxX = int.MinValue;
                 int maxY = int.MinValue;
 
-                foreach (var point in _contour) {
+                foreach (var point in _outline) {
 
                     int x = point.X;
                     int y = point.Y;
@@ -163,8 +198,8 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// Els punts del poligon.
         /// </summary>
         /// 
-        public IEnumerable<EdaPoint> Contour =>
-            _contour;
+        public IEnumerable<EdaPoint> Outline =>
+            _outline;
 
         /// <summary>
         /// Els fills del poligon.

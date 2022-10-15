@@ -507,7 +507,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         //
                         EdaLayer layer = Board.GetLayer(_layerId);
                         EdaPolygon polygon = element.GetPolygon(layer.Id);
-                        IEnumerable<EdaPoint> points = polygon.Contour;
+                        IEnumerable<EdaPoint> points = polygon.Outline;
 
                         if (Part != null) {
                             EdaTransformation t = Part.GetLocalTransformation();
@@ -558,7 +558,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         //
                         EdaLayer layer = Board.GetLayer(_layerId);
                         EdaPolygon polygon = element.GetPolygon(layer.Id);
-                        IEnumerable<EdaPoint> points = polygon.Contour;
+                        IEnumerable<EdaPoint> points = polygon.Outline;
 
                         if (Part != null) {
                             EdaTransformation t = Part.GetLocalTransformation();
@@ -786,13 +786,13 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
                 // Procesa el contorn
                 //
-                if (polygon.Contour != null) {
+                if (polygon.Outline != null) {
 
                     // Dibuixa el contingut de la regio
                     //
                     _gb.SetPolarity(Polarity.Dark);
                     _gb.BeginRegion();
-                    _gb.Region(polygon.Contour, true);
+                    _gb.Region(polygon.Outline, true);
                     _gb.EndRegion();
 
                     // Dibuixa el perfil de la regio per arrodonir les cantonades
@@ -800,7 +800,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                     Aperture ap = _apertures.GetCircleAperture(Math.Max(100000, thickness));
                     _gb.SelectAperture(ap);
                     _gb.SetPolarity(Polarity.Dark);
-                    _gb.Polygon(polygon.Contour);
+                    _gb.Polygon(polygon.Outline);
                 }
 
                 // Processa els forats

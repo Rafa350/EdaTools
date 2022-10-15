@@ -30,7 +30,7 @@ namespace EdaBoardViewer.Render {
 
         private static void ToGeometry(StreamGeometryContext gc, EdaPolygon polygon) {
 
-            ToGeometry(gc, polygon.Contour);
+            ToGeometry(gc, polygon.Outline);
             if (polygon.HasHoles)
                 foreach (var hole in polygon.Holes)
                     ToGeometry(gc, hole);

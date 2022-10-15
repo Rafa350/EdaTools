@@ -51,13 +51,26 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
             public override void Visit(EdaCircleElement element) {
 
-            /*    if ((_layerId.IsTop && element.IsOnLayer(EdaLayerId.TopKeepout)) ||
+                if (element.IsOnLayer(_layerId) ||
+                    (_layerId.IsTop && element.IsOnLayer(EdaLayerId.TopKeepout)) ||
                     (_layerId.IsBottom && element.IsOnLayer(EdaLayerId.BottomKeepout))) {
 
                     var polygon = GetOutlinePolygon(element, _outlineClearance);
                     if (_regionBounds.IntersectsWith(polygon.Bounds))
                         _polygons.Add(polygon);
-                }*/
+                }
+            }
+
+            public override void Visit(EdaRectangleElement element) {
+
+                if (element.IsOnLayer(_layerId) ||
+                    (_layerId.IsTop && element.IsOnLayer(EdaLayerId.TopKeepout)) ||
+                    (_layerId.IsBottom && element.IsOnLayer(EdaLayerId.BottomKeepout))) {
+
+                    var polygon = GetOutlinePolygon(element, _outlineClearance);
+                    if (_regionBounds.IntersectsWith(polygon.Bounds))
+                        _polygons.Add(polygon);
+                }
             }
 
             public override void Visit(EdaThPadElement element) {
@@ -237,7 +250,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="region">L'element de tipus regio.</param>
         /// <param name="layer">La capa a procesar.</param>
         /// <param name="transformation">Transformacio a aplicar al poligon.</param>
-        /// <returns>El poligon generat.</returns>
+        /// <returns>Els poligons generats.</returns>
         /// 
         public IEnumerable<EdaPolygon> GetRegionPolygons(EdaRegionElement region, EdaLayerId layerId, EdaTransformation transformation) {
 
@@ -250,7 +263,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             visitor.Visit(this);
 
             EdaPolygon polygon = region.GetPolygon(layerId);
+
             var polygons = polygon.Substract(holes);
+            polygons = polygons.Offset(-100000);
+            //polygons = polygons.Offset(+250000);
 
             return (transformation == null) ? polygons : polygons.Transform(transformation);
          }

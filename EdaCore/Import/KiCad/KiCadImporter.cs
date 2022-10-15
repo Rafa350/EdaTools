@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Xml.Linq;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
@@ -14,6 +13,7 @@ using MikroPic.EdaTools.v1.Core.Model.Net;
 
 namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
+    [Obsolete]
     public sealed class KiCadImporter: IEdaImporter {
 
         private const double _scale = 1000000.0;
