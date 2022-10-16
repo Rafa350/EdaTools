@@ -22,10 +22,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
     /// </summary>
     public sealed class IPCD356Builder {
 
-        private readonly TextWriter writer;
-        private int offsetX;
-        private int offsetY;
-        private EdaAngle rotation;
+        private readonly TextWriter _writer;
+        private int _offsetX;
+        private int _offsetY;
+        private EdaAngle _rotation;
 
         /// <summary>
         /// Constructor del objecte
@@ -37,7 +37,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
             if (writer == null)
                 throw new ArgumentNullException(nameof(writer));
 
-            this.writer = writer;
+            this._writer = writer;
         }
 
         /// <summary>
@@ -47,10 +47,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
         /// 
         public void Comment(string text) {
 
-            writer.Write(
+            _writer.Write(
                 "C  {0}",
                 text);
-            writer.WriteLine();
+            _writer.WriteLine();
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
         /// 
         public void SetVersion() {
 
-            writer.WriteLine("P  VER   IPC-D-356");
+            _writer.WriteLine("P  VER   IPC-D-356");
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
         /// 
         public void SetImage() {
 
-            writer.WriteLine("P  IMAGE PRIMARY");
+            _writer.WriteLine("P  IMAGE PRIMARY");
         }
 
         /// <summary>
@@ -91,9 +91,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
         /// 
         public void SetTransformation(int offsetX, int offsetY, EdaAngle rotation) {
 
-            this.offsetX = offsetX;
-            this.offsetY = offsetY;
-            this.rotation = rotation;
+            this._offsetX = offsetX;
+            this._offsetY = offsetY;
+            this._rotation = rotation;
         }
 
         /// <summary>
@@ -102,9 +102,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
         /// 
         public void ResetTransformation() {
 
-            offsetX = 0;
-            offsetY = 0;
-            rotation = EdaAngle.Zero;
+            _offsetX = 0;
+            _offsetY = 0;
+            _rotation = EdaAngle.Zero;
         }
 
         /// <summary>
@@ -116,13 +116,28 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
 
             switch (units) {
                 case Units.Inches:
-                    writer.WriteLine("P  UNITS CUST 0");
+                    _writer.WriteLine("P  UNITS CUST 0");
                     break;
 
                 case Units.Millimeters:
-                    writer.WriteLine("P  UNITS CUST 1");
+                    _writer.WriteLine("P  UNITS CUST 1");
                     break;
             }
+        }
+
+        /// <summary>
+        /// Declara un alias de senyal
+        /// </summary>
+        /// <param name="alias">El alias</param>
+        /// <param name="name">El nom del senyal.</param>
+        /// 
+        public void NetAlias(string alias, string name) {
+
+            _writer.Write(
+                "P  NNAME{0,-14}{1}",
+                alias,
+                name);
+            _writer.WriteLine();
         }
 
         /// <summary>
@@ -150,30 +165,30 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
             if (String.IsNullOrEmpty(netName))
                 throw new ArgumentNullException(nameof(netName));
 
-            writer.Write(
+            _writer.Write(
                 "378{0,-14} L{1} X{2}Y0000 X{3}Y{4} X{5}Y{6}{7}",
                 netName,
                 FormatLayerNum(layerNum),
                 FormatDiameter(thickness),
-                FormatCoordinate(points[0].X + offsetX),
-                FormatCoordinate(points[0].Y + offsetY),
-                FormatCoordinate(points[1].X + offsetX),
-                FormatCoordinate(points[1].Y + offsetY),
+                FormatCoordinate(points[0].X + _offsetX),
+                FormatCoordinate(points[0].Y + _offsetY),
+                FormatCoordinate(points[1].X + _offsetX),
+                FormatCoordinate(points[1].Y + _offsetY),
                 points.Length > 2 ? ' ' : '*');
 
             if (points.Length > 2) {
-                writer.WriteLine();
-                writer.Write("078 ");
+                _writer.WriteLine();
+                _writer.Write("078 ");
                 for (int i = 2; i < points.Length; i++) {
-                    writer.Write(
+                    _writer.Write(
                         " X{0}Y{1}",
-                        FormatCoordinate(points[i].X + offsetX),
-                        FormatCoordinate(points[i].Y + offsetY));
+                        FormatCoordinate(points[i].X + _offsetX),
+                        FormatCoordinate(points[i].Y + _offsetY));
                 }
-                writer.Write("*");
+                _writer.Write("*");
             }
 
-            writer.WriteLine();
+            _writer.WriteLine();
         }
 
         /// <summary>
@@ -199,15 +214,15 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
             if (String.IsNullOrEmpty(netName))
                 throw new ArgumentNullException(nameof(netName));
 
-            writer.Write(
+            _writer.Write(
                 "317{0,-14}   {3,-6}-{4,-4} D{5}PA00X{1}Y{2}",
                 netName,
-                FormatCoordinate(position.X + offsetX),
-                FormatCoordinate(position.Y + offsetY),
+                FormatCoordinate(position.X + _offsetX),
+                FormatCoordinate(position.Y + _offsetY),
                 partId,
                 padId,
                 FormatDiameter(drill));
-            writer.WriteLine();
+            _writer.WriteLine();
         }
 
         /// <summary>
@@ -230,15 +245,15 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
             if (String.IsNullOrEmpty(netName))
                 throw new ArgumentNullException(nameof(netName));
 
-            writer.Write(
+            _writer.Write(
                 "327{0,-14}   {3,-6}-{4,-4}       A{5}X{1}Y{2}",
                 netName,
-                FormatCoordinate(position.X + offsetX),
-                FormatCoordinate(position.Y + offsetY),
+                FormatCoordinate(position.X + _offsetX),
+                FormatCoordinate(position.Y + _offsetY),
                 partId,
                 padId,
                 FormatAccess(access));
-            writer.WriteLine();
+            _writer.WriteLine();
         }
 
         /// <summary>
@@ -256,13 +271,13 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
             if (String.IsNullOrEmpty(netName))
                 throw new ArgumentNullException(nameof(netName));
 
-            writer.Write(
+            _writer.Write(
                 "317{0,-14}   VIA   -     D{3}PA00X{1}Y{2}",
                 netName,
-                FormatCoordinate(position.X + offsetX),
-                FormatCoordinate(position.Y + offsetY),
+                FormatCoordinate(position.X + _offsetX),
+                FormatCoordinate(position.Y + _offsetY),
                 FormatDiameter(drill));
-            writer.WriteLine();
+            _writer.WriteLine();
         }
 
         /// <summary>
@@ -271,7 +286,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
         /// 
         public void EndFile() {
 
-            writer.WriteLine("999");
+            _writer.WriteLine("999");
         }
 
         /// <summary>

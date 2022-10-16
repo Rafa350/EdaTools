@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder;
@@ -14,6 +15,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
     /// Generador de codi en format IPCD356
     /// </summary>
     public sealed class IPCD356Generator: Generator {
+
+        private Dictionary<string, string> _netAliasMap = new Dictionary<string, string>();
 
         public IPCD356Generator(Target target) :
             base(target) {
@@ -44,7 +47,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
 
                 IPCD356Builder builder = new IPCD356Builder(writer);
 
-                GenerateFileHeader(builder);
+                GenerateFileHeader(builder, board);
                 builder.Comment("BEGIN BOARD");
                 GenerateVias(builder, board);
                 GeneratePads(builder, board);
@@ -59,7 +62,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
         /// </summary>
         /// <param name="builder">El generador de codi.</param>
         /// 
-        private void GenerateFileHeader(IPCD356Builder builder) {
+        private void GenerateFileHeader(IPCD356Builder builder, EdaBoard board) {
 
             builder.Comment("BEGIN FILE");
             builder.Comment("EdaTools v1.0.");
@@ -69,6 +72,13 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
             builder.SetVersion();
             builder.SetUnits(Units.Millimeters);
             builder.SetImage();
+
+            int count = 0;
+            foreach (var signal in board.Signals) {
+                string alias = String.Format("{0:00000}", count++);
+                builder.NetAlias(alias, signal.Name);
+                _netAliasMap.Add(signal.Name, alias);
+            }
         }
 
         /// <summary>
@@ -93,7 +103,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
 
             builder.Comment("BEGIN VIAS");
 
-            IEdaBoardVisitor visitor = new ViasVisitor(builder);
+            IEdaBoardVisitor visitor = new ViasVisitor(builder, _netAliasMap);
             board.AcceptVisitor(visitor);
 
             builder.Comment("END VIAS");
@@ -109,7 +119,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
 
             builder.Comment("BEGIN PADS");
 
-            IEdaBoardVisitor visitor = new PadsVisitor(builder);
+            IEdaBoardVisitor visitor = new PadsVisitor(builder, _netAliasMap);
             board.AcceptVisitor(visitor);
 
             builder.Comment("END PADS");
@@ -125,7 +135,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
 
             builder.Comment("BEGIN NETS");
 
-            IEdaBoardVisitor visitor = new NetsVisitor(builder);
+            IEdaBoardVisitor visitor = new NetsVisitor(builder, _netAliasMap);
             board.AcceptVisitor(visitor);
 
             builder.Comment("END NETS");
@@ -137,10 +147,12 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
         private sealed class NetsVisitor: EdaSignalVisitor {
 
             private readonly IPCD356Builder _builder;
-
-            public NetsVisitor(IPCD356Builder builder) {
+            private readonly IDictionary<string, string> _netAliasMap;
+            
+            public NetsVisitor(IPCD356Builder builder, IDictionary<string, string> netAliasMap) {
 
                 _builder = builder;
+                _netAliasMap = netAliasMap;
             }
 
             public override void Visit(EdaLineElement line) {
@@ -155,7 +167,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
                     EdaPoint[] points = new EdaPoint[2];
                     points[0] = line.StartPosition;
                     points[1] = line.EndPosition;
-                    _builder.Conductor(points, layerNum, line.Thickness, Signal.Name);
+                    _builder.Conductor(points, layerNum, line.Thickness, _netAliasMap[Signal.Name]);
                 }
             }
 
@@ -181,18 +193,20 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
         /// </summary>
         private sealed class ViasVisitor: EdaElementVisitor {
 
-            private readonly IPCD356Builder builder;
+            private readonly IPCD356Builder _builder;
+            private readonly IDictionary<string, string> _netAliasMap;
 
-            public ViasVisitor(IPCD356Builder builder) {
+            public ViasVisitor(IPCD356Builder builder, IDictionary<string, string> netAliasMap) {
 
-                this.builder = builder;
+                _builder = builder;
+                _netAliasMap = netAliasMap;
             }
 
             public override void Visit(EdaViaElement via) {
 
                 var signal = Board.GetSignal(via, null, false);
                 if (signal != null)
-                    builder.Via(via.Position, via.DrillDiameter, signal.Name);
+                    _builder.Via(via.Position, via.DrillDiameter, _netAliasMap[signal.Name]);
             }
         }
 
@@ -202,10 +216,12 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
         private sealed class PadsVisitor: EdaElementVisitor {
 
             private readonly IPCD356Builder _builder;
+            private readonly IDictionary<string, string> _netAliasMap;
 
-            public PadsVisitor(IPCD356Builder builder) {
+            public PadsVisitor(IPCD356Builder builder, IDictionary<string, string> netAliasMap) {
 
                 _builder = builder;
+                _netAliasMap = netAliasMap;
             }
 
             public override void Visit(EdaSmdPadElement pad) {
@@ -216,7 +232,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
                     EdaTransformation t = Part.GetLocalTransformation();
                     EdaPoint position = t.Transform(pad.Position);
 
-                    _builder.SmdPad(position, TestAccess.Top, Part.Name, pad.Name, signal.Name);
+                    _builder.SmdPad(position, TestAccess.Top, Part.Name, pad.Name, _netAliasMap[signal.Name]);
                 }
             }
 
@@ -228,7 +244,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
                     EdaTransformation t = Part.GetLocalTransformation();
                     EdaPoint position = t.Transform(pad.Position);
 
-                    _builder.ThPad(position, pad.DrillDiameter, Part.Name, pad.Name, signal.Name);
+                    _builder.ThPad(position, pad.DrillDiameter, Part.Name, pad.Name, _netAliasMap[signal.Name]);
                 }
             }
         }
