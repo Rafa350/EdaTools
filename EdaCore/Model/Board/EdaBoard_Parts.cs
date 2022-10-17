@@ -100,6 +100,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             _parts != null;
 
         /// <summary>
+        /// Obte el nombre de parts.
+        /// </summary>
+        /// 
+        public int PartCount =>
+            _parts == null ? 0 : _parts.Count;
+
+        /// <summary>
         /// Obte un enumerador pels noms dels components.
         /// </summary>
         /// 

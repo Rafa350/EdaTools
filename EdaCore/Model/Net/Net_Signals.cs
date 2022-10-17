@@ -5,17 +5,17 @@
 
     public sealed partial class Net {
 
-        private readonly Dictionary<string, NetSignal> signals = new Dictionary<string, NetSignal>();
+        private readonly Dictionary<string, NetSignal> _signals = new Dictionary<string, NetSignal>();
 
         private void InitializeSignals(IEnumerable<NetSignal> signals) {
 
             foreach (NetSignal signal in signals)
-                this.signals.Add(signal.Name, signal);
+                this._signals.Add(signal.Name, signal);
         }
 
         public NetSignal GetSignal(string name, bool throwOnError = true) {
 
-            if (signals.TryGetValue(name, out var signal))
+            if (_signals.TryGetValue(name, out var signal))
                 return signal;
 
             else if (throwOnError)
@@ -32,7 +32,7 @@
         /// 
         public bool HasSignals {
             get {
-                return signals.Count > 0;
+                return _signals.Count > 0;
             }
         }
 
@@ -40,20 +40,14 @@
         /// Enumera els noms de les senyals.
         /// </summary>
         /// 
-        public IEnumerable<string> SignalNames {
-            get {
-                return signals.Keys;
-            }
-        }
+        public IEnumerable<string> SignalNames =>
+            _signals.Keys;
 
         /// <summary>
         /// Enumera les senyals.
         /// </summary>
         /// 
-        public IEnumerable<NetSignal> Signals {
-            get {
-                return signals.Values;
-            }
-        }
+        public IEnumerable<NetSignal> Signals =>
+            _signals.Values;
     }
 }

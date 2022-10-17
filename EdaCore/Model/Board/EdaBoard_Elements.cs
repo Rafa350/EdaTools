@@ -53,6 +53,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             _elements != null;
 
         /// <summary>
+        /// Obte el nombre d'elements.
+        /// </summary>
+        /// 
+        public int ElementCount =>
+            _elements == null ? 0 : _elements.Count;
+
+        /// <summary>
         /// Obte un enunerador pels elements.
         /// </summary>
         /// 

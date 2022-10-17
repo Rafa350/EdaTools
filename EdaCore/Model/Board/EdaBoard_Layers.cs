@@ -137,6 +137,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             _layers != null;
 
         /// <summary>
+        /// Obte el nombre de capes.
+        /// </summary>
+        /// 
+        public int LayerCount =>
+            _layers == null ? 0 : _layers.Count;
+
+        /// <summary>
         /// Enumera les capes.
         /// </summary>
         /// 

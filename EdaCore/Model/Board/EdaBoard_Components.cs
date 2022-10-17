@@ -95,6 +95,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             _components != null;
 
         /// <summary>
+        /// Obte el nombre de components.
+        /// </summary>
+        /// 
+        public int ComponentCount =>
+            _components == null ? 0 : _components.Count;
+
+        /// <summary>
         /// Enumera els noms dels components
         /// </summary>
         /// 

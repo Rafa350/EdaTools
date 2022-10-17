@@ -21,11 +21,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// 
         public static EdaPadElement GetPad(this EdaComponent component, string name, bool throwOnError = true) {
 
-            var pad = component.Pads().First(pad => pad.Name == name);
-            if (pad != null)
-                return pad;
+            var pads = component.Pads();
+            if (pads.Any()) {
+                var pad = pads.FirstOrDefault(pad => pad.Name == name);
+                if (pad != null)
+                    return pad;
+            }
 
-            else if (throwOnError)
+            if (throwOnError)
                 throw new InvalidOperationException(
                     String.Format("No se encontro el pad '{0}' en el componente '{1}'.", name, component.Name));
 
