@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -15,8 +14,20 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
         private const double _scale = 1000000.0;
 
+        private List<LayerInfo> _layerInfoList;
+        private XmlWriter _writer;
+
         public IPC2581Generator(Target target) :
             base(target) {
+
+            _layerInfoList = new List<LayerInfo>() {
+                new LayerInfo { Name = "TOP", Side = LayerSide.Top, Function = LayerFunction.Conductor },
+                new LayerInfo { Name = "BOTTOM", Side = LayerSide.Bottom, Function = LayerFunction.Conductor },
+                new LayerInfo { Name = "DRILL_TOP_BOTTOM", Side = LayerSide.All, Function = LayerFunction.Drill },
+                new LayerInfo { Name = "OUTLINE", Side = LayerSide.None, Function = LayerFunction.Outline },
+                new LayerInfo { Name = "TOP_MASK", Side = LayerSide.Top, Function = LayerFunction.SolderMask },
+                new LayerInfo { Name = "BOTTOM_MASK", Side = LayerSide.Bottom, Function = LayerFunction.SolderMask },
+            };
         }
 
         public override void Generate(EdaBoard board, string outputFolder, GeneratorOptions options = null) {
@@ -33,35 +44,34 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             settings.Indent = true;
             settings.IndentChars = "    ";
 
-            using (var writer = XmlWriter.Create(
+            using (_writer = XmlWriter.Create(
                 new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None),
                 settings)) {
 
-                writer.WriteStartDocument();
-                writer.WriteStartElement("IPC-2581");
-                writer.WriteAttributeString("revision", "C");
+                _writer.WriteStartDocument();
+                _writer.WriteStartElement("IPC-2581");
+                _writer.WriteAttributeString("revision", "C");
 
-                WriteContentSection(writer, board);
-                WriteSection_Bom(writer, board);
-                WriteSection_Ecad(writer, board);
+                WriteContentSection(board);
+                WriteSection_Bom(board);
+                WriteSection_Ecad(board);
 
-                writer.WriteEndElement();
-                writer.WriteEndDocument();
+                _writer.WriteEndElement();
+                _writer.WriteEndDocument();
             }
         }
 
         /// <summary>
         /// Escriu la seccio 'Content'
         /// </summary>
-        /// <param name="writer">El escriptor XML.</param>
         /// <param name="board">La placa.</param>
         /// 
-        private static void WriteContentSection(XmlWriter writer, EdaBoard board) {
+        private void WriteContentSection(EdaBoard board) {
 
-            writer.WriteStartElement("Content");
+            _writer.WriteStartElement("Content");
 
-            writer.WriteStartElement("DictionaryStandard");
-            writer.WriteAttributeString("units", "MILLIMETER");
+            _writer.WriteStartElement("DictionaryStandard");
+            _writer.WriteAttributeString("units", "MILLIMETER");
 
             var elements = new List<EdaElement>();
             foreach (var component in board.Components) {
@@ -84,14 +94,14 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
                                 double diameter = viaElement.OuterSize / 1000000.0;
 
-                                writer.WriteStartElement("EntryStandard");
-                                writer.WriteAttributeString("id", id);
+                                _writer.WriteStartElement("EntryStandard");
+                                _writer.WriteAttributeString("id", id);
 
-                                writer.WriteStartElement("Circle");
-                                writer.WriteAttributeString("diameter", XmlConvert.ToString(diameter));
-                                writer.WriteEndElement();
+                                _writer.WriteStartElement("Circle");
+                                _writer.WriteAttributeString("diameter", XmlConvert.ToString(diameter));
+                                _writer.WriteEndElement();
 
-                                writer.WriteEndElement();
+                                _writer.WriteEndElement();
                             }
                         }
 
@@ -106,69 +116,66 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                                 double height = smdPadElement.Size.Height / 1000000.0;
                                 double radius = smdPadElement.CornerSize / 1000000.0;
 
-                                writer.WriteStartElement("EntryStandard");
-                                writer.WriteAttributeString("id", id);
+                                _writer.WriteStartElement("EntryStandard");
+                                _writer.WriteAttributeString("id", id);
 
-                                writer.WriteStartElement(radius == 0 ? "RectCenter" : "RectRound");
-                                writer.WriteAttributeString("width", XmlConvert.ToString(width));
-                                writer.WriteAttributeString("height", XmlConvert.ToString(height));
+                                _writer.WriteStartElement(radius == 0 ? "RectCenter" : "RectRound");
+                                _writer.WriteAttributeString("width", XmlConvert.ToString(width));
+                                _writer.WriteAttributeString("height", XmlConvert.ToString(height));
                                 if (radius > 0) {
-                                    writer.WriteAttributeString("radius", XmlConvert.ToString(radius));
-                                    writer.WriteAttributeString("upperLeft", "TRUE");
-                                    writer.WriteAttributeString("upperRight", "TRUE");
-                                    writer.WriteAttributeString("lowerLeft", "TRUE");
-                                    writer.WriteAttributeString("lowerRight", "TRUE");
+                                    _writer.WriteAttributeString("radius", XmlConvert.ToString(radius));
+                                    _writer.WriteAttributeString("upperLeft", "TRUE");
+                                    _writer.WriteAttributeString("upperRight", "TRUE");
+                                    _writer.WriteAttributeString("lowerLeft", "TRUE");
+                                    _writer.WriteAttributeString("lowerRight", "TRUE");
                                 }
-                                writer.WriteEndElement();
+                                _writer.WriteEndElement();
 
-                                writer.WriteEndElement();
+                                _writer.WriteEndElement();
                             }
                         }
                     }
             }
 
-            writer.WriteEndElement();
-            writer.WriteEndElement();
+            _writer.WriteEndElement();
+            _writer.WriteEndElement();
         }
 
         /// <summary>
         /// Escriu la seccio 'Bom'
         /// </summary>
-        /// <param name="writer">El escriptor XML.</param>
         /// <param name="board">La placa.</param>
         /// 
-        private static void WriteSection_Bom(XmlWriter writer, EdaBoard board) {
+        private void WriteSection_Bom(EdaBoard board) {
 
-            writer.WriteStartElement("Bom");
-            writer.WriteAttributeString("name", "bom_0");
-            
-            WriteSection_BomHeader(writer, board);
-            WriteSection_BomItem(writer, board);
+            _writer.WriteStartElement("Bom");
+            _writer.WriteAttributeString("name", "bom_0");
 
-            writer.WriteEndElement();
+            WriteSection_BomHeader(board);
+            WriteSection_BomItem(board);
+
+            _writer.WriteEndElement();
         }
 
         /// <summary>
         /// Escriu la seccio 'BomHeader'
         /// </summary>
-        /// <param name="writer">L'escriptor XML.</param>
         /// <param name="board">La placa.</param>
         /// 
-        private static void WriteSection_BomHeader(XmlWriter writer, EdaBoard board) {
+        private void WriteSection_BomHeader(EdaBoard board) {
 
-            writer.WriteStartElement("BomHeader");
-            writer.WriteAttributeString("assembly", "assembly_0");
-            writer.WriteAttributeString("revision", "1.0");
-            writer.WriteEndElement();
+            _writer.WriteStartElement("BomHeader");
+            _writer.WriteAttributeString("assembly", "assembly_0");
+            _writer.WriteAttributeString("revision", "1.0");
+            _writer.WriteEndElement();
         }
 
         /// <summary>
         /// Escriu la seccio 'BomItem'
         /// </summary>
-        /// <param name="writer">L'escriptor XML.</param>
         /// <param name="board">La placa.</param>
         /// 
-        private static void WriteSection_BomItem(XmlWriter writer, EdaBoard board) {
+        private void WriteSection_BomItem(EdaBoard board) {
 
             var bom = new Dictionary<string, List<EdaPart>>();
             foreach (var part in board.Parts) {
@@ -183,293 +190,363 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             }
 
             foreach (var item in bom) {
-                writer.WriteStartElement("BomItem");
-                writer.WriteAttributeString("OEMDesignNumberRef", item.Key);
-                writer.WriteAttributeString("quantity", XmlConvert.ToString(item.Value.Count));
+                _writer.WriteStartElement("BomItem");
+                _writer.WriteAttributeString("OEMDesignNumberRef", item.Key);
+                _writer.WriteAttributeString("quantity", XmlConvert.ToString(item.Value.Count));
 
                 foreach (var part in item.Value) {
-                    writer.WriteStartElement("RefDes");
-                    writer.WriteAttributeString("name", part.Name);
-                    writer.WriteEndElement();
+                    _writer.WriteStartElement("RefDes");
+                    _writer.WriteAttributeString("name", part.Name);
+                    _writer.WriteEndElement();
                 }
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
         }
 
         /// <summary>
         /// Escriu la seccio 'ECad'
         /// </summary>
-        /// <param name="writer">L'escriptor XML.</param>
         /// <param name="board">La placa.</param>
         /// 
-        private static void WriteSection_Ecad(XmlWriter writer, EdaBoard board) {
+        private void WriteSection_Ecad(EdaBoard board) {
 
-            writer.WriteStartElement("Ecad");
-            writer.WriteAttributeString("name", "ecad_0");
-            WriteSection_CadHeader(writer, board);
-            WriteSection_CadData(writer, board);
-            writer.WriteEndElement();
+            _writer.WriteStartElement("Ecad");
+            _writer.WriteAttributeString("name", "ecad_0");
+            WriteSection_CadHeader(board);
+            WriteSection_CadData(board);
+            _writer.WriteEndElement();
         }
 
         /// <summary>
         /// Escriu la seccio 'CadHeader'
         /// </summary>
-        /// <param name="writer">L'escriptor XML</param>
         /// <param name="board">La placa.</param>
         /// 
-        private static void WriteSection_CadHeader(XmlWriter writer, EdaBoard board) {
+        private void WriteSection_CadHeader(EdaBoard board) {
 
-            writer.WriteStartElement("CadHeader");
-            writer.WriteAttributeString("units", "MILLIMETER");
+            _writer.WriteStartElement("CadHeader");
+            _writer.WriteAttributeString("units", "MILLIMETER");
 
-            writer.WriteStartElement("Spec");
-            writer.WriteAttributeString("name", "name_example");
-            writer.WriteAttributeString("value", "value_example");
-            writer.WriteAttributeString("tolPlus", "0.02");
-            writer.WriteAttributeString("tolMinus", "0.02");
-            writer.WriteAttributeString("global", "TRUE");
+            _writer.WriteStartElement("Spec");
+            _writer.WriteAttributeString("name", "name_example");
+            _writer.WriteAttributeString("value", "value_example");
+            _writer.WriteAttributeString("tolPlus", "0.02");
+            _writer.WriteAttributeString("tolMinus", "0.02");
+            _writer.WriteAttributeString("global", "TRUE");
 
-            writer.WriteStartElement("Location");
-            writer.WriteAttributeString("x", "0.00");
-            writer.WriteAttributeString("y", "0.00");
-            writer.WriteEndElement();
+            _writer.WriteStartElement("Location");
+            _writer.WriteAttributeString("x", "0.00");
+            _writer.WriteAttributeString("y", "0.00");
+            _writer.WriteEndElement();
 
-            writer.WriteEndElement();
+            _writer.WriteEndElement();
 
-            writer.WriteEndElement();
+            _writer.WriteEndElement();
         }
 
         /// <summary>
         /// Escriu la seccio 'CadData'
         /// </summary>
-        /// <param name="writer">L'scriptor XML</param>
         /// <param name="board">La placa.</param>
         /// 
-        private static void WriteSection_CadData(XmlWriter writer, EdaBoard board) {
+        private void WriteSection_CadData(EdaBoard board) {
 
-            writer.WriteStartElement("CadData");
+            _writer.WriteStartElement("CadData");
 
-            WriteSection_Layer(writer, board);
-            WriteSection_Stackup(writer, board);
+            WriteSection_Layer(board);
+            WriteSection_Stackup(board);
 
+            _writer.WriteStartElement("Step");
+            _writer.WriteAttributeString("name", "board");
 
-            writer.WriteStartElement("Step");
-            writer.WriteAttributeString("name", "board");
+            WritePoint("Datum", board.Position);
 
-            WritePoint(writer, "Datum", board.Position);
+            WriteProfile(board);
+            WriteSection_Package(board);
+            WriteSection_Component(board);
+            WriteSection_LogicalNet(board);
+            WriteSection_LayerFeature(board);
 
-            WriteProfile(writer, board);
-            WriteSection_Package(writer, board);
-            WriteSection_Component(writer, board);
-            WriteSection_LogicalNet(writer, board);
-            WriteSection_LayerFeature(writer, board);
+            _writer.WriteEndElement();
 
-            writer.WriteEndElement();
-
-            writer.WriteEndElement();
+            _writer.WriteEndElement();
         }
 
         /// <summary>
         /// Escriu la seccio 'Package'
         /// </summary>
-        /// <param name="writer">El escriptor XML</param>
         /// <param name="board">La placa.</param>
         /// 
-        private static void WriteSection_Package(XmlWriter writer, EdaBoard board) {
+        private void WriteSection_Package(EdaBoard board) {
 
             foreach (var component in board.Components) {
-                writer.WriteStartElement("Package");
-                writer.WriteAttributeString("name", component.Name);
-                writer.WriteEndElement();
+                _writer.WriteStartElement("Package");
+                _writer.WriteAttributeString("name", component.Name);
+                _writer.WriteEndElement();
             }
         }
 
         /// <summary>
         /// Escriu la seccio 'LogicalNet'
         /// </summary>
-        /// <param name="writer">El escriptor XML.</param>
         /// <param name="board">La placa.</param>
         /// 
-        private static void WriteSection_LogicalNet(XmlWriter writer, EdaBoard board) {
+        private void WriteSection_LogicalNet(EdaBoard board) {
 
             foreach (var signal in board.Signals) {
-                writer.WriteStartElement("LogicalNet");
-                writer.WriteAttributeString("name", signal.Name);
+                _writer.WriteStartElement("LogicalNet");
+                _writer.WriteAttributeString("name", signal.Name);
 
                 var items = board.GetConnectedItems(signal);
                 if (items != null) {
                     foreach (var item in items) {
                         if (item.Item1 is EdaPadElement pad) {
                             var part = item.Item2;
-                            writer.WriteStartElement("PinRef");
-                            writer.WriteAttributeString("componentRef", part.Name);
-                            writer.WriteAttributeString("pin", pad.Name);
-                            writer.WriteEndElement();
+                            _writer.WriteStartElement("PinRef");
+                            _writer.WriteAttributeString("componentRef", part.Name);
+                            _writer.WriteAttributeString("pin", pad.Name);
+                            _writer.WriteEndElement();
                         }
                     }
                 }
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
             }
         }
 
         /// <summary>
         /// Escriu la seccio 'Layer'
         /// </summary>
-        /// <param name="writer">El escriptor XML.</param>
         /// <param name="board">La placa.</param>
         /// 
-        private static void WriteSection_Layer(XmlWriter writer, EdaBoard board) {
+        private void WriteSection_Layer(EdaBoard board) {
 
-            // Capa TOP
-            //
-            writer.WriteStartElement("Layer");
-            writer.WriteAttributeString("name", "TOP");
-            writer.WriteAttributeString("layerFunction", "CONDUCTOR");
-            writer.WriteAttributeString("side", "TOP");
-            writer.WriteAttributeString("polarity", "POSITIVE");
-            writer.WriteEndElement();
+            foreach (var layerInfo in _layerInfoList) {
 
-            // Capa BOTTOM
-            //
-            writer.WriteStartElement("Layer");
-            writer.WriteAttributeString("name", "BOTTOM");
-            writer.WriteAttributeString("layerFunction", "CONDUCTOR");
-            writer.WriteAttributeString("side", "BOTTOM");
-            writer.WriteAttributeString("polarity", "POSITIVE");
-            writer.WriteEndElement();
+                string functionName = "CONDUCTOR";
+                switch (layerInfo.Function) {
+                    case LayerFunction.Drill:
+                        functionName = "DRILL";
+                        break;
 
-            // Capa DRILL_TOP_BOTTOM
-            //
-            writer.WriteStartElement("Layer");
-            writer.WriteAttributeString("name", "DRILL_TOP_BOTTOM");
-            writer.WriteAttributeString("layerFunction", "DRILL");
-            writer.WriteAttributeString("side", "ALL");
-            writer.WriteAttributeString("polarity", "POSITIVE");
-            writer.WriteStartElement("Span");
-            writer.WriteAttributeString("fromLayer", "TOP");
-            writer.WriteAttributeString("toLayer", "BOTTOM");
-            writer.WriteEndElement();
-            writer.WriteEndElement();
+                    case LayerFunction.Outline:
+                        functionName = "BOARD_OUTLINE";
+                        break;
+
+                    case LayerFunction.SolderMask:
+                        functionName = "SOLDERMASK";
+                        break;
+
+                    case LayerFunction.SolderPaste:
+                        functionName = "SOLDERPASTE";
+                        break;
+                }
+
+                string sideName = "NONE";
+                switch (layerInfo.Side) {
+                    case LayerSide.Top:
+                        sideName = "TOP";
+                        break;
+
+                    case LayerSide.Bottom:
+                        sideName = "BOTTOM";
+                        break;
+
+                    case LayerSide.All:
+                        sideName = "ALL";
+                        break;
+                }
+
+                _writer.WriteStartElement("Layer");
+                _writer.WriteAttributeString("name", layerInfo.Name);
+                _writer.WriteAttributeString("layerFunction", functionName);
+                _writer.WriteAttributeString("side", sideName);
+
+                if (layerInfo.Function == LayerFunction.Drill) {
+                    _writer.WriteStartElement("Span");
+                    _writer.WriteAttributeString("fromLayer", "TOP");
+                    _writer.WriteAttributeString("toLayer", "BOTTOM");
+                    _writer.WriteEndElement();
+                }
+
+                _writer.WriteEndElement();
+            }
         }
 
-        private static void WriteSection_Stackup(XmlWriter writer, EdaBoard board) {
+        /// <summary>
+        /// Escriu la seccio 'Stackup'
+        /// </summary>
+        /// <param name="board">La placa.</param>
+        /// 
+        private void WriteSection_Stackup(EdaBoard board) {
 
-            writer.WriteStartElement("Stackup");
-            writer.WriteAttributeString("name", "stackup_0");
-            writer.WriteAttributeString("tolPlus", "0");
-            writer.WriteAttributeString("tolMinus", "0");
-            writer.WriteStartElement("StackupGroup");
-            writer.WriteAttributeString("name", "stackup_group_0");
-            writer.WriteAttributeString("thickness", "1.45");
-            writer.WriteAttributeString("tolPlus", "0");
-            writer.WriteAttributeString("tolMinus", "0");
+            _writer.WriteStartElement("Stackup");
+            _writer.WriteAttributeString("name", "stackup_0");
+            _writer.WriteAttributeString("overallThickness", "1.44");
+            _writer.WriteAttributeString("whereMeasured", "METAL");
+            _writer.WriteAttributeString("tolPlus", "0");
+            _writer.WriteAttributeString("tolMinus", "0");
+            _writer.WriteStartElement("StackupGroup");
+            _writer.WriteAttributeString("name", "stackup_group_0");
+            _writer.WriteAttributeString("thickness", "1.45");
+            _writer.WriteAttributeString("tolPlus", "0");
+            _writer.WriteAttributeString("tolMinus", "0");
 
             int sequence = 1;
+            foreach (var layerInfo in _layerInfoList) {
+                if (layerInfo.Function == LayerFunction.Conductor) {
+                    _writer.WriteStartElement("StackupLayer");
+                    _writer.WriteAttributeString("layerOfGroupRef", layerInfo.Name);
+                    _writer.WriteAttributeString("thickness", "0.35");
+                    _writer.WriteAttributeString("tolPlus", "0");
+                    _writer.WriteAttributeString("tolMinus", "0");
+                    _writer.WriteAttributeString("sequence", XmlConvert.ToString(sequence++));
+                    _writer.WriteEndElement();
+                }
+            }
 
-            // Capa TOP
-            //
-            writer.WriteStartElement("StackupLayer");
-            writer.WriteAttributeString("layerOfGroupRef", "TOP");
-            writer.WriteAttributeString("thickness", "0.35");
-            writer.WriteAttributeString("tolPlus", "0");
-            writer.WriteAttributeString("tolMinus", "0");
-            writer.WriteAttributeString("sequence", XmlConvert.ToString(sequence++));
-            writer.WriteEndElement();
-
-            // Capa BOTTOM
-            //
-            writer.WriteStartElement("StackupLayer");
-            writer.WriteAttributeString("layerOfGroupRef", "BOTTOM");
-            writer.WriteAttributeString("thickness", "0.35");
-            writer.WriteAttributeString("tolPlus", "0");
-            writer.WriteAttributeString("tolMinus", "0");
-            writer.WriteAttributeString("sequence", XmlConvert.ToString(sequence++));
-            writer.WriteEndElement();
-
-            writer.WriteEndElement();
-            writer.WriteEndElement();
+            _writer.WriteEndElement();
+            _writer.WriteEndElement();
         }
 
         /// <summary>
         /// Escriu la la seccio 'LayerFeature'.
         /// </summary>
-        /// <param name="writer">El escriptor XML.</param>
         /// <param name="board">La placa.</param>
         /// 
-        private static void WriteSection_LayerFeature(XmlWriter writer, EdaBoard board) {
+        private void WriteSection_LayerFeature(EdaBoard board) {
 
-            foreach (var layer in board.Layers) {
-                writer.WriteStartElement("LayerFeature");
-                writer.WriteAttributeString("layerRef", layer.Name);
+            // Procesa les capes conductores.
+            //
+            foreach (var layerInfo in _layerInfoList.Where(x => x.Function == LayerFunction.Conductor)) {
 
-                var elements = board.GetElements(layer, true);
+                _writer.WriteStartElement("LayerFeature");
+                _writer.WriteAttributeString("layerRef", layerInfo.Name);
+
+                EdaLayerId layerId = default;
+                switch (layerInfo.Side) {
+                    case LayerSide.Top:
+                        layerId = EdaLayerId.TopCopper;
+                        break;
+
+                    case LayerSide.Bottom:
+                        layerId = EdaLayerId.BottomCopper;
+                        break;
+                }
+
+                var elements = board.GetElements(board.GetLayer(layerId), false);
                 foreach (var element in elements) {
+
                     if (element is EdaSmdPadElement smdPadElement) {
-                        writer.WriteStartElement("Set"); 
-                        writer.WriteStartElement("Pad");
-                        WritePoint(writer, "Location", smdPadElement.Position);
-                        writer.WriteStartElement("StandardPrimitiveRef");
-                        string id = $"smdpad_{smdPadElement.Size.Width}_{smdPadElement.Size.Height}_{smdPadElement.CornerSize}";
-                        writer.WriteAttributeString("id", id);
-                        writer.WriteEndElement();
-                        writer.WriteEndElement();
-                        writer.WriteEndElement();
+                        _writer.WriteStartElement("Set");
+                        _writer.WriteStartElement("Pad");
+                        WritePoint("Location", smdPadElement.Position);
+                        _writer.WriteStartElement("StandardPrimitiveRef");
+                        _writer.WriteAttributeString("id", $"smdpad_{smdPadElement.Size.Width}_{smdPadElement.Size.Height}_{smdPadElement.CornerSize}");
+                        _writer.WriteEndElement();
+                        _writer.WriteEndElement();
+                        _writer.WriteEndElement();
                     }
 
                     else if (element is EdaViaElement viaElement) {
-                        writer.WriteStartElement("Set");
-                        writer.WriteAttributeString("padUsage", "VIA");
-                        writer.WriteStartElement("Pad");
-                        WritePoint(writer, "Location", viaElement.Position);
-                        writer.WriteStartElement("StandardPrimitiveRef");
-                        string id = $"via_{viaElement.OuterSize}";
-                        writer.WriteAttributeString("id", id);
-                        writer.WriteEndElement();
-                        writer.WriteEndElement();
-                        writer.WriteEndElement();
+                        _writer.WriteStartElement("Set");
+                        _writer.WriteAttributeString("padUsage", "VIA");
+                        _writer.WriteStartElement("Pad");
+                        WritePoint("Location", viaElement.Position);
+                        _writer.WriteStartElement("StandardPrimitiveRef");
+                        _writer.WriteAttributeString("id", $"via_{viaElement.OuterSize}");
+                        _writer.WriteEndElement();
+                        _writer.WriteEndElement();
+                        _writer.WriteEndElement();
                     }
                 }
 
-                writer.WriteEndElement();
+                _writer.WriteEndElement();
+            }
+
+            // Procesa les capes de forats
+            //
+            int holeNumber = 0;
+            foreach (var layerInfo in _layerInfoList.Where(x => x.Function == LayerFunction.Drill)) {
+
+                _writer.WriteStartElement("LayerFeature");
+                _writer.WriteAttributeString("layerRef", layerInfo.Name);
+
+                var elements = board.GetElements(board.GetLayer(EdaLayerId.Vias), true);
+                foreach (var element in elements) {
+                    if (element is EdaViaElement viaElement) {
+                        _writer.WriteStartElement("Set");
+                        _writer.WriteStartElement("Hole");
+                        _writer.WriteAttributeString("name", String.Format("H{0}", holeNumber++));
+                        _writer.WriteAttributeString("platingStatus", "VIA");
+                        _writer.WriteAttributeString("x", XmlConvert.ToString(viaElement.Position.X / _scale));
+                        _writer.WriteAttributeString("y", XmlConvert.ToString(viaElement.Position.Y / _scale));
+                        _writer.WriteAttributeString("diameter", XmlConvert.ToString(viaElement.DrillDiameter / _scale));
+                        _writer.WriteAttributeString("plusTol", "0");
+                        _writer.WriteAttributeString("minusTol", "0");
+                        _writer.WriteEndElement();
+                        _writer.WriteEndElement();
+                    }
+                }
+
+                _writer.WriteEndElement();
+            }
+
+            // Procesa les capes de mascara de soldadura
+            //
+            foreach (var layerInfo in _layerInfoList.Where(x => x.Function == LayerFunction.SolderMask)) {
+
+                _writer.WriteStartElement("LayerFeature");
+                _writer.WriteAttributeString("layerRef", layerInfo.Name);
+
+                EdaLayerId layerId = default;
+                switch (layerInfo.Side) {
+                    case LayerSide.Top:
+                        layerId = EdaLayerId.TopStop;
+                        break;
+
+                    case LayerSide.Bottom:
+                        layerId = EdaLayerId.BottomStop;
+                        break;
+                }
+
+                _writer.WriteEndElement();
             }
         }
 
         /// <summary>
         /// Escriu la la seccio 'Component'.
         /// </summary>
-        /// <param name="writer">El escriptor XML.</param>
         /// <param name="board">La placa.</param>
         /// 
-        private static void WriteSection_Component(XmlWriter writer, EdaBoard board) {
+        private void WriteSection_Component(EdaBoard board) {
 
             foreach (var part in board.Parts) {
 
-                writer.WriteStartElement("Component");
-                writer.WriteAttributeString("refDes", part.Name);
-                writer.WriteAttributeString("layerRef", "Top.Copper");
-                writer.WriteAttributeString("packageRef", part.Component.Name);
-                WritePoint(writer, "Location", part.Position);
-                writer.WriteEndElement();
+                _writer.WriteStartElement("Component");
+                _writer.WriteAttributeString("refDes", part.Name);
+                _writer.WriteAttributeString("layerRef", "TOP");
+                _writer.WriteAttributeString("packageRef", part.Component.Name);
+                WritePoint("Location", part.Position);
+                _writer.WriteEndElement();
             }
         }
 
-        private static void WritePoint(XmlWriter writer, string name, EdaPoint point) {
+        private void WritePoint(string name, EdaPoint point) {
 
-            writer.WriteStartElement(name);
-            writer.WriteAttributeString("x", XmlConvert.ToString(point.X / _scale));
-            writer.WriteAttributeString("y", XmlConvert.ToString(point.Y / _scale));
-            writer.WriteEndElement();
+            _writer.WriteStartElement(name);
+            _writer.WriteAttributeString("x", XmlConvert.ToString(point.X / _scale));
+            _writer.WriteAttributeString("y", XmlConvert.ToString(point.Y / _scale));
+            _writer.WriteEndElement();
         }
 
         /// <summary>
         /// Escriu la descripocio d'un poligon.
         /// </summary>
-        /// <param name="writer">El escriptor XML.</param>
         /// <param name="polygon">El poligon.</param>
         /// 
-        private static void WritePolygon(XmlWriter writer, EdaPolygon polygon) {
+        private void WritePolygon(EdaPolygon polygon) {
 
             bool first = true;
             EdaPoint firstPoint = default;
@@ -477,31 +554,30 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 if (first) {
                     first = false;
                     firstPoint = point;
-                    WritePoint(writer, "PolyBegin", point);
+                    WritePoint("PolyBegin", point);
                 }
                 else
-                    WritePoint(writer, "PolyStepSegment", point);
+                    WritePoint("PolyStepSegment", point);
             }
-            WritePoint(writer, "PolyStepSegment", firstPoint);
+            WritePoint("PolyStepSegment", firstPoint);
         }
 
         /// <summary>
         /// Escriu la descripcio del perfil de la placa.
         /// </summary>
-        /// <param name="writer">El escriptor XML.</param>
         /// <param name="board">La placa.</param>
         /// 
-        private static void WriteProfile(XmlWriter writer, EdaBoard board) {
+        private void WriteProfile(EdaBoard board) {
 
-            writer.WriteStartElement("Profile");
-            writer.WriteStartElement("Polygon");
+            _writer.WriteStartElement("Profile");
+            _writer.WriteStartElement("Polygon");
 
             var polygon = board.GetOutlinePolygon();
             if (polygon != null)
-                WritePolygon(writer, polygon);
+                WritePolygon(polygon);
 
-            writer.WriteEndElement();
-            writer.WriteEndElement();
+            _writer.WriteEndElement();
+            _writer.WriteEndElement();
         }
     }
 }
