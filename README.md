@@ -24,6 +24,11 @@ EdaCAMTool.
 -Create production files from CAM project file (.XCAM).
 -Generate gerber X3 image files.
 -Generate gerber X3 drill and route files.
--Generate IPC-D356 netlist.
--Compliant with Ucamco Gerber File Format Specification (www.ucamco.com)
--Passed test with "https://gerber-viewer.ucamco.com/"
+-Generate IPC-D356 netlist file.
+-Generate IPC-2581C file.
+-Compliant with Ucamco Gerber File Format Specification (www.ucamco.com).
+-Passed Gerber test with "https://gerber-viewer.ucamco.com/".
+-Passed IPC2581C test with 3D PCBA Viewer.
+
+Notes.
+-IPC2581C preliminar version no usable.
