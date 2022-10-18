@@ -251,27 +251,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             writer.WriteStartElement("CadData");
 
             WriteSection_Layer(writer, board);
+            WriteSection_Stackup(writer, board);
 
-            writer.WriteStartElement("Stackup");
-            writer.WriteAttributeString("name", "stackup_0");
-            writer.WriteAttributeString("tolPlus", "0");
-            writer.WriteAttributeString("tolMinus", "0");
-            writer.WriteStartElement("StackupGroup");
-            writer.WriteAttributeString("name", "stackup_group_0");
-            writer.WriteAttributeString("thickness", "1.45");
-            writer.WriteAttributeString("tolPlus", "0");
-            writer.WriteAttributeString("tolMinus", "0");
-            foreach (var layer in board.Layers) {
-                writer.WriteStartElement("StackupLayer");
-                writer.WriteAttributeString("layerOfGroupRef", layer.Name);
-                writer.WriteAttributeString("materialType", "COPPER");
-                writer.WriteAttributeString("thickness", "0.35");
-                writer.WriteAttributeString("tolPlus", "0");
-                writer.WriteAttributeString("tolMinus", "0");
-                writer.WriteEndElement();
-            }
-            writer.WriteEndElement();
-            writer.WriteEndElement();
 
             writer.WriteStartElement("Step");
             writer.WriteAttributeString("name", "board");
@@ -341,41 +322,74 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         /// 
         private static void WriteSection_Layer(XmlWriter writer, EdaBoard board) {
 
-            foreach (var layer in board.Layers) {
+            // Capa TOP
+            //
+            writer.WriteStartElement("Layer");
+            writer.WriteAttributeString("name", "TOP");
+            writer.WriteAttributeString("layerFunction", "CONDUCTOR");
+            writer.WriteAttributeString("side", "TOP");
+            writer.WriteAttributeString("polarity", "POSITIVE");
+            writer.WriteEndElement();
 
-                string sideName = "NONE";
-                switch (layer.Side) {
-                    case BoardSide.Top:
-                        sideName = "TOP";
-                        break;
+            // Capa BOTTOM
+            //
+            writer.WriteStartElement("Layer");
+            writer.WriteAttributeString("name", "BOTTOM");
+            writer.WriteAttributeString("layerFunction", "CONDUCTOR");
+            writer.WriteAttributeString("side", "BOTTOM");
+            writer.WriteAttributeString("polarity", "POSITIVE");
+            writer.WriteEndElement();
 
-                    case BoardSide.Bottom:
-                        sideName = "BOTTOM";
-                        break;
+            // Capa DRILL_TOP_BOTTOM
+            //
+            writer.WriteStartElement("Layer");
+            writer.WriteAttributeString("name", "DRILL_TOP_BOTTOM");
+            writer.WriteAttributeString("layerFunction", "DRILL");
+            writer.WriteAttributeString("side", "ALL");
+            writer.WriteAttributeString("polarity", "POSITIVE");
+            writer.WriteStartElement("Span");
+            writer.WriteAttributeString("fromLayer", "TOP");
+            writer.WriteAttributeString("toLayer", "BOTTOM");
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
 
-                    case BoardSide.Inner:
-                        sideName = "INTERNAL";
-                        break;
-                }
+        private static void WriteSection_Stackup(XmlWriter writer, EdaBoard board) {
 
-                string layerFunction = "OTHER";
-                switch (layer.Function) {
-                    case LayerFunction.Signal:
-                        layerFunction = "SIGNAL";
-                        break;
+            writer.WriteStartElement("Stackup");
+            writer.WriteAttributeString("name", "stackup_0");
+            writer.WriteAttributeString("tolPlus", "0");
+            writer.WriteAttributeString("tolMinus", "0");
+            writer.WriteStartElement("StackupGroup");
+            writer.WriteAttributeString("name", "stackup_group_0");
+            writer.WriteAttributeString("thickness", "1.45");
+            writer.WriteAttributeString("tolPlus", "0");
+            writer.WriteAttributeString("tolMinus", "0");
 
-                    case LayerFunction.Outline:
-                        layerFunction = "BOARD_OUTLINE";
-                        break;
-                }
+            int sequence = 1;
 
-                writer.WriteStartElement("Layer");
-                writer.WriteAttributeString("name", layer.Name);
-                writer.WriteAttributeString("layerFunction", layerFunction);
-                writer.WriteAttributeString("side", sideName);
-                writer.WriteAttributeString("polarity", "POSITIVE");
-                writer.WriteEndElement();
-            }
+            // Capa TOP
+            //
+            writer.WriteStartElement("StackupLayer");
+            writer.WriteAttributeString("layerOfGroupRef", "TOP");
+            writer.WriteAttributeString("thickness", "0.35");
+            writer.WriteAttributeString("tolPlus", "0");
+            writer.WriteAttributeString("tolMinus", "0");
+            writer.WriteAttributeString("sequence", XmlConvert.ToString(sequence++));
+            writer.WriteEndElement();
+
+            // Capa BOTTOM
+            //
+            writer.WriteStartElement("StackupLayer");
+            writer.WriteAttributeString("layerOfGroupRef", "BOTTOM");
+            writer.WriteAttributeString("thickness", "0.35");
+            writer.WriteAttributeString("tolPlus", "0");
+            writer.WriteAttributeString("tolMinus", "0");
+            writer.WriteAttributeString("sequence", XmlConvert.ToString(sequence++));
+            writer.WriteEndElement();
+
+            writer.WriteEndElement();
+            writer.WriteEndElement();
         }
 
         /// <summary>
