@@ -46,7 +46,7 @@ namespace MikroPic.EdaTools.v1.Panel {
             //
             int index = 0;
             foreach (var item in project.Items) {
-                if (item is PcbItem pcb) {
+                if (item is EdaPcbItem pcb) {
 
                     if (!sourceBoardCache.TryGetValue(pcb.FileName, out EdaBoard sourceBoard)) {
                         var path = locator.GetPath(pcb.FileName);
@@ -59,7 +59,7 @@ namespace MikroPic.EdaTools.v1.Panel {
                     AddBoard(sourceBoard, pcb.Position, pcb.Rotation, index++);
                 }
 
-                else if (item is CutItem cut)
+                else if (item is EdaCutItem cut)
                     AddCut(cut);
             }
 
@@ -175,7 +175,7 @@ namespace MikroPic.EdaTools.v1.Panel {
         /// </summary>
         /// <param name="cut">El item.</param>
         /// 
-        private void AddCut(CutItem cut) {
+        private void AddCut(EdaCutItem cut) {
 
             // Obte els punts de tall d'una linia 
             //
@@ -389,8 +389,8 @@ namespace MikroPic.EdaTools.v1.Panel {
                     LayerSet = line.LayerSet
                 };
 
-            else if (element is EdaSmdPadElement smdPad)
-                return new EdaSmdPadElement {
+            else if (element is EdaSmtPadElement smdPad)
+                return new EdaSmtPadElement {
                     Name = smdPad.Name,
                     Position = smdPad.Position,
                     Rotation = smdPad.Rotation,
@@ -400,8 +400,8 @@ namespace MikroPic.EdaTools.v1.Panel {
                     CornerShape = smdPad.CornerShape
                 };
 
-            else if (element is EdaThPadElement thPad)
-                return new EdaThPadElement {
+            else if (element is EdaThtPadElement thPad)
+                return new EdaThtPadElement {
                     Name = thPad.Name,
                     Position = thPad.Position,
                     Rotation = thPad.Rotation,
@@ -480,12 +480,12 @@ namespace MikroPic.EdaTools.v1.Panel {
                 circle.Position = transformation.Transform(circle.Position);
             }
 
-            public override void Visit(EdaSmdPadElement pad) {
+            public override void Visit(EdaSmtPadElement pad) {
 
                 pad.Position = transformation.Transform(pad.Position);
             }
 
-            public override void Visit(EdaThPadElement pad) {
+            public override void Visit(EdaThtPadElement pad) {
 
                 pad.Position = transformation.Transform(pad.Position);
             }

@@ -446,13 +446,13 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             var width = size;
             var height = size;
             var cornerRatio = EdaRatio.Zero;
-            var cornerShape = EdaThPadElement.ThPadCornerShape.Round;
+            var cornerShape = EdaThtPadElement.ThPadCornerShape.Round;
 
             // Obte la forma
             //
             switch (node.AttributeAsString("shape")) {
                 case "octagon":
-                    cornerShape = EdaThPadElement.ThPadCornerShape.Flat;
+                    cornerShape = EdaThtPadElement.ThPadCornerShape.Flat;
                     cornerRatio = EdaRatio.FromPercent(0.54);
                     break;
 
@@ -465,7 +465,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                     break;
             }
 
-            return new EdaThPadElement {
+            return new EdaThtPadElement {
                 Name = name,
                 LayerSet = layerSet,
                 Position = position,
@@ -525,7 +525,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 layerSet.Add(EdaLayerId.BottomCream);
             }
 
-            return new EdaSmdPadElement {
+            return new EdaSmtPadElement {
                 Name = name,
                 LayerSet = layerSet,
                 Position = position,

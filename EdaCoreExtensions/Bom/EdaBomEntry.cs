@@ -1,11 +1,11 @@
 ﻿namespace EdaCoreExtensions.Bom {
 
-    public sealed class BomEntry {
+    public sealed class EdaBomEntry {
 
         private readonly string _name;
         private readonly List<string> _references;
 
-        public BomEntry(string name, IEnumerable<string> references) {
+        public EdaBomEntry(string name, IEnumerable<string> references) {
 
             _name = name;
             _references = new List<string>(references);

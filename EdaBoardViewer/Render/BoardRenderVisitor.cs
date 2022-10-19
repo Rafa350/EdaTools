@@ -128,7 +128,7 @@ namespace EdaBoardViewer.Render {
 
         /// <inheritdoc/>
         /// 
-        public override void Visit(EdaThPadElement pad) {
+        public override void Visit(EdaThtPadElement pad) {
 
             if (_visualLayer.IsVisible(Part, pad)) {
 
@@ -152,7 +152,7 @@ namespace EdaBoardViewer.Render {
 
         /// <inheritdoc/>
         /// 
-        public override void Visit(EdaSmdPadElement pad) {
+        public override void Visit(EdaSmtPadElement pad) {
 
             if (_visualLayer.IsVisible(Part, pad)) {
 

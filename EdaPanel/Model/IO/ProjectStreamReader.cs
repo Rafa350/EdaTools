@@ -167,7 +167,7 @@
         /// </summary>
         /// <returns>L'objecte 'PcbItem' obtingut.</returns>
         /// 
-        private PcbItem ParseBoardNode() {
+        private EdaPcbItem ParseBoardNode() {
 
             if (!rd.IsStartTag("board"))
                 throw new InvalidDataException("Se esperaba <board>");
@@ -185,7 +185,7 @@
             if (!rd.IsEndTag("board"))
                 throw new InvalidDataException("Se esperaba </board>");
 
-            return new PcbItem(fileName, position, size, rotation);
+            return new EdaPcbItem(fileName, position, size, rotation);
         }
 
         /// <summary>
@@ -193,7 +193,7 @@
         /// </summary>
         /// <returns>L'objecte 'CutItem' obtingut.</returns>
         /// 
-        private CutItem ParseCutNode() {
+        private EdaCutItem ParseCutNode() {
 
             if (!rd.IsStartTag("cut"))
                 throw new InvalidDataException("Se esperaba <cut>");
@@ -218,7 +218,7 @@
             if (!rd.IsEndTag("cut"))
                 throw new InvalidDataException("Se esperaba </cut>");
 
-            return new CutItem(startPosition, endPosition, thickness, margin, cuts, cutSpacing,
+            return new EdaCutItem(startPosition, endPosition, thickness, margin, cuts, cutSpacing,
                 holes, holeDiameter, holeSpacing);
         }
     }

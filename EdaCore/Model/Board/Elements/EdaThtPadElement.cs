@@ -6,10 +6,10 @@ using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
-    /// Clase que representa un pad throught hole
+    /// Clase que representa un pad THT
     /// </summary>
     /// 
-    public sealed class EdaThPadElement: EdaPadElement {
+    public sealed class EdaThtPadElement: EdaPadElement {
 
         public enum ThPadCornerShape {
             Round,

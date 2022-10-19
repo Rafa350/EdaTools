@@ -331,7 +331,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             /// <inheritdoc/>
             /// 
-            public override void Visit(EdaThPadElement element) {
+            public override void Visit(EdaThtPadElement element) {
 
                 if (element.IsOnLayer(_layerId)) {
                     EdaAngle rotation = element.Rotation;
@@ -350,7 +350,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             /// <inheritdoc/>
             /// 
-            public override void Visit(EdaSmdPadElement element) {
+            public override void Visit(EdaSmtPadElement element) {
 
                 if (element.IsOnLayer(_layerId)) {
                     EdaAngle rotation = element.Rotation;
@@ -619,7 +619,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             /// <inheritdoc/>
             /// 
-            public override void Visit(EdaThPadElement element) {
+            public override void Visit(EdaThtPadElement element) {
 
                 if (element.IsOnLayer(_layerId)) {
 
@@ -668,7 +668,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             /// <inheritdoc/>
             /// 
-            public override void Visit(EdaSmdPadElement element) {
+            public override void Visit(EdaSmtPadElement element) {
 
                 if (element.IsOnLayer(_layerId)) {
 

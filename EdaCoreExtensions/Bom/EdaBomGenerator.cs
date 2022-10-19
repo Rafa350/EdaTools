@@ -2,17 +2,17 @@
 
 namespace EdaCoreExtensions.Bom {
 
-    public sealed class BomGenerator {
+    public sealed class EdaBomGenerator {
 
         private readonly EdaBoard _board;
         private readonly string _mpnAttributeName = "MPN";
 
-        public BomGenerator(EdaBoard board) {
+        public EdaBomGenerator(EdaBoard board) {
 
             _board = board ?? throw new ArgumentNullException(nameof(board));
         }
 
-        public IEnumerable<BomEntry> Generate() {
+        public EdaBom Generate() {
 
             var bom = new Dictionary<string, List<EdaPart>>();
             foreach (var part in _board.Parts) {
@@ -26,15 +26,15 @@ namespace EdaCoreExtensions.Bom {
                 }
             }
 
-            var bomEntries = new List<BomEntry>();
+            var bomEntries = new List<EdaBomEntry>();
             foreach (var bomItem in bom) {
                 var name = bomItem.Key;
                 var references = bomItem.Value.Select(part => part.Name);
-                var bomEntry = new BomEntry(bomItem.Key, references);
+                var bomEntry = new EdaBomEntry(bomItem.Key, references);
                 bomEntries.Add(bomEntry);
             }
 
-            return bomEntries;
+            return new EdaBom(bomEntries);
         }
     }
 }

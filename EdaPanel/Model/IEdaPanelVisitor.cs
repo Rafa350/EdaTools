@@ -5,7 +5,7 @@
     public interface IEdaPanelVisitor {
 
         void Visit(EdaPanel project);
-        void Visit(CutItem cut);
-        void Visit(PcbItem pcb);
+        void Visit(EdaCutItem cut);
+        void Visit(EdaPcbItem pcb);
     }
 }

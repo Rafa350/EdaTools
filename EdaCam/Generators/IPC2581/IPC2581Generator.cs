@@ -105,7 +105,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                             }
                         }
 
-                        else if (element is EdaSmdPadElement smdPadElement) {
+                        else if (element is EdaSmtPadElement smdPadElement) {
 
                             string id = $"smdpad_{smdPadElement.Size.Width}_{smdPadElement.Size.Height}_{smdPadElement.CornerSize}";
 
@@ -438,7 +438,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 var elements = board.GetElements(board.GetLayer(layerId), false);
                 foreach (var element in elements) {
 
-                    if (element is EdaSmdPadElement smdPadElement) {
+                    if (element is EdaSmtPadElement smdPadElement) {
                         _writer.WriteStartElement("Set");
                         _writer.WriteStartElement("Pad");
                         WritePoint("Location", smdPadElement.Position);

@@ -3,7 +3,7 @@
     using MikroPic.EdaTools.v1.Base.Geometry;
     using MikroPic.EdaTools.v1.Panel.Model;
 
-    public sealed class CutItem: EdaPanelItem {
+    public sealed class EdaCutItem: EdaPanelItem {
 
         private EdaPoint _startPosition;
         private EdaPoint _endPosition;
@@ -28,7 +28,7 @@
         /// <param name="holeDiameter">Diametre dels forats.</param>
         /// <param name="holeSpacing">Espai entre forats.</param>
         /// 
-        public CutItem(EdaPoint startPosition, EdaPoint endPosition, int thickness, int margin, int cuts, int cutSpacing, int holes, int holeDiameter, int holeSpacing) {
+        public EdaCutItem(EdaPoint startPosition, EdaPoint endPosition, int thickness, int margin, int cuts, int cutSpacing, int holes, int holeDiameter, int holeSpacing) {
 
             _startPosition = startPosition;
             _endPosition = endPosition;

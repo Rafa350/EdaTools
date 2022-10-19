@@ -71,10 +71,10 @@
             if (element is EdaViaElement via)
                 AddViaElement(via);
 
-            else if (element is EdaSmdPadElement smd)
+            else if (element is EdaSmtPadElement smd)
                 AddSmdPadElement(smd);
 
-            else if (element is EdaThPadElement th)
+            else if (element is EdaThtPadElement th)
                 AddThPadElement(th);
 
             else if (element is EdaLineElement line)
@@ -197,7 +197,7 @@
         /// </summary>
         /// <param name="pad">L'element a afeigir.</param>
         /// 
-        private void AddThPadElement(EdaThPadElement pad) {
+        private void AddThPadElement(EdaThtPadElement pad) {
 
             ConnectivityItem item = new ConnectivityItem(pad);
 
@@ -210,7 +210,7 @@
         /// </summary>
         /// <param name="pad">L'element a afeigir.</param>
         /// 
-        private void AddSmdPadElement(EdaSmdPadElement pad) {
+        private void AddSmdPadElement(EdaSmtPadElement pad) {
 
             ConnectivityItem item = new ConnectivityItem(pad);
 

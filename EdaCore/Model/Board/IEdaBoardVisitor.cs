@@ -111,14 +111,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// <param name="element">L'element.</param>
         /// 
-        void Visit(EdaSmdPadElement element);
+        void Visit(EdaSmtPadElement element);
 
         /// <summary>
         /// Visita un element de tipus 'ThPad'
         /// </summary>
         /// <param name="element">L'element.</param>
         /// 
-        void Visit(EdaThPadElement element);
+        void Visit(EdaThtPadElement element);
 
         /// <summary>
         /// Visita un element de tipus 'Region'

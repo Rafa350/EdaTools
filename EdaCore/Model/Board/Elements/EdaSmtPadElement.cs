@@ -5,10 +5,10 @@ using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
-    /// Clase que representa un pad superficial
+    /// Clase que representa un pad SMT
     /// </summary>
     /// 
-    public sealed class EdaSmdPadElement: EdaPadElement {
+    public sealed class EdaSmtPadElement: EdaPadElement {
 
         public enum SmdPadCornerShape {
             Round,

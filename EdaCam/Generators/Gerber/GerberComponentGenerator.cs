@@ -206,7 +206,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             /// <inheritdoc/>
             /// 
-            public override void Visit(EdaSmdPadElement pad) {
+            public override void Visit(EdaSmtPadElement pad) {
 
                 //_gb.SelectAperture(_PadAperture);
             }

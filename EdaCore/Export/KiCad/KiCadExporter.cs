@@ -156,7 +156,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// </summary>
             /// <param name="element">L'element.<param>
             /// 
-            public override void Visit(EdaSmdPadElement element) {
+            public override void Visit(EdaSmtPadElement element) {
 
                 var sb = new StringBuilder()
                     .AppendFormat("  (pad {0} smd roundrect ", element.Name)
@@ -176,7 +176,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
             /// </summary>
             /// <param name="element">L'element.</param>
             /// 
-            public override void Visit(EdaThPadElement element) {
+            public override void Visit(EdaThtPadElement element) {
 
                 var sb = new StringBuilder()
                     .AppendFormat("  (pad {0} thru_hole {1} ",
@@ -188,7 +188,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                         element.Rotation.AsDegrees);
 
                 if (!element.CornerRatio.IsZero) {
-                    if (element.CornerShape == EdaThPadElement.ThPadCornerShape.Round)
+                    if (element.CornerShape == EdaThtPadElement.ThPadCornerShape.Round)
                         sb.AppendFormat(CultureInfo.InvariantCulture, "(roundrect_rratio {0}) ",
                             element.CornerRatio.AsPercent / 2.0);
                     else

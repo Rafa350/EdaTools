@@ -3,7 +3,7 @@
     using System;
     using MikroPic.EdaTools.v1.Base.Geometry;
 
-    public sealed class PcbItem: EdaPanelItem {
+    public sealed class EdaPcbItem: EdaPanelItem {
 
         private EdaPoint _position;
         private EdaSize _size;
@@ -15,7 +15,7 @@
         /// </summary>
         /// <param name="fileName">Nom del fitxer de la placa.</param>
         /// 
-        public PcbItem(string fileName) :
+        public EdaPcbItem(string fileName) :
             base() {
 
             if (String.IsNullOrEmpty(fileName))
@@ -32,7 +32,7 @@
         /// <param name="size">Tamany de la envolvent de la placa.</param>
         /// <param name="rotation">Angle de rotacio de la placa centrat en la posicio.</param>
         /// 
-        public PcbItem(string fileName, EdaPoint position, EdaSize size, EdaAngle rotation) {
+        public EdaPcbItem(string fileName, EdaPoint position, EdaSize size, EdaAngle rotation) {
 
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentNullException(nameof(fileName));

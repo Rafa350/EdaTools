@@ -212,7 +212,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             /// <inheritdoc/>
             /// 
-            public override void Visit(EdaThPadElement element) {
+            public override void Visit(EdaThtPadElement element) {
 
                 if (element.IsOnLayer(_layerId) && (element.Slot < element.DrillDiameter))
                     _apertures.DefineCircleAperture(element.DrillDiameter);
@@ -291,7 +291,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
 
             /// <inheritdoc/>
             /// 
-            public override void Visit(EdaThPadElement element) {
+            public override void Visit(EdaThtPadElement element) {
 
                 if (element.IsOnLayer(_layerId) && (element.Slot < element.DrillDiameter)) {
 

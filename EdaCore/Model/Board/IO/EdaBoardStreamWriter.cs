@@ -145,7 +145,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
             /// <inheritdoc/>
             /// 
-            public override void Visit(EdaSmdPadElement element) {
+            public override void Visit(EdaSmtPadElement element) {
 
                 _writer.WriteStartElement("spad");
 
@@ -173,7 +173,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
             /// <inheritdoc/>
             /// 
-            public override void Visit(EdaThPadElement element) {
+            public override void Visit(EdaThtPadElement element) {
 
                 _writer.WriteStartElement("tpad");
 

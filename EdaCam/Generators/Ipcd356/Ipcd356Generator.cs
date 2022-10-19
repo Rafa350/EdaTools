@@ -224,7 +224,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
                 _netAliasMap = netAliasMap;
             }
 
-            public override void Visit(EdaSmdPadElement pad) {
+            public override void Visit(EdaSmtPadElement pad) {
 
                 EdaSignal signal = Board.GetSignal(pad, Part, false);
                 if (signal != null) {
@@ -236,7 +236,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
                 }
             }
 
-            public override void Visit(EdaThPadElement pad) {
+            public override void Visit(EdaThtPadElement pad) {
 
                 EdaSignal signal = Board.GetSignal(pad, Part, false);
                 if (signal != null) {

@@ -710,7 +710,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             switch (padType) {
                 case "smd": {
-                        var element = new EdaSmdPadElement {
+                        var element = new EdaSmtPadElement {
                             Name = name,
                             LayerSet = layerSet,
                             Position = position,
@@ -742,7 +742,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                         }
 
                         layerSet.Add(EdaLayerId.Drills);
-                        var element = new EdaThPadElement {
+                        var element = new EdaThtPadElement {
                             Name = name,
                             LayerSet = layerSet,
                             Position = position,

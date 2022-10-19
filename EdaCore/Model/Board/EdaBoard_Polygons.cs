@@ -73,13 +73,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 }
             }
 
-            public override void Visit(EdaThPadElement element) {
+            public override void Visit(EdaThtPadElement element) {
 
                 if (element.IsOnLayer(_layerId))
                     VisitSignalElement(element);
             }
 
-            public override void Visit(EdaSmdPadElement element) {
+            public override void Visit(EdaSmtPadElement element) {
 
                 if (element.IsOnLayer(_layerId))
                     VisitSignalElement(element);

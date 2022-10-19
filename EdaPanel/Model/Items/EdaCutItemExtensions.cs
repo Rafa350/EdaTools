@@ -2,7 +2,7 @@
 
     using System;
 
-    public static class CutItemExtensions {
+    public static class EdaCutItemExtensions {
 
         /// <summary>
         /// Calcula els punts de referencia.
@@ -10,7 +10,7 @@
         /// <param name="item">El item.</param>
         /// <returns>La llista de punts de referencia.</returns>
         /// 
-        public static int[] GetReferencePoints(this CutItem item) {
+        public static int[] GetReferencePoints(this EdaCutItem item) {
 
             double dx = item.EndPosition.X - item.StartPosition.X;
             double dy = item.EndPosition.Y - item.StartPosition.Y;
@@ -63,7 +63,7 @@
         /// <param name="refPoints">Punts de referencia.</param>
         /// <returns>Punts del talls.</returns>
         /// 
-        public static int[] GetCutReferencePoints(this CutItem item, int[] refPoints) {
+        public static int[] GetCutReferencePoints(this EdaCutItem item, int[] refPoints) {
 
             int s = item.CutSpacing / 2;
             int[] points = new int[(refPoints.Length - 1) * 2];
@@ -90,7 +90,7 @@
         /// <param name="refPoints">Punts de referencia.</param>
         /// <returns>Punts dels forats.</returns>
         /// 
-        public static int[] GetHoleReferencePoints(this CutItem cut, int[] refPoints) {
+        public static int[] GetHoleReferencePoints(this EdaCutItem cut, int[] refPoints) {
 
             int[] points = new int[(refPoints.Length - 2) * 5];
 

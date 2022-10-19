@@ -15,10 +15,10 @@
                     item.AcceptVisitor(this);
         }
 
-        public virtual void Visit(CutItem cut) {
+        public virtual void Visit(EdaCutItem cut) {
         }
 
-        public virtual void Visit(PcbItem pcb) {
+        public virtual void Visit(EdaPcbItem pcb) {
         }
     }
 }

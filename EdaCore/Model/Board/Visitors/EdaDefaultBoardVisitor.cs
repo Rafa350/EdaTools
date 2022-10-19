@@ -56,12 +56,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
 
         /// <inheritdoc/>
         /// 
-        public virtual void Visit(EdaSmdPadElement element) {
+        public virtual void Visit(EdaSmtPadElement element) {
         }
 
         /// <inheritdoc/>
         /// 
-        public virtual void Visit(EdaThPadElement element) {
+        public virtual void Visit(EdaThtPadElement element) {
         }
 
         /// <inheritdoc/>
