@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Base.Xml;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
@@ -14,19 +15,19 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
         private const double _scale = 1000000.0;
 
-        private List<LayerInfo> _layerInfoList;
+        private List<IPCLayer> _ipcLayers;
         private XmlWriter _writer;
 
         public IPC2581Generator(Target target) :
             base(target) {
 
-            _layerInfoList = new List<LayerInfo>() {
-                new LayerInfo { Name = "TOP", Side = LayerSide.Top, Function = LayerFunction.Conductor },
-                new LayerInfo { Name = "BOTTOM", Side = LayerSide.Bottom, Function = LayerFunction.Conductor },
-                new LayerInfo { Name = "DRILL_TOP_BOTTOM", Side = LayerSide.All, Function = LayerFunction.Drill },
-                new LayerInfo { Name = "OUTLINE", Side = LayerSide.None, Function = LayerFunction.Outline },
-                new LayerInfo { Name = "TOP_MASK", Side = LayerSide.Top, Function = LayerFunction.SolderMask },
-                new LayerInfo { Name = "BOTTOM_MASK", Side = LayerSide.Bottom, Function = LayerFunction.SolderMask },
+            _ipcLayers = new List<IPCLayer>() {
+                new IPCLayer("TOP", IPCLayerSide.Top, IPCLayerFunction.Conductor),
+                new IPCLayer("BOTTOM", IPCLayerSide.Bottom, IPCLayerFunction.Conductor),
+                new IPCLayer("DRILL_TOP_BOTTOM", IPCLayerSide.All, IPCLayerFunction.Drill),
+                new IPCLayer("OUTLINE", IPCLayerSide.None, IPCLayerFunction.Outline),
+                new IPCLayer("TOP_MASK", IPCLayerSide.Top, IPCLayerFunction.SolderMask),
+                new IPCLayer("BOTTOM_MASK", IPCLayerSide.Bottom, IPCLayerFunction.SolderMask)
             };
         }
 
@@ -92,13 +93,13 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                             if (!list.Contains(id)) {
                                 list.Add(id);
 
-                                double diameter = viaElement.OuterSize / 1000000.0;
+                                double diameter = viaElement.OuterSize / _scale;
 
                                 _writer.WriteStartElement("EntryStandard");
                                 _writer.WriteAttributeString("id", id);
 
                                 _writer.WriteStartElement("Circle");
-                                _writer.WriteAttributeString("diameter", XmlConvert.ToString(diameter));
+                                _writer.WriteAttributeDouble("diameter", diameter);
                                 _writer.WriteEndElement();
 
                                 _writer.WriteEndElement();
@@ -112,18 +113,18 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                             if (!list.Contains(id)) {
                                 list.Add(id);
 
-                                double width = smdPadElement.Size.Width / 1000000.0;
-                                double height = smdPadElement.Size.Height / 1000000.0;
-                                double radius = smdPadElement.CornerSize / 1000000.0;
+                                double width = smdPadElement.Size.Width / _scale;
+                                double height = smdPadElement.Size.Height / _scale;
+                                double radius = smdPadElement.CornerSize / _scale;
 
                                 _writer.WriteStartElement("EntryStandard");
                                 _writer.WriteAttributeString("id", id);
 
                                 _writer.WriteStartElement(radius == 0 ? "RectCenter" : "RectRound");
-                                _writer.WriteAttributeString("width", XmlConvert.ToString(width));
-                                _writer.WriteAttributeString("height", XmlConvert.ToString(height));
+                                _writer.WriteAttributeDouble("width", width);
+                                _writer.WriteAttributeDouble("height", height);
                                 if (radius > 0) {
-                                    _writer.WriteAttributeString("radius", XmlConvert.ToString(radius));
+                                    _writer.WriteAttributeDouble("radius", radius);
                                     _writer.WriteAttributeString("upperLeft", "TRUE");
                                     _writer.WriteAttributeString("upperRight", "TRUE");
                                     _writer.WriteAttributeString("lowerLeft", "TRUE");
@@ -192,7 +193,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             foreach (var item in bom) {
                 _writer.WriteStartElement("BomItem");
                 _writer.WriteAttributeString("OEMDesignNumberRef", item.Key);
-                _writer.WriteAttributeString("quantity", XmlConvert.ToString(item.Value.Count));
+                _writer.WriteAttributeInteger("quantity", item.Value.Count);
 
                 foreach (var part in item.Value) {
                     _writer.WriteStartElement("RefDes");
@@ -231,15 +232,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             _writer.WriteStartElement("Spec");
             _writer.WriteAttributeString("name", "name_example");
             _writer.WriteAttributeString("value", "value_example");
-            _writer.WriteAttributeString("tolPlus", "0.02");
-            _writer.WriteAttributeString("tolMinus", "0.02");
+            _writer.WriteAttributeDouble("tolPlus", 0);
+            _writer.WriteAttributeDouble("tolMinus", 0);
             _writer.WriteAttributeString("global", "TRUE");
-
-            _writer.WriteStartElement("Location");
-            _writer.WriteAttributeString("x", "0.00");
-            _writer.WriteAttributeString("y", "0.00");
-            _writer.WriteEndElement();
-
+            WriteSection_Point("Location", new EdaPoint(0, 0));
             _writer.WriteEndElement();
 
             _writer.WriteEndElement();
@@ -260,7 +256,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             _writer.WriteStartElement("Step");
             _writer.WriteAttributeString("name", "board");
 
-            WritePoint("Datum", board.Position);
+            WriteSection_Point("Datum", board.Position);
 
             WriteProfile(board);
             WriteSection_Package(board);
@@ -322,48 +318,48 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         /// 
         private void WriteSection_Layer(EdaBoard board) {
 
-            foreach (var layerInfo in _layerInfoList) {
+            foreach (var _ipcLayer in _ipcLayers) {
 
                 string functionName = "CONDUCTOR";
-                switch (layerInfo.Function) {
-                    case LayerFunction.Drill:
+                switch (_ipcLayer.Function) {
+                    case IPCLayerFunction.Drill:
                         functionName = "DRILL";
                         break;
 
-                    case LayerFunction.Outline:
+                    case IPCLayerFunction.Outline:
                         functionName = "BOARD_OUTLINE";
                         break;
 
-                    case LayerFunction.SolderMask:
+                    case IPCLayerFunction.SolderMask:
                         functionName = "SOLDERMASK";
                         break;
 
-                    case LayerFunction.SolderPaste:
+                    case IPCLayerFunction.SolderPaste:
                         functionName = "SOLDERPASTE";
                         break;
                 }
 
                 string sideName = "NONE";
-                switch (layerInfo.Side) {
-                    case LayerSide.Top:
+                switch (_ipcLayer.Side) {
+                    case IPCLayerSide.Top:
                         sideName = "TOP";
                         break;
 
-                    case LayerSide.Bottom:
+                    case IPCLayerSide.Bottom:
                         sideName = "BOTTOM";
                         break;
 
-                    case LayerSide.All:
+                    case IPCLayerSide.All:
                         sideName = "ALL";
                         break;
                 }
 
                 _writer.WriteStartElement("Layer");
-                _writer.WriteAttributeString("name", layerInfo.Name);
+                _writer.WriteAttributeString("name", _ipcLayer.Name);
                 _writer.WriteAttributeString("layerFunction", functionName);
                 _writer.WriteAttributeString("side", sideName);
 
-                if (layerInfo.Function == LayerFunction.Drill) {
+                if (_ipcLayer.Function == IPCLayerFunction.Drill) {
                     _writer.WriteStartElement("Span");
                     _writer.WriteAttributeString("fromLayer", "TOP");
                     _writer.WriteAttributeString("toLayer", "BOTTOM");
@@ -383,25 +379,25 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
             _writer.WriteStartElement("Stackup");
             _writer.WriteAttributeString("name", "stackup_0");
-            _writer.WriteAttributeString("overallThickness", "1.44");
+            _writer.WriteAttributeDouble("overallThickness", 1.44);
             _writer.WriteAttributeString("whereMeasured", "METAL");
-            _writer.WriteAttributeString("tolPlus", "0");
-            _writer.WriteAttributeString("tolMinus", "0");
+            _writer.WriteAttributeDouble("tolPlus", 0);
+            _writer.WriteAttributeDouble("tolMinus", 0);
             _writer.WriteStartElement("StackupGroup");
             _writer.WriteAttributeString("name", "stackup_group_0");
-            _writer.WriteAttributeString("thickness", "1.45");
-            _writer.WriteAttributeString("tolPlus", "0");
-            _writer.WriteAttributeString("tolMinus", "0");
+            _writer.WriteAttributeDouble("thickness", 1.45);
+            _writer.WriteAttributeDouble("tolPlus", 0);
+            _writer.WriteAttributeDouble("tolMinus", 0);
 
             int sequence = 1;
-            foreach (var layerInfo in _layerInfoList) {
-                if (layerInfo.Function == LayerFunction.Conductor) {
+            foreach (var ipcLayer in _ipcLayers) {
+                if (ipcLayer.Function == IPCLayerFunction.Conductor) {
                     _writer.WriteStartElement("StackupLayer");
-                    _writer.WriteAttributeString("layerOfGroupRef", layerInfo.Name);
-                    _writer.WriteAttributeString("thickness", "0.35");
-                    _writer.WriteAttributeString("tolPlus", "0");
-                    _writer.WriteAttributeString("tolMinus", "0");
-                    _writer.WriteAttributeString("sequence", XmlConvert.ToString(sequence++));
+                    _writer.WriteAttributeString("layerOfGroupRef", ipcLayer.Name);
+                    _writer.WriteAttributeDouble("thickness", 0.35);
+                    _writer.WriteAttributeDouble("tolPlus", 0);
+                    _writer.WriteAttributeDouble("tolMinus", 0);
+                    _writer.WriteAttributeInteger("sequence", sequence++);
                     _writer.WriteEndElement();
                 }
             }
@@ -419,18 +415,18 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
             // Procesa les capes conductores.
             //
-            foreach (var layerInfo in _layerInfoList.Where(x => x.Function == LayerFunction.Conductor)) {
+            foreach (var ipcLayer in _ipcLayers.Where(o => o.Function == IPCLayerFunction.Conductor)) {
 
                 _writer.WriteStartElement("LayerFeature");
-                _writer.WriteAttributeString("layerRef", layerInfo.Name);
+                _writer.WriteAttributeString("layerRef", ipcLayer.Name);
 
                 EdaLayerId layerId = default;
-                switch (layerInfo.Side) {
-                    case LayerSide.Top:
+                switch (ipcLayer.Side) {
+                    case IPCLayerSide.Top:
                         layerId = EdaLayerId.TopCopper;
                         break;
 
-                    case LayerSide.Bottom:
+                    case IPCLayerSide.Bottom:
                         layerId = EdaLayerId.BottomCopper;
                         break;
                 }
@@ -438,12 +434,12 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 var elements = board.GetElements(board.GetLayer(layerId), false);
                 foreach (var element in elements) {
 
-                    if (element is EdaSmtPadElement smdPadElement) {
+                    if (element is EdaSmtPadElement smtPadElement) {
                         _writer.WriteStartElement("Set");
                         _writer.WriteStartElement("Pad");
-                        WritePoint("Location", smdPadElement.Position);
+                        WriteSection_Point("Location", smtPadElement.Position);
                         _writer.WriteStartElement("StandardPrimitiveRef");
-                        _writer.WriteAttributeString("id", $"smdpad_{smdPadElement.Size.Width}_{smdPadElement.Size.Height}_{smdPadElement.CornerSize}");
+                        _writer.WriteAttributeString("id", $"smdpad_{smtPadElement.Size.Width}_{smtPadElement.Size.Height}_{smtPadElement.CornerSize}");
                         _writer.WriteEndElement();
                         _writer.WriteEndElement();
                         _writer.WriteEndElement();
@@ -453,7 +449,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                         _writer.WriteStartElement("Set");
                         _writer.WriteAttributeString("padUsage", "VIA");
                         _writer.WriteStartElement("Pad");
-                        WritePoint("Location", viaElement.Position);
+                        WriteSection_Point("Location", viaElement.Position);
                         _writer.WriteStartElement("StandardPrimitiveRef");
                         _writer.WriteAttributeString("id", $"via_{viaElement.OuterSize}");
                         _writer.WriteEndElement();
@@ -465,13 +461,13 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 _writer.WriteEndElement();
             }
 
-            // Procesa les capes de forats
+            // Procesa les capes de forats conductors (Vias i pads THT).
             //
             int holeNumber = 0;
-            foreach (var layerInfo in _layerInfoList.Where(x => x.Function == LayerFunction.Drill)) {
+            foreach (var ipcLayer in _ipcLayers.Where(i => i.Function == IPCLayerFunction.Drill)) {
 
                 _writer.WriteStartElement("LayerFeature");
-                _writer.WriteAttributeString("layerRef", layerInfo.Name);
+                _writer.WriteAttributeString("layerRef", ipcLayer.Name);
 
                 var elements = board.GetElements(board.GetLayer(EdaLayerId.Vias), true);
                 foreach (var element in elements) {
@@ -480,11 +476,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                         _writer.WriteStartElement("Hole");
                         _writer.WriteAttributeString("name", String.Format("H{0}", holeNumber++));
                         _writer.WriteAttributeString("platingStatus", "VIA");
-                        _writer.WriteAttributeString("x", XmlConvert.ToString(viaElement.Position.X / _scale));
-                        _writer.WriteAttributeString("y", XmlConvert.ToString(viaElement.Position.Y / _scale));
-                        _writer.WriteAttributeString("diameter", XmlConvert.ToString(viaElement.DrillDiameter / _scale));
-                        _writer.WriteAttributeString("plusTol", "0");
-                        _writer.WriteAttributeString("minusTol", "0");
+                        _writer.WriteAttributeDouble("x", viaElement.Position.X / _scale);
+                        _writer.WriteAttributeDouble("y", viaElement.Position.Y / _scale);
+                        _writer.WriteAttributeDouble("diameter", viaElement.DrillDiameter / _scale);
+                        _writer.WriteAttributeDouble("plusTol", 0);
+                        _writer.WriteAttributeDouble("minusTol", 0);
                         _writer.WriteEndElement();
                         _writer.WriteEndElement();
                     }
@@ -493,20 +489,20 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 _writer.WriteEndElement();
             }
 
-            // Procesa les capes de mascara de soldadura
+            // Procesa les capes de mascara de soldadura.
             //
-            foreach (var layerInfo in _layerInfoList.Where(x => x.Function == LayerFunction.SolderMask)) {
+            foreach (var ipcLayer in _ipcLayers.Where(x => x.Function == IPCLayerFunction.SolderMask)) {
 
                 _writer.WriteStartElement("LayerFeature");
-                _writer.WriteAttributeString("layerRef", layerInfo.Name);
+                _writer.WriteAttributeString("layerRef", ipcLayer.Name);
 
                 EdaLayerId layerId = default;
-                switch (layerInfo.Side) {
-                    case LayerSide.Top:
+                switch (ipcLayer.Side) {
+                    case IPCLayerSide.Top:
                         layerId = EdaLayerId.TopStop;
                         break;
 
-                    case LayerSide.Bottom:
+                    case IPCLayerSide.Bottom:
                         layerId = EdaLayerId.BottomStop;
                         break;
                 }
@@ -528,17 +524,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 _writer.WriteAttributeString("refDes", part.Name);
                 _writer.WriteAttributeString("layerRef", "TOP");
                 _writer.WriteAttributeString("packageRef", part.Component.Name);
-                WritePoint("Location", part.Position);
+                WriteSection_Point("Location", part.Position);
                 _writer.WriteEndElement();
             }
-        }
-
-        private void WritePoint(string name, EdaPoint point) {
-
-            _writer.WriteStartElement(name);
-            _writer.WriteAttributeString("x", XmlConvert.ToString(point.X / _scale));
-            _writer.WriteAttributeString("y", XmlConvert.ToString(point.Y / _scale));
-            _writer.WriteEndElement();
         }
 
         /// <summary>
@@ -554,12 +542,21 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 if (first) {
                     first = false;
                     firstPoint = point;
-                    WritePoint("PolyBegin", point);
+                    WriteSection_Point("PolyBegin", point);
                 }
                 else
-                    WritePoint("PolyStepSegment", point);
+                    WriteSection_Point("PolyStepSegment", point);
             }
-            WritePoint("PolyStepSegment", firstPoint);
+            WriteSection_Point("PolyStepSegment", firstPoint);
+        }
+
+        private void WriteSection_Point(string name, EdaPoint point) {
+
+            _writer.WriteStartElement(name);
+            _writer.WriteAttributeDouble("x", point.X / _scale);
+            _writer.WriteAttributeDouble("y", point.Y / _scale);
+            _writer.WriteEndElement();
+
         }
 
         /// <summary>
