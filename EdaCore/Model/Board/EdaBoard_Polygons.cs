@@ -33,7 +33,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
             public override void Visit(EdaLineElement element) {
 
-                if (element.IsOnLayer(EdaLayerId.Profile)) 
+                if (element.IsOnLayer(EdaLayerId.Profile))
                     VisitProfileElement(element);
 
                 else if (element.IsOnLayer(_layerId))
@@ -157,7 +157,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                     //
                     if (element is EdaPadElement padElement) {
                         var polygons = GetThermalPolygons(padElement);
-                        foreach(var polygon in polygons)
+                        foreach (var polygon in polygons)
                             if (_regionBounds.IntersectsWith(polygon.Bounds))
                                 _polygons.Add(polygon);
                     }
@@ -188,7 +188,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 var bounds = elementPoligon.Bounds;
                 var thermalPoints = EdaPointFactory.CreateCross(element.Position, bounds.Size, _region.ThermalThickness, element.Rotation);
                 var thermalPoligon = new EdaPolygon(thermalPoints);
-                
+
                 var results = elementPoligon.Substract(thermalPoligon);
                 if (Part != null) {
                     var transformation = Part.GetLocalTransformation();
@@ -197,7 +197,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                         polygons.Add(result.Transform(transformation));
                     return polygons;
                 }
-                else 
+                else
                     return results;
             }
 
@@ -269,7 +269,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             //polygons = polygons.Offset(+250000);
 
             return (transformation == null) ? polygons : polygons.Transform(transformation);
-         }
+        }
 
         /// <summary>
         /// Calcula el rectangle envolvent de la placa

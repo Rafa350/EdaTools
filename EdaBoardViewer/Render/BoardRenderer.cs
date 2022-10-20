@@ -1,7 +1,5 @@
-﻿using Avalonia;
-using Avalonia.Media;
+﻿using Avalonia.Media;
 using MikroPic.EdaTools.v1.Core.Model.Board;
-using SkiaSharp;
 
 namespace EdaBoardViewer.Render {
 

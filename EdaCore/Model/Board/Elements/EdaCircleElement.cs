@@ -26,9 +26,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
             var outerPoints = EdaPointFactory.CreateCircle(_position, _radius + (_thickness / 2));
-            if (_filled) 
+            if (_filled)
                 return new EdaPolygon(outerPoints);
-            else { 
+            else {
                 var innerPoints = EdaPointFactory.CreateCircle(_position, _radius - (_thickness / 2));
                 return new EdaPolygon(outerPoints, innerPoints);
             }

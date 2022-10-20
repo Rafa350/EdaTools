@@ -5,9 +5,12 @@ using System.Linq;
 using System.Xml;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Xml;
+using MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Primitives;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
+using MikroPic.EdaTools.v1.CoreExtensions.Bom;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
@@ -16,6 +19,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         private const double _scale = 1000000.0;
 
         private List<IPCLayer> _ipcLayers;
+        private readonly PrimitiveDictionary _primitiveDictionary = new PrimitiveDictionary();
         private XmlWriter _writer;
 
         public IPC2581Generator(Target target) :
@@ -71,74 +75,75 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
             _writer.WriteStartElement("Content");
 
+            _writer.WriteStartElement("FunctionMode");
+            _writer.WriteAttributeString("mode", "Fabrication");
+            _writer.WriteEndElement();
+
+            WriteSection_DictionaryStandard(board);
+
+            _writer.WriteEndElement();
+        }
+
+        /// <summary>
+        /// Escriu la seccio 'DictionaryStandard'.
+        /// </summary>
+        /// <param name="board">La placa.</param>
+        /// 
+        private void WriteSection_DictionaryStandard(EdaBoard board) {
+
+            // Genera les primitives de les vias.
+            //
+            foreach (var element in board.Elements.OfType<EdaViaElement>()) {
+                _primitiveDictionary.DefineCirclePrimitive(element.OuterSize);
+                _primitiveDictionary.DefineCirclePrimitive(element.InnerSize);
+            }
+
+            foreach (var component in board.Components) {
+
+                // Genera les primitives pels pads THT
+                //
+                foreach (var element in component.Elements.OfType<EdaThtPadElement>()) {
+                    _primitiveDictionary.DefineCirclePrimitive(element.TopSize.Width);
+                    _primitiveDictionary.DefineCirclePrimitive(element.BottomSize.Width);
+                    _primitiveDictionary.DefineCirclePrimitive(element.InnerSize.Width);
+                }
+
+                // Genera les primitives pels pads SMT
+                //
+                foreach (var element in component.Elements.OfType<EdaSmtPadElement>()) {
+                    _primitiveDictionary.DefineRoundRectPrimitive(element.Size.Width, element.Size.Height, element.CornerSize);
+                }
+            }
+
             _writer.WriteStartElement("DictionaryStandard");
             _writer.WriteAttributeString("units", "MILLIMETER");
 
-            var elements = new List<EdaElement>();
-            foreach (var component in board.Components) {
-                foreach (var element in component.Elements)
-                    elements.Add(element);
-            }
-            foreach (var element in board.Elements)
-                elements.Add(element);
+            foreach (var primitive in _primitiveDictionary.Primitives.OfType<CirclePrimitive>()) {
 
-            var list = new HashSet<string>();
-            foreach (var layerName in new string[] { "Top.Copper", "Bottom.Copper" }) {
-                foreach (var element in elements)
-                    if (element.IsOnLayer(EdaLayerId.Get(layerName))) {
-                        if (element is EdaViaElement viaElement) {
+                _writer.WriteStartElement("EntryStandard");
+                _writer.WriteAttributeInteger("id", primitive.Id);
 
-                            string id = $"via_{viaElement.OuterSize}";
+                _writer.WriteStartElement("Circle");
+                _writer.WriteAttributeDouble("diameter", primitive.Diameter / _scale);
+                _writer.WriteEndElement();
 
-                            if (!list.Contains(id)) {
-                                list.Add(id);
-
-                                double diameter = viaElement.OuterSize / _scale;
-
-                                _writer.WriteStartElement("EntryStandard");
-                                _writer.WriteAttributeString("id", id);
-
-                                _writer.WriteStartElement("Circle");
-                                _writer.WriteAttributeDouble("diameter", diameter);
-                                _writer.WriteEndElement();
-
-                                _writer.WriteEndElement();
-                            }
-                        }
-
-                        else if (element is EdaSmtPadElement smdPadElement) {
-
-                            string id = $"smdpad_{smdPadElement.Size.Width}_{smdPadElement.Size.Height}_{smdPadElement.CornerSize}";
-
-                            if (!list.Contains(id)) {
-                                list.Add(id);
-
-                                double width = smdPadElement.Size.Width / _scale;
-                                double height = smdPadElement.Size.Height / _scale;
-                                double radius = smdPadElement.CornerSize / _scale;
-
-                                _writer.WriteStartElement("EntryStandard");
-                                _writer.WriteAttributeString("id", id);
-
-                                _writer.WriteStartElement(radius == 0 ? "RectCenter" : "RectRound");
-                                _writer.WriteAttributeDouble("width", width);
-                                _writer.WriteAttributeDouble("height", height);
-                                if (radius > 0) {
-                                    _writer.WriteAttributeDouble("radius", radius);
-                                    _writer.WriteAttributeString("upperLeft", "TRUE");
-                                    _writer.WriteAttributeString("upperRight", "TRUE");
-                                    _writer.WriteAttributeString("lowerLeft", "TRUE");
-                                    _writer.WriteAttributeString("lowerRight", "TRUE");
-                                }
-                                _writer.WriteEndElement();
-
-                                _writer.WriteEndElement();
-                            }
-                        }
-                    }
+                _writer.WriteEndElement();
             }
 
-            _writer.WriteEndElement();
+            foreach (var primitive in _primitiveDictionary.Primitives.OfType<RectRoundPrimitive>()) {
+
+                _writer.WriteStartElement("EntryStandard");
+                _writer.WriteAttributeInteger("id", primitive.Id);
+
+                _writer.WriteStartElement("RectRound");
+                _writer.WriteAttributeDouble("width", primitive.Width / _scale);
+                _writer.WriteAttributeDouble("height", primitive.Height / _scale);
+                _writer.WriteAttributeDouble("radius", primitive.Radius / _scale);
+                _writer.WriteEndElement();
+
+                _writer.WriteEndElement();
+            }
+
             _writer.WriteEndElement();
         }
 
@@ -178,26 +183,17 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         /// 
         private void WriteSection_BomItem(EdaBoard board) {
 
-            var bom = new Dictionary<string, List<EdaPart>>();
-            foreach (var part in board.Parts) {
-                var attribute = part.GetAttribute("MPN");
-                if (attribute != null) {
-                    if (!bom.TryGetValue(attribute.Value, out var value)) {
-                        value = new List<EdaPart>();
-                        bom.Add(attribute.Value, value);
-                    }
-                    value.Add(part);
-                }
-            }
+            var bomGenerator = new EdaBomGenerator(board);
+            var bom = bomGenerator.Generate();
 
-            foreach (var item in bom) {
+            foreach (var entry in bom.Entries) {
                 _writer.WriteStartElement("BomItem");
-                _writer.WriteAttributeString("OEMDesignNumberRef", item.Key);
-                _writer.WriteAttributeInteger("quantity", item.Value.Count);
+                _writer.WriteAttributeString("OEMDesignNumberRef", entry.Name);
+                _writer.WriteAttributeInteger("quantity", entry.ReferenceCount);
 
-                foreach (var part in item.Value) {
+                foreach (var reference in entry.References) {
                     _writer.WriteStartElement("RefDes");
-                    _writer.WriteAttributeString("name", part.Name);
+                    _writer.WriteAttributeString("name", reference);
                     _writer.WriteEndElement();
                 }
 
@@ -415,7 +411,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
             // Procesa les capes conductores.
             //
-            foreach (var ipcLayer in _ipcLayers.Where(o => o.Function == IPCLayerFunction.Conductor)) {
+            foreach (var ipcLayer in _ipcLayers.Where(l => l.Function == IPCLayerFunction.Conductor)) {
 
                 _writer.WriteStartElement("LayerFeature");
                 _writer.WriteAttributeString("layerRef", ipcLayer.Name);
@@ -431,31 +427,62 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                         break;
                 }
 
-                var elements = board.GetElements(board.GetLayer(layerId), false);
-                foreach (var element in elements) {
+                foreach (var part in board.Parts) {
+                    var component = part.Component;
+                    var tr = part.GetLocalTransformation();
 
-                    if (element is EdaSmtPadElement smtPadElement) {
+                    foreach (var element in component.Elements.OfType<EdaSmtPadElement>().Where(e => e.IsOnLayer(layerId))) {
+                        
+                        var primitive = _primitiveDictionary.GetRectRoundPrimitive(element.Size.Width, element.Size.Height, element.CornerSize);
+                        var signal = board.GetSignal(element, part, false);
+
                         _writer.WriteStartElement("Set");
+                        if (signal != null)
+                            _writer.WriteAttributeString("net", signal.Name);
                         _writer.WriteStartElement("Pad");
-                        WriteSection_Point("Location", smtPadElement.Position);
+                        WriteSection_Xform(part.Rotation);
+                        WriteSection_Point("Location", tr.Transform(element.Position));
                         _writer.WriteStartElement("StandardPrimitiveRef");
-                        _writer.WriteAttributeString("id", $"smdpad_{smtPadElement.Size.Width}_{smtPadElement.Size.Height}_{smtPadElement.CornerSize}");
+                        _writer.WriteAttributeInteger("id", primitive.Id);
                         _writer.WriteEndElement();
                         _writer.WriteEndElement();
                         _writer.WriteEndElement();
                     }
 
-                    else if (element is EdaViaElement viaElement) {
+                    foreach (var element in component.Elements.OfType<EdaThtPadElement>().Where(e => e.IsOnLayer(layerId))) {
+
+                        var primitive = _primitiveDictionary.GetCirclePrimitive(element.TopSize.Width);
+                        var signal = board.GetSignal(element, part, false);
+
                         _writer.WriteStartElement("Set");
-                        _writer.WriteAttributeString("padUsage", "VIA");
+                        if (signal != null)
+                            _writer.WriteAttributeString("net", signal.Name);
                         _writer.WriteStartElement("Pad");
-                        WriteSection_Point("Location", viaElement.Position);
+                        WriteSection_Point("Location", tr.Transform(element.Position));
                         _writer.WriteStartElement("StandardPrimitiveRef");
-                        _writer.WriteAttributeString("id", $"via_{viaElement.OuterSize}");
+                        _writer.WriteAttributeInteger("id", primitive.Id);
                         _writer.WriteEndElement();
                         _writer.WriteEndElement();
                         _writer.WriteEndElement();
                     }
+                }
+
+                foreach (var element in board.Elements.OfType<EdaViaElement>().Where(e => e.IsOnLayer(layerId))) {
+
+                    var primitive = _primitiveDictionary.GetCirclePrimitive(element.OuterSize);
+                    var signal = board.GetSignal(element, null, false);
+
+                    _writer.WriteStartElement("Set");
+                    if (signal != null)
+                        _writer.WriteAttributeString("net", signal.Name);
+                    _writer.WriteAttributeString("padUsage", "VIA");
+                    _writer.WriteStartElement("Pad");
+                    WriteSection_Point("Location", element.Position);
+                    _writer.WriteStartElement("StandardPrimitiveRef");
+                    _writer.WriteAttributeInteger("id", primitive.Id);
+                    _writer.WriteEndElement();
+                    _writer.WriteEndElement();
+                    _writer.WriteEndElement();
                 }
 
                 _writer.WriteEndElement();
@@ -464,26 +491,42 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             // Procesa les capes de forats conductors (Vias i pads THT).
             //
             int holeNumber = 0;
-            foreach (var ipcLayer in _ipcLayers.Where(i => i.Function == IPCLayerFunction.Drill)) {
+            foreach (var ipcLayer in _ipcLayers.Where(l => l.Function == IPCLayerFunction.Drill)) {
 
                 _writer.WriteStartElement("LayerFeature");
                 _writer.WriteAttributeString("layerRef", ipcLayer.Name);
 
-                var elements = board.GetElements(board.GetLayer(EdaLayerId.Vias), true);
-                foreach (var element in elements) {
-                    if (element is EdaViaElement viaElement) {
+                foreach (var part in board.Parts) {
+                    var component = part.Component;
+                    var tr = part.GetLocalTransformation();
+                    foreach (var element in component.Elements.OfType<EdaThtPadElement>()) {
+                        var position = tr.Transform(element.Position);
                         _writer.WriteStartElement("Set");
                         _writer.WriteStartElement("Hole");
                         _writer.WriteAttributeString("name", String.Format("H{0}", holeNumber++));
                         _writer.WriteAttributeString("platingStatus", "VIA");
-                        _writer.WriteAttributeDouble("x", viaElement.Position.X / _scale);
-                        _writer.WriteAttributeDouble("y", viaElement.Position.Y / _scale);
-                        _writer.WriteAttributeDouble("diameter", viaElement.DrillDiameter / _scale);
+                        _writer.WriteAttributeDouble("x", position.X / _scale);
+                        _writer.WriteAttributeDouble("y", position.Y / _scale);
+                        _writer.WriteAttributeDouble("diameter", element.DrillDiameter / _scale);
                         _writer.WriteAttributeDouble("plusTol", 0);
                         _writer.WriteAttributeDouble("minusTol", 0);
                         _writer.WriteEndElement();
                         _writer.WriteEndElement();
                     }
+                }
+
+                foreach (var element in board.Elements.OfType<EdaViaElement>()) {
+                    _writer.WriteStartElement("Set");
+                    _writer.WriteStartElement("Hole");
+                    _writer.WriteAttributeString("name", String.Format("H{0}", holeNumber++));
+                    _writer.WriteAttributeString("platingStatus", "VIA");
+                    _writer.WriteAttributeDouble("x", element.Position.X / _scale);
+                    _writer.WriteAttributeDouble("y", element.Position.Y / _scale);
+                    _writer.WriteAttributeDouble("diameter", element.DrillDiameter / _scale);
+                    _writer.WriteAttributeDouble("plusTol", 0);
+                    _writer.WriteAttributeDouble("minusTol", 0);
+                    _writer.WriteEndElement();
+                    _writer.WriteEndElement();
                 }
 
                 _writer.WriteEndElement();
@@ -527,6 +570,13 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 WriteSection_Point("Location", part.Position);
                 _writer.WriteEndElement();
             }
+        }
+
+        private void WriteSection_Xform(EdaAngle angle) {
+
+            _writer.WriteStartElement("Xform");
+            _writer.WriteAttributeDouble("rotation", angle.AsDegrees);
+            _writer.WriteEndElement();
         }
 
         /// <summary>

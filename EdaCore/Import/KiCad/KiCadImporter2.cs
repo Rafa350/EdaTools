@@ -128,7 +128,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 var signal = CreateNet(tree, netNode);
                 board.AddSignal(signal);
             }
-        }        
+        }
 
         /// <summary>
         /// Crea els components.
@@ -143,8 +143,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 var component = CreateComponent(tree, footprintNode);
                 board.AddComponent(component);
             }
-        }        
-        
+        }
+
         /// <summary>
         /// Construeix els parts.
         /// </summary>
@@ -395,7 +395,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             return part;
         }
-        
+
         /// <summary>
         /// Procesa un 'fp_line'.
         /// </summary>
@@ -768,7 +768,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var layerSet = ParseLayerSet(tree, layerNode);
             var priorityNode = tree.SelectBranch(branch, "priority");
             var priority = priorityNode == null ? 0 : tree.ValueAsInteger(priorityNode[1]);
-            
+
             var connectedPadNode = tree.SelectBranch(branch, "connect_pads");
             int clearance = ParseMeasure(tree, tree.SelectBranch(connectedPadNode, "clearance"));
 

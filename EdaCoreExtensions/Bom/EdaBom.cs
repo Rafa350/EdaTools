@@ -1,4 +1,4 @@
-﻿namespace EdaCoreExtensions.Bom {
+﻿namespace MikroPic.EdaTools.v1.CoreExtensions.Bom {
 
     public sealed class EdaBom {
 

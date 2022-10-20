@@ -148,7 +148,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
 
             private readonly IPCD356Builder _builder;
             private readonly IDictionary<string, string> _netAliasMap;
-            
+
             public NetsVisitor(IPCD356Builder builder, IDictionary<string, string> netAliasMap) {
 
                 _builder = builder;

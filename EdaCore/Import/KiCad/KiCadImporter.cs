@@ -696,10 +696,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layers"));
             var (position, rotation) = ParsePointAndAngle(tree, tree.SelectBranch(node, "at"));
             var size = ParseSize(tree, tree.SelectBranch(node, "size"));
-            
+
             var drillNode = tree.SelectBranch(node, "drill");
             var drill = drillNode == null ? 0 : (int)(tree.ValueAsDouble(drillNode[1]) * _scale);
-            
+
             var clearanceNode = tree.SelectBranch(node, "clearance");
             var clearance = clearanceNode == null ? 0 : (int)(tree.ValueAsDouble(clearanceNode[1]) * _scale);
 

@@ -80,11 +80,11 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         public static IEnumerable<EdaPolygon> Substract(this EdaPolygon polygon, IEnumerable<EdaPolygon> substractPolygons) {
 
             var cp = new Clipper64();
-            
-            cp.AddSubject(ToPath64(polygon.Outline));            
+
+            cp.AddSubject(ToPath64(polygon.Outline));
             foreach (var substractPolygon in substractPolygons)
                 cp.AddClip(ToPath64(substractPolygon.Outline));
-            
+
             var tree = new PolyTree64();
             cp.Execute(ClipType.Difference, FillRule.NonZero, tree);
 
@@ -99,7 +99,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <returns>El resultat.</returns>
         /// 
         public static EdaPolygon Offset(this EdaPolygon polygon, int delta) {
-            
+
             var cpo = new ClipperOffset();
 
             cpo.AddPath(ToPath64(polygon.Outline), JoinType.Round, EndType.Polygon);
@@ -114,10 +114,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             List<List<EdaPoint>> holes = null;
             if (solution.Count > 1) {
                 holes = new List<List<EdaPoint>>(solution.Count - 1);
-                for (int i = 1; i < solution.Count; i++) 
+                for (int i = 1; i < solution.Count; i++)
                     holes.Add(ToPoints(solution[i], true));
             }
-            
+
             return new EdaPolygon(outline, holes);
         }
 
@@ -150,7 +150,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         private static IEnumerable<EdaPolygon> ToPolygons(PolyPath64 tree) {
 
             var polygons = new List<EdaPolygon>(tree.Count);
-            if (tree.Count > 0) 
+            if (tree.Count > 0)
                 foreach (PolyPath64 item in tree) {
 
                     List<List<EdaPoint>> holes = null;

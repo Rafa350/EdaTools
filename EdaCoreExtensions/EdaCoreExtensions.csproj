@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <BaseOutputPath>..\bin</BaseOutputPath>
+    <RootNamespace>MikroPic.EdaTools.v1.CoreExtensions</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

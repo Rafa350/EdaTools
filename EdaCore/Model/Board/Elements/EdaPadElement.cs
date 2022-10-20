@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.WebSockets;
 using MikroPic.EdaTools.v1.Base.Geometry;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {

@@ -21,7 +21,7 @@ namespace EdaBoardViewer.Render {
 
             var g = new StreamGeometry();
             using (StreamGeometryContext gc = g.Open()) {
-                foreach(var polygon in polygons)
+                foreach (var polygon in polygons)
                     ToGeometry(gc, polygon);
             }
 

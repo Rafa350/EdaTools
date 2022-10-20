@@ -1,4 +1,4 @@
-﻿namespace EdaCoreExtensions.Bom {
+﻿namespace MikroPic.EdaTools.v1.CoreExtensions.Bom {
 
     public sealed class EdaBomEntry {
 
@@ -17,7 +17,7 @@
         public int ReferenceCount =>
             _references.Count;
 
-        public IEnumerable<string> References => 
+        public IEnumerable<string> References =>
             _references;
     }
 }
