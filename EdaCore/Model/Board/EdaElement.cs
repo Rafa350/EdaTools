@@ -14,14 +14,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         Circle,
         Polygon,
         Text,
-        SmdPad,
-        ThPad,
-        SlotPad,
+        SmtPad,
+        ThtPad,
         Region,
         Via,
-        CircleHole,
-        LineHole,
-        ArcHole
+        CirclularHole,
+        LinearHole
     }
 
     /// <summary>

@@ -12,8 +12,9 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 throw new ArgumentNullException(nameof(segments));
 
             EdaPoint p = default;
+
             bool first = true;
-            HashSet<Segment> segmentPool = new HashSet<Segment>();
+            var segmentPool = new HashSet<Segment>();
             foreach (var segment in segments) {
                 if (first) {
                     first = false;
@@ -29,7 +30,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 while (segmentPool.Count > 0) {
                     Segment s;
                     if (FindSegmentWidthVertex(segmentPool, p, out s)) {
-                        if (Compare(p, s.Start))
+                        if (p == s.Start)
                             p = s.End;
                         else
                             p = s.Start;
@@ -45,21 +46,16 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 return null;
         }
 
-        private static bool Compare(EdaPoint p1, EdaPoint p2) {
-
-            return (p1.X == p2.X) && (p1.Y == p2.Y);
-        }
-
         private static bool FindSegmentWidthVertex(IEnumerable<Segment> segments, EdaPoint point, out Segment result) {
 
             result = default;
             foreach (var segment in segments) {
-                if (Compare(segment.Start, point)) {
+                if (segment.Start ==  point) {
                     result = segment;
                     return true;
                 }
 
-                else if (Compare(segment.End, point)) {
+                else if (segment.End == point) {
                     result = segment;
                     return true;
                 }

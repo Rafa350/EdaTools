@@ -689,8 +689,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.Gerber {
                         ap = _apertures.GetRectangleAperture(element.Size.Width, element.Size.Height, rotation);
                     else if (element.CornerRatio.IsMax)
                         ap = _apertures.GetOvalAperture(element.Size.Width, element.Size.Height, rotation);
-                    else
-                        ap = _apertures.GetRoundRectangleAperture(element.Size.Width, element.Size.Height, element.CornerSize, rotation);
+                    else {
+                        var s = element.Size;
+                        var cs = (Math.Min(s.Width, s.Height) * element.CornerRatio) / 2;
+                        ap = _apertures.GetRoundRectangleAperture(element.Size.Width, element.Size.Height, cs, rotation);
+                    }
                     _gb.SelectAperture(ap);
 
                     // Afegeix atributs

@@ -45,14 +45,14 @@
 
             vls.Add(new VisualLayer("Inner2",
                 new EdaLayerId[] { EdaLayerId.InnerCopper2 },
-                new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Rectangle, ElementType.Circle, ElementType.Region, ElementType.SmdPad, ElementType.Text },
+                new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Rectangle, ElementType.Circle, ElementType.Region, ElementType.SmtPad, ElementType.Text },
                 true,
                 VisualMode.Element,
                 Color.FromArgb(100, 0, 0, 75)));
 
             vls.Add(new VisualLayer("Inner1",
                 new EdaLayerId[] { EdaLayerId.InnerCopper1 },
-                new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Rectangle, ElementType.Circle, ElementType.Region, ElementType.SmdPad, ElementType.Text },
+                new ElementType[] { ElementType.Line, ElementType.Arc, ElementType.Rectangle, ElementType.Circle, ElementType.Region, ElementType.SmtPad, ElementType.Text },
                 true,
                 VisualMode.Element,
                 Color.FromArgb(100, 75, 0, 0)));
@@ -87,7 +87,7 @@
             */
             vls.Add(new VisualLayer("Pads",
                 new EdaLayerId[] { EdaLayerId.TopCopper },
-                new ElementType[] { ElementType.ThPad, ElementType.SmdPad },
+                new ElementType[] { ElementType.ThtPad, ElementType.SmtPad },
                 true,
                 VisualMode.Element,
                 _padColor));
@@ -101,14 +101,14 @@
 
             vls.Add(new VisualLayer("Platted",
                 new EdaLayerId[] { EdaLayerId.Platted },
-                new ElementType[] { ElementType.Via, ElementType.ThPad, ElementType.CircleHole },
+                new ElementType[] { ElementType.Via, ElementType.ThtPad, ElementType.CirclularHole },
                 true,
                 VisualMode.Drill,
                 _holeColor));
 
             vls.Add(new VisualLayer("Unplatted",
                 new EdaLayerId[] { EdaLayerId.Unplatted },
-                new ElementType[] { ElementType.Circle, ElementType.CircleHole },
+                new ElementType[] { ElementType.Circle, ElementType.CirclularHole },
                 true,
                 VisualMode.Element,
                 _holeColor));

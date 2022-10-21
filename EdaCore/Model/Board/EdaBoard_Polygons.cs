@@ -52,8 +52,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             public override void Visit(EdaCircleElement element) {
 
                 if (element.IsOnLayer(_layerId) ||
-                    (_layerId.IsTop && element.IsOnLayer(EdaLayerId.TopKeepout)) ||
-                    (_layerId.IsBottom && element.IsOnLayer(EdaLayerId.BottomKeepout))) {
+                    (_layerId.IsTop && element.IsOnLayer(EdaLayerId.TopRestrict)) ||
+                    (_layerId.IsBottom && element.IsOnLayer(EdaLayerId.BottomRestrict))) {
 
                     var polygon = GetOutlinePolygon(element, _outlineClearance);
                     if (_regionBounds.IntersectsWith(polygon.Bounds))
@@ -64,8 +64,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             public override void Visit(EdaRectangleElement element) {
 
                 if (element.IsOnLayer(_layerId) ||
-                    (_layerId.IsTop && element.IsOnLayer(EdaLayerId.TopKeepout)) ||
-                    (_layerId.IsBottom && element.IsOnLayer(EdaLayerId.BottomKeepout))) {
+                    (_layerId.IsTop && element.IsOnLayer(EdaLayerId.TopRestrict)) ||
+                    (_layerId.IsBottom && element.IsOnLayer(EdaLayerId.BottomRestrict))) {
 
                     var polygon = GetOutlinePolygon(element, _outlineClearance);
                     if (_regionBounds.IntersectsWith(polygon.Bounds))
@@ -230,14 +230,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             var elements = GetElements(GetLayer(EdaLayerId.Profile));
             var segments = new List<Segment>();
             foreach (var element in elements) {
-                if (element is EdaLineElement line)
-                    segments.Add(new Segment(line.StartPosition, line.EndPosition));
-
-                else if (element is EdaArcElement arc) {
+                if (element is EdaArcElement arc) {
                     var points = new List<EdaPoint>(EdaPointFactory.CreateArc(arc.Center, arc.Radius, arc.StartAngle, arc.Angle, true));
                     for (int i = 1; i < points.Count; i++)
                         segments.Add(new Segment(points[i - 1], points[i]));
                 }
+
+                else if (element is EdaLineElement line)
+                    segments.Add(new Segment(line.StartPosition, line.EndPosition));
             }
 
             var p = Polygonizer.Poligonize(segments);

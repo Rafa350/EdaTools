@@ -25,11 +25,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
-            var outerPoints = EdaPointFactory.CreateCircle(_position, _radius + (_thickness / 2));
-            if (_filled)
+            var outerRadius = _radius + (_thickness / 2);
+            var outerPoints = EdaPointFactory.CreateCircle(_position, outerRadius + (_thickness / 2));
+            if (_filled || (_thickness == 0))
                 return new EdaPolygon(outerPoints);
             else {
-                var innerPoints = EdaPointFactory.CreateCircle(_position, _radius - (_thickness / 2));
+                var innerRadius = _radius - (_thickness / 2);
+                var innerPoints = EdaPointFactory.CreateCircle(_position, innerRadius - (_thickness / 2));
                 return new EdaPolygon(outerPoints, innerPoints);
             }
         }
@@ -104,7 +106,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// 
         public bool Filled {
-            get => _filled;
+            get => _filled || (_thickness == 0);
             set => _filled = value;
         }
 

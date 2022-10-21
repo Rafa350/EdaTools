@@ -475,6 +475,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var fillBranch = tree.SelectBranch(node, "fill");
             bool filled = (fillBranch != null) && (tree.ValueAsString(fillBranch[1]) == "solid");
 
+            if (radius == 0) {
+                radius = thickness;
+                thickness = 0;
+                filled = true;
+            }
+
             var element = new EdaCircleElement {
                 LayerSet = layerSet,
                 Position = center,

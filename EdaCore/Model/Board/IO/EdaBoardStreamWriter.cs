@@ -161,6 +161,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 }
                 if (element.Clearance > 0)
                     _writer.WriteAttributeString("clearance", EdaFormatter.FormatScalar(element.Clearance));
+                if (element.MaskClearance > 0)
+                    _writer.WriteAttributeString("maskClearance", EdaFormatter.FormatScalar(element.MaskClearance));
+                if (element.PasteClearance > 0)
+                    _writer.WriteAttributeString("pasteClearance", EdaFormatter.FormatScalar(element.PasteClearance));
 
                 if (_currentBoard != null) {
                     EdaSignal signal = _currentBoard.GetSignal(element, _currentPart, false);
@@ -188,6 +192,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 }
                 if (element.Clearance > 0)
                     _writer.WriteAttributeString("clearance", EdaFormatter.FormatScalar(element.Clearance));
+                if (element.MaskClearance > 0)
+                    _writer.WriteAttributeString("maskClearance", EdaFormatter.FormatScalar(element.MaskClearance));
                 _writer.WriteAttributeString("topSize", EdaFormatter.FormatSize(element.TopSize));
                 if (element.InnerSize != element.TopSize)
                     _writer.WriteAttributeString("innerSize", EdaFormatter.FormatSize(element.InnerSize));

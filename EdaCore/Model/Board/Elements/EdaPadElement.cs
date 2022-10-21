@@ -13,6 +13,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private EdaPoint _position;
         private EdaAngle _rotation;
         private int _clearance;
+        private int _maskClearance;
+        private bool _maskEnabled = true;
 
         /// <summary>
         /// El nom.
@@ -28,7 +30,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        ///  La posicio del centre geometric del pad.
+        /// La posicio del centre geometric del pad.
         /// </summary>
         /// 
         public EdaPoint Position {
@@ -47,7 +49,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
 
         /// <summary>
-        /// Amplada del aillament.
+        /// L'espai entre el pad i altres conductors.
         /// </summary>
         /// 
         public int Clearance {
@@ -57,6 +59,28 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                     throw new ArgumentOutOfRangeException(nameof(Clearance));
                 _clearance = value;
             }
+        }
+
+        /// <summary>
+        /// L'espai entre el pad i la mascara de soldadura.
+        /// </summary>
+        /// 
+        public int MaskClearance {
+            get => _maskClearance;
+            set {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException(nameof(MaskClearance));
+                _maskClearance = value;
+            }
+        }
+
+        /// <summary>
+        /// Activa o desactiva la mascara de soldadura.
+        /// </summary>
+        /// 
+        public bool MaskEnabled {
+            get => _maskEnabled;
+            set => _maskEnabled = value;
         }
     }
 }

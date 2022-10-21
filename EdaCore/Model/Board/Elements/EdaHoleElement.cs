@@ -1,4 +1,6 @@
-﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+﻿using System;
+
+namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
     /// Clase que representa un forat en la placa.
@@ -25,7 +27,11 @@
         /// 
         public int Diameter {
             get => _diameter;
-            set => _diameter = value;
+            set {
+                if (value <= 0)
+                    throw new ArgumentOutOfRangeException(nameof(Diameter));
+                _diameter = value;
+            }
         }
 
         /// <summary>

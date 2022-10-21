@@ -933,6 +933,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             var drill = EdaParser.ParseScalar(_rd.AttributeAsString("drill"));
             var signalName = _rd.AttributeAsString("signal");
             var clearance = EdaParser.ParseScalar(_rd.AttributeAsString("clearance", "0"));
+            var maskClearance = EdaParser.ParseScalar(_rd.AttributeAsString("maskClearance", "0"));
 
             _rd.NextTag();
             if (!_rd.IsEndTag("tpad"))
@@ -949,7 +950,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 InnerSize = innerSize,
                 BottomSize = bottomSize,
                 DrillDiameter = drill,
-                Clearance = clearance
+                Clearance = clearance,
+                MaskClearance = maskClearance
             };
 
             if (signalName != null)
@@ -977,6 +979,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             var cornerShape = _rd.AttributeAsEnum("cornerShape", EdaSmtPadElement.SmdPadCornerShape.Round);
             var signalName = _rd.AttributeAsString("signal");
             var clearance = EdaParser.ParseScalar(_rd.AttributeAsString("clearance", "0"));
+            var maskClearance = EdaParser.ParseScalar(_rd.AttributeAsString("maskClearance", "0"));
+            var pasteClearance = EdaParser.ParseScalar(_rd.AttributeAsString("pasteClearance", "0"));
 
             _rd.NextTag();
             if (!_rd.IsEndTag("spad"))
@@ -990,7 +994,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 Rotation = rotation,
                 CornerRatio = cornerRatio,
                 CornerShape = cornerShape,
-                Clearance = clearance
+                Clearance = clearance,
+                MaskClearance = maskClearance,
+                PasteClearance = pasteClearance
             };
 
             if (signalName != null)

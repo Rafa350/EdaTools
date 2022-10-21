@@ -38,10 +38,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             visitor.Visit(this);
         }
 
-        /// <summary>
-        /// Obte el valor hash del objecte.
-        /// </summary>
-        /// <returns>El valor hash.</returns>
+        /// <inheritdoc/>
         /// 
         public override int GetHashCode() =>
             Position.GetHashCode() +
@@ -63,7 +60,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         private IEnumerable<EdaPoint> MakePadPoints(EdaLayerId layerId, int spacing) {
 
-            EdaSize size = GetPadSize(layerId);
+            var size = GetPadSize(layerId);
 
             return EdaPointFactory.CreateRectangle(
                 Position,
@@ -316,6 +313,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <inheritdoc/>
         /// 
         public override ElementType ElementType =>
-            ElementType.ThPad;
+            ElementType.ThtPad;
     }
 }

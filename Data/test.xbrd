@@ -71,7 +71,7 @@
             <signal name="unconnected-(U1-Pad25)" clearance="0.15" />
             <signal name="unconnected-(U1-Pad26)" clearance="0.15" />
             <signal name="unconnected-(U2-Pad4)" clearance="0.15" />
-            <signal name="Net-(J5-Pad2)" clearance="0.15" />
+            <signal name="Net-(U3-Pad2)" clearance="0.15" />
             <signal name="Net-(C7-Pad2)" clearance="0.15" />
             <signal name="Net-(C8-Pad2)" clearance="0.15" />
             <signal name="unconnected-(J4-Pad17)" clearance="0.15" />
@@ -244,18 +244,40 @@
                     <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.65, 0" size="0.9, 1.2" />
                 </elements>
             </component>
-            <component name="er-con:ER-CON2.0-2P-SMD:00000000-0000-0000-0000-000061a14be1">
+            <component name="Connector_JST_PH:JST_S2B-PH-SM4-TB_LF__SN_:00000000-0000-0000-0000-000061a14be1">
                 <elements>
-                    <text layer="Top.Names" position="4.5, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.75" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <line layer="Top.Place" startPosition="2.5, 6.5" endPosition="-2.5, 6.5" thickness="0.4064" />
-                    <line layer="Top.Place" startPosition="-2.5, 0" endPosition="2.5, 0" thickness="0.4064" />
-                    <line layer="Top.Place" startPosition="-2.5, 6.5" endPosition="-2.5, 0" thickness="0.4064" />
-                    <line layer="Top.Place" startPosition="2.5, 0" endPosition="2.5, 6.5" thickness="0.4064" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1, -2" size="1, 2.85" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1, -2" rotation="180" size="1, 2.85" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="G1" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.5, 4.5" size="1.4, 3.8" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="G2" layers="Top.Copper, Top.Cream, Top.Stop" position="3.5, 4.5" size="1.4, 3.8" cornerRatio="0.5" cornerShape="round" />
+                    <text layer="Top.Names" position="-5.5, 0" height="1.19888" thickness="0.127" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="7.925, 1.375" height="1.19888" thickness="0.127" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <line layer="Top.Place" startPosition="-3.9497, 3.79984" endPosition="-1.8, 3.79984" thickness="0.15" />
+                    <line layer="Top.Place" startPosition="-0.36, 3.8" endPosition="0.36, 3.8" thickness="0.15" />
+                    <line layer="Top.Place" startPosition="-3.9497, -0.37" endPosition="-3.9497, 3.79984" thickness="0.15" />
+                    <line layer="Top.Place" startPosition="3.9497, 3.79984" endPosition="1.8, 3.79984" thickness="0.15" />
+                    <line layer="Top.Place" startPosition="3.9497, -0.37" endPosition="3.9497, 3.79984" thickness="0.15" />
+                    <line layer="Top.Place" startPosition="-2.4, -3.79984" endPosition="2.4, -3.79984" thickness="0.15" />
+                    <circle layer="Top.Place" position="-2.34696, 4.86156" radius="0.7" filled="true" />
+                    <line layer="Top.Keepout" startPosition="0.34798, 0" endPosition="-0.34798, 0" thickness="0.04826" />
+                    <line layer="Top.Keepout" startPosition="-4.19862, -0.29972" endPosition="-4.39928, -0.29972" thickness="0.04826" />
+                    <line layer="Top.Keepout" startPosition="-4.39928, -0.29972" endPosition="-4.39928, -4.29768" thickness="0.04826" />
+                    <line layer="Top.Keepout" startPosition="-1.79832, 5.4991" endPosition="-1.79832, 4.048759" thickness="0.04826" />
+                    <line layer="Top.Keepout" startPosition="-4.19862, 4.048759" endPosition="-4.19862, -0.29972" thickness="0.04826" />
+                    <line layer="Top.Keepout" startPosition="-4.39928, -4.29768" endPosition="4.39928, -4.29768" thickness="0.04826" />
+                    <line layer="Top.Keepout" startPosition="4.39928, -4.29768" endPosition="4.39928, -0.29972" thickness="0.04826" />
+                    <line layer="Top.Keepout" startPosition="1.79832, 5.4991" endPosition="-1.79832, 5.4991" thickness="0.04826" />
+                    <line layer="Top.Keepout" startPosition="4.19862, -0.29972" endPosition="4.19862, 4.048759" thickness="0.04826" />
+                    <line layer="Top.Keepout" startPosition="-1.79832, 4.048759" endPosition="-4.19862, 4.048759" thickness="0.04826" />
+                    <line layer="Top.Keepout" startPosition="1.79832, 4.048759" endPosition="1.79832, 5.4991" thickness="0.04826" />
+                    <line layer="Top.Keepout" startPosition="0, 0.34798" endPosition="0, -0.34798" thickness="0.04826" />
+                    <line layer="Top.Keepout" startPosition="4.19862, 4.048759" endPosition="1.79832, 4.048759" thickness="0.04826" />
+                    <line layer="Top.Keepout" startPosition="4.39928, -0.29972" endPosition="4.19862, -0.29972" thickness="0.04826" />
+                    <circle layer="Top.Keepout" position="0, 0" radius="0.24892" thickness="0.04826" />
+                    <line layer="F.Fab" startPosition="-3.9497, -3.79984" endPosition="-3.9497, 3.79984" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="3.9497, 3.79984" endPosition="3.9497, -3.79984" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="-3.9497, 3.79984" endPosition="3.9497, 3.79984" thickness="0.1" />
+                    <line layer="F.Fab" startPosition="3.9497, -3.79984" endPosition="-3.9497, -3.79984" thickness="0.1" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.99822, 3.44932" size="0.99822, 3.49758" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.99822, 3.44932" size="0.99822, 3.49758" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.34772, -2.2987" size="1.4986, 3.39852" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="3.34772, -2.2987" size="1.4986, 3.39852" />
                 </elements>
             </component>
             <component name="Package_TO_SOT_SMD:SOT-353_SC-70-5:00000000-0000-0000-0000-000061a16fbd">
@@ -864,10 +886,10 @@
                     <attribute name="VALUE" value="MBR0540" visible="false" position="-96, 105.4" rotation="0" />
                 </attributes>
             </part>
-            <part name="J5" component="er-con:ER-CON2.0-2P-SMD:00000000-0000-0000-0000-000061a14be1" position="58, 16.5">
+            <part name="J5" component="Connector_JST_PH:JST_S2B-PH-SM4-TB_LF__SN_:00000000-0000-0000-0000-000061a14be1" position="58, 18.75" rotation="180">
                 <pads>
-                    <pad name="1" signal="+5V" />
-                    <pad name="2" signal="Net-(J5-Pad2)" />
+                    <pad name="1" signal="Net-(U3-Pad2)" />
+                    <pad name="2" signal="+5V" />
                 </pads>
                 <attributes>
                     <attribute name="MNF" value="JST" visible="false" />
@@ -875,8 +897,8 @@
                     <attribute name="SPL" value="DIGIKEY" visible="false" />
                     <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-91.5, 107.5" rotation="180" />
-                    <attribute name="VALUE" value="S3B-PH-SM4-TB" visible="false" position="-96, 105.75" rotation="0" />
+                    <attribute name="NAME" value="{%name}" visible="false" position="-101.5, 107.5" rotation="-180" />
+                    <attribute name="VALUE" value="S2B-PH-SM4-TB" visible="false" position="-88.075, 108.875" rotation="-180" />
                 </attributes>
             </part>
             <part name="U2" component="Package_TO_SOT_SMD:SOT-353_SC-70-5:00000000-0000-0000-0000-000061a16fbd" position="20, 54.16" rotation="180">
@@ -1162,10 +1184,10 @@
             <part name="U3" component="Package_SO:SC-74-6_1.5x2.9mm_P0.95mm:7ed2abd9-bbed-4f95-9218-99faed10990d" position="53.75, 32.75" rotation="90">
                 <pads>
                     <pad name="1" signal="/BK-PWM" />
-                    <pad name="2" signal="Net-(J5-Pad2)" />
-                    <pad name="3" signal="Net-(J5-Pad2)" />
+                    <pad name="2" signal="Net-(U3-Pad2)" />
+                    <pad name="3" signal="Net-(U3-Pad2)" />
                     <pad name="4" signal="GND" />
-                    <pad name="5" signal="Net-(J5-Pad2)" />
+                    <pad name="5" signal="Net-(U3-Pad2)" />
                     <pad name="6" signal="Net-(R2-Pad1)" />
                 </pads>
                 <attributes>
@@ -1185,8 +1207,8 @@
                     <pad name="2" signal="GND" />
                 </pads>
                 <attributes>
-                    <attribute name="MNF" value="PANASONIC" visible="false" />
-                    <attribute name="MPN" value="ERA-3AHD200V" visible="false" />
+                    <attribute name="MNF" value="VISHAY" visible="false" />
+                    <attribute name="MPN" value="CRCW060312R0FKEAC" visible="false" />
                     <attribute name="PKG" value="0603" visible="false" />
                     <attribute name="RESISTANCE" value="12" visible="false" />
                     <attribute name="SPL" value="MOUSER" visible="false" />
@@ -1201,8 +1223,10 @@
         <elements>
             <line layer="Profile" startPosition="58.99, 67.5" endPosition="69.5, 67.5" thickness="0.05" />
             <line layer="Profile" startPosition="57, 67.5" endPosition="8.5, 67.5" thickness="0.05" />
+            <arc layer="Profile" startPosition="65, 4.5" endPosition="74, 4.5" angle="180" thickness="0.05" lineCap="flat" />
             <line layer="Profile" startPosition="57, 67.5" endPosition="57, 63.5" thickness="0.05" />
             <line layer="Profile" startPosition="0, 59.5" endPosition="0, 8" thickness="0.05" />
+            <arc layer="Profile" startPosition="8.5, 67.5" endPosition="4, 63" angle="90" thickness="0.05" lineCap="flat" />
             <line layer="Profile" startPosition="74, 8" endPosition="78, 8" thickness="0.05" />
             <line layer="Profile" startPosition="4, 8" endPosition="4, 4.5" thickness="0.05" />
             <line layer="Profile" startPosition="4, 59.5" endPosition="4, 63" thickness="0.05" />
@@ -1210,6 +1234,7 @@
             <line layer="Profile" startPosition="57, 63.5" endPosition="59.01, 63.5" thickness="0.05" />
             <line layer="Profile" startPosition="30, 61.25" endPosition="30, 63.25" thickness="0.05" />
             <line layer="Profile" startPosition="30, 63.25" endPosition="48, 63.25" thickness="0.05" />
+            <arc layer="Profile" startPosition="4, 4.5" endPosition="13, 4.5" angle="180" thickness="0.05" lineCap="flat" />
             <line layer="Profile" startPosition="74, 4.5" endPosition="74, 8" thickness="0.05" />
             <line layer="Profile" startPosition="59.01, 63.5" endPosition="58.99, 67.5" thickness="0.05" />
             <line layer="Profile" startPosition="13, 8" endPosition="65, 8" thickness="0.05" />
@@ -1217,6 +1242,7 @@
             <line layer="Profile" startPosition="48, 63.25" endPosition="48, 61.25" thickness="0.05" />
             <line layer="Profile" startPosition="4, 8" endPosition="0, 8" thickness="0.05" />
             <line layer="Profile" startPosition="74, 63" endPosition="74, 59.5" thickness="0.05" />
+            <arc layer="Profile" startPosition="74, 63" endPosition="69.5, 67.5" angle="90" thickness="0.05" lineCap="flat" />
             <line layer="Profile" startPosition="13, 4.5" endPosition="13, 8" thickness="0.05" />
             <line layer="Profile" startPosition="65, 8" endPosition="65, 4.5" thickness="0.05" />
             <line layer="Profile" startPosition="74, 59.5" endPosition="78, 59.5" thickness="0.05" />
@@ -1306,7 +1332,7 @@
             <via layers="Top.Copper, Bottom.Copper" position="12.375, 25.625" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="26.375, 35.5" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="8.125, 54.25" drill="0.25" outerSize="0.5" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="54.5, 22.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="54.75, 22.25" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="58, 43.7" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="51.4, 27" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="49.625, 29.875" drill="0.25" outerSize="0.5" signal="GND" />
@@ -1342,7 +1368,7 @@
             <via layers="Top.Copper, Bottom.Copper" position="66.7, 48.9" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="5.9, 23.7" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="34.75, 14.5" drill="0.25" outerSize="0.5" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="54.5, 19.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="54.75, 19.75" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="4.7, 26.2" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="42.5255, 21.812896" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="46.2, 21.5" drill="0.25" outerSize="0.5" signal="GND" />
@@ -1356,7 +1382,7 @@
             <via layers="Top.Copper, Bottom.Copper" position="20.9, 17.1" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="37.75, 13.25" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="61.5, 17.9" drill="0.25" outerSize="0.5" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="61.5, 19.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="61.25, 19.75" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="46.375, 35.875" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="54.6, 47.4" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="47.625, 18.625" drill="0.25" outerSize="0.5" signal="GND" />
@@ -1367,7 +1393,7 @@
             <via layers="Top.Copper, Bottom.Copper" position="51.8, 10" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="51.625, 49.25" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="36.199999, 26.4" drill="0.25" outerSize="0.5" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="65.3, 15" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="65.3, 15.25" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="44.25, 44.875" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="31.4, 15.7" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="4.25, 30.625" drill="0.25" outerSize="0.5" signal="GND" />
@@ -1433,7 +1459,7 @@
             <via layers="Top.Copper, Bottom.Copper" position="40.75, 31.625" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="5.25, 49.75" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="45.8, 57.6" drill="0.25" outerSize="0.5" signal="GND" />
-            <via layers="Top.Copper, Bottom.Copper" position="61.5, 22.5" drill="0.25" outerSize="0.5" signal="GND" />
+            <via layers="Top.Copper, Bottom.Copper" position="61.25, 22.25" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="13.7, 16" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="30.375, 58.625" drill="0.25" outerSize="0.5" signal="GND" />
             <via layers="Top.Copper, Bottom.Copper" position="49.75, 37.5" drill="0.25" outerSize="0.5" signal="GND" />
@@ -1655,15 +1681,15 @@
             <via layers="Top.Copper, Bottom.Copper" position="16.25, 38.75" drill="0.25" outerSize="0.5" signal="/BK-PWM" />
             <via layers="Top.Copper, Bottom.Copper" position="50.875, 38.75" drill="0.25" outerSize="0.5" signal="/BK-PWM" />
             <line layer="Bottom.Copper" startPosition="16.25, 38.75" endPosition="50.875, 38.75" thickness="0.2" signal="/BK-PWM" />
-            <line layer="Top.Copper" startPosition="53.75, 29.5" endPosition="52.875, 28.625" thickness="0.6" signal="Net-(J5-Pad2)" />
-            <line layer="Top.Copper" startPosition="53.75, 31.6125" endPosition="53.75, 33.8875" thickness="0.6" signal="Net-(J5-Pad2)" />
-            <line layer="Top.Copper" startPosition="54.375, 11.125" endPosition="58.125, 11.125" thickness="0.6" signal="Net-(J5-Pad2)" />
-            <line layer="Top.Copper" startPosition="52.875, 12.625" endPosition="54.375, 11.125" thickness="0.6" signal="Net-(J5-Pad2)" />
-            <line layer="Top.Copper" startPosition="52.875, 28.625" endPosition="52.875, 12.625" thickness="0.6" signal="Net-(J5-Pad2)" />
-            <line layer="Top.Copper" startPosition="53.75, 31.6125" endPosition="54.7, 31.6125" thickness="0.6" signal="Net-(J5-Pad2)" />
-            <line layer="Top.Copper" startPosition="59, 12" endPosition="59, 14.5" thickness="0.6" signal="Net-(J5-Pad2)" />
-            <line layer="Top.Copper" startPosition="58.125, 11.125" endPosition="59, 12" thickness="0.6" signal="Net-(J5-Pad2)" />
-            <line layer="Top.Copper" startPosition="53.75, 31.6125" endPosition="53.75, 29.5" thickness="0.6" signal="Net-(J5-Pad2)" />
+            <line layer="Top.Copper" startPosition="53.75, 29.5" endPosition="52.875, 28.625" thickness="0.6" signal="Net-(U3-Pad2)" />
+            <line layer="Top.Copper" startPosition="53.75, 31.6125" endPosition="53.75, 33.8875" thickness="0.6" signal="Net-(U3-Pad2)" />
+            <line layer="Top.Copper" startPosition="54.375, 11.125" endPosition="58.125, 11.125" thickness="0.6" signal="Net-(U3-Pad2)" />
+            <line layer="Top.Copper" startPosition="52.875, 12.625" endPosition="54.375, 11.125" thickness="0.6" signal="Net-(U3-Pad2)" />
+            <line layer="Top.Copper" startPosition="52.875, 28.625" endPosition="52.875, 12.625" thickness="0.6" signal="Net-(U3-Pad2)" />
+            <line layer="Top.Copper" startPosition="53.75, 31.6125" endPosition="54.7, 31.6125" thickness="0.6" signal="Net-(U3-Pad2)" />
+            <line layer="Top.Copper" startPosition="59, 12" endPosition="59, 14.5" thickness="0.6" signal="Net-(U3-Pad2)" />
+            <line layer="Top.Copper" startPosition="58.125, 11.125" endPosition="59, 12" thickness="0.6" signal="Net-(U3-Pad2)" />
+            <line layer="Top.Copper" startPosition="53.75, 31.6125" endPosition="53.75, 29.5" thickness="0.6" signal="Net-(U3-Pad2)" />
             <line layer="Top.Copper" startPosition="36.25, 14.741783" endPosition="35.97548, 14.467263" thickness="0.2" signal="Net-(C7-Pad2)" />
             <line layer="Top.Copper" startPosition="36.25, 16.1" endPosition="36.25, 14.741783" thickness="0.2" signal="Net-(C7-Pad2)" />
             <line layer="Top.Copper" startPosition="35.97548, 14.467263" endPosition="35.97548, 12.77452" thickness="0.2" signal="Net-(C7-Pad2)" />

@@ -18,6 +18,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private EdaSize _size;
         private EdaRatio _cornerRatio = EdaRatio.Zero;
         private SmdPadCornerShape _cornerShape = SmdPadCornerShape.Round;
+        private int _pasteClearance;
+        private bool _pasteEnabled;
 
         /// <inheritdoc/>
         /// 
@@ -26,6 +28,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             visitor.Visit(this);
         }
 
+        /// <inheritdoc/>
+        /// 
         public override int GetHashCode() =>
             Position.GetHashCode() +
             Size.GetHashCode() +
@@ -57,7 +61,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             if (polygon == null) {
 
                 var outlineSize = new EdaSize(_size.Width + spacing + spacing, _size.Height + spacing + spacing);
-                var outlineCornerRatio = EdaRatio.FromPercent((double)(CornerSize + spacing) / (Math.Min(outlineSize.Width, outlineSize.Height) / 2));
+                var cornerSize = (Math.Min(_size.Width, _size.Height) * _cornerRatio) / 2;
+                var outlineCornerRatio = EdaRatio.FromPercent((double)(cornerSize + spacing) / (Math.Min(outlineSize.Width, outlineSize.Height) / 2));
                 var points = EdaPointFactory.CreateRectangle(Position, outlineSize, outlineCornerRatio, true, Rotation);
                 polygon = new EdaPolygon(points);
 
@@ -98,13 +103,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// Radi de curvatura de les cantonades.
-        /// </summary>
-        /// 
-        public int CornerSize =>
-            (Math.Min(_size.Width, _size.Height) * _cornerRatio) / 2;
-
-        /// <summary>
         /// Forma de les cantonades.
         /// </summary>
         /// 
@@ -113,9 +111,31 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             set => _cornerShape = value;
         }
 
+        /// <summary>
+        /// Espai entre el pad i la pasta de soldadura.
+        /// </summary>
+        /// 
+        public int PasteClearance {
+            get => _pasteClearance;
+            set {
+                if (value < 0)
+                    throw new ArgumentOutOfRangeException(nameof(PasteClearance));
+                _pasteClearance = value;
+            }
+        }
+
+        /// <summary>
+        /// Activa o desactiva la pasta de soldadura.
+        /// </summary>
+        /// 
+        public bool PasteEnabled {
+            get => _pasteEnabled;
+            set => _pasteEnabled = value;
+        }
+
         /// <inheritdoc/>
         /// 
         public override ElementType ElementType =>
-            ElementType.SmdPad;
+            ElementType.SmtPad;
     }
 }
