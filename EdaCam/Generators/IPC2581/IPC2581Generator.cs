@@ -6,9 +6,12 @@ using System.Xml;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Xml;
 using MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Cache.Entries;
+using MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors;
+using MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Xml;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
+using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 using MikroPic.EdaTools.v1.CoreExtensions.Bom;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
@@ -17,21 +20,17 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
         private const double _scale = 1000000.0;
 
-        private List<IPCLayer> _layers;
+        private readonly List<IPCLayer> _layers = new List<IPCLayer>();
         private readonly DataCache _dataCache = new DataCache();
+
+        private IPCLayer _topLayer;
+        private IPCLayer _bottomLayer;
+
         private XmlWriter _writer;
 
         public IPC2581Generator(Target target) :
             base(target) {
 
-            _layers = new List<IPCLayer>() {
-                new IPCLayer("TOP", IPCLayerSide.Top, IPCLayerFunction.Conductor, new EdaLayerSet(EdaLayerId.TopCopper)),
-                new IPCLayer("BOTTOM", IPCLayerSide.Bottom, IPCLayerFunction.Conductor, new EdaLayerSet(EdaLayerId.BottomCopper)),
-                new IPCLayer("DRILL_TOP_BOTTOM", IPCLayerSide.All, IPCLayerFunction.Drill, new EdaLayerSet(EdaLayerId.Platted)),
-                new IPCLayer("OUTLINE", IPCLayerSide.None, IPCLayerFunction.Outline, new EdaLayerSet(EdaLayerId.Profile)),
-                new IPCLayer("TOP_MASK", IPCLayerSide.Top, IPCLayerFunction.SolderMask, new EdaLayerSet(EdaLayerId.TopStop)),
-                new IPCLayer("BOTTOM_MASK", IPCLayerSide.Bottom, IPCLayerFunction.SolderMask, new EdaLayerSet(EdaLayerId.BottomStop))
-            };
         }
 
         public override void Generate(EdaBoard board, string outputFolder, GeneratorOptions options = null) {
@@ -41,6 +40,21 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
             if (String.IsNullOrEmpty(outputFolder))
                 throw new ArgumentNullException(nameof(outputFolder));
+
+            // Afegeix les capes
+            //
+            _topLayer = new IPCLayer("top", IPCLayerSide.Top, IPCLayerFunction.Conductor, new EdaLayerSet(EdaLayerId.TopCopper));
+            _layers.Add(_topLayer);
+            _bottomLayer = new IPCLayer("bottom", IPCLayerSide.Bottom, IPCLayerFunction.Conductor, new EdaLayerSet(EdaLayerId.BottomCopper));
+            _layers.Add(_bottomLayer);
+            _layers.Add(new IPCLayer("drill_all", IPCLayerSide.All, IPCLayerFunction.Drill, new EdaLayerSet(EdaLayerId.Platted)));
+            _layers.Add(new IPCLayer("top_mask", IPCLayerSide.Top, IPCLayerFunction.SolderMask, new EdaLayerSet(EdaLayerId.TopStop)));
+            _layers.Add(new IPCLayer("bottom_mask", IPCLayerSide.Bottom, IPCLayerFunction.SolderMask, new EdaLayerSet(EdaLayerId.BottomStop)));
+
+            // Afegeix les definicions
+            //
+            _dataCache.AddBoardEntries(board);
+            _dataCache.AddDefaultEntries();
 
             string fileName = Path.Combine(outputFolder, Target.FileName);
 
@@ -56,11 +70,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 _writer.WriteStartElement("IPC-2581", "http://webstds.ipc.org/2581");
                 _writer.WriteAttributeString("revision", "C");
 
-                _dataCache.AddBoardEntries(board);
-                _dataCache.AddFillDescEntry(true);
-                _dataCache.AddFillDescEntry(false);
-
-                WriteContentSection(board);
+                WriteContentSection();
                 WriteSection_Bom(board);
                 WriteSection_Ecad(board);
 
@@ -72,9 +82,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         /// <summary>
         /// Escriu la seccio 'Content'
         /// </summary>
-        /// <param name="board">La placa.</param>
         /// 
-        private void WriteContentSection(EdaBoard board) {
+        private void WriteContentSection() {
 
             _writer.WriteStartElement("Content");
 
@@ -82,25 +91,19 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             _writer.WriteAttributeString("mode", "Fabrication");
             _writer.WriteEndElement();
 
-            WriteSection_DictionaryLineDesc(board);
-            WriteSection_DictionaryFillDesc(board);
-            WriteSection_DictionaryStandard(board);
+            // Escriu la seccions 'LayerRef'
+            //
+            foreach (var layer in _layers) {
+                _writer.WriteStartElement("LayerRef");
+                _writer.WriteAttributeString("name", layer.Name);
+                _writer.WriteEndElement();
+            }
 
-            _writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Escriu la seccio 'DictionaryLineDesc'.
-        /// </summary>
-        /// <param name="board">La placa.</param>
-        /// 
-        private void WriteSection_DictionaryLineDesc(EdaBoard board) {
-
+            // Escriu la seccio 'DictionaryLineDesc'
+            //
             _writer.WriteStartElement("DictionaryLineDesc");
             _writer.WriteAttributeString("units", "MILLIMETER");
-
             foreach (var entry in _dataCache.Entries.OfType<LineDescEntry>()) {
-
                 _writer.WriteStartElement("EntryLineDesc");
                 _writer.WriteAttributeInteger("id", entry.Id);
                 _writer.WriteStartElement("LineDesc");
@@ -109,17 +112,13 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 _writer.WriteEndElement();
                 _writer.WriteEndElement();
             }
-
             _writer.WriteEndElement();
-        }
 
-        private void WriteSection_DictionaryFillDesc(EdaBoard board) {
-
+            // Escriu la seccio 'DictionaryFillDesc'
+            //
             _writer.WriteStartElement("DictionaryFillDesc");
             _writer.WriteAttributeString("units", "MILLIMETER");
-
             foreach (var entry in _dataCache.Entries.OfType<FillDescEntry>()) {
-
                 _writer.WriteStartElement("EntryFillDesc");
                 _writer.WriteAttributeInteger("id", entry.Id);
                 _writer.WriteStartElement("FillDesc");
@@ -127,46 +126,31 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 _writer.WriteEndElement();
                 _writer.WriteEndElement();
             }
-
             _writer.WriteEndElement();
-        }
 
-        /// <summary>
-        /// Escriu la seccio 'DictionaryStandard'.
-        /// </summary>
-        /// <param name="board">La placa.</param>
-        /// 
-        private void WriteSection_DictionaryStandard(EdaBoard board) {
-
+            // Escriu la seccio 'DictionaryStandard'
+            //
             _writer.WriteStartElement("DictionaryStandard");
             _writer.WriteAttributeString("units", "MILLIMETER");
-
             foreach (var entry in _dataCache.Entries.OfType<CircleEntry>()) {
-
                 _writer.WriteStartElement("EntryStandard");
                 _writer.WriteAttributeInteger("id", entry.Id);
-
                 _writer.WriteStartElement("Circle");
                 _writer.WriteAttributeDouble("diameter", entry.Diameter / _scale);
                 _writer.WriteEndElement();
-
                 _writer.WriteEndElement();
             }
-
             foreach (var entry in _dataCache.Entries.OfType<RectRoundEntry>()) {
-
                 _writer.WriteStartElement("EntryStandard");
                 _writer.WriteAttributeInteger("id", entry.Id);
-
                 _writer.WriteStartElement("RectRound");
                 _writer.WriteAttributeDouble("width", entry.Size.Width / _scale);
                 _writer.WriteAttributeDouble("height", entry.Size.Height / _scale);
-                double radius = (Math.Min(entry.Size.Width, entry.Size.Height) * entry.Ratio) / 2.0;
-                _writer.WriteAttributeDouble("radius", radius / _scale);
+                _writer.WriteAttributeDouble("radius", entry.Radius / _scale);
                 _writer.WriteEndElement();
-
                 _writer.WriteEndElement();
             }
+            _writer.WriteEndElement();
 
             _writer.WriteEndElement();
         }
@@ -181,35 +165,13 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             _writer.WriteStartElement("Bom");
             _writer.WriteAttributeString("name", "bom_0");
 
-            WriteSection_BomHeader(board);
-            WriteSection_BomItem(board);
-
-            _writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Escriu la seccio 'BomHeader'
-        /// </summary>
-        /// <param name="board">La placa.</param>
-        /// 
-        private void WriteSection_BomHeader(EdaBoard board) {
-
             _writer.WriteStartElement("BomHeader");
             _writer.WriteAttributeString("assembly", "assembly_0");
             _writer.WriteAttributeString("revision", "1.0");
             _writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Escriu la seccio 'BomItem'
-        /// </summary>
-        /// <param name="board">La placa.</param>
-        /// 
-        private void WriteSection_BomItem(EdaBoard board) {
 
             var bomGenerator = new EdaBomGenerator(board);
             var bom = bomGenerator.Generate();
-
             foreach (var entry in bom.Entries) {
 
                 _writer.WriteStartElement("BomItem");
@@ -230,6 +192,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
                 _writer.WriteEndElement();
             }
+
+            _writer.WriteEndElement();
         }
 
         /// <summary>
@@ -262,7 +226,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             _writer.WriteAttributeDouble("tolPlus", 0);
             _writer.WriteAttributeDouble("tolMinus", 0);
             _writer.WriteAttributeString("global", "TRUE");
-            WriteSection_Point("Location", new EdaPoint(0, 0));
+            _writer.WritePointElement("Location", new EdaPoint(0, 0), _scale);
             _writer.WriteEndElement();
 
             _writer.WriteEndElement();
@@ -277,13 +241,15 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
             _writer.WriteStartElement("CadData");
 
-            WriteSection_Layer(board);
-            WriteSection_Stackup(board);
+            WriteSection_Layer();
+            WriteSection_Stackup();
 
             _writer.WriteStartElement("Step");
-            _writer.WriteAttributeString("name", "board");
+            _writer.WriteAttributeString("name", "board_0");
+            _writer.WriteAttributeString("type", "BOARD");
+            _writer.WriteAttributeString("stackupRef", "stackup_0");
 
-            WriteSection_Point("Datum", board.Position);
+            _writer.WritePointElement("Datum", board.Position, _scale);
 
             WriteSection_Profile(board);
             WriteSection_Package(board);
@@ -303,13 +269,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         /// 
         private void WriteSection_Profile(EdaBoard board) {
 
-            _writer.WriteStartElement("Profile");
-
             var polygon = board.GetOutlinePolygon();
             if (polygon != null)
-                WriteSection_Polygon(polygon);
-
-            _writer.WriteEndElement();
+                _writer.WritePolygonElement("Profile", polygon, -1, _scale);
         }
 
         /// <summary>
@@ -357,9 +319,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         /// <summary>
         /// Escriu la seccio 'Layer'
         /// </summary>
-        /// <param name="board">La placa.</param>
         /// 
-        private void WriteSection_Layer(EdaBoard board) {
+        private void WriteSection_Layer() {
 
             foreach (var layer in _layers) {
 
@@ -401,11 +362,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 _writer.WriteAttributeString("name", layer.Name);
                 _writer.WriteAttributeString("layerFunction", functionName);
                 _writer.WriteAttributeString("side", sideName);
-
                 if (layer.Function == IPCLayerFunction.Drill) {
                     _writer.WriteStartElement("Span");
-                    _writer.WriteAttributeString("fromLayer", "TOP");
-                    _writer.WriteAttributeString("toLayer", "BOTTOM");
+                    _writer.WriteAttributeString("fromLayer", _topLayer.Name);
+                    _writer.WriteAttributeString("toLayer", _bottomLayer.Name);
                     _writer.WriteEndElement();
                 }
 
@@ -416,9 +376,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         /// <summary>
         /// Escriu la seccio 'Stackup'
         /// </summary>
-        /// <param name="board">La placa.</param>
         /// 
-        private void WriteSection_Stackup(EdaBoard board) {
+        private void WriteSection_Stackup() {
 
             _writer.WriteStartElement("Stackup");
             _writer.WriteAttributeString("name", "stackup_0");
@@ -433,10 +392,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             _writer.WriteAttributeDouble("tolMinus", 0);
 
             int sequence = 1;
-            foreach (var ipcLayer in _layers) {
-                if (ipcLayer.Function == IPCLayerFunction.Conductor) {
+            foreach (var layer in _layers) {
+                if (layer.Function == IPCLayerFunction.Conductor) {
                     _writer.WriteStartElement("StackupLayer");
-                    _writer.WriteAttributeString("layerOfGroupRef", ipcLayer.Name);
+                    _writer.WriteAttributeString("layerOfGroupRef", layer.Name);
                     _writer.WriteAttributeDouble("thickness", 0.35);
                     _writer.WriteAttributeDouble("tolPlus", 0);
                     _writer.WriteAttributeDouble("tolMinus", 0);
@@ -459,161 +418,28 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             // Procesa les capes conductores.
             //
             foreach (var layer in _layers.Where(l => l.Function == IPCLayerFunction.Conductor)) {
+
+                _writer.WriteStartElement("LayerFeature");
+                _writer.WriteAttributeString("layerRef", layer.Name);
+
                 foreach (var layerId in layer.LayerSet) {
-
-                    _writer.WriteStartElement("LayerFeature");
-                    _writer.WriteAttributeString("layerRef", layer.Name);
-
-                    foreach (var part in board.Parts) {
-                        var component = part.Component;
-                        var tr = part.GetLocalTransformation();
-
-                        foreach (var element in component.Elements.OfType<EdaSmtPadElement>().Where(e => e.IsOnLayer(layerId))) {
-
-                            var rectRoundEntry = _dataCache.GetRectRoundEntry(element.Size, element.CornerRatio);
-                            var signal = board.GetSignal(element, part, false);
-
-                            _writer.WriteStartElement("Set");
-                            if (signal != null)
-                                _writer.WriteAttributeString("net", signal.Name);
-                            _writer.WriteStartElement("Pad");
-                            if (!part.Rotation.IsZero)
-                                WriteSection_Xform(part.Rotation);
-                            WriteSection_Point("Location", tr.Transform(element.Position));
-                            _writer.WriteStartElement("StandardPrimitiveRef");
-                            _writer.WriteAttributeInteger("id", rectRoundEntry.Id);
-                            _writer.WriteEndElement();
-                            _writer.WriteEndElement();
-                            _writer.WriteEndElement();
-                        }
-
-                        foreach (var element in component.Elements.OfType<EdaThtPadElement>().Where(e => e.IsOnLayer(layerId))) {
-
-                            var size =
-                                layerId.IsTop ? element.TopSize :
-                                layerId.IsBottom ? element.BottomSize :
-                                element.InnerSize;
-                            var rectRoundEntry = _dataCache.GetRectRoundEntry(size, element.CornerRatio);
-                            var signal = board.GetSignal(element, part, false);
-
-                            _writer.WriteStartElement("Set");
-                            if (signal != null)
-                                _writer.WriteAttributeString("net", signal.Name);
-                            _writer.WriteStartElement("Pad");
-                            WriteSection_Point("Location", tr.Transform(element.Position));
-                            _writer.WriteStartElement("StandardPrimitiveRef");
-                            _writer.WriteAttributeInteger("id", rectRoundEntry.Id);
-                            _writer.WriteEndElement();
-                            _writer.WriteEndElement();
-                            _writer.WriteEndElement();
-                        }
-                    }
-
-                    foreach (var element in board.Elements.OfType<EdaViaElement>().Where(e => e.IsOnLayer(layerId))) {
-
-                        var circleEntry = _dataCache.GetCircleEntry(element.OuterSize);
-                        var signal = board.GetSignal(element, null, false);
-
-                        _writer.WriteStartElement("Set");
-                        if (signal != null)
-                            _writer.WriteAttributeString("net", signal.Name);
-                        _writer.WriteAttributeString("padUsage", "VIA");
-                        _writer.WriteStartElement("Pad");
-                        WriteSection_Point("Location", element.Position);
-                        _writer.WriteStartElement("StandardPrimitiveRef");
-                        _writer.WriteAttributeInteger("id", circleEntry.Id);
-                        _writer.WriteEndElement();
-                        _writer.WriteEndElement();
-                        _writer.WriteEndElement();
-                    }
-
-                    foreach (var element in board.Elements.OfType<EdaLineElement>().Where(e => e.IsOnLayer(layerId))) {
-
-                        var lineDescEntry = _dataCache.GetLineDescEntry(element.Thickness, element.LineCap);
-                        var signal = board.GetSignal(element, null, false);
-
-                        _writer.WriteStartElement("Set");
-                        if (signal != null)
-                            _writer.WriteAttributeString("net", signal.Name);
-                        _writer.WriteStartElement("Features");
-                        _writer.WriteStartElement("Line");
-                        _writer.WriteAttributeDouble("startX", element.StartPosition.X / _scale);
-                        _writer.WriteAttributeDouble("startY", element.StartPosition.Y / _scale);
-                        _writer.WriteAttributeDouble("endX", element.EndPosition.X / _scale);
-                        _writer.WriteAttributeDouble("endY", element.EndPosition.Y / _scale);
-                        _writer.WriteStartElement("LineDescRef");
-                        _writer.WriteAttributeInteger("id", lineDescEntry.Id);
-                        _writer.WriteEndElement();
-                        _writer.WriteEndElement();
-                        _writer.WriteEndElement();
-                        _writer.WriteEndElement();
-                    }
-
-                    foreach (var element in board.Elements.OfType<EdaRegionElement>().Where(e => e.IsOnLayer(layerId))) {
-
-                        //var lineDescEntry = _dataCache.GetLineDescEntry(element.Thickness);
-                        var signal = board.GetSignal(element, null, false);
-
-                        _writer.WriteStartElement("Set");
-                        if (signal != null)
-                            _writer.WriteAttributeString("net", signal.Name);
-                        _writer.WriteStartElement("Features");
-                        _writer.WriteStartElement("Contour");
-
-                        var polygons = board.GetRegionPolygons(element, layerId, null);
-                        foreach (var polygon in polygons)
-                            WriteSection_Polygon(polygon);
-
-                        //_writer.WriteStartElement("LineDescRef");
-                        //_writer.WriteAttributeInteger("id", lineDescEntry.Id);
-                        //_writer.WriteEndElement();
-                        _writer.WriteEndElement();
-                        _writer.WriteEndElement();
-                        _writer.WriteEndElement();
-                    }
-
-                    _writer.WriteEndElement();
+                    var visitor = new ConductorLayerVisitor(layerId, _dataCache, _writer);
+                    visitor.Visit(board);
                 }
+
+                _writer.WriteEndElement();
             }
-            // Procesa les capes de forats conductors (Vias i pads THT).
+
+            // Procesa les capes de forats (Vias i pads THT).
             //
-            int holeNumber = 0;
             foreach (var layer in _layers.Where(l => l.Function == IPCLayerFunction.Drill)) {
 
                 _writer.WriteStartElement("LayerFeature");
                 _writer.WriteAttributeString("layerRef", layer.Name);
 
-                foreach (var part in board.Parts) {
-                    var component = part.Component;
-                    var tr = part.GetLocalTransformation();
-                    foreach (var element in component.Elements.OfType<EdaThtPadElement>()) {
-                        var position = tr.Transform(element.Position);
-                        _writer.WriteStartElement("Set");
-                        _writer.WriteStartElement("Hole");
-                        _writer.WriteAttributeString("name", String.Format("H{0}", holeNumber++));
-                        _writer.WriteAttributeString("platingStatus", "VIA");
-                        _writer.WriteAttributeDouble("x", position.X / _scale);
-                        _writer.WriteAttributeDouble("y", position.Y / _scale);
-                        _writer.WriteAttributeDouble("diameter", element.DrillDiameter / _scale);
-                        _writer.WriteAttributeDouble("plusTol", 0);
-                        _writer.WriteAttributeDouble("minusTol", 0);
-                        _writer.WriteEndElement();
-                        _writer.WriteEndElement();
-                    }
-                }
-
-                foreach (var element in board.Elements.OfType<EdaViaElement>()) {
-                    _writer.WriteStartElement("Set");
-                    _writer.WriteStartElement("Hole");
-                    _writer.WriteAttributeString("name", String.Format("H{0}", holeNumber++));
-                    _writer.WriteAttributeString("platingStatus", "VIA");
-                    _writer.WriteAttributeDouble("x", element.Position.X / _scale);
-                    _writer.WriteAttributeDouble("y", element.Position.Y / _scale);
-                    _writer.WriteAttributeDouble("diameter", element.DrillDiameter / _scale);
-                    _writer.WriteAttributeDouble("plusTol", 0);
-                    _writer.WriteAttributeDouble("minusTol", 0);
-                    _writer.WriteEndElement();
-                    _writer.WriteEndElement();
+                foreach (var layerId in layer.LayerSet) {
+                    var visitor = new DrillLayerVisitor(layerId, _dataCache, _writer);
+                    visitor.Visit(board);
                 }
 
                 _writer.WriteEndElement();
@@ -639,7 +465,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                             _writer.WriteStartElement("Pad");
                             if (!part.Rotation.IsZero)
                                 WriteSection_Xform(part.Rotation);
-                            WriteSection_Point("Location", tr.Transform(element.Position));
+                            _writer.WritePointElement("Location", tr.Transform(element.Position), _scale);
                             _writer.WriteStartElement("StandardPrimitiveRef");
                             _writer.WriteAttributeInteger("id", rectRoundEntry.Id);
                             _writer.WriteEndElement();
@@ -660,7 +486,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                             _writer.WriteStartElement("Pad");
                             if (!part.Rotation.IsZero)
                                 WriteSection_Xform(part.Rotation);
-                            WriteSection_Point("Location", tr.Transform(element.Position));
+                            _writer.WritePointElement("Location", tr.Transform(element.Position), _scale);
                             _writer.WriteStartElement("StandardPrimitiveRef");
                             _writer.WriteAttributeInteger("id", rectRoundEntry.Id);
                             _writer.WriteEndElement();
@@ -684,9 +510,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             foreach (var part in board.Parts) {
                 _writer.WriteStartElement("Component");
                 _writer.WriteAttributeString("refDes", part.Name);
-                _writer.WriteAttributeString("layerRef", part.Side == PartSide.Top ? "TOP" : "BOTTOM");
+                _writer.WriteAttributeString("layerRef", part.Side == PartSide.Top ? _topLayer.Name : _bottomLayer.Name);
                 _writer.WriteAttributeString("packageRef", part.Component.Name);
-                WriteSection_Point("Location", part.Position);
+                _writer.WritePointElement("Location", part.Position, _scale);
                 _writer.WriteEndElement();
             }
         }
@@ -696,55 +522,6 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             _writer.WriteStartElement("Xform");
             _writer.WriteAttributeDouble("rotation", angle.AsDegrees);
             _writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Escriu la descripocio d'un poligon.
-        /// </summary>
-        /// <param name="polygon">El poligon.</param>
-        /// 
-        private void WriteSection_Polygon(EdaPolygon polygon) {
-
-            void WritePolygonPoints(IEnumerable<EdaPoint> points) {
-
-                bool first = true;
-                EdaPoint firstPoint = default;
-                foreach (var point in points) {
-                    if (first) {
-                        first = false;
-                        firstPoint = point;
-                        WriteSection_Point("PolyBegin", point);
-                    }
-                    else
-                        WriteSection_Point("PolyStepSegment", point);
-                }
-                WriteSection_Point("PolyStepSegment", firstPoint);
-            }
-
-            _writer.WriteStartElement("Polygon");
-            WritePolygonPoints(polygon.Outline);
-            _writer.WriteStartElement("FillDescRef");
-            var fillDescEntry = _dataCache.GetFillDescEntry(true);
-            _writer.WriteAttributeInteger("id", fillDescEntry.Id);
-            _writer.WriteEndElement();
-            _writer.WriteEndElement();
-
-            if (polygon.HasHoles) {
-                foreach (var hole in polygon.Holes) {
-                    _writer.WriteStartElement("Cutout");
-                    WritePolygonPoints(hole);
-                    _writer.WriteEndElement();
-                }
-            }
-        }
-
-        private void WriteSection_Point(string name, EdaPoint point) {
-
-            _writer.WriteStartElement(name);
-            _writer.WriteAttributeDouble("x", point.X / _scale);
-            _writer.WriteAttributeDouble("y", point.Y / _scale);
-            _writer.WriteEndElement();
-
-        }
+        }    
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using MikroPic.EdaTools.v1.Base.Geometry;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Cache.Entries {
@@ -45,10 +46,17 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Cache.Entries {
             _size;
 
         /// <summary>
-        /// Obte el ratio de curvatura de les cantonades.
+        /// Obte el percentatge de curvatura de les cantonades.
         /// </summary>
         /// 
         public EdaRatio Ratio =>
             _ratio;
+
+        /// <summary>
+        /// Obte el radi de curvatura de les cantonades.
+        /// </summary>
+        /// 
+        public int Radius =>
+            (Math.Min(_size.Width, _size.Height) * _ratio) / 2;
     }
 }

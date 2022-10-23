@@ -56,5 +56,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             var visitor = new Visitor(dataCache);
             visitor.Visit(board);
         }
+
+        public static void AddDefaultEntries(this DataCache dataCache) {
+
+            dataCache.AddFillDescEntry(true);
+            dataCache.AddFillDescEntry(false);
+        }
     }
 }
