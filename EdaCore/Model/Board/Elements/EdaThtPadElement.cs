@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
@@ -99,35 +98,17 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
-            int hash = GetHashCode() + (layerId.GetHashCode() * 2798761);
-            EdaPolygon polygon = PolygonCache.Get(hash);
-            if (polygon == null) {
-
-                var padPoints = MakePadPoints(layerId, 0);
-                var holePoints = MakeHolePoints();
-                polygon = new EdaPolygon(padPoints, holePoints);
-
-                PolygonCache.Save(hash, polygon);
-            }
-
-            return polygon;
+            var padPoints = MakePadPoints(layerId, 0);
+            var holePoints = MakeHolePoints();
+            return new EdaPolygon(padPoints, holePoints);
         }
 
         /// <inheritdoc/>
         /// 
         public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
-            int hash = GetHashCode() + (layerId.GetHashCode() * 47211) + spacing * 99997;
-            EdaPolygon polygon = PolygonCache.Get(hash);
-            if (polygon == null) {
-
-                var padPoints = MakePadPoints(layerId, spacing);
-                polygon = new EdaPolygon(padPoints);
-
-                PolygonCache.Save(hash, polygon);
-            }
-
-            return polygon;
+            var padPoints = MakePadPoints(layerId, spacing);
+            return new EdaPolygon(padPoints);
         }
 
         /// <summary>

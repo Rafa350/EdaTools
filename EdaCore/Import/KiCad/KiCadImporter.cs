@@ -460,7 +460,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 StartPosition = start,
                 EndPosition = end,
                 Thickness = thickness,
-                LineCap = EdaLineElement.CapStyle.Round
+                LineCap = EdaLineCap.Round
             };
 
             board.AddElement(element);
@@ -491,7 +491,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 StartPosition = start,
                 EndPosition = end,
                 Thickness = thickness,
-                LineCap = EdaLineElement.CapStyle.Round
+                LineCap = EdaLineCap.Round
             };
 
             component.AddElement(element);
@@ -527,7 +527,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 EndPosition = angle > 0 ? start : end,
                 Thickness = thickness,
                 Angle = EdaAngle.FromDegrees(Math.Abs(angle)),
-                LineCap = EdaLineElement.CapStyle.Flat
+                LineCap = EdaLineCap.Flat
             };
 
             board.AddElement(element);
@@ -560,7 +560,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 EndPosition = ArcUtils.EndPosition(center, start, angle),
                 Thickness = thickness,
                 Angle = angle,
-                LineCap = EdaLineElement.CapStyle.Flat
+                LineCap = EdaLineCap.Flat
             };
 
             component.AddElement(element);

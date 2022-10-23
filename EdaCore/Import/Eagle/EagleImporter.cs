@@ -634,7 +634,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             EdaAngle angle = EdaAngle.Zero;
             if (node.AttributeExists("curve"))
                 angle = ParseAngle(node.AttributeAsString("curve"));
-            EdaLineElement.CapStyle lineCap = node.AttributeAsString("cap") == null ? EdaLineElement.CapStyle.Round : EdaLineElement.CapStyle.Flat;
+            EdaLineCap lineCap = node.AttributeAsString("cap") == null ? EdaLineCap.Round : EdaLineCap.Flat;
             int thickness = ParseNumber(node.AttributeAsString("width"));
             if (thickness == 0)
                 thickness = 100000;

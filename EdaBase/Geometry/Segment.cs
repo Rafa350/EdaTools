@@ -20,6 +20,9 @@
             _angle = angle;
         }
 
+        public override string ToString() =>
+            string.Format("From ({0}) To ({1}) Angle {2}", _start, _end, _angle);
+
         public EdaPoint Start =>
             _start;
 

@@ -211,7 +211,7 @@ namespace MikroPic.EdaTools.v1.Panel {
                     StartPosition = q1,
                     EndPosition = q2,
                     Thickness = cut.Thickness,
-                    LineCap = EdaLineElement.CapStyle.Round
+                    LineCap = EdaLineCap.Round
                 });
             }
 
@@ -256,7 +256,7 @@ namespace MikroPic.EdaTools.v1.Panel {
                 StartPosition = new EdaPoint(rect.Left, rect.Top),
                 EndPosition = new EdaPoint(rect.Right, rect.Top),
                 Thickness = 100000,
-                LineCap = EdaLineElement.CapStyle.Round
+                LineCap = EdaLineCap.Round
             });
 
             targetBoard.AddElement(new EdaLineElement {
@@ -264,7 +264,7 @@ namespace MikroPic.EdaTools.v1.Panel {
                 StartPosition = new EdaPoint(rect.Left, rect.Bottom),
                 EndPosition = new EdaPoint(rect.Right, rect.Bottom),
                 Thickness = 100000,
-                LineCap = EdaLineElement.CapStyle.Round
+                LineCap = EdaLineCap.Round
             });
 
             targetBoard.AddElement(new EdaLineElement {
@@ -272,7 +272,7 @@ namespace MikroPic.EdaTools.v1.Panel {
                 StartPosition = new EdaPoint(rect.Left, rect.Top),
                 EndPosition = new EdaPoint(rect.Left, rect.Bottom),
                 Thickness = 100000,
-                LineCap = EdaLineElement.CapStyle.Round
+                LineCap = EdaLineCap.Round
             });
 
             targetBoard.AddElement(new EdaLineElement {
@@ -280,7 +280,7 @@ namespace MikroPic.EdaTools.v1.Panel {
                 StartPosition = new EdaPoint(rect.Right, rect.Top),
                 EndPosition = new EdaPoint(rect.Right, rect.Bottom),
                 Thickness = 100000,
-                LineCap = EdaLineElement.CapStyle.Round
+                LineCap = EdaLineCap.Round
             });
         }
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
@@ -70,36 +69,17 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
-            int hash = GetHashCode() * layerId.GetHashCode() * 273;
-
-            EdaPolygon polygon = PolygonCache.Get(hash);
-            if (polygon == null) {
-
-                var viaPoints = MakeViaPoints(layerId, 0);
-                var holePoints = MakeHolePoints();
-                polygon = new EdaPolygon(viaPoints, holePoints);
-
-                PolygonCache.Save(hash, polygon);
-            }
-
-            return polygon;
+            var viaPoints = MakeViaPoints(layerId, 0);
+            var holePoints = MakeHolePoints();
+            return new EdaPolygon(viaPoints, holePoints);
         }
 
         /// <inheritdoc/>
         /// 
         public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
-            int hash = GetHashCode() + (layerId.GetHashCode() * 11327) + (spacing * 131);
-            EdaPolygon polygon = PolygonCache.Get(hash);
-            if (polygon == null) {
-
-                var viaPoints = MakeViaPoints(layerId, spacing);
-                polygon = new EdaPolygon(viaPoints);
-
-                PolygonCache.Save(hash, polygon);
-            }
-
-            return polygon;
+            var viaPoints = MakeViaPoints(layerId, spacing);
+            return new EdaPolygon(viaPoints);
         }
 
         /// <summary>

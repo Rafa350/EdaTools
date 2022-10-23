@@ -1,6 +1,5 @@
 ﻿using System;
 using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Base.Geometry.Polygons;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
@@ -40,36 +39,20 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
-            int hash = GetHashCode() + layerId.GetHashCode() * 981;
-            EdaPolygon polygon = PolygonCache.Get(hash);
-            if (polygon == null) {
-
-                var points = EdaPointFactory.CreateRectangle(Position, Size, _cornerRatio, true, Rotation);
-                polygon = new EdaPolygon(points);
-
-                PolygonCache.Save(hash, polygon);
-            }
-            return polygon;
+            var points = EdaPointFactory.CreateRectangle(Position, Size, _cornerRatio, true, Rotation);
+            return new EdaPolygon(points);
         }
 
         /// <inheritdoc/>
         /// 
         public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
-            int hash = GetHashCode() + (layerId.GetHashCode() * 71) + (spacing * 27009);
-            var polygon = PolygonCache.Get(hash);
-            if (polygon == null) {
+            var outlineSize = new EdaSize(_size.Width + spacing + spacing, _size.Height + spacing + spacing);
+            var cornerSize = (Math.Min(_size.Width, _size.Height) * _cornerRatio) / 2;
+            var outlineCornerRatio = EdaRatio.FromPercent((double)(cornerSize + spacing) / (Math.Min(outlineSize.Width, outlineSize.Height) / 2));
+            var points = EdaPointFactory.CreateRectangle(Position, outlineSize, outlineCornerRatio, true, Rotation);
+            return new EdaPolygon(points);
 
-                var outlineSize = new EdaSize(_size.Width + spacing + spacing, _size.Height + spacing + spacing);
-                var cornerSize = (Math.Min(_size.Width, _size.Height) * _cornerRatio) / 2;
-                var outlineCornerRatio = EdaRatio.FromPercent((double)(cornerSize + spacing) / (Math.Min(outlineSize.Width, outlineSize.Height) / 2));
-                var points = EdaPointFactory.CreateRectangle(Position, outlineSize, outlineCornerRatio, true, Rotation);
-                polygon = new EdaPolygon(points);
-
-                PolygonCache.Save(hash, polygon);
-            }
-
-            return polygon;
         }
 
         /// <inheritdoc/>

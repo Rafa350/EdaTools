@@ -723,7 +723,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             var startPosition = EdaParser.ParsePoint(_rd.AttributeAsString("startPosition"));
             var endPosition = EdaParser.ParsePoint(_rd.AttributeAsString("endPosition"));
             var thickness = EdaParser.ParseScalar(_rd.AttributeAsString("thickness", "0"));
-            var lineCap = _rd.AttributeAsEnum<EdaLineElement.CapStyle>("lineCap", EdaLineElement.CapStyle.Round);
+            var lineCap = _rd.AttributeAsEnum<EdaLineCap>("lineCap", EdaLineCap.Round);
             var signalName = _rd.AttributeAsString("signal");
 
             _rd.NextTag();
@@ -759,7 +759,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             var endPosition = EdaParser.ParsePoint(_rd.AttributeAsString("endPosition"));
             var thickness = EdaParser.ParseScalar(_rd.AttributeAsString("thickness"));
             var angle = EdaParser.ParseAngle(_rd.AttributeAsString("angle"));
-            var lineCap = _rd.AttributeAsEnum<EdaLineElement.CapStyle>("lineCap", EdaLineElement.CapStyle.Round);
+            var lineCap = _rd.AttributeAsEnum<EdaLineCap>("lineCap", EdaLineCap.Round);
             var signalName = _rd.AttributeAsString("signal");
 
             _rd.NextTag();

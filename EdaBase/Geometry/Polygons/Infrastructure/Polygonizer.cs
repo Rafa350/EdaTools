@@ -50,18 +50,23 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
             result = default;
             foreach (var segment in segments) {
-                if (segment.Start ==  point) {
+                if (Compare(segment.Start, point)) {
                     result = segment;
                     return true;
                 }
 
-                else if (segment.End == point) {
+                else if (Compare(segment.End, point)) {
                     result = segment;
                     return true;
                 }
             }
 
             return false;
+        }
+
+        private static bool Compare(EdaPoint p1, EdaPoint p2) {
+
+            return (Math.Abs(p1.X - p2.X) < 10) && (Math.Abs(p1.Y - p2.Y) < 10);
         }
     }
 }

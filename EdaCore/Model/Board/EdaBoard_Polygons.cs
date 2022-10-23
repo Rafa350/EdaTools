@@ -231,7 +231,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             var segments = new List<Segment>();
             foreach (var element in elements) {
                 if (element is EdaArcElement arc) {
-                    var points = new List<EdaPoint>(EdaPointFactory.CreateArc(arc.Center, arc.Radius, arc.StartAngle, arc.Angle, true));
+                    var points = new List<EdaPoint>(EdaPointFactory.CreateArc(arc.Center, arc.Radius, arc.StartAngle, arc.Angle));
+                    points[0] = arc.StartPosition;
+                    points[points.Count - 1] = arc.EndPosition;
                     for (int i = 1; i < points.Count; i++)
                         segments.Add(new Segment(points[i - 1], points[i]));
                 }

@@ -40,7 +40,7 @@ namespace EdaBoardViewer.Render {
 
                 var brush = new SolidColorBrush(_visualLayer.Color);
 
-                var lineCap = line.LineCap == EdaLineElement.CapStyle.Flat ? PenLineCap.Flat : PenLineCap.Round;
+                var lineCap = line.LineCap == EdaLineCap.Flat ? PenLineCap.Flat : PenLineCap.Round;
                 var pen = new Pen(brush, line.Thickness, null, lineCap);
 
                 var start = line.StartPosition.ToPoint();

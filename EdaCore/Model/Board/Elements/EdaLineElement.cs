@@ -9,15 +9,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// 
     public class EdaLineElement: EdaElement, IEdaConectable {
 
-        public enum CapStyle {
-            Round,
-            Flat
-        }
-
         private EdaPoint _startPosition;
         private EdaPoint _endPosition;
         private int _thickness;
-        private CapStyle _lineCap = CapStyle.Round;
+        private EdaLineCap _lineCap = EdaLineCap.Round;
 
         /// <inheritdoc/>
         /// 
@@ -30,7 +25,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
-            var points = EdaPointFactory.CreateLineTrace(_startPosition, _endPosition, _thickness, LineCap == CapStyle.Round);
+            var points = EdaPointFactory.CreateLineTrace(_startPosition, _endPosition, _thickness, LineCap == EdaLineCap.Round);
             return new EdaPolygon(points);
         }
 
@@ -38,7 +33,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
-            var points = EdaPointFactory.CreateLineTrace(_startPosition, _endPosition, _thickness + (spacing * 2), _lineCap == CapStyle.Round);
+            var points = EdaPointFactory.CreateLineTrace(_startPosition, _endPosition, _thickness + (spacing * 2), _lineCap == EdaLineCap.Round);
             return new EdaPolygon(points);
         }
 
@@ -89,7 +84,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// Obte o asigna el tipus d'extrem de linia.
         /// </summary>
         /// 
-        public CapStyle LineCap {
+        public EdaLineCap LineCap {
             get => _lineCap;
             set => _lineCap = value;
         }

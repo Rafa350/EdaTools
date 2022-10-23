@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
 
 namespace MikroPic.EdaTools.v1.Base.Geometry {
@@ -295,7 +294,9 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             var points = new List<EdaPoint>();
             for (int i = 0; i < numPoints; i++) {
 
-                points.Add(new EdaPoint((int)(x + cx), (int)(y + cy)));
+                int xx = (int)Math.Round(x + cx);
+                int yy = (int)Math.Round(y + cy);
+                points.Add(new EdaPoint(xx, yy));
 
                 double tx = x;
                 x = (cos * tx) - (sin * y);

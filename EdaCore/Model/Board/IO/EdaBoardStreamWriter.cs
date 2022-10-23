@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Xml;
+using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Xml;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
@@ -49,7 +50,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 _writer.WriteAttributeString("endPosition", EdaFormatter.FormatPoint(element.EndPosition));
                 if (element.Thickness > 0)
                     _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(element.Thickness));
-                if (element.LineCap != EdaLineElement.CapStyle.Round)
+                if (element.LineCap != EdaLineCap.Round)
                     _writer.WriteAttributeEnum("lineCap", element.LineCap);
 
                 if (_currentBoard != null) {
@@ -73,7 +74,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 _writer.WriteAttributeString("angle", EdaFormatter.FormatAngle(element.Angle));
                 if (element.Thickness > 0)
                     _writer.WriteAttributeString("thickness", EdaFormatter.FormatScalar(element.Thickness));
-                if (element.LineCap != EdaLineElement.CapStyle.Round)
+                if (element.LineCap != EdaLineCap.Round)
                     _writer.WriteAttributeEnum("lineCap", element.LineCap);
 
                 if (_currentBoard != null) {

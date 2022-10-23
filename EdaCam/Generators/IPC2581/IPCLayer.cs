@@ -1,4 +1,6 @@
-﻿namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
+﻿using MikroPic.EdaTools.v1.Core.Model.Board;
+
+namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
     internal enum IPCLayerSide {
         Top,
@@ -21,12 +23,14 @@
         private readonly string _name;
         private readonly IPCLayerSide _side;
         private readonly IPCLayerFunction _function;
+        private readonly EdaLayerSet _layerSet;
 
-        public IPCLayer(string name, IPCLayerSide side, IPCLayerFunction function) {
+        public IPCLayer(string name, IPCLayerSide side, IPCLayerFunction function, EdaLayerSet layerSet) {
 
             _name = name;
             _side = side;
             _function = function;
+            _layerSet = layerSet;
         }
 
         public string Name =>
@@ -37,5 +41,8 @@
 
         public IPCLayerFunction Function =>
             _function;
+
+        public EdaLayerSet LayerSet =>
+            _layerSet;
     }
 }

@@ -25,7 +25,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             if (_angle == EdaAngle.Zero)
                 return base.GetPolygon(layerId);
             else {
-                var points = EdaPointFactory.CreateArcTrace(Center, Radius, StartAngle, _angle, Thickness, LineCap == CapStyle.Round);
+                var points = EdaPointFactory.CreateArcTrace(Center, Radius, StartAngle, _angle, Thickness, LineCap == EdaLineCap.Round);
                 return new EdaPolygon(points);
             }
         }
@@ -37,7 +37,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             if (_angle == EdaAngle.Zero)
                 return base.GetOutlinePolygon(layerId, spacing);
             else {
-                var points = EdaPointFactory.CreateArcTrace(Center, Radius, StartAngle, _angle, Thickness + (spacing * 2), LineCap == CapStyle.Round);
+                var points = EdaPointFactory.CreateArcTrace(Center, Radius, StartAngle, _angle, Thickness + (spacing * 2), LineCap == EdaLineCap.Round);
                 return new EdaPolygon(points);
             }
         }
