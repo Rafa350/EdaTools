@@ -5,6 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <BaseOutputPath>..\bin</BaseOutputPath>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>C:\Users\Rafael\Documents\Projectes\Net\EdaTools\Signature\edatools.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
 </Project>

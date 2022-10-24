@@ -6,3 +6,4 @@ obj
 *.zip
 *.pfx
 
+/Signature

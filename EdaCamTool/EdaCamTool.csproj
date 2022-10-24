@@ -5,11 +5,12 @@
     <TargetFramework>net6.0</TargetFramework>
     <StartupObject>MikroPic.EdaTools.v1.CamTool.Program</StartupObject>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>signature.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>C:\Users\Rafael\Documents\Projectes\Net\EdaTools\Signature\edatools.snk</AssemblyOriginatorKeyFile>
     <Copyright>(c) 2019..2021 rsr.openware@gmail.com</Copyright>
     <Version>2.1.0</Version>
     <Product>EdaTools v2.1</Product>
     <BaseOutputPath>..\bin</BaseOutputPath>
+    <DelaySign>False</DelaySign>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

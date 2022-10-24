@@ -8,7 +8,7 @@
     <Copyright>(c) 2019..2020 rsr.openware@gmail.com</Copyright>
     <Product>EdaTools v2.0</Product>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>signature.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>C:\Users\Rafael\Documents\Projectes\Net\EdaTools\Signature\edatools.snk</AssemblyOriginatorKeyFile>
     <BaseOutputPath>..\bin</BaseOutputPath>
   </PropertyGroup>
 

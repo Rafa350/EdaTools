@@ -5,7 +5,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <StartupObject>EdaComponentGenerator.Program</StartupObject>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>signature.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>C:\Users\Rafael\Documents\Projectes\Net\EdaTools\Signature\edatools.snk</AssemblyOriginatorKeyFile>
     <BaseOutputPath>..\bin</BaseOutputPath>
   </PropertyGroup>
 
