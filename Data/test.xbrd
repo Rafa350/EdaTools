@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<document version="213" documentType="board" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/BoardDocument.xsd">
+<document version="213" documentType="board" distanceUnits="mm" angleUnits="deg" xmlns="http://MikroPic.com/schemas/edatools/v1/EdaBoardDocument.xsd">
     <board position="96, -107.5" rotation="0">
         <layers>
             <layer id="Pads" side="none" function="unknown" />
@@ -99,8 +99,8 @@
                     <line layer="F.Fab" startPosition="0.8, -0.4" endPosition="-0.8, -0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.8, 0.4" endPosition="0.8, -0.4" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a0f464">
@@ -118,8 +118,8 @@
                     <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.8, 0.4" endPosition="0.8, -0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.8, -0.4" endPosition="-0.8, -0.4" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a0f4a8">
@@ -137,8 +137,8 @@
                     <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.8, 0.4" endPosition="0.8, -0.4" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a0f4b9">
@@ -156,8 +156,8 @@
                     <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.8, -0.4" endPosition="-0.8, -0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="Inductor_SMD:L_0603_1608Metric:00000000-0000-0000-0000-000061a0f4e3">
@@ -175,8 +175,8 @@
                     <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.8, 0.4" endPosition="0.8, -0.4" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.7875, 0" size="0.875, 0.95" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.7875, 0" size="0.875, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.7875, 0" size="0.875, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.7875, 0" size="0.875, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="Resistor_SMD:R_0603_1608Metric:00000000-0000-0000-0000-000061a0f4f4">
@@ -194,8 +194,8 @@
                     <line layer="F.Fab" startPosition="-0.8, 0.4125" endPosition="0.8, 0.4125" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.8, -0.4125" endPosition="-0.8, 0.4125" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.8, 0.4125" endPosition="0.8, -0.4125" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.825, 0" size="0.8, 0.95" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.825, 0" size="0.8, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.825, 0" size="0.8, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.825, 0" size="0.8, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a10710">
@@ -213,8 +213,8 @@
                     <line layer="F.Fab" startPosition="0.8, 0.4" endPosition="0.8, -0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="Diode_SMD:D_SOD-123:00000000-0000-0000-0000-000061a108fc">
@@ -240,8 +240,8 @@
                     <line layer="F.Fab" startPosition="-0.35, 0" endPosition="-0.35, -0.55" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-1.4, 0.9" endPosition="1.4, 0.9" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.35, 0" endPosition="0.25, 0.4" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.65, 0" size="0.9, 1.2" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.65, 0" size="0.9, 1.2" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.65, 0" size="0.9, 1.2" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.65, 0" size="0.9, 1.2" maskEnabled="true" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="Connector_JST_PH:JST_S2B-PH-SM4-TB_LF__SN_:00000000-0000-0000-0000-000061a14be1">
@@ -274,10 +274,10 @@
                     <line layer="F.Fab" startPosition="3.9497, 3.79984" endPosition="3.9497, -3.79984" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-3.9497, 3.79984" endPosition="3.9497, 3.79984" thickness="0.1" />
                     <line layer="F.Fab" startPosition="3.9497, -3.79984" endPosition="-3.9497, -3.79984" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.99822, 3.44932" size="0.99822, 3.49758" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.99822, 3.44932" size="0.99822, 3.49758" />
-                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.34772, -2.2987" size="1.4986, 3.39852" />
-                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="3.34772, -2.2987" size="1.4986, 3.39852" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.99822, 3.44932" size="0.99822, 3.49758" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.99822, 3.44932" size="0.99822, 3.49758" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.34772, -2.2987" size="1.4986, 3.39852" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="3.34772, -2.2987" size="1.4986, 3.39852" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="Package_TO_SOT_SMD:SOT-353_SC-70-5:00000000-0000-0000-0000-000061a16fbd">
@@ -296,11 +296,11 @@
                     <line layer="F.Fab" startPosition="-0.175, 1.1" endPosition="-0.675, 0.6" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.675, 0.6" endPosition="-0.675, -1.1" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.675, 1.1" endPosition="-0.175, 1.1" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.95, 0.65" size="0.65, 0.4" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.95, 0" size="0.65, 0.4" />
-                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.95, -0.65" size="0.65, 0.4" />
-                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="0.95, -0.65" size="0.65, 0.4" />
-                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="0.95, 0.65" size="0.65, 0.4" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.95, 0.65" size="0.65, 0.4" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.95, 0" size="0.65, 0.4" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.95, -0.65" size="0.65, 0.4" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="0.95, -0.65" size="0.65, 0.4" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="0.95, 0.65" size="0.65, 0.4" maskEnabled="true" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="Connector_MOLEX_PicoBlade:MOLEX_53261-0471:00000000-0000-0000-0000-000061a1813e">
@@ -342,12 +342,12 @@
                     <line layer="F.Fab" startPosition="-3.3782, 1.10236" endPosition="-4.87934, 1.10236" thickness="0.1" />
                     <line layer="F.Fab" startPosition="4.87934, 1.09728" endPosition="4.87934, -2.09804" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-3.37312, 2.09804" endPosition="3.37312, 2.09804" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.87452, 2.89814" size="0.79756, 1.59766" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.62484, 2.89814" size="0.79756, 1.59766" />
-                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="0.62484, 2.89814" size="0.79756, 1.59766" />
-                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="1.87452, 2.89814" size="0.79756, 1.59766" />
-                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.42468, 0" size="2.09804, 2.99974" />
-                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="4.42468, 0" size="2.09804, 2.99974" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.87452, 2.89814" size="0.79756, 1.59766" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.62484, 2.89814" size="0.79756, 1.59766" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="0.62484, 2.89814" size="0.79756, 1.59766" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="1.87452, 2.89814" size="0.79756, 1.59766" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.42468, 0" size="2.09804, 2.99974" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" />
+                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="4.42468, 0" size="2.09804, 2.99974" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="Package_SO:SOIC-28W_7.5x17.9mm_P1.27mm:00000000-0000-0000-0000-000061a1a777">
@@ -373,34 +373,34 @@
                     <line layer="F.Fab" startPosition="-2.75, 8.95" endPosition="3.75, 8.95" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-3.75, 7.95" endPosition="-2.75, 8.95" thickness="0.1" />
                     <line layer="F.Fab" startPosition="3.75, -8.95" endPosition="-3.75, -8.95" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, 8.255" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, 6.985" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, 5.715" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, 4.445" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, 3.175" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, 1.905" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, 0.635" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, -0.635" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, -1.905" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, -3.175" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, -4.445" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, -5.715" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, -6.985" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, -8.255" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, -8.255" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, -6.985" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, -5.715" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, -4.445" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, -3.175" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, -1.905" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, -0.635" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, 0.635" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, 1.905" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, 3.175" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="25" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, 4.445" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="26" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, 5.715" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="27" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, 6.985" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="28" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, 8.255" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, 8.255" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, 6.985" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, 5.715" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, 4.445" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, 3.175" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, 1.905" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, 0.635" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, -0.635" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, -1.905" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, -3.175" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, -4.445" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, -5.715" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, -6.985" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.65, -8.255" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, -8.255" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, -6.985" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, -5.715" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, -4.445" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, -3.175" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, -1.905" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, -0.635" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, 0.635" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, 1.905" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, 3.175" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="25" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, 4.445" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="26" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, 5.715" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="27" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, 6.985" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="28" layers="Top.Copper, Top.Cream, Top.Stop" position="4.65, 8.255" size="2.049999, 0.6" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a1c081">
@@ -418,8 +418,8 @@
                     <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.8, 0.4" endPosition="0.8, -0.4" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:00000000-0000-0000-0000-000061a1cdf8">
@@ -439,8 +439,8 @@
                     <line layer="F.Fab" startPosition="1.6, 0.8" endPosition="-1.2, 0.8" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-1.6, 0.4" endPosition="-1.6, -0.8" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-1.2, 0.8" endPosition="-1.6, 0.4" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.35, 0" size="1.4, 1.35" cornerRatio="0.37" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.35, 0" size="1.4, 1.35" cornerRatio="0.37" cornerShape="round" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.35, 0" size="1.4, 1.35" cornerRatio="0.37" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.35, 0" size="1.4, 1.35" cornerRatio="0.37" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:00000000-0000-0000-0000-000061a1d586">
@@ -460,8 +460,8 @@
                     <line layer="F.Fab" startPosition="-1.2, 0.8" endPosition="-1.6, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-1.6, 0.4" endPosition="-1.6, -0.8" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-1.6, -0.8" endPosition="1.6, -0.8" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.35, 0" size="1.4, 1.35" cornerRatio="0.37" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.35, 0" size="1.4, 1.35" cornerRatio="0.37" cornerShape="round" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.35, 0" size="1.4, 1.35" cornerRatio="0.37" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="1.35, 0" size="1.4, 1.35" cornerRatio="0.37" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="MountingHole:MountingHole_3.2mm_M3_Pad_Via:00000000-0000-0000-0000-000061a4d432">
@@ -471,15 +471,15 @@
                     <text layer="F.Fab" position="0.3, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <circle layer="Cmts.User" position="0, 0" radius="3.2" thickness="0.15" />
                     <circle layer="Top.Keepout" position="0, 0" radius="3.45" thickness="0.05" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" cornerRatio="1" cornerShape="round" clearance="1" topSize="6.4, 6.4" drill="3.2" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="2.4, 0" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-2.4, 0" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -2.4" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, 1.697056" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 2.4" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, 1.697056" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, -1.697056" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" cornerRatio="1" cornerShape="round" clearance="1" maskEnabled="true" topSize="6.4, 6.4" drill="3.2" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="2.4, 0" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-2.4, 0" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, -1.697056" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
                 </elements>
             </component>
             <component name="MountingHole:MountingHole_3.2mm_M3_Pad_Via:00000000-0000-0000-0000-000061a5451e">
@@ -489,15 +489,15 @@
                     <text layer="F.Fab" position="0.3, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <circle layer="Cmts.User" position="0, 0" radius="3.2" thickness="0.15" />
                     <circle layer="Top.Keepout" position="0, 0" radius="3.45" thickness="0.05" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="2.4, 0" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" cornerRatio="1" cornerShape="round" clearance="1" topSize="6.4, 6.4" drill="3.2" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-2.4, 0" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, 1.697056" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="2.4, 0" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -2.4" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, -1.697056" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" cornerRatio="1" cornerShape="round" clearance="1" maskEnabled="true" topSize="6.4, 6.4" drill="3.2" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-2.4, 0" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, -1.697056" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, 1.697056" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 2.4" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
                 </elements>
             </component>
             <component name="MountingHole:MountingHole_3.2mm_M3_Pad_Via:00000000-0000-0000-0000-000061a5456a">
@@ -507,15 +507,15 @@
                     <text layer="F.Fab" position="0.3, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <circle layer="Cmts.User" position="0, 0" radius="3.2" thickness="0.15" />
                     <circle layer="Top.Keepout" position="0, 0" radius="3.45" thickness="0.05" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" cornerRatio="1" cornerShape="round" clearance="1" topSize="6.4, 6.4" drill="3.2" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-2.4, 0" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="2.4, 0" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, 1.697056" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" cornerRatio="1" cornerShape="round" clearance="1" maskEnabled="true" topSize="6.4, 6.4" drill="3.2" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-2.4, 0" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, -1.697056" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -2.4" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 2.4" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, 1.697056" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, -1.697056" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="2.4, 0" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
                 </elements>
             </component>
             <component name="MountingHole:MountingHole_3.2mm_M3_Pad_Via:00000000-0000-0000-0000-000061a545b6">
@@ -525,15 +525,15 @@
                     <text layer="F.Fab" position="0.3, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <circle layer="Cmts.User" position="0, 0" radius="3.2" thickness="0.15" />
                     <circle layer="Top.Keepout" position="0, 0" radius="3.45" thickness="0.05" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-2.4, 0" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" cornerRatio="1" cornerShape="round" clearance="1" topSize="6.4, 6.4" drill="3.2" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, 1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, -1.697056" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 2.4" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="2.4, 0" cornerRatio="1" cornerShape="round" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, -1.697056" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-2.4, 0" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -2.4" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="1.697056, 1.697056" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" cornerRatio="1" cornerShape="round" clearance="1" maskEnabled="true" topSize="6.4, 6.4" drill="3.2" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, 1.697056" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="-1.697056, -1.697056" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 2.4" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="2.4, 0" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="0.8, 0.8" drill="0.5" />
                 </elements>
             </component>
             <component name="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a698ec">
@@ -551,8 +551,8 @@
                     <line layer="F.Fab" startPosition="0.8, 0.4" endPosition="0.8, -0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.8, -0.4" endPosition="-0.8, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="Connector_FFC-FPC:Hirose_FH12-26S-0.5SH_1x26-1MP_P0.50mm_Horizontal:00000000-0000-0000-0000-000061a6f6c2">
@@ -588,34 +588,34 @@
                     <line layer="F.Fab" startPosition="-6.25, 0.492893" endPosition="-5.75, 1.2" thickness="0.1" />
                     <line layer="F.Fab" startPosition="7.45, -3.4" endPosition="7.45, -3.7" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-7.45, -3.7" endPosition="-7.95, -3.7" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-6.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop" position="0.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop" position="0.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop" position="1.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop" position="1.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop" position="2.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop" position="2.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop" position="3.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop" position="3.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop" position="4.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop" position="4.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop" position="5.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="25" layers="Top.Copper, Top.Cream, Top.Stop" position="5.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="26" layers="Top.Copper, Top.Cream, Top.Stop" position="6.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="MP" layers="Top.Copper, Top.Cream, Top.Stop" position="8.15, -1.4" size="1.8, 2.2" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="MP" layers="Top.Copper, Top.Cream, Top.Stop" position="-8.15, -1.4" size="1.8, 2.2" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-6.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-5.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="-4.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="7" layers="Top.Copper, Top.Cream, Top.Stop" position="-3.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="8" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="9" layers="Top.Copper, Top.Cream, Top.Stop" position="-2.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="10" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="11" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="12" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="13" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="14" layers="Top.Copper, Top.Cream, Top.Stop" position="0.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="15" layers="Top.Copper, Top.Cream, Top.Stop" position="0.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="16" layers="Top.Copper, Top.Cream, Top.Stop" position="1.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="17" layers="Top.Copper, Top.Cream, Top.Stop" position="1.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="18" layers="Top.Copper, Top.Cream, Top.Stop" position="2.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="19" layers="Top.Copper, Top.Cream, Top.Stop" position="2.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="20" layers="Top.Copper, Top.Cream, Top.Stop" position="3.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="21" layers="Top.Copper, Top.Cream, Top.Stop" position="3.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="22" layers="Top.Copper, Top.Cream, Top.Stop" position="4.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="23" layers="Top.Copper, Top.Cream, Top.Stop" position="4.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="24" layers="Top.Copper, Top.Cream, Top.Stop" position="5.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="25" layers="Top.Copper, Top.Cream, Top.Stop" position="5.75, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="26" layers="Top.Copper, Top.Cream, Top.Stop" position="6.25, 1.85" size="0.3, 1.3" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="MP" layers="Top.Copper, Top.Cream, Top.Stop" position="8.15, -1.4" size="1.8, 2.2" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
+                    <spad name="MP" layers="Top.Copper, Top.Cream, Top.Stop" position="-8.15, -1.4" size="1.8, 2.2" cornerRatio="0.5" cornerShape="round" maskEnabled="true" maskClearance="0.05" pasteEnabled="true" pasteReductionRatio="0.1" />
                 </elements>
             </component>
             <component name="Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical:00000000-0000-0000-0000-000061abe25c">
@@ -638,11 +638,11 @@
                     <line layer="F.Fab" startPosition="1, -9" endPosition="-1, -9" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-1, -9" endPosition="-1, 0.5" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.5, 1" endPosition="1, 1" thickness="0.1" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" topSize="1.35, 1.35" drill="0.8" />
-                    <tpad name="2" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -2" cornerRatio="1" cornerShape="round" topSize="1.35, 1.35" drill="0.8" />
-                    <tpad name="3" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -4" cornerRatio="1" cornerShape="round" topSize="1.35, 1.35" drill="0.8" />
-                    <tpad name="4" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -6" cornerRatio="1" cornerShape="round" topSize="1.35, 1.35" drill="0.8" />
-                    <tpad name="5" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -8" cornerRatio="1" cornerShape="round" topSize="1.35, 1.35" drill="0.8" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" maskEnabled="true" topSize="1.35, 1.35" drill="0.8" />
+                    <tpad name="2" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -2" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="1.35, 1.35" drill="0.8" />
+                    <tpad name="3" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -4" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="1.35, 1.35" drill="0.8" />
+                    <tpad name="4" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -6" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="1.35, 1.35" drill="0.8" />
+                    <tpad name="5" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, -8" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="1.35, 1.35" drill="0.8" />
                 </elements>
             </component>
             <component name="Connector_Molex:Molex_KK-254_AE-6410-02A_1x02_P2.54mm_Vertical:00000000-0000-0000-0000-000061ac2e6e">
@@ -679,8 +679,8 @@
                     <line layer="F.Fab" startPosition="-1.27, 2.92" endPosition="-1.27, -2.88" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-1.27, 0.5" endPosition="-0.562893, 0" thickness="0.1" />
                     <line layer="F.Fab" startPosition="3.81, 2.92" endPosition="-1.27, 2.92" thickness="0.1" />
-                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" cornerRatio="0.287" cornerShape="round" topSize="1.74, 2.19" drill="1.19" />
-                    <tpad name="2" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="2.54, 0" cornerRatio="1" cornerShape="round" topSize="1.74, 2.19" drill="1.19" />
+                    <tpad name="1" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="0, 0" cornerRatio="0.287" cornerShape="round" maskEnabled="true" topSize="1.74, 2.19" drill="1.19" />
+                    <tpad name="2" layers="Top.Copper, Bottom.Copper, Top.Stop, Bottom.Stop, Drills" position="2.54, 0" cornerRatio="1" cornerShape="round" maskEnabled="true" topSize="1.74, 2.19" drill="1.19" />
                 </elements>
             </component>
             <component name="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061b8ff15">
@@ -698,8 +698,8 @@
                     <line layer="F.Fab" startPosition="-0.8, 0.4" endPosition="0.8, 0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.8, 0.4" endPosition="0.8, -0.4" thickness="0.1" />
                     <line layer="F.Fab" startPosition="0.8, -0.4" endPosition="-0.8, -0.4" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.775, 0" size="0.9, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="Package_SO:SC-74-6_1.5x2.9mm_P0.95mm:7ed2abd9-bbed-4f95-9218-99faed10990d">
@@ -720,12 +720,12 @@
                     <line layer="F.Fab" startPosition="0.75, 1.45" endPosition="0.75, -1.45" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.75, 1.075" endPosition="-0.375, 1.45" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.75, -1.45" endPosition="-0.75, 1.075" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.1375, 0.95" size="1.425, 0.5" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.1375, 0" size="1.425, 0.5" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.1375, -0.95" size="1.425, 0.5" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="1.1375, -0.95" size="1.425, 0.5" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="1.1375, 0" size="1.425, 0.5" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="1.1375, 0.95" size="1.425, 0.5" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.1375, 0.95" size="1.425, 0.5" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.1375, 0" size="1.425, 0.5" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="3" layers="Top.Copper, Top.Cream, Top.Stop" position="-1.1375, -0.95" size="1.425, 0.5" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="4" layers="Top.Copper, Top.Cream, Top.Stop" position="1.1375, -0.95" size="1.425, 0.5" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="5" layers="Top.Copper, Top.Cream, Top.Stop" position="1.1375, 0" size="1.425, 0.5" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="6" layers="Top.Copper, Top.Cream, Top.Stop" position="1.1375, 0.95" size="1.425, 0.5" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
                 </elements>
             </component>
             <component name="Resistor_SMD:R_0603_1608Metric:b0879d7b-5c17-4095-b4c9-5a2b9719c6a0">
@@ -743,8 +743,8 @@
                     <line layer="F.Fab" startPosition="0.8, -0.4125" endPosition="-0.8, -0.4125" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.8, -0.4125" endPosition="-0.8, 0.4125" thickness="0.1" />
                     <line layer="F.Fab" startPosition="-0.8, 0.4125" endPosition="0.8, 0.4125" thickness="0.1" />
-                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.825, 0" size="0.8, 0.95" cornerRatio="0.5" cornerShape="round" />
-                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.825, 0" size="0.8, 0.95" cornerRatio="0.5" cornerShape="round" />
+                    <spad name="1" layers="Top.Copper, Top.Cream, Top.Stop" position="-0.825, 0" size="0.8, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
+                    <spad name="2" layers="Top.Copper, Top.Cream, Top.Stop" position="0.825, 0" size="0.8, 0.95" cornerRatio="0.5" cornerShape="round" maskEnabled="true" pasteEnabled="true" />
                 </elements>
             </component>
         </components>

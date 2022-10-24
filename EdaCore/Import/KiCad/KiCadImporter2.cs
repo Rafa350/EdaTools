@@ -253,6 +253,17 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             var (position, rotation) = ParsePointAndAngle(tree, tree.SelectBranch(node, "at"));
 
+            var solderMaskMarginNode = tree.SelectBranch(node, "solder_mask_margin");
+            int solderMaskMargin = 0;
+            if (solderMaskMarginNode != null)
+                solderMaskMargin = ParseMeasure(tree, solderMaskMarginNode);
+
+            var solderPasteRatioNode = tree.SelectBranch(node, "solder_paste_ratio");
+            EdaRatio solderPasteRatio = EdaRatio.Zero;
+            if (solderPasteRatioNode != null)
+                solderPasteRatio = ParseRatio(tree, solderPasteRatioNode);
+
+
             var component = new EdaComponent();
             component.Name = componentName;
 
@@ -278,7 +289,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                         break;
 
                     case "pad":
-                        ProcessPad(tree, childNode, component, rotation);
+                        ProcessPad(tree, childNode, component, rotation, solderMaskMargin, solderPasteRatio);
                         break;
                 }
             }
@@ -498,14 +509,18 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <param name="node">El node.</param>
         /// <param name="component">El component.</param>
         /// <param name="fpRotation">Rotacio del footprint al que pertany.</param>
+        /// <param name="fpMaskClearance">Espaiat de la mascara del footprint.</param>
+        /// <param name="fpPasteReductionRatio">Reduccio de pasta del footprint.</param>
         /// 
-        private void ProcessPad(STree tree, SBranch node, EdaComponent component, EdaAngle fpRotation) {
+        private void ProcessPad(STree tree, SBranch node, EdaComponent component, EdaAngle fpRotation, int fpMaskClearance, EdaRatio fpPasteReductionRatio) {
 
             var name = tree.ValueAsString(node[1]);
             var padType = tree.ValueAsString(node[2]);
             var shapeType = tree.ValueAsString(node[3]);
 
             var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layers"));
+            var maskEnabled = layerSet.Contains(EdaLayerId.TopStop) || layerSet.Contains(EdaLayerId.BottomStop);
+            var pasteEnabled = layerSet.Contains(EdaLayerId.TopCream) || layerSet.Contains(EdaLayerId.BottomCream);
             var (position, rotation) = ParsePointAndAngle(tree, tree.SelectBranch(node, "at"));
             var size = ParseSize(tree, tree.SelectBranch(node, "size"));
 
@@ -529,7 +544,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                             Size = size,
                             Rotation = rotation - fpRotation,
                             CornerRatio = roundness,
-                            Clearance = clearance
+                            Clearance = clearance,
+                            MaskEnabled = maskEnabled,
+                            MaskClearance = fpMaskClearance,
+                            PasteEnabled = pasteEnabled,
+                            PasteReductionRatio = fpPasteReductionRatio
                         };
                         component.AddElement(element);
                     }
@@ -564,7 +583,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                             Rotation = rotation - fpRotation,
                             CornerRatio = roundness,
                             DrillDiameter = drill,
-                            Clearance = clearance
+                            Clearance = clearance,
+                            MaskEnabled = maskEnabled,
+                            MaskClearance = 0
                         };
                         component.AddElement(element);
                     }
@@ -872,6 +893,19 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             double a = tree.ValueAsDouble(node[1]);
             return EdaAngle.FromDegrees(a);
+        }
+
+        /// <summary>
+        /// Obte un percentatge.
+        /// </summary>
+        /// <param name="tree">L'arbre.</param>
+        /// <param name="node">El node.</param>
+        /// <returns>El percentatge</returns>
+        /// 
+        private static EdaRatio ParseRatio(STree tree, SBranch node) {
+
+            double r = tree.ValueAsDouble(node[1]);
+            return EdaRatio.FromPercent(Math.Abs(r));
         }
 
         /// <summary>

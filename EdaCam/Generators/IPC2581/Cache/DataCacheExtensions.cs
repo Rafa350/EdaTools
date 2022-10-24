@@ -1,4 +1,5 @@
-﻿using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using System;
+using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
@@ -48,6 +49,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 _cache.AddRectRoundEntry(element.Size, element.CornerRatio);
                 if (element.MaskClearance > 0)
                     _cache.AddRectRoundEntry(element.Size.Inflated(element.MaskClearance), element.CornerRatio);
+                if (!element.PasteReductionRatio.IsZero) {
+                    //var pasteReduction = Math.Min(element.Size.Width, element.Size.Height) * element.PasteReductionRatio / 2;
+                    var size = element.Size.Deflated(element.PasteReductionRatio);
+                    _cache.AddRectRoundEntry(size, element.CornerRatio);
+                }
             }
         }
 

@@ -162,10 +162,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 }
                 if (element.Clearance > 0)
                     _writer.WriteAttributeString("clearance", EdaFormatter.FormatScalar(element.Clearance));
-                if (element.MaskClearance > 0)
-                    _writer.WriteAttributeString("maskClearance", EdaFormatter.FormatScalar(element.MaskClearance));
-                if (element.PasteClearance > 0)
-                    _writer.WriteAttributeString("pasteClearance", EdaFormatter.FormatScalar(element.PasteClearance));
+                if (element.MaskEnabled) {
+                    _writer.WriteAttributeBool("maskEnabled", true);
+                    if (element.MaskClearance > 0)
+                        _writer.WriteAttributeString("maskClearance", EdaFormatter.FormatScalar(element.MaskClearance));
+                }
+                if (element.PasteEnabled) {
+                    _writer.WriteAttributeBool("pasteEnabled", true);
+                    if (!element.PasteReductionRatio.IsZero)
+                        _writer.WriteAttributeString("pasteReductionRatio", EdaFormatter.FormatRatio(element.PasteReductionRatio));
+                }
 
                 if (_currentBoard != null) {
                     EdaSignal signal = _currentBoard.GetSignal(element, _currentPart, false);
@@ -193,8 +199,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 }
                 if (element.Clearance > 0)
                     _writer.WriteAttributeString("clearance", EdaFormatter.FormatScalar(element.Clearance));
-                if (element.MaskClearance > 0)
-                    _writer.WriteAttributeString("maskClearance", EdaFormatter.FormatScalar(element.MaskClearance));
+                if (element.MaskEnabled) {
+                    _writer.WriteAttributeBool("maskEnabled", true);
+                    if (element.MaskClearance > 0)
+                        _writer.WriteAttributeString("maskClearance", EdaFormatter.FormatScalar(element.MaskClearance));
+                }
                 _writer.WriteAttributeString("topSize", EdaFormatter.FormatSize(element.TopSize));
                 if (element.InnerSize != element.TopSize)
                     _writer.WriteAttributeString("innerSize", EdaFormatter.FormatSize(element.InnerSize));
@@ -559,7 +568,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
                 writer.WriteStartDocument();
 
-                writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/BoardDocument.xsd");
+                writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/EdaBoardDocument.xsd");
                 writer.WriteAttributeInteger("version", _version);
                 writer.WriteAttributeString("documentType", "board");
                 writer.WriteAttributeString("distanceUnits", _distanceUnits);
@@ -593,7 +602,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
                 writer.WriteStartDocument();
 
-                writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/BoardDocument.xsd");
+                writer.WriteStartElement("document", "http://MikroPic.com/schemas/edatools/v1/EdaEdaBoardDocument.xsd");
                 writer.WriteAttributeInteger("version", _version);
                 writer.WriteAttributeString("documentType", "componentLibrary");
                 writer.WriteAttributeString("distanceUnits", _distanceUnits);

@@ -21,11 +21,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Model\Board\IO\Schemas\BoardDocument.xsd" />
+    <None Remove="Model\Board\IO\Schemas\EdaBoardDocument.xsd" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Model\Board\IO\Schemas\BoardDocument.xsd" />
+    <EmbeddedResource Include="Model\Board\IO\Schemas\EdaBoardDocument.xsd" />
   </ItemGroup>
 
   <ItemGroup>

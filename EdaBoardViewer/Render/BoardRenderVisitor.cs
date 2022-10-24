@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Xml.Linq;
 using Avalonia.Media;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
@@ -157,8 +159,16 @@ namespace EdaBoardViewer.Render {
             if (_visualLayer.IsVisible(Part, pad)) {
 
                 var brush = new SolidColorBrush(_visualLayer.Color);
-                var geometry = pad.GetPolygon(_layer.Id).ToGeometry();
 
+                EdaPolygon polygon;
+                if ((_layer.Id == EdaLayerId.TopCream) || (_layer.Id == EdaLayerId.BottomCream)) {
+                    var spacing = Math.Max(pad.Size.Width, pad.Size.Height) * pad.PasteReductionRatio / 2;
+                    polygon = pad.GetOutlinePolygon(_layer.Id, -spacing);
+                }
+                else
+                    polygon = pad.GetPolygon(_layer.Id);
+
+                var geometry = polygon.ToGeometry();
                 _context.DrawGeometry(brush, null, geometry);
             }
         }

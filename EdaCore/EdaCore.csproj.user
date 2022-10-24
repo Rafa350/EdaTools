@@ -2,7 +2,7 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <EmbeddedResource Update="Model\Board\IO\Schemas\BoardDocument.xsd">
+    <EmbeddedResource Update="Model\Board\IO\Schemas\EdaBoardDocument.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

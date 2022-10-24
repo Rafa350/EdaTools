@@ -1,15 +1,23 @@
-﻿namespace MikroPic.EdaTools.v1.Base.Geometry {
+﻿using System;
+
+namespace MikroPic.EdaTools.v1.Base.Geometry {
 
     public static class EdaSizeExtensions {
 
-        public static EdaSize Inflated(this EdaSize size, int dx, int dy) {
+        public static EdaSize Inflated(this EdaSize s, int dx, int dy) =>
+            new (s.Width + dx, s.Height + dy);
 
-            return new EdaSize(size.Width + dx, size.Height + dy);
+        public static EdaSize Inflated(this EdaSize s, int d) =>
+            new (s.Width + d, s.Height + d);
+
+        public static EdaSize Inflated(this EdaSize s, EdaRatio ratio) {
+            var delta = Math.Min(s.Width, s.Height) * ratio;
+            return new EdaSize(s.Width + delta, s.Height + delta);
         }
 
-        public static EdaSize Inflated(this EdaSize size, int d) {
-
-            return new EdaSize(size.Width + d, size.Height + d);
+        public static EdaSize Deflated(this EdaSize s, EdaRatio ratio) {
+            var delta = Math.Min(s.Width, s.Height) * ratio;
+            return new EdaSize(s.Width - delta, s.Height - delta);
         }
     }
 }

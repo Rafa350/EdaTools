@@ -248,6 +248,7 @@
             <xs:attribute name="thermalClearance" use="optional" type="xs:double"/>
             <xs:attribute name="filled" use="optional" type="xs:boolean"/>
             <xs:attribute name="signal" use="optional" type="nameType"/>
+            <xs:attribute name="priority" use="optional" type="xs:integer"/>
         </xs:complexType>
     </xs:element>
 
@@ -262,8 +263,9 @@
     <xs:element
         name="via">
         <xs:complexType>
-            <xs:attribute name="topLayer" use="required" type="xs:string"/>
-            <xs:attribute name="bottomLayer" use="required" type="xs:string"/>
+            <xs:attribute name="layers" use="required" type="xs:string"/>
+            <!--<xs:attribute name="topLayer" use="required" type="xs:string"/>
+            <xs:attribute name="bottomLayer" use="required" type="xs:string"/>-->
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="outerSize" use="required" type="xs:double"/>
             <xs:attribute name="innerSize" use="optional" type="xs:double"/>
@@ -277,15 +279,18 @@
         name="tpad">
         <xs:complexType>
             <xs:attribute name="name" use="required" type="nameType"/>
+            <xs:attribute name="layers" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="topSize" use="required" type="sizeType"/>
             <xs:attribute name="innerSize" use="optional" type="sizeType"/>
             <xs:attribute name="bottomSize" use="optional" type="sizeType"/>
             <xs:attribute name="drill" use="required" type="xs:double"/>
             <xs:attribute name="rotation" use="optional" type="angleType"/>
-            <xs:attribute name="cornerRatio" use="optional" type="xs:double"/>
+            <xs:attribute name="cornerRatio" use="optional" type="ratioType"/>
             <xs:attribute name="cornerShape" use="optional" type="tpadCornerShapeType"/>
             <xs:attribute name="clearance" use="optional" type="xs:double"/>
+            <xs:attribute name="maskEnabled" use="optional" type="xs:boolean"/>
+            <xs:attribute name="maskClearance" use="optional" type="xs:double"/>
         </xs:complexType>
     </xs:element>
 
@@ -293,13 +298,17 @@
         name="spad">
         <xs:complexType>
             <xs:attribute name="name" use="required" type="nameType"/>
-            <xs:attribute name="layer" use="required" type="xs:string"/>
+            <xs:attribute name="layers" use="required" type="xs:string"/>
             <xs:attribute name="position" use="required" type="pointType"/>
             <xs:attribute name="size" use="required" type="sizeType"/>
             <xs:attribute name="rotation" use="optional" type="angleType"/>
-            <xs:attribute name="cornerRatio" use="optional" type="xs:double"/>
+            <xs:attribute name="cornerRatio" use="optional" type="ratioType"/>
             <xs:attribute name="cornerShape" use="optional" type="spadCornerShapeType"/>
             <xs:attribute name="clearance" use="optional" type="xs:double"/>
+            <xs:attribute name="maskEnabled" use="optional" type="xs:boolean"/>
+            <xs:attribute name="pasteEnabled" use="optional" type="xs:boolean"/>
+            <xs:attribute name="maskClearance" use="optional" type="xs:double"/>
+            <xs:attribute name="pasteReductionRatio" use="optional" type="ratioType"/>
         </xs:complexType>
     </xs:element>
 
@@ -352,6 +361,11 @@
 
     <xs:simpleType
         name="angleType">
+        <xs:restriction base="xs:double"/>
+    </xs:simpleType>
+
+    <xs:simpleType
+        name="ratioType">
         <xs:restriction base="xs:double"/>
     </xs:simpleType>
 

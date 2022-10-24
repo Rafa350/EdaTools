@@ -17,8 +17,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private EdaSize _size;
         private EdaRatio _cornerRatio = EdaRatio.Zero;
         private SmdPadCornerShape _cornerShape = SmdPadCornerShape.Round;
-        private int _pasteClearance;
-        private bool _pasteEnabled;
+        private EdaRatio _pasteReductionRatio = EdaRatio.Zero;
+        private bool _pasteEnabled = true;
 
         /// <inheritdoc/>
         /// 
@@ -77,7 +77,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         }
 
         /// <summary>
-        /// El factor d'arrodoniment de les cantonades del pad.
+        /// El percentatge d'arrodoniment de les cantonades del pad.
         /// </summary>
         /// 
         public EdaRatio CornerRatio {
@@ -98,13 +98,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// Espai entre el pad i la pasta de soldadura.
         /// </summary>
         /// 
-        public int PasteClearance {
-            get => _pasteClearance;
-            set {
-                if (value < 0)
-                    throw new ArgumentOutOfRangeException(nameof(PasteClearance));
-                _pasteClearance = value;
-            }
+        public EdaRatio PasteReductionRatio {
+            get => _pasteReductionRatio;
+            set => _pasteReductionRatio = value;
         }
 
         /// <summary>

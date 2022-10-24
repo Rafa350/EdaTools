@@ -25,6 +25,28 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             new(r.X - dx, r.Y - dy, r.Width + dx + dx, r.Height + dy + dy);
 
         /// <summary>
+        /// Obte un rectangle inflat.
+        /// </summary>
+        /// <param name="ratio">Percentatge d'inflat.</param>
+        /// <returns>El resultat de l'operacio.</returns>
+        /// 
+        public static EdaRect Inflated(this EdaRect r, EdaRatio ratio) {
+            var delta = Math.Min(r.Width, r.Height) * ratio / 2;
+            return new(r.X - delta, r.Y - delta, r.Width + delta + delta, r.Height + delta + delta);
+        }
+
+        /// <summary>
+        /// Obte un rectangle desinflat.
+        /// </summary>
+        /// <param name="ratio">Percentatge de desinflat.</param>
+        /// <returns>El resultat de l'operacio.</returns>
+        /// 
+        public static EdaRect Deflated(this EdaRect r, EdaRatio ratio) {
+            var delta = -Math.Min(r.Width, r.Height) * ratio / 2;
+            return new(r.X - delta, r.Y - delta, r.Width + delta + delta, r.Height + delta + delta);
+        }
+
+        /// <summary>
         /// Obte la unio amb un altre rectangle
         /// </summary>
         /// <param name="rect">Rectangle a unir.</param>

@@ -92,6 +92,13 @@
                 VisualMode.Element,
                 _padColor));
 
+            vls.Add(new VisualLayer("TopCream",
+                new EdaLayerId[] { EdaLayerId.TopCream },
+                null,
+                true,
+                VisualMode.Element,
+                Color.FromArgb(204, 64, 64, 64)));
+
             vls.Add(new VisualLayer("Vias",
                 new EdaLayerId[] { EdaLayerId.TopCopper },
                 new ElementType[] { ElementType.Via },

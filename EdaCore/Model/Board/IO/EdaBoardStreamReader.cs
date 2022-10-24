@@ -38,7 +38,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
             _schemas = new XmlSchemaSet();
 
-            string schemaResourceName = "MikroPic.EdaTools.v1.Core.Model.Board.IO.Schemas.BoardDocument.xsd";
+            string schemaResourceName = "MikroPic.EdaTools.v1.Core.Model.Board.IO.Schemas.EdaBoardDocument.xsd";
             Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(schemaResourceName);
             if (resourceStream == null)
                 throw new Exception(String.Format("No se encontro el recurso '{0}'", schemaResourceName));
@@ -980,7 +980,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
             var signalName = _rd.AttributeAsString("signal");
             var clearance = EdaParser.ParseScalar(_rd.AttributeAsString("clearance", "0"));
             var maskClearance = EdaParser.ParseScalar(_rd.AttributeAsString("maskClearance", "0"));
-            var pasteClearance = EdaParser.ParseScalar(_rd.AttributeAsString("pasteClearance", "0"));
+            var pasteReductionRatio = EdaParser.ParseRatio(_rd.AttributeAsString("pasteReductionRatio", "0"));
 
             _rd.NextTag();
             if (!_rd.IsEndTag("spad"))
@@ -996,7 +996,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 CornerShape = cornerShape,
                 Clearance = clearance,
                 MaskClearance = maskClearance,
-                PasteClearance = pasteClearance
+                MaskEnabled = true,
+                PasteReductionRatio = pasteReductionRatio,
+                PasteEnabled = true
             };
 
             if (signalName != null)

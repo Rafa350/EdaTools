@@ -11,9 +11,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         private string _name;
         private EdaPoint _position;
-        private EdaAngle _rotation;
-        private int _clearance;
-        private int _maskClearance;
+        private EdaAngle _rotation = EdaAngle.Zero;
+        private int _clearance = 0;
+        private int _maskClearance = 0;
         private bool _maskEnabled = true;
 
         /// <summary>

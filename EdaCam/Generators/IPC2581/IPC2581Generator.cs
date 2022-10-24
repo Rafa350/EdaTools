@@ -11,7 +11,6 @@ using MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Xml;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
-using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 using MikroPic.EdaTools.v1.CoreExtensions.Bom;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
@@ -50,6 +49,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             _layers.Add(new IPCLayer("drill_all", IPCLayerSide.All, IPCLayerFunction.Drill, new EdaLayerSet(EdaLayerId.Platted)));
             _layers.Add(new IPCLayer("top_mask", IPCLayerSide.Top, IPCLayerFunction.SolderMask, new EdaLayerSet(EdaLayerId.TopStop)));
             _layers.Add(new IPCLayer("bottom_mask", IPCLayerSide.Bottom, IPCLayerFunction.SolderMask, new EdaLayerSet(EdaLayerId.BottomStop)));
+            _layers.Add(new IPCLayer("top_paste", IPCLayerSide.Top, IPCLayerFunction.SolderPaste, new EdaLayerSet(EdaLayerId.TopCream)));
+            _layers.Add(new IPCLayer("bottom`_paste", IPCLayerSide.Bottom, IPCLayerFunction.SolderPaste, new EdaLayerSet(EdaLayerId.BottomCream)));
 
             // Afegeix les definicions
             //
@@ -448,55 +449,31 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             // Procesa les capes de mascara de soldadura.
             //
             foreach (var layer in _layers.Where(x => x.Function == IPCLayerFunction.SolderMask)) {
+
+                _writer.WriteStartElement("LayerFeature");
+                _writer.WriteAttributeString("layerRef", layer.Name);
+
                 foreach (var layerId in layer.LayerSet) {
-
-                    _writer.WriteStartElement("LayerFeature");
-                    _writer.WriteAttributeString("layerRef", layer.Name);
-
-                    foreach (var part in board.Parts) {
-                        var component = part.Component;
-                        var tr = part.GetLocalTransformation();
-                        foreach (var element in component.Elements.OfType<EdaSmtPadElement>().Where(e => e.IsOnLayer(layerId))) {
-
-                            var size = element.Size.Inflated(element.MaskClearance);
-                            var rectRoundEntry = _dataCache.GetRectRoundEntry(size, element.CornerRatio);
-
-                            _writer.WriteStartElement("Set");
-                            _writer.WriteStartElement("Pad");
-                            if (!part.Rotation.IsZero)
-                                WriteSection_Xform(part.Rotation);
-                            _writer.WritePointElement("Location", tr.Transform(element.Position), _scale);
-                            _writer.WriteStartElement("StandardPrimitiveRef");
-                            _writer.WriteAttributeInteger("id", rectRoundEntry.Id);
-                            _writer.WriteEndElement();
-                            _writer.WriteEndElement();
-                            _writer.WriteEndElement();
-                        }
-
-                        foreach (var element in component.Elements.OfType<EdaThtPadElement>()) {
-
-                            var size =
-                                layerId.IsTop ? element.TopSize :
-                                layerId.IsBottom ? element.BottomSize :
-                                element.InnerSize;
-                            var maskSize = size.Inflated(element.MaskClearance);
-                            var rectRoundEntry = _dataCache.GetRectRoundEntry(maskSize, element.CornerRatio);
-
-                            _writer.WriteStartElement("Set");
-                            _writer.WriteStartElement("Pad");
-                            if (!part.Rotation.IsZero)
-                                WriteSection_Xform(part.Rotation);
-                            _writer.WritePointElement("Location", tr.Transform(element.Position), _scale);
-                            _writer.WriteStartElement("StandardPrimitiveRef");
-                            _writer.WriteAttributeInteger("id", rectRoundEntry.Id);
-                            _writer.WriteEndElement();
-                            _writer.WriteEndElement();
-                            _writer.WriteEndElement();
-                        }
-                    }
-
-                    _writer.WriteEndElement();
+                    var visitor = new SolderMaskLayerVisitor(layerId, _dataCache, _writer);
+                    visitor.Visit(board);
                 }
+
+                _writer.WriteEndElement();
+            }
+
+            // Procesa les capes de pasta de soldadura.
+            //
+            foreach (var layer in _layers.Where(x => x.Function == IPCLayerFunction.SolderPaste)) {
+
+                _writer.WriteStartElement("LayerFeature");
+                _writer.WriteAttributeString("layerRef", layer.Name);
+
+                foreach (var layerId in layer.LayerSet) {
+                    var visitor = new SolderPasteLayerVisitor(layerId, _dataCache, _writer);
+                    visitor.Visit(board);
+                }
+
+                _writer.WriteEndElement();
             }
         }
 
