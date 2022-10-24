@@ -2,7 +2,7 @@
 
 
 Tools and utilities for PCB design.
-!!!Very very early version. Runs ok for my works.
+!!!Very early version. Runs ok for my works.
 
 
 EdaImport
@@ -30,5 +30,4 @@ EdaCAMTool.
 -Passed Gerber test with "https://gerber-viewer.ucamco.com/".
 -Passed IPC2581C test with 3D PCBA Viewer.
 
-Notes.
--IPC2581C preliminar version. Incomplete results.
+Notes: I used this tool for convert KiCAD to IPC2581 for board fabrication. Pending for assembly.
