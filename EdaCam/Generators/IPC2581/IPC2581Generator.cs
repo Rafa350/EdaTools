@@ -296,15 +296,18 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         /// 
         private void WriteSection_LogicalNet(EdaBoard board) {
 
+            //var generator = new EdaLogicalNetGenerator(board);
+            //var logicalNet = generator.Generate();
+
             foreach (var signal in board.Signals) {
                 _writer.WriteStartElement("LogicalNet");
                 _writer.WriteAttributeString("name", signal.Name);
 
-                var items = board.GetConnectedItems(signal);
-                if (items != null) {
-                    foreach (var item in items) {
-                        if (item.Item1 is EdaPadElement pad) {
-                            var part = item.Item2;
+                var signalNodes = board.GetConnectedItems(signal);
+                if (signalNodes != null) {
+                    foreach (var signalNode in signalNodes) {
+                        if (signalNode.Conectable is EdaPadElement pad) {
+                            var part = signalNode.Part;
                             _writer.WriteStartElement("PinRef");
                             _writer.WriteAttributeString("componentRef", part.Name);
                             _writer.WriteAttributeString("pin", pad.Name);

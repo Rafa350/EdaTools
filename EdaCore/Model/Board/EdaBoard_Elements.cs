@@ -24,10 +24,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
             if ((_elements != null) && _elements.Contains(element))
                 throw new InvalidOperationException(
-                    String.Format("El elemento ya pertenece a la placa."));
+                    String.Format("El elemento ya pertenece a esta placa."));
 
+            // Crea la llista si cal.
+            //
             if (_elements == null)
                 _elements = new List<EdaElement>();
+
             _elements.Add(element);
         }
 
@@ -43,6 +46,31 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
             foreach (var element in elements)
                 AddElement(element);
+        }
+
+        /// <summary>
+        /// Elimina un element del component.
+        /// </summary>
+        /// <param name="element">El element a eliminar.</param>
+        /// 
+        public void RemoveElement(EdaElement element) {
+
+            if (element == null)
+                throw new ArgumentNullException(nameof(element));
+
+            // Comprova que l'element estigui en la llista
+            //
+            if ((_elements == null) || !_elements.Contains(element))
+                throw new InvalidOperationException("El elemento no pertenece a esta placa.");
+
+            // Elimina l'element de la llista d'elements
+            //
+            _elements.Remove(element);
+
+            // Elimina la llista si es buida
+            //
+            if (_elements.Count == 0)
+                _elements = null;
         }
 
         /// <summary>

@@ -28,6 +28,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
             if (_components == null)
                 _components = new Dictionary<string, EdaComponent>();
+
             _components.Add(component.Name, component);
         }
 
@@ -60,6 +61,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                     String.Format("El componente '{0}' no esta asignado a esta placa.", component.Name));
 
             _components.Remove(component.Name);
+
             if (_components.Count == 0)
                 _components = null;
         }

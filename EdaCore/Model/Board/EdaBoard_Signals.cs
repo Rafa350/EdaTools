@@ -11,8 +11,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     public sealed partial class EdaBoard {
 
         private Dictionary<string, EdaSignal> _signals = new Dictionary<string, EdaSignal>();
-        private readonly Dictionary<EdaSignal, HashSet<Tuple<IEdaConectable, EdaPart>>> _itemsOfSignal = new Dictionary<EdaSignal, HashSet<Tuple<IEdaConectable, EdaPart>>>();
-        private readonly Dictionary<Tuple<IEdaConectable, EdaPart>, EdaSignal> _signalOfItem = new Dictionary<Tuple<IEdaConectable, EdaPart>, EdaSignal>();
+
+        private readonly Dictionary<EdaSignal, HashSet<EdaSignalNode>> _signalMap = new Dictionary<EdaSignal, HashSet<EdaSignalNode>>();
+        private readonly Dictionary<EdaSignalNode, EdaSignal> _signalNodeMap = new Dictionary<EdaSignalNode, EdaSignal>();
 
         /// <summary>
         /// Afeigeix una senyal a la placa.
@@ -30,6 +31,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
             if (_signals == null)
                 _signals = new Dictionary<string, EdaSignal>();
+
             _signals.Add(signal.Name, signal);
         }
 
@@ -61,11 +63,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 throw new InvalidOperationException(
                     String.Format("No se encontro ninguna señal con el nombre '{0}', en la placa.", signal.Name));
 
-            if (_itemsOfSignal.ContainsKey(signal))
+            if (_signalMap.ContainsKey(signal))
                 throw new InvalidOperationException(
                     String.Format("La señal '{0}', esta en uso y no puede ser retirada de la placa.", signal.Name));
 
             _signals.Remove(signal.Name);
+
             if (_signals.Count == 0)
                 _signals = null;
         }
@@ -89,18 +92,17 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 throw new InvalidOperationException(
                     String.Format("La senyal '{0}', no esta asignada a esta placa.", signal.Name));
 
-            Tuple<IEdaConectable, EdaPart> item = new Tuple<IEdaConectable, EdaPart>(element, part);
+            var signalNode = new EdaSignalNode(element, part);
 
-            if (_signalOfItem.ContainsKey(item))
+            if (_signalNodeMap.ContainsKey(signalNode))
                 throw new InvalidOperationException("El objeto ya esta conectado.");
 
-            HashSet<Tuple<IEdaConectable, EdaPart>> elementSet;
-            if (!_itemsOfSignal.TryGetValue(signal, out elementSet)) {
-                elementSet = new HashSet<Tuple<IEdaConectable, EdaPart>>();
-                _itemsOfSignal.Add(signal, elementSet);
+            if (!_signalMap.TryGetValue(signal, out HashSet<EdaSignalNode> signalNodes)) {
+                signalNodes = new HashSet<EdaSignalNode>();
+                _signalMap.Add(signal, signalNodes);
             }
-            elementSet.Add(item);
-            _signalOfItem.Add(item, signal);
+            signalNodes.Add(signalNode);
+            _signalNodeMap.Add(signalNode, signal);
         }
 
         /// <summary>
@@ -114,9 +116,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             if (element == null)
                 throw new ArgumentNullException(nameof(element));
 
-            Tuple<IEdaConectable, EdaPart> item = new Tuple<IEdaConectable, EdaPart>(element, part);
-
-            if (!_signalOfItem.ContainsKey(item))
+            var signalNode = new EdaSignalNode(element, part);
+            if (!_signalNodeMap.ContainsKey(signalNode))
                 throw new InvalidOperationException("El objeto no esta conectado a ninguna señal.");
         }
 
@@ -136,8 +137,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             EdaSignal signal = null;
 
             if (element is IEdaConectable conectableElement) {
-                Tuple<IEdaConectable, EdaPart> item = new Tuple<IEdaConectable, EdaPart>(conectableElement, part);
-                _signalOfItem.TryGetValue(item, out signal);
+                var signalNode = new EdaSignalNode(conectableElement, part);
+                _signalNodeMap.TryGetValue(signalNode, out signal);
             }
 
             if ((signal == null) && throwOnError)
@@ -175,7 +176,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="signal">La senyal.</param>
         /// <returns>Els items conectats. Null si no hi ha cap.</returns>
         /// 
-        public IEnumerable<Tuple<IEdaConectable, EdaPart>> GetConnectedItems(EdaSignal signal) {
+        public IEnumerable<EdaSignalNode> GetConnectedItems(EdaSignal signal) {
 
             if (signal == null)
                 throw new ArgumentNullException(nameof(signal));
@@ -184,9 +185,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 throw new InvalidOperationException(
                     String.Format("La señal '{0}', no esta asignada a esta placa.", signal.Name));
 
-            HashSet<Tuple<IEdaConectable, EdaPart>> itemSet;
-            if (_itemsOfSignal.TryGetValue(signal, out itemSet))
-                return itemSet;
+            if (_signalMap.TryGetValue(signal, out HashSet<EdaSignalNode> signalNodes))
+                return signalNodes;
             else
                 return null;
         }
