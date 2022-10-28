@@ -88,11 +88,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => _lineCap;
             set => _lineCap = value;
         }
-
-        /// <inheritdoc/>
-        /// 
-        public override ElementType ElementType =>
-            ElementType.Line;
     }
 }
 

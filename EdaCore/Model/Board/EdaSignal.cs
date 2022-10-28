@@ -19,6 +19,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             visitor.Visit(this);
         }
 
+        /// <inheritdoc/>
+        /// 
+        public override string ToString() =>
+            String.Format("Signal: {0}", _name);
+
         /// <summary>
         /// Nom de la senyal.
         /// </summary>

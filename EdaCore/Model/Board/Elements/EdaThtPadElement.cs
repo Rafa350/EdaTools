@@ -290,10 +290,5 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => _innerSize;
             set => _innerSize = value;
         }
-
-        /// <inheritdoc/>
-        /// 
-        public override ElementType ElementType =>
-            ElementType.ThtPad;
     }
 }

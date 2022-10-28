@@ -1,8 +1,8 @@
-﻿namespace EdaBoardViewer.Render {
+﻿using System;
+using Avalonia.Media;
+using MikroPic.EdaTools.v1.Core.Model.Board;
 
-    using Avalonia.Media;
-
-    using MikroPic.EdaTools.v1.Core.Model.Board;
+namespace EdaBoardViewer.Render {
 
     public enum VisualMode {
         Element,
@@ -13,7 +13,7 @@
     public sealed class VisualLayer {
 
         private readonly EdaLayerId[] _layerIds;
-        private readonly ElementType[] _elementTypes;
+        private readonly Type[] _elementTypes;
         private readonly string _name;
         private readonly VisualMode _visualMode;
         private readonly Color _color;
@@ -29,7 +29,7 @@
         /// <param name="visualMode">Modus de visualitzacio.</param>
         /// <param name="color">Color.</param>
         /// 
-        public VisualLayer(string name, EdaLayerId[] layerIds, ElementType[] elementTypes, bool visible, VisualMode visualMode, Color color) {
+        public VisualLayer(string name, EdaLayerId[] layerIds, Type[] elementTypes, bool visible, VisualMode visualMode, Color color) {
 
             _name = name;
             _layerIds = layerIds;
@@ -75,7 +75,7 @@
                 typeOk = true;
             else
                 foreach (var elementType in _elementTypes) {
-                    if (element.ElementType == elementType) {
+                    if (element.GetType() == elementType) {
                         typeOk = true;
                         break;
                     }
@@ -95,7 +95,7 @@
         /// Obte la llista de tipus d'elements.
         /// </summary>
         /// 
-        public ElementType[] ElementTypes =>
+        public Type[] ElementTypes =>
             _elementTypes;
 
         /// <summary>
@@ -110,12 +110,8 @@
         /// </summary>
         /// 
         public bool Visible {
-            get {
-                return _visible;
-            }
-            set {
-                _visible = value;
-            }
+            get => _visible;
+            set => _visible = value;
         }
 
         /// <summary>

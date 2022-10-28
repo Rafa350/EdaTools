@@ -29,7 +29,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
             EdaSignal savedSignal = _currentSignal;
             _currentSignal = signal;
             try {
-                IEnumerable<EdaSignalNode> items = _currentBoard.GetConnectedItems(signal);
+                var items = _currentBoard.GetConectionItems(signal);
                 if (items != null)
                     foreach (var item in items) {
                         if (item.Conectable is EdaElement element)

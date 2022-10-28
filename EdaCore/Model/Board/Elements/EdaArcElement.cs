@@ -86,10 +86,5 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public int Radius =>
             ArcUtils.Radius(StartPosition, EndPosition, _angle);
-
-        /// <inheritdoc/>
-        /// 
-        public override ElementType ElementType =>
-            ElementType.Arc;
     }
 }

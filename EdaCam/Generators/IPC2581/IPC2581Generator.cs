@@ -303,7 +303,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 _writer.WriteStartElement("LogicalNet");
                 _writer.WriteAttributeString("name", signal.Name);
 
-                var signalNodes = board.GetConnectedItems(signal);
+                var signalNodes = board.GetConectionItems(signal);
                 if (signalNodes != null) {
                     foreach (var signalNode in signalNodes) {
                         if (signalNode.Conectable is EdaPadElement pad) {
@@ -496,12 +496,5 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 _writer.WriteEndElement();
             }
         }
-
-        private void WriteSection_Xform(EdaAngle angle) {
-
-            _writer.WriteStartElement("Xform");
-            _writer.WriteAttributeDouble("rotation", angle.AsDegrees);
-            _writer.WriteEndElement();
-        }    
     }
 }

@@ -42,7 +42,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clipper2", "Clipper2\Clipper2.csproj", "{3A877F5A-D247-4A1E-9C97-4607A08C536D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdaCoreExtensions", "EdaCoreExtensions\EdaCoreExtensions.csproj", "{EEC3F0A6-7CDF-4246-BF2F-DAD7F293CCDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EdaCoreExtensions", "EdaCoreExtensions\EdaCoreExtensions.csproj", "{EEC3F0A6-7CDF-4246-BF2F-DAD7F293CCDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGraphics", "TestGraphics\TestGraphics.csproj", "{57B50C85-5DDA-4F9B-B4EE-2A0A0C4897B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -106,6 +108,10 @@ Global
 		{EEC3F0A6-7CDF-4246-BF2F-DAD7F293CCDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEC3F0A6-7CDF-4246-BF2F-DAD7F293CCDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEC3F0A6-7CDF-4246-BF2F-DAD7F293CCDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57B50C85-5DDA-4F9B-B4EE-2A0A0C4897B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57B50C85-5DDA-4F9B-B4EE-2A0A0C4897B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57B50C85-5DDA-4F9B-B4EE-2A0A0C4897B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57B50C85-5DDA-4F9B-B4EE-2A0A0C4897B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,6 +131,7 @@ Global
 		{C1FC88B7-F150-454B-84A5-9D7F0F94564E} = {E3221687-5D1E-464E-A24E-A8287F028C0D}
 		{3A877F5A-D247-4A1E-9C97-4607A08C536D} = {0CBCDECB-D253-4477-B1AA-1DBE17687F0B}
 		{EEC3F0A6-7CDF-4246-BF2F-DAD7F293CCDC} = {0CBCDECB-D253-4477-B1AA-1DBE17687F0B}
+		{57B50C85-5DDA-4F9B-B4EE-2A0A0C4897B8} = {E3221687-5D1E-464E-A24E-A8287F028C0D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {98C638C2-4E0C-43A4-9E0E-D0C6F59502FD}

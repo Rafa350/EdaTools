@@ -27,6 +27,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
             if (_elements == null)
                 _elements = new List<EdaElement>();
+
             _elements.Add(element);
         }
 
@@ -62,6 +63,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             // Elimina l'element de la llista d'elements
             //
             _elements.Remove(element);
+
             if (_elements.Count == 0)
                 _elements = null;
         }

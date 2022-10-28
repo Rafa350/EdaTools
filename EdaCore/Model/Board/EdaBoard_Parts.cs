@@ -33,6 +33,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
             if (_parts == null)
                 _parts = new Dictionary<string, EdaPart>();
+
             _parts.Add(part.Name, part);
         }
 
@@ -65,6 +66,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                     String.Format("El elemento '{0}', no se encontro en la placa.", part.Name));
 
             _parts.Remove(part.Name);
+
             if (_parts.Count == 0)
                 _parts = null;
         }

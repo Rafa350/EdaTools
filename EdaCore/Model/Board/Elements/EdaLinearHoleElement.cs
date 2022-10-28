@@ -65,10 +65,5 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => _endPosition;
             set => _endPosition = value;
         }
-
-        /// <inheritdoc/>
-        /// 
-        public override ElementType ElementType =>
-            ElementType.LinearHole;
     }
 }

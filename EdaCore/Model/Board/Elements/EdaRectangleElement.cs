@@ -111,7 +111,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// 
         public int Thickness {
-            get => _thickness;
+            get => _filled ? 0 : _thickness;
             set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(Thickness));
@@ -124,13 +124,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// </summary>
         /// 
         public bool Filled {
-            get => _filled;
+            get => _filled || (_thickness == 0);
             set => _filled = value;
         }
-
-        /// <inheritdoc/>
-        /// 
-        public override ElementType ElementType =>
-            ElementType.Rectangle;
     }
 }

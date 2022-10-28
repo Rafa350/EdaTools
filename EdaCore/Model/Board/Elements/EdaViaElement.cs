@@ -160,10 +160,5 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             }
             set => _innerSize = value;
         }
-
-        /// <inheritdoc/>
-        /// 
-        public override ElementType ElementType =>
-            ElementType.Via;
     }
 }

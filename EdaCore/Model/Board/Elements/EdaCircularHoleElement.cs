@@ -51,10 +51,5 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => _position;
             set => _position = value;
         }
-
-        /// <inheritdoc/>
-        /// 
-        public override ElementType ElementType =>
-            ElementType.CirclularHole;
     }
 }

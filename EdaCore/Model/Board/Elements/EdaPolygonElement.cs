@@ -137,10 +137,5 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => _segments;
             set => _segments = value;
         }
-
-        /// <inheritdoc/>
-        /// 
-        public override ElementType ElementType =>
-            ElementType.Polygon;
     }
 }

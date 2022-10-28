@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
@@ -65,7 +66,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 throw new InvalidOperationException(
                     String.Format("No se encontro la capa '{0}'.", layer.Id));
 
+            if (layer == _outlineLayer)
+                _outlineLayer = null;
+
             _layers.Remove(layer.Id);
+
             if (_layers.Count == 0)
                 _layers = null;
         }
@@ -90,23 +95,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         }
 
         /// <summary>
-        /// Obte la llista de capes de senyal, ordenades de la capa TOP a la BOTTOM
+        /// Obte la llista de capes de senyal.
         /// </summary>
         /// <returns>Les capes.</returns>
         /// 
-        public IEnumerable<EdaLayer> GetSignalLayers() {
-
-            var signalLayers = new List<EdaLayer>();
-
-            foreach (var layer in _layers.Values)
-                if (layer.Function == LayerFunction.Signal)
-                    signalLayers.Add(layer);
-
-            return signalLayers;
-        }
+        public IEnumerable<EdaLayer> GetSignalLayers() =>
+            _layers.Select(i => i.Value).Where(l => l.Function == LayerFunction.Signal);
 
         /// <summary>
-        /// Obte els elements d'una capa.
+        /// Enumera els elements d'una capa.
         /// </summary>
         /// <param name="layer">La capa.</param>
         /// <param name="includeComponents">Indica si cal incluir els elements dels components.</param>
@@ -114,19 +111,17 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// 
         public IEnumerable<EdaElement> GetElements(EdaLayer layer, bool includeComponents = true) {
 
-            var list = new List<EdaElement>();
-
             foreach (var element in Elements)
                 if (element.IsOnLayer(layer.Id))
-                    list.Add(element);
+                    yield return element;
 
             if (includeComponents)
                 foreach (var component in Components)
                     foreach (var element in component.Elements)
                         if (element.IsOnLayer(layer.Id))
-                            list.Add(element);
+                            yield return element;
 
-            return list;
+            yield break;
         }
 
         /// <summary>

@@ -1,4 +1,6 @@
-﻿using MikroPic.EdaTools.v1.Core.Model.Common;
+﻿using System.Xml.Linq;
+using System;
+using MikroPic.EdaTools.v1.Core.Model.Common;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
@@ -54,6 +56,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
             visitor.Visit(this);
         }
+
+        /// <inheritdoc/>
+        /// 
+        public override string ToString() =>
+            String.Format("Layer: {0}", _id);
 
         /// <summary>
         /// Obte el identificador.

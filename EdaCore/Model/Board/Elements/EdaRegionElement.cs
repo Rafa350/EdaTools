@@ -81,10 +81,5 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             get => _priority;
             set => _priority = value;
         }
-
-        /// <inheritdoc/>
-        /// 
-        public override ElementType ElementType =>
-            ElementType.Region;
     }
 }

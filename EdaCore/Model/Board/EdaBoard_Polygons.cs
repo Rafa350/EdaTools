@@ -146,8 +146,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             /// 
             private void VisitSignalElement(EdaElement element) {
 
-                var regionSignal = Board.GetSignal(_region, null, false);
-                var signal = Board.GetSignal(element, Part, false);
+                EdaSignal regionSignal = Board.GetSignal(_region, null, false);
+                
+                EdaSignal signal = null;
+                if (element is IEdaConectable conectable)
+                    signal = Board.GetSignal(conectable, Part, false);
 
                 // Si la senyal del element es la mateixa que la regio, genera un termal
                 //

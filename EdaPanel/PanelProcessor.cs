@@ -155,8 +155,8 @@ namespace MikroPic.EdaTools.v1.Panel {
                     transformableElements.Add(panelElement);
                     targetBoard.AddElement(panelElement);
 
-                    if (boardElement is IEdaConectable) {
-                        EdaSignal signal = board.GetSignal(boardElement, null, false);
+                    if (boardElement is IEdaConectable conectable) {
+                        EdaSignal signal = board.GetSignal(conectable, null, false);
                         if (signal != null) {
                             string panelSignalName = String.Format("{1}@{0}", index, signal.Name);
                             targetBoard.Connect(targetBoard.GetSignal(panelSignalName), panelElement as IEdaConectable);
@@ -444,7 +444,7 @@ namespace MikroPic.EdaTools.v1.Panel {
                 };
 
             else
-                throw new InvalidOperationException($"No es posible cloner el elemento de tipo {element.ElementType}.");
+                throw new InvalidOperationException($"No es posible cloner el elemento de tipo {element.GetType()}.");
         }
 
         private sealed class TransformVisitor: EdaDefaultBoardVisitor {

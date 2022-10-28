@@ -4,6 +4,11 @@ using System.Linq;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
+    public struct ConectionItem {
+        public IEdaConectable Conectable { get; set; }
+        public EdaPart Part { get; set; }
+    }
+
     /// <summary>
     /// Clase que representa una placa de circuit impres.
     /// </summary>
@@ -12,8 +17,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
         private Dictionary<string, EdaSignal> _signals = new Dictionary<string, EdaSignal>();
 
-        private readonly Dictionary<EdaSignal, HashSet<EdaSignalNode>> _signalMap = new Dictionary<EdaSignal, HashSet<EdaSignalNode>>();
-        private readonly Dictionary<EdaSignalNode, EdaSignal> _signalNodeMap = new Dictionary<EdaSignalNode, EdaSignal>();
+        private readonly Dictionary<EdaSignal, HashSet<ConectionItem>> _signalMap = new Dictionary<EdaSignal, HashSet<ConectionItem>>();
+        private readonly Dictionary<ConectionItem, EdaSignal> _connectionMap = new Dictionary<ConectionItem, EdaSignal>();
 
         /// <summary>
         /// Afeigeix una senyal a la placa.
@@ -77,72 +82,72 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// Conecta un element conectable amb una senyal.
         /// </summary>
         /// <param name="signal">La senyal.</param>
-        /// <param name="element">L'element a conectar.</param>
+        /// <param name="conectable">L'element a conectar.</param>
         /// <param name="part">El component del element.</param>
         /// 
-        public void Connect(EdaSignal signal, IEdaConectable element, EdaPart part = null) {
+        public void Connect(EdaSignal signal, IEdaConectable conectable, EdaPart part = null) {
 
             if (signal == null)
                 throw new ArgumentNullException(nameof(signal));
 
-            if (element == null)
-                throw new ArgumentNullException(nameof(element));
+            if (conectable == null)
+                throw new ArgumentNullException(nameof(conectable));
 
             if ((_signals == null) || !_signals.ContainsKey(signal.Name))
                 throw new InvalidOperationException(
-                    String.Format("La senyal '{0}', no esta asignada a esta placa.", signal.Name));
+                    String.Format("La señal '{0}', no esta asignada a esta placa.", signal.Name));
 
-            var signalNode = new EdaSignalNode(element, part);
+            var signalNode = new ConectionItem { Conectable = conectable, Part = part };
 
-            if (_signalNodeMap.ContainsKey(signalNode))
-                throw new InvalidOperationException("El objeto ya esta conectado.");
+            if (_connectionMap.ContainsKey(signalNode))
+                throw new InvalidOperationException("El elemento ya esta conectado.");
 
-            if (!_signalMap.TryGetValue(signal, out HashSet<EdaSignalNode> signalNodes)) {
-                signalNodes = new HashSet<EdaSignalNode>();
+            if (!_signalMap.TryGetValue(signal, out HashSet<ConectionItem> signalNodes)) {
+                signalNodes = new HashSet<ConectionItem>();
                 _signalMap.Add(signal, signalNodes);
             }
             signalNodes.Add(signalNode);
-            _signalNodeMap.Add(signalNode, signal);
+            _connectionMap.Add(signalNode, signal);
         }
 
         /// <summary>
         /// Desconecta un element de la senyal.
         /// </summary>
-        /// <param name="element">El element a desconectar.</param>
+        /// <param name="conectable">El element a desconectar.</param>
         /// <param name="part">El component del element.</param>
         /// 
-        public void Disconnect(IEdaConectable element, EdaPart part = null) {
+        public void Disconnect(IEdaConectable conectable, EdaPart part = null) {
 
-            if (element == null)
-                throw new ArgumentNullException(nameof(element));
+            if (conectable == null)
+                throw new ArgumentNullException(nameof(conectable));
 
-            var signalNode = new EdaSignalNode(element, part);
-            if (!_signalNodeMap.ContainsKey(signalNode))
+            var signalNode = new ConectionItem { Conectable = conectable, Part = part };
+            if (!_connectionMap.ContainsKey(signalNode))
                 throw new InvalidOperationException("El objeto no esta conectado a ninguna señal.");
         }
 
         /// <summary>
         /// Obte la senyal conectada a un objecte.
         /// </summary>
-        /// <param name="element">El objecte.</param>
+        /// <param name="conectable">El objecte.</param>
         /// <param name="part">El part al que pertany l'element. Null si pertany a la placa.</param>
         /// <param name="throwOnError">True si cal generar una excepcio en cas d'error.</param>
         /// <returns>La senyal o null si no esta conectat.</returns>
         /// 
-        public EdaSignal GetSignal(EdaElement element, EdaPart part = null, bool throwOnError = true) {
+        public EdaSignal GetSignal(IEdaConectable conectable, EdaPart part = null, bool throwOnError = true) {
 
-            if (element == null)
-                throw new ArgumentNullException(nameof(element));
+            if (conectable == null)
+                throw new ArgumentNullException(nameof(conectable));
 
             EdaSignal signal = null;
 
-            if (element is IEdaConectable conectableElement) {
-                var signalNode = new EdaSignalNode(conectableElement, part);
-                _signalNodeMap.TryGetValue(signalNode, out signal);
+            if (conectable is IEdaConectable conectableElement) {
+                var signalNode = new ConectionItem { Conectable = conectableElement, Part = part};
+                _connectionMap.TryGetValue(signalNode, out signal);
             }
 
             if ((signal == null) && throwOnError)
-                throw new InvalidOperationException("El item no esta conectado.");
+                throw new InvalidOperationException("El elemento no esta conectado.");
 
             return signal;
         }
@@ -176,7 +181,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="signal">La senyal.</param>
         /// <returns>Els items conectats. Null si no hi ha cap.</returns>
         /// 
-        public IEnumerable<EdaSignalNode> GetConnectedItems(EdaSignal signal) {
+        public IEnumerable<ConectionItem> GetConectionItems(EdaSignal signal) {
 
             if (signal == null)
                 throw new ArgumentNullException(nameof(signal));
@@ -185,7 +190,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 throw new InvalidOperationException(
                     String.Format("La señal '{0}', no esta asignada a esta placa.", signal.Name));
 
-            if (_signalMap.TryGetValue(signal, out HashSet<EdaSignalNode> signalNodes))
+            if (_signalMap.TryGetValue(signal, out HashSet<ConectionItem> signalNodes))
                 return signalNodes;
             else
                 return null;

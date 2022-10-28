@@ -4,25 +4,6 @@ using MikroPic.EdaTools.v1.Core.Model.Common;
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
     /// <summary>
-    /// Identifica el tipus d'element
-    /// </summary>
-    /// 
-    public enum ElementType {
-        Line,
-        Arc,
-        Rectangle,
-        Circle,
-        Polygon,
-        Text,
-        SmtPad,
-        ThtPad,
-        Region,
-        Via,
-        CirclularHole,
-        LinearHole
-    }
-
-    /// <summary>
     /// Clase base per tots els elements de la placa.
     /// </summary>
     /// 
@@ -79,11 +60,5 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             }
             set => _layerSet = value;
         }
-
-        /// <summary>
-        /// Obte el identificador del tipus d'element
-        /// </summary>
-        /// 
-        public abstract ElementType ElementType { get; }
     }
 }
