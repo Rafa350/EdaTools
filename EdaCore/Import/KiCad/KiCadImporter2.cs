@@ -804,14 +804,14 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var thermalThickness = ParseMeasure(tree, tree.SelectBranch(fillSettingsNode, "thermal_bridge_width"));
             var radius = ParseMeasure(tree, tree.SelectBranch(fillSettingsNode, "radius"));
 
-            var segments = new List<EdaArcPoint>();
+            var vertices = new List<EdaArcPoint>();
             var polygonNode = tree.SelectBranch(branch, "polygon");
             if (polygonNode != null) {
                 var ptsNode = tree.SelectBranch(polygonNode, "pts");
                 if (ptsNode != null) {
                     foreach (var xyNode in ptsNode.Nodes.OfType<SBranch>()) {
                         var point = ParsePoint(tree, xyNode) - _origin;
-                        segments.Add(new EdaArcPoint(point));
+                        vertices.Add(new EdaArcPoint(point));
                     }
                 }
             }
@@ -824,7 +824,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 ThermalThickness = thermalThickness,
                 Filled = true,
                 Priority = priority,
-                Segments = segments
+                Vertices = vertices
             };
             board.AddElement(element);
 

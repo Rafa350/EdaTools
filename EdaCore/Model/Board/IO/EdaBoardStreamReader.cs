@@ -876,14 +876,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                 _elementSignal.Add(new Tuple<IEdaConectable, EdaPart>(element, null), signalName);
 
             _rd.NextTag();
-            List<EdaArcPoint> segments = null;
+            List<EdaArcPoint> vertices = null;
             while (_rd.IsStartTag("segment")) {
-                if (segments == null)
-                    segments = new List<EdaArcPoint>();
-                segments.Add(ParseRegionSegmentNode());
+                if (vertices == null)
+                    vertices = new List<EdaArcPoint>();
+                vertices.Add(ParseRegionSegmentNode());
                 _rd.NextTag();
             }
-            element.Segments = segments;
+            element.Vertices = vertices;
 
             if (!_rd.IsEndTag("region"))
                 throw new InvalidDataException("Se esperaba </region>");

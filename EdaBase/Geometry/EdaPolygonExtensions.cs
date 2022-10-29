@@ -107,7 +107,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
                 foreach (var hole in polygon.Holes)
                     cpo.AddPath(ToPath64(hole, true), JoinType.Round, EndType.Polygon);
 
-            cpo.ArcTolerance = Math.Abs(delta / 1000);
+            //cpo.ArcTolerance = Math.Abs(delta / 1000);
             var solution = cpo.Execute(delta);
 
             List<EdaPoint> outline = ToPoints(solution[0]);

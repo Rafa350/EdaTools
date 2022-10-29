@@ -46,7 +46,9 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <inheritdoc/>
         /// 
         public override string ToString() =>
-            String.Format("{0}; {1}", Math.Round(_x / 1000000.0, 3), Math.Round(_y / 1000000.0, 3));
+            String.Format("{0}; {1}", 
+                Math.Round(_x / 1000000.0, 3), 
+                Math.Round(_y / 1000000.0, 3));
 
         /// <summary>
         /// Operacio de comparacio entre dos objectes..

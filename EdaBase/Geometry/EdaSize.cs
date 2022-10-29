@@ -36,6 +36,11 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         public override int GetHashCode() =>
             (_width * 7) * (_height * 531);
 
+        public override string ToString() =>
+            string.Format("{0}; {1}",
+                Math.Round(_width / 1000000.0, 3),
+                Math.Round(_height / 1000000.0, 3));
+
         /// <summary>
         /// Operacio d'igualtat entre dos objectes.
         /// </summary>

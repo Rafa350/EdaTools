@@ -4,7 +4,7 @@
     /// Units for distances.
     /// </summary>
     /// 
-    public enum EdaDistanceUnits {
+    public enum EdaLenghtUnits {
         Millimeters,
         Micrometers,
         Nanometers,

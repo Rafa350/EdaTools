@@ -72,6 +72,13 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         public static bool operator !=(EdaRect r1, EdaRect r2) =>
             !r1.Equals(r2);
 
+        public override string ToString() =>
+            String.Format("{0}; {1}; {2}; {3}",
+                Math.Round(_x / 1000000.0, 3),
+                Math.Round(_y / 1000000.0, 3),
+                Math.Round(_width / 1000000.0, 3),
+                Math.Round(_height / 1000000.0, 3));
+
         /// <summary>
         /// Obte el codi hask de l'objecte.
         /// </summary>

@@ -231,18 +231,18 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         public EdaPolygon GetOutlinePolygon() {
 
             var elements = GetElements(GetLayer(EdaLayerId.Profile));
-            var segments = new List<Segment>();
+            var segments = new List<EdaSegment>();
             foreach (var element in elements) {
                 if (element is EdaArcElement arc) {
                     var points = new List<EdaPoint>(EdaPointFactory.CreateArc(arc.Center, arc.Radius, arc.StartAngle, arc.Angle));
                     points[0] = arc.StartPosition;
                     points[points.Count - 1] = arc.EndPosition;
                     for (int i = 1; i < points.Count; i++)
-                        segments.Add(new Segment(points[i - 1], points[i]));
+                        segments.Add(new EdaSegment(points[i - 1], points[i]));
                 }
 
                 else if (element is EdaLineElement line)
-                    segments.Add(new Segment(line.StartPosition, line.EndPosition));
+                    segments.Add(new EdaSegment(line.StartPosition, line.EndPosition));
             }
 
             var p = Polygonizer.Poligonize(segments);
@@ -270,8 +270,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             EdaPolygon polygon = region.GetPolygon(layerId);
 
             var polygons = polygon.Substract(holes);
-            //polygons = polygons.Offset(-100000);
-            //polygons = polygons.Offset(+250000);
+            //polygons = polygons.Offset(-250000);
+            //polygons = polygons.Offset(250000);
 
             return (transformation == null) ? polygons : polygons.Transform(transformation);
         }

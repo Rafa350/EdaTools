@@ -6,7 +6,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
 
     public static class Polygonizer {
 
-        static public IEnumerable<EdaPoint> Poligonize(IEnumerable<Segment> segments) {
+        static public IEnumerable<EdaPoint> Poligonize(IEnumerable<EdaSegment> segments) {
 
             if (segments == null)
                 throw new ArgumentNullException(nameof(segments));
@@ -14,7 +14,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
             EdaPoint p = default;
 
             bool first = true;
-            var segmentPool = new HashSet<Segment>();
+            var segmentPool = new HashSet<EdaSegment>();
             foreach (var segment in segments) {
                 if (first) {
                     first = false;
@@ -28,7 +28,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 var points = new List<EdaPoint>();
 
                 while (segmentPool.Count > 0) {
-                    Segment s;
+                    EdaSegment s;
                     if (FindSegmentWidthVertex(segmentPool, p, out s)) {
                         if (p == s.Start)
                             p = s.End;
@@ -46,7 +46,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure {
                 return null;
         }
 
-        private static bool FindSegmentWidthVertex(IEnumerable<Segment> segments, EdaPoint point, out Segment result) {
+        private static bool FindSegmentWidthVertex(IEnumerable<EdaSegment> segments, EdaPoint point, out EdaSegment result) {
 
             result = default;
             foreach (var segment in segments) {

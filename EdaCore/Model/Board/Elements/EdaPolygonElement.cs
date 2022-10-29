@@ -11,7 +11,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// 
     public class EdaPolygonElement: EdaElement {
 
-        private IEnumerable<EdaArcPoint> _segments;
+        private IEnumerable<EdaArcPoint> _vertices;
         private int _thickness;
 
         /// <inheritdoc/>
@@ -25,7 +25,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetPolygon(EdaLayerId layerId) {
 
-            if (_segments == null)
+            if (_vertices == null)
                 return null;
 
             else {
@@ -36,7 +36,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 var points = new List<EdaPoint>();
 
                 bool first = true;
-                foreach (var segment in _segments) {
+                foreach (var segment in _vertices) {
 
                     // Guarda el primer punt, per tancar el poligon
                     //
@@ -81,7 +81,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaPolygon GetOutlinePolygon(EdaLayerId layerId, int spacing) {
 
-            if (_segments == null)
+            if (_vertices == null)
                 return null;
 
             else {
@@ -94,7 +94,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// 
         public override EdaRect GetBoundingBox(EdaLayerId layerId) {
 
-            if (_segments == null)
+            if (_vertices == null)
                 return new EdaRect(0, 0, 0, 0);
 
             else {
@@ -133,9 +133,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// La llista de segments.
         /// </summary>
         /// 
-        public IEnumerable<EdaArcPoint> Segments {
-            get => _segments;
-            set => _segments = value;
+        public IEnumerable<EdaArcPoint> Vertices {
+            get => _vertices;
+            set => _vertices = value;
         }
     }
 }

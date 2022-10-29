@@ -293,12 +293,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
                         _writer.WriteAttributeString("signal", signal.Name);
                 }
 
-                if (element.Segments != null)
-                    foreach (var segment in element.Segments) {
+                if (element.Vertices != null)
+                    foreach (var vertex in element.Vertices) {
                         _writer.WriteStartElement("segment");
-                        _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(segment.Position));
-                        if (!segment.Arc.IsZero)
-                            _writer.WriteAttributeString("angle", EdaFormatter.FormatAngle(segment.Arc));
+                        _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(vertex.Position));
+                        if (!vertex.Arc.IsZero)
+                            _writer.WriteAttributeString("angle", EdaFormatter.FormatAngle(vertex.Arc));
                         _writer.WriteEndElement();
                     }
 

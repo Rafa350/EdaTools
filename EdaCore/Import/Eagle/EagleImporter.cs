@@ -764,14 +764,14 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             var layerId = GetLayerId(layerNum);
             var layerSet = new EdaLayerSet(layerId);
 
-            var segments = new List<EdaArcPoint>();
+            var vertices = new List<EdaArcPoint>();
             foreach (XmlNode vertexNode in node.SelectNodes("vertex")) {
 
                 // Obte la posicio
                 //
                 int x = ParseNumber(vertexNode.AttributeAsString("x"));
                 int y = ParseNumber(vertexNode.AttributeAsString("y"));
-                EdaPoint vertex = new EdaPoint(x, y);
+                var point = new EdaPoint(x, y);
 
                 // Obte la curvatura
                 //
@@ -779,7 +779,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 if (vertexNode.AttributeExists("curve"))
                     angle = ParseAngle(vertexNode.AttributeAsString("curve"));
 
-                segments.Add(new EdaArcPoint(vertex, angle));
+                vertices.Add(new EdaArcPoint(point, angle));
             }
 
             var element = new EdaRegionElement {
@@ -787,7 +787,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 Thickness = thickness,
                 Filled = true,
                 Clearance = clearance,
-                Segments = segments
+                Vertices = vertices
             };
             return element;
         }
