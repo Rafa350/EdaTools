@@ -15,7 +15,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         Drill,
         Outline,
         SolderMask,
-        SolderPaste
+        SolderPaste,
+        SilkScreen
     }
 
     internal class IPCLayer {

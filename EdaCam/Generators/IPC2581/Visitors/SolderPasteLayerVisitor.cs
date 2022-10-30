@@ -30,10 +30,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
 
                 var size = element.Size.Deflated(element.PasteReductionRatio);
                 var rectRoundEntry = _cache.GetRectRoundEntry(size, element.CornerRatio);
-                var tr = Part.GetLocalTransformation();
+                var tr = Part == null ? new EdaTransformation() : Part.GetLocalTransformation();
+                var rotation = Part == null ? EdaAngle.Zero : Part.Rotation;
                 var location = tr.Transform(element.Position);
 
-                WritePad(rectRoundEntry.Id, location, Part.Rotation);
+                WritePad(rectRoundEntry.Id, location, rotation);
             }
         }
 

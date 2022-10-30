@@ -50,7 +50,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             _layers.Add(new IPCLayer("top_mask", IPCLayerSide.Top, IPCLayerFunction.SolderMask, new EdaLayerSet(EdaLayerId.TopStop)));
             _layers.Add(new IPCLayer("bottom_mask", IPCLayerSide.Bottom, IPCLayerFunction.SolderMask, new EdaLayerSet(EdaLayerId.BottomStop)));
             _layers.Add(new IPCLayer("top_paste", IPCLayerSide.Top, IPCLayerFunction.SolderPaste, new EdaLayerSet(EdaLayerId.TopCream)));
-            _layers.Add(new IPCLayer("bottom`_paste", IPCLayerSide.Bottom, IPCLayerFunction.SolderPaste, new EdaLayerSet(EdaLayerId.BottomCream)));
+            _layers.Add(new IPCLayer("bottom_paste", IPCLayerSide.Bottom, IPCLayerFunction.SolderPaste, new EdaLayerSet(EdaLayerId.BottomCream)));
+            _layers.Add(new IPCLayer("top_silkscreen", IPCLayerSide.Top, IPCLayerFunction.SilkScreen, new EdaLayerSet(EdaLayerId.TopNames, EdaLayerId.TopPlace)));
+            _layers.Add(new IPCLayer("bottom_silkscreen", IPCLayerSide.Bottom, IPCLayerFunction.SilkScreen, new EdaLayerSet(EdaLayerId.BottomNames, EdaLayerId.BottomPlace)));
 
             // Afegeix les definicions
             //
@@ -345,6 +347,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                     case IPCLayerFunction.SolderPaste:
                         functionName = "SOLDERPASTE";
                         break;
+
+                    case IPCLayerFunction.SilkScreen:
+                        functionName = "SILKSCREEN";
+                        break;
                 }
 
                 string sideName = "NONE";
@@ -473,6 +479,21 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
                 foreach (var layerId in layer.LayerSet) {
                     var visitor = new SolderPasteLayerVisitor(layerId, _dataCache, _writer);
+                    visitor.Visit(board);
+                }
+
+                _writer.WriteEndElement();
+            }
+
+            // Procesa les capes de texts.
+            //
+            foreach (var layer in _layers.Where(x => x.Function == IPCLayerFunction.SilkScreen)) {
+
+                _writer.WriteStartElement("LayerFeature");
+                _writer.WriteAttributeString("layerRef", layer.Name);
+
+                foreach (var layerId in layer.LayerSet) {
+                    var visitor = new SilkscreenLayerVisitor(layerId, _dataCache, _writer);
                     visitor.Visit(board);
                 }
 

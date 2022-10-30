@@ -87,6 +87,9 @@
                 //
                 int offset = 0;
                 for (int i = 0; i < text.Length; i++) {
+                    
+                    TraceStartGlyph();
+                    
                     Glyph glyph = _font.GetGlyph(text[i]);
                     if (glyph != null) {
 
@@ -95,7 +98,7 @@
                             bool first = true;
                             foreach (var trace in glyph.Traces) {
 
-                                EdaPoint p = new EdaPoint(
+                                var p = new EdaPoint(
                                     position.X + ((trace.Position.X + offset + offsetX) * scale),
                                     position.Y + ((trace.Position.Y + offsetY) * scale));
 
@@ -108,6 +111,8 @@
 
                         offset += glyph.Advance;
                     }
+
+                    TraceEndGlyph();
                 }
             }
 
@@ -122,6 +127,14 @@
         /// <param name="first">True si es el primer punt.</param>
         /// 
         protected virtual void Trace(EdaPoint position, bool stroke, bool first) {
+
+        }
+
+        protected virtual void TraceStartGlyph() {
+
+        }
+
+        protected virtual void TraceEndGlyph() {
 
         }
     }

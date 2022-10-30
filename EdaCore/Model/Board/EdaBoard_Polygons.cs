@@ -270,8 +270,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             EdaPolygon polygon = region.GetPolygon(layerId);
 
             var polygons = polygon.Substract(holes);
-            //polygons = polygons.Offset(-250000);
-            //polygons = polygons.Offset(250000);
+            /*polygons = polygons.Offset(-250000);
+            polygons = polygons.Clean();
+            polygons = polygons.Offset(250000);
+            polygons = polygons.Clean();*/
 
             return (transformation == null) ? polygons : polygons.Transform(transformation);
         }

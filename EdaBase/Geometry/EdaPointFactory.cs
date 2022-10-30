@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
+using Clipper2Lib;
+using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace MikroPic.EdaTools.v1.Base.Geometry {
 
@@ -14,10 +17,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <param name="startposition">Posicio inicial.</param>
         /// <param name="endPosition">Posicio final.</param>
         /// <param name="thickness">Amplada de linia.</param>
-        /// <param name="capRounded">True si els extrems son arrodonits.</param>
+        /// <param name="rounded">True si els extrems son arrodonits.</param>
         /// <returns>La llista de punts.</returns>
         /// 
-        public static IEnumerable<EdaPoint> CreateLineTrace(EdaPoint startposition, EdaPoint endPosition, int thickness, bool capRounded) {
+        public static IEnumerable<EdaPoint> CreateLineTrace(EdaPoint startposition, EdaPoint endPosition, int thickness, bool rounded) {
 
             int dx = endPosition.X - startposition.X;
             int dy = endPosition.Y - startposition.Y;
@@ -28,6 +31,27 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             points.AddRange(CreateArc(startposition, thickness / 2, angle + EdaAngle.Deg90, EdaAngle.Deg180));
 
             return points;
+        }
+
+        /// <summary>
+        /// Obte una llista de punts en forma de polilinia.
+        /// </summary>
+        /// <param name="points">La llista de punts.</param>
+        /// <param name="thickness">Amplada de linia.</param>
+        /// <param name="rounded">True si els extrems son arrodonits.</param>
+        /// <returns>La llista de punts.</returns>
+        /// 
+        public static IEnumerable<EdaPoint> CreateLineTrace(IEnumerable<EdaPoint> points, int thickness, bool rounded) {
+
+            var cpo = new ClipperOffset();
+            cpo.AddPath(new Path64(points.Select(p => new Point64(p.X, p.Y))), JoinType.Round, EndType.Round);
+            var paths = cpo.Execute(thickness);
+            if (paths.Count == 1) {
+                var path = Clipper.RamerDouglasPeucker(paths[0], 2500);
+                return path.Select(p => new EdaPoint((int)p.X, (int)p.Y));
+            }
+            else
+                return null;
         }
 
         /// <summary>
@@ -203,7 +227,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// es sobre l'eix X, en cas que la rotacio sigui zero
         /// </summary>
         /// <param name="sides">Numero de cares.</param>
-        /// <param name="position">Posicio del centroid.</param>
+        /// <param name="position">Posicio del centre.</param>
         /// <param name="radius">Radi exterior.</param>
         /// <param name="rotation">Angle de rotacio.</param>
         /// <returns>La llista de punts. Com es tancat, el numero de punts 
@@ -349,3 +373,4 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         }
     }
 }
+

@@ -1,4 +1,5 @@
 ﻿using System.Xml;
+using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Xml;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
@@ -43,7 +44,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
 
             if (element.IsOnLayer(_layerId)) {
 
-                var tr = Part.GetLocalTransformation();
+                var tr = Part == null ? new EdaTransformation() : Part.GetLocalTransformation();
                 var position = tr.Transform(element.Position);
 
                 _writer.WriteStartElement("Set");
@@ -53,6 +54,27 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
                 _writer.WriteAttributeDouble("x", position.X / _scale);
                 _writer.WriteAttributeDouble("y", position.Y / _scale);
                 _writer.WriteAttributeDouble("diameter", element.DrillDiameter / _scale);
+                _writer.WriteAttributeDouble("plusTol", 0);
+                _writer.WriteAttributeDouble("minusTol", 0);
+                _writer.WriteEndElement();
+                _writer.WriteEndElement();
+            }
+        }
+
+        public override void Visit(EdaCircularHoleElement element) {
+
+            if (element.IsOnLayer(_layerId)) {
+
+                var tr = Part == null ? new EdaTransformation() : Part.GetLocalTransformation();
+                var position = tr.Transform(element.Position);
+
+                _writer.WriteStartElement("Set");
+                _writer.WriteStartElement("Hole");
+                _writer.WriteAttributeString("name", string.Format("H{0}", _holeNumber++));
+                _writer.WriteAttributeString("platingStatus", "VIA");
+                _writer.WriteAttributeDouble("x", position.X / _scale);
+                _writer.WriteAttributeDouble("y", position.Y / _scale);
+                _writer.WriteAttributeDouble("diameter", element.Diameter / _scale);
                 _writer.WriteAttributeDouble("plusTol", 0);
                 _writer.WriteAttributeDouble("minusTol", 0);
                 _writer.WriteEndElement();

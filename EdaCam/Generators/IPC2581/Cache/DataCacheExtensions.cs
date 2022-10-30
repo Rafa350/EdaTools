@@ -55,6 +55,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                     _cache.AddRectRoundEntry(size, element.CornerRatio);
                 }
             }
+
+            public override void Visit(EdaTextElement element) {
+
+                _cache.AddLineDescEntry(element.Thickness, EdaLineCap.Round);
+            }
         }
 
         public static void AddBoardEntries(this DataCache dataCache, EdaBoard board) {

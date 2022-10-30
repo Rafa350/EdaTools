@@ -58,6 +58,25 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             return result;
         }
 
+        public static IEnumerable<EdaPolygon> Combine(this EdaPolygon polygon, params EdaPolygon[] combinePolygons) {
+
+            return Combine(polygon, (IEnumerable<EdaPolygon>)combinePolygons);
+        }
+
+        public static IEnumerable<EdaPolygon> Combine(this EdaPolygon polygon, IEnumerable<EdaPolygon> combinePolygons) {
+
+            var cp = new Clipper64();
+
+            cp.AddSubject(ToPath64(polygon.Outline));
+            foreach (var combinePolygon in combinePolygons)
+                cp.AddClip(ToPath64(combinePolygon.Outline));
+
+            var tree = new PolyTree64();
+            cp.Execute(ClipType.Union, FillRule.NonZero, tree);
+
+            return ToPolygons(tree);
+        }
+
         /// <summary>
         /// Subtraccio d'un o diversos poligons.
         /// </summary>
@@ -107,14 +126,13 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
                 foreach (var hole in polygon.Holes)
                     cpo.AddPath(ToPath64(hole, true), JoinType.Round, EndType.Polygon);
 
-            //cpo.ArcTolerance = Math.Abs(delta / 1000);
             var solution = cpo.Execute(delta);
 
             List<EdaPoint> outline = ToPoints(solution[0]);
             List<List<EdaPoint>> holes = null;
             if (solution.Count > 1) {
                 holes = new List<List<EdaPoint>>(solution.Count - 1);
-                for (int i = 1; i < solution.Count; i++)
+                for (int i = 1; i < solution.Count; i++) 
                     holes.Add(ToPoints(solution[i], true));
             }
 
@@ -126,6 +144,31 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             var result = new List<EdaPolygon>();
             foreach (var polygon in polygons)
                 result.Add(Offset(polygon, delta));
+            return result;
+        }
+
+        public static EdaPolygon Clean(this EdaPolygon polygon) {
+
+            double epsilon = 2500;
+
+            var outline = ToPoints(Clipper.RamerDouglasPeucker(ToPath64(polygon.Outline), epsilon));
+
+            List<List<EdaPoint>> holes = null;
+            if (polygon.HasHoles) {
+                holes = new List<List<EdaPoint>>();
+                foreach (var hole in polygon.Holes)
+                    holes.Add(ToPoints(Clipper.RamerDouglasPeucker(ToPath64(hole), epsilon)));
+            }
+
+            return new EdaPolygon(outline, holes);
+        }
+
+        public static IEnumerable<EdaPolygon> Clean(this IEnumerable<EdaPolygon> polygons) {
+
+            var result = new List<EdaPolygon>();
+            foreach (var polygon in polygons)
+                result.Add(Clean(polygon));
+
             return result;
         }
 
@@ -156,8 +199,11 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
                     List<List<EdaPoint>> holes = null;
                     if (item.Count > 0) {
                         holes = new List<List<EdaPoint>>();
-                        foreach (PolyPath64 subItem in item)
-                            holes.Add(new List<EdaPoint>(subItem.Polygon.Select(i => new EdaPoint((int)i.X, (int)i.Y))));
+                        foreach (PolyPath64 subItem in item) {
+                            var hole = new List<EdaPoint>(subItem.Polygon.Select(i => new EdaPoint((int)i.X, (int)i.Y)));
+                            hole.Reverse();
+                            holes.Add(hole);
+                        }
                     }
 
                     var contour = new List<EdaPoint>(item.Polygon.Select(i => new EdaPoint((int)i.X, (int)i.Y)));
