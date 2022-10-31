@@ -3,8 +3,8 @@ using System.IO;
 using MikroPic.EdaTools.v1.Cam;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Cam.Model.IO;
+using MikroPic.EdaTools.v1.Core.IO;
 using MikroPic.EdaTools.v1.Core.Model.Board;
-using MikroPic.EdaTools.v1.Core.Model.Board.IO;
 
 namespace MikroPic.EdaTools.v1.CamTool {
 

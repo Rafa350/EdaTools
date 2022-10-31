@@ -1,4 +1,5 @@
-﻿using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using System;
+using MikroPic.EdaTools.v1.Base.Geometry;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
@@ -9,6 +10,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     public sealed class EdaCircularHoleElement: EdaHoleElement {
 
         private EdaPoint _position;
+
+        /// <inheritdoc/>
+        /// 
+        public override int GetHashCode() =>
+            HashCode.Combine(_position, base.GetHashCode());
 
         /// <inheritdoc/>
         /// 

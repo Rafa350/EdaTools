@@ -14,7 +14,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         }
 
         public override string ToString() =>
-            String.Format("{0}; {1}; {2}; {3}", 
+            String.Format("X1: {0}; Y1: {1}; X2: {2}; Y2: {3}",
                 Math.Round(_start.X / 1000000.0, 3),
                 Math.Round(_start.Y / 1000000.0, 3),
                 Math.Round(_end.X / 1000000.0, 3),

@@ -142,7 +142,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             EdaSignal signal = null;
 
             if (conectable is IEdaConectable conectableElement) {
-                var signalNode = new ConectionItem { Conectable = conectableElement, Part = part};
+                var signalNode = new ConectionItem { Conectable = conectableElement, Part = part };
                 _connectionMap.TryGetValue(signalNode, out signal);
             }
 

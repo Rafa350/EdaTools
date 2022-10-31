@@ -1,5 +1,5 @@
 ﻿using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers;
+using MikroPic.EdaTools.v1.Core.IO.Serializers;
 using MikroPic.EdaTools.v1.Core.Model.Common;
 using NetSerializer.Attributes;
 

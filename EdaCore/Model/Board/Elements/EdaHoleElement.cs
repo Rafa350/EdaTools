@@ -13,6 +13,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
+        public override int GetHashCode() =>
+            HashCode.Combine(_diameter, _platted, base.GetHashCode());
+
+        /// <inheritdoc/>
+        /// 
         public override bool IsOnLayer(EdaLayerId layerId) {
             return
                 ((layerId == EdaLayerId.Platted) && _platted) ||

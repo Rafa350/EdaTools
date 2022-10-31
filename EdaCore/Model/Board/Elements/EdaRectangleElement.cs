@@ -50,6 +50,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
+        public override int GetHashCode() =>
+            HashCode.Combine(_position, _size, _rotation, _cornerRatio, _thickness, _filled, base.GetHashCode());
+
+        /// <inheritdoc/>
+        /// 
         public override EdaRect GetBoundingBox(EdaLayerId layerId) {
 
             double width = _size.Width + _thickness;

@@ -1,17 +1,17 @@
-﻿namespace EdaBoardViewer.Views {
+﻿using System;
+using System.IO;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Markup.Xaml;
+using Avalonia.Media;
+using EdaBoardViewer.Render;
+using EdaBoardViewer.Tools;
+using EdaBoardViewer.Views.Controls;
+using MikroPic.EdaTools.v1.Core.IO;
+using MikroPic.EdaTools.v1.Core.Model.Board;
 
-    using System;
-    using System.IO;
-    using Avalonia;
-    using Avalonia.Controls;
-    using Avalonia.Input;
-    using Avalonia.Markup.Xaml;
-    using Avalonia.Media;
-    using EdaBoardViewer.Render;
-    using EdaBoardViewer.Tools;
-    using EdaBoardViewer.Views.Controls;
-    using MikroPic.EdaTools.v1.Core.Model.Board;
-    using MikroPic.EdaTools.v1.Core.Model.Board.IO;
+namespace EdaBoardViewer.Views {
 
     public class SceneView: UserControl {
 
@@ -24,7 +24,8 @@
 
         private class BoardScene: ISceneRenderer {
 
-            private readonly EdaBoard board;
+            private readonly EdaBoard _board;
+            private readonly BoardRenderer _boardRenderer;
 
             public BoardScene() {
 
@@ -32,14 +33,15 @@
                 string fileName = @"C:\Users\Rafael\Documents\Projectes\EDA\DSP04X\build\dsp04x.xbrd";
                 using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
                     var reader = new EdaBoardStreamReader(stream);
-                    board = reader.ReadBoard();
+                    _board = reader.ReadBoard();
                 }
+
+                _boardRenderer = new BoardRenderer(_board);
             }
 
             public void Render(DrawingContext context) {
 
-                var boardRenderer = new BoardRenderer(context);
-                boardRenderer.Render(board);
+                _boardRenderer.Render(context);
             }
         }
 

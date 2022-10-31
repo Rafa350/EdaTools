@@ -16,6 +16,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private int _maskClearance = 0;
         private bool _maskEnabled = true;
 
+        /// <inheritdoc/>
+        /// 
+        public override int GetHashCode() =>
+            HashCode.Combine(_name, _position, _rotation, _clearance, _maskClearance, MaskEnabled, base.GetHashCode());
+
         /// <summary>
         /// El nom.
         /// </summary>

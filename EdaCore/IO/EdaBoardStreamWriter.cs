@@ -4,11 +4,12 @@ using System.Xml;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Xml;
+using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 using MikroPic.EdaTools.v1.Core.Model.IO;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
+namespace MikroPic.EdaTools.v1.Core.IO {
 
     /// <summary>
     /// Clase per la escriptura de plaques en un stream.

@@ -46,6 +46,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
+        public override int GetHashCode() =>
+            HashCode.Combine(_position, _radius, _thickness, base.GetHashCode());
+
+        /// <inheritdoc/>
+        /// 
         public override EdaRect GetBoundingBox(EdaLayerId layerId) {
 
             int r = _radius + (_thickness / 2);

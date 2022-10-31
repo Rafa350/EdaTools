@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml.Linq;
 using Avalonia.Media;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
@@ -18,13 +17,15 @@ namespace EdaBoardViewer.Render {
         private readonly EdaLayer _layer;
         private readonly VisualLayer _visualLayer;
         private readonly DrawingContext _context;
-        private Font font;
+        private readonly PolygonCache _polygonCache;
+        private Font _font;
 
-        public BoardRenderVisitor(EdaLayer layer, VisualLayer visualLayer, DrawingContext context) {
+        public BoardRenderVisitor(EdaLayer layer, VisualLayer visualLayer, DrawingContext context, PolygonCache polygonCache) {
 
             _layer = layer;
             _visualLayer = visualLayer;
             _context = context;
+            _polygonCache = polygonCache;
         }
 
         /// <inheritdoc/>
@@ -59,7 +60,9 @@ namespace EdaBoardViewer.Render {
             if (_visualLayer.IsVisible(Part, rectangle)) {
 
                 var brush = new SolidColorBrush(_visualLayer.Color);
-                var geometry = rectangle.GetPolygon(_layer.Id).ToGeometry();
+
+                var polygon = _polygonCache.GetPolygon(rectangle, _layer.Id);
+                var geometry = polygon.ToGeometry();
 
                 _context.DrawGeometry(brush, null, geometry);
             }
@@ -72,7 +75,9 @@ namespace EdaBoardViewer.Render {
             if (_visualLayer.IsVisible(Part, arc)) {
 
                 var brush = new SolidColorBrush(_visualLayer.Color);
-                var geometry = arc.GetPolygon(_layer.Id).ToGeometry();
+
+                var polygon = _polygonCache.GetPolygon(arc, _layer.Id);
+                var geometry = polygon.ToGeometry();
 
                 _context.DrawGeometry(brush, null, geometry);
             }
@@ -85,7 +90,9 @@ namespace EdaBoardViewer.Render {
             if (_visualLayer.IsVisible(Part, circle)) {
 
                 var brush = new SolidColorBrush(_visualLayer.Color);
-                var geometry = circle.GetPolygon(_layer.Id).ToGeometry();
+
+                var polygon = _polygonCache.GetPolygon(circle, _layer.Id);
+                var geometry = polygon.ToGeometry();
 
                 _context.DrawGeometry(brush, null, geometry);
             }
@@ -98,7 +105,9 @@ namespace EdaBoardViewer.Render {
             if (_visualLayer.IsVisible(Part, element)) {
 
                 var brush = new SolidColorBrush(_visualLayer.Color);
-                var geometry = element.GetPolygon(_layer.Id).ToGeometry();
+
+                var polygon = _polygonCache.GetPolygon(element, _layer.Id);
+                var geometry = polygon.ToGeometry();
 
                 _context.DrawGeometry(brush, null, geometry);
             }
@@ -112,16 +121,18 @@ namespace EdaBoardViewer.Render {
 
                 switch (_visualLayer.VisualMode) {
                     case VisualMode.Element: {
-                            var viaBrush = new SolidColorBrush(_visualLayer.Color);
-                            var viaGeometry = via.GetPolygon(_layer.Id).ToGeometry();
-                            _context.DrawGeometry(viaBrush, null, viaGeometry);
+                            var brush = new SolidColorBrush(_visualLayer.Color);
+                            var polygon = _polygonCache.GetPolygon(via, _layer.Id);
+                            var geometry = polygon.ToGeometry();
+                            _context.DrawGeometry(brush, null, geometry);
                         }
                         break;
 
                     case VisualMode.Drill: {
-                            var drillBrush = new SolidColorBrush(_background);
-                            var drillGeometry = via.GetDrillPolygon().ToGeometry();
-                            _context.DrawGeometry(drillBrush, null, drillGeometry);
+                            var brush = new SolidColorBrush(_background);
+                            var polygon = _polygonCache.GetDrillPolygon(via);
+                            var geometry = polygon.ToGeometry();
+                            _context.DrawGeometry(brush, null, geometry);
                         }
                         break;
                 }
@@ -136,16 +147,18 @@ namespace EdaBoardViewer.Render {
 
                 switch (_visualLayer.VisualMode) {
                     case VisualMode.Element: {
-                            var padBrush = new SolidColorBrush(_visualLayer.Color);
-                            var padGeometry = pad.GetPolygon(_layer.Id).ToGeometry();
-                            _context.DrawGeometry(padBrush, null, padGeometry);
+                            var brush = new SolidColorBrush(_visualLayer.Color);
+                            var polygon = _polygonCache.GetPolygon(pad, _layer.Id);
+                            var geometry = polygon.ToGeometry();
+                            _context.DrawGeometry(brush, null, geometry);
                         }
                         break;
 
                     case VisualMode.Drill: {
-                            var drillBrush = new SolidColorBrush(_background);
-                            var drillGeometry = pad.GetDrillPolygon().ToGeometry();
-                            _context.DrawGeometry(drillBrush, null, drillGeometry);
+                            var brush = new SolidColorBrush(_background);
+                            var polygon = _polygonCache.GetDrillPolygon(pad);
+                            var geometry = polygon.ToGeometry();
+                            _context.DrawGeometry(brush, null, geometry);
                         }
                         break;
                 }
@@ -163,10 +176,10 @@ namespace EdaBoardViewer.Render {
                 EdaPolygon polygon;
                 if ((_layer.Id == EdaLayerId.TopCream) || (_layer.Id == EdaLayerId.BottomCream)) {
                     var spacing = Math.Max(pad.Size.Width, pad.Size.Height) * pad.PasteReductionRatio / 2;
-                    polygon = pad.GetOutlinePolygon(_layer.Id, -spacing);
+                    polygon = _polygonCache.GetOutlinePolygon(pad, _layer.Id, -spacing);
                 }
                 else
-                    polygon = pad.GetPolygon(_layer.Id);
+                    polygon = _polygonCache.GetPolygon(pad, _layer.Id);
 
                 var geometry = polygon.ToGeometry();
                 _context.DrawGeometry(brush, null, geometry);
@@ -182,10 +195,10 @@ namespace EdaBoardViewer.Render {
                 var paa = new PartAttributeAdapter(Part, text);
                 if (paa.IsVisible) {
 
-                    if (font == null)
-                        font = Font.Load("font.xml");
+                    if (_font == null)
+                        _font = Font.Load("font.xml");
 
-                    var td = new TextDrawer(font);
+                    var td = new TextDrawer(_font);
                     IEnumerable<GlyphTrace> glyphTraces = td.Draw(paa.Value, new EdaPoint(0, 0), paa.HorizontalAlign, paa.VerticalAlign, paa.Height);
 
                     var t = new EdaTransformation();
@@ -226,8 +239,8 @@ namespace EdaBoardViewer.Render {
             if (_visualLayer.IsVisible(Part, region)) {
 
                 var polygons = _layer.Function == LayerFunction.Signal ?
-                    Board.GetRegionPolygons(region, _layer.Id, new EdaTransformation()) :
-                    new List<EdaPolygon>() { region.GetPolygon(_layer.Id) };
+                    _polygonCache.GetPolygons(Board, region, _layer.Id) :
+                    new List<EdaPolygon>() { _polygonCache.GetPolygon(region, _layer.Id) };
 
                 var pen = new Pen(new SolidColorBrush(_visualLayer.Color), region.Thickness, null, PenLineCap.Round, PenLineJoin.Round);
                 var brush = new SolidColorBrush(_visualLayer.Color);

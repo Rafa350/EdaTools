@@ -37,7 +37,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             (int)((n * (long)r._value) / 1000L);
 
         public override int GetHashCode() =>
-            _value * 11337793;
+            _value.GetHashCode();
 
         public bool Equals(EdaRatio other) =>
             _value == other._value;

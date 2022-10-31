@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Linq;
+using MikroPic.EdaTools.v1.Core.Model.Board;
 using NetSerializer.Descriptors;
 using NetSerializer.Storage;
 using NetSerializer.TypeSerializers;
 using NetSerializer.TypeSerializers.Serializers;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.IO.Serializers {
+namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
 
     /// <summary>
     /// Serialitzador per la clase 'LblLabel'

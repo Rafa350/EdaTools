@@ -7,10 +7,11 @@ using System.Xml.Schema;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Xml;
+using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.IO;
 
-namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
+namespace MikroPic.EdaTools.v1.Core.IO {
 
     /// <summary>
     /// Clase per la lectura de plaques des d'un stream
@@ -38,7 +39,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.IO {
 
             _schemas = new XmlSchemaSet();
 
-            string schemaResourceName = "MikroPic.EdaTools.v1.Core.Model.Board.IO.Schemas.EdaBoardDocument.xsd";
+            string schemaResourceName = "MikroPic.EdaTools.v1.Core.IO.Schemas.EdaBoardDocument.xsd";
             Stream resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(schemaResourceName);
             if (resourceStream == null)
                 throw new Exception(String.Format("No se encontro el recurso '{0}'", schemaResourceName));

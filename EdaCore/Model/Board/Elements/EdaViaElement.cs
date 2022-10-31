@@ -31,16 +31,10 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             visitor.Visit(this);
         }
 
-        /// <summary>
-        /// Obte el hash del objecte.
-        /// </summary>
-        /// <returns>El hash.</returns>
+        /// <inheritdoc/>
         /// 
         public override int GetHashCode() =>
-            (_position.GetHashCode() * 17) +
-            (_outerSize * 31) +
-            (_innerSize * 111) +
-            (_drillDiameter * 13);
+            HashCode.Combine(_position, _drillDiameter, _outerSize, _innerSize, base.GetHashCode());
 
         /// <summary>
         /// Obte la llista de puns pels poligons

@@ -14,6 +14,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
         /// <inheritdoc/>
         /// 
+        public override int GetHashCode() =>
+            HashCode.Combine(_startPosition, _endPosition, base.GetHashCode());
+
+        /// <inheritdoc/>
+        /// 
         public override void AcceptVisitor(IEdaBoardVisitor visitor) {
 
             visitor.Visit(this);

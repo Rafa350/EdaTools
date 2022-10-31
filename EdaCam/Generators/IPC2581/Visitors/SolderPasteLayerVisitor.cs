@@ -1,5 +1,4 @@
-﻿using System;
-using System.Xml;
+﻿using System.Xml;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Xml;
 using MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Xml;
@@ -17,8 +16,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
         private readonly DataCache _cache;
         private readonly XmlWriter _writer;
 
-        public SolderPasteLayerVisitor(EdaLayerId layerId, DataCache cache, XmlWriter writer) { 
-            
+        public SolderPasteLayerVisitor(EdaLayerId layerId, DataCache cache, XmlWriter writer) {
+
             _layerId = layerId;
             _cache = cache;
             _writer = writer;

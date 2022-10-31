@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using MikroPic.EdaTools.v1.Base.Geometry.Utils;
-using Clipper2Lib;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using Clipper2Lib;
+using MikroPic.EdaTools.v1.Base.Geometry.Utils;
 
 namespace MikroPic.EdaTools.v1.Base.Geometry {
 

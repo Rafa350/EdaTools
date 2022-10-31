@@ -28,16 +28,15 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             _height = height;
         }
 
-        /// <summary>
-        /// Obte el codi hash del objecte.
-        /// </summary>
-        /// <returns>El codi hash</returns>
+        /// <inheritdoc/>
         /// 
         public override int GetHashCode() =>
-            (_width * 7) * (_height * 531);
+            HashCode.Combine(_width, _height);
 
+        /// <inheritdoc/>
+        /// 
         public override string ToString() =>
-            string.Format("{0}; {1}",
+            string.Format("W: {0}; H: {1}",
                 Math.Round(_width / 1000000.0, 3),
                 Math.Round(_height / 1000000.0, 3));
 

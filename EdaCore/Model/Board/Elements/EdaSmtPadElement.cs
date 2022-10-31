@@ -30,10 +30,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <inheritdoc/>
         /// 
         public override int GetHashCode() =>
-            Position.GetHashCode() +
-            Size.GetHashCode() +
-            (Rotation.GetHashCode() * 73429) +
-            _cornerRatio.GetHashCode();
+            HashCode.Combine(_size, _cornerRatio, _cornerShape, _pasteEnabled, base.GetHashCode());
 
         /// <inheritdoc/>
         /// 

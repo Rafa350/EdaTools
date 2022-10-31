@@ -40,15 +40,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// <inheritdoc/>
         /// 
         public override int GetHashCode() =>
-            Position.GetHashCode() +
-            _innerSize.GetHashCode() +
-            _topSize.GetHashCode() +
-            _bottomSize.GetHashCode() +
-            _cornerRatio.GetHashCode() +
-            _cornerShape.GetHashCode() +
-            Rotation.GetHashCode() +
-            _drillDiameter * 37000 +
-            _slot * 211;
+            HashCode.Combine(_topSize, _innerSize, _bottomSize, _cornerRatio, _cornerShape, _drillDiameter, _slot, base.GetHashCode());
 
         /// <summary>
         /// Crea la llista de punts del poligon del pad.

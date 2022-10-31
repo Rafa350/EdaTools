@@ -147,7 +147,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             private void VisitSignalElement(EdaElement element) {
 
                 EdaSignal regionSignal = Board.GetSignal(_region, null, false);
-                
+
                 EdaSignal signal = null;
                 if (element is IEdaConectable conectable)
                     signal = Board.GetSignal(conectable, Part, false);

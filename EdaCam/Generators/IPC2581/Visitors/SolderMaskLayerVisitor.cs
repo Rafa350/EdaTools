@@ -24,7 +24,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
         }
 
         public override void Visit(EdaSmtPadElement element) {
-            
+
             if (element.IsOnLayer(_layerId)) {
 
                 var size = element.Size.Inflated(element.MaskClearance);

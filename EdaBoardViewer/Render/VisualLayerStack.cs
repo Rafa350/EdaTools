@@ -85,7 +85,7 @@ namespace EdaBoardViewer.Render {
                 true,
                 VisualMode.Element,
                 Color.FromArgb(255, 211, 211, 211)));
-            
+
             vls.Add(new VisualLayer("Pads",
                 new EdaLayerId[] { EdaLayerId.TopCopper },
                 new Type[] { typeof(EdaThtPadElement), typeof(EdaSmtPadElement) },

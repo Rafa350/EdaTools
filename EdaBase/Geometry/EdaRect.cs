@@ -72,8 +72,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         public static bool operator !=(EdaRect r1, EdaRect r2) =>
             !r1.Equals(r2);
 
+        /// <inheritdoc/>
+        /// 
         public override string ToString() =>
-            String.Format("{0}; {1}; {2}; {3}",
+            String.Format("X: {0}; Y:{1}; W:{2}; H:{3}",
                 Math.Round(_x / 1000000.0, 3),
                 Math.Round(_y / 1000000.0, 3),
                 Math.Round(_width / 1000000.0, 3),
@@ -85,7 +87,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <returns>El codi hash</returns>
         /// 
         public override int GetHashCode() =>
-            _x + (_y * 1327) + (_width * 59) + (_height * 1293);
+            HashCode.Combine(_x, _y, _width, _height);
 
         /// <summary>
         /// Obte la posicio del rectangle

@@ -7,8 +7,8 @@ namespace TestGraphics.Views.Controls {
 
     internal class RenderControl: Control {
 
-        public RenderControl() { 
-        
+        public RenderControl() {
+
         }
 
         public override void Render(DrawingContext context) {
@@ -43,7 +43,7 @@ namespace TestGraphics.Views.Controls {
                 Math.Sqrt(dx * dx + dy * dy);
 
             Point ProportionPoint(Point point, double factor, double dx, double dy) =>
-                new (point.X - (dx * factor), point.Y - (dy * factor));
+                new(point.X - (dx * factor), point.Y - (dy * factor));
 
             // Vector 1
             //

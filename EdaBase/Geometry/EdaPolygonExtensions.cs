@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Clipper2Lib;
 
@@ -132,7 +131,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             List<List<EdaPoint>> holes = null;
             if (solution.Count > 1) {
                 holes = new List<List<EdaPoint>>(solution.Count - 1);
-                for (int i = 1; i < solution.Count; i++) 
+                for (int i = 1; i < solution.Count; i++)
                     holes.Add(ToPoints(solution[i], true));
             }
 

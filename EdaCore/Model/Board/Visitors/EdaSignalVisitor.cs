@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
 

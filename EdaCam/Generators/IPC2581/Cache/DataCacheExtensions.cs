@@ -1,5 +1,4 @@
-﻿using System;
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;

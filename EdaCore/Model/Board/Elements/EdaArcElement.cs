@@ -1,4 +1,5 @@
-﻿using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using System;
+using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
@@ -41,6 +42,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 return new EdaPolygon(points);
             }
         }
+
+        /// <inheritdoc/>
+        /// 
+        public override int GetHashCode() =>
+            HashCode.Combine(_angle, base.GetHashCode());
 
         /// <inheritdoc/>
         /// 

@@ -87,9 +87,9 @@
                 //
                 int offset = 0;
                 for (int i = 0; i < text.Length; i++) {
-                    
+
                     TraceStartGlyph();
-                    
+
                     Glyph glyph = _font.GetGlyph(text[i]);
                     if (glyph != null) {
 

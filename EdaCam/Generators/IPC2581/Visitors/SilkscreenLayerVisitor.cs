@@ -33,7 +33,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
 
             protected override void Trace(EdaPoint position, bool stroke, bool first) {
 
-                if (first) 
+                if (first)
                     _writer.WriteStartElement("PolyBegin");
                 else if (!stroke) {
                     TraceEndGlyph();
@@ -127,8 +127,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
                 var tr = Part == null ? new EdaTransformation() : Part.GetLocalTransformation();
                 var position = tr.Transform(element.Position);
                 var rotation = Part == null ? EdaAngle.Zero : Part.Rotation;
-                
-                PartAttributeAdapter paa = new PartAttributeAdapter(Part, element);
+
+                var paa = new PartAttributeAdapter(Part, element);
 
                 _writer.WriteStartElement("Set");
                 _writer.WriteAttributeString("geometricUsage", "TEXT");

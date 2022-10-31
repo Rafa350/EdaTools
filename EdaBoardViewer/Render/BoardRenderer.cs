@@ -6,28 +6,32 @@ namespace EdaBoardViewer.Render {
     public sealed class BoardRenderer {
 
         private static Color _boardColor = Color.FromArgb(255, 0, 48, 0);
-        private readonly DrawingContext context;
 
-        public BoardRenderer(DrawingContext context) {
+        private readonly EdaBoard _board;
 
-            this.context = context;
+        private PolygonCache _polygonCache;
+
+        public BoardRenderer(EdaBoard board) {
+
+            _board = board;
+            _polygonCache = new PolygonCache();
         }
 
-        public void Render(EdaBoard board) {
+        public void Render(DrawingContext context) {
 
             var brush = new SolidColorBrush(_boardColor);
 
-            var geometry = board.GetOutlinePolygon().ToGeometry();
+            var geometry = _board.GetOutlinePolygon().ToGeometry();
             context.DrawGeometry(brush, null, geometry);
 
             VisualLayerStack visualLayers = VisualLayerStack.CreateDefault();
             foreach (VisualLayer visualLayer in visualLayers.VisualLayers) {
                 if (visualLayer.Visible) {
                     foreach (var layerId in visualLayer.LayerIds) {
-                        var layer = board.GetLayer(layerId, false);
+                        var layer = _board.GetLayer(layerId, false);
                         if (layer != null) {
-                            var visitor = new BoardRenderVisitor(layer, visualLayer, context);
-                            visitor.Visit(board);
+                            var visitor = new BoardRenderVisitor(layer, visualLayer, context, _polygonCache);
+                            visitor.Visit(_board);
                         }
                     }
                 }
