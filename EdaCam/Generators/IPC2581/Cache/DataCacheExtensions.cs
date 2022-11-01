@@ -26,6 +26,14 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 _cache.AddLineDescEntry(element.Thickness, element.LineCap);
             }
 
+            public override void Visit(EdaCircleElement element) {
+
+                if (element.Filled)
+                    _cache.AddFillDescEntry(true);
+                else
+                    _cache.AddLineDescEntry(element.Thickness, EdaLineCap.Flat);
+            }
+
             public override void Visit(EdaViaElement element) {
 
                 _cache.AddCircleEntry(element.OuterSize);

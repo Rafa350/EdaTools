@@ -27,8 +27,6 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         private EdaAngle(int value) {
 
             _value = value % 36000;
-            //if (_value < 0)
-            //  _value += 36000;
         }
 
         /// <summary>
@@ -81,14 +79,13 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
                 return false;
         }
 
-        /// <summary>
-        /// Calcula el codi hash del objecte.
-        /// </summary>
-        /// <returns>El codi hash.</returns>
+        /// <inheritdoc/>
         /// 
         public override int GetHashCode() =>
             _value.GetHashCode();
 
+        /// <inheritdoc/>
+        /// 
         public override string ToString() =>
             AsDegrees.ToString();
 

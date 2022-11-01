@@ -10,7 +10,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// 
     public sealed partial class EdaBoard {
 
-        private Dictionary<EdaLayerId, EdaLayer> _layers = new Dictionary<EdaLayerId, EdaLayer>();
+        private Dictionary<EdaLayerId, EdaLayer> _layers;
         private EdaLayer _outlineLayer;
 
         /// <summary>
@@ -33,8 +33,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 _outlineLayer = layer;
             }
 
+            // Crea el diccionari, si cal.
+            //
             if (_layers == null)
                 _layers = new Dictionary<EdaLayerId, EdaLayer>();
+
+            // Afegeix la capa
+            //
             _layers.Add(layer.Id, layer);
         }
 
@@ -69,8 +74,12 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             if (layer == _outlineLayer)
                 _outlineLayer = null;
 
+            // Elimina lña capa.
+            //
             _layers.Remove(layer.Id);
 
+            // Elimina el diccionari, si cal.
+            //
             if (_layers.Count == 0)
                 _layers = null;
         }
@@ -143,7 +152,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// 
         public IEnumerable<EdaLayer> Layers =>
-            _layers?.Values;
+            _layers == null ? Enumerable.Empty<EdaLayer>() : _layers.Values;
 
         /// <summary>
         /// Obte la capa del perfil de la placa.

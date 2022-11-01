@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Clipper2Lib;
+using MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
 
 namespace MikroPic.EdaTools.v1.Base.Geometry {
@@ -265,6 +266,17 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         }
 
         /// <summary>
+        /// Crea una llista de puns pels poligons definits per una llista de segments.
+        /// </summary>
+        /// <param name="segments">Els segments.</param>
+        /// <returns>Els punts dell poligons.</returns>
+        /// 
+        public static IEnumerable<EdaPoint> CreatePolygon(IEnumerable<EdaSegment> segments) {
+
+            return Polygonizer.Poligonize(segments);
+        }
+
+        /// <summary>
         /// Obte els punts per formar un arc.
         /// </summary>
         /// <param name="center">El centre.</param>
@@ -325,48 +337,6 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
                 x = (cos * tx) - (sin * y);
                 y = (sin * tx) + (cos * y);
             }
-
-            return points;
-        }
-
-        public static IEnumerable<EdaPoint> CreateArc(EdaPoint center, EdaPoint start, EdaPoint end, bool discardLast = false, int numSegments = 0) {
-
-            var startAngle = ArcUtils.StartAngle(start, center);
-            var endAngle = ArcUtils.StartAngle(end, center);
-            var angle = startAngle - endAngle;
-
-            // Calcula el nombre de segments
-            //
-            if (numSegments == 0)
-                numSegments = (int)Math.Abs(Math.Floor(angle.AsDegrees * _circleFacets / 360.0));
-
-            // Calcula l'angle de cada segment
-            //
-            double radSegment = angle.AsRadiants / numSegments;
-
-            // Precalcula el sinus i el cosinus
-            //
-            double cos = Math.Cos(radSegment);
-            double sin = Math.Sin(radSegment);
-
-            var points = new List<EdaPoint>();
-            points.Add(start);
-
-            // Calcula el punt inicial
-            //
-            double x = start.X - center.X;
-            double y = start.Y - center.Y;
-            for (int i = 1; i < numSegments - 1; i++) {
-
-                double tx = x;
-                x = (cos * tx) - (sin * y);
-                y = (sin * tx) + (cos * y);
-
-                points.Add(new EdaPoint((int)(x + center.X), (int)(y + center.Y)));
-            }
-
-            if (!discardLast)
-                points.Add(end);
 
             return points;
         }

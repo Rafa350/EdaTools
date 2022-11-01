@@ -125,7 +125,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 _writer.WriteStartElement("EntryFillDesc");
                 _writer.WriteAttributeInteger("id", entry.Id);
                 _writer.WriteStartElement("FillDesc");
-                _writer.WriteAttributeString("fillProperty", entry.Fill ? "SOLID" : "HOLLOW");
+                _writer.WriteAttributeString("fillProperty", entry.Fill ? "FILL" : "HOLLOW");
                 _writer.WriteEndElement();
                 _writer.WriteEndElement();
             }

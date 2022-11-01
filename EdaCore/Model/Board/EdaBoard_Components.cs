@@ -26,9 +26,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 throw new InvalidOperationException(
                     String.Format("El componente '{0}', ya pertenece a la placa.", component.Name));
 
+            // Crea diccionari si cal
+            //
             if (_components == null)
                 _components = new Dictionary<string, EdaComponent>();
 
+            // Afegeix el component
+            //
             _components.Add(component.Name, component);
         }
 
@@ -56,12 +60,16 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             if (component == null)
                 throw new ArgumentNullException(nameof(component));
 
-            if ((_components == null) || _components.ContainsKey(component.Name))
+            if ((_components == null) || !_components.ContainsKey(component.Name))
                 throw new InvalidOperationException(
                     String.Format("El componente '{0}' no esta asignado a esta placa.", component.Name));
 
+            // Elimina el component
+            //
             _components.Remove(component.Name);
 
+            // Elimina el diccionari, si cal.
+            //
             if (_components.Count == 0)
                 _components = null;
         }
@@ -111,7 +119,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             _components == null ? Enumerable.Empty<string>() : _components.Keys;
 
         /// <summary>
-        /// Obte un enumerador pels blocs.
+        /// Obte un enumerador pels components.
         /// </summary>
         /// 
         public IEnumerable<EdaComponent> Components =>

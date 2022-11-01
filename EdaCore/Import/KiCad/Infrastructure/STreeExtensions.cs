@@ -92,7 +92,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad.Infrastructure {
                 return Enumerable.Empty<SBranch>();
 
             else {
-                List<SBranch> nodes = new List<SBranch>();
+                var nodes = new List<SBranch>();
 
                 foreach (var childNode in branch.Nodes.OfType<SBranch>())
                     if (tree.GetBranchName(childNode) == name)

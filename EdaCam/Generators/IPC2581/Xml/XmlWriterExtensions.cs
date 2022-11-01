@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Xml;
@@ -33,7 +34,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Xml {
                 writer.WritePointElement("PolyStepSegment", firstPoint, scale);
             }
 
-            writer.WriteStartElement(name);
+            if (!String.IsNullOrEmpty(name)) 
+                writer.WriteStartElement(name);
+
             writer.WriteStartElement("Polygon");
             WritePolygonPoints(polygon.Outline);
             if (fillDescId != -1) {
@@ -51,7 +54,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Xml {
                 }
             }
 
-            writer.WriteEndElement();
+            if (!String.IsNullOrEmpty(name))
+                writer.WriteEndElement();
         }
     }
 }

@@ -15,13 +15,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
             Flat
         }
 
-        private readonly int _drcTopSizeMin = 175000;
-        private readonly int _drcTopSizeMax = 2500000;
-        private readonly EdaRatio _drcTopSizePercent = EdaRatio.P25;
-        private readonly int _drcBottomSizeMin = 175000;
-        private readonly int _drcBottomSizeMax = 2500000;
-        private readonly EdaRatio _drcBottomSizePercent = EdaRatio.P25;
-
         private EdaSize _topSize;
         private EdaSize _innerSize;
         private EdaSize _bottomSize;

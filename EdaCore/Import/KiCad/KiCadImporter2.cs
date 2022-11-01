@@ -330,13 +330,18 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 switch (tree.GetBranchName(childNode)) {
                     case "fp_text": {
                             string attrValue = tree.ValueAsString(childNode[2]);
-                            bool attrVisible = childNode.Count == 6; // Si no te el node 'hide' es visible
                             var (attrPosition, attrRotation) = ParsePointAndAngle(tree, tree.SelectBranch(childNode, "at"));
                             attrPosition -= _origin;
                             attrRotation -= rotation;
 
-                            switch (tree.ValueAsString(childNode[1])) {
+                            bool attrVisible = true;
+                            for (int i = 3; i < childNode.Count; i++)
+                                if ((childNode[i] is SLeaf) && (tree.ValueAsString(childNode[i]) == "hide")) {
+                                    attrVisible = false;
+                                    break;
+                                }
 
+                            switch (tree.ValueAsString(childNode[1])) {
                                 case "value":
                                     attribute = new EdaPartAttribute("VALUE", attrValue, attrVisible);
                                     break;
@@ -486,8 +491,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var fillBranch = tree.SelectBranch(node, "fill");
             bool filled = (fillBranch != null) && (tree.ValueAsString(fillBranch[1]) == "solid");
 
-            if (radius == 0) {
-                radius = thickness;
+            if (radius < thickness / 2) {
+                radius = thickness / 2;
                 thickness = 0;
                 filled = true;
             }

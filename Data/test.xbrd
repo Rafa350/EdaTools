@@ -766,8 +766,8 @@
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="25V" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-96, 106" rotation="0" />
-                    <attribute name="VALUE" value="1u" visible="false" position="-96, 106.07" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-96, 106" rotation="0" />
+                    <attribute name="VALUE" value="1u" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
             <part name="C3" component="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a0f464" position="18.25, 45.375">
@@ -787,8 +787,8 @@
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="25V" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-98.5, 107.5" rotation="0" />
-                    <attribute name="VALUE" value="100n" visible="false" position="-96, 106.07" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-98.5, 107.5" rotation="0" />
+                    <attribute name="VALUE" value="100n" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
             <part name="C7" component="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a0f4a8" position="36.75, 13.25" rotation="-90">
@@ -808,8 +808,8 @@
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="25V" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-93.5, 107.5" rotation="180" />
-                    <attribute name="VALUE" value="1u" visible="false" position="-96, 106.07" rotation="180" />
+                    <attribute name="NAME" value="{%name}" position="-93.5, 107.5" rotation="180" />
+                    <attribute name="VALUE" value="1u" position="-96, 106.07" rotation="180" />
                 </attributes>
             </part>
             <part name="C8" component="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a0f4b9" position="32.75, 13.25" rotation="90">
@@ -829,8 +829,8 @@
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="25V" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-98.47, 107.57" rotation="0" />
-                    <attribute name="VALUE" value="1u" visible="false" position="-96, 106.07" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-98.47, 107.57" rotation="0" />
+                    <attribute name="VALUE" value="1u" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
             <part name="FB1" component="Inductor_SMD:L_0603_1608Metric:00000000-0000-0000-0000-000061a0f4e3" position="61.11, 50.82" rotation="-90">
@@ -846,8 +846,8 @@
                     <attribute name="SPN" value="571-1-1624117-7" visible="false" />
                     <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-96, 106.09" rotation="0" />
-                    <attribute name="VALUE" value="600R" visible="false" position="-96, 106.07" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-96, 106.09" rotation="0" />
+                    <attribute name="VALUE" value="600R" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
             <part name="R1" component="Resistor_SMD:R_0603_1608Metric:00000000-0000-0000-0000-000061a0f4f4" position="4.5, 29.25">
@@ -865,8 +865,8 @@
                     <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="1%" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-98.5, 107.5" rotation="0" />
-                    <attribute name="VALUE" value="10K" visible="false" position="-96, 106.07" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-98.5, 107.5" rotation="0" />
+                    <attribute name="VALUE" value="10K" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
             <part name="C4" component="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a10710" position="17.375, 54.125" rotation="90">
@@ -886,8 +886,8 @@
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="25V" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-96, 108.93" rotation="0" />
-                    <attribute name="VALUE" value="1u" visible="false" position="-96, 106.07" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-96, 108.93" rotation="0" />
+                    <attribute name="VALUE" value="1u" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
             <part name="D1" component="Diode_SMD:D_SOD-123:00000000-0000-0000-0000-000061a108fc" position="63.56, 51.36" rotation="90">
@@ -902,8 +902,8 @@
                     <attribute name="SPN" value="863-MBR0540T1G" visible="false" />
                     <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-99.46, 107.46" rotation="180" />
-                    <attribute name="VALUE" value="MBR0540" visible="false" position="-96, 105.4" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-99.46, 107.46" rotation="180" />
+                    <attribute name="VALUE" value="MBR0540" position="-96, 105.4" rotation="0" />
                 </attributes>
             </part>
             <part name="J5" component="Connector_JST_PH:JST_S2B-PH-SM4-TB_LF__SN_:00000000-0000-0000-0000-000061a14be1" position="58, 18.75" rotation="180">
@@ -917,8 +917,8 @@
                     <attribute name="SPL" value="DIGIKEY" visible="false" />
                     <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-101.5, 107.5" rotation="-180" />
-                    <attribute name="VALUE" value="S2B-PH-SM4-TB" visible="false" position="-88.075, 108.875" rotation="-180" />
+                    <attribute name="NAME" value="{%name}" position="-101.5, 107.5" rotation="-180" />
+                    <attribute name="VALUE" value="S2B-PH-SM4-TB" position="-88.075, 108.875" rotation="-180" />
                 </attributes>
             </part>
             <part name="U2" component="Package_TO_SOT_SMD:SOT-353_SC-70-5:00000000-0000-0000-0000-000061a16fbd" position="20, 54.16" rotation="180">
@@ -937,8 +937,8 @@
                     <attribute name="SPN" value="998-MIC5366-3.3YC5TR" visible="false" />
                     <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-96.02, 105.08" rotation="-180" />
-                    <attribute name="VALUE" value="MIC5366-3.3YC5" visible="false" position="-96, 105.5" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-96.02, 105.08" rotation="-180" />
+                    <attribute name="VALUE" value="MIC5366-3.3YC5" position="-96, 105.5" rotation="0" />
                 </attributes>
             </part>
             <part name="J1" component="Connector_MOLEX_PicoBlade:MOLEX_53261-0471:00000000-0000-0000-0000-000061a1813e" position="4.625, 51.125" rotation="-90">
@@ -954,8 +954,8 @@
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-102.875, 107.375" rotation="270" />
-                    <attribute name="VALUE" value="532610471" visible="false" position="-86.51, 107.21" rotation="180" />
+                    <attribute name="NAME" value="{%name}" position="-102.875, 107.375" rotation="270" />
+                    <attribute name="VALUE" value="532610471" position="-86.51, 107.21" rotation="180" />
                 </attributes>
             </part>
             <part name="U1" component="Package_SO:SOIC-28W_7.5x17.9mm_P1.27mm:00000000-0000-0000-0000-000061a1a777" position="15.56, 36.43" rotation="90">
@@ -996,8 +996,8 @@
                     <attribute name="SPN" value="579-PIC18F26K22ISO" visible="false" />
                     <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-88.93, 113.86" rotation="90" />
-                    <attribute name="VALUE" value="PIC18F26K22-I/SO" visible="false" position="-96, 97.6" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-88.93, 113.86" rotation="90" />
+                    <attribute name="VALUE" value="PIC18F26K22-I/SO" position="-96, 97.6" rotation="0" />
                 </attributes>
             </part>
             <part name="C1" component="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061a1c081" position="18.25, 43.75">
@@ -1017,8 +1017,8 @@
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="25V" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-98.5, 107.5" rotation="0" />
-                    <attribute name="VALUE" value="10n" visible="false" position="-96, 106.07" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-98.5, 107.5" rotation="0" />
+                    <attribute name="VALUE" value="10n" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
             <part name="C9" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:00000000-0000-0000-0000-000061a1cdf8" position="46.25, 12.625">
@@ -1038,8 +1038,8 @@
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="6.3V" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-92.625, 107.5" rotation="0" />
-                    <attribute name="VALUE" value="10u" visible="false" position="-96, 105.75" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-92.625, 107.5" rotation="0" />
+                    <attribute name="VALUE" value="10u" position="-96, 105.75" rotation="0" />
                 </attributes>
             </part>
             <part name="C10" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:00000000-0000-0000-0000-000061a1d586" position="14.875, 49.73" rotation="90">
@@ -1059,8 +1059,8 @@
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="6.3V" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-96, 109.25" rotation="0" />
-                    <attribute name="VALUE" value="10u" visible="false" position="-96, 105.75" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-96, 109.25" rotation="0" />
+                    <attribute name="VALUE" value="10u" position="-96, 105.75" rotation="0" />
                 </attributes>
             </part>
             <part name="MH1" component="MountingHole:MountingHole_3.2mm_M3_Pad_Via:00000000-0000-0000-0000-000061a4d432" position="8.5, 63">
@@ -1104,8 +1104,8 @@
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="25V" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-93.5, 107.5" rotation="0" />
-                    <attribute name="VALUE" value="10n" visible="false" position="-96, 106.07" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-93.5, 107.5" rotation="0" />
+                    <attribute name="VALUE" value="10n" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
             <part name="J4" component="Connector_FFC-FPC:Hirose_FH12-26S-0.5SH_1x26-1MP_P0.50mm_Horizontal:00000000-0000-0000-0000-000061a6f6c2" position="39, 17.95" rotation="180">
@@ -1144,8 +1144,8 @@
                     <attribute name="SPN" value="798-FH12-26S-0.5SH55" visible="false" />
                     <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-106.5, 108.825" rotation="-180" />
-                    <attribute name="VALUE" value="FH12-26S-0.5SH" visible="false" position="-96, 101.9" rotation="-180" />
+                    <attribute name="NAME" value="{%name}" position="-106.5, 108.825" rotation="-180" />
+                    <attribute name="VALUE" value="FH12-26S-0.5SH" position="-96, 101.9" rotation="-180" />
                 </attributes>
             </part>
             <part name="J2" component="Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical:00000000-0000-0000-0000-000061abe25c" position="4.05, 32.46" rotation="180">
@@ -1160,7 +1160,7 @@
                     <attribute name="MPN" value="" visible="false" />
                     <attribute name="Sheetfile" value="DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-93.45, 107.56" rotation="-180" />
+                    <attribute name="NAME" value="{%name}" position="-93.45, 107.56" rotation="-180" />
                     <attribute name="VALUE" value="Conn_01x05" visible="false" position="-96, 97.44" rotation="-180" />
                 </attributes>
             </part>
@@ -1176,8 +1176,8 @@
                     <attribute name="SPN" value="CO3302" visible="false" />
                     <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-94.85, 102.85" rotation="0" />
-                    <attribute name="VALUE" value="CO3302" visible="false" position="-94.73, 103.42" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-94.85, 102.85" rotation="0" />
+                    <attribute name="VALUE" value="CO3302" position="-94.73, 103.42" rotation="0" />
                 </attributes>
             </part>
             <part name="C5" component="Capacitor_SMD:C_0603_1608Metric:00000000-0000-0000-0000-000061b8ff15" position="39.5, 12.5">
@@ -1197,8 +1197,8 @@
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="10%" visible="false" />
                     <attribute name="VOLTAGE" value="25V" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-93.5, 107.5" rotation="0" />
-                    <attribute name="VALUE" value="100n" visible="false" position="-96, 106.07" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-93.5, 107.5" rotation="0" />
+                    <attribute name="VALUE" value="100n" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
             <part name="U3" component="Package_SO:SC-74-6_1.5x2.9mm_P0.95mm:7ed2abd9-bbed-4f95-9218-99faed10990d" position="53.75, 32.75" rotation="90">
@@ -1217,8 +1217,8 @@
                     <attribute name="SPL" value="MOUSER" visible="false" />
                     <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-97.625, 110.25" rotation="90" />
-                    <attribute name="VALUE" value="NCR421U" visible="false" position="-96, 105.1" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-97.625, 110.25" rotation="90" />
+                    <attribute name="VALUE" value="NCR421U" position="-96, 105.1" rotation="0" />
                 </attributes>
             </part>
             <part name="R2" component="Resistor_SMD:R_0603_1608Metric:b0879d7b-5c17-4095-b4c9-5a2b9719c6a0" position="53.75, 35.875">
@@ -1235,8 +1235,8 @@
                     <attribute name="Sheetfile" value="Fitxer: DSP04X.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="TOLERANCE" value="1%" visible="false" />
-                    <attribute name="NAME" value="{%name}" visible="false" position="-96, 108.93" rotation="0" />
-                    <attribute name="VALUE" value="12R" visible="false" position="-96, 106.07" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-96, 108.93" rotation="0" />
+                    <attribute name="VALUE" value="12R" position="-96, 106.07" rotation="0" />
                 </attributes>
             </part>
         </parts>

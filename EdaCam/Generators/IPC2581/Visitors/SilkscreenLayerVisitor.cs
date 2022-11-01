@@ -23,12 +23,14 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
 
             private readonly XmlWriter _writer;
             private readonly int _id;
+            private readonly EdaAngle _rotation;
 
-            public Drawer(Font font, XmlWriter writer, int id) :
+            public Drawer(Font font, XmlWriter writer, int id, EdaAngle rotation) :
                 base(font) {
 
                 _writer = writer;
                 _id = id;
+                _rotation = rotation;
             }
 
             protected override void Trace(EdaPoint position, bool stroke, bool first) {
@@ -109,6 +111,31 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
 
             if (element.IsOnLayer(_layerId)) {
 
+                var tr = Part == null ? new EdaTransformation() : Part.GetLocalTransformation();
+                var position = tr.Transform(element.Position);
+
+                var polygon = element.GetPolygon(_layerId);
+
+                _writer.WriteStartElement("Set");
+                _writer.WriteStartElement("Features");
+                _writer.WritePointElement("Location", position, _scale);
+                _writer.WriteStartElement("Circle");
+                _writer.WriteAttributeDouble("diameter", element.Diameter / _scale);
+                if (element.Filled) {
+                    var fillDescEntry = _cache.GetFillDescEntry(true);
+                    _writer.WriteStartElement("FillDescRef");
+                    _writer.WriteAttributeInteger("id", fillDescEntry.Id);
+                    _writer.WriteEndElement();
+                }
+                else {
+                    var lineDescEntry = _cache.GetLineDescEntry(element.Thickness, EdaLineCap.Flat);
+                    _writer.WriteStartElement("LineDescRef");
+                    _writer.WriteAttributeInteger("id", lineDescEntry.Id);
+                    _writer.WriteEndElement();
+                }
+                _writer.WriteEndElement(); // Circle
+                _writer.WriteEndElement(); // Features                    
+                _writer.WriteEndElement(); // Set
             }
         }
 
@@ -123,25 +150,27 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
 
             if (element.IsOnLayer(_layerId)) {
 
-                var lineDescEntry = _cache.GetLineDescEntry(element.Thickness, EdaLineCap.Round);
-                var tr = Part == null ? new EdaTransformation() : Part.GetLocalTransformation();
-                var position = tr.Transform(element.Position);
-                var rotation = Part == null ? EdaAngle.Zero : Part.Rotation;
-
                 var paa = new PartAttributeAdapter(Part, element);
+                if (paa.IsVisible) {
 
-                _writer.WriteStartElement("Set");
-                _writer.WriteAttributeString("geometricUsage", "TEXT");
-                _writer.WriteStartElement("NonStandardAttribute");
-                _writer.WriteAttributeString("name", "TEXT");
-                _writer.WriteAttributeString("type", "STRING");
-                _writer.WriteAttributeString("value", paa.Value);
-                _writer.WriteEndElement();
+                    var lineDescEntry = _cache.GetLineDescEntry(element.Thickness, EdaLineCap.Round);
+                    var tr = Part == null ? new EdaTransformation() : Part.GetLocalTransformation();
+                    var position = tr.Transform(element.Position);
+                    var rotation = Part == null ? EdaAngle.Zero : Part.Rotation;
 
-                var drawer = new Drawer(_font, _writer, lineDescEntry.Id);
-                drawer.Draw(paa.Value, position, element.HorizontalAlign, element.VerticalAlign, element.Height);
+                    _writer.WriteStartElement("Set");
+                    _writer.WriteAttributeString("geometricUsage", "TEXT");
+                    _writer.WriteStartElement("NonStandardAttribute");
+                    _writer.WriteAttributeString("name", "TEXT");
+                    _writer.WriteAttributeString("type", "STRING");
+                    _writer.WriteAttributeString("value", paa.Value);
+                    _writer.WriteEndElement();
 
-                _writer.WriteEndElement(); // Set
+                    var drawer = new Drawer(_font, _writer, lineDescEntry.Id, rotation);
+                    drawer.Draw(paa.Value, position, element.HorizontalAlign, element.VerticalAlign, element.Height);
+
+                    _writer.WriteEndElement(); // Set
+                }
             }
         }
     }

@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Model\Board\Rules\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 
