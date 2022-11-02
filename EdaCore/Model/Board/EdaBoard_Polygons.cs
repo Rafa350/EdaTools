@@ -157,7 +157,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
                     // Si es un pad genera un termal
                     //
-                    if (element is EdaPadElement padElement) {
+                    if (element is EdaPadBaseElement padElement) {
                         var polygons = GetThermalPolygons(padElement);
                         foreach (var polygon in polygons)
                             if (_regionBounds.IntersectsWith(polygon.Bounds))
@@ -169,7 +169,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 //
                 else {
                     var clearance = Math.Max(regionSignal.Clearance, _region.Clearance);
-                    if (element is EdaPadElement padElement)
+                    if (element is EdaPadBaseElement padElement)
                         clearance = Math.Max(clearance, padElement.Clearance);
                     var polygon = GetOutlinePolygon(element, clearance);
                     if (_regionBounds.IntersectsWith(polygon.Bounds))
@@ -183,7 +183,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             /// <param name="element">L'element.</param>
             /// <returns>El resultat. Pot ser mes d'un poligon.</returns>
             /// 
-            private IEnumerable<EdaPolygon> GetThermalPolygons(EdaPadElement element) {
+            private IEnumerable<EdaPolygon> GetThermalPolygons(EdaPadBaseElement element) {
 
                 var elementPoligon = element.GetOutlinePolygon(_layerId, _region.ThermalClearance);
 

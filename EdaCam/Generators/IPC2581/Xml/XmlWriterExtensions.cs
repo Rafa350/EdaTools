@@ -16,7 +16,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Xml {
             writer.WriteEndElement();
         }
 
-        public static void WritePolygonElement(this XmlWriter writer, string name, EdaPolygon polygon, int fillDescId, double scale) {
+        public static void WritePolygonElement(this XmlWriter writer, EdaPolygon polygon, int fillDescId, double scale) {
 
             void WritePolygonPoints(IEnumerable<EdaPoint> points) {
 
@@ -34,9 +34,6 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Xml {
                 writer.WritePointElement("PolyStepSegment", firstPoint, scale);
             }
 
-            if (!String.IsNullOrEmpty(name))
-                writer.WriteStartElement(name);
-
             writer.WriteStartElement("Polygon");
             WritePolygonPoints(polygon.Outline);
             if (fillDescId != -1) {
@@ -53,9 +50,6 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Xml {
                     writer.WriteEndElement(); // Cutout
                 }
             }
-
-            if (!String.IsNullOrEmpty(name))
-                writer.WriteEndElement();
         }
     }
 }

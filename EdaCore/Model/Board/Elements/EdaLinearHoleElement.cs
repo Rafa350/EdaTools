@@ -7,7 +7,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un forat en forma de linia en la placa.
     /// </summary>
     /// 
-    public class EdaLinearHoleElement: EdaHoleElement {
+    public class EdaLinearHoleElement: EdaHoleBaseElement {
 
         private EdaPoint _startPosition;
         private EdaPoint _endPosition;

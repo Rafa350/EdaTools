@@ -121,8 +121,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
                 _writer.WriteStartElement("Features");
 
                 var polygons = Board.GetRegionPolygons(element, _layerId, null);
-                foreach (var polygon in polygons)
-                    _writer.WritePolygonElement("Contour", polygon, fillDescEntry.Id, _scale);
+                foreach (var polygon in polygons) {
+                    _writer.WriteStartElement("Contour");
+                    _writer.WritePolygonElement(polygon, fillDescEntry.Id, _scale);
+                    _writer.WriteEndElement();
+                }
 
                 _writer.WriteEndElement(); // Features
                 _writer.WriteEndElement(); // Set
@@ -135,7 +138,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
             if (signal != null)
                 _writer.WriteAttributeString("net", signal.Name);
             _writer.WriteStartElement("Pad");
-            if (!Part.Rotation.IsZero) {
+            if (!rotation.IsZero) {
                 _writer.WriteStartElement("Xform");
                 _writer.WriteAttributeDouble("rotation", rotation.AsDegrees);
                 _writer.WriteEndElement(); // Xform

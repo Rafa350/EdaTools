@@ -8,14 +8,14 @@ using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
 
-    internal sealed class ComponentPinVisitor: EdaDefaultBoardVisitor {
+    internal sealed class PackageVisitor: EdaDefaultBoardVisitor {
 
         private const double _scale = 1000000.0;
 
         private readonly XmlWriter _writer;
         private readonly DataCache _cache;
 
-        public ComponentPinVisitor(DataCache cache, XmlWriter writer) {
+        public PackageVisitor(DataCache cache, XmlWriter writer) {
 
             _writer = writer;
             _cache = cache;
@@ -48,7 +48,12 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
             _writer.WriteStartElement("Pin");
             _writer.WriteAttributeString("number", element.Name);
             _writer.WriteAttributeString("type", "SURFACE");
-            _writer.WriteAttributeString("electricalType", "MECHANICAL");
+            _writer.WriteAttributeString("electricalType", "ELECTRICAL");
+            if (!element.Rotation.IsZero) {
+                _writer.WriteStartElement("Xform");
+                _writer.WriteAttributeDouble("rotation", element.Rotation.AsDegrees);
+                _writer.WriteEndElement(); // Xform
+            }
             _writer.WritePointElement("Location", element.Position, _scale);
             _writer.WriteStartElement("StandardPrimitiveRef");
             _writer.WriteAttributeInteger("id", rectEntry.Id);
@@ -58,18 +63,18 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
 
         public override void Visit(EdaThtPadElement element) {
 
-            var flat = element.CornerShape == EdaThtPadElement.CornerShapeType.Flat;
+            /*var flat = element.CornerShape == EdaThtPadElement.CornerShapeType.Flat;
             var rectEntry = _cache.GetRectEntry(element.TopSize, element.CornerRatio, flat);
 
             _writer.WriteStartElement("Pin");
             _writer.WriteAttributeString("number", element.Name);
             _writer.WriteAttributeString("type", "THRU");
-            _writer.WriteAttributeString("electricalType", "MECHANICAL");
+            _writer.WriteAttributeString("electricalType", "ELECTRICAL");
             _writer.WritePointElement("Location", element.Position, _scale);
             _writer.WriteStartElement("StandardPrimitiveRef");
             _writer.WriteAttributeInteger("id", rectEntry.Id);
             _writer.WriteEndElement();
-            _writer.WriteEndElement();
+            _writer.WriteEndElement();*/
         }
     }
 }

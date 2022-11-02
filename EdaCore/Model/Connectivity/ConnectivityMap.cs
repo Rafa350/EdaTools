@@ -224,7 +224,7 @@
         /// <param name="position">La posicio.</param>
         /// <param name="element">El element.</param>
         /// 
-        private void AddLineElement(EdaLineElement line) {
+        private void AddLineElement(EdaLineBaseElement line) {
 
             ConnectivityItem item = new ConnectivityItem(line);
 

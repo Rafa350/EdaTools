@@ -8,7 +8,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un arc.
     /// </summary>
     /// 
-    public sealed class EdaArcElement: EdaLineElement, IEdaConectable {
+    public sealed class EdaArcElement: EdaLineBaseElement, IEdaConectable {
 
         private EdaAngle _angle;
 

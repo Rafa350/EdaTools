@@ -8,7 +8,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un pad THT
     /// </summary>
     /// 
-    public sealed class EdaThtPadElement: EdaPadElement {
+    public sealed class EdaThtPadElement: EdaPadBaseElement {
 
         public enum CornerShapeType {
             Round,

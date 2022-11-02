@@ -584,7 +584,7 @@ namespace MikroPic.EdaTools.v1.Core.IO {
 
                     case "pads":
                         foreach (var padInfo in ParsePartPadsNode()) {
-                            EdaPadElement pad = part.GetPad(padInfo.Name);
+                            EdaPadBaseElement pad = part.GetPad(padInfo.Name);
                             _elementSignal.Add(new Tuple<IEdaConectable, EdaPart>(pad, part), padInfo.SignalName);
                         }
                         break;

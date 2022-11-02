@@ -366,7 +366,7 @@ namespace MikroPic.EdaTools.v1.Core.IO {
                     //
                     if (part.HasPads) {
                         bool empty = true;
-                        foreach (EdaPadElement pad in part.Pads) {
+                        foreach (EdaPadBaseElement pad in part.Pads) {
                             EdaSignal signal = _currentBoard.GetSignal(pad, part, false);
                             if (signal != null) {
                                 if (empty) {

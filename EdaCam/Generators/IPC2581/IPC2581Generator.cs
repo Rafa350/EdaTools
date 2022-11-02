@@ -151,20 +151,20 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             _writer.WriteAttributeString("mode", modeText);
             _writer.WriteAttributeInteger("level", 1);
             _writer.WriteAttributeString("sectionKey", keyText);
-            _writer.WriteEndElement();
+            _writer.WriteEndElement(); // FunctionMode
 
             // Escriu la seccio 'StepRef'
             //
             _writer.WriteStartElement("StepRef");
             _writer.WriteAttributeString("name", "board_0");
-            _writer.WriteEndElement();
+            _writer.WriteEndElement(); // StepRef
 
             // Escriu la seccion 'LayerRef'
             //
             foreach (var layer in _layers) {
                 _writer.WriteStartElement("LayerRef");
                 _writer.WriteAttributeString("name", layer.Name);
-                _writer.WriteEndElement();
+                _writer.WriteEndElement(); // LayerRef
             }
 
             // Escriu la seccio 'BomRef'
@@ -172,7 +172,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             if (_bomDataEnabled) {
                 _writer.WriteStartElement("BomRef");
                 _writer.WriteAttributeString("name", "board_0_bom");
-                _writer.WriteEndElement();
+                _writer.WriteEndElement(); // BomRef
             }
 
             // Escriu la seccio 'DictionaryLineDesc'
@@ -188,7 +188,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 _writer.WriteEndElement();
                 _writer.WriteEndElement();
             }
-            _writer.WriteEndElement();
+            _writer.WriteEndElement(); // DictionaryLineDesc
 
             // Escriu la seccio 'DictionaryFillDesc'
             //
@@ -202,7 +202,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 _writer.WriteEndElement();
                 _writer.WriteEndElement();
             }
-            _writer.WriteEndElement();
+            _writer.WriteEndElement(); // DictionaryFillDesc
 
             // Escriu la seccio 'DictionaryStandard'
             //
@@ -235,9 +235,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 }
                 _writer.WriteEndElement();
             }
-            _writer.WriteEndElement();
+            _writer.WriteEndElement(); // DictionaryStandard
 
-            _writer.WriteEndElement();
+            _writer.WriteEndElement(); // Content
         }
 
         /// <summary>
@@ -364,8 +364,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         private void WriteSection_Profile(EdaBoard board) {
 
             var polygon = board.GetOutlinePolygon();
-            if (polygon != null)
-                _writer.WritePolygonElement("Profile", polygon, -1, _scale);
+            if (polygon != null) {
+                _writer.WriteStartElement("Profile");
+                _writer.WritePolygonElement(polygon, -1, _scale);
+                _writer.WriteEndElement();
+            }
         }
 
         /// <summary>
@@ -386,7 +389,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 var items = board.GetConectionItems(signal);
                 if (items != null) {
                     foreach (var item in items) {
-                        if (item.Conectable is EdaPadElement pad) {
+                        if (item.Conectable is EdaPadBaseElement pad) {
                             var part = item.Part;
                             _writer.WriteStartElement("PinRef");
                             _writer.WriteAttributeString("componentRef", part.Name);
@@ -593,6 +596,11 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 _writer.WriteAttributeString("refDes", part.Name);
                 _writer.WriteAttributeString("layerRef", part.Side == PartSide.Top ? _topLayer.Name : _bottomLayer.Name);
                 _writer.WriteAttributeString("packageRef", part.Component.Name);
+                if (!part.Rotation.IsZero) {
+                    _writer.WriteStartElement("Xform");
+                    _writer.WriteAttributeDouble("rotation", part.Rotation.AsDegrees);
+                    _writer.WriteEndElement(); // Xform
+                }
                 _writer.WritePointElement("Location", part.Position, _scale);
                 _writer.WriteEndElement();
             }
@@ -605,7 +613,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         /// 
         private void WriteSection_Package(EdaBoard board) {
 
-            var visitor = new ComponentPinVisitor(_dataCache, _writer);
+            var visitor = new PackageVisitor(_dataCache, _writer);
             visitor.Visit(board);
         }
     }

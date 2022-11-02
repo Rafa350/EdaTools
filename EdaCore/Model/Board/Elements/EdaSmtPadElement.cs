@@ -7,7 +7,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un pad SMT
     /// </summary>
     /// 
-    public sealed class EdaSmtPadElement: EdaPadElement {
+    public sealed class EdaSmtPadElement: EdaPadBaseElement {
 
         public enum CornerShapeType {
             Round,

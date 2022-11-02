@@ -19,7 +19,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="throwOnError">True si dispara una excepcio si no el troba.</param>
         /// <returns>El pad. Null si no el troba.</returns>
         /// 
-        public static EdaPadElement GetPad(this EdaComponent component, string name, bool throwOnError = true) {
+        public static EdaPadBaseElement GetPad(this EdaComponent component, string name, bool throwOnError = true) {
 
             var pads = component.Pads();
             if (pads.Any()) {
@@ -43,7 +43,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <returns>True si conte pads.</returns>
         /// 
         public static bool HasPads(this EdaComponent component) =>
-            component.Elements.OfType<EdaPadElement>().Any();
+            component.Elements.OfType<EdaPadBaseElement>().Any();
 
         /// <summary>
         /// Enumera el nom dels pads.
@@ -52,7 +52,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <returns>El resultat.</returns>
         /// 
         public static IEnumerable<string> PadNames(this EdaComponent component) =>
-            component.Elements.OfType<EdaPadElement>().Select(pad => pad.Name);
+            component.Elements.OfType<EdaPadBaseElement>().Select(pad => pad.Name);
 
         /// <summary>
         /// Enumera els pads.
@@ -60,7 +60,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="component">El component.</param>
         /// <returns>El resultat.</returns>
         /// 
-        public static IEnumerable<EdaPadElement> Pads(this EdaComponent component) =>
-            component.Elements.OfType<EdaPadElement>();
+        public static IEnumerable<EdaPadBaseElement> Pads(this EdaComponent component) =>
+            component.Elements.OfType<EdaPadBaseElement>();
     }
 }

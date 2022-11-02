@@ -126,7 +126,7 @@ namespace MikroPic.EdaTools.v1.Panel {
                     targetBoard.AddPart(panelPart);
 
                     foreach (var panelElement in panelPart.Elements) {
-                        if (panelElement is EdaPadElement panelPad) {
+                        if (panelElement is EdaPadBaseElement panelPad) {
                             EdaSignal signal = board.GetSignal(part.GetPad(panelPad.Name), part, false);
                             if (signal != null) {
                                 string panelSignalName = String.Format("{1}@{0}", index, signal.Name);

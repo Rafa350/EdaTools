@@ -205,7 +205,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                     string padName = childNode.AttributeAsString("pad");
 
                     EdaPart part = board.GetPart(partName, true);
-                    foreach (EdaPadElement pad in part.Pads) {
+                    foreach (EdaPadBaseElement pad in part.Pads) {
                         if (pad.Name == padName)
                             try {
                                 board.Connect(signal, pad, part);

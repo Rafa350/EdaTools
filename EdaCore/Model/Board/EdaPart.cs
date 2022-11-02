@@ -77,7 +77,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="throwOnError">True si dispara una execepcio si no el troba.</param>
         /// <returns>El pad. Null si no el troba.</returns>
         /// 
-        public EdaPadElement GetPad(string name, bool throwOnError = true) {
+        public EdaPadBaseElement GetPad(string name, bool throwOnError = true) {
 
             if (String.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
@@ -171,7 +171,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// Enumera els pads
         /// </summary>
         /// 
-        public IEnumerable<EdaPadElement> Pads =>
+        public IEnumerable<EdaPadBaseElement> Pads =>
             _component.Pads();
     }
 }

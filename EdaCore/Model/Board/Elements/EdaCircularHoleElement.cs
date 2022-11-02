@@ -7,7 +7,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un forat circular en la placa.
     /// </summary>
     /// 
-    public sealed class EdaCircularHoleElement: EdaHoleElement {
+    public sealed class EdaCircularHoleElement: EdaHoleBaseElement {
 
         private EdaPoint _position;
 

@@ -7,7 +7,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un pad.
     /// </summary>
     /// 
-    public abstract class EdaPadElement: EdaElement, IEdaConectable {
+    public abstract class EdaPadBaseElement: EdaElement, IEdaConectable {
 
         private string _name;
         private EdaPoint _position;
