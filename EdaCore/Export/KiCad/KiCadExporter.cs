@@ -188,7 +188,7 @@ namespace MikroPic.EdaTools.v1.Core.Export.KiCad {
                         element.Rotation.AsDegrees);
 
                 if (!element.CornerRatio.IsZero) {
-                    if (element.CornerShape == EdaThtPadElement.ThPadCornerShape.Round)
+                    if (element.CornerShape == EdaThtPadElement.CornerShapeType.Round)
                         sb.AppendFormat(CultureInfo.InvariantCulture, "(roundrect_rratio {0}) ",
                             element.CornerRatio.AsPercent / 2.0);
                     else

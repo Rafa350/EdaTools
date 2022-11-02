@@ -446,13 +446,13 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             var width = size;
             var height = size;
             var cornerRatio = EdaRatio.Zero;
-            var cornerShape = EdaThtPadElement.ThPadCornerShape.Round;
+            var cornerShape = EdaThtPadElement.CornerShapeType.Round;
 
             // Obte la forma
             //
             switch (node.AttributeAsString("shape")) {
                 case "octagon":
-                    cornerShape = EdaThtPadElement.ThPadCornerShape.Flat;
+                    cornerShape = EdaThtPadElement.CornerShapeType.Flat;
                     cornerRatio = EdaRatio.FromPercent(0.54);
                     break;
 

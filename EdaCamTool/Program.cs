@@ -86,7 +86,7 @@ namespace MikroPic.EdaTools.v1.CamTool {
 
             string credits =
                 "+--------------------------------------------------------------------\r\n" +
-                "| EdaCamTool V2.1 - (c) 2019..2021 rsr.openware@gmail.com\r\n" +
+                "| EdaCamTool V2.2 - (c) 2019..2022 rsr.openware@gmail.com\r\n" +
                 "+--------------------------------------------------------------------";
 
             Console.WriteLine(credits);

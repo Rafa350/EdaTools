@@ -9,14 +9,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// 
     public sealed class EdaSmtPadElement: EdaPadElement {
 
-        public enum SmdPadCornerShape {
+        public enum CornerShapeType {
             Round,
             Flat
         }
 
         private EdaSize _size;
         private EdaRatio _cornerRatio = EdaRatio.Zero;
-        private SmdPadCornerShape _cornerShape = SmdPadCornerShape.Round;
+        private CornerShapeType _cornerShape = CornerShapeType.Round;
         private EdaRatio _pasteReductionRatio = EdaRatio.Zero;
         private bool _pasteEnabled = true;
 
@@ -86,7 +86,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// Forma de les cantonades.
         /// </summary>
         /// 
-        public SmdPadCornerShape CornerShape {
+        public CornerShapeType CornerShape {
             get => _cornerShape;
             set => _cornerShape = value;
         }

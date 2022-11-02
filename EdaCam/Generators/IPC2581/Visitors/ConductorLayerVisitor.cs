@@ -55,13 +55,14 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
 
             if (element.IsOnLayer(_layerId)) {
 
-                var rectRoundEntry = _cache.GetRectRoundEntry(element.Size, element.CornerRatio);
+                var flat = element.CornerShape == EdaSmtPadElement.CornerShapeType.Flat;
+                var rectEntry = _cache.GetRectEntry(element.Size, element.CornerRatio, flat);
                 var signal = Board.GetSignal(element, Part, false);
                 var tr = Part == null ? new EdaTransformation() : Part.GetLocalTransformation();
                 var rotation = Part == null ? EdaAngle.Zero : Part.Rotation;
                 var location = tr.Transform(element.Position);
 
-                WritePad(rectRoundEntry.Id, signal, location, rotation);
+                WritePad(rectEntry.Id, signal, location, rotation);
             }
         }
 
@@ -73,13 +74,14 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
                     _layerId.IsTop ? element.TopSize :
                     _layerId.IsBottom ? element.BottomSize :
                     element.InnerSize;
-                var rectRoundEntry = _cache.GetRectRoundEntry(size, element.CornerRatio);
+                var flat = element.CornerShape == EdaThtPadElement.CornerShapeType.Flat;
+                var rectEntry = _cache.GetRectEntry(size, element.CornerRatio, flat);
                 var signal = Board.GetSignal(element, Part, false);
                 var tr = Part == null ? new EdaTransformation() : Part.GetLocalTransformation();
                 var rotation = Part == null ? EdaAngle.Zero : Part.Rotation;
                 var location = tr.Transform(element.Position);
 
-                WritePad(rectRoundEntry.Id, signal, location, rotation);
+                WritePad(rectEntry.Id, signal, location, rotation);
             }
         }
 

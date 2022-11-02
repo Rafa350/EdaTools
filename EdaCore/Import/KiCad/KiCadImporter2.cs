@@ -491,7 +491,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var fillBranch = tree.SelectBranch(node, "fill");
             bool filled = (fillBranch != null) && (tree.ValueAsString(fillBranch[1]) == "solid");
 
-            if (radius < thickness / 2) {
+            if (radius <= thickness / 2) {
                 radius = thickness / 2;
                 thickness = 0;
                 filled = true;

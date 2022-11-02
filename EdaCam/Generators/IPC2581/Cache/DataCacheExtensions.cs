@@ -42,24 +42,27 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
             public override void Visit(EdaThtPadElement element) {
 
-                _cache.AddRectRoundEntry(element.TopSize, element.CornerRatio);
-                _cache.AddRectRoundEntry(element.BottomSize, element.CornerRatio);
-                _cache.AddRectRoundEntry(element.InnerSize, element.CornerRatio);
+                bool flat = element.CornerShape == EdaThtPadElement.CornerShapeType.Flat;
+
+                _cache.AddRectEntry(element.TopSize, element.CornerRatio, flat);
+                _cache.AddRectEntry(element.BottomSize, element.CornerRatio, flat);
+                _cache.AddRectEntry(element.InnerSize, element.CornerRatio, flat);
                 if (element.MaskClearance > 0) {
-                    _cache.AddRectRoundEntry(element.TopSize.Inflated(element.MaskClearance), element.CornerRatio);
-                    _cache.AddRectRoundEntry(element.BottomSize.Inflated(element.MaskClearance), element.CornerRatio);
+                    _cache.AddRectEntry(element.TopSize.Inflated(element.MaskClearance), element.CornerRatio, flat);
+                    _cache.AddRectEntry(element.BottomSize.Inflated(element.MaskClearance), element.CornerRatio, flat);
                 }
             }
 
             public override void Visit(EdaSmtPadElement element) {
 
-                _cache.AddRectRoundEntry(element.Size, element.CornerRatio);
+                bool flat = element.CornerShape == EdaSmtPadElement.CornerShapeType.Flat;
+
+                _cache.AddRectEntry(element.Size, element.CornerRatio, flat);
                 if (element.MaskClearance > 0)
-                    _cache.AddRectRoundEntry(element.Size.Inflated(element.MaskClearance), element.CornerRatio);
+                    _cache.AddRectEntry(element.Size.Inflated(element.MaskClearance), element.CornerRatio, flat);
                 if (!element.PasteReductionRatio.IsZero) {
-                    //var pasteReduction = Math.Min(element.Size.Width, element.Size.Height) * element.PasteReductionRatio / 2;
                     var size = element.Size.Deflated(element.PasteReductionRatio);
-                    _cache.AddRectRoundEntry(size, element.CornerRatio);
+                    _cache.AddRectEntry(size, element.CornerRatio, flat);
                 }
             }
 

@@ -34,7 +34,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Xml {
                 writer.WritePointElement("PolyStepSegment", firstPoint, scale);
             }
 
-            if (!String.IsNullOrEmpty(name)) 
+            if (!String.IsNullOrEmpty(name))
                 writer.WriteStartElement(name);
 
             writer.WriteStartElement("Polygon");

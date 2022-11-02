@@ -10,7 +10,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// 
     public sealed class EdaThtPadElement: EdaPadElement {
 
-        public enum ThPadCornerShape {
+        public enum CornerShapeType {
             Round,
             Flat
         }
@@ -19,7 +19,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         private EdaSize _innerSize;
         private EdaSize _bottomSize;
         private EdaRatio _cornerRatio = EdaRatio.Zero;
-        private ThPadCornerShape _cornerShape = ThPadCornerShape.Round;
+        private CornerShapeType _cornerShape = CornerShapeType.Round;
         private int _drillDiameter;
         private int _slot;
 
@@ -50,7 +50,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
                 Position,
                 new EdaSize(size.Width + spacing + spacing, size.Height + spacing + spacing),
                 _cornerRatio,
-                _cornerShape == ThPadCornerShape.Round,
+                _cornerShape == CornerShapeType.Round,
                 Rotation);
         }
 
@@ -157,7 +157,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// Forma de les cantonades.
         /// </summary>
         /// 
-        public ThPadCornerShape CornerShape {
+        public CornerShapeType CornerShape {
             get => _cornerShape;
             set => _cornerShape = value;
         }

@@ -929,7 +929,7 @@ namespace MikroPic.EdaTools.v1.Core.IO {
             var innerSize = _rd.AttributeExists("innerSize") ? EdaParser.ParseSize(_rd.AttributeAsString("innerSize")) : topSize;
             var bottomSize = _rd.AttributeExists("bottomSize") ? EdaParser.ParseSize(_rd.AttributeAsString("bottomSize")) : topSize;
             var cornerRatio = EdaParser.ParseRatio(_rd.AttributeAsString("cornerRatio", "0"));
-            var cornerShape = _rd.AttributeAsEnum("cornerShape", EdaThtPadElement.ThPadCornerShape.Round);
+            var cornerShape = _rd.AttributeAsEnum("cornerShape", EdaThtPadElement.CornerShapeType.Round);
             var rotation = EdaParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
             var drill = EdaParser.ParseScalar(_rd.AttributeAsString("drill"));
             var signalName = _rd.AttributeAsString("signal");
@@ -977,7 +977,7 @@ namespace MikroPic.EdaTools.v1.Core.IO {
             var size = EdaParser.ParseSize(_rd.AttributeAsString("size"));
             var rotation = EdaParser.ParseAngle(_rd.AttributeAsString("rotation", "0"));
             var cornerRatio = EdaParser.ParseRatio(_rd.AttributeAsString("cornerRatio", "0"));
-            var cornerShape = _rd.AttributeAsEnum("cornerShape", EdaSmtPadElement.SmdPadCornerShape.Round);
+            var cornerShape = _rd.AttributeAsEnum("cornerShape", EdaSmtPadElement.CornerShapeType.Round);
             var signalName = _rd.AttributeAsString("signal");
             var clearance = EdaParser.ParseScalar(_rd.AttributeAsString("clearance", "0"));
             var maskClearance = EdaParser.ParseScalar(_rd.AttributeAsString("maskClearance", "0"));

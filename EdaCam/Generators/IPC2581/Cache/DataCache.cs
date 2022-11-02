@@ -75,23 +75,24 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         }
 
         /// <summary>
-        /// Afegeix una entrada de tipus 'RectRound'.
+        /// Afegeix una entrada de tipus 'Rect'.
         /// </summary>
         /// <param name="size">El tamany.</param>
         /// <param name="ratio">El ratio de curvatura de les cantonades.</param>
+        /// <param name="flat">Indica si les casntonades son planes.</param>
         /// <param name="tag">El tag.</param>
         /// <returns>L'entrada.</returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         /// 
-        public RectRoundEntry AddRectRoundEntry(EdaSize size, EdaRatio ratio, string tag = null) {
+        public RectEntry AddRectEntry(EdaSize size, EdaRatio ratio, bool flat, string tag = null) {
 
-            int key = RectRoundEntry.GetId(size, ratio, tag);
+            int key = RectEntry.GetId(size, ratio, false, tag);
             if (!_entries.TryGetValue(key, out DataCacheEntry entry)) {
-                entry = new RectRoundEntry(_entryId++, tag, size, ratio);
+                entry = new RectEntry(_entryId++, tag, size, ratio, flat);
                 _entries.Add(key, entry);
             }
 
-            return (RectRoundEntry)entry;
+            return (RectEntry)entry;
         }
 
         /// <summary>
@@ -135,17 +136,17 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         }
 
         /// <summary>
-        /// Obte una entrada de tipus 'RectRound'.
+        /// Obte una entrada de tipus 'Rect'.
         /// </summary>
         /// <param name="size">El tamany</param>
         /// <param name="ratio">El ratio de curvatura.</param>
         /// <param name="tag">Etiqueta.</param>
         /// <returns>L'entrada.</returns>
         /// 
-        public RectRoundEntry GetRectRoundEntry(EdaSize size, EdaRatio ratio, string tag = null) {
+        public RectEntry GetRectEntry(EdaSize size, EdaRatio ratio, bool flat, string tag = null) {
 
-            int id = RectRoundEntry.GetId(size, ratio, tag);
-            return (RectRoundEntry)_entries[id];
+            int id = RectEntry.GetId(size, ratio, flat, tag);
+            return (RectEntry)_entries[id];
         }
 
         /// <summary>

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Clipper2Lib;
 using MikroPic.EdaTools.v1.Base.Geometry.Polygons.Infrastructure;
-using MikroPic.EdaTools.v1.Base.Geometry.Utils;
 
 namespace MikroPic.EdaTools.v1.Base.Geometry {
 

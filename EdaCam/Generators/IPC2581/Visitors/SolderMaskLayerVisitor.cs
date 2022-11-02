@@ -28,7 +28,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
             if (element.IsOnLayer(_layerId)) {
 
                 var size = element.Size.Inflated(element.MaskClearance);
-                var rectRoundEntry = _cache.GetRectRoundEntry(size, element.CornerRatio);
+                var rectRoundEntry = _cache.GetRectEntry(size, element.CornerRatio, false);
                 var tr = Part == null ? new EdaTransformation() : Part.GetLocalTransformation();
                 var rotation = Part == null ? EdaAngle.Zero : Part.Rotation;
                 var location = tr.Transform(element.Position);
@@ -46,7 +46,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
                     _layerId.IsBottom ? element.BottomSize :
                     element.InnerSize;
                 var maskSize = size.Inflated(element.MaskClearance);
-                var rectRoundEntry = _cache.GetRectRoundEntry(maskSize, element.CornerRatio);
+                var rectRoundEntry = _cache.GetRectEntry(maskSize, element.CornerRatio, false);
                 var tr = Part == null ? new EdaTransformation() : Part.GetLocalTransformation();
                 var rotation = Part == null ? EdaAngle.Zero : Part.Rotation;
                 var location = tr.Transform(element.Position);
