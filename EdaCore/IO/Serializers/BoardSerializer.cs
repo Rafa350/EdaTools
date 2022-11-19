@@ -1,35 +1,34 @@
 ﻿using System;
 using System.Linq;
 using MikroPic.EdaTools.v1.Core.Model.Board;
-using NetSerializer.Descriptors;
-using NetSerializer.Storage;
-using NetSerializer.TypeSerializers;
-using NetSerializer.TypeSerializers.Serializers;
+using NetSerializer.V5;
+using NetSerializer.V5.Descriptors;
+using NetSerializer.V5.TypeSerializers.Serializers;
 
 namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
 
     /// <summary>
-    /// Serialitzador per la clase 'LblLabel'
+    /// Serialitzador per la clase 'Board'
     /// </summary>
     /// 
-    public sealed class BoardSerializer: ClassSerializer {
+    internal sealed class BoardSerializer: ClassSerializer {
 
         /// <inheritdoc/>
         /// 
-        public BoardSerializer(TypeManager typeManager) :
-            base(typeManager) {
+        public BoardSerializer() :
+            base() {
 
         }
         /// <inheritdoc/>
         /// 
-        public override bool CanSerialize(Type type) {
+        public override bool CanProcess(Type type) {
 
             return type == typeof(EdaBoard);
         }
 
         /// <inheritdoc/>
         /// 
-        public override bool CanSerializeProperty(PropertyDescriptor propertyDescriptor) {
+        protected override bool CanProcessProperty(PropertyDescriptor propertyDescriptor) {
 
             var name = propertyDescriptor.Name;
 
@@ -39,60 +38,60 @@ namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
                 (name == "Layers"))
                 return true;
             else
-                return base.CanSerializeProperty(propertyDescriptor);
+                return base.CanProcessProperty(propertyDescriptor);
         }
 
         /// <inheritdoc/>
         /// 
-        protected override void SerializeProperty(StorageWriter writer, object obj, PropertyDescriptor propertyDescriptor) {
+        protected override void SerializeProperty(SerializationContext context, object obj, PropertyDescriptor propertyDescriptor) {
 
             var board = (EdaBoard)obj;
             var name = propertyDescriptor.Name;
 
             if (name == "Layers") {
                 EdaLayer[] layers = board.HasLayers ? board.Layers.ToArray() : null;
-                var serializer = GetSerializer(typeof(EdaLayerId[]));
-                serializer.Serialize(writer, name, typeof(EdaLayerId[]), layers);
+                var serializer = context.GetTypeSerializer(typeof(EdaLayerId[]));
+                serializer.Serialize(context, name, typeof(EdaLayerId[]), layers);
             }
 
             else if (name == "Components") {
                 EdaComponent[] components = board.HasComponents ? board.Components.ToArray() : null;
-                var serializer = GetSerializer(typeof(EdaComponent[]));
-                serializer.Serialize(writer, name, typeof(EdaComponent[]), components);
+                var serializer = context.GetTypeSerializer(typeof(EdaComponent[]));
+                serializer.Serialize(context, name, typeof(EdaComponent[]), components);
             }
 
             else if (name == "Elements") {
                 EdaElement[] elements = board.HasElements ? board.Elements.ToArray() : null;
-                var serializer = GetSerializer(typeof(EdaElement[]));
-                serializer.Serialize(writer, name, typeof(EdaElement[]), elements);
+                var serializer = context.GetTypeSerializer(typeof(EdaElement[]));
+                serializer.Serialize(context, name, typeof(EdaElement[]), elements);
             }
 
             else if (name == "Parts") {
                 EdaPart[] parts = board.HasParts ? board.Parts.ToArray() : null;
-                var serializer = GetSerializer(typeof(EdaPart[]));
-                serializer.Serialize(writer, name, typeof(EdaPart[]), parts);
+                var serializer = context.GetTypeSerializer(typeof(EdaPart[]));
+                serializer.Serialize(context, name, typeof(EdaPart[]), parts);
             }
 
             else
-                base.SerializeProperty(writer, obj, propertyDescriptor);
+                base.SerializeProperty(context, obj, propertyDescriptor);
         }
 
         /// <inheritdoc/>
         /// 
-        protected override void DeserializeProperty(StorageReader reader, object obj, PropertyDescriptor propertyDescriptor) {
+        protected override void DeserializeProperty(DeserializationContext context, object obj, PropertyDescriptor propertyDescriptor) {
 
             var board = (EdaBoard)obj;
             var name = propertyDescriptor.Name;
 
             if (name == "Components") {
-                var serializer = GetSerializer(typeof(EdaComponent[]));
-                serializer.Deserialize(reader, name, typeof(EdaComponent[]), out object components);
+                var serializer = context.GetTypeSerializer(typeof(EdaComponent[]));
+                serializer.Deserialize(context, name, typeof(EdaComponent[]), out object components);
                 if (components != null)
                     Array.ForEach((EdaComponent[])components, item => board.AddComponent(item));
             }
 
             else
-                base.DeserializeProperty(reader, obj, propertyDescriptor);
+                base.DeserializeProperty(context, obj, propertyDescriptor);
         }
     }
 }

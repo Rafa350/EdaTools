@@ -1,5 +1,8 @@
-﻿namespace MikroPic.EdaTools.v1.Base.Geometry {
+﻿using System.ComponentModel;
 
+namespace MikroPic.EdaTools.v1.Base.Geometry {
+
+    [TypeConverter(typeof(EdaArcPointConverter))]
     public readonly struct EdaArcPoint {
 
         private readonly EdaPoint _position;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace MikroPic.EdaTools.v1.Base.Geometry {
 
@@ -6,6 +7,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
     /// Representa un valor normalitzat a 1, en milesimes d'unitat.
     /// </summary>
     /// 
+    [TypeConverter(typeof(EdaRatioConverter))]
     public readonly struct EdaRatio: IEquatable<EdaRatio> {
 
         public static readonly EdaRatio Zero = new EdaRatio(0);

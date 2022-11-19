@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NetSerializer" Version="2.3.1" />
+    <PackageReference Include="NetSerializer" Version="5.1.22" />
   </ItemGroup>
 
 </Project>

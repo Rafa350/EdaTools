@@ -1,7 +1,4 @@
-﻿using System;
-using MikroPic.EdaTools.v1.Base.Geometry;
-
-namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
+﻿namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
     /// <summary>
     /// Clase que representa una linia.

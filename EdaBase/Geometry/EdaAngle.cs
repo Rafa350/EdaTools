@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace MikroPic.EdaTools.v1.Base.Geometry {
 
@@ -7,6 +8,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
     /// de grau i el gir positiu es contrari al rellotge.
     /// </summary>
     /// 
+    [TypeConverter(typeof(EdaAngleConverter))]
     public readonly struct EdaAngle: IEquatable<EdaAngle> {
 
         public static readonly EdaAngle Zero = new EdaAngle(0);

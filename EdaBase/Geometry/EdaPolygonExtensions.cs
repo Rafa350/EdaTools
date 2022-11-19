@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using Clipper2Lib;
 
 namespace MikroPic.EdaTools.v1.Base.Geometry {
@@ -120,11 +121,13 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
 
             var cpo = new ClipperOffset();
 
-            cpo.AddPath(ToPath64(polygon.Outline), JoinType.Round, EndType.Polygon);
+            var path = new Paths64();
+            path.Add(ToPath64(polygon.Outline));
             if (polygon.HasHoles)
-                foreach (var hole in polygon.Holes)
-                    cpo.AddPath(ToPath64(hole, true), JoinType.Round, EndType.Polygon);
-
+                foreach (var hole in polygon.Holes) 
+                    path.Add(ToPath64(hole, true));     
+            
+            cpo.AddPaths(path, JoinType.Round, EndType.Polygon);
             var solution = cpo.Execute(delta);
 
             List<EdaPoint> outline = ToPoints(solution[0]);

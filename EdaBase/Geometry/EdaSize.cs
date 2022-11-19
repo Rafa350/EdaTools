@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace MikroPic.EdaTools.v1.Base.Geometry {
 
@@ -6,6 +7,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
     /// Estructura que representa un tamany d'una superficie rectangular en milionesimes de la unitat.
     /// </summary>
     /// 
+    [TypeConverter(typeof(EdaSizeConverter))]
     public readonly struct EdaSize: IEquatable<EdaSize> {
 
         private readonly int _width;

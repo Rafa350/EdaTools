@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace MikroPic.EdaTools.v1.Base.Geometry {
 
@@ -6,6 +7,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
     /// Objecte que representa un rectangle aliniat amb els eixos X i Y.
     /// </summary>
     /// 
+    [TypeConverter(typeof(EdaRectConverter))]
     public readonly struct EdaRect: IEquatable<EdaRect> {
 
         private readonly int _x;

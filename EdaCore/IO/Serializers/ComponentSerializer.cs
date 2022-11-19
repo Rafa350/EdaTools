@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Linq;
 using MikroPic.EdaTools.v1.Core.Model.Board;
-using NetSerializer.Descriptors;
-using NetSerializer.Storage;
-using NetSerializer.TypeSerializers;
-using NetSerializer.TypeSerializers.Serializers;
+using NetSerializer.V5.Descriptors;
+using NetSerializer.V5.Formatters.Xml;
+using NetSerializer.V5.Formatters;
+using NetSerializer.V5;
+using NetSerializer.V5.TypeSerializers.Serializers;
 
 namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
 
@@ -12,24 +13,25 @@ namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
     /// Serialitzador per la clase 'LblLabel'
     /// </summary>
     /// 
-    public sealed class ComponentSerializer: ClassSerializer {
+    internal sealed class ComponentSerializer: ClassSerializer {
 
         /// <inheritdoc/>
         /// 
-        public ComponentSerializer(TypeManager typeManager) :
-            base(typeManager) {
+        public ComponentSerializer() :
+            base() {
 
         }
+
         /// <inheritdoc/>
         /// 
-        public override bool CanSerialize(Type type) {
+        public override bool CanProcess(Type type) {
 
             return type == typeof(EdaComponent);
         }
 
         /// <inheritdoc/>
         /// 
-        public override bool CanSerializeProperty(PropertyDescriptor propertyDescriptor) {
+        protected override bool CanProcessProperty(PropertyDescriptor propertyDescriptor) {
 
             var name = propertyDescriptor.Name;
 
@@ -38,53 +40,53 @@ namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
                 (name == "Name"))
                 return true;
             else
-                return base.CanSerializeProperty(propertyDescriptor);
+                return base.CanProcessProperty(propertyDescriptor);
         }
 
         /// <inheritdoc/>
         /// 
-        protected override void SerializeProperty(StorageWriter writer, object obj, PropertyDescriptor propertyDescriptor) {
+        protected override void SerializeProperty(SerializationContext context, object obj, PropertyDescriptor propertyDescriptor) {
 
             var component = (EdaComponent)obj;
             var name = propertyDescriptor.Name;
 
             if (name == "Name") {
-                var serializer = GetSerializer(typeof(string));
-                serializer.Serialize(writer, name, typeof(string), propertyDescriptor.GetValue(obj));
+                var serializer = context.GetTypeSerializer(typeof(string));
+                serializer.Serialize(context, name, typeof(string), propertyDescriptor.GetValue(obj));
             }
 
             else if (name == "Elements") {
                 EdaElement[] elements = component.HasElements ? component.Elements.ToArray() : null;
-                var serializer = GetSerializer(typeof(EdaElement[]));
-                serializer.Serialize(writer, name, typeof(EdaElement[]), elements);
+                var serializer = context.GetTypeSerializer(typeof(EdaElement[]));
+                serializer.Serialize(context, name, typeof(EdaElement[]), elements);
             }
 
             else if (name == "Attributes") {
                 EdaComponentAttribute[] attributes = component.HasAttributes ? component.Attributes.ToArray() : null;
-                var serializer = GetSerializer(typeof(EdaComponentAttribute[]));
-                serializer.Serialize(writer, name, typeof(EdaComponentAttribute[]), attributes);
+                var serializer = context.GetTypeSerializer(typeof(EdaComponentAttribute[]));
+                serializer.Serialize(context, name, typeof(EdaComponentAttribute[]), attributes);
             }
 
             else
-                base.SerializeProperty(writer, obj, propertyDescriptor);
+                base.SerializeProperty(context, obj, propertyDescriptor);
         }
 
         /// <inheritdoc/>
         /// 
-        protected override void DeserializeProperty(StorageReader reader, object obj, PropertyDescriptor propertyDescriptor) {
+        protected override void DeserializeProperty(DeserializationContext context, object obj, PropertyDescriptor propertyDescriptor) {
 
             var component = (EdaComponent)obj;
             var name = propertyDescriptor.Name;
 
             if (name == "Elements") {
-                var serializer = GetSerializer(typeof(EdaElement[]));
-                serializer.Deserialize(reader, name, typeof(EdaElement[]), out object elements);
+                var serializer = context.GetTypeSerializer(typeof(EdaElement[]));
+                serializer.Deserialize(context, name, typeof(EdaElement[]), out object elements);
                 if (elements != null)
                     Array.ForEach((EdaElement[])elements, item => component.AddElement(item));
             }
 
             else
-                base.DeserializeProperty(reader, obj, propertyDescriptor);
+                base.DeserializeProperty(context, obj, propertyDescriptor);
         }
     }
 }

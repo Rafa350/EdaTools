@@ -1,11 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace MikroPic.EdaTools.v1.Base.Geometry {
 
     /// <summary>
-    /// Estructura que representa un punt milionesimes de la unitat.
+    /// Estructura que representa un punt.
     /// </summary>
     /// 
+    [TypeConverter(typeof(EdaPointConverter))]
     public readonly struct EdaPoint: IEquatable<EdaPoint> {
 
         private readonly int _x;

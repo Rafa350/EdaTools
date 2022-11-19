@@ -25,7 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="IO\Serializers\" />
     <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NetSerializer" Version="5.1.22" />
   </ItemGroup>
 
   <ItemGroup>
