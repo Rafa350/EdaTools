@@ -21,7 +21,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// Clase que representa una placa de circuit impres.
     /// </summary>
     /// 
-    [NetSerializer(typeof(BoardSerializer), AliasName = "Board")]
+    [NetSerializer(AliasName = "Board")]
     public sealed partial class EdaBoard: IEdaVisitable<IEdaBoardVisitor> {
 
         private EdaPoint _position;

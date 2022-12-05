@@ -1,6 +1,4 @@
-﻿
-using MikroPic.EdaTools.v1.Core.IO.Serializers;
-using MikroPic.EdaTools.v1.Core.Model.Common;
+﻿using MikroPic.EdaTools.v1.Core.Model.Common;
 using NetSerializer.V5.Attributes;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
@@ -9,7 +7,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// Clase que representa un bloc predefinit.
     /// </summary>
     /// 
-    [NetSerializer(typeof(ComponentSerializer), AliasName = "Component")]
+    [NetSerializer(AliasName = "Component")]
     public sealed partial class EdaComponent: IEdaVisitable<IEdaBoardVisitor> {
 
         private string _name;
