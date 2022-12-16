@@ -61,7 +61,7 @@ namespace MikroPic.EdaTools.v1.Import {
 
             else if (String.Compare(sourceExt, ".kicad_pcb", true) == 0) {
 
-                var importer = new KiCadImporter2();
+                var importer = new KiCadImporter();
                 var board = importer.ReadBoard(sourcePath);
 
                 var writer = new EdaBoardStreamWriter(new FileStream(targetPath, FileMode.Create, FileAccess.Write, FileShare.None));

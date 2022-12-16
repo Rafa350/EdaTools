@@ -32,7 +32,6 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
             _writer.WriteStartElement("Package");
             _writer.WriteAttributeString("name", component.Name);
             _writer.WriteAttributeString("type", "OTHER");
-            _writer.WritePointElement("PickupPoint", new EdaPoint(0, 0), _scale);
 
             foreach (var pad in component.Pads())
                 pad.AcceptVisitor(this);
@@ -51,7 +50,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
             _writer.WriteAttributeString("electricalType", "ELECTRICAL");
             if (!element.Rotation.IsZero) {
                 _writer.WriteStartElement("Xform");
-                _writer.WriteAttributeDouble("rotation", element.Rotation.AsDegrees);
+                _writer.WriteAttributeAngle("rotation", element.Rotation);
                 _writer.WriteEndElement(); // Xform
             }
             _writer.WritePointElement("Location", element.Position, _scale);
@@ -63,7 +62,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
 
         public override void Visit(EdaThtPadElement element) {
 
-            /*var flat = element.CornerShape == EdaThtPadElement.CornerShapeType.Flat;
+            return;
+
+            var flat = element.CornerShape == EdaThtPadElement.CornerShapeType.Flat;
             var rectEntry = _cache.GetRectEntry(element.TopSize, element.CornerRatio, flat);
 
             _writer.WriteStartElement("Pin");
@@ -74,7 +75,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
             _writer.WriteStartElement("StandardPrimitiveRef");
             _writer.WriteAttributeInteger("id", rectEntry.Id);
             _writer.WriteEndElement();
-            _writer.WriteEndElement();*/
+            _writer.WriteEndElement();
         }
     }
 }

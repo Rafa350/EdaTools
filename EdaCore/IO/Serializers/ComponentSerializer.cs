@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
 using MikroPic.EdaTools.v1.Core.Model.Board;
-using NetSerializer.V5.Descriptors;
-using NetSerializer.V5.Formatters.Xml;
-using NetSerializer.V5.Formatters;
 using NetSerializer.V5;
+using NetSerializer.V5.Descriptors;
 using NetSerializer.V5.TypeSerializers.Serializers;
 
 namespace MikroPic.EdaTools.v1.Core.IO.Serializers {

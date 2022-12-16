@@ -1,7 +1,7 @@
 ﻿using MikroPic.EdaTools.v1.Core.IO;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using NetSerializer.V5;
-using NetSerializer.V5.Storage.Xml;
+using NetSerializer.V5.Formatters.Xml;
 
 namespace MyApp // Note: actual namespace depends on the project name.
 {
@@ -9,8 +9,8 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
         public static void Main(string[] args) {
 
-            var board = Read("C:\\Users\\Rafael\\Documents\\Projectes\\EDA\\DSP04X\\Build\\dsp04x.xbrd");
-            Write(board, "C:\\temp\\dsp04x.xml");
+            var board = Read("C:\\Users\\Rafael\\Documents\\Projectes\\EDA\\cpu4c\\Build\\cpu04c.xbrd");
+            Write(board, "C:\\temp\\cpu04x.xml");
 
         }
 
@@ -23,14 +23,11 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
         private static void Write(EdaBoard board, string fileName) {
 
-            var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None);
-            var writer = new XmlStorageWriter(stream, null);
-            var serializer = new Serializer(writer, 100);
-            try {
-                serializer.Serialize(board, "Label");
-            }
-            finally {
-                serializer.Close();
+            using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
+                using (var writer = new XmlFormatWriter(stream, null)) {
+                    var serializer = new Serializer();
+                    serializer.Serialize(writer, board, "Label");
+                }
             }
         }
     }

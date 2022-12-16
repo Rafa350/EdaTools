@@ -59,7 +59,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
                 var rectEntry = _cache.GetRectEntry(element.Size, element.CornerRatio, flat);
                 var signal = Board.GetSignal(element, Part, false);
                 var tr = Part == null ? new EdaTransformation() : Part.GetLocalTransformation();
-                var rotation = Part == null ? EdaAngle.Zero : Part.Rotation;
+                var rotation = element.Rotation + (Part == null ? EdaAngle.Zero : Part.Rotation);
                 var location = tr.Transform(element.Position);
 
                 WritePad(rectEntry.Id, signal, location, rotation);
@@ -78,7 +78,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
                 var rectEntry = _cache.GetRectEntry(size, element.CornerRatio, flat);
                 var signal = Board.GetSignal(element, Part, false);
                 var tr = Part == null ? new EdaTransformation() : Part.GetLocalTransformation();
-                var rotation = Part == null ? EdaAngle.Zero : Part.Rotation;
+                var rotation = element.Rotation + (Part == null ? EdaAngle.Zero : Part.Rotation);
                 var location = tr.Transform(element.Position);
 
                 WritePad(rectEntry.Id, signal, location, rotation);
@@ -140,7 +140,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
             _writer.WriteStartElement("Pad");
             if (!rotation.IsZero) {
                 _writer.WriteStartElement("Xform");
-                _writer.WriteAttributeDouble("rotation", rotation.AsDegrees);
+                _writer.WriteAttributeAngle("rotation", rotation);
                 _writer.WriteEndElement(); // Xform
             }
             _writer.WritePointElement("Location", location, _scale);

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
@@ -13,19 +12,15 @@ using MikroPic.EdaTools.v1.Core.Model.Net;
 
 namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
-    [Obsolete]
     public sealed class KiCadImporter: IEdaImporter {
 
         private const double _scale = 1000000.0;
-        private const bool _inlineMode = true;
 
-        private EdaPoint _origin;
-        private int _partCount = 0;
         private int _version = 5;
-        private readonly Dictionary<int, EdaSignal> _signals = new Dictionary<int, EdaSignal>();
+        private int _partCount;
+        private EdaPoint _origin;
+        private readonly Dictionary<int, EdaSignal> _signalLocator = new Dictionary<int, EdaSignal>();
 
-        /// <inheritdoc/>
-        /// 
         public EdaBoard ReadBoard(string fileName) {
 
             using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
@@ -36,76 +31,67 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 var parser = new SParser();
                 var tree = parser.Parse(source);
 
-                return ProcessBoard(tree);
+                return BuildBoard(tree, tree.Root as SBranch);
             }
         }
 
-        /// <inheritdoc/>
-        /// 
         public EdaLibrary ReadLibrary(string fileName) {
 
-            var sb = new StringBuilder();
-            sb.Append('(');
-            var fNames = Directory.EnumerateFiles(fileName, "*.kicad_mod");
-            foreach (var fName in fNames) {
-                using (var stream = new FileStream(fName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                    var reader = new StreamReader(stream);
-                    sb.Append(reader.ReadToEnd());
-                }
-            }
-            sb.Append(')');
-
-            var parser = new SParser();
-            var tree = parser.Parse(sb.ToString());
-
-            return ProcessLibrary(tree, Path.GetFileName(fileName));
+            return null;
         }
 
-        /// <inheritdoc/>
-        /// 
         public Net ReadNet(string fileName) {
 
-            throw new NotImplementedException();
+            return null;
         }
 
         /// <summary>
-        /// Carrega un component desde una llibreria.
+        /// Construeix la placa.
         /// </summary>
-        /// <param name="componentName">Nom del component.</param>
-        /// <param name="board">La placa.</param>
-        /// 
-        private void LoadComponent(string componentName, EdaBoard board) {
-
-            var fileName = GetModuleFileName(componentName);
-            using (var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-
-                var reader = new StreamReader(stream);
-                var source = reader.ReadToEnd();
-                reader.Close();
-
-                var parser = new SParser();
-                var tree = parser.Parse(source);
-
-                var libraryName = componentName.Split(':')[0];
-                var library = new EdaLibrary(libraryName);
-                ProcessModule(tree, tree.Root as SBranch, library);
-
-                board.AddComponents(library.Components);
-            }
-        }
-
-        /// <summary>
-        /// Procesa una placa.
-        /// </summary>
-        /// <param name="tree">El STree.</param>
+        /// <param name="tree">L'arbre.</param>
+        /// <param name="node">El node.</param>
         /// <returns>La placa.</returns>
         /// 
-        private EdaBoard ProcessBoard(STree tree) {
+        private EdaBoard BuildBoard(STree tree, SBranch node) {
 
             var board = new EdaBoard();
 
-            // Afegeix les capes basiques que no existeixen en la placa a importar
+            // Obte el numero de versio
             //
+            var versionNode = tree.SelectBranch(node, "version");
+            string versionCode = tree.ValueAsString(versionNode[1]);
+            if (versionCode.StartsWith("2021"))
+                _version = 6;
+
+            // Obte el parametres de configuracio
+            //
+            var setupNode = tree.SelectBranch(node, "setup");
+            if (setupNode != null) {
+                var auxAxisOriginNode = tree.SelectBranch(setupNode, "aux_axis_origin");
+                if (auxAxisOriginNode != null) {
+                    _origin = ParsePoint(tree, auxAxisOriginNode);
+                    board.Position = _origin;
+                }
+            }
+
+            BuildLayers(tree, node, board);
+            BuildNets(tree, node, board);
+            BuildComponents(tree, node, board);
+            BuildParts(tree, node, board);
+            BuildElements(tree, node, board);
+
+            return board;
+        }
+
+        /// <summary>
+        /// Construeix les capes.
+        /// </summary>
+        /// <param name="tree">L'arbre.</param>
+        /// <param name="node">El node.</param>
+        /// <param name="board">La placa.</param>
+        /// 
+        private static void BuildLayers(STree tree, SBranch node, EdaBoard board) {
+
             board.AddLayer(new EdaLayer(EdaLayerId.Pads, BoardSide.None, LayerFunction.Unknown));
             board.AddLayer(new EdaLayer(EdaLayerId.Vias, BoardSide.None, LayerFunction.Unknown));
             board.AddLayer(new EdaLayer(EdaLayerId.Drills, BoardSide.None, LayerFunction.Unknown));
@@ -121,67 +107,81 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             board.AddLayer(new EdaLayer(EdaLayerId.TopKeepout, BoardSide.Top, LayerFunction.Unknown));
             board.AddLayer(new EdaLayer(EdaLayerId.BottomKeepout, BoardSide.Bottom, LayerFunction.Unknown));
 
-            // Obte el numero de versio
-            //
-            var versionNode = tree.SelectBranch(tree.Root, "version");
-            var versionCode = tree.ValueAsString(versionNode[1]);
-            if (versionCode.StartsWith("2021"))
-                _version = 6;
-
-            // Obte el parametres de configuracio
-            //
-            var setupNode = tree.SelectBranch(tree.Root, "setup");
-            if (setupNode != null) {
-                var auxAxisOriginNode = tree.SelectBranch(setupNode, "aux_axis_origin");
-                if (auxAxisOriginNode != null) {
-                    _origin = ParsePoint(tree, auxAxisOriginNode);
-                    board.Position = _origin;
-                }
+            var layersNode = tree.SelectBranch(node, "layers");
+            foreach (var layerNode in layersNode.Nodes.OfType<SBranch>()) {
+                var layer = CreateLayer(tree, layerNode, board);
+                if (layer != null)
+                    board.AddLayer(layer);
             }
+        }
 
-            // Procesa les capes
-            //
-            var layersNode = tree.SelectBranch(tree.Root, "layers");
-            foreach (var layerNode in layersNode.Nodes.OfType<SBranch>())
-                ProcessLayer(tree, layerNode, board);
+        /// <summary>
+        /// Construeix els senyals.
+        /// </summary>
+        /// <param name="tree">L'arbre.</param>
+        /// <param name="node">El node.</param>
+        /// <param name="board">La placas.</param>
+        /// 
+        private void BuildNets(STree tree, SBranch node, EdaBoard board) {
 
-            // Procesa les senyals
-            //
-            foreach (var netNode in tree.SelectBranches(tree.Root, "net"))
-                ProcessSignal(tree, netNode, board);
-
-            // Procesa els components referenciats en llibreries externes
-            //
-            foreach (var moduleNode in tree.SelectBranches(tree.Root, _version == 5 ? "module" : "footprint")) {
-                string name = tree.ValueAsString(moduleNode[1]);
-                var tsNode = tree.SelectBranch(moduleNode, "tstamp");
-                var ts = tsNode == null ? "0" : tree.ValueAsString(tsNode[1]);
-
-                string componentName = name;
-                if (board.GetComponent(componentName, false) == null)
-                    LoadComponent(componentName, board);
+            foreach (var netNode in tree.SelectBranches(node, "net")) {
+                var signal = CreateNet(tree, netNode);
+                board.AddSignal(signal);
             }
+        }
 
-            // Procesa el contingut
-            //
-            foreach (var childNode in (tree.Root as SBranch).Nodes.OfType<SBranch>()) {
+        /// <summary>
+        /// Crea els components.
+        /// </summary>
+        /// <param name="tree">L'arbre.</param>
+        /// <param name="node">El node.</param>
+        /// <param name="board">La placa.</param>
+        /// 
+        private void BuildComponents(STree tree, SBranch node, EdaBoard board) {
+
+            foreach (var footprintNode in tree.SelectBranches(node, _version == 6 ? "footprint" : "module")) {
+                var component = CreateComponent(tree, footprintNode);
+                board.AddComponent(component);
+            }
+        }
+
+        /// <summary>
+        /// Construeix els parts.
+        /// </summary>
+        /// <param name="tree">L'arbre.</param>
+        /// <param name="node">El node.</param>
+        /// <param name="board">La placa.</param>
+        /// 
+        private void BuildParts(STree tree, SBranch node, EdaBoard board) {
+
+            foreach (var footprintNode in tree.SelectBranches(node, _version == 6 ? "footprint" : "module")) {
+                var part = CreatePart(tree, footprintNode, board);
+                board.AddPart(part);
+            }
+        }
+
+        /// <summary>
+        /// Construeix els elements.
+        /// </summary>
+        /// <param name="tree">L'arbre.</param>
+        /// <param name="node">El node.</param>
+        /// <param name="board">La placa.</param>
+        /// 
+        private void BuildElements(STree tree, SBranch node, EdaBoard board) {
+
+            foreach (var childNode in node.Nodes.OfType<SBranch>()) {
                 switch (tree.GetBranchName(childNode)) {
-                    case "footprint":
-                    case "module":
-                        ProcessPart(tree, childNode, board);
-                        break;
-
                     case "via":
                         ProcessVia(tree, childNode, board);
                         break;
 
                     case "gr_line":
                     case "segment":
-                        ProcessLine(tree, childNode, board);
+                        ProcessSegment(tree, childNode, board);
                         break;
 
                     case "gr_arc":
-                        ProcessArc(tree, childNode, board);
+                        ProcessGrArc(tree, childNode, board);
                         break;
 
                     case "zone":
@@ -189,35 +189,17 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                         break;
                 }
             }
-
-            return board;
         }
 
         /// <summary>
-        /// Procesa una llibreria
-        /// </summary>
-        /// <param name="tree">El STree.</param>
-        /// <param name="libraryName">El nom de la llibreria.</param>
-        /// <returns>La llibreria.</returns>
-        /// 
-        private EdaLibrary ProcessLibrary(STree tree, string libraryName) {
-
-            var library = new EdaLibrary(libraryName);
-
-            foreach (var childNode in (tree.Root as SBranch).Nodes.OfType<SBranch>())
-                ProcessModule(tree, childNode, library);
-
-            return library;
-        }
-
-        /// <summary>
-        /// Procesa una capa.
+        /// Crea una capa.
         /// </summary>
         /// <param name="tree">El STree.</param>
         /// <param name="node">El node.</param>
         /// <param name="board">La placa.</param>
+        /// <returns>La capa creada.</returns>
         /// 
-        private static void ProcessLayer(STree tree, SBranch node, EdaBoard board) {
+        private static EdaLayer CreateLayer(STree tree, SBranch node, EdaBoard board) {
 
             string name = tree.ValueAsString(node[1]);
             string type = tree.ValueAsString(node[2]);
@@ -226,20 +208,19 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             EdaLayerId id = GetLayerId(name);
             LayerFunction function = type == "signal" ? LayerFunction.Signal : GetLayerFunction(name);
 
-            if (board.GetLayer(id, false) == null) {
-                var layer = new EdaLayer(id, side, function);
-                board.AddLayer(layer);
-            }
+            if (board.GetLayer(id, false) == null)
+                return new EdaLayer(id, side, function);
+            else
+                return null;
         }
 
         /// <summary>
-        /// Procesa una senyal.
+        /// Crea una senyal
         /// </summary>
         /// <param name="tree">El STree.</param>
         /// <param name="node">El node.</param>
-        /// <param name="board">La placa.</param>
         /// 
-        private void ProcessSignal(STree tree, SBranch node, EdaBoard board) {
+        private EdaSignal CreateNet(STree tree, SBranch node) {
 
             int id = tree.ValueAsInteger(node[1]);
             string name = tree.ValueAsString(node[2]);
@@ -251,99 +232,84 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 Name = name,
                 Clearance = 150000
             };
-            board.AddSignal(signal);
+            _signalLocator.Add(id, signal);
 
-            _signals.Add(id, signal);
+            return signal;
         }
 
         /// <summary>
-        /// Procesa una via
+        /// Crea un component.
         /// </summary>
-        /// <param name="tree">El STree</param>
-        /// <param name="node">El node</param>
-        /// <returns>L'element creat.</returns>
-        /// 
-        private void ProcessVia(STree tree, SBranch node, EdaBoard board) {
-
-            var position = ParsePoint(tree, tree.SelectBranch(node, "at")) - _origin;
-            var size = ParseMeasure(tree, tree.SelectBranch(node, "size"));
-            var drill = ParseMeasure(tree, tree.SelectBranch(node, "drill"));
-            var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layers"));
-
-            var via = new EdaViaElement {
-                LayerSet = layerSet,
-                Position = position,
-                OuterSize = size,
-                InnerSize = size,
-                DrillDiameter = drill
-            };
-
-            var netNode = tree.SelectBranch(node, "net");
-            if (netNode != null) {
-                int netId = tree.ValueAsInteger(netNode[1]);
-                board.Connect(_signals[netId], via);
-            }
-
-            board.AddElement(via);
-        }
-
-        /// <summary>
-        /// Procesa un modul en una llibreria.
-        /// </summary>
-        /// <param name="tree">El STree.</param>
+        /// <param name="tree">L'arbre.</param>
         /// <param name="node">El node.</param>
-        /// <param name="library">La llibreria.</param>
+        /// <returns>El component creat.</returns>
         /// 
-        private void ProcessModule(STree tree, SBranch node, EdaLibrary library) {
+        private EdaComponent CreateComponent(STree tree, SBranch node) {
 
             string name = tree.ValueAsString(node[1]);
-
             var tsNode = tree.SelectBranch(node, "tstamp");
-            var ts = tsNode == null ? "0" : tree.ValueAsString(tsNode[1]);
+            var ts = tree.ValueAsString(tsNode[1]);
+            var componentName = string.Format("{0}:{1}", name, ts);
+
+            var (position, rotation) = ParsePointAndAngle(tree, tree.SelectBranch(node, "at"));
+
+            var solderMaskMarginNode = tree.SelectBranch(node, "solder_mask_margin");
+            int solderMaskMargin = 0;
+            if (solderMaskMarginNode != null)
+                solderMaskMargin = ParseMeasure(tree, solderMaskMarginNode);
+
+            var solderPasteRatioNode = tree.SelectBranch(node, "solder_paste_ratio");
+            EdaRatio solderPasteRatio = EdaRatio.Zero;
+            if (solderPasteRatioNode != null)
+                solderPasteRatio = ParseRatio(tree, solderPasteRatioNode);
+
 
             var component = new EdaComponent();
-            component.Name = String.Format("{0}:{1}", library.Name, name);
+            component.Name = componentName;
 
             foreach (var childNode in node.Nodes.OfType<SBranch>()) {
                 switch (tree.GetBranchName(childNode)) {
                     case "fp_text":
-                        ProcessText(tree, childNode, component);
+                        ProcessFpText(tree, childNode, component);
                         break;
 
                     case "fp_circle":
-                        ProcessCircle(tree, childNode, component);
+                        ProcessFpCircle(tree, childNode, component);
                         break;
 
                     case "fp_rectangle":
                         throw new NotImplementedException();
 
                     case "fp_line":
-                        ProcessLine(tree, childNode, component);
+                        ProcessFpLine(tree, childNode, component);
                         break;
 
                     case "fp_arc":
-                        ProcessArc(tree, childNode, component);
+                        ProcessFpArc(tree, childNode, component);
                         break;
 
                     case "pad":
-                        ProcessPadOrHole(tree, childNode, component);
+                        ProcessPad(tree, childNode, component, rotation, solderMaskMargin, solderPasteRatio);
                         break;
                 }
             }
 
-            library.AddComponent(component);
+            return component;
         }
 
         /// <summary>
-        /// Procesa un modul en una placa.
+        /// Crea un part.
         /// </summary>
-        /// <param name="tree">El STree.</param>
-        /// <param name="node">El node a procesar.</param>
+        /// <param name="tree">L'arbre.</param>
+        /// <param name="node">El node.</param>
         /// <param name="board">La placa.</param>
         /// 
-        private void ProcessPart(STree tree, SBranch node, EdaBoard board) {
+        private EdaPart CreatePart(STree tree, SBranch node, EdaBoard board) {
 
             string name = tree.ValueAsString(node[1]);
+            var tsNode = tree.SelectBranch(node, "tstamp");
+            var ts = tree.ValueAsString(tsNode[1]);
+            var componentName = string.Format("{0}:{1}", name, ts);
 
             var (position, rotation) = ParsePointAndAngle(tree, tree.SelectBranch(node, "at"));
             position -= _origin;
@@ -352,7 +318,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var layer = tree.ValueAsString(layerNode[1]);
             var side = layer == "Bottom" ? PartSide.Bottom : PartSide.Top;
 
-            var component = board.GetComponent(name);
+            var component = board.GetComponent(componentName);
             var partName = String.Format("{0}:{1}", name, _partCount++);
 
             // Procesa els atributs
@@ -364,13 +330,18 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 switch (tree.GetBranchName(childNode)) {
                     case "fp_text": {
                             string attrValue = tree.ValueAsString(childNode[2]);
-                            bool attrVisible = childNode.Count == 6; // Si no te el node 'hide' es visible
                             var (attrPosition, attrRotation) = ParsePointAndAngle(tree, tree.SelectBranch(childNode, "at"));
                             attrPosition -= _origin;
                             attrRotation -= rotation;
 
-                            switch (tree.ValueAsString(childNode[1])) {
+                            bool attrVisible = true;
+                            for (int i = 3; i < childNode.Count; i++)
+                                if ((childNode[i] is SLeaf) && (tree.ValueAsString(childNode[i]) == "hide")) {
+                                    attrVisible = false;
+                                    break;
+                                }
 
+                            switch (tree.ValueAsString(childNode[1])) {
                                 case "value":
                                     attribute = new EdaPartAttribute("VALUE", attrValue, attrVisible);
                                     break;
@@ -427,7 +398,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                         int netId = tree.ValueAsInteger(netNode[1]);
 
                         var pad = part.GetPad(padName);
-                        var signal = _signals[netId];
+                        var signal = _signalLocator[netId];
                         try {
                             board.Connect(signal, pad, part);
                         }
@@ -438,48 +409,17 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 }
             }
 
-            board.AddPart(part);
+            return part;
         }
 
         /// <summary>
-        /// Procesa una node 'fp_line'
+        /// Procesa un 'fp_line'.
         /// </summary>
-        /// <param name="tree">STree.</param>
-        /// <param name="node">El node</param>
-        /// <param name="board">La placa.</param>
-        /// 
-        private void ProcessLine(STree tree, SBranch node, EdaBoard board) {
-
-            var start = ParsePoint(tree, tree.SelectBranch(node, "start")) - _origin;
-            var end = ParsePoint(tree, tree.SelectBranch(node, "end")) - _origin;
-            var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
-            var thickness = ParseMeasure(tree, tree.SelectBranch(node, "width"));
-
-            var element = new EdaLineElement {
-                LayerSet = layerSet,
-                StartPosition = start,
-                EndPosition = end,
-                Thickness = thickness,
-                LineCap = EdaLineCap.Round
-            };
-
-            board.AddElement(element);
-
-            var netNode = tree.SelectBranch(node, "net");
-            if (netNode != null) {
-                var netId = tree.ValueAsInteger(netNode[1]);
-                board.Connect(_signals[netId], element);
-            }
-        }
-
-        /// <summary>
-        /// Procesa una node 'fp_line'.
-        /// </summary>
-        /// <param name="tree">STree.</param>
-        /// <param name="node">El node.</param>
+        /// <param name="tree">L'arbre.</param>
+        /// <param name="node">La branca.</param>
         /// <param name="component">El component.</param>
         /// 
-        private void ProcessLine(STree tree, SBranch node, EdaComponent component) {
+        private void ProcessFpLine(STree tree, SBranch node, EdaComponent component) {
 
             var start = ParsePoint(tree, tree.SelectBranch(node, "start"));
             var end = ParsePoint(tree, tree.SelectBranch(node, "end"));
@@ -498,13 +438,13 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         }
 
         /// <summary>
-        /// Procesa un node 'gr_arc'.
+        /// Procesa un 'fp_arc'.
         /// </summary>
-        /// <param name="tree">STree.</param>
+        /// <param name="tree">L'arbre.</param>
         /// <param name="node">El node.</param>
-        /// <param name="board">La placa.</param>
+        /// <param name="component">El component.</param>
         /// 
-        private void ProcessArc(STree tree, SBranch node, EdaBoard board) {
+        private void ProcessFpArc(STree tree, SBranch node, EdaComponent component) {
 
             var start = ParsePoint(tree, tree.SelectBranch(node, "start")) - _origin;
             var mid = ParsePoint(tree, tree.SelectBranch(node, "mid")) - _origin;
@@ -530,62 +470,32 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 LineCap = EdaLineCap.Flat
             };
 
-            board.AddElement(element);
-
-            var netNode = tree.SelectBranch(node, "net");
-            if (netNode != null) {
-                var netId = tree.ValueAsInteger(netNode[1]);
-                board.Connect(_signals[netId], element);
-            }
-        }
-
-        /// <summary>
-        /// Procesa un node 'fp_arc'.
-        /// </summary>
-        /// <param name="tree">STree.</param>
-        /// <param name="node">El node.</param>
-        /// <param name="component">El component.</param>
-        /// 
-        private void ProcessArc(STree tree, SBranch node, EdaComponent component) {
-
-            var center = ParsePoint(tree, tree.SelectBranch(node, "start"));
-            var start = ParsePoint(tree, tree.SelectBranch(node, "end"));
-            var angle = ParseAngle(tree, tree.SelectBranch(node, "angle"));
-            var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
-            var thickness = ParseMeasure(tree, tree.SelectBranch(node, "width"));
-
-            var element = new EdaArcElement {
-                LayerSet = layerSet,
-                StartPosition = start,
-                EndPosition = ArcUtils.EndPosition(center, start, angle),
-                Thickness = thickness,
-                Angle = angle,
-                LineCap = EdaLineCap.Flat
-            };
-
             component.AddElement(element);
         }
 
         /// <summary>
-        /// Procesa un node 'fp_circle'.
+        /// Procesa un 'fp_circle'.
         /// </summary>
-        /// <param name="tree">STree.</param>
+        /// <param name="tree">L'arbre.</param>
         /// <param name="node">El node.</param>
         /// <param name="component">El component.</param>
         /// 
-        private void ProcessCircle(STree tree, SBranch node, EdaComponent component) {
+        private void ProcessFpCircle(STree tree, SBranch node, EdaComponent component) {
 
             var center = ParsePoint(tree, tree.SelectBranch(node, "center"));
             var end = ParsePoint(tree, tree.SelectBranch(node, "end"));
             int radius = (int)(Math.Sqrt(Math.Pow(end.X - center.X, 2) + Math.Pow(end.Y - center.Y, 2)));
-
             var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
             int thickness = ParseMeasure(tree, tree.SelectBranch(node, "width"));
 
-            // Obte el indicador de relleno
-            //
-            var fillNode = tree.SelectBranch(node, "fill");
-            bool filled = (fillNode != null) && (tree.ValueAsString(fillNode[1]) == "solid");
+            var fillBranch = tree.SelectBranch(node, "fill");
+            bool filled = (fillBranch != null) && (tree.ValueAsString(fillBranch[1]) == "solid");
+
+            if (radius <= thickness / 2) {
+                radius = thickness / 2;
+                thickness = 0;
+                filled = true;
+            }
 
             var element = new EdaCircleElement {
                 LayerSet = layerSet,
@@ -598,13 +508,117 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         }
 
         /// <summary>
+        /// Procesa un node 'pad'.
+        /// </summary>
+        /// <param name="tree">L'arbre.</param>
+        /// <param name="node">El node.</param>
+        /// <param name="component">El component.</param>
+        /// <param name="fpRotation">Rotacio del footprint al que pertany.</param>
+        /// <param name="fpMaskClearance">Espaiat de la mascara del footprint.</param>
+        /// <param name="fpPasteReductionRatio">Reduccio de pasta del footprint.</param>
+        /// 
+        private void ProcessPad(STree tree, SBranch node, EdaComponent component, EdaAngle fpRotation, int fpMaskClearance, EdaRatio fpPasteReductionRatio) {
+
+            var name = tree.ValueAsString(node[1]);
+            var padType = tree.ValueAsString(node[2]);
+            var shapeType = tree.ValueAsString(node[3]);
+
+            var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layers"));
+            var maskEnabled = layerSet.Contains(EdaLayerId.TopStop) || layerSet.Contains(EdaLayerId.BottomStop);
+            var pasteEnabled = layerSet.Contains(EdaLayerId.TopCream) || layerSet.Contains(EdaLayerId.BottomCream);
+            var (position, rotation) = ParsePointAndAngle(tree, tree.SelectBranch(node, "at"));
+            var size = ParseSize(tree, tree.SelectBranch(node, "size"));
+
+            var drillNode = tree.SelectBranch(node, "drill");
+            var drill = drillNode == null ? 0 : (int)(tree.ValueAsDouble(drillNode[1]) * _scale);
+
+            var clearanceNode = tree.SelectBranch(node, "clearance");
+            var clearance = clearanceNode == null ? 0 : (int)(tree.ValueAsDouble(clearanceNode[1]) * _scale);
+
+            var roundnessNode = tree.SelectBranch(node, "roundrect_rratio");
+            var roundness = roundnessNode == null ?
+                EdaRatio.Zero :
+                EdaRatio.FromPercent(tree.ValueAsDouble(roundnessNode[1]) * 2.0);
+
+            switch (padType) {
+                case "smd": {
+                        var element = new EdaSmtPadElement {
+                            Name = name,
+                            LayerSet = layerSet,
+                            Position = position,
+                            Size = size,
+                            Rotation = rotation - fpRotation,
+                            CornerRatio = roundness,
+                            Clearance = clearance,
+                            MaskEnabled = maskEnabled,
+                            MaskClearance = fpMaskClearance,
+                            PasteEnabled = pasteEnabled,
+                            PasteReductionRatio = fpPasteReductionRatio
+                        };
+                        component.AddElement(element);
+                    }
+                    break;
+
+                case "thru_hole": {
+                        switch (shapeType) {
+                            case "rect":
+                                roundness = EdaRatio.Zero;
+                                break;
+
+                            case "circle":
+                            case "oval":
+                                roundness = EdaRatio.P100;
+                                break;
+
+                            case "roundrect":
+                                break;
+
+                            default:
+                                throw new InvalidOperationException("Tipo de forma desconocida.");
+                        }
+
+                        layerSet.Add(EdaLayerId.Drills);
+                        var element = new EdaThtPadElement {
+                            Name = name,
+                            LayerSet = layerSet,
+                            Position = position,
+                            TopSize = size,
+                            InnerSize = size,
+                            BottomSize = size,
+                            Rotation = rotation - fpRotation,
+                            CornerRatio = roundness,
+                            DrillDiameter = drill,
+                            Clearance = clearance,
+                            MaskEnabled = maskEnabled,
+                            MaskClearance = 0
+                        };
+                        component.AddElement(element);
+                    }
+                    break;
+
+                case "np_thru_hole": {
+                        var element = new EdaCircularHoleElement {
+                            Position = position,
+                            Diameter = drill,
+                            Platted = false
+                        };
+                        component.AddElement(element);
+                        break;
+                    }
+
+                default:
+                    throw new InvalidDataException("Tipo de pad no reconocido.");
+            }
+        }
+
+        /// <summary>
         /// Procesa un node 'fp_text'.
         /// </summary>
-        /// <param name="tree">El STree.</param>
+        /// <param name="tree">L'arbre.</param>
         /// <param name="node">El node.</param>
         /// <param name="component">El component.</param>
         /// 
-        private void ProcessText(STree tree, SBranch node, EdaComponent component) {
+        private void ProcessFpText(STree tree, SBranch node, EdaComponent component) {
 
             string type = tree.ValueAsString(node[1]);
             var (position, rotation) = ParsePointAndAngle(tree, tree.SelectBranch(node, "at"));
@@ -624,23 +638,22 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 }
                 var justifyNode = tree.SelectBranch(effectsNode, "justify");
                 if (justifyNode != null) {
-                    var h = tree.ValueAsString(justifyNode[1]);
-                    switch (h) {
-                        case "left":
-                            horizontalAlign = HorizontalTextAlign.Left;
-                            break;
-                        case "right":
-                            horizontalAlign = HorizontalTextAlign.Right;
-                            break;
-                    }
-                    var v = tree.ValueAsString(justifyNode[2]);
-                    switch (v) {
-                        case "top":
-                            verticalAlign = VerticalTextAlign.Top;
-                            break;
-                        case "bottom":
-                            verticalAlign = VerticalTextAlign.Bottom;
-                            break;
+                    foreach (var justifyChild in justifyNode.Skip(1)) {
+                        var h = tree.ValueAsString(justifyChild);
+                        switch (h) {
+                            case "left":
+                                horizontalAlign = HorizontalTextAlign.Left;
+                                break;
+                            case "right":
+                                horizontalAlign = HorizontalTextAlign.Right;
+                                break;
+                            case "top":
+                                verticalAlign = VerticalTextAlign.Top;
+                                break;
+                            case "bottom":
+                                verticalAlign = VerticalTextAlign.Bottom;
+                                break;
+                        }
                     }
                 }
             }
@@ -680,128 +693,125 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             component.AddElement(element);
         }
 
+        private void ProcessGrArc(STree tree, SBranch node, EdaBoard board) {
+
+            var start = ParsePoint(tree, tree.SelectBranch(node, "start")) - _origin;
+            var mid = ParsePoint(tree, tree.SelectBranch(node, "mid")) - _origin;
+            var end = ParsePoint(tree, tree.SelectBranch(node, "end")) - _origin;
+            var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layer"));
+            var thickness = ParseMeasure(tree, tree.SelectBranch(node, "width"));
+
+            EdaPoint center = ArcUtils.Center(start, end, mid);
+            var startAngle = ArcUtils.StartAngle(start, center).AsDegrees;
+            var endAngle = ArcUtils.EndAngle(end, center).AsDegrees;
+            var angle = startAngle - endAngle;
+            while (angle < 0)
+                angle += 360;
+            while (angle >= 360)
+                angle -= 360;
+
+            var element = new EdaArcElement {
+                LayerSet = layerSet,
+                StartPosition = angle > 0 ? end : start,
+                EndPosition = angle > 0 ? start : end,
+                Thickness = thickness,
+                Angle = EdaAngle.FromDegrees(Math.Abs(angle)),
+                LineCap = EdaLineCap.Flat
+            };
+
+            board.AddElement(element);
+        }
+
         /// <summary>
-        /// Procesa un node 'pad'.
+        /// Procesa una via
         /// </summary>
-        /// <param name="tree">El STree</param>
-        /// <param name="node">El node a procesar.</param>
+        /// <param name="tree">L'arbre.</param>
+        /// <param name="node">El node.</param>
         /// <param name="component">El component.</param>
         /// 
-        private void ProcessPadOrHole(STree tree, SBranch node, EdaComponent component) {
+        private void ProcessVia(STree tree, SBranch node, EdaBoard board) {
 
-            var name = tree.ValueAsString(node[1]);
-            var padType = tree.ValueAsString(node[2]);
-            var shapeType = tree.ValueAsString(node[3]);
-
+            var position = ParsePoint(tree, tree.SelectBranch(node, "at")) - _origin;
+            var size = ParseMeasure(tree, tree.SelectBranch(node, "size"));
+            var drill = ParseMeasure(tree, tree.SelectBranch(node, "drill"));
             var layerSet = ParseLayerSet(tree, tree.SelectBranch(node, "layers"));
-            var (position, rotation) = ParsePointAndAngle(tree, tree.SelectBranch(node, "at"));
-            var size = ParseSize(tree, tree.SelectBranch(node, "size"));
 
-            var drillNode = tree.SelectBranch(node, "drill");
-            var drill = drillNode == null ? 0 : (int)(tree.ValueAsDouble(drillNode[1]) * _scale);
+            var via = new EdaViaElement {
+                LayerSet = layerSet,
+                Position = position,
+                OuterSize = size,
+                InnerSize = size,
+                DrillDiameter = drill
+            };
 
-            var clearanceNode = tree.SelectBranch(node, "clearance");
-            var clearance = clearanceNode == null ? 0 : (int)(tree.ValueAsDouble(clearanceNode[1]) * _scale);
+            var netNode = tree.SelectBranch(node, "net");
+            if (netNode != null) {
+                int netId = tree.ValueAsInteger(netNode[1]);
+                board.Connect(_signalLocator[netId], via);
+            }
 
-            var roundnessNode = tree.SelectBranch(node, "roundrect_rratio");
-            var roundness = roundnessNode == null ?
-                EdaRatio.Zero :
-                EdaRatio.FromPercent(tree.ValueAsDouble(roundnessNode[1]) * 2.0);
+            board.AddElement(via);
+        }
 
-            switch (padType) {
-                case "smd": {
-                        var element = new EdaSmtPadElement {
-                            Name = name,
-                            LayerSet = layerSet,
-                            Position = position,
-                            Size = size,
-                            Rotation = rotation,
-                            CornerRatio = roundness,
-                            Clearance = clearance
-                        };
-                        component.AddElement(element);
-                    }
-                    break;
+        /// <summary>
+        /// Procesa un segment.
+        /// </summary>
+        /// <param name="tree">L'arbre.</param>
+        /// <param name="branch">La branca</param>
+        /// <param name="board">La placa.</param>
+        /// 
+        private void ProcessSegment(STree tree, SBranch branch, EdaBoard board) {
 
-                case "thru_hole": {
-                        switch (shapeType) {
-                            case "rect":
-                                roundness = EdaRatio.Zero;
-                                break;
+            var start = ParsePoint(tree, tree.SelectBranch(branch, "start")) - _origin;
+            var end = ParsePoint(tree, tree.SelectBranch(branch, "end")) - _origin;
+            var layerSet = ParseLayerSet(tree, tree.SelectBranch(branch, "layer"));
+            var thickness = ParseMeasure(tree, tree.SelectBranch(branch, "width"));
 
-                            case "circle":
-                            case "oval":
-                                roundness = EdaRatio.P100;
-                                break;
+            var element = new EdaLineElement {
+                LayerSet = layerSet,
+                StartPosition = start,
+                EndPosition = end,
+                Thickness = thickness,
+                LineCap = EdaLineCap.Round
+            };
 
-                            case "roundrect":
-                                break;
+            board.AddElement(element);
 
-                            default:
-                                throw new InvalidOperationException("Tipo de forma desconocida.");
-                        }
-
-                        layerSet.Add(EdaLayerId.Drills);
-                        var element = new EdaThtPadElement {
-                            Name = name,
-                            LayerSet = layerSet,
-                            Position = position,
-                            TopSize = size,
-                            InnerSize = size,
-                            BottomSize = size,
-                            Rotation = rotation,
-                            CornerRatio = roundness,
-                            DrillDiameter = drill,
-                            Clearance = clearance
-                        };
-                        component.AddElement(element);
-                    }
-                    break;
-
-                case "np_thru_hole": {
-                        var element = new EdaCircularHoleElement {
-                            Position = position,
-                            Diameter = drill,
-                            Platted = false
-                        };
-                        component.AddElement(element);
-                        break;
-                    }
-
-                default:
-                    throw new InvalidDataException("Tipo de pad no reconocido.");
+            var netNode = tree.SelectBranch(branch, "net");
+            if (netNode != null) {
+                var netId = tree.ValueAsInteger(netNode[1]);
+                board.Connect(_signalLocator[netId], element);
             }
         }
 
         /// <summary>
         /// Procesa un node 'zone'
         /// </summary>
-        /// <param name="tree">STree.</param>
-        /// <param name="node">El node.</param>
+        /// <param name="tree">L'arbre.</param>
+        /// <param name="branch">La branca</param>
         /// <param name="board">La placa.</param>
         /// 
-        private void ProcessZone(STree tree, SBranch node, EdaBoard board) {
+        private void ProcessZone(STree tree, SBranch branch, EdaBoard board) {
 
-            var layerNode = tree.SelectBranch(node, "layer");
+            var layerNode = tree.SelectBranch(branch, "layer");
             if (layerNode == null)
-                layerNode = tree.SelectBranch(node, "layers");
+                layerNode = tree.SelectBranch(branch, "layers");
             var layerSet = ParseLayerSet(tree, layerNode);
-            var priorityNode = tree.SelectBranch(node, "priority");
+            var priorityNode = tree.SelectBranch(branch, "priority");
             var priority = priorityNode == null ? 0 : tree.ValueAsInteger(priorityNode[1]);
-            var connectedPadNode = tree.SelectBranch(node, "connect_pads");
-            var clearanceNode = tree.SelectBranch(connectedPadNode, "clearance");
-            int clearance = ParseMeasure(tree, clearanceNode);
 
-            var fillSettingsNode = tree.SelectBranch(node, "fill");
-            var thermalClearanceNode = tree.SelectBranch(fillSettingsNode, "thermal_gap");
-            var thermalClearance = ParseMeasure(tree, thermalClearanceNode);
-            var thermalThicknessNode = tree.SelectBranch(fillSettingsNode, "thermal_bridge_width");
-            var thermalThickness = ParseMeasure(tree, thermalThicknessNode);
+            var connectedPadNode = tree.SelectBranch(branch, "connect_pads");
+            int clearance = ParseMeasure(tree, tree.SelectBranch(connectedPadNode, "clearance"));
+
+            var fillSettingsNode = tree.SelectBranch(branch, "fill");
+            var thermalClearance = ParseMeasure(tree, tree.SelectBranch(fillSettingsNode, "thermal_gap"));
+            var thermalThickness = ParseMeasure(tree, tree.SelectBranch(fillSettingsNode, "thermal_bridge_width"));
+
             var radiusNode = tree.SelectBranch(fillSettingsNode, "radius");
-            var radius = ParseMeasure(tree, radiusNode);
+            var radius = radiusNode == null ? 0 : ParseMeasure(tree, radiusNode);
 
             var vertices = new List<EdaArcPoint>();
-            var polygonNode = tree.SelectBranch(node, "polygon");
+            var polygonNode = tree.SelectBranch(branch, "polygon");
             if (polygonNode != null) {
                 var ptsNode = tree.SelectBranch(polygonNode, "pts");
                 if (ptsNode != null) {
@@ -824,19 +834,19 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             };
             board.AddElement(element);
 
-            var netNode = tree.SelectBranch(node, "net");
+            var netNode = tree.SelectBranch(branch, "net");
             if (netNode != null) {
                 int netId = tree.ValueAsInteger(netNode[1]);
-                board.Connect(_signals[netId], element);
+                board.Connect(_signalLocator[netId], element);
             }
         }
 
         /// <summary>
         /// Obte un punt.
         /// </summary>
-        /// <param name="tree">El STree.</param>
+        /// <param name="tree">L'arbre.</param>
         /// <param name="node">El node.</param>
-        /// <returns>El punt</returns>
+        /// <returns>El punt.</returns>
         /// 
         private static EdaPoint ParsePoint(STree tree, SBranch node) {
 
@@ -848,7 +858,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <summary>
         /// Obte un punt i un angle (Posicio i rotacio)
         /// </summary>
-        /// <param name="tree">El STree.</param>
+        /// <param name="tree">L'arbre.</param>
         /// <param name="node">El node.</param>
         /// <returns>El punt i l'angle.</returns>
         /// 
@@ -859,6 +869,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var position = new EdaPoint(x, y);
 
             double r = node.Count == 4 ? tree.ValueAsDouble(node[3]) : 0;
+            if (r < 0)
+                r = 360 + r;
             var rotation = EdaAngle.FromDegrees(r);
 
             return (position, rotation);
@@ -867,7 +879,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <summary>
         /// Obte un tamany.
         /// </summary>
-        /// <param name="tree">El STree.</param>
+        /// <param name="tree">L'arbre.</param>
         /// <param name="node">El node.</param>
         /// <returns>El tamany.</returns>
         /// 
@@ -881,7 +893,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <summary>
         /// Obte un angle.
         /// </summary>
-        /// <param name="tree">El STree.</param>
+        /// <param name="tree">L'arbre.</param>
         /// <param name="node">El node.</param>
         /// <returns>L'angle.</returns>
         /// 
@@ -892,9 +904,22 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         }
 
         /// <summary>
+        /// Obte un percentatge.
+        /// </summary>
+        /// <param name="tree">L'arbre.</param>
+        /// <param name="node">El node.</param>
+        /// <returns>El percentatge</returns>
+        /// 
+        private static EdaRatio ParseRatio(STree tree, SBranch node) {
+
+            double r = tree.ValueAsDouble(node[1]);
+            return EdaRatio.FromPercent(Math.Abs(r));
+        }
+
+        /// <summary>
         /// Obte una mesura.
         /// </summary>
-        /// <param name="tree">El STree.</param>
+        /// <param name="tree">L'arbre.</param>
         /// <param name="node">El node.</param>
         /// <returns>El valor.</returns>
         /// 
@@ -906,7 +931,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <summary>
         /// Obte el conjunt de capes
         /// </summary>
-        /// <param name="tree">El STree.</param>
+        /// <param name="tree">L'arbre.</param>
         /// <param name="node">El node.</param>
         /// <returns>El conjunt obtingut.</returns>
         /// 
@@ -925,24 +950,6 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             }
 
             return layers;
-        }
-
-        /// <summary>
-        /// Obte la cara de la placa a partir d'un nom de capa.
-        /// </summary>
-        /// <param name="kcName">Nom de la capa.</param>
-        /// <returns>La cara.</returns>
-        /// 
-        private static BoardSide GetLayerSide(string kcName) {
-
-            if (kcName.Contains("Top") || kcName.Contains("F."))
-                return BoardSide.Top;
-            else if (kcName.Contains("Bottom") || kcName.Contains("B."))
-                return BoardSide.Bottom;
-            else if (kcName.Contains("In"))
-                return BoardSide.Inner;
-            else
-                return BoardSide.None;
         }
 
         /// <summary>
@@ -1005,6 +1012,23 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                     return EdaLayerId.Get(kcName);
             }
         }
+        /// <summary>
+        /// Obte la cara de la placa a partir d'un nom de capa.
+        /// </summary>
+        /// <param name="kcName">Nom de la capa.</param>
+        /// <returns>La cara.</returns>
+        /// 
+        private static BoardSide GetLayerSide(string kcName) {
+
+            if (kcName.Contains("Top") || kcName.Contains("F."))
+                return BoardSide.Top;
+            else if (kcName.Contains("Bottom") || kcName.Contains("B."))
+                return BoardSide.Bottom;
+            else if (kcName.Contains("In"))
+                return BoardSide.Inner;
+            else
+                return BoardSide.None;
+        }
 
         /// <summary>
         /// Obte la funcio de la capa a partir del seu nom.
@@ -1022,34 +1046,6 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             else
                 return LayerFunction.Unknown;
-        }
-
-        /// <summary>
-        /// Obte el nom de fitxer del modul.
-        /// </summary>
-        /// <param name="name">El nom del modul.</param>
-        /// <returns>El nom de fitxer.</returns>
-        /// 
-        private static string GetModuleFileName(string name) {
-
-            string[] s = name.Split(':', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-            string libFolder = String.Format("{0}.pretty", s[0]);
-            string modFileName = String.Format("{0}.kicad_mod", s[1]);
-            string[] libBaseFolders = {
-                ".",
-                @"C:\Program Files\KiCad\6.0\share\kicad\footprints",
-                @"C:\Users\Rafael\Documents\Projectes\KiCad\Libraries\User",
-                @"C:\Users\Rafael\Documents\Projectes\KiCad\KiCad\footprints",
-                @"C:\Users\Rafael\Documents\Projectes\KiCad\Aplex",
-            };
-
-            foreach (var libBaseFolder in libBaseFolders) {
-                string fileName = Path.Combine(libBaseFolder, libFolder, modFileName);
-                if (File.Exists(fileName))
-                    return fileName;
-            }
-
-            return name;
         }
     }
 }

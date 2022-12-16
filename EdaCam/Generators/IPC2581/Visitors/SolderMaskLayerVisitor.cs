@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System.Net.WebSockets;
+using System.Xml;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Xml;
 using MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Xml;
@@ -48,8 +49,12 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
                 var maskSize = size.Inflated(element.MaskClearance);
                 var rectRoundEntry = _cache.GetRectEntry(maskSize, element.CornerRatio, false);
                 var tr = Part == null ? new EdaTransformation() : Part.GetLocalTransformation();
-                var rotation = Part == null ? EdaAngle.Zero : Part.Rotation;
+                var rotation = element.Rotation + (Part == null ? EdaAngle.Zero : Part.Rotation);
                 var location = tr.Transform(element.Position);
+
+                if (Part.Name.Contains("JP4")) {
+                    var x = 0;
+                }
 
                 WritePad(rectRoundEntry.Id, location, rotation);
             }
@@ -61,7 +66,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
             _writer.WriteStartElement("Pad");
             if (!Part.Rotation.IsZero) {
                 _writer.WriteStartElement("Xform");
-                _writer.WriteAttributeDouble("rotation", rotation.AsDegrees);
+                _writer.WriteAttributeAngle("rotation", rotation);
                 _writer.WriteEndElement(); // Xform
             }
             _writer.WritePointElement("Location", location, _scale);

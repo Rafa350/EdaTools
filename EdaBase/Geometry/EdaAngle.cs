@@ -28,7 +28,10 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// 
         private EdaAngle(int value) {
 
-            _value = value % 36000;
+            value %= 36000;
+            if (value < 0)
+                value += 36000;
+            _value = value;
         }
 
         /// <summary>
@@ -38,7 +41,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <returns>L'angle creat.</returns>
         /// 
         public static EdaAngle FromValue(int value) =>
-            new EdaAngle(value);
+            new(value);
 
         /// <summary>
         /// Crea un angle a partir del seu valor en graus
@@ -47,7 +50,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <returns>L'angle creat.</returns>
         /// 
         public static EdaAngle FromDegrees(double deg) =>
-            new EdaAngle((int)(deg * 100.0));
+            new((int)(deg * 100.0));
 
         /// <summary>
         /// Crea un angle a partir del seu valor en radiants
@@ -56,7 +59,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <returns>L'angle creat.</returns>
         /// 
         public static EdaAngle FromRadiants(double rad) =>
-            new EdaAngle((int)((rad * 18000.0) / Math.PI));
+            new((int)((rad * 18000.0) / Math.PI));
 
         /// <summary>
         /// Test d'igualtat.
@@ -110,19 +113,19 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
             a1._value <= a2._value;
 
         public static EdaAngle operator -(EdaAngle a) =>
-            new EdaAngle(-a._value);
+            new(-a._value);
 
         public static EdaAngle operator +(EdaAngle a1, EdaAngle a2) =>
-            new EdaAngle(a1._value + a2._value);
+            new(a1._value + a2._value);
 
         public static EdaAngle operator -(EdaAngle a1, EdaAngle a2) =>
-            new EdaAngle(a1._value - a2._value);
+            new(a1._value - a2._value);
 
         public static EdaAngle operator *(EdaAngle a, int v) =>
-            new EdaAngle(a._value * v);
+            new(a._value * v);
 
         public static EdaAngle operator /(EdaAngle a, int v) =>
-            new EdaAngle(a._value / v);
+            new(a._value / v);
 
         /// <summary>
         /// Comprova si l'angle es zero.
@@ -145,28 +148,28 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// </summary>
         /// 
         public bool IsOrthogonal =>
-            Math.Abs(_value % 9000) == 0;
+            (_value % 9000) == 0;
 
         /// <summary>
         /// Comprova si l'angle es diagonal respecte els eixos
         /// </summary>
         /// 
         public bool IsDiagonal =>
-            Math.Abs(_value % 9000) == 4500;
+            (_value % 9000) == 4500;
 
         /// <summary>
         /// Comprova si l'angle es paral·lel al eix Y
         /// </summary>
         /// 
         public bool IsVertical =>
-            Math.Abs(_value % 18000) == 9000;
+            (_value % 18000) == 9000;
 
         /// <summary>
         /// Comprova si l'angle es paral·lel al eix X
         /// </summary>
         /// 
         public bool IsHorizontal =>
-            Math.Abs(_value % 18000) == 0;
+            (_value % 18000) == 0;
 
         /// <summary>
         /// Obte el valor de l'angle en centesimes graus.
