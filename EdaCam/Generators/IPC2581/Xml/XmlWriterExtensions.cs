@@ -7,14 +7,6 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Xml {
 
     internal static class XmlWriterExtensions {
 
-        public static void WriteAttributeAngle(this XmlWriter writer, string name, EdaAngle angle) {
-
-            double value = angle.AsDegrees;
-            if (value < 0)
-                value = 360.0 + value;
-            writer.WriteAttributeDouble(name, value);
-        }
-
         public static void WritePointElement(this XmlWriter writer, string name, EdaPoint point, double scale) {
 
             writer.WriteStartElement(name);

@@ -219,7 +219,18 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             foreach (var entry in _dataCache.Entries.OfType<RectEntry>()) {
                 _writer.WriteStartElement("EntryStandard");
                 _writer.WriteAttributeInteger("id", entry.Id);
-                if (entry.Flat) {
+                if (entry.Radius == 0) {
+                    _writer.WriteStartElement("RectCenter");
+                    _writer.WriteAttributeDouble("width", entry.Size.Width / _scale);
+                    _writer.WriteAttributeDouble("height", entry.Size.Height / _scale);
+                    _writer.WriteEndElement();
+                }
+                else if ((entry.Size.Width == entry.Size.Height) && (entry.Size.Width >= entry.Radius * 2)) {
+                    _writer.WriteStartElement("Circle");
+                    _writer.WriteAttributeDouble("diameter", entry.Size.Width / _scale);
+                    _writer.WriteEndElement();
+                }
+                else if (entry.Flat) {
                     _writer.WriteStartElement("RectCham");
                     _writer.WriteAttributeDouble("width", entry.Size.Width / _scale);
                     _writer.WriteAttributeDouble("height", entry.Size.Height / _scale);
@@ -598,7 +609,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 _writer.WriteAttributeString("packageRef", part.Component.Name);
                 if (!part.Rotation.IsZero) {
                     _writer.WriteStartElement("Xform");
-                    _writer.WriteAttributeAngle("rotation", part.Rotation);
+                    _writer.WriteAttributeDouble("rotation", part.Rotation.AsDegrees);
                     _writer.WriteEndElement(); // Xform
                 }
                 _writer.WritePointElement("Location", part.Position, _scale);

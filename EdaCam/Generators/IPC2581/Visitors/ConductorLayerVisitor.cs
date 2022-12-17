@@ -140,7 +140,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
             _writer.WriteStartElement("Pad");
             if (!rotation.IsZero) {
                 _writer.WriteStartElement("Xform");
-                _writer.WriteAttributeAngle("rotation", rotation);
+                _writer.WriteAttributeDouble("rotation", rotation.AsDegrees);
                 _writer.WriteEndElement(); // Xform
             }
             _writer.WritePointElement("Location", location, _scale);
