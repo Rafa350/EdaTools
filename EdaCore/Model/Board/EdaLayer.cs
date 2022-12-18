@@ -10,6 +10,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     public enum LayerFunction {
         Unknown,     // Desconeguda
         Signal,      // Pistes, vias, pads, th, etc
+        Design,      // Mascara, adhesiu, pasta
         Document,    // Names, Values, Dimensions, etc
         Mechanical,  // Forats, fressat, etc
         Outline      // Perfil extern

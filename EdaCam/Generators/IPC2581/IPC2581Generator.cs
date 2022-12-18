@@ -602,19 +602,8 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         /// 
         private void WriteSection_Component(EdaBoard board) {
 
-            foreach (var part in board.Parts) {
-                _writer.WriteStartElement("Component");
-                _writer.WriteAttributeString("refDes", part.Name);
-                _writer.WriteAttributeString("layerRef", part.Side == PartSide.Top ? _topLayer.Name : _bottomLayer.Name);
-                _writer.WriteAttributeString("packageRef", part.Component.Name);
-                if (!part.Rotation.IsZero) {
-                    _writer.WriteStartElement("Xform");
-                    _writer.WriteAttributeDouble("rotation", part.Rotation.AsDegrees);
-                    _writer.WriteEndElement(); // Xform
-                }
-                _writer.WritePointElement("Location", part.Position, _scale);
-                _writer.WriteEndElement();
-            }
+            var visitor = new ComponentVisitor(_writer);
+            visitor.Visit(board);
         }
 
         /// <summary>

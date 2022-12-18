@@ -12,7 +12,7 @@
     },
     "EdaImport_KiCad": {
       "commandName": "Project",
-      "commandLineArgs": "C:\\Users\\Rafael\\Documents\\Projectes\\KiCad\\cpu04c\\cpu04c.kicad_pcb  test.xbrd /v",
+      "commandLineArgs": "C:\\Users\\Rafael\\Documents\\Projectes\\KiCad\\EdaToolsTest\\EdaToolsTest.kicad_pcb  C:\\Users\\Rafael\\Documents\\Projectes\\KiCad\\EdaToolsTest\\EdaToolsTest.xbrd /v",
       "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\Net\\EdaTools\\Data"
     },
     "EdaImport_KiCadLib": {

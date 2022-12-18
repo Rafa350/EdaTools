@@ -318,7 +318,7 @@ namespace MikroPic.EdaTools.v1.Core.IO {
                     _writer.WriteAttributeBool("visible", attr.IsVisible);
                 if (attr.UsePosition)
                     _writer.WriteAttributeString("position", EdaFormatter.FormatPoint(attr.Position));
-                if (attr.UseRotation)
+                if (attr.UseRotation && !attr.Rotation.IsZero)
                     _writer.WriteAttributeString("rotation", EdaFormatter.FormatAngle(attr.Rotation));
                 if (attr.UseHeight)
                     _writer.WriteAttributeString("height", EdaFormatter.FormatScalar(attr.Height));

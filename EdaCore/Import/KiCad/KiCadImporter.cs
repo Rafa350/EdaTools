@@ -76,7 +76,6 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             BuildLayers(tree, node, board);
             BuildNets(tree, node, board);
-            BuildComponents(tree, node, board);
             BuildParts(tree, node, board);
             BuildElements(tree, node, board);
 
@@ -131,21 +130,6 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         }
 
         /// <summary>
-        /// Crea els components.
-        /// </summary>
-        /// <param name="tree">L'arbre.</param>
-        /// <param name="node">El node.</param>
-        /// <param name="board">La placa.</param>
-        /// 
-        private void BuildComponents(STree tree, SBranch node, EdaBoard board) {
-
-            foreach (var footprintNode in tree.SelectBranches(node, _version == 6 ? "footprint" : "module")) {
-                var component = CreateComponent(tree, footprintNode);
-                board.AddComponent(component);
-            }
-        }
-
-        /// <summary>
         /// Construeix els parts.
         /// </summary>
         /// <param name="tree">L'arbre.</param>
@@ -155,6 +139,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         private void BuildParts(STree tree, SBranch node, EdaBoard board) {
 
             foreach (var footprintNode in tree.SelectBranches(node, _version == 6 ? "footprint" : "module")) {
+
+                var component = CreateComponent(tree, footprintNode);
+                board.AddComponent(component);
+
                 var part = CreatePart(tree, footprintNode, board);
                 board.AddPart(part);
             }
@@ -204,9 +192,33 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             string name = tree.ValueAsString(node[1]);
             string type = tree.ValueAsString(node[2]);
 
-            BoardSide side = GetLayerSide(name);
+            // Obte el identificador de la capa.
+            //
             EdaLayerId id = GetLayerId(name);
-            LayerFunction function = type == "signal" ? LayerFunction.Signal : GetLayerFunction(name);
+
+            // Obte la cara de la capa.
+            //
+            BoardSide side = BoardSide.None;
+            if (name.StartsWith("F."))
+                side = BoardSide.Top;
+            else if (name.StartsWith("B."))
+                side = BoardSide.Bottom;
+            else if (name.StartsWith("In") && name.EndsWith(".Cu"))
+                side = BoardSide.Inner;
+
+            // Obte la funcio de la capa.
+            //
+            LayerFunction function = LayerFunction.Unknown;
+            if ((type == "signal") || (type == "mixed") || (type == "power") || (type == "jumper") || name.EndsWith(".Cu"))
+                function = LayerFunction.Signal;
+            else if (type == "user") {
+                if (name.EndsWith(".SilkS") || name.EndsWith(".CrtYr"))
+                    function = LayerFunction.Document;
+                else if (name.EndsWith(".Paste") || name.EndsWith(".Mask") || name.EndsWith(".Adhes"))
+                    function = LayerFunction.Design;
+                else if (name == "Edge.Cuts")
+                    function = LayerFunction.Outline;
+            }
 
             if (board.GetLayer(id, false) == null)
                 return new EdaLayer(id, side, function);
@@ -263,14 +275,13 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             if (solderPasteRatioNode != null)
                 solderPasteRatio = ParseRatio(tree, solderPasteRatioNode);
 
-
             var component = new EdaComponent();
             component.Name = componentName;
 
             foreach (var childNode in node.Nodes.OfType<SBranch>()) {
                 switch (tree.GetBranchName(childNode)) {
                     case "fp_text":
-                        ProcessFpText(tree, childNode, component);
+                        ProcessFpText(tree, childNode, rotation, component);
                         break;
 
                     case "fp_circle":
@@ -316,7 +327,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
             var layerNode = tree.SelectBranch(node, "layer");
             var layer = tree.ValueAsString(layerNode[1]);
-            var side = layer == "Bottom" ? PartSide.Bottom : PartSide.Top;
+            var side = layer.Contains("B.") ? PartSide.Bottom : PartSide.Top;
 
             var component = board.GetComponent(componentName);
             var partName = String.Format("{0}:{1}", name, _partCount++);
@@ -331,8 +342,6 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                     case "fp_text": {
                             string attrValue = tree.ValueAsString(childNode[2]);
                             var (attrPosition, attrRotation) = ParsePointAndAngle(tree, tree.SelectBranch(childNode, "at"));
-                            attrPosition -= _origin;
-                            attrRotation -= rotation;
 
                             bool attrVisible = true;
                             for (int i = 3; i < childNode.Count; i++)
@@ -357,7 +366,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
 
                             if (attribute != null) {
                                 attribute.Position = attrPosition;
-                                attribute.Rotation = attrRotation;
+                                attribute.Rotation = attrRotation - rotation;
                             }
                         }
                         break;
@@ -616,9 +625,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// </summary>
         /// <param name="tree">L'arbre.</param>
         /// <param name="node">El node.</param>
+        /// <param name="fpRotation">Rotacio del footprint.</param>
         /// <param name="component">El component.</param>
         /// 
-        private void ProcessFpText(STree tree, SBranch node, EdaComponent component) {
+        private void ProcessFpText(STree tree, SBranch node, EdaAngle fpRotation, EdaComponent component) {
 
             string type = tree.ValueAsString(node[1]);
             var (position, rotation) = ParsePointAndAngle(tree, tree.SelectBranch(node, "at"));
@@ -665,11 +675,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             string text;
 
             if (type == "reference") {
-                layerId = layerName.Contains("F.") ? EdaLayerId.TopNames : EdaLayerId.BottomNames;
+                layerId = layerName.StartsWith("F.") ? EdaLayerId.TopNames : EdaLayerId.BottomNames;
                 text = "{NAME}";
             }
             else if (type == "value") {
-                layerId = layerName.Contains("F.") ? EdaLayerId.TopValues : EdaLayerId.BottomValues;
+                layerId = layerName.StartsWith("F.") ? EdaLayerId.TopValues : EdaLayerId.BottomValues;
                 text = "{VALUE}";
             }
             else {
@@ -683,7 +693,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             var element = new EdaTextElement {
                 LayerSet = layerSet,
                 Position = position,
-                Rotation = rotation,
+                Rotation = rotation - fpRotation,
                 Height = height,
                 Thickness = thickness,
                 HorizontalAlign = horizontalAlign,
@@ -868,9 +878,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             int y = (int)(tree.ValueAsDouble(node[2]) * _scale * -1);
             var position = new EdaPoint(x, y);
 
-            double r = node.Count == 4 ? tree.ValueAsDouble(node[3]) : 0;
-            if (r < 0)
-                r = 360 + r;
+            double r = node.Count > 3 ? tree.ValueAsDouble(node[3]) : 0;
             var rotation = EdaAngle.FromDegrees(r);
 
             return (position, rotation);
@@ -1011,41 +1019,6 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                 default:
                     return EdaLayerId.Get(kcName);
             }
-        }
-        /// <summary>
-        /// Obte la cara de la placa a partir d'un nom de capa.
-        /// </summary>
-        /// <param name="kcName">Nom de la capa.</param>
-        /// <returns>La cara.</returns>
-        /// 
-        private static BoardSide GetLayerSide(string kcName) {
-
-            if (kcName.Contains("Top") || kcName.Contains("F."))
-                return BoardSide.Top;
-            else if (kcName.Contains("Bottom") || kcName.Contains("B."))
-                return BoardSide.Bottom;
-            else if (kcName.Contains("In"))
-                return BoardSide.Inner;
-            else
-                return BoardSide.None;
-        }
-
-        /// <summary>
-        /// Obte la funcio de la capa a partir del seu nom.
-        /// </summary>
-        /// <param name="kcName">El nom.</param>
-        /// <returns>La funcio.</returns>
-        /// 
-        private static LayerFunction GetLayerFunction(string kcName) {
-
-            if (kcName.EndsWith(".Cu"))
-                return LayerFunction.Signal;
-
-            else if (kcName == "Edge.Cuts")
-                return LayerFunction.Outline;
-
-            else
-                return LayerFunction.Unknown;
         }
     }
 }

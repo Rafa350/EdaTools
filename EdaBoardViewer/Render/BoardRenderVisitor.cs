@@ -202,10 +202,8 @@ namespace EdaBoardViewer.Render {
                     IEnumerable<GlyphTrace> glyphTraces = td.Draw(paa.Value, new EdaPoint(0, 0), paa.HorizontalAlign, paa.VerticalAlign, paa.Height);
 
                     var t = new EdaTransformation();
-                    //t.Translate(paa.Position);
-                    //t.Rotate(paa.Position, paa.Rotation);
-                    t.Translate(element.Position);
-                    t.Rotate(element.Position, element.Rotation);
+                    t.Translate(paa.Position);
+                    t.Rotate(paa.Position, paa.Rotation);
 
                     Matrix2D matrix = t.Matrix;
                     var m = new Avalonia.Matrix(matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.Tx, matrix.Ty);

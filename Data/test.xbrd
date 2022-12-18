@@ -18,14 +18,14 @@
             <layer id="Bottom.Keepout" side="bottom" function="unknown" />
             <layer id="Top.Copper" side="top" function="signal" />
             <layer id="Bottom.Copper" side="bottom" function="signal" />
-            <layer id="Bottom.Glue" side="bottom" function="unknown" />
-            <layer id="Top.Glue" side="top" function="unknown" />
-            <layer id="Bottom.Cream" side="bottom" function="unknown" />
-            <layer id="Top.Cream" side="top" function="unknown" />
-            <layer id="Bottom.Place" side="bottom" function="unknown" />
-            <layer id="Top.Place" side="top" function="unknown" />
-            <layer id="Bottom.Stop" side="bottom" function="unknown" />
-            <layer id="Top.Stop" side="top" function="unknown" />
+            <layer id="Bottom.Glue" side="bottom" function="design" />
+            <layer id="Top.Glue" side="top" function="design" />
+            <layer id="Bottom.Cream" side="bottom" function="design" />
+            <layer id="Top.Cream" side="top" function="design" />
+            <layer id="Bottom.Place" side="bottom" function="document" />
+            <layer id="Top.Place" side="top" function="document" />
+            <layer id="Bottom.Stop" side="bottom" function="design" />
+            <layer id="Top.Stop" side="top" function="design" />
             <layer id="Dwgs.User" side="none" function="unknown" />
             <layer id="Cmts.User" side="none" function="unknown" />
             <layer id="Eco1.User" side="none" function="unknown" />
@@ -141,9 +141,9 @@
         <components>
             <component name="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:034ee7d6-7038-41b0-9036-61ad58e38bc4">
                 <elements>
-                    <text layer="Top.Names" position="4.5, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -3" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="4.5, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -3" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="0, 2.16" endPosition="2.009999, 2.16" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-2.009999, 1.805" endPosition="-3.475, 1.805" thickness="0.12" />
                     <line layer="Top.Place" startPosition="2.009999, 2.16" endPosition="2.009999, 1.805" thickness="0.12" />
@@ -170,9 +170,9 @@
             </component>
             <component name="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:06aaee06-80e2-4d1d-abcd-e8c301b20a2c">
                 <elements>
-                    <text layer="Top.Names" position="4.5, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -3" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="4.5, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -3" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="0, 2.16" endPosition="2.009999, 2.16" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, -2.16" endPosition="-2.009999, -2.16" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-2.009999, 1.805" endPosition="-3.475, 1.805" thickness="0.12" />
@@ -199,9 +199,9 @@
             </component>
             <component name="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:06d50bbf-c4fe-4b28-baf4-7e097697253b">
                 <elements>
-                    <text layer="Top.Names" position="4.5, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -3" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="4.5, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -3" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="0, -2.16" endPosition="2.009999, -2.16" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, 2.16" endPosition="-2.009999, 2.16" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, 2.16" endPosition="2.009999, 2.16" thickness="0.12" />
@@ -274,9 +274,9 @@
             </component>
             <component name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:0c0f0e30-ee9a-4cc9-a633-07e3c92d5009">
                 <elements>
-                    <text layer="Top.Names" position="0, 1.75" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.75" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="270" height="0.8" thickness="0.12" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="0, 1.75" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.75" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.8" thickness="0.12" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-2.31, -0.935" endPosition="1.6, -0.935" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-2.31, 0.935" endPosition="-2.31, -0.935" thickness="0.12" />
                     <line layer="Top.Place" startPosition="1.6, 0.935" endPosition="-2.31, 0.935" thickness="0.12" />
@@ -295,9 +295,9 @@
             </component>
             <component name="Connector_Molex:Molex_PicoBlade_53261-0471_1x04-1MP_P1.25mm_Horizontal:0c35336a-cc65-411a-a855-588370f189e0">
                 <elements>
-                    <text layer="Top.Names" position="3.6, 2.7" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -3.8" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, -1.9" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="3.6, 2.7" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -3.8" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, -1.9" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="3.485, 1.26" endPosition="3.485, 1.71" thickness="0.12" />
                     <line layer="Top.Place" startPosition="3.485, 1.71" endPosition="2.535, 1.71" thickness="0.12" />
                     <line layer="Top.Place" startPosition="3.485, -2.71" endPosition="3.485, -2.26" thickness="0.12" />
@@ -381,9 +381,9 @@
             </component>
             <component name="Package_SO:SO-8_3.9x4.9mm_P1.27mm:1636d414-dba5-4fcc-b987-a003e939cf5c">
                 <elements>
-                    <text layer="Top.Names" position="-4.5, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -3.4" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.98" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-4.5, 0" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -3.4" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" rotation="180" height="0.98" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="0, 2.56" endPosition="1.95, 2.56" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, -2.56" endPosition="1.95, -2.56" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, 2.56" endPosition="-3.45, 2.56" thickness="0.12" />
@@ -428,8 +428,8 @@
             </component>
             <component name="MD-CPU04C:1X02_90:2415008c-c0ca-4e48-acce-1dbbc2af3373">
                 <elements>
-                    <text layer="Top.Names" position="4, -2" height="0.8857" thickness="0.1143" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="4.445, -3.81" height="1.176528" thickness="0.093472" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="Top.Names" position="4, -2" rotation="90" height="0.8857" thickness="0.1143" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="4.445, -3.81" rotation="90" height="1.176528" thickness="0.093472" verticalAlign="middle" value="{VALUE}" />
                     <line layer="Top.Place" startPosition="0, -1.905" endPosition="0, 0.635" thickness="0.1524" />
                     <line layer="Top.Place" startPosition="2.54, -1.905" endPosition="2.54, 0.635" thickness="0.1524" />
                     <line layer="Top.Place" startPosition="0, 0.635" endPosition="-2.54, 0.635" thickness="0.1524" />
@@ -445,9 +445,9 @@
             </component>
             <component name="Inductor_SMD:L_0805_2012Metric:2c2d4bae-b56d-4788-9bae-faff7343bca5">
                 <elements>
-                    <text layer="Top.Names" position="0, 1.55" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.55" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="180" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="0, 1.55" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.55" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.399622, -0.56" endPosition="0.399622, -0.56" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.399622, 0.56" endPosition="0.399622, 0.56" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="1.75, 0.85" endPosition="1.75, -0.85" thickness="0.05" />
@@ -464,9 +464,9 @@
             </component>
             <component name="Package_SO:SO-16_5.3x10.2mm_P1.27mm:2dc75f02-45cd-4533-bcd3-766542227c9c">
                 <elements>
-                    <text layer="Top.Names" position="0, -6.25" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -6.05" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="0, -6.25" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -6.05" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-2.76, 5.21" endPosition="-2.76, 5.005" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, 5.21" endPosition="-2.76, 5.21" thickness="0.12" />
                     <line layer="Top.Place" startPosition="2.76, -5.21" endPosition="2.76, -5.005" thickness="0.12" />
@@ -505,9 +505,9 @@
             </component>
             <component name="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:3027e5be-3da4-4ff8-955a-ebc39bda8953">
                 <elements>
-                    <text layer="Top.Names" position="0, 1.75" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.75" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.8" thickness="0.12" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="0, 1.75" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.75" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.8" thickness="0.12" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="1.6, 0.935" endPosition="-2.31, 0.935" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-2.31, 0.935" endPosition="-2.31, -0.935" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-2.31, -0.935" endPosition="1.6, -0.935" thickness="0.12" />
@@ -526,9 +526,9 @@
             </component>
             <component name="Crystal:Crystal_SMD_HC49-SD:3d6d912d-b91d-4f34-8801-1f7e0160c6ab">
                 <elements>
-                    <text layer="Top.Names" position="0, 3.55" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -3.55" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="0, 3.55" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -3.55" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-6.7, 2.55" endPosition="-6.7, -2.55" thickness="0.12" />
                     <line layer="Top.Place" startPosition="5.9, 2.55" endPosition="-6.7, 2.55" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-6.7, -2.55" endPosition="5.9, -2.55" thickness="0.12" />
@@ -550,9 +550,9 @@
             </component>
             <component name="Connector_Molex:Molex_PicoBlade_53261-0471_1x04-1MP_P1.25mm_Horizontal:4993646a-4fa8-494a-bcdd-85677606c8a8">
                 <elements>
-                    <text layer="Top.Names" position="3.4, 2.7" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -3.8" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, -1.9" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="3.4, 2.7" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -3.8" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, -1.9" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-2.535, 1.71" endPosition="-2.535, 3.2" thickness="0.12" />
                     <line layer="Top.Place" startPosition="3.485, -2.71" endPosition="3.485, -2.26" thickness="0.12" />
                     <line layer="Top.Place" startPosition="3.485, 1.71" endPosition="2.535, 1.71" thickness="0.12" />
@@ -612,9 +612,9 @@
             </component>
             <component name="Capacitor_SMD:C_0805_2012Metric:4e7fcab2-8ed0-441b-b056-b2e9c57d4663">
                 <elements>
-                    <text layer="Top.Names" position="-2.75, 0" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.68" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="270" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-2.75, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.68" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.261251, 0.735" endPosition="0.261251, 0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.261251, -0.735" endPosition="0.261251, -0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="1.7, 0.98" endPosition="1.7, -0.98" thickness="0.05" />
@@ -631,9 +631,9 @@
             </component>
             <component name="Capacitor_SMD:C_0805_2012Metric:4ebff465-eccb-4088-b3a4-4d3c9a1e1b4c">
                 <elements>
-                    <text layer="Top.Names" position="-3.25, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.68" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-3.25, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.68" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.261251, -0.735" endPosition="0.261251, -0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.261251, 0.735" endPosition="0.261251, 0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="-1.7, 0.98" endPosition="1.7, 0.98" thickness="0.05" />
@@ -650,9 +650,9 @@
             </component>
             <component name="Package_SO:SO-8_3.9x4.9mm_P1.27mm:4f8f5c57-a7cf-4418-bd08-c8d05927f175">
                 <elements>
-                    <text layer="Top.Names" position="-4.75, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -3.4" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.98" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-4.75, 0" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -3.4" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" rotation="180" height="0.98" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="0, 2.56" endPosition="-3.45, 2.56" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, -2.56" endPosition="1.95, -2.56" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, 2.56" endPosition="1.95, 2.56" thickness="0.12" />
@@ -684,9 +684,9 @@
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric:544f4364-ec43-4e70-b923-c8256f6d973d">
                 <elements>
-                    <text layer="Top.Names" position="2.5, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.65" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="270" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="2.5, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.227064, -0.735" endPosition="0.227064, -0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.227064, 0.735" endPosition="0.227064, 0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="-1.68, 0.95" endPosition="1.68, 0.95" thickness="0.05" />
@@ -703,9 +703,9 @@
             </component>
             <component name="Package_SO:SO-8_3.9x4.9mm_P1.27mm:56810a4b-d656-45cc-bdc7-7a8b415711f3">
                 <elements>
-                    <text layer="Top.Names" position="-4.75, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -3.4" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.98" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-4.75, 0" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -3.4" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" rotation="180" height="0.98" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="0, 2.56" endPosition="-3.45, 2.56" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, -2.56" endPosition="-1.95, -2.56" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, 2.56" endPosition="1.95, 2.56" thickness="0.12" />
@@ -731,9 +731,9 @@
             </component>
             <component name="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:68deaa90-d495-4b68-879b-7e15875cd754">
                 <elements>
-                    <text layer="Top.Names" position="4.5, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -3" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="4.5, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -3" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="2.009999, -2.16" endPosition="2.009999, -1.805" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-2.009999, 2.16" endPosition="-2.009999, 1.805" thickness="0.12" />
                     <line layer="Top.Place" startPosition="2.009999, 2.16" endPosition="2.009999, 1.805" thickness="0.12" />
@@ -770,9 +770,9 @@
             </component>
             <component name="Package_QFP:LQFP-44_10x10mm_P0.8mm:6ab4afa7-073f-4752-a0ad-66595a05bce2">
                 <elements>
-                    <text layer="Top.Names" position="7.25, 5.5" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -7.35" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="7.25, 5.5" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -7.35" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="5.11, -5.11" endPosition="5.11, -4.535" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-5.11, 4.535" endPosition="-6.4, 4.535" thickness="0.12" />
                     <line layer="Top.Place" startPosition="4.535, -5.11" endPosition="5.11, -5.11" thickness="0.12" />
@@ -878,9 +878,9 @@
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric:71d0cb07-e3b4-4e91-aa4b-4a837d75f063">
                 <elements>
-                    <text layer="Top.Names" position="-3.25, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.65" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-3.25, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.227064, -0.735" endPosition="0.227064, -0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.227064, 0.735" endPosition="0.227064, 0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="1.68, -0.95" endPosition="-1.68, -0.95" thickness="0.05" />
@@ -897,9 +897,9 @@
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric:76374772-bc39-46e8-ac1e-aa036d07fdac">
                 <elements>
-                    <text layer="Top.Names" position="-3.25, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.65" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-3.25, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.227064, -0.735" endPosition="0.227064, -0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.227064, 0.735" endPosition="0.227064, 0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="-1.68, 0.95" endPosition="1.68, 0.95" thickness="0.05" />
@@ -916,9 +916,9 @@
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric:7ecdeb1a-e8e1-462e-877c-7b6102cd6f77">
                 <elements>
-                    <text layer="Top.Names" position="-3.25, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.65" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-3.25, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.227064, 0.735" endPosition="0.227064, 0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.227064, -0.735" endPosition="0.227064, -0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="1.68, 0.95" endPosition="1.68, -0.95" thickness="0.05" />
@@ -935,9 +935,9 @@
             </component>
             <component name="Package_SO:SO-8_3.9x4.9mm_P1.27mm:83304b74-1030-40be-8f80-3a14b260905e">
                 <elements>
-                    <text layer="Top.Names" position="-4.5, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -3.4" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.98" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-4.5, 0" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -3.4" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" rotation="180" height="0.98" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="0, 2.56" endPosition="1.95, 2.56" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, -2.56" endPosition="-1.95, -2.56" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, 2.56" endPosition="-3.45, 2.56" thickness="0.12" />
@@ -963,9 +963,9 @@
             </component>
             <component name="Capacitor_SMD:C_0805_2012Metric:8701daf3-5538-47a2-9b71-ca0bae4d9458">
                 <elements>
-                    <text layer="Top.Names" position="0, 1.75" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.68" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="270" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="0, 1.75" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.68" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.261251, 0.735" endPosition="0.261251, 0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.261251, -0.735" endPosition="0.261251, -0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="-1.7, -0.98" endPosition="-1.7, 0.98" thickness="0.05" />
@@ -982,9 +982,9 @@
             </component>
             <component name="Capacitor_SMD:C_0805_2012Metric:8880362c-bcb5-4ba8-a1f1-97c604518d8a">
                 <elements>
-                    <text layer="Top.Names" position="0, 1.68" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.68" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="0, 1.68" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.68" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.261251, 0.735" endPosition="0.261251, 0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.261251, -0.735" endPosition="0.261251, -0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="1.7, -0.98" endPosition="-1.7, -0.98" thickness="0.05" />
@@ -1001,9 +1001,9 @@
             </component>
             <component name="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:8ab45b45-6053-4a0f-9643-6e5a0809982d">
                 <elements>
-                    <text layer="Top.Names" position="4.5, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -3" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="4.5, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -3" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="0, -2.16" endPosition="2.009999, -2.16" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, 2.16" endPosition="-2.009999, 2.16" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, -2.16" endPosition="-2.009999, -2.16" thickness="0.12" />
@@ -1030,9 +1030,9 @@
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric:8fa82f63-d493-47c8-970a-36b59493eb12">
                 <elements>
-                    <text layer="Top.Names" position="0, 1.65" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.65" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="0, 1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.227064, -0.735" endPosition="0.227064, -0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.227064, 0.735" endPosition="0.227064, 0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="-1.68, 0.95" endPosition="1.68, 0.95" thickness="0.05" />
@@ -1059,9 +1059,9 @@
             </component>
             <component name="Connector_Molex:Molex_PicoBlade_53261-0571_1x05-1MP_P1.25mm_Horizontal:9f6f8bfc-2de6-4257-b70b-0b8d0c7e81ab">
                 <elements>
-                    <text layer="Top.Names" position="0, 4.4" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -3.8" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, -1.9" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="0, 4.4" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -3.8" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, -1.9" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="4.11, -2.71" endPosition="4.11, -2.26" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-4.11, -2.71" endPosition="4.11, -2.71" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-4.11, -2.26" endPosition="-4.11, -2.71" thickness="0.12" />
@@ -1113,9 +1113,9 @@
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric:a3b216b9-4fee-49bb-b100-a691848caa12">
                 <elements>
-                    <text layer="Top.Names" position="-3.25, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.65" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-3.25, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.227064, 0.735" endPosition="0.227064, 0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.227064, -0.735" endPosition="0.227064, -0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="1.68, -0.95" endPosition="-1.68, -0.95" thickness="0.05" />
@@ -1132,9 +1132,9 @@
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric:a4219ef4-9d2b-4212-866d-f1e0dd716ad0">
                 <elements>
-                    <text layer="Top.Names" position="-3.25, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.65" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-3.25, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.227064, 0.735" endPosition="0.227064, 0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.227064, -0.735" endPosition="0.227064, -0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="1.68, 0.95" endPosition="1.68, -0.95" thickness="0.05" />
@@ -1151,9 +1151,9 @@
             </component>
             <component name="Diode_SMD:D_0805_2012Metric:a79ffa96-d78f-48ce-a640-7386caa72dcd">
                 <elements>
-                    <text layer="Top.Names" position="0, -2" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.65" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="270" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="0, -2" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="1, 0.96" endPosition="-1.685, 0.96" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-1.685, -0.96" endPosition="1, -0.96" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-1.685, 0.96" endPosition="-1.685, -0.96" thickness="0.12" />
@@ -1191,9 +1191,9 @@
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric:aad903ed-d517-4abe-b9b0-d75992c0495f">
                 <elements>
-                    <text layer="Top.Names" position="-2.75, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.65" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-2.75, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.227064, 0.735" endPosition="0.227064, 0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.227064, -0.735" endPosition="0.227064, -0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="-1.68, -0.95" endPosition="-1.68, 0.95" thickness="0.05" />
@@ -1210,9 +1210,9 @@
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric:af307c9a-258b-449c-a948-695d3b606e03">
                 <elements>
-                    <text layer="Top.Names" position="-2.75, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.65" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-2.75, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.227064, -0.735" endPosition="0.227064, -0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.227064, 0.735" endPosition="0.227064, 0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="1.68, 0.95" endPosition="1.68, -0.95" thickness="0.05" />
@@ -1265,9 +1265,9 @@
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric:b15e09b5-5f3c-4e17-9455-ed097a57be51">
                 <elements>
-                    <text layer="Top.Names" position="-2.75, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.65" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-2.75, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.227064, -0.735" endPosition="0.227064, -0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.227064, 0.735" endPosition="0.227064, 0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="1.68, -0.95" endPosition="-1.68, -0.95" thickness="0.05" />
@@ -1310,9 +1310,9 @@
             </component>
             <component name="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:b354aef0-b65b-4c25-9ed4-10b63d7c12e9">
                 <elements>
-                    <text layer="Top.Names" position="4.5, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -3" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="4.5, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -3" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="0, -2.16" endPosition="2.009999, -2.16" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-2.009999, 2.16" endPosition="-2.009999, 1.805" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, 2.16" endPosition="2.009999, 2.16" thickness="0.12" />
@@ -1394,9 +1394,9 @@
             </component>
             <component name="Capacitor_SMD:C_0805_2012Metric:c8f938e3-262e-49aa-8430-779899694a35">
                 <elements>
-                    <text layer="Top.Names" position="0, -1.75" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.68" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="0, -1.75" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.68" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.261251, -0.735" endPosition="0.261251, -0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.261251, 0.735" endPosition="0.261251, 0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="1.7, -0.98" endPosition="-1.7, -0.98" thickness="0.05" />
@@ -1413,9 +1413,9 @@
             </component>
             <component name="Capacitor_SMD:C_0805_2012Metric:cf623136-61be-4948-b7d6-f200009decaf">
                 <elements>
-                    <text layer="Top.Names" position="-2.75, 0" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.68" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="270" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-2.75, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.68" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.261251, 0.735" endPosition="0.261251, 0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.261251, -0.735" endPosition="0.261251, -0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="-1.7, 0.98" endPosition="1.7, 0.98" thickness="0.05" />
@@ -1432,9 +1432,9 @@
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric:cfe6c9df-bd02-44ac-b0cc-1bb791e7bfab">
                 <elements>
-                    <text layer="Top.Names" position="2.5, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.65" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="2.5, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.227064, 0.735" endPosition="0.227064, 0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.227064, -0.735" endPosition="0.227064, -0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="1.68, -0.95" endPosition="-1.68, -0.95" thickness="0.05" />
@@ -1451,9 +1451,9 @@
             </component>
             <component name="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:d467246d-ac7d-464d-a4ca-1acb6af186c1">
                 <elements>
-                    <text layer="Top.Names" position="4.5, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -3" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="4.5, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -3" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-2.009999, 2.16" endPosition="-2.009999, 1.805" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, 2.16" endPosition="-2.009999, 2.16" thickness="0.12" />
                     <line layer="Top.Place" startPosition="2.009999, 2.16" endPosition="2.009999, 1.805" thickness="0.12" />
@@ -1480,9 +1480,9 @@
             </component>
             <component name="Package_SO:SO-8_3.9x4.9mm_P1.27mm:d800f4fb-b3c4-4afb-bcb5-39ae79c2df44">
                 <elements>
-                    <text layer="Top.Names" position="-4.75, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -3.4" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.98" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-4.75, 0" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -3.4" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" rotation="180" height="0.98" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="0, -2.56" endPosition="-1.95, -2.56" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, 2.56" endPosition="-3.45, 2.56" thickness="0.12" />
                     <line layer="Top.Place" startPosition="0, 2.56" endPosition="1.95, 2.56" thickness="0.12" />
@@ -1508,9 +1508,9 @@
             </component>
             <component name="Capacitor_SMD:C_0805_2012Metric:ddfe4a48-eb68-4a69-a216-a34a4a339534">
                 <elements>
-                    <text layer="Top.Names" position="0, -1.75" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.68" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="180" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="0, -1.75" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.68" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.261251, -0.735" endPosition="0.261251, -0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.261251, 0.735" endPosition="0.261251, 0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="-1.7, 0.98" endPosition="1.7, 0.98" thickness="0.05" />
@@ -1527,9 +1527,9 @@
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric:df238608-5578-4546-8bac-1eee7b2f2734">
                 <elements>
-                    <text layer="Top.Names" position="2.5, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.65" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="270" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="2.5, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.227064, -0.735" endPosition="0.227064, -0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.227064, 0.735" endPosition="0.227064, 0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="1.68, 0.95" endPosition="1.68, -0.95" thickness="0.05" />
@@ -1546,9 +1546,9 @@
             </component>
             <component name="Capacitor_SMD:C_0805_2012Metric:dfecac64-6489-4934-aeb6-22c359ae6e1f">
                 <elements>
-                    <text layer="Top.Names" position="-3.1, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.68" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="180" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-3.1, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.68" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.261251, -0.735" endPosition="0.261251, -0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.261251, 0.735" endPosition="0.261251, 0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="1.7, 0.98" endPosition="1.7, -0.98" thickness="0.05" />
@@ -1565,9 +1565,9 @@
             </component>
             <component name="Capacitor_SMD:C_0805_2012Metric:e5d6c42f-8e0c-4a44-9b30-3fc8cf11302d">
                 <elements>
-                    <text layer="Top.Names" position="0, 1.75" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.68" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="0, 1.75" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.68" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.261251, 0.735" endPosition="0.261251, 0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.261251, -0.735" endPosition="0.261251, -0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="1.7, 0.98" endPosition="1.7, -0.98" thickness="0.05" />
@@ -1584,9 +1584,9 @@
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric:ec0abbb8-96e2-4107-822a-f1b041644787">
                 <elements>
-                    <text layer="Top.Names" position="-3.25, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.65" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-3.25, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.227064, 0.735" endPosition="0.227064, 0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.227064, -0.735" endPosition="0.227064, -0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="1.68, -0.95" endPosition="-1.68, -0.95" thickness="0.05" />
@@ -1603,9 +1603,9 @@
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric:f093c95b-1ea4-4fb9-865f-d22e44091489">
                 <elements>
-                    <text layer="Top.Names" position="2.5, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.65" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="270" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="2.5, 0" rotation="270" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.227064, -0.735" endPosition="0.227064, -0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.227064, 0.735" endPosition="0.227064, 0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="1.68, 0.95" endPosition="1.68, -0.95" thickness="0.05" />
@@ -1622,9 +1622,9 @@
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric:f1918f94-54db-4c73-81f2-7e74332f1eb3">
                 <elements>
-                    <text layer="Top.Names" position="-3.25, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.65" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="-3.25, 0" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.227064, -0.735" endPosition="0.227064, -0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.227064, 0.735" endPosition="0.227064, 0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="-1.68, -0.95" endPosition="-1.68, 0.95" thickness="0.05" />
@@ -1641,9 +1641,9 @@
             </component>
             <component name="Resistor_SMD:R_0805_2012Metric:f2140f87-b600-4de2-99c5-a295b2b45d1b">
                 <elements>
-                    <text layer="Top.Names" position="0, 1.65" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Top.Values" position="0, -1.65" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="F.Fab" position="0, 0" rotation="90" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Top.Names" position="0, 1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Top.Values" position="0, -1.65" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="F.Fab" position="0, 0" height="0.5" thickness="0.08" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Top.Place" startPosition="-0.227064, 0.735" endPosition="0.227064, 0.735" thickness="0.12" />
                     <line layer="Top.Place" startPosition="-0.227064, -0.735" endPosition="0.227064, -0.735" thickness="0.12" />
                     <line layer="Top.Keepout" startPosition="-1.68, -0.95" endPosition="-1.68, 0.95" thickness="0.05" />
@@ -1679,9 +1679,9 @@
             </component>
             <component name="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:007cbb43-8f9e-416d-9c8d-2eae5e81b95d">
                 <elements>
-                    <text layer="Bottom.Names" position="4.5, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Bottom.Values" position="0, 3" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="B.Fab" position="0, 0" rotation="90" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Bottom.Names" position="4.5, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Bottom.Values" position="0, 3" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="B.Fab" position="0, 0" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Bottom.Place" startPosition="0, 2.16" endPosition="2.009999, 2.16" thickness="0.12" />
                     <line layer="Bottom.Place" startPosition="0, -2.16" endPosition="-2.009999, -2.16" thickness="0.12" />
                     <line layer="Bottom.Place" startPosition="2.009999, -2.16" endPosition="2.009999, -1.805" thickness="0.12" />
@@ -1708,9 +1708,9 @@
             </component>
             <component name="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:4bc09b6c-b0c4-421b-bcc1-a4d594f96e19">
                 <elements>
-                    <text layer="Bottom.Names" position="4.5, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Bottom.Values" position="0, 3" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="B.Fab" position="0, 0" rotation="90" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Bottom.Names" position="4.5, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Bottom.Values" position="0, 3" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="B.Fab" position="0, 0" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Bottom.Place" startPosition="0, 2.16" endPosition="-2.009999, 2.16" thickness="0.12" />
                     <line layer="Bottom.Place" startPosition="-2.009999, -1.805" endPosition="-3.475, -1.805" thickness="0.12" />
                     <line layer="Bottom.Place" startPosition="2.009999, 2.16" endPosition="2.009999, 1.805" thickness="0.12" />
@@ -1737,9 +1737,9 @@
             </component>
             <component name="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:7e8f4c4f-431b-4983-a3a3-366c0a7e43ac">
                 <elements>
-                    <text layer="Bottom.Names" position="4.5, 0" rotation="180" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
-                    <text layer="Bottom.Values" position="0, 3" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
-                    <text layer="B.Fab" position="0, 0" rotation="90" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
+                    <text layer="Bottom.Names" position="4.5, 0" rotation="90" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{NAME}" />
+                    <text layer="Bottom.Values" position="0, 3" height="1" thickness="0.15" horizontalAlign="center" verticalAlign="middle" value="{VALUE}" />
+                    <text layer="B.Fab" position="0, 0" height="0.95" thickness="0.14" horizontalAlign="center" verticalAlign="middle" value="${REFERENCE}" />
                     <line layer="Bottom.Place" startPosition="-2.009999, 2.16" endPosition="-2.009999, 1.805" thickness="0.12" />
                     <line layer="Bottom.Place" startPosition="0, 2.16" endPosition="-2.009999, 2.16" thickness="0.12" />
                     <line layer="Bottom.Place" startPosition="-2.009999, -2.16" endPosition="-2.009999, -1.805" thickness="0.12" />
@@ -1774,10 +1774,12 @@
                     <pad name="4" signal="/O1" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="VISHAY" visible="false" />
+                    <attribute name="MPN" value="VO1400" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-109.0011, 138.7536" rotation="90" />
-                    <attribute name="VALUE" value="VO1400" position="-113.5011, 135.7536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="4.5, 0" rotation="90" />
+                    <attribute name="VALUE" value="VO1400" position="0, -3" rotation="0" />
                 </attributes>
             </part>
             <part name="U15" component="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:06aaee06-80e2-4d1d-abcd-e8c301b20a2c" position="54.5, 47" rotation="90">
@@ -1788,10 +1790,12 @@
                     <pad name="4" signal="/O6" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="VISHAY" visible="false" />
+                    <attribute name="MPN" value="VO1400" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-109.0011, 138.7536" rotation="90" />
-                    <attribute name="VALUE" value="VO1400" position="-113.5011, 135.7536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="4.5, 0" rotation="90" />
+                    <attribute name="VALUE" value="VO1400" position="0, -3" rotation="0" />
                 </attributes>
             </part>
             <part name="U7" component="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:06d50bbf-c4fe-4b28-baf4-7e097697253b" position="44.5, 47" rotation="90">
@@ -1802,10 +1806,12 @@
                     <pad name="4" signal="/O2" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="VISHAY" visible="false" />
+                    <attribute name="MPN" value="VO1400" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-109.0011, 138.7536" rotation="90" />
-                    <attribute name="VALUE" value="VO1400" position="-113.5011, 135.7536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="4.5, 0" rotation="90" />
+                    <attribute name="VALUE" value="VO1400" position="0, -3" rotation="0" />
                 </attributes>
             </part>
             <part name="C4" component="Capacitor_SMD:C_0805_2012Metric:08bbf645-96ad-47c2-b0b2-1edb45063a1d" position="20, 16">
@@ -1814,11 +1820,13 @@
                     <pad name="2" signal="Net-(C4-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="KEMET" visible="false" />
+                    <attribute name="MPN" value="C0805C104K5RACTU" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="C" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-111.0011, 138.7536" rotation="90" />
-                    <attribute name="VALUE" value="100n" position="-113.5011, 137.0736" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="2.5, 0" rotation="90" />
+                    <attribute name="VALUE" value="100n" position="0, -1.68" rotation="0" />
                 </attributes>
             </part>
             <part name="D2" component="Diode_SMD:D_SOD-123F:0b9cdc9d-6a24-4d46-bd0b-83daa5abd293" position="67, 39.25">
@@ -1827,10 +1835,12 @@
                     <pad name="2" signal="Net-(D2-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="ONSEMI" visible="false" />
+                    <attribute name="MPN" value="MBR0540T1G" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-113.5011, 140.5036" rotation="0" />
-                    <attribute name="VALUE" value="MBR0540" position="-113.5011, 136.6536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="0, 1.75" rotation="0" />
+                    <attribute name="VALUE" value="MBR0540" position="0, -2.1" rotation="0" />
                 </attributes>
             </part>
             <part name="C16" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:0c0f0e30-ee9a-4cc9-a633-07e3c92d5009" position="48.5, 15" rotation="270">
@@ -1839,10 +1849,12 @@
                     <pad name="2" signal="GND" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="KEMET" visible="false" />
+                    <attribute name="MPN" value="T491A106K006AT7280" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-113.5011, 140.5036" rotation="0" />
-                    <attribute name="VALUE" value="10u" position="-113.5011, 137.0036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="0, 1.75" rotation="0" />
+                    <attribute name="VALUE" value="10u" position="0, -1.75" rotation="0" />
                 </attributes>
             </part>
             <part name="J6" component="Connector_Molex:Molex_PicoBlade_53261-0471_1x04-1MP_P1.25mm_Horizontal:0c35336a-cc65-411a-a855-588370f189e0" position="3.5, 26" rotation="270">
@@ -1853,10 +1865,10 @@
                     <pad name="4" signal="+3.3V" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-109.9011, 141.4536" rotation="0" />
-                    <attribute name="VALUE" value="Conn_01x04" position="-113.5011, 134.9536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="3.6, 2.7" rotation="0" />
+                    <attribute name="VALUE" value="Conn_01x04" position="0, -3.8" rotation="0" />
                 </attributes>
             </part>
             <part name="J5" component="Connector_PinHeader_2.00mm:PinHeader_1x05_P2.00mm_Vertical:10a1090e-b34f-41a8-b209-60ae2914cdf6" position="43.5, 18.5">
@@ -1868,23 +1880,23 @@
                     <pad name="5" signal="/IN7{slash}PGC" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="exclude_from_bom" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-113.5011, 140.8136" rotation="0" />
-                    <attribute name="VALUE" value="Conn_01x05" position="-113.5011, 128.6936" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="0, 2.06" rotation="0" />
+                    <attribute name="VALUE" value="Conn_01x05" position="0, -10.06" rotation="0" />
                 </attributes>
             </part>
             <part name="REFM1" component="MountingHole:MountingHole_3.2mm_M3:13ab96fc-3a90-4396-adff-8e74295fe6f1" position="4.5, 4.5">
                 <attributes>
-                    <attribute name="NAME" value="{%name}" visible="false" position="-113.5011, 142.9536" rotation="0" />
-                    <attribute name="VALUE" value="MountingHole_3.2mm_M3" visible="false" position="-113.5011, 134.5536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" visible="false" position="0, 4.2" rotation="0" />
+                    <attribute name="VALUE" value="MountingHole_3.2mm_M3" visible="false" position="0, -4.2" rotation="0" />
                 </attributes>
             </part>
             <part name="U$2" component="MD-CPU04C:ESD_10.00:143aeec8-43f1-43f0-ac78-8a2e7833b421" position="11.25, 27.75">
                 <attributes>
-                    <attribute name="NAME" value="{%name}" visible="false" position="-113.5011, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="" visible="false" position="-113.5011, 138.7536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" visible="false" position="0, 0" rotation="0" />
+                    <attribute name="VALUE" value="" visible="false" position="0, 0" rotation="0" />
                 </attributes>
             </part>
             <part name="U2" component="Package_SO:SO-8_3.9x4.9mm_P1.27mm:1636d414-dba5-4fcc-b987-a003e939cf5c" position="9, 47.5" rotation="270">
@@ -1899,11 +1911,13 @@
                     <pad name="8" signal="/IN2" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="ABRACOM" visible="false" />
+                    <attribute name="MPN" value="ACP224" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-118.0011, 138.7536" rotation="270" />
-                    <attribute name="VALUE" value="ACPL224" position="-113.5011, 135.3536" rotation="180" />
+                    <attribute name="NAME" value="{%name}" position="-4.5, 0" rotation="270" />
+                    <attribute name="VALUE" value="ACPL224" position="0, -3.4" rotation="180" />
                 </attributes>
             </part>
             <part name="C1" component="Capacitor_SMD:C_0805_2012Metric:1a8dbd3b-11aa-4543-b0e6-e4b7e7a0f3b3" position="20, 10.5">
@@ -1912,11 +1926,13 @@
                     <pad name="2" signal="GND" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="KEMET" visible="false" />
+                    <attribute name="MPN" value="C0805C104K5RACTU" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="C" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-111.0011, 138.7536" rotation="90" />
-                    <attribute name="VALUE" value="100n" position="-113.5011, 137.0736" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="2.5, 0" rotation="90" />
+                    <attribute name="VALUE" value="100n" position="0, -1.68" rotation="0" />
                 </attributes>
             </part>
             <part name="JP4" component="MD-CPU04C:1X02_90:2415008c-c0ca-4e48-acce-1dbbc2af3373" position="62, 27.5" rotation="270">
@@ -1925,10 +1941,10 @@
                     <pad name="2" signal="GND" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-109.5011, 136.7536" rotation="90" />
-                    <attribute name="VALUE" value="PINHD-1X2/90" position="-109.0561, 134.9436" rotation="90" />
+                    <attribute name="NAME" value="{%name}" position="4, -2" rotation="90" />
+                    <attribute name="VALUE" value="PINHD-1X2/90" position="4.445, -3.81" rotation="90" />
                 </attributes>
             </part>
             <part name="L1" component="Inductor_SMD:L_0805_2012Metric:2c2d4bae-b56d-4788-9bae-faff7343bca5" position="67.5, 32" rotation="180">
@@ -1937,11 +1953,13 @@
                     <pad name="2" signal="Net-(JP4-Pad1)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="MURATA" visible="false" />
+                    <attribute name="MPN" value="BLM21RK601SN1D" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="FerriteBead" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-113.5011, 140.3036" rotation="0" />
-                    <attribute name="VALUE" value="600R" position="-113.5011, 137.2036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="0, 1.55" rotation="0" />
+                    <attribute name="VALUE" value="600R" position="0, -1.55" rotation="0" />
                 </attributes>
             </part>
             <part name="U11" component="Package_SO:SO-16_5.3x10.2mm_P1.27mm:2dc75f02-45cd-4533-bcd3-766542227c9c" position="13.5, 15" rotation="180">
@@ -1964,11 +1982,13 @@
                     <pad name="16" signal="+3.3V" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="MAXIM" visible="false" />
+                    <attribute name="MPN" value="MAX3232" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="MAX3232" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-113.5011, 132.5036" rotation="180" />
-                    <attribute name="VALUE" value="MAX3232" position="-113.5011, 132.7036" rotation="180" />
+                    <attribute name="NAME" value="{%name}" position="0, -6.25" rotation="180" />
+                    <attribute name="VALUE" value="MAX3232" position="0, -6.05" rotation="180" />
                 </attributes>
             </part>
             <part name="C14" component="Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A:3027e5be-3da4-4ff8-955a-ebc39bda8953" position="23.5, 38.5" rotation="90">
@@ -1977,11 +1997,13 @@
                     <pad name="2" signal="GND" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="KEMET" visible="false" />
+                    <attribute name="MPN" value="T491A106K006AT7280" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="C_Polarized" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-113.5011, 140.5036" rotation="0" />
-                    <attribute name="VALUE" value="10u" position="-113.5011, 137.0036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="0, 1.75" rotation="0" />
+                    <attribute name="VALUE" value="10u" position="0, -1.75" rotation="0" />
                 </attributes>
             </part>
             <part name="Q1" component="Crystal:Crystal_SMD_HC49-SD:3d6d912d-b91d-4f34-8801-1f7e0160c6ab" position="32, 31" rotation="180">
@@ -1990,11 +2012,11 @@
                     <pad name="2" signal="Net-(C11-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="Crystal" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-113.5011, 142.3036" rotation="0" />
-                    <attribute name="VALUE" value="16Mh" position="-113.5011, 135.2036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="0, 3.55" rotation="0" />
+                    <attribute name="VALUE" value="16Mh" position="0, -3.55" rotation="0" />
                 </attributes>
             </part>
             <part name="J8" component="Connector_Molex:Molex_PicoBlade_53261-0471_1x04-1MP_P1.25mm_Horizontal:4993646a-4fa8-494a-bcdd-85677606c8a8" position="3.5, 37.4" rotation="270">
@@ -2005,10 +2027,10 @@
                     <pad name="4" signal="+3.3V" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-110.1011, 141.4536" rotation="0" />
-                    <attribute name="VALUE" value="Conn_01x04" position="-113.5011, 134.9536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="3.4, 2.7" rotation="0" />
+                    <attribute name="VALUE" value="Conn_01x04" position="0, -3.8" rotation="0" />
                 </attributes>
             </part>
             <part name="C11" component="Capacitor_SMD:C_0805_2012Metric:49ae23ae-7f25-4bb4-bbeb-9486c7d553aa" position="29.75, 34.75">
@@ -2017,11 +2039,13 @@
                     <pad name="2" signal="Net-(C11-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="KEMET" visible="false" />
+                    <attribute name="MPN" value="C0805C220K5RACTU" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="C" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-116.7511, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="22p" position="-113.5011, 137.0736" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-3.25, 0" rotation="0" />
+                    <attribute name="VALUE" value="22p" position="0, -1.68" rotation="0" />
                 </attributes>
             </part>
             <part name="C6" component="Capacitor_SMD:C_0805_2012Metric:4e7fcab2-8ed0-441b-b056-b2e9c57d4663" position="40, 27.5" rotation="270">
@@ -2030,11 +2054,13 @@
                     <pad name="2" signal="+3.3V" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="KEMET" visible="false" />
+                    <attribute name="MPN" value="C0805C104K5RACTU" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="C" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-116.2511, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="100n" position="-113.5011, 137.0736" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-2.75, 0" rotation="0" />
+                    <attribute name="VALUE" value="100n" position="0, -1.68" rotation="0" />
                 </attributes>
             </part>
             <part name="C17" component="Capacitor_SMD:C_0805_2012Metric:4ebff465-eccb-4088-b3a4-4d3c9a1e1b4c" position="46.25, 15.5" rotation="90">
@@ -2043,11 +2069,13 @@
                     <pad name="2" signal="+3.3V" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="KEMET" visible="false" />
+                    <attribute name="MPN" value="C0805C104K5RACTU" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="C" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-116.7511, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="100n" position="-113.5011, 137.0736" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-3.25, 0" rotation="0" />
+                    <attribute name="VALUE" value="100n" position="0, -1.68" rotation="0" />
                 </attributes>
             </part>
             <part name="U12" component="Package_SO:SO-8_3.9x4.9mm_P1.27mm:4f8f5c57-a7cf-4418-bd08-c8d05927f175" position="27, 47.5" rotation="270">
@@ -2062,17 +2090,19 @@
                     <pad name="8" signal="/IN8" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="ABRACOM" visible="false" />
+                    <attribute name="MPN" value="ACP224" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-118.2511, 138.7536" rotation="270" />
-                    <attribute name="VALUE" value="ACPL224" position="-113.5011, 135.3536" rotation="180" />
+                    <attribute name="NAME" value="{%name}" position="-4.75, 0" rotation="270" />
+                    <attribute name="VALUE" value="ACPL224" position="0, -3.4" rotation="180" />
                 </attributes>
             </part>
             <part name="U$1" component="MD-CPU04C:CE-4MM:52e6d892-870d-4fbd-8e12-f965ef560341" position="44.5, 28.5">
                 <attributes>
-                    <attribute name="NAME" value="{%name}" visible="false" position="-113.5011, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="" visible="false" position="-113.5011, 138.7536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" visible="false" position="0, 0" rotation="0" />
+                    <attribute name="VALUE" value="" visible="false" position="0, 0" rotation="0" />
                 </attributes>
             </part>
             <part name="R5" component="Resistor_SMD:R_0805_2012Metric:544f4364-ec43-4e70-b923-c8256f6d973d" position="32.5, 39.5" rotation="270">
@@ -2081,10 +2111,10 @@
                     <pad name="2" signal="+3.3V" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-111.0011, 138.7536" rotation="90" />
-                    <attribute name="VALUE" value="10K" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="2.5, 0" rotation="90" />
+                    <attribute name="VALUE" value="10K" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="U4" component="Package_SO:SO-8_3.9x4.9mm_P1.27mm:56810a4b-d656-45cc-bdc7-7a8b415711f3" position="21, 47.5" rotation="270">
@@ -2099,11 +2129,13 @@
                     <pad name="8" signal="/IN6{slash}PGD" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="ABRACOM" visible="false" />
+                    <attribute name="MPN" value="ACP224" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-118.2511, 138.7536" rotation="270" />
-                    <attribute name="VALUE" value="ACPL224" position="-113.5011, 135.3536" rotation="180" />
+                    <attribute name="NAME" value="{%name}" position="-4.75, 0" rotation="270" />
+                    <attribute name="VALUE" value="ACPL224" position="0, -3.4" rotation="180" />
                 </attributes>
             </part>
             <part name="U17" component="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:68deaa90-d495-4b68-879b-7e15875cd754" position="59.5, 47" rotation="90">
@@ -2114,16 +2146,18 @@
                     <pad name="4" signal="/O8" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="VISHAY" visible="false" />
+                    <attribute name="MPN" value="VO1400" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-109.0011, 138.7536" rotation="90" />
-                    <attribute name="VALUE" value="VO1400" position="-113.5011, 135.7536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="4.5, 0" rotation="90" />
+                    <attribute name="VALUE" value="VO1400" position="0, -3" rotation="0" />
                 </attributes>
             </part>
             <part name="M4" component="MountingHole:MountingHole_3.2mm_M3:6a276a0e-9972-417e-b49e-550ee19121d1" position="65.5, 4.5">
                 <attributes>
-                    <attribute name="NAME" value="{%name}" visible="false" position="-113.5011, 142.9536" rotation="0" />
-                    <attribute name="VALUE" value="MountingHole_3.2mm_M3" visible="false" position="-113.5011, 134.5536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" visible="false" position="0, 4.2" rotation="0" />
+                    <attribute name="VALUE" value="MountingHole_3.2mm_M3" visible="false" position="0, -4.2" rotation="0" />
                 </attributes>
             </part>
             <part name="U10" component="Package_QFP:LQFP-44_10x10mm_P0.8mm:6ab4afa7-073f-4752-a0ad-66595a05bce2" position="34, 18.5" rotation="90">
@@ -2170,10 +2204,12 @@
                     <pad name="44" signal="/TX1" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="MICROCHIP" visible="false" />
+                    <attribute name="MPN" value="PIC18F4K22-I/PT" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-106.2511, 144.2536" rotation="90" />
-                    <attribute name="VALUE" value="PIC18F4K22-I/PT" position="-113.5011, 131.4036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="7.25, 5.5" rotation="90" />
+                    <attribute name="VALUE" value="PIC18F4K22-I/PT" position="0, -7.35" rotation="0" />
                 </attributes>
             </part>
             <part name="C12" component="Capacitor_SMD:C_0805_2012Metric:7165ebc6-8a7f-46fb-82cc-0716017fff85" position="62, 32">
@@ -2182,11 +2218,13 @@
                     <pad name="2" signal="GND" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="KEMET" visible="false" />
+                    <attribute name="MPN" value="C0805C475K3RACTU" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="C" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-117.0011, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="4u7" position="-113.5011, 137.0736" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-3.5, 0" rotation="0" />
+                    <attribute name="VALUE" value="4u7" position="0, -1.68" rotation="0" />
                 </attributes>
             </part>
             <part name="R14" component="Resistor_SMD:R_0805_2012Metric:71d0cb07-e3b4-4e91-aa4b-4a837d75f063" position="50.5, 39.5" rotation="90">
@@ -2195,10 +2233,10 @@
                     <pad name="2" signal="Net-(R14-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-116.7511, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="270R" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-3.25, 0" rotation="0" />
+                    <attribute name="VALUE" value="270R" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="R10" component="Resistor_SMD:R_0805_2012Metric:76374772-bc39-46e8-ac1e-aa036d07fdac" position="40, 39.5" rotation="90">
@@ -2207,10 +2245,10 @@
                     <pad name="2" signal="Net-(R10-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-116.7511, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="270R" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-3.25, 0" rotation="0" />
+                    <attribute name="VALUE" value="270R" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="R11" component="Resistor_SMD:R_0805_2012Metric:7ecdeb1a-e8e1-462e-877c-7b6102cd6f77" position="47, 39.5" rotation="90">
@@ -2219,10 +2257,10 @@
                     <pad name="2" signal="Net-(R11-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-116.7511, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="270R" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-3.25, 0" rotation="0" />
+                    <attribute name="VALUE" value="270R" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="U1" component="Package_SO:SO-8_3.9x4.9mm_P1.27mm:83304b74-1030-40be-8f80-3a14b260905e" position="3, 47.5" rotation="270">
@@ -2237,11 +2275,13 @@
                     <pad name="8" signal="/IN0" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="ABRACOM" visible="false" />
+                    <attribute name="MPN" value="ACP224" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-118.0011, 138.7536" rotation="270" />
-                    <attribute name="VALUE" value="ACPL224" position="-113.5011, 135.3536" rotation="180" />
+                    <attribute name="NAME" value="{%name}" position="-4.5, 0" rotation="270" />
+                    <attribute name="VALUE" value="ACPL224" position="0, -3.4" rotation="180" />
                 </attributes>
             </part>
             <part name="C15" component="Capacitor_SMD:C_0805_2012Metric:8701daf3-5538-47a2-9b71-ca0bae4d9458" position="25.75, 38" rotation="270">
@@ -2250,11 +2290,13 @@
                     <pad name="2" signal="+3.3V" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="KEMET" visible="false" />
+                    <attribute name="MPN" value="C0805C104K5RACTU" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="C" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-113.5011, 140.5036" rotation="0" />
-                    <attribute name="VALUE" value="100n" position="-113.5011, 137.0736" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="0, 1.75" rotation="0" />
+                    <attribute name="VALUE" value="100n" position="0, -1.68" rotation="0" />
                 </attributes>
             </part>
             <part name="C5" component="Capacitor_SMD:C_0805_2012Metric:8880362c-bcb5-4ba8-a1f1-97c604518d8a" position="10.5, 7.75" rotation="90">
@@ -2263,10 +2305,12 @@
                     <pad name="2" signal="+3.3V" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="KEMET" visible="false" />
+                    <attribute name="MPN" value="C0805C104K5RACTU" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-113.5011, 140.4336" rotation="0" />
-                    <attribute name="VALUE" value="100n" position="-113.5011, 137.0736" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="0, 1.68" rotation="0" />
+                    <attribute name="VALUE" value="100n" position="0, -1.68" rotation="0" />
                 </attributes>
             </part>
             <part name="U18" component="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:8ab45b45-6053-4a0f-9643-6e5a0809982d" position="64.5, 47" rotation="90">
@@ -2277,10 +2321,12 @@
                     <pad name="4" signal="/O9" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="VISHAY" visible="false" />
+                    <attribute name="MPN" value="VO1400" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-109.0011, 138.7536" rotation="90" />
-                    <attribute name="VALUE" value="VO1400" position="-113.5011, 135.7536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="4.5, 0" rotation="90" />
+                    <attribute name="VALUE" value="VO1400" position="0, -3" rotation="0" />
                 </attributes>
             </part>
             <part name="R1" component="Resistor_SMD:R_0805_2012Metric:8fa82f63-d493-47c8-970a-36b59493eb12" position="67.5, 35.5" rotation="90">
@@ -2289,16 +2335,16 @@
                     <pad name="2" signal="Net-(D2-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-113.5011, 140.4036" rotation="0" />
-                    <attribute name="VALUE" value="5R1" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="0, 1.65" rotation="0" />
+                    <attribute name="VALUE" value="5R1" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="M3" component="MountingHole:MountingHole_3.2mm_M3:905b3d47-e89f-4ed6-acad-986c0de1d59e" position="65.5, 63">
                 <attributes>
-                    <attribute name="NAME" value="{%name}" visible="false" position="-113.5011, 142.9536" rotation="0" />
-                    <attribute name="VALUE" value="MountingHole_3.2mm_M3" visible="false" position="-113.5011, 134.5536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" visible="false" position="0, 4.2" rotation="0" />
+                    <attribute name="VALUE" value="MountingHole_3.2mm_M3" visible="false" position="0, -4.2" rotation="0" />
                 </attributes>
             </part>
             <part name="J3" component="Connector_Molex:Molex_PicoBlade_53261-0571_1x05-1MP_P1.25mm_Horizontal:9f6f8bfc-2de6-4257-b70b-0b8d0c7e81ab" position="3.5, 13.8" rotation="270">
@@ -2310,16 +2356,16 @@
                     <pad name="5" signal="Net-(J3-Pad5)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-113.5011, 143.1536" rotation="180" />
-                    <attribute name="VALUE" value="Conn_01x05" position="-113.5011, 134.9536" rotation="180" />
+                    <attribute name="NAME" value="{%name}" position="0, 4.4" rotation="180" />
+                    <attribute name="VALUE" value="Conn_01x05" position="0, -3.8" rotation="180" />
                 </attributes>
             </part>
             <part name="M2" component="MountingHole:MountingHole_3.2mm_M3:a0eb6902-6c2d-447b-92fe-ed9825e60171" position="4.5, 63">
                 <attributes>
-                    <attribute name="NAME" value="{%name}" visible="false" position="-113.5011, 142.9536" rotation="0" />
-                    <attribute name="VALUE" value="MountingHole_3.2mm_M3" visible="false" position="-113.5011, 134.5536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" visible="false" position="0, 4.2" rotation="0" />
+                    <attribute name="VALUE" value="MountingHole_3.2mm_M3" visible="false" position="0, -4.2" rotation="0" />
                 </attributes>
             </part>
             <part name="R15" component="Resistor_SMD:R_0805_2012Metric:a3b216b9-4fee-49bb-b100-a691848caa12" position="54.5, 39.5" rotation="90">
@@ -2328,10 +2374,10 @@
                     <pad name="2" signal="Net-(R15-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-116.7511, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="270R" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-3.25, 0" rotation="0" />
+                    <attribute name="VALUE" value="270R" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="R12" component="Resistor_SMD:R_0805_2012Metric:a4219ef4-9d2b-4212-866d-f1e0dd716ad0" position="43, 39.5" rotation="90">
@@ -2340,10 +2386,10 @@
                     <pad name="2" signal="Net-(R12-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-116.7511, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="270R" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-3.25, 0" rotation="0" />
+                    <attribute name="VALUE" value="270R" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="LED1" component="Diode_SMD:D_0805_2012Metric:a79ffa96-d78f-48ce-a640-7386caa72dcd" position="26.5, 9" rotation="270">
@@ -2352,11 +2398,13 @@
                     <pad name="2" signal="Net-(LED1-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="BROADCOM" visible="false" />
+                    <attribute name="MPN" value="HSMG-C170" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="LED" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-113.5011, 136.7536" rotation="0" />
-                    <attribute name="VALUE" value="GREEN" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="0, -2" rotation="0" />
+                    <attribute name="VALUE" value="GREEN" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="C2" component="Capacitor_SMD:C_0805_2012Metric:a96eef5a-939e-4168-ac0d-09f2ea9d54a0" position="20, 18.5">
@@ -2365,11 +2413,13 @@
                     <pad name="2" signal="GND" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="KEMET" visible="false" />
+                    <attribute name="MPN" value="C0805C104K5RACTU" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="C" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-111.0011, 138.7536" rotation="90" />
-                    <attribute name="VALUE" value="100n" position="-113.5011, 137.0736" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="2.5, 0" rotation="90" />
+                    <attribute name="VALUE" value="100n" position="0, -1.68" rotation="0" />
                 </attributes>
             </part>
             <part name="R3" component="Resistor_SMD:R_0805_2012Metric:aad903ed-d517-4abe-b9b0-d75992c0495f" position="56.5, 39.5" rotation="90">
@@ -2378,10 +2428,10 @@
                     <pad name="2" signal="Net-(R3-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-116.2511, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="270R" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-2.75, 0" rotation="0" />
+                    <attribute name="VALUE" value="270R" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="R9" component="Resistor_SMD:R_0805_2012Metric:af307c9a-258b-449c-a948-695d3b606e03" position="38, 39.5" rotation="90">
@@ -2390,10 +2440,10 @@
                     <pad name="2" signal="Net-(R9-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-116.2511, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="270R" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-2.75, 0" rotation="0" />
+                    <attribute name="VALUE" value="270R" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="X2" component="MD-CPU04C:PAK100_2500-5-14:b079c22e-1cd7-4cda-ab96-a09fc049cc40" position="48, 56.5">
@@ -2414,10 +2464,10 @@
                     <pad name="14" signal="/O-COM3" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-126.5011, 138.5036" rotation="0" />
-                    <attribute name="VALUE" value="2514-5" position="-118.5811, 143.3256" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-13, -0.25" rotation="0" />
+                    <attribute name="VALUE" value="2514-5" position="-5.08, 4.572" rotation="0" />
                 </attributes>
             </part>
             <part name="R4" component="Resistor_SMD:R_0805_2012Metric:b15e09b5-5f3c-4e17-9455-ed097a57be51" position="52.5, 39.5" rotation="90">
@@ -2426,10 +2476,10 @@
                     <pad name="2" signal="Net-(R4-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-116.2511, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="270R" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-2.75, 0" rotation="0" />
+                    <attribute name="VALUE" value="270R" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="U9" component="Package_TO_SOT_SMD:SOT-89-3:b2314500-9139-47ec-90c3-9285985bd762" position="62.5, 35.5">
@@ -2439,11 +2489,13 @@
                     <pad name="3" signal="+3.3V" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="MICROCHIP" visible="false" />
+                    <attribute name="MPN" value="MCP1804T-3302I/MB" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="MCP1703A-3302_SOT89" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-117.2511, 137.0036" rotation="0" />
-                    <attribute name="VALUE" value="MCP1703A-3302_SOT89" position="-113.2011, 135.2536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-3.75, -1.75" rotation="0" />
+                    <attribute name="VALUE" value="MCP1703A-3302_SOT89" position="0.3, -3.5" rotation="0" />
                 </attributes>
             </part>
             <part name="U5" component="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:b354aef0-b65b-4c25-9ed4-10b63d7c12e9" position="39.5, 47" rotation="90">
@@ -2454,10 +2506,12 @@
                     <pad name="4" signal="/O0" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="VISHAY" visible="false" />
+                    <attribute name="MPN" value="VO1400" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-109.0011, 138.7536" rotation="90" />
-                    <attribute name="VALUE" value="VO1400" position="-113.5011, 135.7536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="4.5, 0" rotation="90" />
+                    <attribute name="VALUE" value="VO1400" position="0, -3" rotation="0" />
                 </attributes>
             </part>
             <part name="R6" component="Resistor_SMD:R_0805_2012Metric:bc269074-fb30-474a-8211-54d50dfbcdf8" position="47.25, 18.75">
@@ -2466,10 +2520,10 @@
                     <pad name="2" signal="+3.3V" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-113.5011, 140.4036" rotation="0" />
-                    <attribute name="VALUE" value="10K" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="0, 1.65" rotation="0" />
+                    <attribute name="VALUE" value="10K" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="X1" component="MD-CPU04C:PAK100_2500-5-14:c58f7405-5759-4503-8ba2-842e86febc86" position="22, 56.5">
@@ -2490,10 +2544,10 @@
                     <pad name="14" signal="/I-COM3" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-126.5011, 138.5036" rotation="0" />
-                    <attribute name="VALUE" value="2514-5" position="-118.5811, 143.3256" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-13, -0.25" rotation="0" />
+                    <attribute name="VALUE" value="2514-5" position="-5.08, 4.572" rotation="0" />
                 </attributes>
             </part>
             <part name="C8" component="Capacitor_SMD:C_0805_2012Metric:c8f938e3-262e-49aa-8430-779899694a35" position="37.25, 9" rotation="90">
@@ -2502,11 +2556,13 @@
                     <pad name="2" signal="+3.3V" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="KEMET" visible="false" />
+                    <attribute name="MPN" value="C0805C104K5RACTU" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="C" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-113.5011, 137.0036" rotation="0" />
-                    <attribute name="VALUE" value="100n" position="-113.5011, 137.0736" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="0, -1.75" rotation="0" />
+                    <attribute name="VALUE" value="100n" position="0, -1.68" rotation="0" />
                 </attributes>
             </part>
             <part name="C7" component="Capacitor_SMD:C_0805_2012Metric:cf623136-61be-4948-b7d6-f200009decaf" position="42, 27.5" rotation="270">
@@ -2515,11 +2571,13 @@
                     <pad name="2" signal="+3.3V" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="KEMET" visible="false" />
+                    <attribute name="MPN" value="C0805F103K5RACTU" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="C" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-116.2511, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="10n" position="-113.5011, 137.0736" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-2.75, 0" rotation="0" />
+                    <attribute name="VALUE" value="10n" position="0, -1.68" rotation="0" />
                 </attributes>
             </part>
             <part name="R17" component="Resistor_SMD:R_0805_2012Metric:cfe6c9df-bd02-44ac-b0cc-1bb791e7bfab" position="25, 21" rotation="90">
@@ -2528,10 +2586,10 @@
                     <pad name="2" signal="+3.3V" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-111.0011, 138.7536" rotation="90" />
-                    <attribute name="VALUE" value="1K5" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="2.5, 0" rotation="90" />
+                    <attribute name="VALUE" value="1K5" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="U13" component="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:d467246d-ac7d-464d-a4ca-1acb6af186c1" position="49.5, 47" rotation="90">
@@ -2542,10 +2600,12 @@
                     <pad name="4" signal="/O4" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="VISHAY" visible="false" />
+                    <attribute name="MPN" value="VO1400" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-109.0011, 138.7536" rotation="90" />
-                    <attribute name="VALUE" value="VO1400" position="-113.5011, 135.7536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="4.5, 0" rotation="90" />
+                    <attribute name="VALUE" value="VO1400" position="0, -3" rotation="0" />
                 </attributes>
             </part>
             <part name="U3" component="Package_SO:SO-8_3.9x4.9mm_P1.27mm:d800f4fb-b3c4-4afb-bcb5-39ae79c2df44" position="15, 47.5" rotation="270">
@@ -2560,11 +2620,13 @@
                     <pad name="8" signal="/IN4" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="ABRACOM" visible="false" />
+                    <attribute name="MPN" value="ACP224" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-118.2511, 138.7536" rotation="270" />
-                    <attribute name="VALUE" value="ACPL224" position="-113.5011, 135.3536" rotation="180" />
+                    <attribute name="NAME" value="{%name}" position="-4.75, 0" rotation="270" />
+                    <attribute name="VALUE" value="ACPL224" position="0, -3.4" rotation="180" />
                 </attributes>
             </part>
             <part name="C13" component="Capacitor_SMD:C_0805_2012Metric:ddfe4a48-eb68-4a69-a216-a34a4a339534" position="62, 39" rotation="180">
@@ -2573,10 +2635,12 @@
                     <pad name="2" signal="GND" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="KEMET" visible="false" />
+                    <attribute name="MPN" value="C0805C475K3RACTU" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-113.5011, 137.0036" rotation="0" />
-                    <attribute name="VALUE" value="4u7" position="-113.5011, 137.0736" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="0, -1.75" rotation="0" />
+                    <attribute name="VALUE" value="4u7" position="0, -1.68" rotation="0" />
                 </attributes>
             </part>
             <part name="R2" component="Resistor_SMD:R_0805_2012Metric:df238608-5578-4546-8bac-1eee7b2f2734" position="30.5, 39.5" rotation="270">
@@ -2585,10 +2649,10 @@
                     <pad name="2" signal="+3.3V" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-111.0011, 138.7536" rotation="90" />
-                    <attribute name="VALUE" value="10K" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="2.5, 0" rotation="90" />
+                    <attribute name="VALUE" value="10K" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="C10" component="Capacitor_SMD:C_0805_2012Metric:dfecac64-6489-4934-aeb6-22c359ae6e1f" position="34.25, 34.75" rotation="180">
@@ -2597,11 +2661,13 @@
                     <pad name="2" signal="Net-(C10-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="KEMET" visible="false" />
+                    <attribute name="MPN" value="C0805C220K5RACTU" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="22p" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-116.6011, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="22p" position="-113.5011, 137.0736" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-3.1, 0" rotation="0" />
+                    <attribute name="VALUE" value="22p" position="0, -1.68" rotation="0" />
                 </attributes>
             </part>
             <part name="C9" component="Capacitor_SMD:C_0805_2012Metric:e5d6c42f-8e0c-4a44-9b30-3fc8cf11302d" position="35, 9" rotation="90">
@@ -2610,11 +2676,13 @@
                     <pad name="2" signal="+3.3V" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="KEMET" visible="false" />
+                    <attribute name="MPN" value="C0805F103K5RACTU" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="C" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-113.5011, 140.5036" rotation="0" />
-                    <attribute name="VALUE" value="10n" position="-113.5011, 137.0736" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="0, 1.75" rotation="0" />
+                    <attribute name="VALUE" value="10n" position="0, -1.68" rotation="0" />
                 </attributes>
             </part>
             <part name="R13" component="Resistor_SMD:R_0805_2012Metric:ec0abbb8-96e2-4107-822a-f1b041644787" position="45, 39.5" rotation="90">
@@ -2623,10 +2691,10 @@
                     <pad name="2" signal="Net-(R13-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-116.7511, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="270R" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-3.25, 0" rotation="0" />
+                    <attribute name="VALUE" value="270R" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="R18" component="Resistor_SMD:R_0805_2012Metric:f093c95b-1ea4-4fb9-865f-d22e44091489" position="25, 16.75" rotation="270">
@@ -2635,10 +2703,10 @@
                     <pad name="2" signal="+3.3V" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-111.0011, 138.7536" rotation="270" />
-                    <attribute name="VALUE" value="1K5" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="2.5, 0" rotation="270" />
+                    <attribute name="VALUE" value="1K5" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="R16" component="Resistor_SMD:R_0805_2012Metric:f1918f94-54db-4c73-81f2-7e74332f1eb3" position="58.5, 39.5" rotation="90">
@@ -2647,10 +2715,10 @@
                     <pad name="2" signal="Net-(R16-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-116.7511, 138.7536" rotation="0" />
-                    <attribute name="VALUE" value="270R" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="-3.25, 0" rotation="0" />
+                    <attribute name="VALUE" value="270R" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="R19" component="Resistor_SMD:R_0805_2012Metric:f2140f87-b600-4de2-99c5-a295b2b45d1b" position="30, 9" rotation="90">
@@ -2659,10 +2727,10 @@
                     <pad name="2" signal="/LED" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-113.5011, 140.4036" rotation="0" />
-                    <attribute name="VALUE" value="270R" position="-113.5011, 137.1036" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="0, 1.65" rotation="0" />
+                    <attribute name="VALUE" value="270R" position="0, -1.65" rotation="0" />
                 </attributes>
             </part>
             <part name="C3" component="Capacitor_SMD:C_0805_2012Metric:f3bd24f1-788d-4de6-a2a6-f2416ff59952" position="20, 13">
@@ -2671,14 +2739,16 @@
                     <pad name="2" signal="Net-(C3-Pad2)" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="KEMET" visible="false" />
+                    <attribute name="MPN" value="C0805C104K5RACTU" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
                     <attribute name="Value" value="C" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-111.0011, 138.7536" rotation="90" />
-                    <attribute name="VALUE" value="100n" position="-113.5011, 137.0736" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="2.5, 0" rotation="90" />
+                    <attribute name="VALUE" value="100n" position="0, -1.68" rotation="0" />
                 </attributes>
             </part>
-            <part name="U16" component="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:007cbb43-8f9e-416d-9c8d-2eae5e81b95d" position="55, 47" rotation="90">
+            <part name="U16" component="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:007cbb43-8f9e-416d-9c8d-2eae5e81b95d" position="55, 47" rotation="90" side="bottom">
                 <pads>
                     <pad name="1" signal="Net-(R16-Pad2)" />
                     <pad name="2" signal="GND" />
@@ -2686,13 +2756,15 @@
                     <pad name="4" signal="/O7" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="VISHAY" visible="false" />
+                    <attribute name="MPN" value="VO1400" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-109.0011, 138.7536" rotation="90" />
-                    <attribute name="VALUE" value="VO1400" position="-113.5011, 141.7536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="4.5, 0" rotation="90" />
+                    <attribute name="VALUE" value="VO1400" position="0, 3" rotation="0" />
                 </attributes>
             </part>
-            <part name="U14" component="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:4bc09b6c-b0c4-421b-bcc1-a4d594f96e19" position="49.5, 47" rotation="90">
+            <part name="U14" component="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:4bc09b6c-b0c4-421b-bcc1-a4d594f96e19" position="49.5, 47" rotation="90" side="bottom">
                 <pads>
                     <pad name="1" signal="Net-(R14-Pad2)" />
                     <pad name="2" signal="GND" />
@@ -2700,13 +2772,15 @@
                     <pad name="4" signal="/O5" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="VISHAY" visible="false" />
+                    <attribute name="MPN" value="VO1400" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-109.0011, 138.7536" rotation="90" />
-                    <attribute name="VALUE" value="VO1400" position="-113.5011, 141.7536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="4.5, 0" rotation="90" />
+                    <attribute name="VALUE" value="VO1400" position="0, 3" rotation="0" />
                 </attributes>
             </part>
-            <part name="U8" component="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:7e8f4c4f-431b-4983-a3a3-366c0a7e43ac" position="44, 47" rotation="90">
+            <part name="U8" component="Package_SO:SOP-4_3.8x4.1mm_P2.54mm:7e8f4c4f-431b-4983-a3a3-366c0a7e43ac" position="44, 47" rotation="90" side="bottom">
                 <pads>
                     <pad name="1" signal="Net-(R12-Pad2)" />
                     <pad name="2" signal="GND" />
@@ -2714,10 +2788,12 @@
                     <pad name="4" signal="/O3" />
                 </pads>
                 <attributes>
-                    <attribute name="Sheetfile" value="MD-CPU04C.kicad_sch" visible="false" />
+                    <attribute name="MNF" value="VISHAY" visible="false" />
+                    <attribute name="MPN" value="VO1400" visible="false" />
+                    <attribute name="Sheetfile" value="cpu04c.kicad_sch" visible="false" />
                     <attribute name="Sheetname" value="" visible="false" />
-                    <attribute name="NAME" value="{%name}" position="-109.0011, 138.7536" rotation="90" />
-                    <attribute name="VALUE" value="VO1400" position="-113.5011, 141.7536" rotation="0" />
+                    <attribute name="NAME" value="{%name}" position="4.5, 0" rotation="90" />
+                    <attribute name="VALUE" value="VO1400" position="0, 3" rotation="0" />
                 </attributes>
             </part>
         </parts>
@@ -3361,6 +3437,8 @@
             <line layer="Top.Copper" startPosition="27.174, 31" endPosition="31, 31" thickness="0.2" signal="Net-(C11-Pad2)" />
             <line layer="Top.Copper" startPosition="30, 8.05" endPosition="26.5, 8.05" thickness="0.2" signal="Net-(LED1-Pad2)" />
             <line layer="Top.Copper" startPosition="62.95, 39" endPosition="65.35, 39" thickness="0.4" signal="Net-(C13-Pad1)" />
+            <line layer="Top.Copper" startPosition="62.5, 35.5" endPosition="63, 36" thickness="0.4" signal="Net-(C13-Pad1)" />
+            <line layer="Top.Copper" startPosition="60.9375, 35.5" endPosition="62.5, 35.5" thickness="0.4" signal="Net-(C13-Pad1)" />
             <line layer="Top.Copper" startPosition="63, 36" endPosition="63, 38.95" thickness="0.4" signal="Net-(C13-Pad1)" />
             <line layer="Top.Copper" startPosition="68.4, 37.3125" endPosition="68.4, 39.25" thickness="0.4" signal="Net-(D2-Pad2)" />
             <line layer="Top.Copper" startPosition="67.5, 36.4125" endPosition="68.4, 37.3125" thickness="0.4" signal="Net-(D2-Pad2)" />

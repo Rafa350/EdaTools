@@ -467,6 +467,7 @@
         <xs:restriction base="xs:string">
             <xs:enumeration value="signal"/>
             <xs:enumeration value="design"/>
+            <xs:enumeration value="document"/>
             <xs:enumeration value="mechanical"/>
             <xs:enumeration value="outline"/>
             <xs:enumeration value="unknown"/>
