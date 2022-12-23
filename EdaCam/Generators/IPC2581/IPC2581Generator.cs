@@ -10,8 +10,6 @@ using MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors;
 using MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Xml;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
-using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
-using MikroPic.EdaTools.v1.CoreExtensions.Bom;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
 
@@ -24,7 +22,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         All
     }
 
-    public sealed class IPC2581Generator: Generator {
+    public sealed partial class IPC2581Generator: Generator {
 
         private const double _scale = 1000000.0;
 
@@ -252,47 +250,6 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
         }
 
         /// <summary>
-        /// Escriu la seccio 'Bom'
-        /// </summary>
-        /// <param name="board">La placa.</param>
-        /// 
-        private void WriteSection_Bom(EdaBoard board) {
-
-            _writer.WriteStartElement("Bom");
-            _writer.WriteAttributeString("name", "board_0_bom");
-
-            _writer.WriteStartElement("BomHeader");
-            _writer.WriteAttributeString("assembly", "assembly_0");
-            _writer.WriteAttributeString("revision", "1.0");
-            _writer.WriteEndElement();
-
-            var bomGenerator = new EdaBomGenerator(board);
-            var bom = bomGenerator.Generate();
-            foreach (var entry in bom.Entries) {
-
-                _writer.WriteStartElement("BomItem");
-                _writer.WriteAttributeString("OEMDesignNumberRef", entry.Name);
-                _writer.WriteAttributeInteger("quantity", entry.ReferenceCount);
-
-                foreach (var reference in entry.References) {
-
-                    var part = board.GetPart(reference);
-                    var package = part.Component.Name;
-
-                    _writer.WriteStartElement("RefDes");
-                    _writer.WriteAttributeString("name", reference);
-                    _writer.WriteAttributeString("packageRef", package);
-                    _writer.WriteAttributeBool("populate", true);
-                    _writer.WriteEndElement();
-                }
-
-                _writer.WriteEndElement();
-            }
-
-            _writer.WriteEndElement();
-        }
-
-        /// <summary>
         /// Escriu la seccio 'ECad'
         /// </summary>
         /// <param name="board">La placa.</param>
@@ -357,8 +314,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                 WriteSection_Component(board);
             }
 
-            if (_logicalNetDataEnabled)
+            if (_logicalNetDataEnabled) {
                 WriteSection_LogicalNet(board);
+                WriteSection_PhysicalNet(board);
+            }
 
             WriteSection_LayerFeature(board);
 
@@ -378,38 +337,6 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             if (polygon != null) {
                 _writer.WriteStartElement("Profile");
                 _writer.WritePolygonElement(polygon, -1, _scale);
-                _writer.WriteEndElement();
-            }
-        }
-
-        /// <summary>
-        /// Escriu la seccio 'LogicalNet'
-        /// </summary>
-        /// <param name="board">La placa.</param>
-        /// 
-        private void WriteSection_LogicalNet(EdaBoard board) {
-
-            //var generator = new EdaLogicalNetGenerator(board);
-            //var logicalNet = generator.Generate();
-
-            foreach (var signal in board.Signals) {
-
-                _writer.WriteStartElement("LogicalNet");
-                _writer.WriteAttributeString("name", signal.Name);
-
-                var items = board.GetConectionItems(signal);
-                if (items != null) {
-                    foreach (var item in items) {
-                        if (item.Conectable is EdaPadBaseElement pad) {
-                            var part = item.Part;
-                            _writer.WriteStartElement("PinRef");
-                            _writer.WriteAttributeString("componentRef", part.Name);
-                            _writer.WriteAttributeString("pin", pad.Name);
-                            _writer.WriteEndElement();
-                        }
-                    }
-                }
-
                 _writer.WriteEndElement();
             }
         }

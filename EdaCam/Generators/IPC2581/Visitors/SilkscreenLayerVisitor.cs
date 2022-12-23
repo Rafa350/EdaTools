@@ -52,7 +52,6 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
             protected override void TraceStartGlyph() {
 
                 _writer.WriteStartElement("Features");
-                _writer.WritePointElement("Location", new EdaPoint(0, 0), _scale);
                 _writer.WriteStartElement("Polyline");
             }
 
@@ -153,10 +152,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
                 var paa = new PartAttributeAdapter(Part, element);
                 if (paa.IsVisible) {
 
-                    var lineDescEntry = _cache.GetLineDescEntry(element.Thickness, EdaLineCap.Round);
                     var tr = Part == null ? new EdaTransformation() : Part.GetLocalTransformation();
-                    var position = tr.Transform(element.Position);
-                    var rotation = Part == null ? EdaAngle.Zero : Part.Rotation;
+                    var position = tr.Transform(paa.Position);
+
+                    var rotation = (Part == null ? EdaAngle.Zero : Part.Rotation) + paa.Rotation;
 
                     _writer.WriteStartElement("Set");
                     _writer.WriteAttributeString("geometricUsage", "TEXT");
@@ -166,6 +165,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
                     _writer.WriteAttributeString("value", paa.Value);
                     _writer.WriteEndElement();
 
+                    var lineDescEntry = _cache.GetLineDescEntry(element.Thickness, EdaLineCap.Round);
                     var drawer = new Drawer(_font, _writer, lineDescEntry.Id, rotation);
                     drawer.Draw(paa.Value, position, element.HorizontalAlign, element.VerticalAlign, element.Height);
 

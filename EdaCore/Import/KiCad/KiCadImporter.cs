@@ -103,14 +103,11 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             board.AddLayer(new EdaLayer(EdaLayerId.TopRestrict, BoardSide.Top, LayerFunction.Unknown));
             board.AddLayer(new EdaLayer(EdaLayerId.InnerRestrict, BoardSide.Inner, LayerFunction.Unknown));
             board.AddLayer(new EdaLayer(EdaLayerId.BottomRestrict, BoardSide.Bottom, LayerFunction.Unknown));
-            board.AddLayer(new EdaLayer(EdaLayerId.TopKeepout, BoardSide.Top, LayerFunction.Unknown));
-            board.AddLayer(new EdaLayer(EdaLayerId.BottomKeepout, BoardSide.Bottom, LayerFunction.Unknown));
 
             var layersNode = tree.SelectBranch(node, "layers");
             foreach (var layerNode in layersNode.Nodes.OfType<SBranch>()) {
-                var layer = CreateLayer(tree, layerNode, board);
-                if (layer != null)
-                    board.AddLayer(layer);
+                var layer = CreateLayer(tree, layerNode);
+                board.AddLayer(layer);
             }
         }
 
@@ -124,7 +121,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         private void BuildNets(STree tree, SBranch node, EdaBoard board) {
 
             foreach (var netNode in tree.SelectBranches(node, "net")) {
-                var signal = CreateNet(tree, netNode);
+                var signal = CreateSignal(tree, netNode);
                 board.AddSignal(signal);
             }
         }
@@ -184,10 +181,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// </summary>
         /// <param name="tree">El STree.</param>
         /// <param name="node">El node.</param>
-        /// <param name="board">La placa.</param>
         /// <returns>La capa creada.</returns>
         /// 
-        private static EdaLayer CreateLayer(STree tree, SBranch node, EdaBoard board) {
+        private static EdaLayer CreateLayer(STree tree, SBranch node) {
 
             string name = tree.ValueAsString(node[1]);
             string type = tree.ValueAsString(node[2]);
@@ -220,10 +216,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                     function = LayerFunction.Outline;
             }
 
-            if (board.GetLayer(id, false) == null)
-                return new EdaLayer(id, side, function);
-            else
-                return null;
+            return new EdaLayer(id, side, function);
         }
 
         /// <summary>
@@ -232,10 +225,10 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <param name="tree">El STree.</param>
         /// <param name="node">El node.</param>
         /// 
-        private EdaSignal CreateNet(STree tree, SBranch node) {
+        private EdaSignal CreateSignal(STree tree, SBranch node) {
 
-            int id = tree.ValueAsInteger(node[1]);
-            string name = tree.ValueAsString(node[2]);
+            var id = tree.ValueAsInteger(node[1]);
+            var name = tree.ValueAsString(node[2]);
 
             if (String.IsNullOrEmpty(name))
                 name = "unnamed_signal";
@@ -258,12 +251,12 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// 
         private EdaComponent CreateComponent(STree tree, SBranch node) {
 
-            string name = tree.ValueAsString(node[1]);
+            var name = tree.ValueAsString(node[1]);
             var tsNode = tree.SelectBranch(node, "tstamp");
             var ts = tree.ValueAsString(tsNode[1]);
             var componentName = string.Format("{0}:{1}", name, ts);
 
-            var (position, rotation) = ParsePointAndAngle(tree, tree.SelectBranch(node, "at"));
+            var (_, rotation) = ParsePointAndAngle(tree, tree.SelectBranch(node, "at"));
 
             var solderMaskMarginNode = tree.SelectBranch(node, "solder_mask_margin");
             int solderMaskMargin = 0;
@@ -403,8 +396,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                     var netNode = tree.SelectBranch(childNode, "net");
                     if (netNode != null) {
 
-                        string padName = tree.ValueAsString(childNode[1]);
-                        int netId = tree.ValueAsInteger(netNode[1]);
+                        var padName = tree.ValueAsString(childNode[1]);
+                        var netId = tree.ValueAsInteger(netNode[1]);
 
                         var pad = part.GetPad(padName);
                         var signal = _signalLocator[netId];
@@ -427,6 +420,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <param name="tree">L'arbre.</param>
         /// <param name="node">La branca.</param>
         /// <param name="component">El component.</param>
+        /// <remarks>Les coordinades son relatives al component.</remarks>
         /// 
         private void ProcessFpLine(STree tree, SBranch node, EdaComponent component) {
 
@@ -452,6 +446,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <param name="tree">L'arbre.</param>
         /// <param name="node">El node.</param>
         /// <param name="component">El component.</param>
+        /// <remarks>Les coordinades son relatives al component.</remarks>
         /// 
         private void ProcessFpArc(STree tree, SBranch node, EdaComponent component) {
 
@@ -488,6 +483,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <param name="tree">L'arbre.</param>
         /// <param name="node">El node.</param>
         /// <param name="component">El component.</param>
+        /// <remarks>Les coordinades son relatives al component.</remarks>
         /// 
         private void ProcessFpCircle(STree tree, SBranch node, EdaComponent component) {
 
@@ -525,6 +521,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <param name="fpRotation">Rotacio del footprint al que pertany.</param>
         /// <param name="fpMaskClearance">Espaiat de la mascara del footprint.</param>
         /// <param name="fpPasteReductionRatio">Reduccio de pasta del footprint.</param>
+        /// <remarks>Les coordinades son relatives al component.</remarks>
         /// 
         private void ProcessPad(STree tree, SBranch node, EdaComponent component, EdaAngle fpRotation, int fpMaskClearance, EdaRatio fpPasteReductionRatio) {
 
@@ -627,6 +624,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <param name="node">El node.</param>
         /// <param name="fpRotation">Rotacio del footprint.</param>
         /// <param name="component">El component.</param>
+        /// <remarks>Les coordinades son relatives al component.</remarks>
         /// 
         private void ProcessFpText(STree tree, SBranch node, EdaAngle fpRotation, EdaComponent component) {
 
@@ -703,6 +701,14 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
             component.AddElement(element);
         }
 
+        /// <summary>
+        /// Procesa un 'gr_arc'
+        /// </summary>
+        /// <param name="tree"></param>
+        /// <param name="node"></param>
+        /// <param name="board"></param>
+        /// <remarks>Les coordinades son relatives al la placa.</remarks>
+        /// 
         private void ProcessGrArc(STree tree, SBranch node, EdaBoard board) {
 
             var start = ParsePoint(tree, tree.SelectBranch(node, "start")) - _origin;
@@ -737,7 +743,8 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// </summary>
         /// <param name="tree">L'arbre.</param>
         /// <param name="node">El node.</param>
-        /// <param name="component">El component.</param>
+        /// <param name="board">La placa.</param>
+        /// <remarks>Les coordinades son relatives al la placa.</remarks>
         /// 
         private void ProcessVia(STree tree, SBranch node, EdaBoard board) {
 
@@ -769,6 +776,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <param name="tree">L'arbre.</param>
         /// <param name="branch">La branca</param>
         /// <param name="board">La placa.</param>
+        /// <remarks>Les coordinades son relatives al la placa.</remarks>
         /// 
         private void ProcessSegment(STree tree, SBranch branch, EdaBoard board) {
 
@@ -800,6 +808,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         /// <param name="tree">L'arbre.</param>
         /// <param name="branch">La branca</param>
         /// <param name="board">La placa.</param>
+        /// <remarks>Les coordinades son relatives al la placa.</remarks>
         /// 
         private void ProcessZone(STree tree, SBranch branch, EdaBoard board) {
 
@@ -961,19 +970,17 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
         }
 
         /// <summary>
-        /// Obte el identificador de la capa a partir del seu nom.
+        /// Obte el identificador de la capa a partir del seu nom canonic.
         /// </summary>
-        /// <param name="kcName">Nom de la capa.</param>
+        /// <param name="canonicName">Nom de la capa.</param>
         /// <returns>El identificador.</returns>
         /// 
-        private static EdaLayerId GetLayerId(string kcName) {
+        private static EdaLayerId GetLayerId(string canonicName) {
 
-            switch (kcName) {
-                case "Top":
+            switch (canonicName) {
                 case "F.Cu":
                     return EdaLayerId.TopCopper;
 
-                case "Bottom":
                 case "B.Cu":
                     return EdaLayerId.BottomCopper;
 
@@ -1017,7 +1024,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad {
                     return EdaLayerId.Profile;
 
                 default:
-                    return EdaLayerId.Get(kcName);
+                    return EdaLayerId.Get(canonicName);
             }
         }
     }

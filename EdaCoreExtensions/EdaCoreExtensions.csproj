@@ -15,8 +15,4 @@
     <ProjectReference Include="..\EdaCore\EdaCore.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="PhysicalNet\" />
-  </ItemGroup>
-
 </Project>

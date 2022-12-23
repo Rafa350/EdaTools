@@ -12,29 +12,38 @@ namespace MikroPic.EdaTools.v1.CoreExtensions.Bom {
             _board = board ?? throw new ArgumentNullException(nameof(board));
         }
 
-        public EdaBom Generate() {
+        public IEnumerable<EdaBomEntry> Generate() {
 
-            var bom = new Dictionary<string, List<EdaPart>>();
+            // Obte els components unics de la placa en un diccionari
+            //
+            var dictionary = new Dictionary<string, List<EdaPart>>();
             foreach (var part in _board.Parts) {
-                var attribute = part.GetAttribute(_mpnAttributeName);
-                if (attribute != null) {
-                    if (!bom.TryGetValue(attribute.Value, out var value)) {
+                var partMPN = GetMPN(part);
+                if (partMPN != null) {
+                    if (!dictionary.TryGetValue(partMPN, out var value)) {
                         value = new List<EdaPart>();
-                        bom.Add(attribute.Value, value);
+                        dictionary.Add(partMPN, value);
                     }
                     value.Add(part);
                 }
             }
 
+            // Obte les referencies de cada component
+            //
             var bomEntries = new List<EdaBomEntry>();
-            foreach (var bomItem in bom) {
-                var name = bomItem.Key;
-                var references = bomItem.Value.Select(part => part.Name);
-                var bomEntry = new EdaBomEntry(bomItem.Key, references);
+            foreach (var kv in dictionary) {
+                
+                var name = kv.Key;
+                var references = kv.Value.Select(part => part.Name);
+                var bomEntry = new EdaBomEntry(name, references);
+
                 bomEntries.Add(bomEntry);
             }
 
-            return new EdaBom(bomEntries);
+            return bomEntries;
         }
+
+        private string? GetMPN(EdaPart part) =>
+            part.GetAttribute(_mpnAttributeName)?.Value;
     }
 }

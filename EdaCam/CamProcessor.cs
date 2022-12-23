@@ -3,7 +3,7 @@ using MikroPic.EdaTools.v1.Cam.Generators;
 using MikroPic.EdaTools.v1.Cam.Generators.Gerber;
 using MikroPic.EdaTools.v1.Cam.Generators.GerberJob;
 using MikroPic.EdaTools.v1.Cam.Generators.IPC2581;
-using MikroPic.EdaTools.v1.Cam.Generators.IPCD356;
+using MikroPic.EdaTools.v1.Cam.Generators.IPC356;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 
@@ -68,7 +68,7 @@ namespace MikroPic.EdaTools.v1.Cam {
                     return new GerberJobGenerator(target);
 
                 case "ipc-D356":
-                    return new IPCD356Generator(target);
+                    return new IPC356Generator(target);
 
                 case "ipc-2581":
                     return new IPC2581Generator(target);

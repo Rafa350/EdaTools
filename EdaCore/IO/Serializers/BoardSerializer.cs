@@ -11,7 +11,7 @@ namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
     /// Serialitzador per la clase 'Board'
     /// </summary>
     /// 
-    internal sealed class BoardSerializer: ClassSerializer {
+    internal sealed class BoardSerializer: CustomClassSerializer {
 
         /// <inheritdoc/>
         /// 
@@ -50,8 +50,8 @@ namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
 
             if (name == "Layers") {
                 EdaLayer[] layers = board.HasLayers ? board.Layers.ToArray() : null;
-                var serializer = context.GetTypeSerializer(typeof(EdaLayerId[]));
-                serializer.Serialize(context, name, typeof(EdaLayerId[]), layers);
+                var serializer = context.GetTypeSerializer(typeof(EdaLayer[]));
+                serializer.Serialize(context, name, typeof(EdaLayer[]), layers);
             }
 
             else if (name == "Components") {

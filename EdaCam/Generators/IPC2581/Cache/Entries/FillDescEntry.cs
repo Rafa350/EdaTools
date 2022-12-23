@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+﻿using System;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Cache.Entries {
 
@@ -19,8 +19,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Cache.Entries {
 
         public static int GetId(bool fill, string tag) {
 
-            string s = string.Format(CultureInfo.InvariantCulture, "FillDesc;{0};{1}", fill, tag);
-            return s.GetHashCode();
+            return HashCode.Combine("FillDesc", fill, tag);
         }
 
         public bool Fill =>

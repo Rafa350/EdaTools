@@ -47,6 +47,17 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             _useAlign = false;
         }
 
+        /// <summary>
+        /// Constructor del objecte.
+        /// </summary>
+        /// <param name="name">Nom del atribut</param>
+        /// <param name="value">Valor del atribut.</param>
+        /// <param name="height"></param>
+        /// <param name="position"></param>
+        /// <param name="rotation"></param>
+        /// <param name="horizontalAlign"></param>
+        /// <param name="verticalAlign"></param>
+        /// 
         public EdaPartAttribute(string name, EdaPoint position, EdaAngle rotation, int height,
             HorizontalTextAlign horizontalAlign, VerticalTextAlign verticalAlign, string value) {
 
@@ -71,6 +82,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             _useAlign = true;
         }
 
+        /// <inheritdoc/>
+        /// 
         public void AcceptVisitor(IEdaBoardVisitor visitor) {
 
             visitor.Visit(this);

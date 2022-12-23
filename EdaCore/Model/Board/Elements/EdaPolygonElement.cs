@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
+using NetSerializer.V5.Attributes;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 
@@ -133,6 +134,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
         /// La llista de segments.
         /// </summary>
         /// 
+        [NetSerializerOptions(Exclude = true)]
         public IEnumerable<EdaArcPoint> Vertices {
             get => _vertices;
             set => _vertices = value;

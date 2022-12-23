@@ -3,7 +3,7 @@ using System.IO;
 using MikroPic.EdaTools.v1.Base.Geometry;
 
 
-namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
+namespace MikroPic.EdaTools.v1.Cam.Generators.IPC356.Builder {
 
     public enum TestAccess {
         None,
@@ -20,7 +20,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
     /// <summary>
     /// Generador de codi IPCD356
     /// </summary>
-    public sealed class IPCD356Builder {
+    public sealed class IPC356Builder {
 
         private readonly TextWriter _writer;
         private int _offsetX;
@@ -32,7 +32,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
         /// </summary>
         /// <param name="writer">Escriptor de sortida.</param>
         /// 
-        public IPCD356Builder(TextWriter writer) {
+        public IPC356Builder(TextWriter writer) {
 
             if (writer == null)
                 throw new ArgumentNullException(nameof(writer));
@@ -91,9 +91,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
         /// 
         public void SetTransformation(int offsetX, int offsetY, EdaAngle rotation) {
 
-            this._offsetX = offsetX;
-            this._offsetY = offsetY;
-            this._rotation = rotation;
+            _offsetX = offsetX;
+            _offsetY = offsetY;
+            _rotation = rotation;
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder {
                 throw new ArgumentOutOfRangeException(nameof(points));
 
             if (layerNum <= 0)
-                throw new ArgumentOutOfRangeException("lauerNum");
+                throw new ArgumentOutOfRangeException(nameof(layerNum));
 
             if (thickness <= 0)
                 throw new ArgumentOutOfRangeException(nameof(thickness));

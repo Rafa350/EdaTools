@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+﻿using System;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Cache.Entries {
 
@@ -28,8 +28,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Cache.Entries {
         /// 
         public static int GetId(int diameter, string tag) {
 
-            string s = string.Format(CultureInfo.InvariantCulture, "Circle;{0};{1}", diameter, tag);
-            return s.GetHashCode();
+            return HashCode.Combine("Circle", diameter, tag);
         }
 
         /// <summary>

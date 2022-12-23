@@ -17,6 +17,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         private EdaPoint _position;
         private EdaAngle _rotation = EdaAngle.Zero;
         private PartSide _side = PartSide.Top;
+        private EdaDevice _device;
         private EdaComponent _component;
 
         /// <inheritdoc/>
@@ -110,6 +111,15 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         public EdaComponent Component {
             get => _component;
             set => _component = value;
+        }
+
+        /// <summary>
+        /// El component
+        /// </summary>
+        /// 
+        public EdaDevice Device {
+            get => _device;
+            set => _device = value;
         }
 
         /// <summary>

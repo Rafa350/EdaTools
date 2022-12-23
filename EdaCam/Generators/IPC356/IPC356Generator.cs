@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using System.IO;
 using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Cam.Generators.IPCD356.Builder;
+using MikroPic.EdaTools.v1.Cam.Generators.IPC356.Builder;
 using MikroPic.EdaTools.v1.Cam.Model;
 using MikroPic.EdaTools.v1.Core.Model.Board;
 using MikroPic.EdaTools.v1.Core.Model.Board.Elements;
 using MikroPic.EdaTools.v1.Core.Model.Board.Visitors;
 
 
-namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
+namespace MikroPic.EdaTools.v1.Cam.Generators.IPC356 {
 
     /// <summary>
     /// Generador de codi en format IPCD356
     /// </summary>
-    public sealed class IPCD356Generator: Generator {
+    public sealed class IPC356Generator: Generator {
 
         private Dictionary<string, string> _netAliasMap = new Dictionary<string, string>();
 
-        public IPCD356Generator(Target target) :
+        public IPC356Generator(Target target) :
             base(target) {
 
         }
@@ -45,7 +45,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
             using (TextWriter writer = new StreamWriter(
                 new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None))) {
 
-                IPCD356Builder builder = new IPCD356Builder(writer);
+                IPC356Builder builder = new IPC356Builder(writer);
 
                 GenerateFileHeader(builder, board);
                 builder.Comment("BEGIN BOARD");
@@ -62,7 +62,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
         /// </summary>
         /// <param name="builder">El generador de codi.</param>
         /// 
-        private void GenerateFileHeader(IPCD356Builder builder, EdaBoard board) {
+        private void GenerateFileHeader(IPC356Builder builder, EdaBoard board) {
 
             builder.Comment("BEGIN FILE");
             builder.Comment("EdaTools v1.0.");
@@ -86,7 +86,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
         /// </summary>
         /// <param name="builder">El generador de codi.</param>
         /// 
-        private void GenerateFileTail(IPCD356Builder builder) {
+        private void GenerateFileTail(IPC356Builder builder) {
 
             builder.Comment(String.Format("End timestamp: {0:HH:mm:ss.fff}", DateTime.Now));
             builder.Comment("END FILE");
@@ -99,7 +99,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
         /// <param name="builder">El generador de codi.</param>
         /// <param name="board">La placa a procesar.</param>
         /// 
-        private void GenerateVias(IPCD356Builder builder, EdaBoard board) {
+        private void GenerateVias(IPC356Builder builder, EdaBoard board) {
 
             builder.Comment("BEGIN VIAS");
 
@@ -115,7 +115,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
         /// <param name="builder">El generador de codi.</param>
         /// <param name="board">La placa a procesar.</param>
         /// 
-        private void GeneratePads(IPCD356Builder builder, EdaBoard board) {
+        private void GeneratePads(IPC356Builder builder, EdaBoard board) {
 
             builder.Comment("BEGIN PADS");
 
@@ -131,7 +131,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
         /// <param name="builder">El generador de codi.</param>
         /// <param name="board">La placa a procesar.</param>
         /// 
-        private void GenerateNets(IPCD356Builder builder, EdaBoard board) {
+        private void GenerateNets(IPC356Builder builder, EdaBoard board) {
 
             builder.Comment("BEGIN NETS");
 
@@ -146,10 +146,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
         /// </summary>
         private sealed class NetsVisitor: EdaSignalVisitor {
 
-            private readonly IPCD356Builder _builder;
+            private readonly IPC356Builder _builder;
             private readonly IDictionary<string, string> _netAliasMap;
 
-            public NetsVisitor(IPCD356Builder builder, IDictionary<string, string> netAliasMap) {
+            public NetsVisitor(IPC356Builder builder, IDictionary<string, string> netAliasMap) {
 
                 _builder = builder;
                 _netAliasMap = netAliasMap;
@@ -193,10 +193,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
         /// </summary>
         private sealed class ViasVisitor: EdaElementVisitor {
 
-            private readonly IPCD356Builder _builder;
+            private readonly IPC356Builder _builder;
             private readonly IDictionary<string, string> _netAliasMap;
 
-            public ViasVisitor(IPCD356Builder builder, IDictionary<string, string> netAliasMap) {
+            public ViasVisitor(IPC356Builder builder, IDictionary<string, string> netAliasMap) {
 
                 _builder = builder;
                 _netAliasMap = netAliasMap;
@@ -215,10 +215,10 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPCD356 {
         /// </summary>
         private sealed class PadsVisitor: EdaElementVisitor {
 
-            private readonly IPCD356Builder _builder;
+            private readonly IPC356Builder _builder;
             private readonly IDictionary<string, string> _netAliasMap;
 
-            public PadsVisitor(IPCD356Builder builder, IDictionary<string, string> netAliasMap) {
+            public PadsVisitor(IPC356Builder builder, IDictionary<string, string> netAliasMap) {
 
                 _builder = builder;
                 _netAliasMap = netAliasMap;

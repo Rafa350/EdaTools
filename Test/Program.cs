@@ -9,8 +9,8 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
         public static void Main(string[] args) {
 
-            var board = Read("C:\\Users\\Rafael\\Documents\\Projectes\\EDA\\cpu4c\\Build\\cpu04c.xbrd");
-            Write(board, "C:\\temp\\cpu04x.xml");
+            var board = Read(@"C:\Users\Rafael\Documents\Projectes\EDA\cpu04c\build\cpu04c.xbrd");
+            Write(board, @"C:\temp\cpu04x.xml");
 
         }
 
@@ -26,7 +26,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
             using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
                 using (var writer = new XmlFormatWriter(stream, null)) {
                     var serializer = new Serializer();
-                    serializer.Serialize(writer, board, "Label");
+                    serializer.Serialize(writer, board, "Board");
                 }
             }
         }

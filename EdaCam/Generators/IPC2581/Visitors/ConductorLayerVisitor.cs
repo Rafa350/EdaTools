@@ -62,7 +62,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
                 var rotation = element.Rotation + (Part == null ? EdaAngle.Zero : Part.Rotation);
                 var location = tr.Transform(element.Position);
 
-                WritePad(rectEntry.Id, signal, location, rotation);
+                WritePad(rectEntry.Id, signal, location, rotation, Part.Name, element.Name);
             }
         }
 
@@ -81,7 +81,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
                 var rotation = element.Rotation + (Part == null ? EdaAngle.Zero : Part.Rotation);
                 var location = tr.Transform(element.Position);
 
-                WritePad(rectEntry.Id, signal, location, rotation);
+                WritePad(rectEntry.Id, signal, location, rotation, Part.Name, element.Name);
             }
         }
 
@@ -98,10 +98,12 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
                     _writer.WriteAttributeString("net", signal.Name);
                 _writer.WriteAttributeString("padUsage", "VIA");
                 _writer.WriteStartElement("Pad");
+
                 _writer.WritePointElement("Location", location, _scale);
                 _writer.WriteStartElement("StandardPrimitiveRef");
                 _writer.WriteAttributeInteger("id", circleEntry.Id);
                 _writer.WriteEndElement(); // StandardPrimitiveRef
+
                 _writer.WriteEndElement(); // Pad
                 _writer.WriteEndElement(); // Set
             }
@@ -124,7 +126,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
                 foreach (var polygon in polygons) {
                     _writer.WriteStartElement("Contour");
                     _writer.WritePolygonElement(polygon, fillDescEntry.Id, _scale);
-                    _writer.WriteEndElement();
+                    _writer.WriteEndElement(); // Contour
                 }
 
                 _writer.WriteEndElement(); // Features
@@ -132,12 +134,13 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
             }
         }
 
-        private void WritePad(int entryId, EdaSignal signal, EdaPoint location, EdaAngle rotation) {
+        private void WritePad(int entryId, EdaSignal signal, EdaPoint location, EdaAngle rotation, string componentName, string pinName) {
 
             _writer.WriteStartElement("Set");
             if (signal != null)
                 _writer.WriteAttributeString("net", signal.Name);
             _writer.WriteStartElement("Pad");
+
             if (!rotation.IsZero) {
                 _writer.WriteStartElement("Xform");
                 _writer.WriteAttributeDouble("rotation", rotation.AsDegrees);
@@ -146,7 +149,13 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
             _writer.WritePointElement("Location", location, _scale);
             _writer.WriteStartElement("StandardPrimitiveRef");
             _writer.WriteAttributeInteger("id", entryId);
-            _writer.WriteEndElement(); // StandardPrimitiveRef                
+            _writer.WriteEndElement(); // StandardPrimitiveRef
+
+            _writer.WriteStartElement("PinRef");
+            _writer.WriteAttributeString("pin", pinName);
+            _writer.WriteAttributeString("componentRef", componentName);
+            _writer.WriteEndElement(); // PinRef
+
             _writer.WriteEndElement(); // Pad                
             _writer.WriteEndElement(); // Set
         }

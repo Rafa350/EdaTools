@@ -52,10 +52,6 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
                 var rotation = element.Rotation + (Part == null ? EdaAngle.Zero : Part.Rotation);
                 var location = tr.Transform(element.Position);
 
-                if (Part.Name.Contains("JP4")) {
-                    var x = 0;
-                }
-
                 WritePad(rectRoundEntry.Id, location, rotation);
             }
         }
@@ -64,15 +60,18 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
 
             _writer.WriteStartElement("Set");
             _writer.WriteStartElement("Pad");
+
             if (!Part.Rotation.IsZero) {
                 _writer.WriteStartElement("Xform");
                 _writer.WriteAttributeDouble("rotation", rotation.AsDegrees);
                 _writer.WriteEndElement(); // Xform
             }
             _writer.WritePointElement("Location", location, _scale);
+
             _writer.WriteStartElement("StandardPrimitiveRef");
             _writer.WriteAttributeInteger("id", entryId);
-            _writer.WriteEndElement(); // StandardPrimitiveRef                
+            _writer.WriteEndElement(); // StandardPrimitiveRef
+                                       
             _writer.WriteEndElement(); // Pad                
             _writer.WriteEndElement(); // Set
         }

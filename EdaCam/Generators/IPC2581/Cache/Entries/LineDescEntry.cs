@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+﻿using System;
 using MikroPic.EdaTools.v1.Base.Geometry;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Cache.Entries {
@@ -24,8 +24,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Cache.Entries {
         /// 
         public static int GetId(int thickness, EdaLineCap capStyle, string tag) {
 
-            string s = string.Format(CultureInfo.InvariantCulture, "LineDesc;{0};{1};{2}", thickness, capStyle, tag);
-            return s.GetHashCode();
+            return HashCode.Combine("LineDesc", thickness, capStyle, tag);
         }
 
         /// <summary>

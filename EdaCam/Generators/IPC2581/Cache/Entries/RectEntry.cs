@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using MikroPic.EdaTools.v1.Base.Geometry;
 
 namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Cache.Entries {
@@ -37,9 +36,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Cache.Entries {
         /// 
         public static int GetId(EdaSize size, EdaRatio ratio, bool flat, string tag) {
 
-            string s = string.Format(CultureInfo.InvariantCulture, "RectRound;{0};{1};{2};{3};{4}",
-                size.Width, size.Height, ratio.AsPercent, flat, tag);
-            return s.GetHashCode();
+            return HashCode.Combine("RectRound", size.Width, size.Height, ratio.AsPercent, flat, tag);
         }
 
         /// <summary>

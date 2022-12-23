@@ -11,7 +11,7 @@ namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
     /// Serialitzador per la clase 'LblLabel'
     /// </summary>
     /// 
-    internal sealed class ComponentSerializer: ClassSerializer {
+    internal sealed class ComponentSerializer: CustomClassSerializer {
 
         /// <inheritdoc/>
         /// 
@@ -34,8 +34,7 @@ namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
             var name = propertyDescriptor.Name;
 
             if ((name == "Elements") ||
-                (name == "Attributes") ||
-                (name == "Name"))
+                (name == "Attributes"))
                 return true;
             else
                 return base.CanProcessProperty(propertyDescriptor);
@@ -48,12 +47,7 @@ namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
             var component = (EdaComponent)obj;
             var name = propertyDescriptor.Name;
 
-            if (name == "Name") {
-                var serializer = context.GetTypeSerializer(typeof(string));
-                serializer.Serialize(context, name, typeof(string), propertyDescriptor.GetValue(obj));
-            }
-
-            else if (name == "Elements") {
+            if (name == "Elements") {
                 EdaElement[] elements = component.HasElements ? component.Elements.ToArray() : null;
                 var serializer = context.GetTypeSerializer(typeof(EdaElement[]));
                 serializer.Serialize(context, name, typeof(EdaElement[]), elements);
