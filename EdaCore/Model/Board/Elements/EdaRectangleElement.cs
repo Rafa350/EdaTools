@@ -7,7 +7,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un rectangle.
     /// </summary>
     /// 
-    public sealed class EdaRectangleElement: EdaElement {
+    public sealed class EdaRectangleElement: EdaElementBase {
 
         private EdaPoint _position;
         private EdaSize _size;

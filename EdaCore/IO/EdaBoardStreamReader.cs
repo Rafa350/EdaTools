@@ -188,7 +188,7 @@ namespace MikroPic.EdaTools.v1.Core.IO {
                 _rd.NextTag();
             }
 
-            IEnumerable<EdaElement> elements = null;
+            IEnumerable<EdaElementBase> elements = null;
             if (_rd.TagName == "elements") {
                 elements = ParseBoardElementsNode();
                 _rd.NextTag();
@@ -397,12 +397,12 @@ namespace MikroPic.EdaTools.v1.Core.IO {
         /// </summary>
         /// <returns>La llista d'objectres 'Element' obtinguda.</returns>
         /// 
-        private IEnumerable<EdaElement> ParseComponentElementsNode() {
+        private IEnumerable<EdaElementBase> ParseComponentElementsNode() {
 
             if (!_rd.IsStartTag("elements"))
                 throw new InvalidDataException("Se esperaba <elements>");
 
-            var elements = new List<EdaElement>();
+            var elements = new List<EdaElementBase>();
 
             _rd.NextTag();
             while (_rd.IsStart) {
@@ -464,12 +464,12 @@ namespace MikroPic.EdaTools.v1.Core.IO {
         /// </summary>
         /// <returns>La llista d'objectes 'Element' obtinguda.</returns>
         /// 
-        private IEnumerable<EdaElement> ParseBoardElementsNode() {
+        private IEnumerable<EdaElementBase> ParseBoardElementsNode() {
 
             if (!_rd.IsStartTag("elements"))
                 throw new InvalidDataException("Se esperaba <elements>");
 
-            var elements = new List<EdaElement>();
+            var elements = new List<EdaElementBase>();
 
             _rd.NextTag();
             while (_rd.IsStart) {
@@ -715,7 +715,7 @@ namespace MikroPic.EdaTools.v1.Core.IO {
         /// Procesa el node 'line'
         /// </summary>
         /// 
-        private EdaElement ParseLineNode() {
+        private EdaElementBase ParseLineNode() {
 
             if (!_rd.IsStartTag("line"))
                 throw new InvalidDataException("Se esperaba <line>");
@@ -750,7 +750,7 @@ namespace MikroPic.EdaTools.v1.Core.IO {
         /// </summary>
         /// <returns>L'objecte 'ArcElement' obtingut.</returns>
         /// 
-        private EdaElement ParseArcNode() {
+        private EdaElementBase ParseArcNode() {
 
             if (!_rd.IsStartTag("arc"))
                 throw new InvalidDataException("Se esperaba <arc>");
@@ -787,7 +787,7 @@ namespace MikroPic.EdaTools.v1.Core.IO {
         /// </summary>
         /// <returns>L'objecte 'RectangleElement' obtingut.</returns>
         /// 
-        private EdaElement ParseRectangleNode() {
+        private EdaElementBase ParseRectangleNode() {
 
             if (!_rd.IsStartTag("rectangle"))
                 throw new InvalidDataException("Se esperaba <rectangle>");
@@ -820,7 +820,7 @@ namespace MikroPic.EdaTools.v1.Core.IO {
         /// </summary>
         /// <returns>L'objecte 'CircleElement' obtingut.</returns>
         /// 
-        private EdaElement ParseCircleNode() {
+        private EdaElementBase ParseCircleNode() {
 
             if (!_rd.IsStartTag("circle"))
                 throw new InvalidDataException("Se esperaba <circle>");
@@ -851,7 +851,7 @@ namespace MikroPic.EdaTools.v1.Core.IO {
         /// </summary>
         /// <returns>L'objecte 'RegionElement' obtingut.</returns>
         /// 
-        private EdaElement ParseRegionNode() {
+        private EdaElementBase ParseRegionNode() {
 
             if (!_rd.IsStartTag("region"))
                 throw new InvalidDataException("Se esperaba <region>");
@@ -917,7 +917,7 @@ namespace MikroPic.EdaTools.v1.Core.IO {
         /// </summary>
         /// <returns>L'objecte 'TPadElement' obtingut</returns>
         /// 
-        private EdaElement ParseTPadNode() {
+        private EdaElementBase ParseTPadNode() {
 
             if (!_rd.IsStartTag("tpad"))
                 throw new InvalidDataException("Se esperaba <tpad>");
@@ -966,7 +966,7 @@ namespace MikroPic.EdaTools.v1.Core.IO {
         /// </summary>
         /// <returns>L'objecte 'SPadElement' obtingut.</returns>
         /// 
-        private EdaElement ParseSPadNode() {
+        private EdaElementBase ParseSPadNode() {
 
             if (!_rd.IsStartTag("spad"))
                 throw new InvalidDataException("Se esperaba <spad>");
@@ -1013,7 +1013,7 @@ namespace MikroPic.EdaTools.v1.Core.IO {
         /// </summary>
         /// <param name="elementList">La llista d'elements.</param>
         /// 
-        private EdaElement ParseViaNode() {
+        private EdaElementBase ParseViaNode() {
 
             if (!_rd.IsStartTag("via"))
                 throw new InvalidDataException("Se esperaba <via>");
@@ -1050,7 +1050,7 @@ namespace MikroPic.EdaTools.v1.Core.IO {
         /// </summary>
         /// <returns>L'objecte 'TextElement' obtingut.</returns>
         /// 
-        private EdaElement ParseTextNode() {
+        private EdaElementBase ParseTextNode() {
 
             if (!_rd.IsStartTag("text"))
                 throw new InvalidDataException("Se esperaba <text>");
@@ -1088,7 +1088,7 @@ namespace MikroPic.EdaTools.v1.Core.IO {
         /// <returns>L'element.</returns>
         /// <exception cref="InvalidDataException">Dades incorrectes.</exception>
         /// 
-        private EdaElement ParseCircleHoleNode() {
+        private EdaElementBase ParseCircleHoleNode() {
 
             if (!_rd.IsStartTag("circleHole"))
                 throw new InvalidDataException("Se esperaba <circleHole>");
@@ -1116,7 +1116,7 @@ namespace MikroPic.EdaTools.v1.Core.IO {
         /// <returns>L'element.</returns>
         /// <exception cref="InvalidDataException">Dades incorrecters.</exception>
         /// 
-        private EdaElement ParseLineHoleNode() {
+        private EdaElementBase ParseLineHoleNode() {
 
             if (!_rd.IsStartTag("lineHole"))
                 throw new InvalidDataException("Se esperaba <lineHole>");

@@ -5,9 +5,9 @@
 
     public sealed class ConnectivityItem {
 
-        private readonly EdaElement element;
+        private readonly EdaElementBase element;
 
-        public ConnectivityItem(EdaElement element) {
+        public ConnectivityItem(EdaElementBase element) {
 
             if (element == null)
                 throw new ArgumentNullException(nameof(element));
@@ -15,7 +15,7 @@
             this.element = element;
         }
 
-        public EdaElement Element {
+        public EdaElementBase Element {
             get {
                 return element;
             }

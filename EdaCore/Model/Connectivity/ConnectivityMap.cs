@@ -63,7 +63,7 @@
         /// </summary>
         /// <param name="element">L'element a afeigir.</param>
         /// 
-        public void Add(EdaElement element) {
+        public void Add(EdaElementBase element) {
 
             if (element == null)
                 throw new ArgumentNullException(nameof(element));
@@ -89,7 +89,7 @@
         /// </summary>
         /// <param name="element">L'element a eliminar.</param>
         /// 
-        public void Remove(EdaElement element) {
+        public void Remove(EdaElementBase element) {
 
         }
 
@@ -99,9 +99,9 @@
         /// <param name="position">La posicio.</param>
         /// <returns>La pista com a llista d'elements.</returns>
         /// 
-        public IEnumerable<EdaElement> GetChainedElements(EdaPoint position) {
+        public IEnumerable<EdaElementBase> GetChainedElements(EdaPoint position) {
 
-            HashSet<EdaElement> chain = new HashSet<EdaElement>();
+            HashSet<EdaElementBase> chain = new HashSet<EdaElementBase>();
             //            GetChainedElements(position, chain);
             return chain;
         }
@@ -156,7 +156,7 @@
         /// <param name="anchor">L'anclatge.</param>
         /// <param name="element">El element.</param>
         /// 
-        private void DefineItem(ConnectivityAnchor anchor, EdaElement element) {
+        private void DefineItem(ConnectivityAnchor anchor, EdaElementBase element) {
 
             ConnectivityItem item = new ConnectivityItem(element);
             anchor.AddItem(item);
@@ -243,7 +243,7 @@
         /// <param name="position">La posicio.</param>
         /// <param name="element">El element.</param>
         /// 
-        private void RemoveElement(EdaPoint position, EdaElement element) {
+        private void RemoveElement(EdaPoint position, EdaElementBase element) {
         }
 
         public void Clear() {

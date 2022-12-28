@@ -1,7 +1,5 @@
-﻿using System;
-using MikroPic.EdaTools.v1.Base.Geometry;
+﻿using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Fonts;
-using MikroPic.EdaTools.v1.Core.Model.Common;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
@@ -9,10 +7,8 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// Clase que representa un atribut
     /// </summary>
     /// 
-    public sealed class EdaPartAttribute: IEdaVisitable<IEdaBoardVisitor> {
+    public sealed class EdaPartAttribute: EdaAttributeBase {
 
-        private readonly string _name;
-        private string _value;
         private EdaPoint _position;
         private EdaAngle _rotation;
         private int _height;
@@ -31,13 +27,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="value">Valor del atribut.</param>
         /// <param name="isVisible">Indica si es visible.</param>
         /// 
-        public EdaPartAttribute(string name, string value, bool isVisible = false) {
+        public EdaPartAttribute(string name, string value, bool isVisible = false) :
+            base(name, value) {
 
-            if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException(nameof(name));
-
-            _name = name;
-            _value = value;
             _isVisible = isVisible;
             _horizontalAlign = HorizontalTextAlign.Left;
             _verticalAlign = VerticalTextAlign.Bottom;
@@ -59,13 +51,9 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="verticalAlign"></param>
         /// 
         public EdaPartAttribute(string name, EdaPoint position, EdaAngle rotation, int height,
-            HorizontalTextAlign horizontalAlign, VerticalTextAlign verticalAlign, string value) {
+            HorizontalTextAlign horizontalAlign, VerticalTextAlign verticalAlign, string value):
+            base(name, value) {
 
-            if (String.IsNullOrEmpty(name))
-                throw new ArgumentNullException(nameof(name));
-
-            _name = name;
-            _value = value;
             _isVisible = true;
 
             _position = position;
@@ -84,7 +72,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
 
         /// <inheritdoc/>
         /// 
-        public void AcceptVisitor(IEdaBoardVisitor visitor) {
+        public override void AcceptVisitor(IEdaBoardVisitor visitor) {
 
             visitor.Visit(this);
         }
@@ -97,13 +85,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             get => _isVisible;
             set => _isVisible = value;
         }
-
-        /// <summary>
-        /// Obte el nom del atribut.
-        /// </summary>
-        /// 
-        public string Name =>
-            _name;
 
         /// <summary>
         /// La posicio del atribut.
@@ -163,15 +144,6 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
                 _height = value;
                 _useHeight = true;
             }
-        }
-
-        /// <summary>
-        /// El valor de l'atribut.
-        /// </summary>
-        /// 
-        public string Value {
-            get => _value;
-            set => _value = value;
         }
 
         /// <summary>

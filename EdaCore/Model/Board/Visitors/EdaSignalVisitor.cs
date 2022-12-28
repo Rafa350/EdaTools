@@ -31,7 +31,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
                 var items = _currentBoard.GetConectionItems(signal);
                 if (items != null)
                     foreach (var item in items) {
-                        if (item.Conectable is EdaElement element)
+                        if (item.Conectable is EdaElementBase element)
                             element.AcceptVisitor(this);
                     }
             }

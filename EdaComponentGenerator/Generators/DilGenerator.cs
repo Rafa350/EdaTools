@@ -31,7 +31,7 @@ namespace EdaComponentGenerator.Generators {
                     Size = _padSize,
                     CornerShape = EdaSmtPadElement.CornerShapeType.Round
                 };
-                
+
                 component.AddElement(pad);
             }
 

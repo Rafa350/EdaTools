@@ -118,7 +118,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="includeComponents">Indica si cal incluir els elements dels components.</param>
         /// <returns>Els elements.</returns>
         /// 
-        public IEnumerable<EdaElement> GetElements(EdaLayer layer, bool includeComponents = true) {
+        public IEnumerable<EdaElementBase> GetElements(EdaLayer layer, bool includeComponents = true) {
 
             foreach (var element in Elements)
                 if (element.IsOnLayer(layer.Id))

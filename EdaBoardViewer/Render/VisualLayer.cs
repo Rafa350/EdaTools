@@ -53,7 +53,7 @@ namespace EdaBoardViewer.Render {
         /// <param name="element">L'element a comprobar.</param>
         /// <returns>True si es visible, false en cas contrari.</returns>
         /// 
-        public bool IsVisible(EdaPart part, EdaElement element) {
+        public bool IsVisible(EdaPart part, EdaElementBase element) {
 
             // Seleccio per capa
             //

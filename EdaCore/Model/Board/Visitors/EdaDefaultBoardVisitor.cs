@@ -91,6 +91,11 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Visitors {
 
         /// <inheritdoc/>
         /// 
+        public virtual void Visit(EdaDevice device) {
+        }
+
+        /// <inheritdoc/>
+        /// 
         public virtual void Visit(EdaPartAttribute attribute) {
         }
 

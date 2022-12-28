@@ -48,9 +48,9 @@ namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
             var name = propertyDescriptor.Name;
 
             if (name == "Elements") {
-                EdaElement[] elements = component.HasElements ? component.Elements.ToArray() : null;
-                var serializer = context.GetTypeSerializer(typeof(EdaElement[]));
-                serializer.Serialize(context, name, typeof(EdaElement[]), elements);
+                EdaElementBase[] elements = component.HasElements ? component.Elements.ToArray() : null;
+                var serializer = context.GetTypeSerializer(typeof(EdaElementBase[]));
+                serializer.Serialize(context, name, typeof(EdaElementBase[]), elements);
             }
 
             else if (name == "Attributes") {
@@ -71,10 +71,10 @@ namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
             var name = propertyDescriptor.Name;
 
             if (name == "Elements") {
-                var serializer = context.GetTypeSerializer(typeof(EdaElement[]));
-                serializer.Deserialize(context, name, typeof(EdaElement[]), out object elements);
+                var serializer = context.GetTypeSerializer(typeof(EdaElementBase[]));
+                serializer.Deserialize(context, name, typeof(EdaElementBase[]), out object elements);
                 if (elements != null)
-                    Array.ForEach((EdaElement[])elements, item => component.AddElement(item));
+                    Array.ForEach((EdaElementBase[])elements, item => component.AddElement(item));
             }
 
             else

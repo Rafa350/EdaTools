@@ -167,7 +167,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// Enumera els elements.
         /// </summary>
         /// 
-        public IEnumerable<EdaElement> Elements =>
+        public IEnumerable<EdaElementBase> Elements =>
             _component.Elements;
 
         /// <summary>

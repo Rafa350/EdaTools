@@ -10,7 +10,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa una regio poligonal.
     /// </summary>
     /// 
-    public class EdaPolygonElement: EdaElement {
+    public class EdaPolygonElement: EdaElementBase {
 
         private IEnumerable<EdaArcPoint> _vertices;
         private int _thickness;

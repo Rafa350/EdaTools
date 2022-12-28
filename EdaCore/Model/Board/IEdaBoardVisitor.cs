@@ -53,6 +53,13 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <summary>
         /// Visita un component
         /// </summary>
+        /// <param name="device">El component</param>
+        /// 
+        void Visit(EdaDevice device);
+
+        /// <summary>
+        /// Visita un component
+        /// </summary>
         /// <param name="component">El component</param>
         /// 
         void Visit(EdaComponent component);

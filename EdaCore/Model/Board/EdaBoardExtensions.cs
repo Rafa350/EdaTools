@@ -12,7 +12,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// <param name="r">El rectangle</param>
         /// <returns>Enumera ela elements trobats. Null si no hi ha cap.</returns>
         /// 
-        public static IEnumerable<EdaElement> FindElement(this EdaBoard board, EdaRect r) {
+        public static IEnumerable<EdaElementBase> FindElement(this EdaBoard board, EdaRect r) {
 
             return null;
         }

@@ -7,7 +7,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa una linia.
     /// </summary>
     /// 
-    public abstract class EdaLineBaseElement: EdaElement, IEdaConectable {
+    public abstract class EdaLineBaseElement: EdaElementBase, IEdaConectable {
 
         private EdaPoint _startPosition;
         private EdaPoint _endPosition;

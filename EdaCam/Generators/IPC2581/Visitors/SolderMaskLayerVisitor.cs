@@ -1,5 +1,4 @@
-﻿using System.Net.WebSockets;
-using System.Xml;
+﻿using System.Xml;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Xml;
 using MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Xml;
@@ -71,7 +70,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
             _writer.WriteStartElement("StandardPrimitiveRef");
             _writer.WriteAttributeInteger("id", entryId);
             _writer.WriteEndElement(); // StandardPrimitiveRef
-                                       
+
             _writer.WriteEndElement(); // Pad                
             _writer.WriteEndElement(); // Set
         }

@@ -20,7 +20,7 @@ namespace EdaBoardViewer.Render {
             _regionCache.Clear();
         }
 
-        public EdaPolygon GetPolygon(EdaElement element, EdaLayerId layerId) {
+        public EdaPolygon GetPolygon(EdaElementBase element, EdaLayerId layerId) {
 
             int key = HashCode.Combine(element.GetHashCode(), layerId);
 
@@ -56,7 +56,7 @@ namespace EdaBoardViewer.Render {
             return polygon;
         }
 
-        public EdaPolygon GetOutlinePolygon(EdaElement element, EdaLayerId layerId, int spacing) {
+        public EdaPolygon GetOutlinePolygon(EdaElementBase element, EdaLayerId layerId, int spacing) {
 
             int key = HashCode.Combine(element.GetHashCode(), layerId, spacing);
 

@@ -7,7 +7,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// Clase base per tots els elements de la placa.
     /// </summary>
     /// 
-    public abstract class EdaElement: IEdaVisitable<IEdaBoardVisitor> {
+    public abstract class EdaElementBase: IEdaVisitable<IEdaBoardVisitor> {
 
         private EdaLayerSet _layerSet;
 

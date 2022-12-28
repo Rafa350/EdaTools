@@ -6,7 +6,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un forat en la placa.
     /// </summary>
     /// 
-    public abstract class EdaHoleBaseElement: EdaElement {
+    public abstract class EdaHoleBaseElement: EdaElementBase {
 
         private int _diameter;
         private bool _platted;

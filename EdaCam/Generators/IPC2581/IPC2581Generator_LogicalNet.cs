@@ -20,6 +20,9 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                     _writer.WriteAttributeString("name", signal.Name);
 
                     foreach (var item in items) {
+
+                        // Procesa unicament les conexions a components
+                        //
                         if (item.Part != null) {
 
                             string partName = item.Part.Name;

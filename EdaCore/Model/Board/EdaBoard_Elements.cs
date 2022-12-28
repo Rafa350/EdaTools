@@ -10,14 +10,14 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
     /// 
     public sealed partial class EdaBoard {
 
-        private List<EdaElement> _elements;
+        private List<EdaElementBase> _elements;
 
         /// <summary>
         /// Afeigeix un element.
         /// </summary>
         /// <param name="element">L'element a afeigir.</param>
         /// 
-        public void AddElement(EdaElement element) {
+        public void AddElement(EdaElementBase element) {
 
             if (element == null)
                 throw new ArgumentNullException(nameof(element));
@@ -29,7 +29,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             // Crea la llista si cal.
             //
             if (_elements == null)
-                _elements = new List<EdaElement>();
+                _elements = new List<EdaElementBase>();
 
             _elements.Add(element);
         }
@@ -39,7 +39,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// <param name="elements">Els elements a afeigir.</param>
         /// 
-        public void AddElements(IEnumerable<EdaElement> elements) {
+        public void AddElements(IEnumerable<EdaElementBase> elements) {
 
             if (elements == null)
                 throw new ArgumentNullException(nameof(elements));
@@ -53,7 +53,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// </summary>
         /// <param name="element">El element a eliminar.</param>
         /// 
-        public void RemoveElement(EdaElement element) {
+        public void RemoveElement(EdaElementBase element) {
 
             if (element == null)
                 throw new ArgumentNullException(nameof(element));
@@ -91,7 +91,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
         /// Obte un enunerador pels elements.
         /// </summary>
         /// 
-        public IEnumerable<EdaElement> Elements =>
-            _elements == null ? Enumerable.Empty<EdaElement>() : _elements;
+        public IEnumerable<EdaElementBase> Elements =>
+            _elements == null ? Enumerable.Empty<EdaElementBase>() : _elements;
     }
 }

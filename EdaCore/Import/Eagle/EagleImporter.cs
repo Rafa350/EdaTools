@@ -26,7 +26,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
 
         private readonly Dictionary<string, EdaComponent> componentDict = new Dictionary<string, EdaComponent>();
         private readonly Dictionary<string, EdaSignal> signalDict = new Dictionary<string, EdaSignal>();
-        private readonly Dictionary<EdaElement, string> mapElementSignal = new Dictionary<EdaElement, string>();
+        private readonly Dictionary<EdaElementBase, string> mapElementSignal = new Dictionary<EdaElementBase, string>();
 
         private EdaBoard board;
         private XmlDocument doc;
@@ -164,7 +164,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             //
             foreach (XmlNode node in doc.SelectSingleNode("eagle/drawing/board/plain")) {
 
-                EdaElement element = null;
+                EdaElementBase element = null;
                 switch (node.Name) {
                     case "wire":
                         element = ParseWireNode(node);
@@ -219,7 +219,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
                 }
 
                 foreach (XmlNode childNode in node.ChildNodes) {
-                    EdaElement element = null;
+                    EdaElementBase element = null;
                     switch (childNode.Name) {
                         case "wire":
                             element = ParseWireNode(childNode);
@@ -308,9 +308,9 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             string packageName = packageNode.AttributeAsString("name");
             string packageDescription = null;
 
-            var elements = new List<EdaElement>();
+            var elements = new List<EdaElementBase>();
             foreach (XmlNode elementNode in packageNode.ChildNodes) {
-                EdaElement element = null;
+                EdaElementBase element = null;
                 switch (elementNode.Name) {
                     case "description":
                         packageDescription = elementNode.InnerText;
@@ -406,7 +406,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'ThPadElement' creat.</returns>
         /// 
-        private EdaElement ParsePadNode(XmlNode node) {
+        private EdaElementBase ParsePadNode(XmlNode node) {
 
             // Obte el nom
             //
@@ -485,7 +485,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'SmdPadElement' creat.</returns>
         /// 
-        private EdaElement ParseSmdNode(XmlNode node) {
+        private EdaElementBase ParseSmdNode(XmlNode node) {
 
             string name = node.AttributeAsString("name");
 
@@ -541,7 +541,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'ViaElement' creat.</returns>
         /// 
-        private EdaElement ParseViaNode(XmlNode node) {
+        private EdaElementBase ParseViaNode(XmlNode node) {
 
             int x = ParseNumber(node.AttributeAsString("x"));
             int y = ParseNumber(node.AttributeAsString("y"));
@@ -573,7 +573,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'TextElement' creat.</returns>
         /// 
-        private EdaElement ParseTextNode(XmlNode node) {
+        private EdaElementBase ParseTextNode(XmlNode node) {
 
             string value = node.InnerText;
             if (value.StartsWith('>'))
@@ -621,7 +621,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'LineElement' o ArcElement' creat.</returns>
         /// 
-        private EdaElement ParseWireNode(XmlNode node) {
+        private EdaElementBase ParseWireNode(XmlNode node) {
 
             int x1 = ParseNumber(node.AttributeAsString("x1"));
             int y1 = ParseNumber(node.AttributeAsString("y1"));
@@ -642,7 +642,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
             int layerNum = node.AttributeAsInteger("layer");
             var layerId = GetLayerId(layerNum);
 
-            EdaElement element;
+            EdaElementBase element;
             if (angle.IsZero)
                 element = new EdaLineElement {
                     StartPosition = p1,
@@ -669,7 +669,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'RectangleElement' creat.</returns>
         /// 
-        private EdaElement ParseRectangleNode(XmlNode node) {
+        private EdaElementBase ParseRectangleNode(XmlNode node) {
 
             // Obte la posicio i el tamany
             //
@@ -712,7 +712,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'CircleElement' creat.</returns>
         /// 
-        private EdaElement ParseCircleNode(XmlNode node) {
+        private EdaElementBase ParseCircleNode(XmlNode node) {
 
             // obte la posicio
             //
@@ -748,7 +748,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'RegionElement' creat.</returns>
         /// 
-        private EdaElement ParsePolygonNode(XmlNode node) {
+        private EdaElementBase ParsePolygonNode(XmlNode node) {
 
             // Obte l'amplada de linia
             //
@@ -798,7 +798,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.Eagle {
         /// <param name="node">El node a procesar.</param>
         /// <returns>L'objecte 'EdaElement'.</returns>
         /// 
-        private EdaElement ParseHoleNode(XmlNode node) {
+        private EdaElementBase ParseHoleNode(XmlNode node) {
 
             // Obte la posicio
             //

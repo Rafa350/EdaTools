@@ -8,7 +8,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa un text.
     /// </summary>
     /// 
-    public sealed class EdaTextElement: EdaElement {
+    public sealed class EdaTextElement: EdaElementBase {
 
         private EdaPoint _position;
         private EdaAngle _rotation;

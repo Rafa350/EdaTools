@@ -34,7 +34,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EdaBase\EdaBase.csproj" />
-    <ProjectReference Include="..\EdaCoreExtensions\EdaCoreExtensions.csproj" />
     <ProjectReference Include="..\EdaCore\EdaCore.csproj" />
   </ItemGroup>
 

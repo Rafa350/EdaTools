@@ -26,7 +26,7 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
                         //
                         if (item.Conectable is EdaPadBaseElement element) {
 
-                            // Nomes explora les capes exterior de coure
+                            // Nomes explora les capes exteriors de coure
                             //
                             var layerIds = new EdaLayerId[] { EdaLayerId.TopCopper, EdaLayerId.BottomCopper };
 

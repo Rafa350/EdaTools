@@ -8,7 +8,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
     /// Clase que representa una via
     /// </summary>
     /// 
-    public sealed class EdaViaElement: EdaElement, IEdaConectable {
+    public sealed class EdaViaElement: EdaElementBase, IEdaConectable {
 
         private const double _cos2250 = 0.92387953251128675612818318939679;
 

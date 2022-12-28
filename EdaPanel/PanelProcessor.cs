@@ -144,10 +144,10 @@ namespace MikroPic.EdaTools.v1.Panel {
             // Afegeix els elements de la placa
             //
             if (board.HasElements) {
-                List<EdaElement> transformableElements = new List<EdaElement>();
+                List<EdaElementBase> transformableElements = new List<EdaElementBase>();
                 foreach (var boardElement in board.Elements) {
 
-                    EdaElement panelElement = CloneElement(boardElement);
+                    EdaElementBase panelElement = CloneElement(boardElement);
                     if (boardElement.IsOnLayer(EdaLayerId.Profile)) {
                         boardElement.LayerSet.Remove(EdaLayerId.Profile);
                         boardElement.LayerSet.Add(EdaLayerId.Get("LocalProfile"));
@@ -364,7 +364,7 @@ namespace MikroPic.EdaTools.v1.Panel {
         /// <returns>El clon.</returns>
         /// <exception cref="InvalidOperationException"></exception>
         /// 
-        private static EdaElement CloneElement(EdaElement element) {
+        private static EdaElementBase CloneElement(EdaElementBase element) {
 
             if (element is EdaCircleElement circle)
                 return new EdaCircleElement {

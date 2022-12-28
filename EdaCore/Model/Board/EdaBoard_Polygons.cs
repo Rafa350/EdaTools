@@ -131,7 +131,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             /// </summary>
             /// <param name="element">L'element a visitar.</param>
             /// 
-            private void VisitProfileElement(EdaElement element) {
+            private void VisitProfileElement(EdaElementBase element) {
 
                 var polygon = element.GetOutlinePolygon(EdaLayerId.Profile, _outlineClearance);
                 if (_regionBounds.IntersectsWith(polygon.Bounds))
@@ -143,7 +143,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             /// </summary>
             /// <param name="element">L'element a visitar.</param>
             /// 
-            private void VisitSignalElement(EdaElement element) {
+            private void VisitSignalElement(EdaElementBase element) {
 
                 EdaSignal regionSignal = Board.GetSignal(_region, null, false);
 
@@ -210,7 +210,7 @@ namespace MikroPic.EdaTools.v1.Core.Model.Board {
             /// <param name="clearance">L'espaiat.</param>
             /// <returns>El poligon.</returns>
             /// 
-            private EdaPolygon GetOutlinePolygon(EdaElement element, int clearance) {
+            private EdaPolygon GetOutlinePolygon(EdaElementBase element, int clearance) {
 
                 var polygon = element.GetOutlinePolygon(_layerId, clearance);
                 if (Part != null) {
