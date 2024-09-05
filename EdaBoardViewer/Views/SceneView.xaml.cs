@@ -29,7 +29,8 @@ namespace EdaBoardViewer.Views {
 
             public BoardScene() {
 
-                string fileName = @"C:\Users\Rafael\Documents\Projectes\Eda\cpu04c\build\cpu04c.xbrd";
+                //string fileName = @"C:\Users\Rafael\Documents\Projectes\Eda\cpu04c\build\cpu04c.xbrd";
+                string fileName = @"C:\Users\Rafael\Documents\Projectes\Eda\ps-01c\build\ps-01c.xbrd";
                 //string fileName = @"C:\Users\Rafael\Documents\Projectes\KiCad\EdaToolsTest\EdaToolsTest.xbrd";
                 using (Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.None)) {
                     var reader = new EdaBoardStreamReader(stream);

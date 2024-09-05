@@ -72,7 +72,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad.Infrastructure {
 
         public static SBranch SelectBranch(this STree tree, SNode node, string name) {
 
-            SBranch branch = node as SBranch;
+            var branch = node as SBranch;
             if (branch == null)
                 return null;
 
@@ -87,7 +87,7 @@ namespace MikroPic.EdaTools.v1.Core.Import.KiCad.Infrastructure {
 
         public static IEnumerable<SBranch> SelectBranches(this STree tree, SNode node, string name) {
 
-            SBranch branch = node as SBranch;
+            var branch = node as SBranch;
             if (branch == null)
                 return Enumerable.Empty<SBranch>();
 

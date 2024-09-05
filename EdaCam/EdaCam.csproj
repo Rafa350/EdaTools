@@ -28,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Configuration\" />
     <Folder Include="Generators\Gerber\Builder\Macros\" />
   </ItemGroup>
 

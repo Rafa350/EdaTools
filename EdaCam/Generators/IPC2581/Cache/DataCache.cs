@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using MikroPic.EdaTools.v1.Base.Geometry;
-using MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Cache;
+using MikroPic.EdaTools.v1.Cam.Configuration;
 using MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Cache.Entries;
 
-namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
+namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581
+{
 
     internal class DataCache {
 

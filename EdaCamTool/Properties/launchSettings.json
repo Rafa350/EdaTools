@@ -2,8 +2,8 @@
   "profiles": {
     "EdaCamTool": {
       "commandName": "Project",
-      "commandLineArgs": "cpu04c.xcam /o:build /v /b:Build/cpu04c.xbrd",
-      "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\EDA\\cpu04c"
+      "commandLineArgs": "ps-01c.xcam /o:build /v /b:Build/ps-01c.xbrd",
+      "workingDirectory": "C:\\Users\\Rafael\\Documents\\Projectes\\EDA\\ps-01c"
     }
   }
 }

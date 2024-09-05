@@ -1,7 +1,9 @@
 ﻿using System;
 using MikroPic.EdaTools.v1.Base.Geometry;
+using MikroPic.EdaTools.v1.Cam.Configuration;
 
-namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Cache.Entries {
+namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Cache.Entries
+{
 
     internal sealed class LineDescEntry: DataCacheEntry {
 

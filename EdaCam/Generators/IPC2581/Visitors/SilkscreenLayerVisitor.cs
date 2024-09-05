@@ -103,6 +103,28 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581.Visitors {
 
             if (element.IsOnLayer(_layerId)) {
 
+                var lineDescEntry = _cache.GetLineDescEntry(element.Thickness, element.LineCap);
+                var tr = Part == null ? new EdaTransformation() : Part.GetLocalTransformation();
+                var startPosition = tr.Transform(element.StartPosition);
+                var endPosition = tr.Transform(element.EndPosition);
+                var centerPosition = tr.Transform(element.Center);
+
+                _writer.WriteStartElement("Set");
+                _writer.WriteStartElement("Features");
+                _writer.WriteStartElement("Arc");
+                _writer.WriteAttributeDouble("startX", startPosition.X / _scale);
+                _writer.WriteAttributeDouble("startY", startPosition.Y / _scale);
+                _writer.WriteAttributeDouble("endX", endPosition.X / _scale);
+                _writer.WriteAttributeDouble("endY", endPosition.Y / _scale);
+                _writer.WriteAttributeDouble("centerX", centerPosition.X / _scale);
+                _writer.WriteAttributeDouble("centerY", centerPosition.Y / _scale);
+                _writer.WriteAttributeBool("clockwise", false);
+                _writer.WriteStartElement("LineDescRef");
+                _writer.WriteAttributeInteger("id", lineDescEntry.Id);
+                _writer.WriteEndElement(); // LineDescRef                    
+                _writer.WriteEndElement(); // Arc
+                _writer.WriteEndElement(); // Features                    
+                _writer.WriteEndElement(); // Set
             }
         }
 

@@ -77,11 +77,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <inheritdoc/>
         /// 
         public override string ToString() =>
-            String.Format("X: {0}; Y:{1}; W:{2}; H:{3}",
-                Math.Round(_x / 1000000.0, 3),
-                Math.Round(_y / 1000000.0, 3),
-                Math.Round(_width / 1000000.0, 3),
-                Math.Round(_height / 1000000.0, 3));
+            String.Format("X: {0}; Y:{1}; W:{2}; H:{3}", _x, _y, _width, _height);
 
         /// <summary>
         /// Obte el codi hask de l'objecte.

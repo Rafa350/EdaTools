@@ -38,9 +38,7 @@ namespace MikroPic.EdaTools.v1.Base.Geometry {
         /// <inheritdoc/>
         /// 
         public override string ToString() =>
-            string.Format("W: {0}; H: {1}",
-                Math.Round(_width / 1000000.0, 3),
-                Math.Round(_height / 1000000.0, 3));
+            string.Format("W: {0}; H: {1}", _width, _height);
 
         /// <summary>
         /// Operacio d'igualtat entre dos objectes.

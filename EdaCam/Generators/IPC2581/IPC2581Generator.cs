@@ -178,10 +178,20 @@ namespace MikroPic.EdaTools.v1.Cam.Generators.IPC2581 {
             _writer.WriteStartElement("DictionaryLineDesc");
             _writer.WriteAttributeString("units", "MILLIMETER");
             foreach (var entry in _dataCache.Entries.OfType<LineDescEntry>()) {
+                /*string lineEnd = "NONE";
+                switch (entry.CapStyle) {
+                    case EdaLineCap.Round:
+                        lineEnd = "ROUND";
+                        break;
+
+                    case EdaLineCap.Square:
+                        lineEnd = "SQUARE";
+                        break;
+                }*/
                 _writer.WriteStartElement("EntryLineDesc");
                 _writer.WriteAttributeInteger("id", entry.Id);
                 _writer.WriteStartElement("LineDesc");
-                _writer.WriteAttributeString("lineEnd", "ROUND"); // ?????
+                _writer.WriteAttributeString("lineEnd", "ROUND"); //??????
                 _writer.WriteAttributeDouble("lineWidth", entry.Thickness / _scale);
                 _writer.WriteEndElement();
                 _writer.WriteEndElement();
