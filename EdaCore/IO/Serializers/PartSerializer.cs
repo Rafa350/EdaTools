@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using MikroPic.EdaTools.v1.Core.Model.Board;
-using NetSerializer.V5;
-using NetSerializer.V5.Descriptors;
-using NetSerializer.V5.TypeSerializers.Serializers;
+using NetSerializer.V6;
+using NetSerializer.V6.TypeDescriptors;
+using NetSerializer.V6.TypeSerializers.Serializers;
 
 namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
 
@@ -44,8 +44,7 @@ namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
 
             if (name == "Attributes") {
                 EdaPartAttribute[] attributes = part.HasAttributes ? part.Attributes.ToArray() : null;
-                var serializer = context.GetTypeSerializer(typeof(EdaPartAttribute[]));
-                serializer.Serialize(context, name, typeof(EdaPartAttribute[]), attributes);
+                context.WriteArray(name, attributes);
             }
 
             else

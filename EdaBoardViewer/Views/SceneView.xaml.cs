@@ -131,7 +131,7 @@ namespace EdaBoardViewer.Views {
         /// </summary>
         /// <param name="e">Parametres del event.</param>
         /// 
-        protected override void OnPropertyChanged<T>(AvaloniaPropertyChangedEventArgs<T> e) {
+        protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e) {
 
             // Detecta el canvi en el tamany del control
             //

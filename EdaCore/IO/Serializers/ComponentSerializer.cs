@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using MikroPic.EdaTools.v1.Core.Model.Board;
-using NetSerializer.V5;
-using NetSerializer.V5.Descriptors;
-using NetSerializer.V5.TypeSerializers.Serializers;
+using NetSerializer.V6;
+using NetSerializer.V6.TypeDescriptors;
+using NetSerializer.V6.TypeSerializers.Serializers;
 
 namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
 
@@ -49,14 +49,12 @@ namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
 
             if (name == "Elements") {
                 EdaElementBase[] elements = component.HasElements ? component.Elements.ToArray() : null;
-                var serializer = context.GetTypeSerializer(typeof(EdaElementBase[]));
-                serializer.Serialize(context, name, typeof(EdaElementBase[]), elements);
+                context.WriteArray(name, elements);
             }
 
             else if (name == "Attributes") {
                 EdaComponentAttribute[] attributes = component.HasAttributes ? component.Attributes.ToArray() : null;
-                var serializer = context.GetTypeSerializer(typeof(EdaComponentAttribute[]));
-                serializer.Serialize(context, name, typeof(EdaComponentAttribute[]), attributes);
+                context.WriteArray(name, attributes);
             }
 
             else
@@ -71,10 +69,9 @@ namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
             var name = propertyDescriptor.Name;
 
             if (name == "Elements") {
-                var serializer = context.GetTypeSerializer(typeof(EdaElementBase[]));
-                serializer.Deserialize(context, name, typeof(EdaElementBase[]), out object elements);
+                var elements = (EdaElementBase[]) context.ReadArray(name, typeof(EdaElementBase[]));
                 if (elements != null)
-                    Array.ForEach((EdaElementBase[])elements, item => component.AddElement(item));
+                    Array.ForEach((EdaElementBase[]) elements, item => component.AddElement(item));
             }
 
             else

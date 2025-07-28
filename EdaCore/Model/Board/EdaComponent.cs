@@ -1,5 +1,5 @@
 ﻿using MikroPic.EdaTools.v1.Core.Model.Common;
-using NetSerializer.V5.Attributes;
+using NetSerializer.V6.Attributes;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board {
 

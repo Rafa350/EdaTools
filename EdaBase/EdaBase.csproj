@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\Rafael\Documents\Projectes\Net\EdaTools\Signature\edatools.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>MikroPic.EdaTools.v1.Base</RootNamespace>
@@ -9,7 +9,7 @@
     <Copyright>(c) 2017..2020 rsr.openware@gmail.com</Copyright>
     <Description></Description>
     <Product>EdaTools v2.0</Product>
-    <BaseOutputPath>..\bin</BaseOutputPath>
+    <BaseOutputPath></BaseOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using MikroPic.EdaTools.v1.Core.Model.Board;
-using NetSerializer.V5;
-using NetSerializer.V5.Descriptors;
-using NetSerializer.V5.TypeSerializers;
-using NetSerializer.V5.TypeSerializers.Serializers;
+using NetSerializer.V6;
+using NetSerializer.V6.TypeDescriptors;
+using NetSerializer.V6.TypeSerializers;
+using NetSerializer.V6.TypeSerializers.Serializers;
 
 namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
 
@@ -50,36 +50,30 @@ namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
             var board = (EdaBoard)obj;
             var name = propertyDescriptor.Name;
 
-            ITypeSerializer serializer;
             switch (name) {
                 case "Layers":
                     EdaLayer[] layers = board.HasLayers ? board.Layers.ToArray() : null;
-                    serializer = context.GetTypeSerializer(typeof(EdaLayer[]));
-                    serializer.Serialize(context, name, typeof(EdaLayer[]), layers);
+                    context.WriteArray(name, layers);
                     break;
 
                 case "Devices":
                     EdaDevice[] devices = board.HasDevices ? board.Devices.ToArray() : null;
-                    serializer = context.GetTypeSerializer(typeof(EdaDevice[]));
-                    serializer.Serialize(context, name, typeof(EdaDevice[]), devices);
+                    context.WriteArray(name, devices);
                     break;
 
                 case "Components":
                     EdaComponent[] components = board.HasComponents ? board.Components.ToArray() : null;
-                    serializer = context.GetTypeSerializer(typeof(EdaComponent[]));
-                    serializer.Serialize(context, name, typeof(EdaComponent[]), components);
+                    context.WriteArray(name, components);
                     break;
 
                 case "Elements":
                     EdaElementBase[] elements = board.HasElements ? board.Elements.ToArray() : null;
-                    serializer = context.GetTypeSerializer(typeof(EdaElementBase[]));
-                    serializer.Serialize(context, name, typeof(EdaElementBase[]), elements);
+                    context.WriteArray(name, elements);
                     break;
 
                 case "Parts":
                     EdaPart[] parts = board.HasParts ? board.Parts.ToArray() : null;
-                    serializer = context.GetTypeSerializer(typeof(EdaPart[]));
-                    serializer.Serialize(context, name, typeof(EdaPart[]), parts);
+                    context.WriteArray(name, parts);
                     break;
 
                 default:
@@ -95,13 +89,11 @@ namespace MikroPic.EdaTools.v1.Core.IO.Serializers {
             var board = (EdaBoard)obj;
             var name = propertyDescriptor.Name;
 
-            ITypeSerializer serializer;
             switch (name) {
                 case "Components":
-                    serializer = context.GetTypeSerializer(typeof(EdaComponent[]));
-                    serializer.Deserialize(context, name, typeof(EdaComponent[]), out object components);
+                    var components = (EdaComponent[]) context.ReadArray(name, typeof(EdaComponent[]));
                     if (components != null)
-                        Array.ForEach((EdaComponent[])components, item => board.AddComponent(item));
+                        Array.ForEach(components, item => board.AddComponent(item));
                     break;
 
                 default:

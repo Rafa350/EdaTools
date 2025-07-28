@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using MikroPic.EdaTools.v1.Base.Geometry;
 using MikroPic.EdaTools.v1.Base.Geometry.Utils;
-using NetSerializer.V5.Attributes;
+using NetSerializer.V6.Attributes;
 
 namespace MikroPic.EdaTools.v1.Core.Model.Board.Elements {
 

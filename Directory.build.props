@@ -1,0 +1,21 @@
+<Project>
+
+	<PropertyGroup>
+		<ArtifactsPath>$(MSBuildThisFileDirectory)artifacts</ArtifactsPath>
+	</PropertyGroup>
+    
+	<PropertyGroup>
+		<Nullable>enable</Nullable>
+		<AvaloniaVersion>11.2.3</AvaloniaVersion>
+	</PropertyGroup>
+
+    <!-- Informacio del projecte
+    -->
+	<PropertyGroup>
+		<CustomProduct>Eda Tools</CustomProduct>
+		<CustomCopyright>(c) 1989..2025 Rafael Serrano Riera [rsr.openware@gmail.com]</CustomCopyright>
+		<CustomAuthors>Rafael Serrano Riera</CustomAuthors>
+		<CustomVersion>2.0.0</CustomVersion>
+	</PropertyGroup>
+       
+</Project>

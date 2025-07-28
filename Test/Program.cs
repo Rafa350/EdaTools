@@ -1,7 +1,7 @@
 ﻿using MikroPic.EdaTools.v1.Core.IO;
 using MikroPic.EdaTools.v1.Core.Model.Board;
-using NetSerializer.V5;
-using NetSerializer.V5.Formatters.Xml;
+using NetSerializer.V6;
+using NetSerializer.V6.Formatters.Xml;
 
 namespace MyApp // Note: actual namespace depends on the project name.
 {
@@ -24,9 +24,9 @@ namespace MyApp // Note: actual namespace depends on the project name.
         private static void Write(EdaBoard board, string fileName) {
 
             using (var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.None)) {
-                using (var writer = new XmlFormatWriter(stream, null)) {
+                using (var writer = new XmlFormatWriter(stream, 300)) {
                     var serializer = new Serializer();
-                    serializer.Serialize(writer, board, "Board");
+                    serializer.Serialize(writer, board);
                 }
             }
         }
